@@ -1,0 +1,21 @@
+{% extends "projects/base_projects.html" %}
+
+
+{% block title %}Projects{% endblock %}
+
+
+{% block content_title %}
+  <h2 class="pagetitle">Find a project</h2>
+{% endblock %}
+
+  
+{% block content %}
+  <div class="project_list">
+  {% for project in object_list %}
+    <div class="info">
+      <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a></h3>
+      <p class="description">{{ project.description }}</p>
+    </div>
+  {% endfor %}
+  </div>
+{% endblock %}

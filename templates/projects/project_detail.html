@@ -1,0 +1,55 @@
+{% extends "projects/base_projects.html" %}
+
+
+{% block title %}{{ object.full_title }}{% endblock %}
+
+
+{% block content %}
+  {% load markup %}
+
+  <div class="project_details">
+    <h2 class="name">{{ object.full_name }}</h2>
+    
+    {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
+    
+    {% if object.long_description %}<p class="long_description">{{ object.long_description }}</p>{% endif %}
+    
+    <div class="details">
+      <h3>Project details <sup class="editlink">(<a href="edit">edit</a>)</sup></h3>
+      <table class="definition">
+        {% if object.homepage %}
+        <tr>
+          <th class="homepage i16">Homepage:</th>
+          <td><a title="Homepage for {{ object.name }}" href="{{ object.homepage }}">{{ object.homepage }}</a></td>
+        </tr>
+        {% endif %}
+        {% if object.repository %}
+        <tr>
+          <th class="repository i16">Source:</th>
+          <td>
+            <code>{{ object.repository }}</code>
+            {% if object.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ object.repository_web }}">web</a>)</sup>{% endif %}
+            <img class="repotype" src="/site_media/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
+          </td>
+        </tr>
+        {% endif %}
+        {% if object.branches %}
+        <tr>
+          <th class="branch i16">Branches:</th>
+          <td>
+            {{ object.branches }}
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <th class="i16 link">External resources:</th>
+          <td><ul>
+            <li><a href="">Screenshots</a></li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

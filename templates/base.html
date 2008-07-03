@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	{# FIXME: decouple from /site_media #}
+    <link media="screen" href="{{ MEDIA_URL }}/css/base.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+</head>
+<body id="{% block body_id %}{% endblock %}">
+  <div id="wrapper">
+
+    <div id="header">
+      <div id="logo">
+        <img src="/site_media/images/tx-logo.png" alt="Transifex logo" />
+      </div>
+      <div id="navmenu">
+        <a href="{% url project_list %}">Projects</a>
+      </div>
+      {% comment %}
+      <div id="language_switcher">
+      <select>
+        <option selected>English</option>
+      </select>
+      </div>
+      <div id="topright">
+        <span id="login" class="disabled">Already a user? <a href="{% url login %}">Sign in</a></span>
+      </div>
+    {% endcomment %}
+    </div>
+        
+    <div id="content-all">
+    {% block body %}
+      <div>
+        {% block content_title %}{% endblock %}
+      </div>
+     <div class="content-main">
+        {% block content %}{% endblock %}
+     </div>
+    {% endblock %}
+    </div>
+
+  <div id="footer">
+  </div>
+
+</body>
+</html>
