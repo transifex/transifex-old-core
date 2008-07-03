@@ -1,0 +1,52 @@
+{% extends "projects/base.html" %}
+
+{% block title %}{{ block.super }} | Search{% endblock %}
+
+{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; <a href="{% url search %}">Search</a>{% endblock %}
+
+{% block body_class %}search{% endblock %}
+
+
+{% block content_title %}
+  <h2 class="pagetitle">Search</h2>
+{% endblock %}
+
+{% block content-header %}
+<div class="searchform content_head_prim">
+  <form action="." method="GET" class="search_projects">
+    <label for="q">Find projects by name, description, etc.</label><br/>
+    <input class="query" type="text" name="q" size="50" value="{{ query|escape }}">
+    <input class="submit" type="submit" value="Search">
+  </form>
+</div>
+
+{% if query %}
+<div class="addproject content_head_sec">
+  <span class="i16 add"><a href="{% url add_project %}">Add a new project</a></span>
+</div>
+{% endif %}
+
+
+{% endblock %}
+  
+{% block content %}
+  {% if query %}
+    <h3>Results for "{{ query|escape }}"</h3>
+
+    {% if results %}
+	  <div class="project_list">
+	  {% for project in results %}
+	    <div class="info">
+	      <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a></h4>
+	      <p class="description">{{ project.description }}</p>
+	    </div>
+	  {% endfor %}
+	  </div>
+    {% else %}
+      <p>No projects found. Why don't you start by <a href="{% url add_project %}">adding one</a>?</p>
+    {% endif %}
+    {# FIXME remove local style #}
+    <p style="margin-top: 3em;" class="i16 idea">Couldn't find your project? Why don't you go ahead and <a href="{% url add_project %}">add it</a>?</p>
+  {% endif %}
+
+{% endblock %}

@@ -4,9 +4,8 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{% block title %}{% endblock %}</title>
-	{# FIXME: decouple from /site_media #}
-    <link media="screen" href="{{ MEDIA_URL }}/css/base.css" type="text/css" rel="stylesheet" />
+	<title>{% block title %}Transifex{% endblock %}</title>
+    <link media="screen" href="/site_media/css/base.css" type="text/css" rel="stylesheet" />
     <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 </head>
@@ -15,10 +14,11 @@
 
     <div id="header">
       <div id="logo">
-        <img src="/site_media/images/tx-logo.png" alt="Transifex logo" />
+        <a href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="Transifex logo" /></a>
       </div>
       <div id="navmenu">
         <a href="{% url project_list %}">Projects</a>
+        | <a href="{% url search %}">Search</a>
       </div>
       {% comment %}
       <div id="language_switcher">
@@ -34,9 +34,15 @@
         
     <div id="content-all">
     {% block body %}
+      <div id="breadcrumbs">
+        {% block breadcrumb %}{% endblock %}
+      </div>
       <div>
         {% block content_title %}{% endblock %}
       </div>
+     <div class="content-header">
+        {% block content-header %}{% endblock %}
+     </div>
      <div class="content-main">
         {% block content %}{% endblock %}
      </div>

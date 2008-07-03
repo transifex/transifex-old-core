@@ -1,13 +1,14 @@
-{% extends "projects/base_projects.html" %}
-
-
-{% block title %}Projects{% endblock %}
-
+{% extends "projects/base.html" %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Find a project</h2>
+  <h2 class="pagetitle">Projects on Transifex</h2>
 {% endblock %}
 
+{% block content-header %}
+<div class="addproject content_head_sec">
+  <span class="i16 add"><a href="{% url add_project %}">Add a new project</a></span>
+</div>
+{% endblock %}
   
 {% block content %}
   <div class="project_list">

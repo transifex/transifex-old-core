@@ -1,8 +1,8 @@
-{% extends "projects/base_projects.html" %}
+{% extends "projects/base.html" %}
 
+{% block title %}{{ block.super }} | {{ object.full_name }}{% endblock %}
 
-{% block title %}{{ object.full_title }}{% endblock %}
-
+{% block breadcrumb %}{{ block.super }} &raquo; {{ object.name }}{% endblock %}
 
 {% block content %}
   {% load markup %}
@@ -41,6 +41,10 @@
           </td>
         </tr>
         {% endif %}
+        <tr>
+          <th class="i16 tag">Tags:</th>
+          <td>{% for tag in object.get_tags %}{{tag}} {%endfor%}</td>
+        </tr>
         <tr>
           <th class="i16 link">External resources:</th>
           <td><ul>

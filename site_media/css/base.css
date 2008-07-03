@@ -49,6 +49,10 @@ div#header div#language_switcher {
 
 /* Content */
 
+div#breadcrumbs {
+  margin: 1em 3em;
+}
+
 div#content-all {
   background-color: #ebf2f8;
   border-top: #afc8e1 4px solid;
@@ -67,6 +71,7 @@ div#content-all h2.pagetitle {
 }
 
 div.content-main {
+  clear: both;
   background-color: white;
   -moz-border-radius: 5px;
   margin: 1em;
@@ -86,6 +91,11 @@ a:hover {
 
 /* Projects */
 
+div.content_head_sec {
+  float:right;
+  margin: 0 2em 0.5em 0; 
+}
+
 div.project_list div.project_info {
   border-bottom: 3px solid #eee;
 }
@@ -94,7 +104,8 @@ div.project_list p.description {
   margin-top: 0.5em;
 }
 
-div.project_list h3.name {
+div.project_list h3.name,
+div.project_list h4.name {
   font-weight: normal;
   font-size: 140%;
   margin-bottom: 0;
@@ -104,8 +115,7 @@ div.project_list p.description {
   color: #88889e;
 }
 
-div.project_list h3,
-div.project_details h3 {
+div.content-main h3 {
   color: #b65d0e;
 }
 
@@ -130,6 +140,29 @@ div.project_details p.long_description {
   margin: -1em 0 2em 1em;
   max-width: 80%;
   text-align: justify;
+}
+
+/* Search */
+
+div.searchform.content_head_prim {
+  margin-left: 3em;
+}
+
+div.searchform label {
+  font-size: 90%;
+  font-color: gray;
+  margin-left: 0.5em;
+}
+
+div.searchform input.query {
+  height: 1.2em;
+  font-size: 1.2em;
+  padding-left: 0.5em;
+}
+
+div.searchform input.submit {
+  border-color: #4f87bd;
+  height: 1.5em;
 }
 
 /* Other elements */
