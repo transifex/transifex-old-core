@@ -1,0 +1,21 @@
+{% extends "projects/base.html" %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; Delete {% endblock %}
+
+{% block content-title %}
+    <h2 class="pagetitle">Say goodbye to <em>{{ object.name }}</em>?</h2>
+{% endblock %}
+
+{% block content %}
+
+<p>Are you sure you want to permanently delete the registered project '{{ object.name }}'?</p>
+
+  <form action='' method='post'>
+  <input class=i16 ok" type="submit" value="Yes, I'm sure!" />
+  </form>
+
+{% endblock %}
+
+{% block content-footer %}
+
+{% endblock %}

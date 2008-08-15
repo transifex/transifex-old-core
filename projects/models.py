@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib import admin
 from django.db.models import permalink
+from django.forms import ModelForm
+
 import tagging
 from tagging.fields import TagField
 from tagging.models import Tag
-
 
 
 class Project(models.Model):
@@ -14,7 +15,7 @@ class Project(models.Model):
     long_description = models.TextField(null=True, max_length=1000,
         help_text='Use Markdown syntax.')
     long_description_html = models.TextField(blank=True, null=True,
-        max_length=1000, help_text='Description as HTML.')
+        max_length=1000, help_text='Description as HTML.', editable=False)
     slug = models.SlugField(unique=True)
 
     homepage = models.CharField(blank=True, max_length=255)
@@ -32,10 +33,10 @@ class Project(models.Model):
     report_bugs = models.CharField(blank=True, max_length=255,
         help_text="A URL to the project's bugzilla, trac, etc")
     enabled = models.BooleanField(default=True)
-    added = models.DateField(blank=True, null=True, editable=False)
-    last_updated = models.DateField(blank=True, null=True, editable=False)
-    
+    created = models.DateField(blank=True, null=True, editable=False)
+    updated = models.DateField(blank=True, null=True, editable=False)
 
+    #tags = TagField(help_text="Separate tags with spaces.")
 
     class Meta:
         ordering = ('name',)
@@ -57,14 +58,19 @@ class Project(models.Model):
     def get_tags(self):
         return Tag.objects.get_for_object(self)
 
-    def save(self):
-        import markdown
-        self.long_description_html = markdown.markdown(self.long_description)
-        super(Entry, self).save() # Call the "real" save() method.
+#    def save(self):
+#        import markdown
+#        self.long_description_html = markdown.markdown(self.long_description)
+#        super(Entry, self).save() # Call the "real" save() method.
 
 class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Project, ProjectAdmin)
+
+class ProjectForm(ModelForm):
+    class Meta:
+        model = Project
+
 
 # Tagging
 

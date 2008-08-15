@@ -1,5 +1,7 @@
 {% extends "projects/base.html" %}
 
+{% load pagination_tags %}
+
 {% block content-title %}
   <h2 class="pagetitle">Projects on Transifex</h2>
 {% endblock %}
@@ -23,6 +25,7 @@
     </div>
   {% endfor %}
   </div>
+  
 {% endblock %}
 
 {% block content-footer %}

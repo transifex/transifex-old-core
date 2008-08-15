@@ -4,6 +4,14 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ object.name }}{% endblock %}
 
+{% block content-header %}
+<div class="editproject content_head_sec">
+  <span class="i16 edit"><a href="{% url project_edit slug=object.slug %}">Edit</a></span>
+  <br/>
+  <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete</a></span>
+</div>
+{% endblock %}
+
 {% block content %}
   {% load markup %}
 
@@ -15,7 +23,7 @@
     {% if object.long_description %}<p class="long_description">{{ object.long_description }}</p>{% endif %}
     
     <div class="details">
-      <h3>Project details <sup class="editlink">(<a href="edit">edit</a>)</sup></h3>
+      <h3>Project details</h3>
       <table class="definition">
         {% if object.homepage %}
         <tr>
@@ -48,12 +56,17 @@
         <tr>
           <th class="i16 link">External resources:</th>
           <td><ul>
-            <li><a href="">Screenshots</a></li>
+            <li>Screenshots</li>
+            <li>...</li>
             </ul>
           </td>
         </tr>
       </table>
+        {{ form.as_table }}
+  {{ form_message }}
     </div>
   </div>
+    
 
+  
 {% endblock %}

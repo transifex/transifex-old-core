@@ -1,9 +1,15 @@
 {% extends "projects/base.html" %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; Add{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo;
+  {% if not object %} Add {% else %} Edit {% endif %}
+{% endblock %}
 
 {% block content-title %}
-  <h2 class="pagetitle">Add a new project</h2>
+  {% if not object %}
+    <h2 class="pagetitle">Add a project</h2>
+  {% else %}
+    <h2 class="pagetitle">Edit {{ object.name }}</h2>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
