@@ -1,0 +1,21 @@
+{% extends "projects/base.html" %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; Add{% endblock %}
+
+{% block content-title %}
+  <h2 class="pagetitle">Add a new project</h2>
+{% endblock %}
+
+{% block content %}
+  <div class="project_add">
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <form action='' method='post'>
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit">
+  </form>
+  </div>
+{% endblock %}

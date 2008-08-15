@@ -3,9 +3,18 @@
 
 {% block body_class %}index{% endblock %}
 
-{% block content_title %}
+{% block content-title %}
   <h2 class="pagetitle">Welcome to Transifex</h2>
 {% endblock %}
 
 {% block content %}
+<div class="searchform content_head_prim">
+  <p>
+    {% include "search_form.html" %}
+  </p>
+  
+  <p>You could also browse through <a href="{% url project_list %}">all projects</a>.</p>
+</div>
+
+  
 {% endblock %}

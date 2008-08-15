@@ -43,7 +43,7 @@
         {% endif %}
         <tr>
           <th class="i16 tag">Tags:</th>
-          <td>{% for tag in object.get_tags %}{{tag}} {%endfor%}</td>
+          <td>{% for tag in object.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
         </tr>
         <tr>
           <th class="i16 link">External resources:</th>

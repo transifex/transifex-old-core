@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
-from txc.projects.models import *
-
+from models import *
 
 project_list = {
     'queryset': Project.objects.all(),
@@ -14,17 +13,16 @@ urlpatterns = patterns('',
         kwargs = project_list,
         name = 'project_detail',
         ),
-     url (
-       regex = '^(?P<slug>[-\w]+)/add$',
-       view = 'django.views.generic.create_update.create_object',
-       kwargs = project_list,
-       name = 'project_add',
-     ),
-     url (
-       regex = '^$',
-       view = 'django.views.generic.list_detail.object_list',
-       kwargs = project_list,
-       name = 'project_list',
-     ),
+    url (
+        regex = '^add$',
+        view = 'txc.projects.views.project_add',
+        name = 'project_add',
+    ),
+    url (
+        regex = '^$',
+        view = 'django.views.generic.list_detail.object_list',
+        kwargs = project_list,
+        name = 'project_list',
+    ),
 )
 

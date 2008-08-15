@@ -6,6 +6,8 @@ body {
   font-family:"Trebuchet MS", sans-serif;
   font-size: 0.9em;
   color: #333;
+  padding: 0;
+  margin: 0;
 }
 
 div#header,
@@ -18,8 +20,13 @@ div#footer {
 
 /* Header */
 
+div#wrapper {
+  background: url('../images/top_bg_grad.png') repeat-x;
+}
+
 div#header {
   height: 80px;
+  padding-top: 10px;
 }
 
 div#header div#logo {
@@ -79,22 +86,27 @@ div.content-main {
   padding: 0.5em 3em 3em 3em;
 }
 
-a {
-  color: #0d4c8c;
-  text-decoration: none;
+div.content-header,
+div.content-footer {
+  margin: 0 1em;
 }
 
-a:hover {
-  text-decoration: underline;
+div.content_head_sec,
+div.content_main_sec,
+div.content_footer_sec {
+  float:right;
 }
+div.content_head_prim, div.content_head_sec { margin-bottom: 0.5em; }
+div.content_footer_prim, div.content_footer_sec { margin-top: 0.5em; }
+div.content_head_prim, div.content_footer_prim { margin-left: 1em; }
+div.content_head_sec, div.content_footer_sec { margin-right: 1em; }
+div.content_head_center, div.content_footer_center { text-align: center; }
 
+div.content_main_sec { margin-top: 0.5em; }
 
 /* Projects */
 
-div.content_head_sec {
-  float:right;
-  margin: 0 2em 0.5em 0; 
-}
+
 
 div.project_list div.project_info {
   border-bottom: 3px solid #eee;
@@ -113,6 +125,8 @@ div.project_list h4.name {
 
 div.project_list p.description {
   color: #88889e;
+  max-width: 40em;
+  text-align: justify;
 }
 
 div.content-main h3 {
@@ -144,10 +158,6 @@ div.project_details p.long_description {
 
 /* Search */
 
-div.searchform.content_head_prim {
-  margin-left: 3em;
-}
-
 div.searchform label {
   font-size: 90%;
   font-color: gray;
@@ -155,17 +165,30 @@ div.searchform label {
 }
 
 div.searchform input.query {
-  height: 1.2em;
-  font-size: 1.2em;
-  padding-left: 0.5em;
+  font-size: 1.1em;
+  padding-left: 1.2em;
+  padding: 2px 2px 2px 25px;
+  background-image: url('../images/icons/magnifier.png');
+  background-repeat: no-repeat;
+  background-position: 5px 50%;
+  font-weight: bold;
+  color: #666;
 }
 
 div.searchform input.submit {
-  border-color: #4f87bd;
-  height: 1.5em;
+  font-size: 1.1em;
 }
 
 /* Other elements */
+
+a {
+  color: #0d4c8c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 
 table.definition th { text-align: left; color: #666; }
 table.definition td {
@@ -182,3 +205,41 @@ img.repotype { vertical-align: middle; }
 
 .disabled { color: #aaa; }
 .disabled a { color: #bdcedf; }
+
+.spaceabove { margin-top: 3em; }
+
+p.message {
+  border: 3px solid #ddd;
+  -moz-border-radius: 5px;
+  padding: 0.5em 35px;
+  background-color: #fafafa;
+}
+
+p.message.i16 {
+  background-position: 10px 50%;
+}
+
+input, textarea {
+  padding: 0 0.5em;
+  border: 1px solid #aaa;
+  -moz-border-radius: 2px;
+}
+
+div.project_add table th {
+  text-align: right;
+  padding-right: 1em;
+}
+
+div.project_add ul.errorlist {
+  font-size: 85%;
+  color: #c27878;
+  list-style: none;
+  margin: 0 0 0 0.5em;
+  padding: 0;
+  float: right;
+}
+
+.floatright {
+  float: right;
+  margin-left: 1em;
+}

@@ -1,16 +1,20 @@
 {% extends "projects/base.html" %}
 
-{% block content_title %}
+{% block content-title %}
   <h2 class="pagetitle">Projects on Transifex</h2>
 {% endblock %}
 
 {% block content-header %}
 <div class="addproject content_head_sec">
-  <span class="i16 add"><a href="{% url add_project %}">Add a new project</a></span>
+  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
 </div>
 {% endblock %}
   
 {% block content %}
+  <div class="content_main_sec">
+    {% include "search_form_plain.html" %}
+  </div>
+
   <div class="project_list">
   {% for project in object_list %}
     <div class="info">
@@ -18,5 +22,11 @@
       <p class="description">{{ project.description }}</p>
     </div>
   {% endfor %}
+  </div>
+{% endblock %}
+
+{% block content-footer %}
+  <div class="content_footer_center">
+    <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</span>
   </div>
 {% endblock %}

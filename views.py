@@ -8,7 +8,7 @@ def search(request):
         qset = (
             Q(name__icontains=query)
             | Q(description__icontains=query)
-#            | Q(tags__last_name__icontains=query)
+#            | Q(long_description__icontains=query)
         )
         results = Project.objects.filter(qset).distinct()
     else:
