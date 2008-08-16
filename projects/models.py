@@ -11,14 +11,27 @@ from tagging.models import Tag
 
 
 class Project(models.Model):
-    """ A project is a collection of translatable resources """
-    name = models.CharField(max_length=255)
+    """A project is a collection of translatable resources.
+    
+    # Create some projects
+    >>> foo = Project.objects.create(slug="foo", name="Foo Project")
+    >>> bar = Project.objects.create(slug="bar", name="Bar Project")
+    >>> foo.name
+    'Foo Project'
+    >>> foo.set_tags = 'foo project'
+    >>> print ' '.join(foo.get_tags())
+    """
+
+    name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text='Use Markdown syntax.')
-    long_description_html = models.TextField(blank=True, null=True,
-        max_length=1000, help_text='Description as HTML.', editable=False)
-    slug = models.SlugField(unique=True)
+    long_description_html = models.TextField(blank=True, max_length=1000, 
+        help_text='Description as HTML.', editable=False)
+    slug = models.SlugField(unique=True, primary_key='True',
+        help_text='A unique, normalized name the entry (used in URLs, etc).')
+    
+    num_components = models.PositiveIntegerField(default=0)
 
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
@@ -34,12 +47,8 @@ class Project(models.Model):
         ordering = ('name',)
 
     def __unicode__(self):
-        return u'%s' % self.full_name
-  
-    @property
-    def full_name(self):
-        return u'%s' % (self.name)
-  
+        return u'%s' % self.name
+
     @permalink
     def get_absolute_url(self):
         return ('project_detail', None, { 'slug': self.slug })
@@ -54,10 +63,18 @@ class Project(models.Model):
         self.date_modified = datetime.datetime.now()
         super(Project, self).save()
 
+class ProjectAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+admin.site.register(Project, ProjectAdmin)
+
+class ProjectForm(ModelForm):
+    class Meta:
+        model = Project
+
 
 class Component(models.Model):
     """ A component is a translatable resource. """
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text='Use Markdown syntax.')
@@ -109,15 +126,10 @@ class Component(models.Model):
         self.date_modified = datetime.datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
         super(Component, self).save()
+        # Update de-normalized field
+        self.project.num_components = self.project.component_set.count()
+        self.project.save()
 
-
-class ProjectAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(Project, ProjectAdmin)
-
-class ProjectForm(ModelForm):
-    class Meta:
-        model = Project
 # Tagging
 
 tagging.register(Project)

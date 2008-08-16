@@ -73,7 +73,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
-    "django.core.context_processors.media"
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
 )
 
 
@@ -82,6 +83,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
+    'pagination.middleware.PaginationMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'txc.urls'
@@ -95,11 +98,14 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.comments',
     'django.contrib.contenttypes',
+    'django.contrib.flatpages',
     'django.contrib.markup',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django_evolution',
     'tagging',
+    'pagination',
+    'contact_form',
     'search',
     'txc.projects',
     'txc.management',

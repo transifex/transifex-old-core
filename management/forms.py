@@ -1,4 +1,4 @@
-from django.newforms import ModelForm
+from django.forms import ModelForm
 from models import Hold
 
 class HoldForm(ModelForm):
