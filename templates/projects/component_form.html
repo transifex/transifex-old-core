@@ -1,0 +1,27 @@
+{% extends "projects/project_form.html" %}
+
+{% block breadcrumb %}{{ block.supersuper }} &raquo;
+  {% if not object %} Add component {% else %} Edit component {% endif %}
+{% endblock %}
+
+{% block content-title %}
+  {% if not object %}
+    <h2 class="pagetitle">Add a component</h2>
+  {% else %}
+    <h2 class="pagetitle">Edit {{ object.name }}</h2>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="project_add">
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <form action='' method='post'>
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit">
+  </form>
+  </div>
+{% endblock %}

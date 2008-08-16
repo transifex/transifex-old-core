@@ -1,12 +1,22 @@
 from django.conf.urls.defaults import *
 from django.views.generic import create_update 
 from models import *
+from feeds import LatestProjects
+
 
 project_list = {
     'queryset': Project.objects.all(),
 }
 
-urlpatterns = patterns('django.views.generic',
+feeds = {
+    'latest': LatestProjects,
+}
+
+urlpatterns = patterns('',
+    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+)
+
+urlpatterns += patterns('django.views.generic',
     url(
         regex = '^add/$',
         view = 'create_update.create_object',
@@ -33,5 +43,10 @@ urlpatterns = patterns('django.views.generic',
         view = 'list_detail.object_list',
         kwargs = project_list,
         name = 'project_list'),
+    url(
+        regex = '^component/add$',
+        view = 'create_update.create_object',
+        name = 'component_add',
+        kwargs = {'model' : Component}),
 )
 

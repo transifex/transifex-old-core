@@ -63,7 +63,7 @@ div#breadcrumbs {
 div#content-all {
   background-color: #ebf2f8;
   border-top: #afc8e1 4px solid;
-  border-bottom: #afc8e1 2px solid;
+  border-bottom: #afc8e1 3px solid;
   margin-top: 1em;
   min-height: 50em;
 }
@@ -104,12 +104,33 @@ div.content_head_center, div.content_footer_center { text-align: center; }
 
 div.content_main_sec { margin-top: 0.5em; }
 
+div#footer .left,
+div#footer .center,
+div#footer .right {
+  width: 30%;
+  padding: 0.5em 0 1em 0;
+  font-size: 90%;
+}
+
+div#footer .left { float: left; text-align: left; }
+div#footer .center { margin: 0 auto; text-align: center; }
+div#footer .right { float: right; text-align: right; }
+
+div#footer .joint {
+  margin-right: 1em;
+  font-weight: bold;
+  color: #444;
+}
+
+.indifex-word span.prefix { color: #0d4c8c; }
+.indifex-word span.suffix { color: #b65c0c; }
+
 /* Projects */
 
-
-
-div.project_list div.project_info {
-  border-bottom: 3px solid #eee;
+div.project_list div.entry {
+  /* border-bottom: 3px solid #eee; */
+  background: url('../images/light-separator.png') repeat-x -20px 100%;
+  padding-bottom: 1em;
 }
 
 div.project_list p.description {
@@ -238,6 +259,14 @@ div.project_add ul.errorlist {
   margin: 0 0 0 0.5em;
   padding: 0;
   float: right;
+}
+
+/* Other */
+
+.promo {
+  font-size: 130%;
+  width: 80%;
+  margin: 2em;
 }
 
 .floatright {

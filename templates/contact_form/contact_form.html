@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content-title %}
+  <h2 class="pagetitle">Let us know what you think!</h2>
+{% endblock %}
+
+{% block content %}
+  <p>We'd like to make this web service as useful as possible for our users.
+  If you have any feedback to provide, please do so!</p>
+  
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <form action='' method='post'>
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit">
+  </form>
+{% endblock %}

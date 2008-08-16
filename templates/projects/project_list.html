@@ -17,19 +17,24 @@
     {% include "search_form_plain.html" %}
   </div>
 
+  {% autopaginate object_list 2 %}
+
   <div class="project_list">
   {% for project in object_list %}
-    <div class="info">
+    <div class="entry">
       <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a></h3>
       <p class="description">{{ project.description }}</p>
     </div>
   {% endfor %}
+  
+  {% paginate %}
+  
   </div>
   
 {% endblock %}
 
 {% block content-footer %}
   <div class="content_footer_center">
-    <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</span>
+    <span class="i16 tip">Couldn't find your project? Go ahead and <a href="{% url project_add %}">add it</a>!</span>
   </div>
 {% endblock %}

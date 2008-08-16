@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^search/$', 'txc.views.search', name='search'),
 #    (r'^admin/', include('django.contrib.admin.urls')),
     (r'^admin/(.*)', admin.site.root),
+    (r'^contact/', include('contact_form.urls'), {}, 'contact'),
 )
 
 if settings.STATIC_SERVE:

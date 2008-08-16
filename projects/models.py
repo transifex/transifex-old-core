@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib import admin
 from django.db.models import permalink
@@ -9,10 +11,10 @@ from tagging.models import Tag
 
 
 class Project(models.Model):
-    """ A project is a resource holding some content """
+    """ A project is a collection of translatable resources """
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    long_description = models.TextField(null=True, max_length=1000,
+    long_description = models.TextField(blank=True, max_length=1000,
         help_text='Use Markdown syntax.')
     long_description_html = models.TextField(blank=True, null=True,
         max_length=1000, help_text='Description as HTML.', editable=False)
@@ -21,20 +23,10 @@ class Project(models.Model):
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
         help_text='An RSS feed with updates on the project.')
-      
-    repository = models.CharField(blank=True, max_length=255,
-        help_text="The URL of the project's source repository")
-    repository_type = models.CharField(blank=True, max_length=10,
-        help_text='cvs, svn, hg, git, ...')
-    repository_web = models.CharField(blank=True, null=True, max_length=255,
-        help_text="A URL to the versioning system's web front-end")
-    branches = models.CharField(blank=True, max_length=255,
-        help_text='Space-separated list of branch names')
-    report_bugs = models.CharField(blank=True, max_length=255,
-        help_text="A URL to the project's bugzilla, trac, etc")
     enabled = models.BooleanField(default=True)
-    created = models.DateField(blank=True, null=True, editable=False)
-    updated = models.DateField(blank=True, null=True, editable=False)
+    date_created = models.DateField(default=datetime.datetime.now,
+                                    editable=False)
+    date_modified = models.DateTimeField(editable=False)
 
     #tags = TagField(help_text="Separate tags with spaces.")
 
@@ -58,10 +50,66 @@ class Project(models.Model):
     def get_tags(self):
         return Tag.objects.get_for_object(self)
 
-#    def save(self):
-#        import markdown
-#        self.long_description_html = markdown.markdown(self.long_description)
-#        super(Entry, self).save() # Call the "real" save() method.
+    def save(self):
+        self.date_modified = datetime.datetime.now()
+        super(Project, self).save()
+
+
+class Component(models.Model):
+    """ A component is a translatable resource. """
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    long_description = models.TextField(blank=True, max_length=1000,
+        help_text='Use Markdown syntax.')
+    long_description_html = models.TextField(blank=True, null=True,
+        max_length=1000, help_text='Description as HTML.', editable=False)
+    slug = models.SlugField(unique=True)
+    
+    project = models.ForeignKey(Project)
+      
+    repository = models.CharField(blank=True, max_length=255,
+        help_text="The URL of the project's source repository")
+    repository_type = models.CharField(blank=True, max_length=10,
+        help_text='cvs, svn, hg, git, ...')
+    repository_web = models.CharField(blank=True, null=True, max_length=255,
+        help_text="A URL to the versioning system's web front-end")
+    branches = models.CharField(blank=True, max_length=255,
+        help_text='Space-separated list of branch names')
+    report_bugs = models.CharField(blank=True, max_length=255,
+        help_text="A URL to the project's bugzilla, trac, etc")
+    enabled = models.BooleanField(default=True)
+    date_created = models.DateField(default=datetime.datetime.now,
+                                    editable=False)
+    date_modified = models.DateTimeField(editable=False)
+
+    #tags = TagField(help_text="Separate tags with spaces.")
+
+    class Meta:
+        ordering = ('name',)
+
+    def __unicode__(self):
+        return u'%s' % self.full_name
+  
+    @property
+    def full_name(self):
+        return u'%s' % (self.name)
+  
+    @permalink
+    def get_absolute_url(self):
+        return ('project_detail', None, { 'slug': self.slug })
+
+    def set_tags(self, tags):
+        Tag.objects.update_tags(self, tags)
+
+    def get_tags(self):
+        return Tag.objects.get_for_object(self)
+
+    def save(self):
+        import markdown
+        self.date_modified = datetime.datetime.now()
+        self.long_description_html = markdown.markdown(self.long_description)
+        super(Component, self).save()
+
 
 class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -70,8 +118,6 @@ admin.site.register(Project, ProjectAdmin)
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-
-
 # Tagging
 
 tagging.register(Project)

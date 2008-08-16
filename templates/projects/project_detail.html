@@ -14,8 +14,11 @@
 
 {% block content %}
   {% load markup %}
-
+  <div class="content_main_sec">
+    {% include "search_form_plain.html" %}
+  </div>
   <div class="project_details">
+
     <h2 class="name">{{ object.full_name }}</h2>
     
     {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
