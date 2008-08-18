@@ -1,9 +1,10 @@
 import datetime
 
-from django.db import models
 from django.contrib import admin
+from django.db import models
 from django.db.models import permalink
 from django.forms import ModelForm
+from django.utils.translation import ugettext_lazy as _
 
 import tagging
 from tagging.fields import TagField
@@ -19,32 +20,34 @@ class Project(models.Model):
     >>> foo.name
     'Foo Project'
     >>> foo.set_tags = 'foo project'
-    >>> print ' '.join(foo.get_tags())
+    >>> foo.get_tags()
     """
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(blank=False, null=False, max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text='Use Markdown syntax.')
     long_description_html = models.TextField(blank=True, max_length=1000, 
         help_text='Description as HTML.', editable=False)
-    slug = models.SlugField(unique=True, primary_key='True',
-        help_text='A unique, normalized name the entry (used in URLs, etc).')
+    slug = models.SlugField(unique=True)
     
-    num_components = models.PositiveIntegerField(default=0)
+    num_components = models.PositiveIntegerField(editable=False, default=0)
 
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
         help_text='An RSS feed with updates on the project.')
     enabled = models.BooleanField(default=True)
-    date_created = models.DateField(default=datetime.datetime.now,
-                                    editable=False)
-    date_modified = models.DateTimeField(editable=False)
+    created = models.DateField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
-    #tags = TagField(help_text="Separate tags with spaces.")
+    #tags = TagField(help_text="Separate tags with spaces.", blank=True, null=True)
 
     class Meta:
-        ordering = ('name',)
+        verbose_name = _('project')
+        verbose_name_plural = _('projects')
+        db_table  = 'projects_project'
+        ordering  = ('name',)
+        get_latest_by = 'created'
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -63,6 +66,9 @@ class Project(models.Model):
         self.date_modified = datetime.datetime.now()
         super(Project, self).save()
 
+# Tagging
+#tagging.register(Project)
+
 class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Project, ProjectAdmin)
@@ -80,7 +86,7 @@ class Component(models.Model):
         help_text='Use Markdown syntax.')
     long_description_html = models.TextField(blank=True, null=True,
         max_length=1000, help_text='Description as HTML.', editable=False)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
     
     project = models.ForeignKey(Project)
       
@@ -105,21 +111,19 @@ class Component(models.Model):
         ordering = ('name',)
 
     def __unicode__(self):
-        return u'%s' % self.full_name
-  
-    @property
-    def full_name(self):
-        return u'%s' % (self.name)
+        return u'%s' % self.name
   
     @permalink
     def get_absolute_url(self):
-        return ('project_detail', None, { 'slug': self.slug })
+        return ('component_detail', None, { 'slug': self.slug })
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
 
     def get_tags(self):
         return Tag.objects.get_for_object(self)
+    
+    tags = property(get_tags, set_tags)
 
     def save(self):
         import markdown
@@ -128,8 +132,9 @@ class Component(models.Model):
         super(Component, self).save()
         # Update de-normalized field
         self.project.num_components = self.project.component_set.count()
+        #self.project.component_set.add(self)
         self.project.save()
 
-# Tagging
-
-tagging.register(Project)
+class ComponentAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+admin.site.register(Component, ComponentAdmin)

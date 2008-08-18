@@ -1,15 +1,14 @@
 {% extends "projects/base.html" %}
-
 {% load pagination_tags %}
 
-{% block content-title %}
-  <h2 class="pagetitle">Projects on Transifex</h2>
-{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; Projects {% endblock %}
 
-{% block content-header %}
-<div class="addproject content_head_sec">
-  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
-</div>
+{% block content_title %}<h2 class="pagetitle">Projects on Transifex</h2>{% endblock %}
+
+{% block content_header_sec %}
+    <div class="addproject content_head_sec">
+      <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
+    </div>
 {% endblock %}
   
 {% block content %}
@@ -22,7 +21,7 @@
   <div class="project_list">
   {% for project in object_list %}
     <div class="entry">
-      <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a></h3>
+      <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
       <p class="description">{{ project.description }}</p>
     </div>
   {% endfor %}
@@ -33,7 +32,7 @@
   
 {% endblock %}
 
-{% block content-footer %}
+{% block content_footer %}
   <div class="content_footer_center">
     <span class="i16 tip">Couldn't find your project? Go ahead and <a href="{% url project_add %}">add it</a>!</span>
   </div>

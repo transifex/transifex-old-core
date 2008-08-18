@@ -1,0 +1,5 @@
+{% extends "projects/base.html" %}
+
+{% block title %}{{ block.super }} | {{ object.name }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url project_detail slug=object.slug %}">{{ object.name }}</a>{% endblock %}

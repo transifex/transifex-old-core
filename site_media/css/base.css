@@ -11,7 +11,7 @@ body {
 }
 
 div#header,
-div#content-all,
+div#content_all,
 div#footer {
   max-width: 1100px;
   margin: 0 auto;
@@ -44,12 +44,11 @@ div#header div#navmenu {
   color: #ccc;
 }
 
-div#header div#topright {
+div#header div#header_secnav {
   float: right;
 }
 
-div#header div#language_switcher {
-  float: right;
+div#header lang_switcher {
   margin-left: 1em;
 }
 
@@ -60,7 +59,7 @@ div#breadcrumbs {
   margin: 1em 3em;
 }
 
-div#content-all {
+div#content_all {
   background-color: #ebf2f8;
   border-top: #afc8e1 4px solid;
   border-bottom: #afc8e1 3px solid;
@@ -68,16 +67,25 @@ div#content-all {
   min-height: 50em;
 }
 
-div#content-all h2.pagetitle {
+div#content_all h2.pagetitle {
   color: #0d4c8c;
   font-weight: normal;
-  font-size: 3.3em;
+  font-size: 2.8em;
   font-family: "Georgia", serif;
   margin: 0.8em 0.8em 0.5em 0.8em;
   letter-spacing: -2px;
 }
 
-div.content-main {
+div#content_all h2.pagesubtitle {
+  color: #0d4c8c;
+  font-weight: normal;
+  font-size: 2.5em;
+  font-family: "Georgia", serif;
+  margin: 0.8em 0.8em 0.5em 0;
+  letter-spacing: -2px;
+}
+
+div.content_main {
   clear: both;
   background-color: white;
   -moz-border-radius: 5px;
@@ -86,8 +94,8 @@ div.content-main {
   padding: 0.5em 3em 3em 3em;
 }
 
-div.content-header,
-div.content-footer {
+div.content_header,
+div.content_footer {
   margin: 0 1em;
 }
 
@@ -137,20 +145,26 @@ div.project_list p.description {
   margin-top: 0.5em;
 }
 
-div.project_list h3.name,
-div.project_list h4.name {
+h2.name,
+h3.name,
+h4.name {
   font-weight: normal;
   font-size: 140%;
   margin-bottom: 0;
 }
 
-div.project_list p.description {
+p.description {
   color: #88889e;
   max-width: 40em;
   text-align: justify;
 }
 
-div.content-main h3 {
+.details {
+  background: url('../images/light-separator.png') repeat-x -20px 100%;
+  padding-bottom: 1em;
+}
+
+div.content_main h3 {
   color: #b65d0e;
 }
 
@@ -218,10 +232,11 @@ table.definition td {
 
 code { font-size: 1.2em; }
 
-sup.editlink { font-size: 70%; }
-sup.editlink,
-sup.editlink a { color: #999; font-weight: normal; }
-sup.editlink a:hover { color: #0d4c8c; }
+
+div.projects_details div.editlinks { float: right; clear: right; }
+div.projects_details div.editlinks p { float: right; clear: right; margin: 0; }
+
+div.projects_details div.deletelink { text-align: center; }
 
 img.repotype { vertical-align: middle; }
 
@@ -284,3 +299,5 @@ table.add_form td {
 ul.errorlist li {
   color: #e55;
 }
+
+.components .entry .description {color: #999}

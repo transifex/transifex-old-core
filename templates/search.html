@@ -6,11 +6,11 @@
 
 {% block body_class %}search{% endblock %}
 
-{% block content-title %}
+{% block content_title %}
   <h2 class="pagetitle">Search</h2>
 {% endblock %}
 
-{% block content-header %}
+{% block content_header %}
 	{% with "content_head_prim" as extra_searchform_classes %}
 	    {% include "search_form.html" %}
 	{% endwith %}
@@ -19,7 +19,7 @@
 	  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
 	</div>
 	{% endif %}
-{% endblock content-header %}
+{% endblock content_header %}
   
 {% block content %}
   {% if query %}
@@ -28,7 +28,7 @@
 	  <div class="project_list">
 	  {% for project in results %}
 	    <div class="info">
-	      <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a></h4>
+	      <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h4>
 	      <p class="description">{{ project.description }}</p>
 	    </div>
 	  {% endfor %}
@@ -39,7 +39,7 @@
   {% endif %}
 {% endblock %}
 
-{% block content-footer %}
+{% block content_footer %}
   <div class="content_footer_center">
    <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</p>   
   </div>

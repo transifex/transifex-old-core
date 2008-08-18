@@ -1,75 +1,87 @@
 {% extends "projects/base.html" %}
+{% load projects_tags %}
 
-{% block title %}{{ block.super }} | {{ object.full_name }}{% endblock %}
+{% block body_class %}projects{% endblock %}
+
+{% block title %}{{ block.super }} | {{ object.name }}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ object.name }}{% endblock %}
 
-{% block content-header %}
-<div class="editproject content_head_sec">
-  <span class="i16 edit"><a href="{% url project_edit slug=object.slug %}">Edit</a></span>
-  <br/>
-  <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete</a></span>
-</div>
+{% block content_header_sec %}
 {% endblock %}
 
 {% block content %}
+
   {% load markup %}
   <div class="content_main_sec">
     {% include "search_form_plain.html" %}
   </div>
-  <div class="project_details">
 
-    <h2 class="name">{{ object.full_name }}</h2>
+  <h2 class="name">{{ object.name }}</h2>
+
+  {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
+  {% if object.long_description %}<p class="long_description">{{ object.long_description }}</p>{% endif %}
+
+  <div class="details">
+
+  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=object.slug %}">Edit</a></p></div>
+
+  <h3>Project details </h3>
+  <table class="definition">{% if object.homepage %}
+    <tr>
+      <th class="homepage i16">Homepage:</th>
+      <td><a title="Homepage for {{ object.name }}" href="{{ object.homepage }}">{{ object.homepage }}</a></td>
+    </tr>
+    {% endif %}{% if object.repository %}
+    <tr>
+      <th class="repository i16">Source:</th>
+      <td>
+        <code>{{ object.repository }}</code>
+        {% if object.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ object.repository_web }}">web</a>)</sup>{% endif %}
+        <img class="repotype" src="/site_media/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
+      </td>
+    </tr>
+    {% endif %}{% if object.branches %}
+    <tr>
+      <th class="branch i16">Branches:</th>
+      <td>
+        {{ object.branches }}
+      </td>
+    </tr>
+    {% endif %}<tr>
+      <th class="i16 tag">Tags:</th>
+      <td>{% for tag in object.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
+    </tr>
+    <tr>
+      <th class="i16 link">External resources:</th>
+      <td><ul>
+        <li>Screenshots</li>
+        <li>...</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="components">
+  <div class="editlinks"><p class="i16 add">
+    <a href="{% url component_add slug=object.slug %}">Add</a></span>
+  </p></div>
     
-    {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
-    
-    {% if object.long_description %}<p class="long_description">{{ object.long_description }}</p>{% endif %}
-    
-    <div class="details">
-      <h3>Project details</h3>
-      <table class="definition">
-        {% if object.homepage %}
-        <tr>
-          <th class="homepage i16">Homepage:</th>
-          <td><a title="Homepage for {{ object.name }}" href="{{ object.homepage }}">{{ object.homepage }}</a></td>
-        </tr>
-        {% endif %}
-        {% if object.repository %}
-        <tr>
-          <th class="repository i16">Source:</th>
-          <td>
-            <code>{{ object.repository }}</code>
-            {% if object.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ object.repository_web }}">web</a>)</sup>{% endif %}
-            <img class="repotype" src="/site_media/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
-          </td>
-        </tr>
-        {% endif %}
-        {% if object.branches %}
-        <tr>
-          <th class="branch i16">Branches:</th>
-          <td>
-            {{ object.branches }}
-          </td>
-        </tr>
-        {% endif %}
-        <tr>
-          <th class="i16 tag">Tags:</th>
-          <td>{% for tag in object.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
-        </tr>
-        <tr>
-          <th class="i16 link">External resources:</th>
-          <td><ul>
-            <li>Screenshots</li>
-            <li>...</li>
-            </ul>
-          </td>
-        </tr>
-      </table>
-        {{ form.as_table }}
-  {{ form_message }}
+  <h3>Components</h3>{% if object.component_set.all %}
+  <p>This projects has the following components registered:</p>
+  <div class="component_list">
+  {% for c in object.component_set.all %}
+    <div class="entry">
+      <ul>
+      <li class="name">{{ c.name }}
+      <span class="description">: {{ c.description }}</span></li>
+      </ul>
     </div>
-  </div>
-    
+    {% endfor %}
+	</div>{% endif %}
 
-  
+	<div class="deletelink">
+	  <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete</a></span>
+	</div>
 {% endblock %}

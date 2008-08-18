@@ -102,7 +102,8 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django_evolution',
+    # Breaks with django-1.0-style releases
+    #'django_evolution',
     'tagging',
     'pagination',
     'contact_form',

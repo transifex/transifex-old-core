@@ -7,4 +7,4 @@ class LatestProjects(Feed):
     description = "Updates on changes and additions to projects."
 
     def items(self):
-        return Project.objects.order_by('-date_created')[:5]
+        return Project.objects.order_by('-created')[:5]

@@ -8,11 +8,12 @@ urlpatterns = patterns('',
     url(r'^$', 'django.views.generic.simple.direct_to_template',
         {'template': 'index.html'}, name='home'),
     (r'^projects/', include('txc.projects.urls')),
-    (r'^manage/', include('txc.management.urls')),
+    #(r'^manage/', include('txc.management.urls')),
     url(r'^search/$', 'txc.views.search', name='search'),
-#    (r'^admin/', include('django.contrib.admin.urls')),
     (r'^admin/(.*)', admin.site.root),
-    (r'^contact/', include('contact_form.urls'), {}, 'contact'),
+    url(r'^contact/', include('contact_form.urls'), name='contact'),
+    url(r'^$', 'django.views.generic.simple.direct_to_template',
+        {'template': 'index.html'}, name='login'),
 )
 
 if settings.STATIC_SERVE:

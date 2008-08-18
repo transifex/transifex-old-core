@@ -1,10 +1,11 @@
-{% extends "projects/project_form.html" %}
+{% extends "projects/base.html" %}
 
-{% block breadcrumb %}{{ block.supersuper }} &raquo;
+{% block breadcrumb %}{{ block.super }} &raquo;
+  <a href="{% url project_detail slug=project.slug %}">{{ project.name }}</a> &raquo;
   {% if not object %} Add component {% else %} Edit component {% endif %}
 {% endblock %}
 
-{% block content-title %}
+{% block content_title %}
   {% if not object %}
     <h2 class="pagetitle">Add a component</h2>
   {% else %}
