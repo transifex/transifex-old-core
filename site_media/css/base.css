@@ -11,7 +11,7 @@ body {
 }
 
 div#header,
-div#content_all,
+div#content,
 div#footer {
   max-width: 1100px;
   margin: 0 auto;
@@ -59,7 +59,7 @@ div#breadcrumbs {
   margin: 1em 3em;
 }
 
-div#content_all {
+div#content {
   background-color: #ebf2f8;
   border-top: #afc8e1 4px solid;
   border-bottom: #afc8e1 3px solid;
@@ -67,7 +67,7 @@ div#content_all {
   min-height: 50em;
 }
 
-div#content_all h2.pagetitle {
+div#content h2.pagetitle {
   color: #0d4c8c;
   font-weight: normal;
   font-size: 2.8em;
@@ -76,7 +76,7 @@ div#content_all h2.pagetitle {
   letter-spacing: -2px;
 }
 
-div#content_all h2.pagesubtitle {
+div#content h2.pagesubtitle {
   color: #0d4c8c;
   font-weight: normal;
   font-size: 2.5em;
@@ -85,7 +85,7 @@ div#content_all h2.pagesubtitle {
   letter-spacing: -2px;
 }
 
-div.content_main {
+div#body {
   clear: both;
   background-color: white;
   -moz-border-radius: 5px;
@@ -94,23 +94,23 @@ div.content_main {
   padding: 0.5em 3em 3em 3em;
 }
 
-div.content_header,
-div.content_footer {
+div#content_header,
+div#content_footer {
   margin: 0 1em;
 }
 
-div.content_head_sec,
-div.content_main_sec,
-div.content_footer_sec {
+div#content_header_sec,
+div#body_sec,
+div#content_footer_sec {
   float:right;
 }
-div.content_head_prim, div.content_head_sec { margin-bottom: 0.5em; }
-div.content_footer_prim, div.content_footer_sec { margin-top: 0.5em; }
-div.content_head_prim, div.content_footer_prim { margin-left: 1em; }
-div.content_head_sec, div.content_footer_sec { margin-right: 1em; }
-div.content_head_center, div.content_footer_center { text-align: center; }
+div#content_header_prim, div#content_header_sec { margin-bottom: 0.5em; }
+div#content_footer_prim, div#content_footer_sec { margin-top: 0.5em; }
+div#content_header_prim, div#content_footer_prim { margin-left: 1em; }
+div#content_header_sec, div#content_footer_sec { margin-right: 1em; }
+div#content_header_center, div#content_footer_center { text-align: center; }
 
-div.content_main_sec { margin-top: 0.5em; }
+div#body_sec { margin-top: 0.5em; }
 
 div#footer .left,
 div#footer .center,
@@ -135,42 +135,42 @@ div#footer .joint {
 
 /* Projects */
 
-div.project_list div.entry {
+body.projects.project_list div.entry {
   /* border-bottom: 3px solid #eee; */
   background: url('../images/light-separator.png') repeat-x -20px 100%;
   padding-bottom: 1em;
 }
 
-div.project_list p.description {
+body.projects.project_list p.description {
   margin-top: 0.5em;
 }
 
-h2.name,
-h3.name,
-h4.name {
+body.projects.project_list h2.name,
+body.projects.project_list h3.name,
+body.projects.project_list h4.name {
   font-weight: normal;
   font-size: 140%;
   margin-bottom: 0;
 }
 
-p.description {
+body.projects.project_list p.description {
   color: #88889e;
   max-width: 40em;
   text-align: justify;
 }
 
-.details {
+body.projects.project_detail .details {
   background: url('../images/light-separator.png') repeat-x -20px 100%;
   padding-bottom: 1em;
 }
 
-div.content_main h3 {
+div#body h3 {
   color: #b65d0e;
 }
 
 /* Project details */
 
-div.project_details h2.name {
+body.projects.project_detail h2.name {
   color: #0d4c8c;
   font-weight: normal;
   font-size: 3em;
@@ -178,14 +178,14 @@ div.project_details h2.name {
   letter-spacing: -2px;
 }
 
-div.project_details p.description {
+body.projects.project_detail p.description {
   font-size: 120%;
   color: #666;
   margin-top: 0;
   margin-bottom: 2.5em;
 }
 
-div.project_details p.long_description {
+body.projects.project_detail p.long_description {
   margin: -1em 0 2em 1em;
   max-width: 80%;
   text-align: justify;
@@ -233,10 +233,16 @@ table.definition td {
 code { font-size: 1.2em; }
 
 
-div.projects_details div.editlinks { float: right; clear: right; }
-div.projects_details div.editlinks p { float: right; clear: right; margin: 0; }
+body.projects.project_detail div.editlinks { float: right; clear: right; }
+body.projects.project_detail div.editlinks p { float: right; clear: right; margin: 0; }
 
-div.projects_details div.deletelink { text-align: center; }
+body.projects.project_detail div.deletelink { text-align: center; }
+
+body.projects.project_detail div.deletelink span a:hover {
+  color: #833;
+  background-color: #fee;  
+}
+
 
 img.repotype { vertical-align: middle; }
 

@@ -5,8 +5,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>{% block title %}Transifex{% endblock %}</title>
-    <link media="screen" href="/site_media/css/base.css" type="text/css" rel="stylesheet" />
-    <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="{{MEDIA_URL}}/css/base.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="{{MEDIA_URL}}/css/icons.css" type="text/css" rel="stylesheet" />
     <meta content="text/html; charset=utf-8" http-equiv="content_type" />
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
@@ -14,21 +14,21 @@
 
   <div id="header">
     <div id="logo">
-      <a href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="Transifex logo" /></a>
+      <a href="{% url home %}"><img border="0" src="{{MEDIA_URL}}/images/tx-logo.png" alt="Transifex logo" /></a>
     </div>
     <div id="navmenu">
       <a href="{% url home %}">Home</a> | <a href="{% url project_list %}">Projects</a>
     </div>
     <div id="header_secnav">
-      <span id="login" class="disabled">Already a user? <a href="{% url login %}">Sign in</a></span>
+      <span id="login"><a href="{% url auth_login %}">Sign in</a> | <a href="{% url registration_register %}">Register</a></span>
       <select class="lang_switcher">
         <option selected>English</option>
       </select>
     </div>
   </div>
         
-  <div id="content_all">
-    <div class="content_header">
+  <div id="content">
+    <div id="content_header">
     {% block content_header %}
       <div id="breadcrumbs">
         {% block breadcrumb %}{% endblock %}
@@ -41,10 +41,17 @@
       </div>
     {% endblock %}
     </div>
-    <div class="content_main">
-      {% block content %}{% endblock %}
+    <div id="body">
+      {% block body %}
+        <div id="body_sec">
+          {% block body_sec %}{% endblock %}
+        </div>
+        <div id="body_main">
+          {% block body_main %}{% endblock %}
+        </div>
+      {% endblock %}
     </div>
-    <div class="content_footer">
+    <div id="content_footer">
       {% block content_footer %}{% endblock %}
     </div>
   </div>

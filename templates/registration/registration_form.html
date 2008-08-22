@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content_title %}
+  <h2 class="pagetitle">Register for an account</h2>
+{% endblock %}
+
+{% block body %} 
+<form method="post" action="">
+<table>
+{% for field in form %}
+  <tr>
+    <th>{{ field.label_tag }}</th>
+    <td>{{ field }}</td>
+    {% if field.help_text %}<td>{{ field.help_text }}</td>{% endif %}
+    {% if field.errors %}<td class="myerrors">{{ field.errors }}</td>{% endif %}
+  </tr>
+{% endfor %}
+</table>
+<input type="submit" />
+</form>
+ 
+{% endblock %}

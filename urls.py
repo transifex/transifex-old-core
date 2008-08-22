@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^search/$', 'txc.views.search', name='search'),
     (r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
+    (r'^accounts/', include('registration.urls')),
     url(r'^$', 'django.views.generic.simple.direct_to_template',
         {'template': 'index.html'}, name='login'),
 )

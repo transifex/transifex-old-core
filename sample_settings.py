@@ -9,13 +9,34 @@ STATIC_SERVE = True
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 ADMINS = (
-    # ('Dimitris Glezos', 'dimitris@glezos.com'),
+    ('Dimitris Glezos', 'dimitris@glezos.com'),
 )
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+# External app configuration
+
+# Tagging
+FORCE_LOWERCASE_TAGS = True
+
+# Sites
+SITE_ID = 1
+SITE_NAME = 'Transifex'
+
+# Registration
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
+
+
+# Database configuration
+
+DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'txc.db.sqlite'             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -31,8 +52,6 @@ TIME_ZONE = 'Europe/Athens'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
-
-SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -66,7 +85,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
-    "django.core.context_processors.media"
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
 )
 
 
@@ -75,6 +95,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
+    'pagination.middleware.PaginationMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'txc.urls'
@@ -88,10 +110,17 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.comments',
     'django.contrib.contenttypes',
+    'django.contrib.flatpages',
     'django.contrib.markup',
     'django.contrib.sessions',
     'django.contrib.sites',
-#    'django_evolution',
+    # Breaks with django-1.0-style releases
+    #'django_evolution',
     'tagging',
+    'pagination',
+    'contact_form',
+    'search',
+    'registration',
     'txc.projects',
+    'txc.management',
 )

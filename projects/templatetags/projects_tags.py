@@ -14,8 +14,8 @@ class EditProjectNode(template.Node):
         pass
     def render(self, context):
         return (''
-'<a href="/projects/edit/"><img border=0 src="/site_media/images/icons/pencil.png" /></a>'
-'<a href="/projects/delete/"><img border=0 src="/site_media/images/icons/cross.png" /></a>')
+'<a href="/projects/edit/"><img border=0 src="{{MEDIA_URL}}/images/icons/pencil.png" /></a>'
+'<a href="/projects/delete/"><img border=0 src="{{MEDIA_URL}}/images/icons/cross.png" /></a>')
 
 
 @register.tag

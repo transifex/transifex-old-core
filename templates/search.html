@@ -11,17 +11,17 @@
 {% endblock %}
 
 {% block content_header %}
-	{% with "content_head_prim" as extra_searchform_classes %}
+	{% with "content_header_prim" as extra_searchform_classes %}
 	    {% include "search_form.html" %}
 	{% endwith %}
 	{% if query %}
-	<div class="addproject content_head_sec">
+	<div class="addproject content_header_sec">
 	  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
 	</div>
 	{% endif %}
 {% endblock content_header %}
   
-{% block content %}
+{% block body %}
   {% if query %}
     {% if results %}
       {# <p class="i16 message find">Results for "{{ query|escape }}"</p> #}
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block content_footer %}
-  <div class="content_footer_center">
+  <div id="content_footer_center">
    <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</p>   
   </div>
 {% endblock %}

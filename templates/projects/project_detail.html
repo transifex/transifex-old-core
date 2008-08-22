@@ -1,21 +1,17 @@
 {% extends "projects/base.html" %}
 {% load projects_tags %}
 
-{% block body_class %}projects{% endblock %}
+{% block body_class %}{{ block.super }} project_detail{% endblock %}
 
 {% block title %}{{ block.super }} | {{ object.name }}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ object.name }}{% endblock %}
 
-{% block content_header_sec %}
+{% block body_sec %}
+  {% include "search_form_plain.html" %}
 {% endblock %}
 
-{% block content %}
-
-  {% load markup %}
-  <div class="content_main_sec">
-    {% include "search_form_plain.html" %}
-  </div>
+{% block body_main %}
 
   <h2 class="name">{{ object.name }}</h2>
 
@@ -38,7 +34,7 @@
       <td>
         <code>{{ object.repository }}</code>
         {% if object.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ object.repository_web }}">web</a>)</sup>{% endif %}
-        <img class="repotype" src="/site_media/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
+        <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
       </td>
     </tr>
     {% endif %}{% if object.branches %}
@@ -63,8 +59,9 @@
   </table>
 </div>
 
+
 <div class="components">
-  <div class="editlinks"><p class="i16 add">
+  <div class="editlinks"><span class="i16 add">
     <a href="{% url component_add slug=object.slug %}">Add</a></span>
   </p></div>
     
@@ -79,9 +76,15 @@
       </ul>
     </div>
     {% endfor %}
-	</div>{% endif %}
+	</div>{% else %}
+	<p>No components registered yet. <a href="{% url component_add slug=object.slug %}">Add one!</a></p>{% endif %}
+</div>
+{% endblock %}
 
-	<div class="deletelink">
-	  <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete</a></span>
-	</div>
+{% block content_footer %}
+  <div id="content_footer_center">
+    <div class="deletelink">
+      <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete project</a></span>
+    </div>
+  </div>
 {% endblock %}
