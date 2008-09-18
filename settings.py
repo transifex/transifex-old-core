@@ -23,7 +23,7 @@ FORCE_LOWERCASE_TAGS = True
 SITE_ID = 1
 SITE_NAME = 'Transifex'
 
-# Registration
+# Registration - OpenID
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_HOST = ''
 EMAIL_HOST_USER = ''
@@ -31,6 +31,10 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
+
+ugettext = lambda s: s
+LOGIN_URL = '/%s%s' % (ugettext('account/'), ugettext('signin/'))
+
 
 
 # Database configuration
@@ -89,7 +93,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
 )
 
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -97,6 +100,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django_authopenid.middleware.OpenIDMiddleware',
 )
 
 ROOT_URLCONF = 'txc.urls'
@@ -116,11 +120,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # Breaks with django-1.0-style releases
     #'django_evolution',
+    'django_authopenid',
     'tagging',
     'pagination',
     'contact_form',
-    'search',
-    'registration',
+    #'registration',
     'txc.projects',
     'txc.management',
 )

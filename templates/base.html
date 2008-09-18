@@ -20,7 +20,12 @@
       <a href="{% url home %}">Home</a> | <a href="{% url project_list %}">Projects</a>
     </div>
     <div id="header_secnav">
-      <span id="login"><a href="{% url auth_login %}">Sign in</a> | <a href="{% url registration_register %}">Register</a></span>
+      <span id="login">
+          {% if user.is_authenticated %}
+              Welcome <a title="Profile settings" href="{% url user_account_settings %}">{{ user.username }}</a> | <a href="{% url user_signout %}">Sign out</a></span>
+          {% else %}
+              <a href="{% url user_signin %}">Sign in</a> | <a href="{% url user_signup %}">Register</a></span>
+          {% endif %}
       <select class="lang_switcher">
         <option selected>English</option>
       </select>
