@@ -2,15 +2,15 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; Delete {% endblock %}
 
-<a href="{% url project_detail slug=object.slug %}">{{ object.name }}</a> &raquo; Edit
+<a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; Edit
 
 {% block content_title %}
-    <h2 class="pagetitle">Say goodbye to <em>{{ object.name }}</em>?</h2>
+    <h2 class="pagetitle">Say goodbye to <em>{{ project.name }}</em>?</h2>
 {% endblock %}
 
 {% block body %}
 
-<p>Are you sure you want to permanently delete the registered project '{{ object.name }}'?</p>
+<p>Are you sure you want to permanently delete the registered project '{{ project.name }}'?</p>
 
   <form action='' method='post'>
   <input class=i16 ok" type="submit" value="Yes, I'm sure!" />

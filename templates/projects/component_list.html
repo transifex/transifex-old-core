@@ -1,0 +1,24 @@
+<div class="components">
+  <div class="editlinks"><span class="i16 add">
+    <a href="{% url component_add slug=project.slug %}">Add</a></span>
+  </p></div>
+    
+  <h3>Project Components</h3>
+  <p>
+    <span class="i16 tip"><em>Components</em> are smaller, self-contained parts of a larger project.</em>
+  </p>
+  {% if project.component_set.all %}
+  <p>This project has the following components registered:</p>
+  <div class="component_list">
+  {% for c in project.component_set.all %}
+    <div class="entry">
+      <ul>
+      <li class="name">
+        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        <span class="description">: {{ c.description }}</span></li>
+      </ul>
+    </div>
+    {% endfor %}
+    </div>{% else %}
+    <p>No components are registered for this project yet. <a href="{% url component_add slug=project.slug %}">Add one!</a></p>{% endif %}
+</div>

@@ -1,14 +1,12 @@
 {% extends "projects/project_detail_childs.html" %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {% if not object %} Add {% else %} Edit {% endif %} {% endblock %}
-
-{% block content_header %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% if not project %} Add {% else %} Edit {% endif %} {% endblock %}
 
 {% block content_title %}
-  {% if not object %}
+  {% if not project %}
     <h2 class="pagetitle">Add a project</h2>
   {% else %}
-    <h2 class="pagetitle">Editing <a href="{% url project_detail slug=object.slug %}">{{ object.name }}</a></h2>
+    <h2 class="pagetitle">Editing <a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
   {% endif %}
 {% endblock %}
 

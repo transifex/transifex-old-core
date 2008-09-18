@@ -18,10 +18,10 @@
 {% endblock %}
 {% block body_main %}
 
-  {% autopaginate object_list 2 %}
+  {% autopaginate project_list 2 %}
 
   <div class="project_list">
-  {% for project in object_list %}
+  {% for project in project_list %}
     <div class="entry">
       <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
       <p class="description">{{ project.description }}</p>
@@ -31,6 +31,10 @@
   {% paginate %}
   
   </div>
+  {% if not project_list %}
+  <p>No projects registered yet. :-(</p>
+  <p>Why don't you <a href="{% url project_add %}">add one</a>?</p>
+  {% endif %}
   
 {% endblock %}
 

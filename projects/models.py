@@ -16,12 +16,16 @@ class Project(models.Model):
     
     # Create some projects
     >>> foo = Project.objects.create(slug="foo", name="Foo Project")
-    >>> bar = Project.objects.create(slug="bar", name="Bar Project")
+    >>> foo.long_description = '*foo*'
+    >>> foo.save()
+    >>> foo = Project.objects.get(slug='foo')
     >>> foo.name
     'Foo Project'
-    >>> foo.set_tags = 'foo project'
-    >>> foo.get_tags()
+    >>> foo.long_description_html
+    'u'<p><em>foo</em>\n</p>'
     """
+#    >>> foo.set_tags = 'foo project'
+#    >>> foo.get_tags()
 
     name = models.CharField(blank=False, null=False, max_length=50)
     description = models.CharField(max_length=255)
@@ -62,9 +66,11 @@ class Project(models.Model):
     def get_tags(self):
         return Tag.objects.get_for_object(self)
 
-    def save(self):
+    def save(self, *args, **kwargs):
+        import markdown
         self.date_modified = datetime.datetime.now()
-        super(Project, self).save()
+        self.long_description_html = markdown.markdown(self.long_description)
+        super(Project, self).save(*args, **kwargs)
 
 # Tagging
 #tagging.register(Project)
@@ -115,7 +121,9 @@ class Component(models.Model):
   
     @permalink
     def get_absolute_url(self):
-        return ('component_detail', None, { 'slug': self.slug })
+        return ('component_detail', None,
+                { 'project_slug': self.project.slug,
+                 'component_slug': self.slug })
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)

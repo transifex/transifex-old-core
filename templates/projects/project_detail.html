@@ -1,11 +1,12 @@
 {% extends "projects/base.html" %}
 {% load projects_tags %}
+{% load markup %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
-{% block title %}{{ block.super }} | {{ object.name }}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ object.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
 {% block body_sec %}
   {% include "search_form_plain.html" %}
@@ -13,40 +14,48 @@
 
 {% block body_main %}
 
-  <h2 class="name">{{ object.name }}</h2>
+  <h2 class="name">{{ project.name }}</h2>
 
-  {% if object.description %}<p class="description">{{ object.description }}</p>{% endif %}
-  {% if object.long_description %}<p class="long_description">{{ object.long_description }}</p>{% endif %}
+  {% if project.description %}<p class="description">{{ project.description }}</p>{% endif %}
+
+  <div class="long_description">{{ project.long_description|markdown|truncatewords:"100" }}
+  {% comment %}
+  {# FIXME: This is sub-optimal #}
+  {% ifequal project.long_description|markdown project.long_description|markdown|truncatewords:"100" %}
+  (<a href="?long_desc">more</a>)
+  {% endifequal %}
+  {% endcomment %}
+  </div>
 
   <div class="details">
 
-  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=object.slug %}">Edit</a></p></div>
+  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">Edit</a></p></div>
 
   <h3>Project details </h3>
-  <table class="definition">{% if object.homepage %}
+  <table class="definition">{% if project.homepage %}
     <tr>
       <th class="homepage i16">Homepage:</th>
-      <td><a title="Homepage for {{ object.name }}" href="{{ object.homepage }}">{{ object.homepage }}</a></td>
+      <td><a title="Homepage for {{ project.name }}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
     </tr>
-    {% endif %}{% if object.repository %}
+    {% endif %}{% if project.repository %}
     <tr>
       <th class="repository i16">Source:</th>
       <td>
-        <code>{{ object.repository }}</code>
-        {% if object.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ object.repository_web }}">web</a>)</sup>{% endif %}
-        <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ object.repository_type }}.png" alt="{{ object.repository_type }}" title="{{ object.repository_type }}" />
+        <code>{{ project.repository }}</code>
+        {% if project.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ project.repository_web }}">web</a>)</sup>{% endif %}
+        <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ project.repository_type }}.png" alt="{{ project.repository_type }}" title="{{ project.repository_type }}" />
       </td>
     </tr>
-    {% endif %}{% if object.branches %}
+    {% endif %}{% if project.branches %}
     <tr>
       <th class="branch i16">Branches:</th>
       <td>
-        {{ object.branches }}
+        {{ project.branches }}
       </td>
     </tr>
     {% endif %}<tr>
       <th class="i16 tag">Tags:</th>
-      <td>{% for tag in object.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
+      <td>{% for tag in project.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
     </tr>
     <tr>
       <th class="i16 link">External resources:</th>
@@ -59,32 +68,14 @@
   </table>
 </div>
 
+{% include "projects/component_list.html" %}
 
-<div class="components">
-  <div class="editlinks"><span class="i16 add">
-    <a href="{% url component_add slug=object.slug %}">Add</a></span>
-  </p></div>
-    
-  <h3>Components</h3>{% if object.component_set.all %}
-  <p>This projects has the following components registered:</p>
-  <div class="component_list">
-  {% for c in object.component_set.all %}
-    <div class="entry">
-      <ul>
-      <li class="name">{{ c.name }}
-      <span class="description">: {{ c.description }}</span></li>
-      </ul>
-    </div>
-    {% endfor %}
-	</div>{% else %}
-	<p>No components registered yet. <a href="{% url component_add slug=object.slug %}">Add one!</a></p>{% endif %}
-</div>
 {% endblock %}
 
 {% block content_footer %}
   <div id="content_footer_center">
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url project_delete slug=object.slug %}">Delete project</a></span>
+      <span class="i16 delete"><a href="{% url project_delete slug=project.slug %}">Delete project</a></span>
     </div>
   </div>
 {% endblock %}
