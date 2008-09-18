@@ -114,7 +114,12 @@ class Component(models.Model):
     #tags = TagField(help_text="Separate tags with spaces.")
 
     class Meta:
-        ordering = ('name',)
+        unique_together = ("project", "slug")
+        verbose_name = _('component')
+        verbose_name_plural = _('components')
+        db_table  = 'projects_component'
+        ordering  = ('name',)
+        get_latest_by = 'created'
 
     def __unicode__(self):
         return u'%s' % self.name
