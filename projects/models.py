@@ -13,19 +13,16 @@ from tagging.models import Tag
 
 class Project(models.Model):
     """A project is a collection of translatable resources.
-    
-    # Create some projects
-    >>> foo = Project.objects.create(slug="foo", name="Foo Project")
-    >>> foo.long_description = '*foo*'
-    >>> foo.save()
-    >>> foo = Project.objects.get(slug='foo')
-    >>> foo.name
-    'Foo Project'
-    >>> foo.long_description_html
-    'u'<p><em>foo</em>\n</p>'
+
+    >>> p = Project.objects.create(slug="foo", name="Foo Project")
+    >>> p = Project.objects.get(slug='foo')
+    >>> p
+    <Project: Foo Project>
+    >>> Project.objects.create(slug="foo", name="Foo Project")
+    Traceback (most recent call last):
+        ...
+    IntegrityError: column slug is not unique
     """
-#    >>> foo.set_tags = 'foo project'
-#    >>> foo.get_tags()
 
     name = models.CharField(blank=False, null=False, max_length=50)
     description = models.CharField(max_length=255)
@@ -53,6 +50,9 @@ class Project(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
+    def __repr__(self):
+        return '<Project: %s>' % self.name
+  
     def __unicode__(self):
         return u'%s' % self.name
 
@@ -67,6 +67,19 @@ class Project(models.Model):
         return Tag.objects.get_for_object(self)
 
     def save(self, *args, **kwargs):
+        """
+        Save the object in the database.
+
+        >>> p = Project.objects.get(slug='foo')
+        >>> p.long_description = '*foo*'
+        >>> p.save()
+        >>> p.long_description_html
+        u'<p><em>foo</em>\\n</p>'
+        >>> c = Component(slug='bar', project=p)
+        >>> c.save()
+        >>> p.num_components
+        1
+        """
         import markdown
         self.date_modified = datetime.datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
@@ -121,6 +134,9 @@ class Component(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
+    def __repr__(self):
+        return '<Component: %s>' % self.name
+  
     def __unicode__(self):
         return u'%s' % self.name
   
