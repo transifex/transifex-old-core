@@ -1,19 +1,22 @@
 {% extends "projects/project_detail_childs.html" %}
+{% load i18n %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; Delete {% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Delete" %}{% endblock %}
 
-<a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; Edit
+<a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Edit" %}
 
 {% block content_title %}
-    <h2 class="pagetitle">Say goodbye to <em>{{ project.name }}</em>?</h2>
+    <h2 class="pagetitle">{% blocktrans with project.name as project_name %}Say goodbye to <em>{{ project_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
 {% block body %}
 
-<p>Are you sure you want to permanently delete the registered project '{{ project.name }}'?</p>
+<p>{% blocktrans with project.name as project_name %}
+  Are you sure you want to permanently delete the registered project '{{ project_name }}'?
+{% endblocktrans %}</p>
 
   <form action='' method='post'>
-  <input class=i16 ok" type="submit" value="Yes, I'm sure!" />
+    <input class=i16 ok" type="submit" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 
 {% endblock %}

@@ -1,15 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Page not found{% endblock %}
+{% block title %}{% trans "Page not found" %}{% endblock %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Page not found</h2>
+  <h2 class="pagetitle">{% trans "Page not found" %}</h2>
 {% endblock %}
 
 {% block body %}
 
-<p>Looks like you followed a bad link. If you think it's our fault, please <a href="http://code.djangoproject.com/simpleticket/">let us know</a>.</p>
+<p>{% trans "Looks like you followed a bad link. If you think it's our fault, please <a href="http://transifex.org/newticket">let us know</a>." %}</p>
 
-<p>Here's a link to the <a href="/">homepage</a>. You know, just in case.</p>
+{% url home as home %}
+<p>{% blocktrans %}Here's a link to the <a href="{{ home }}">homepage</a>. You know, just in case." {% endblocktrans %}</p>
 
 {% endblock %}

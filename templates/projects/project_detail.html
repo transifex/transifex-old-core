@@ -1,6 +1,7 @@
 {% extends "projects/base.html" %}
-{% load projects_tags %}
+{% load i18n %}
 {% load markup %}
+{% load projects_tags %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -29,38 +30,40 @@
 
   <div class="details">
 
-  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">Edit</a></p></div>
+  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
 
-  <h3>Project details </h3>
+  <h3>{% trans "Project details" %} </h3>
   <table class="definition">{% if project.homepage %}
     <tr>
-      <th class="homepage i16">Homepage:</th>
-      <td><a title="Homepage for {{ project.name }}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
+      <th class="homepage i16">{% trans "Homepage:" %}</th>
+      <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
     </tr>
     {% endif %}{% if project.repository %}
     <tr>
-      <th class="repository i16">Source:</th>
+      <th class="repository i16">{% trans "Source:" %}</th>
       <td>
         <code>{{ project.repository }}</code>
-        {% if project.repository_web %}<sup>(<a title="Link to a web front-end to the source" href="{{ project.repository_web }}">web</a>)</sup>{% endif %}
+        {% if project.repository_web %}<sup>(<a title="{% trans "Link to a web front-end to the source" %}" href="{{ project.repository_web }}">{% trans "web" %}</a>)</sup>{% endif %}
         <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ project.repository_type }}.png" alt="{{ project.repository_type }}" title="{{ project.repository_type }}" />
       </td>
     </tr>
     {% endif %}{% if project.branches %}
     <tr>
-      <th class="branch i16">Branches:</th>
+      <th class="branch i16">{% trans "Branches:" %}</th>
       <td>
         {{ project.branches }}
       </td>
     </tr>
     {% endif %}<tr>
-      <th class="i16 tag">Tags:</th>
-      <td>{% for tag in project.get_tags %}<a href="/projects/tag/{{tag}}" alt="Projects with tag {{tag}}" title="Projects with tag {{tag}}">{{tag}}</a> {%endfor%}</td>
+      <th class="i16 tag">{% trans "Tags:" %}</th>
+      <td>{% for tag in project.get_tags %}
+        <a href="/projects/tag/{{tag}}" alt="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}" title="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}">{{tag}}</a> {%endfor%}
+      </td>
     </tr>
     <tr>
-      <th class="i16 link">External resources:</th>
+      <th class="i16 link">{% trans "External resources:" %}</th>
       <td><ul>
-        <li>Screenshots</li>
+        <li>{% trans "Screenshots" %}</li>
         <li>...</li>
         </ul>
       </td>
@@ -75,7 +78,7 @@
 {% block content_footer %}
   <div id="content_footer_center">
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url project_delete slug=project.slug %}">Delete project</a></span>
+      <span class="i16 delete"><a href="{% url project_delete slug=project.slug %}">{% trans "Delete project" %}</a></span>
     </div>
   </div>
 {% endblock %}

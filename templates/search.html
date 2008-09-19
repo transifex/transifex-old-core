@@ -1,13 +1,14 @@
 {% extends "projects/base.html" %}
+{% load i18n %}
 
-{% block title %}{{ block.super }} | Search{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Search" %}{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; <a href="{% url search %}">Search</a>{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; <a href="{% url search %}">{% trans "Search" %}</a>{% endblock %}
 
 {% block body_class %}search{% endblock %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Search</h2>
+  <h2 class="pagetitle">{% trans "Search" %}</h2>
 {% endblock %}
 
 {% block content_header %}
@@ -16,7 +17,7 @@
 	{% endwith %}
 	{% if query %}
 	<div class="addproject content_header_sec">
-	  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
+	  <span class="i16 add"><a href="{% url project_add %}">{% trans "Add a new project" %}</a></span>
 	</div>
 	{% endif %}
 {% endblock content_header %}
@@ -24,7 +25,7 @@
 {% block body %}
   {% if query %}
     {% if results %}
-      {# <p class="i16 message find">Results for "{{ query|escape }}"</p> #}
+      {# <p class="i16 message find">{% blocktrans with query|escape as query %}Results for "{{ query }}{% endblocktrans %}"</p> #}
 	  <div class="project_list">
 	  {% for project in results %}
 	    <div class="info">
@@ -34,13 +35,14 @@
 	  {% endfor %}
 	  </div>
     {% else %}
-      <p class="i16 notice">No projects found for "{{ query|escape }}". You might want to change your query a bit.</p>
+      <p class="i16 notice">{% trans "You might want to change your query a bit" %}</p>
     {% endif %}
   {% endif %}
 {% endblock %}
 
 {% block content_footer %}
+{% url project_add as project_add %}
   <div id="content_footer_center">
-   <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</p>   
+   <span class="i16 tip">{% blocktrans %} Couldn't find your project? Why don't you go ahead and <a href="{{ project_add }}">add it</a>?{% endblocktrans %}</p>   
   </div>
 {% endblock %}

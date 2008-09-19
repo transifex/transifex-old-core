@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Thanks!</h2>
+  <h2 class="pagetitle">{% trans "Thanks!" %}</h2>
 {% endblock %}
 
 {% block body %}
-  <p>Thank you for your feedback.</p>
+  <p>{% trans "Thank you for your feedback." %}</p>
 {% endblock %}

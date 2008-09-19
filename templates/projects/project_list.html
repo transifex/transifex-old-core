@@ -1,15 +1,16 @@
 {% extends "projects/base.html" %}
+{% load i18n %}
 {% load pagination_tags %}
 
 {% block body_class %}{{ block.super }} project_list{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; Projects {% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
 
-{% block content_title %}<h2 class="pagetitle">Projects on Transifex</h2>{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Projects on Transifex" %}</h2>{% endblock %}
 
 {% block content_header_sec %}
     <div class="addproject content_header_sec">
-      <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
+      <span class="i16 add"><a href="{% url project_add %}">{% trans "Add a new project" %}</a></span>
     </div>
 {% endblock %}
 
@@ -17,9 +18,7 @@
   {% include "search_form_plain.html" %}
 {% endblock %}
 {% block body_main %}
-
   {% autopaginate project_list 5 %}
-
   <div class="project_list">
   {% for project in project_list %}
     <div class="entry">
@@ -27,19 +26,19 @@
       <p class="description">{{ project.description }}</p>
     </div>
   {% endfor %}
-  
   {% paginate %}
-  
   </div>
   {% if not project_list %}
-  <p>No projects registered yet. :-(</p>
-  <p>Why don't you <a href="{% url project_add %}">add one</a>?</p>
+  <p>{% trans "No projects registered yet. :-(" %}</p>
+  {% url project_add as project_add %}
+  <p>{% blocktrans %}Why don't you <a href="{{ project_add }}">add one</a>?{% endblocktrans %}</p>
   {% endif %}
   
 {% endblock %}
 
 {% block content_footer %}
+{% url project_add as project_add %}
   <div id="content_footer_center">
-    <span class="i16 tip">Couldn't find your project? Go ahead and <a href="{% url project_add %}">add it</a>!</span>
+    <span class="i16 tip">{% blocktrans %}Couldn't find your project? Go ahead and <a href="{{ project_add }}">add it</a>!{% endblocktrans %}</span>
   </div>
 {% endblock %}

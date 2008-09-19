@@ -1,12 +1,15 @@
 {% extends "projects/base.html" %}
+{% load i18n %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {% if not project %} Add {% else %} Edit {% endif %} {% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% if not project %} {% trans "Add" %} {% else %} {% trans "Edit" %} {% endif %} {% endblock %}
 
 {% block content_title %}
   {% if not project %}
-    <h2 class="pagetitle">Add a project</h2>
+    <h2 class="pagetitle">{% trans "Add a project" %}</h2>
   {% else %}
-    <h2 class="pagetitle">Editing <a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
+    <h2 class="pagetitle">
+      {% blocktrans with project.name as project_name and project.get_absolute_url as project_url %}Editing <a href="{{ project_url }}">{{ project_name }}</a>{% endblocktrans %}
+    </h2>
   {% endif %}
 {% endblock %}
 

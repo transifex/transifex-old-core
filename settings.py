@@ -33,7 +33,7 @@ DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
 
 # Registration - OpenID
 ugettext = lambda s: s
-LOGIN_URL = '/%s%s' % (ugettext('account/'), ugettext('signin/'))
+LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 
 
 # Database configuration

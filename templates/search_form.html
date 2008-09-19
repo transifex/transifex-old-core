@@ -1,7 +1,8 @@
+{% load i18n %}
 <div class="searchform {{ extra_searchform_classes }}">
   <form action="{% url search %}" method="GET" class="search_projects">
-    <label for="q">Find projects by name, description, etc.</label><br/>
+    <label for="q">{% trans "Find projects by name, description, etc." %}</label><br/>
     <input class="query" type="text" name="q" size="50" value="{{ query|escape }}">
-    <input class="submit" type="submit" value="Search">
+    <input class="submit" type="submit" value="{% trans "Search" %}">
   </form>
 </div>

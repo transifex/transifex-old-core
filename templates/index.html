@@ -1,15 +1,14 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 {% block body_class %}index{% endblock %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Welcome to Transifex</h2>
+  <h2 class="pagetitle">{% trans "Welcome to Transifex" %}</h2>
 {% endblock %}
 
 {% block body %}
-<p class="promo">Transifex.net is a service aimed at helping translators keeping track of
-their favourite translation projects.</p>
+<p class="promo">{% trans "Transifex.net is a service aimed at helping translators keeping track of their favourite translation projects." %}</p>
 
 <p>&nbsp;</p>
 
@@ -18,7 +17,8 @@ their favourite translation projects.</p>
     {% include "search_form.html" %}
   </p>
   
-  <p>You could also browse through <a href="{% url project_list %}">all projects</a>.</p>
+  {% url project_list as project_list %} 
+  <p>{% blocktrans %}You could also browse through <a href="{{ project_list }}">all projects</a>.{% endblocktrans %}</p>
 </div>
 
   

@@ -27,16 +27,16 @@ class Project(models.Model):
     name = models.CharField(blank=False, null=False, max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
-        help_text='Use Markdown syntax.')
+        help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, max_length=1000, 
-        help_text='Description as HTML.', editable=False)
+        help_text=_('Description as HTML.'), editable=False)
     slug = models.SlugField(unique=True)
     
     num_components = models.PositiveIntegerField(editable=False, default=0)
 
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
-        help_text='An RSS feed with updates on the project.')
+        help_text=_('An RSS feed with updates on the project.'))
     enabled = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -51,7 +51,7 @@ class Project(models.Model):
         get_latest_by = 'created'
 
     def __repr__(self):
-        return '<Project: %s>' % self.name
+        return _('<Project: %s>') % self.name
   
     def __unicode__(self):
         return u'%s' % self.name
@@ -102,23 +102,23 @@ class Component(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
-        help_text='Use Markdown syntax.')
+        help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, null=True,
-        max_length=1000, help_text='Description as HTML.', editable=False)
+        max_length=1000, help_text=_('Description as HTML.'), editable=False)
     slug = models.SlugField()
     
     project = models.ForeignKey(Project)
       
     repository = models.CharField(blank=True, max_length=255,
-        help_text="The URL of the project's source repository")
+        help_text=_("The URL of the project's source repository"))
     repository_type = models.CharField(blank=True, max_length=10,
-        help_text='cvs, svn, hg, git, ...')
+        help_text=_('cvs, svn, hg, git, ...'))
     repository_web = models.CharField(blank=True, null=True, max_length=255,
-        help_text="A URL to the versioning system's web front-end")
+        help_text=_("A URL to the versioning system's web front-end"))
     branches = models.CharField(blank=True, max_length=255,
-        help_text='Space-separated list of branch names')
+        help_text=_('Space-separated list of branch names'))
     report_bugs = models.CharField(blank=True, max_length=255,
-        help_text="A URL to the project's bugzilla, trac, etc")
+        help_text=_("A URL to the project's bugzilla, trac, etc"))
     enabled = models.BooleanField(default=True)
     date_created = models.DateField(default=datetime.datetime.now,
                                     editable=False)
@@ -135,7 +135,7 @@ class Component(models.Model):
         get_latest_by = 'created'
 
     def __repr__(self):
-        return '<Component: %s>' % self.name
+        return _('<Component: %s>') % self.name
   
     def __unicode__(self):
         return u'%s' % self.name

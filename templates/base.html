@@ -1,10 +1,11 @@
+{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{% block title %}Transifex{% endblock %}</title>
+	<title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
     <link media="screen" href="{{MEDIA_URL}}/css/base.css" type="text/css" rel="stylesheet" />
     <link media="screen" href="{{MEDIA_URL}}/css/icons.css" type="text/css" rel="stylesheet" />
     <meta content="text/html; charset=utf-8" http-equiv="content_type" />
@@ -14,20 +15,22 @@
 
   <div id="header">
     <div id="logo">
-      <a href="{% url home %}"><img border="0" src="{{MEDIA_URL}}/images/tx-logo.png" alt="Transifex logo" /></a>
+      <a href="{% url home %}"><img border="0" src="{{MEDIA_URL}}/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
     </div>
     <div id="navmenu">
-      <a href="{% url home %}">Home</a> | <a href="{% url project_list %}">Projects</a>
+      <a href="{% url home %}">{% trans "Home" %}</a> | <a href="{% url project_list %}">{% trans "Projects" %}</a>
     </div>
     <div id="header_secnav">
       <span id="login">
           {% if user.is_authenticated %}
-              Welcome <a title="Profile settings" href="{% url user_account_settings %}">{{ user.username }}</a> | <a href="{% url user_signout %}">Sign out</a></span>
+                {% url user_account_settings as user_account_settings %} 
+              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_account_settings }}">{{ user_username }}</a>{% endblocktrans %} |
+              <a href="{% url user_signout %}">{% trans "Sign out" %}</a></span>
           {% else %}
-              <a href="{% url user_signin %}">Sign in</a> | <a href="{% url user_signup %}">Register</a></span>
+              <a href="{% url user_signin %}">{% trans "Sign in" %}</a> | <a href="{% url user_signup %}">{% trans "Register" %}</a></span>
           {% endif %}
       <select class="lang_switcher">
-        <option selected>English</option>
+        <option selected>{% trans "English" %}</option>
       </select>
     </div>
   </div>
@@ -69,7 +72,7 @@
     </div>
     <div class="center">
       {# FIXME feed url #}
-      About | <a href="/projects/feeds/latest/">Feed</a> | <a href="{% url contact_form %}">Contact us</a>
+      {% trans "About" %} | <a href="{% url feed url="latest" %}">{% trans "Feed" %}</a> | <a href="{% url contact_form %}">{% trans "Contact us" %}</a>
     </div>
     {% endblock %}
   </div>

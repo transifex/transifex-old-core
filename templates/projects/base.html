@@ -1,5 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block body_class %}projects{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; <a href="{% url project_list %}">Projects</a>{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; <a href="{% url project_list %}">{% trans "Projects" %}</a>{% endblock %}
