@@ -102,7 +102,7 @@ MIDDLEWARE_CLASSES = (
     'django_authopenid.middleware.OpenIDMiddleware',
 )
 
-ROOT_URLCONF = 'txc.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
@@ -122,7 +122,7 @@ INSTALLED_APPS = (
     'tagging',
     'pagination',
     'contact_form',
-    'txc.projects',
-    'txc.management',
-    'txc.filters',
+    'projects',
+    'management',
+    'filters',
 )

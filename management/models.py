@@ -1,5 +1,5 @@
 from django.db import models
-from txc.projects.models import Project
+from projects.models import Project
 
 class Hold(models.Model):
     """ A hold on a project """

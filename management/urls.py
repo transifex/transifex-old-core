@@ -15,7 +15,7 @@ urlpatterns = patterns('',
         ),
      url (
        regex = '^add$',
-       view = 'txc.management.views.hold_add',
+       view = 'management.views.hold_add',
        name = 'hold_add',
      ),
      url (

@@ -1,6 +1,6 @@
 from django.views.generic import create_update, list_detail
 from django.shortcuts import get_object_or_404
-from txc.projects.models import *
+from projects.models import *
 
 component_list = {
     'queryset': Component.objects.all(),
@@ -10,7 +10,7 @@ component_list = {
 
 def component_create_object(request, slug):
 
-    from txc.projects.models import Project, Component
+    from projects.models import Project, Component
     project = get_object_or_404(Project, slug__iexact=slug)
 
     # Use the object_list view for the heavy lifting.

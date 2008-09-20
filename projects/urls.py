@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from models import Project
 from feeds import LatestProjects
-from txc.projects.views import * 
+from projects.views import * 
 
 project_list = {
     'queryset': Project.objects.all(),

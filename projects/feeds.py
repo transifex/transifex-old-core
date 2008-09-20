@@ -1,6 +1,6 @@
 from django.contrib.syndication.feeds import Feed
 from django.utils.translation import ugettext_lazy as _
-from txc.projects.models import Project
+from projects.models import Project
 
 class LatestProjects(Feed):
     title = _("Transifex website")

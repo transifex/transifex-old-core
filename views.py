@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render_to_response
-from txc.projects.models import Project
+from projects.models import Project
 from django.template import RequestContext 
 
 def search(request):
