@@ -124,4 +124,5 @@ INSTALLED_APPS = (
     'contact_form',
     'txc.projects',
     'txc.management',
+    'txc.filters',
 )

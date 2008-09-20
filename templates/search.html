@@ -1,46 +1,72 @@
-{% extends "projects/base.html" %}
+{% extends "base.html" %}
+{% load i18n %}
+{% load search_filters %}
+{% load pagination_tags %}
 
-{% block title %}{{ block.super }} | Search{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Search" %} {% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">Home</a> &raquo; <a href="{% url search %}">Search</a>{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; <a href="{% url search %}">{% trans "Search" %}</a>{% endblock %}
 
-{% block body_class %}search{% endblock %}
+{% block body_class %}search project_list{% endblock %}
 
 {% block content_title %}
-  <h2 class="pagetitle">Search</h2>
+  <h2 class="pagetitle">
+  {% if not query %}
+      {% trans "Search projects" %}
+  {% else %}
+      {% trans "Search results" %}
+  {% endif %}
+  </h2>
 {% endblock %}
-
-{% block content_header %}
-	{% with "content_header_prim" as extra_searchform_classes %}
-	    {% include "search_form.html" %}
-	{% endwith %}
-	{% if query %}
-	<div class="addproject content_header_sec">
-	  <span class="i16 add"><a href="{% url project_add %}">Add a new project</a></span>
-	</div>
-	{% endif %}
-{% endblock content_header %}
   
 {% block body %}
+
+  {% with "content_header_prim" as extra_searchform_classes %}
+      {% include "search_form.html" %}
+  {% endwith %}
+
   {% if query %}
     {% if results %}
-      {# <p class="i16 message find">Results for "{{ query|escape }}"</p> #}
-	  <div class="project_list">
-	  {% for project in results %}
-	    <div class="info">
-	      <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h4>
-	      <p class="description">{{ project.description }}</p>
-	    </div>
-	  {% endfor %}
-	  </div>
+      <h3 class="pagetitle">{% trans "Search Results" %}</h3>
+      <h4 class="i16 message find">
+          {% with results|length as result_count %}
+          {{ result_count|default:"No" }} project{{ result_count|pluralize }} found
+          {% if terms %}for &ldquo;{{ query }}&rdquo;{% endif %}
+          {% endwith %}
+      </h4>
+      {% autopaginate results 5 %}
+      <div class="project_list">
+      {% for project in results %}
+        {% highlight terms as name %} {# set `name` object #}
+            {{ project.name }}
+        {% endhighlight %}
+        {% searchexcerpt terms 6 as description %} {# set `description` object #}
+            {{ project.description|striptags }}
+        {% endsearchexcerpt %}
+        {% searchexcerpt terms 10 as long_description %} {# set `description` object #}
+            {{ project.long_description|striptags }}
+        {% endsearchexcerpt %}
+        <div class="info">
+          <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ name.highlighted }}</a></h4>
+          <p class="description">{{ description.excerpt|highlight:terms }}</p>
+          <p class="long_description">{{ long_description.excerpt|highlight:terms }}</p>
+        </div>
+      {% endfor %}
+      {% paginate %}
+      </div>
     {% else %}
-      <p class="i16 notice">No projects found for "{{ query|escape }}". You might want to change your query a bit.</p>
+      <p class="i16 notice notfound">
+          {% blocktrans with query|escape as q %}No projects found for "{{ q }}". You might want to change your query a bit.{% endblocktrans %}
+      </p>
     {% endif %}
   {% endif %}
+
 {% endblock %}
 
 {% block content_footer %}
   <div id="content_footer_center">
-   <span class="i16 tip">Couldn't find your project? Why don't you go ahead and <a href="{% url project_add %}">add it</a>?</p>   
+   <span class="i16 tip">
+       {% trans "Couldn't find your project? Why don't you go ahead and " %}<a href="{% url project_add %}">{% trans "add it"%}</a>?
+   </span>   
   </div>
 {% endblock %}
