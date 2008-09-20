@@ -122,7 +122,9 @@ INSTALLED_APPS = (
     'tagging',
     'pagination',
     'contact_form',
-    'projects',
-    'management',
     'filters',
+    # txo specific apps:
+    'vcs',
+    'projects',
+	#'management',
 )
