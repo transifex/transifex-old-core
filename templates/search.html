@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load search_filters %}
 {% load pagination_tags %}
+{% load markup %}
 
 {% block title %}{{ block.super }} | {% trans "Search" %} {% endblock %}
 
@@ -44,7 +45,7 @@
             {{ project.description|striptags }}
         {% endsearchexcerpt %}
         {% searchexcerpt terms 10 as long_description %} {# set `description` object #}
-            {{ project.long_description|striptags }}
+            {{ project.long_description|markdown|striptags }}
         {% endsearchexcerpt %}
         <div class="info">
           <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ name.highlighted }}</a></h4>
