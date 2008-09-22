@@ -1,0 +1,28 @@
+{% load i18n %}
+<table class="stats">
+   <thead>
+    <tr>
+      <th>{% trans "Lang name" %}</th>
+      {% for c in stats.0.components %}
+          <th class="alcenter">{{c.name}}</th>
+      {% endfor %}
+    </tr>
+   </thead>
+   <tbody>
+   {% for stat in stats %}
+      <tr>
+        <td class="left">{{stat.lang_name}} ({{stat.lang}})</td>
+           {% for c in stat.components %}
+        <td>
+          <div class="graph">
+              <div class="translated" style="width: {{c.p_translated}}px;"></div>
+              <div class="fuzzy" style="left: {{c.p_translated}}px; width: {{c.p_fuzzy}}px;"></div>
+              <div class="untranslated" style="left: {{c.p_trans_fuzzy}}px; width: {{c.p_untranslated}}px;"></div>
+          </div>
+          <div class="stats_string">{{c.p_translated}}%</div> 
+        </td>
+        {% endfor %}
+      </tr>
+   {% endfor %}
+   </tbody>
+ </table>

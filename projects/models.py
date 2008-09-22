@@ -85,6 +85,35 @@ class Project(models.Model):
         self.long_description_html = markdown.markdown(self.long_description)
         super(Project, self).save(*args, **kwargs)
 
+    class StatsRow()
+        def __init__(self):
+            from random import random
+            self.total = 300*random()
+            self.tr = random()*total
+            self.fu = random()*(total-tr)
+            self.un = total-tr-fu
+        @property
+        def tr_perc(self):
+            return self.tr/100
+
+
+# Temp extra data
+    def get_all_stats(self):
+        from random import random
+
+        # We sould return the stats of all components for all langs.
+        # If a module doesn't have translation for a specific language
+        # so the statc of it should return the 100% untranslated
+        lang_list = ['el', 'pt_BR']
+        comp_list = ['tip', '0.2', '0.1']
+        dict = {}
+        for lang in lang_list:
+            for comp in comp_list:
+                dict[lang][comp] = StatsRow()
+
+        return stats
+
+
 # Tagging
 #tagging.register(Project)
 

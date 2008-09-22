@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load markup %}
 {% load projects_tags %}
+{% load stats_tags %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -70,6 +71,10 @@
     </tr>
   </table>
 </div>
+
+
+{% project_stats_table project.get_all_stats %}
+
 
 {% include "projects/component_list.html" %}
 
