@@ -164,6 +164,17 @@ class Component(models.Model):
         #self.project.component_set.add(self)
         self.project.save()
 
+# Temp extra data
+    def get_all_stats(self):
+
+        stats = [{'lang':'pt_BR', 'translated':600, 'fuzzy':300, 'untranslated':100},
+                 {'lang':'el', 'translated':1000, 'fuzzy':0, 'untranslated':0},
+                 {'lang':'de', 'translated':333, 'fuzzy':302, 'untranslated':365},
+                ]
+
+        return stats
+
+
 class ComponentAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Component, ComponentAdmin)

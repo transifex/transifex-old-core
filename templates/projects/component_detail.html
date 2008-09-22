@@ -1,6 +1,8 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load projects_tags %}
+{% load stats_tags %}
 {% load markup %}
+{% load i18n %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -15,6 +17,14 @@
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
+
+
+<h3>{% trans "Project statistics" %} </h3>
+<div class="stats">
+
+  {% comp_stats_table component.get_all_stats %}
+
+</div>
 
 {% endblock %}
 

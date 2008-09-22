@@ -1,0 +1,26 @@
+{% load i18n %}
+<table class="stats">
+   <thead>
+    <tr>
+      <th>{% trans "Lang name" %}</th>
+      <th class="alcenter">{% trans "Translations" %}</th>
+      <th>{% trans "Download" %}</th>
+    </tr>
+   </thead>
+   <tbody>
+   {% for stat in stats %}
+      <tr>
+        <td class="left">{{stat.lang_name}}</td>
+        <td>
+          <div class="graph">
+              <div class="translated" style="width: {{stat.p_translated}}px;"></div>
+              <div class="fuzzy" style="left: {{stat.p_translated}}px; width: {{stat.p_fuzzy}}px;"></div>
+              <div class="untranslated" style="left: {{stat.p_trans_fuzzy}}px; width: {{stat.p_untranslated}}px;"></div>
+          </div>
+          <div class="stats_string">{{stat.p_translated}}% ({{stat.translated}}/{{stat.fuzzy}}/{{stat.untranslated}})</div> 
+        </td>
+        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.lang}}.po" href="">{{stat.lang}}.po</a></td>
+      </tr>
+   {% endfor %}
+   </tbody>
+ </table>
