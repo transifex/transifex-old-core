@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.admindocs',
     'django_evolution',
     'django_authopenid',
     'tagging',
@@ -128,3 +129,7 @@ INSTALLED_APPS = (
     'projects',
 	#'management',
 )
+
+## VCS-specific settings
+
+SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')

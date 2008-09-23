@@ -12,9 +12,8 @@ class Repository(models.Model):
     in general, only on their modules.
 
     >>> Repository.objects.create(slug="foo", name="Foo")
-    >>> r = Repository.objects.get(slug='foo')
-    >>> print r
     <Repository: Foo>
+    >>> r = Repository.objects.get(slug='foo')
     >>> Repository.objects.create(slug="foo", name="Foo")
     Traceback (most recent call last):
         ...
@@ -32,7 +31,7 @@ class Repository(models.Model):
     slug = models.SlugField(unique=True)
 
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=255)
+    description = models.CharField(blank=True, max_length=255)
       
     root = models.CharField(blank=True, max_length=255,
         help_text=_("The URL of the project's source repository"))
@@ -55,15 +54,15 @@ class Repository(models.Model):
         get_latest_by = 'created'
 
     def __repr__(self):
-        #TODO: Also return the root here
-        return _('<Repository: %(name)s (%(type)s)>') % (self.name, self.type)
+        #TODO: Also return the root and type here
+        return _('<Repository: %(name)s>') % { 'name': self.name }
   
     def __unicode__(self):
         return u'%s' % self.name
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.date_modified = datetime.now()
-        super(Repository, self).save()
+        super(Repository, self).save(*args, **kwargs)
 
 
 class Unit(models.Model):
@@ -77,14 +76,16 @@ class Unit(models.Model):
     
     It can be considered as the equivalent of a filesystem's directory.
 
-    >>> Unit.objects.create(slug="foo", name="Foo")
+    >>> try: r = Repository.objects.create(slug="foo", name="Foo")
+    ... except: r = Repository.objects.get(slug="foo")
+    >>> u = Unit.objects.create(repository=r, slug="foo", name="Foo")
     >>> u = Unit.objects.get(slug='foo')
-    >>> print u
-    <Unit: Foo>
-    >>> Unit.objects.create(slug="foo", name="Foo")
+    >>> print u.name
+    Foo
+    >>> Unit.objects.create(slug="foo", name="Foo", repository=r)
     Traceback (most recent call last):
         ...
-    IntegrityError: column slug is not unique
+    IntegrityError: columns repository_id, slug are not unique
     """
     
     slug = models.SlugField()
@@ -113,12 +114,21 @@ class Unit(models.Model):
         get_latest_by = 'created'
 
     def __repr__(self):
-        return _('<Unit: %(name)s (repo: %(repo)s>') % (
-            (self.name, self.repository.name))
+        return _('<Unit: %(name)s (repo: %(repo)s)>') % {
+            'name': self.name, 'repo': self.repository.name}
   
     def __unicode__(self):
         return u'%s' % self.name
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.date_modified = datetime.now()
-        super(Unit, self).save()
+        super(Unit, self).save(*args, **kwargs)
+
+    def init_browser(self):
+        from vcs.lib.types import BrowserError
+        from vcs.lib import get_browser_class, import_to_python
+#        try:
+        from txc.vcs.lib.types.hg import HgBrowser
+        self.browser = HgBrowser(self)
+#        except Exception, e:
+#            raise BrowserError(e)

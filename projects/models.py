@@ -25,8 +25,8 @@ class Project(models.Model):
 
     slug = models.SlugField(unique=True)
 
-    name = models.CharField(blank=False, null=False, max_length=50)
-    description = models.CharField(max_length=255)
+    name = models.CharField(max_length=50)
+    description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, max_length=1000, 
@@ -143,11 +143,13 @@ class Component(models.Model):
     
     tags = property(get_tags, set_tags)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         import markdown
         self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
-        super(Component, self).save()
+        super(Component, self).save(*args, **kwargs)
+
         # Update de-normalized field
         self.project.num_components = self.project.component_set.count()
-        self.project.save()
+        self.project.save(*args, **kwargs)
+
