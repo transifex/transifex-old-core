@@ -17,14 +17,9 @@
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
-
-
-<h3>{% trans "Project statistics" %} </h3>
-<div class="stats">
+  <h3>{% trans "Project statistics" %} </h3>
 
   {% comp_stats_table component.get_all_stats %}
-
-</div>
 
 {% endblock %}
 

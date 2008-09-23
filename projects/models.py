@@ -10,6 +10,46 @@ import tagging
 from tagging.fields import TagField
 from tagging.models import Tag
 
+class StatsRow():
+    def __init__(self):
+        from random import randint
+        self.total = 30*randint(1, 100)
+        self.trans = randint(0, self.total)
+        self.fuzzy = randint(0, self.total - self.trans)
+        self.untrans = self.total - self.trans - self.fuzzy
+
+        #self.total = 100
+        #self.trans = 50
+        #self.fuzzy = 30
+        #self.untrans = 20
+
+    @property
+    def trans(self):
+        return self.trans
+
+    @property
+    def fuzzy(self):
+        return self.fuzzy
+
+    @property
+    def untrans(self):
+        return self.untrans
+
+    @property
+    def total(self):
+        return self.total
+
+    @property
+    def trans_perc(self):
+        return self.trans*100/self.total
+
+    @property
+    def fuzzy_perc(self):
+        return self.fuzzy*100/self.total
+
+    @property
+    def untrans_perc(self):
+        return self.untrans*100/self.total
 
 class Project(models.Model):
     """A project is a collection of translatable resources.
@@ -85,34 +125,33 @@ class Project(models.Model):
         self.long_description_html = markdown.markdown(self.long_description)
         super(Project, self).save(*args, **kwargs)
 
-    class StatsRow()
-        def __init__(self):
-            from random import random
-            self.total = 300*random()
-            self.tr = random()*total
-            self.fu = random()*(total-tr)
-            self.un = total-tr-fu
-        @property
-        def tr_perc(self):
-            return self.tr/100
+    def get_langs(self):
+        return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
+    
+    def get_components(self):
+        return ['tip','0.4.x',  '0.3.2.x', '0.3', '0.2', '0.1']
 
+    def get_lang_comp_stats(self, lang, component):
+        return StatsRow()
 
-# Temp extra data
-    def get_all_stats(self):
-        from random import random
+    def get_stats(self):
 
-        # We sould return the stats of all components for all langs.
-        # If a module doesn't have translation for a specific language
-        # so the statc of it should return the 100% untranslated
-        lang_list = ['el', 'pt_BR']
-        comp_list = ['tip', '0.2', '0.1']
-        dict = {}
-        for lang in lang_list:
-            for comp in comp_list:
-                dict[lang][comp] = StatsRow()
+        # Stats of all components and langs.
+        #
+        # Returns a dictionary like:
+        # {'pt_BR': {'tip': StatsRow objetc,
+        #            '0.1': StatsRow objetc},
+        #  'el': {'tip': StatsRow objetc,
+        #         '0.1': StatsRow objetc}
+        # }
 
+        stats = {}
+        for lang in self.get_langs():
+            ll = {}
+            for comp in self.get_components():
+                ll.update({comp: self.get_lang_comp_stats(lang, comp)})
+            stats.update({lang: ll})
         return stats
-
 
 # Tagging
 #tagging.register(Project)
@@ -193,15 +232,24 @@ class Component(models.Model):
         #self.project.component_set.add(self)
         self.project.save()
 
-# Temp extra data
+    def get_langs(self):
+        return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
+
+    def get_lang_stats(self, lang):
+        return StatsRow()
+
     def get_all_stats(self):
 
-        stats = [{'lang':'pt_BR', 'translated':600, 'fuzzy':300, 'untranslated':100},
-                 {'lang':'el', 'translated':1000, 'fuzzy':0, 'untranslated':0},
-                 {'lang':'de', 'translated':333, 'fuzzy':302, 'untranslated':365},
-                ]
+        # Returns a dictionary like:
+        # {'pt_BR': StatsRow objetc},
+        #  'el': StatsRow objetc}
+        # }
 
+        stats = {}
+        for lang in self.get_langs():
+            stats.update({lang: self.get_lang_stats(lang)})
         return stats
+
 
 
 class ComponentAdmin(admin.ModelAdmin):

@@ -1,28 +1,32 @@
 {% load i18n %}
-<table class="stats">
+{% load stats_tags %}
+<table class="stats_comp">
    <thead>
     <tr>
       <th>{% trans "Lang name" %}</th>
-      {% for c in stats.0.components %}
-          <th class="alcenter">{{c.name}}</th>
+      {% for c in components %}
+          <th class="alcenter">{{ c }}</th>
       {% endfor %}
     </tr>
    </thead>
-   <tbody>
-   {% for stat in stats %}
-      <tr>
-        <td class="left">{{stat.lang_name}} ({{stat.lang}})</td>
-           {% for c in stat.components %}
+   <tbody>        
+   {% for lang, comp in stats.items %}
+    <tr>
+      <td class="left">{{ lang }}</td>    
+      {% for name, stat in comp.items %}
         <td>
-          <div class="graph">
-              <div class="translated" style="width: {{c.p_translated}}px;"></div>
-              <div class="fuzzy" style="left: {{c.p_translated}}px; width: {{c.p_fuzzy}}px;"></div>
-              <div class="untranslated" style="left: {{c.p_trans_fuzzy}}px; width: {{c.p_untranslated}}px;"></div>
-          </div>
-          <div class="stats_string">{{c.p_translated}}%</div> 
-        </td>
-        {% endfor %}
-      </tr>
+          <div class="graph_comp">
+            <div class="translated_comp" style="width: {{stat.trans_perc}}px;"></div>
+            <!--  <div class="fuzzy" style="left: {{stat.trans_perc}}px; width: {{stat.fuzzy_perc}}px;"></div>
+            <div class="untranslated" style="left: {{stat|sum_trans_fuzzy}}px; width: {{stat.untrans_perc}}px;"></div>
+            --></div>
+          <div class="stats_string_comp">{{stat.trans_perc}}%</div> 
+        </td>   
+      {% endfor %}
+    </tr>       
    {% endfor %}
    </tbody>
  </table>
+
+
+{{s}}

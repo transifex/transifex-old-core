@@ -125,4 +125,5 @@ INSTALLED_APPS = (
     'projects',
     'management',
     'filters',
+    'django.contrib.admindocs',
 )
