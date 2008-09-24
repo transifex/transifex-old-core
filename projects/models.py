@@ -21,6 +21,7 @@ class Project(models.Model):
     Traceback (most recent call last):
         ...
     IntegrityError: column slug is not unique
+    >>> p.delete()
     """
 
     slug = models.SlugField(unique=True)
@@ -70,8 +71,8 @@ class Project(models.Model):
         """
         Save the object in the database.
 
-        >>> p = Project.objects.get(slug='foo')
-        >>> p.long_description = '*foo*'
+        >>> p = Project.objects.create(slug="foo", name="Foo Project",
+        ... long_description = '*foo*')
         >>> p.save()
         >>> p.long_description_html
         u'<p><em>foo</em>\\n</p>'
@@ -79,6 +80,8 @@ class Project(models.Model):
         >>> c.save()
         >>> p.num_components
         1
+        >>> c.delete()
+        >>> p.delete()
         """
         import markdown
         self.date_modified = datetime.now()
