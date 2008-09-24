@@ -2,7 +2,7 @@ from django import template
 
 register = template.Library()
 
-@register.inclusion_tag("stats/comp_stats_table.html")
+@register.inclusion_tag("comp_stats_table.html")
 def comp_stats_table(stats):
     """
     Creates a HTML table for presents the statistics of all 
@@ -10,7 +10,7 @@ def comp_stats_table(stats):
     """
     return {"stats": stats}
 
-@register.inclusion_tag("stats/project_stats_table.html")
+@register.inclusion_tag("project_stats_table.html")
 def project_stats_table(project):
     """
     Creates a HTML table for presents the statistics of all

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load markup %}
 {% load projects_tags %}
-{% load stats_tags %}
+{% load statistics %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -72,7 +72,7 @@
   </table>
 </div>
 
-
+<h3>{% trans "Project statistics" %} </h3>
 {% project_stats_table project %}
 
 

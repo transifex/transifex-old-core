@@ -10,50 +10,7 @@ import tagging
 from tagging.fields import TagField
 from tagging.models import Tag
 
-class Statistic():
-    """
-    A Statistic is a collection of information about translations stats
-    of a component in a language
-    """
-    def __init__(self, lang=None, component=None):
-        from random import randint
-        self.total = 30*randint(1, 100)
-        self.trans = randint(0, self.total)
-        self.fuzzy = randint(0, self.total - self.trans)
-        self.untrans = self.total - self.trans - self.fuzzy
-
-        #self.total = 100
-        #self.trans = 100
-        #self.fuzzy = 0
-        #self.untrans = 0
-
-    @property
-    def trans(self):
-        return self.trans
-
-    @property
-    def fuzzy(self):
-        return self.fuzzy
-
-    @property
-    def untrans(self):
-        return self.untrans
-
-    @property
-    def total(self):
-        return self.total
-
-    @property
-    def trans_perc(self):
-        return self.trans*100/self.total
-
-    @property
-    def fuzzy_perc(self):
-        return self.fuzzy*100/self.total
-
-    @property
-    def untrans_perc(self):
-        return self.untrans*100/self.total
+from statistics.models import POStatistic
 
 class Project(models.Model):
     """A project is a collection of translatable resources.
@@ -140,17 +97,17 @@ class Project(models.Model):
         return comp_list
 
     def get_lang_comp_stats(self, lang, component):
-        return Statistic()
+        return POStatistic()
 
     def get_stats_dict(self):
         """
         Stats of all components and langs in a dictionary.
         
         Returns a dictionary like:
-            {'pt_BR': {'tip': Statistic objetc,
-                       '0.1': Statistic objetc},
-             'el': {'tip': Statistic objetc,
-                    '0.1': Statistic objetc}
+            {'pt_BR': {'tip': POStatistic objetc,
+                       '0.1': POStatistic objetc},
+             'el': {'tip': POStatistic objetc,
+                    '0.1': POStatistic objetc}
             }
         """
         stats = {}
@@ -245,13 +202,13 @@ class Component(models.Model):
         return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
 
     def get_lang_stats(self, lang):
-        return Statistic()
+        return POStatistic()
 
     def get_all_stats(self):
 
         # Returns a dictionary like:
-        # {'pt_BR': Statistic objetc},
-        #  'el': Statistic objetc}
+        # {'pt_BR': POStatistic objetc},
+        #  'el': POStatistic objetc}
         # }
 
         stats = {}

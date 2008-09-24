@@ -126,4 +126,5 @@ INSTALLED_APPS = (
     'management',
     'filters',
     'django.contrib.admindocs',
+    'statistics',
 )
