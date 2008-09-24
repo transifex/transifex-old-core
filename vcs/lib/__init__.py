@@ -1,28 +1,26 @@
 import os
 from django.conf import settings
 
-cvcs_submit_msg = """
-%(date)s  %(userinfo)s
+####################
+# Methods used for the backend support. Common backend methods go in
+# types/.
 
-%(message)s
-
-"""
-
-dvcs_submit_msg = """
-%(message)s
-            
-Transmitted-via: Transifex (%(domain)s)
-"""
-
-REPOSITORIES_PATH = os.path.join(settings.SCRATCH_DIR, 'sources')
-
-def import_to_python(import_str):
+def get_browser_class(vcs_type):
     """
-    Given a string 'a.b.c' returns object c from a.b module.
-    """
-    mod_name, obj_name = import_str.rsplit('.',1)
-    obj = getattr(__import__(mod_name, {}, {}, ['']), obj_name)
-    return obj
+    Given a vcs type, return the class that provides the browsing
+    functionality.
     
-def get_browser_class(type):
-    return import_to_python('txc.vcs.types.%s.%sBrowser' % (type, type))
+    # Get a hardcoded class 
+    >>> print get_browser_class('hg')
+    vcs.lib.types.hg.HgBrowser
+    """
+    assert vcs_type in settings.VCS_CHOICES.keys(), (
+        "VCS type '%s' is not registered as a supported one." % vcs_type)
+      
+    return ('%(module)s.%(class)s' % {
+        'module': settings.BROWSER_CLASS_BASE,
+        'class': settings.BROWSER_CLASS_NAMES[vcs_type]})
+
+def get_browser_object(vcs_type):
+    from vcs.lib.common import import_to_python
+    return import_to_python(get_browser_class(vcs_type))

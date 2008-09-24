@@ -1,69 +1,8 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
-class Repository(models.Model):
-    """
-    A place where content is stored, which can have multiple modules.
-
-    Repositories are primarily identified by their URL, and are used to group
-    together modules. Actual file operations can not occur on repositories
-    in general, only on their modules.
-
-    >>> Repository.objects.create(slug="foo", name="Foo")
-    <Repository: Foo>
-    >>> r = Repository.objects.get(slug='foo')
-    >>> Repository.objects.create(slug="foo", name="Foo")
-    Traceback (most recent call last):
-        ...
-    IntegrityError: column slug is not unique
-    """
-    
-    VCS_CHOICES = (
-        ('cvs', 'CVS'),
-        ('svn', 'Subversion'),
-        ('git', 'git'),
-        ('hg', 'Mercurial'),
-        ('bzr', 'Bazaar'),
-    )
-    
-    slug = models.SlugField(unique=True)
-
-    name = models.CharField(max_length=50)
-    description = models.CharField(blank=True, max_length=255)
-      
-    root = models.CharField(blank=True, max_length=255,
-        help_text=_("The URL of the project's source repository"))
-    type = models.CharField(blank=True, max_length=10, choices=VCS_CHOICES,
-        help_text=_('The repository system type (cvs, hg, git...)'))
-    web_frontend = models.CharField(blank=True, null=True, max_length=255,
-        help_text=_("A URL to the repository's web front-end"))
-
-    hidden = models.BooleanField(default=False)
-    enabled = models.BooleanField(default=True)
-    date_created = models.DateField(default=datetime.now,
-                                    editable=False)
-    date_modified = models.DateTimeField(editable=False)
-
-    class Meta:
-        verbose_name = _('repository')
-        verbose_name_plural = _('repositories')
-        db_table  = 'vcs_repository'
-        ordering  = ('name',)
-        get_latest_by = 'created'
-
-    def __repr__(self):
-        #TODO: Also return the root and type here
-        return _('<Repository: %(name)s>') % { 'name': self.name }
-  
-    def __unicode__(self):
-        return u'%s' % self.name
-
-    def save(self, *args, **kwargs):
-        self.date_modified = datetime.now()
-        super(Repository, self).save(*args, **kwargs)
-
 
 class Unit(models.Model):
     """
@@ -76,37 +15,39 @@ class Unit(models.Model):
     
     It can be considered as the equivalent of a filesystem's directory.
 
-    >>> try: r = Repository.objects.create(slug="foo", name="Foo")
-    ... except: r = Repository.objects.get(slug="foo")
-    >>> u = Unit.objects.create(repository=r, slug="foo", name="Foo")
+    >>> u = Unit.objects.create(slug="foo", name="Foo")
     >>> u = Unit.objects.get(slug='foo')
     >>> print u.name
     Foo
-    >>> Unit.objects.create(slug="foo", name="Foo", repository=r)
+    >>> Unit.objects.create(slug="foo", name="Foo")
     Traceback (most recent call last):
         ...
-    IntegrityError: columns repository_id, slug are not unique
+    IntegrityError: column slug is not unique
+    >>> u.delete()
     """
     
-    slug = models.SlugField()
-    repository = models.ForeignKey(Repository)
+    slug = models.SlugField(unique=True)
 
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=255)
+    description = models.CharField(blank=True, max_length=255,
+        help_text=_("A short description of this object"))
 
+    root = models.CharField(blank=True, max_length=255,
+        help_text=_("The root URL of the project (without the branch)"))
+    type = models.CharField(blank=True, max_length=10,
+                            choices=settings.VCS_CHOICES.items(),
+        help_text=_('The repository system type (cvs, hg, git...)'))
     branch = models.CharField(blank=True, max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
-    directory = models.CharField(blank=True, max_length=255,
-        help_text=_('The directory that holds the actual set of files'))
+    web_frontend = models.CharField(blank=True, null=True, max_length=255,
+        help_text=_("A URL to the project's web front-end"))
 
     hidden = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
-    date_created = models.DateField(default=datetime.now,
-                                    editable=False)
+    date_created = models.DateField(default=datetime.now, editable=False)
     date_modified = models.DateTimeField(editable=False)
 
     class Meta:
-        unique_together = ("repository", "slug")
         verbose_name = _('unit')
         verbose_name_plural = _('units')
         db_table  = 'vcs_unit'
@@ -114,8 +55,7 @@ class Unit(models.Model):
         get_latest_by = 'created'
 
     def __repr__(self):
-        return _('<Unit: %(name)s (repo: %(repo)s)>') % {
-            'name': self.name, 'repo': self.repository.name}
+        return _('<Unit: %s>') % self.name
   
     def __unicode__(self):
         return u'%s' % self.name
@@ -125,10 +65,15 @@ class Unit(models.Model):
         super(Unit, self).save(*args, **kwargs)
 
     def init_browser(self):
-        from vcs.lib.types import BrowserError
-        from vcs.lib import get_browser_class, import_to_python
-#        try:
-        from txc.vcs.lib.types.hg import HgBrowser
-        self.browser = HgBrowser(self)
-#        except Exception, e:
-#            raise BrowserError(e)
+        """
+        Initializes an appropriate VCS browser object, depending
+        on the VCS type of the project.
+        
+        The initialization will raise an exception if the VCS type
+        is not specified in the model.
+        """   
+        from vcs.lib import get_browser_object
+        browser = get_browser_object(self.type)
+        self.browser = browser(root=self.root,
+                               name=self.slug,
+                               branch=self.branch)
