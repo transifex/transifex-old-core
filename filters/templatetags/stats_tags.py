@@ -1,20 +1,26 @@
 from django import template
-#from django.conf import settings
-#from django.db import models
-from django.utils.safestring import mark_safe
 
 register = template.Library()
 
 @register.inclusion_tag("stats/comp_stats_table.html")
 def comp_stats_table(stats):
-
+    """
+    Creates a HTML table for presents the statistics of all 
+    languages for a component.
+    """
     return {"stats": stats}
 
 @register.inclusion_tag("stats/project_stats_table.html")
 def project_stats_table(project):
-    
+    """
+    Creates a HTML table for presents the statistics of all
+    Project's components and langs.
+    """
     components = []
-    stats = project.get_stats()
+    stats = project.get_stats_dict()
+    # TODO: We should have a smarter way to organize que components 
+    # order to avoid this 'hacking'. Maybe find a way to keep the 
+    # dictionary sorted by langs and components
     for s in stats:
         for c in stats[s]:
             components.append(c)
@@ -23,4 +29,20 @@ def project_stats_table(project):
 
 @register.filter
 def sum_trans_fuzzy(stat):
+    """
+    This filter returns a sun of the translated and fuzzy percentages
+    """
     return (stat.trans_perc + stat.fuzzy_perc)
+
+
+@register.filter  
+def truncate_chars(value, max_length):
+    """
+    Truncates a string after a certain number of characters.
+    """
+    if len(value) > max_length:  
+        truncd_val = value[:max_length-1]  
+        if value[max_length] != " ":  
+            truncd_val = truncd_val[:truncd_val.rfind(" ")]  
+        return  truncd_val + "..."  
+    return value  

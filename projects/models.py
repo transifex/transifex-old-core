@@ -10,8 +10,12 @@ import tagging
 from tagging.fields import TagField
 from tagging.models import Tag
 
-class StatsRow():
-    def __init__(self):
+class Statistic():
+    """
+    A Statistic is a collection of information about translations stats
+    of a component in a language
+    """
+    def __init__(self, lang=None, component=None):
         from random import randint
         self.total = 30*randint(1, 100)
         self.trans = randint(0, self.total)
@@ -19,9 +23,9 @@ class StatsRow():
         self.untrans = self.total - self.trans - self.fuzzy
 
         #self.total = 100
-        #self.trans = 50
-        #self.fuzzy = 30
-        #self.untrans = 20
+        #self.trans = 100
+        #self.fuzzy = 0
+        #self.untrans = 0
 
     @property
     def trans(self):
@@ -129,22 +133,26 @@ class Project(models.Model):
         return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
     
     def get_components(self):
-        return ['tip','0.4.x',  '0.3.2.x', '0.3', '0.2', '0.1']
+        #return ['tip', '0.4.x', '0.3.2.x', '0.3', '0.2', '0.1']
+        comp_list = []
+        for c in self.component_set.all():
+            comp_list.append(c.name)
+        return comp_list
 
     def get_lang_comp_stats(self, lang, component):
-        return StatsRow()
+        return Statistic()
 
-    def get_stats(self):
-
-        # Stats of all components and langs.
-        #
-        # Returns a dictionary like:
-        # {'pt_BR': {'tip': StatsRow objetc,
-        #            '0.1': StatsRow objetc},
-        #  'el': {'tip': StatsRow objetc,
-        #         '0.1': StatsRow objetc}
-        # }
-
+    def get_stats_dict(self):
+        """
+        Stats of all components and langs in a dictionary.
+        
+        Returns a dictionary like:
+            {'pt_BR': {'tip': Statistic objetc,
+                       '0.1': Statistic objetc},
+             'el': {'tip': Statistic objetc,
+                    '0.1': Statistic objetc}
+            }
+        """
         stats = {}
         for lang in self.get_langs():
             ll = {}
@@ -152,6 +160,7 @@ class Project(models.Model):
                 ll.update({comp: self.get_lang_comp_stats(lang, comp)})
             stats.update({lang: ll})
         return stats
+
 
 # Tagging
 #tagging.register(Project)
@@ -236,13 +245,13 @@ class Component(models.Model):
         return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
 
     def get_lang_stats(self, lang):
-        return StatsRow()
+        return Statistic()
 
     def get_all_stats(self):
 
         # Returns a dictionary like:
-        # {'pt_BR': StatsRow objetc},
-        #  'el': StatsRow objetc}
+        # {'pt_BR': Statistic objetc},
+        #  'el': Statistic objetc}
         # }
 
         stats = {}

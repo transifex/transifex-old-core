@@ -1,25 +1,27 @@
+/* Stats graphs style 1 */
+
 table.stats {
   /*width: 100%;*/
   font-size: 100%;
 }
 
 .stats th { 
-    text-align: left; 
-    background: gray;
-    color: white;
-    padding: 0.1em 0.5em;
+  text-align: left; 
+  background: gray;
+  color: white;
+  padding: 0.1em 0.5em;
 }
 
 .stats td { 
-    background: #f5f5f5; 
-    text-align: center;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-size: 100%;
+  background: #f5f5f5; 
+  text-align: center;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-size: 100%;
 }
 
 .stats td.left { 
-    text-align: left;
+  text-align: left;
 }
 
 
@@ -39,7 +41,6 @@ div.stats_string{
   /*position: absolute;*/
   font-size: 75%;
   font-weight: bold;
-
 }
 
 div.translated {
@@ -79,43 +80,37 @@ div.untranslated {
   background-repeat: repeat-x;
 }
 
- 
 
-
-
-
-
-
+/* Stats graphs style 2 */
 
 table.stats_comp {
-  /*width: 100%;*/
   font-size: 100%;
 }
 
 .stats_comp th { 
-    text-align: left; 
-    background: gray;
-    color: white;
-    padding: 0.1em 0.5em;
+  text-align: left; 
+  background: gray;
+  color: white;
+  padding: 0.1em 0.3em;
+  font-size: 95%;
 }
 
 .stats_comp td { 
-    background: #f5f5f5; 
-    text-align: center;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-size: 100%;
-    padding: 0px;
+  background: #fbfbfb;
+  text-align: center;
+  font-size: 100%;
+  padding: 0px;
+  margin: 0px;
 }
 
 .stats_comp td.left { 
-    text-align: left;
+  text-align: left;
 }
-
 
 div.graph_comp {
   height: 18px;
   margin: 0px;
+  padding: 0px;
   width: 100px;
   border: 0px solid black; 
   position: relative;
@@ -126,13 +121,11 @@ div.stats_string_comp{
   height: 18px;
   float: right;
   text-align: right;
-  padding-top: 0.15em;
-  padding-right: 0.3em;
   position: absolute;
-  font-size: 80%;
+  font-size: 90%;
   font-weight: bold;
-  width: 100px;
-
+  width: 98px;
+  color: gray;
 }
 
 div.translated_comp {
@@ -141,11 +134,25 @@ div.translated_comp {
   height:100%; 
   left: 0%; 
   background: #D5FFDE;
-  /*background: url('../images/icons/stats/green-bar.png') 0 50%;*/
   background-repeat: repeat-x;
 }
 
  
+div.fuzzy_comp {
+  position: absolute; 
+  top: 0px;
+  height:100%; 
+  background: #FFF1D4;
+  background-repeat: repeat-x;
+}
+
+div.untranslated_comp {
+  position: absolute; 
+  height:100%; 
+  top: 0px;
+  background: #FFDEDE;
+  background-repeat: repeat-x;
+}
 
 
 
