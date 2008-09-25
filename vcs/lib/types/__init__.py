@@ -5,7 +5,7 @@ class BrowserError(Exception):
 
 class VCSBrowserMixin:
     """
-    Implements VCS browser functionality:
+    Implement VCS browser functionality:
     Reading and saving files, creating diffs etc
     """
 

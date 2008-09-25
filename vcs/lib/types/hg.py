@@ -4,11 +4,27 @@ from mercurial.repo import RepoError
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
-#A VCS module can override the default value if necessary. 
 HG_REPO_PATH = settings.HG_REPO_PATH
 
 class HgBrowser(VCSBrowserMixin):
-    """A browser class for Mercurial repositories."""
+    """
+    A browser class for Mercurial repositories.
+    
+    Mercurial homepage: http://www.selenic.com/mercurial/
+
+    # Browser initialization
+    >>> b = HgBrowser(root='http://code.transifex.org/transifex',
+    ... name='test-hg', branch='tip')
+    >>> print b.root
+    http://code.transifex.org/transifex
+
+    # Test exception for potential directory traversals.
+    >>> HgBrowser(root='foo', name='../..', branch='tip')
+    Traceback (most recent call last):
+        ...
+    AssertionError: Unit checkout path outside of nominal repo checkout path.
+    
+    """
     
     def __init__(self, root, name, branch):
         import os
@@ -18,32 +34,32 @@ class HgBrowser(VCSBrowserMixin):
         self.path = os.path.normpath(os.path.join(HG_REPO_PATH, name))
         #Mercurial doesn't seem to handle correctly unicode paths
         self.path = str(self.path)
-        #Test for directory traversal
+        
+        #Test for possible directory traversal
         assert os.path.commonprefix(
             [self.path, HG_REPO_PATH]) == HG_REPO_PATH, (
-            "Checkout dir outside of nominal repo path. "
-            "Directory traversal warning.")
+            "Unit checkout path outside of nominal repo checkout path.")
 
     @property
     def remote_path(self):
-        """
-        Calculate remote path for cloning
-        """
+        "Return remote path for cloning."
         return str('%s' % self.root)
 
     def init_repo(self):
         """
-        Initialize repository for the first time, commands used:
-
+        Initialize repository for the first time.
+        
+        Commands used:
         hg clone <remote_path> <self.path>
         hg update <branch>
         """
         try:
             self.repo = hg.repository(ui.ui(), self.path)
         except RepoError:
-            # Repo does not exist, create it"
+            # Repo does not exist, create it.
             try:
-                remote_repo, self.repo = hg.clone(ui.ui(), self.remote_path, self.path)
+                remote_repo, self.repo = hg.clone(ui.ui(), self.remote_path,
+                                                  self.path)
                 commands.update(self.repo.ui, self.repo, self.branch)
                 self.repo = hg.repository(ui.ui(), self.path)
             except RepoError, e:
@@ -52,7 +68,7 @@ class HgBrowser(VCSBrowserMixin):
 
     def teardown_repo(self):
         """
-        Removes the local copy of the repository, ignoring any changes
+        Remove the local copy of the repository, ignoring any changes
         that have been made.
         """
         import shutil
@@ -91,7 +107,8 @@ class HgSubmitter(VCSBrowserMixin):
     
     def submit(self, files, msg, *args, **kwargs):
         """
-        update to upstream
+        Update to upstream.
+        
         hg commit -m <msg> --addremove
         hg push
         """
