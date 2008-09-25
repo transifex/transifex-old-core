@@ -15,15 +15,13 @@ class HgBrowser(VCSBrowserMixin):
     # Browser initialization
     >>> b = HgBrowser(root='http://code.transifex.org/transifex',
     ... name='test-hg', branch='tip')
-    >>> print b.root
-    http://code.transifex.org/transifex
 
     # Test exception for potential directory traversals.
     >>> HgBrowser(root='foo', name='../..', branch='tip')
     Traceback (most recent call last):
-        ...
+      ...
     AssertionError: Unit checkout path outside of nominal repo checkout path.
-    
+
     """
     
     def __init__(self, root, name, branch):
@@ -100,9 +98,7 @@ class HgBrowser(VCSBrowserMixin):
 
 
 class HgSubmitter(VCSBrowserMixin):
-    """
-    A browser class for Mercurial repositories.
-    """
+    """A submit class for Mercurial repositories."""
     
     
     def submit(self, files, msg, *args, **kwargs):
@@ -123,3 +119,4 @@ class HgSubmitter(VCSBrowserMixin):
         commands.commit(self.repo.ui, self.repo, message=self.submit_msg(msg), \
             addremove=True, logfile=None, user=user, date=None)
         commands.push(self.repo.ui, self.repo, force=False, rev=None)
+

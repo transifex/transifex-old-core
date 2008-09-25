@@ -4,6 +4,14 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+def suite():
+    import unittest
+    import doctest
+    from vcs.lib.types import (hg, svn)
+    s = unittest.TestSuite()
+    s.addTest(doctest.DocTestSuite(hg))
+    return s
+
 class Unit(models.Model):
     """
     A snapshot of a VCS project, an instance of a repository's files.
@@ -24,6 +32,7 @@ class Unit(models.Model):
         ...
     IntegrityError: column slug is not unique
     >>> u.delete()
+
     """
     
     slug = models.SlugField(unique=True)

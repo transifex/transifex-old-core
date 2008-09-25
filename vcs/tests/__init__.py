@@ -1,1 +1,1 @@
-from vcs.tests.hg import *
+from vcs.tests.test_hg import *
