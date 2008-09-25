@@ -10,6 +10,7 @@ def suite():
     from vcs.lib.types import (hg, svn)
     s = unittest.TestSuite()
     s.addTest(doctest.DocTestSuite(hg))
+    s.addTest(doctest.DocTestSuite(svn))
     return s
 
 class Unit(models.Model):
