@@ -71,10 +71,12 @@
     </tr>
   </table>
 </div>
+{% if project.component_set.all %}
 
 <h3>{% trans "Project statistics" %} </h3>
 {% project_stats_table project %}
 
+{% endif %}
 
 {% include "projects/component_list.html" %}
 
