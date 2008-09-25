@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from django.contrib import admin
 from django.db import models
@@ -6,7 +6,6 @@ from django.db.models import permalink
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
-import tagging
 from tagging.fields import TagField
 from tagging.models import Tag
 
@@ -23,26 +22,28 @@ class Project(models.Model):
     Traceback (most recent call last):
         ...
     IntegrityError: column slug is not unique
+    >>> p.delete()
     """
 
-    name = models.CharField(blank=False, null=False, max_length=50)
-    description = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
+    name = models.CharField(max_length=50)
+    description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, max_length=1000, 
         help_text=_('Description as HTML.'), editable=False)
-    slug = models.SlugField(unique=True)
-    
-    num_components = models.PositiveIntegerField(editable=False, default=0)
-
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
+
+    num_components = models.PositiveIntegerField(editable=False, default=0)
+
+    hidden = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    #tags = TagField(help_text="Separate tags with spaces.", blank=True, null=True)
 
     class Meta:
         verbose_name = _('project')
@@ -71,8 +72,8 @@ class Project(models.Model):
         """
         Save the object in the database.
 
-        >>> p = Project.objects.get(slug='foo')
-        >>> p.long_description = '*foo*'
+        >>> p = Project.objects.create(slug="foo", name="Foo Project",
+        ... long_description = '*foo*')
         >>> p.save()
         >>> p.long_description_html
         u'<p><em>foo</em>\\n</p>'
@@ -80,9 +81,11 @@ class Project(models.Model):
         >>> c.save()
         >>> p.num_components
         1
+        >>> c.delete()
+        >>> p.delete()
         """
         import markdown
-        self.date_modified = datetime.datetime.now()
+        self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
         super(Project, self).save(*args, **kwargs)
 
@@ -119,30 +122,19 @@ class Project(models.Model):
         return stats
 
 
-# Tagging
-#tagging.register(Project)
-
-class ProjectAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(Project, ProjectAdmin)
-
-class ProjectForm(ModelForm):
-    class Meta:
-        model = Project
-
 
 class Component(models.Model):
     """ A component is a translatable resource. """
+
+    slug = models.SlugField()
+    project = models.ForeignKey(Project)
+
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, null=True,
         max_length=1000, help_text=_('Description as HTML.'), editable=False)
-    slug = models.SlugField()
-    
-    project = models.ForeignKey(Project)
-      
     repository = models.CharField(blank=True, max_length=255,
         help_text=_("The URL of the project's source repository"))
     repository_type = models.CharField(blank=True, max_length=10,
@@ -153,12 +145,12 @@ class Component(models.Model):
         help_text=_('Space-separated list of branch names'))
     report_bugs = models.CharField(blank=True, max_length=255,
         help_text=_("A URL to the project's bugzilla, trac, etc"))
+
+    hidden = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
-    date_created = models.DateField(default=datetime.datetime.now,
+    date_created = models.DateField(default=datetime.now,
                                     editable=False)
     date_modified = models.DateTimeField(editable=False)
-
-    #tags = TagField(help_text="Separate tags with spaces.")
 
     class Meta:
         unique_together = ("project", "slug")
@@ -188,15 +180,15 @@ class Component(models.Model):
     
     tags = property(get_tags, set_tags)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         import markdown
-        self.date_modified = datetime.datetime.now()
+        self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
-        super(Component, self).save()
+        super(Component, self).save(*args, **kwargs)
+
         # Update de-normalized field
         self.project.num_components = self.project.component_set.count()
-        #self.project.component_set.add(self)
-        self.project.save()
+        self.project.save(*args, **kwargs)
 
     def get_langs(self):
         return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
@@ -218,6 +210,3 @@ class Component(models.Model):
 
 
 
-class ComponentAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(Component, ComponentAdmin)

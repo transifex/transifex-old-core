@@ -117,14 +117,58 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.admindocs',
     'django_evolution',
     'django_authopenid',
     'tagging',
     'pagination',
     'contact_form',
-    'projects',
-    'management',
     'filters',
-    'django.contrib.admindocs',
+    # txo specific apps:
+    'vcs',
     'statistics',
+    'projects',
+    #'management',
 )
+
+####################
+# vcs application settings
+
+# The directory where the vcs app will checkout stuff and play around.
+# Warning: On production systems this should be a place outside of the source
+# and with enough disk space. Eg. /var/lib/transifex.
+SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')
+
+# Directories where checked-out units will be put.
+REPOSITORIES_PATH = os.path.join(SCRATCH_DIR, 'sources')
+# Per-VCS checkout directories, in case an override is required. The final
+# location of a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
+HG_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'hg')
+
+# Our VCS choices. This feeds the Unit model with the available options.
+VCS_CHOICES = {'cvs': 'CVS',
+               'svn': 'Subversion',
+               'git': 'git',
+               'hg': 'Mercurial',
+               'bzr': 'Bazaar'}
+
+# The classes which implement the VCS support. The full "path" to the class
+# is the concatenation of the BASE and the NAME of the class.
+BROWSER_CLASS_BASE = 'vcs.lib.types'
+BROWSER_CLASS_NAMES = {'bzr': 'bzr.BzrBrowser',
+                       'cvs': 'cvs.CvsBrowser',
+                       'hg': 'hg.HgBrowser',
+                       'git': 'git.GitBrowser',
+                       'svn': 'svn.SvnBrowser',}
+
+# Default submit message format for centralized VCSs. Backends can override
+# this.
+CVCS_SUBMIT_MSG = """%(date)s  %(userinfo)s
+
+%(message)s"""
+
+# Default submit message format for decentralized VCSs. Backends can override
+# this.
+DVCS_SUBMIT_MSG = """%(message)s
+            
+Transmitted-via: Transifex (%(domain)s)"""

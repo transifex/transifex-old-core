@@ -1,7 +1,11 @@
 from django.conf.urls.defaults import *
-from models import Project
-from feeds import LatestProjects
+from django.contrib import admin
+
+from projects.models import Project
 from projects.views import * 
+from feeds import LatestProjects
+
+admin.autodiscover()
 
 project_list = {
     'queryset': Project.objects.all(),
