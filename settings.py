@@ -145,12 +145,13 @@ REPOSITORIES_PATH = os.path.join(SCRATCH_DIR, 'sources')
 # location of a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
 HG_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'hg')
 SVN_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'svn')
+GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 
 # Our VCS choices. This feeds the Unit model with the available options.
 VCS_CHOICES = {#'bzr': 'Bazaar'
                #'cvs': 'CVS',
                'hg': 'Mercurial',
-               #'git': 'git',
+               'git': 'git',
                'svn': 'Subversion',}
 
 # The classes which implement the VCS support. The full "path" to the class
@@ -159,7 +160,7 @@ BROWSER_CLASS_BASE = 'vcs.lib.types'
 BROWSER_CLASS_NAMES = {#'bzr': 'bzr.BzrBrowser',
                        #'cvs': 'cvs.CvsBrowser',
                        'hg': 'hg.HgBrowser',
-                       #'git': 'git.GitBrowser',
+                       'git': 'git.GitBrowser',
                        'svn': 'svn.SvnBrowser',}
 
 # Default submit message format for centralized VCSs. Backends can override

@@ -4,15 +4,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-def suite():
-    import unittest
-    import doctest
-    from vcs.lib.types import (hg, svn)
-    s = unittest.TestSuite()
-    s.addTest(doctest.DocTestSuite(hg))
-    s.addTest(doctest.DocTestSuite(svn))
-    return s
-
 class Unit(models.Model):
     """
     A snapshot of a VCS project, an instance of a repository's files.
@@ -87,3 +78,26 @@ class Unit(models.Model):
         self.browser = browser(root=self.root,
                                name=self.slug,
                                branch=self.branch)
+
+def suite():
+    """
+    Define the testing suite for Django's test runner.
+    
+    Enables test execution with ``./manage.py test <appname>``.
+    """
+     
+    import unittest
+    import doctest
+    from vcs.lib.common import import_to_python
+    s = unittest.TestSuite()
+
+    #FIXME: Load tests automatically:
+    #    for vcs_type in settings.VCS_CHOICES:
+    #        vcs_browser = import_to_python('vcs.lib.types' % vcs_type)
+    #        s.addTest(doctest.DocTestSuite(vcs_browser))
+    from vcs.lib.types import (git, hg, svn)
+    s.addTest(doctest.DocTestSuite(git))
+    s.addTest(doctest.DocTestSuite(hg))
+    s.addTest(doctest.DocTestSuite(svn))
+        
+    return s

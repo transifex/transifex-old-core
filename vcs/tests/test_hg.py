@@ -10,7 +10,7 @@ class HgTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
         self.unit = Unit.objects.create(
-            name="Foo", slug="testhg",
+            name="Test-HG", slug="test-hg",
             root='http://code.transifex.org/transifex',
             branch='tip', type='hg')
     def tearDown(self):

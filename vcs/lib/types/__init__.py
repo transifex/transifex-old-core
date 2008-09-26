@@ -4,24 +4,30 @@ class BrowserError(Exception):
     pass
 
 class VCSBrowserMixin:
+    
     """
-    Implement VCS browser functionality:
-    Reading and saving files, creating diffs etc
+    Implement VCS-type-agnostic browser functionality.
+    
+    This mixin class provides methods for reading and saving
+    files, from the server filesystem, creating diffs etc.
+    It is inherited by the type-specific classes, and its
+    methods are common to all types which use a checkout
+    directory on the local file system.
+    
     """
 
     def get_file(self, filename):
-        """
-        Returns a file pointer of the requested file.
-        """
+        """Return a file pointer of the requested file."""
         fullpath = os.path.join(self.path, filename)
         fp = open(fullpath, 'r')
         return fp
 
     def get_file_contents(self, filename, decode=None):
-        """
-        Returns the file contents of the requested file.
-        If decode is specified the contents are decoded whith the <decode>
-        encoding.
+        """Return the file contents of the requested file.
+        
+        If decode is specified the contents are decoded with the
+        <decode> encoding.
+        
         """
         fp = self.get_file(filename)
         try:
@@ -35,8 +41,11 @@ class VCSBrowserMixin:
 
     def save_file_contents(self, filename, contents, encode=None):
         """
-        Save contents as <filename>. If encode is specified the contents are
-        first encoded with the <encode> encoding.
+        Save contents as <filename>.
+        
+        If encode is specified the contents are first encoded with
+        the <encode> encoding.
+        
         """
         fullpath = os.path.join(self.path, filename)
         dirpath = os.path.dirname(fullpath)
@@ -52,9 +61,7 @@ class VCSBrowserMixin:
             fp.close()
 
     def diff(self, filename, content):
-        """
-        Diff the contents with the filename contents.
-        """
+        """Diff the contents with the filename contents."""
         try:
             contents = self.get_file_contents(filename, decode='utf-8')
         except IOError:
@@ -65,8 +72,10 @@ class VCSBrowserMixin:
     def walk(self):
         """
         Wrapper around os.walk() function.
+        
         The only differense is that the root returned is relative
         to the sresource path.
+        
         """
         for root, dirs, files in os.walk(self.path):
             # remove sresource path to create relative path
@@ -74,4 +83,19 @@ class VCSBrowserMixin:
             # the first characher is '/' we need to remove it
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
+
+    def teardown_repo(self):
+        """
+        Remove the local copy of the repository.
+        
+        Ignore any changes that have been made.
+        
+        """
+        import shutil
+        #Fail silently when the repo cannot be destroyed
+        #TODO: Think about this ^^ more.
+        try:
+            shutil.rmtree(self.path)
+        except OSError:
+            pass
 

@@ -1,8 +1,9 @@
 import unittest
 from vcs.models import Unit
+from vcs.lib import RepoError
 
-class SvnTestCase(unittest.TestCase):
-    """Test Subversion VCS support.
+class GitTestCase(unittest.TestCase):
+    """Test Git VCS support.
     
     Supplementary tests, in addition to doctests.   
     """ 
@@ -10,27 +11,27 @@ class SvnTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
         self.unit = Unit.objects.create(
-            name="Test-SVN", slug="test-svn",
-            root='http://svn.fedorahosted.org/svn/system-config-language',
-            branch='trunk', type='svn')
+            name="Test-Git", slug="test-git",
+            root='http://git.fedorahosted.org/git/elections.git',
+            branch='master', type='git')
     def tearDown(self):
         self.unit.delete()
         # Until we use a local repo, let's not delete it after the first run:
         # self.unit.browser.teardown_repo()
 
     def test_repo_init(self):
-        """Test correct SVN repo initialization."""
+        """Test correct Git repo initialization."""
         from os import path
-        from vcs.lib.types.svn import SVN_REPO_PATH 
+        from vcs.lib.types.git import GIT_REPO_PATH
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        local_unit_path = path.join(SVN_REPO_PATH, self.unit.slug)
+        local_unit_path = path.join(GIT_REPO_PATH, self.unit.slug)
         self.assertTrue(path.isdir(local_unit_path))
 
     def test_get_file_contents(self):
-        """Test that SVN get_file_contents returns correct file size."""
+        """Test that Git get_file_contents returns correct file size."""
         #FIXME: This is not the best way to test something like this!
         self.unit.init_browser()
         self.unit.browser.init_repo()
         self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
-                          17982)
+                          18002)
