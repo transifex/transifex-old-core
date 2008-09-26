@@ -13,16 +13,12 @@ class SvnBrowser(VCSBrowserMixin):
    
     Subversion homepage: http://subversion.tigris.org/
 
-    # Browser initialization
     >>> b = SvnBrowser(name='test-svn', branch='tip',
     ... root='http://svn.fedorahosted.org/svn/system-config-language')
-
-    # Test exception for potential directory traversals.
     >>> SvnBrowser(root='foo', name='../..', branch='trunk')
     Traceback (most recent call last):
-        ...
+    ...
     AssertionError: Unit checkout path outside of nominal repo checkout path.
-    
     """
 
     # We are using the pysvn module.

@@ -10,7 +10,6 @@ def get_browser_class(vcs_type):
     Given a vcs type, return the class that provides the browsing
     functionality.
     
-    # Get a hardcoded class 
     >>> print get_browser_class('hg')
     vcs.lib.types.hg.HgBrowser
     """

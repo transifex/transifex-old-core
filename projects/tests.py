@@ -1,6 +1,7 @@
 import unittest
 
 class SmokeTestCase(unittest.TestCase):
+    """Test that all project URLs return correct status code."""
     #TODO: Run this for all applications, somehow
     #TODO: More customization: 404s, etc 
     #TODO: Make this run automatic for all 
