@@ -11,12 +11,6 @@ from tagging.models import Tag
 
 from statistics.models import POStatistic, Language
 
-try:
-    from notification import models as notification
-except ImportError:
-    notification = None
-
-
 class Project(models.Model):
     """A project is a collection of translatable resources.
 
