@@ -105,10 +105,10 @@ class Project(models.Model):
         Stats of all components and langs in a dictionary.
         
         Returns a dictionary like:
-            {'pt_BR': {'tip': POStatistic objetc,
-                       '0.1': POStatistic objetc},
-             'el': {'tip': POStatistic objetc,
-                    '0.1': POStatistic objetc}
+            {'pt_BR': {'tip': POStatistic object,
+                       '0.1': POStatistic object},
+             'el': {'tip': POStatistic object,
+                    '0.1': POStatistic object}
             }
         """
         stats = {}
@@ -197,16 +197,10 @@ class Component(models.Model):
         return POStatistic.get_stats_for_lang_object(lang, self)
 
     def get_all_stats(self):
-
-        # Returns a dictionary like:
-        # {'pt_BR': POStatistic objetc},
-        #  'el': POStatistic objetc}
-        # }
-
-        stats = {}
-        for l in POStatistic.get_stats_for_object(self):
-            stats.update({l.lang: l})
-        return stats
+        # Returns a list like:
+        # [POStatistic object,
+        #  POStatistic object]
+        return POStatistic.get_stats_for_object(self)
 
 
 

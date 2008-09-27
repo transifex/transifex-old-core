@@ -9,9 +9,9 @@
     </tr>
    </thead>
    <tbody>
-   {% for lang, stat in stats.items %}
+   {% for stat in stats %}
       <tr>
-        <td class="left">{{lang.name}}</td>
+        <td class="left">{{stat.lang.name}}</td>
         <td>
           <div class="graph_comp">
               <div class="translated_comp" style="width: {{stat.trans_perc}}px;"></div>
@@ -20,7 +20,7 @@
           </div>
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
-        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{lang.code}}.po" href="">{{lang.code}}.po</a></td>
+        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.lang.code}}.po" href="">{{stat.lang.code}}.po</a></td>
       </tr>
    {% endfor %}
    </tbody>
