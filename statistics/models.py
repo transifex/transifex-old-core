@@ -103,12 +103,12 @@ class POStatistic(models.Model):
     @classmethod
     def get_stats_for_object(self, object):
         """ Returns a list of languages statistics for a project."""
-        return self.objects.filter(object_id=object.id).order_by('trans_perc')
+        return self.objects.filter(object_id=object.id).order_by('-trans_perc')
     
     @classmethod
     def get_stats_for_lang(self, lang):
         """ Returns a list of projects statistics for a language."""
-        return self.objects.filter(lang=lang).order_by('trans_perc')
+        return self.objects.filter(lang=lang).order_by('-trans_perc')
 
     @classmethod
     def get_stats_for_lang_object(self, lang, object):
