@@ -4,15 +4,16 @@
     "model": "projects.project", 
     "fields": {
       "feed": "", 
-      "num_components": 2, 
-      "created": "2008-09-19", 
-      "long_description_html": "<p>Hi. I'm a <em>test</em> project.\n</p>", 
       "description": "This is a test project.", 
+      "created": "2008-09-19", 
+      "long_description_html": "<p>Hi. I'm a <em>test</em> project number 1.\n</p>", 
       "enabled": true, 
-      "modified": "2008-09-19 14:56:46", 
-      "slug": "test1", 
+      "modified": "2008-09-27 17:14:20", 
+      "slug": "project1", 
+      "num_components": 2, 
+      "hidden": false, 
       "homepage": "", 
-      "long_description": "Hi. I'm a *test* project.", 
+      "long_description": "Hi. I'm a *test* project number 1.", 
       "name": "Test Project 1"
     }
   }, 
@@ -21,16 +22,17 @@
     "model": "projects.project", 
     "fields": {
       "feed": "", 
-      "num_components": 1, 
-      "created": "2008-09-19", 
-      "long_description_html": "<p>I've got a <em>way</em> cooler name than the other ones.\n</p>", 
       "description": "Yup, it's yet another test project.", 
+      "created": "2008-09-19", 
+      "long_description_html": "<p>Hi. I'm a <em>test</em> project number 2.\n</p>", 
       "enabled": true, 
-      "modified": "2008-09-19 14:54:43", 
-      "slug": "test-o-matic", 
+      "modified": "2008-09-27 17:16:02", 
+      "slug": "project2", 
+      "num_components": 2, 
+      "hidden": false, 
       "homepage": "", 
-      "long_description": "I've got a *way* cooler name than the other ones.", 
-      "name": "Test-o-matic project 2"
+      "long_description": "Hi. I'm a *test* project number 2.", 
+      "name": "Test Project 2"
     }
   }, 
   {
@@ -38,9 +40,9 @@
     "model": "projects.component", 
     "fields": {
       "branches": "master 1.0", 
-      "name": "Component 1", 
+      "description": "Yeah! I'm the Component 1", 
       "repository": "http://git.example.com/git/comp1", 
-      "date_modified": "2008-09-19 14:56:11", 
+      "date_modified": "2008-09-27 17:13:40", 
       "repository_web": "http://git.foo.com/git/comp1", 
       "long_description_html": "<p>This is the first component of this awesome project.\n</p>", 
       "report_bugs": "http://bugzilla.example.com/", 
@@ -48,9 +50,10 @@
       "slug": "comp1", 
       "project": 2, 
       "date_created": "2008-09-19", 
+      "hidden": false, 
       "repository_type": "git", 
       "long_description": "This is the first component of this awesome project.", 
-      "description": "Component 1"
+      "name": "Component 1"
     }
   }, 
   {
@@ -58,19 +61,41 @@
     "model": "projects.component", 
     "fields": {
       "branches": "", 
-      "name": "Component 2", 
+      "description": "Yeah! I'm the Component 2", 
       "repository": "", 
-      "date_modified": "2008-09-19 14:56:46", 
+      "date_modified": "2008-09-27 17:14:20", 
       "repository_web": "", 
-      "long_description_html": "", 
+      "long_description_html": "<p>This is the second component of this awesome project.\n</p>", 
       "report_bugs": "", 
       "enabled": true, 
-      "slug": "c2", 
+      "slug": "comp2", 
       "project": 2, 
       "date_created": "2008-09-19", 
+      "hidden": false, 
       "repository_type": "", 
-      "long_description": "", 
-      "description": "la la la"
+      "long_description": "This is the second component of this awesome project.", 
+      "name": "Component 2"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "projects.component", 
+    "fields": {
+      "branches": "", 
+      "description": "Yeah! I'm the Component 3", 
+      "repository": "", 
+      "date_modified": "2008-09-27 17:15:26", 
+      "repository_web": "", 
+      "long_description_html": "<p>Yes...yes... I'm the component number 3\n</p>", 
+      "report_bugs": "", 
+      "enabled": true, 
+      "slug": "comp3", 
+      "project": 6, 
+      "date_created": "2008-09-26", 
+      "hidden": false, 
+      "repository_type": "", 
+      "long_description": "Yes...yes... I'm the component number 3", 
+      "name": "Component 3"
     }
   }, 
   {
@@ -78,19 +103,20 @@
     "model": "projects.component", 
     "fields": {
       "branches": "", 
-      "name": "hh", 
+      "description": "Yeah! I'm the Component 4", 
       "repository": "", 
-      "date_modified": "2008-09-19 01:44:29", 
+      "date_modified": "2008-09-27 17:16:02", 
       "repository_web": "", 
-      "long_description_html": "<p>teha\n</p>", 
+      "long_description_html": "<p>Yes...yes... I'm the component <strong>number 4</strong>........\n</p>", 
       "report_bugs": "", 
       "enabled": true, 
-      "slug": "teja", 
+      "slug": "comp4", 
       "project": 6, 
       "date_created": "2008-09-19", 
+      "hidden": false, 
       "repository_type": "", 
-      "long_description": "teha", 
-      "description": "aha"
+      "long_description": "Yes...yes... I'm the component **number 4**........", 
+      "name": "Component 4"
     }
   }
 ]
