@@ -22,10 +22,6 @@ class Language(models.Model):
     code = models.CharField(max_length=5)
     name = models.CharField(max_length=50)
 
-    def set_data(self, code, name):
-        self.code = code
-        self.name = name
-
 #class LanguageAdmin(admin.ModelAdmin):
 #    prepopulated_fields = {'slug': ('code',)}
 #admin.site.register(Language, LanguageAdmin)
@@ -69,7 +65,7 @@ class POStatistic(models.Model):
 
     trans_perc = models.PositiveIntegerField(default=0, editable=False)
     fuzzy_perc = models.PositiveIntegerField(default=0, editable=False)
-    untrans_perc = models.PositiveIntegerField(default=0, editable=False)
+    untrans_perc = models.PositiveIntegerField(default=100, editable=False)
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -107,9 +103,9 @@ class POStatistic(models.Model):
         self.calulate_perc()
 
     @classmethod
-    def get_stats_for_object(self, object_id):
+    def get_stats_for_object(self, object):
         """ Returns a list of languages statistics for a project."""
-        return self.objects.filter(object_id=object_id).order_by('trans_perc')
+        return self.objects.filter(object_id=object.id).order_by('trans_perc')
     
     @classmethod
     def get_stats_for_lang(self, lang):
@@ -119,4 +115,7 @@ class POStatistic(models.Model):
     @classmethod
     def get_stats_for_lang_object(self, lang, object):
         """ Returns statistics for a project in a specific language."""
-        return self.objects.filter(lang=lang, object_id=object.id)[0]    
+        try: 
+            return self.objects.filter(lang=lang, object_id=object.id)[0]
+        except:
+            return POStatistic(lang=lang, object=object)
