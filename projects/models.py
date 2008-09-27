@@ -204,8 +204,8 @@ class Component(models.Model):
         # }
 
         stats = {}
-        for lang in self.get_langs():
-            stats.update({lang: self.get_lang_stats(lang)})
+        for l in POStatistic.get_stats_for_object(self):
+            stats.update({l.lang: l})
         return stats
 
 
