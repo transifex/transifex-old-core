@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.conf import settings
 from django.contrib import admin
 from django.db import models
 from django.db.models import permalink
@@ -9,7 +9,13 @@ from django.utils.translation import ugettext_lazy as _
 from tagging.fields import TagField
 from tagging.models import Tag
 
-from statistics.models import POStatistic
+from statistics.models import POStatistic, Language
+
+try:
+    from notification import models as notification
+except ImportError:
+    notification = None
+
 
 class Project(models.Model):
     """A project is a collection of translatable resources.
@@ -90,17 +96,15 @@ class Project(models.Model):
         super(Project, self).save(*args, **kwargs)
 
     def get_langs(self):
-        return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
+        # We can filter for only include languages that have a po file
+        # for this module if we want. Now we are showing up all langs.
+        return Language.objects.all()
     
     def get_components(self):
-        #return ['tip', '0.4.x', '0.3.2.x', '0.3', '0.2', '0.1']
-        comp_list = []
-        for c in self.component_set.all():
-            comp_list.append(c.name)
-        return comp_list
-
+        return Component.objects.filter(project=self).order_by('name')
+       
     def get_lang_comp_stats(self, lang, component):
-        return POStatistic()
+        return POStatistic.get_stats_for_lang_object(lang, component)
 
     def get_stats_dict(self):
         """
@@ -189,12 +193,14 @@ class Component(models.Model):
         # Update de-normalized field
         self.project.num_components = self.project.component_set.count()
         self.project.save(*args, **kwargs)
-
+        
     def get_langs(self):
-        return sorted(['pt_BR', 'el', 'es', 'sr', 'ca', 'hu', 'ja', 'pt', 'de'])
+        # We can filter for only include languages that have a po file
+        # for this module if we want. Now we are showing up all langs.
+        return Language.objects.all()
 
     def get_lang_stats(self, lang):
-        return POStatistic()
+        return POStatistic.get_stats_for_lang_object(lang, self)
 
     def get_all_stats(self):
 

@@ -86,7 +86,7 @@ class POStatistic(models.Model):
         self.modified = datetime.now()
         super(POStatistic, self).save(*args, **kwargs)
 
-    def calulate_perc():
+    def calulate_perc(self):
         if self.total != 0:
             self.trans_perc = self.trans*100/self.total
             self.fuzzy_perc = self.fuzzy*100/self.total
@@ -104,7 +104,7 @@ class POStatistic(models.Model):
         self.trans = randint(0, self.total)
         self.fuzzy = randint(0, self.total - self.trans)
         self.untrans = self.total - self.trans - self.fuzzy
-        calulate_perc()
+        self.calulate_perc()
 
     @classmethod
     def get_stats_for_object(self, object_id):
@@ -115,4 +115,8 @@ class POStatistic(models.Model):
     def get_stats_for_lang(self, lang):
         """ Returns a list of projects statistics for a language."""
         return self.objects.filter(lang=lang).order_by('trans_perc')
-    
+
+    @classmethod
+    def get_stats_for_lang_object(self, lang, object):
+        """ Returns statistics for a project in a specific language."""
+        return self.objects.filter(lang=lang, object_id=object.id)[0]    

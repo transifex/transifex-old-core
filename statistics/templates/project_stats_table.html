@@ -5,14 +5,14 @@
     <tr>
       <th>{% trans "Lang name" %}</th>
       {% for c in components %}
-          <th class="alcenter">{{ c|truncate_chars:11 }}</th>
+          <th class="alcenter">{{ c.name|truncate_chars:11 }}</th>
       {% endfor %}
     </tr>
    </thead>
    <tbody>        
    {% for lang, comp in stats.items %}
     <tr>
-      <td class="left">{{ lang }}</td>    
+      <td class="left">{{ lang.name }} ({{lang.code}})</td>    
       {% for name, stat in comp.items %}
         <td>
           <div class="graph_comp">
