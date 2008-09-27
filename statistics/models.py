@@ -11,8 +11,7 @@ class Language(models.Model):
     
     # Test Language creation
     >>> from statistics.models import Language
-    >>> l = Language.objects.create()
-    >>> l.set_data('pt_BR', 'Brazilian Portuguese')
+    >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
     >>> l.save()
     >>> print l.code
     pt_BR
@@ -33,8 +32,7 @@ class POStatistic(models.Model):
     
     # Test Language creation
     >>> from statistics.models import Language
-    >>> l = Language.objects.create()
-    >>> l.set_data('pt_BR', 'Brazilian Portuguese')
+    >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
     >>> l.save()
     >>> from statistics.models import POStatistic
     >>> from projects.models import Project
@@ -44,7 +42,7 @@ class POStatistic(models.Model):
     pt_BR
 
     # Take the a list of objects for a object
-    >>> ps = POStatistic.get_stats_for_object(p.id)
+    >>> ps = POStatistic.get_stats_for_object(p)
     >>> print ps[0].lang.code
     pt_BR
 
