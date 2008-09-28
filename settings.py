@@ -120,10 +120,10 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django_evolution',
     'django_authopenid',
+    'transifex',    
     'tagging',
     'pagination',
     'contact_form',
-    'filters',
     # txo specific apps:
     'vcs',
     'statistics',
