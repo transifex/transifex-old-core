@@ -1,7 +1,9 @@
-{% extends "projects/project_detail_childs.html" %}
+{% extends "projects/base.html" %}
 {% load i18n %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Delete" %}{% endblock %}
+{% block title %}{{ block.super }} | {% blocktrans with project.name as project_name %}Delete {{ project_name }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {% blocktrans with project.name as project_name %}Delete <em>{{ project_name}}</em>{% endblocktrans %}{% endblock %}
 
 <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Edit" %}
 

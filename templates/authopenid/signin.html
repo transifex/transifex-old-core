@@ -2,10 +2,9 @@
 {% load i18n %}
 
 {% block head %}
-
-
 {% endblock %}
 
+{% block title %}{{ block.super }} | {% trans "Sign in" %}{% endblock %}
 
 {% block content_title %}
   <h2 class="pagetitle">{% trans "Sign in" %}</h2>

@@ -1,10 +1,15 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
 
-{% block breadcrumb %}{{ block.super }} &raquo;
-  <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo;
-  {% if not component %} {% trans "Add component" %} {% else %} {% trans "Edit component" %} {% endif %}
-{% endblock %}
+{% block title %}
+{% if not component %}{{ block.super }} | {{ project.name }} | {% trans "Add a component" %}
+{% else %}{{ block.super }} | {{ project.name }} | {% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}
+{% endif %}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo;
+{% if not component %}{% trans "Add a component" %}
+{% else %}{% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}
+{% endif %}{% endblock %}
 
 {% block content_title %}
   {% if not component %}

@@ -4,6 +4,8 @@
 
 {% block body_class %}{{ block.super }} project_list{% endblock %}
 
+{% block title %}{{ block.super }} | {% trans "Project list" %}{% endblock %}
+
 {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{% trans "Projects on Transifex" %}</h2>{% endblock %}

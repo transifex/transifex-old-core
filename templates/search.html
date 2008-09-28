@@ -4,9 +4,9 @@
 {% load pagination_tags %}
 {% load markup %}
 
-{% block title %}{{ block.super }} | {% trans "Search" %} {% endblock %}
+{% block title %}{{ block.super }} | {% trans "Search" %}{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; <a href="{% url search %}">{% trans "Search" %}</a>{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Search" %}{% endblock %}
 
 {% block body_class %}search project_list{% endblock %}
 

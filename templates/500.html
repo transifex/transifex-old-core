@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Page unavailable" %}{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Page unavailable" %}{% endblock %}
 
 {% block content_title %}
   <h2 class="pagetitle">{% trans "Page unavailable" %}</h2>

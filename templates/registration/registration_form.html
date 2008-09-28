@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}{{ block.super }} | {% trans "Register" %}{% endblock %}
+
 {% block content_title %}
-  <h2 class="pagetitle">Register for an account</h2>
+  <h2 class="pagetitle">{% trans "Register for an account" %}</h2>
 {% endblock %}
 
 {% block body %} 

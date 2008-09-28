@@ -1,7 +1,15 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {% if not project %} {% trans "Add" %} {% else %} {% trans "Edit" %} {% endif %} {% endblock %}
+{% block title %}
+  {% if not project %}{{ block.super }} | {% trans "Add a project" %}
+  {% else %}{{ block.super }} | {% blocktrans with project.name as project_name %}Edit {{ project_name}}{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+  {% if not project %}{{ block.super }} &raquo; {% trans "Add a project" %}
+  {% else %}{{ block.super }} &raquo; {% blocktrans with project.name as project_name %}Edit <em>{{ project_name}}</em>{% endblocktrans %}{% endif %}
+{% endblock %}
 
 {% block content_title %}
   {% if not project %}

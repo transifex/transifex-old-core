@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{{ block.super }} | {% trans "Let us know what you think!" %}{% endblock %}
+
 {% block content_title %}
   <h2 class="pagetitle">{% trans "Let us know what you think!" %}</h2>
 {% endblock %}

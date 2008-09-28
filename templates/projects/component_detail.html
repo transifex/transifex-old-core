@@ -8,21 +8,31 @@
 
 {% block title %}{{ block.super }} | {{ component.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ component.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }}
+&raquo; {{ component.name }}{% endblock %}
 
 
 {% block body_main %}
 
+  <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
   <h2 class="name">{{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
-  <h3>{% trans "Project statistics" %} </h3>
+  <div class="long_description">
+  {{ component.long_description|markdown|truncatewords:"100" }}
+  </div>
+
+  <h3>{% trans "Component statistics" %} </h3>
 
   {% comp_stats_table component.get_all_stats %}
 
 {% endblock %}
 
 {% block content_footer %}
-
+  <div id="content_footer_center">
+    <div class="deletelink">
+      <span class="i16 delete"><a href="{% url component_delete project_slug=project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a></span>
+    </div>
+  </div>
 {% endblock %}

@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
+{% block title %}{{ block.super }} | {% trans "Registration confirmation sent" %}{% endblock %}
+
 {% block content_title %}
-  <h2 class="pagetitle">Check your email!</h2>
+  <h2 class="pagetitle">{% trans "Check your email!" %}</h2>
 {% endblock %}
 
 {% block body %} 
 
-<p>Hello {{ account }}!</p>
+<p>{% blocktrans %}Hello {{ account }}!{% endblock %}</p>
 
-<p>An email has been sent to you to confirm the account creation.</p>
+<p>{% trans "An email has been sent to you to confirm the account creation." %}</p>
 {% endblock %}

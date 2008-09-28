@@ -25,7 +25,7 @@
       <span id="login">
           {% if user.is_authenticated %}
                 {% url user_account_settings as user_account_settings %} 
-              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_account_settings }}">{{ user_username }}</a>{% endblocktrans %} |
+              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_account_settings }}">{{ user_username }}</a>!{% endblocktrans %} |
               <a href="{% url user_signout %}">{% trans "Sign out" %}</a></span>
           {% else %}
               <a href="{% url user_signin %}">{% trans "Sign in" %}</a> | <a href="{% url user_signup %}">{% trans "Register" %}</a></span>

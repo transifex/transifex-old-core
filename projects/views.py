@@ -38,3 +38,39 @@ def component_detail(request, project_slug, component_slug, *args, **kwargs):
         extra_context = {'project': component.project}
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
+
+def component_edit(request, project_slug, component_slug, *args, **kwargs):
+
+    #TODO: Make this one query
+    project = get_object_or_404(Project, slug__iexact=project_slug)
+    component = get_object_or_404(Component, slug__exact=component_slug,
+                                  project=project)
+
+    # Use the object_list view for the heavy lifting.
+    return create_update.update_object(
+        request,
+        object_id=component.id,
+        model=Component,
+        template_object_name = "component",
+        template_name = "projects/component_form.html",
+        extra_context = {'project': component.project}
+    )
+component_detail.__doc__ = list_detail.object_detail.__doc__
+
+def component_delete(request, project_slug, component_slug, *args, **kwargs):
+
+    #TODO: Make this one query
+    project = get_object_or_404(Project, slug__iexact=project_slug)
+    component = get_object_or_404(Component, slug__exact=component_slug,
+                                  project=project)
+
+    # Use the object_list view for the heavy lifting.
+    return create_update.delete_object(
+        request,
+        object_id=component.id,
+        model=Component,
+        template_object_name = "component",
+        extra_context = {'project': component.project},
+        post_delete_redirect = '/projects/%s' % project.slug,
+    )
+component_detail.__doc__ = list_detail.object_detail.__doc__

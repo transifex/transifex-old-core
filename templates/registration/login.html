@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}{{ block.super }} | {% trans "Login" %} {% endblock %}
+
 {% block content_title %}
-  <h2 class="pagetitle">Login</h2>
+  <h2 class="pagetitle">{% trans "Login" %}</h2>
 {% endblock %}
 
 {% block body %} 
