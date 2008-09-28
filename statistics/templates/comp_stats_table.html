@@ -13,11 +13,7 @@
       <tr>
         <td class="left">{{stat.lang.name}}</td>
         <td>
-          <div class="graph_comp">
-              <div class="translated_comp" style="width: {{stat.trans_perc}}px;"></div>
-              <div class="fuzzy_comp" style="left: {{stat.trans_perc}}px; width: {{stat.fuzzy_perc}}px;"></div>
-              <div class="untranslated_comp" style="left: {{stat|sum_trans_fuzzy}}px; width: {{stat.untrans_perc}}px;"></div>
-          </div>
+          {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
         <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.lang.code}}.po" href="">{{stat.lang.code}}.po</a></td>

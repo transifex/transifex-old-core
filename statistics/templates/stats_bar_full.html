@@ -1,0 +1,7 @@
+{% load statistics %}
+
+<div class="graph_comp">
+  <div class="translated_comp" style="width: {{stat.trans_perc}}px;"></div>
+  <div class="fuzzy_comp" style="left: {{stat.trans_perc}}px; width: {{stat.fuzzy_perc}}px;"></div>
+  <div class="untranslated_comp" style="left: {{stat|sum_trans_fuzzy}}px; width: {{stat.untrans_perc}}px;"></div>
+</div>

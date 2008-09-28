@@ -5,7 +5,7 @@ register = template.Library()
 @register.inclusion_tag("comp_stats_table.html")
 def comp_stats_table(stats):
     """
-    Creates a HTML table for presents the statistics of all 
+    Creates a HTML table to presents the statistics of all 
     languages for a component.
     """
     return {"stats": stats}
@@ -13,7 +13,7 @@ def comp_stats_table(stats):
 @register.inclusion_tag("project_stats_table.html")
 def project_stats_table(project):
     """
-    Creates a HTML table for presents the statistics of all
+    Creates a HTML table to presents the statistics of all
     Project's components and langs.
     """
     components = []
@@ -26,6 +26,20 @@ def project_stats_table(project):
             components.append(c)
         return {'components': components,
                 'stats': stats}
+
+@register.inclusion_tag("stats_bar_full.html")
+def stats_bar_full(stat):
+    """
+    Creates a HTML bar to presents the full statistics 
+    """
+    return {'stat': stat}
+
+@register.inclusion_tag("stats_bar_trans.html")
+def stats_bar_trans(stat):
+    """
+    Creates a HTML bar to presents only the translated the statistics 
+    """
+    return {'stat': stat}
 
 @register.filter
 def sum_trans_fuzzy(stat):
