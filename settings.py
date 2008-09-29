@@ -137,15 +137,17 @@ INSTALLED_APPS = (
 # The directory where the vcs app will checkout stuff and play around.
 # Warning: On production systems this should be a place outside of the source
 # and with enough disk space. Eg. /var/lib/transifex.
-SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')
+SCRATCH_DIR = os.path.join('/tmp', 'scratchdir')
 
 # Directories where checked-out units will be put.
 REPOSITORIES_PATH = os.path.join(SCRATCH_DIR, 'sources')
 # Per-VCS checkout directories, in case an override is required. The final
 # location of a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
+#BZR_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'bzr')
+#CVS_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'cvs')
+GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 HG_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'hg')
 SVN_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'svn')
-GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 
 # Our VCS choices. This feeds the Unit model with the available options.
 VCS_CHOICES = {#'bzr': 'Bazaar'

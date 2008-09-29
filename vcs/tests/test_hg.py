@@ -10,7 +10,7 @@ class HgTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
         self.unit = Unit.objects.create(
-            name="Test-HG", slug="test-hg",
+            name="Test-HG",
             root='http://code.transifex.org/transifex',
             branch='tip', type='hg')
     def tearDown(self):
@@ -24,7 +24,7 @@ class HgTestCase(unittest.TestCase):
         from vcs.lib.types.hg import HG_REPO_PATH 
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        local_unit_path = path.join(HG_REPO_PATH, self.unit.slug)
+        local_unit_path = path.join(HG_REPO_PATH, self.unit.name)
         self.assertTrue(path.isdir(local_unit_path))
 
     def test_get_file_contents(self):

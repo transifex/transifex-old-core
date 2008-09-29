@@ -15,36 +15,29 @@ class Unit(models.Model):
     
     It can be considered as the equivalent of a filesystem's directory.
 
-    >>> u = Unit.objects.create(slug="foo", name="Foo")
-    >>> u = Unit.objects.get(slug='foo')
+    >>> u = Unit.objects.create(name="Foo")
+    >>> u = Unit.objects.get(name="Foo")
     >>> print u.name
     Foo
-    >>> Unit.objects.create(slug="foo", name="Foo")
+    >>> Unit.objects.create( name="Foo")
     Traceback (most recent call last):
         ...
-    IntegrityError: column slug is not unique
+    IntegrityError: column name is not unique
     >>> u.delete()
 
     """
     
-    slug = models.SlugField(unique=True)
-
-    name = models.CharField(max_length=50)
-    description = models.CharField(blank=True, max_length=255,
-        help_text=_("A short description of this object"))
-
-    root = models.CharField(blank=True, max_length=255,
+    name = models.CharField(unique=True, max_length=100)
+    root = models.CharField(max_length=255,
         help_text=_("The root URL of the project (without the branch)"))
-    type = models.CharField(blank=True, max_length=10,
+    type = models.CharField(max_length=10,
                             choices=settings.VCS_CHOICES.items(),
         help_text=_('The repository system type (cvs, hg, git...)'))
-    branch = models.CharField(blank=True, max_length=255,
+    branch = models.CharField(max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
     web_frontend = models.CharField(blank=True, null=True, max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
-    hidden = models.BooleanField(default=False)
-    enabled = models.BooleanField(default=True)
     date_created = models.DateField(default=datetime.now, editable=False)
     date_modified = models.DateTimeField(editable=False)
 
@@ -76,7 +69,7 @@ class Unit(models.Model):
         from vcs.lib import get_browser_object
         browser = get_browser_object(self.type)
         self.browser = browser(root=self.root,
-                               name=self.slug,
+                               name=self.name,
                                branch=self.branch)
 
 def suite():
