@@ -10,6 +10,8 @@
     <link media="screen" href="{{MEDIA_URL}}/css/stats.css" type="text/css" rel="stylesheet" />
     <link media="screen" href="{{MEDIA_URL}}/css/icons.css" type="text/css" rel="stylesheet" />
     <meta content="text/html; charset=utf-8" http-equiv="content_type" />
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
