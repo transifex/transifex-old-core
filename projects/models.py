@@ -146,9 +146,8 @@ class Component(models.Model):
 
     hidden = models.BooleanField(default=False)
     enabled = models.BooleanField(default=True)
-    date_created = models.DateField(default=datetime.now,
-                                    editable=False)
-    date_modified = models.DateTimeField(editable=False)
+    created = models.DateField(auto_now_add=True, editable=False)
+    modified = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
         unique_together = ("project", "slug")
@@ -180,7 +179,7 @@ class Component(models.Model):
 
     def save(self, *args, **kwargs):
         import markdown
-        self.date_modified = datetime.now()
+        self.modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
         super(Component, self).save(*args, **kwargs)
 
