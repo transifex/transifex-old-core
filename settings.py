@@ -100,7 +100,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django_authopenid.middleware.OpenIDMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+#INTERNAL_IPS = ('127.0.0.1',)
+
 
 ROOT_URLCONF = 'urls'
 
@@ -118,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admindocs',
+#    'debug_toolbar',
     'django_evolution',
     'django_authopenid',
     'transifex',    
@@ -153,7 +158,7 @@ SVN_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'svn')
 VCS_CHOICES = {#'bzr': 'Bazaar'
                #'cvs': 'CVS',
                'hg': 'Mercurial',
-               'git': 'git',
+               'git': 'Git',
                'svn': 'Subversion',}
 
 # The classes which implement the VCS support. The full "path" to the class

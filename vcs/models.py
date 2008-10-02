@@ -32,7 +32,8 @@ class Unit(models.Model):
         help_text=_("The root URL of the project (without the branch)"))
     type = models.CharField(max_length=10,
                             choices=settings.VCS_CHOICES.items(),
-        help_text=_('The repository system type (cvs, hg, git...)'))
+        help_text=_('The repository system type (%s)' %
+                    ', '.join(settings.VCS_CHOICES.keys())))
     branch = models.CharField(max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
     web_frontend = models.CharField(blank=True, null=True, max_length=255,
