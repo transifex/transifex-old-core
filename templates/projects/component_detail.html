@@ -23,6 +23,29 @@
   {{ component.long_description|markdown|truncatewords:"100" }}
   </div>
 
+{% if component.unit %}
+<div id="vcs_details">
+  <h3>Source details</h3>
+
+  <table class="definition">
+    <tr>
+      <th class="repository i16">{% trans "Repository:" %}</th>
+      <td>
+        <code>{{ component.unit.root }}</code></a>
+        {% if component.unit.web_frontend %}<sup>(<a title="{% trans "Link to a web front-end to the source" %}" href="{{ component.unit.webfrontend }}">{% trans "web" %}</a>)</sup>{% endif %}
+        <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ component.unit.type }}.png" alt="{{ component.unit.type }}" title="{{ component.unit.type }}" />
+    </tr>
+    <tr>
+      <th class="branch i16">{% trans "Branch:" %}</th>
+      <td>{{ component.unit.branch }}</td>
+    </tr>
+  </table>
+</div>
+{% endif %}  
+
+
+  </div>
+
   <h3>{% trans "Component statistics" %} </h3>
 
   {% comp_stats_table component.get_all_stats %}
