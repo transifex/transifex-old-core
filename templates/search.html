@@ -28,13 +28,8 @@
 
   {% if query %}
     {% if results %}
-      <h3 class="pagetitle">{% trans "Search Results" %}</h3>
-      <h4 class="i16 message find">
-          {% with results|length as result_count %}
-          {{ result_count|default:"No" }} project{{ result_count|pluralize }} found
-          {% if terms %}for &ldquo;{{ query }}&rdquo;{% endif %}
-          {% endwith %}
-      </h4>
+      <h3 class="pagetitle">
+        {% with results|length as result_count %}{% blocktrans %}Search Results ({{ result_count }}){% endblocktrans %}</h3>{% endwith %}
       {% autopaginate results 5 %}
       <div class="project_list">
       {% for project in results %}

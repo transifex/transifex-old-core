@@ -1,6 +1,5 @@
 from datetime import datetime
 from django.conf import settings
-from django.contrib import admin
 from django.db import models
 from django.db.models import permalink
 from django.forms import ModelForm
@@ -10,6 +9,7 @@ from tagging.fields import TagField
 from tagging.models import Tag
 
 from statistics.models import POStatistic, Language
+from vcs.models import Unit
 
 class Project(models.Model):
     """A project is a collection of translatable resources.
@@ -39,8 +39,10 @@ class Project(models.Model):
 
     num_components = models.PositiveIntegerField(editable=False, default=0)
 
-    hidden = models.BooleanField(default=False)
-    enabled = models.BooleanField(default=True)
+    hidden = models.BooleanField(default=False,
+        help_text=_('Hide this object from the list view?'))
+    enabled = models.BooleanField(default=True,
+        help_text=_('Enable this object or disable its use?'))
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -126,6 +128,7 @@ class Component(models.Model):
 
     slug = models.SlugField()
     project = models.ForeignKey(Project)
+    unit = models.ForeignKey(Unit, blank=True, null=True, editable=False)
 
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
@@ -133,19 +136,11 @@ class Component(models.Model):
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, null=True,
         max_length=1000, help_text=_('Description as HTML.'), editable=False)
-    repository = models.CharField(blank=True, max_length=255,
-        help_text=_("The URL of the project's source repository"))
-    repository_type = models.CharField(blank=True, max_length=10,
-        help_text=_('cvs, svn, hg, git, ...'))
-    repository_web = models.CharField(blank=True, null=True, max_length=255,
-        help_text=_("A URL to the versioning system's web front-end"))
-    branches = models.CharField(blank=True, max_length=255,
-        help_text=_('Space-separated list of branch names'))
-    report_bugs = models.CharField(blank=True, max_length=255,
-        help_text=_("A URL to the project's bugzilla, trac, etc"))
 
-    hidden = models.BooleanField(default=False)
-    enabled = models.BooleanField(default=True)
+    hidden = models.BooleanField(default=False,
+        help_text=_('Hide this object from the list view?'))
+    enabled = models.BooleanField(default=True,
+        help_text=_('Enable this object or disable its use?'))
     created = models.DateField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
@@ -179,7 +174,6 @@ class Component(models.Model):
 
     def save(self, *args, **kwargs):
         import markdown
-        self.modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
         super(Component, self).save(*args, **kwargs)
 
@@ -200,6 +194,3 @@ class Component(models.Model):
         # [POStatistic object,
         #  POStatistic object]
         return POStatistic.get_stats_for_object(self)
-
-
-

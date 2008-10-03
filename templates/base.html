@@ -6,9 +6,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
-    <link media="screen" href="{{MEDIA_URL}}/css/base.css" type="text/css" rel="stylesheet" />
-    <link media="screen" href="{{MEDIA_URL}}/css/stats.css" type="text/css" rel="stylesheet" />
-    <link media="screen" href="{{MEDIA_URL}}/css/icons.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="/site_media/css/base.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="/site_media/css/stats.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
     <meta content="text/html; charset=utf-8" http-equiv="content_type" />
     {% block extra_head %}
     {% endblock %}
@@ -18,7 +18,7 @@
 
   <div id="header">
     <div id="logo">
-      <a href="{% url home %}"><img border="0" src="{{MEDIA_URL}}/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
+      <a href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
     </div>
     <div id="navmenu">
       <a href="{% url home %}">{% trans "Home" %}</a> | <a href="{% url project_list %}">{% trans "Projects" %}</a>
@@ -58,7 +58,19 @@
           {% block body_sec %}{% endblock %}
         </div>
         <div id="body_main">
-          {% block body_main %}{% endblock %}
+          {% block messages %}
+          {% if messages %}
+          <div id="messages">
+  	      <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+		  {% endfor %}
+		  </ul>
+          </div>
+		  {% endif %}
+		  {% endblock %}
+
+        {% block body_main %}{% endblock %}
         </div>
       {% endblock %}
     </div>

@@ -67,6 +67,8 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site_media')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
+# NOTE: Also, this is hard-coded in the base.html template, so that the 500
+# error page works. You'll need to change the occurences in that file too.
 MEDIA_URL = '/site_media'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -100,7 +102,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django_authopenid.middleware.OpenIDMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+#INTERNAL_IPS = ('127.0.0.1',)
+
 
 ROOT_URLCONF = 'urls'
 
@@ -118,6 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admindocs',
+#    'debug_toolbar',
     'django_evolution',
     'django_authopenid',
     'transifex',    
@@ -137,21 +144,23 @@ INSTALLED_APPS = (
 # The directory where the vcs app will checkout stuff and play around.
 # Warning: On production systems this should be a place outside of the source
 # and with enough disk space. Eg. /var/lib/transifex.
-SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')
+SCRATCH_DIR = os.path.join('/tmp', 'scratchdir')
 
 # Directories where checked-out units will be put.
 REPOSITORIES_PATH = os.path.join(SCRATCH_DIR, 'sources')
 # Per-VCS checkout directories, in case an override is required. The final
 # location of a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
+#BZR_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'bzr')
+#CVS_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'cvs')
+GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 HG_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'hg')
 SVN_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'svn')
-GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 
 # Our VCS choices. This feeds the Unit model with the available options.
 VCS_CHOICES = {#'bzr': 'Bazaar'
                #'cvs': 'CVS',
                'hg': 'Mercurial',
-               'git': 'git',
+               'git': 'Git',
                'svn': 'Subversion',}
 
 # The classes which implement the VCS support. The full "path" to the class

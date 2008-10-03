@@ -33,29 +33,14 @@
 
   <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
 
-  <h3>{% trans "Project details" %} </h3>
+  {# <h3>{% trans "Project details" %} </h3> #}
   <table class="definition">{% if project.homepage %}
     <tr>
       <th class="homepage i16">{% trans "Homepage:" %}</th>
       <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
     </tr>
-    {% endif %}{% if project.repository %}
+    {% endif %}
     <tr>
-      <th class="repository i16">{% trans "Source:" %}</th>
-      <td>
-        <code>{{ project.repository }}</code>
-        {% if project.repository_web %}<sup>(<a title="{% trans "Link to a web front-end to the source" %}" href="{{ project.repository_web }}">{% trans "web" %}</a>)</sup>{% endif %}
-        <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ project.repository_type }}.png" alt="{{ project.repository_type }}" title="{{ project.repository_type }}" />
-      </td>
-    </tr>
-    {% endif %}{% if project.branches %}
-    <tr>
-      <th class="branch i16">{% trans "Branches:" %}</th>
-      <td>
-        {{ project.branches }}
-      </td>
-    </tr>
-    {% endif %}<tr>
       <th class="i16 tag">{% trans "Tags:" %}</th>
       <td>{% for tag in project.get_tags %}
         <a href="/projects/tag/{{tag}}" alt="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}" title="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}">{{tag}}</a> {%endfor%}
@@ -71,14 +56,15 @@
     </tr>
   </table>
 </div>
-{% if project.component_set.all %}
-
-<h3>{% trans "Project statistics" %} </h3>
-{% project_stats_table project %}
-
-{% endif %}
 
 {% include "projects/component_list.html" %}
+
+{% if project.component_set.all %}
+<div id="statistics" class="statistics">
+ <h3>{% trans "Translation statistics" %}</h3>
+ {% project_stats_table project %}
+</div>
+{% endif %}
 
 {% endblock %}
 

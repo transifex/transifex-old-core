@@ -11,7 +11,7 @@ class GitTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
         self.unit = Unit.objects.create(
-            name="Test-Git", slug="test-git",
+            name="Test-Git",
             root='http://git.fedorahosted.org/git/elections.git',
             branch='master', type='git')
     def tearDown(self):
@@ -25,7 +25,7 @@ class GitTestCase(unittest.TestCase):
         from vcs.lib.types.git import GIT_REPO_PATH
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        local_unit_path = path.join(GIT_REPO_PATH, self.unit.slug)
+        local_unit_path = path.join(GIT_REPO_PATH, self.unit.name)
         self.assertTrue(path.isdir(local_unit_path))
 
     def test_get_file_contents(self):

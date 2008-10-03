@@ -1,76 +1,63 @@
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext 
 from django.views.generic import create_update, list_detail
-from django.shortcuts import get_object_or_404
-from projects.models import *
+from django.utils.translation import ugettext_lazy as _
 
-component_list = {
-    'queryset': Component.objects.all(),
-    "template_object_name" : "component",
-}
-
+from projects.models import Project, Component
+from projects.forms import get_component_form
 
 def component_create_object(request, slug):
-
-    from projects.models import Project, Component
     project = get_object_or_404(Project, slug__iexact=slug)
-
-    # Use the object_list view for the heavy lifting.
+    form = get_component_form(project)
     return create_update.create_object(
         request,
-        template_name = "projects/component_form.html",
-        extra_context = {"project" : project},
-        model =  Component,
-    )
+        form_class=get_component_form(project),
+        extra_context={'project': project})
+component_create_object.__doc__ = create_update.create_object.__doc__
+
 
 def component_detail(request, project_slug, component_slug, *args, **kwargs):
-
-    #TODO: Make this one query
     project = get_object_or_404(Project, slug__iexact=project_slug)
     component = get_object_or_404(Component, slug__exact=component_slug,
                                   project=project)
-
-    # Use the object_list view for the heavy lifting.
     return list_detail.object_detail(
         request,
-        object_id=component.id,
         queryset = Component.objects.all(),
+        object_id=component.id,
         template_object_name = "component",
-        template_name = "projects/component_detail.html",
-        extra_context = {'project': component.project}
+        extra_context = {'project': project}
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
+                                                                                                                                                                                                            
 def component_edit(request, project_slug, component_slug, *args, **kwargs):
-
     #TODO: Make this one query
     project = get_object_or_404(Project, slug__iexact=project_slug)
     component = get_object_or_404(Component, slug__exact=component_slug,
                                   project=project)
-
-    # Use the object_list view for the heavy lifting.
     return create_update.update_object(
         request,
         object_id=component.id,
-        model=Component,
+        form_class=get_component_form(project),
         template_object_name = "component",
-        template_name = "projects/component_form.html",
-        extra_context = {'project': component.project}
+        extra_context = {'project': project}
     )
-component_detail.__doc__ = list_detail.object_detail.__doc__
+component_detail.__doc__ = create_update.update_object.__doc__
+
 
 def component_delete(request, project_slug, component_slug, *args, **kwargs):
-
     #TODO: Make this one query
     project = get_object_or_404(Project, slug__iexact=project_slug)
     component = get_object_or_404(Component, slug__exact=component_slug,
                                   project=project)
-
-    # Use the object_list view for the heavy lifting.
     return create_update.delete_object(
         request,
-        object_id=component.id,
         model=Component,
+        object_id=component.id,
         template_object_name = "component",
-        extra_context = {'project': component.project},
+        extra_context = {'project': project},
         post_delete_redirect = '/projects/%s' % project.slug,
     )
-component_detail.__doc__ = list_detail.object_detail.__doc__
+component_detail.__doc__ = create_update.delete_object.__doc__

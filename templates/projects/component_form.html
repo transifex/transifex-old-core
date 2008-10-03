@@ -13,7 +13,7 @@
 
 {% block content_title %}
   {% if not component %}
-    <h2 class="pagetitle">{% trans "Add a component" %}</h2>
+    <h2 class="pagetitle">{% blocktrans with project.name as project_name %}New component for {{ project_name }}{% endblocktrans %}</h2>
   {% else %}
     <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}</h2>
   {% endif %}
