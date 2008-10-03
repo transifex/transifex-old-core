@@ -6,6 +6,10 @@
 
 {% block title %}{{ block.super }} | {% trans "Project list" %}{% endblock %}
 
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed url="latest" %}" />
+{% endblock %}
+
 {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{% trans "Projects on Transifex" %}</h2>{% endblock %}
@@ -17,8 +21,9 @@
 {% endblock %}
 
 {% block body_sec %}
-  {% include "search_form_plain.html" %}
+  <a href="{% url project_feed url="latest" %}" title="Projects feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
+
 {% block body_main %}
   {% autopaginate project_list 5 %}
   <div class="project_list">

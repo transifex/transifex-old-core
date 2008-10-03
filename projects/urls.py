@@ -17,8 +17,11 @@ feeds = {
 }
 
 urlpatterns = patterns('',
-    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
-     {'feed_dict': feeds}, 'feed'),
+    url(
+        regex = r'^feeds/(?P<url>[-\w]+)$',
+        view = 'django.contrib.syndication.views.feed',
+        name = 'project_feed',
+        kwargs = {'feed_dict': feeds}),
 )
 
 urlpatterns += patterns('django.views.generic',

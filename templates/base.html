@@ -4,14 +4,13 @@
 
 <html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
-    <link media="screen" href="/site_media/css/base.css" type="text/css" rel="stylesheet" />
-    <link media="screen" href="/site_media/css/stats.css" type="text/css" rel="stylesheet" />
-    <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
-    <meta content="text/html; charset=utf-8" http-equiv="content_type" />
-    {% block extra_head %}
-    {% endblock %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
+  <link media="screen" href="/site_media/css/base.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="/site_media/css/stats.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="/site_media/css/icons.css" type="text/css" rel="stylesheet" />
+  <meta content="text/html; charset=utf-8" http-equiv="content_type" />
+  {% block extra_head %}{% endblock %}
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
@@ -35,6 +34,11 @@
       <select class="lang_switcher">
         <option selected>{% trans "English" %}</option>
       </select>
+    </div>
+    <div id="header_trinav">
+    {% block header_trinav %}
+      {% include "search_form_plain.html" %}
+    {% endblock %}
     </div>
   </div>
         
@@ -86,8 +90,7 @@
       <div class="joint">An <a title="Information craftsmen" href="http://www.indifex.com"><span class="indifex-word"><span class="prefix">Indi</span><span class="suffix">fex</span></span></a> joint</a></div>
     </div>
     <div class="center">
-      {# FIXME feed url #}
-      {% trans "About" %} | <a href="{% url feed url="latest" %}">{% trans "Feed" %}</a> | <a href="{% url contact_form %}">{% trans "Contact us" %}</a>
+      {% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Get in contact with us" %}">{% trans "Feedback" %}</a>
     </div>
     {% endblock %}
   </div>
