@@ -12,8 +12,6 @@ urlpatterns = patterns('',
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^account/', include('django_authopenid.urls')),
-    url(r'^$', 'django.views.generic.simple.direct_to_template',
-        {'template': 'index.html'}, name='login'),
 )
 
 if settings.STATIC_SERVE:
