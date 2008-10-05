@@ -139,7 +139,7 @@ INSTALLED_APPS = (
     'contact_form',
     # txo specific apps:
     'vcs',
-    'statistics',
+    'translations',
     'projects',
     #'management',
 )

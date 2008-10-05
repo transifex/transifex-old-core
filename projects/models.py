@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from tagging.fields import TagField
 from tagging.models import Tag
 
-from statistics.models import POStatistic, Language
+from translations.models import POStatistic, Language
 from vcs.models import Unit
 
 if settings.ENABLE_NOTICES:
