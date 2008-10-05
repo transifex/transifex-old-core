@@ -44,7 +44,9 @@
         <dt>» <a href="{% url user_changeopenid %}">{% trans "change openid url" %}</a></dt>
         <dd>{% trans "Change openid associated to your account" %}</dd>
         {% endif %}
-        
+        <dt>» <a href="{% url notification.views.notices %}">{% trans "change notifications" %}</a></dt>
+        <dd>{% trans "Change notifications associated to your account" %}</dd>
+
         <dt>» <a href="{% url user_delete %}">{% trans "delete account" %}</a></dt>
         <dd>{% trans "Erase your username and all your data from website" %}</dd>
 	</dl>

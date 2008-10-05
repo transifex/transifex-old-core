@@ -11,6 +11,12 @@ from tagging.models import Tag
 from statistics.models import POStatistic, Language
 from vcs.models import Unit
 
+if settings.ENABLE_NOTICES:
+    from notification import models as notification
+    from django.contrib.auth.models import User
+else:
+    notification = None
+
 class Project(models.Model):
     """A project is a collection of translatable resources.
 
@@ -89,7 +95,12 @@ class Project(models.Model):
         import markdown
         self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
+        created = self.created
         super(Project, self).save(*args, **kwargs)
+
+        if not created and notification:
+            notification.send(User.objects.all(), "projects_added_new",
+                              {'project': self})
 
     def get_langs(self):
         # We can filter for only include languages that have a po file
@@ -175,11 +186,18 @@ class Component(models.Model):
     def save(self, *args, **kwargs):
         import markdown
         self.long_description_html = markdown.markdown(self.long_description)
+        created = self.created
         super(Component, self).save(*args, **kwargs)
 
         # Update de-normalized field
         self.project.num_components = self.project.component_set.count()
         self.project.save(*args, **kwargs)
+
+        if not created and notification:
+            notification.send(User.objects.all(), 
+                              "projects_added_new_component",  
+                              {'project': self.project, 
+                              'component': self,})
         
     def get_langs(self):
         # We can filter for only include languages that have a po file

@@ -31,6 +31,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
 
+# To enable notification it must have the email settings configured
+ENABLE_NOTICES = False
+
 # Registration - OpenID
 ugettext = lambda s: s
 LOGIN_URL = '/%s%s' % ('account/', 'signin/')
@@ -92,6 +95,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+
+    "notification.context_processors.notification",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admindocs',
 #    'debug_toolbar',
+    'notification',
     'django_evolution',
     'django_authopenid',
     'transifex',    
