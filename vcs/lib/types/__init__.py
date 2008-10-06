@@ -1,4 +1,5 @@
 import os
+import re
 
 class BrowserError(Exception):
     pass
@@ -84,6 +85,23 @@ class VCSBrowserMixin:
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
 
+    def get_files(self, filefilter=None):
+        """
+        Return files 
+
+        It can be used with a ``filefilter`` parameter to filter the
+        output result to avoid to get all files
+
+        """
+        for rel_root, dirs, files in self.walk():
+            for filename in files:
+                filename = os.path.join(rel_root, filename)
+                if filefilter:
+                    if re.compile(filefilter).match(filename):
+                        yield filename
+                else:
+                    yield filename                
+        
     def teardown_repo(self):
         """
         Remove the local copy of the repository.

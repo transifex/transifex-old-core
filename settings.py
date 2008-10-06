@@ -189,3 +189,15 @@ CVCS_SUBMIT_MSG = """%(date)s  %(userinfo)s
 DVCS_SUBMIT_MSG = """%(message)s
             
 Transmitted-via: Transifex (%(domain)s)"""
+
+
+####################
+# TransManager application settings
+
+# Our Translation Manager choices.
+TRANS_CHOICES = {'POT': 'POT Files',}
+
+# The classes which implement the TransManager support. The full "path" 
+# to the class is the concatenation of the BASE and the NAME of the class.
+TRANS_CLASS_BASE = 'translations.lib.types'
+TRANS_CLASS_NAMES = {'POT': 'pot.POTManager',}

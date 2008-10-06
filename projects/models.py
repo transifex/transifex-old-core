@@ -132,8 +132,6 @@ class Project(models.Model):
             stats.update({lang: ll})
         return stats
 
-
-
 class Component(models.Model):
     """ A component is a translatable resource. """
 
@@ -147,6 +145,15 @@ class Component(models.Model):
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, null=True,
         max_length=1000, help_text=_('Description as HTML.'), editable=False)
+
+    source_lang = models.CharField(max_length=50,
+        help_text=_("Eg: 'en', 'pt_BR', 'el' "))
+    i18n_type = models.CharField(max_length=20,
+                            choices=settings.TRANS_CHOICES.items(),
+        help_text=_('The type of internationalization support (%s)' %
+                    ', '.join(settings.TRANS_CHOICES.keys())))
+    file_filter = models.CharField(max_length=50, blank=True, null=True,
+        help_text=_("Eg: 'po/.*'"))
 
     hidden = models.BooleanField(default=False,
         help_text=_('Hide this object from the list view?'))
@@ -198,11 +205,76 @@ class Component(models.Model):
                               "projects_added_new_component",  
                               {'project': self.project, 
                               'component': self,})
+
+    def set_unit(self, root, branch, type):
+        if self.unit:
+            self.unit.name = self.name
+            self.unit.root = root
+            self.unit.branch = branch
+            self.unit.type = type
+        else:
+            try:
+                u = Unit.objects.create(name=self.name, root=root, 
+                                        branch=branch, type=type)
+                u.save()
+                self.unit = u
+            except IntegrityError:
+                #TODO: Here we should probably send an e-mail to the 
+                # admin, because something very strange would be happening
+                pass
+
+    def init_trans(self):
+        """ Initialize a TransManager instance for the component. """
+        from translations.lib import get_trans_manager
+        self.unit.init_browser()
+        file_set = [f for f in self.unit.browser.get_files(self.file_filter)]
+        self.trans = get_trans_manager(file_set, self.source_lang, 
+                                       self.i18n_type, self.unit.browser.path)
+
+    # FIXME: Change this logic inside the POTManager
+    def set_stats_for_lang(self, lang):
+        """ Sets stats for a determinated language. """
+        from translations.lib.types.pot import POTStatsError
+
+        self.init_trans()
+
+        try:
+            stats = self.trans.get_stat(lang)
+            f = self.trans.get_langfile(lang)
+            s = POStatistic.objects.filter(object_id=self.id, filename=f)[0]
+        except POTStatsError:
+            # TODO: It should probably be raised when a checkout of a 
+            # module has a problem. Needs to decide what to do when it
+            # happens
+            pass
+        except DoesNotExist:
+            try:
+                l = Language.objects.get(code=lang)
+            except DoesNotExist:
+                l = None
+            s = POStatistic.objects.create(lang=l, filename=f, object=self)      
+
+        s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
+                    untrans=stats['untranslated'])
+        s.save()
+
+
+    def set_stats(self):
+        """
+        This method is responsable to set up the statistics for a 
+        component, calculing the stats for each translation present on it.
+        """
+        # Initializing the component's unit
+        self.unit.init_browser()
+        # Unit checkout
+        self.unit.browser.init_repo()
+        # Creating and Initializing the TransManager
+        self.init_trans()
+        for lang in self.trans.get_langs():
+            self.set_stats_for_lang(lang)
         
     def get_langs(self):
-        # We can filter for only include languages that have a po file
-        # for this module if we want. Now we are showing up all langs.
-        return Language.objects.all()
+        return POStatistic.get_langs_for_object(self)
 
     def get_lang_stats(self, lang):
         return POStatistic.get_stats_for_lang_object(lang, self)
