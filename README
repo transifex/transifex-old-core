@@ -1,24 +1,34 @@
 Transifex.com
 =============
 
-The website transifex.com.
+The website transifex.net
 
-Dependancies
+Dependencies
 ------------
 
-* On Fedora run: 
-  * ``yum install Django python-markdown python-openid python-httplib2``
+* Transifex is developed on top of Django. Install Django using the 
+  install package tool of your system or just download it from:
+  http://www.djangoproject.com/
+   
+* Some of the dependencies can be installed by using easy_install:
+  ``easy_install markdown python-openid httplib2``
 
-* [http://code.google.com/p/django-tagging django-tagging]
-* [http://code.google.com/p/django_authopenid django_authopenid]
-* [http://code.google.com/p/django-pagination django-pagination]
-* [http://code.google.com/p/django-contact-form django-contact_form]
-* For notifications:
- - [http://code.google.com/p/django-notification django-notification]
- - [http://code.google.com/p/django-atompub/ django-atompub]
-* Markdown
+* All the others application denpendencies can be downloaded from 
+  http://code.google.com/p/<application name> and then installed by 
+  using the setup.py or creating a symbolic link as following:
 
-Install
+  * django-tagging (python setup.py install)
+  * django_authopenid (python setup.py install)
+  * django-pagination (create a symbolic link in your PYTHONPATH)
+  * django-contact-form (python setup.py install)
+
+  * For notifications (it's optional):
+   - django-notification (create a symbolic link in your PYTHONPATH)
+   - http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
+     (download it and rename to atomformat.py and put it somewhere in 
+     your PYTHONPATH)
+
+Install Transifex
 -------
 
 * Customize ``settings.py`` and ``urls.py``.
