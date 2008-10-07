@@ -12,11 +12,15 @@ urlpatterns = patterns('',
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^account/', include('django_authopenid.urls')),
-    (r'^notices/', include('notification.urls')),
 )
 
 if settings.STATIC_SERVE:
     urlpatterns += patterns('',
         (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
          {'document_root': settings.MEDIA_ROOT}),
+    )
+
+if settings.ENABLE_NOTICES:
+    urlpatterns += patterns('',
+        (r'^notices/', include('notification.urls')),
     )

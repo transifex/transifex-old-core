@@ -85,6 +85,7 @@ class VCSBrowserMixin:
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
 
+    #FIXME: Filtering should be put in a different method.
     def get_files(self, filefilter=None):
         """
         Return files 

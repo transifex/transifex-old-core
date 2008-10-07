@@ -18,7 +18,7 @@ feeds = {
 
 urlpatterns = patterns('',
     url(
-        regex = r'^feeds/(?P<url>[-\w]+)$',
+        regex = r'^feeds/(?P<url>[-\w]+)/$',
         view = 'django.contrib.syndication.views.feed',
         name = 'project_feed',
         kwargs = {'feed_dict': feeds}),
@@ -31,13 +31,13 @@ urlpatterns += patterns('django.views.generic',
         name = 'project_add',
         kwargs = {'model': Project}),
     url(
-        regex = '^(?P<slug>[-\w]+)/edit$',
+        regex = '^(?P<slug>[-\w]+)/edit/$',
         view = 'create_update.update_object',
         name = 'project_edit',
         kwargs = {'model': Project,
                   'template_object_name': 'project'}),
     url(
-        regex = '^(?P<slug>[-\w]+)/delete$',
+        regex = '^(?P<slug>[-\w]+)/delete/$',
         view = 'create_update.delete_object',
         name = 'project_delete',
         kwargs = {'model': Project,
@@ -59,28 +59,28 @@ urlpatterns += patterns('django.views.generic',
 # Components
 urlpatterns += patterns('',
     url(
-        regex = '^(?P<slug>[-\w]+)/add-component$',
+        regex = '^(?P<slug>[-\w]+)/add-component/$',
         view = component_create_object,
         name = 'component_add',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit$',
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit/$',
         view = component_edit,
         kwargs = project_list,
         name = 'component_edit',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/delete$',
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/delete/$',
         view = component_delete,
         name = 'component_delete',
         kwargs = {'model': Component,
                   'template_object_name': 'component'}),
     url (
-        regex = '^(?P<slug>[-\w]+)/components/added$',
+        regex = '^(?P<slug>[-\w]+)/components/added/$',
         view = 'django.views.generic.list_detail.object_detail',
         kwargs = {'object_list': project_list,
                   'message': 'Component added.' },
         name = 'component_added'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)$',
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/$',
         view = component_detail,
         kwargs = project_list,
         name = 'component_detail'),

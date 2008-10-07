@@ -11,16 +11,23 @@ Dependancies
 
 * [http://code.google.com/p/django-tagging django-tagging]
 * [http://code.google.com/p/django_authopenid django_authopenid]
-* [http://code.google.com/p/django_authopenid]
 * [http://code.google.com/p/django-pagination django-pagination]
 * [http://code.google.com/p/django-contact-form django-contact_form]
-* markdown
+* For notifications:
+ - [http://code.google.com/p/django-notification django-notification]
+ - [http://code.google.com/p/django-atompub/ django-atompub]
+* Markdown
 
 Install
 -------
 
 * Customize ``settings.py`` and ``urls.py``.
 * Run ``./manage.py syncdb``
+* Run ``./manage.py runserver 8088``.
+
+To enable debugging, run the server as follows:
+
+``./manage.py runserver --settings settings_debug``  
 
 Testing
 -------

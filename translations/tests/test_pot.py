@@ -70,4 +70,5 @@ class POTTestCase(unittest.TestCase):
         """Test that tm.browser.get_langfile works properly."""
 
         file = self.c.trans.get_langfile('pt_BR')
+#        self.assertTrue(file)
         self.assertTrue(len(file)>0)

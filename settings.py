@@ -1,4 +1,4 @@
-# Django settings for txc project.
+    # Django settings for txc project.
 
 import os
 
@@ -31,7 +31,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
 
-# To enable notification it must have the email settings configured
+# Notifications
+# Enable notifications (requires working email settings)
+# TODO: Make notifications not crash the app if email sending doesn't work.
 ENABLE_NOTICES = False
 
 # Registration - OpenID
@@ -41,12 +43,13 @@ LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 
 # Database configuration
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'txc.db.sqlite'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASE_ENGINE = 'sqlite3'                             # 'postgresql', ...
+DATABASE_NAME = os.path.join(PROJECT_PATH, 'txc.db.sqlite')  # Use file path for sqlite3
+# The following are not used for sqlite3
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+DATABASE_HOST = ''             # Set to empty string for localhost.
+DATABASE_PORT = ''             # Set to empty string for default.
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -95,8 +98,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-
-    "notification.context_processors.notification",
+#    "notification.context_processors.notification",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,11 +109,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django_authopenid.middleware.OpenIDMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
-
-#INTERNAL_IPS = ('127.0.0.1',)
-
 
 ROOT_URLCONF = 'urls'
 
@@ -129,15 +127,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admindocs',
-#    'debug_toolbar',
-    'notification',
-    'django_evolution',
+#    'notification',
     'django_authopenid',
-    'transifex',    
     'tagging',
     'pagination',
     'contact_form',
     # txo specific apps:
+    'transifex',    
     'vcs',
     'translations',
     'projects',
@@ -201,3 +197,14 @@ TRANS_CHOICES = {'POT': 'POT Files',}
 # to the class is the concatenation of the BASE and the NAME of the class.
 TRANS_CLASS_BASE = 'translations.lib.types'
 TRANS_CLASS_NAMES = {'POT': 'pot.POTManager',}
+
+
+#####################
+# EXTRA LOCAL SETTINGS
+
+# Put any settings specific to the particular host in local_settings.py
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
