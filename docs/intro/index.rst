@@ -1,0 +1,11 @@
+.. _intro-index:
+
+Getting started
+===============
+
+.. toctree::
+   :maxdepth: 1
+   
+   overview 
+   install
+   credits

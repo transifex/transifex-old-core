@@ -1,0 +1,163 @@
+.. _intro-install:
+
+Quick install guide
+===================
+
+Before you can use Transifex, you'll need to get it installed. This guide 
+will guide you to a simple, minimal installation that'll work while you 
+walk through the introduction.
+
+Installing Python
+-----------------
+
+Being a Python Web tool, Transifex requires Python. We recommend 
+installing Python 2.5 or later.
+
+Get Python at http://www.python.org. If you're running Linux or Mac OS X, 
+you probably already have it installed.
+
+You can verify that Python's installed by typing ``python`` from your 
+shell; you should see something like::
+
+  Python 2.5.1 (r251:54863, Jun 15 2008, 18:24:51)
+  [GCC 4.3.0 20080428 (Red Hat 4.3.0-8)] on linux2
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>>
+  
+Installing the Version Control Systems - VCS
+--------------------------------------------
+
+To run Transifex you need some VCS. Dependending of which ones you want 
+to use, you will need to install some of the following packages:
+
+  * Mercurial (hg)
+  * Git (git)
+  * Subversion (svn)
+  * CVS (cvs) - not implemented yet
+  * Bazaar (bzr) - not implemented yet
+
+On Fedora you can run the following command to install all those VCS:
+
+  .. code-block:: bash
+
+   yum install cvs subversion mercurial git bzr
+
+Some extra Python packages needed
+---------------------------------
+
+For provide some features as markdown and to cover some other 
+:ref:`django applications dependencies<install-django-app>`, you need 
+to install:
+
+  * Markdown
+  * Python-openid
+  * Httplib2
+
+You can install by using ``easy_install``:
+
+  .. code-block:: bash
+
+   easy_install markdown python-openid httplib2
+
+
+or on Fedora you can run:
+
+  .. code-block:: bash
+
+   yum install python-markdown python-openid python-httplib2
+
+Installing Django
+-----------------
+
+Transifex is developed on top a Python Web Framework called Django. We 
+recommend installing Django 1.0. You can get more information about how
+to install Django in your system referring http://docs.djangoproject.com.
+
+On Fedora you can just run:
+
+  .. code-block:: bash
+
+   yum install Django
+
+.. _install-django-app:
+
+Installing Django applications depedencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Django supports to use different applications inside a Django project. 
+Transifex does use some of this available applications to provide some 
+specific features as OpenID support, notifications, pagination, tagging,
+contact-form, etc.
+
+All those application denpendencies can be downloaded from 
+http://code.google.com/p/<application_name> and then installed by using 
+the setup.py or creating a symbolic link as following:
+
+  * django-tagging_ (python setup.py install)
+  * django_authopenid_ (python setup.py install)
+  * django-pagination_ (create a symbolic link in your PYTHONPATH)
+  * django-contact-form_ (python setup.py install)
+
+.. _django-tagging: http://code.google.com/p/django-tagging
+.. _django_authopenid: http://code.google.com/p/django_authopenid
+.. _django-pagination: http://code.google.com/p/django-pagination
+.. _django-contact-form: http://code.google.com/p/django-contact-form
+
+For notifications (it's optional):
+
+  * django-notification_ (create a symbolic link in your PYTHONPATH)
+  * http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
+    (download it and rename to ``atomformat.py`` and put it somewhere in 
+    your PYTHONPATH)
+
+.. _django-notification: http://code.google.com/p/django-notification
+
+Installing Transifex
+--------------------
+
+After you have all dependencies and packages installed, the Transifex 
+installation should be very simple. You only need to customize the 
+``settings.py``, ``urls.py``, and then run:
+
+  .. code-block:: bash
+
+   ./manage.py syncdb
+   ./manage.py runserver 8088
+
+To enable debugging, run the server as follows:
+
+  .. code-block:: bash
+
+   ./manage.py runserver --settings settings_debug
+
+Initializing some data
+~~~~~~~~~~~~~~~~~~~~~~
+
+Transifex uses the fixtures feature of Django to load some initial datas
+in the database.
+
+  .. note::
+ 
+    Make sure you have executed the ``./manage.py syncdb``
+    command before run the following commands.
+
+  .. code-block:: bash
+
+   ./manage.py loaddata vcs/fixtures/sample_data.json
+   ./manage.py loaddata projects/fixtures/sample_data.json
+   ./manage.py loaddata translations/fixtures/sample_data.json
+
+Testing
+-------
+
+For testing the whole project you can run:
+
+  .. code-block:: bash
+
+   ./manage.py test
+
+For testing a specific application inside Transifex you can run:
+
+  .. code-block:: bash
+
+   ./manage.py test projects
