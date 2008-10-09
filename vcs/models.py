@@ -89,7 +89,8 @@ def suite():
     #    for vcs_type in settings.VCS_CHOICES:
     #        vcs_browser = import_to_python('vcs.lib.types' % vcs_type)
     #        s.addTest(doctest.DocTestSuite(vcs_browser))
-    from vcs.lib.types import (git, hg, svn)
+    from vcs.lib.types import (bzr, git, hg, svn)
+    s.addTest(doctest.DocTestSuite(bzr))
     s.addTest(doctest.DocTestSuite(git))
     s.addTest(doctest.DocTestSuite(hg))
     s.addTest(doctest.DocTestSuite(svn))

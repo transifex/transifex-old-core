@@ -150,16 +150,17 @@ SCRATCH_DIR = os.path.join('/tmp', 'scratchdir')
 
 # Directories where checked-out units will be put.
 REPOSITORIES_PATH = os.path.join(SCRATCH_DIR, 'sources')
+
 # Per-VCS checkout directories, in case an override is required. The final
 # location of a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
-#BZR_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'bzr')
+BZR_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'bzr')
 #CVS_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'cvs')
 GIT_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'git')
 HG_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'hg')
 SVN_REPO_PATH = os.path.join(REPOSITORIES_PATH, 'svn')
 
 # Our VCS choices. This feeds the Unit model with the available options.
-VCS_CHOICES = {#'bzr': 'Bazaar'
+VCS_CHOICES = {'bzr': 'Bazaar',
                #'cvs': 'CVS',
                'hg': 'Mercurial',
                'git': 'Git',
@@ -168,7 +169,7 @@ VCS_CHOICES = {#'bzr': 'Bazaar'
 # The classes which implement the VCS support. The full "path" to the class
 # is the concatenation of the BASE and the NAME of the class.
 BROWSER_CLASS_BASE = 'vcs.lib.types'
-BROWSER_CLASS_NAMES = {#'bzr': 'bzr.BzrBrowser',
+BROWSER_CLASS_NAMES = {'bzr': 'bzr.BzrBrowser',
                        #'cvs': 'cvs.CvsBrowser',
                        'hg': 'hg.HgBrowser',
                        'git': 'git.GitBrowser',
