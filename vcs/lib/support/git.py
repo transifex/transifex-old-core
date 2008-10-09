@@ -2,8 +2,9 @@ import os
 from vcs.lib import (_Repo, RepoError)
 from vcs.lib.support.commands import run_command
 
-##########
-## Handle low-level bits required by git.
+"""
+Handle low-level bits required by git.
+"""
 
 
 def repository(path=''):
@@ -49,6 +50,7 @@ class GitRepo(_Repo):
         return self.run(cmd, *args[1:], **kwargs)
 
     add = _git_factory('add')
+    branch = _git_factory('branch')
     checkout = _git_factory('checkout')
     reset = _git_factory('reset')
     status = _git_factory('status')
@@ -58,5 +60,3 @@ class GitRepo(_Repo):
     fetch = _git_factory('fetch')
     push = _git_factory('push')
     pull = _git_factory('pull')
-
-
