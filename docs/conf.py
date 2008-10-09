@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Trac documentation build configuration file, created by
-# sphinx-quickstart on Wed May 14 09:05:13 2008.
+# Transifex documentation build configuration file, created by
+# sphinx-quickstart on Fri Sep 26 13:37:22 2008 +0300.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -11,16 +11,11 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
+import sys
+import os
 
-# If your extensions are in another directory, add it here. If the directory
-# is relative to the documentation root, use os.path.abspath to make it
-# absolute, like shown here.
+# If your extensions are in another directory, add it here.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-#sys.path.append(os.path.abspath('/home/mits/devel/txc/txc-docs/'))
-
 
 # General configuration
 # ---------------------
@@ -30,25 +25,25 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 extensions = ['sphinx.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['.templates']
+templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = '.rst'
+source_suffix = '.txt'
 
 # The master toctree document.
 master_doc = 'index'
 
 # General substitutions.
 project = 'Transifex'
-copyright = '2008, Dimitris Glezos and the Transifex team'
+copyright = 'Dimitris Glezos and contributors'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.4-devel'
+version = '0.5'
 # The full version, including alpha/beta/rc tags.
-release = version
+release = '0.5-devel'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -64,19 +59,18 @@ today_fmt = '%B %d, %Y'
 #exclude_dirs = []
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
-#add_function_parentheses = True
+add_function_parentheses = True
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-#add_module_names = True
+add_module_names = False
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
-#show_authors = False
+show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
-
+pygments_style = 'trac'
 
 # Options for HTML output
 # -----------------------
@@ -97,7 +91,7 @@ html_style = 'default.css'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['.static']
+html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -105,20 +99,20 @@ html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
-#html_use_smartypants = True
+html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
-#html_additional_pages = {}
+html_additional_pages = {}
 
 # If false, no module index is generated.
 #html_use_modindex = True
 
 # If true, the reST sources are included in the HTML build as _sources/<name>.
-#html_copy_source = True
+html_copy_source = True
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
@@ -143,7 +137,7 @@ htmlhelp_basename = 'Transifexdoc'
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
-latex_documents = [
+latex_documents = [('contents')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -162,3 +156,5 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+latex_use_parts = True
