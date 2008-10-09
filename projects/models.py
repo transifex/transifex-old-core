@@ -183,6 +183,9 @@ class Component(models.Model):
         return ('component_detail', None,
                 { 'project_slug': self.project.slug,
                  'component_slug': self.slug })
+    @property
+    def fullname(self):
+        return '.'.join([self.project.slug, self.slug])
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
@@ -212,14 +215,14 @@ class Component(models.Model):
     def set_unit(self, root, branch, type, web_frontend=None):
         """Associate a unit with this component."""
         if self.unit:
-            self.unit.name = self.name
+            self.unit.name = self.fullname
             self.unit.root = root
             self.unit.branch = branch
             self.unit.type = type
             self.unit.web_frontend = web_frontend
         else:
             try:
-                u = Unit.objects.create(name=self.name, root=root, 
+                u = Unit.objects.create(name=self.fullname, root=root, 
                                         branch=branch, type=type, 
                                         web_frontend=web_frontend)
                 u.save()
