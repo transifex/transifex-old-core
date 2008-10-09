@@ -73,6 +73,10 @@ urlpatterns += patterns('',
         name = 'component_delete',
         kwargs = {'model': Component,
                   'template_object_name': 'component'}),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/set_stats/$',
+        view = component_set_stats,
+        name = 'component_set_stats',),
     url (
         regex = '^(?P<slug>[-\w]+)/components/added/$',
         view = 'django.views.generic.list_detail.object_detail',

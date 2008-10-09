@@ -61,3 +61,15 @@ def component_delete(request, project_slug, component_slug, *args, **kwargs):
         post_delete_redirect = '/projects/%s' % project.slug,
     )
 component_detail.__doc__ = create_update.delete_object.__doc__
+
+
+def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
+    #TODO: Make this one query
+    project = get_object_or_404(Project, slug__iexact=project_slug)
+    component = get_object_or_404(Component, slug__exact=component_slug,
+                                  project=project)
+    # Calcule statistics
+    component.set_stats()
+
+    return HttpResponseRedirect(reverse('projects.views.component_detail', args=(project_slug, component_slug,)))
+
