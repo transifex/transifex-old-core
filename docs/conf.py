@@ -46,7 +46,7 @@ copyright = '2008, Dimitris Glezos and the Transifex team'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = 'devel'
+version = '0.4-devel'
 # The full version, including alpha/beta/rc tags.
 release = version
 
