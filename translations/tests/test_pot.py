@@ -41,14 +41,14 @@ class POTTestCase(unittest.TestCase):
         self.c.delete()
         self.p.delete()
 
-    def test_get_stats(self):
-        """Test that tm.browser.get_stats works properly."""
+    def test_calcule_stats(self):
+        """Test that tm.browser.calcule_stats works properly."""
 
-        stats = self.c.trans.get_stat('pt_BR')
+        stats = self.c.trans.calcule_stats('pt_BR')
         self.assertTrue(len(stats)>0)
 
         try:
-            stats = self.c.trans.get_stat('--')
+            stats = self.c.trans.calcule_stats('--')
         except POTStatsError:
             pass
         else:
@@ -70,5 +70,4 @@ class POTTestCase(unittest.TestCase):
         """Test that tm.browser.get_langfile works properly."""
 
         file = self.c.trans.get_langfile('pt_BR')
-#        self.assertTrue(file)
         self.assertTrue(len(file)>0)
