@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
+from translations.models import POStatistic, Language
 
 # I couldn't import this file from a separated dir
 import libpo as po 
@@ -48,7 +49,7 @@ class POTManager(TransManagerMixin):
         langs.sort()
         return langs
 
-    def get_stat(self, lang):
+    def calcule_stats(self, lang):
         """ 
         Return the statistics of a specificy language for a 
         component 
@@ -57,6 +58,28 @@ class POTManager(TransManagerMixin):
             file_path = os.path.join(self.path, self.get_langfile(lang))
             entries = po.read(file_path)
             return po.stats(entries)
-        except:
+        except AttributeError:
             raise POTStatsError, lang
 
+    def create_stats(self, lang, component):
+        """Set the statistics of a specificy language for a component."""
+        try:
+            stats = self.calcule_stats(lang)
+            f = self.get_langfile(lang)
+            s = POStatistic.objects.get(object_id=component.id, 
+                                            filename=f)
+        except POTStatsError:
+            # TODO: It should probably be raised when a checkout of a 
+            # module has a problem. Needs to decide what to do when it
+            # happens
+            pass
+        except POStatistic.DoesNotExist:
+            try:
+                l = Language.objects.get(code=lang)
+            except Language.DoesNotExist:
+                l = None
+            s = POStatistic.objects.create(lang=l, filename=f, 
+                                           object=component)
+        s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
+                    untrans=stats['untranslated'])
+        return s

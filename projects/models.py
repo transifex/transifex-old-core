@@ -16,7 +16,6 @@ from vcs.models import Unit
 if settings.ENABLE_NOTICES:
     from notification import models as notification
 
-
 class Project(models.Model):
     """A project is a collection of translatable resources.
 
@@ -210,17 +209,19 @@ class Component(models.Model):
                               {'project': self.project, 
                               'component': self,})
 
-    def set_unit(self, root, branch, type):
+    def set_unit(self, root, branch, type, web_frontend=None):
         """Associate a unit with this component."""
         if self.unit:
             self.unit.name = self.name
             self.unit.root = root
             self.unit.branch = branch
             self.unit.type = type
+            self.unit.web_frontend = web_frontend
         else:
             try:
                 u = Unit.objects.create(name=self.name, root=root, 
-                                        branch=branch, type=type)
+                                        branch=branch, type=type, 
+                                        web_frontend=web_frontend)
                 u.save()
                 self.unit = u
             except IntegrityError:
@@ -231,38 +232,24 @@ class Component(models.Model):
     def init_trans(self):
         """ Initialize a TransManager instance for the component. """
         from translations.lib import get_trans_manager
-        self.unit.init_browser()
-        file_set = [f for f in self.unit.browser.get_files(self.file_filter)]
-        self.trans = get_trans_manager(file_set, self.source_lang, 
+        self.trans = get_trans_manager(self.get_files(), self.source_lang, 
                                        self.i18n_type, self.unit.browser.path)
+
+    def get_files(self):
+        """Return a list of filtered files for the component."""
+        self.unit.init_browser()
+        return [f for f in self.unit.browser.get_files(self.file_filter)]
+
 
     # FIXME: Move this logic inside the POTManager
     def set_stats_for_lang(self, lang):
         """ Sets stats for a determinated language. """
-        from translations.lib.types.pot import POTStatsError
 
+        # Setting self.trans up
         self.init_trans()
 
-        try:
-            stats = self.trans.get_stat(lang)
-            f = self.trans.get_langfile(lang)
-            s = POStatistic.objects.filter(object_id=self.id, filename=f)[0]
-        except POTStatsError:
-            # TODO: It should probably be raised when a checkout of a 
-            # module has a problem. Needs to decide what to do when it
-            # happens
-            pass
-        except DoesNotExist:
-            try:
-                l = Language.objects.get(code=lang)
-            except DoesNotExist:
-                l = None
-            s = POStatistic.objects.create(lang=l, filename=f, object=self)      
-
-        s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
-                    untrans=stats['untranslated'])
+        s = self.trans.create_stats(lang, self)
         s.save()
-
 
     def set_stats(self):
         """
@@ -273,8 +260,11 @@ class Component(models.Model):
         self.unit.init_browser()
         # Unit checkout
         self.unit.browser.init_repo()
-        # Creating and Initializing the TransManager
+        # Creating and Initializing the TransManager in self.trans
         self.init_trans()
+        # Deleting all stats for the component
+        POStatistic.delete_stats_for_object(self)
+
         for lang in self.trans.get_langs():
             self.set_stats_for_lang(lang)
         
