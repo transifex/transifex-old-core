@@ -14,7 +14,7 @@ class SvnBrowser(VCSBrowserMixin):
    
     Subversion homepage: http://subversion.tigris.org/
 
-    >>> b = SvnBrowser(name='test-svn', branch='tip',
+    >>> b = SvnBrowser(name='test-svn', branch='trunk',
     ... root='http://svn.fedorahosted.org/svn/system-config-language')
     >>> SvnBrowser(root='foo', name='../..', branch='trunk')
     Traceback (most recent call last):
@@ -26,8 +26,13 @@ class SvnBrowser(VCSBrowserMixin):
     # We are using the pysvn module.
     # Pysvn is somewhat different from the mercurial and git apis.
     # We have to specify the full path to svn commands in order to work.
- 
-    def __init__(self, root, name, branch):
+
+    def __init__(self, root, name=None, branch='trunk'):
+        # If name isn't given, let's take the last part of the root
+        # Eg. root = 'http://example.com/foo/baz' -> name='baz'
+        if not name:
+            name = root.split('/')[-1]
+
         self.root = root
         self.name = name
         self.branch = branch
@@ -41,14 +46,16 @@ class SvnBrowser(VCSBrowserMixin):
             
         self.client = pysvn.Client()
 
+
     @property
     def remote_path(self):
         """Calculate remote path using the standard svn layout."""
         if self.branch == u'trunk':
             repo_path = "%s/trunk" % self.root
         else:
-            repo_path += "%s/branches/%" % (self.root, self.branch)
+            repo_path = "%s/branches/%s" % (self.root, self.branch)
         return repo_path
+
 
     def init_repo(self):
         """
@@ -61,6 +68,7 @@ class SvnBrowser(VCSBrowserMixin):
 
         self.client.checkout(self.remote_path, self.path)
 
+
     def _clean_dir(self):
         """
         Clean the local working directory.
@@ -70,6 +78,7 @@ class SvnBrowser(VCSBrowserMixin):
         
         """
         self.client.revert(self.path, recurse=True)
+
 
     def update(self):
         """

@@ -8,6 +8,7 @@ HG_REPO_PATH = settings.HG_REPO_PATH
 
 
 class HgBrowser(VCSBrowserMixin):
+
     """
     A browser class for Mercurial repositories.
     
@@ -21,8 +22,14 @@ class HgBrowser(VCSBrowserMixin):
     AssertionError: Unit checkout path outside of nominal repo checkout path.
     
     """
-    
-    def __init__(self, root, name, branch):
+
+   
+    def __init__(self, root, name=None, branch='tip'):
+        # If name isn't given, let's take the last part of the root
+        # Eg. root = 'http://example.com/foo/baz' -> name='baz'
+        if not name:
+            name = root.split('/')[-1]
+        
         self.root = root
         self.branch = branch
         
@@ -34,12 +41,14 @@ class HgBrowser(VCSBrowserMixin):
             [self.path, HG_REPO_PATH]) == HG_REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
 
+
     @property
     def remote_path(self):
         """Return remote path for cloning."""
         return str(self.root)
 
-    def init_repo(self):
+
+    def setup_repo(self):
         """
         Initialize repository for the first time.
         
@@ -48,18 +57,32 @@ class HgBrowser(VCSBrowserMixin):
         hg update <branch>
         
         """
+
+        try:
+            remote_repo, repo = hg.clone(ui.ui(), self.remote_path,
+                                         self.path)
+            commands.update(repo.ui, repo, self.branch)
+            #TODO: Why is the following needed, since it's defined above?
+            repo = hg.repository(ui.ui(), self.path)
+        except RepoError, e:
+            # Remote repo error
+            raise BrowserError, e
+
+        return repo
+
+
+    def init_repo(self):
+        """
+        Initialize the ``repo`` variable on the browser.
+        
+        If local repo exists, use that. If not, clone it.
+        """
+        
         try:
             self.repo = hg.repository(ui.ui(), self.path)
         except RepoError:
-            # Repo does not exist, create it.
-            try:
-                remote_repo, self.repo = hg.clone(ui.ui(), self.remote_path,
-                                                  self.path)
-                commands.update(self.repo.ui, self.repo, self.branch)
-                self.repo = hg.repository(ui.ui(), self.path)
-            except RepoError, e:
-                # Remote repo error
-                raise BrowserError, e
+            self.repo = self.setup_repo()
+
 
     def _clean_dir(self):
         """
@@ -70,6 +93,7 @@ class HgBrowser(VCSBrowserMixin):
         
         """
         commands.revert(self.repo.ui, self.repo, date=None, rev=None, all=True, no_backup=True)
+
 
     def update(self):
         """

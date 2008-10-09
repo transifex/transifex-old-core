@@ -1,3 +1,4 @@
+from mercurial.repo import RepoError
 import os
 from django.conf import settings
 from vcs.lib import (RepoError, _Repo)
@@ -23,7 +24,13 @@ class GitBrowser(VCSBrowserMixin):
     
     """
 
-    def __init__(self, root, name, branch):
+
+    def __init__(self, root, name=None, branch='master'):
+        # If name isn't given, let's take the last part of the root
+        # Eg. root = 'http://example.com/foo/baz' -> name='baz'
+        if not name:
+            name = root.split('/')[-1]
+
         self.root = root
         self.branch = branch
 
@@ -32,13 +39,15 @@ class GitBrowser(VCSBrowserMixin):
         assert os.path.commonprefix(
             [self.path, GIT_REPO_PATH]) == GIT_REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
-            
+
+
     @property
     def remote_path(self):
         """Return remote path for cloning."""
         return str(self.root)
 
-    def init_repo(self):
+
+    def setup_repo(self):
         """
         Initialize repository for the first time.
         
@@ -49,19 +58,31 @@ class GitBrowser(VCSBrowserMixin):
             git co <branch>
         
         """
-        try:
-            self.repo = clone(self.remote_path, self.path)
-        except RepoError:
-            pass
-        
-        if self.branch == u'master':
-            return
 
-        # Non master branches
-        remote_branch = 'origin/%s' % self.branch
+        repo = clone(self.remote_path, self.path)
+
+        # Non master branches need more work:
+        if self.branch != u'master':
+            remote_branch = 'origin/%s' % self.branch
+    
+            repo.branch(self.branch, remote_branch)
+            repo.checkout(self.branch)
         
-        self.repo.branch(self.branch, remote_branch)
-        self.repo.checkout(self.branch)
+        return repo
+
+
+    def init_repo(self):
+        """
+        Initialize the ``repo`` variable on the browser.
+        
+        If local repo exists, use that. If not, clone it.
+        """
+        
+        try:
+            self.repo = repository(self.path)
+        except RepoError:
+            self.repo = self.setup_repo()
+
 
     def update(self):
         """
