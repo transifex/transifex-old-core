@@ -25,8 +25,8 @@ def get_browser_class(vcs_type):
     Return the appropriate VCS browser class.
     
     Keyword arguments:
-    vcs type -- The type of the VCS, used to decide the class
-                to be returned.
+    vcs type -- The type of the VCS, used to decide the class to be 
+    returned.
     
     >>> print get_browser_class('hg')
     vcs.lib.types.hg.HgBrowser

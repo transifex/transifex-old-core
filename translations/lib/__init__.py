@@ -21,7 +21,7 @@ def get_tm_class(trans_type):
     
     Keyword arguments:
     trans_type -- The type of the TransManager, used to decide the class
-                to be returned.
+    to be returned.
     
     >>> print get_tm_class('POT')
     translations.lib.types.pot.POTManager
