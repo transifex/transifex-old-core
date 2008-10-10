@@ -19,11 +19,12 @@ you probably already have it installed.
 You can verify that Python's installed by typing ``python`` from your 
 shell; you should see something like::
 
-  Python 2.5.1 (r251:54863, Jun 15 2008, 18:24:51)
-  [GCC 4.3.0 20080428 (Red Hat 4.3.0-8)] on linux2
-  Type "help", "copyright", "credits" or "license" for more information.
-  >>>
-  
+    Python 2.5.1 (r251:54863, Jun 15 2008, 18:24:51)
+    [GCC 4.3.0 20080428 (Red Hat 4.3.0-8)] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+
 Installing the Version Control Systems - VCS
 --------------------------------------------
 
@@ -36,11 +37,10 @@ to use, you will need to install some of the following packages:
 * Mercurial (hg)
 * Subversion (svn)
 
-On Fedora you can run the following command to install all those VCS:
+On Fedora you can run the following command to install all those VCS::
 
-  .. code-block:: bash
+    yum install cvs subversion mercurial git bzr bzrtools
 
-   yum install cvs subversion mercurial git bzr bzrtools
 
 Some extra Python packages needed
 ---------------------------------
@@ -49,22 +49,18 @@ For provide some features as markdown and to cover some other
 :ref:`django applications dependencies<install-django-app>`, you need 
 to install:
 
-  * Markdown
-  * Python-openid
-  * Httplib2
+* Markdown
+* Python-openid
+* Httplib2
 
-You can install by using ``easy_install``:
-
-  .. code-block:: bash
+You can install by using ``easy_install``::
 
    easy_install markdown python-openid httplib2
 
-
-or on Fedora you can run:
-
-  .. code-block:: bash
+or on Fedora you can run::
 
    yum install python-markdown python-openid python-httplib2
+
 
 Installing Django
 -----------------
@@ -73,30 +69,29 @@ Transifex is developed on top a Python Web Framework called Django. We
 recommend installing Django 1.0. You can get more information about how
 to install Django in your system referring http://docs.djangoproject.com.
 
-On Fedora you can just run:
+On Fedora you can just run::
 
-  .. code-block:: bash
-
-   yum install Django
+    yum install Django
 
 .. _install-django-app:
 
-Installing Django applications depedencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installing Django applications dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Django supports to use different applications inside a Django project. 
 Transifex does use some of this available applications to provide some 
 specific features as OpenID support, notifications, pagination, tagging,
 contact-form, etc.
 
-All those application denpendencies can be downloaded from 
-http://code.google.com/p/<application_name> and then installed by using 
+All those application dependencies can be downloaded from 
+``http://code.google.com/p/<application_name>`` and then installed by using 
 the setup.py or creating a symbolic link as following:
 
-  * django-tagging_ (python setup.py install)
-  * django_authopenid_ (python setup.py install)
-  * django-pagination_ (create a symbolic link in your PYTHONPATH)
-  * django-contact-form_ (python setup.py install)
+* django-tagging_ (``python setup.py install``)
+* django_authopenid_ (``python setup.py install``)
+* django-pagination_ (create a symbolic link in your ``PYTHONPATH``)
+* django-contact-form_ (``python setup.py install``)
 
 .. _django-tagging: http://code.google.com/p/django-tagging
 .. _django_authopenid: http://code.google.com/p/django_authopenid
@@ -105,24 +100,54 @@ the setup.py or creating a symbolic link as following:
 
 For notifications (it's optional):
 
-  * django-notification_ (create a symbolic link in your PYTHONPATH)
-  * http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
-    (download it and rename to ``atomformat.py`` and put it somewhere in 
-    your PYTHONPATH)
+* django-notification_ (create a symbolic link in your ``PYTHONPATH``)
+* http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
+  (download it and rename to ``atomformat.py`` and put it somewhere in 
+  your ``PYTHONPATH``)
 
 .. _django-notification: http://code.google.com/p/django-notification
+
+
+A note on ``PythonPath``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+These applications can be installed anywhere on your system, as long as Python
+can find them. Python uses the ``PythonPath`` environment variable for this.
+The value you use for ``PythonPath`` should include the parent directories of
+all the modules you are going to import in your application. It should also
+include the parent directory of Transifex itself.
+This is exactly the same situation as
+setting the Python path for interactive usage. Whenever you try to import
+something, Python will run through all the directories in ``sys.path`` in turn,
+from first to last, and try to import from each directory until one succeeds.
+
+An example might make this clearer. Suppose you have some applications under
+``/usr/local/django-apps/`` (for example, ``/usr/local/django-apps/weblog/`` and
+so forth), your settings file is at ``/var/www/mysite/settings.py`` and you have
+specified :ref:`DJANGO_SETTINGS_MODULE <django-settings-module>` as in the above
+example. In this case, you would need to write your ``PythonPath`` directive
+as::
+
+    PythonPath "['/usr/local/django-apps/', '/var/www'] + sys.path"
+
+With this path, ``import weblog`` and ``import mysite.settings`` will both
+work. If you had ``import blogroll`` in your code somewhere and ``blogroll``
+lived under the ``weblog/`` directory, you would *also* need to add
+``/usr/local/django-apps/weblog/`` to your ``PythonPath``. Remember: the
+**parent directories** of anything you import directly must be on the Python
+path.
+
+
 
 Installing Transifex
 --------------------
 
 After you have all dependencies and packages installed, the Transifex 
 installation should be very simple. You only need to customize the 
-``settings.py``, ``urls.py``, and then run:
+``settings.py``, ``urls.py``, and then run::
 
-  .. code-block:: bash
-
-   ./manage.py syncdb
-   ./manage.py runserver 8088
+    ./manage.py syncdb
+    ./manage.py runserver 8088
 
   .. warning::
  
@@ -132,11 +157,9 @@ installation should be very simple. You only need to customize the
     for example. Without those paths created the checkout for these VCS
     will fail.
 
-To enable debugging, run the server as follows:
+To enable debugging, run the server as follows::
 
-  .. code-block:: bash
-
-   ./manage.py runserver --settings settings_debug
+    ./manage.py runserver --settings settings_debug
 
 Initializing some data
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -147,25 +170,19 @@ in the database.
   .. note::
  
     Make sure you have executed the ``./manage.py syncdb``
-    command before run the following commands.
+    command before run the following commands.::
 
-  .. code-block:: bash
-
-   ./manage.py loaddata vcs/fixtures/sample_data.json
-   ./manage.py loaddata projects/fixtures/sample_data.json
-   ./manage.py loaddata translations/fixtures/sample_data.json
+    ./manage.py loaddata vcs/fixtures/sample_data.json
+    ./manage.py loaddata projects/fixtures/sample_data.json
+    ./manage.py loaddata translations/fixtures/sample_data.json
 
 Testing
 -------
 
-For testing the whole project you can run:
+For testing the whole project you can run::
 
-  .. code-block:: bash
+    ./manage.py test
 
-   ./manage.py test
-
-For testing a specific application inside Transifex you can run:
-
-  .. code-block:: bash
-
-   ./manage.py test projects
+For testing a specific application inside Transifex you can run::
+ 
+    ./manage.py test projects
