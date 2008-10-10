@@ -124,7 +124,7 @@ from first to last, and try to import from each directory until one succeeds.
 An example might make this clearer. Suppose you have some applications under
 ``/usr/local/django-apps/`` (for example, ``/usr/local/django-apps/weblog/`` and
 so forth), your settings file is at ``/var/www/mysite/settings.py`` and you have
-specified :ref:`DJANGO_SETTINGS_MODULE <django-settings-module>` as in the above
+specified DJANGO_SETTINGS_MODULE_ as in the above
 example. In this case, you would need to write your ``PythonPath`` directive
 as::
 
@@ -137,6 +137,7 @@ lived under the ``weblog/`` directory, you would *also* need to add
 **parent directories** of anything you import directly must be on the Python
 path.
 
+.. _DJANGO_SETTINGS_MODULE: http://docs.djangoproject.com/en/dev/topics/settings/#django-settings-module
 
 
 Installing Transifex
@@ -149,7 +150,7 @@ installation should be very simple. You only need to customize the
     ./manage.py syncdb
     ./manage.py runserver 8088
 
-  .. warning::
+.. warning::
  
     Make sure you have created in your system all the directories 
     configured in your ``settings.py`` file, like the GIT_REPO_PATH and
@@ -167,10 +168,12 @@ Initializing some data
 Transifex uses the fixtures feature of Django to load some initial datas
 in the database.
 
-  .. note::
+.. note::
  
-    Make sure you have executed the ``./manage.py syncdb``
-    command before run the following commands.::
+  Make sure you have executed the ``./manage.py syncdb``
+  command before run the following commands.
+
+.. code-block:: bash
 
     ./manage.py loaddata vcs/fixtures/sample_data.json
     ./manage.py loaddata projects/fixtures/sample_data.json
