@@ -1,0 +1,105 @@
+.. _releases-relprocess:
+
+Transifex Release Process
+=========================
+
+Transifex releases every few months, and after all the work for the release
+has been completed (development, texting, etc), the process to get the release
+out of the door is more or less standard. This document lists the steps we
+follow in this process.  
+
+
+Prepare the code
+----------------
+
+1. Get changesets into mainline branch::
+
+    cd ../b-mainline
+    hg pull txo
+    hg pull ../b-0.3    
+    hg push txo
+
+2. Write the release notes for this release::
+
+    date +%c
+    hg log -r 0.3:tip \
+    --template "{author|person}\t{author|email}\t{desc|firstline}\n" | \
+    python devel-docs/hg-shortlog.py  | grep -v trivial > NEWS.new
+    vi NEWS.new docs/releases/0.4.txt
+    rm NEWS.new
+
+3. Make sure the documentation is also up to date::
+
+    vi docs/conf.py
+    firefox docs/_build/html/index.html
+
+4. Update packaging files with version bump. If there are new translations,
+   include them in ``setup.py``::
+
+    vim setup.py transifex.spec
+
+5. Commit changes::
+
+    hg commit -m "Release version 0.3"
+    hg tag 0.3
+
+
+Package
+-------
+
+1. Create packages::
+
+    python setup.py sdist bdist_egg
+
+2. Update the Files_ page with the new tarball::
+
+    md5sum dist/*
+    vi devel-docs/txo_files_index.html
+
+3. Bring release version back to ``devel``::
+
+    vim setup.py
+    hg commit -m "Bumping version from 0.3 back to devel"
+    
+Publish
+-------
+
+1.  Publish tarballs::
+    hg push txo
+    scp dist/* transifex.org:webapps/txo_files
+    scp devel-docs/txo_files.html transifex.org:webapps/txo_files/index.html
+    python setup.py register upload
+
+2. Update the milestone_ in Trac (copy NEWS entries and mark as completed) and
+   add a new version_.
+
+3. Send an email to transifex-devel@googlegroups.com. Get the diffstat number
+   with ``hg diffstat -r 0.3:tip | tail -n 1``::
+
+    Subject: Transifex 0.3 "Get smart" released!
+
+    Transifex 0.3 codenamed "Get smart" was released today.
+
+    Diffstat: 83 files changed, 17171 insertions(+), 3645 deletions(-)
+
+    Tarballs and packages are available at http://transifex.org/files/ and
+    http://pypi.python.org/pypi/transifex/0.3.
+
+    Here are the release notes:
+
+    ...
+
+    Please report any bugs at http://transifex.org/newticket.
+
+    Thanks to all those who made this possible.
+
+4. Update the News_ wiki page, post on blog, etc.
+
+5. Grab a beer and enjoy.
+
+
+.. _Files: http://transifex.org/files/
+.. _pypi: http://pypi.python.org/pypi/transifex/
+.. _milestone: http://transifex.org/admin/ticket/milestones/
+.. _version: http://transifex.org/admin/ticket/versions
+.. _News: http://transifex.org/wiki/News
