@@ -1,0 +1,141 @@
+.. _development-contributing:
+
+=========================
+Contributing to Transifex
+=========================
+
+We're passionate about helping Transifex users make the jump to contributing members
+of the community, so there are many ways you can help Django's development:
+
+* Report bugs and request features in our `ticket tracker`_.  Please read
+  `Reporting bugs`_, below, for the details on how we like our bug reports
+  served up.
+
+* Submit patches for new and/or fixed behavior.  Please read `Submitting
+  patches`_, below, for details on how to submit a patch.
+
+* Join the `transifex-devel`_ mailing list and share your ideas for how
+  to improve Transifex.  We're always open to suggestions, although we're
+  likely to be skeptical of large-scale suggestions without some code to
+  back it up.
+
+* Triage patches that have been submitted by other users. Please read
+  `Ticket triage`_ below, for details on the triage process.
+
+
+.. _reporting-bugs:
+
+Reporting bugs
+==============
+
+Well-written bug reports are *incredibly* helpful. However, there's a certain
+amount of overhead involved in working with any bug tracking system, so your
+help in keeping our ticket tracker as useful as possible is appreciated.  In
+particular:
+
+* **Do** read the :ref:`FAQ <faq-index>` to see if your issue might be a well-known question.
+
+* **Do** `search the tracker`_ to see if your issue has already been filed.
+
+* **Do** ask on `transifex-devel`_ *first* if you're not sure if what you're
+  seeing is a bug.
+
+* **Do** write complete, reproducible, specific bug reports. Include as
+  much information as you possibly can, complete with code snippets, test
+  cases, etc. This means including a clear, concise description of the
+  problem, and a clear set of instructions for replicating the problem.
+  A minimal example that illustrates the bug in a nice small test case
+  is the best possible bug report.
+
+* **Don't** use the ticket system to ask support questions.  Use the
+  `transifex-devel`_ list, or the `#transifex`_ IRC channel for that.
+
+* **Don't** use the ticket system to make large-scale feature requests.
+  We like to discuss any big changes to Transifex's core on the `transifex-devel`_
+  list before actually working on them.
+
+* **Don't** reopen issues that have been marked "wontfix". This mark means
+  that the decision has been made that we can't or won't fix this particular
+  issue.  If you're not sure why, please ask on `transifex-devel`_.
+
+* **Don't** use the ticket tracker for lengthy discussions, because they're
+  likely to get lost. If a particular ticket is controversial, please move
+  discussion to `transifex-devel`_.
+
+* **Don't** post to transifex-devel just to announce that you have filed
+  a bug report. All the tickets are mailed to another list
+  (`transifex-updates`_), which is tracked by developers and triagers, so we
+  see them as they are filed.
+
+
+.. submitting-patches:
+
+Submitting patches
+==================
+
+We're always grateful for patches to Transifex's code. Indeed, bug reports with
+associated patches will get fixed *far* more quickly than those without patches.
+
+
+.. _coding-style:
+
+Coding style
+============
+
+Here are some notes on the common style we use for stuff landing in Transifex.
+
+* Code follows the guidelines described in the standard Python Coding Style
+  of PEP-8_. Docstrings follow PEP-257_.
+
+* Use the following style (indented, auto-concat) when writing long strings::
+
+    def lorem_ipsum():
+       description = _(
+       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas "
+       "nisl leo, suscipit sed, elementum ac, condimentum eget, augue. "
+       "Pellentesque consequat posuere metus. Curabitur scelerisque faucibus "
+       "massa. Vestibulum ut nisl ut leo cursus commodo."
+       )
+
+* Model filtering should be in the form::
+
+    Module.query.filter_by(name='foo')
+
+  and *not*::
+
+    Module.query.filter(Module.name=='foo') 
+
+
+Committing
+==========
+
+
+Commit messages
+---------------
+
+Commit messages should have a short first line and optionally more information
+after a blank newline::
+
+    Short (50 chars or less) summary of changes (#ticket)
+    
+    More detailed explanatory text can follow after a blank line, if
+    necessary. Wrap to about 72 characters or so.
+
+If there is a ticket associated, include it in the summary line. Prefix
+line with "bugfix:" and "trivial:" for bugfixes and trivial commits.::
+
+     - Bullet points are okay, too. Typically a hyphen is used for the bullet,
+       preceded by a single space, with blank lines between items.
+   
+     - Use a hanging indent, like above.
+
+Hint: ``:set tw=72``, or in ~/.bashrc: ``export EDITOR="vim -c 'set tw=72'``
+
+
+.. _PEP-8:   http://www.python.org/dev/peps/pep-0008/
+.. _PEP-257: http://www.python.org/dev/peps/pep-0257/
+.. _transifex-updates: http://groups.google.com/group/transifex-updates
+.. _search the tracker: http://transifex.org/search?&ticket=on
+.. _`#django`: irc://irc.freenode.net/django
+.. _ticket tracker: http://transifex.org/newticket
+.. _transifex-devel: http://groups.google.com/group/transifex-devel
