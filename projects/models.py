@@ -101,10 +101,6 @@ class Project(models.Model):
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
-   
-    def get_components(self):
-        return Component.objects.filter(project=self).order_by('name')
-
 
 class Component(models.Model):
     """ A component is a translatable resource. """
