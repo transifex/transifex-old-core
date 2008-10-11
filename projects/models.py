@@ -101,36 +101,9 @@ class Project(models.Model):
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
-
-    def get_langs(self):
-        # We can filter for only include languages that have a po file
-        # for this module if we want. Now we are showing up all langs.
-        return Language.objects.all()
-    
+   
     def get_components(self):
         return Component.objects.filter(project=self).order_by('name')
-       
-    def get_lang_comp_stats(self, lang, component):
-        return POStatistic.get_stats_for_lang_object(lang, component)
-
-    def get_stats_dict(self):
-        """
-        Stats of all components and langs in a dictionary.
-        
-        Returns a dictionary like:
-            {'pt_BR': {'tip': POStatistic object,
-                       '0.1': POStatistic object},
-             'el': {'tip': POStatistic object,
-                    '0.1': POStatistic object}
-            }
-        """
-        stats = {}
-        for lang in self.get_langs():
-            ll = {}
-            for comp in self.get_components():
-                ll.update({comp: self.get_lang_comp_stats(lang, comp)})
-            stats.update({lang: ll})
-        return stats
 
 
 class Component(models.Model):
