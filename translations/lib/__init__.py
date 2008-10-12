@@ -4,7 +4,7 @@ from django.conf import settings
 # types/.
 
 
-def get_trans_manager(file_set, source_lang, type, path=''):
+def get_trans_manager(component, file_set, source_lang, type, path=''):
     """
     Initializes an appropriate TransManager object, depending
     on the Translation type of the component and return it.
@@ -13,7 +13,7 @@ def get_trans_manager(file_set, source_lang, type, path=''):
     is not specified in the model.
     """   
     tm = get_tm_object(type)
-    return tm(file_set, path, source_lang)
+    return tm(component, file_set, path, source_lang)
 
 def get_tm_class(trans_type):
     """

@@ -42,26 +42,10 @@ class POStatistic(models.Model):
     >>> print s.lang.code
     pt_BR
 
-    # Take the a list of objects for a object
-    >>> ps = POStatistic.get_stats_for_object(p)
-    >>> print ps[0].lang.code
-    pt_BR
-
     # Take the a list of objects for a lang
-    >>> ps = POStatistic.get_stats_for_lang(l)
+    >>> ps = POStatistic.stats_for_lang(l)
     >>> print ps[0].lang.code
     pt_BR
-
-    # Take the a list available languages for a project
-    >>> langs = POStatistic.get_langs_for_object(p)
-    >>> print langs[0].code
-    pt_BR
-
-    # Take the a list available languages for a project
-    >>> POStatistic.delete_stats_for_object(p)
-    >>> langs = POStatistic.get_langs_for_object(p)
-    >>> print langs
-    []
 
     # Delete objects
     >>> p.delete()
@@ -111,34 +95,7 @@ class POStatistic(models.Model):
         self.calulate_perc()
 
     @classmethod
-    def get_stats_for_object(self, object):
-        """ Returns a list of languages statistics for an object."""
-        return self.objects.filter(object_id=object.id).order_by('-trans_perc')
-    
-    @classmethod
-    def get_stats_for_lang(self, lang):
+    def stats_for_lang(self, lang):
         """ Returns a list of objects statistics for a language."""
         return self.objects.filter(lang=lang).order_by('-trans_perc')
-
-    @classmethod
-    def get_stats_for_lang_object(self, lang, object):
-        """ Returns statistics for an object in a specific language."""
-        try: 
-            return self.objects.filter(lang=lang, object_id=object.id)[0]
-        except:
-            return POStatistic(lang=lang, object=object)
-
-    @classmethod
-    def get_langs_for_object(self, object):
-        """ Returns a list of languages availables for an object."""
-        langs = []
-        for obj in self.objects.filter(object_id=object.id):
-            langs.append(obj.lang)
-        return langs
-
-    @classmethod
-    def delete_stats_for_object(self, object):
-        """ Delete all lang statistics of an object."""
-        self.objects.filter(object_id=object.id).delete()
-
         

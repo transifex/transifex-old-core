@@ -145,6 +145,11 @@ class Component(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
+    def __init__(self, *args, **kwargs):
+        models.Model.__init__(self, *args, **kwargs)
+        if self.id:
+            self.init_trans()
+
     def __repr__(self):
         return _('<Component: %s>') % self.name
   
@@ -208,8 +213,9 @@ class Component(models.Model):
     def init_trans(self):
         """ Initialize a TransManager instance for the component. """
         from translations.lib import get_trans_manager
-        self.trans = get_trans_manager(self.get_files(), self.source_lang, 
-                                       self.i18n_type, self.unit.browser.path)
+        self.trans = get_trans_manager(self, self.get_files(), 
+                                       self.source_lang, self.i18n_type, 
+                                       self.unit.browser.path)
 
     def get_files(self):
         """Return a list of filtered files for the component."""
@@ -219,12 +225,8 @@ class Component(models.Model):
 
     # FIXME: Move this logic inside the POTManager
     def set_stats_for_lang(self, lang):
-        """ Sets stats for a determinated language. """
-
-        # Setting self.trans up
-        self.init_trans()
-
-        s = self.trans.create_stats(lang, self)
+        """Sets stats for a determinated language."""
+        s = self.trans.create_stats(lang)
         s.save()
 
     def set_stats(self):
@@ -236,22 +238,11 @@ class Component(models.Model):
         self.unit.init_browser()
         # Unit checkout
         self.unit.browser.init_repo()
-        # Creating and Initializing the TransManager in self.trans
-        self.init_trans()
         # Deleting all stats for the component
-        POStatistic.delete_stats_for_object(self)
+        self.trans.delete_stats_for_object(self)
 
         for lang in self.trans.get_langs():
             self.set_stats_for_lang(lang)
         
-    def get_langs(self):
-        return POStatistic.get_langs_for_object(self)
-
-    def get_lang_stats(self, lang):
-        return POStatistic.get_stats_for_lang_object(lang, self)
-
-    def get_all_stats(self):
-        # Returns a list like:
-        # [POStatistic object,
-        #  POStatistic object]
-        return POStatistic.get_stats_for_object(self)
+    def get_stats(self):
+        return self.trans.get_stats()
