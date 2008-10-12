@@ -59,13 +59,12 @@ urlpatterns += patterns('django.views.generic',
 # Components
 urlpatterns += patterns('',
     url(
-        regex = '^(?P<slug>[-\w]+)/add-component/$',
-        view = component_create_object,
+        regex = '^(?P<project_slug>[-\w]+)/add-component/$',
+        view = component_create_update,
         name = 'component_add',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit/$',
-        view = component_edit,
-        kwargs = project_list,
+        view = component_create_update,
         name = 'component_edit',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/delete/$',

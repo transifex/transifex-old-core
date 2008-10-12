@@ -2,7 +2,7 @@
 
 <div id="components" class="components">
   <div class="editlinks"><span class="i16 add">
-    <a href="{% url component_add slug=project.slug %}">{% trans "Add" %}</a></span>
+    <a href="{% url component_add project_slug=project.slug %}">{% trans "Add" %}</a></span>
   </p></div>
     
   <h3>{% trans "Project Components" %}</h3>
@@ -23,6 +23,6 @@
     {% endfor %}
     </div>{% else %}
     <p>{% trans "No components are registered for this project yet." %}
-      <a href="{% url component_add slug=project.slug %}">{% trans "Add one!" %}</a>
+      <a href="{% url component_add project_slug=project.slug %}">{% trans "Add one!" %}</a>
     </p>{% endif %}
 </div>
