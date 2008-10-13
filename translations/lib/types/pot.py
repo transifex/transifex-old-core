@@ -18,8 +18,7 @@ class POTStatsError(Exception):
 class POTManager(TransManagerMixin):
     """ A browser class for POT files. """
 
-    def __init__(self, component, file_set, path, source_lang):
-        self.component = component
+    def __init__(self, file_set, path, source_lang):
         self.file_set = file_set
         self.path = path
         self.source_lang = source_lang
@@ -62,12 +61,12 @@ class POTManager(TransManagerMixin):
         except AttributeError:
             raise POTStatsError, lang
 
-    def create_stats(self, lang):
+    def create_stats(self, lang, object):
         """Set the statistics of a specificy language for a object."""
         try:
             stats = self.calcule_stats(lang)
             f = self.get_langfile(lang)
-            s = POStatistic.objects.get(object_id=self.component.id, 
+            s = POStatistic.objects.get(object_id=object.id, 
                                         filename=f)
         except POTStatsError:
             # TODO: It should probably be raised when a checkout of a 
@@ -80,23 +79,23 @@ class POTManager(TransManagerMixin):
             except Language.DoesNotExist:
                 l = None
             s = POStatistic.objects.create(lang=l, filename=f, 
-                                           object=self.component)
+                                           object=object)
         s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untranslated'])
         return s
 
-    def stats_for_lang_object(self, lang):
+    def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""
         try: 
             return POStatistic.objects.filter(lang=lang, 
-                                              object_id=self.component.id)[0]
+                                              object_id=object.id)[0]
         except IndexError:
             return None
 
-    def get_stats(self):
+    def get_stats(self, object):
         """ Return a list of statistics of languages for an object."""
         return POStatistic.objects.filter(
-                   object_id=self.component.id
+                   object_id=object.id
         ).order_by('-trans_perc')
 
     def delete_stats_for_object(self, object):

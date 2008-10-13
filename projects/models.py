@@ -209,7 +209,7 @@ class Component(models.Model):
     def init_trans(self):
         """ Initialize a TransManager instance for the component. """
         from translations.lib import get_trans_manager
-        self.trans = get_trans_manager(self, self.get_files(), 
+        self.trans = get_trans_manager(self.get_files(), 
                                        self.source_lang, self.i18n_type, 
                                        self.unit.browser.path)
 
@@ -218,11 +218,9 @@ class Component(models.Model):
         self.unit.init_browser()
         return [f for f in self.unit.browser.get_files(self.file_filter)]
 
-
-    # FIXME: Move this logic inside the POTManager
     def set_stats_for_lang(self, lang):
         """Sets stats for a determinated language."""
-        s = self.trans.create_stats(lang)
+        s = self.trans.create_stats(lang, self)
         s.save()
 
     def set_stats(self):
@@ -241,4 +239,5 @@ class Component(models.Model):
             self.set_stats_for_lang(lang)
         
     def get_stats(self):
-        return self.trans.get_stats()
+        return self.trans.get_stats(self)
+
