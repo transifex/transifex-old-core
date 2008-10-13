@@ -43,6 +43,7 @@ class GitBrowser(VCSBrowserMixin):
         self.branch = branch
 
         self.path = os.path.normpath(os.path.join(GIT_REPO_PATH, name))
+        self.path = os.path.abspath(self.path)
         #Test for possible directory traversal
         assert os.path.commonprefix(
             [self.path, GIT_REPO_PATH]) == GIT_REPO_PATH, (

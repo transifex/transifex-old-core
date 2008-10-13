@@ -42,6 +42,7 @@ class HgBrowser(VCSBrowserMixin):
         self.branch = branch
         
         self.path = os.path.normpath(os.path.join(HG_REPO_PATH, name))
+        self.path = os.path.abspath(self.path)
         #Mercurial doesn't seem to handle correctly unicode paths
         self.path = str(self.path)
         #Test for possible directory traversal

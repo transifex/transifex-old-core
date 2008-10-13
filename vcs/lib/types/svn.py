@@ -46,7 +46,7 @@ class SvnBrowser(VCSBrowserMixin):
         self.branch = branch
         
         self.path = os.path.normpath(os.path.join(SVN_REPO_PATH, name))
-        
+        self.path = os.path.abspath(self.path)        
         #Test for possible directory traversal
         assert os.path.commonprefix(
             [self.path, SVN_REPO_PATH]) == SVN_REPO_PATH, (

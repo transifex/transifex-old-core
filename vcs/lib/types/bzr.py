@@ -42,12 +42,12 @@ class BzrBrowser(VCSBrowserMixin):
         self.root = root
         self.branch = branch
         self.path = os.path.join(BZR_REPO_PATH, name)
-
+        self.path = os.path.abspath(self.path)
+        
         #Test for possible directory traversal
         assert os.path.commonprefix(
             [self.path, BZR_REPO_PATH]) == BZR_REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
-
 
     @property
     def remote_path(self):
