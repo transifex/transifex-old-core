@@ -6,6 +6,14 @@ from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
 SVN_REPO_PATH = settings.SVN_REPO_PATH
 
+def need_repo(fn):
+    def repo_fn(self, *args, **kw):
+        try:
+            self.client
+        except AttributeError:
+            self.init_repo()
+        return fn(self, *args, **kw)
+    return repo_fn
 
 class SvnBrowser(VCSBrowserMixin):
     
@@ -68,7 +76,6 @@ class SvnBrowser(VCSBrowserMixin):
 
         self.client.checkout(self.remote_path, self.path)
 
-
     def _clean_dir(self):
         """
         Clean the local working directory.
@@ -79,7 +86,7 @@ class SvnBrowser(VCSBrowserMixin):
         """
         self.client.revert(self.path, recurse=True)
 
-
+    @need_repo
     def update(self):
         """
         Fully update the local repository.

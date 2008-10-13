@@ -7,6 +7,14 @@ from vcs.lib.support.git import repository, clone
 
 GIT_REPO_PATH = settings.GIT_REPO_PATH
 
+def need_repo(fn):
+    def repo_fn(self, *args, **kw):
+        try:
+            self.repo
+        except AttributeError:
+            self.init_repo()
+        return fn(self, *args, **kw)
+    return repo_fn
 
 class GitBrowser(VCSBrowserMixin):
 
@@ -47,6 +55,7 @@ class GitBrowser(VCSBrowserMixin):
         return str(self.root)
 
 
+
     def setup_repo(self):
         """
         Initialize repository for the first time.
@@ -83,7 +92,7 @@ class GitBrowser(VCSBrowserMixin):
         except RepoError:
             self.repo = self.setup_repo()
 
-
+    @need_repo
     def update(self):
         """
         Fully update the local repository.

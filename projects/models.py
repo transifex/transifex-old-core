@@ -233,7 +233,7 @@ class Component(models.Model):
         # Initializing the component's unit
         self.unit.init_browser()
         # Unit checkout
-        self.unit.browser.init_repo()
+        self.unit.browser.update()
         # Deleting all stats for the component
         self.trans.delete_stats_for_object(self)
 

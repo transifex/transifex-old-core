@@ -7,6 +7,14 @@ from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
 BZR_REPO_PATH = settings.BZR_REPO_PATH
 
+def need_repo(fn):
+    def repo_fn(self, *args, **kw):
+        try:
+            self.repo
+        except AttributeError:
+            self.init_repo()
+        return fn(self, *args, **kw)
+    return repo_fn
 
 class BzrBrowser(VCSBrowserMixin):
 
@@ -96,7 +104,7 @@ class BzrBrowser(VCSBrowserMixin):
         clean_tree.clean_tree(self.path, unknown=True, ignored=True,
                               detritus=True)
 
-
+    @need_repo
     def update(self):
         """
         Fully update the local repository.

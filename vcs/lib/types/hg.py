@@ -6,6 +6,14 @@ from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
 HG_REPO_PATH = settings.HG_REPO_PATH
 
+def need_repo(fn):
+    def repo_fn(self, *args, **kw):
+        try:
+            self.repo
+        except AttributeError:
+            self.init_repo()
+        return fn(self, *args, **kw)
+    return repo_fn
 
 class HgBrowser(VCSBrowserMixin):
 
@@ -94,7 +102,7 @@ class HgBrowser(VCSBrowserMixin):
         """
         commands.revert(self.repo.ui, self.repo, date=None, rev=None, all=True, no_backup=True)
 
-
+    @need_repo
     def update(self):
         """
         Fully update the local repository.
