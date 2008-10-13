@@ -82,7 +82,7 @@ class POTManager(TransManagerMixin):
                                            object=object)
         s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untranslated'])
-        return s
+        return s.save()
 
     def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""

@@ -2,6 +2,7 @@ import unittest
 from vcs.models import Unit
 from projects.models import Project, Component
 from translations.lib.types.pot import POTStatsError
+from translations.lib.types.pot import POTManager
 
 class POTTestCase(unittest.TestCase):
     """Test POT support.
@@ -32,8 +33,9 @@ class POTTestCase(unittest.TestCase):
         # Unit checkout
         self.c.unit.browser.init_repo()
 
-        # Creating and Initializing the TransManager
-        self.c.init_trans()
+        self.tm = POTManager(self.c.get_files(),
+                             self.c.unit.browser.path, 
+                             self.c.source_lang)
 
     def tearDown(self):
         self.c.unit.browser.teardown_repo()
@@ -44,11 +46,11 @@ class POTTestCase(unittest.TestCase):
     def test_calcule_stats(self):
         """Test that tm.browser.calcule_stats works properly."""
 
-        stats = self.c.trans.calcule_stats('pt_BR')
+        stats = self.tm.calcule_stats('pt_BR')
         self.assertTrue(len(stats)>0)
 
         try:
-            stats = self.c.trans.calcule_stats('--')
+            stats = self.tm.calcule_stats('--')
         except POTStatsError:
             pass
         else:
@@ -57,17 +59,17 @@ class POTTestCase(unittest.TestCase):
     def test_get_langs(self):
         """Test that tm.browser.get_langs works properly."""
 
-        langs = self.c.trans.get_langs()
+        langs = self.tm.get_langs()
         self.assertTrue(len(langs)>0)
 
     def test_get_po_files(self):
         """Test that tm.browser.get_po_files works properly."""
 
-        pofiles = self.c.trans.get_po_files()
+        pofiles = self.tm.get_po_files()
         self.assertTrue(len(pofiles)>0)
 
     def test_get_langfile(self):
         """Test that tm.browser.get_langfile works properly."""
 
-        file = self.c.trans.get_langfile('pt_BR')
+        file = self.tm.get_langfile('pt_BR')
         self.assertTrue(len(file)>0)

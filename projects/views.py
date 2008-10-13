@@ -75,7 +75,7 @@ def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
     component = get_object_or_404(Component, slug__exact=component_slug,
                                   project=project)
     # Calcule statistics
-    component.set_stats()
+    component.trans.set_stats()
 
     return HttpResponseRedirect(reverse('projects.views.component_detail', args=(project_slug, component_slug,)))
 

@@ -12,6 +12,8 @@ from tagging.models import Tag
 from translations.models import POStatistic, Language
 from vcs.models import Unit
 
+from handlers import get_trans_handler
+
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
     from notification import models as notification
@@ -144,7 +146,8 @@ class Component(models.Model):
     def __init__(self, *args, **kwargs):
         models.Model.__init__(self, *args, **kwargs)
         if self.id:
-            self.init_trans()
+            handler_class = get_trans_handler(self.i18n_type)
+            self.trans = handler_class(self)
 
     def __repr__(self):
         return _('<Component: %s>') % self.name
@@ -206,38 +209,8 @@ class Component(models.Model):
                 # admin, because something very strange would be happening
                 pass
 
-    def init_trans(self):
-        """ Initialize a TransManager instance for the component. """
-        from translations.lib import get_trans_manager
-        self.trans = get_trans_manager(self.get_files(), 
-                                       self.source_lang, self.i18n_type, 
-                                       self.unit.browser.path)
-
     def get_files(self):
         """Return a list of filtered files for the component."""
         self.unit.init_browser()
         return [f for f in self.unit.browser.get_files(self.file_filter)]
-
-    def set_stats_for_lang(self, lang):
-        """Sets stats for a determinated language."""
-        s = self.trans.create_stats(lang, self)
-        s.save()
-
-    def set_stats(self):
-        """
-        This method is responsable to set up the statistics for a 
-        component, calculing the stats for each translation present on it.
-        """
-        # Initializing the component's unit
-        self.unit.init_browser()
-        # Unit checkout
-        self.unit.browser.update()
-        # Deleting all stats for the component
-        self.trans.delete_stats_for_object(self)
-
-        for lang in self.trans.get_langs():
-            self.set_stats_for_lang(lang)
-        
-    def get_stats(self):
-        return self.trans.get_stats(self)
 

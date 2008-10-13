@@ -189,15 +189,15 @@ Transmitted-via: Transifex (%(domain)s)"""
 
 
 ####################
-# TransManager application settings
+# TransHandler settings
 
-# Our Translation Manager choices.
+# Our Translation Handler choices.
 TRANS_CHOICES = {'POT': 'POT Files',}
 
-# The classes which implement the TransManager support. The full "path" 
+# The classes which implement the TransHandler support. The full "path" 
 # to the class is the concatenation of the BASE and the NAME of the class.
-TRANS_CLASS_BASE = 'translations.lib.types'
-TRANS_CLASS_NAMES = {'POT': 'pot.POTManager',}
+TRANS_CLASS_BASE = 'projects.handlers.types'
+TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',}
 
 
 #####################
