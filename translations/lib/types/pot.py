@@ -23,6 +23,13 @@ class POTManager(TransManagerMixin):
         self.path = path
         self.source_lang = source_lang
 
+    def get_file_content(self, filename):
+        file_path = os.path.join(self.path, filename)
+        filef = file(file_path, 'rb')
+        file_content = filef.read()
+        filef.close()
+        return file_content
+        
     def get_po_files(self):
         """ Return a list of PO filenames """
 

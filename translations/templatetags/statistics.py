@@ -5,17 +5,24 @@ from translations.models import Language
 register = template.Library()
 
 @register.inclusion_tag("comp_stats_table.html")
-def comp_stats_table(stats):
+def comp_stats_table(object):
     """
     Creates a HTML table to presents the statistics of all 
     languages for a component.
     """
+    project = object.project.slug
+    component = object.slug
+
+    stats = object.trans.get_stats()
+
     for s in stats:
         if not s.lang:
            c = os.path.basename(s.filename[:-3:])
            s.lang = Language(code=c, name=s.filename)
 
-    return {"stats": stats}
+    return {"stats": stats,
+            "project": project,
+            "component": component}
 
 @register.inclusion_tag("project_stats_table.html")
 def project_stats_table(project):

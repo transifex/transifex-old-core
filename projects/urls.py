@@ -76,6 +76,10 @@ urlpatterns += patterns('',
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/set_stats/$',
         view = component_set_stats,
         name = 'component_set_stats',),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/raw/(?P<filename>(.*))$',
+        view = component_raw_file,
+        name = 'component_raw_file',),
     url (
         regex = '^(?P<slug>[-\w]+)/components/added/$',
         view = 'django.views.generic.list_detail.object_detail',

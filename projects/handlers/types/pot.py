@@ -30,3 +30,6 @@ class POTHandler():
         
     def get_stats(self):
         return self.tm.get_stats(self.component)
+
+    def get_file_content(self, filename):
+        return self.tm.get_file_content(filename)

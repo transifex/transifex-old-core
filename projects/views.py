@@ -1,5 +1,6 @@
+import os
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.views.generic import create_update, list_detail
@@ -77,5 +78,24 @@ def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
     # Calcule statistics
     component.trans.set_stats()
 
-    return HttpResponseRedirect(reverse('projects.views.component_detail', args=(project_slug, component_slug,)))
+    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
 
+
+def component_raw_file(request, project_slug, component_slug, filename, *args, **kwargs):
+    #TODO: Make this one query
+    project = get_object_or_404(Project, slug__iexact=project_slug)
+    component = get_object_or_404(Component, slug__exact=component_slug,
+                                  project=project)
+
+    try:
+        content = component.trans.get_file_content(filename)
+    except IOError:
+        raise Http404
+    filename = project_slug + '.' + component_slug + '.' + \
+               os.path.basename(filename)
+
+    response = HttpResponse(content, mimetype='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    return response
