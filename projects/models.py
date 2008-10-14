@@ -211,6 +211,4 @@ class Component(models.Model):
 
     def get_files(self):
         """Return a list of filtered files for the component."""
-        self.unit.init_browser()
-        return [f for f in self.unit.browser.get_files(self.file_filter)]
-
+        return [f for f in self.unit.get_files(self.file_filter)]

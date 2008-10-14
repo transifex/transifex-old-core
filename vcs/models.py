@@ -4,6 +4,27 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+
+def need_browser(fn):
+    """
+    Decorator to initialize the unit.browser when it is needed.
+
+    Usage: 
+    @need_browser
+    def func():
+        ...
+
+    """
+
+    def browser_fn(self, *args, **kw):
+        try:
+            self.browser
+        except AttributeError:
+            self.init_browser()
+        return fn(self, *args, **kw)
+    return browser_fn
+
+
 class Unit(models.Model):
     """
     A snapshot of a VCS project, an instance of a repository's files.
@@ -72,6 +93,15 @@ class Unit(models.Model):
         self.browser = browser(root=self.root,
                                name=self.name,
                                branch=self.branch)
+    @need_browser
+    def update(self):
+        """Abstration for the unit.browser.update."""
+        return self.browser.update()
+
+    @need_browser
+    def get_files(self, file_filter):
+        """Abstration for the unit.browser.get_files."""
+        return self.browser.get_files(file_filter)
 
 def suite():
     """

@@ -18,10 +18,8 @@ class POTHandler():
         This method is responsable to set up the statistics for a 
         component, calculing the stats for each translation present on it.
         """
-        # Initializing the component's unit
-        self.component.unit.init_browser()
         # Unit checkout
-        self.component.unit.browser.update()
+        self.component.unit.update()
         # Deleting all stats for the component
         self.tm.delete_stats_for_object(self.component)
 
