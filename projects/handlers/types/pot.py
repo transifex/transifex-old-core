@@ -19,7 +19,7 @@ class POTHandler():
         component, calculing the stats for each translation present on it.
         """
         # Unit checkout
-        self.component.unit.update()
+        self.component.unit.prepare_repo()
         # Deleting all stats for the component
         self.tm.delete_stats_for_object(self.component)
 

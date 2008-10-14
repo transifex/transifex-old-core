@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+class CheckOutError(Exception):
+    pass
 
 def need_browser(fn):
     """
@@ -60,6 +62,8 @@ class Unit(models.Model):
     web_frontend = models.CharField(blank=True, null=True, max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
+    last_checkout = models.DateTimeField(editable=False, blank=True)
+
     date_created = models.DateField(default=datetime.now, editable=False)
     date_modified = models.DateTimeField(editable=False)
 
@@ -94,9 +98,14 @@ class Unit(models.Model):
                                name=self.name,
                                branch=self.branch)
     @need_browser
-    def update(self):
+    def prepare_repo(self):
         """Abstration for the unit.browser.update."""
-        return self.browser.update()
+        try:
+            self.browser.update()
+            self.last_checkout = datetime.now()
+            self.save()
+        except:
+           raise CheckOutError(_("Could not checkout."))
 
     @need_browser
     def get_files(self, file_filter):

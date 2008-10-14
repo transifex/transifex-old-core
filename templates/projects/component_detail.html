@@ -15,7 +15,6 @@
 {% block body_main %}
 
   <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
-  <div class="editlinks"><p class="i16 update"><a href="{% url component_set_stats project_slug=project.slug component_slug=component.slug %}">{% trans "Calcule Stats" %}</a></p></div>
   <h2 class="name">{{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
@@ -39,6 +38,19 @@
     <tr>
       <th class="branch i16">{% trans "Branch:" %}</th>
       <td>{{ component.unit.branch }}</td>
+    </tr>
+    <tr>
+      <th class="i16 update">{% trans "Local cache:" %}</th>
+      <td>
+        <form action="{% url component_set_stats project.slug component.slug %}" style="float: right;">
+            {% if component.unit.last_checkout %}
+            {% trans "The local checked-out copy of this component was last updated at" %} <strong>{{component.unit.last_checkout|date:"jS M Y H:i"}}</strong>.
+            {% else %}
+            {% trans "You can check-out a copy of this component right now if you want." %}
+            {% endif %}
+            <input title="{% trans "It will refresh and re-calculate the stats. It can take some time." %}" class="icon16 refresh" value="{% trans "Refresh now!" %}" type="submit">
+        </form>
+      </td>
     </tr>
   </table>
 </div>
