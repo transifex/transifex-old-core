@@ -1,7 +1,7 @@
 import os
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
-from translations.models import POStatistic, Language
+from translations.models import POFile, Language
 
 # I couldn't import this file from a separated dir
 import libpo as po 
@@ -73,19 +73,19 @@ class POTManager(TransManagerMixin):
         try:
             stats = self.calcule_stats(lang)
             f = self.get_langfile(lang)
-            s = POStatistic.objects.get(object_id=object.id, 
+            s = POFile.objects.get(object_id=object.id, 
                                         filename=f)
         except POTStatsError:
             # TODO: It should probably be raised when a checkout of a 
             # module has a problem. Needs to decide what to do when it
             # happens
             pass
-        except POStatistic.DoesNotExist:
+        except POFile.DoesNotExist:
             try:
                 l = Language.objects.get(code=lang)
             except Language.DoesNotExist:
                 l = None
-            s = POStatistic.objects.create(lang=l, filename=f, 
+            s = POFile.objects.create(lang=l, filename=f, 
                                            object=object)
         s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untranslated'])
@@ -94,17 +94,17 @@ class POTManager(TransManagerMixin):
     def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""
         try: 
-            return POStatistic.objects.filter(lang=lang, 
+            return POFile.objects.filter(lang=lang, 
                                               object_id=object.id)[0]
         except IndexError:
             return None
 
     def get_stats(self, object):
         """ Return a list of statistics of languages for an object."""
-        return POStatistic.objects.filter(
+        return POFile.objects.filter(
                    object_id=object.id
         ).order_by('-trans_perc')
 
     def delete_stats_for_object(self, object):
         """ Delete all lang statistics of an object."""
-        POStatistic.objects.filter(object_id=object.id).delete()
+        POFile.objects.filter(object_id=object.id).delete()

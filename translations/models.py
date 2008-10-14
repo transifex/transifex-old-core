@@ -25,7 +25,7 @@ class Language(models.Model):
 #    prepopulated_fields = {'slug': ('code',)}
 #admin.site.register(Language, LanguageAdmin)
 
-class POStatistic(models.Model):
+class POFile(models.Model):
     """
     A Statistic is a collection of information about translations stats
     of a component in a language.
@@ -34,16 +34,16 @@ class POStatistic(models.Model):
     >>> from translations.models import Language
     >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
     >>> l.save()
-    >>> from translations.models import POStatistic
+    >>> from translations.models import POFile
     >>> from projects.models import Project
     >>> p = Project.objects.create(slug="foobar", name="Foo Project")
-    >>> s = POStatistic.objects.create(lang=l, object=p)
+    >>> s = POFile.objects.create(lang=l, object=p)
     >>> s.save()
     >>> print s.lang.code
     pt_BR
 
     # Take the a list of objects for a lang
-    >>> ps = POStatistic.stats_for_lang(l)
+    >>> ps = POFile.stats_for_lang(l)
     >>> print ps[0].lang.code
     pt_BR
 
@@ -74,7 +74,7 @@ class POStatistic(models.Model):
 
     def save(self, *args, **kwargs):
         self.modified = datetime.now()
-        super(POStatistic, self).save(*args, **kwargs)
+        super(POFile, self).save(*args, **kwargs)
 
     def calulate_perc(self):
         if self.total != 0:

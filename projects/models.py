@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from tagging.fields import TagField
 from tagging.models import Tag
 
-from translations.models import POStatistic, Language
 from vcs.models import Unit
 
 from handlers import get_trans_handler
