@@ -112,7 +112,7 @@ class Component(models.Model):
     unit = models.ForeignKey(Unit, blank=True, null=True, editable=False)
 
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=255)
+    description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
     long_description_html = models.TextField(blank=True, null=True,

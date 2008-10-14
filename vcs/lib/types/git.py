@@ -1,7 +1,7 @@
 from mercurial.repo import RepoError
 import os
 from django.conf import settings
-from vcs.lib import (RepoError, _Repo)
+from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 from vcs.lib.support.git import repository, clone
 
