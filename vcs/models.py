@@ -62,7 +62,7 @@ class Unit(models.Model):
     web_frontend = models.CharField(blank=True, null=True, max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
-    last_checkout = models.DateTimeField(editable=False, blank=True)
+    last_checkout = models.DateTimeField(editable=False, null=True)
 
     date_created = models.DateField(default=datetime.now, editable=False)
     date_modified = models.DateTimeField(editable=False)
