@@ -84,6 +84,10 @@ class Unit(models.Model):
         self.date_modified = datetime.now()
         super(Unit, self).save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.teardown_repo()
+        super(Unit, self).delete(*args, **kwargs)
+
     def init_browser(self):
         """
         Initializes an appropriate VCS browser object, depending
@@ -111,6 +115,14 @@ class Unit(models.Model):
     def get_files(self, file_filter):
         """Abstration for the unit.browser.get_files."""
         return self.browser.get_files(file_filter)
+
+    def teardown_repo(self):
+        """Abstration for the unit.browser.teardown_repo."""
+        try:
+            self.browser.teardown_repo()
+        except:
+           pass
+
 
 def suite():
     """

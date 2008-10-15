@@ -103,6 +103,15 @@ class Project(models.Model):
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
 
+    def delete(self, *args, **kwargs):
+        #FIXME: ``Component.objects.filter(project=self).delete()`` command 
+        # seems do not call the delete modified method for Component class
+        component = Component.objects.filter(project=self)
+        for c in component:
+            c.delete()
+        super(Project, self).delete(*args, **kwargs)
+
+
 class Component(models.Model):
     """ A component is a translatable resource. """
 
@@ -187,6 +196,10 @@ class Component(models.Model):
                               "projects_added_new_component",  
                               {'project': self.project, 
                               'component': self,})
+
+    def delete(self, *args, **kwargs):
+        self.unit.delete()
+        super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
         """Associate a unit with this component."""
