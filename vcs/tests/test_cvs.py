@@ -1,0 +1,36 @@
+import unittest
+from vcs.models import Unit
+
+class CvsTestCase(unittest.TestCase):
+    """Test CVS VCS support.
+    
+    Supplementary tests, in addition to doctests.   
+    """ 
+
+    #TODO: Run the init stuff only when needed.
+    def setUp(self):
+        self.unit = Unit.objects.create(
+            name="Test-CVS",
+            root=':pserver:anonymous@cvs.fedoraproject.org:/cvs/elvis/switchdesk',
+            type='cvs')
+    def tearDown(self):
+        self.unit.delete()
+        # Until we use a local repo, let's not delete it after the first run:
+        # self.unit.browser.teardown_repo()
+
+    def test_repo_init(self):
+        """Test correct CVS repo initialization."""
+        from os import path
+        from vcs.lib.types.svn import CVS_REPO_PATH 
+        self.unit.init_browser()
+        self.unit.browser.init_repo()
+        local_unit_path = path.join(CVS_REPO_PATH, self.unit.name)
+        self.assertTrue(path.isdir(local_unit_path))
+
+    def test_get_file_contents(self):
+        """Test that CVS get_file_contents returns correct file size."""
+        #FIXME: This is not the best way to test something like this!
+        self.unit.init_browser()
+        self.unit.browser.init_repo()
+        self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
+                          17982)
