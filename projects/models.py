@@ -153,7 +153,7 @@ class Component(models.Model):
 
     def __init__(self, *args, **kwargs):
         models.Model.__init__(self, *args, **kwargs)
-        if self.id:
+        if self.id and self.i18n_type:
             handler_class = get_trans_handler(self.i18n_type)
             self.trans = handler_class(self)
 
@@ -198,7 +198,8 @@ class Component(models.Model):
                               'component': self,})
 
     def delete(self, *args, **kwargs):
-        self.unit.delete()
+        if self.unit:
+            self.unit.delete()
         super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
