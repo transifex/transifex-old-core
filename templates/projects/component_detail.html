@@ -15,7 +15,7 @@
 {% block body_main %}
 
   <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
-  <h2 class="name">{{ component.name }}</h2>
+  <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
@@ -70,3 +70,4 @@
     </div>
   </div>
 {% endblock %}
+
