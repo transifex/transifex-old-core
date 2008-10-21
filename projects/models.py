@@ -213,6 +213,7 @@ class Component(models.Model):
     def delete(self, *args, **kwargs):
         if self.unit:
             self.unit.delete()
+            POFile.objects.filter(object_id=self.id).delete()
         super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
