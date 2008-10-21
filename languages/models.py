@@ -8,17 +8,11 @@ from django.contrib.contenttypes import generic
 
 
 class Language(models.Model):
+
     """
     A Language is a code and name collection of languages.
-    
-    # Test Language creation
-\    >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
-    >>> l.save()
-    >>> print l.code
-    pt_BR
-    >>> l.delete()
-    
     """
+
     name = models.CharField(unique=True, max_length=50,
         help_text="The name of the language including dialect, script, etc.")
     code = models.CharField(unique=True, max_length=50,
@@ -40,3 +34,15 @@ class Language(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('language_detail', None, { 'slug': self.code })
+
+
+def suite():
+    """Define this application's testing suite for Django's test runner."""
+     
+    import unittest
+    import doctest
+    from languages.tests import test_models 
+
+    s = unittest.TestSuite()
+    s.addTest(doctest.DocTestSuite(test_models))
+    return s

@@ -13,27 +13,6 @@ class POFile(models.Model):
     A POFile is a collection of information about translations stats
     of a component in a language.
     
-    # Test Language creation
-    >>> from languages.models import Language
-    >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
-    >>> l.save()
-    >>> from translations.models import POFile
-    >>> from projects.models import Project
-    >>> p = Project.objects.create(slug="foobar", name="Foo Project")
-    >>> s = POFile.objects.create(lang=l, object=p)
-    >>> s.save()
-    >>> print s.lang.code
-    pt_BR
-
-    # Take the a list of objects for a lang
-    >>> ps = POFile.stats_for_lang(l)
-    >>> print ps[0].lang.code
-    pt_BR
-
-    # Delete objects
-    >>> p.delete()
-    >>> l.delete()
-    >>> s.delete()
     """    
     total = models.PositiveIntegerField(default=0)
     trans = models.PositiveIntegerField(default=0)
@@ -93,4 +72,23 @@ class POFile(models.Model):
     def stats_for_lang(self, lang):
         """ Returns a list of objects statistics for a language."""
         return self.objects.filter(lang=lang).order_by('-trans_perc')
+
+def suite():
+    """
+    Define the testing suite for Django's test runner.
+    
+    Enables test execution with ``./manage.py test <appname>``.
+    """
+     
+    import unittest
+    import doctest
+    s = unittest.TestSuite()
+
+    #FIXME: Load tests automatically:
+    #    for vcs_type in settings.VCS_CHOICES:
+    #        vcs_browser = import_to_python('vcs.lib.types' % vcs_type)
+    #        s.addTest(doctest.DocTestSuite(vcs_browser))
+    from translations.tests import test_models 
+    s.addTest(doctest.DocTestSuite(test_models))
         
+    return s

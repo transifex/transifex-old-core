@@ -4,7 +4,7 @@ from projects.models import Project, Component
 from translations.lib.types.pot import POTStatsError
 from translations.lib.types.pot import POTManager
 
-class POTTestCase(unittest.TestCase):
+class POTTestCaseBase(unittest.TestCase):
     """Test POT support.
     
     Supplementary tests, in addition to doctests.   
@@ -42,6 +42,8 @@ class POTTestCase(unittest.TestCase):
         self.c.unit.delete()
         self.c.delete()
         self.p.delete()
+
+class POTTestCase(POTTestCaseBase):
 
     def test_calcule_stats(self):
         """Test that tm.browser.calcule_stats works properly."""

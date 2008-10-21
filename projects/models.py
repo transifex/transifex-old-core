@@ -63,18 +63,6 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         """
         Save the object in the database.
-
-        >>> p = Project.objects.create(slug="foo", name="Foo Project",
-        ... long_description = '*foo*')
-        >>> p.save()
-        >>> p.long_description_html
-        u'<p><em>foo</em>\\n</p>'
-        >>> c = Component(slug='bar', project=p)
-        >>> c.save()
-        >>> p.num_components
-        1
-        >>> c.delete()
-        >>> p.delete()
         """
         import markdown
         self.date_modified = datetime.now()
