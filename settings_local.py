@@ -17,7 +17,7 @@ These settings complement (and override) those in ``settings.py``.
 from settings import *
 # To enable the use of the notification app on your system:
 #ENABLE_NOTICES = True
-#INSTALLED_APPS += ('notification',)
+INSTALLED_APPS += ('django_evolution',)
 #TEMPLATE_CONTEXT_PROCESSORS += ("notification.context_processors.notification",)
 
 # Note: Operator '-=' doesn't work on tuples :-(

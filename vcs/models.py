@@ -74,12 +74,6 @@ class Unit(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
-    def __repr__(self):
-        return _('<Unit: %s>') % self.name
-  
-    def __unicode__(self):
-        return u'%s' % self.name
-
     def save(self, *args, **kwargs):
         self.date_modified = datetime.now()
         super(Unit, self).save(*args, **kwargs)

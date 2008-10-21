@@ -60,12 +60,6 @@ class Project(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
-    def __repr__(self):
-        return _('<Project: %s>') % self.name
-  
-    def __unicode__(self):
-        return u'%s' % self.name
-
     def save(self, *args, **kwargs):
         """
         Save the object in the database.
@@ -157,12 +151,6 @@ class Component(models.Model):
         if self.id and self.i18n_type:
             handler_class = get_trans_handler(self.i18n_type)
             self.trans = handler_class(self)
-
-    def __repr__(self):
-        return _('<Component: %s>') % self.name
-  
-    def __unicode__(self):
-        return u'%s' % self.name
   
     @permalink
     def get_absolute_url(self):
@@ -204,7 +192,12 @@ class Component(models.Model):
         super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
-        """Associate a unit with this component."""
+        """
+        Associate a unit with this component.
+        
+        Another place the same functionality happens is when the Component
+        form is saved.
+        """
         if self.unit:
             self.unit.name = self.fullname
             self.unit.root = root

@@ -18,12 +18,19 @@ class Language(models.Model):
     >>> l.delete()
     
     """
-    code = models.CharField(max_length=15)
     name = models.CharField(max_length=50)
+    code = models.CharField(max_length=15)
 
-#class LanguageAdmin(admin.ModelAdmin):
-#    prepopulated_fields = {'slug': ('code',)}
-#admin.site.register(Language, LanguageAdmin)
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.name, self.code)
+
+    class Meta:
+        verbose_name = _('language')
+        verbose_name_plural = _('languages')
+        db_table  = 'translations_language'
+        ordering  = ('name',)
+
 
 class POFile(models.Model):
     """
@@ -72,6 +79,18 @@ class POFile(models.Model):
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return u"%(file)s (%(type)s %(obj)s)" % {
+            'file': self.filename,
+            'type': self.content_type,
+            'obj': self.object,}
+
+    class Meta:
+        verbose_name = _('PO file')
+        verbose_name_plural = _('PO files')
+        db_table  = 'translations_pofile'
+        ordering  = ('filename', 'lang')
+        
     def save(self, *args, **kwargs):
         self.modified = datetime.now()
         super(POFile, self).save(*args, **kwargs)
