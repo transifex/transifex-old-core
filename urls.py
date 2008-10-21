@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
+    url(r'^languages/', include('languages.urls')),
     url(r'^account/', include('django_authopenid.urls')),
 )
 

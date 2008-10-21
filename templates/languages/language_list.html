@@ -1,0 +1,31 @@
+{% extends "languages/base.html" %}
+{% load i18n %}
+
+{% block body_class %}{{ block.super }} language_list{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Languages" %}{% endblock %}
+
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url language_feed url="all" %}" />
+{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Languages" %}{% endblock %}
+
+{% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} <sup class="entry_metalink">{{ language_list.count }}</sup></h2>{% endblock %}
+
+{% block body_sec %}
+  <a href="{% url language_feed url="all" %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
+
+{% block body_main %}
+  <div class="languages_list multicolumn3">
+  {% for language in language_list %}
+    <ul>
+      <li class="name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>
+    </ul>
+  {% endfor %}
+  </div>
+  {% if not language_list %}
+  <p>{% trans "No languages registered yet. :-(" %}</p>
+  {% endif %}
+{% endblock %}

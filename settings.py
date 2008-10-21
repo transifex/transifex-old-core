@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'transifex',    
     'vcs',
     'translations',
+    'languages',
     'projects',
     #'management',
 )

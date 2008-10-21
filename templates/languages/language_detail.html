@@ -1,0 +1,15 @@
+{% extends "languages/base.html" %}
+{% load i18n %}
+
+{% block body_class %}{{ block.super }} language_detail{% endblock %}
+
+{% block title %}{{ block.super }} | {{ language }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url language_list %}">{% trans "Languages" %}</a> &raquo; {{ language.name }}{% endblock %}
+
+
+{% block content_title %}<h2 class="pagetitle">{{ language.name }} <sup class="entry_metalink">{{ language.code }}</sup></h2>{% endblock %}
+
+{% block body_main %}
+
+{% endblock %}

@@ -1,44 +1,20 @@
 from datetime import datetime
 from django.contrib import admin
 from django.db import models
+from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-class Language(models.Model):
-    """
-    A Language is a code and name collection of languages.
-    
-    # Test Language creation
-    >>> from translations.models import Language
-    >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
-    >>> l.save()
-    >>> print l.code
-    pt_BR
-    >>> l.delete()
-    
-    """
-    name = models.CharField(max_length=50)
-    code = models.CharField(max_length=15)
-
-
-    def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.code)
-
-    class Meta:
-        verbose_name = _('language')
-        verbose_name_plural = _('languages')
-        db_table  = 'translations_language'
-        ordering  = ('name',)
-
+from languages.models import Language
 
 class POFile(models.Model):
     """
-    A Statistic is a collection of information about translations stats
+    A POFile is a collection of information about translations stats
     of a component in a language.
     
     # Test Language creation
-    >>> from translations.models import Language
+    >>> from languages.models import Language
     >>> l = Language.objects.create(code='pt_BR', name='Brazilian Portuguese')
     >>> l.save()
     >>> from translations.models import POFile

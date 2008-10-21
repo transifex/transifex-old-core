@@ -127,7 +127,6 @@ def suite():
      
     import unittest
     import doctest
-    from vcs.lib.common import import_to_python
     s = unittest.TestSuite()
 
     #FIXME: Load tests automatically:
