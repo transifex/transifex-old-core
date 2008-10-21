@@ -66,16 +66,6 @@ class Project(models.Model):
     def __unicode__(self):
         return u'%s' % self.name
 
-    @permalink
-    def get_absolute_url(self):
-        return ('project_detail', None, { 'slug': self.slug })
-
-    def set_tags(self, tags):
-        Tag.objects.update_tags(self, tags)
-
-    def get_tags(self):
-        return Tag.objects.get_for_object(self)
-
     def save(self, *args, **kwargs):
         """
         Save the object in the database.
@@ -110,6 +100,17 @@ class Project(models.Model):
         for c in component:
             c.delete()
         super(Project, self).delete(*args, **kwargs)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('project_detail', None, { 'slug': self.slug })
+
+    def set_tags(self, tags):
+        Tag.objects.update_tags(self, tags)
+
+    def get_tags(self):
+        return Tag.objects.get_for_object(self)
+
 
 
 class Component(models.Model):
