@@ -26,7 +26,7 @@ def component_create_update(request, project_slug, component_slug=None):
         if component_form.is_valid() and unit_form.is_valid():
             component = component_form.save(commit=False)
             unit = unit_form.save(commit=False)            
-            unit.name = component.fullname
+            unit.name = component.full_name
             unit.save()
             component.unit = unit
             component.save()
@@ -92,8 +92,7 @@ def component_raw_file(request, project_slug, component_slug, filename, *args, *
         content = component.trans.get_file_content(filename)
     except IOError:
         raise Http404
-    filename = project_slug + '.' + component_slug + '.' + \
-               os.path.basename(filename)
+    filename = "%s.%s" % (component.full_name, os.path.basename(filename))
 
     response = HttpResponse(content, mimetype='text/plain')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename

@@ -125,6 +125,9 @@ class Component(models.Model):
         help_text=_('Enable this object or disable its use?'))
     created = models.DateField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
+    
+    # Normalized fields
+    full_name = models.CharField(max_length=100, editable=False)
 
     class Meta:
         unique_together = ("project", "slug")
@@ -145,9 +148,6 @@ class Component(models.Model):
         return ('component_detail', None,
                 { 'project_slug': self.project.slug,
                  'component_slug': self.slug })
-    @property
-    def fullname(self):
-        return '.'.join([self.project.slug, self.slug])
 
     def set_tags(self, tags):
         Tag.objects.update_tags(self, tags)
@@ -160,11 +160,11 @@ class Component(models.Model):
     def save(self, *args, **kwargs):
         import markdown
         self.long_description_html = markdown.markdown(self.long_description)
+        self.full_name = "%s.%s" % (self.project.slug, self.slug)
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
         super(Component, self).save(*args, **kwargs)
-
-        # Update de-normalized field
+        # Update de-normalized fields
         self.project.num_components = self.project.component_set.count()
         self.project.save(*args, **kwargs)
 
@@ -187,14 +187,14 @@ class Component(models.Model):
         form is saved.
         """
         if self.unit:
-            self.unit.name = self.fullname
+            self.unit.name = self.full_name
             self.unit.root = root
             self.unit.branch = branch
             self.unit.type = type
             self.unit.web_frontend = web_frontend
         else:
             try:
-                u = Unit.objects.create(name=self.fullname, root=root, 
+                u = Unit.objects.create(name=self.full_name, root=root, 
                                         branch=branch, type=type, 
                                         web_frontend=web_frontend)
                 u.save()
