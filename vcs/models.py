@@ -28,6 +28,7 @@ def need_browser(fn):
 
 
 class Unit(models.Model):
+
     """
     A snapshot of a VCS project, an instance of a repository's files.
     
@@ -54,24 +55,27 @@ class Unit(models.Model):
     root = models.CharField(max_length=255,
         help_text=_("The root URL of the project (without the branch)"))
     type = models.CharField(max_length=10,
-                            choices=settings.VCS_CHOICES.items(),
+        choices=settings.VCS_CHOICES.items(),
         help_text=_('The repository system type (%s)' %
                     ', '.join(settings.VCS_CHOICES.keys())))
     branch = models.CharField(max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
     web_frontend = models.CharField(blank=True, null=True, max_length=255,
         help_text=_("A URL to the project's web front-end"))
+    last_checkout = models.DateTimeField(null=True, editable=False,
+        help_text=_("The last time this unit was checked-out from its repo."))
 
-    last_checkout = models.DateTimeField(editable=False, null=True)
+    created = models.DateField(auto_now_add=True, editable=False)
+    modified = models.DateTimeField(auto_now=True, editable=False)
 
-    date_created = models.DateField(default=datetime.now, editable=False)
-    date_modified = models.DateTimeField(editable=False)
+    def __repr__(self):
+        return _('<Unit: %s (%s)>') % (self.name, self.type)
 
     class Meta:
         verbose_name = _('unit')
         verbose_name_plural = _('units')
         db_table  = 'vcs_unit'
-        ordering  = ('name',)
+        ordering  = ('name', 'branch')
         get_latest_by = 'created'
 
     def save(self, *args, **kwargs):

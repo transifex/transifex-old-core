@@ -1,15 +1,21 @@
 from django.db import models
-from projects.models import Project
+
 
 class Hold(models.Model):
-    """ A hold on a project """
+    
+    """A hold on something."""
+
     description = models.CharField(max_length=255)
     long_description = models.TextField(null=True, max_length=1000,
         help_text='Use Markdown syntax.')
-    long_description_html = models.TextField(blank=True, null=True)
 
-#    directors     = models.ManyToManyField(Person, limit_choices_to={'person_types__slug__exact': 'director'}, blank=True)
-    project        = models.ForeignKey(Project)
+    enabled = models.BooleanField(default=True,
+        help_text=_('Enable this object or disable its use?'))
+    created = models.DateField(auto_now_add=True, editable=False)
+    modified = models.DateField(auto_now=True, editable=False)
 
-    enabled = models.BooleanField(default=True)
-    created = models.DateField(blank=True, null=True, editable=False)
+    # Normalized fields
+    long_description_html = models.TextField(blank=True, max_length=1000, 
+        help_text=_('Description in HTML.'), editable=False)
+
+    # TODO: Add generic relation details...

@@ -23,14 +23,14 @@ class Language(models.Model):
         help_text=("A space-separated list of alternative locales."),
         null=True, default='')
 
+    def __unicode__(self):
+        return u'%s (%s)' % (self.name, self.code)
+
     class Meta:
         verbose_name = _('language')
         verbose_name_plural = _('languages')
         db_table  = 'translations_language'
         ordering  = ('name',)
-
-    def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.code)
 
     @permalink
     def get_absolute_url(self):

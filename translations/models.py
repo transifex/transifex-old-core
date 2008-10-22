@@ -5,8 +5,8 @@ from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
 from languages.models import Language
+
 
 class POFileManager(models.Manager):
     def get_for_object(self, obj):
@@ -23,27 +23,30 @@ class POFile(models.Model):
     A POFile is a collection of information about translations stats
     of a component in a language.
     
-    """    
-    total = models.PositiveIntegerField(default=0)
-    trans = models.PositiveIntegerField(default=0)
-    fuzzy = models.PositiveIntegerField(default=0)
-    untrans = models.PositiveIntegerField(default=0)
-
-    trans_perc = models.PositiveIntegerField(default=0, editable=False)
-    fuzzy_perc = models.PositiveIntegerField(default=0, editable=False)
-    untrans_perc = models.PositiveIntegerField(default=100, editable=False)
+    """
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     object = generic.GenericForeignKey('content_type', 'object_id')
     
+    total = models.PositiveIntegerField(default=0)
+    trans = models.PositiveIntegerField(default=0)
+    fuzzy = models.PositiveIntegerField(default=0)
+    untrans = models.PositiveIntegerField(default=0)
+    
     lang = models.ForeignKey(Language, null=True)
     filename = models.TextField(null=False, max_length=1000)
 
-    enabled = models.BooleanField(default=True)
-    created = models.DateField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    enabled = models.BooleanField(default=True, editable=False)
+    created = models.DateField(auto_now_add=True, editable=False)
+    modified = models.DateTimeField(auto_now=True, editable=False)
     
+    # Normalized fields
+    trans_perc = models.PositiveIntegerField(default=0, editable=False)
+    fuzzy_perc = models.PositiveIntegerField(default=0, editable=False)
+    untrans_perc = models.PositiveIntegerField(default=100, editable=False)
+
+    # Managers
     objects = POFileManager()
 
     def __unicode__(self):

@@ -37,25 +37,25 @@ class Project(models.Model):
     """
 
     slug = models.SlugField(unique=True)
-
     name = models.CharField(max_length=50)
     description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
-    long_description_html = models.TextField(blank=True, max_length=1000, 
-        help_text=_('Description as HTML.'), editable=False)
     homepage = models.CharField(blank=True, max_length=255)
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
-
-    num_components = models.PositiveIntegerField(editable=False, default=0)
 
     hidden = models.BooleanField(default=False,
         help_text=_('Hide this object from the list view?'))
     enabled = models.BooleanField(default=True,
         help_text=_('Enable this object or disable its use?'))
-    created = models.DateField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    created = models.DateField(auto_now_add=True, editable=False)
+    modified = models.DateTimeField(auto_now=True, editable=False)
+
+    # Normalized fields
+    long_description_html = models.TextField(blank=True, max_length=1000, 
+        help_text=_('Description in HTML.'), editable=False)
+    num_components = models.PositiveIntegerField(editable=False, default=0)
 
     def __repr__(self):
         return _('<Project: %s>') % self.name
@@ -121,16 +121,10 @@ class Component(models.Model):
     """A component is a translatable resource."""
 
     slug = models.SlugField()
-    project = models.ForeignKey(Project)
-    unit = models.ForeignKey(Unit, blank=True, null=True, editable=False)
-
     name = models.CharField(max_length=50)
     description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
-    long_description_html = models.TextField(blank=True, null=True,
-        max_length=1000, help_text=_('Description as HTML.'), editable=False)
-
     source_lang = models.CharField(max_length=50,
         help_text=_("The source language for this component, "
                     "eg. 'en', 'pt_BR', 'el'."))
@@ -140,7 +134,6 @@ class Component(models.Model):
                     ', '.join(settings.TRANS_CHOICES.keys())))
     file_filter = models.CharField(max_length=50, blank=True, null=True,
         help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
-
     hidden = models.BooleanField(default=False,
         help_text=_('Hide this object from the list view?'))
     enabled = models.BooleanField(default=True,
@@ -150,8 +143,12 @@ class Component(models.Model):
     
     # Normalized fields
     full_name = models.CharField(max_length=100, editable=False)
-    
-    # Generic relations
+    long_description_html = models.TextField(blank=True,
+        max_length=1000, help_text=_('Description in HTML.'), editable=False)
+
+    # Relations
+    project = models.ForeignKey(Project)
+    unit = models.ForeignKey(Unit, blank=True, null=True, editable=False)
     pofiles = generic.GenericRelation(POFile)
 
     # Managers
