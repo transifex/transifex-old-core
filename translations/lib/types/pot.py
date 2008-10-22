@@ -108,3 +108,9 @@ class POTManager(TransManagerMixin):
     def delete_stats_for_object(self, object):
         """ Delete all lang statistics of an object."""
         POFile.objects.filter(object_id=object.id).delete()
+
+    def get_source_file(self):
+        """Return the source file (pot)"""
+        for filename in self.file_set:
+            if filename.endswith('.pot'):
+                return filename

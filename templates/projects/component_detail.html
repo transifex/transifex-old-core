@@ -38,6 +38,13 @@
       <th class="branch i16">{% trans "Branch:" %}</th>
       <td>{{ component.unit.branch }}</td>
     </tr>
+    {% if component.trans.get_source_file %}
+    <tr>
+      {% url component_raw_file project.slug component.slug component.trans.get_source_file as file_source_url %}
+      <th class="link i16">{% trans "Source file:" %}</th>
+      <td><a title="{% trans "Download the source file for this component." %}" href="{{file_source_url}}">{{component.trans.get_source_file}}</a></td>
+    </tr>
+    {% endif %}
     <tr>
       <th class="i16 update">{% trans "Local cache:" %}</th>
       <td>
@@ -54,7 +61,6 @@
   </table>
 </div>
 {% endif %}  
-
 
   <h3>{% trans "Component statistics" %} </h3>
 

@@ -41,3 +41,6 @@ class POTHandler():
     def get_file_content(self, filename):
         """Return stats for the component."""
         return self.tm.get_file_content(filename)
+
+    def get_source_file(self):
+        return self.tm.get_source_file()
