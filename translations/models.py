@@ -8,6 +8,16 @@ from django.contrib.contenttypes import generic
 
 from languages.models import Language
 
+class POFileManager(models.Manager):
+    def get_for_object(self, obj):
+        """
+        Create a queryset matching all POFiles associated with the given
+        object.
+        """
+        ctype = ContentType.objects.get_for_model(obj)
+        return self.filter(content_type__pk=ctype.pk,
+                           object_id=obj.pk)
+
 class POFile(models.Model):
     """
     A POFile is a collection of information about translations stats
@@ -33,6 +43,8 @@ class POFile(models.Model):
     enabled = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+    
+    objects = POFileManager()
 
     def __unicode__(self):
         return u"%(file)s (%(type)s %(obj)s)" % {

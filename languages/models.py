@@ -15,6 +15,7 @@ class Language(models.Model):
 
     name = models.CharField(unique=True, max_length=50,
         help_text="The name of the language including dialect, script, etc.")
+    description = models.CharField(blank=True, max_length=255)
     code = models.CharField(unique=True, max_length=50,
         help_text=("The primary language code, used in file naming, etc."
                    "(eg. pt_BR for Brazilian Portuguese.)"))
