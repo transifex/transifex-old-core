@@ -12,7 +12,8 @@
    {% for stat in stats %} 
    {% url component_raw_file project component stat.filename as file_url %}
       <tr>
-        <td class="left">{{stat.lang.name}}</td>
+        <td class="left" id="{{stat.lang.code}}">
+          <a href="{{stat.lang.get_absolute_url}}#{{stat.object.full_name}}">{{stat.lang.name}}</a></td>
         <td>
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 

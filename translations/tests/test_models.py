@@ -19,8 +19,4 @@ class TranslationModelsTestCase(unittest.TestCase):
     def test_pofile_stats(self):
         """
         Test pofile statistics.
-        
-        >>> ps = POFile.stats_for_lang(self.language)
-        >>> ps[0].language.code
-        pt_BR
         """

@@ -12,4 +12,22 @@
 
 {% block body_main %}
 
+  <h3>Projects</h3>
+  
+{% if component_list %}
+  <p>Here's a list of the projects that ship this language.</p>
+  <div class="component_list multicolumn3">
+  <ul>
+  {% for component in component_list %}
+    <li id="{{component.full_name}}"><a href="{{ component.get_absolute_url }}#{{ language.code }}">{{ component.project.name }} ({{ component.name }})</a></li>
+  {% endfor %}
+  </ul>
+  </div>
+{% endif %}
+{% if not component_list %}
+{% url contact_form as contact_form %}
+  <p>{% blocktrans %}Transifex searched for projects containing translation files for this language, but couldn't find any. Try submitting such a file and check again.{% endblocktrans %}</p>
+  <p class="i16 tip">{% blocktrans %}If you think this shouldn't happen, please <a href="{{ contact_form }}">let us know</a>.{% endblocktrans %}</span></p>
+{% endif %}
+
 {% endblock %}

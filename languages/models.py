@@ -36,6 +36,10 @@ class Language(models.Model):
     def get_absolute_url(self):
         return ('language_detail', None, { 'slug': self.code })
 
+    @property
+    def components(self):
+        from projects.models import Component
+        return Component.objects.with_language(self)
 
 def suite():
     """Define this application's testing suite for Django's test runner."""

@@ -5,20 +5,24 @@ from django.db import models
 from django.db.models import permalink
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 
 from tagging.fields import TagField
 from tagging.models import Tag
 
 from vcs.models import Unit
-
+from translations.models import POFile
 from handlers import get_trans_handler
 
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
     from notification import models as notification
 
+
 class Project(models.Model):
-    """A project is a collection of translatable resources.
+    
+    """
+    A project is a collection of translatable resources.
 
     >>> p = Project.objects.create(slug="foo", name="Foo Project")
     >>> p = Project.objects.get(slug='foo')
@@ -29,6 +33,7 @@ class Project(models.Model):
         ...
     IntegrityError: column slug is not unique
     >>> p.delete()
+    
     """
 
     slug = models.SlugField(unique=True)
@@ -52,6 +57,8 @@ class Project(models.Model):
     created = models.DateField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    def __repr__(self):
+        return _('<Project: %s>') % self.name
 
     class Meta:
         verbose_name = _('project')
@@ -61,9 +68,7 @@ class Project(models.Model):
         get_latest_by = 'created'
 
     def save(self, *args, **kwargs):
-        """
-        Save the object in the database.
-        """
+        """Save the object in the database."""
         import markdown
         self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
@@ -95,8 +100,25 @@ class Project(models.Model):
 
 
 
+class ComponentManager(models.Manager):
+    
+    def with_language(self, language):
+        """
+        Return distinct components which ship a language's files.
+
+        Poll Components for ones that have files of a particular
+        language. Can be used by a language page, to list all
+        components which ship this language.
+        """
+
+        pofiles = POFile.objects.filter(lang=language)
+        qs = self.filter(id__in=[c.object_id for c in pofiles])
+        return qs.distinct()
+
+
 class Component(models.Model):
-    """ A component is a translatable resource. """
+
+    """A component is a translatable resource."""
 
     slug = models.SlugField()
     project = models.ForeignKey(Project)
@@ -128,7 +150,16 @@ class Component(models.Model):
     
     # Normalized fields
     full_name = models.CharField(max_length=100, editable=False)
+    
+    # Generic relations
+    pofiles = generic.GenericRelation(POFile)
 
+    # Managers
+    objects = ComponentManager()
+        
+    def __repr__(self):
+        return _('<Component: %s>') % self.full_name
+    
     class Meta:
         unique_together = ("project", "slug")
         verbose_name = _('component')
@@ -156,6 +187,9 @@ class Component(models.Model):
         return Tag.objects.get_for_object(self)
     
     tags = property(get_tags, set_tags)
+
+    def get_pofiles(self):
+        return POFile.objects.get_for_object(self)
 
     def save(self, *args, **kwargs):
         import markdown

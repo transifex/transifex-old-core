@@ -12,7 +12,7 @@
    <tbody>        
    {% for lang, comp in stats.items %}
     <tr>
-      <td class="left">{{ lang.name }} ({{lang.code}})</td>    
+      <td class="left" id="{{lang.code}}">{{ lang.name }} ({{lang.code}})</td>    
       {% for name, stat in comp.items %}
         <td>
           {% stats_bar_trans stat %}

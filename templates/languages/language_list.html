@@ -29,3 +29,10 @@
   <p>{% trans "No languages registered yet. :-(" %}</p>
   {% endif %}
 {% endblock %}
+
+{% block content_footer %}
+{% url contact_form as contact_form %}
+  <div id="content_footer_center">
+    <p><span class="i16 tip">{% blocktrans %}Couldn't find your lanugage? <a href="{{ contact_form }}">Let us know</a>!{% endblocktrans %}</span></p>
+  </div>
+{% endblock %}
