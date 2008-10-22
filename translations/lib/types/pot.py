@@ -8,12 +8,12 @@ import libpo as po
 
 class POTStatsError(Exception):
 
-    def __init__(self, lang):
-        self.lang = lang
+    def __init__(self, language):
+        self.language = language
 
     def __str__(self):
         return "Could not calculate the statistics using the '%s' " \
-               "language." % (self.lang)
+               "language." % (self.language)
 
 class POTManager(TransManagerMixin):
     """ A browser class for POT files. """

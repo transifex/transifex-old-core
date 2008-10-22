@@ -3,16 +3,16 @@
 <table class="stats_comp">
    <thead>
     <tr>
-      <th>{% trans "Lang name" %}</th>
+      <th>{% trans "Language" %}</th>
       {% for c in components %}
           <th class="alcenter">{{ c.name|truncate_chars:11 }}</th>
       {% endfor %}
     </tr>
    </thead>
    <tbody>        
-   {% for lang, comp in stats.items %}
+   {% for language, comp in stats.items %}
     <tr>
-      <td class="left" id="{{lang.code}}">{{ lang.name }} ({{lang.code}})</td>    
+      <td class="left" id="{{language.code}}">{{ language.name }} ({{language.code}})</td>    
       {% for name, stat in comp.items %}
         <td>
           {% stats_bar_trans stat %}

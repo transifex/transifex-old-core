@@ -18,6 +18,11 @@ class POFileManager(models.Manager):
         return self.filter(content_type__pk=ctype.pk,
                            object_id=obj.pk)
 
+    def by_language(self, language):
+        """ Returns a list of objects statistics for a language."""
+        return self.filter(language=language).order_by('-trans_perc')
+    
+    
 class POFile(models.Model):
     """
     A POFile is a collection of information about translations stats
@@ -34,7 +39,7 @@ class POFile(models.Model):
     fuzzy = models.PositiveIntegerField(default=0)
     untrans = models.PositiveIntegerField(default=0)
     
-    lang = models.ForeignKey(Language, null=True)
+    language = models.ForeignKey(Language, null=True)
     filename = models.TextField(null=False, max_length=1000)
 
     enabled = models.BooleanField(default=True, editable=False)
@@ -59,7 +64,7 @@ class POFile(models.Model):
         verbose_name = _('PO file')
         verbose_name_plural = _('PO files')
         db_table  = 'translations_pofile'
-        ordering  = ('filename', 'lang')
+        ordering  = ('filename', 'language')
         
     def save(self, *args, **kwargs):
         self.modified = datetime.now()
@@ -82,11 +87,6 @@ class POFile(models.Model):
         self.fuzzy = fuzzy
         self.untrans = untrans
         self.calulate_perc()
-
-    @classmethod
-    def stats_for_lang(self, lang):
-        """ Returns a list of objects statistics for a language."""
-        return self.objects.filter(lang=lang).order_by('-trans_perc')
 
 def suite():
     """

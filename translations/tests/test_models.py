@@ -8,15 +8,16 @@ class TranslationModelsTestCase(unittest.TestCase):
     Supplementary tests, in addition to doctests.   
     """ 
 
-    def setUp(self):
-        self.pofile = POFile(object=self.language, lang=self.language)
-        self.pofile.save()
-    
-    def tearDown(self):
-        self.pofile.delete()
- 
-
-    def test_pofile_stats(self):
-        """
-        Test pofile statistics.
-        """
+#    def setUp(self):
+#        self.pofile = POFile(object=self.language, language=self.language)
+#        self.pofile.save()
+#    
+#    def tearDown(self):
+#        self.pofile.delete()
+# 
+#
+#    def test_pofile_stats(self):
+#        """
+#        Test pofile statistics.
+#        """
+    pass

@@ -3,7 +3,7 @@
 <table class="stats_comp">
    <thead>
     <tr>
-      <th>{% trans "Lang name" %}</th>
+      <th>{% trans "Language" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
       <th>{% trans "Download" %}</th>
     </tr>
@@ -12,13 +12,13 @@
    {% for stat in stats %} 
    {% url component_raw_file project component stat.filename as file_url %}
       <tr>
-        <td class="left" id="{{stat.lang.code}}">
-          <a href="{{stat.lang.get_absolute_url}}#{{stat.object.full_name}}">{{stat.lang.name}}</a></td>
+        <td class="left" id="{{stat.language.code}}">
+          <a href="{{stat.language.get_absolute_url}}#{{stat.object.full_name}}">{{stat.language.name}}</a></td>
         <td>
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
-        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.lang.code}}.po" href="{{file_url}}">{{stat.lang.code}}.po</a></td>
+        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.language.code}}.po" href="{{file_url}}">{{stat.language.code}}.po</a></td>
       </tr>
    {% endfor %}
    </tbody>
