@@ -148,7 +148,7 @@ class Component(models.Model):
 
     # Relations
     project = models.ForeignKey(Project)
-    unit = models.ForeignKey(Unit, blank=True, null=True, editable=False)
+    unit = models.OneToOneField(Unit, blank=True, null=True, editable=False)
     pofiles = generic.GenericRelation(POFile)
 
     # Managers
