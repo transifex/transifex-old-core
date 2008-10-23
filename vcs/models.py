@@ -78,10 +78,6 @@ class Unit(models.Model):
         ordering  = ('name', 'branch')
         get_latest_by = 'created'
 
-    def save(self, *args, **kwargs):
-        self.date_modified = datetime.now()
-        super(Unit, self).save(*args, **kwargs)
-
     def delete(self, *args, **kwargs):
         self.teardown_repo()
         super(Unit, self).delete(*args, **kwargs)

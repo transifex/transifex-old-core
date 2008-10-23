@@ -70,7 +70,6 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         """Save the object in the database."""
         import markdown
-        self.date_modified = datetime.now()
         self.long_description_html = markdown.markdown(self.long_description)
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
