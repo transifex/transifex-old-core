@@ -85,7 +85,7 @@ class POTManager(TransManagerMixin):
                 l = Language.objects.get(code=lang)
             except Language.DoesNotExist:
                 l = None
-            s = POFile.objects.create(lang=l, filename=f, 
+            s = POFile.objects.create(language=l, filename=f, 
                                            object=object)
         s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untranslated'])
@@ -94,8 +94,8 @@ class POTManager(TransManagerMixin):
     def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""
         try: 
-            return POFile.objects.filter(lang=lang, 
-                                              object_id=object.id)[0]
+            return POFile.objects.filter(language=lang, 
+                                         object_id=object.id)[0]
         except IndexError:
             return None
 

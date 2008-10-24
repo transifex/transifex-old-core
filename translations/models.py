@@ -25,9 +25,12 @@ class POFileManager(models.Manager):
     
 class POFile(models.Model):
     """
-    A POFile is a collection of information about translations stats
-    of a component in a language.
+    A POFile is a representation of a PO file structure.
     
+    It can either be a real PO file on a repository, a
+    dynamically-generated one, etc. It represents the translation
+    of a component to a language. The model's basic use is the
+    calculation of translation statistics.    
     """
 
     content_type = models.ForeignKey(ContentType)
@@ -61,32 +64,53 @@ class POFile(models.Model):
             'obj': self.object,}
 
     class Meta:
+        unique_together = ("content_type", "object_id", "filename")
         verbose_name = _('PO file')
         verbose_name_plural = _('PO files')
         db_table  = 'translations_pofile'
         ordering  = ('filename', 'language')
+        get_latest_by = 'created'
         
     def save(self, *args, **kwargs):
-        self.modified = datetime.now()
+        self.calculate_perc()
         super(POFile, self).save(*args, **kwargs)
 
-    def calulate_perc(self):
-        if self.total != 0:
-            self.trans_perc = self.trans*100/self.total
-            self.fuzzy_perc = self.fuzzy*100/self.total
-            self.untrans_perc = self.untrans*100/self.total
-        else:
+    def calculate_perc(self):
+        """Update normalized percentage statistics fields."""
+        try:
+            self.trans_perc = self.trans * 100 / self.total
+            self.fuzzy_perc = self.fuzzy * 100 / self.total
+            self.untrans_perc = self.untrans * 100 / self.total
+        except ZeroDivisionError:
             self.trans_perc = 0
             self.fuzzy_perc = 0
-            self.untrans_perc = 100
-        
+            self.untrans_perc = 0
+
     def set_stats(self, trans=0, fuzzy=0, untrans=0):
-        """ Initialize the object"""
         self.total = trans + fuzzy + untrans
         self.trans = trans
         self.fuzzy = fuzzy
         self.untrans = untrans
-        self.calulate_perc()
+        self.calculate_perc()
+    
+    def guess_lang(self):
+        """
+        Try to find the language of the POFile.
+
+        Return None if guesswork fails.
+        This method is currently specific to <lang>.po files.        
+        """
+        # FIXME: Per-i18n-type functionality is stroed in the transmanager,
+        # and this method should be there. Or, we should have this model
+        # tied to a particular manager. Design decision needed.
+
+        from os.path import basename
+        try:
+            lang_code = basename(self.filename[:-3:])
+            return Language.objects.get(code=lang_code)
+        except:
+            return
+
 
 def suite():
     """

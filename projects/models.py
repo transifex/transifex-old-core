@@ -110,7 +110,7 @@ class ComponentManager(models.Manager):
         components which ship this language.
         """
 
-        pofiles = POFile.objects.filter(lang=language)
+        pofiles = POFile.objects.filter(language=language)
         qs = self.filter(id__in=[c.object_id for c in pofiles])
         return qs.distinct()
 
