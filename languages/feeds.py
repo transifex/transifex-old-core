@@ -1,12 +1,16 @@
-from django.contrib.syndication.feeds import Feed
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.syndication.feeds import Feed
+from django.contrib.sites.models import Site
 from models import Language
 
+
 class AllLanguages(Feed):
-    title = _("Transifex languages")
-    # FIXME: get this from sites and settings.py
-    link = "http://transifex.net/"
-    description = _("The languages Transifex speaks.")
+    current_site = Site.objects.get_current()
+    title = _("Languages on %(site_name)s") % {
+        'site_name': current_site.name }
+    link = current_site.domain
+    description = _("The languages spoken on %s.") % current_site.name
 
     def items(self):
         return Language.objects.all()

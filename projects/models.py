@@ -57,6 +57,9 @@ class Project(models.Model):
         help_text=_('Description in HTML.'), editable=False)
     num_components = models.PositiveIntegerField(editable=False, default=0)
 
+    def __unicode__(self):
+        return self.name
+
     def __repr__(self):
         return _('<Project: %s>') % self.name
 
@@ -153,6 +156,9 @@ class Component(models.Model):
     # Managers
     objects = ComponentManager()
         
+    def __unicode__(self):
+        return self.name
+
     def __repr__(self):
         return _('<Component: %s>') % self.full_name
     
