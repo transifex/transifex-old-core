@@ -1,5 +1,7 @@
+import os
 import unittest
 from vcs.models import Unit
+
 
 class CvsTestCase(unittest.TestCase):
     """Test CVS VCS support.
@@ -9,9 +11,10 @@ class CvsTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
+
         self.unit = Unit.objects.create(
             name="Test-CVS",
-            root=':pserver:anonymous@cvs.fedoraproject.org:/cvs/elvis/switchdesk',
+            root='%s/test_repo/cvs/Test-CVS' % os.path.split(__file__)[0],
             type='cvs')
     def tearDown(self):
         self.unit.delete()
@@ -32,5 +35,5 @@ class CvsTestCase(unittest.TestCase):
         #FIXME: This is not the best way to test something like this!
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
-                          15131)
+        self.assertEquals(len(self.unit.browser.get_file_contents('po/test_repo.pot')),
+                          594)

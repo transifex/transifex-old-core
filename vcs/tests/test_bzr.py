@@ -1,3 +1,4 @@
+import os
 import unittest
 from vcs.models import Unit
 
@@ -10,7 +11,7 @@ class BzrTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
         self.unit = Unit.objects.create(type='bzr',
-            root='http://fedorapeople.org/~wtogami/temp/InstantMirror/',)
+            root='%s/test_repo/bzr' % os.path.split(__file__)[0],)
     def tearDown(self):
         self.unit.delete()
         # Until we use a local repo, let's not delete it after the first run:
@@ -30,5 +31,6 @@ class BzrTestCase(unittest.TestCase):
         #FIXME: This is not the best way to test something like this!
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
-                          18011)
+        self.assertEquals(len(self.unit.browser.get_file_contents(
+                          'po/test_repo.pot')),
+                          594)

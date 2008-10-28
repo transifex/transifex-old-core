@@ -1,3 +1,4 @@
+import os
 import unittest
 from vcs.models import Unit
 from vcs.lib import RepoError
@@ -12,7 +13,7 @@ class GitTestCase(unittest.TestCase):
     def setUp(self):
         self.unit = Unit.objects.create(
             name="Test-Git",
-            root='http://git.fedorahosted.org/git/elections.git',
+            root='%s/test_repo/git' % os.path.split(__file__)[0],
             branch='master', type='git')
     def tearDown(self):
         self.unit.delete()
@@ -33,5 +34,5 @@ class GitTestCase(unittest.TestCase):
         #FIXME: This is not the best way to test something like this!
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
-                          18002)
+        self.assertEquals(len(self.unit.browser.get_file_contents('po/test_repo.pot')),
+                          594)

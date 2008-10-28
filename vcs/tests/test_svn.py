@@ -1,3 +1,4 @@
+import os
 import unittest
 from vcs.models import Unit
 
@@ -11,7 +12,7 @@ class SvnTestCase(unittest.TestCase):
     def setUp(self):
         self.unit = Unit.objects.create(
             name="Test-SVN",
-            root='http://svn.fedorahosted.org/svn/system-config-language',
+            root='%s/test_repo/svn/checkout' % os.path.split(__file__)[0],
             branch='trunk', type='svn')
     def tearDown(self):
         self.unit.delete()
@@ -32,5 +33,5 @@ class SvnTestCase(unittest.TestCase):
         #FIXME: This is not the best way to test something like this!
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        self.assertEquals(len(self.unit.browser.get_file_contents('COPYING')),
-                          17982)
+        self.assertEquals(len(self.unit.browser.get_file_contents('po/test_repo.pot')),
+                          594)
