@@ -1,5 +1,7 @@
 {% load i18n %}
 {% load statistics %}
+{% if stats %}
+<h3>{% trans "Component statistics" %} </h3>
 <table class="stats_comp">
    <thead>
     <tr>
@@ -23,3 +25,4 @@
    {% endfor %}
    </tbody>
 </table>
+{%  endif %}
