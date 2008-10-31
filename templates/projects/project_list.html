@@ -15,9 +15,11 @@
 {% block content_title %}<h2 class="pagetitle">{% trans "Projects on Transifex" %}</h2>{% endblock %}
 
 {% block content_header_sec %}
+    {% if request.user.is_authenticated %}
     <div class="addproject content_header_sec">
       <span class="i16 add"><a href="{% url project_add %}">{% trans "Add a new project" %}</a></span>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block body_sec %}

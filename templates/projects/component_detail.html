@@ -13,7 +13,9 @@
 
 {% block body_main %}
 
+  {% if request.user.is_authenticated %}
   <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
@@ -68,9 +70,11 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
+    {% if request.user.is_authenticated %}
     <div class="deletelink">
       <span class="i16 delete"><a href="{% url component_delete project_slug=project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a></span>
     </div>
+    {% endif %}
   </div>
 {% endblock %}
 

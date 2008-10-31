@@ -5,10 +5,24 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
 
 from projects.models import Project, Component
 from projects.forms import ComponentForm, UnitForm
 
+@login_required
+def project_create(*args, **kwargs):
+    return create_update.create_object(*args, **kwargs)
+
+@login_required
+def project_update(*args, **kwargs):
+    return create_update.update_object(*args, **kwargs)
+
+@login_required
+def project_delete(*args, **kwargs):
+    return create_update.delete_object(*args, **kwargs)
+
+@login_required
 def component_create_update(request, project_slug, component_slug=None):
     """
     Create & update components. Handles associated units
@@ -53,7 +67,7 @@ def component_detail(request, project_slug, component_slug, *args, **kwargs):
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
-
+@login_required
 def component_delete(request, project_slug, component_slug, *args, **kwargs):
     #TODO: Make this one query
     project = get_object_or_404(Project, slug__iexact=project_slug)

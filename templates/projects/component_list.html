@@ -1,10 +1,11 @@
 {% load i18n %}
 
 <div id="components" class="components">
+  {% if request.user.is_authenticated %}
   <div class="editlinks"><span class="i16 add">
     <a href="{% url component_add project_slug=project.slug %}">{% trans "Add" %}</a></span>
   </p></div>
-    
+  {% endif %}    
   <h3>{% trans "Project Components" %}</h3>
   <p>
     <span class="i16 tip">{% trans "<em>Components</em> are smaller, self-contained parts of a larger project." %}</em>
@@ -14,10 +15,13 @@
   {% for comp in project.component_set.all %}
     <div class="entry">
       <h4><a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>
+      {% if request.user.is_authenticated %}
       <sup class="entry_metalink">
         (<a href="{% url component_edit project_slug=project.slug component_slug=comp.slug %}">{% trans "edit" %}</a>, 
         <a href="{% url component_delete project_slug=project.slug component_slug=comp.slug %}">{% trans "del" %}</a>)
-      </sup></h4>
+      </sup>
+      {% endif %}
+      </h4>
       <span class="description">{{ comp.description }}</span></li>
     </div>
     {% endfor %}
