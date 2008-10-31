@@ -8,6 +8,11 @@
 {% endblock %}
 
 {% block body %}
+
+{% if not request.user.is_authenticated %}
+    {% include "login.html" %}
+{% endif %}
+
 <p class="promo">{% trans "Transifex is a service aimed at helping translators keep track of their favourite translation projects." %}</p>
 
 <div class="searchform content_header_prim">
@@ -18,6 +23,5 @@
   {% url project_list as project_list %} 
   <p>{% blocktrans %}You could also browse through <a href="{{ project_list }}">all projects</a>.{% endblocktrans %}</p>
 </div>
-
-  
+<div id="clear"></div>  
 {% endblock %}
