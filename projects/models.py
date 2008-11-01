@@ -193,10 +193,13 @@ class Component(models.Model):
     def get_pofiles(self):
         return POFile.objects.get_for_object(self)
 
+    def get_full_name(self):
+        return "%s.%s" % (self.project.slug, self.slug)
+
     def save(self, *args, **kwargs):
         import markdown
         self.long_description_html = markdown.markdown(self.long_description)
-        self.full_name = "%s.%s" % (self.project.slug, self.slug)
+        self.full_name = self.get_full_name()
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
         super(Component, self).save(*args, **kwargs)
