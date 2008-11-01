@@ -9,8 +9,8 @@ SVN_REPO_PATH = settings.SVN_REPO_PATH
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
         try:
-            self.client
-        except AttributeError:
+            self.client.status(self.path)
+        except pysvn.ClientError:
             self.init_repo()
         return fn(self, *args, **kw)
     return repo_fn
