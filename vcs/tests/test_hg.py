@@ -10,12 +10,16 @@ class HgTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
+        self.root='%s/test_repo/hg' % os.path.split(__file__)[0]
+        os.system('cd %s; hg init; hg add *; hg commit -m "Init repo"'
+                  % self.root)
         self.unit = Unit.objects.create(
             name="Test-HG",
-            root='%s/test_repo/hg' % os.path.split(__file__)[0],
+            root=self.root,
             branch='tip', type='hg')
     def tearDown(self):
         self.unit.delete()
+        os.system('rm -rf %s/.hg' % self.root)
         # Until we use a local repo, let's not delete it after the first run:
         # self.unit.browser.teardown_repo()
 
