@@ -55,7 +55,6 @@ class Project(models.Model):
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 
         help_text=_('Description in HTML.'), editable=False)
-    num_components = models.PositiveIntegerField(editable=False, default=0)
 
     def __unicode__(self):
         return self.name
@@ -203,9 +202,6 @@ class Component(models.Model):
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
         super(Component, self).save(*args, **kwargs)
-        # Update de-normalized fields
-        self.project.num_components = self.project.component_set.count()
-        self.project.save(*args, **kwargs)
 
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), 
