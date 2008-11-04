@@ -78,6 +78,17 @@ class Unit(models.Model):
         ordering  = ('name', 'branch')
         get_latest_by = 'created'
 
+    def save(self, *args, **kwargs):
+        if self.id:
+            unit_old = Unit.objects.get(id=self.id)
+        else:
+            unit_old = None
+
+        super(Unit, self).save(*args, **kwargs)
+
+        if unit_old and unit_old.name != self.name:
+            unit_old.rename_repo(self.name)
+
     def delete(self, *args, **kwargs):
         self.teardown_repo()
         super(Unit, self).delete(*args, **kwargs)
@@ -95,6 +106,7 @@ class Unit(models.Model):
         self.browser = browser(root=self.root,
                                name=self.name,
                                branch=self.branch)
+
     @need_browser
     def prepare_repo(self):
         """Abstration for the unit.browser.update."""
@@ -117,6 +129,10 @@ class Unit(models.Model):
         except:
            pass
 
+    @need_browser
+    def rename_repo(self, new_name):
+        """Abstration for the unit.browser.rename_repo."""
+        self.browser.rename_repo(new_name)
 
 def suite():
     """

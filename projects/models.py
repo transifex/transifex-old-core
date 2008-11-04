@@ -77,15 +77,15 @@ class Project(models.Model):
         created = self.created
         super(Project, self).save(*args, **kwargs)
 
+        for c in Component.objects.filter(project=self):
+            c.save()
+        
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
 
     def delete(self, *args, **kwargs):
-        #FIXME: ``Component.objects.filter(project=self).delete()`` command 
-        # seems do not call the delete modified method for Component class
-        component = Component.objects.filter(project=self)
-        for c in component:
+        for c in Component.objects.filter(project=self):
             c.delete()
         super(Project, self).delete(*args, **kwargs)
 
@@ -202,6 +202,10 @@ class Component(models.Model):
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
         super(Component, self).save(*args, **kwargs)
+
+        if self.unit:
+            self.unit.name = self.full_name
+            self.unit.save()
 
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), 

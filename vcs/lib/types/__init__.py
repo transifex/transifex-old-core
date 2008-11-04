@@ -118,3 +118,12 @@ class VCSBrowserMixin:
         except OSError:
             pass
 
+    def rename_repo(self, new_name):
+        """ Rename the directory in the filesystem of the repository. """
+        import shutil
+        try:
+            destination = "%s/%s" % (os.path.split(self.path)[0], new_name)
+            shutil.move(self.path, destination)
+        except OSError:
+            pass
+
