@@ -18,6 +18,41 @@ from handlers import get_trans_handler
 if settings.ENABLE_NOTICES:
     from notification import models as notification
 
+def cached_property(func):
+    """
+    Cached property.
+
+    This function is able to verify if an instance of a property fieald
+    was already created before and, if not, it creates the new one.
+    When needed it also is able to delete the cached property field from
+    the memory.
+
+    Usage:
+    @cached_property
+    def trans(self):
+        ...
+
+    del(self.trans)
+ 
+    """
+    def _set_cache(self):
+        cache_attr = "__%s" % func.__name__
+        try:
+            return getattr(self, cache_attr)
+        except AttributeError:
+            value = func(self)
+            setattr(self, cache_attr, value)
+            return value
+
+    def _del_cache(self):
+        cache_attr = "__%s" % func.__name__
+        try:
+            delattr(self, cache_attr)
+        except AttributeError:
+            pass
+        
+    return property(_set_cache, fdel=_del_cache)
+
 
 class Project(models.Model):
     
@@ -169,12 +204,18 @@ class Component(models.Model):
         ordering  = ('name',)
         get_latest_by = 'created'
 
-    def __init__(self, *args, **kwargs):
-        models.Model.__init__(self, *args, **kwargs)
+    @cached_property
+    def trans(self):
+        """ 
+        Cached property field to TransHandler 
+
+        This function allows to inicialize the TransHandler only when it
+        is needed.
+        """
         if self.id and self.i18n_type:
             handler_class = get_trans_handler(self.i18n_type)
-            self.trans = handler_class(self)
-  
+            return handler_class(self)
+
     @permalink
     def get_absolute_url(self):
         return ('component_detail', None,
@@ -247,3 +288,15 @@ class Component(models.Model):
     def get_files(self):
         """Return a list of filtered files for the component."""
         return [f for f in self.unit.get_files(self.file_filter)]
+
+    def prepare_repo(self):
+        """
+        Abstraction for unit.prepare_repo().
+
+        This function creates/updates the Component local repository
+        and then unset the TransHandler property cache for it be created
+        again, with a new set of files, next time that it will be used.
+        """
+        self.unit.prepare_repo()
+        del(self.trans)
+
