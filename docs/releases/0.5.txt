@@ -1,23 +1,123 @@
 .. _releases-0.5:
 
-===================================
-Transifex version 0.5 release notes
-===================================
+=====================================
+ Transifex version 0.5 release notes
+=====================================
 
 Welcome to the Transifex 0.5 release.
 
-This represents a significant advance in Transifex development since the 0.4
-release in July 2008. The one most major change is the complete re-write of
-the code from scratch, migrating to the Django framework.
+This release represents a significant advance in Transifex development since
+the Transifex 0.4 release in November 2008, maybe even the creation of Transifex
+itself in 2007. The single most major change is the complete re-write of the
+code from scratch, migrating to the Django framework, but also the multitude
+of features added, both of which signify a turning point in Transifex's history.
+
+Development for Transifex 0.5 is quite flux right now and the following might
+receive minor changes. Even so, they should be considered as a good picture of
+our plans for version 0.5.
+
+
+Summary
+=======
 
 Following is a summarized list of the major new features:
 
-* Complete re-write of source code on top of the Django framework
-* Refactoring of the version control system level, supporting
+- Complete re-write of source code on top of the Django framework
+- New data model supporting multiple repositories per project
+- Support for highly customizable deployment, including overriding of VCS
+  backends, themes and custom classes for I18n support in projects
+- Refactoring of the version control system level, supporting
+  cvs, svn, hg, git and bzr, hosted anywhere on the Internet.
+- Support for calculation of a project's translation coverage (statistics)
+- Support for serving translation files to users for easy access to them 
+- User registrations
+- OpenID authentication
+- User permissions support, allowing fine-grained permission handling
+- Support for searching for a project
+- Support for notification on changes in registered projects
+- Documentation using the Sphinx library
+- RSS feeds for every element in the system.
+
+
+Roadmap
+=======
+
+Releasing Transifex 0.5 will require quite some planning, coordination and
+code. The canonical place where we track the roadmap for the release is
+the ticket system at http://transifex.org/milestone/0.5.
+
+To reach Transifex 0.5 Gold, we'll split the work in milestones,
+represented as *v0.5m1*. Here's a draft plan for the features in these
+milestones. 
+
+
+What's new in Transifex 0.5
+===========================
+
+So many things have changed we don't know where to start.
+
+
+New features
+------------
+
+A multitude of new features appear in this release.
+
+
+Migration to Django
+:::::::::::::::::::
+
+Mention:
+
+- Complete re-write of source code on top of the Django framework
+- Merge of submissions layer of Christos.
+- Support for highly customizable deployment, including overriding of VCS
+  backends, themes and custom classes for I18n support.
+- Refactoring of the version control system level, supporting
   cvs, svn, hg, git and bzr.
-* Translation statistics support
-* User registrations
-* OpenID authentication
-* Search support in projects
-* Support for notification on changes in registered projects
-* Documentation using the Sphinx library
+
+
+Data model
+::::::::::
+
+- New data model supporting multiple repositories per project.
+
+
+Translation statistics
+::::::::::::::::::::::
+
+- Translation statistics support (POT-based).
+- Easy addition of more i18n types.
+
+
+Notifications
+:::::::::::::
+
+- Support for notification on changes in registered projects
+- Extensible for more notifications.
+
+
+User management
+:::::::::::::::
+
+- User registrations
+- OpenID authentication
+- User profiles
+
+
+Various
+:::::::
+
+- RSS feeds for every element in the system.
+- Documentation using the Sphinx library
+- Search support in projects
+
+
+Bugfixes
+--------
+
+- ...
+
+Translations
+------------
+
+- ...

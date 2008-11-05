@@ -63,9 +63,9 @@ class GitBrowser(VCSBrowserMixin):
         
         Commands used:
         git clone <remote_path> <self.path>
-        if branch != master
-            git branch <branch> <remote_branch>
-            git co <branch>
+        if branch != master:
+        git branch <branch> <remote_branch>
+        git co <branch>
         
         """
 
