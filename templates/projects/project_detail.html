@@ -7,7 +7,15 @@
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
+{% endblock %}
+
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+
+{% block body_sec %}
+  <a href="{% url project_feed param=project.slug %}" title="Project feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
 
 {% block body_main %}
 

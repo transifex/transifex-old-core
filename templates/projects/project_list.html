@@ -7,7 +7,7 @@
 {% block title %}{{ block.super }} | {% trans "Project list" %}{% endblock %}
 
 {% block extra_head %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed url="latest" %}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_latest_feed %}" />
 {% endblock %}
 
 {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block body_sec %}
-  <a href="{% url project_feed url="latest" %}" title="Projects feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+  <a href="{% url project_latest_feed %}" title="Projects feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block body_main %}

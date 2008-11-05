@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 from models import Language
 from feeds import AllLanguages
-from views import language_detail
+from views import language_detail, slug_feed
 
 admin.autodiscover()
 
@@ -10,15 +10,15 @@ feeds = {
     'all': AllLanguages,
 }
 
-# These urlconfs are being mounted directly at /, so make sure they don't
-# conflict with anything else in the main urls.py
 urlpatterns = patterns('',
     url(
-        name = 'language_feed',
-        regex = r'^feeds/(?P<url>[-\w]+)/$',
-        view = 'django.contrib.syndication.views.feed',
-        kwargs = {'feed_dict': feeds}),
+        regex = r'^feed/$',
+        view = 'languages.views.slug_feed',
+        name = 'languages_latest_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'all'}),
 )
+
 
 urlpatterns += patterns('django.views.generic',
     url (

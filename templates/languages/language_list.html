@@ -6,7 +6,7 @@
 {% block title %}{{ block.super }} | {% trans "Languages" %}{% endblock %}
 
 {% block extra_head %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url language_feed url="all" %}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url languages_latest_feed %}" />
 {% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {% trans "Languages" %}{% endblock %}
@@ -14,7 +14,7 @@
 {% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} <sup class="entry_metalink">{{ language_list.count }}</sup></h2>{% endblock %}
 
 {% block body_sec %}
-  <a href="{% url language_feed url="all" %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+  <a href="{% url languages_latest_feed %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block body_main %}

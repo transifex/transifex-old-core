@@ -1,12 +1,13 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.feeds import (Feed, FeedDoesNotExist)
 from django.contrib.sites.models import Site
-from projects.models import Project
+from projects.models import (Project, Component)
 
+current_site = Site.objects.get_current()
 
 class LatestProjects(Feed):
-    current_site = Site.objects.get_current()
     title = _("Latest projects on %(site_name)s") % {
         'site_name': current_site.name }
     link = current_site.domain
@@ -14,3 +15,29 @@ class LatestProjects(Feed):
 
     def items(self):
         return Project.objects.order_by('-created')[:10]
+
+
+class ProjectFeed(Feed):
+
+    def get_object(self, bits):
+        # In case of "/rss/name/foo/bar/baz/", or other such clutter,
+        # check that the bits parameter has only one member.
+        if len(bits) != 1:
+            raise ObjectDoesNotExist
+        return Project.objects.get(slug__exact=bits[0])
+
+    def title(self, obj):
+        return _("%(site_name)s: Components in %(project)s") % {
+            'site_name': current_site.name,
+            'project': obj.name }
+
+    def description(self, obj):
+        return _("Latest components in project %s.") % obj.name
+
+    def link(self, obj):
+        if not obj:
+            raise FeedDoesNotExist
+        return obj.get_absolute_url()
+
+    def items(self, obj):
+        return Component.objects.filter(project__id__exact=obj.id).order_by('-created')[:50]

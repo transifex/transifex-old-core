@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from projects.models import Project
 from projects.views import * 
-from feeds import LatestProjects
+from feeds import (LatestProjects, ProjectFeed)
 
 admin.autodiscover()
 
@@ -14,14 +14,22 @@ project_list = {
 
 feeds = {
     'latest': LatestProjects,
+    'project': ProjectFeed,
 }
 
 urlpatterns = patterns('',
     url(
-        regex = r'^feeds/(?P<url>[-\w]+)/$',
-        view = 'django.contrib.syndication.views.feed',
+        regex = r'^feed/$',
+        view = 'projects.views.slug_feed',
+        name = 'project_latest_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'latest'}),
+    url(
+        regex = r'^(?P<param>[-\w]+)/feed/$',
+        view = 'projects.views.slug_feed',
         name = 'project_feed',
-        kwargs = {'feed_dict': feeds}),
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'project'}),
 )
 
 urlpatterns += patterns('django.views.generic',
