@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
+from tagging.views import tagged_object_list
 
 from projects.models import Project
 from projects.views import * 
@@ -55,14 +56,21 @@ urlpatterns += patterns('django.views.generic',
         regex = '^(?P<slug>[-\w]+)/$',
         view = 'list_detail.object_detail',
         name = 'project_detail',
-        kwargs = project_list,
-        ),
+        kwargs = project_list,),
     url (
         regex = '^$',
         view = 'list_detail.object_list',
         kwargs = project_list,
         name = 'project_list'),
+    url(
+        r'^tag/(?P<tag>[^/]+)/$',
+        tagged_object_list,
+        dict(queryset_or_model=Project, allow_empty=True,
+             template_object_name='project'),
+        name='project_tag_list'),
+
 )
+
 
 # Components
 urlpatterns += patterns('',

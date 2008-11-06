@@ -49,7 +49,7 @@
     <tr>
       <th class="i16 tag">{% trans "Tags:" %}</th>
       <td class="compact">
-        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="">{{ tag }}</a> {% endfor %}
+        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
       </td>
     </tr>
     {% endif %}
