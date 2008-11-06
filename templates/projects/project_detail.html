@@ -45,12 +45,14 @@
       <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
     </tr>
     {% endif %}
+    {% if project.tags %}
     <tr>
       <th class="i16 tag">{% trans "Tags:" %}</th>
-      <td>{% for tag in project.get_tags %}
-        <a href="/projects/tag/{{tag}}" alt="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}" title="{% blocktrans %}Projects with tag {{tag}}{% endblocktrans %}">{{tag}}</a> {%endfor%}
+      <td class="compact">
+        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="">{{ tag }}</a> {% endfor %}
       </td>
     </tr>
+    {% endif %}
     <tr>
       <th class="i16 link">{% trans "External resources:" %}</th>
       <td><ul>

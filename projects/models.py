@@ -7,8 +7,8 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
+import tagging
 from tagging.fields import TagField
-from tagging.models import Tag
 
 from vcs.models import Unit
 from translations.models import POFile
@@ -86,6 +86,8 @@ class Project(models.Model):
         help_text=_('Enable this object or disable its use?'))
     created = models.DateField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
+    
+    tags = TagField()
 
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 
@@ -128,11 +130,7 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('project_detail', None, { 'slug': self.slug })
 
-    def set_tags(self, tags):
-        Tag.objects.update_tags(self, tags)
-
-    def get_tags(self):
-        return Tag.objects.get_for_object(self)
+tagging.register(Project, tag_descriptor_attr='tagsobj')
 
 
 
@@ -207,10 +205,9 @@ class Component(models.Model):
     @cached_property
     def trans(self):
         """ 
-        Cached property field to TransHandler 
+        Cache TransHandler property field. 
 
-        This function allows to inicialize the TransHandler only when it
-        is needed.
+        Allow the TransHandler initialization only when it is needed.
         """
         if self.id and self.i18n_type:
             handler_class = get_trans_handler(self.i18n_type)
@@ -221,14 +218,6 @@ class Component(models.Model):
         return ('component_detail', None,
                 { 'project_slug': self.project.slug,
                  'component_slug': self.slug })
-
-    def set_tags(self, tags):
-        Tag.objects.update_tags(self, tags)
-
-    def get_tags(self):
-        return Tag.objects.get_for_object(self)
-    
-    tags = property(get_tags, set_tags)
 
     def get_pofiles(self):
         return POFile.objects.get_for_object(self)
@@ -291,7 +280,7 @@ class Component(models.Model):
 
     def prepare_repo(self):
         """
-        Abstraction for unit.prepare_repo().
+        Abstract unit.prepare_repo().
 
         This function creates/updates the Component local repository
         and then unset the TransHandler property cache for it be created
