@@ -26,8 +26,7 @@ class POTHandler():
 
     def set_stats(self):
         """Calculate stats for all translations of the component."""
-        # Unit checkout
-        self.component.prepare_repo()
+
         # Deleting all stats for the component
         self.tm.delete_stats_for_object(self.component)
 

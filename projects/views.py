@@ -111,6 +111,8 @@ def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
     project = get_object_or_404(Project, slug__iexact=project_slug)
     component = get_object_or_404(Component, slug__exact=component_slug,
                                   project=project)
+    # Checkout
+    component.prepare_repo()
     # Calcule statistics
     component.trans.set_stats()
 
