@@ -21,6 +21,10 @@
 
   <h2 class="name">{{ project.name }}</h2>
 
+  {% if request.user.is_authenticated %}
+  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
+  
   {% if project.description %}<p class="description">{{ project.description }}</p>{% endif %}
 
   <div class="long_description">{{ project.long_description|markdown|truncatewords:"100" }}
@@ -34,10 +38,6 @@
 
   <div class="details">
 
-  {% if request.user.is_authenticated %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
-  {% endif %}
-  
   {# <h3>{% trans "Project details" %} </h3> #}
   <table class="definition">{% if project.homepage %}
     <tr>
@@ -53,14 +53,15 @@
       </td>
     </tr>
     {% endif %}
+<!--
     <tr>
-      <th class="i16 link">{% trans "External resources:" %}</th>
+      <th class="i16 link">{% trans "External links:" %}</th>
       <td><ul>
         <li>{% trans "Screenshots" %}</li>
-        <li>...</li>
         </ul>
       </td>
     </tr>
+-->
   </table>
 </div>
 
