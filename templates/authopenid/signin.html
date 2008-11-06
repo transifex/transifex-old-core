@@ -1,20 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block head %}
-{% endblock %}
-
 {% block title %}{{ block.super }} | {% trans "Sign in" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Sign in" %}</h2>
-{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Login" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Sign in" %}</h2>{% endblock %}
 
 {% block body %}
 
 {% blocktrans %}
-<h3>Login</h3>
-<p>Please login in with your email + screen name, or OpenID.<br />
+<p>Please login in with your email or screen name, or using your OpenID URL.<br />
 {% endblocktrans %}
 <br />
 {% if msg %}

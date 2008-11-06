@@ -1,17 +1,16 @@
-{% extends "base.html" %}
+{% extends "authopenid/base_profile.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% trans "Profile settings" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
-{% endblock %}
-
+{% block title %}{{ block.super }} | {% trans "Change my email" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Change email address" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Change my email" %}</h2>{% endblock %}
 
 {% block body %}
-<h4 class="headblue">{% trans "Account: change email" %}</h4>
+<p class="settings-descr">
+  {% blocktrans %}This is where you can change the email address associated with your account.
+Please keep this email address up to date so we can send you a password-reset email if you request one.{% endblocktrans %}
+</p>
 
-<p class="settings-descr">{% blocktrans %}This is where you can change the email address associated with your account. Please keep this email address up to date so we can send you a password-reset email if you request one.{% endblocktrans %}</p>
 {% if form.errors %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
 	{% if form.email.errors %} 
@@ -30,8 +29,8 @@
 <div class="aligned">
 	<form action="." method="post" accept-charset="utf-8">
 
-		<div id="form-row"><label for="id_email">{% trans "Email" %}</label>{{ form.email }}</div>
-		<div id="form-row"><label for="id_password">{% trans "Password" %}</label>{{ form.password }}</div>
+		<div id="form-row"><label for="id_email">{% trans "Email" %}</label>: {{ form.email }}</div>
+		<div id="form-row"><label for="id_password">{% trans "Password" %}</label>: {{ form.password }}</div>
 
         <p><input type="submit" value="{% trans "Change email" %}"></p>
 

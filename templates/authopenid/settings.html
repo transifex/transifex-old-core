@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "authopenid/base.html" %}
 {% load i18n %}
 
 {% block head %}
@@ -14,41 +14,36 @@
 </style>
 {% endblock %}
 
-{% block title %}{{ block.super }} | {% trans "Profile settings" %}{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Your Profile" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Profile" %}{% endblock %}
 
+{% with user_username|capfirst as user %}
 {% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
+  <h2 class="pagetitle">{% blocktrans %}Your profile, {{ user }}{% endblocktrans %}</h2>
 {% endblock %}
+{% endwith %}
 
 {% block body %}
 <div id="settings-intro">
-
-    <h3>{% trans "Username: " %}<strong>{{ user.username }}</strong></h3>
-    {% blocktrans %}
-    <p>This is where you can make changes to your account.</p>
-
-    {% endblocktrans %}
+    <p>{% trans "This is where you can make changes to your account." %}
 </div>
 
 <div id="settings-options">
-	{% if msg %}
-		<p class="error">{{ msg }}</p>
-	{% endif %}
-    <h5>{% trans "Account" %}</h5>
+	{% if msg %}<p class="error">{{ msg }}</p>{% endif %}
 	<dl>
-        <dt>» <a href="{% url user_changepw %}">{% trans "change password" %}</a></dt>
+        <dt>» <a href="{% url user_changepw %}">{% trans "Change password" %}</a></dt>
         <dd>{% trans "Give your  account a new password." %}</dd>
-        <dt>» <a href="{% url user_changeemail %}">{% trans "change email" %}</a></dt>
+        <dt>» <a href="{% url user_changeemail %}">{% trans "Change email" %}</a></dt>
         <dd>{% trans "Add or update the email address associated with your account." %}</dd>
         {% if is_openid %}
-        <dt>» <a href="{% url user_changeopenid %}">{% trans "change openid url" %}</a></dt>
+        <dt>» <a href="{% url user_changeopenid %}">{% trans "Change openid url" %}</a></dt>
         <dd>{% trans "Change openid associated to your account" %}</dd>
         {% endif %}
         {% if ENABLE_NOTICES %}
-        <dt>» <a href="{% url notification.views.notices %}">{% trans "change notifications" %}</a></dt>
+        <dt>» <a href="{% url notification.views.notices %}">{% trans "Change notifications" %}</a></dt>
         <dd>{% trans "Change notifications associated to your account" %}</dd>
         {% endif %}
-        <dt>» <a href="{% url user_delete %}">{% trans "delete account" %}</a></dt>
+        <dt>» <a href="{% url user_delete %}">{% trans "Delete account" %}</a></dt>
         <dd>{% trans "Erase your username and all your data from website" %}</dd>
 	</dl>
 </div>

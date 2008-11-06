@@ -14,10 +14,9 @@
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
-
   <div id="header">
     <div id="logo">
-      <a href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
+      <a class="simlink" href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
     </div>
     <div id="navmenu">
       <a href="{% url home %}">{% trans "Home" %}</a>
@@ -27,8 +26,8 @@
     <div id="header_secnav">
       <span id="login">
           {% if user.is_authenticated %}
-                {% url user_account_settings as user_account_settings %} 
-              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_account_settings }}">{{ user_username }}</a>!{% endblocktrans %} |
+                {% url user_account_settings as user_profile %} 
+              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
               <a href="{% url user_signout %}">{% trans "Sign out" %}</a></span>
           {% else %}
               <a href="{% url user_signin %}?next={{request.path_info}}">{% trans "Sign in" %}</a> | <a href="{% url user_signup %}">{% trans "Register" %}</a></span>
@@ -48,7 +47,7 @@
     <div id="content_header">
     {% block content_header %}
       <div id="breadcrumbs">
-        {% block breadcrumb %}{% endblock %}
+        {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a>{% endblock %}
       </div>
       <div id="content_title">
         {% block content_title %}{% endblock %}

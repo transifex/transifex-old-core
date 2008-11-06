@@ -2,7 +2,7 @@
 <div class="searchform {{ extra_searchform_classes }}">
   <form action="{% url search %}" method="GET" class="search_projects">
     <label for="q">{% trans "Find projects by name, description, etc." %}</label><br/>
-    <input class="query" type="text" name="q" size="40" value="{{ query|escape }}">
+    <input class="query withbgimage" type="text" name="q" size="40" value="{{ query|escape }}">
     <input class="submit" type="submit" value="{% trans "Search" %}">
   </form>
 </div>

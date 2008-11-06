@@ -1,16 +1,13 @@
-{% extends "base.html" %}
+{% extends "authopenid/base_profile.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% trans "Profile settings" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
-{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Delete my account" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Delete account" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Delete my account" %}</h2>{% endblock %}
 
 {% block body %}
-<h4 class="headblue">{% trans "Account: delete account" %}</h4>
-
 <p class="settings-descr">{% blocktrans %}Note: After deleting your account, anyone will be able to register this username.{% endblocktrans %}</p>
+
 {% if form.errors %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
 	{% if form.confirm.errors %} 
@@ -21,16 +18,18 @@
 	{% endif %}
 </p>
 {% endif %}
+
 {% if msg %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
     <span class="error">{{ msg }}</span>
     </p>
 {% endif %}
+
 <div class="aligned">
 	<form action="." method="post" accept-charset="utf-8">
 
-        <div id="form-row"> {{ form.confirm }} {% trans "I am sure I want to delete my account." %}</div>
-        <div id="form-row"><label for="id_password">{% trans "Password/OpenID URL" %}</label>{{ form.password }} {% trans "(required for your security)" %}</div>
+        <div id="form-row"><p>{{ form.confirm }} {% trans "I am sure I want to delete my account." %}</p></div>
+        <div id="form-row"><p><label for="id_password">{% trans "Password or OpenID URL" %}</label>: {{ form.password }} <span class="compact">{% trans "(required for your security)" %}</span></p></div>
 
         <p><input type="submit" value="{% trans "Delete account permanently" %}"></p>
 

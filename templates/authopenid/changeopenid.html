@@ -1,25 +1,21 @@
-{% extends "base.html" %}
+{% extends "authopenid/base_profile.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% trans "Profile settings" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
-{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Change OpenID" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Change OpenID" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Change my OpenID" %}</h2>{% endblock %}
 
 {% block body %}
-<h4 class="headblue">{% trans "Account: change OpenID URL" %}</h4>
 
-<p>{% blocktrans %}This is where you can change your OpenID URL. Make sure you remember it!{% endblocktrans %}</p>
+<p>{% trans "This is where you can change the OpenID URL associated with your account." %}</p>
 {% if form.errors %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
 	{% if form.openid_url.errors %} 
 		<span class="error">{{ form.openid_url.errors|join:", " }}</span>
 	{% endif %}
-
-
 </p>
 {% endif %}
+
 {% if msg %}
 	<p class="errors">{{ msg }}</p>
 {% endif %}

@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% trans "Let us know what you think!" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Let us know what you think!" %}</h2>
-{% endblock %}
+{% block title %}{{ block.super }} | {% trans "Contact us" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Contact us" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Let us know what you think!" %}</h2>{% endblock %}
 
 {% block body %}
   <p>{% trans "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!" %}</p>

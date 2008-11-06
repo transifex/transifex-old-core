@@ -3,4 +3,4 @@
 
 {% block body_class %}projects{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; <a href="{% url project_list %}">{% trans "Projects" %}</a>{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url project_list %}">{% trans "Projects" %}</a>{% endblock %}

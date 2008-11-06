@@ -9,12 +9,12 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url languages_latest_feed %}" />
 {% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Languages" %}{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Languages" %}{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} <sup class="entry_metalink">{{ language_list.count }}</sup></h2>{% endblock %}
 
 {% block body_sec %}
-  <a href="{% url languages_latest_feed %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+  <a class="simlink" href="{% url languages_latest_feed %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block body_main %}

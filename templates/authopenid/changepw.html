@@ -1,21 +1,13 @@
-{% extends "base.html" %}
+{% extends "authopenid/base_profile.html" %}
 {% load i18n %}
 
-{% block head %}
-		
-{% endblock %}
-
-{% block title %}{{ block.super }} | {% trans "Profile settings" %}{% endblock %}
-
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
-{% endblock %}
-
+{% block title %}{{ block.super }} | {% trans "Change my password" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Change password" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Change my password" %}</h2>{% endblock %}
 
 {% block body %}
-<h4 class="headblue">{% trans "Account: change password" %}</h4>
+<p>{% trans "You can use the following form to change your password." %}</p>
 
-<p>{% blocktrans %}This is where you can change your password. Make sure you remember it!{% endblocktrans %}</p>
 {% if form.errors %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
 {{ form.errors }}
@@ -25,9 +17,9 @@
 <div class="aligned">
 	<form action="." method="post" accept-charset="utf-8">
 
-		<div id="form-row"><label for="id_oldpw">{% trans "Current password" %}</label>{{ form.oldpw }}</div>
-		<div id="form-row"><label for="id_password1">{% trans "New password" %}</label>{{ form.password1 }}</div>
-		<div id="form-row"><label for="id_password2">{% trans "New password again" %}</label>{{ form.password2 }}</div>
+		<div id="form-row"><label for="id_oldpw">{% trans "Current password" %}</label>: {{ form.oldpw }}</div>
+		<div id="form-row"><label for="id_password1">{% trans "New password" %}</label>: {{ form.password1 }}</div>
+		<div id="form-row"><label for="id_password2">{% trans "New password again" %}</label>: {{ form.password2 }}</div>
         <p><input type="submit" value="{% trans "Change password" %}"></p>
 
 	</form>

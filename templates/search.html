@@ -6,17 +6,13 @@
 
 {% block title %}{{ block.super }} | {% trans "Search" %}{% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Search" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% if not query %}{% trans "Search" %}{% else %}<a href="{% url search %}">{% trans "Search" %}</a> &raquo; {% trans "Results" %}{% endif %}{% endblock %}
 
 {% block body_class %}search project_list{% endblock %}
 
 {% block content_title %}
   <h2 class="pagetitle">
-  {% if not query %}
-      {% trans "Search projects" %}
-  {% else %}
-      {% trans "Search results" %}
-  {% endif %}
+    {% if not query %}{% trans "Search projects" %}{% else %}{% trans "Search results" %}{% endif %}
   </h2>
 {% endblock %}
   

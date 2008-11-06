@@ -1,21 +1,18 @@
-{% extends "base.html" %}
+{% extends "authopenid/base_profile.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% trans "Profile settings" %} | {% trans "Notices" %} {% endblock %}
+{% block title %}{{ block.super }} | {% trans "Notifications" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Notifications" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Notification settings" %}</h2>{% endblock %}
 
 {% block extra_head %}
     <link rel="alternate" type="application/atom+xml" title="Notices Feed" href="{% url notification_feed_for_user %}" />
 {% endblock %}
 
-{% block content_title %}
-  <h2 class="pagetitle">{% trans "Profile settings" %}</h2>
-{% endblock %}
-
 {% block body %}
  
     <div class="notice_settings">
-        <h3>{% trans "Notification settings" %}</h3>
-        
+       
         {% if user.email %}
             <p>
                 {% blocktrans %} You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list bellow and choose which events you would like to be notificated by email. {% endblocktrans %} <br /><br />

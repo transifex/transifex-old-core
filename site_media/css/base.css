@@ -328,12 +328,8 @@ div.searchform label {
 }
 
 div.searchform input.query {
-  font-size: 1.1em;
-  padding-left: 1.2em;
-  padding: 2px 2px 2px 25px;
   background-image: url('../images/icons/magnifier.png');
-  background-repeat: no-repeat;
-  background-position: 5px 50%;
+  font-size: 1.1em;
   font-weight: bold;
   color: #666;
 }
@@ -379,18 +375,28 @@ body.search.project_list .find{
 }
 
 body.search.project_list .notfound{
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 /* Other elements */
 
 a {
   color: #0d4c8c;
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px dotted #aaa;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  border-bottom: 1px solid #aaa;
+}
+
+a img {
+  border-bottom: none;
+}
+
+a.simlink, a.simlink:hover {
+  border: none;
 }
 
 table.definition th { text-align: left; color: #666; }

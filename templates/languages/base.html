@@ -1,4 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a>{% endblock %}
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a>
+&raquo; <a href="{% url language_list %}">{% trans "Languages" %}</a>{% endblock %}
