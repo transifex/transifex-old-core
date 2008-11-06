@@ -176,11 +176,11 @@ div#login_index {
   border:1px solid #AFC8E1;*/
 }
 
-div#clear{
+div#clear {
   clear: both;
 }
 
-div#login_index fieldset{
+div#login_index fieldset {
   border:1px solid #AFC8E1;
   background-color: #EBF2F8;
   -moz-border-radius-bottomleft:5px;
@@ -189,7 +189,7 @@ div#login_index fieldset{
   -moz-border-radius-topright:5px;
 }
 
-div#login_index legend{
+div#login_index legend {
   border:1px solid #AFC8E1;
   background-color: #FFF;
   padding-left: 0.6em;
@@ -200,25 +200,30 @@ div#login_index legend{
   -moz-border-radius-topright:5px;
 }
 
-div#login_index .submit-row{
+div#login_index .submit-row {
   margin-top: 5px;
   text-align: right;
   font-size: 50%;
+  display: none;
 }
 
-div#login_index .form-row{
+div#login_index .form-row {
   text-align: right;
   margin-top: 5px;
 }
 
-div#login_index p{
+div#login_index p {
   text-align: center;
   width: 100%;
   margin-bottom: 0px;
 }
 
-div#login_index .lost_passwd{
+div#login_index .lost_passwd {
   margin-top: 3px;
+}
+
+div#login_index input#id_openid_url {
+  background-image: url('../images/openid-icons/openid.ico');
 }
 
 /* Projects */
@@ -410,12 +415,20 @@ div.project_add ul.errorlist {
   float: right;
 }
 
+/* Input with background image (search, etc) */
+input.withbgimage {
+  padding: 2px 2px 2px 25px;
+  background-image: url('../images/icons/cog.png');
+  background-repeat: no-repeat;
+  background-position: 5px 50%;
+}
+
 /* Other */
 
 .promo {
   font-size: 130%;
   width: 80%;
-  margin: 2em;
+  margin: 2em 0;
 }
 
 .compact { font-size: 85%; }
