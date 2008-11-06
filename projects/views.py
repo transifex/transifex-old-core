@@ -50,7 +50,8 @@ def component_create_update(request, project_slug, component_slug=None):
     """
     project = get_object_or_404(Project, slug__iexact=project_slug)
     if component_slug:    
-        component = get_object_or_404(Component, slug__iexact=component_slug)
+        component = get_object_or_404(Component, slug__iexact=component_slug,
+                                      project=project)
         unit = component.unit    
     else:
         component = None
