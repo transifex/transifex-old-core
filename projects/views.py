@@ -43,7 +43,8 @@ def project_update(*args, **kwargs):
 
 @login_required
 def project_delete(*args, **kwargs):
-    return create_update.delete_object(*args, **kwargs)
+    ret_url = reverse('project_list')
+    return create_update.delete_object(post_delete_redirect = ret_url, *args, **kwargs)
 
 
 # Components
@@ -71,7 +72,9 @@ def component_create_update(request, project_slug, component_slug=None):
             unit.save()
             component.unit = unit
             component.save()
-            return HttpResponseRedirect('/projects/%s/%s' % (project.slug, component.slug))
+            return HttpResponseRedirect(
+                reverse('component_detail', args=[project_slug,
+                                                  component.slug]))
     else:
         component_form = ComponentForm(project, instance=component, prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
@@ -106,7 +109,7 @@ def component_delete(request, project_slug, component_slug, *args, **kwargs):
         object_id=component.id,
         template_object_name = "component",
         extra_context = {'project': project},
-        post_delete_redirect = '/projects/%s' % project.slug,
+        post_delete_redirect = reverse('project_detail', args=[project_slug])
     )
 component_detail.__doc__ = create_update.delete_object.__doc__
 

@@ -42,4 +42,5 @@ def collection_update(*args, **kwargs):
 
 @login_required
 def collection_delete(*args, **kwargs):
+    kwargs['post_delete_redirect'] = reverse('collection_detail', args=[kwargs['slug']])
     return create_update.delete_object(*args, **kwargs)
