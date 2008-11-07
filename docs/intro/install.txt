@@ -153,10 +153,15 @@ installation should be very simple. You only need to customize the
 .. warning::
  
     Make sure you have created in your system all the directories 
-    configured in your ``settings.py`` file, like the GIT_REPO_PATH and
-    HG_REPO_PATH, if you have enabled ``git`` and ``hg`` in VCS_CHOICES,
+    configured in your ``settings.py`` file, like the ``GIT_REPO_PATH`` and
+    ``HG_REPO_PATH``, if you have enabled ``git`` and ``hg`` in ``VCS_CHOICES``,
     for example. Without those paths created the checkout for these VCS
     will fail.
+
+.. note::
+ 
+    To enable Transifex's notifications you'll need to switch the relevant
+    setting to True and enable the application in the ``INSTALLED_APPS`` list.
 
 To enable debugging, run the server as follows::
 
@@ -171,7 +176,7 @@ in the database.
 .. note::
  
   Make sure you have executed the ``./manage.py syncdb``
-  command before run the following commands.
+  command before running the following commands.
 
 .. code-block:: bash
 
