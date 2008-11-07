@@ -18,12 +18,12 @@
                 {% blocktrans %} You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list bellow and choose which events you would like to be notificated by email. {% endblocktrans %} <br /><br />
                 {% trans "Primary email" %}: 
                 <b>{{ user.email }}</b><br />
-                ({% blocktrans %}change under <a href="{{ user_account_settings }}">Account</a>{% endblocktrans %})
+                ({% trans "change under" %}<a href="{% url user_account_settings %}">{% trans "Account" %}</a>)
             </p>
         {% else %}
             <p>
                 <span class="warning">{% trans "Note" %}</span>:
-                {% blocktrans %}You do not have a verified email address to which notices can be sent. You can add one by going to <a href="{{ user_account_settings }}">Account</a>.{% endblocktrans %}
+                {% trans "You do not have a verified email address to which notices can be sent. You can add one by going to" %} <a href="{% url user_account_settings %}">{% trans "Account" %}</a>.
             </p>
         {% endif %}
         
