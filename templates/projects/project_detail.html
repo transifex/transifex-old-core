@@ -42,7 +42,7 @@
   <table class="definition">{% if project.homepage %}
     <tr>
       <th class="homepage i16">{% trans "Homepage:" %}</th>
-      <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}">{{ project.homepage }}</a></td>
+      <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></td>
     </tr>
     {% endif %}
     {% if project.tags %}

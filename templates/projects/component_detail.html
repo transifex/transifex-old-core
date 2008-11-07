@@ -33,7 +33,7 @@
       <th class="repository i16">{% trans "Repository:" %}</th>
       <td>
         <code>{{ component.unit.root }}</code></a>
-        {% if component.unit.web_frontend %}<sup>(<a title="{% trans "Link to a web front-end to the source" %}" href="{{ component.unit.webfrontend }}">{% trans "web" %}</a>)</sup>{% endif %}
+        {% if component.unit.web_frontend %}<sup>(<a title="{% trans "Link to a web front-end to the source" %}" href="{{ component.unit.web_frontend }}" target="_blank" >{% trans "web" %}</a>)</sup>{% endif %}
         <img class="repotype" src="{{MEDIA_URL}}/images/icons/vcs/{{ component.unit.type }}.png" alt="{{ component.unit.type }}" title="{{ component.unit.type }}" />
     </tr>
     <tr>
