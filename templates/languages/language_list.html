@@ -1,5 +1,6 @@
 {% extends "languages/base.html" %}
 {% load i18n %}
+{% load tx-common %}
 
 {% block body_class %}{{ block.super }} language_list{% endblock %}
 
@@ -11,7 +12,7 @@
 
 {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Languages" %}{% endblock %}
 
-{% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} <sup class="entry_metalink">{{ language_list.count }}</sup></h2>{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} {% render_metacount language_list _("languages") %}</h2>{% endblock %}
 
 {% block body_sec %}
   <a class="simlink" href="{% url languages_latest_feed %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
@@ -20,8 +21,8 @@
 {% block body_main %}
   <div class="languages_list multicolumn3">
   {% for language in language_list %}
-    <ul>
-      <li class="name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>
+    <ul class="simple">
+      <li class="i16 language name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>
     </ul>
   {% endfor %}
   </div>

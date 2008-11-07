@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
+{% load tx-common %}
 {% load pagination_tags %}
 
 {% block body_class %}{{ block.super }} project_list{% endblock %}
@@ -14,7 +15,7 @@
 
 {% block content_title %}
 <h2 class="pagetitle">{% if tag %}{% blocktrans %}Projects with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
-{% else %}<h2 class="pagetitle">{% trans "Projects on Transifex" %} <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
+{% else %}<h2 class="pagetitle">{% trans "Projects on Transifex" %} {% render_metacount project_list _("projects") %}</h2>
 {% endif %}
 {% endblock %}
 

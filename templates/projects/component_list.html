@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load tx-common %}
 
 <div id="components" class="components">
 
@@ -8,11 +9,14 @@
   </p></div>
   {% endif %}    
 
-  <h3>{% trans "Project Components" %}</h3>
+  {% with project.component_set.all as components %}
+  <h3>{% blocktrans count components|length as counter %}Project Component{% plural %}Project Components{% endblocktrans %}
+    {% render_metacount components _("components") %}
+  </h3>
 
-  {% if project.component_set.all %}
+  {% if components %}
   <div class="component_list">
-  {% for comp in project.component_set.all|slice:"0:4" %}
+  {% for comp in components|slice:"0:4" %}
     <div class="entry">
       <h4><a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>
       {% if request.user.is_authenticated %}
@@ -26,9 +30,9 @@
     </div>
     {% endfor %}
   </div>
-  {% if project.component_set.all|slice:"4:" %}<p class="more">
+  {% if components|slice:"4:" %}<p class="more">
   More components:  
-  {% for comp in project.component_set.all|slice:"4:" %}
+  {% for comp in components|slice:"4:" %}
     <a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>{% if not forloop.last %},{% endif %}
   {% endfor %}
   </p>
@@ -37,7 +41,8 @@
   <p>{% trans "No components are registered for this project yet." %}
     <a href="{% url component_add project_slug=project.slug %}">{% trans "Add one!" %}</a>
   </p>{% endif %}
-  <p class="i16 tip compact clear" style="padding-top: 2em;">
+  {% endwith %}
+  <p class="i16 tip compact clear">
     {% blocktrans %}<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.
     Examples of components of a software project could be "UI" and "Docs" or development branches like <code>HEAD</code>.{% endblocktrans %}</em>
   </p>

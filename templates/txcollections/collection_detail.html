@@ -1,5 +1,6 @@
 {% extends "txcollections/base.html" %}
 {% load i18n %}
+{% load tx-common %}
 {% load markup %}
 {% load statistics %}
 
@@ -69,12 +70,15 @@
 
 <div id="projects" class="projects">
 
-  <h3>{% trans "Projects in collection" %}</h3>
+  {% with collection.projects.all as projects %}
+  <h3>{% blocktrans count projects|length as counter %}Project in collection{% plural %}Projects in collection{% endblocktrans %}
+  {% render_metacount projects _("projects") %}
+  </h3>
 
-  {% if collection.projects.all %}
+  {% if projects %}
   <div class="project_list">
   <ul class="simple">
-  {% for project in collection.projects.all %}
+  {% for project in projects %}
     <li><h4 class="i16 project"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h4></li>
   {% comment %}
     <div class="entry">
@@ -89,6 +93,7 @@
 {% url project_list as project_list %}
     <p class="i16 tip">{% blocktrans %}No projects are registered for this collection yet. <a href="{{ project_list }}">Find projects</a> and add them to this collection.{% endblocktrans %}</p>
   {% endif %}
+  {% endwith %}
 </div>
 
 
