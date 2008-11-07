@@ -39,8 +39,9 @@
         <dt>» <a href="{% url user_changeopenid %}">{% trans "Change openid url" %}</a></dt>
         <dd>{% trans "Change openid associated to your account" %}</dd>
         {% endif %}
-        {% if ENABLE_NOTICES %}
-        <dt>» <a href="{% url notification.views.notices %}">{% trans "Change notifications" %}</a></dt>
+        {% url notification.views.notices as notices_url %}
+        {% if notices_url %}
+        <dt>» <a href="{{notices_url}}">{% trans "Change notifications" %}</a></dt>
         <dd>{% trans "Change notifications associated to your account" %}</dd>
         {% endif %}
         <dt>» <a href="{% url user_delete %}">{% trans "Delete account" %}</a></dt>
