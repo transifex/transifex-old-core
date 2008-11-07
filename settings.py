@@ -1,4 +1,4 @@
-    # Django settings for txc project.
+# Django settings for Transifex.
 
 import os
 
@@ -45,7 +45,7 @@ LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 # Database configuration
 
 DATABASE_ENGINE = 'sqlite3'                             # 'postgresql', ...
-DATABASE_NAME = os.path.join(PROJECT_PATH, 'txc.db.sqlite')  # Use file path for sqlite3
+DATABASE_NAME = os.path.join(PROJECT_PATH, 'transifex.db.sqlite')  # Use file path for sqlite3
 # The following are not used for sqlite3
 DATABASE_USER = ''
 DATABASE_PASSWORD = ''
