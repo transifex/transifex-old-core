@@ -10,9 +10,12 @@ from django.contrib.contenttypes import generic
 import tagging
 from tagging.fields import TagField
 
-from vcs.models import Unit
+from txcollections.models import Collection
 from translations.models import POFile
+from vcs.models import Unit
+
 from handlers import get_trans_handler
+
 
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
@@ -76,7 +79,7 @@ class Project(models.Model):
     description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
-    homepage = models.CharField(blank=True, max_length=255)
+    homepage = models.URLField(blank=True)
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
 
@@ -88,6 +91,9 @@ class Project(models.Model):
     modified = models.DateTimeField(auto_now=True, editable=False)
     
     tags = TagField()
+
+    # Relations
+    collections = models.ManyToManyField(Collection, related_name='projects')
 
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 

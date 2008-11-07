@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'translations',
     'languages',
     'projects',
+    'txcollections',
     #'management',
 )
 

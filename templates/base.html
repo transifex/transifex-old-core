@@ -16,12 +16,14 @@
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-      <a class="simlink" href="{% url home %}"><img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" /></a>
+      <a class="simlink" href="{% url home %}" alt="{% trans "Home" %}" title="{% trans "Home" %}">
+        <img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" />
+      </a>
     </div>
     <div id="navmenu">
-      <a href="{% url home %}">{% trans "Home" %}</a>
-      | <a href="{% url project_list %}">{% trans "Projects" %}</a>
-      | <a href="{% url language_list %}">{% trans "Languages" %}</a>
+      <a href="{% url project_list %}" title="{% trans "The projects being served" %}">{% trans "Projects" %}</a>
+      | <a href="{% url collection_list %}" title="{% trans "Collections of projects" %}">{% trans "Collections" %}</a>
+      | <a href="{% url language_list %}" title="{% trans "The languages our service serves" %}">{% trans "Languages" %}</a>
     </div>
     <div id="header_secnav">
       <span id="login">

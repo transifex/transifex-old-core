@@ -29,6 +29,8 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
     return feed(request, url, feed_dict)
 
 
+# Projects
+
 # Override generic views to use decorator
 
 @login_required
@@ -42,6 +44,9 @@ def project_update(*args, **kwargs):
 @login_required
 def project_delete(*args, **kwargs):
     return create_update.delete_object(*args, **kwargs)
+
+
+# Components
 
 @login_required
 def component_create_update(request, project_slug, component_slug=None):

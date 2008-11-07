@@ -1,0 +1,59 @@
+{% extends "txcollections/base.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+
+{% block body_class %}{{ block.super }} collection_list{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Collection list" %}{% endblock %}
+
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url collection_latest_feed %}" />
+{% endblock %}
+
+{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Collections" %}{% endblock %}
+
+{% block content_title %}
+<h2 class="pagetitle">{% if tag %}{% blocktrans %}Collections with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ collection_list.count }}</sup></h2>
+{% else %}<h2 class="pagetitle">{% trans "Collections on Transifex" %} <sup class="entry_metalink">{{ collection_list.count }}</sup></h2>
+{% endif %}
+{% endblock %}
+
+{% block content_header_sec %}
+    {% if request.user.is_authenticated %}
+    <div class="addcollection content_header_sec">
+      <span class="i16 add"><a href="{% url collection_add %}">{% trans "Add a new collection" %}</a></span>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block body_sec %}
+  <a class="simlink" href="{% url collection_latest_feed %}" title="Collections feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
+
+{% block body_main %}
+  {% autopaginate collection_list 5 %}
+  <div class="collection_list obj_biglist">
+  {% for collection in collection_list %}
+    <div class="entry">
+      <h3 class="name"><a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a></h3>
+      <p class="description">{{ collection.description }}</p>
+      <p><span class="i16 stats compact">{% blocktrans count collection.projects.all|length as counter %}1 project{% plural %}{{ counter }} projects{% endblocktrans %}</span>
+      {% if collection.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in collection.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url collection_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
+    </div>
+  {% endfor %}
+  {% paginate %}
+  </div>
+  {% if not collection_list %}
+  <p>{% trans "No collections registered yet. :-(" %}</p>
+  {% url collection_add as collection_add %}
+  <p>{% blocktrans %}Why don't you <a href="{{ collection_add }}">add one</a>?{% endblocktrans %}</p>
+  {% endif %}
+  
+{% endblock %}
+
+{% block content_footer %}
+{% url collection_add as collection_add %}
+  <div id="content_footer_center">
+    <p><span class="i16 tip">{% blocktrans %}Couldn't find your collection? Go ahead and <a href="{{ collection_add }}">add it</a>!{% endblocktrans %}</span></p>
+  </div>
+{% endblock %}

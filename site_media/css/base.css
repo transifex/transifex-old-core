@@ -104,6 +104,10 @@ div#body {
   padding: 0.5em 3em 3em 3em;
 }
 
+div#body h3 {
+  color: #b65d0e;
+}
+
 div.multicolumn3 {
   -moz-column-count: 3;
   -moz-column-gap: 3em;
@@ -176,17 +180,15 @@ div#login_index {
   border:1px solid #AFC8E1;*/
 }
 
-div#clear {
+div#clear,
+.clear {
   clear: both;
 }
 
 div#login_index fieldset {
   border:1px solid #AFC8E1;
   background-color: #EBF2F8;
-  -moz-border-radius-bottomleft:5px;
-  -moz-border-radius-bottomright:5px;
-  -moz-border-radius-topleft:5px;
-  -moz-border-radius-topright:5px;
+  -moz-border-radius:3px;
 }
 
 div#login_index legend {
@@ -194,10 +196,7 @@ div#login_index legend {
   background-color: #FFF;
   padding-left: 0.6em;
   padding-right: 0.6em;
-  -moz-border-radius-bottomleft:5px;
-  -moz-border-radius-bottomright:5px;
-  -moz-border-radius-topleft:5px;
-  -moz-border-radius-topright:5px;
+  -moz-border-radius: 2px;
 }
 
 div#login_index .submit-row {
@@ -226,44 +225,34 @@ div#login_index input#id_openid_url {
   background-image: url('../images/openid-icons/openid.ico');
 }
 
-/* Projects */
+/* List and Detail views for Projects and Collections */
 
-body.projects.project_list div.entry {
+div.obj_biglist div.entry {
   /* border-bottom: 3px solid #eee; */
   background: url('../images/light-separator.png') repeat-x -20px 100%;
   padding-bottom: 1em;
 }
 
-body.projects.project_list p.description {
+div.obj_biglist p.description {
   margin-top: 0.5em;
 }
 
-body.projects.project_list h2.name,
-body.projects.project_list h3.name,
-body.projects.project_list h4.name {
+div.obj_biglist .name {
   font-weight: normal;
   font-size: 140%;
   margin-bottom: 0;
 }
 
-body.projects.project_list p.description {
+div.obj_biglist p.description {
   color: #88889e;
   max-width: 40em;
   text-align: justify;
 }
 
-body.projects.project_detail .details {
-  background: url('../images/light-separator.png') repeat-x -20px 100%;
-  padding-bottom: 1em;
-}
 
-div#body h3 {
-  color: #b65d0e;
-}
+/* Object details */
 
-/* Project details */
-
-body.projects.project_detail h2.name {
+div.obj_bigdetails h2.name {
   color: #0d4c8c;
   font-weight: normal;
   font-size: 3em;
@@ -271,17 +260,30 @@ body.projects.project_detail h2.name {
   letter-spacing: -2px;
 }
 
-body.projects.project_detail p.description {
+div.obj_bigdetails p.description {
   font-size: 120%;
   color: #666;
   margin-top: 0;
   margin-bottom: 2.5em;
 }
 
-body.projects.project_detail div.long_description {
+div.obj_bigdetails div.long_description {
   margin: -1em 0 2em 1em;
   max-width: 80%;
   text-align: justify;
+}
+
+div.obj_bigdetails .details {
+  background: url('../images/light-separator.png') repeat-x -20px 100%;
+  padding-bottom: 1em;
+}
+
+div.obj_bigdetails div.editlinks { float: right; clear: right; }
+div.obj_bigdetails div.editlinks p { float: right; clear: right; margin: 0; }
+div.obj_bigdetails div.deletelink { text-align: center; margin-bottom: 2em; }
+div.obj_bigdetails div.deletelink span a:hover {
+  color: #833;
+  background-color: #fee;  
 }
 
 
@@ -306,6 +308,7 @@ body.projects.project_detail .component_list .entry {
 body.projects.project_detail .component_list .entry h4 {
   font-size: 1.2em;
   margin: 0 0 0.5em 0;
+  background: url('../images/icons/brick.png') no-repeat 100% 50%;
 }
 
 body.projects.project_detail .component_list .entry p {
@@ -407,16 +410,7 @@ table.definition td {
 code { font-size: 1.2em; }
 span.title { border-bottom: 1px dotted #aaa; }
 
-body.projects.project_detail div.editlinks { float: right; clear: right; }
-body.projects.project_detail div.editlinks p { float: right; clear: right; margin: 0; }
-
-body.projects.project_detail div.deletelink { text-align: center; margin-bottom: 2em; }
-
-body.projects.project_detail div.deletelink span a:hover {
-  color: #833;
-  background-color: #fee;  
-}
-
+ul.simple { list-style: none; padding-left: 20px; }
 
 img.repotype { vertical-align: middle; }
 
@@ -425,14 +419,14 @@ img.repotype { vertical-align: middle; }
 
 .spaceabove { margin-top: 3em; }
 
-p.message {
+.message {
   border: 3px solid #ddd;
   -moz-border-radius: 5px;
   padding: 0.5em 35px;
   background-color: #fafafa;
 }
 
-p.message.i16 {
+.message.i16 {
   background-position: 10px 50%;
 }
 

@@ -1,0 +1,36 @@
+{% extends "txcollections/base.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% if not collection %}{{ block.super }} | {% trans "Add a collection" %}
+  {% else %}{{ block.super }} | {% blocktrans with collection.name as collection_name %}Edit {{ collection_name}}{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+  {% if not collection %}{{ block.super }} &raquo; {% trans "Add a collection" %}
+  {% else %}{{ block.super }} &raquo; {% blocktrans with collection.name as collection_name %}Edit <em>{{ collection_name}}</em>{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block content_title %}
+  {% if not collection %}
+    <h2 class="pagetitle">{% trans "Add a collection" %}</h2>
+  {% else %}
+    <h2 class="pagetitle">
+      {% blocktrans with collection.name as collection_name and collection.get_absolute_url as collection_url %}Editing <a href="{{ collection_url }}">{{ collection_name }}</a>{% endblocktrans %}
+    </h2>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div class="collection_add">
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <form action='' method='post'>
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit">
+  </form>
+  </div>
+{% endblock %}

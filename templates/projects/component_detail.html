@@ -12,7 +12,7 @@
 
 
 {% block body_main %}
-
+  <div class="obj_bigdetails">
   {% if request.user.is_authenticated %}
   <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
@@ -66,6 +66,7 @@
 
   {% comp_stats_table component %}
 
+</div>
 {% endblock %}
 
 {% block content_footer %}

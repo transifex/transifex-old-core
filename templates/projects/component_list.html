@@ -10,7 +10,6 @@
 
   <h3>{% trans "Project Components" %}</h3>
 
-  <p class="i16 tip compact">{% blocktrans %}<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files. Examples of components of a software project could be "UI" and "Docs" or development branches like <code>HEAD</code>. {% endblocktrans %}</em></p>
   {% if project.component_set.all %}
   <div class="component_list">
   {% for comp in project.component_set.all|slice:"0:4" %}
@@ -27,15 +26,19 @@
     </div>
     {% endfor %}
   </div>
-  <p class="more">{% if project.component_set.all|slice:"4:" %}
+  {% if project.component_set.all|slice:"4:" %}<p class="more">
   More components:  
   {% for comp in project.component_set.all|slice:"4:" %}
     <a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>{% if not forloop.last %},{% endif %}
   {% endfor %}
-  {% endif %}
   </p>
+  {% endif %}
   {% else %}
-    <p>{% trans "No components are registered for this project yet." %}
-      <a href="{% url component_add project_slug=project.slug %}">{% trans "Add one!" %}</a>
-    </p>{% endif %}
+  <p>{% trans "No components are registered for this project yet." %}
+    <a href="{% url component_add project_slug=project.slug %}">{% trans "Add one!" %}</a>
+  </p>{% endif %}
+  <p class="i16 tip compact clear" style="padding-top: 2em;">
+    {% blocktrans %}<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.
+    Examples of components of a software project could be "UI" and "Docs" or development branches like <code>HEAD</code>.{% endblocktrans %}</em>
+  </p>
 </div>

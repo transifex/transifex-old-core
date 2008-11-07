@@ -31,8 +31,8 @@
 {% endblock %}
 
 {% block body_main %}
-  {% autopaginate project_list 5 %}
-  <div class="project_list">
+  {% autopaginate project_list 20 %}
+  <div class="project_list obj_biglist">
   {% for project in project_list %}
     <div class="entry">
       <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
