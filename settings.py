@@ -21,7 +21,8 @@ FORCE_LOWERCASE_TAGS = True
 
 # Sites
 SITE_ID = 1
-SITE_NAME = 'Transifex'
+# Your site's domain. This is used only in this file.
+SITE_DOMAIN = 'localhost'
 
 # Email sending
 EMAIL_HOST = ''
@@ -29,7 +30,7 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_NAME
+DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_DOMAIN
 
 # Notifications
 # Enable notifications (requires working email settings)
