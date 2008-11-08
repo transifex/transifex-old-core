@@ -11,7 +11,7 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url collection_latest_feed %}" />
 {% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Collections" %}{% endblock %}
+{% block breadcrumb %}{% homelink %} &raquo; {% trans "Collections" %}{% endblock %}
 
 {% block content_title %}
 <h2 class="pagetitle">{% if tag %}{% blocktrans %}Collections with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ collection_list.count }}</sup></h2>

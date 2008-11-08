@@ -11,7 +11,7 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_latest_feed %}" />
 {% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
+{% block breadcrumb %}{% homelink %} &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}
 <h2 class="pagetitle">{% if tag %}{% blocktrans %}Projects with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ project_list.count }}</sup></h2>

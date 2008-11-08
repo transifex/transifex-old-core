@@ -5,10 +5,8 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; {% blocktrans with collection.name as collection_name %}Delete <em>{{ collection_name}}</em>{% endblocktrans %}{% endblock %}
 
-<a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a> &raquo; {% trans "Edit" %}
-
 {% block content_title %}
-    <h2 class="pagetitle">{% blocktrans with collection.name as collection_name %}Say goodbye to <em>{{ collection_name }}</em>?{% endblocktrans %}</h2>
+  <h2 class="pagetitle">{% blocktrans with collection.name as collection_name %}Say goodbye to <em>{{ collection_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
 {% block body %}

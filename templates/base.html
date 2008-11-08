@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load tx-common %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -16,7 +17,7 @@
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-      <a class="simlink" href="{% url home %}" alt="{% trans "Home" %}" title="{% trans "Home" %}">
+      <a class="simlink" href="{% url home %}" alt="{% trans "Go to start page" %}" title="{% trans "Go to start page" %}">
         <img border="0" src="/site_media/images/tx-logo.png" alt="{% trans "Transifex logo" %}" />
       </a>
     </div>
@@ -28,7 +29,7 @@
     <div id="header_secnav">
       <span id="login">
           {% if user.is_authenticated %}
-                {% url user_account_settings as user_profile %} 
+              {% url user_account_settings as user_profile %} 
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
               <a href="{% url user_signout %}">{% trans "Sign out" %}</a></span>
           {% else %}
@@ -49,7 +50,7 @@
     <div id="content_header">
     {% block content_header %}
       <div id="breadcrumbs">
-        {% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a>{% endblock %}
+        {% block breadcrumb %}{% homelink %}{% endblock %}
       </div>
       <div id="content_title">
         {% block content_title %}{% endblock %}

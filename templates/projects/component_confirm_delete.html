@@ -7,10 +7,8 @@
 &raquo; {% blocktrans with component.name as component_name %}Delete {{ component_name }}{% endblocktrans %}
 {% endblock %}
 
-<a href="{{ project.get_absolute_url }}">{{ component.name }}</a> &raquo; {% trans "Edit" %}
-
 {% block content_title %}
-    <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
+  <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
 {% block body %}
