@@ -5,7 +5,7 @@
 
   {% if request.user.is_authenticated %}
   <div class="editlinks"><span class="i16 add">
-    <a href="{% url component_add project_slug=project.slug %}">{% trans "Add" %}</a></span>
+    <a href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></span>
   </p></div>
   {% endif %}    
 
@@ -39,7 +39,7 @@
   {% endif %}
   {% else %}
   <p>{% trans "No components are registered for this project yet." %}
-    <a href="{% url component_add project_slug=project.slug %}">{% trans "Add one!" %}</a>
+    <a href="{% url component_create project_slug=project.slug %}">{% trans "Add one!" %}</a>
   </p>{% endif %}
   {% endwith %}
   <p class="i16 tip compact clear">

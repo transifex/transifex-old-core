@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from models import Hold
 from forms import HoldForm
 
-def hold_add(request):
+def hold_create(request):
     form_message = ''
     if request.POST:
         form = HoldForm(request.POST)

@@ -37,7 +37,7 @@ urlpatterns += patterns('django.views.generic',
     url(
         regex = '^add/$',
         view = project_create,
-        name = 'project_add',
+        name = 'project_create',
         kwargs = {'model': Project}),
     url(
         regex = '^(?P<slug>[-\w]+)/edit/$',
@@ -76,7 +76,7 @@ urlpatterns += patterns('',
     url(
         regex = '^(?P<project_slug>[-\w]+)/add-component/$',
         view = component_create_update,
-        name = 'component_add',),
+        name = 'component_create',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit/$',
         view = component_create_update,
@@ -100,7 +100,7 @@ urlpatterns += patterns('',
         view = 'django.views.generic.list_detail.object_detail',
         kwargs = {'object_list': project_list,
                   'message': 'Component added.' },
-        name = 'component_added'),
+        name = 'component_created'),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/$',
         view = component_detail,

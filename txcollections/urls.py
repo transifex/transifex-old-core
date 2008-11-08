@@ -23,7 +23,7 @@ urlpatterns = patterns('django.views.generic',
     url(
         regex = '^add/$',
         view = collection_create,
-        name = 'collection_add',
+        name = 'collection_create',
         kwargs = {'model': Collection}),
     url(
         regex = '^(?P<slug>[-\w]+)/edit/$',
