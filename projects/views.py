@@ -32,6 +32,8 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 # Projects
 
 # Override generic views to use decorator
+# Note: This can be done in the URL too:
+# http://www.b-list.org/weblog/2007/nov/06/urlconf/
 
 @login_required
 def project_create(*args, **kwargs):
@@ -44,7 +46,7 @@ def project_update(*args, **kwargs):
 @login_required
 def project_delete(*args, **kwargs):
     ret_url = reverse('project_list')
-    return create_update.delete_object(post_delete_redirect = ret_url, *args, **kwargs)
+    return create_update.delete_object(post_delete_redirect=ret_url, *args, **kwargs)
 
 
 # Components
@@ -55,7 +57,7 @@ def component_create_update(request, project_slug, component_slug=None):
     Create & update components. Handles associated units
     """
     project = get_object_or_404(Project, slug__iexact=project_slug)
-    if component_slug:    
+    if component_slug:
         component = get_object_or_404(Component, slug__iexact=component_slug,
                                       project=project)
         unit = component.unit    
@@ -72,9 +74,10 @@ def component_create_update(request, project_slug, component_slug=None):
             unit.save()
             component.unit = unit
             component.save()
+            component_form.save_m2m()
             return HttpResponseRedirect(
-                reverse('component_detail', args=[project_slug,
-                                                  component.slug]))
+                reverse('component_detail',
+                        args=[project_slug, component.slug]),)
     else:
         component_form = ComponentForm(project, instance=component, prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
@@ -82,6 +85,7 @@ def component_create_update(request, project_slug, component_slug=None):
         'component_form': component_form,
         'unit_form': unit_form,
         'project' : project,
+        'component': component,
     }, context_instance=RequestContext(request))
 
 def component_detail(request, project_slug, component_slug, *args, **kwargs):

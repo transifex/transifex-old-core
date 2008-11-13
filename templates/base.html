@@ -88,13 +88,11 @@
   </div>
 </div>
 
-  <div id="footer">
-    {% block footer %}
+  <div id="footer">{% block footer %}
     <div class="center">
       {% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Get in contact with us" %}">{% trans "Feedback" %}</a>
     </div>
-    {% endblock %}
-  </div>
+  {% endblock %}</div>
 
 </body>
 </html>

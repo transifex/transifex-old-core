@@ -79,7 +79,7 @@ class Project(models.Model):
     description = models.CharField(blank=True, max_length=255)
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
-    homepage = models.URLField(blank=True)
+    homepage = models.URLField(blank=True, verify_exists=False)
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
 
@@ -93,7 +93,9 @@ class Project(models.Model):
     tags = TagField()
 
     # Relations
-    collections = models.ManyToManyField(Collection, related_name='projects')
+    # The collections this project belongs to.
+    collections = models.ManyToManyField(Collection, related_name='projects',
+                                         blank=True, null=True,)
 
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 

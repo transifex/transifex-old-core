@@ -7,7 +7,7 @@
   <div class="editlinks"><span class="i16 add">
     <a href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></span>
   </p></div>
-  {% endif %}    
+  {% endif %}
 
   {% with project.component_set.all as components %}
   <h3>{% blocktrans count components|length as counter %}Project Component{% plural %}Project Components{% endblocktrans %}

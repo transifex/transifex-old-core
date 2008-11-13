@@ -10,7 +10,7 @@ from django.contrib.contenttypes import generic
 class Language(models.Model):
 
     """
-    A Language is a code and name collection of languages.
+    A spoken language or dialect, with a distinct locale.
     """
 
     name = models.CharField(unique=True, max_length=50,

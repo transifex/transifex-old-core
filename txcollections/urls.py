@@ -9,7 +9,7 @@ admin.autodiscover()
 
 collection_list = {
     'queryset': Collection.objects.all(),
-    'template_object_name' : 'collection',
+    'template_object_name': 'collection',
 }
 
 feeds = {

@@ -10,7 +10,7 @@ admin.autodiscover()
 
 project_list = {
     'queryset': Project.objects.all(),
-    "template_object_name" : "project",
+    'template_object_name': 'project',
 }
 
 feeds = {
@@ -67,7 +67,6 @@ urlpatterns += patterns('django.views.generic',
         dict(queryset_or_model=Project, allow_empty=True,
              template_object_name='project'),
         name='project_tag_list'),
-
 )
 
 
@@ -96,7 +95,7 @@ urlpatterns += patterns('',
         view = component_raw_file,
         name = 'component_raw_file',),
     url (
-        regex = '^(?P<slug>[-\w]+)/components/added/$',
+        regex = '^(?P<slug>[-\w]+)/component-added/$',
         view = 'django.views.generic.list_detail.object_detail',
         kwargs = {'object_list': project_list,
                   'message': 'Component added.' },
