@@ -7,7 +7,7 @@
 &raquo; {% blocktrans with component.name as component_name %}Delete {{ component_name }}{% endblocktrans %}
 {% endblock %}
 
-<a href="{{ project.get_absolute_url }}">{{ component.name }}</a> &raquo; {% trans "Edit" %}
+<a href="{{ component.project.get_absolute_url }}">{{ component.name }}</a> &raquo; {% trans "Edit" %}
 
 {% block content_title %}
     <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
@@ -15,7 +15,7 @@
 
 {% block body %}
 
-<p>{% blocktrans with project.name as project_name and component.name as component_name %}
+<p>{% blocktrans with component.project.name as project_name and component.name as component_name %}
   Are you sure you want to permanently delete the component '{{ component_name }}' which belongs to {{ project_name }}?
 {% endblocktrans %}</p>
 

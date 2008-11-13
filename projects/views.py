@@ -92,7 +92,6 @@ def component_detail(request, project_slug, component_slug, *args, **kwargs):
         queryset = Component.objects.all(),
         object_id=component.id,
         template_object_name = "component",
-        extra_context = {'project': component.project}
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
@@ -105,7 +104,6 @@ def component_delete(request, project_slug, component_slug, *args, **kwargs):
         model=Component,
         object_id=component.id,
         template_object_name = "component",
-        extra_context = {'project': component.project},
         post_delete_redirect = reverse('project_detail', args=[project_slug])
     )
 component_detail.__doc__ = create_update.delete_object.__doc__
