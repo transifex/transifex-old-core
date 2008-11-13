@@ -54,9 +54,9 @@ def component_create_update(request, project_slug, component_slug=None):
     """
     Create & update components. Handles associated units
     """
-    project = get_object_or_404(Project, slug__iexact=project_slug)
+    project = get_object_or_404(Project, slug=project_slug)
     if component_slug:    
-        component = get_object_or_404(Component, slug__iexact=component_slug,
+        component = get_object_or_404(Component, slug=component_slug,
                                       project=project)
         unit = component.unit    
     else:
@@ -85,40 +85,35 @@ def component_create_update(request, project_slug, component_slug=None):
     }, context_instance=RequestContext(request))
 
 def component_detail(request, project_slug, component_slug, *args, **kwargs):
-    project = get_object_or_404(Project, slug__iexact=project_slug)
-    component = get_object_or_404(Component, slug__exact=component_slug,
-                                  project=project)
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
     return list_detail.object_detail(
         request,
         queryset = Component.objects.all(),
         object_id=component.id,
         template_object_name = "component",
-        extra_context = {'project': project}
+        extra_context = {'project': component.project}
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
 @login_required
 def component_delete(request, project_slug, component_slug, *args, **kwargs):
-    #TODO: Make this one query
-    project = get_object_or_404(Project, slug__iexact=project_slug)
-    component = get_object_or_404(Component, slug__exact=component_slug,
-                                  project=project)
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
     return create_update.delete_object(
         request,
         model=Component,
         object_id=component.id,
         template_object_name = "component",
-        extra_context = {'project': project},
+        extra_context = {'project': component.project},
         post_delete_redirect = reverse('project_detail', args=[project_slug])
     )
 component_detail.__doc__ = create_update.delete_object.__doc__
 
 
 def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
-    #TODO: Make this one query
-    project = get_object_or_404(Project, slug__iexact=project_slug)
-    component = get_object_or_404(Component, slug__exact=component_slug,
-                                  project=project)
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
     # Checkout
     component.prepare_repo()
     # Calcule statistics
@@ -129,10 +124,8 @@ def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
 
 
 def component_raw_file(request, project_slug, component_slug, filename, *args, **kwargs):
-    #TODO: Make this one query
-    project = get_object_or_404(Project, slug__iexact=project_slug)
-    component = get_object_or_404(Component, slug__exact=component_slug,
-                                  project=project)
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
 
     try:
         content = component.trans.get_file_content(filename)
