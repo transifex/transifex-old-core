@@ -84,7 +84,7 @@ def component_create_update(request, project_slug, component_slug=None):
         'project' : project,
     }, context_instance=RequestContext(request))
 
-def component_detail(request, project_slug, component_slug, *args, **kwargs):
+def component_detail(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     return list_detail.object_detail(
@@ -96,7 +96,7 @@ def component_detail(request, project_slug, component_slug, *args, **kwargs):
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
 @login_required
-def component_delete(request, project_slug, component_slug, *args, **kwargs):
+def component_delete(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     return create_update.delete_object(
@@ -109,7 +109,7 @@ def component_delete(request, project_slug, component_slug, *args, **kwargs):
 component_detail.__doc__ = create_update.delete_object.__doc__
 
 
-def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
+def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     # Checkout
@@ -121,7 +121,7 @@ def component_set_stats(request, project_slug, component_slug, *args, **kwargs):
                                 args=(project_slug, component_slug,)))
 
 
-def component_raw_file(request, project_slug, component_slug, filename, *args, **kwargs):
+def component_raw_file(request, project_slug, component_slug, filename):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
 
