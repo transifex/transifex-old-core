@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
 from projects.models import Component, Unit
-from vcs.forms import UnitForm
 
 class ComponentForm(forms.ModelForm):
     class Meta:
