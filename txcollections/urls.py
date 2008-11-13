@@ -57,16 +57,19 @@ urlpatterns = patterns('django.views.generic',
 
 ## More
 
+#TODO: Temporary until we import view from a common place
+SLUG_FEED = 'txcollections.views.slug_feed'
 urlpatterns += patterns('',
     url(
-        regex = r'^feed/$',
-        view = 'txcollections.views.slug_feed',
+        # FIXME: This doesn't seem to work with a trailing / ?!
+        regex = r'^feed$',
+        view = SLUG_FEED,
         name = 'collection_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
     url(
         regex = r'^(?P<param>[-\w]+)/feed/$',
-        view = 'txcollections.views.slug_feed',
+        view = SLUG_FEED,
         name = 'collection_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'collection'}),

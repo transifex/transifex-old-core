@@ -18,16 +18,18 @@ feeds = {
     'project': ProjectFeed,
 }
 
+#TODO: Temporary until we import view from a common place
+SLUG_FEED = 'projects.views.slug_feed'
 urlpatterns = patterns('',
     url(
         regex = r'^feed/$',
-        view = 'projects.views.slug_feed',
+        view = SLUG_FEED,
         name = 'project_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
     url(
         regex = r'^(?P<param>[-\w]+)/feed/$',
-        view = 'projects.views.slug_feed',
+        view = SLUG_FEED,
         name = 'project_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'project'}),
