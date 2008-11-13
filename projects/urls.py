@@ -84,9 +84,7 @@ urlpatterns += patterns('',
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/delete/$',
         view = component_delete,
-        name = 'component_delete',
-        kwargs = {'model': Component,
-                  'template_object_name': 'component'}),
+        name = 'component_delete',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/set_stats/$',
         view = component_set_stats,
@@ -104,6 +102,5 @@ urlpatterns += patterns('',
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/$',
         view = component_detail,
-        kwargs = project_list,
         name = 'component_detail'),
 )
