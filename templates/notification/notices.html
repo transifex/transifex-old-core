@@ -13,19 +13,17 @@
  
     <div class="notice_settings">
        
-        {% if user.email %}
-            <p>
-                {% blocktrans %} You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list bellow and choose which events you would like to be notificated by email. {% endblocktrans %} <br /><br />
-                {% trans "Primary email" %}: 
-                <b>{{ user.email }}</b><br />
-                ({% trans "change under" %} <a href="{% url user_changeemail %}">{% trans "Account" %}</a>)
-            </p>
+        {% with user.email as user_email %}
+        {% if user_email %}
+            <p>{% blocktrans %}You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list bellow and choose which events you would like to be notificated by email.{% endblocktrans %}</p>
+            <p>{% trans "Primary email" %}: <strong>{{ user.email }}</strong>
+            < br/>({% trans "change under" %} <a href="{% url user_changeemail %}">{% trans "Account" %}</a>)
         {% else %}
-            <p>
-                <span class="warning">{% trans "Note" %}</span>:
-                {% trans "You do not have a verified email address to which notices can be sent. You can add one by going to" %} <a href="{% url user_changeemail %}">{% trans "Account" %}</a>.
+            <p><span class="warning">{% trans "Note" %}</span>:
+              {% trans "You do not have a verified email address to which notices can be sent. You can add one by going to" %} <a href="{% url user_changeemail %}">{% trans "Account" %}</a>.
             </p>
         {% endif %}
+        {% endwith %}
         
         <form method="POST" action="">
             <table class="notice_settings">

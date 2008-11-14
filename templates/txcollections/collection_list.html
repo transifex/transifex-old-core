@@ -13,11 +13,11 @@
 
 {% block breadcrumb %}{% homelink %} &raquo; {% trans "Collections" %}{% endblock %}
 
-{% block content_title %}
-<h2 class="pagetitle">{% if tag %}{% blocktrans %}Collections with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ collection_list.count }}</sup></h2>
-{% else %}<h2 class="pagetitle">{% trans "Collections on Transifex" %} {% render_metacount collection_list _("collections") %}</h2>
-{% endif %}
-{% endblock %}
+{% block content_title %}<h2 class="pagetitle">
+  {% if tag %}{% blocktrans %}Collections with tag '{{ tag }}'{% endblocktrans %}
+  {% else %}{% trans "Collections on Transifex" %}{% endif %}
+  {% render_metacount collection_list _("collections") %}
+</h2>{% endblock %}
 
 {% block content_header_sec %}
   {% if request.user.is_authenticated %}

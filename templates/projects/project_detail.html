@@ -28,14 +28,13 @@
   
   {% if project.description %}<p class="description">{{ project.description }}</p>{% endif %}
 
-  <div class="long_description">{{ project.long_description|markdown|truncatewords:"100" }}
-  {% comment %}
-  {# FIXME: This is sub-optimal #}
-  {% ifequal project.long_description|markdown project.long_description|markdown|truncatewords:"100" %}
-  (<a href="?long_desc">more</a>)
-  {% endifequal %}
-  {% endcomment %}
+  {% with project.long_description as long_desc %}
+  {% if long_desc %}
+  <div class="long_description">
+    {{ long_desc|markdown|truncatewords:"100" }}
   </div>
+  {% endif %}
+  {% endwith %}
 
   <div class="details">
 
