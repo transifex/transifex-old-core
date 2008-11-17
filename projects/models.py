@@ -1,4 +1,7 @@
+from cgi import escape
 from datetime import datetime
+import markdown
+
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -9,7 +12,6 @@ from django.contrib.contenttypes import generic
 
 import tagging
 from tagging.fields import TagField
-
 from txcollections.models import Collection
 from translations.models import POFile
 from vcs.models import Unit
@@ -116,8 +118,8 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         """Save the object in the database."""
-        import markdown
-        self.long_description_html = markdown.markdown(self.long_description)
+        long_desc = escape(self.long_description)
+        self.long_description_html = markdown.markdown(long_desc)
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
         super(Project, self).save(*args, **kwargs)
@@ -234,8 +236,8 @@ class Component(models.Model):
         return "%s.%s" % (self.project.slug, self.slug)
 
     def save(self, *args, **kwargs):
-        import markdown
-        self.long_description_html = markdown.markdown(self.long_description)
+        desc_escaped = escape(self.long_description)
+        self.long_description_html = markdown.markdown(desc_escaped)
         self.full_name = self.get_full_name()
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created

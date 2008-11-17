@@ -28,10 +28,10 @@
   
   {% if project.description %}<p class="description">{{ project.description }}</p>{% endif %}
 
-  {% with project.long_description as long_desc %}
+  {% with project.long_description_html as long_desc %}
   {% if long_desc %}
   <div class="long_description">
-    {{ long_desc|markdown|truncatewords:"100" }}
+    {{ long_desc|truncatewords_html:"100"|safe }}
   </div>
   {% endif %}
   {% endwith %}

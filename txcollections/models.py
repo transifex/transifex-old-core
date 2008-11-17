@@ -66,7 +66,9 @@ class Collection(models.Model):
 
     def save(self, *args, **kwargs):
         import markdown
-        self.long_description_html = markdown.markdown(self.long_description)
+        from cgi import escape
+        desc_escaped = escape(self.long_description)
+        self.long_description_html = markdown.markdown(desc_escaped)
         created = self.created
         super(Collection, self).save(*args, **kwargs)
 
