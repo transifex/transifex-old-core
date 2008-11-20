@@ -28,15 +28,12 @@
   
   {% if collection.description %}<p class="description">{{ collection.description }}</p>{% endif %}
 
-  {% with collection.long_description|markdown|truncatewords:"100" as desc %}
-  <div class="long_description">{{ desc }}
-  {% comment %}
-  {# FIXME: This is sub-optimal #}
-  {% ifnotequal collection.long_description|markdown desc %}
-  (<a href="?long_desc">more</a>)
-  {% endifequal %}
-  {% endcomment %}
+  {% with collection.long_description_html as long_desc %}
+  {% if long_desc %}
+  <div class="long_description">
+    {{ long_desc|truncatewords_html:"100"|safe }}
   </div>
+  {% endif %}
   {% endwith %}
 
   <div class="details">
@@ -95,7 +92,6 @@
   {% endif %}
   {% endwith %}
 </div>
-
 
 </div>
 {% endblock %}

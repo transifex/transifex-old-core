@@ -15,8 +15,8 @@ urlpatterns = patterns('',
         ),
      url (
        regex = '^add$',
-       view = 'management.views.hold_add',
-       name = 'hold_add',
+       view = 'management.views.hold_create',
+       name = 'hold_create',
      ),
      url (
        regex = '^$',

@@ -14,3 +14,8 @@ def render_metacount(list, countable):
     if count > 1:
         return {'count': count,
                 'countable': countable}
+
+@register.inclusion_tag("common_homelink.html")
+def homelink(text="Home"):
+    """Return a link to the homepage."""
+    return {'text': text}

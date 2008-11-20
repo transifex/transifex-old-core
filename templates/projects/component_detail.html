@@ -5,10 +5,10 @@
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
-{% block title %}{{ block.super }} | {{ component.name }}{% endblock %}
+{% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }}{% endwith %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }}
-&raquo; {{ component.name }}{% endblock %}
+{% block breadcrumb %}{% with component.project as project %}{{ block.super }}
+&raquo; {{ component.name }}{% endwith %}{% endblock %}
 
 
 {% block body_main %}
@@ -20,9 +20,13 @@
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
+  {% with component.long_description_html as long_desc %}
+  {% if long_desc %}
   <div class="long_description">
-  {{ component.long_description|markdown|truncatewords:"100" }}
+    {{ long_desc|truncatewords_html:"100"|safe }}
   </div>
+  {% endif %}
+  {% endwith %}
 
 {% if component.unit %}
 <div id="vcs_details">
@@ -51,11 +55,13 @@
       <th class="i16 update">{% trans "Local cache:" %}</th>
       <td>
         <form action="{% url component_set_stats component.project.slug component.slug %}" style="float: right;">
-            {% if component.unit.last_checkout %}
-            {% trans "The local checked-out copy of this component was last updated at" %} <strong>{{component.unit.last_checkout|date:"jS M Y H:i"}}</strong>.
+            {% with component.unit as unit %}
+            {% if unit.last_checkout %}
+              {% blocktrans %}The local checked-out copy of this component was last updated at <strong>{{ unit.last_checkout|date:"jS M Y H:i" }}</strong>.{% endblocktrans %}
             {% else %}
-            {% trans "You can check-out a copy of this component right now if you want." %}
+              {% trans "You can check-out a copy of this component right now if you want." %}
             {% endif %}
+            {% endwith %}
             <input title="{% trans "It will refresh and re-calculate the stats. It can take some time." %}" class="icon16 refresh" value="{% trans "Refresh now!" %}" type="submit">
         </form>
       </td>
@@ -64,7 +70,7 @@
 </div>
 {% endif %}  
 
-  {% comp_stats_table component %}
+{% comp_stats_table component %}
 
 </div>
 {% endblock %}

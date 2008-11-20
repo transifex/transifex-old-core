@@ -10,10 +10,12 @@ feeds = {
     'all': AllLanguages,
 }
 
+#TODO: Temporary until we import view from a common place
+SLUG_FEED = 'languages.views.slug_feed'
 urlpatterns = patterns('',
     url(
         regex = r'^feed/$',
-        view = 'languages.views.slug_feed',
+        view = SLUG_FEED,
         name = 'languages_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'all'}),

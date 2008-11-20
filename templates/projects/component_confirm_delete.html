@@ -1,16 +1,17 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | {% blocktrans with component.name as component_name %}Delete {{ component_name }}{% endblocktrans %}{% endblock %}
+{% block title %}{% with component.project as project %}
+  {{ block.super }}
+  | {% blocktrans with component.name as component_name %}Delete {{ component_name }}{% endblocktrans %}
+{% endwith %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }}
+{% block breadcrumb %}{% with component.project as project %}{{ block.super }}
 &raquo; {% blocktrans with component.name as component_name %}Delete {{ component_name }}{% endblocktrans %}
-{% endblock %}
-
-<a href="{{ component.project.get_absolute_url }}">{{ component.name }}</a> &raquo; {% trans "Edit" %}
+{% endwith %}{% endblock %}
 
 {% block content_title %}
-    <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
+  <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
 {% block body %}

@@ -16,6 +16,7 @@ class LatestCollections(Feed):
     def items(self):
         return Collection.objects.order_by('-created')[:10]
 
+
 class CollectionFeed(Feed):
 
     def get_object(self, bits):

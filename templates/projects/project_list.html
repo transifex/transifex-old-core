@@ -11,7 +11,7 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_latest_feed %}" />
 {% endblock %}
 
-{% block breadcrumb %}<a href="{% url home %}">{% trans "Home" %}</a> &raquo; {% trans "Projects" %}{% endblock %}
+{% block breadcrumb %}{% homelink %} &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}
 <h2 class="pagetitle">{% if tag %}{% blocktrans %}Projects with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
@@ -22,7 +22,7 @@
 {% block content_header_sec %}
     {% if request.user.is_authenticated %}
     <div class="addproject content_header_sec">
-      <span class="i16 add"><a href="{% url project_add %}">{% trans "Add a new project" %}</a></span>
+      <span class="i16 add"><a href="{% url project_create %}">{% trans "Add a new project" %}</a></span>
     </div>
     {% endif %}
 {% endblock %}
@@ -44,15 +44,15 @@
   </div>
   {% if not project_list %}
   <p>{% trans "No projects registered yet. :-(" %}</p>
-  {% url project_add as project_add %}
-  <p>{% blocktrans %}Why don't you <a href="{{ project_add }}">add one</a>?{% endblocktrans %}</p>
+  {% url project_create as project_create %}
+  <p>{% blocktrans %}Why don't you <a href="{{ project_create }}">add one</a>?{% endblocktrans %}</p>
   {% endif %}
   
 {% endblock %}
 
 {% block content_footer %}
-{% url project_add as project_add %}
+{% url project_create as project_create %}
   <div id="content_footer_center">
-    <p><span class="i16 tip">{% blocktrans %}Couldn't find your project? Go ahead and <a href="{{ project_add }}">add it</a>!{% endblocktrans %}</span></p>
+    <p><span class="i16 tip">{% blocktrans %}Couldn't find your project? Go ahead and <a href="{{ project_create }}">add it</a>!{% endblocktrans %}</span></p>
   </div>
 {% endblock %}
