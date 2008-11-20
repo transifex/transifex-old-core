@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.syndication.feeds import (Feed, FeedDoesNotExist)
 from django.contrib.sites.models import Site
-from txcollections.models import (Collection)
+from txcollections.models import (Collection, CollectionRelease as Release)
 
 current_site = Site.objects.get_current()
 
@@ -32,7 +32,7 @@ class CollectionFeed(Feed):
             'collection': obj.name }
 
     def description(self, obj):
-        return _("Latest projects in the %s collection.") % obj.name
+        return _("Latest releases in the %s collection.") % obj.name
 
     def link(self, obj):
         if not obj:
@@ -40,4 +40,4 @@ class CollectionFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        return obj.projects.order_by('-name')[:50]
+        return obj.releases.order_by('-name')[:50]

@@ -9,6 +9,8 @@ from django.utils.html import escape
 import tagging
 from tagging.fields import TagField
 
+from releases.models import Release as ReleasesRelease
+
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
     from notification import models as notification
@@ -76,3 +78,50 @@ class Collection(models.Model):
                               {'collection': self})
 
 tagging.register(Collection, tag_descriptor_attr='tagsobj')
+
+
+# Releases
+
+class ReleaseManager(models.Manager):
+    pass
+
+
+class CollectionRelease(ReleasesRelease):
+
+    """
+    A collection of packages shipped in a Collection (eg. Fedora 9).
+    
+    Represents a packaging and releasing of a software project (big or
+    small) on a particular date, for which makes sense to track
+    translations across the whole release.
+        
+    Inherits from the generic release.Release.
+    """
+    
+    # Relations
+    
+    collection = models.ForeignKey(Collection, related_name='releases')
+    
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def full_name(self):
+        return "%s: %s" % (self.collection.name, self.name)
+
+    def __repr__(self):
+        return _('<Release: %(rel)s (Collection %(col)s)>') % {
+            'rel': self.name,
+            'col': self.collection.name}
+    
+    class Meta(ReleasesRelease.Meta):
+        """Inherits from the parent object's Meta class."""
+        db_table  = 'collections_release'
+        unique_together = ['slug', 'collection']
+
+    @permalink
+    def get_absolute_url(self):
+        return ('collection_release_detail', None,
+                { 'slug': self.collection.slug, 'release_slug': self.slug})
+
+tagging.register(CollectionRelease, tag_descriptor_attr='tagsobj')

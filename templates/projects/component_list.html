@@ -18,14 +18,14 @@
   <div class="component_list">
   {% for comp in components|slice:"0:4" %}
     <div class="entry">
-      <h4><a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>
+      <p class="name"><a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>
       {% if request.user.is_authenticated %}
       <sup class="entry_metalink">
         (<a href="{% url component_edit project_slug=project.slug component_slug=comp.slug %}">{% trans "edit" %}</a>, 
         <a href="{% url component_delete project_slug=project.slug component_slug=comp.slug %}">{% trans "del" %}</a>)
       </sup>
       {% endif %}
-      </h4>
+      </p>
       <p class="description">{{ comp.description|truncatewords:"10" }}</p></li>
     </div>
     {% endfor %}

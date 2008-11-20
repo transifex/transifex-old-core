@@ -12,7 +12,7 @@ from django.utils.html import escape
 
 import tagging
 from tagging.fields import TagField
-from txcollections.models import Collection
+from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import Unit
 
@@ -202,6 +202,8 @@ class Component(models.Model):
     project = models.ForeignKey(Project)
     unit = models.OneToOneField(Unit, blank=True, null=True, editable=False)
     pofiles = generic.GenericRelation(POFile)
+    releases = models.ManyToManyField(CollectionRelease, related_name='components',
+                                      blank=True, null=True)
 
     # Managers
     objects = ComponentManager()

@@ -51,6 +51,16 @@
       <td><a title="{% trans "Download the source file for this component." %}" href="{{file_source_url}}">{{component.trans.get_source_file}}</a></td>
     </tr>
     {% endif %}
+    {% with component.releases.all as releases %}
+    {% if releases %}
+    <tr>
+      <th class="i16 release">{% blocktrans count releases|length as counter %}Release:{% plural %}Releases:{% endblocktrans %}</th>
+      <td class="compact">
+        {% for release in releases|slice:"0:6" %}<a class="release" href="{% url collection_release_detail slug=release.collection.slug release_slug=release.slug %}">{{ release }}</a> {% endfor %}
+      </td>
+    </tr>
+    {% endif %}
+    {% endwith %}
     <tr>
       <th class="i16 update">{% trans "Local cache:" %}</th>
       <td>

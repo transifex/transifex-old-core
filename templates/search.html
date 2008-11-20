@@ -39,7 +39,7 @@
             {{ project.long_description|markdown|striptags }}
         {% endsearchexcerpt %}
         <div class="info">
-          <h4 class="name"><a href="{{ project.get_absolute_url }}">{{ name.highlighted }}</a></h4>
+          <p class="name"><a href="{{ project.get_absolute_url }}">{{ name.highlighted }}</a></p>
           <p class="description">{{ description.excerpt|highlight:terms }}</p>
           <p class="long_description">{{ long_description.excerpt|highlight:terms }}</p>
         </div>

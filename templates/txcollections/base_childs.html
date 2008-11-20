@@ -1,0 +1,6 @@
+{% extends "txcollections/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} | {{ collection.name }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a>{% endblock %}

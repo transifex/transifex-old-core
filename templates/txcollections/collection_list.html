@@ -38,7 +38,11 @@
     <div class="entry">
       <h3 class="name"><a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a></h3>
       <p class="description">{{ collection.description }}</p>
-      <p><span class="i16 stats compact">{% blocktrans count collection.projects.all|length as counter %}1 project{% plural %}{{ counter }} projects{% endblocktrans %}</span>
+      <p>
+        <span class="i16 stats compact">
+          {% blocktrans count collection.releases.all|length as counter %}1 release{% plural %}{{ counter }} releases{% endblocktrans %},
+          {% blocktrans count collection.projects.all|length as counter %}1 project{% plural %}{{ counter }} projects{% endblocktrans %}
+        </span>
       {% if collection.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in collection.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url collection_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
     </div>
   {% endfor %}

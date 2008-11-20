@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body_class %}releases{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url release_list %}">{% trans "Releases" %}</a>{% endblock %}

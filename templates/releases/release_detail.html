@@ -1,0 +1,101 @@
+{% extends "releases/base.html" %}
+{% load i18n %}
+{% load tx-common %}
+{% load markup %}
+{% load statistics %}
+
+{% block body_class %}{{ block.super }} release_detail{% endblock %}
+
+{% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
+
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed param=release.slug %}" />
+{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
+
+{% block body_sec %}
+  <a class="simlink" href="{% url release_feed param=release.slug %}" title="release feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
+
+{% block body_main %}
+  <div class="obj_bigdetails">
+  <h2 class="name">{{ release.name }}</h2>
+
+  {% if request.user.is_authenticated %}
+  <div class="editlinks"><p class="i16 edit"><a href="{% url release_edit slug=release.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
+  
+  {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
+
+  {% with release.long_description as long_desc %}
+  {% if long_desc %}
+  <div class="long_description">
+    {{ long_desc|markdown|truncatewords:"100" }}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <div class="details">
+
+  {# <h3>{% trans "Release details" %} </h3> #}
+  <table class="definition">{% if release.homepage %}
+    <tr>
+      <th class="homepage i16">{% trans "Homepage:" %}</th>
+      <td><a title="{% blocktrans with release.name as release_name %}Homepage for {{ release_name }}{% endblocktrans %}" href="{{ release.homepage }}">{{ release.homepage }}</a></td>
+    </tr>
+    {% endif %}
+    {% if release.tags %}
+    <tr>
+      <th class="i16 tag">{% trans "Tags:" %}</th>
+      <td class="compact">
+        {% for tag in release.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url release_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
+      </td>
+    </tr>
+    {% endif %}
+<!--
+    <tr>
+      <th class="i16 link">{% trans "External links:" %}</th>
+      <td><ul>
+        <li>{% trans "Screenshots" %}</li>
+        </ul>
+      </td>
+    </tr>
+-->
+  </table>
+</div>
+
+<div id="projects" class="projects">
+
+  {% with release.projects.all as projects %}
+  <h3>{% blocktrans count projects|length as counter %}Project in release{% plural %}Projects in release{% endblocktrans %}
+  {% render_metacount projects _("projects") %}
+  </h3>
+
+  {% if projects %}
+  <div class="project_list">
+  <ul class="simple">
+  {% for project in projects %}
+    <li>a<p class="i16 project"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p></li>
+  {% endfor %}
+  </ul>
+  </div>
+  {% else %}
+    {% url project_list as project_list %}
+    <p class="i16 tip">{% blocktrans %}No projects are registered for this release yet. <a href="{{ project_list }}">Find projects</a> and add them to this release.{% endblocktrans %}</p>
+  {% endif %}
+  {% endwith %}
+</div>
+
+</div>
+{% endblock %}
+
+{% block content_footer %}
+  <div id="content_footer_center">
+    {% if request.user.is_authenticated %}
+    <div class="deletelink">
+      <span class="i16 delete"><a href="{% url release_delete slug=release.slug %}">{% trans "Delete release" %}</a></span>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

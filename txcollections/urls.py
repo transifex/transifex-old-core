@@ -4,6 +4,7 @@ from tagging.views import tagged_object_list
 
 from txcollections.views import * 
 from txcollections.feeds import (LatestCollections, CollectionFeed)
+from txcollections.models import Collection
 
 admin.autodiscover()
 
@@ -22,12 +23,12 @@ feeds = {
 urlpatterns = patterns('django.views.generic',
     url(
         regex = '^add/$',
-        view = collection_create,
+        view = limited_create_object,
         name = 'collection_create',
         kwargs = {'model': Collection}),
     url(
         regex = '^(?P<slug>[-\w]+)/edit/$',
-        view = collection_update,
+        view = limited_update_object,
         name = 'collection_edit',
         kwargs = {'model': Collection,
                   'template_object_name': 'collection',}),
@@ -73,4 +74,38 @@ urlpatterns += patterns('',
         name = 'collection_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'collection'}),
+)
+
+# Releases
+
+urlpatterns += patterns('',
+    url(
+        regex = '^(?P<slug>[-\w]+)/add-release/$',
+        view = release_create_update,
+        name = 'collection_release_create',
+        kwargs = {'model': Release,}),
+    url(
+        regex = '^(?P<slug>[-\w]+)/(?P<release_slug>[-\w]+)/edit/$',
+        view = release_create_update,
+        name = 'collection_release_edit',
+        kwargs = {'model': Release,
+                  'template_object_name': 'release'}),
+    url(
+        regex = '^(?P<slug>[-\w]+)/(?P<release_slug>[-\w]+)/delete/$',
+        view = release_delete,
+        name = 'collection_release_delete',
+        kwargs = {'model': Release,
+                  'template_object_name': 'release'}),
+    url (
+        regex = '^(?P<slug>[-\w]+)/release-added/$',
+        view = 'django.views.generic.list_detail.object_detail',
+        name = 'collection_release_created',
+        kwargs = {'object_list': collection_list,
+                  'message': 'Component added.' },),
+    url(
+        regex = '^(?P<slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
+        view = release_detail,
+        name = 'collection_release_detail',
+        kwargs = {'template_object_name': 'release',
+                  'template_name': 'txcollections/release_detail.html',}),
 )

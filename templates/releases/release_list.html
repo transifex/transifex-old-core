@@ -1,0 +1,60 @@
+{% extends "releases/base.html" %}
+{% load i18n %}
+{% load tx-common %}
+{% load pagination_tags %}
+
+{% block body_class %}{{ block.super }} release_list{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Release list" %}{% endblock %}
+
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_latest_feed %}" />
+{% endblock %}
+
+{% block breadcrumb %}{% homelink %} &raquo; {% trans "Releases" %}{% endblock %}
+
+{% block content_title %}
+<h2 class="pagetitle">{% if tag %}{% blocktrans %}Releases with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ release_list.count }}</sup></h2>
+{% else %}<h2 class="pagetitle">{% trans "Releases on Transifex" %} {% render_metacount release_list _("releases") %}</h2>
+{% endif %}
+{% endblock %}
+
+{% block content_header_sec %}
+    {% if request.user.is_authenticated %}
+    <div class="addrelease content_header_sec">
+      <span class="i16 add"><a href="{% url release_create %}">{% trans "Add a new release" %}</a></span>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block body_sec %}
+  <a class="simlink" href="{% url release_latest_feed %}" title="Releases feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
+
+{% block body_main %}
+  {% autopaginate release_list 5 %}
+  <div class="release_list obj_biglist">
+  {% for release in release_list %}
+    <div class="entry">
+      <h3 class="name"><a href="{{ release.get_absolute_url }}">{{ release.name }}</a></h3>
+      <p class="description">{{ release.description }}</p>
+      <p><span class="i16 stats compact">{% blocktrans count release.projects.all|length as counter %}1 project{% plural %}{{ counter }} projects{% endblocktrans %}</span>
+      {% if release.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in release.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url release_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
+    </div>
+  {% endfor %}
+  {% paginate %}
+  </div>
+  {% if not release_list %}
+  <p>{% trans "No releases registered yet. :-(" %}</p>
+  {% url release_create as release_create %}
+  <p>{% blocktrans %}Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
+  {% endif %}
+  
+{% endblock %}
+
+{% block content_footer %}
+{% url release_create as release_create %}
+  <div id="content_footer_center">
+    <p><span class="i16 tip">{% blocktrans %}Couldn't find your release? Go ahead and <a href="{{ release_create }}">add it</a>!{% endblocktrans %}</span></p>
+  </div>
+{% endblock %}

@@ -36,9 +36,11 @@
   {% endif %}
   {% endwith %}
 
-  <div class="details">
+  <div class="details separate">
 
-  {# <h3>{% trans "Project details" %} </h3> #}
+  {% if project.homepage or project.tags or project.collections.all %}
+    <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
+  {% endif %}
   <table class="definition">
     {% if project.homepage %}
     <tr>

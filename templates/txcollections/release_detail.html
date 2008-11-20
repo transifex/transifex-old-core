@@ -1,0 +1,100 @@
+{% extends "txcollections/base_childs.html" %}
+{% load i18n %}
+{% load tx-common %}
+{% load markup %}
+{% load statistics %}
+
+{% block body_class %}{{ block.super }} release_detail{% endblock %}
+
+{% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
+
+{% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url collection_feed param=collection.slug %}" />
+{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
+
+{% comment %}
+{% block body_sec %}
+  <a class="simlink" href="{% url collection_feed param=collection.slug %}" title="collection feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
+{% endcomment %}
+
+{% block body_main %}
+  <div class="obj_bigdetails">
+  {% if request.user.is_authenticated %}
+  <div class="editlinks"><p class="i16 edit"><a href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
+  <h2 class="name">{{ collection.name }} &raquo; {{ release }}</h2>
+  
+  {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
+
+  {% with release.long_description_html as long_desc %}
+  {% if long_desc %}
+  <div class="long_description">
+    {{ long_desc|truncatewords:"100"|safe }}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <div class="details">
+
+  {% if release.homepage or release.release_date %}
+  <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
+  {% endif %}
+  <table class="definition">
+    <tr {% if not release.homepage %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
+      <th class="homepage i16">{% trans "Homepage:" %}</th>
+      <td><a href="{{ release.homepage }}">{{ release.homepage }}</a></td>
+    </tr>
+    <tr class="separator"></tr>
+    <tr class="{% if not release.release_date %}empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
+      <th class="release_date i16">{% trans "Release date:" %}</th>
+      <td>{{ release.release_date|date:"D d M Y" }}</td>
+    </tr>
+    <tr {% if not release.stringfreeze_date %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
+      <th class="freeze i16">{% trans "String freeze:" %}</th>
+      <td>{{ release.stringfreeze_date|date:"D d M Y" }}</td>
+    </tr>
+    <tr {% if not release.develfreeze_date %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
+      <th class="freeze i16">{% trans "Devel freeze:" %}</th>
+      <td>{{ release.develfreeze_date|date:"D d M Y" }}</td>
+    </tr>
+  </table>
+</div>
+
+<div id="projects" class="projects">
+
+  {# We're getting components directly from the view, ordered and everything #}
+  <h3>{% blocktrans %}Projects shipped with {{ release }}{% endblocktrans %}
+  {% render_metacount components _("components") %}
+  </h3>
+
+  <p class="explanation">Here's a list of projects grouped together with this release.</p>
+
+  {% if components %}
+  <div class="components_list">
+  <ul class="simple bigthings">
+  {% for component in components %}
+    <li><p class="i16 component"><a href="{{ component.get_absolute_url }}">{{ component.project.name }} ({{ component.name }})</a></p></li>
+  {% endfor %}
+  </ul>
+  </div>
+  {% else %}
+{% url project_list as project_list %}
+    <p class="i16 tip">{% blocktrans %}No projects are registered for this release yet. <a href="{{ project_list }}">Find projects</a> and add them to this release.{% endblocktrans %}</p>
+  {% endif %}
+</div>
+
+</div>
+{% endblock %}{# body_main #}
+
+{% block content_footer %}
+  <div id="content_footer_center">
+    {% if request.user.is_authenticated %}
+    <div class="deletelink">
+      <span class="i16 delete"><a href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a></span>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

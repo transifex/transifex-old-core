@@ -36,9 +36,11 @@
   {% endif %}
   {% endwith %}
 
-  <div class="details">
+  <div class="details separate">
 
-  {# <h3>{% trans "Collection details" %} </h3> #}
+  {% if collection.homepage or collection.tags %}
+  <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
+  {% endif %}
   <table class="definition">{% if collection.homepage %}
     <tr>
       <th class="homepage i16">{% trans "Homepage:" %}</th>
@@ -53,36 +55,52 @@
       </td>
     </tr>
     {% endif %}
-<!--
-    <tr>
-      <th class="i16 link">{% trans "External links:" %}</th>
-      <td><ul>
-        <li>{% trans "Screenshots" %}</li>
-        </ul>
-      </td>
-    </tr>
--->
   </table>
+</div>
+
+{% url collection_release_create slug=collection.slug as release_create %}
+<div id="releases" class="releases separate">
+  {% if request.user.is_authenticated %}
+  <div class="editlinks"><span class="i16 add">
+    <a href="{{ release_create }}">{% trans "Add" %}</a></span>
+  </p></div>
+  {% endif %}
+
+  {% with collection.releases.all as releases %}
+  <h3>{% blocktrans %}{{ collection }} Releases{% endblocktrans %}
+  {% render_metacount releases _("releases") %}
+  </h3>
+
+  {% if releases %}
+  <div class="release_list">
+  <p class="explanation">{% blocktrans %}The {{ collection }} collection includes the following groups of shipped components:{% endblocktrans %}</p>
+  <ul class="simple bigthings">
+  {% for release in releases %}
+    <li><p class="i16 release"><a href="{{ release.get_absolute_url }}">{{ release.name }}</a>
+    {% if release.description %}<span class="description">– {{ release.description }}</span>{% endif %}</p></li>
+  {% endfor %}
+  </ul>
+  </div>
+  {% else %}
+{% url release_create as collection_list %}
+    <p class="i16 tip">{% blocktrans %}No releases are registered for this collection yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
+  {% endif %}
+  {% endwith %}
 </div>
 
 <div id="projects" class="projects">
 
   {% with collection.projects.all as projects %}
-  <h3>{% blocktrans count projects|length as counter %}Project in collection{% plural %}Projects in collection{% endblocktrans %}
+  <h3>{% blocktrans %}Projects in {{ collection }}{% endblocktrans %}
   {% render_metacount projects _("projects") %}
   </h3>
 
   {% if projects %}
+  <p class="explanation">{% blocktrans %}Projects currently registered to belong in this collection:{% endblocktrans %}</p>
   <div class="project_list">
-  <ul class="simple">
+  <ul class="simple bigthings">
   {% for project in projects %}
-    <li><h4 class="i16 project"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h4></li>
-  {% comment %}
-    <div class="entry">
-      <h4><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h4>
-      <p class="description">{{ project.description|truncatewords:"10" }}</p></li>
-    </div>
-  {% endcomment %}
+    <li><p class="i16 project"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></p></li>
   {% endfor %}
   </ul>
   </div>
@@ -94,7 +112,7 @@
 </div>
 
 </div>
-{% endblock %}
+{% endblock %}{# body_main #}
 
 {% block content_footer %}
   <div id="content_footer_center">

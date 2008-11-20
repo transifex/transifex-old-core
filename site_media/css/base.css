@@ -40,8 +40,8 @@ div#logo {
 
 div#header div#navmenu {
   float: left;
-  margin: 65px 0.5em 0 5em;
-  font-size: 120%;
+  margin: 65px 0.5em 0 3em;
+  font-size: 110%;
   color: #ccc;
 }
 
@@ -106,6 +106,12 @@ div#body {
 
 div#body h3 {
   color: #b65d0e;
+}
+
+div#body h4 {
+  text-transform: uppercase;
+  color: #666;
+  font-weight: bold;
 }
 
 div.multicolumn3 {
@@ -273,7 +279,7 @@ div.obj_bigdetails div.long_description {
   text-align: justify;
 }
 
-div.obj_bigdetails .details {
+div.separate {
   background: url('../images/light-separator.png') repeat-x -20px 100%;
   padding-bottom: 1em;
 }
@@ -292,7 +298,8 @@ div.obj_bigdetails div.deletelink span a:hover {
 body.projects.project_detail .component_list .entry {
   float: left;
   margin: 0.5em;
-  width: 15em;
+  min-width: 15em;
+  max-width: 25em;
   height: 5em;
   background-color: #fafafa;
   border-top: 1px solid #eee;
@@ -306,13 +313,15 @@ body.projects.project_detail .component_list .entry {
   margin-bottom: 2em;
 }
 
-body.projects.project_detail .component_list .entry h4 {
+body.projects.project_detail .component_list .entry p.name {
   font-size: 1.2em;
   margin: 0 0 0.5em 0;
+  padding-right: 25px;
   background: url('../images/icons/brick.png') no-repeat 100% 50%;
+  font-weight: bold;
 }
 
-body.projects.project_detail .component_list .entry p {
+body.projects.project_detail .component_list .entry p.description {
   font-size: 90%;
   margin: 0.5em 0 0 0;
 }
@@ -349,7 +358,7 @@ body.search.project_list div.info {
   padding-top: 1em;
 }
 
-body.search.project_list h4.name {
+body.search.project_list p.name {
   font-weight: normal;
   font-size: 140%;
   margin: 0;
@@ -408,12 +417,23 @@ table.definition td {
   padding: 0.2em 0.5em;
 }
 
+table.definition tr.empty th,
+table.definition tr.empty td {
+  display: none;
+  /*color: #aaa; font-weight: normal;*/
+}
+
+table.definition tr.separator { height: 5px; }
+
 code { font-size: 1.2em; }
 span.title { border-bottom: 1px dotted #aaa; }
 
 ul.simple { list-style: none; padding-left: 20px; }
+ul.simple.bigthings { font-weight: bold; }
 
-img.repotype { vertical-align: middle; }
+ul.simple.bigthings .description { font-weight: normal; color: #666; }
+
+img.repotype { vertical-align: middle; margin-left: 10px; }
 
 .disabled { color: #aaa; }
 .disabled a { color: #bdcedf; }
@@ -507,6 +527,8 @@ h2 .entry_metalink {
 h2 .entry_metalink {
   font-size: 60%;
 }
+
+.nodisplay { display: none; }
 
 
 /* Custom classes for various elements */
