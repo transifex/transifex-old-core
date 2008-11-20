@@ -1,4 +1,3 @@
-from cgi import escape
 from datetime import datetime
 import markdown
 
@@ -9,6 +8,7 @@ from django.db.models import permalink
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
+from django.utils.html import escape
 
 import tagging
 from tagging.fields import TagField

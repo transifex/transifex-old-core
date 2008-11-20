@@ -1,12 +1,13 @@
+from markdown import markdown
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
+from django.utils.html import escape
 import tagging
 from tagging.fields import TagField
-
 
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
@@ -65,10 +66,8 @@ class Collection(models.Model):
                 { 'slug': self.slug, })
 
     def save(self, *args, **kwargs):
-        import markdown
-        from cgi import escape
         desc_escaped = escape(self.long_description)
-        self.long_description_html = markdown.markdown(desc_escaped)
+        self.long_description_html = markdown(desc_escaped)
         created = self.created
         super(Collection, self).save(*args, **kwargs)
 
