@@ -3,8 +3,7 @@ from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
 
-# I couldn't import this file from a separated dir
-import libpo as po 
+import polib
 
 class POTStatsError(Exception):
 
@@ -66,8 +65,10 @@ class POTManager(TransManagerMixin):
         """
         try:
             file_path = os.path.join(self.path, self.get_langfile(lang))
-            entries = po.read(file_path)
-            return po.stats(entries)
+            po = polib.pofile(file_path)
+            return {'trans': len(po.translated_entries()),
+                    'fuzzy': len(po.fuzzy_entries()),
+                    'untrans': len(po.untranslated_entries())}
         except AttributeError:
             raise POTStatsError, lang
 
@@ -90,8 +91,8 @@ class POTManager(TransManagerMixin):
                 l = None
             s = POFile.objects.create(language=l, filename=f, 
                                            object=object)
-        s.set_stats(trans=stats['translated'], fuzzy=stats['fuzzy'], 
-                    untrans=stats['untranslated'])
+        s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
+                    untrans=stats['untrans'])
         return s.save()
 
     def stats_for_lang_object(self, lang, object):
