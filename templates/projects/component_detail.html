@@ -56,8 +56,8 @@
       <td>
         <form action="{% url component_set_stats component.project.slug component.slug %}" style="float: right;">
             {% with component.unit as unit %}
-            {% if unit.last_checkout %}
-              {% blocktrans %}The local checked-out copy of this component was last updated at <strong>{{ unit.last_checkout|date:"jS M Y H:i" }}</strong>.{% endblocktrans %}
+            {% if unit.last_checkout %}{# FIXME: The following doesn't work when put inside a blocktrans. #}
+              {% trans "The local checked-out copy of this component was last updated at: " %} <strong>{{ unit.last_checkout|date:"jS M Y H:i"}}</strong>.
             {% else %}
               {% trans "You can check-out a copy of this component right now if you want." %}
             {% endif %}
