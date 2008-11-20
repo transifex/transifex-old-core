@@ -28,7 +28,7 @@ class Collection(models.Model):
     description = models.CharField(blank=True, max_length=255,
         help_text=_('A sentence or two describing the object.'))
     long_description = models.TextField(blank=True, max_length=1000,
-        help_text=_('Use Markdown syntax.'))
+        help_text=_('A longer description (optional). Use Markdown syntax.'))
     homepage = models.URLField(blank=True, verify_exists=False)
     hidden = models.BooleanField(default=False,
         help_text=_('Hide this object from the list view?'))

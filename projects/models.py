@@ -76,11 +76,15 @@ class Project(models.Model):
     
     """
 
-    slug = models.SlugField(unique=True)
-    name = models.CharField(max_length=50)
-    description = models.CharField(blank=True, max_length=255)
+    slug = models.SlugField(max_length=30,
+        help_text=_('A short label to be used in the URL, containing only '
+                    'letters, numbers, underscores or hyphens.'))
+    name = models.CharField(max_length=50,
+        help_text=_('A string like a name or very short description.'))
+    description = models.CharField(blank=True, max_length=255,
+        help_text=_('A sentence or two describing the object (optional).'))
     long_description = models.TextField(blank=True, max_length=1000,
-        help_text=_('Use Markdown syntax.'))
+        help_text=_('A longer description (optional). Use Markdown syntax.'))
     homepage = models.URLField(blank=True, verify_exists=False)
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
@@ -164,11 +168,15 @@ class Component(models.Model):
 
     """A component is a translatable resource."""
 
-    slug = models.SlugField()
-    name = models.CharField(max_length=50)
-    description = models.CharField(blank=True, max_length=255)
+    slug = models.SlugField(max_length=30,
+        help_text=_('A short label to be used in the URL, containing only '
+                    'letters, numbers, underscores or hyphens.'))
+    name = models.CharField(max_length=50,
+        help_text=_('A string like a name or very short description.'))
+    description = models.CharField(blank=True, max_length=255,
+        help_text=_('A sentence or two describing the object (optional).'))
     long_description = models.TextField(blank=True, max_length=1000,
-        help_text=_('Use Markdown syntax.'))
+        help_text=_('A longer description (optional). Use Markdown syntax.'))
     source_lang = models.CharField(max_length=50,
         help_text=_("The source language for this component, "
                     "eg. 'en', 'pt_BR', 'el'."))
