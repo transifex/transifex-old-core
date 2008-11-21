@@ -4,7 +4,7 @@ from mercurial.repo import RepoError
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
-HG_REPO_PATH = settings.HG_REPO_PATH
+REPO_PATH = settings.REPO_PATHS['hg']
 
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
@@ -41,13 +41,13 @@ class HgBrowser(VCSBrowserMixin):
         self.root = root
         self.branch = branch
         
-        self.path = os.path.normpath(os.path.join(HG_REPO_PATH, name))
+        self.path = os.path.normpath(os.path.join(REPO_PATH, name))
         self.path = os.path.abspath(self.path)
         #Mercurial doesn't seem to handle correctly unicode paths
         self.path = str(self.path)
         #Test for possible directory traversal
         assert os.path.commonprefix(
-            [self.path, HG_REPO_PATH]) == HG_REPO_PATH, (
+            [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
 
 

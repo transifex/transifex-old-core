@@ -35,9 +35,7 @@ def get_browser_class(vcs_type):
     assert vcs_type in settings.VCS_CHOICES.keys(), (
         "VCS type '%s' is not registered as a supported one." % vcs_type)
       
-    return ('%(module)s.%(class)s' % {
-        'module': settings.BROWSER_CLASS_BASE,
-        'class': settings.BROWSER_CLASS_NAMES[vcs_type]})
+    return settings.BROWSER_CLASS_NAMES[vcs_type]
 
 def get_browser_object(vcs_type):
     """

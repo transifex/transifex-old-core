@@ -5,7 +5,7 @@ from bzrlib.plugins.bzrtools import clean_tree
 from bzrlib.errors import NotBranchError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
-BZR_REPO_PATH = settings.BZR_REPO_PATH
+REPO_PATH = settings.REPO_PATHS['bzr']
 
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
@@ -41,12 +41,12 @@ class BzrBrowser(VCSBrowserMixin):
 
         self.root = root
         self.branch = branch
-        self.path = os.path.join(BZR_REPO_PATH, name)
+        self.path = os.path.join(REPO_PATH, name)
         self.path = os.path.abspath(self.path)
         
         #Test for possible directory traversal
         assert os.path.commonprefix(
-            [self.path, BZR_REPO_PATH]) == BZR_REPO_PATH, (
+            [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
 
     @property

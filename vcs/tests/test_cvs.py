@@ -24,10 +24,10 @@ class CvsTestCase(unittest.TestCase):
     def test_repo_init(self):
         """Test correct CVS repo initialization."""
         from os import path
-        from vcs.lib.types.cvs import CVS_REPO_PATH 
+        from vcs.lib.types.cvs import REPO_PATH
         self.unit.init_browser()
         self.unit.browser.init_repo()
-        local_unit_path = path.join(CVS_REPO_PATH, self.unit.name)
+        local_unit_path = path.join(REPO_PATH, self.unit.name)
         self.assertTrue(path.isdir(local_unit_path))
 
     def test_get_file_contents(self):

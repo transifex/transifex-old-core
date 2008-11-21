@@ -6,7 +6,7 @@ from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 from vcs.lib.support.cvs import repository, checkout
 
-CVS_REPO_PATH = settings.CVS_REPO_PATH
+REPO_PATH = settings.REPO_PATHS['cvs']
 
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
@@ -58,11 +58,11 @@ class CvsBrowser(VCSBrowserMixin):
         self.name = name
         self.branch = branch
         
-        self.path = os.path.normpath(os.path.join(CVS_REPO_PATH, name))
+        self.path = os.path.normpath(os.path.join(REPO_PATH, name))
         self.path = os.path.abspath(self.path)        
         #Test for possible directory traversal
         assert os.path.commonprefix(
-            [self.path, CVS_REPO_PATH]) == CVS_REPO_PATH, (
+            [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
 
 

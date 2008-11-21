@@ -5,7 +5,7 @@ from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 from vcs.lib.support.git import repository, clone
 
-GIT_REPO_PATH = settings.GIT_REPO_PATH
+REPO_PATH = settings.REPO_PATHS['git']
 
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
@@ -42,11 +42,11 @@ class GitBrowser(VCSBrowserMixin):
         self.root = root
         self.branch = branch
 
-        self.path = os.path.normpath(os.path.join(GIT_REPO_PATH, name))
+        self.path = os.path.normpath(os.path.join(REPO_PATH, name))
         self.path = os.path.abspath(self.path)
         #Test for possible directory traversal
         assert os.path.commonprefix(
-            [self.path, GIT_REPO_PATH]) == GIT_REPO_PATH, (
+            [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
 
 
