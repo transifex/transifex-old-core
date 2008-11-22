@@ -2,6 +2,7 @@
 <div id="login_index">
    <fieldset>
        <legend>{% trans "Sign in" %}</legend>
+       <p class="login-tagline">Add projects or modify existing ones. Wiki-style.</p>
     <form name="fauth" action="{% url user_signin %}" method="post">
         {{ form1.next }}
                 <div class="form-row"><label for="id_username">{% trans "Username:" %}</label> <input id="id_username" class="required login" name="username" maxlength="30" size="12" type="text"></div>

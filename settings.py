@@ -152,7 +152,8 @@ INSTALLED_APPS = (
 # and with enough disk space. Eg. /var/lib/transifex.
 SCRATCH_DIR = os.path.join('/tmp', 'scratchdir')
 
-# Our VCS choices. This feeds the Unit model with the available options.
+# The VCS choices for the system. Enable or disable any VCS types from here.
+# This list also feeds the Unit model with the available options.
 VCS_CHOICES = {'bzr': 'Bazaar',
                'cvs': 'CVS',
                'hg': 'Mercurial',
