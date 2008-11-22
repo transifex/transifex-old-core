@@ -115,7 +115,11 @@ class Unit(models.Model):
             self.last_checkout = datetime.now()
             self.save()
         except:
-           raise CheckOutError(_("Could not checkout."))
+            # Try once again with a clean local repo.
+            self.teardown_repo()
+            self.browser.setup_repo()
+            #TODO: Do something if this fails.
+            self.browser.update()
 
     @need_browser
     def get_files(self, file_filter):
