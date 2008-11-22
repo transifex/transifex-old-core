@@ -177,12 +177,18 @@ in the database.
   Make sure you have executed the ``./manage.py syncdb``
   command before running the following commands.
 
+The following command loads a bunch of sample data to play around with.
+
 .. code-block:: bash
 
-    ./manage.py loaddata transifex/fixtures/sample_site.json
-    ./manage.py loaddata vcs/fixtures/sample_data.json
-    ./manage.py loaddata projects/fixtures/sample_data.json
-    ./manage.py loaddata translations/fixtures/sample_data.json
+    ./manage.py loaddata transifex/fixtures/sample_data.json
+
+Also, you can load a sample user 'guest' with password 'guest, with the
+following command.
+
+.. code-block:: bash
+
+    ./manage.py loaddata transifex/fixtures/sample_users.json
 
 Testing
 -------

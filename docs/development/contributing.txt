@@ -132,6 +132,59 @@ line with "bugfix:" and "trivial:" for bugfixes and trivial commits.::
 Hint: ``:set tw=72``, or in ~/.bashrc: ``export EDITOR="vim -c 'set tw=72'``
 
 
+Changing the model
+==================
+
+Like with all software having a database, changes to Transifex's models should
+be handled with care. Production instances of Transifex rely on the stability
+of the model when upgrading, and a safe upgrade path should be given to
+everyone currently running a Transifex instance.
+
+For this reason we usually discuss model changes on the mailing list,
+especially if they're big ones. 
+
+New model fields should follow the style of the current fields and include
+any help texts attributes to them, if needed.
+
+A commit which changes the models needs to include fixtures that work with the
+new model. We already have some sample data for folks to try out in
+``transifex/fixtures/sample_data.json``.
+
+Typical model change scenario
+-----------------------------
+
+When model modifications are introduced, the following steps can be followed
+to have the fixture updated:
+
+1. Flush, create tables and load data::
+
+     ./manage.py flush
+     ./manage.py syncdb
+     ./manage.py loaddata transifex/fixtures/sample_data.json
+
+2. Make changes to the models.
+3. If an evolution is required, get a hint for it, and if it looks OK, copy
+   the lines up to and including the ones with dashes to a file like
+   ``transifex/evolutions/001_add_X_field.py``::
+   
+     mg evolve --hint
+   
+   Note that in complex changes the evolution application might not be able
+   to proceed (for example when adding a non-null column). In this case you
+   can delete the column and re-add it, add it as null and change it, etc.
+
+4. With the new DB schema in place, dump the data again::
+
+     ./manage.py dumpdata --indent=2 projects txcollections vcs translations \
+     sites tagging contenttypes > transifex/fixtures/sample_data.json
+
+5. Inspect the changes between the two ``sample_data.json`` files to make
+   sure they're OK.
+   
+6. Update the documentation if needed. Commit all changes together..
+ 
+ 
+ 
 .. _PEP-8:   http://www.python.org/dev/peps/pep-0008/
 .. _PEP-257: http://www.python.org/dev/peps/pep-0257/
 .. _transifex-updates: http://groups.google.com/group/transifex-updates
