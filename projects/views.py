@@ -10,6 +10,7 @@ from django.contrib.syndication.views import feed
 
 from projects.models import Project, Component
 from projects.forms import ComponentForm, UnitForm
+from transifex.log import logger
 
 # Feeds
 
@@ -114,6 +115,7 @@ component_detail.__doc__ = create_update.delete_object.__doc__
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
+    logger.debug("Requested stats calc for component %s" % component.full_name)
     # Checkout
     component.prepare_repo()
     # Calcule statistics
@@ -126,14 +128,12 @@ def component_set_stats(request, project_slug, component_slug):
 def component_raw_file(request, project_slug, component_slug, filename):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
-
     try:
         content = component.trans.get_file_content(filename)
     except IOError:
         raise Http404
     filename = "%s.%s" % (component.full_name, os.path.basename(filename))
-
+    logger.debug("Requested raw file %s" % filename)
     response = HttpResponse(content, mimetype='text/plain')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-
     return response

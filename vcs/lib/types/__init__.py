@@ -1,5 +1,6 @@
 import os
 import re
+from transifex.log import logger
 
 class BrowserError(Exception):
     pass
@@ -55,6 +56,7 @@ class VCSBrowserMixin:
 
         if encode:
             contents = contents.encode(encode)
+        logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
         fp = open(fullpath, 'w')
         try:
             fp.write(contents)

@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from projects.models import Project
-from django.template import RequestContext 
+from transifex.log import logger
 
 def search(request):
     query_string = request.GET.get('q', "")
@@ -15,6 +16,7 @@ def search(request):
         results = results.filter(query).distinct()
     else:
         results = []
+    logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))
     return render_to_response("search.html",
         {'query': query_string, 
          'terms': search_terms, 

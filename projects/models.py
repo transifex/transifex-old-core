@@ -16,10 +16,8 @@ from tagging.fields import TagField
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import Unit
-from transifex.log import log_model
-
-
-from handlers import get_trans_handler
+from transifex.log import (logger, log_model)
+from projects.handlers import get_trans_handler
 
 
 # The following is a tricky module, so we're including it only if needed
@@ -286,6 +284,7 @@ class Component(models.Model):
             self.unit.type = type
             self.unit.web_frontend = web_frontend
         else:
+            logger.debug("Unit for %s not found. Creating." % self.full_name)
             try:
                 u = Unit.objects.create(name=self.full_name, root=root, 
                                         branch=branch, type=type, 
@@ -293,6 +292,8 @@ class Component(models.Model):
                 u.save()
                 self.unit = u
             except IntegrityError:
+                logger.error("Yow! Unit exists but is not associated with %s! "
+                          % self.full_name)
                 # TODO: Here we should probably send an e-mail to the 
                 # admin, because something very strange would be happening
                 pass
@@ -309,6 +310,7 @@ class Component(models.Model):
         and then unset the TransHandler property cache for it be created
         again, with a new set of files, next time that it will be used.
         """
+        logger.debug("Updating local repo for %s" % self.full_name)
         self.unit.prepare_repo()
         del(self.trans)
 

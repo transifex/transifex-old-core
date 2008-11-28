@@ -1,4 +1,5 @@
 from translations.lib.types.pot import POTManager
+from transifex.log import logger
 
 class POTHandler():
     """
@@ -28,6 +29,7 @@ class POTHandler():
         """Calculate stats for all translations of the component."""
 
         # Deleting all stats for the component
+        logger.debug("Setting stats for %s" % self.component)
         self.tm.delete_stats_for_object(self.component)
 
         for lang in self.tm.get_langs():

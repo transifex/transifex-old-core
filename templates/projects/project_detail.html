@@ -26,7 +26,7 @@
   <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
-  {% if project.description %}<p class="description">{{ project.description }}</p>{% endif %}
+  <p class="description">{% firstof project.description project.name %}</p>
 
   {% with project.long_description_html as long_desc %}
   {% if long_desc %}

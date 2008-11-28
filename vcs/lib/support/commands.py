@@ -1,5 +1,6 @@
 import os
 import subprocess
+from transifex.log import logger
 
 ##########
 ## Support the direct execution of commands on the system
@@ -93,13 +94,15 @@ def run_command(command, *args, **kw):
     else:
         stdin = None
 
+    logger.debug("Running low-level command '%s'" % ' '.join(command))
+    logger.debug("  CWD: '%s'" % cwd) 
+
     # Start the process
     proc = subprocess.Popen(command,
                             cwd=cwd,
                             stdin=stdin,
                             stderr=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            )
+                            stdout=subprocess.PIPE,)
 
     # Write the contents to the pipe
     if _input:
@@ -113,6 +116,17 @@ def run_command(command, *args, **kw):
     if not with_raw_output:
         stdout_value = stdout_value.rstrip()
         stderr_value = stderr_value.rstrip()
+
+    logger.debug("  Status: %(stat)s. "
+                 "std bytes: stdin %(in)s, stdout %(out)s, err %(err)s"
+                 % {'stat': status,
+                    'in': len(_input) if _input else 0,
+                    'out': len(stdout_value),
+                    'err': len(stderr_value)})
+    if stderr_value:
+        # Something didn't go well (or this command abuses stderr)
+        logger.info("  Error: " + stderr_value)
+        logger.info("  Output: " + stdout_value)
 
     if with_exceptions and status != 0:
         raise CommandError(command, status, stderr_value)

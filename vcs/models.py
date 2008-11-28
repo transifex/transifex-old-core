@@ -3,6 +3,7 @@ from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from transifex.log import logger
 
 class CheckOutError(Exception):
     pass
@@ -111,10 +112,12 @@ class Unit(models.Model):
     def prepare_repo(self):
         """Abstration for the unit.browser.update."""
         try:
+            logger.debug("Preparing repo for unit %s" % self.name)
             self.browser.update()
             self.last_checkout = datetime.now()
             self.save()
         except:
+            logger.debug("Repo update failed. Let's clean up and try again.")
             # Try once again with a clean local repo.
             self.teardown_repo()
             self.browser.setup_repo()
@@ -129,13 +132,17 @@ class Unit(models.Model):
     def teardown_repo(self):
         """Abstration for the unit.browser.teardown_repo."""
         try:
+            logger.debug("Tearing down repo for unit '%s'" % self.name)
             self.browser.teardown_repo()
         except:
+           logger.error("Could not teardown repo for unit '%s'" % self.name)
            pass
 
     @need_browser
     def rename_repo(self, new_name):
         """Abstration for the unit.browser.rename_repo."""
+        logger.debug("Renaming repo of unit '%s' to %s" % (self.name,
+                                                           new_name))
         self.browser.rename_repo(new_name)
 
 def suite():
