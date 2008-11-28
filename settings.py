@@ -1,10 +1,15 @@
 # Django settings for Transifex.
 
 import os
+import logging
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 STATIC_SERVE = True
+
+# Logging level/verbosity.
+# Choices: logging.DEBUG, .INFO (default), .WARNING, .ERROR, .CRITICAL
+# LOG_LEVEL = logging.INFO
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 

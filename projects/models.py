@@ -12,9 +12,12 @@ from django.utils.html import escape
 
 import tagging
 from tagging.fields import TagField
+
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import Unit
+from transifex.log import log_model
+
 
 from handlers import get_trans_handler
 
@@ -145,7 +148,7 @@ class Project(models.Model):
         return ('project_detail', None, { 'slug': self.slug })
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
-
+log_model(Project)
 
 
 class ComponentManager(models.Manager):
@@ -309,3 +312,5 @@ class Component(models.Model):
         self.unit.prepare_repo()
         del(self.trans)
 
+log_model(Component)
+log_model(Unit)

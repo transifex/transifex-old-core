@@ -16,6 +16,7 @@ except ImportError:
 # Now override any of them
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+LOG_LEVEL = 'DEBUG'
 
 #INTERNAL_IPS = ['xx.xxx.xxx.xx']
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)

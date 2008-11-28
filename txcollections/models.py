@@ -10,6 +10,7 @@ import tagging
 from tagging.fields import TagField
 
 from releases.models import Release as ReleasesRelease
+from transifex.log import log_model
 
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
@@ -78,7 +79,7 @@ class Collection(models.Model):
                               {'collection': self})
 
 tagging.register(Collection, tag_descriptor_attr='tagsobj')
-
+log_model(Collection)
 
 # Releases
 
@@ -125,3 +126,4 @@ class CollectionRelease(ReleasesRelease):
                 { 'slug': self.collection.slug, 'release_slug': self.slug})
 
 tagging.register(CollectionRelease, tag_descriptor_attr='tagsobj')
+log_model(CollectionRelease)
