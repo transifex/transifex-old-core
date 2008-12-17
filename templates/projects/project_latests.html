@@ -1,0 +1,11 @@
+{% load i18n %}
+<div>
+<h3>{% trans "Latest Projects"%}</h3>
+<p>
+  {% for project in latest_projects %}
+    <div class="entry">
+      <b><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></b> <p class="description">{{ project.description }}</p>
+    </div>
+  {% endfor %}
+</p>
+</div>

@@ -4,8 +4,9 @@ from django.contrib import admin
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'django.views.generic.simple.direct_to_template',
-        {'template': 'index.html'}, name='home'),
+    #url(r'^$', 'django.views.generic.simple.direct_to_template',
+    #    {'template': 'index.html'}, name='home'),
+    url(r'^$', 'transifex.views.index', name='home'),
     url(r'^projects/', include('projects.urls')),
     url(r'^collections/', include('txcollections.urls')),
     url(r'^search/$', 'transifex.views.search', name='search'),

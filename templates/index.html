@@ -21,7 +21,9 @@
   <p>
     {% include "search_form.html" %}
   </p>
-  
+   <p>
+    {% include "projects/project_latests.html" %}
+  </p> 
   {% url project_list as project_list %} 
   <p>{% blocktrans %}You could also browse through <a href="{{ project_list }}">all projects</a>.{% endblocktrans %}</p>
 </div>
