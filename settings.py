@@ -1,8 +1,12 @@
 # Django settings for Transifex.
+# You can override any of these in settings_local.py
 
 import os
 import logging
 
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+# The following are usually overridden in settings_local.py
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 STATIC_SERVE = True
@@ -11,14 +15,13 @@ STATIC_SERVE = True
 # Choices: logging.DEBUG, .INFO (default), .WARNING, .ERROR, .CRITICAL
 # LOG_LEVEL = logging.INFO
 
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
-
 ADMINS = (
-    ('Dimitris Glezos', 'dimitris@glezos.com'),
+    # ('Your Name', 'your_email@domain.com'),
 )
 
 MANAGERS = ADMINS
 
+###########
 # External app configuration
 
 # Tagging
@@ -107,7 +110,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #    "notification.context_processors.notification",
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -115,7 +118,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django_authopenid.middleware.OpenIDMiddleware',
-)
+]
 
 ROOT_URLCONF = 'urls'
 
@@ -123,7 +126,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.comments',
@@ -147,7 +150,7 @@ INSTALLED_APPS = (
     'txcollections',
     'releases'
     #'management',
-)
+]
 
 ####################
 # vcs application settings

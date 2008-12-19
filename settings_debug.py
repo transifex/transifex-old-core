@@ -17,9 +17,9 @@ except ImportError:
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = 'DEBUG'
+INTERNAL_IPS = ('127.0.0.1',)
 
-#INTERNAL_IPS = ['xx.xxx.xxx.xx']
-MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-INSTALLED_APPS += ('debug_toolbar',
+MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
+INSTALLED_APPS += ['debug_toolbar',
                    'django_evolution',
-                   'django_extensions',)
+                   'django_extensions',]
