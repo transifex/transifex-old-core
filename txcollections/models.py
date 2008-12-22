@@ -38,7 +38,7 @@ class Collection(models.Model):
         help_text=_('Hide this object from the list view?'))
     enabled = models.BooleanField(default=True,
         help_text=_('Enable this object or disable its use?'))
-    created = models.DateField(auto_now_add=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
     tags = TagField()

@@ -46,7 +46,7 @@ class POFile(models.Model):
     filename = models.TextField(null=False, max_length=1000)
 
     enabled = models.BooleanField(default=True, editable=False)
-    created = models.DateField(auto_now_add=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
     
     # Normalized fields

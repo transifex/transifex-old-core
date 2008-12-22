@@ -66,7 +66,7 @@ class Unit(models.Model):
     last_checkout = models.DateTimeField(null=True, editable=False,
         help_text=_("The last time this unit was checked-out from its repo."))
 
-    created = models.DateField(auto_now_add=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
     def __repr__(self):

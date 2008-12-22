@@ -11,8 +11,8 @@ class Hold(models.Model):
 
     enabled = models.BooleanField(default=True,
         help_text=_('Enable this object or disable its use?'))
-    created = models.DateField(auto_now_add=True, editable=False)
-    modified = models.DateField(auto_now=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    modified = models.DateTimeField(auto_now=True, editable=False)
 
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 
