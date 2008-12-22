@@ -20,11 +20,9 @@
 
 {% block body_main %}
   <div class="languages_list multicolumn3">
-  {% for language in language_list %}
     <ul class="simple">
-      <li class="i16 language name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>
+    {% for language in language_list %}<li class="i16 language name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>{% endfor %}
     </ul>
-  {% endfor %}
   </div>
   {% if not language_list %}
   <p>{% trans "No languages registered yet. :-(" %}</p>
