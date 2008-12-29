@@ -44,6 +44,10 @@
       <th class="branch i16">{% trans "Branch:" %}</th>
       <td>{{ component.unit.branch }}</td>
     </tr>
+    <tr>
+      <th class="i16 filter">{% trans "Filter:" %}</th>
+      <td>{{ component.file_filter }}</td>
+    </tr>
     {% if component.trans.get_source_file %}
     <tr>
       {% url component_raw_file component.project.slug component.slug component.trans.get_source_file as file_source_url %}
