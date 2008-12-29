@@ -45,16 +45,25 @@ class POTManager(TransManagerMixin):
     def get_langfile(self, lang):
         """ Return a PO filename """
 
-        for filename in self.get_po_files():
-            if os.path.basename(filename[:-3:]) == lang:
-                return filename
+        for filepath in self.get_po_files():
+            if self.guess_language(filepath) == lang:
+                return filepath
+
+    def guess_language(self, filepath):
+        """ Guess a language from a filepath """
+
+        if 'LC_MESSAGES' in filepath:
+            fp = filepath.split('LC_MESSAGES')
+            return os.path.basename(fp[0][:-1:])
+        else:
+            return os.path.basename(filepath[:-3:])
 
     def get_langs(self):
         """ Return all langs tha have a po file for a object """
 
         langs = []
-        for filename in self.get_po_files():
-            langs.append(os.path.basename(filename[:-3:]))
+        for filepath in self.get_po_files():
+            langs.append(self.guess_language(filepath))
         langs.sort()
         return langs
 
