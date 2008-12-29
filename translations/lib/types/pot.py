@@ -77,9 +77,13 @@ class POTManager(TransManagerMixin):
             po = polib.pofile(file_path)
             return {'trans': len(po.translated_entries()),
                     'fuzzy': len(po.fuzzy_entries()),
-                    'untrans': len(po.untranslated_entries())}
-        except AttributeError:
-            raise POTStatsError, lang
+                    'untrans': len(po.untranslated_entries()),
+                    'error': False}
+        except IOError:
+            return {'trans': 0,
+                    'fuzzy': 0,
+                    'untrans': 0,
+                    'error': True}     
 
     def create_stats(self, lang, object):
         """Set the statistics of a specificy language for a object."""
