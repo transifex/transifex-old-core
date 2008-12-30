@@ -7,20 +7,28 @@
     <tr>
       <th>{% trans "Language" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
-      <th>{% trans "Download" %}</th>
+      <th>{% trans "Actions" %}</th>
     </tr>
    </thead>
    <tbody>
    {% for stat in stats %} 
    {% url component_raw_file project component stat.filename as file_url %}
       <tr>
-        <td class="left" id="{{stat.language.code}}">
-          <a href="{{stat.language.get_absolute_url}}#{{stat.object.full_name}}">{{stat.language.name}}</a></td>
+        <td class="left" id="{{stat.filename}}">
+          {% if stat.language %}
+              <a href="{{stat.language.get_absolute_url}}#{{stat.object.full_name}}" title="{% trans "See statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
+          {% else %}
+              <span class="stat_message" title="{% trans "There is no language registered that matches with this file" %}" >{{stat.filename}}</span>
+          {% endif %}
+          {% if stat.error %}
+              <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
+          {% endif %}
+        </td>
         <td>
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
-        <td class="left"><a class="i16 link" title="{% trans "Download the " %}{{stat.language.code}}.po" href="{{file_url}}">{{stat.language.code}}.po</a></td>
+        <td class="left"><a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_url}}"></a></td>
       </tr>
    {% endfor %}
    </tbody>
