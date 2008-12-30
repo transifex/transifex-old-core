@@ -125,7 +125,8 @@ def component_set_stats(request, project_slug, component_slug):
                                 args=(project_slug, component_slug,)))
 
 
-def component_raw_file(request, project_slug, component_slug, filename):
+def component_file(request, project_slug, component_slug,
+                       filename, view=False):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     try:
@@ -134,6 +135,10 @@ def component_raw_file(request, project_slug, component_slug, filename):
         raise Http404
     filename = "%s.%s" % (component.full_name, os.path.basename(filename))
     logger.debug("Requested raw file %s" % filename)
-    response = HttpResponse(content, mimetype='text/plain')
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
+    if view:
+        attach=""
+    else:
+        attach="attachment;"
+    response['Content-Disposition'] = '%s filename=%s' % (attach, filename)
     return response

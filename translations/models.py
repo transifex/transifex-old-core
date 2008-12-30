@@ -48,6 +48,7 @@ class POFile(models.Model):
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
+    error = models.BooleanField(default=False, editable=False)
     
     # Normalized fields
     trans_perc = models.PositiveIntegerField(default=0, editable=False)
@@ -86,11 +87,12 @@ class POFile(models.Model):
             self.fuzzy_perc = 0
             self.untrans_perc = 0
 
-    def set_stats(self, trans=0, fuzzy=0, untrans=0):
+    def set_stats(self, trans=0, fuzzy=0, untrans=0, error=False):
         self.total = trans + fuzzy + untrans
         self.trans = trans
         self.fuzzy = fuzzy
         self.untrans = untrans
+        self.error = error
         self.calculate_perc()
     
     def guess_lang(self):

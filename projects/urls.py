@@ -92,8 +92,13 @@ urlpatterns += patterns('',
         name = 'component_set_stats',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/raw/(?P<filename>(.*))$',
-        view = component_raw_file,
+        view = component_file,
         name = 'component_raw_file',),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/view/(?P<filename>(.*))$',
+        view = component_file,
+        name = 'component_view_file',
+        kwargs = {'view': True },),
     url (
         regex = '^(?P<slug>[-\w]+)/component-added/$',
         view = 'django.views.generic.list_detail.object_detail',

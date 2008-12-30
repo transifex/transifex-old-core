@@ -45,16 +45,25 @@ class POTManager(TransManagerMixin):
     def get_langfile(self, lang):
         """ Return a PO filename """
 
-        for filename in self.get_po_files():
-            if os.path.basename(filename[:-3:]) == lang:
-                return filename
+        for filepath in self.get_po_files():
+            if self.guess_language(filepath) == lang:
+                return filepath
+
+    def guess_language(self, filepath):
+        """ Guess a language from a filepath """
+
+        if 'LC_MESSAGES' in filepath:
+            fp = filepath.split('LC_MESSAGES')
+            return os.path.basename(fp[0][:-1:])
+        else:
+            return os.path.basename(filepath[:-3:])
 
     def get_langs(self):
         """ Return all langs tha have a po file for a object """
 
         langs = []
-        for filename in self.get_po_files():
-            langs.append(os.path.basename(filename[:-3:]))
+        for filepath in self.get_po_files():
+            langs.append(self.guess_language(filepath))
         langs.sort()
         return langs
 
@@ -68,9 +77,13 @@ class POTManager(TransManagerMixin):
             po = polib.pofile(file_path)
             return {'trans': len(po.translated_entries()),
                     'fuzzy': len(po.fuzzy_entries()),
-                    'untrans': len(po.untranslated_entries())}
-        except AttributeError:
-            raise POTStatsError, lang
+                    'untrans': len(po.untranslated_entries()),
+                    'error': False}
+        except IOError:
+            return {'trans': 0,
+                    'fuzzy': 0,
+                    'untrans': 0,
+                    'error': True}     
 
     def create_stats(self, lang, object):
         """Set the statistics of a specificy language for a object."""
@@ -92,7 +105,7 @@ class POTManager(TransManagerMixin):
             s = POFile.objects.create(language=l, filename=f, 
                                            object=object)
         s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
-                    untrans=stats['untrans'])
+                    untrans=stats['untrans'], error=stats['error'])
         return s.save()
 
     def stats_for_lang_object(self, lang, object):

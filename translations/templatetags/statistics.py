@@ -15,11 +15,6 @@ def comp_stats_table(object):
 
     stats = object.trans.get_stats()
 
-    for s in stats:
-        if not s.language:
-           c = os.path.basename(s.filename[:-3:])
-           s.language = Language(code=c, name=s.filename)
-
     return {"stats": stats,
             "project": project,
             "component": component}
