@@ -105,7 +105,7 @@ class POTManager(TransManagerMixin):
             s = POFile.objects.create(language=l, filename=f, 
                                            object=object)
         s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
-                    untrans=stats['untrans'])
+                    untrans=stats['untrans'], error=stats['error'])
         return s.save()
 
     def stats_for_lang_object(self, lang, object):
