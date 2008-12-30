@@ -7,12 +7,11 @@
     <tr>
       <th>{% trans "Language" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
-      <th>{% trans "Actions" %}</th>
+      <th>{% trans "Options" %}</th>
     </tr>
    </thead>
    <tbody>
    {% for stat in stats %} 
-   {% url component_raw_file project component stat.filename as file_url %}
       <tr>
         <td class="left" id="{{stat.filename}}">
           {% if stat.language %}
@@ -28,7 +27,12 @@
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
-        <td class="left"><a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_url}}"></a></td>
+        <td class="left">
+           {% url component_view_file project component stat.filename as file_view_url %}
+           {% url component_raw_file project component stat.filename as file_raw_url %}
+           <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
+           <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
+        </td>
       </tr>
    {% endfor %}
    </tbody>
