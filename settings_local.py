@@ -20,7 +20,7 @@ from settings import *
 
 # To enable the use of the notification app on your system:
 #ENABLE_NOTICES = True
-INSTALLED_APPS += ['django_evolution',]
+#INSTALLED_APPS += ['django_evolution',]
 
 #MIDDLEWARE_CLASSES += ['txn_stats.middleware.Activity']
 #TEMPLATE_CONTEXT_PROCESSORS += ["notification.context_processors.notification",]
