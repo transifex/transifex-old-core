@@ -42,72 +42,35 @@ On Fedora you can run the following command to install all those VCS::
     yum install cvs subversion pysvn mercurial git bzr bzrtools 
 
 
-Some extra Python packages needed
----------------------------------
-
-For provide some features as markdown and to cover some other 
-:ref:`django applications dependencies<install-django-app>`, you need 
-to install:
-
-* Markdown
-* Python-openid
-* Httplib2
-* Polib
-
-You can install by using ``easy_install``::
-
-   easy_install markdown python-openid httplib2 ...
-
-or on Fedora you can run::
-
-   yum install python-markdown python-openid python-httplib2 2 ...
-
-
 Installing Django
 -----------------
 
-Transifex is developed on top a Python Web Framework called Django. We 
+Transifex is developed on top of a Python Web Framework called Django. We 
 recommend installing Django 1.0. You can get more information about how
-to install Django in your system referring http://docs.djangoproject.com.
+to install Django in your system from the official Django documentation.
 
-On Fedora you can just run::
+Usually you can use the package your distribution provides you, or you can
+even use `easy_install` to setup the package. On Fedora you can just run::
 
     yum install Django
 
-.. _install-django-app:
+.. _install-django-deps:
 
 
-Installing Django applications dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installing Python dependencies
+------------------------------
 
-Django supports to use different applications inside a Django project. 
-Transifex does use some of this available applications to provide some 
-specific features as OpenID support, notifications, pagination, tagging,
-contact-form, etc.
+This is the generic method for creating a development enviroment for 
+transifex. We strongly suggest running those commands inside a virtualenv 
+enviroment instead of running them as root.::
 
-All those application dependencies can be downloaded from 
-``http://code.google.com/p/<application_name>`` and then installed by using 
-the setup.py or creating a symbolic link as following:
+    easy_install Markdown httplib2 polib
+    easy_install Django python-openid django-authopenid django-pagination
+    easy_install -f http://transifex.org/files/eggs/ contact_form tagging
 
-* django-tagging_ (``python setup.py install``)
-* django_authopenid_ (``python setup.py install``)
-* django-pagination_ (create a symbolic link in your ``PYTHONPATH``)
-* django-contact-form_ (``python setup.py install``)
+For notifications (it's optional)::
 
-.. _django-tagging: http://code.google.com/p/django-tagging
-.. _django_authopenid: http://code.google.com/p/django-authopenid
-.. _django-pagination: http://code.google.com/p/django-pagination
-.. _django-contact-form: http://code.google.com/p/django-contact-form
-
-For notifications (it's optional):
-
-* django-notification_ (create a symbolic link in your ``PYTHONPATH``)
-* http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
-  (download it and rename to ``atomformat.py`` and put it somewhere in 
-  your ``PYTHONPATH``)
-
-.. _django-notification: http://code.google.com/p/django-notification
-
+    easy_install django-notification
 
 A note on ``PythonPath``
 ~~~~~~~~~~~~~~~~~~~~~~~~
