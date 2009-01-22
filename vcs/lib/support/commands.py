@@ -85,7 +85,9 @@ def run_command(command, *args, **kw):
         command = command.split()
 
     # if more kwargs are given, convert them to command line args
-    kwarglist = python_to_args(**kw) if kw else []
+    kwarglist = []
+    if kw:
+        kwarglist = python_to_args(**kw)
     command += kwarglist + list(args)
 
     # If stdin is a string, create a pipe so we can write the contents
@@ -117,10 +119,13 @@ def run_command(command, *args, **kw):
         stdout_value = stdout_value.rstrip()
         stderr_value = stderr_value.rstrip()
 
+    lin = 0
+    if _input:
+        lin = len(_input)
     logger.debug("  Status: %(stat)s. "
                  "std bytes: stdin %(in)s, stdout %(out)s, err %(err)s"
                  % {'stat': status,
-                    'in': len(_input) if _input else 0,
+                    'in': lin,
                     'out': len(stdout_value),
                     'err': len(stderr_value)})
     if stderr_value:

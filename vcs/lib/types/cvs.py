@@ -51,8 +51,11 @@ class CvsBrowser(VCSBrowserMixin):
         """
 
         # Break root
-        self.module = root.split('/')[-1] if not module else module
-        self.root = '/'.join(root.split('/')[:-1]) if not module else module
+        self.module = module
+        self.root = module
+        if not module:
+            self.module = root.split('/')[-1]
+            self.root = '/'.join(root.split('/')[:-1])
         if not name:
             name = self.module
         self.name = name
@@ -80,7 +83,9 @@ class CvsBrowser(VCSBrowserMixin):
         cvs -d checkout 
        
         """
-        branch = self.branch if self.branch != 'HEAD' else None
+        branch = None
+        if self.branch != 'HEAD':
+            branch = self.branch
         repo = checkout(root=self.root, module=self.module,
                         dest=self.path, branch=branch)
         return repo
