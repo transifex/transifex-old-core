@@ -1,6 +1,9 @@
 import os
 import time
+import os.path
+
 import pysvn
+
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
@@ -97,3 +100,18 @@ class SvnBrowser(VCSBrowserMixin):
         """
         self._clean_dir()
         self.client.update(self.path)
+
+    @need_repo
+    def get_rev(self, obj=None):
+        """
+        Get the current revision of the repository or a specific
+        object.
+        
+        Commands used:
+        svn info
+        """
+        if not obj:
+            entry = self.client.info(self.path)
+        else:
+            entry = self.client.info(os.path.join(self.path, obj))
+        return (entry.commit_revision.number,)

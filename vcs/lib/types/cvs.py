@@ -1,5 +1,6 @@
 import os
 import time
+import os.path
 
 from django.conf import settings
 from vcs.lib import RepoError
@@ -109,3 +110,33 @@ class CvsBrowser(VCSBrowserMixin):
         cvs up -PdC
         """
         self.repo.up(P=True, d=True, C=True)
+
+    @need_repo
+    def get_rev(self, obj=None):
+        """
+        Get the current revision of a file within the repository.
+        
+        Commands used:
+        none
+        """
+        if not obj:
+            raise ValueError('CVS repos do not have a global revision')
+        p = os.path.join(self.path, obj)
+        if not os.path.exists(p):
+            return None
+        if not os.path.isfile(p):
+            raise ValueError('Only files have a revision in CVS')
+        d, b = os.path.split(p)
+        e = os.path.join(d, 'CVS', 'Entries')
+        try:
+            ef = open(e, 'r')
+            bs = '/%s/' % b
+            for line in (entry for entry in ef if entry.startswith(bs)):
+                rev = line.split('/')[2]
+                break
+            else:
+                rev = None
+            ef.close()
+        except IOError:
+            return None
+        return tuple(int(p) for p in rev.split('.'))

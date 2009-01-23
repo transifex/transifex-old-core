@@ -60,3 +60,4 @@ class GitRepo(_Repo):
     fetch = _git_factory('fetch')
     push = _git_factory('push')
     pull = _git_factory('pull')
+    show_ref = _git_factory('show-ref')

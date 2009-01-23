@@ -1,6 +1,8 @@
 import os
+
 from mercurial import ui, hg, commands
 from mercurial.repo import RepoError
+
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
@@ -120,3 +122,17 @@ class HgBrowser(VCSBrowserMixin):
             commands.update(self.repo.ui, self.repo, self.branch)
         except RepoError, e:
             raise BrowserError, e
+
+    @need_repo
+    def get_rev(self, obj=None):
+        """
+        Get the current revision of the repository or a specific
+        object.
+        """
+        if not obj:
+            return (int(self.repo.changectx().node().encode('hex'),
+                16),)
+        else:
+            f = self.repo.changectx().filectx('NOTES')
+            return (int(f.filectx(f.filerev()).node().encode('hex'),
+                16),)

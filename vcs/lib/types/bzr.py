@@ -1,8 +1,10 @@
 import os
-from django.conf import settings
+
 from bzrlib import bzrdir
 from bzrlib.plugins.bzrtools import clean_tree
 from bzrlib.errors import NotBranchError
+
+from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
 REPO_PATH = settings.REPO_PATHS['bzr']
@@ -117,3 +119,18 @@ class BzrBrowser(VCSBrowserMixin):
         # bzr pull.
         self._clean_dir()
         self.work_tree.update()
+
+    @need_repo
+    def get_rev(self, obj=None):
+        """
+        Get the current revision of the repository or a specific
+        object.
+        """
+        if not obj:
+            return self.repo.last_revision_info()[0:1]
+        else:
+            m = self.repo.get_revision_id_to_revno_map()
+            t = self.repo.repository.revision_tree(
+                self.repo.last_revision())
+            i = t.inventory[t.path2id(obj)]
+            return m[i.revision]

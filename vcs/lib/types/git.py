@@ -1,5 +1,7 @@
-from mercurial.repo import RepoError
 import os
+
+from mercurial.repo import RepoError
+
 from django.conf import settings
 from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
@@ -106,3 +108,20 @@ class GitBrowser(VCSBrowserMixin):
         revspec = 'origin/%s' % self.branch
         self.repo.fetch('origin')
         self.repo.reset(revspec, hard=True)
+
+    @need_repo
+    def get_rev(self, obj=None):
+        """
+        Get the current revision of the repository or a specific
+        object.
+        
+        Commands used:
+        git show-ref refs/heads/<branch>
+        git log -1 --pretty=format:%H <obj>
+        """
+        if not obj:
+            refspec = 'refs/heads/%s' % self.branch
+            rev = self.repo.show_ref(refspec).split()[0]
+        else:
+            rev = self.repo.log('-1', '--pretty=format:%H', obj)
+        return (int(rev, 16),)
