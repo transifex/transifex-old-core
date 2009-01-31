@@ -145,6 +145,11 @@ class Unit(models.Model):
                                                            new_name))
         self.browser.rename_repo(new_name)
 
+    @need_browser
+    def get_rev(self, path=None):
+        """Get revision of a path from the underlying VCS"""
+        return self.browser.get_rev(path)
+        
 def suite():
     """
     Define the testing suite for Django's test runner.

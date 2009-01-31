@@ -314,5 +314,9 @@ class Component(models.Model):
         self.unit.prepare_repo()
         del(self.trans)
 
+    def get_rev(self, path=None):
+        """Get revision of a path from the underlying Unit"""
+        return self.unit.get_rev(path)
+
 log_model(Component)
 log_model(Unit)
