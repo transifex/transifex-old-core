@@ -1,11 +1,11 @@
 {% load i18n %}
 {% load statistics %}
 {% if stats %}
-<h3>{% trans "Component statistics" %} </h3>
+
 <table class="stats_comp">
    <thead>
     <tr>
-      <th>{% trans "Language" %}</th>
+      <th>{% trans "Project/Component" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
       <th>{% trans "Options" %}</th>
     </tr>
@@ -13,12 +13,9 @@
    <tbody>
    {% for stat in stats %} 
       <tr>
-        <td class="left" id="{{stat.language.code}}">
-          {% if stat.language %}
-              <a href="{{stat.language.get_absolute_url}}#{{stat.object.full_name}}" title="{% trans "See statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
-          {% else %}
-              <span class="stat_message" title="{% trans "There is no language registered that matches with this file" %}" >{{stat.filename}}</span>
-          {% endif %}
+        <td class="left" id="{{stat.object.full_name}}">
+          <a href="{{stat.object.project.get_absolute_url}}" title="{% trans "Go to this project page" %}">{{stat.object.project.name}}</a> 
+          <span class="stat_message" >(<a href="{{stat.object.get_absolute_url}}#{{stat.language.code}}" title="{% trans "Go to this component page" %}">{{stat.object.name}}</a>)</span>
           {% if stat.error %}
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
           {% endif %}
@@ -28,8 +25,8 @@
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
         <td class="left">
-           {% url component_view_file project component stat.filename as file_view_url %}
-           {% url component_raw_file project component stat.filename as file_raw_url %}
+           {% url component_view_file stat.object.project.slug stat.object.slug stat.filename as file_view_url %}
+           {% url component_raw_file stat.object.project.slug stat.object.slug stat.filename as file_raw_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
         </td>

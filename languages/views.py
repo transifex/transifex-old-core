@@ -4,7 +4,7 @@ from django.views.generic import list_detail
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.syndication.views import feed
 
-from projects.models import Component
+from translations.models import POFile
 from models import Language
 
 
@@ -26,11 +26,11 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 def language_detail(request, slug, *args, **kwargs):
     language = get_object_or_404(Language, code__iexact=slug)
-    component_list = Component.objects.with_language(language)
+    pofile_list = POFile.objects.by_language(language)
     return list_detail.object_detail(
         request,
         object_id=language.id,
-        extra_context = {'component_list': component_list},
+        extra_context = {'pofile_list': pofile_list},
         *args, **kwargs
     )
 language_detail.__doc__ = list_detail.object_detail.__doc__

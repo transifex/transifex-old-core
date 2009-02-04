@@ -36,6 +36,15 @@ def project_stats_table(project):
         return {'components': components,
                 'stats': stats}
 
+@register.inclusion_tag("lang_stats_table.html")
+def lang_stats_table(stats):
+    """
+    Creates a HTML table to presents the statistics of all components 
+    for a specific language.
+    """
+
+    return {'stats': stats}
+
 @register.inclusion_tag("stats_bar_full.html")
 def stats_bar_full(stat):
     """
