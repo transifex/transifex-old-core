@@ -85,30 +85,52 @@ div.untranslated {
 
 table.stats_comp {
   font-size: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.5em;
+}
+
+.stats_comp a {
+  border-bottom: none;
+}
+
+.stats_comp a:hover {
+  color: #041E37;
 }
 
 .stats_comp th { 
   text-align: left; 
-  background: gray;
-  color: white;
-  padding: 0.1em 0.3em;
+  padding: 0.3em 0.3em;
   font-size: 95%;
+  border-bottom: 3px solid #E3EAEE;
+  color: #444;;
+  background-color: #f5f5f5;
 }
 
 .stats_comp td { 
-  background: #fbfbfb;
   text-align: center;
   font-size: 100%;
   padding: 0px;
   margin: 0px;
+  line-height: 1.8em;
+  border-bottom: 1px solid #E3EAEE;
 }
 
 .stats_comp td.left { 
   text-align: left;
 }
 
+.stats_comp td.name {
+  padding-left: 0.3em;
+  padding-right: 0.5em;
+  font-size: 90%;
+}
+
+.stats_comp td.actions {
+  padding-left: 0.8em;
+}
+
 div.graph_comp {
-  height: 18px;
+  height: 1.5em;
   margin: 0px;
   padding: 0px;
   width: 100px;
@@ -118,14 +140,14 @@ div.graph_comp {
 }
 
 div.stats_string_comp{
-  height: 18px;
+  height: 1.5em;
   float: right;
   text-align: right;
   position: absolute;
   font-size: 90%;
-  font-weight: bold;
-  width: 98px;
-  color: gray;
+  width: 95px;
+  color: #666;
+  line-height: 1.5em;
 }
 
 div.translated_comp {
@@ -135,6 +157,7 @@ div.translated_comp {
   left: 0%; 
   background: #D5FFDE;
   background-repeat: repeat-x;
+  border-left: 1px solid #ddd;
 }
 
  
@@ -152,6 +175,7 @@ div.untranslated_comp {
   top: 0px;
   background: #FFDEDE;
   background-repeat: repeat-x;
+  border-right: 1px solid #ddd;
 }
 
 span.stat_message{

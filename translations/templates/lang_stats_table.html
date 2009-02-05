@@ -13,18 +13,18 @@
    <tbody>
    {% for stat in stats %} 
       <tr>
-        <td class="left" id="{{stat.object.full_name}}">
+        <td class="left name" id="{{stat.object.full_name}}">
           <a href="{{stat.object.project.get_absolute_url}}" title="{% trans "Go to this project page" %}">{{stat.object.project.name}}</a> 
-          <span class="stat_message" >(<a href="{{stat.object.get_absolute_url}}#{{stat.language.code}}" title="{% trans "Go to this component page" %}">{{stat.object.name}}</a>)</span>
+          <span class="stat_message" > &raquo; <a href="{{stat.object.get_absolute_url}}#{{stat.language.code}}" title="{% trans "Go to this component page" %}">{{stat.object.name}}</a></span>
           {% if stat.error %}
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
           {% endif %}
         </td>
-        <td>
+        <td class="stats">
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
-        <td class="left">
+        <td class="left actions">
            {% url component_view_file stat.object.project.slug stat.object.slug stat.filename as file_view_url %}
            {% url component_raw_file stat.object.project.slug stat.object.slug stat.filename as file_raw_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
