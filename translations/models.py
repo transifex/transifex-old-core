@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
-
+from django.template.defaultfilters import dictsort
 
 class POFileManager(models.Manager):
     def get_for_object(self, obj):
@@ -20,8 +20,9 @@ class POFileManager(models.Manager):
 
     def by_language(self, language):
         """ Returns a list of objects statistics for a language."""
-        return self.filter(language=language).order_by('-trans_perc')
-    
+        postats = self.filter(language=language)
+        return dictsort(postats,'object.project.name')
+
     
 class POFile(models.Model):
     """
