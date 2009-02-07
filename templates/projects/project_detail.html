@@ -23,7 +23,7 @@
   <h2 class="name">{{ project.name }}</h2>
 
   {% if request.user.is_authenticated %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit slug=project.slug %}">{% trans "Edit" %}</a></p></div>
+  <div class="editlinks"><p class="i16 edit"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
   <p class="description">{% firstof project.description project.name %}</p>
@@ -87,7 +87,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated %}
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url project_delete slug=project.slug %}">{% trans "Delete project" %}</a></span>
+      <span class="i16 delete"><a href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a></span>
     </div>
     {% endif %}
   </div>

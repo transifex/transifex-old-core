@@ -35,24 +35,24 @@ urlpatterns = patterns('',
                   'slug': 'project'}),
 )
 
-urlpatterns += patterns('django.views.generic',
+
+# Project
+urlpatterns += patterns('',
     url(
         regex = '^add/$',
-        view = project_create,
-        name = 'project_create',
-        kwargs = {'model': Project}),
+        view = project_create_update,
+        name = 'project_create'),
     url(
-        regex = '^(?P<slug>[-\w]+)/edit/$',
-        view = project_update,
-        name = 'project_edit',
-        kwargs = {'model': Project,
-                  'template_object_name': 'project'}),
+        regex = '^(?P<project_slug>[-\w]+)/edit/$',
+        view = project_create_update,
+        name = 'project_edit',),
     url(
-        regex = '^(?P<slug>[-\w]+)/delete/$',
+        regex = '^(?P<project_slug>[-\w]+)/delete/$',
         view = project_delete,
-        name = 'project_delete',
-        kwargs = {'model': Project,
-                  'template_object_name': 'project',}),
+        name = 'project_delete',),
+)
+
+urlpatterns += patterns('django.views.generic',
     url(
         regex = '^(?P<slug>[-\w]+)/$',
         view = 'list_detail.object_detail',

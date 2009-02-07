@@ -3,7 +3,12 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
-from projects.models import Component, Unit
+from projects.models import Project, Component, Unit
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
 
 class ComponentForm(forms.ModelForm):
     class Meta:

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
 from projects.models import Project, Component
-from projects.forms import ComponentForm, UnitForm
+from projects.forms import ProjectForm, ComponentForm, UnitForm
 from transifex.log import logger
 
 # Feeds
@@ -32,20 +32,45 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 # Projects
 
-# Override generic views to use decorator
+@login_required
+def project_create_update(request, project_slug=None):
+
+    if project_slug:
+        project = get_object_or_404(Project, slug=project_slug)
+    else:
+        project = None
+
+    if request.method == 'POST':
+        project_form = ProjectForm(request.POST, instance=project, 
+                                   prefix='project') 
+        if project_form.is_valid(): 
+            project = project_form.save(commit=False)
+            # Here log action later
+            project.save()
+            project_form.save_m2m()
+            return HttpResponseRedirect(reverse('project_detail',
+                                        args=[project.slug]),)
+    else:
+        project_form = ProjectForm(instance=project, prefix='project')
+
+    return render_to_response('projects/project_form.html', {
+        'project_form': project_form,
+    }, context_instance=RequestContext(request))
+
 
 @login_required
-def project_create(*args, **kwargs):
-    return create_update.create_object(*args, **kwargs)
+def project_delete(request, project_slug):
 
-@login_required
-def project_update(*args, **kwargs):
-    return create_update.update_object(*args, **kwargs)
+    project = get_object_or_404(Project, slug=project_slug)
 
-@login_required
-def project_delete(*args, **kwargs):
-    ret_url = reverse('project_list')
-    return create_update.delete_object(post_delete_redirect=ret_url, *args, **kwargs)
+    if request.method == 'POST':
+        project.delete()
+        request.user.message_set.create(message=_("The %s was deleted.") % project.name )
+        return HttpResponseRedirect(reverse('project_list'))
+    else:
+        return render_to_response('projects/project_confirm_delete.html', {
+            'project': project,
+        }, context_instance=RequestContext(request))
 
 
 # Components
@@ -100,17 +125,20 @@ component_detail.__doc__ = list_detail.object_detail.__doc__
 
 @login_required
 def component_delete(request, project_slug, component_slug):
+
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
-    return create_update.delete_object(
-        request,
-        model=Component,
-        object_id=component.id,
-        template_object_name = "component",
-        post_delete_redirect = reverse('project_detail', args=[project_slug])
-    )
-component_detail.__doc__ = create_update.delete_object.__doc__
 
+    if request.method == 'POST':
+        component.delete()
+        request.user.message_set.create(message=_("The %s was deleted.") % component.name )
+        return HttpResponseRedirect(reverse('project_detail', 
+                                     args=(project_slug,)))
+    else:
+        return render_to_response('projects/component_confirm_delete.html', {
+            'component': component,
+        }, context_instance=RequestContext(request))
+component_detail.__doc__ = create_update.delete_object.__doc__
 
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
