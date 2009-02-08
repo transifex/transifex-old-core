@@ -11,6 +11,7 @@ from django.contrib.syndication.views import feed
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
 from transifex.log import logger
+from actionlog.models import (log_addition, log_change, log_deletion)
 
 # Feeds
 
@@ -45,9 +46,13 @@ def project_create_update(request, project_slug=None):
                                    prefix='project') 
         if project_form.is_valid(): 
             project = project_form.save(commit=False)
-            # Here log action later
+            project_id = project.id
             project.save()
             project_form.save_m2m()
+            if not project_id:
+                log_addition(request, project)
+            else:
+                log_change(request, project, 'This project has been changed.')
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project.slug]),)
     else:
@@ -64,8 +69,11 @@ def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
 
     if request.method == 'POST':
+        import copy
+        project_ = copy.copy(project)
         project.delete()
-        request.user.message_set.create(message=_("The %s was deleted.") % project.name )
+        log_deletion(request, project_, project_.name)
+        request.user.message_set.create(message=_("The %s was deleted.") % project.name)
         return HttpResponseRedirect(reverse('project_list'))
     else:
         return render_to_response('projects/project_confirm_delete.html', {
@@ -97,8 +105,13 @@ def component_create_update(request, project_slug, component_slug=None):
             unit.name = component.get_full_name()
             unit.save()
             component.unit = unit
+            component_id = component.id
             component.save()
             component_form.save_m2m()
+            if not component_id:
+                log_addition(request, component)
+            else:
+                log_change(request, component, 'This component has been changed.')
             return HttpResponseRedirect(
                 reverse('component_detail',
                         args=[project_slug, component.slug]),)
@@ -130,8 +143,11 @@ def component_delete(request, project_slug, component_slug):
                                   project__slug=project_slug)
 
     if request.method == 'POST':
+        import copy
+        component_ = copy.copy(component)
         component.delete()
-        request.user.message_set.create(message=_("The %s was deleted.") % component.name )
+        request.user.message_set.create(message=_("The %s was deleted.") % component.name)
+        log_deletion(request, component_, component_.name)        
         return HttpResponseRedirect(reverse('project_detail', 
                                      args=(project_slug,)))
     else:

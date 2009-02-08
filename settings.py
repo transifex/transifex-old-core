@@ -153,7 +153,8 @@ INSTALLED_APPS = [
     'languages',
     'projects',
     'txcollections',
-    'releases'
+    'releases',
+    'actionlog'
     #'management',
 ]
 

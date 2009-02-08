@@ -85,6 +85,22 @@
 {% comp_stats_table component %}
 
 </div>
+
+<h3>{% trans 'History' %}</h3>
+{% load tx_action_log %}
+{% get_log 5 as action_log for_object component %}
+{% if not action_log %}
+<p>{% trans 'None available' %}</p>
+{% else %}
+<ul class="actionlist simple">
+{% for entry in action_log %}
+<li class="i16 {% if entry.is_addition %}add{% endif %}{% if entry.is_change %}change{% endif %}{% if entry.is_deletion %}delete{% endif %}">
+    Component {% if entry.is_addition %}added{% endif %}{% if entry.is_change %}modified{% endif %}{% if entry.is_deletion %}deleted{% endif %} by {{ entry.user }} on 
+    {{ entry.action_time|date:"r" }}
+{% endfor %}
+</ul>
+{% endif %}
+
 {% endblock %}
 
 {% block content_footer %}
