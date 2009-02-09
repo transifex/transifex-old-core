@@ -99,7 +99,7 @@ class POTManager(TransManagerMixin):
             pass
         except POFile.DoesNotExist:
             try:
-                l = Language.objects.get(code=lang)
+                l = Language.objects.by_code_or_alias(code=lang)
             except Language.DoesNotExist:
                 l = None
             s = POFile.objects.create(language=l, filename=f, 

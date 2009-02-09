@@ -7,6 +7,16 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 
+class LanguageManager(models.Manager):
+    def by_code_or_alias(self, code):        
+        """ 
+        Return a language that matches either with the code or something
+        inside the code_aliases field.
+        """
+        return Language.objects.get(models.Q(code=code) |
+                          models.Q(code_aliases__contains=' %s ' % code)
+                          )
+
 class Language(models.Model):
 
     """
@@ -22,6 +32,9 @@ class Language(models.Model):
     code_aliases = models.CharField(max_length=100,
         help_text=("A space-separated list of alternative locales."),
         null=True, default='')
+
+    # Managers
+    objects = LanguageManager()
 
     def __unicode__(self):
         return u'%s (%s)' % (self.name, self.code)
@@ -40,6 +53,19 @@ class Language(models.Model):
     def components(self):
         from projects.models import Component
         return Component.objects.with_language(self)
+
+    def save(self, *args, **kwargs):
+        # It's needed to ensure that when we compare this field with the
+        # 'contain' action, we will always take the whole alias for a 
+        # language, instead of part of it. We compare the alias with spaces
+        # at the beginning and at the end of it.
+        # TODO: check if alias does not exist already
+        if not self.code_aliases.startswith(' '):
+            self.code_aliases=' %s' % self.code_aliases
+        if not self.code_aliases.endswith(' '):
+            self.code_aliases='%s ' % self.code_aliases
+
+        super(Language, self).save(*args, **kwargs)
 
 def suite():
     """Define this application's testing suite for Django's test runner."""
