@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load forms_template_style %}
+{% if form %}
+    {% for field in form %}
+    <tr>
+    <th>
+        {{ field.label }}: {% if field.field.required %}*{% endif %} 
+        </th>
+    <td>
+        {% if field.errors %}<p class="myerrors">{{ field.errors }}</p>{% endif %}
+        {{ field }}{% if field.help_text %}<br />{{ field.help_text }}{% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+{% endif %}

@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% load forms_template_style %}
 {% load i18n %}
 
 {% block title %}
@@ -28,9 +29,11 @@
   {% endif %}
   <form action='' method='post'>
   <table>
-    {{ project_form.as_table }}
+    <tbody>
+    {% form_as_table_rows project_form %}
+    </tbody>
   </table>
   <input type="submit">
   </form>
-  </div>
+ </div>
 {% endblock %}

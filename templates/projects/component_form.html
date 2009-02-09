@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% load forms_template_style %}
 {% load i18n %}
 
 {% block title %}
@@ -26,8 +27,10 @@
   {% endif %}
   <form action='' method='post'>
   <table>
-    {{ component_form.as_table }}
-    {{ unit_form.as_table }}
+    <tbody>
+      {% form_as_table_rows component_form %}
+      {% form_as_table_rows unit_form %}
+    </tbody>
   </table>
   <input type="submit">
   </form>
