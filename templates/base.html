@@ -67,17 +67,14 @@
         </div>
         <div id="body_main">
           {% block messages %}
-          {% if messages %}
-          <div id="messages">
-  	      <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-		  {% endfor %}
-		  </ul>
-          </div>
-		  {% endif %}
-		  {% endblock %}
-
+            {% if messages %}
+                <div class="messages">
+                {% for message in messages %}
+                    <span class="message">{{ message }}</span> 
+                {% endfor %}
+                </div>
+            {% endif %}
+          {% endblock %}
         {% block body_main %}{% endblock %}
         </div>
       {% endblock %}
