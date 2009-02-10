@@ -44,7 +44,7 @@ class POFile(models.Model):
     untrans = models.PositiveIntegerField(default=0)
     
     language = models.ForeignKey(Language, null=True)
-    filename = models.TextField(null=False, max_length=1000)
+    filename = models.CharField(null=False, max_length=255)
 
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
