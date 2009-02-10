@@ -25,7 +25,9 @@ class LogNode(template.Node):
         if self.user is not None:
             if not self.user.isdigit():
                 self.user = context[self.user].id
-            context[self.varname] = LogEntry.objects.filter(user__id__exact=self.user).select_related('content_type', 'user')[:self.limit]
+            context[self.varname] = LogEntry.objects.filter(
+                user__id__exact=self.user).select_related(
+                'content_type', 'user')[:self.limit]
             return ''
         if self.object is not None:
             from django.contrib.contenttypes.models import ContentType
@@ -61,17 +63,24 @@ class DoGetLog:
     def __call__(self, parser, token):
         tokens = token.contents.split()
         if len(tokens) < 4:
-            raise template.TemplateSyntaxError, "'%s' statements require two arguments" % self.tag_name
+            raise template.TemplateSyntaxError, \
+                "'%s' statements requires two arguments" % self.tag_name
         if not tokens[1].isdigit():
-            raise template.TemplateSyntaxError, "First argument in '%s' must be an integer" % self.tag_name
+            raise template.TemplateSyntaxError, \
+                "First argument in '%s' must be an integer" % self.tag_name
         if tokens[2] != 'as':
-            raise template.TemplateSyntaxError, "Second argument in '%s' must be 'as'" % self.tag_name
+            raise template.TemplateSyntaxError, \
+                "Second argument in '%s' must be 'as'" % self.tag_name
         if len(tokens) > 4:
             if tokens[4] == 'for_user':
-                return LogNode(limit=tokens[1], varname=tokens[3], user=(len(tokens) > 5 and tokens[5] or None))
+                return LogNode(limit=tokens[1], varname=tokens[3],
+                               user=(len(tokens) > 5 and tokens[5] or None))
             elif tokens[4] == 'for_object':
-                return LogNode(limit=tokens[1], varname=tokens[3], object=(len(tokens) > 5 and tokens[5] or None))
+                return LogNode(limit=tokens[1], varname=tokens[3],
+                               object=(len(tokens) > 5 and tokens[5] or None))
             else:
-                raise template.TemplateSyntaxError, "Fourth argument in '%s' must be either 'user' or 'object'" % self.tag_name
+                raise template.TemplateSyntaxError, \
+                    "Fourth argument in '%s' must be either 'user' or " \
+                    "'object'" % self.tag_name
 
 register.tag('get_log', DoGetLog('get_log'))

@@ -13,9 +13,9 @@ class LanguageManager(models.Manager):
         Return a language that matches either with the code or something
         inside the code_aliases field.
         """
-        return Language.objects.get(models.Q(code=code) |
-                          models.Q(code_aliases__contains=' %s ' % code)
-                          )
+        return Language.objects.get(
+            models.Q(code=code) |
+            models.Q(code_aliases__contains=' %s ' % code))
 
 class Language(models.Model):
 
@@ -59,7 +59,7 @@ class Language(models.Model):
         # 'contain' action, we will always take the whole alias for a 
         # language, instead of part of it. We compare the alias with spaces
         # at the beginning and at the end of it.
-        # TODO: check if alias does not exist already
+        # TODO: check if alias does not already exist
         if not self.code_aliases.startswith(' '):
             self.code_aliases=' %s' % self.code_aliases
         if not self.code_aliases.endswith(' '):

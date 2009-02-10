@@ -19,8 +19,11 @@ ACTION_CHOICES = (
 
 
 class LogEntryManager(models.Manager):
-    def log_action(self, user_id, content_type_id, object_id, object_repr, action_flag, change_message=''):
-        e = self.model(None, None, user_id, content_type_id, smart_unicode(object_id), object_repr[:200], action_flag, change_message)
+    def log_action(self, user_id, content_type_id, object_id, object_repr,
+                   action_flag, change_message=''):
+        e = self.model(None, None, user_id, content_type_id,
+                       smart_unicode(object_id), object_repr[:200],
+                       action_flag, change_message)
         e.save()
 
 class LogEntry(models.Model):
@@ -52,14 +55,15 @@ class LogEntry(models.Model):
         return self.action_flag == ACTIONS['DELETION']
 
     def get_edited_object(self):
-        "Returns the edited object represented by this log entry"
+        """Return the edited object represented by this log entry."""
         return self.content_type.get_object_for_this_type(pk=self.object_id)
 
     def get_edit_url(self):
         """
-        Returns the admin URL to edit the object represented by this log entry.
+        Return the admin URL to edit the object represented by this log entry.
         This is relative to the Django admin index page.
         """
+        #FIXME
         #return mark_safe(u"%s/%s/" % (self.content_type.model, quote(self.object_id)))
         pass
 

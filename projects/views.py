@@ -65,9 +65,7 @@ def project_create_update(request, project_slug=None):
 
 @login_required
 def project_delete(request, project_slug):
-
     project = get_object_or_404(Project, slug=project_slug)
-
     if request.method == 'POST':
         import copy
         project_ = copy.copy(project)
@@ -125,6 +123,7 @@ def component_create_update(request, project_slug, component_slug=None):
         'component': component,
     }, context_instance=RequestContext(request))
 
+
 def component_detail(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -136,12 +135,11 @@ def component_detail(request, project_slug, component_slug):
     )
 component_detail.__doc__ = list_detail.object_detail.__doc__
 
+
 @login_required
 def component_delete(request, project_slug, component_slug):
-
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
-
     if request.method == 'POST':
         import copy
         component_ = copy.copy(component)
@@ -156,6 +154,7 @@ def component_delete(request, project_slug, component_slug):
         }, context_instance=RequestContext(request))
 component_detail.__doc__ = create_update.delete_object.__doc__
 
+
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -164,13 +163,11 @@ def component_set_stats(request, project_slug, component_slug):
     component.prepare_repo()
     # Calcule statistics
     component.trans.set_stats()
-
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
 
-def component_file(request, project_slug, component_slug,
-                       filename, view=False):
+def component_file(request, project_slug, component_slug, filename, view=False):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     try:
@@ -181,8 +178,8 @@ def component_file(request, project_slug, component_slug,
     logger.debug("Requested raw file %s" % filename)
     response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
     if view:
-        attach=""
+        attach = ""
     else:
-        attach="attachment;"
+        attach = "attachment;"
     response['Content-Disposition'] = '%s filename=%s' % (attach, filename)
     return response
