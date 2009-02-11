@@ -77,7 +77,7 @@ class Project(models.Model):
     
     """
 
-    slug = models.SlugField(max_length=30,
+    slug = models.SlugField(max_length=30, unique=True, 
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(max_length=50,
