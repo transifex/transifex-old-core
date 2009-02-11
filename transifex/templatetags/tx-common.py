@@ -1,5 +1,7 @@
 from django import template
 
+import transifex
+
 register = template.Library()
 
 @register.inclusion_tag("common_render_metacount.html")
@@ -19,3 +21,8 @@ def render_metacount(list, countable):
 def homelink(text="Home"):
     """Return a link to the homepage."""
     return {'text': text}
+
+@register.simple_tag
+def txversion():
+    """Return the version of Transifex"""
+    return transifex.version
