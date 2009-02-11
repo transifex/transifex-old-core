@@ -48,7 +48,7 @@ def limited_delete_object(*args, **kwargs):
 # Collections
 
 def collection_delete(*args, **kwargs):
-    kwargs['post_delete_redirect'] = reverse('collection_list', args=[kwargs['slug']])
+    kwargs['post_delete_redirect'] = reverse('collection_list')
     return limited_delete_object(*args, **kwargs)
 
 
