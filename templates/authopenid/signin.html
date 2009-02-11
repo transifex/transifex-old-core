@@ -43,7 +43,7 @@
     {{ form2.next }}
 	<fieldset>
 		<legend>{% trans "Sign In Using Your OpenID" %}</legend>
-        <div class="form-row"><label for="id_openid_ul">{% trans "OpenId URL :" %}</label><br />{{ form2.openid_url }}</div>
+        <div class="form-row"><label for="id_openid_ul">{% trans "OpenId URL :" %}</label><br />{{ form2.openid_url }}<input name="bonus" type="text" class="hidden_field"></div>
         <div class="submit-row "><input name="bsignin" type="submit" value="{% trans "Sign in with OPENID" %}"></div>
 		
 	</fieldset>

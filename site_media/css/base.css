@@ -47,6 +47,7 @@ div#header div#navmenu {
 
 div#header div#header_secnav {
   float: right;
+  margin-right: 10px;
 }
 
 div#header div#header_trinav {
@@ -172,6 +173,10 @@ div#footer .joint {
 
 /* Login index */
 
+div#login-block {
+  padding: 10px;
+}
+
 div#login_index {
   color: #666;
   float: right;
@@ -194,12 +199,18 @@ div#clear,
 }
 
 div#login_index fieldset {
+  position: relative;
+  margin-top:1em;
+  padding-top:.75em;
   border:1px solid #AFC8E1;
   background-color: #EBF2F8;
   -moz-border-radius:3px;
 }
 
 div#login_index legend {
+  position:absolute;
+  top:-.7em;
+  left:.5em;
   border:1px solid #AFC8E1;
   background-color: #FFF;
   padding-left: 0.6em;
@@ -211,7 +222,6 @@ div#login_index .submit-row {
   margin-top: 5px;
   text-align: right;
   font-size: 50%;
-  display: none;
 }
 
 div#login_index .form-row {
@@ -230,7 +240,7 @@ div#login_index .lost_passwd {
 }
 
 div#login_index input#id_openid_url {
-  background-image: url('../images/openid-icons/openid.ico');
+  background-image: url('../images/openid-icons/openid.png');
 }
 
 /* List and Detail views for Projects and Collections */
@@ -471,6 +481,10 @@ img.repotype { vertical-align: middle; margin-left: 10px; }
   background-position: 10px 50%;
 }
 
+.hidden_field {
+  display:none;
+}
+
 input, textarea {
   padding: 0 0.5em;
   border: 1px solid #aaa;
@@ -501,9 +515,14 @@ input.withbgimage {
 
 /* Other */
 
+#intro {
+  float:left; 
+  width:60%; 
+}
+
 .promo {
   font-size: 130%;
-  width: 80%;
+  width: 100%;
   margin: 2em 0;
 }
 
