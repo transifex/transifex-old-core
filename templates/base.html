@@ -86,12 +86,11 @@
 </div>
 
   <div id="footer">{% block footer %}
-    <div class="center">
+    <p class="main-footer center">
       {% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Get in contact with us" %}">{% trans "Feedback" %}</a>
-    </div>
-    <div class="version">
-      <p>Transifex v{% txversion %}</p>
-    </div>
+    </p>
+    <p class="powered">Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform</p>
+    <p class="version">v{% txversion %}</p>
   {% endblock %}</div>
 
 </body>
