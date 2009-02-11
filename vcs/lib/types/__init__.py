@@ -126,6 +126,6 @@ class VCSBrowserMixin:
         try:
             destination = "%s/%s" % (os.path.split(self.path)[0], new_name)
             shutil.move(self.path, destination)
-        except OSError:
+        except IOError:
             pass
 
