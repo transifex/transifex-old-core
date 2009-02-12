@@ -215,6 +215,10 @@ TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',}
 
 
 #####################
+# msgmerge settings
+MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
+
+#####################
 # EXTRA LOCAL SETTINGS
 
 # Put any settings specific to the particular host in local_settings.py

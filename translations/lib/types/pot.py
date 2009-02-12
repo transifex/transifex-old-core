@@ -1,4 +1,4 @@
-import os
+import os, commands
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
@@ -21,10 +21,15 @@ class POTManager(TransManagerMixin):
         self.file_set = file_set
         self.path = path
         self.source_lang = source_lang
+        self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
+                                     os.path.basename(self.path))
 
-    def get_file_content(self, filename):
+    def get_file_content(self, filename, msgmerge=False):
         if filename in self.file_set:
-            file_path = os.path.join(self.path, filename)
+            if msgmerge:
+                file_path = os.path.join(self.msgmerge_path, filename)
+            else:
+                file_path = os.path.join(self.path, filename)
             filef = file(file_path, 'rb')
             file_content = filef.read()
             filef.close()
@@ -73,7 +78,8 @@ class POTManager(TransManagerMixin):
         object 
         """
         try:
-            file_path = os.path.join(self.path, self.get_langfile(lang))
+            file_path = self.msgmerge(self.get_langfile(lang),
+                                      self.get_source_file())
             po = polib.pofile(file_path)
             return {'trans': len(po.translated_entries()),
                     'fuzzy': len(po.fuzzy_entries()),
@@ -131,3 +137,33 @@ class POTManager(TransManagerMixin):
         for filename in self.file_set:
             if filename.endswith('.pot'):
                 return filename
+
+    def msgmerge(self, pofile, potfile):
+        """
+        Merge two files and save the output at the settings.MSGMERGE_DIR.
+        In case that error, copy the source file (pofile) to the 
+        destination without merging.
+        """
+        outpo = os.path.join(self.msgmerge_path, pofile)
+        pofile = os.path.join(self.path, pofile)
+
+        if not os.path.exists(os.path.dirname(outpo)):
+            os.makedirs(os.path.dirname(outpo))
+
+        try:
+        # TODO: Find a library to avoid call msgmerge by command
+            command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
+                    'outpo' : outpo,
+                    'pofile' : pofile,
+                    'potfile' : os.path.join(self.path, potfile),}
+            
+            (error, output) = commands.getstatusoutput(command)
+        except:
+            error = True
+
+        if error:
+            # TODO: Log this. output var can be used.
+            import shutil
+            shutil.copyfile(pofile, outpo)
+
+        return outpo
