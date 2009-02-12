@@ -1,8 +1,12 @@
 import os
+import pygments
+import pygments.lexers
+import pygments.formatters
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
@@ -174,12 +178,22 @@ def component_file(request, project_slug, component_slug, filename, view=False):
         content = component.trans.get_file_content(filename)
     except IOError:
         raise Http404
-    filename = "%s.%s" % (component.full_name, os.path.basename(filename))
+    fname = "%s.%s" % (component.full_name, os.path.basename(filename))
     logger.debug("Requested raw file %s" % filename)
-    response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
     if view:
+        lexer = pygments.lexers.GettextLexer()
+        formatter = pygments.formatters.HtmlFormatter(linenos='inline')
+        # TODO: get the actual encoding via polib
+        context = Context({'body': pygments.highlight(content.decode('utf8'),
+            lexer, formatter), 'style': formatter.get_style_defs(),
+            'title': "%s: %s" % (component.full_name,
+            os.path.basename(filename))})
+        content = loader.get_template('poview.html').render(
+            context)
+        response = HttpResponse(content, mimetype='text/html; charset=UTF-8')
         attach = ""
     else:
+        response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
         attach = "attachment;"
-    response['Content-Disposition'] = '%s filename=%s' % (attach, filename)
+    response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
     return response
