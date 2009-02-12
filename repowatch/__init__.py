@@ -9,6 +9,13 @@ class WatchException(Exception):
 def send_email(site, component, user, repo_changed, files):
     """
     Sends email to a watcher for a specific component
+    
+    site: django.contrib.sites.models.Site for the site sending
+        the message
+    component: projects.models.Component that had the change
+    user: django.contrib.auth.models.User that set the watch
+    repo_change: Whether or not the repo had a global change
+    files: List of paths being watched that changed
     """
     context = Context({'component': component.name,
         'first_name': user.first_name, 'hostname': site.domain,
