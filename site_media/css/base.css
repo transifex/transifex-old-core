@@ -179,7 +179,6 @@ div#login-block {
 
 div#login_index {
   color: #666;
-  float: right;
   margin-top: 20px;
   margin-right: -10px;
   margin-right: -10px;
@@ -191,6 +190,14 @@ div#login_index {
   -moz-border-radius-topleft:5px;
   -moz-border-radius-topright:5px;
   border:1px solid #AFC8E1;*/
+}
+
+div#login_index .divright{
+  float: right;
+}
+
+div#login_index .divleft{
+  float: left;
 }
 
 div#clear,
@@ -491,18 +498,58 @@ input, textarea {
   -moz-border-radius: 2px;
 }
 
-div.project_create table th {
+div.generic_form table th {
   text-align: right;
   padding-right: 1em;
+  font-size: 90%;
+  color: #333;
+  line-height: 1.8em;
+  vertical-align: top;
 }
 
-div.project_create ul.errorlist {
-  font-size: 85%;
+div.generic_form table td {
+  vertical-align: top;
+  line-height: 1.8em;
+}
+
+div.generic_form table th p {
+  margin-top: 0em;
+}
+
+div.generic_form table td input,
+div.generic_form table td textarea,
+div.generic_form table td select {
+  font-size: 0.9em;
+  padding: 0.2em 0.3em;
+}
+
+div.generic_form table p.fieldp {
+  margin: 0;
+}
+
+div.generic_form ul.errorlist {
+  font-size: 75%;
   color: #c27878;
   list-style: none;
-  margin: 0 0 0 0.5em;
+  margin: 0.2em 0 0.3em 0.1em;
   padding: 0;
-  float: right;
+  max-width: 30em;
+  line-height: 120%;
+}
+
+div.generic_form ul.errorlist li {
+  margin: 0;
+  padding: 0;
+}
+
+div.generic_form table td p.helptext {
+  font-family: sans-serif;
+  font-size: 0.75em;
+  padding-left: 2em;
+  max-width: 30em;
+  color: #666;
+  line-height: 120%;
+  margin: 0.2em 0;
 }
 
 /* Input with background image (search, etc) */
@@ -585,4 +632,9 @@ a.tag {
   line-height: 1.5em;
   padding: 0.15em 0.2em;
   font-size: 95%;
+}
+
+.buttonright {
+  text-align:right;
+  padding-top: 0.3em;
 }

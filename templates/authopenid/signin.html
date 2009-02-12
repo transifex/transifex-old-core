@@ -25,29 +25,26 @@
 	{% endif %}
 </p>
 {% endif %}
-<div class="login">
-
+<div id="login_index">
+   <div class="divleft">
+   <fieldset>
+       <legend>{% trans "Sign in" %}</legend>
+       <p class="login-tagline">Add projects or modify existing ones. Wiki-style.</p>
     <form name="fauth" action="{% url user_signin %}" method="post">
         {{ form1.next }}
-	<fieldset>
-		<legend>{% trans "Sign In Using Your Account ID" %}</legend>
-		<div class="form-row"><label for="id_username">{% trans "Username:" %}</label><br />{{ form1.username }}</div>
-		<div class="form-row"><label for="id_password">{% trans "Password" %}</label><br />{{ form1.password }}</div>
-        <div class="submit-row"><input type="submit" name="blogin" value="{% trans "Sign in" %}"> </div>
-        <div>&nbsp;&nbsp;<a href="{{ sendpw_url }}">{% trans "Lost your password ?" %}</a></div>
-	</fieldset>	
-</form>
-
-<br />
-<form name="fopenid" action="{% url user_signin %}" method="post">
-    {{ form2.next }}
-	<fieldset>
-		<legend>{% trans "Sign In Using Your OpenID" %}</legend>
-        <div class="form-row"><label for="id_openid_ul">{% trans "OpenId URL :" %}</label><br />{{ form2.openid_url }}<input name="bonus" type="text" class="hidden_field"></div>
-        <div class="submit-row "><input name="bsignin" type="submit" value="{% trans "Sign in with OPENID" %}"></div>
-		
-	</fieldset>
-</form>	
-</div>	
+                <div class="form-row"><label for="id_username">{% trans "Username:" %}</label> <input id="id_username" class="required login" name="username" maxlength="30" size="12" type="text"></div>
+                <div class="form-row"><label for="id_password">{% trans "Password:" %}</label> <input id="id_password" class="required login" name="password" maxlength="128" size="12" type="password"></div>
+        <div class="buttonright"><input type="submit" name="blogin" value="{% trans "Sign in" %}"> </div>
+    </form>
+    <p>{% trans "Or, with your OpenID:" %}</p> 
+    <form name="fopenid" action="{% url user_signin %}" method="post">
+        <div class="form-row"><input id="id_openid_url" class="required openid withbgimage" name="openid_url" maxlength="255" type="text"></div>
+        <div class="buttonright"><input name="bsignin" type="submit" value="{% trans "Sign in with OpenID" %}"></div>
+    </form> 
+        <div class="lost_passwd compact">&nbsp;&nbsp;<a href="/account/sendpw/">{% trans "Lost your password?" %}</a></div>
+        </fieldset>   
+</div>
+</div>
+<div id="clear"></div>
 {% endblock %}
 

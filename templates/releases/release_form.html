@@ -1,5 +1,6 @@
 {% extends "releases/base.html" %}
 {% load i18n %}
+{% load forms_template_style %}
 
 {% block title %}
   {% if not release %}{{ block.super }} | {% trans "Add a release" %}
@@ -28,9 +29,11 @@
   {% endif %}
   <form action='' method='post'>
   <table>
-    {{ form.as_table }}
+    <tbody>
+    {% form_as_table_rows form %}
+    </tbody>
   </table>
-  <input type="submit">
+  <p class="submit"><input type="submit" /></p>
   </form>
   </div>
 {% endblock %}

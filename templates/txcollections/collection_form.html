@@ -1,5 +1,6 @@
 {% extends "txcollections/base.html" %}
 {% load i18n %}
+{% load forms_template_style %}
 
 {% block title %}
   {% if not collection %}{{ block.super }} | {% trans "Add a collection" %}
@@ -22,15 +23,17 @@
 {% endblock %}
 
 {% block body %}
-  <div class="collection_create">
+  <div class="collection_create generic_form">
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
   <form action='' method='post'>
   <table>
-    {{ form.as_table }}
+  <tbody>
+    {% form_as_table_rows form %}
+  </tbody>
   </table>
-  <input type="submit">
+  <p class="submit"><input type="submit" /></p>
   </form>
   </div>
 {% endblock %}

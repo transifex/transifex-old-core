@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load forms_template_style %}
 
 {% block title %}{{ block.super }} | {% trans "Contact us" %}{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; {% trans "Contact us" %}{% endblock %}
@@ -13,8 +14,10 @@
   {% endif %}
   <form action='' method='post'>
   <table>
-    {{ form.as_table }}
+  <tbody>
+    {% form_as_table_rows form %}
+  </tbody>
   </table>
-  <input type="submit">
+  <p class="submit"><input type="submit" /></p>
   </form>
 {% endblock %}

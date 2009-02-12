@@ -3,13 +3,12 @@
 {% if form %}
     {% for field in form %}
     <tr>
-    <th>
-        {{ field.label }}: {% if field.field.required %}*{% endif %} 
-        </th>
+    <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
     <td>
-        {% if field.errors %}<p class="myerrors">{{ field.errors }}</p>{% endif %}
-        {{ field }}{% if field.help_text %}<br />{{ field.help_text }}{% endif %}
+        <p class="fieldp">{{ field }}</p>
+        {% if field.errors %}<p class="fielderrors">{{ field.errors }}</p>{% endif %}
     </td>
+    <td><p class="helptext">{{ field.help_text }}</p></td>
     </tr>
     {% endfor %}
 {% endif %}

@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block body %}
-  <div class="project_create">
+  <div class="component_create generic_form">
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
@@ -32,7 +32,7 @@
       {% form_as_table_rows unit_form %}
     </tbody>
   </table>
-  <input type="submit">
+  <p class="submit"><input type="submit" /></p>
   </form>
   </div>
 {% endblock %}
