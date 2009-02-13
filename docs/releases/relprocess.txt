@@ -23,8 +23,8 @@ Prepare the code
 
     date +%c
     hg log -r 0.3:tip \
-    --template "{author|person}\t{author|email}\t{desc|firstline}\n" | \
-    python devel-docs/hg-shortlog.py  | grep -v trivial > NEWS.new
+        --template "{author|person}\t{author|email}\t{desc|firstline}\n" | \
+        python devel-docs/hg-shortlog.py | grep -v trivial > NEWS.new
     vi NEWS.new docs/releases/0.4.txt
     rm NEWS.new
 

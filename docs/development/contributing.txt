@@ -91,10 +91,10 @@ Here are some notes on the common style we use for stuff landing in Transifex.
 
     def lorem_ipsum():
        description = _(
-       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas "
-       "nisl leo, suscipit sed, elementum ac, condimentum eget, augue. "
-       "Pellentesque consequat posuere metus. Curabitur scelerisque faucibus "
-       "massa. Vestibulum ut nisl ut leo cursus commodo."
+           "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas "
+           "nisl leo, suscipit sed, elementum ac, condimentum eget, augue. "
+           "Pellentesque consequat posuere metus. Curabitur scelerisque faucibus "
+           "massa. Vestibulum ut nisl ut leo cursus commodo."
        )
 
 * Model filtering should be in the form::
@@ -117,19 +117,63 @@ Commit messages should have a short first line and optionally more information
 after a blank newline::
 
     Short (50 chars or less) summary of changes (#ticket)
-    
+
     More detailed explanatory text can follow after a blank line, if
     necessary. Wrap to about 72 characters or so.
 
-If there is a ticket associated, include it in the summary line. Prefix
-line with "bugfix:" and "trivial:" for bugfixes and trivial commits.::
+    If there is a ticket associated, include it in the summary line. Prefix
+    line with "bugfix:" and "trivial:" for bugfixes and trivial commits.
 
-     - Bullet points are okay, too. Typically a hyphen is used for the bullet,
-       preceded by a single space, with blank lines between items.
-   
+     - Bullet points are okay, too. Typically a hyphen or asterisk is used
+       for the bullet, preceded by a single space, with blank lines between
+       items.
+
      - Use a hanging indent, like above.
 
-Hint: ``:set tw=72``, or in ~/.bashrc: ``export EDITOR="vim -c 'set tw=72'``
+Setup Hints for Common Editors
+==============================
+
+Configuring VIM for Transifex Code
+----------------------------------
+
+To configure vim for editing Transifex code, make sure that it sets up
+the indentation level to 4 columns when editing Python code, that it
+expands ASCII TAB (code: 9) characters to spaces, and wraps text at 72
+columns.
+
+To enable these options only for ``*.py`` files, you can add the following
+options to your ``~/.vimrc`` file::
+
+    if !exists("format_tx_python")
+      let format_tx_python = 1
+
+      " Formatting Python code for Transifex.
+      autocmd BufNewFile,BufRead *.py set autoindent showmatch
+      autocmd BufNewFile,BufRead *.py set formatoptions=tcq2l
+      autocmd BufNewFile,BufRead *.py set textwidth=72 shiftwidth=4
+      autocmd BufNewFile,BufRead *.py set softtabstop=4 tabstop=8 expandtab
+    endif
+
+Configuring Emacs for Transifex Code
+------------------------------------
+
+To configure Emacs for editing Transifex code, you can set up a hook
+function that runs whenever ``python-mode`` is enabled.  Setting up the
+column for wrapping text, and the use of only ASCII SPACE characters for
+indentation is easy.  Just add the following Emacs Lisp snippet in your
+Emacs startup file::
+
+    ;; Formatting Python code for Transifex.
+    (defun local/python-mode-options ()
+      "My local configuration tweaks for `python-mode'."
+      (setq fill-column 72		;text wrap column
+            python-indent 4		;use 4-column indentation for Python
+            indent-tabs-mode nil	;use only SPC for indentation
+            next-line-add-newlines nil)) ;don't add newlines at end-of-file
+
+    ;; When python-mode loads, call our hook function.
+    (eval-after-load "python"
+      '(add-hook 'python-mode 'local/python-mode-options))
 
 
 Changing the model
