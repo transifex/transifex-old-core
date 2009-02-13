@@ -94,16 +94,19 @@ class HgBrowser(VCSBrowserMixin):
         except RepoError:
             self.repo = self.setup_repo()
 
-
+    @need_repo
     def _clean_dir(self):
         """
         Clean the local working directory.
          
         Commands used:
         hg revert --all --no-backup
+        hg update -C
         
         """
-        commands.revert(self.repo.ui, self.repo, date=None, rev=None, all=True, no_backup=True)
+        commands.revert(self.repo.ui, self.repo, date=None, rev=None, 
+                        all=True, no_backup=True)
+        hg.clean(self.repo, self.branch, show_stats=False)
 
     @need_repo
     def update(self):
