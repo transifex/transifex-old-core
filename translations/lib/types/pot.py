@@ -24,9 +24,9 @@ class POTManager(TransManagerMixin):
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
                                      os.path.basename(self.path))
 
-    def get_file_content(self, filename, msgmerge=False):
+    def get_file_content(self, filename, isMsgmerged=False):
         if filename in self.file_set:
-            if msgmerge:
+            if isMsgmerged:
                 file_path = os.path.join(self.msgmerge_path, filename)
             else:
                 file_path = os.path.join(self.path, filename)
@@ -78,26 +78,27 @@ class POTManager(TransManagerMixin):
         object 
         """
         try:
-            file_path = self.msgmerge(self.get_langfile(lang),
-                                      self.get_source_file())
+            (isMsgmerged, file_path) = self.msgmerge(self.get_langfile(lang),
+                                                  self.get_source_file())
             po = polib.pofile(file_path)
             return {'trans': len(po.translated_entries()),
                     'fuzzy': len(po.fuzzy_entries()),
                     'untrans': len(po.untranslated_entries()),
-                    'error': False}
+                    'error': False,
+                    'isMsgmerged': isMsgmerged}
         except IOError:
             return {'trans': 0,
                     'fuzzy': 0,
                     'untrans': 0,
-                    'error': True}     
+                    'error': True,
+                    'isMsgmerged': isMsgmerged}     
 
     def create_stats(self, lang, object):
         """Set the statistics of a specificy language for a object."""
         try:
             stats = self.calcule_stats(lang)
             f = self.get_langfile(lang)
-            s = POFile.objects.get(object_id=object.id, 
-                                        filename=f)
+            s = POFile.objects.get(object_id=object.id, filename=f)
         except POTStatsError:
             # TODO: It should probably be raised when a checkout of a 
             # module has a problem. Needs to decide what to do when it
@@ -112,6 +113,7 @@ class POTManager(TransManagerMixin):
                                            object=object)
         s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untrans'], error=stats['error'])
+        s.isMsgmerged = stats['isMsgmerged']
         return s.save()
 
     def stats_for_lang_object(self, lang, object):
@@ -144,6 +146,7 @@ class POTManager(TransManagerMixin):
         In case that error, copy the source file (pofile) to the 
         destination without merging.
         """
+        isMsgmerged = True
         outpo = os.path.join(self.msgmerge_path, pofile)
         pofile = os.path.join(self.path, pofile)
 
@@ -163,7 +166,8 @@ class POTManager(TransManagerMixin):
 
         if error:
             # TODO: Log this. output var can be used.
+            isMsgmerged = False
             import shutil
             shutil.copyfile(pofile, outpo)
 
-        return outpo
+        return (isMsgmerged, outpo)

@@ -46,6 +46,8 @@ class POFile(models.Model):
     language = models.ForeignKey(Language, null=True)
     filename = models.CharField(null=False, max_length=255)
 
+    isMsgmerged = models.BooleanField(default=True, editable=False)
+
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)

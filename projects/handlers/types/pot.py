@@ -39,9 +39,9 @@ class POTHandler:
         """Return stats for the component."""
         return self.tm.get_stats(self.component)
 
-    def get_file_content(self, filename, msgmerge):
+    def get_file_content(self, filename, isMsgmerged):
         """Return stats for the component."""
-        return self.tm.get_file_content(filename, msgmerge)
+        return self.tm.get_file_content(filename, isMsgmerged)
 
     def get_source_file(self):
         return self.tm.get_source_file()

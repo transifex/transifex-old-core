@@ -172,11 +172,11 @@ def component_set_stats(request, project_slug, component_slug):
 
 
 def component_file(request, project_slug, component_slug, filename, 
-                   view=False, msgmerge=True):
+                   view=False, isMsgmerged=True):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     try:
-        content = component.trans.get_file_content(filename, msgmerge)
+        content = component.trans.get_file_content(filename, isMsgmerged)
     except IOError:
         raise Http404
     fname = "%s.%s" % (component.full_name, os.path.basename(filename))
