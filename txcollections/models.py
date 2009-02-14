@@ -12,10 +12,6 @@ from tagging.fields import TagField
 from releases.models import Release as ReleasesRelease
 from transifex.log import log_model
 
-# The following is a tricky module, so we're including it only if needed
-if settings.ENABLE_NOTICES:
-    from notification import models as notification
-
 class CollectionManager(models.Manager):
     pass
 
@@ -73,10 +69,6 @@ class Collection(models.Model):
         self.long_description_html = markdown(desc_escaped)
         created = self.created
         super(Collection, self).save(*args, **kwargs)
-
-        if not created and settings.ENABLE_NOTICES:
-            notification.send(User.objects.all(), "collections_new_collection",
-                              {'collection': self})
 
 tagging.register(Collection, tag_descriptor_attr='tagsobj')
 log_model(Collection)
