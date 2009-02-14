@@ -111,6 +111,16 @@ class CvsBrowser(VCSBrowserMixin):
         """
         self.repo.up(P=True, d=True, C=True)
 
+
+    def _clean_dir(self):
+        """
+        Clean the local working directory.
+        """
+        try:
+            self.update()
+        except:
+            pass
+
     @need_repo
     def get_rev(self, obj=None):
         """

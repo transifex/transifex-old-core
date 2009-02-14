@@ -95,6 +95,20 @@ class GitBrowser(VCSBrowserMixin):
         except RepoError:
             self.repo = self.setup_repo()
 
+    def _clean_dir(self):
+        """
+        Clean the local working directory.
+        
+        Reset any pending changes.
+
+        Commands used:
+        git reset --hard
+        """
+        try:
+            self.repo.reset('--hard')
+        except:
+            pass
+        
     @need_repo
     def update(self):
         """

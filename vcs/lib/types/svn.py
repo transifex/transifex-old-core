@@ -87,7 +87,10 @@ class SvnBrowser(VCSBrowserMixin):
         svn revert -R .
         
         """
-        self.client.revert(self.path, recurse=True)
+        try:
+            self.client.revert(self.path, recurse=True)
+        except:
+            pass
 
     @need_repo
     def update(self):

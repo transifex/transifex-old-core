@@ -87,7 +87,6 @@ class BzrBrowser(VCSBrowserMixin):
             # Else create a lightweight checkout there.
             self.setup_repo()
             
-
     def _clean_dir(self):
         """
         Clean the local working directory.
@@ -98,13 +97,16 @@ class BzrBrowser(VCSBrowserMixin):
         bzr revert --no-backup
         bzr clean_tree --ignored --unknown --detritus
         """
-        # Remove any pending changes (left over from a submit that
-        # encoutnered an error, for instance).
-        self.work_tree.revert(backups=False)
-        # Removes all unknown files.  This is important as we don't
-        # want to import files that were left over from another run by mistake.
-        clean_tree.clean_tree(self.path, unknown=True, ignored=True,
-                              detritus=True)
+        try:
+            # Remove any pending changes (left over from a submit that
+            # encoutnered an error, for instance).
+            self.work_tree.revert(backups=False)
+            # Removes all unknown files.  This is important as we don't
+            # want to import files that were left over from another run by mistake.
+            clean_tree.clean_tree(self.path, unknown=True, ignored=True,
+                              detritus=True, no_prompt=True)
+        except:
+            pass
 
     @need_repo
     def update(self):
