@@ -25,7 +25,10 @@ class POTManager(TransManagerMixin):
                                      os.path.basename(self.path))
 
     def get_file_content(self, filename, isMsgmerged=False):
-        if filename in self.file_set:
+        # All the files should be in the file_set, except the intltool
+        # POT file that is created by the system
+        if filename in self.file_set or \
+           filename.endswith('.pot') and isMsgmerged:
             if isMsgmerged:
                 file_path = os.path.join(self.msgmerge_path, filename)
             else:
@@ -139,6 +142,26 @@ class POTManager(TransManagerMixin):
         for filename in self.file_set:
             if filename.endswith('.pot'):
                 return filename
+        # If there is no POT in the file_set, try to find it in
+        # the file system
+        filename = self.get_intltool_source_file(self.msgmerge_path)
+        return filename
+
+    def get_intltool_source_file(self, po_dir):
+        """Return the POT file that might be created by intltool"""
+        for root, dirs, files in os.walk(po_dir):
+            for filename in files:
+                if filename.endswith('.pot'):
+                    # Get the relative path
+                    rel_path = root.split(os.path.basename(self.path))[1]
+                    # Return the relative path of the POT file without 
+                    # the / in the start of the POT file path
+                    return os.path.join(rel_path, filename)[1:]
+
+    def copy_file(self, origin, destination):
+        """Copy a file to the destination"""
+        import shutil
+        shutil.copyfile(origin, destination)
 
     def msgmerge(self, pofile, potfile):
         """
@@ -158,7 +181,7 @@ class POTManager(TransManagerMixin):
             command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
                     'outpo' : outpo,
                     'pofile' : pofile,
-                    'potfile' : os.path.join(self.path, potfile),}
+                    'potfile' : os.path.join(self.msgmerge_path, potfile),}
             
             (error, output) = commands.getstatusoutput(command)
         except:
@@ -167,7 +190,38 @@ class POTManager(TransManagerMixin):
         if error:
             # TODO: Log this. output var can be used.
             isMsgmerged = False
-            import shutil
-            shutil.copyfile(pofile, outpo)
+            self.copy_file(pofile, outpo)
 
         return (isMsgmerged, outpo)
+
+    def guess_po_dir(self):
+        """ Guess the po/ diretory to run intltool """
+        for filename in self.file_set:
+            if 'po/POTFILES.in' in filename:
+                return os.path.join(self.path, 
+                                      os.path.dirname(filename))
+
+    def intltool_update(self):
+        """
+        Create a new POT file using "intltool-update -p" from the 
+        source files. Return False if it fails.
+        """
+        try:
+            command = "cd \"%(dir)s\" && rm -f missing notexist && " \
+                      "intltool-update -p" % { "dir" : 
+                                                self.guess_po_dir(), }
+            (error, output) = commands.getstatusoutput(command)
+        except:
+            error = True
+
+        # Copy the potfile if it exist to the merged files directory
+        potfile = self.get_intltool_source_file(self.path)
+        if potfile:
+            self.copy_file(os.path.join(self.path, potfile),
+                            os.path.join(self.msgmerge_path, potfile))
+
+        if error:
+            # TODO: Log this. output var can be used.
+            return False
+
+        return True

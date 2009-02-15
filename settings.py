@@ -206,13 +206,14 @@ Transmitted-via: Transifex (%(domain)s)"""
 # TransHandler settings
 
 # Our Translation Handler choices.
-TRANS_CHOICES = {'POT': 'POT Files',}
+TRANS_CHOICES = {'POT': 'POT files',
+                 'INTLTOOL': 'POT files using intltool',}
 
 # The classes which implement the TransHandler support. The full "path" 
 # to the class is the concatenation of the BASE and the NAME of the class.
 TRANS_CLASS_BASE = 'projects.handlers.types'
-TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',}
-
+TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
+                     'INTLTOOL': 'intltool.IntltoolHandler',}
 
 #####################
 # msgmerge settings
