@@ -1,4 +1,4 @@
-import os, commands
+import os, commands, re
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
@@ -17,10 +17,11 @@ class POTStatsError(Exception):
 class POTManager(TransManagerMixin):
     """ A browser class for POT files. """
 
-    def __init__(self, file_set, path, source_lang):
+    def __init__(self, file_set, path, source_lang, file_filter):
         self.file_set = file_set
         self.path = path
         self.source_lang = source_lang
+        self.file_filter = file_filter
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
                                      os.path.basename(self.path))
 
@@ -198,7 +199,9 @@ class POTManager(TransManagerMixin):
         """ Guess the po/ diretory to run intltool """
         for filename in self.file_set:
             if 'po/POTFILES.in' in filename:
-                return os.path.join(self.path, 
+                if self.file_filter:
+                    if re.compile(self.file_filter).match(filename):
+                        return os.path.join(self.path, 
                                       os.path.dirname(filename))
 
     def intltool_update(self):
@@ -206,16 +209,16 @@ class POTManager(TransManagerMixin):
         Create a new POT file using "intltool-update -p" from the 
         source files. Return False if it fails.
         """
+        po_dir = self.guess_po_dir()
         try:
             command = "cd \"%(dir)s\" && rm -f missing notexist && " \
-                      "intltool-update -p" % { "dir" : 
-                                                self.guess_po_dir(), }
+                      "intltool-update -p" % { "dir" : po_dir, }
             (error, output) = commands.getstatusoutput(command)
         except:
             error = True
 
         # Copy the potfile if it exist to the merged files directory
-        potfile = self.get_intltool_source_file(self.path)
+        potfile = self.get_intltool_source_file(po_dir)
         if potfile:
             self.copy_file(os.path.join(self.path, potfile),
                             os.path.join(self.msgmerge_path, potfile))

@@ -16,7 +16,8 @@ class POTHandler:
         self.component = component
         self.tm = POTManager(component.get_files(),
                              component.unit.browser.path, 
-                             component.source_lang)
+                             component.source_lang,
+                             component.file_filter)
 
     def get_manager(self):
         return self.tm
