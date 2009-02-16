@@ -46,7 +46,11 @@ class POFile(models.Model):
     language = models.ForeignKey(Language, null=True)
     filename = models.CharField(null=False, max_length=255)
 
+    # This field is used to indicate whenever a file was created 
+    # by the system, even a POT file through intltool-update
+    # We might rename it later
     isMsgmerged = models.BooleanField(default=True, editable=False)
+    isPOT = models.BooleanField(default=False, editable=False)
 
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)

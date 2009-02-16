@@ -33,6 +33,13 @@ class POTHandler:
         logger.debug("Setting stats for %s" % self.component)
         self.tm.delete_stats_for_object(self.component)
 
+        # Set the source file (pot) to the database
+        self.tm.set_source_stats(self.component, isMsgmerged=False)
+        
+        # Copying the source file to the static dir
+        potfile = self.tm.get_source_stats(self.component).filename
+        self.tm.copy_file_to_static_dir(potfile)
+
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)
         
@@ -45,4 +52,4 @@ class POTHandler:
         return self.tm.get_file_content(filename, isMsgmerged)
 
     def get_source_file(self):
-        return self.tm.get_source_file()
+        return self.tm.get_source_stats(self.component).filename

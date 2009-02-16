@@ -28,6 +28,12 @@ class IntltoolHandler(pot.POTHandler):
         if not isIntltooled:
             logger.debug("intltool-update --pot has failed for %s" % 
                          self.component)
+            isMsgmerged=False
+        else:
+            isMsgmerged=True
+
+        # Set the source file (pot) to the database
+        self.tm.set_source_stats(self.component, isMsgmerged)
 
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)

@@ -131,15 +131,49 @@ class POTManager(TransManagerMixin):
     def get_stats(self, object):
         """ Return a list of statistics of languages for an object."""
         return POFile.objects.filter(
-                   object_id=object.id
+                   object_id=object.id,
+                   isPOT=False,
         ).order_by('-trans_perc')
 
     def delete_stats_for_object(self, object):
         """ Delete all lang statistics of an object."""
         POFile.objects.filter(object_id=object.id).delete()
 
+    def set_source_stats(self, object, isMsgmerged):
+        """Set the source file (pot) in the database"""
+
+        potfile=self.get_source_file()
+        if potfile:
+            try:
+                p=POFile.objects.get(object_id=object.id, isPOT=True)
+                p.filename=potfile
+                p.isMsgmerged=isMsgmerged
+            except POFile.DoesNotExist:
+                p = POFile(filename=potfile,
+                        isPOT=True,
+                        object=object,
+                        isMsgmerged=isMsgmerged)
+            p.save()
+        else:
+            #TODO: We don't have a source file (POT), what should we do?
+            pass
+
+    def get_source_stats(self, object):
+        """
+        Return the source file (pot) statistics from the database
+        """
+        try:
+            return POFile.objects.get(object_id=object.id, isPOT=True)
+        except POFile.DoesNotExist:
+            return None
+
     def get_source_file(self):
-        """Return the source file (pot)"""
+        """
+        Return the source file (pot) path
+
+        Try to find it in the file_set passed to the PO file instace. 
+        If it still fauls, try to find the POT file in the filesystem.
+        """
         for filename in self.file_set:
             if filename.endswith('.pot'):
                 return filename
@@ -159,10 +193,16 @@ class POTManager(TransManagerMixin):
                     # the / in the start of the POT file path
                     return os.path.join(rel_path, filename)[1:]
 
-    def copy_file(self, origin, destination):
+    def copy_file_to_static_dir(self, filename):
         """Copy a file to the destination"""
         import shutil
-        shutil.copyfile(origin, destination)
+
+        dest = os.path.join(self.msgmerge_path, filename)
+
+        if not os.path.exists(os.path.dirname(dest)):
+            os.makedirs(os.path.dirname(dest))
+
+        shutil.copyfile(os.path.join(self.path, filename), dest)
 
     def msgmerge(self, pofile, potfile):
         """
@@ -172,16 +212,12 @@ class POTManager(TransManagerMixin):
         """
         isMsgmerged = True
         outpo = os.path.join(self.msgmerge_path, pofile)
-        pofile = os.path.join(self.path, pofile)
-
-        if not os.path.exists(os.path.dirname(outpo)):
-            os.makedirs(os.path.dirname(outpo))
 
         try:
         # TODO: Find a library to avoid call msgmerge by command
             command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
                     'outpo' : outpo,
-                    'pofile' : pofile,
+                    'pofile' : os.path.join(self.path, pofile),
                     'potfile' : os.path.join(self.msgmerge_path, potfile),}
             
             (error, output) = commands.getstatusoutput(command)
@@ -191,7 +227,7 @@ class POTManager(TransManagerMixin):
         if error:
             # TODO: Log this. output var can be used.
             isMsgmerged = False
-            self.copy_file(pofile, outpo)
+            self.copy_file_to_static_dir(pofile)
 
         return (isMsgmerged, outpo)
 
@@ -220,8 +256,7 @@ class POTManager(TransManagerMixin):
         # Copy the potfile if it exist to the merged files directory
         potfile = self.get_intltool_source_file(po_dir)
         if potfile:
-            self.copy_file(os.path.join(self.path, potfile),
-                            os.path.join(self.msgmerge_path, potfile))
+            self.copy_file_to_static_dir(potfile)
 
         if error:
             # TODO: Log this. output var can be used.

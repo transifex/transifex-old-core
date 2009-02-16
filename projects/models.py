@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import markdown
 
@@ -252,11 +253,20 @@ class Component(models.Model):
         self.full_name = self.get_full_name()
         # Get a grip on the empty 'created' to detect a new addition. 
         created = self.created
+
+        if self.id:
+            component_old = Component.objects.get(id=self.id)
+        else:
+            component_old = None
+
         super(Component, self).save(*args, **kwargs)
 
         if self.unit:
             self.unit.name = self.full_name
             self.unit.save()
+
+        if component_old and component_old.full_name != self.full_name:
+            component_old.rename_static_dir(self.full_name)
 
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), 
@@ -268,6 +278,7 @@ class Component(models.Model):
         if self.unit:
             self.unit.delete()
             POFile.objects.filter(object_id=self.id).delete()
+            self.delete_static_dir()
         super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
@@ -317,6 +328,27 @@ class Component(models.Model):
     def get_rev(self, path=None):
         """Get revision of a path from the underlying Unit"""
         return self.unit.get_rev(path)
+
+    # TODO: We might want to move the next two functions to another 
+    # app later, like Utils or something
+    def rename_static_dir(self, new_name):
+        """Rename the directory of static content for a component"""
+        import shutil
+        try:
+            original = os.path.join(settings.MSGMERGE_DIR, self.full_name)
+            destination = os.path.join(settings.MSGMERGE_DIR, new_name)
+            shutil.move(original, destination)
+        except IOError:
+            pass
+
+    def delete_static_dir(self):
+        """Delete the directory of static content for a component"""
+        import shutil
+        try:
+            shutil.rmtree(os.path.join(settings.MSGMERGE_DIR, 
+                                       self.full_name))
+        except OSError:
+            pass
 
 log_model(Component)
 log_model(Unit)
