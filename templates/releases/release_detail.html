@@ -15,7 +15,7 @@
 {% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
 
 {% block body_sec %}
-  <a class="simlink" href="{% url release_feed param=release.slug %}" title="release feed"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+  <a class="simlink" href="{% url release_feed param=release.slug %}" title="release feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block body_main %}

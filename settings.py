@@ -91,7 +91,7 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site_media')
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 # NOTE: Also, this is hard-coded in the base.html template, so that the 500
 # error page works. You'll need to change the occurences in that file too.
-MEDIA_URL = '/site_media'
+MEDIA_URL = '/site_media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
