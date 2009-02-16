@@ -43,6 +43,8 @@ DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_DOMAIN
 # Notifications
 # Enable notifications (requires working email settings)
 # TODO: Make notifications not crash the app if email sending doesn't work.
+# To enable notices you also need to enable the context processor and
+# application below.
 ENABLE_NOTICES = False
 
 # Registration - OpenID
@@ -112,7 +114,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-#    "notification.context_processors.notification",
+    # Following needs notification app too.
+    # "notification.context_processors.notification",
 )
 
 MIDDLEWARE_CLASSES = [
@@ -141,7 +144,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admindocs',
-#    'notification',
+    # Following needs notification context processor above too.
+    # 'notification',
     'django_authopenid',
     'tagging',
     'pagination',
