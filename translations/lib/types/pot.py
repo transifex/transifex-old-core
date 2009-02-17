@@ -234,7 +234,7 @@ class POTManager(TransManagerMixin):
     def guess_po_dir(self):
         """ Guess the po/ diretory to run intltool """
         for filename in self.file_set:
-            if 'po/POTFILES.in' in filename:
+            if 'POTFILES.in' in filename:
                 if self.file_filter:
                     if re.compile(self.file_filter).match(filename):
                         return os.path.join(self.path, 
