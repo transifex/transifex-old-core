@@ -37,8 +37,13 @@ class POTHandler:
         self.tm.set_source_stats(self.component, isMsgmerged=False)
         
         # Copying the source file to the static dir
-        potfile = self.tm.get_source_stats(self.component).filename
-        self.tm.copy_file_to_static_dir(potfile)
+        try:
+            potfile = self.tm.get_source_stats(self.component).filename
+            self.tm.copy_file_to_static_dir(potfile)
+        except (AttributeError, IOError):
+            # TODO: There is no source file (POT)
+            # It looks like an intltool POT-based, what should we do?
+            pass
 
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)
