@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body_class %}index{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">{% trans "Welcome to Transifex" %}</h2>
+{% endblock %}
+
+{% block body %}
+
+
+<h1>About Transifex</h1>
+
+<p>Transifex is an upstream-friendly cross-project 
+localization platform. It is a service offering users with an easy-to-use 
+interface to submit translations to various projects hosted on a number of hosting 
+platform types.</p>
+
+<p>The goal of Transifex is to make it real easy for developers to receive
+translations from contributors, and translators to collaborate together to
+send their contributors to upstream in an easy way.</p>
+
+<h2>Features</h2>
+
+<p>Here is a quick list of what Transifex supports:</p>
+
+<ul>
+<li>Multiple versioning systems: CVS, SVN, hg, git, bzr</li> 
+<li>Translation statistics calculation for multiple i18n methods: POT, msgmerged POs and intltool</li>
+<li>Projects with multiple components/branches</li>
+<li>Project collections for grouping packages together (eg. Fedora, GNOME)</li>
+<li>PO and POT file viewing and direct downloading</li>
+<li>Softaware releases (eg. KDE 4.2.1)</li>
+<li>RSS feeds for everything</li>
+<li>User accounts and authentication through OpenID</li>
+<li>Notifications for project additons</li>
+<li>Tagging! For ever easier grouping</li> 
+<li>Rich descriptions using Markdown syntax for ease of use</li>
+</ul>
+
+<p>And many more to come. :)</p>
+
+{% endblock %}
