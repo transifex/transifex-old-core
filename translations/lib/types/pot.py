@@ -3,8 +3,6 @@ from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
 
-import polib
-
 class POTStatsError(Exception):
 
     def __init__(self, language):
@@ -76,26 +74,49 @@ class POTManager(TransManagerMixin):
         langs.sort()
         return langs
 
+
+    def po_file_stats(self, pofile):
+        """ Calculate stats for a POT/PO file """
+        error = False
+        pofile = os.path.join(self.msgmerge_path, pofile)
+
+        command = "LC_ALL=C LANG=C LANGUAGE=C msgfmt --statistics" \
+                  " -o /dev/null %s" % pofile
+        (error, output) = commands.getstatusoutput(command)
+
+        if error:
+            error = True
+        else:
+            r_tr = re.search(r"([0-9]+) translated", output)
+            r_un = re.search(r"([0-9]+) untranslated", output)
+            r_fz = re.search(r"([0-9]+) fuzzy", output)
+
+        if r_tr: translated = r_tr.group(1)
+        else: translated = 0
+        if r_un: untranslated = r_un.group(1)
+        else: untranslated = 0
+        if r_fz: fuzzy = r_fz.group(1)
+        else: fuzzy = 0
+
+        return {'translated' : int(translated),
+                'fuzzy' : int(fuzzy),
+                'untranslated' : int(untranslated),
+                'error' : error,}
+
     def calcule_stats(self, lang):
         """ 
-        Return the statistics of a specificy language for a 
-        object 
+        Return the statistics of a specificy language for a object after
+        merging the file translation.
         """
-        try:
-            (isMsgmerged, file_path) = self.msgmerge(self.get_langfile(lang),
-                                                  self.get_source_file())
-            po = polib.pofile(file_path)
-            return {'trans': len(po.translated_entries()),
-                    'fuzzy': len(po.fuzzy_entries()),
-                    'untrans': len(po.untranslated_entries()),
-                    'error': False,
-                    'isMsgmerged': isMsgmerged}
-        except IOError:
-            return {'trans': 0,
-                    'fuzzy': 0,
-                    'untrans': 0,
-                    'error': True,
-                    'isMsgmerged': isMsgmerged}     
+        (isMsgmerged, file_path) = self.msgmerge(self.get_langfile(lang),
+                                                self.get_source_file())
+        postats = self.po_file_stats(file_path)
+
+        return {'trans': postats['translated'],
+                'fuzzy': postats['fuzzy'],
+                'untrans': postats['untranslated'],
+                'error': postats['error'],
+                'isMsgmerged': isMsgmerged}
 
     def create_stats(self, lang, object):
         """Set the statistics of a specificy language for a object."""
