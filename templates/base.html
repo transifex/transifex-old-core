@@ -33,7 +33,7 @@
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
               <a href="{% url user_signout %}">{% trans "Sign out" %}</a></span>
           {% else %}
-              <a href="{% url user_signin %}?next={{request.path}}">{% trans "Sign in" %}</a> | <a href="{% url user_signup %}">{% trans "Register" %}</a></span>
+              <a href="{% url user_signin %}?next={{request.path_info}}">{% trans "Sign in" %}</a> | <a href="{% url user_signup %}">{% trans "Register" %}</a></span>
           {% endif %}
       <select class="lang_switcher">
         <option selected>{% trans "English" %}</option>
