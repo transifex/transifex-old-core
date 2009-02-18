@@ -16,6 +16,7 @@ from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
 from transifex.log import logger
 from actionlog.models import (log_addition, log_change, log_deletion)
+from translations.lib.types.pot import FileFilterError
 
 # Feeds
 
@@ -166,7 +167,18 @@ def component_set_stats(request, project_slug, component_slug):
     # Checkout
     component.prepare_repo()
     # Calcule statistics
-    component.trans.set_stats()
+    try:
+        component.trans.set_stats()
+    except FileFilterError:
+        logger.debug("File filte does not allow POTFILES.in file name" \
+                     " for %s component" % component.name)
+
+        # TODO: Figure out why gettext is not working here
+        request.user.message_set.create(
+              message="The file filter of this intltool POT-based " \
+                      "component does not seem to allow the " \
+                      "POTFILES.in file. Please fix it.")
+
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 

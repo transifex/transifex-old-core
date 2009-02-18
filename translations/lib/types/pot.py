@@ -12,6 +12,12 @@ class POTStatsError(Exception):
         return "Could not calculate the statistics using the '%s' " \
                "language." % (self.language)
 
+class FileFilterError(Exception):
+
+    def __str__(self):
+        return "The file filter should allows the POTFILES.in file" \
+               " for intltool POT-based projects."
+
 class POTManager(TransManagerMixin):
     """ A browser class for POT files. """
 
@@ -260,6 +266,7 @@ class POTManager(TransManagerMixin):
                     if re.compile(self.file_filter).match(filename):
                         return os.path.join(self.path, 
                                       os.path.dirname(filename))
+        raise FileFilterError
 
     def intltool_update(self):
         """
