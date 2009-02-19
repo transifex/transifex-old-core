@@ -192,6 +192,53 @@ following command.
 
     ./manage.py loaddata transifex/fixtures/sample_users.json
 
+
+Further customization
+~~~~~~~~~~~~~~~~~~~~~
+
+Site Domain and Name
+++++++++++++++++++++
+
+Transifex leverages the power of Django's Sites_ framework to make it easy
+to have instances of Transifex on differnet domains using the same models
+and database.
+
+Upon installation, a single website is created in the database called
+'example.com'. This value is used in a number of places, including emails sent
+by the system. You can customize this value in two ways:
+
+* Using the `Django admin panel`_: By default Transifex comes with a handy
+  admin panel. This is mounted by default at ``/admin/`` (this value can be
+  changed from your settings file.
+  
+  Login to ``/admin/`` with the admin credentials you created during the
+  database creation step, find the 'example.com' entry in the ``Sites`` model
+  and edit it to your needs.
+
+* Using the command line::
+
+    from django.contrib.sites.models import Site
+    current_site = Site.objects.get_current()
+    current_site.name = 'Transifex'
+    current_site.domain = 'mydomain.com'
+    current_site.save()
+
+User Interface
+++++++++++++++
+
+The default Transifex interface lives in the ``templates/`` directory and can
+be customized at will.
+
+You can also customize the theme by copying this directory to a differnet
+location and updating the ``TEMPLATE_DIR`` setting with this new location.
+
+Finally, Django supports multiple locations of template source files, which it
+searches in order. Instead of copying the entire template directory, you can
+simply copy particular files you'd like to override and define the
+``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
+to be searched (first entry takes preference over second, etc).  
+
+
 Testing
 -------
 
@@ -202,3 +249,7 @@ For testing the whole project you can run::
 For testing a specific application inside Transifex you can run::
  
     ./manage.py test projects
+
+
+.. _Sites: http://docs.djangoproject.com/en/dev/ref/contrib/sites
+.. _`Django admin panel`: http://www.djangobook.com/en/1.0/chapter06/
