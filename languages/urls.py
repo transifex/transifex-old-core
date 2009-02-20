@@ -40,7 +40,7 @@ urlpatterns += patterns('django.views.generic',
     ),
     url(
         name = 'language_release',
-        regex = '^(?P<slug>[-_@\w]+)/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
+        regex = '^(?P<slug>[-_@\w]+)/(?P<collection_slug>[-\w]+)/collection/(?P<release_slug>[-\w]+)/$',
         view = language_release,
     ),
 
