@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
+from translations.models import POFile
 from txcollections.models import (Collection, CollectionRelease as Release)
 from txcollections.forms import *
 
@@ -63,12 +64,14 @@ def release_detail(request, slug, release_slug, *args, **kwargs):
     collection = get_object_or_404(Collection, slug__exact=slug)
     release = get_object_or_404(Release, slug__exact=release_slug,
                                 collection=collection)
-    components = release.components.order_by('project', 'name')
+    pofile_list = POFile.objects.by_release_total(release)
     return list_detail.object_detail(
         request,
         queryset = Release.objects.all(),
         slug=release_slug,
-        extra_context = {'collection': collection, 'components': components},
+        extra_context = {'pofile_list': pofile_list,
+                         'release': release,
+                         'collection': collection},
         *args, **kwargs)
 
 

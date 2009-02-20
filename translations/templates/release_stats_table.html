@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load statistics %}
+{% if stats %}
+<h3>{% trans "Translation statistics" %} </h3>
+<table class="stats_comp">
+   <thead>
+    <tr>
+      <th>{% trans "Language" %}</th>
+      <th class="alcenter">{% trans "Translations" %}</th>
+    </tr>
+   </thead>
+   <tbody>
+   {% for stat in stats %} 
+      <tr>
+        <td class="left name" id="{{stat.language.code}}">
+          {% if stat.language %}
+              <a href="{% url language_release stat.language.code collection.slug release.slug %}" title="{% trans "See the detailed statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
+          {% else %}
+              <span class="stat_message" title="{% trans "There is no language registered that matches with this file" %}" >{{stat.filename}}</span>
+          {% endif %}
+          {% if stat.error %}
+              <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
+          {% endif %}
+        </td>
+        <td class="stats">
+          {% stats_bar_full stat %}
+          <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
+        </td>
+      </tr>
+   {% endfor %}
+   </tbody>
+</table>
+{%  endif %}

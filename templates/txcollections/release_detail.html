@@ -65,26 +65,11 @@
 
 <div id="projects" class="projects">
 
-  {# We're getting components directly from the view, ordered and everything #}
-  <h3>{% blocktrans %}Projects shipped with {{ release }}{% endblocktrans %}
-  {% render_metacount components _("components") %}
-  </h3>
+{% release_stats_table pofile_list collection release %}
 
-  <p class="explanation">Here's a list of projects grouped together with this release.</p>
-
-  {% if components %}
-  <div class="components_list">
-  <ul class="simple bigthings">
-  {% for component in components %}
-    <li><p class="i16 component"><a href="{{ component.get_absolute_url }}">{{ component.project.name }} ({{ component.name }})</a></p></li>
-  {% endfor %}
-  </ul>
-  </div>
-  {% else %}
-{% url project_list as project_list %}
-    <p class="i16 tip">{% blocktrans %}No projects are registered for this release yet. <a href="{{ project_list }}">Find projects</a> and add them to this release.{% endblocktrans %}</p>
-  {% endif %}
-</div>
+{% if not pofile_list %}
+<p>{% trans "No translations added for this release. :-(" %}</p>
+{% endif %}
 
 </div>
 {% endblock %}{# body_main #}

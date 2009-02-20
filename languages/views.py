@@ -3,10 +3,11 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import list_detail
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.syndication.views import feed
+from django.template import RequestContext
 
 from translations.models import POFile
 from models import Language
-
+from txcollections.models import (Collection, CollectionRelease as Release)
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
@@ -30,7 +31,26 @@ def language_detail(request, slug, *args, **kwargs):
     return list_detail.object_detail(
         request,
         object_id=language.id,
-        extra_context = {'pofile_list': pofile_list},
+        extra_context = {'pofile_list': pofile_list,
+                         'collection_list': Collection.objects.all()},
         *args, **kwargs
     )
 language_detail.__doc__ = list_detail.object_detail.__doc__
+
+def language_release(request, slug, collection_slug, release_slug):
+
+    language = get_object_or_404(Language, code__iexact=slug)
+    collection = get_object_or_404(Collection, 
+                                   slug__exact=collection_slug)
+    release = get_object_or_404(Release, slug__exact=release_slug,
+                                collection=collection)
+
+    pofile_list = POFile.objects.by_language_and_release(language, 
+                                                         release)
+
+    return render_to_response('languages/language_release.html', {
+        'pofile_list': pofile_list,
+        'release': release,
+        'language': language,
+    }, context_instance=RequestContext(request))
+

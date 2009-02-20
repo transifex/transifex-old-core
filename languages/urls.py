@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 from models import Language
 from feeds import AllLanguages
-from views import language_detail, slug_feed
+from views import language_detail, slug_feed, language_release
 
 admin.autodiscover()
 
@@ -38,4 +38,10 @@ urlpatterns += patterns('django.views.generic',
                   "template_object_name" : "language",
                   'queryset': Language.objects.all()}
     ),
+    url(
+        name = 'language_release',
+        regex = '^(?P<slug>[-_@\w]+)/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
+        view = language_release,
+    ),
+
 )

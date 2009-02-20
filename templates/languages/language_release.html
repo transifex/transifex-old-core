@@ -1,0 +1,29 @@
+{% extends "languages/base.html" %}
+{% load i18n %}
+{% load statistics %}
+
+{% block body_class %}{{ block.super }} language_release{% endblock %}
+
+{% block title %}{{ block.super }} | {{ language.name }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {{ language.name }}{% endblock %}
+
+{% block content_title %}<h2 class="pagetitle">{{ release.name }} <sup class="entry_metalink">{{ language.name }} ({{language.code}})</sup></h2>{% endblock %}
+
+{% block body_main %}
+
+{% if pofile_list %}
+
+    <h3>{% trans "Project/Component statistics" %} </h3>
+
+    {% lang_stats_table pofile_list %}
+
+{% endif %}
+
+{% if not pofile_list %}
+{% url contact_form as contact_form %}
+  <p>{% blocktrans %}Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again.{% endblocktrans %}</p>
+  <p class="i16 tip">{% blocktrans %}If you think this shouldn't happen, please <a href="{{ contact_form }}">let us know</a>.{% endblocktrans %}</span></p>
+{% endif %}
+
+{% endblock %}

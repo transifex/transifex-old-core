@@ -45,6 +45,18 @@ def lang_stats_table(stats):
 
     return {'stats': stats}
 
+@register.inclusion_tag("release_stats_table.html")
+def release_stats_table(stats, collection, release):
+    """
+    Creates a HTML table to presents the statistics of all languages 
+    for a specific release.
+    """
+
+    return {'stats': stats,
+            'collection': collection,
+            'release': release}
+
+
 @register.inclusion_tag("stats_bar_full.html")
 def stats_bar_full(stat):
     """

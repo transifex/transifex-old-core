@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
-from django.template.defaultfilters import dictsort
+from django.template.defaultfilters import dictsort, dictsortreversed
 
 class POFileManager(models.Manager):
     def get_for_object(self, obj):
@@ -22,6 +22,52 @@ class POFileManager(models.Manager):
         """ Returns a list of objects statistics for a language."""
         postats = self.filter(language=language)
         return dictsort(postats,'object.project.name')
+
+    def by_language_and_release(self, language, release):
+        """ 
+        Return a list of stats object for a language and release.
+        """
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("SELECT t.id FROM translations_pofile as t, " \
+                       "projects_component_releases as r WHERE " \
+                       "r.collectionrelease_id=%s AND t.language_id=%s "\
+                       "AND t.object_id=r.component_id;", 
+                       [release.id, language.id])
+        postats = []
+        for row in cursor.fetchall():
+            # TODO: Make it more efficient
+            po = self.model.objects.get(id=row[0])
+            postats.append(po)
+        return dictsort(postats,'object.project.name')
+
+    def by_release_total(self, release):
+        """
+        Return a list of the total translation by languages for a release
+        """
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("SELECT sum(t.trans), sum(t.fuzzy), "\
+                       "sum(t.untrans), sum(t.total), t.language_id "\
+                       "FROM translations_pofile as t, "\
+                       "projects_component_releases as r "\
+                       "WHERE r.collectionrelease_id=%s AND "\
+                       "language_id is NOT NULL AND "\
+                       "t.object_id=r.component_id GROUP by language_id",
+                       [release.id])
+        postats = []
+        for row in cursor.fetchall():
+            l = Language.objects.get(id=row[4])
+            po = self.model(trans=row[0],
+                            fuzzy=row[1], 
+                            untrans=row[2], 
+                            total=row[3],
+                            filename=l.code,
+                            object=l, # Not used but needed
+                            language=l)
+            po.calculate_perc()
+            postats.append(po)
+        return dictsortreversed(postats,'trans_perc')
 
     
 class POFile(models.Model):
