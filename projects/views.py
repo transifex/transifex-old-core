@@ -65,6 +65,7 @@ def project_create_update(request, project_slug=None):
 
     return render_to_response('projects/project_form.html', {
         'project_form': project_form,
+        'project': project,
     }, context_instance=RequestContext(request))
 
 
@@ -76,12 +77,13 @@ def project_delete(request, project_slug):
         project_ = copy.copy(project)
         project.delete()
         log_deletion(request, project_, project_.name)
-        request.user.message_set.create(message=_("The %s was deleted.") % project.name)
+        request.user.message_set.create(
+            message=_("The %s was deleted.") % project.name)
         return HttpResponseRedirect(reverse('project_list'))
     else:
-        return render_to_response('projects/project_confirm_delete.html', {
-            'project': project,
-        }, context_instance=RequestContext(request))
+        return render_to_response(
+            'projects/project_confirm_delete.html', {'project': project,},
+            context_instance=RequestContext(request))
 
 
 # Components
@@ -100,7 +102,8 @@ def component_create_update(request, project_slug, component_slug=None):
         component = None
         unit = None
     if request.method == 'POST':
-        component_form = ComponentForm(project, request.POST, instance=component, prefix='component')
+        component_form = ComponentForm(project, request.POST,
+                                       instance=component, prefix='component')
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
         if component_form.is_valid() and unit_form.is_valid():
             component = component_form.save(commit=False)
@@ -114,12 +117,14 @@ def component_create_update(request, project_slug, component_slug=None):
             if not component_id:
                 log_addition(request, component)
             else:
-                log_change(request, component, 'This component has been changed.')
+                log_change(request, component,
+                           'This component has been changed.')
             return HttpResponseRedirect(
                 reverse('component_detail',
                         args=[project_slug, component.slug]),)
     else:
-        component_form = ComponentForm(project, instance=component, prefix='component')
+        component_form = ComponentForm(project, instance=component,
+                                       prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
@@ -138,7 +143,6 @@ def component_detail(request, project_slug, component_slug):
         object_id=component.id,
         template_object_name = "component",
     )
-component_detail.__doc__ = list_detail.object_detail.__doc__
 
 
 @login_required
@@ -149,15 +153,15 @@ def component_delete(request, project_slug, component_slug):
         import copy
         component_ = copy.copy(component)
         component.delete()
-        request.user.message_set.create(message=_("The %s was deleted.") % component.name)
+        request.user.message_set.create(
+            message=_("The %s was deleted.") % component.name)
         log_deletion(request, component_, component_.name)        
         return HttpResponseRedirect(reverse('project_detail', 
                                      args=(project_slug,)))
     else:
-        return render_to_response('projects/component_confirm_delete.html', {
-            'component': component,
-        }, context_instance=RequestContext(request))
-component_detail.__doc__ = create_update.delete_object.__doc__
+        return render_to_response('projects/component_confirm_delete.html',
+                                  {'component': component,},
+                                  context_instance=RequestContext(request))
 
 
 def component_set_stats(request, project_slug, component_slug):
@@ -166,19 +170,16 @@ def component_set_stats(request, project_slug, component_slug):
     logger.debug("Requested stats calc for component %s" % component.full_name)
     # Checkout
     component.prepare_repo()
-    # Calcule statistics
+    # Calculate statistics
     try:
         component.trans.set_stats()
     except FileFilterError:
-        logger.debug("File filte does not allow POTFILES.in file name" \
+        logger.debug("File filter does not allow POTFILES.in file name"
                      " for %s component" % component.name)
-
         # TODO: Figure out why gettext is not working here
-        request.user.message_set.create(
-              message="The file filter of this intltool POT-based " \
-                      "component does not seem to allow the " \
-                      "POTFILES.in file. Please fix it.")
-
+        request.user.message_set.create(message = (
+            "The file filter of this intltool POT-based component does not "
+            " seem to allow the POTFILES.in file. Please fix it."))
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
@@ -198,11 +199,11 @@ def component_file(request, project_slug, component_slug, filename,
         formatter = pygments.formatters.HtmlFormatter(linenos='inline')
         # TODO: get the actual encoding via polib
         context = Context({'body': pygments.highlight(content.decode('utf8'),
-            lexer, formatter), 'style': formatter.get_style_defs(),
-            'title': "%s: %s" % (component.full_name,
-            os.path.basename(filename))})
-        content = loader.get_template('poview.html').render(
-            context)
+                                                      lexer, formatter),
+                           'style': formatter.get_style_defs(),
+                           'title': "%s: %s" % (component.full_name,
+                                                os.path.basename(filename))})
+        content = loader.get_template('poview.html').render(context)
         response = HttpResponse(content, mimetype='text/html; charset=UTF-8')
         attach = ""
     else:
