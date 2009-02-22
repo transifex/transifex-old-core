@@ -12,8 +12,8 @@ TEMPLATE_DEBUG = DEBUG
 STATIC_SERVE = True
 
 # Logging level/verbosity.
-# Choices: logging.DEBUG, .INFO (default), .WARNING, .ERROR, .CRITICAL
-# LOG_LEVEL = logging.INFO
+# Choices: logging.DEBUG (default), .INFO, .WARNING, .ERROR, .CRITICAL
+LOG_LEVEL = logging.DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -72,7 +72,7 @@ DATABASE_PORT = ''             # Set to empty string for default.
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'Europe/Athens'
+TIME_ZONE = 'Europe/London'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
