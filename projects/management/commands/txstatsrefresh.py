@@ -26,14 +26,13 @@ class Command(LabelCommand):
     requires_model_validation = False
     
     def handle(self, *comps, **options):
+        """Override default method to make it work without arguments.""" 
         if not comps:
             comps = [c.full_name for c in Component.objects.all()]
            
-        print 'Calculating statistics...'
+        print 'Refreshing translation statistics...'
         for comp in comps:
-            label_output = self.handle_label(label, **options)
-            if label_output:
-                output.append(label_output)
+            self.handle_label(comp, **options)
         print 'Done.'
 
     def handle_label(self, comp, **options):
