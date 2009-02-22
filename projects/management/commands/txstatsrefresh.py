@@ -1,4 +1,5 @@
 import logging
+import os
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import (LabelCommand, CommandError)
@@ -13,10 +14,17 @@ Example::
 
     python manage.py txstatsrefresh fooproject.HEAD"""
 
+
+RESUME_FILENAME = '.txstatsrefresh_resume.temp'
+
 class Command(LabelCommand):
     option_list = LabelCommand.option_list + (
-        make_option('--verbose', action='store_true', dest='verbose', default=False,
+        make_option('--verbose', action='store_true',
+                    dest='verbose', default=False,
             help='Be more verbose in reporting progress.'),
+        make_option('--continue', action='store_true',
+                    dest='continue', default=False,
+            help='Try resuming operation from temporary progress file.'),
     )
     help = (_HELP_TEXT)
            
@@ -27,12 +35,43 @@ class Command(LabelCommand):
     
     def handle(self, *comps, **options):
         """Override default method to make it work without arguments.""" 
+        _continue = options.get('continue')
+        if _continue and not os.access(os.path.dirname(__file__), os.W_OK):
+            raise CommandError("Insufficient rights to resume file.")
+            
+        # If component not defined, get all of them.
         if not comps:
             comps = [c.full_name for c in Component.objects.all()]
-           
+
+        resume_list = []
+        if _continue and os.path.exists(RESUME_FILENAME):
+            try:
+                # Read resume list
+                readlog = open(RESUME_FILENAME, 'r')
+                resume_list = readlog.readlines()
+                readlog.close()
+            except:
+                # File isn't there (or something else anyway)
+                pass
+        if _continue:
+            log = open(RESUME_FILENAME, 'a')
+
         print 'Refreshing translation statistics...'
-        for comp in comps:
-            self.handle_label(comp, **options)
+        try:
+            for comp in comps:
+                if _continue and '%s\n' % comp in resume_list: # Note newline
+                    print 'Skipping\t%s' % comp
+                    continue
+                print 'Refreshing\t%s' % comp
+                self.handle_label(comp, **options)
+                if _continue:
+                    log.write('%s\n' % comp)
+        finally:
+            if _continue:
+                log.close()
+        # When finished, resume file not needed.
+        if _continue:
+            os.remove(RESUME_FILENAME)
         print 'Done.'
 
     def handle_label(self, comp, **options):
@@ -51,7 +90,7 @@ class Command(LabelCommand):
         # Calculate statistics
         try:
             comp.trans.set_stats()
-        except e:
+        except:
             raise CommandError("Error in setting stats for %s." % comp.full_name)
             sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
             sys.exit(1)
