@@ -13,7 +13,7 @@ STATIC_SERVE = True
 
 # Logging level/verbosity.
 # Choices: logging.DEBUG (default), .INFO, .WARNING, .ERROR, .CRITICAL
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -168,7 +168,7 @@ INSTALLED_APPS = [
 # The directory where the vcs app will checkout stuff and play around.
 # Warning: On production systems this should be a place outside of the source
 # and with enough disk space. Eg. /var/lib/transifex.
-SCRATCH_DIR = os.path.join('/tmp/transifex', 'scratchdir')
+SCRATCH_DIR = os.path.join('/var/lib/transifex', 'scratchdir')
 
 # The VCS choices for the system. Enable or disable any VCS types from here.
 # This list also feeds the Unit model with the available options.
