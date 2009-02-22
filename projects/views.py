@@ -154,7 +154,7 @@ def component_delete(request, project_slug, component_slug):
         component_ = copy.copy(component)
         component.delete()
         request.user.message_set.create(
-            message=_("The %s was deleted.") % component.name)
+            message=_("The %s was deleted.") % component.full_name)
         log_deletion(request, component_, component_.name)        
         return HttpResponseRedirect(reverse('project_detail', 
                                      args=(project_slug,)))
@@ -175,7 +175,7 @@ def component_set_stats(request, project_slug, component_slug):
         component.trans.set_stats()
     except FileFilterError:
         logger.debug("File filter does not allow POTFILES.in file name"
-                     " for %s component" % component.name)
+                     " for %s component" % component.full_name)
         # TODO: Figure out why gettext is not working here
         request.user.message_set.create(message = (
             "The file filter of this intltool POT-based component does not "
@@ -183,6 +183,13 @@ def component_set_stats(request, project_slug, component_slug):
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
+@login_required
+def component_clear_cache(request, project_slug, component_slug):
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
+    component.clear_cache()
+    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
 
 def component_file(request, project_slug, component_slug, filename, 
                    view=False, isMsgmerged=True):

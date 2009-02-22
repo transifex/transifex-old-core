@@ -87,6 +87,10 @@ urlpatterns += patterns('',
         view = component_delete,
         name = 'component_delete',),
     url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/clear_cache/$',
+        view = component_clear_cache,
+        name = 'component_clear_cache',),
+    url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/set_stats/$',
         view = component_set_stats,
         name = 'component_set_stats',),

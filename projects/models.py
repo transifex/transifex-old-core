@@ -275,10 +275,9 @@ class Component(models.Model):
                               'component': self,})
 
     def delete(self, *args, **kwargs):
+        self.clear_cache()
         if self.unit:
             self.unit.delete()
-            POFile.objects.filter(object_id=self.id).delete()
-            self.delete_static_dir()
         super(Component, self).delete(*args, **kwargs)
 
     def set_unit(self, root, branch, type, web_frontend=None):
@@ -325,6 +324,25 @@ class Component(models.Model):
         self.unit.prepare_repo()
         del(self.trans)
 
+    def clear_cache(self):
+        """
+        Clear the local cache of the component.
+
+        Delete statistics, teardown repo, remove static dir, rest unit.
+        """ 
+        logger.debug("Clearing local cache for %s" % self.full_name)
+        try:
+            self.trans.clear_stats()
+            self.delete_static_dir()
+            self.unit.teardown_repo()
+            del(self.trans)
+            if self.unit:
+                self.delete_static_dir()
+                self.unit.last_checkout = None
+                self.unit.save()
+        except:
+             logger.error("Clearing cache failed for %s." % (self.full_name))
+         
     def get_rev(self, path=None):
         """Get revision of a path from the underlying Unit"""
         return self.unit.get_rev(path)

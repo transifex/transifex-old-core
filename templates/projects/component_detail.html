@@ -66,15 +66,23 @@
     {% endif %}
     {% endwith %}
     <tr>
-      <th class="i16 update">{% trans "Local cache:" %}</th>
+      <th class="i16 cache">{% trans "Local cache:" %}</th>
       <td>
-        <form action="{% url component_set_stats component.project.slug component.slug %}" style="float: right;">
-            {% if component.unit.last_checkout %}
-            {% trans "The local checked-out copy of this component was last updated " %} <strong>{{component.unit.last_checkout|timesince}}</strong> {% trans "ago" %}.
-            {% else %}
-            {% trans "You can check-out a copy of this component right now if you want." %}
-            {% endif %}
-            <input title="{% trans "It will refresh and re-calculate the stats. It can take some time." %}" class="icon16 refresh" value="{% trans "Refresh now!" %}" type="submit">
+        {% if component.unit.last_checkout %}
+        {% trans "The local checked-out copy of this component was last updated " %} <strong>{{component.unit.last_checkout|timesince}}</strong> {% trans "ago" %}.
+        {% else %}
+        {% trans "Component not yet pulled from source repository." %}
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th class="i16 maintainer">{% trans "Maintainer actions:" %}</th>
+      <td>
+        <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
+            <input title="{% trans "Refresh and re-calculate statistics. It can take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
+        </form>
+        <form action="{% url component_clear_cache component.project.slug component.slug %}" class="microform">
+            <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
         </form>
       </td>
     </tr>

@@ -31,7 +31,7 @@ class POTHandler:
 
         # Deleting all stats for the component
         logger.debug("Setting stats for %s" % self.component)
-        self.tm.delete_stats_for_object(self.component)
+        self.clear_stats()
 
         # Set the source file (pot) to the database
         self.tm.set_source_stats(self.component, isMsgmerged=False)
@@ -47,6 +47,14 @@ class POTHandler:
 
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)
+
+    def clear_stats(self):
+        """Clear stats for all translations of the component."""
+
+        # Deleting all stats for the component
+        logger.debug("Clearing stats for %s" % self.component)
+        self.tm.delete_stats_for_object(self.component)
+
         
     def get_stats(self):
         """Return stats for the component."""
