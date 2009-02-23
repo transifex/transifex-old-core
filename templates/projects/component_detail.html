@@ -50,9 +50,16 @@
     </tr>
     {% if component.trans.get_source_file %}
     <tr>
-      {% url component_raw_file component.project.slug component.slug component.trans.get_source_file as file_source_url %}
       <th class="link i16">{% trans "Source file:" %}</th>
-      <td><a title="{% trans "Download the source file for this component." %}" href="{{file_source_url}}">{{component.trans.get_source_file}}</a></td>
+      <td>
+      {% with component.trans.get_source_file as source_file %}
+      {% url component_raw_file component.project.slug component.slug source_file as source_raw_url %}
+      {% url component_view_file component.project.slug component.slug source_file as source_view_url %}
+        <code style="margin-right: 0.7em;">{{ source_file }}</code>
+        <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_file }}" href="{{ source_view_url }}"></a>
+        <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{ source_file }}" href="{{ source_raw_url }}"></a>
+      {% endwith %}
+      </td>
     </tr>
     {% endif %}
     {% with component.releases.all as releases %}
@@ -75,7 +82,7 @@
         {% endif %}
       </td>
     </tr>
-    <tr>
+    {% if request.user.is_authenticated %}<tr>
       <th class="i16 maintainer">{% trans "Maintainer actions:" %}</th>
       <td>
         <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
@@ -85,7 +92,7 @@
             <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
         </form>
       </td>
-    </tr>
+    </tr>{% endif %}
   </table>
 </div>
 {% endif %}  
