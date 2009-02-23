@@ -1,3 +1,4 @@
+from exceptions import Exception
 import logging
 import os
 from optparse import make_option, OptionParser
@@ -19,12 +20,15 @@ RESUME_FILENAME = '.txstatsrefresh_resume.temp'
 
 class Command(LabelCommand):
     option_list = LabelCommand.option_list + (
-        make_option('--verbose', action='store_true',
-                    dest='verbose', default=False,
-            help='Be more verbose in reporting progress.'),
         make_option('--continue', action='store_true',
                     dest='continue', default=False,
             help='Try resuming operation from temporary progress file.'),
+        make_option('--skip-broken', action='store_true',
+                    dest='skip', default=False,
+            help='Be more verbose in reporting progress.'),
+        make_option('--verbose', action='store_true',
+                    dest='verbose', default=False,
+            help='Be more verbose in reporting progress.'),
     )
     help = (_HELP_TEXT)
            
@@ -36,6 +40,7 @@ class Command(LabelCommand):
     def handle(self, *comps, **options):
         """Override default method to make it work without arguments.""" 
         _continue = options.get('continue')
+        skip = options.get('skip')
         if _continue and not os.access(os.path.dirname(__file__), os.W_OK):
             raise CommandError("Insufficient rights to resume file.")
             
@@ -63,7 +68,16 @@ class Command(LabelCommand):
                     print 'Skipping\t%s' % comp
                     continue
                 print 'Refreshing\t%s' % comp
-                self.handle_label(comp, **options)
+                try:
+                    self.handle_label(comp, **options)
+                except Exception, e:
+                    log.exception("Failed refreshing stats for %s." % comp)
+                    if skip:
+                        print("Failed refreshing %s." % comp)
+                        pass
+                    else:
+                        raise CommandError("Error refreshing stats for %s. "
+                            "Use --skip to ignore broken ones)." % comp)
                 if _continue:
                     log.write('%s\n' % comp)
         finally:
