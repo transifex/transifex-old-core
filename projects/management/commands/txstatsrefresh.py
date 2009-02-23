@@ -71,7 +71,7 @@ class Command(LabelCommand):
                 try:
                     self.handle_label(comp, **options)
                 except Exception, e:
-                    log.exception("Failed refreshing stats for %s." % comp)
+                    logging.exception("Failed refreshing stats for %s." % comp)
                     if skip:
                         print("Failed refreshing %s." % comp)
                         pass
