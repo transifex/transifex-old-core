@@ -63,11 +63,12 @@ class Command(LabelCommand):
 
         print 'Refreshing translation statistics...'
         try:
-            for comp in comps:
+            for i, comp in enumerate(comps):
                 if _continue and '%s\n' % comp in resume_list: # Note newline
-                    print 'Skipping\t%s' % comp
+                    print '%s/%s: Skipping\t%s' % (i+1, len(comps), comp)
                     continue
-                print 'Refreshing\t%s' % comp
+                print '%s/%s: Refreshing\t%s' % (i+1, len(comps), comp)
+                errors = False
                 try:
                     self.handle_label(comp, **options)
                 except Exception, e:
@@ -78,7 +79,7 @@ class Command(LabelCommand):
                     else:
                         raise CommandError("Error refreshing stats for %s. "
                             "Use --skip to ignore broken ones)." % comp)
-                if _continue:
+                if _continue and not errors:
                     log.write('%s\n' % comp)
         finally:
             if _continue:
