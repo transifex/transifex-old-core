@@ -34,6 +34,7 @@
 {% block body_main %}
   {% autopaginate release_list 5 %}
   <div class="release_list obj_biglist">
+  <div class="pagination_top">{% paginate %}</div>
   {% for release in release_list %}
     <div class="entry">
       <h3 class="name"><a href="{{ release.get_absolute_url }}">{{ release.name }}</a></h3>
@@ -42,7 +43,7 @@
       {% if release.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in release.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url release_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
     </div>
   {% endfor %}
-  {% paginate %}
+  <div class="pagination_bottom">{% paginate %}</div>
   </div>
   {% if not release_list %}
   <p>{% trans "No releases registered yet. :-(" %}</p>

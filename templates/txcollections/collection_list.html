@@ -34,6 +34,7 @@
 {% block body_main %}
   {% autopaginate collection_list 5 %}
   <div class="collection_list obj_biglist">
+  <div class="pagination_top">{% paginate %}</div>
   {% for collection in collection_list %}
     <div class="entry">
       <h3 class="name"><a href="{{ collection.get_absolute_url }}">{{ collection.name }}</a></h3>
@@ -46,7 +47,7 @@
       {% if collection.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in collection.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url collection_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
     </div>
   {% endfor %}
-  {% paginate %}
+  <div class="pagination_bottom">{% paginate %}</div>
   </div>
   {% if not collection_list %}
   <p>{% trans "No collections registered yet. :-(" %}</p>

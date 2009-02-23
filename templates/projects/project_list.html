@@ -34,13 +34,14 @@
 {% block body_main %}
   {% autopaginate project_list 20 %}
   <div class="project_list obj_biglist">
+  <div class="pagination_top">{% paginate %}</div>
   {% for project in project_list %}
     <div class="entry">
       <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
       <p class="description">{{ project.description }}</p>
     </div>
   {% endfor %}
-  {% paginate %}
+  <div class="pagination_bottom">{% paginate %}</div>
   </div>
   {% if not project_list %}
   <p>{% trans "No projects registered yet. :-(" %}</p>
