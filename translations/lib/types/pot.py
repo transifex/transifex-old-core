@@ -92,10 +92,10 @@ class POTManager(TransManagerMixin):
 
         if error:
             error = True
-        else:
-            r_tr = re.search(r"([0-9]+) translated", output)
-            r_un = re.search(r"([0-9]+) untranslated", output)
-            r_fz = re.search(r"([0-9]+) fuzzy", output)
+    
+        r_tr = re.search(r"([0-9]+) translated", output)
+        r_un = re.search(r"([0-9]+) untranslated", output)
+        r_fz = re.search(r"([0-9]+) fuzzy", output)
 
         if r_tr: translated = r_tr.group(1)
         else: translated = 0
@@ -180,6 +180,13 @@ class POTManager(TransManagerMixin):
                         isPOT=True,
                         object=object,
                         isMsgmerged=isMsgmerged)
+
+            stats = self.po_file_stats(potfile)
+            p.set_stats(trans=stats['translated'], 
+                        fuzzy=stats['fuzzy'], 
+                        untrans=stats['untranslated'], 
+                        error=stats['error'])
+
             p.save()
         else:
             #TODO: We don't have a source file (POT), what should we do?
