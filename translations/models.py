@@ -47,6 +47,16 @@ class POFileManager(models.Manager):
         """
         from django.db import connection
         cursor = connection.cursor()
+
+        cursor.execute("SELECT sum(t.total) "
+                       "FROM translations_pofile as t, "
+                       "projects_component_releases as r "
+                       "WHERE r.collectionrelease_id=%s AND "
+                       "isPOT=1 AND "
+                       "t.object_id=r.component_id",
+                       [release.id])
+        pot_total = cursor.fetchone()[0]
+
         cursor.execute("SELECT sum(t.trans), sum(t.fuzzy), "\
                        "sum(t.untrans), sum(t.total), t.language_id "\
                        "FROM translations_pofile as t, "\
@@ -58,11 +68,20 @@ class POFileManager(models.Manager):
         postats = []
         for row in cursor.fetchall():
             l = Language.objects.get(id=row[4])
+
+            if pot_total and pot_total > row[3]:
+                # Compare the total of entries between POT and PO
+                # We need to sum entries as untranslated for languages 
+                # that even are not present in a component
+                no_po = pot_total - row[3]
+            else:
+                no_po = 0
+
             po = self.model(trans=row[0],
                             fuzzy=row[1], 
-                            untrans=row[2], 
-                            total=row[3],
-                            filename=l.code,
+                            untrans=row[2] + no_po, 
+                            total=row[3] + no_po, 
+                            filename=l.code, # Not used but needed
                             object=l, # Not used but needed
                             language=l)
             po.calculate_perc()
