@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 
 from mercurial import ui, hg, commands
@@ -141,3 +142,22 @@ class HgBrowser(VCSBrowserMixin):
             f = self.repo.changectx(self.branch).filectx('NOTES')
             return (int(f.filectx(f.filerev()).node().encode('hex'),
                 16),)
+
+    @need_repo
+    def submit(self, files, msg, user):
+        """
+        update to upstream
+        hg commit -m <msg> --addremove
+        hg push
+        """
+        self.update()
+
+        for filename, contents in files.iteritems():
+            self.save_file_contents(filename, contents)
+
+        user = u'%s <%s>' % (user.id, user.email)
+
+        commands.commit(self.repo.ui, self.repo, message=msg,
+                        addremove=True, logfile=None, user=user,
+                        date=None)
+        commands.push(self.repo.ui, self.repo, force=False, rev=None)
