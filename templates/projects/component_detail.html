@@ -48,16 +48,16 @@
       <th class="i16 filter">{% trans "Filter:" %}</th>
       <td>{{ component.file_filter }}</td>
     </tr>
-    {% if component.trans.get_source_file %}
+    {% if component.trans.get_source_stats %}
     <tr>
       <th class="link i16">{% trans "Source file:" %}</th>
       <td>
-      {% with component.trans.get_source_file as source_file %}
-      {% url component_raw_file component.project.slug component.slug source_file as source_raw_url %}
-      {% url component_view_file component.project.slug component.slug source_file as source_view_url %}
-        <code style="margin-right: 0.7em;">{{ source_file }}</code>
-        <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_file }}" href="{{ source_view_url }}"></a>
-        <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{ source_file }}" href="{{ source_raw_url }}"></a>
+      {% with component.trans.get_source_stats as source_stats %}
+      {% url component_raw_file component.project.slug component.slug source_stats.filename as source_raw_url %}
+      {% url component_view_file component.project.slug component.slug source_stats.filename as source_view_url %}
+        <code style="margin-right: 0.7em;">{{ source_stats.filename }} ({{ source_stats.total }} {% trans "entries" %})</code>
+        <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_stats.filename }}" href="{{ source_view_url }}"></a>
+        <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{ source_stats.filename }}" href="{{ source_raw_url }}"></a>
       {% endwith %}
       </td>
     </tr>
