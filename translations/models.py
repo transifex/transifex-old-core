@@ -1,12 +1,13 @@
 from datetime import datetime
-from django.contrib import admin
 from django.db import models
 from django.db.models import permalink
+from django.template.defaultfilters import dictsort, dictsortreversed
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
-from django.template.defaultfilters import dictsort, dictsortreversed
+from simplelock.models import Lock
+
 
 class POFileManager(models.Manager):
     def get_for_object(self, obj):
@@ -185,6 +186,26 @@ class POFile(models.Model):
         except:
             return
 
+    @property
+    def locked(self):
+        if self.locks.all():
+            return True
+        else:
+            return False
+
+class POFileLock(Lock):
+    """A lock/hold on a POFile object."""
+    
+    pofile = models.ForeignKey(POFile, related_name='locks', null=True)
+
+    class Meta(Lock.Meta):
+        db_table = 'translations_pofile_lock'
+        unique_together = ('pofile', 'owner')
+
+    def __unicode__(self):
+        return u"%(pofile)s (%(owner)s)" % {
+            'owner': self.owner,
+            'pofile': self.pofile.filename,}
 
 def suite():
     """

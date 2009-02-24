@@ -103,6 +103,10 @@ urlpatterns += patterns('',
         view = component_file,
         name = 'component_view_file',
         kwargs = {'view': True },),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/toggle_lock/(?P<filename>(.*))$',
+        view = component_toggle_lock_file,
+        name = 'component_toggle_lock_file',),
     url (
         regex = '^(?P<slug>[-\w]+)/component-added/$',
         view = 'django.views.generic.list_detail.object_detail',

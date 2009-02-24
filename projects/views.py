@@ -17,6 +17,7 @@ from projects.forms import ProjectForm, ComponentForm, UnitForm
 from transifex.log import logger
 from actionlog.models import (log_addition, log_change, log_deletion)
 from translations.lib.types.pot import FileFilterError
+from translations.models import (POFile, POFileLock)
 
 # Feeds
 
@@ -183,6 +184,7 @@ def component_set_stats(request, project_slug, component_slug):
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
+
 @login_required
 def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
@@ -190,6 +192,7 @@ def component_clear_cache(request, project_slug, component_slug):
     component.clear_cache()
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
+
 
 def component_file(request, project_slug, component_slug, filename, 
                    view=False, isMsgmerged=True):
@@ -218,3 +221,27 @@ def component_file(request, project_slug, component_slug, filename,
         attach = "attachment;"
     response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
     return response
+
+
+@login_required
+def component_toggle_lock_file(request, project_slug, component_slug,
+                               filename):
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
+    pofile = get_object_or_404(POFile, component=component, filename=filename)
+
+    try:
+        lock = POFileLock.objects.get(pofile=pofile)
+        if request.user == lock.owner:
+            lock.delete()
+            request.user.message_set.create(message="Lock removed.")
+        else:
+            request.user.message_set.create(
+                message="Error: Only the owner of a lock can remove it.")
+    except POFileLock.DoesNotExist:
+        lock = POFileLock.objects.create(pofile=pofile, owner=request.user)
+        request.user.message_set.create(
+            message="Lock created. Please don't forget to remove it when "
+            "you're done.")
+    return HttpResponseRedirect(reverse('projects.views.component_detail',
+                                        args=(project_slug, component_slug,)))

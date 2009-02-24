@@ -150,7 +150,7 @@ INSTALLED_APPS = [
     'tagging',
     'pagination',
     'contact_form',
-    # txo specific apps:
+    # Transifex specific apps:
     'transifex',    
     'vcs',
     'translations',
@@ -158,8 +158,8 @@ INSTALLED_APPS = [
     'projects',
     'txcollections',
     'releases',
-    'actionlog'
-    #'management',
+    'actionlog',
+    'simplelock',
 ]
 
 ####################

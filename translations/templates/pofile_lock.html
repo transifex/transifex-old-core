@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load statistics %}
+{% url component_toggle_lock_file project component pofile.filename as toggle_lock_url %}
+{% with pofile.locks.get.owner as owner %}
+{% if pofile.locked %}
+  {% ifequal current_user.username owner.username %}
+    <a class="i16 lock_break nodecoration_icon" title="{% trans "Unlock this file when you're finished working with it." %}" href="{{ toggle_lock_url }}"></a>
+    <span class="stat_message">(you)</span>
+  {% else %}
+    <span class="i16 lock nodecoration_icon" title="{% trans "This file is locked, indicating someone is working with it." %}" href="{{ toggle_lock_url }}"></span>
+    <span class="stat_message">({{ owner }})</span>
+  {% endifequal %}
+{% else %}
+  {% if current_user.is_authenticated %}
+    <a class="i16 lock_none nodecoration_icon" title="{% trans "Lock this file to notify others you're working with it." %}" href="{{ toggle_lock_url }}"></a>
+  {% else %}
+    <span class="i16 lock_none nodecoration_icon" title="{% trans "This file is unlocked. Most likely noone is working with it right now." %}" href="{{ toggle_lock_url }}"></span>
+  {% endif %}
+{% endif %}
+{% endwith %}

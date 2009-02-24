@@ -4,8 +4,7 @@ from translations.models import Language
 
 register = template.Library()
 
-@register.inclusion_tag("comp_stats_table.html")
-def comp_stats_table(object):
+def comp_stats_table(context, object):
     """
     Creates a HTML table to presents the statistics of all 
     languages for a component.
@@ -15,9 +14,11 @@ def comp_stats_table(object):
 
     stats = object.trans.get_stats()
 
-    return {"stats": stats,
-            "project": project,
-            "component": component}
+    return {'stats': stats,
+            'project': project,
+            'component': component,
+            'current_user': context['request'].user}
+register.inclusion_tag('comp_stats_table.html', takes_context=True)(comp_stats_table)
 
 @register.inclusion_tag("project_stats_table.html")
 def project_stats_table(project):
@@ -36,14 +37,15 @@ def project_stats_table(project):
         return {'components': components,
                 'stats': stats}
 
-@register.inclusion_tag("lang_stats_table.html")
-def lang_stats_table(stats):
+def lang_stats_table(context, stats):
     """
     Creates a HTML table to presents the statistics of all components 
     for a specific language.
     """
 
-    return {'stats': stats}
+    return {'stats': stats,
+            'current_user': context['request'].user}
+register.inclusion_tag('lang_stats_table.html', takes_context=True)(lang_stats_table)
 
 @register.inclusion_tag("release_stats_table.html")
 def release_stats_table(stats, collection, release):

@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load statistics %}
+{% load locks %}
 {% if stats %}
 <h3>{% trans "Translation statistics" %} </h3>
 <table class="stats_comp">
@@ -32,6 +33,7 @@
            {% url component_raw_file project component stat.filename as file_raw_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
+           {% pofile_lock project component stat %}
         </td>
       </tr>
    {% endfor %}
