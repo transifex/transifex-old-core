@@ -11,6 +11,12 @@ if [ ! "$#" = "1" ]; then
 	exit 1
 fi
 
+if [ "$RPMBUILDROOT" = "" ]; then
+	echo "RPMBUILDROOT seems uninitialized; are you sure you are not running this script directly?"
+	exit 1
+fi
+
+
 echo "Cleaning up"
 
 for dir in BUILD BUILDROOT RPMS SOURCES SRPMS; do
@@ -36,17 +42,17 @@ pwd
 popd
 
 echo "setting up staging directory"
-if [ ! -d /var/tmp/rpmbuild ]; then
+if [ ! -d $RPMBUILDROOT ]; then
 	echo "creating staging directory"
-	mkdir /var/tmp/rpmbuild
+	mkdir $RPMBUILDROOT
 else
-	rm -rf /var/tmp/rpmbuild
-	mkdir /var/tmp/rpmbuild
+	rm -rf $RPMBUILDROOT
+	mkdir $RPMBUILDROOT
 fi
 
-find . | cpio -p -dum -v /var/tmp/rpmbuild
+find . | cpio -p -dum -v $RPMBUILDROOT
 
-pushd /var/tmp/rpmbuild
+pushd $RPMBUILDROOT
 rpmbuild -ba --clean --nodeps SPECS/transifex-extras.spec
 popd
 

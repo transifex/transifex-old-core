@@ -11,6 +11,11 @@ if [ ! "$#" = "1" ]; then
 	exit 1
 fi
 
+if [ "$RPMBUILDROOT" = "" ]; then
+        echo "RPMBUILDROOT seems uninitialized; are you sure you are not running this script directly?"
+	exit 1
+fi
+
 echo "Cleaning up"
 
 for dir in BUILD BUILDROOT RPMS SOURCES SRPMS; do
@@ -24,7 +29,7 @@ done
 echo "applying version $1 to spec file"
 cat SPECS/transifex.spec.in | sed -e "s/\[\[version\]\]/$1/g" > SPECS/transifex.spec
 echo "checking out latest code; please wait"
-hg clone http://code.transifex.org/index.cgi/tx-django/ SOURCES/transifex-$1
+hg clone $REPO SOURCES/transifex-$1
 rm -rf SOURCES/transifex-$1/build-tools
 pushd SOURCES
 
@@ -35,17 +40,18 @@ pwd
 popd
 
 echo "setting up staging directory"
-if [ ! -d /var/tmp/rpmbuild ]; then
+if [ ! -d $RPMBUILDROOT ]; then
 	echo "creating staging directory"
-	mkdir /var/tmp/rpmbuild
+	mkdir $RPMBUILDROOT
 else
-	rm -rf /var/tmp/rpmbuild
-	mkdir /var/tmp/rpmbuild
+	rm -rf $RPMBUILDROOT
+	mkdir $RPMBUILDROOT
 fi
 
-find . | cpio -p -dum -v /var/tmp/rpmbuild
+find . | cpio -p -dum -v $RPMBUILDROOT
 
-pushd /var/tmp/rpmbuild
+pushd $RPMBUILDROOT
+
 rpmbuild -ba --clean --nodeps SPECS/transifex.spec
 popd
 

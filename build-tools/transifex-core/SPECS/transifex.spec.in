@@ -30,8 +30,9 @@ rm -rf $RPM_BUILD_ROOT
 # make install DESTDIR=$RPM_BUILD_ROOT
 #make DESTDIR=$RPM_BUILD_ROOT install
 # std place fedora-infrastructure deployes tg code
-mkdir -p $RPM_BUILD_ROOT/%{python_sitelib}
-find * | cpio -p -dum $RPM_BUILD_ROOT/%{python_sitelib}/%{name}
+mkdir -p $RPM_BUILD_ROOT/srv/transifex
+mkdir -p $RPM_BUILD_ROOT/var/lib/transifex/scratchdir
+find * | cpio -p -dum $RPM_BUILD_ROOT/srv/transifex
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -39,8 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-/%{python_sitelib}/%{name}/*
-
+/var/lib/transifex
+%attr(-,apache,apache) /var/lib/transifex/scratchdir
+/srv/%{name}
 
 %changelog
 

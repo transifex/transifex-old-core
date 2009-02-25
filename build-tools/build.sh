@@ -12,18 +12,23 @@ if [ ! "$#" = "1" ]; then
 	exit 1
 fi
 
-echo "Cleaning up"
+export REPO='http://code.transifex.org/index.cgi/mainline'
+export RPMBUILDROOT=`rpmbuild --showrc | grep _topdir | grep -v '{_topdir}' | awk '{print $3}'`
 
-for dir in BUILD BUILDROOT RPMS SOURCES SPECS SRPMS; do
-	rm -rf $dir/*
-done
+if [ "$RPMBUILDROOT" = "" ]; then
+	echo "The RPM _topdir build directory does not seem to be specified; please make sure it's set"
+	echo "For instance you can add '%_topdir      /var/tmp/rpmbuild' in ~/.rpmmacros"
+	exit 1
+fi
+
+echo "Cleaning up"
 
 pushd transifex-core
 ./build.sh $1
 popd
-for file in `find /var/tmp/rpmbuild/ -name 'transifex*rpm'`; do cp $file . ; done
+for file in `find $RPMBUILDROOT -name 'transifex*rpm'`; do cp $file . ; done
 
 pushd transifex-extras
 ./build.sh $1
 popd
-for file in `find /var/tmp/rpmbuild/ -name 'transifex*rpm'`; do cp $file . ; done
+for file in `find $RPMBUILDROOT -name 'transifex*rpm'`; do cp $file . ; done
