@@ -61,6 +61,7 @@ class Command(LabelCommand):
         if _continue:
             log = open(RESUME_FILENAME, 'a')
 
+        errors = {}
         print 'Refreshing translation statistics...'
         try:
             for i, comp in enumerate(comps):
@@ -68,24 +69,24 @@ class Command(LabelCommand):
                     print '%s/%s: Skipping\t%s' % (i+1, len(comps), comp)
                     continue
                 print '%s/%s: Refreshing\t%s' % (i+1, len(comps), comp)
-                errors = False
                 try:
                     self.handle_label(comp, **options)
                 except Exception, e:
                     logging.exception("Failed refreshing stats for %s." % comp)
+                    errors[comp] = True
                     if skip:
                         print("Failed refreshing %s." % comp)
                         pass
                     else:
                         raise CommandError("Error refreshing stats for %s. "
                             "Use --skip to ignore broken ones)." % comp)
-                if _continue and not errors:
+                if _continue and not errors[comp]:
                     log.write('%s\n' % comp)
         finally:
             if _continue:
                 log.close()
         # When finished, resume file not needed.
-        if _continue:
+        if _continue and len(errors) == 0:
             os.remove(RESUME_FILENAME)
         print 'Done.'
 
