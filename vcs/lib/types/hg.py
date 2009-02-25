@@ -158,7 +158,9 @@ class HgBrowser(VCSBrowserMixin):
 
         user = u'%s <%s>' % (user.username, user.email)
 
-        commands.commit(self.repo.ui, self.repo, message=msg,
-                        addremove=True, logfile=None, user=user,
+        commands.commit(self.repo.ui, self.repo, 
+                        message=msg.encode('utf-8'),
+                        addremove=True, logfile=None, 
+                        user=user.encode('utf-8'),
                         date=None)
         commands.push(self.repo.ui, self.repo, force=False, rev=None)
