@@ -260,12 +260,15 @@ def component_submit_file(request, project_slug, component_slug,
         # TODO: put it somewhere else using the settings.py
         msg="Sending translation for %s" % lang_name
 
-        component.submit(request.FILES, msg, request.user)
         try:
+            logger.debug("Submitting %s for component %s" % 
+                         (postats.filename, component.full_name))
             component.submit(request.FILES, msg, request.user)
             # Calculate new stats
+            logger.debug("Calculating %s stats for component %s" % 
+                         (postats.filename, component.full_name))
             component.trans.set_stats_for_lang(lang_code)
-            request.user.message_set.create(message=("File submited " 
+            request.user.message_set.create(message=("File submitted " 
                                "successfully: %s" % postats.filename))
         except:
             logger.debug("Error submiting translation file %s"
