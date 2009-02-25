@@ -66,3 +66,7 @@ class POTHandler:
 
     def get_source_stats(self):
         return self.tm.get_source_stats(self.component)
+
+    def guess_language(self, filename):
+        """Set stats for a specific language."""
+        return self.tm.guess_language(lang, filename)

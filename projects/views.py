@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext_lazy as _
+from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
@@ -18,6 +19,8 @@ from transifex.log import logger
 from actionlog.models import (log_addition, log_change, log_deletion)
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
+from translations.models import POFile
+from languages.models import Language
 
 # Feeds
 
@@ -221,6 +224,63 @@ def component_file(request, project_slug, component_slug, filename,
         attach = "attachment;"
     response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
     return response
+
+@login_required
+def component_submit_file(request, project_slug, component_slug, 
+                          filename):
+
+    if request.method == 'POST':
+
+        component = get_object_or_404(Component, slug=component_slug,
+                                    project__slug=project_slug)
+        postats = get_object_or_404(POFile, filename=filename,
+                                    object_id=component.id)
+
+        try:
+            # Adding extra field to the instance
+            request.FILES['submited_file'].targetfile = postats.filename 
+        except MultiValueDictKeyError:
+            # TODO: Figure out why gettext is not working here
+            request.user.message_set.create(message=("Please select a " 
+                               "file from your system to be uploaded."))
+            return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
+
+        logger.debug("Checking out for component %s" % component.full_name)
+        # Checkout
+        component.prepare_repo()
+        
+        try:
+            lang_name = postats.language.name
+            lang_code = postats.language.code
+        except AttributeError:
+            lang_name = postats.filename
+            lang_code = component.trans.guess_language(postats.filename)
+
+        # TODO: put it somewhere else using the settings.py
+        msg="Sending translation for %s" % lang_name
+
+        component.submit(request.FILES, msg, request.user)
+        try:
+            component.submit(request.FILES, msg, request.user)
+            # Calculate new stats
+            component.trans.set_stats_for_lang(lang_code)
+            request.user.message_set.create(message=("File submited " 
+                               "successfully: %s" % postats.filename))
+        except:
+            logger.debug("Error submiting translation file %s"
+                         " for %s component: %s" % (postats.filename,
+                                               component.full_name, e))
+            # TODO: Figure out why gettext is not working here
+            request.user.message_set.create(message = (
+                "Sorry, an error is causing troubles to send your file."))
+
+    else:
+        # TODO: Figure out why gettext is not working here
+        request.user.message_set.create(message = (
+                "Sorry, but you need to send a POST request."))
+    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
 
 
 @login_required

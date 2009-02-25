@@ -149,6 +149,11 @@ class Unit(models.Model):
     def get_rev(self, path=None):
         """Get revision of a path from the underlying VCS"""
         return self.browser.get_rev(path)
+
+    @need_browser
+    def submit(self, files, msg, user):
+        """Get revision of a path from the underlying VCS"""
+        return self.browser.submit(files, msg, user)
         
 def suite():
     """

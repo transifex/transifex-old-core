@@ -347,6 +347,9 @@ class Component(models.Model):
         """Get revision of a path from the underlying Unit"""
         return self.unit.get_rev(path)
 
+    def submit(self, files, msg, user):
+        return self.unit.submit(files, msg, user)
+
     # TODO: We might want to move the next two functions to another 
     # app later, like Utils or something
     def rename_static_dir(self, new_name):
