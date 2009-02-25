@@ -8,6 +8,9 @@
     <tr>
       <th>{% trans "Language" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
+      {% if current_user.is_authenticated %}
+      <th>{% trans "Send a translation" %}</th>
+      {% endif %}
       <th>{% trans "Options" %}</th>
     </tr>
    </thead>
@@ -28,6 +31,15 @@
           {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
+        {% if current_user.is_authenticated %}
+        <td class="left submission">
+           {% url component_submit_file project component stat.filename as file_submit_url %}
+             <form class="microform" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
+                <input type="file" class="i16 find_file" name="submited_file" size="10">
+                <input type="submit" class="i16 submit" value="{% trans "Send" %}">
+             </form>
+        </td>
+        {% endif %}
         <td class="left actions">
            {% url component_view_file project component stat.filename as file_view_url %}
            {% url component_raw_file project component stat.filename as file_raw_url %}
