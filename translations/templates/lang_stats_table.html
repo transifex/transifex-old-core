@@ -30,7 +30,7 @@
            {% url component_raw_file stat.object.project.slug stat.object.slug stat.filename as file_raw_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
-           {% pofile_lock project component stat %}
+           {% pofile_lock stat.object.project.slug stat.object.slug stat %}
         </td>
       </tr>
    {% endfor %}
