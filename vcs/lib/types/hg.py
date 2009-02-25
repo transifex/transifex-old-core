@@ -152,10 +152,11 @@ class HgBrowser(VCSBrowserMixin):
         """
         self.update()
 
-        for filename, contents in files.iteritems():
-            self.save_file_contents(filename, contents)
+        for fieldname, uploadedfile in files.iteritems():
+            for contents in uploadedfile.chunks():
+                self.save_file_contents(uploadedfile.targetfile, contents)
 
-        user = u'%s <%s>' % (user.id, user.email)
+        user = u'%s <%s>' % (user.username, user.email)
 
         commands.commit(self.repo.ui, self.repo, message=msg,
                         addremove=True, logfile=None, user=user,
