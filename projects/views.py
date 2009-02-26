@@ -1,4 +1,5 @@
-import os
+# -*- coding: utf-8 -*-
+import os, re
 import pygments
 import pygments.lexers
 import pygments.formatters
@@ -227,35 +228,49 @@ def component_file(request, project_slug, component_slug, filename,
 
 @login_required
 def component_submit_file(request, project_slug, component_slug, 
-                          filename):
+                          filename=None):
+
+    component = get_object_or_404(Component, slug=component_slug,
+                                    project__slug=project_slug)
 
     if request.method == 'POST':
 
-        component = get_object_or_404(Component, slug=component_slug,
-                                    project__slug=project_slug)
-        postats = get_object_or_404(POFile, filename=filename,
-                                    object_id=component.id)
-
-        try:
-            # Adding extra field to the instance
-            request.FILES['submited_file'].targetfile = postats.filename 
-        except MultiValueDictKeyError:
+        if not request.FILES.has_key('submited_file'):
             # TODO: Figure out why gettext is not working here
             request.user.message_set.create(message=("Please select a " 
                                "file from your system to be uploaded."))
             return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
-        logger.debug("Checking out for component %s" % component.full_name)
-        # Checkout
-        component.prepare_repo()
-        
+        # For a new file
+        if not filename:
+            if request.POST['targetfile'] == '':
+                # TODO: Figure out why gettext is not working here
+                request.user.message_set.create(message=("Please enter" 
+                                       " a target to upload the file."))
+                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
+            else:
+                filename = request.POST['targetfile']
+
+            if not re.compile(component.file_filter).match(filename):
+                # TODO: Figure out why gettext is not working here
+                request.user.message_set.create(message=("The target " 
+                                       "file does not match with the "
+                                       "component file filter"))
+                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
+        # Adding extra field to the instance
+        request.FILES['submited_file'].targetfile = filename
+
         try:
+            postats = POFile.objects.get(filename=filename,
+                                         object_id=component.id)
             lang_name = postats.language.name
             lang_code = postats.language.code
-        except AttributeError:
-            lang_name = postats.filename
-            lang_code = component.trans.guess_language(postats.filename)
+        except POFile.DoesNotExist:
+            lang_name = filename
+            lang_code = component.trans.guess_language(filename)
 
         # TODO: put it somewhere else using the settings.py
         msg="Sending translation for %s" % lang_name
@@ -263,26 +278,30 @@ def component_submit_file(request, project_slug, component_slug,
         try:
 
             logger.debug("Checking %s with msgfmt -c for component %s" % 
-                         (postats.filename, component.full_name))
+                         (filename, component.full_name))
             for contents in request.FILES['submited_file'].chunks():
                 component.trans.msgfmt_check(contents)
 
+            logger.debug("Checking out for component %s" % component.full_name)
+            component.prepare_repo()
+
             logger.debug("Submitting %s for component %s" % 
-                         (postats.filename, component.full_name))
+                         (filename, component.full_name))
             component.submit(request.FILES, msg, request.user)
-            # Calculate new stats
+
             logger.debug("Calculating %s stats for component %s" % 
-                         (postats.filename, component.full_name))
+                         (filename, component.full_name))
             component.trans.set_stats_for_lang(lang_code)
+
             request.user.message_set.create(message=("File submitted " 
-                               "successfully: %s" % postats.filename))
+                               "successfully: %s" % filename))
         except ValueError, e: # msgfmt_check
             request.user.message_set.create(message = e.message)
         except:
             logger.debug("Error submiting translation file %s"
-                         " for %s component" % (postats.filename,
+                         " for %s component" % (filename,
                                                component.full_name))
-            # TODO: Figure out why gettext is not working here
+           # TODO: Figure out why gettext is not working here
             request.user.message_set.create(message = (
                 "Sorry, an error is causing troubles to send your file."))
 

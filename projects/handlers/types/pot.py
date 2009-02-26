@@ -69,7 +69,7 @@ class POTHandler:
 
     def guess_language(self, filename):
         """Set stats for a specific language."""
-        return self.tm.guess_language(lang, filename)
+        return self.tm.guess_language(filename)
 
     def msgfmt_check(self, po_contents):
         """Check a POT/PO file with msgfmt -c."""

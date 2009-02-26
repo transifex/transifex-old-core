@@ -108,6 +108,10 @@
 
 {% comp_stats_table component %}
 
+{% if request.user.is_authenticated %}
+   {% include "projects/component_submit_new_file.html" %}
+{% endif %}
+
 </div>
 
 <h3>{% trans 'History' %}</h3>

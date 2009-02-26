@@ -111,6 +111,10 @@ urlpatterns += patterns('',
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/submit/(?P<filename>(.*))$',
         view = component_submit_file,
         name = 'component_submit_file',),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/submit/$',
+        view = component_submit_file,
+        name = 'component_submit_new_file',),
     url (
         regex = '^(?P<slug>[-\w]+)/component-added/$',
         view = 'django.views.generic.list_detail.object_detail',
