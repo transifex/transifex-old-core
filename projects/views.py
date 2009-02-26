@@ -268,7 +268,7 @@ def component_submit_file(request, project_slug, component_slug,
                                          object_id=component.id)
             lang_name = postats.language.name
             lang_code = postats.language.code
-        except POFile.DoesNotExist:
+        except (POFile.DoesNotExist, AttributeError):
             lang_name = filename
             lang_code = component.trans.guess_language(filename)
 
