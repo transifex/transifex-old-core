@@ -118,3 +118,31 @@ class SvnBrowser(VCSBrowserMixin):
         else:
             entry = self.client.info(os.path.join(self.path, obj))
         return (entry.commit_revision.number,)
+
+    @need_repo
+    def submit(self, files, msg, user):
+        """
+        update
+        svn add <filename>
+        svn ci
+        """
+        self.update()
+
+        # Save contents
+        for fieldname, uploadedfile in files.iteritems():
+            for contents in uploadedfile.chunks():
+                self.save_file_contents(uploadedfile.targetfile, contents)
+
+        # We have to calculate absolute filenames because of pysvn usage
+        absolute_filenames = [os.path.join(self.path, uploadedfile.targetfile) \
+            for uploadedfile in files.values()]
+
+        # `svn add` untracked files
+        for filename in absolute_filenames:
+            if not self.client.status(filename)[0]['is_versioned']:
+                self.client.add(filename)
+        
+        # svn ci files
+        self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+        self.update()
+

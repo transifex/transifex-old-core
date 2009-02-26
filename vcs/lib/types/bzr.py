@@ -136,3 +136,24 @@ class BzrBrowser(VCSBrowserMixin):
                 self.repo.last_revision())
             i = t.inventory[t.path2id(obj)]
             return m[i.revision]
+
+    @need_repo
+    def submit(self, files, msg, user):
+        """
+        update to upstream
+        bzr add <filename>
+        bzr commit -m <msg>
+        # Lightweight checkout so no push is needed
+        """
+        self.update()
+
+        for fieldname, uploadedfile in files.iteritems():
+            for contents in uploadedfile.chunks():
+                self.save_file_contents(uploadedfile.targetfile, contents)
+
+        # smart_add recursively checks all files in the tree
+        self.work_tree.smart_add([self.path])
+        user = u'%s <%s>' % (user.username, user.email)
+
+        self.work_tree.commit(message=msg.encode('utf-8'),
+                revprops={'author': user.encode('utf-8')})

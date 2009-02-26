@@ -139,3 +139,19 @@ class GitBrowser(VCSBrowserMixin):
         else:
             rev = self.repo.log('-1', '--pretty=format:%H', obj)
         return (int(rev, 16),)
+
+    @need_repo
+    def submit(self, files, msg, user):
+        self.update()
+
+        for fieldname, uploadedfile in files.iteritems():
+            for contents in uploadedfile.chunks():
+                self.save_file_contents(uploadedfile.targetfile, contents)
+                self.repo.add(uploadedfile.targetfile)
+        
+        user = u'%s <%s>' % (user.username, user.email)
+
+        self.repo.commit(m=msg.encode('utf-8'), 
+                         author=user.encode('utf-8'))
+        self.repo.push('origin', self.branch)
+
