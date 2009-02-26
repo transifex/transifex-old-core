@@ -2,6 +2,14 @@
 {% load i18n %}
 {% load statistics %}
 
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+  <style type="text/css">
+    form.submit_form { display: none; }
+    form.submit_form fieldset { border: 2px dotted #ddd; }
+  </style>
+{% endblock %}
+
 {% block body_class %}{{ block.super }} language_release{% endblock %}
 
 {% block title %}{{ block.super }} | {{ language.name }}{% endblock %}
