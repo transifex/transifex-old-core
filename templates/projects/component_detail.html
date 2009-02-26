@@ -3,6 +3,14 @@
 {% load markup %}
 {% load i18n %}
 
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+  <style type="text/css">
+    form.submit_form { display: none; }
+    form.submit_form fieldset { border: 2px dotted #ddd; }
+  </style>
+{% endblock %}
+
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
 {% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }}{% endwith %}{% endblock %}
@@ -82,17 +90,6 @@
         {% endif %}
       </td>
     </tr>
-    {% if request.user.is_authenticated %}<tr>
-      <th class="i16 maintainer">{% trans "Maintainer actions:" %}</th>
-      <td>
-        <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
-            <input title="{% trans "Refresh and re-calculate statistics. It can take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
-        </form>
-        <form action="{% url component_clear_cache component.project.slug component.slug %}" class="microform">
-            <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
-        </form>
-      </td>
-    </tr>{% endif %}
   </table>
 </div>
 {% endif %}  
