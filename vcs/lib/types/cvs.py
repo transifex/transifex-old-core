@@ -150,3 +150,23 @@ class CvsBrowser(VCSBrowserMixin):
         except IOError:
             return None
         return tuple(int(p) for p in rev.split('.'))
+
+    @need_repo
+    def submit(self, files, msg, user):
+
+        self.update()
+
+        # Save contents
+        for fieldname, uploadedfile in files.iteritems():
+            for contents in uploadedfile.chunks():
+                self.save_file_contents(uploadedfile.targetfile, contents)
+
+        # `cvs add` untracked files
+        for uploadedfile in files.values():
+            file_status = self.repo.status(uploadedfile.targetfile)
+            if file_status.find('Unknown') >= 1:
+                self.client.add(uploadedfile.targetfile)
+        
+        # cvs ci files
+        self.repo.commit(m=msg.encode('utf-8'))
+        self.update()
