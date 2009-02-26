@@ -79,7 +79,10 @@ def run_command(command, *args, **kw):
         command = command.split()
 
     # if more kwargs are given, convert them to command line args
-    kwarglist = python_to_args(**kw) if kw else []
+    if kw:
+        kwarglist = python_to_args(**kw)
+    else:
+        kwarglist = []
     command += kwarglist + list(args)
 
     # If stdin is a string, create a pipe so we can write the contents
