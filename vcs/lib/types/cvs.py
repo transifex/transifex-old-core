@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import time
 import os.path
@@ -12,7 +13,7 @@ REPO_PATH = settings.REPO_PATHS['cvs']
 def need_repo(fn):
     def repo_fn(self, *args, **kw):
         try:
-            self.client
+            self.repo
         except AttributeError:
             self.init_repo()
         return fn(self, *args, **kw)
@@ -165,7 +166,7 @@ class CvsBrowser(VCSBrowserMixin):
         for uploadedfile in files.values():
             file_status = self.repo.status(uploadedfile.targetfile)
             if file_status.find('Unknown') >= 1:
-                self.client.add(uploadedfile.targetfile)
+                self.repo.add(uploadedfile.targetfile)
         
         # cvs ci files
         self.repo.commit(m=msg.encode('utf-8'))
