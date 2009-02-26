@@ -1,0 +1,109 @@
+Name:       transifex
+Version:    [[version]]
+Release:    1%{?dist}
+Summary:    A system for distributed translation submissions
+
+Group:      Applications/Internet
+License:    GPLv2
+URL:        http://transifex.org/
+Source0:    transifex-[[version]].tar.gz
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildArch:  noarch
+
+BuildRequires:  python-sphinx
+Requires:   Django django-authopenid django-contact-form django-evolution
+Requires:   django-notification django-pagination django-tagging
+Requires:   python-markdown python-polib python-pygments
+Requires:   mercurial
+Requires:   intltool >= 0.40.5
+
+%description
+Transifex is a web-system that facilitates the process of submitting
+translations in remote and disparate version control systems (VCS).
+
+%package extras
+Summary:    Additional support for Transifex
+Requires:   transifex = %{version}
+Requires:   cvs pysvn bzrtools git
+
+%description extras
+This package adds extra options to Transifex.
+
+%prep
+%setup -q
+
+%build
+cd docs
+make html
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
+find -mindepth 1 -maxdepth 1 -type d \( \( -name .hg -o \
+    -name build-tools -o -name docs \) -prune -o -print \) | \
+    xargs cp -a -t $RPM_BUILD_ROOT/%{_datadir}/%{name}
+cp -a *.py $RPM_BUILD_ROOT/%{_datadir}/%{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root,-)
+%doc LICENSE README docs/_build/html
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/__init__.py
+%{_datadir}/%{name}/__init__.py[co]
+%{_datadir}/%{name}/manage.py
+%{_datadir}/%{name}/manage.py[co]
+%{_datadir}/%{name}/settings*.py
+%{_datadir}/%{name}/settings*.py[co]
+%{_datadir}/%{name}/urls.py
+%{_datadir}/%{name}/urls.py[co]
+%{_datadir}/%{name}/actionlog
+%{_datadir}/%{name}/languages
+%{_datadir}/%{name}/projects
+%{_datadir}/%{name}/releases
+%{_datadir}/%{name}/repowatch
+%{_datadir}/%{name}/simplelock
+%{_datadir}/%{name}/site_media
+%{_datadir}/%{name}/templates
+%{_datadir}/%{name}/transifex
+%{_datadir}/%{name}/translations
+%{_datadir}/%{name}/txcollections
+%dir %{_datadir}/%{name}/vcs
+%{_datadir}/%{name}/vcs/*.py
+%{_datadir}/%{name}/vcs/*.py[co]
+%dir %{_datadir}/%{name}/vcs/lib
+%{_datadir}/%{name}/vcs/lib/*.py
+%{_datadir}/%{name}/vcs/lib/*.py[co]
+%dir %{_datadir}/%{name}/vcs/lib/support
+%{_datadir}/%{name}/vcs/lib/support/__init__.py
+%{_datadir}/%{name}/vcs/lib/support/__init__.py[co]
+%{_datadir}/%{name}/vcs/lib/support/commands.py
+%{_datadir}/%{name}/vcs/lib/support/commands.py[co]
+%dir %{_datadir}/%{name}/vcs/lib/types
+%{_datadir}/%{name}/vcs/lib/types/__init__.py
+%{_datadir}/%{name}/vcs/lib/types/__init__.py[co]
+%{_datadir}/%{name}/vcs/lib/types/dummy.py
+%{_datadir}/%{name}/vcs/lib/types/dummy.py[co]
+%{_datadir}/%{name}/vcs/lib/types/hg.py
+%{_datadir}/%{name}/vcs/lib/types/hg.py[co]
+%{_datadir}/%{name}/vcs/management/
+%{_datadir}/%{name}/vcs/tests/
+
+%files extras
+%defattr(-,root,root,-)
+%{_datadir}/%{name}/vcs/lib/support/cvs.py
+%{_datadir}/%{name}/vcs/lib/support/cvs.py[co]
+%{_datadir}/%{name}/vcs/lib/types/cvs.py
+%{_datadir}/%{name}/vcs/lib/types/cvs.py[co]
+%{_datadir}/%{name}/vcs/lib/types/svn.py
+%{_datadir}/%{name}/vcs/lib/types/svn.py[co]
+%{_datadir}/%{name}/vcs/lib/types/bzr.py
+%{_datadir}/%{name}/vcs/lib/types/bzr.py[co]
+%{_datadir}/%{name}/vcs/lib/support/git.py
+%{_datadir}/%{name}/vcs/lib/support/git.py[co]
+%{_datadir}/%{name}/vcs/lib/types/git.py
+%{_datadir}/%{name}/vcs/lib/types/git.py[co]
+
+%changelog

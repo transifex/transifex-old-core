@@ -1,7 +1,8 @@
 #!/bin/bash
 
-which rpmbuild >& /dev/null
-if [ ! "$?" = "0" ]; then
+repo="http://code.transifex.org/index.cgi/mainline/"
+
+if ! which rpmbuild &> /dev/null ; then
 	echo "rpmbuild is not installed in your system; exiting"
 	exit 1
 fi
@@ -12,23 +13,41 @@ if [ ! "$#" = "1" ]; then
 	exit 1
 fi
 
-export REPO='http://code.transifex.org/index.cgi/mainline'
-export RPMBUILDROOT=`rpmbuild --showrc | grep _topdir | grep -v '{_topdir}' | awk '{print $3}'`
+rootdir="$(mktemp -d -p $PWD -t txbuild-XXXXXXXX)"
 
-if [ "$RPMBUILDROOT" = "" ]; then
-	echo "The RPM _topdir build directory does not seem to be specified; please make sure it's set"
-	echo "For instance you can add '%_topdir      /var/tmp/rpmbuild' in ~/.rpmmacros"
-	exit 1
-fi
+for dir in BUILD BUILDROOT RPMS SOURCES SPECS SRPMS; do
+	if [ ! -d "$rootdir/$dir" ]; then
+		mkdir -p "$rootdir/$dir"
+	fi
+done
 
-echo "Cleaning up"
+echo "applying version $1 to spec file"
+sed -e "s/\[\[version\]\]/$1/g" SPECS/transifex.spec.in > "$rootdir"/SPECS/transifex.spec
+echo "checking out latest code; please wait"
+hg clone $repo "$rootdir"/SOURCES/transifex-$1
 
-pushd transifex-core
-./build.sh $1
+pushd "$rootdir"/SOURCES
+echo "bundling ..."
+tar cfz transifex-$1.tar.gz transifex-$1
+rm -rf transifex-$1
 popd
-for file in `find $RPMBUILDROOT -name 'transifex*rpm'`; do cp $file . ; done
 
-pushd transifex-extras
-./build.sh $1
-popd
-for file in `find $RPMBUILDROOT -name 'transifex*rpm'`; do cp $file . ; done
+rpmbuild --define "_builddir $rootdir/BUILD" \
+	--define "_buildrootdir $rootdir/BUILDROOT" \
+	--define "_rpmdir $rootdir/RPMS" \
+	--define "_sourcedir $rootdir/SOURCES" \
+	--define "_srcrpmdir $rootdir/SRPMS" \
+	--define "_build_name_fmt %%{name}-%%{version}-%%{release}.%%{arch}.rpm" \
+	-bb --nodeps "$rootdir"/SPECS/transifex.spec
+
+rpmbuild --define "_builddir $rootdir/BUILD" \
+	--define "_buildrootdir $rootdir/BUILDROOT" \
+	--define "_rpmdir $rootdir/RPMS" \
+	--define "_sourcedir $rootdir/SOURCES" \
+	--define "_srcrpmdir $rootdir/SRPMS" \
+	--define "_build_name_fmt %%{name}-%%{version}-%%{release}.%%{arch}.rpm" \
+	--define "dist %{nil}" \
+	-bs --nodeps "$rootdir"/SPECS/transifex.spec
+
+find "$rootdir" -name '*.rpm' -exec cp {} . \;
+rm -rf "$rootdir"
