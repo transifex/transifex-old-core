@@ -2,6 +2,7 @@ import os, commands, re
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
+from translations.lib.utils import (run_command, CommandError)
 
 class POTStatsError(Exception):
 
@@ -298,3 +299,17 @@ class POTManager(TransManagerMixin):
             return False
 
         return True
+
+    def msgfmt_check(self, po_contents):
+        """
+        Run a `msgfmt -c` on a file (file object).
+        Raises a ValueError in case the file has errors.
+        """
+        try:
+            p = run_command('msgfmt -c -', _input=po_contents)
+        except CommandError:
+            # TODO: Figure out why gettext is not working here
+            raise ValueError, "Your file does not" \
+                            " pass by the check for correctness" \
+                            " (msgfmt -c). Please run this command" \
+                            " on your system to see the errors."

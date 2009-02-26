@@ -261,6 +261,12 @@ def component_submit_file(request, project_slug, component_slug,
         msg="Sending translation for %s" % lang_name
 
         try:
+
+            logger.debug("Checking %s with msgfmt -c for component %s" % 
+                         (postats.filename, component.full_name))
+            for contents in request.FILES['submited_file'].chunks():
+                component.trans.msgfmt_check(contents)
+
             logger.debug("Submitting %s for component %s" % 
                          (postats.filename, component.full_name))
             component.submit(request.FILES, msg, request.user)
@@ -270,10 +276,12 @@ def component_submit_file(request, project_slug, component_slug,
             component.trans.set_stats_for_lang(lang_code)
             request.user.message_set.create(message=("File submitted " 
                                "successfully: %s" % postats.filename))
+        except ValueError, e: # msgfmt_check
+            request.user.message_set.create(message = e.message)
         except:
             logger.debug("Error submiting translation file %s"
-                         " for %s component: %s" % (postats.filename,
-                                               component.full_name, e))
+                         " for %s component" % (postats.filename,
+                                               component.full_name))
             # TODO: Figure out why gettext is not working here
             request.user.message_set.create(message = (
                 "Sorry, an error is causing troubles to send your file."))
