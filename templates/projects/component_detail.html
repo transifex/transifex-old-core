@@ -106,9 +106,9 @@
 </div>
 {% endif %}  
 
-{% comp_stats_table component %}
+{% comp_stats_table component.trans.get_stats %}
 
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated and component.allows_submission %}
    {% include "projects/component_submit_new_file.html" %}
 {% endif %}
 

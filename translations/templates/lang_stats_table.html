@@ -31,7 +31,7 @@
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
            {% pofile_lock stat.object.project.slug stat.object.slug stat %}
-           {% if current_user.is_authenticated %}{% include "projects/component_submit.html" %}{% endif %}
+           {% if current_user.is_authenticated and component.allows_submission %}{% include "projects/component_submit.html" %}{% endif %}
         </td>
       </tr>
    {% endfor %}

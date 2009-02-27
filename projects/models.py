@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from datetime import datetime
 import markdown
@@ -188,6 +189,10 @@ class Component(models.Model):
                     ', '.join(settings.TRANS_CHOICES.keys())))
     file_filter = models.CharField(max_length=50, blank=True, null=True,
         help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
+
+    allows_submission = models.BooleanField(default=False,
+        help_text=_('Does this module repository allow write access?'))
+
     hidden = models.BooleanField(default=False,
         help_text=_('Hide this object from the list view?'))
     enabled = models.BooleanField(default=True,

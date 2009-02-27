@@ -4,19 +4,13 @@ from translations.models import Language
 
 register = template.Library()
 
-def comp_stats_table(context, object):
+def comp_stats_table(context, stats):
     """
     Creates a HTML table to presents the statistics of all 
     languages for a component.
     """
-    project = object.project.slug
-    component = object.slug
-
-    stats = object.trans.get_stats()
 
     return {'stats': stats,
-            'project': project,
-            'component': component,
             'current_user': context['request'].user}
 register.inclusion_tag('comp_stats_table.html', takes_context=True)(comp_stats_table)
 

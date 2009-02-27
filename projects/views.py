@@ -232,6 +232,11 @@ def component_submit_file(request, project_slug, component_slug,
 
     component = get_object_or_404(Component, slug=component_slug,
                                     project__slug=project_slug)
+    if not component.allows_submission:
+        request.user.message_set.create(message=("This component does " 
+                            " not allow white access."))
+        return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                            args=(project_slug, component_slug,)))
 
     if request.method == 'POST':
 
