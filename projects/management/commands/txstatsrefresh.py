@@ -80,7 +80,7 @@ class Command(LabelCommand):
                     else:
                         raise CommandError("Error refreshing stats for %s. "
                             "Use --skip to ignore broken ones)." % comp)
-                if _continue and not errors[comp]:
+                if _continue and not errors.has_key(comp):
                     log.write('%s\n' % comp)
         finally:
             if _continue:
