@@ -39,6 +39,13 @@
     <div class="entry">
       <h3 class="name"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h3>
       <p class="description">{{ project.description }}</p>
+      <p>
+        <span class="i16 component compact">
+          {% for comp in project.component_set.all|slice:"0:4" %}<a class="component" title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp }}</a> {% endfor %}
+        </span>
+      {% if project.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
+      </p>
+
     </div>
   {% endfor %}
   <div class="pagination_bottom">{% paginate %}</div>
