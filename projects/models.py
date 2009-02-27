@@ -313,12 +313,13 @@ class Component(models.Model):
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
-            except IntegrityError:
+            except self.IntegrityError:
                 logger.error("Yow! Unit exists but is not associated with %s! "
                           % self.full_name)
                 # TODO: Here we should probably send an e-mail to the 
                 # admin, because something very strange would be happening
                 pass
+        return self.unit
 
     def get_files(self):
         """Return a list of filtered files for the component."""
