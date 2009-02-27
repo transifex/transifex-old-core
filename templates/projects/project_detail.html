@@ -1,4 +1,4 @@
-    {% extends "projects/base.html" %}
+{% extends "projects/base.html" %}
 {% load i18n %}
 {% load markup %}
 {% load tx-common %}
@@ -62,6 +62,21 @@
       <th class="i16 collection">{% blocktrans count colls|length as counter %}Collection:{% plural %}Collections:{% endblocktrans %}</th>
       <td class="compact">
         {% for coll in colls|slice:"0:6" %}<a class="collection" href="{% url collection_detail slug=coll.slug %}">{{ coll }}</a> {% endfor %}
+      </td>
+    </tr>
+    {% endif %}
+    {% endwith %}
+    {% with project.maintainers.all as maintainers %}
+    {% if maintainers %}
+    <tr>
+      <th class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</th>
+      <td>
+        {% for m in maintainers|slice:"0:6" %}
+          {% if m.first_name and m.last_name %}
+            {{ m.first_name }} {{ m.last_name }} ({{m.email|mungify:m.username}})
+          {% else %}
+            {{m.email|mungify:m.username}}{% endif %}{% if not forloop.last %},{% endif %}
+        {% endfor %}
       </td>
     </tr>
     {% endif %}

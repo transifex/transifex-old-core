@@ -105,6 +105,8 @@ class Project(models.Model):
     # The collections this project belongs to.
     collections = models.ManyToManyField(Collection, related_name='projects',
                                          blank=True, null=True,)
+    maintainers = models.ManyToManyField(User, related_name='projects_maintaining',
+                                         blank=True, null=True)
 
     # Normalized fields
     long_description_html = models.TextField(blank=True, max_length=1000, 
