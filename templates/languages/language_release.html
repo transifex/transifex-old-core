@@ -12,11 +12,11 @@
 
 {% block body_class %}{{ block.super }} language_release{% endblock %}
 
-{% block title %}{{ block.super }} | {{ language.name }}{% endblock %}
+{% block title %}{{ block.super }} | {{ language.name }} | {{ release.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ language.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url language_detail language.code %}">{{ language.name }}</a> &raquo; {{ release.name }}{% endblock %}
 
-{% block content_title %}<h2 class="pagetitle">{{ release.name }} <sup class="entry_metalink">{{ language.name }} ({{language.code}})</sup></h2>{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{{ language.name }}<sup class="entry_metalink">{{ release.name }}</sup></h2>{% endblock %}
 
 {% block body_main %}
 
