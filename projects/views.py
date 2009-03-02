@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import os, re
+import os
+import re
 import pygments
 import pygments.lexers
 import pygments.formatters
@@ -211,9 +212,13 @@ def component_file(request, project_slug, component_slug, filename,
     if view:
         lexer = pygments.lexers.GettextLexer()
         formatter = pygments.formatters.HtmlFormatter(linenos='inline')
-        # TODO: get the actual encoding via polib
-        context = Context({'body': pygments.highlight(content.decode('utf8'),
-                                                      lexer, formatter),
+        encre = re.compile(r'"?Content-Type:.+? charset=([\w_\-:\.]+)')
+        m = encre.search(content)
+        encoding = 'UTF-8'
+        if m:
+            encoding = m.group(1)
+        context = Context({'body': pygments.highlight(content.decode(
+                                        encoding), lexer, formatter),
                            'style': formatter.get_style_defs(),
                            'title': "%s: %s" % (component.full_name,
                                                 os.path.basename(filename))})
