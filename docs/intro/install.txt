@@ -60,15 +60,20 @@ even use `easy_install` to setup the package. On Fedora you can just run::
 Installing Python dependencies
 ------------------------------
 
-This is the generic method for creating a development enviroment for 
-transifex. We strongly suggest running those commands inside a virtualenv 
-enviroment instead of running them as root.::
+This is the generic method for creating a development enviroment for
+Transifex. We strongly suggest running those commands inside a virtualenv
+enviroment instead of running them as root. For an example of a Virtualenv
+setup, take a look at the `Virtualenv example`_ wiki page. You can also
+install some of these dependencies as packages in your distribution, if they
+are available.
+
+.. code-block:: bash
 
     easy_install Markdown httplib2 polib pygments
     easy_install Django python-openid django-authopenid django-pagination
     easy_install -f http://transifex.org/files/eggs/ contact_form tagging
 
-For notifications (it's optional)::
+For notifications (optional)::
 
     easy_install django-notification
 
@@ -267,3 +272,4 @@ For testing a specific application inside Transifex you can run::
 
 .. _Sites: http://docs.djangoproject.com/en/dev/ref/contrib/sites
 .. _`Django admin panel`: http://www.djangobook.com/en/1.0/chapter06/
+.. _`Virtualenv example`: http://transifex.org/wiki/Development/InstallationOnCentOS_VirtaualEnv
