@@ -21,6 +21,8 @@ for dir in BUILD BUILDROOT RPMS SOURCES SPECS SRPMS; do
 	fi
 done
 
+cp -p django-settings.py.in "$rootdir"/SOURCES
+
 echo "applying version $1 to spec file"
 sed -e "s/\[\[version\]\]/$1/g" SPECS/transifex.spec.in > "$rootdir"/SPECS/transifex.spec
 echo "checking out latest code; please wait"

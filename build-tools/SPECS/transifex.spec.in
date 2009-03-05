@@ -1,3 +1,5 @@
+%define confpath %{_sysconfdir}/%{name}
+
 Name:       transifex
 Version:    [[version]]
 Release:    1%{?dist}
@@ -7,6 +9,7 @@ Group:      Applications/Internet
 License:    GPLv2
 URL:        http://transifex.org/
 Source0:    transifex-[[version]].tar.gz
+Source1:    django-settings.py.in
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:  noarch
 
@@ -38,11 +41,16 @@ make html
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 find -mindepth 1 -maxdepth 1 -type d \( \( -name .hg -o \
     -name build-tools -o -name docs \) -prune -o -print \) | \
     xargs cp -a -t $RPM_BUILD_ROOT/%{_datadir}/%{name}
-cp -a *.py $RPM_BUILD_ROOT/%{_datadir}/%{name}
+cp -a *.py $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -d -m 0755 $RPM_BUILD_ROOT/%{confpath}
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py \
+    $RPM_BUILD_ROOT%{confpath}/00-default.conf
+sed -e 's!\[\[confpath\]\]!%{confpath}!' %{SOURCE1} > \
+    $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -50,6 +58,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc LICENSE README docs/_build/html
+%dir %{confpath}
+%{confpath}/00-default.conf
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/__init__.py
 %{_datadir}/%{name}/__init__.py[co]
