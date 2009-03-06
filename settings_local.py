@@ -2,14 +2,14 @@ from django.conf import settings
 """
 Local settings for the project.
 
-These settings complement (and override) those in ``settings.py``,
-by importing them at the end of the file. This means they also
-appear as if they were defined there.
+These settings complement (and override) those in ``settings.py``.
 """
 
-from settings import *
+# Assuming that by default we're having a development environment.
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+LOG_LEVEL = logging.DEBUG
 
-# Email sending
 #EMAIL_HOST = ''
 #EMAIL_HOST_USER = ''
 #EMAIL_HOST_PASSWORD = ''
@@ -18,9 +18,8 @@ from settings import *
 
 #SCRATCH_DIR = os.path.join('/tmp', 'scratchdir')
 
+INSTALLED_APPS += ['django_evolution',]
+
 # To enable the use of the notification app on your system:
 #ENABLE_NOTICES = True
-#INSTALLED_APPS += ['django_evolution',]
-
-#MIDDLEWARE_CLASSES += ['txn_stats.middleware.Activity']
 #TEMPLATE_CONTEXT_PROCESSORS += ["notification.context_processors.notification",]

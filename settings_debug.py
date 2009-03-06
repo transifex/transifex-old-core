@@ -19,7 +19,6 @@ TEMPLATE_DEBUG = DEBUG
 LOG_LEVEL = 'DEBUG'
 INTERNAL_IPS = ('127.0.0.1',)
 
-MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
-INSTALLED_APPS += ['debug_toolbar',
-                   'django_evolution',
+#MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
+INSTALLED_APPS += [#'debug_toolbar',    # Useful but a tad heavy.
                    'django_extensions',]

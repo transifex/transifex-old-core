@@ -1,5 +1,9 @@
 # Django settings for Transifex.
-# You can override any of these in settings_local.py
+#
+# PREFER TO OVERRIDE ANY OPTIONS IN settings_local.py
+#
+# It helps keeping this file clean with the default values
+# and up to date with newer versions.
 
 import os
 import logging
@@ -7,13 +11,13 @@ import logging
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # The following are usually overridden in settings_local.py
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 STATIC_SERVE = True
 
 # Logging level/verbosity.
 # Choices: logging.DEBUG (default), .INFO, .WARNING, .ERROR, .CRITICAL
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -170,8 +174,11 @@ INSTALLED_APPS = [
 # and with enough disk space. Eg. /var/lib/transifex.
 SCRATCH_DIR = os.path.join('/var/lib/transifex', 'scratchdir')
 
-# The VCS choices for the system. Enable or disable any VCS types from here.
-# This list also feeds the Unit model with the available options.
+# The following settings define the VCS choices for the system.
+
+# BASIC VCS OPTIONS
+
+# List of VCS types. Also feeds the Unit model with the available options.
 VCS_CHOICES = {'hg': 'Mercurial',}
 
 # Directories where checked-out units will be put. The final location of
@@ -193,6 +200,22 @@ DVCS_SUBMIT_MSG = """%(message)s
             
 Transmitted-via: Transifex (%(domain)s)"""
 
+# ADDITIONAL VCS OPTIONS
+
+VCS_CHOICES.update({'bzr': 'Bazaar',
+                    'cvs': 'CVS',
+                    'git': 'Git',
+                    'svn': 'Subversion',})
+
+REPO_PATHS.update({'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
+                   'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
+                   'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
+                   'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),})
+
+BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
+                            'cvs': 'vcs.lib.types.cvs.CvsBrowser',
+                            'git': 'vcs.lib.types.git.GitBrowser',
+                            'svn': 'vcs.lib.types.svn.SvnBrowser',})
 
 ####################
 # TransHandler settings
@@ -211,23 +234,6 @@ TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
 # msgmerge settings
 MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
 
-
-# ADDITIONAL VCS OPTIONS
-
-VCS_CHOICES.update({'bzr': 'Bazaar',
-                    'cvs': 'CVS',
-                    'git': 'Git',
-                    'svn': 'Subversion',})
-
-REPO_PATHS.update({'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
-                   'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
-                   'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
-                   'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),})
-
-BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
-                            'cvs': 'vcs.lib.types.cvs.CvsBrowser',
-                            'git': 'vcs.lib.types.git.GitBrowser',
-                            'svn': 'vcs.lib.types.svn.SvnBrowser',})
 
 # EXTRA LOCAL SETTINGS
 
