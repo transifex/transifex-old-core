@@ -72,7 +72,7 @@ DATABASE_PORT = ''             # Set to empty string for default.
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'Europe/London'
+TIME_ZONE = 'Other/UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -99,7 +99,7 @@ MEDIA_URL = '/site_media/'
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '89&f-)wka1gld*qr%pzt0uz%jmqc=0pttgv-_a&1(auvapj+d@'
+SECRET_KEY = r"[[SECRETKEY]]"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -172,26 +172,14 @@ SCRATCH_DIR = os.path.join('/var/lib/transifex', 'scratchdir')
 
 # The VCS choices for the system. Enable or disable any VCS types from here.
 # This list also feeds the Unit model with the available options.
-VCS_CHOICES = {'bzr': 'Bazaar',
-               'cvs': 'CVS',
-               'hg': 'Mercurial',
-               'git': 'Git',
-               'svn': 'Subversion',}
+VCS_CHOICES = {'hg': 'Mercurial',}
 
 # Directories where checked-out units will be put. The final location of
 # a unit will be something like: SCRATCH_DIR/sources/hg/unit_slug.
-REPO_PATHS = {'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
-              'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
-              'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
-              'hg': os.path.join(SCRATCH_DIR, 'sources', 'hg'),
-              'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),}
+REPO_PATHS = {'hg': os.path.join(SCRATCH_DIR, 'sources', 'hg'),}
 
 # The classes which implement the VCS support.
-BROWSER_CLASS_NAMES = {'bzr': 'vcs.lib.types.bzr.BzrBrowser',
-                       'cvs': 'vcs.lib.types.cvs.CvsBrowser',
-                       'hg': 'vcs.lib.types.hg.HgBrowser',
-                       'git': 'vcs.lib.types.git.GitBrowser',
-                       'svn': 'vcs.lib.types.svn.SvnBrowser',}
+BROWSER_CLASS_NAMES = {'hg': 'vcs.lib.types.hg.HgBrowser',}
 
 # Default submit message format for centralized VCSs. Backends can override
 # this.
@@ -223,12 +211,29 @@ TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
 # msgmerge settings
 MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
 
-#####################
+
+# ADDITIONAL VCS OPTIONS
+
+VCS_CHOICES.update({'bzr': 'Bazaar',
+                    'cvs': 'CVS',
+                    'git': 'Git',
+                    'svn': 'Subversion',})
+
+REPO_PATHS.update({'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
+                   'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
+                   'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
+                   'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),})
+
+BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
+                            'cvs': 'vcs.lib.types.cvs.CvsBrowser',
+                            'git': 'vcs.lib.types.git.GitBrowser',
+                            'svn': 'vcs.lib.types.svn.SvnBrowser',})
+
 # EXTRA LOCAL SETTINGS
 
-# Put any settings specific to the particular host in local_settings.py
+# Put any settings specific to the particular host in settings_local.py
 
 try:
-    from settings_local import *
-except ImportError:
+    execfile('settings_local.py')
+except IOError:
     pass
