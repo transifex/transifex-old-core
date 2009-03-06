@@ -175,6 +175,7 @@ INSTALLED_APPS = [
 SCRATCH_DIR = os.path.join('/var/lib/transifex', 'scratchdir')
 
 # The following settings define the VCS choices for the system.
+# They are separated in basic and additional options below.
 
 # BASIC VCS OPTIONS
 
@@ -200,23 +201,6 @@ DVCS_SUBMIT_MSG = """%(message)s
             
 Transmitted-via: Transifex (%(domain)s)"""
 
-# ADDITIONAL VCS OPTIONS
-
-VCS_CHOICES.update({'bzr': 'Bazaar',
-                    'cvs': 'CVS',
-                    'git': 'Git',
-                    'svn': 'Subversion',})
-
-REPO_PATHS.update({'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
-                   'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
-                   'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
-                   'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),})
-
-BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
-                            'cvs': 'vcs.lib.types.cvs.CvsBrowser',
-                            'git': 'vcs.lib.types.git.GitBrowser',
-                            'svn': 'vcs.lib.types.svn.SvnBrowser',})
-
 ####################
 # TransHandler settings
 
@@ -234,6 +218,23 @@ TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
 # msgmerge settings
 MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
 
+#####################
+# ADDITIONAL VCS OPTIONS
+
+VCS_CHOICES.update({'bzr': 'Bazaar',
+                    'cvs': 'CVS',
+                    'git': 'Git',
+                    'svn': 'Subversion',})
+
+REPO_PATHS.update({'bzr': os.path.join(SCRATCH_DIR, 'sources', 'bzr'),
+                   'cvs': os.path.join(SCRATCH_DIR, 'sources', 'cvs'),
+                   'git': os.path.join(SCRATCH_DIR, 'sources', 'git'),
+                   'svn': os.path.join(SCRATCH_DIR, 'sources', 'svn'),})
+
+BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
+                            'cvs': 'vcs.lib.types.cvs.CvsBrowser',
+                            'git': 'vcs.lib.types.git.GitBrowser',
+                            'svn': 'vcs.lib.types.svn.SvnBrowser',})
 
 # EXTRA LOCAL SETTINGS
 
