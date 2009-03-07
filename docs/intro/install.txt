@@ -165,11 +165,18 @@ Initialize the database
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 After you have all dependencies and packages installed, the Transifex 
-installation should be very simple. You only need to customize the 
-``settings.py``, ``urls.py``, and then run inside the project directory::
+installation should be very simple. Customize the ``settings.py`` and
+``urls.py`` to accommodate your server's needs.
+
+To enable Transifex's notifications you'll need to switch the relevant setting
+to ``True`` and enable the application in the ``INSTALLED_APPS`` list.
+
+Once you're done configuring, run inside the project directory::
 
     ./manage.py syncdb
     ./manage.py runserver 8088
+
+Fire up your browser at ``http://localhost:8088/`` and grab a cup of coffee.
 
 .. warning::
  
@@ -178,25 +185,13 @@ installation should be very simple. You only need to customize the
     Without those paths created, the checkout for these VCS, among others will
     fail.
 
-.. note::
- 
-    To enable Transifex's notifications you'll need to switch the relevant
-    setting to True and enable the application in the ``INSTALLED_APPS`` list.
-
-To enable debugging, run the server as follows::
-
-    ./manage.py runserver --settings settings_debug
-
 Import some data
 ~~~~~~~~~~~~~~~~
 
 Transifex uses the fixtures feature of Django to load some initial datas
-in the database.
-
-.. note::
- 
-  Make sure you have executed the ``./manage.py syncdb``
-  command before running the following commands.
+in the database. The following commands require you having run
+``./manage.py syncdb`` at least once before in order for the database tables
+to exist.
 
 The following command loads a bunch of sample data to play around with.
 
@@ -210,7 +205,6 @@ following command.
 .. code-block:: bash
 
     ./manage.py loaddata transifex/fixtures/sample_users.json
-
 
 Further customization
 ~~~~~~~~~~~~~~~~~~~~~
@@ -230,9 +224,9 @@ by the system. You can customize this value in two ways:
   admin panel. This is mounted by default at ``/admin/`` (this value can be
   changed from your settings file.
   
-  Login to ``/admin/`` with the admin credentials you created during the
-  database creation step, find the 'example.com' entry in the ``Sites`` model
-  and edit it to your needs.
+  Login to the admin panel using the credentials you created during the
+  database creation step. You'll find the 'example.com' entry in the ``Sites``
+  model, which you can edit to your needs.
 
 * Using the command line::
 
@@ -245,7 +239,7 @@ by the system. You can customize this value in two ways:
 User Interface
 ++++++++++++++
 
-The default Transifex interface lives in the ``templates/`` directory and can
+The default Transifex interface lives in the ``templates`` directory and can
 be customized at will.
 
 You can also customize the theme by copying this directory to a differnet
@@ -257,6 +251,25 @@ simply copy particular files you'd like to override and define the
 ``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
 to be searched (first entry takes preference over second, etc).  
 
+
+Debugging
+---------
+
+Debugging is enabled through a separete ``SETTINGS`` file, which enables some
+additional applications and features. Some of these additional applications
+might require installation using ``easy_install``, but you can enable any
+number you want by editing the ``settings_debug.py`` file.
+
+Some of these applications define their own models, so the first time you'll
+use the file, a 'syncdb' using that file will be needed to have the respective
+database tables created::
+  
+    ./manage.py syncdb --settings settings_debug
+
+From that point on, you can run the debug server as follows::
+
+    ./manage.py runserver --settings settings_debug
+    
 
 Testing
 -------
