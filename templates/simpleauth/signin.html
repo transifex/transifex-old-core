@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} | {% trans "Sign in" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Login" %}{% endblock %}
+{% block content_title %}<h2 class="pagetitle">{% trans "Sign in" %}</h2>{% endblock %}
+
+{% block body %}
+
+{% blocktrans %}
+<p>Please login in with your email or screen name.<br />
+{% endblocktrans %}
+<br />
+{% if msg %}
+<br />
+	<p class="warning">{{ msg }}</p>
+{% endif %}
+{% if form.errors %}
+<p class="errors">{% trans "Please correct errors below:" %}<br />
+	{% if form.username.errors %} 
+		<span class="error">{{ form.username.errors|join:", " }}</span>
+	{% endif %}
+	{% if form.password.errors %} 
+		<span class="error">{{ form.password.errors|join:", " }}</span>
+	{% endif %}
+</p>
+{% endif %}
+
+<div id="login_index">
+  <div class="divleft">
+      {% include "simpleauth/login_box.html" %}
+  </div>
+</div>
+<div class="clear"></div>
+{% endblock %}
+

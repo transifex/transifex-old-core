@@ -118,7 +118,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
-    # Following needs notification app too.
+    # Notification support (requires app below too)
     # "notification.context_processors.notification",
 )
 
@@ -129,6 +129,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.doc.XViewMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    # OpenID support (requires app below too)
     'django_authopenid.middleware.OpenIDMiddleware',
 ]
 
@@ -148,8 +149,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admindocs',
-    # Following needs notification context processor above too.
+    # Notification support (requires context processor above too)
     # 'notification',
+    # OpenId support (needs middleware class above too)
     'django_authopenid',
     'tagging',
     'pagination',

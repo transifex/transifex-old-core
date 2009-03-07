@@ -20,6 +20,10 @@ LOG_LEVEL = logging.DEBUG
 
 INSTALLED_APPS += ['django_evolution',]
 
+#Disable use of authopenid app and fall back to simple auth:
+#INSTALLED_APPS.remove('django_authopenid')
+#INSTALLED_APPS += ['simpleauth']
+
 # To enable the use of the notification app on your system:
 #ENABLE_NOTICES = True
 #TEMPLATE_CONTEXT_PROCESSORS += ["notification.context_processors.notification",]

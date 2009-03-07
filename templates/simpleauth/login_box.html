@@ -1,0 +1,13 @@
+{% load i18n %}
+   <fieldset>
+        <legend>{% trans "Sign in" %}</legend>
+        <div id="login-block">
+		      <p class="login-tagline">Add projects or modify existing ones. Wiki-style.</p>
+		      <form name="fauth" action="{% url user_signin %}?next={{request.path_info}}" method="post">
+		      {{ form1.next }}
+		              <div class="form-row"><label for="id_username">{% trans "Username:" %}</label> <input id="id_username" class="required login" name="username" maxlength="30" size="12" type="text"></div>
+		              <div class="form-row"><label for="id_password">{% trans "Password:" %}</label> <input id="id_password" class="required login" name="password" maxlength="128" size="12" type="password"></div>
+		      <div class="submit-row"><input type="submit" name="blogin" value="{% trans "Sign in" %}"> </div>
+		      </form>
+        </div>
+        </fieldset>

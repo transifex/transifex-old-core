@@ -14,8 +14,15 @@ urlpatterns = patterns('',
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^languages/', include('languages.urls')),
-    url(r'^account/', include('django_authopenid.urls')),
 )
+
+# Choose auth app depending on whether authopenid was enabled or not
+if 'django_authopenid' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        url(r'^account/', include('django_authopenid.urls')),)
+else:
+    urlpatterns += patterns('',
+        url(r'^account/', include('simpleauth.urls')),)
 
 if settings.STATIC_SERVE:
     urlpatterns += patterns('',

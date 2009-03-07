@@ -12,7 +12,16 @@
 {% block body %}
 
 {% if not request.user.is_authenticated %}
-    {% include "login.html" %}
+<div id="login_index">
+  <div class="divright">
+  {% url user_changeopenid as user_changeopenid %}
+  {% if user_changeopenid %}{# hack to check if openid is enabled #}
+    {% include "authopenid/login_box.html" %}
+  {% else %}
+    {% include "simpleauth/login_box.html" %}
+  {% endif %}
+  </div>
+</div>
 {% endif %}
 <div id="intro">
   <p class="promo">{% trans "Transifex is a service aimed at helping translators keep track of their favourite translation projects." %}</p>
