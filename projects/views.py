@@ -305,8 +305,12 @@ def component_submit_file(request, project_slug, component_slug,
 
             request.user.message_set.create(message=("File submitted " 
                                "successfully: %s" % filename))
-        except ValueError, e: # msgfmt_check
-            request.user.message_set.create(message = e.message)
+        except ValueError: # msgfmt_check
+            logger.debug("Msgfmt -c check failed for the %s file." % filename)
+            request.user.message_set.create(message=("Your file does not" \
+                                    " pass by the check for correctness" \
+                                    " (msgfmt -c). Please run this command" \
+                                    " on your system to see the errors."))
         except:
             logger.debug("Error submiting translation file %s"
                          " for %s component" % (filename,
