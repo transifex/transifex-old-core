@@ -28,18 +28,11 @@ class POFileManager(models.Manager):
         """ 
         Return a list of stats object for a language and release.
         """
-        from django.db import connection
-        cursor = connection.cursor()
-        cursor.execute("SELECT t.id FROM translations_pofile as t, " \
-                       "projects_component_releases as r WHERE " \
-                       "r.collectionrelease_id=%s AND t.language_id=%s "\
-                       "AND t.object_id=r.component_id;", 
-                       [release.id, language.id])
-        postats = []
-        for row in cursor.fetchall():
-            # TODO: Make it more efficient
-            po = self.model.objects.get(id=row[0])
-            postats.append(po)
+        ctype = ContentType.objects.get(app_label='projects', model='component')
+        comp_query = release.components.values('pk').query
+        postats = self.filter(content_type=ctype,
+                              object_id__in=comp_query,
+                              language=language)
         return dictsort(postats,'object.project.name')
 
     def by_release_total(self, release):
