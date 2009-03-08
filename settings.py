@@ -220,6 +220,9 @@ TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
 # msgmerge settings
 MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
 
+# Enable msgfmt -c check for submission file
+MSGFMT_CHECK = True
+
 #####################
 # ADDITIONAL VCS OPTIONS
 

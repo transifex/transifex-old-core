@@ -15,6 +15,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
+import settings
+
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
 from transifex.log import logger
@@ -287,10 +289,11 @@ def component_submit_file(request, project_slug, component_slug,
 
         try:
 
-            logger.debug("Checking %s with msgfmt -c for component %s" % 
-                         (filename, component.full_name))
-            for contents in request.FILES['submited_file'].chunks():
-                component.trans.msgfmt_check(contents)
+            if settings.MSGFMT_CHECK:
+                logger.debug("Checking %s with msgfmt -c for component %s" % 
+                            (filename, component.full_name))
+                for contents in request.FILES['submited_file'].chunks():
+                    component.trans.msgfmt_check(contents)
 
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare_repo()
