@@ -193,24 +193,30 @@ in the database. The following commands require you having run
 ``./manage.py syncdb`` at least once before in order for the database tables
 to exist.
 
-The following command loads a bunch of sample data to play around with.
+The following commands loads a bunch of sample data to play around with.
 
 .. code-block:: bash
 
     ./manage.py loaddata transifex/fixtures/sample_data.json
-
-Also, you can load a sample user 'guest' with password 'guest, with the
-following command.
-
-.. code-block:: bash
-
     ./manage.py loaddata transifex/fixtures/sample_users.json
 
-Further customization
-~~~~~~~~~~~~~~~~~~~~~
+You can now fire up your browser to check out the newly imported data.
+
+Note that the registered projects have not been actually checked out by
+Transifex yet. To have translation files downloaded and fresh statistics
+produced, run a fresh checkout::
+
+    ./manage.py txstatsrefresh
+
+This command is usually used in a cronjob to refresh Transifex's cache and
+translation statistics every once in a while for translators.
+
+
+Customizing your Transifex instance
+-----------------------------------
 
 Site Domain and Name
-++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~
 
 Transifex leverages the power of Django's Sites_ framework to make it easy
 to have instances of Transifex on differnet domains using the same models
@@ -237,7 +243,7 @@ by the system. You can customize this value in two ways:
     current_site.save()
 
 User Interface
-++++++++++++++
+~~~~~~~~~~~~~~
 
 The default Transifex interface lives in the ``templates`` directory and can
 be customized at will.
