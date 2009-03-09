@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 )
 
 # Choose auth app depending on whether authopenid was enabled or not
-if 'django_authopenid' in settings.INSTALLED_APPS:
+if settings.ENABLE_OPENID:
     urlpatterns += patterns('',
         url(r'^account/', include('django_authopenid.urls')),)
 else:

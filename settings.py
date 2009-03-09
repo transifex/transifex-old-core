@@ -52,6 +52,8 @@ DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_DOMAIN
 ENABLE_NOTICES = False
 
 # Registration - OpenID
+# Requires respective middleware and application
+ENABLE_OPENID=False
 ugettext = lambda s: s
 LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 

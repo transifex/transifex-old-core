@@ -21,6 +21,7 @@ LOG_LEVEL = logging.DEBUG
 INSTALLED_APPS += ['django_evolution',]
 
 #Disable use of authopenid app and fall back to simple auth:
+#ENABLE_OPENID=False
 #INSTALLED_APPS.remove('django_authopenid')
 #INSTALLED_APPS += ['simpleauth']
 
