@@ -53,7 +53,7 @@ ENABLE_NOTICES = False
 
 # Registration - OpenID
 # Requires respective middleware and application
-ENABLE_OPENID=False
+ENABLE_OPENID=True
 ugettext = lambda s: s
 LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 
