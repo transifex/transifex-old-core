@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from projects.models import Project
-from transifex.log import logger
+from txcommon.log import logger
 from django.contrib.auth.forms import AuthenticationForm
 
 def search(request):

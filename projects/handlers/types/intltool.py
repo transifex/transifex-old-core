@@ -1,5 +1,5 @@
 from projects.handlers.types import pot
-from transifex.log import logger
+from txcommon.log import logger
 
 
 class IntltoolHandler(pot.POTHandler):

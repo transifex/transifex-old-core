@@ -159,7 +159,7 @@ INSTALLED_APPS = [
     'pagination',
     'contact_form',
     # Transifex specific apps:
-    'transifex',
+    'txcommon',
     'vcs',
     'translations',
     'languages',

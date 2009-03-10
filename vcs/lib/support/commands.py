@@ -1,6 +1,6 @@
 import os
 import subprocess
-from transifex.log import logger
+from txcommon.log import logger
 
 ##########
 ## Support the direct execution of commands on the system

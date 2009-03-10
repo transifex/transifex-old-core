@@ -10,7 +10,7 @@ import tagging
 from tagging.fields import TagField
 
 from releases.models import Release as ReleasesRelease
-from transifex.log import log_model
+from txcommon.log import log_model
 
 class CollectionManager(models.Manager):
     pass

@@ -18,7 +18,7 @@ from tagging.fields import TagField
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import Unit
-from transifex.log import (logger, log_model)
+from txcommon.log import (logger, log_model)
 from projects.handlers import get_trans_handler
 
 

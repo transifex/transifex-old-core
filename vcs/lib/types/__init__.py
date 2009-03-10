@@ -1,6 +1,6 @@
 import os
 import re
-from transifex.log import logger
+from txcommon.log import logger
 
 class BrowserError(Exception):
     pass

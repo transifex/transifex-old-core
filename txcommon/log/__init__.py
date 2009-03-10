@@ -8,7 +8,7 @@ Standard logging facilities for Transifex applications.
 
 To use the common logger, use something like the following::
 
-  from transifex.log import logger
+  from txcommon.log import logger
   logger.debug("foo")
 """
 
@@ -32,7 +32,7 @@ def log_model(model):
 
     Called after the declaration of a model in ``models.py``. Eg.:
     
-    >>> from transifex.log import log_model
+    >>> from txcommon.log import log_model
     >>> from django import models
     >>> class Person(models.Model):
     ...     pass
@@ -40,7 +40,7 @@ def log_model(model):
 
     """
 
-    from transifex.log.receivers import (post_save_named, post_delete_named)
+    from txcommon.log.receivers import (post_save_named, post_delete_named)
     if model:
         #logger.debug("Registered logging for model %s" % model.__name__)
         post_save.connect(post_save_named, sender=model)

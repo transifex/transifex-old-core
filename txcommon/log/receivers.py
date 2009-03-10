@@ -7,7 +7,7 @@ def model_named(sender, message='', **kwargs):
     """
     Receive signals for objects with a .name attribute.
     """
-    from transifex.log import logger
+    from txcommon.log import logger
     obj = kwargs['instance']
     logger.debug("%(msg)s %(obj)s %(name)s" %
                  {'msg': message,

@@ -19,13 +19,13 @@ import settings
 
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
-from transifex.log import logger
+from txcommon.log import logger
 from actionlog.models import (log_addition, log_change, log_deletion)
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from translations.models import POFile
 from languages.models import Language
-from transifex.decorators import perm_required_with_403
+from txcommon.decorators import perm_required_with_403
 
 # Feeds
 
