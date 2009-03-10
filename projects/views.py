@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+import codecs
 import pygments
 import pygments.lexers
 import pygments.formatters
@@ -227,7 +228,11 @@ def component_file(request, project_slug, component_slug, filename,
         m = encre.search(content)
         encoding = 'UTF-8'
         if m:
-            encoding = m.group(1)
+            try:
+                codecs.lookup(m.group(1))
+                encoding = m.group(1)
+            except LookupError:
+                pass
         context = Context({'body': pygments.highlight(content.decode(
                                         encoding), lexer, formatter),
                            'style': formatter.get_style_defs(),
