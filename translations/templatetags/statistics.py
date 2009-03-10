@@ -11,7 +11,8 @@ def comp_stats_table(context, stats):
     """
 
     return {'stats': stats,
-            'current_user': context['request'].user}
+            'current_user': context['request'].user,
+            'perms': context['perms']}
 register.inclusion_tag('comp_stats_table.html', takes_context=True)(comp_stats_table)
 
 @register.inclusion_tag("project_stats_table.html")
@@ -38,7 +39,8 @@ def lang_stats_table(context, stats):
     """
 
     return {'stats': stats,
-            'current_user': context['request'].user}
+            'current_user': context['request'].user,
+            'perms': context['perms']}
 register.inclusion_tag('lang_stats_table.html', takes_context=True)(lang_stats_table)
 
 @register.inclusion_tag("release_stats_table.html")

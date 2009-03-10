@@ -21,7 +21,7 @@
 
 {% block body_main %}
   <div class="obj_bigdetails">
-  {% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated and perms.projects.add_component %}
   <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
@@ -94,12 +94,16 @@
     {% if request.user.is_authenticated %}<tr>
       <th class="i16 maintainer">{% trans "Maintainer actions:" %}</th>
       <td>
+       {% if perms.projects.refresh_stats %}
         <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
             <input title="{% trans "Refresh and re-calculate statistics. It can take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
         </form>
+        {% endif %}
+        {% if perms.projects.clear_cache %}
         <form action="{% url component_clear_cache component.project.slug component.slug %}" class="microform">
             <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
         </form>
+        {% endif %}
       </td>
     </tr>{% endif %}
   </table>
@@ -108,7 +112,7 @@
 
 {% comp_stats_table component.trans.get_stats %}
 
-{% if request.user.is_authenticated and component.allows_submission %}
+{% if request.user.is_authenticated and component.allows_submission and perms.projects.submit_file %}
    {% include "projects/component_submit_new_file.html" %}
 {% endif %}
 
@@ -133,7 +137,7 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated and perms.projects.delete_component %}
     <div class="deletelink">
       <span class="i16 delete"><a href="{% url component_delete project_slug=component.project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a></span>
     </div>

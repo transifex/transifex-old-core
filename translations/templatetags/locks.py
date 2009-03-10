@@ -9,5 +9,6 @@ def pofile_lock(context, project, component, pofile):
     return {'project': project,
             'component': component,
             'pofile': pofile,
-            'current_user': context['current_user']}
+            'current_user': context['current_user'],
+            'perms': context['perms']}
 register.inclusion_tag('pofile_lock.html', takes_context=True)(pofile_lock)
