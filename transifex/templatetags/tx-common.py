@@ -31,6 +31,15 @@ def txversion():
     """Return the version of Transifex"""
     return transifex.version
 
+# Forms
+
+@register.inclusion_tag("form_as_table_rows.html")
+def form_as_table_rows(form):
+    """
+    Create a form using HTML table rows.
+    """
+    return {"form": form}
+
 
 # Email Munger by cootetom
 # http://www.djangosnippets.org/snippets/1284/
