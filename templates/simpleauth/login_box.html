@@ -1,13 +1,20 @@
 {% load i18n %}
-   <fieldset>
-        <legend>{% trans "Sign in" %}</legend>
-        <div id="login-block">
-		      <p class="login-tagline">Add projects or modify existing ones. Wiki-style.</p>
-		      <form name="fauth" action="{% url user_signin %}?next={{request.path_info}}" method="post">
-		      {{ form1.next }}
-		              <div class="form-row"><label for="id_username">{% trans "Username:" %}</label> <input id="id_username" class="required login" name="username" maxlength="30" size="12" type="text"></div>
-		              <div class="form-row"><label for="id_password">{% trans "Password:" %}</label> <input id="id_password" class="required login" name="password" maxlength="128" size="12" type="password"></div>
-		      <div class="submit-row"><input type="submit" name="blogin" value="{% trans "Sign in" %}"> </div>
-		      </form>
-        </div>
-        </fieldset>
+{% load tx-common %}
+
+<form name="fauth" action="{% url user_signin %}?next={{next}}" method="post">
+<div class="generic_form" id="login_index login-block">
+<fieldset>
+  <legend>{% trans "Sign in" %}</legend>
+  <p class="login-tagline i16 user">Login to add or modify projects, work on translations, and other stuff.</p>
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <table>
+    <tbody>
+      {% form_as_table_rows form %}
+    </tbody>
+  </table>
+  <div class="submit-row"><input type="submit" name="blogin" value="{% trans "Sign in" %}"> </div>
+</div>
+</fieldset>
+</form>

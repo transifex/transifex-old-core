@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from projects.models import Project
 from transifex.log import logger
+from django.contrib.auth.forms import AuthenticationForm
 
 def search(request):
     query_string = request.GET.get('q', "")
@@ -26,5 +27,7 @@ def search(request):
 def index(request):
     latest_projects = Project.objects.order_by('-created')[:5]
     return render_to_response("index.html",
-        {'latest_projects': latest_projects}, 
+        {'latest_projects': latest_projects,
+         'form': AuthenticationForm(),
+         'next': request.path},
           context_instance = RequestContext(request))

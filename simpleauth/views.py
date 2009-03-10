@@ -2,8 +2,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import logout as auth_logout
+from django.contrib.auth.views import (logout as auth_logout,
+                                       login as auth_login)
 from simpleauth.util import clean_next
+
 
 @login_required
 def logout(request, template_name='simpleauth/logged_out.html'):
@@ -11,6 +13,14 @@ def logout(request, template_name='simpleauth/logged_out.html'):
     next = clean_next(request.GET.get('next'))
     auth_logout(request, next_page=next, template_name=template_name)
     return HttpResponseRedirect(next)
+
+
+def login(request, template_name='simpleauth/signin.html'):
+    """Login the user to the website and redirect back."""
+    next = clean_next(request.GET.get('next'))
+    return auth_login(request, template_name=template_name,
+                      redirect_field_name='next')
+
 
 @login_required
 def account_settings(request, template_name='simpleauth/settings.html'):
