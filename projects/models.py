@@ -230,6 +230,11 @@ class Component(models.Model):
         db_table  = 'projects_component'
         ordering  = ('name',)
         get_latest_by = 'created'
+        permissions = (
+            ("clear_cache", "Can clear cache"),
+            ("refresh_stats", "Can refresh statistics"),
+            ("submit_file", "Can submit file"),
+        )
 
     @cached_property
     def trans(self):

@@ -25,6 +25,7 @@ from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from translations.models import POFile
 from languages.models import Language
+from transifex.decorators import perm_required_with_403
 
 # Feeds
 
@@ -47,6 +48,8 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 # Projects
 
 @login_required
+@perm_required_with_403('projects.add_project')
+@perm_required_with_403('projects.change_project')
 def project_create_update(request, project_slug=None):
 
     if project_slug:
@@ -78,6 +81,7 @@ def project_create_update(request, project_slug=None):
 
 
 @login_required
+@perm_required_with_403('projects.delete_project')
 def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
@@ -97,6 +101,8 @@ def project_delete(request, project_slug):
 # Components
 
 @login_required
+@perm_required_with_403('projects.add_component')
+@perm_required_with_403('projects.change_component')
 def component_create_update(request, project_slug, component_slug=None):
     """
     Create & update components. Handles associated units
@@ -154,6 +160,7 @@ def component_detail(request, project_slug, component_slug):
 
 
 @login_required
+@perm_required_with_403('projects.delete_component')
 def component_delete(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -171,7 +178,8 @@ def component_delete(request, project_slug, component_slug):
                                   {'component': component,},
                                   context_instance=RequestContext(request))
 
-
+@login_required
+@perm_required_with_403('projects.refresh_stats')
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -193,6 +201,7 @@ def component_set_stats(request, project_slug, component_slug):
 
 
 @login_required
+@perm_required_with_403('projects.clear_cache')
 def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -234,6 +243,7 @@ def component_file(request, project_slug, component_slug, filename,
     return response
 
 @login_required
+@perm_required_with_403('projects.submit_file')
 def component_submit_file(request, project_slug, component_slug, 
                           filename=None):
 
@@ -331,6 +341,8 @@ def component_submit_file(request, project_slug, component_slug,
 
 
 @login_required
+@perm_required_with_403('translations.add_pofilelock')
+@perm_required_with_403('translations.delete_pofilelock')
 def component_toggle_lock_file(request, project_slug, component_slug,
                                filename):
     component = get_object_or_404(Component, slug=component_slug,
