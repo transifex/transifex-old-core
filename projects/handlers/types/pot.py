@@ -43,7 +43,7 @@ class POTHandler:
             pass
 
         # Set the source file (pot) to the database
-        self.tm.set_source_stats(self.component, isMsgmerged=False)
+        self.tm.set_source_stats(self.component, is_msgmerged=False)
 
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)
@@ -60,9 +60,9 @@ class POTHandler:
         """Return stats for the component."""
         return self.tm.get_stats(self.component)
 
-    def get_file_content(self, filename, isMsgmerged):
+    def get_file_content(self, filename, is_msgmerged):
         """Return stats for the component."""
-        return self.tm.get_file_content(filename, isMsgmerged)
+        return self.tm.get_file_content(filename, is_msgmerged)
 
     def get_source_stats(self):
         return self.tm.get_source_stats(self.component)

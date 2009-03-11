@@ -212,11 +212,11 @@ def component_clear_cache(request, project_slug, component_slug):
 
 
 def component_file(request, project_slug, component_slug, filename, 
-                   view=False, isMsgmerged=True):
+                   view=False, is_msgmerged=True):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     try:
-        content = component.trans.get_file_content(filename, isMsgmerged)
+        content = component.trans.get_file_content(filename, is_msgmerged)
     except IOError:
         raise Http404
     fname = "%s.%s" % (component.full_name, os.path.basename(filename))

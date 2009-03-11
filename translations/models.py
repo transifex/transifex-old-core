@@ -43,10 +43,10 @@ class POFileManager(models.Manager):
         Yield a POFile for every language in a release containing the language
         total statistics
         """
-        postats = self.by_release(release).filter(isPOT=True).values('total')
+        postats = self.by_release(release).filter(is_pot=True).values('total')
         pot_total = sum(postat['total'] for postat in postats)
 
-        postats = self.by_release(release).filter(isPOT=False,
+        postats = self.by_release(release).filter(is_pot=False,
                                                   language__isnull=False)
 
         grouped_postats = groupby(postats, key=lambda po:po.language)
@@ -103,8 +103,8 @@ class POFile(models.Model):
     # This field is used to indicate whenever a file was created 
     # by the system, even a POT file through intltool-update
     # We might rename it later
-    isMsgmerged = models.BooleanField(default=True, editable=False)
-    isPOT = models.BooleanField(default=False, editable=False)
+    is_msgmerged = models.BooleanField(default=True, editable=False)
+    is_pot = models.BooleanField(default=False, editable=False)
 
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
