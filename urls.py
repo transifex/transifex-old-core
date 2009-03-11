@@ -6,10 +6,10 @@ from django.contrib import admin
 urlpatterns = patterns('',
     #url(r'^$', 'django.views.generic.simple.direct_to_template',
     #    {'template': 'index.html'}, name='home'),
-    url(r'^$', 'transifex.views.index', name='home'),
+    url(r'^$', 'txcommon.views.index', name='home'),
     url(r'^projects/', include('projects.urls')),
     url(r'^collections/', include('txcollections.urls')),
-    url(r'^search/$', 'transifex.views.search', name='search'),
+    url(r'^search/$', 'txcommon.views.search', name='search'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 )
 
 # Choose auth app depending on whether authopenid was enabled or not
-if 'django_authopenid' in settings.INSTALLED_APPS:
+if settings.ENABLE_OPENID:
     urlpatterns += patterns('',
         url(r'^account/', include('django_authopenid.urls')),)
 else:

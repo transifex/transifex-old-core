@@ -10,6 +10,7 @@ def comp_stats_table(context, stats):
     Creates a HTML table to presents the statistics of all 
     languages for a component.
     """
+
     context['stats'] = key_sort(stats, ('sort_id', '-trans_perc',))
     return context
 

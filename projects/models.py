@@ -18,7 +18,7 @@ from tagging.fields import TagField
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import Unit
-from transifex.log import (logger, log_model)
+from txcommon.log import (logger, log_model)
 from projects.handlers import get_trans_handler
 
 
@@ -230,6 +230,11 @@ class Component(models.Model):
         db_table  = 'projects_component'
         ordering  = ('name',)
         get_latest_by = 'created'
+        permissions = (
+            ("clear_cache", "Can clear cache"),
+            ("refresh_stats", "Can refresh statistics"),
+            ("submit_file", "Can submit file"),
+        )
 
     @cached_property
     def trans(self):
@@ -308,12 +313,13 @@ class Component(models.Model):
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
-            except IntegrityError:
+            except self.IntegrityError:
                 logger.error("Yow! Unit exists but is not associated with %s! "
                           % self.full_name)
                 # TODO: Here we should probably send an e-mail to the 
                 # admin, because something very strange would be happening
                 pass
+        return self.unit
 
     def get_files(self):
         """Return a list of filtered files for the component."""

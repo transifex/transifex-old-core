@@ -15,15 +15,10 @@
 <br />
 	<p class="warning">{{ msg }}</p>
 {% endif %}
-{% if form.errors %}
-<p class="errors">{% trans "Please correct errors below:" %}<br />
-	{% if form.username.errors %} 
-		<span class="error">{{ form.username.errors|join:", " }}</span>
-	{% endif %}
-	{% if form.password.errors %} 
-		<span class="error">{{ form.password.errors|join:", " }}</span>
-	{% endif %}
-</p>
+{% if form.non_field_errors %}
+<div id="form-error">
+  {{ form.non_field_errors }}
+</div>
 {% endif %}
 
 <div id="login_index">

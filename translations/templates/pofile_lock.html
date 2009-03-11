@@ -11,7 +11,7 @@
     <span class="stat_message">({{ owner }})</span>
   {% endifequal %}
 {% else %}
-  {% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated and perms.translations.add_pofilelock %}
     <a class="i16 lock_none nodecoration_icon" title="{% trans "Lock this file to notify others you're working with it." %}" href="{{ toggle_lock_url }}"></a>
   {% else %}
     <span class="i16 lock_none nodecoration_icon" title="{% trans "This file is unlocked. Most likely noone is working with it right now." %}" href="{{ toggle_lock_url }}"></span>

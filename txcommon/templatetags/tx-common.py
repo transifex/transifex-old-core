@@ -4,7 +4,7 @@ from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 
-import transifex
+import txcommon
 
 register = template.Library()
 
@@ -29,7 +29,16 @@ def homelink(text="Home"):
 @register.simple_tag
 def txversion():
     """Return the version of Transifex"""
-    return transifex.version
+    return txcommon.version
+
+# Forms
+
+@register.inclusion_tag("form_as_table_rows.html")
+def form_as_table_rows(form):
+    """
+    Create a form using HTML table rows.
+    """
+    return {"form": form}
 
 
 # Email Munger by cootetom

@@ -1,5 +1,5 @@
 from translations.lib.types.pot import POTManager
-from transifex.log import logger
+from txcommon.log import logger
 
 class POTHandler:
     """

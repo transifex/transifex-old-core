@@ -219,14 +219,20 @@ to have the fixture updated:
 
 4. With the new DB schema in place, dump the data again::
 
-     ./manage.py dumpdata --indent=2 projects txcollections vcs translations \
-     sites tagging contenttypes > transifex/fixtures/sample_data.json
+     ./manage.py dumpdata --intend=2 projects txcollections releases vcs \
+     translations sites > transifex/fixtures/sample_data.json
 
-5. Inspect the changes between the two ``sample_data.json`` files to make
-   sure they're OK.
+5. Try the new DB fixture::
+
+     ./manage.py flush --noinput
+     ./manage.py syncdb --noinput
+     mg loaddata transifex/fixtures/sample_data.json
+     mg loaddata transifex/fixtures/sample_users.json
+
+   Open up your browser to check everything looks OK and that your changes
+   have been included as you'd expect.
    
-6. Update the documentation if needed. Commit all changes together..
- 
+6. Update the documentation if needed. Commit all changes together.
  
  
 .. _PEP-8:   http://www.python.org/dev/peps/pep-0008/

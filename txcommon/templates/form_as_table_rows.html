@@ -1,12 +1,12 @@
 {% load i18n %}
-{% load forms_template_style %}
+{% load tx-common %}
 {% if form %}
     {% for field in form %}
     <tr>
     <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
     <td>
         <p class="fieldp">{{ field }}</p>
-        {% if field.errors %}<p class="fielderrors">{{ field.errors }}</p>{% endif %}
+        {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
     </td>
     <td><p class="helptext">{{ field.help_text }}</p></td>
     </tr>

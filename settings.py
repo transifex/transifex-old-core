@@ -52,6 +52,8 @@ DEFAULT_FROM_EMAIL = 'admin@%s' % SITE_DOMAIN
 ENABLE_NOTICES = False
 
 # Registration - OpenID
+# Requires respective middleware and application
+ENABLE_OPENID=True
 ugettext = lambda s: s
 LOGIN_URL = '/%s%s' % ('account/', 'signin/')
 
@@ -157,7 +159,7 @@ INSTALLED_APPS = [
     'pagination',
     'contact_form',
     # Transifex specific apps:
-    'transifex',    
+    'txcommon',
     'vcs',
     'translations',
     'languages',
@@ -200,7 +202,7 @@ CVCS_SUBMIT_MSG = """%(date)s  %(userinfo)s
 # Default submit message format for decentralized VCSs. Backends can override
 # this.
 DVCS_SUBMIT_MSG = """%(message)s
-            
+
 Transmitted-via: Transifex (%(domain)s)"""
 
 ####################
@@ -210,7 +212,7 @@ Transmitted-via: Transifex (%(domain)s)"""
 TRANS_CHOICES = {'POT': 'POT files',
                  'INTLTOOL': 'POT files using intltool',}
 
-# The classes which implement the TransHandler support. The full "path" 
+# The classes which implement the TransHandler support. The full "path"
 # to the class is the concatenation of the BASE and the NAME of the class.
 TRANS_CLASS_BASE = 'projects.handlers.types'
 TRANS_CLASS_NAMES = {'POT': 'pot.POTHandler',
@@ -245,7 +247,17 @@ BROWSER_CLASS_NAMES.update({'bzr': 'vcs.lib.types.bzr.BzrBrowser',
 
 # Put any settings specific to the particular host in settings_local.py
 
+QUIT_ON_LOCAL_LOAD_FAILURE = True
+
+import sys
+import traceback
+
 try:
-    execfile('settings_local.py')
-except IOError:
-    pass
+    if os.path.exists('settings_local.py'):
+        execfile('settings_local.py')
+except StandardError, e:
+    print >> sys.stderr, 'Unable to load local settings: %r' % (e,)
+    print >> sys.stderr, 'Full traceback:'
+    traceback.print_exc(file=sys.stderr)
+    if QUIT_ON_LOCAL_LOAD_FAILURE:
+        sys.exit(1)
