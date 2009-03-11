@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load statistics %}
-{% url component_toggle_lock_file component.project.slug component.slug pofile.filename as toggle_lock_url %}
+{% url component_toggle_lock_file pofile.object.project.slug pofile.object.slug pofile.filename as toggle_lock_url %}
 {% with pofile.locks.get.owner as owner %}
 {% if pofile.locked %}
   {% ifequal request.user.username owner.username %}
