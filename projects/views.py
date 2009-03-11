@@ -356,7 +356,7 @@ def component_toggle_lock_file(request, project_slug, component_slug,
 
     try:
         lock = POFileLock.objects.get(pofile=pofile)
-        if request.user == lock.owner:
+        if request.user.pk == lock.owner.pk:
             lock.delete()
             request.user.message_set.create(message="Lock removed.")
         else:
