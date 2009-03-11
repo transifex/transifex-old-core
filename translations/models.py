@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import dictsort, dictsortreversed
 from django.utils.translation import ugettext_lazy as _
+from django.utils.itercompat import groupby
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
@@ -20,67 +22,60 @@ class POFileManager(models.Manager):
                            object_id=obj.pk)
 
     def by_language(self, language):
-        """ Returns a list of objects statistics for a language."""
-        postats = self.filter(language=language)
-        return dictsort(postats,'object.project.name')
+        """ Return a list of objects statistics for a language."""
+        return self.filter(language=language)
+
+    def by_release(self, release):
+        """ Return a QuerySet for a specific release """
+        ctype = ContentType.objects.get(app_label='projects', model='component')
+        comp_query = release.components.values('pk').query
+        return self.filter(content_type=ctype, object_id__in=comp_query)
 
     def by_language_and_release(self, language, release):
         """ 
         Return a list of stats object for a language and release.
         """
-        ctype = ContentType.objects.get(app_label='projects', model='component')
-        comp_query = release.components.values('pk').query
-        postats = self.filter(content_type=ctype,
-                              object_id__in=comp_query,
-                              language=language)
-        return dictsort(postats,'object.project.name')
+        return self.by_release(release).filter(language=language)
+
 
     def by_release_total(self, release):
         """
-        Return a list of the total translation by languages for a release
+        Yield a POFile for every language in a release containing the language
+        total statistics
         """
-        from django.db import connection
-        cursor = connection.cursor()
+        postats = self.by_release(release).filter(isPOT=True).values('total')
+        pot_total = sum(postat['total'] for postat in postats)
 
-        cursor.execute("SELECT sum(t.total) "
-                       "FROM translations_pofile as t, "
-                       "projects_component_releases as r "
-                       "WHERE r.collectionrelease_id=%s AND "
-                       "isPOT=1 AND "
-                       "t.object_id=r.component_id",
-                       [release.id])
-        pot_total = cursor.fetchone()[0]
+        postats = self.by_release(release).filter(isPOT=False,
+                                                  language__isnull=False)
 
-        cursor.execute("SELECT sum(t.trans), sum(t.fuzzy), "\
-                       "sum(t.untrans), sum(t.total), t.language_id "\
-                       "FROM translations_pofile as t, "\
-                       "projects_component_releases as r "\
-                       "WHERE r.collectionrelease_id=%s AND "\
-                       "language_id is NOT NULL AND "\
-                       "t.object_id=r.component_id GROUP by language_id",
-                       [release.id])
-        postats = []
-        for row in cursor.fetchall():
-            l = Language.objects.get(id=row[4])
+        grouped_postats = groupby(postats, key=lambda po:po.language)
 
-            if pot_total and pot_total > row[3]:
+        for lang, pofiles in grouped_postats:
+            po_trans = po_fuzzy = po_untrans = po_total = 0 
+            for pofile in pofiles:
+                po_trans += pofile.trans
+                po_fuzzy += pofile.fuzzy
+                po_untrans += pofile.untrans
+                po_total += pofile.total
+
+            if pot_total and pot_total > po_total:
                 # Compare the total of entries between POT and PO
                 # We need to sum entries as untranslated for languages 
                 # that even are not present in a component
-                no_po = pot_total - row[3]
+                no_po = pot_total - po_total
             else:
                 no_po = 0
 
-            po = self.model(trans=row[0],
-                            fuzzy=row[1], 
-                            untrans=row[2] + no_po, 
-                            total=row[3] + no_po, 
-                            filename=l.code, # Not used but needed
-                            object=l, # Not used but needed
-                            language=l)
+            po = self.model(trans=po_trans,
+                            fuzzy=po_fuzzy, 
+                            untrans=po_untrans + no_po, 
+                            total=po_total + no_po, 
+                            filename=lang.code, # Not used but needed
+                            object=lang, # Not used but needed
+                            language=lang)
             po.calculate_perc()
-            postats.append(po)
-        return dictsortreversed(postats,'trans_perc')
+            yield po
 
     
 class POFile(models.Model):
