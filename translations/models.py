@@ -77,7 +77,7 @@ class POFileManager(models.Manager):
             po.calculate_perc()
             yield po
 
-    
+
 class POFile(models.Model):
     """
     A POFile is a representation of a PO file structure.
@@ -124,13 +124,19 @@ class POFile(models.Model):
             'file': self.filename,
             'type': self.content_type,
             'obj': self.object,}
+    @property
+    def sort_id(self):
+        if self.language:
+            return self.language.name.lower()
+        else:
+            return self.filename.lower()
 
     class Meta:
         unique_together = ("content_type", "object_id", "filename")
         verbose_name = _('PO file')
         verbose_name_plural = _('PO files')
         db_table  = 'translations_pofile'
-        ordering  = ('filename', 'language')
+        ordering  = ('language__name',)
         get_latest_by = 'created'
         
     def save(self, *args, **kwargs):

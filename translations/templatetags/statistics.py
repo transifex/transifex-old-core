@@ -10,7 +10,7 @@ def comp_stats_table(context, stats):
     languages for a component.
     """
 
-    return {'stats': stats,
+    return {'stats': key_sort(stats, ('sort_id', '-trans_perc',)),
             'current_user': context['request'].user}
 register.inclusion_tag('comp_stats_table.html', takes_context=True)(comp_stats_table)
 
@@ -37,7 +37,7 @@ def lang_stats_table(context, stats):
     for a specific language.
     """
 
-    return {'stats': stats,
+    return {'stats': key_sort(stats, ('object.project.name', '-trans_perc')),
             'current_user': context['request'].user}
 register.inclusion_tag('lang_stats_table.html', takes_context=True)(lang_stats_table)
 
@@ -47,8 +47,7 @@ def release_stats_table(stats, collection, release):
     Creates a HTML table to presents the statistics of all languages 
     for a specific release.
     """
-
-    return {'stats': stats,
+    return {'stats': key_sort(stats, ('language.name', '-trans_perc')),
             'collection': collection,
             'release': release}
 
@@ -74,6 +73,39 @@ def sum_trans_fuzzy(stat):
     """
     return (stat.trans_perc + stat.fuzzy_perc)
 
+@register.filter
+def sort(value, arg):
+    keys = [k.strip() for k in arg.split(',')]
+    return key_sort(value, keys)
+
+def key_sort(l, keys):
+    """
+    Sort an iterable given an arbitary number of keys relative to it
+    and return the result as a list. When a key starts with '-' the
+    sorting is reversed.
+    
+    Example: key_sort(people, ('lastname','-age'))
+    """
+    l = list(l)
+    for key in keys:
+        #Find out if we want a reversed ordering
+        if key.startswith('-'):
+            reverse = True
+            key = key[1:]
+        else:
+            reverse = False
+            
+        attrs = key.split('.')
+        def fun(x):
+            # Calculate x.attr1.attr2...
+            for attr in attrs:
+                x = getattr(x, attr)
+            # If the key attribute is a string we lowercase it
+            if isinstance(x, basestring):
+                x = x.lower()
+            return x
+        l.sort(key=fun, reverse=reverse)
+    return l
 
 @register.filter  
 def truncate_chars(value, max_length):
