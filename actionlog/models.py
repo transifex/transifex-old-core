@@ -31,7 +31,7 @@ class LogEntry(models.Model):
     user = models.ForeignKey(User, related_name="tx_actions")
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
                                      related_name="tx_logentry_type")
-    object_id = models.TextField(_('object id'), blank=True, null=True)
+    object_id = models.IntegerField(_('object id'), blank=True, null=True)
     object_repr = models.CharField(_('object repr'), max_length=200)
     action_flag = models.CharField(_("action flag"), max_length=1,
                                    choices=ACTION_CHOICES, db_index=True)
