@@ -1,7 +1,8 @@
 {% load statistics %}
 
 <div class="graph_comp">
-  <div class="translated_comp" style="width: {{stat.trans_perc}}px;"></div>
-  <div class="fuzzy_comp" style="left: {{stat.trans_perc}}px; width: {{stat.fuzzy_perc}}px;"></div>
-  <div class="untranslated_comp" style="left: {{stat|sum_trans_fuzzy}}px; width: {{stat.untrans_perc}}px;"></div>
+  {% ifnotequal stat.trans_perc 0 %}<div class="translated_comp" style="left: {{pos.trans.l}}px; width: {{pos.trans.w}}px;"></div>{% endifnotequal %}
+  {% ifnotequal stat.fuzzy_perc 0 %}<div class="fuzzy_comp" style="left: {{pos.fuzzy.l}}px; width: {{pos.fuzzy.w}}px;"></div>{% endifnotequal %}
+  {% ifnotequal stat.untrans_perc 0 %}<div class="untranslated_comp" style="left: {{pos.untrans.l}}px; width: {{pos.untrans.w}}px;"></div>{% endifnotequal %}
 </div>
+
