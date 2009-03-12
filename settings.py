@@ -253,11 +253,13 @@ import sys
 import traceback
 
 try:
-    if os.path.exists('settings_local.py'):
-        execfile('settings_local.py')
+    _localsettings = os.path.join(PROJECT_PATH, 'settings_local.py')
+    if os.path.exists(_localsettings):
+        execfile(_localsettings)
 except StandardError, e:
     print >> sys.stderr, 'Unable to load local settings: %r' % (e,)
     print >> sys.stderr, 'Full traceback:'
     traceback.print_exc(file=sys.stderr)
     if QUIT_ON_LOCAL_LOAD_FAILURE:
         sys.exit(1)
+del _localsettings
