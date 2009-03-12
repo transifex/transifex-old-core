@@ -11,7 +11,7 @@ from django.contrib.syndication.views import feed
 from translations.models import POFile
 from txcollections.models import (Collection, CollectionRelease as Release)
 from txcollections.forms import *
-
+from txcommon.decorators import perm_required_with_403
 
 # Feeds
 
@@ -34,20 +34,23 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 # A set of limited-access generic views to re-use
 # TODO: Move this in transifex-core
 @login_required
+@perm_required_with_403('txcollections.add_collection')
 def limited_create_object(*args, **kwargs):
     return create_update.create_object(*args, **kwargs)
 
 @login_required
+@perm_required_with_403('txcollections.change_collection')
 def limited_update_object(*args, **kwargs):
     return create_update.update_object(*args, **kwargs)
 
-@login_required
+# Generic function to delete objects
 def limited_delete_object(*args, **kwargs):
     return create_update.delete_object(*args, **kwargs)
 
 
 # Collections
-
+@login_required
+@perm_required_with_403('txcollections.delete_collection')
 def collection_delete(*args, **kwargs):
     kwargs['post_delete_redirect'] = reverse('collection_list')
     return limited_delete_object(*args, **kwargs)
@@ -55,27 +58,9 @@ def collection_delete(*args, **kwargs):
 
 # Releases
 
-def release_delete(*args, **kwargs):
-    kwargs['post_delete_redirect'] = reverse('collection_detail', args=[kwargs['slug']])
-    return limited_delete_object(*args, **kwargs)
-
-
-def release_detail(request, slug, release_slug, *args, **kwargs):
-    collection = get_object_or_404(Collection, slug__exact=slug)
-    release = get_object_or_404(Release, slug__exact=release_slug,
-                                collection=collection)
-    pofile_list = POFile.objects.by_release_total(release)
-    return list_detail.object_detail(
-        request,
-        queryset = Release.objects.all(),
-        slug=release_slug,
-        extra_context = {'pofile_list': pofile_list,
-                         'release': release,
-                         'collection': collection},
-        *args, **kwargs)
-
-
 @login_required
+@perm_required_with_403('txcollections.add_collectionrelease')
+@perm_required_with_403('txcollections.change_collectionrelease')
 def release_create_update(request, slug, release_slug=None, *args, **kwargs):
     collection = get_object_or_404(Collection, slug__exact=slug)
     if release_slug:
@@ -99,3 +84,24 @@ def release_create_update(request, slug, release_slug=None, *args, **kwargs):
         'collection': collection,
         'release': release,
     }, context_instance=RequestContext(request))
+
+
+def release_detail(request, slug, release_slug, *args, **kwargs):
+    collection = get_object_or_404(Collection, slug__exact=slug)
+    release = get_object_or_404(Release, slug__exact=release_slug,
+                                collection=collection)
+    pofile_list = POFile.objects.by_release_total(release)
+    return list_detail.object_detail(
+        request,
+        queryset = Release.objects.all(),
+        slug=release_slug,
+        extra_context = {'pofile_list': pofile_list,
+                         'release': release,
+                         'collection': collection},
+        *args, **kwargs)
+
+@login_required
+@perm_required_with_403('txcollections.delete_collectionrelease')
+def release_delete(*args, **kwargs):
+    kwargs['post_delete_redirect'] = reverse('collection_detail', args=[kwargs['slug']])
+    return limited_delete_object(*args, **kwargs)

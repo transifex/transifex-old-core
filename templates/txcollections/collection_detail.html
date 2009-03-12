@@ -22,7 +22,7 @@
   <div class="obj_bigdetails">
   <h2 class="name">{{ collection.name }}</h2>
 
-  {% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated and perms.txcollections.change_collection %}
   <div class="editlinks"><p class="i16 edit"><a href="{% url collection_edit slug=collection.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
@@ -60,7 +60,7 @@
 
 {% url collection_release_create slug=collection.slug as release_create %}
 <div id="releases" class="releases separate">
-  {% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
   <div class="editlinks"><span class="i16 add">
     <a href="{{ release_create }}">{% trans "Add" %}</a></span>
   </p></div>
@@ -116,7 +116,7 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated and perms.txcollections.delete_collection %}
     <div class="deletelink">
       <span class="i16 delete"><a href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a></span>
     </div>

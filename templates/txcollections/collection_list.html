@@ -20,7 +20,7 @@
 </h2>{% endblock %}
 
 {% block content_header_sec %}
-  {% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated and perms.txcollections.add_collection %}
   <div class="addcollection content_header_sec">
     <span class="i16 add"><a href="{% url collection_create %}">{% trans "Add a new collection" %}</a></span>
   </div>
