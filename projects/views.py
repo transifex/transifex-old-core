@@ -21,7 +21,8 @@ import settings
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
 from txcommon.log import logger
-from actionlog.models import (log_addition, log_change, log_deletion)
+from actionlog.models import (log_addition, log_change, log_deletion, 
+                              log_submission)
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from translations.models import POFile
@@ -323,6 +324,8 @@ def component_submit_file(request, project_slug, component_slug,
 
             request.user.message_set.create(message=("File submitted " 
                                "successfully: %s" % filename))
+            log_submission(request, component,
+                           'A translation has been submitted for %s' % lang_name)
         except ValueError: # msgfmt_check
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
             request.user.message_set.create(message=("Your file does not" \

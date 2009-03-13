@@ -9,12 +9,14 @@ from django.utils.safestring import mark_safe
 
 ACTIONS = {'ADDITION': 'A',
            'CHANGE': 'C',
-           'DELETION': 'D'}
+           'DELETION': 'D',
+           'SUBMISSION': 'S'}
 
 ACTION_CHOICES = (
     ('A', _('Addition')),
     ('C', _('Change')),
     ('D', _('Deletion')),
+    ('S', _('Submission')),
 )
 
 
@@ -53,6 +55,9 @@ class LogEntry(models.Model):
 
     def is_deletion(self):
         return self.action_flag == ACTIONS['DELETION']
+
+    def is_submission(self):
+        return self.action_flag == ACTIONS['SUBMISSION']
 
     def get_edited_object(self):
         """Return the edited object represented by this log entry."""
@@ -116,4 +121,22 @@ def log_deletion(request, object, object_repr):
         object_repr     = object_repr,
         action_flag     = ACTIONS['DELETION']
     )
+
+
+def log_submission(request, object, message):
+    """
+    Log that an object has been successfully submited to a repository. 
+    
+    The default implementation creates an admin LogEntry object.
+    """
+    from actionlog.models import LogEntry, ACTIONS
+    LogEntry.objects.log_action(
+        user_id         = request.user.pk, 
+        content_type_id = ContentType.objects.get_for_model(object).pk, 
+        object_id       = object.pk, 
+        object_repr     = force_unicode(object), 
+        action_flag     = ACTIONS['SUBMISSION'], 
+        change_message  = message
+    )
+
 
