@@ -1,13 +1,15 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from models import Language
-from feeds import AllLanguages
-from views import language_detail, slug_feed, language_release
+from feeds import AllLanguages, LanguageReleaseFeed
+from views import (language_detail, slug_feed,
+                   language_release, language_release_feed)
 
 admin.autodiscover()
 
 feeds = {
     'all': AllLanguages,
+    'language_release': LanguageReleaseFeed,
 }
 
 #TODO: Temporary until we import view from a common place
@@ -19,6 +21,12 @@ urlpatterns = patterns('',
         name = 'languages_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'all'}),
+    url(
+        regex = '^(?P<language_slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/feed/$',
+        view = language_release_feed,
+        name = 'language_release_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'language_release'}),
 )
 
 

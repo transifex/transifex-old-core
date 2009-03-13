@@ -25,6 +25,17 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
     return feed(request, url, feed_dict)
 
 
+def language_release_feed(request,
+                          language_slug, collection_slug, release_slug,
+                          slug=None, param='', feed_dict=None,):
+    param = '%s/%s/%s' % (language_slug, collection_slug, release_slug)
+    if slug:
+        url = "%s/%s" % (slug, param)
+    else:
+        url = param
+    return feed(request, url, feed_dict)
+
+
 def language_detail(request, slug, *args, **kwargs):
     language = get_object_or_404(Language, code__iexact=slug)
     pofile_list = POFile.objects.by_language(language)
@@ -35,7 +46,7 @@ def language_detail(request, slug, *args, **kwargs):
                          'collection_list': Collection.objects.all()},
         *args, **kwargs
     )
-language_detail.__doc__ = list_detail.object_detail.__doc__
+
 
 def language_release(request, slug, collection_slug, release_slug):
 
