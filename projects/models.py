@@ -92,9 +92,9 @@ class Project(models.Model):
     feed = models.CharField(blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
 
-    hidden = models.BooleanField(default=False,
+    hidden = models.BooleanField(default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True,
+    enabled = models.BooleanField(default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
@@ -195,9 +195,9 @@ class Component(models.Model):
     allows_submission = models.BooleanField(default=False,
         help_text=_('Does this module repository allow write access?'))
 
-    hidden = models.BooleanField(default=False,
+    hidden = models.BooleanField(default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True,
+    enabled = models.BooleanField(default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)

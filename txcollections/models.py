@@ -30,9 +30,9 @@ class Collection(models.Model):
     long_description = models.TextField(blank=True, max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
     homepage = models.URLField(blank=True, verify_exists=False)
-    hidden = models.BooleanField(default=False,
+    hidden = models.BooleanField(default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True,
+    enabled = models.BooleanField(default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)

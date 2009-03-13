@@ -43,9 +43,9 @@ class Release(models.Model):
                     "from the developers, and thus, translations to be "
                     "built in the packages of it."))
     
-    hidden = models.BooleanField(default=False,
+    hidden = models.BooleanField(default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True,
+    enabled = models.BooleanField(default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
