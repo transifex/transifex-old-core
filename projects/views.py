@@ -350,22 +350,33 @@ def component_submit_file(request, project_slug, component_slug,
 @perm_required_with_403('translations.delete_pofilelock')
 def component_toggle_lock_file(request, project_slug, component_slug,
                                filename):
-    component = get_object_or_404(Component, slug=component_slug,
-                                  project__slug=project_slug)
-    pofile = get_object_or_404(POFile, component=component, filename=filename)
+    if request.method == 'POST':
+        component = get_object_or_404(Component, slug=component_slug,
+                                    project__slug=project_slug)
+        pofile = get_object_or_404(POFile, component=component, filename=filename)
 
-    try:
-        lock = POFileLock.objects.get(pofile=pofile)
-        if request.user.pk == lock.owner.pk:
-            lock.delete()
-            request.user.message_set.create(message="Lock removed.")
-        else:
+        try:
+            lock = POFileLock.objects.get(pofile=pofile)
+            if request.user.pk == lock.owner.pk:
+                lock.delete()
+                # TODO: Figure out why gettext is not working here
+                request.user.message_set.create(message="Lock removed.")
+            else:
+                # TODO: Figure out why gettext is not working here
+                request.user.message_set.create(
+                    message="Error: Only the owner of a lock can remove it.")
+        except POFileLock.DoesNotExist:
+            lock = POFileLock.objects.create(pofile=pofile, owner=request.user)
+            # TODO: Figure out why gettext is not working here
             request.user.message_set.create(
-                message="Error: Only the owner of a lock can remove it.")
-    except POFileLock.DoesNotExist:
-        lock = POFileLock.objects.create(pofile=pofile, owner=request.user)
-        request.user.message_set.create(
-            message="Lock created. Please don't forget to remove it when "
-            "you're done.")
-    return HttpResponseRedirect(reverse('projects.views.component_detail',
+                message="Lock created. Please don't forget to remove it when "
+                "you're done.")
+    else:
+        # TODO: Figure out why gettext is not working here
+        request.user.message_set.create(message = (
+                "Sorry, but you need to send a POST request."))
+    try:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    except:
+        return HttpResponseRedirect(reverse('projects.views.component_detail',
                                         args=(project_slug, component_slug,)))

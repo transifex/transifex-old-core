@@ -4,7 +4,9 @@
 {% with pofile.locks.get.owner as owner %}
 {% if pofile.locked %}
   {% ifequal request.user.username owner.username %}
-    <a class="i16 lock_break nodecoration_icon" title="{% trans "Unlock this file when you're finished working with it." %}" href="{{ toggle_lock_url }}"></a>
+    <form action="{{ toggle_lock_url }}" method="POST" class="microform">
+        <input title="{% trans "Unlock this file when you're finished working with it." %}" class="i16 lock_break nodecoration_icon image_submit_type" value="" type="image">
+    </form>
     <span class="stat_message">(you)</span>
   {% else %}
     <span class="i16 lock nodecoration_icon" title="{% trans "This file is locked, indicating someone is working with it." %}" href="{{ toggle_lock_url }}"></span>
@@ -12,7 +14,9 @@
   {% endifequal %}
 {% else %}
   {% if request.user.is_authenticated and perms.translations.add_pofilelock %}
-    <a class="i16 lock_none nodecoration_icon" title="{% trans "Lock this file to notify others you're working with it." %}" href="{{ toggle_lock_url }}"></a>
+   <form action="{{ toggle_lock_url }}" method="POST" class="microform">
+        <input title="{% trans "Lock this file to notify others you're working with it." %}" class="i16 lock_none nodecoration_icon image_submit_type" value="" type="image">
+    </form>
   {% else %}
     <span class="i16 lock_none nodecoration_icon" title="{% trans "This file is unlocked. Most likely noone is working with it right now." %}" href="{{ toggle_lock_url }}"></span>
   {% endif %}
