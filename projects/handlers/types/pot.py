@@ -29,8 +29,6 @@ class POTHandler:
     def set_stats(self):
         """Calculate stats for all translations of the component."""
 
-        # Deleting all stats for the component
-        self.clear_stats()
         logger.debug("Setting stats for %s" % self.component)
 
         # Copying the source file to the static dir

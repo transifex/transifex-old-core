@@ -20,9 +20,7 @@ class IntltoolHandler(pot.POTHandler):
         using intltool-update.    .
         """
 
-        # Deleting all stats for the component
         logger.debug("Setting stats for %s" % self.component)
-        self.tm.delete_stats_for_object(self.component)
 
         isIntltooled = self.tm.intltool_update()
         if not isIntltooled:
