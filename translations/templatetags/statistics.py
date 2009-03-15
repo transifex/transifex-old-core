@@ -50,7 +50,7 @@ def comp_stats_table(context, stats):
     languages for a component.
     """
 
-    context['stats'] = key_sort(stats, ('sort_id', '-trans_perc',))
+    context['stats'] = key_sort(stats, 'sort_id', '-trans_perc')
     return context
 
 @register.inclusion_tag("project_stats_table.html")
@@ -77,7 +77,7 @@ def lang_stats_table(context, stats):
     for a specific language.
     """
 
-    context['stats'] = key_sort(stats, ('object.project.name', '-trans_perc'))
+    context['stats'] = key_sort(stats, 'object.project.name', '-trans_perc')
     return context
 
 @register.inclusion_tag("release_stats_table.html")
@@ -86,7 +86,7 @@ def release_stats_table(stats, collection, release):
     Create a HTML table to presents the statistics of all languages 
     for a specific release.
     """
-    return {'stats': key_sort(stats, ('language.name', '-trans_perc')),
+    return {'stats': key_sort(stats, 'language.name', '-trans_perc'),
             'collection': collection,
             'release': release}
 
@@ -111,15 +111,15 @@ def stats_bar_trans(stat):
 @register.filter
 def sort(value, arg):
     keys = [k.strip() for k in arg.split(',')]
-    return key_sort(value, keys)
+    return key_sort(value, *keys)
 
-def key_sort(l, keys):
+def key_sort(l, *keys):
     """
     Sort an iterable given an arbitary number of keys relative to it
     and return the result as a list. When a key starts with '-' the
     sorting is reversed.
     
-    Example: key_sort(people, ('lastname','-age'))
+    Example: key_sort(people, 'lastname', '-age')
     """
     l = list(l)
     for key in keys:
