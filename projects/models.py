@@ -189,7 +189,7 @@ class Component(models.Model):
         choices=settings.TRANS_CHOICES.items(),
         help_text=_("The code's type of i18n support (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
-    file_filter = models.CharField(max_length=50, blank=True, null=True,
+    file_filter = models.CharField(max_length=50,
         help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
 
     allows_submission = models.BooleanField(default=False,
