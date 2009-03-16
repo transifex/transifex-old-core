@@ -69,7 +69,7 @@ urlpatterns += patterns('',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
     url(
-        regex = r'^(?P<param>[-\w]+)/feed/$',
+        regex = r'^(?P<param>[-\w]+)/releases/feed/$',
         view = SLUG_FEED,
         name = 'collection_feed',
         kwargs = {'feed_dict': feeds,
