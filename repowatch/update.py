@@ -55,7 +55,7 @@ def main(args):
                 continue
         # ...and notify by user
         if changes:
-            changes.sort(operator.itemgetter(0)
+            changes.sort(operator.itemgetter(0))
             for usergroup in itertool.groupby(changes,
                 key=operator.itemgetter(0)):
                 repowatch.send_email(Site.objects.get_current(), comp,
