@@ -306,7 +306,7 @@ class POTManager(TransManagerMixin):
         Raises a ValueError in case the file has errors.
         """
         try:
-            p = run_command('msgfmt -c -', _input=po_contents)
+            p = run_command('msgfmt -o /dev/null -c -', _input=po_contents)
         except CommandError:
             # TODO: Figure out why gettext is not working here
             raise ValueError, "Your file does not" \
