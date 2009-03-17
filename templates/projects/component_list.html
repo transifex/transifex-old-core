@@ -6,7 +6,7 @@
   <div class="editlinks">
   <p><a class="simlink" href="{% url project_feed param=project.slug %}" title="Project feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p>
   {% if request.user.is_authenticated and perms.projects.add_component %}
-    <p class="i16 add"><a href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></p>
+    <p><a class="i16 add buttonized" href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></p>
   {% endif %}
   </div>
 

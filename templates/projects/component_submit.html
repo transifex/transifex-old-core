@@ -1,10 +1,10 @@
 {% load i18n %}
 {% url component_submit_file stat.object.project.slug stat.object.slug stat.filename as file_submit_url %}
-<span class="i16 nodecoration_icon submit submit_button" title="{% trans "Send a translation for this language." %}"></span>
+<span class="i16 nodecoration_icon submit_file submit_button buttonized_simple" title="{% trans "Send a translation for this language." %}"></span>
 <form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
   <input type="file" name="submited_file">
-  <input type="submit" class="submit" size="10" value="{% trans "Send" %}">
+  <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
 </fieldset>
 </form>

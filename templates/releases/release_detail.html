@@ -23,7 +23,7 @@
   <h2 class="name">{{ release.name }}</h2>
 
   {% if request.user.is_authenticated %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url release_edit slug=release.slug %}">{% trans "Edit" %}</a></p></div>
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url release_edit slug=release.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
   {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
@@ -94,7 +94,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated %}
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url release_delete slug=release.slug %}">{% trans "Delete release" %}</a></span>
+      <a class="i16 delete buttonized" href="{% url release_delete slug=release.slug %}">{% trans "Delete release" %}</a>
     </div>
     {% endif %}
   </div>

@@ -19,7 +19,7 @@
   <h2 class="name">{{ collection.name }}</h2>
 
   {% if request.user.is_authenticated and perms.txcollections.change_collection %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url collection_edit slug=collection.slug %}">{% trans "Edit" %}</a></p></div>
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url collection_edit slug=collection.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
   {% if collection.description %}<p class="description">{{ collection.description }}</p>{% endif %}
@@ -59,7 +59,7 @@
   <div class="editlinks">
     <p><a class="simlink" href="{% url collection_feed param=collection.slug %}" title="collection feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p>
       {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
-    <p class="i16 add"><a href="{{ release_create }}">{% trans "Add" %}</a></p>
+    <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
       {% endif %}
     </p>
   </div>
@@ -116,7 +116,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated and perms.txcollections.delete_collection %}
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a></span>
+      <a class="i16 delete buttonized" href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a>
     </div>
     {% endif %}
   </div>

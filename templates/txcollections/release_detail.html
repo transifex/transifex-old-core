@@ -23,7 +23,7 @@
 {% block body_main %}
   <div class="obj_bigdetails">
   {% if request.user.is_authenticated and perms.txcollections.change_collectionrelease %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p></div>
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   <h2 class="name">{{ collection.name }} &raquo; {{ release }}</h2>
   
@@ -78,7 +78,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated and perms.txcollections.delete_collectionrelease %}
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a></span>
+      <a class="i16 delete buttonized" href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a>
     </div>
     {% endif %}
   </div>

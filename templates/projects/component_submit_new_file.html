@@ -1,10 +1,10 @@
 {% load i18n %}
 <div class="generic_form">
 {% url component_submit_new_file component.project.slug component.slug as file_submit_url %}
-<span class="i16 nodecoration_icon submit submit_button" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new language translation" %}</span>
+<span class="i16 add submit_button buttonized" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new translation" %}</span>
 <form class="submit_form microform" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
- <fieldset>
-  <legend>{% trans "Submit file" %}</legend>
+ <fieldset style="margin-top: 1em;">
+  <legend>{% trans "Add a translation file" %}</legend>
    <table>
     <tbody>
     <tr>
@@ -19,7 +19,7 @@
     </tr>
     </tbody>
    </table>
-   <p class="submit">  <input type="submit" class="submit" size="10" value="{% trans "Send" %}"></p>
+   <p class="submit">  <input type="submit" class="i16 send_file" class="submit" size="10" value="{% trans "Send" %}"></p>
  </fieldset>
 </form>
 </div>
