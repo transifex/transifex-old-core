@@ -43,8 +43,9 @@ class POFileManager(models.Manager):
         Yield a POFile for every language in a release containing the language
         total statistics
         """
-        postats = self.by_release(release).filter(is_pot=True).values('total')
-        pot_total = sum(postat['total'] for postat in postats)
+        postats = self.by_release(release).filter(is_pot=True).values_list(
+            'total', flat=True)
+        pot_total = sum(postats)
 
         postats = self.by_release(release).filter(is_pot=False,
                                                   language__isnull=False)
