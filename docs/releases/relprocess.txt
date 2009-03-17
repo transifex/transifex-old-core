@@ -12,12 +12,11 @@ follow in this process.
 Prepare the code
 ----------------
 
-1. Get changesets into mainline branch::
+1. Sync your repo with the mainline branch::
 
-    cd ../b-mainline
-    hg pull txo
-    hg pull ../b-0.3    
-    hg push txo
+    hg -R ../b-mainline pull default
+    hg pull ../b-mainline
+    hg push ../b-mainline
 
 2. Write the release notes for this release::
 
@@ -36,7 +35,7 @@ Prepare the code
 4. Update packaging files with version bump. If there are new translations,
    include them in ``setup.py``::
 
-    vim setup.py transifex.spec
+    vim setup.py transifex.spec txcommon/__init__.py
 
 5. Commit changes::
 
