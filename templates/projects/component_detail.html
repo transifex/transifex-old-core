@@ -22,7 +22,7 @@
 {% block body_main %}
   <div class="obj_bigdetails">
   {% if request.user.is_authenticated and perms.projects.add_component %}
-  <div class="editlinks"><p class="i16 edit"><a href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
@@ -56,14 +56,6 @@
       <th class="i16 filter">{% trans "File filter:" %}</th>
       <td>{{ component.file_filter }}</td>
     </tr>
-    <tr>
-      <th class="i16 allow_file">{% trans "Allows file submissions:" %}</th>
-      <td>
-        {% if component.allows_submission %}<span class="i16 tick_circle"></span>
-        {% else %}<span class="i16 stop"></span>
-        {% endif %}
-      </td>
-    </tr>
     {% with component.releases.all as releases %}
     {% if releases %}
     <tr>
@@ -92,7 +84,7 @@
     </tr>{% endif %}
   </table>
 </div>
-{% endif %}  
+{% endif %}
 
 <h3>{% trans "Translation files" %}</h3>
 
@@ -155,7 +147,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated and perms.projects.delete_component %}
     <div class="deletelink">
-      <span class="i16 delete"><a href="{% url component_delete project_slug=component.project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a></span>
+      <a class="i16 delete buttonized" href="{% url component_delete project_slug=component.project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a>
     </div>
     {% endif %}
   </div>

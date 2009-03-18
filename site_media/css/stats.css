@@ -86,7 +86,7 @@ div.untranslated {
 table.stats_comp {
   font-size: 100%;
   border-collapse: collapse;
-  margin: 1em 0 0.5em 0;
+  margin: 1em 0;
 }
 
 .stats_comp a {
@@ -187,7 +187,15 @@ span.stat_message{
   padding-right: 1px;
 }
 
-.nodecoration_icon, .nodecoration_icon:hover{
+.nodecoration_icon, .nodecoration_icon:hover { /* These classes need cleanup */
   text-decoration: none;
   border: none !important;
+  padding-left: 16px !important;
+  margin-left: 5px;
+}
+
+input.nodecoration_icon,
+input.nodecoration_icon:hover { /* Not sure why this is needed. */
+  margin-left: 0;
+  padding-left: 16px !important;
 }

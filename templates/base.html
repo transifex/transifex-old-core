@@ -32,7 +32,7 @@
           {% if user.is_authenticated %}
               {% url user_account_settings as user_profile %} 
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
-              <a href="{% url user_signout %}?next={{request.path}}">{% trans "Sign out" %}</a></span>
+              <form action="{% url user_signout %}?next={{request.path}}" method="POST" class="microform"><input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" /></form>
           {% else %}
               <a href="{% url user_signin %}?next={{request.path}}">{% trans "Sign in" %}</a>
   {% url user_changeopenid as user_changeopenid %}
@@ -74,7 +74,7 @@
             {% if messages %}
                 <div class="messages">
                 {% for message in messages %}
-                    <span class="message">{{ message }}</span> 
+                    <span class="i16 tip message">{{ message }}</span> 
                 {% endfor %}
                 </div>
             {% endif %}

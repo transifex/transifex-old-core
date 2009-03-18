@@ -22,7 +22,7 @@
 {% block content_header_sec %}
     {% if request.user.is_authenticated %}
     <div class="addrelease content_header_sec">
-      <span class="i16 add"><a href="{% url release_create %}">{% trans "Add a new release" %}</a></span>
+      <a class="i16 add buttonized" href="{% url release_create %}">{% trans "Add a new release" %}</a>
     </div>
     {% endif %}
 {% endblock %}

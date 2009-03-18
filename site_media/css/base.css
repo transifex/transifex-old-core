@@ -3,7 +3,7 @@
 /* General */
 
 body {
-  font-family:"Trebuchet MS", sans-serif;
+  font-family: sans-serif;
   font-size: 0.85em;
   color: #333;
   padding: 0;
@@ -175,10 +175,6 @@ form.microform {
   display: inline;
 }
 
-form.microform input.image_submit_type {
-  margin-left:-5px; /* I don't like it */
-}
-
 div.pagination_top {
   margin: 1em 0 3em 0;
 }
@@ -324,10 +320,10 @@ div.separate {
 
 div.obj_bigdetails div.editlinks { float: right; clear: right; }
 div.obj_bigdetails div.editlinks p { float: right; clear: right; margin: 0; }
-div.obj_bigdetails div.deletelink { text-align: center; margin-bottom: 2em; }
-div.obj_bigdetails div.deletelink span a:hover {
+div.deletelink { text-align: center; margin-bottom: 1em; }
+div.deletelink a:hover {
   color: #833;
-  background-color: #fee;  
+  background-color: #f5eeee;
 }
 
 
@@ -498,21 +494,23 @@ img.repotype { vertical-align: middle; margin-left: 10px; }
   -moz-border-radius: 5px;
   border-width: 1px;
   border-style: solid;
-  padding: 9px;
+  padding: 0.5em;
   background-color: #ffffe0;
   border-color: #e6db55;
   margin: 0px;
+  font-size: 0.9em;
 }
 
 .message.i16 {
   background-position: 10px 50%;
+  padding-left: 33px;
 }
 
 .hidden_field {
   display:none;
 }
 
-span.submit_button{
+input[type="submit"] {
   cursor: pointer;
 }
 
@@ -661,4 +659,43 @@ a.tag {
 .buttonright {
   text-align:right;
   padding-top: 0.3em;
+}
+
+/* Buttonized */
+
+.buttonized,
+.buttonized:hover,
+.buttonized_simple,
+.buttonized_simple:hover,
+.microform input[type="submit"] {
+  cursor: pointer;
+}
+
+.buttonized,
+.microform input[type="submit"] {
+  border: 1px solid #ccc !important;
+  background-color: #f5f5f5;
+  -moz-border-radius: 3px;
+  line-height: 22px;
+  height: 22px;
+  padding: 0.3em 0.6em;
+  color: #333;
+}
+
+.buttonized { font-size: 0.85em; }
+
+.buttonized.active { background-color: #ddd; }
+
+.buttonized a {
+  border-bottom: none;
+}
+
+.buttonized a:hover {
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.buttonized:hover {
+  background-color: #fafafa;
+  border: 1px solid #ccc;
 }
