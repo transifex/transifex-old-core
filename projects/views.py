@@ -332,10 +332,10 @@ def component_submit_file(request, project_slug, component_slug,
                                     " pass by the check for correctness" \
                                     " (msgfmt -c). Please run this command" \
                                     " on your system to see the errors."))
-        except:
+        except StandardError, e:
             logger.debug("Error submiting translation file %s"
-                         " for %s component" % (filename,
-                                               component.full_name))
+                         " for %s component: %r" % (filename,
+                         component.full_name, e))
            # TODO: Figure out why gettext is not working here
             request.user.message_set.create(message = (
                 "Sorry, an error is causing troubles to send your file."))
