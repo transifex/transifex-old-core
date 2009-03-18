@@ -65,21 +65,13 @@
 
 <div id="projects" class="projects">
 
+<h3>{% trans "Translation statistics" %} </h3>
 {% release_stats_table pofile_list collection release %}
 
 {% if not pofile_list %}
 <p>{% trans "No translations added for this release. :-(" %}</p>
 {% endif %}
-
+</div>
 </div>
 {% endblock %}{# body_main #}
 
-{% block content_footer %}
-  <div id="content_footer_center">
-    {% if request.user.is_authenticated and perms.txcollections.delete_collectionrelease %}
-    <div class="deletelink">
-      <span class="i16 delete"><a href="{% url collection_delete slug=collection.slug %}">{% trans "Delete collection" %}</a></span>
-    </div>
-    {% endif %}
-  </div>
-{% endblock %}

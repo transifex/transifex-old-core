@@ -53,23 +53,17 @@
       <td>{{ component.unit.branch }}</td>
     </tr>
     <tr>
-      <th class="i16 filter">{% trans "Filter:" %}</th>
+      <th class="i16 filter">{% trans "File filter:" %}</th>
       <td>{{ component.file_filter }}</td>
     </tr>
-    {% if component.trans.get_source_stats %}
     <tr>
-      <th class="link i16">{% trans "Source file:" %}</th>
+      <th class="i16 allow_file">{% trans "Allows file submissions:" %}</th>
       <td>
-      {% with component.trans.get_source_stats as source_stats %}
-      {% url component_raw_file component.project.slug component.slug source_stats.filename as source_raw_url %}
-      {% url component_view_file component.project.slug component.slug source_stats.filename as source_view_url %}
-        <code style="margin-right: 0.7em;">{{ source_stats.filename }} ({{ source_stats.total }} {% trans "entries" %})</code>
-        <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_stats.filename }}" href="{{ source_view_url }}"></a>
-        <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{ source_stats.filename }}" href="{{ source_raw_url }}"></a>
-      {% endwith %}
+        {% if component.allows_submission %}<span class="i16 tick_circle"></span>
+        {% else %}<span class="i16 stop"></span>
+        {% endif %}
       </td>
     </tr>
-    {% endif %}
     {% with component.releases.all as releases %}
     {% if releases %}
     <tr>
@@ -80,16 +74,6 @@
     </tr>
     {% endif %}
     {% endwith %}
-    <tr>
-      <th class="i16 cache">{% trans "Local cache:" %}</th>
-      <td>
-        {% if component.unit.last_checkout %}
-        {% trans "The local checked-out copy of this component was last updated " %} <strong>{{component.unit.last_checkout|timesince}}</strong> {% trans "ago" %}.
-        {% else %}
-        {% trans "Component not yet pulled from source repository." %}
-        {% endif %}
-      </td>
-    </tr>
     <tr>
     {% if request.user.is_authenticated %}<tr>
       <th class="i16 maintainer">{% trans "Maintainer actions:" %}</th>
@@ -109,6 +93,32 @@
   </table>
 </div>
 {% endif %}  
+
+<h3>{% trans "Translation files" %}</h3>
+
+{% if component.trans.get_source_stats %}
+<table class="definition">
+<tr>
+  <th class="link i16">{% trans "Source file:" %}</th>
+  <td>
+  {% with component.trans.get_source_stats as source_stats %}
+  {% url component_raw_file component.project.slug component.slug source_stats.filename as source_raw_url %}
+  {% url component_view_file component.project.slug component.slug source_stats.filename as source_view_url %}
+    <code style="margin-right: 0.7em;">{{ source_stats.filename }} ({{ source_stats.total }} {% trans "entries" %})</code>
+    <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_stats.filename }}" href="{{ source_view_url }}"></a>
+    <a class="i16 link nodecoration_icon" title="{% trans "Download " %}{{ source_stats.filename }}" href="{{ source_raw_url }}"></a>
+  {% endwith %}
+  </td>
+</tr>
+    <tr>
+      <th class="i16 cache">{% trans "Statistics last updated:" %}</th>
+      <td>
+        {% if component.unit.last_checkout %}<strong>{{component.unit.last_checkout|timesince}}</strong> {% trans "ago" %}.
+        {% else %}{% trans "Component not yet pulled from source repository." %}{% endif %}
+      </td>
+    </tr>
+</table>
+{% endif %}
 
 {% comp_stats_table component.trans.get_stats %}
 
