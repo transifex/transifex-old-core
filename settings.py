@@ -125,7 +125,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = [
+    # Enable GZIP compression
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # Enable protection against Cross Site Request Forgeries
+    'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',

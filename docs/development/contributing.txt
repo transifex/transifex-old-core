@@ -233,7 +233,32 @@ to have the fixture updated:
    have been included as you'd expect.
    
 6. Update the documentation if needed. Commit all changes together.
- 
+
+
+Various Development Tips
+========================
+
+Cross Site Request Forgery protection
+-------------------------------------
+
+Transifex is protected against CSRF_ attacks by ensuring that GET requests are
+side-effect free. This means that every action inside Transifex that has an
+effect on the database, session, etc. are not being done over a GET request.
+With Django's `CSRF Middleware`_ enabled, attackers are prevented from meddling
+with a Transifex user's settings.
+
+Examples of CSRF-vulnerable elements are a link which calls ``/logout`` over
+GET to log the user out, a 'pt_BR' link to change the page's language to
+Brazilian Portuguese and save this setting to the user's cookie, a simple AJAX
+request to lock a file, etc.
+
+Examples not vulnerable actions are searching through the website for a string,
+pagination, etc.
+
+If you are adding some code in Transifex which has a side-effect, always do it
+over POST.
+
+
  
 .. _PEP-8:   http://www.python.org/dev/peps/pep-0008/
 .. _PEP-257: http://www.python.org/dev/peps/pep-0257/
@@ -242,3 +267,5 @@ to have the fixture updated:
 .. _`#django`: irc://irc.freenode.net/django
 .. _ticket tracker: http://transifex.org/newticket
 .. _transifex-devel: http://groups.google.com/group/transifex-devel
+.. _CSRF: http://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`CSRF Middleware`: http://docs.djangoproject.com/en/dev/ref/contrib/csrf/
