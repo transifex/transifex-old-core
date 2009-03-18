@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.html import escape
+from django.dispatch import Signal
 
 import tagging
 from tagging.fields import TagField
@@ -21,7 +22,7 @@ from translations.models import POFile
 from vcs.models import Unit
 from txcommon.log import (logger, log_model)
 from projects.handlers import get_trans_handler
-
+from projects import signals
 
 # The following is a tricky module, so we're including it only if needed
 if settings.ENABLE_NOTICES:
@@ -350,8 +351,12 @@ class Component(models.Model):
         again, with a new set of files, next time that it will be used.
         """
         logger.debug("Updating local repo for %s" % self.full_name)
+        Signal.send(signals.pre_comp_prep, sender=Component,
+            instance=self)
         self.unit.prepare_repo()
         del(self.trans)
+        Signal.send(signals.post_comp_prep, sender=Component,
+            instance=self)
 
     def clear_cache(self):
         """
