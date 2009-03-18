@@ -34,7 +34,7 @@ def python_to_args(**kwargs):
     return kwarglist
 
 
-class CommandError(Exception):
+class CommandError(StandardError):
     def __init__(self, command, status, stderr=None):
         self.stderr = stderr
         self.status = status
