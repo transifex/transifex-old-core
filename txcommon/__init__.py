@@ -1,4 +1,4 @@
-version_info = (0, 5, 0, 'final', 0)
+version_info = (0, 6, 0, 'devel', 0)
 
 _verpart = ''
 if version_info[3] != 'final':
