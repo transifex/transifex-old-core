@@ -19,6 +19,7 @@ Example::
 RESUME_FILENAME = '.txstatsrefresh_resume.temp'
 
 class Command(LabelCommand):
+    """Refresh translation statistics of registered components."""
     option_list = LabelCommand.option_list + (
         make_option('--continue', action='store_true',
                     dest='continue', default=False,
