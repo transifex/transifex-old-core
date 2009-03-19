@@ -1,45 +1,39 @@
-Transifex.net
-=============
+===========
+ Transifex
+===========
 
-The website transifex.net
+Transifex: The Open Translation Platform
+----------------------------------------
 
-Dependencies
-------------
+Transifex is a highly scalable localization platform with a focus on
+integrating well with the existing workflow of both translators and developers.
 
-* Transifex is developed on top of Django. Install Django using the 
-  install package tool of your system or just download it from:
-  http://www.djangoproject.com/
-   
-* Some of the dependencies can be installed by using easy_install:
-  ``easy_install markdown python-openid httplib2 ...``
+It aims in making it dead-simple for content providers to receive quality
+translations from big translation communities, no matter where the project
+is hosted. 
 
-* All the others application denpendencies can be downloaded from 
-  http://code.google.com/p/<application name> and then installed by 
-  using the setup.py or creating a symbolic link as following:
+* Homepage: http://transifex.org/
+* Example live deployment: http://translate.fedoraproject.org/
 
-  * django-tagging (python setup.py install)
-  * django_authopenid (python setup.py install)
-  * django-pagination (create a symbolic link in your PYTHONPATH)
-  * django-contact-form (python setup.py install)
 
-  * For notifications (it's optional):
-   - django-notification (create a symbolic link in your PYTHONPATH)
-   - http://django-atompub.googlecode.com/svn/trunk/atompub/atom.py
-     (download it and rename to atomformat.py and put it somewhere in 
-     your PYTHONPATH)
+Goals
+-----
 
-Installing Transifex
---------------------
+* Provide an interface for translators to submit translations to multiple
+  projects, regardless of the type of the underlying VCS
 
-* Customize ``settings.py`` and ``urls.py``.
-* Run ``./manage.py syncdb``
-* Run ``./manage.py runserver 8088``.
+* Reduce the overhead a project maintainer usually undertakes to administrate
+  accounts for translators
 
-To enable debugging, run the server as follows:
+* Help translators do more by eliminating the need to subscribe to each VCS and
+  learn its commands and tricks
 
-``./manage.py runserver --settings settings_debug``  
+* Encourage collaboration between developers and maintainers and thus, increase
+  the language coverage of the participant projects
 
-Testing
--------
 
-``./manage.py test``
+Documentation
+-------------
+
+For full documentation, including installation instructions, please refer to
+http://docs.transifex.org/ or the documents inside the 'docs/' directory.
