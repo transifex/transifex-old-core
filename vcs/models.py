@@ -70,7 +70,8 @@ class Unit(models.Model):
     modified = models.DateTimeField(auto_now=True, editable=False)
 
     def __repr__(self):
-        return _('<Unit: %s (%s)>') % (self.name, self.type)
+        return _('<Unit: %(name)s (%(type)s)>') % {'name': self.name,
+                                                   'type': self.type}
 
     class Meta:
         verbose_name = _('unit')
