@@ -10,6 +10,7 @@ from django.db.models import permalink
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.utils.html import escape
 
 import tagging
@@ -167,6 +168,20 @@ class ComponentManager(models.Manager):
         pofiles = POFile.objects.filter(language=language)
         qs = self.filter(id__in=[c.object_id for c in pofiles])
         return qs.distinct()
+
+    def untranslated_by_lang_release(self, language, release):
+        """
+        Return a QuerySet of components without translations for a specificity
+        language and release.
+        """
+        comp_query = release.components.values('pk').query
+        ctype = ContentType.objects.get_for_model(Component)
+        po = POFile.objects.filter(content_type=ctype, 
+                                   object_id__in=comp_query,
+                                   language__id=language.id)
+        poc = po.values('object_id').query
+        return Component.objects.exclude(pk__in=poc).filter(
+                                                      releases__pk=release.pk)
 
 
 class Component(models.Model):

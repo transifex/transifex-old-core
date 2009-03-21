@@ -8,6 +8,7 @@ from django.template import RequestContext
 from translations.models import POFile
 from models import Language
 from txcollections.models import (Collection, CollectionRelease as Release)
+from projects.models import Component
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
@@ -58,10 +59,13 @@ def language_release(request, slug, collection_slug, release_slug):
 
     pofile_list = POFile.objects.by_language_and_release(language, 
                                                          release)
+    untrans_comps = Component.objects.untranslated_by_lang_release(language, 
+                                                                   release)
 
     return render_to_response('languages/language_release.html', {
         'pofile_list': pofile_list,
         'release': release,
         'language': language,
+        'untrans_comps': untrans_comps,
     }, context_instance=RequestContext(request))
 

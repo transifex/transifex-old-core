@@ -38,4 +38,17 @@
   <p class="i16 tip">{% blocktrans %}If you think this shouldn't happen, please <a href="{{ contact_form }}">let us know</a>.{% endblocktrans %}</span></p>
 {% endif %}
 
+{% if untrans_comps %}
+  <h3>{% blocktrans %}Untranslated Components{% endblocktrans %}</h3>
+  <p class="explanation">{% blocktrans %}Here you can find components registered to belong in {% endblocktrans %}{{ release.name }}{% blocktrans %}, but with no translations sent for {% endblocktrans %}{{ language.name }}{% blocktrans %} yet:{% endblocktrans %}</p>
+  <div class="component_list">
+  <ul class="simple">
+  {% for comp in untrans_comps %}
+    <li><p class="i16 component"><a href="{{ comp.get_absolute_url }}">{{ comp.project.name }} &raquo; {{ comp.name }}</a></p></li>
+  {% endfor %}
+  </ul>
+  </div>
+
+{% endif %}
+
 {% endblock %}
