@@ -110,13 +110,26 @@ class POTManager(TransManagerMixin):
                 'untranslated' : int(untranslated),
                 'error' : error,}
 
-    def calcule_stats(self, lang):
+    def calcule_stats(self, lang, try_to_merge):
         """ 
         Return the statistics of a specificy language for a object after
         merging the file translation.
         """
-        (is_msgmerged, file_path) = self.msgmerge(self.get_langfile(lang),
-                                                self.get_source_file())
+
+        filename = self.get_langfile(lang)
+
+        # We might want to skip the msgmerge setting try_to_merge as False
+        if try_to_merge:
+            (is_msgmerged, file_path) = self.msgmerge(filename,
+                                                      self.get_source_file())
+        else:
+            is_msgmerged=False
+            file_path = os.path.join(self.path, filename)
+
+        #Copy the current file (non-msgmerged) to the static dir
+        if not is_msgmerged:
+            self.copy_file_to_static_dir(filename)
+
         postats = self.po_file_stats(file_path)
 
         return {'trans': postats['translated'],
@@ -125,10 +138,10 @@ class POTManager(TransManagerMixin):
                 'error': postats['error'],
                 'is_msgmerged': is_msgmerged}
 
-    def create_stats(self, lang, object):
+    def create_stats(self, lang, object, try_to_merge=True):
         """Set the statistics of a specificy language for a object."""
         try:
-            stats = self.calcule_stats(lang)
+            stats = self.calcule_stats(lang, try_to_merge)
             f = self.get_langfile(lang)
             s = POFile.objects.get(object_id=object.id, filename=f)
         except POTStatsError:
@@ -262,7 +275,6 @@ class POTManager(TransManagerMixin):
         if error:
             # TODO: Log this. output var can be used.
             is_msgmerged = False
-            self.copy_file_to_static_dir(pofile)
 
         return (is_msgmerged, outpo)
 

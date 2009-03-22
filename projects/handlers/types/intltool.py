@@ -13,6 +13,10 @@ class IntltoolHandler(pot.POTHandler):
     
     """
 
+    def set_stats_for_lang(self, lang, try_to_merge):
+        """Set stats for a specific language."""
+        return self.tm.create_stats(lang, self.component, try_to_merge)
+
     def set_stats(self):
         """
         Calculate stats for all translations of the component after 
@@ -34,7 +38,7 @@ class IntltoolHandler(pot.POTHandler):
         self.tm.set_source_stats(self.component, is_msgmerged)
 
         for lang in self.tm.get_langs():
-            self.set_stats_for_lang(lang)
+            self.set_stats_for_lang(lang, is_msgmerged)
 
         # Cleaning the repository after running intltool-update
         self.component.unit.browser._clean_dir()
