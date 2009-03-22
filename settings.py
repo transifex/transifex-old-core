@@ -11,7 +11,7 @@ import logging
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # The following are usually overridden in settings_local.py
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 STATIC_SERVE = True
 
