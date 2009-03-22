@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 from txcollections.models import Collection, CollectionRelease as Release
 from translations.models import POFile
 from models import Language
+from txcommon.templatetags.txcommontags import key_sort
 current_site = Site.objects.get_current()
 
 class AllLanguages(Feed):
@@ -47,7 +48,8 @@ class LanguageReleaseFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        return POFile.objects.by_language_and_release(obj, self.release)[:100]
+        stats = POFile.objects.by_language_and_release(obj, self.release)[:100]
+        return key_sort(stats, 'object.name', 'object.project.name', '-trans_perc')
 
     def item_link(self, item):
         return item.object.get_absolute_url()
