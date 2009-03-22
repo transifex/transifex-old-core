@@ -2,7 +2,10 @@
 import os
 
 from mercurial import ui, hg, commands
-from mercurial.repo import RepoError
+try:
+    from mercurial.repo import RepoError # mercurial-1.1.x
+except:
+    from mercurial.error import RepoError # mercurial-1.2.x
 
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
