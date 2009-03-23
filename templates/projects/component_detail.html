@@ -21,9 +21,6 @@
 
 {% block body_main %}
   <div class="obj_bigdetails">
-  {% if request.user.is_authenticated and perms.projects.add_component %}
-  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
-  {% endif %}
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
@@ -35,6 +32,10 @@
   </div>
   {% endif %}
   {% endwith %}
+
+{% if request.user.is_authenticated and perms.projects.add_component %}
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
+{% endif %}
 
 {% if component.unit %}
 <div id="vcs_details">

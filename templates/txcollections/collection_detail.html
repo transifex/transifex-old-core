@@ -18,11 +18,11 @@
   <div class="obj_bigdetails">
   <h2 class="name">{{ collection.name }}</h2>
 
+  {% if collection.description %}<p class="description">{{ collection.description }}</p>{% endif %}
+
   {% if request.user.is_authenticated and perms.txcollections.change_collection %}
   <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url collection_edit slug=collection.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
-  
-  {% if collection.description %}<p class="description">{{ collection.description }}</p>{% endif %}
 
   {% with collection.long_description_html as long_desc %}
   {% if long_desc %}

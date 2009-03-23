@@ -20,9 +20,6 @@
 
 {% block body_main %}
   <div class="obj_bigdetails">
-  {% if request.user.is_authenticated and perms.txcollections.change_collectionrelease %}
-  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p></div>
-  {% endif %}
   <h2 class="name">{{ collection.name }} &raquo; {{ release }}</h2>
   
   {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
@@ -34,6 +31,12 @@
   </div>
   {% endif %}
   {% endwith %}
+
+  {% if request.user.is_authenticated and perms.txcollections.change_collectionrelease %}
+    <div class="editlinks">
+      <p><a class="i16 edit buttonized" href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p>
+    </div>
+  {% endif %}
 
   <div class="details">
 

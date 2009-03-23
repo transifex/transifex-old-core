@@ -33,15 +33,18 @@ class LanguageReleaseFeed(Feed):
         return Language.objects.get(code__exact=bits[0])
 
     def title(self, obj):
-        return _("%(site_name)s: %(language)s :: %(collection)s :: "
-                 "%(release)s release") % {'site_name': current_site.name,
-                                   'language': obj.name,
-                                   'collection': self.collection.name,
-                                   'release': self.release.name,}
+        return _("%(site_name)s: %(language)s :: %(release)s release") % {
+            'site_name': current_site.name,
+            'language': obj.name,
+            'release': self.release.full_name,}
 
     def description(self, obj):
-        return _("Latest translations in %s.") % obj.name
-
+        return _("Latest translations for %(language)s language in "
+                 "%(release)s release.") % {
+                   'site_name': current_site.name,
+                   'language': obj.name,
+                   'release': self.release.full_name,}
+                 
     def link(self, obj):
         if not obj:
             raise FeedDoesNotExist

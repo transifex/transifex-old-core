@@ -3,6 +3,7 @@
 {% load statistics %}
 
 {% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url language_release_feed language_slug=language.code collection_slug=release.collection.slug release_slug=release.slug %}" />
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   <style type="text/css">
     form.submit_form { display: none; }

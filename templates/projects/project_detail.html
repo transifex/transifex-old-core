@@ -18,10 +18,6 @@
   <div class="obj_bigdetails">
   <h2 class="name">{{ project.name }}</h2>
 
-  {% if request.user.is_authenticated and perms.projects.change_project %}
-  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
-  {% endif %}
-  
   <p class="description">{% firstof project.description project.name %}</p>
 
   {% with project.long_description_html as long_desc %}
@@ -32,6 +28,10 @@
   {% endif %}
   {% endwith %}
 
+  {% if request.user.is_authenticated and perms.projects.change_project %}
+  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
+  
   <div class="details separate">
 
   {% if project.homepage or project.tags or project.collections.all %}
