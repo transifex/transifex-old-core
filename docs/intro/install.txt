@@ -177,6 +177,10 @@ Once you're done configuring, run inside the project directory::
     ./manage.py txcreatedirs
     ./manage.py runserver 8088
 
+The first command will create the necessary database tables. It will also ask
+you to create an admin user (superuser), who will have access to the admin panel
+(by default accessible through ``/admin/``).
+
 Fire up your browser at ``http://localhost:8088/`` and grab a cup of coffee.
 
 .. warning::
@@ -200,6 +204,12 @@ The following commands loads a bunch of sample data to play around with.
 
     ./manage.py loaddata txcommon/fixtures/sample_data.json
     ./manage.py loaddata txcommon/fixtures/sample_users.json
+
+The last command created two users: 'guest' and 'editor'. The 'guest' has the
+basic rights of a logged-in user of the site, while the 'editor' account has
+more advanced privileges like modifying projects, etc. Together with the 'admin'
+user created with the 'syncdb' step above, you should have 3 accounts now, each
+with its own access level.
 
 You can now fire up your browser to check out the newly imported data.
 
