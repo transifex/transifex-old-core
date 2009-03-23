@@ -9,16 +9,14 @@
 {% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
 
 {% block extra_head %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url collection_feed param=collection.slug %}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_languages_feed collection_slug=release.collection.slug release_slug=release.slug %}" />
 {% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
 
-{% comment %}
 {% block body_sec %}
-  <a class="simlink" href="{% url collection_feed param=collection.slug %}" title="collection feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
+  <a class="simlink" href="{% url release_languages_feed collection_slug=release.collection.slug release_slug=release.slug %}" title="Feed for languages in {{ release.full_name }} release"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
 {% endblock %}
-{% endcomment %}
 
 {% block body_main %}
   <div class="obj_bigdetails">
@@ -65,7 +63,7 @@
 
 <div id="projects" class="projects">
 
-<h3>{% trans "Translation statistics" %} </h3>
+<h3>{% trans "Translation statistics" %}</h3>
 {% release_stats_table pofile_list collection release %}
 
 {% if not pofile_list %}

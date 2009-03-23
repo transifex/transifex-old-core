@@ -3,7 +3,8 @@ from django.contrib import admin
 from tagging.views import tagged_object_list
 
 from txcollections.views import * 
-from txcollections.feeds import (LatestCollections, CollectionFeed)
+from txcollections.feeds import (LatestCollections, CollectionFeed,
+                                 ReleaseLanguagesFeed)
 from txcollections.models import Collection
 
 admin.autodiscover()
@@ -16,6 +17,7 @@ collection_list = {
 feeds = {
     'latest': LatestCollections,
     'collection': CollectionFeed,
+    'release_languages': ReleaseLanguagesFeed,
 }
 
 # Collections
@@ -74,6 +76,12 @@ urlpatterns += patterns('',
         name = 'collection_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'collection'}),
+    url(
+        regex = '^(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/feed/$',
+        view = release_languages_feed,
+        name = 'release_languages_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'release_languages'}),
 )
 
 # Releases

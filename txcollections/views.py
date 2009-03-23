@@ -30,6 +30,14 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
         url = param
     return feed(request, url, feed_dict)
 
+def release_languages_feed(request, collection_slug, release_slug,
+                           slug=None, param='', feed_dict=None,):
+    param = '%s/%s' % (collection_slug, release_slug)
+    if slug:
+        url = "%s/%s" % (slug, param)
+    else:
+        url = param
+    return feed(request, url, feed_dict)
 
 # A set of limited-access generic views to re-use
 # TODO: Move this in transifex-core

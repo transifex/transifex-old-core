@@ -9,7 +9,7 @@
 {% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
 
 {% block extra_head %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed param=release.slug %}" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_languages_feed collection_slug=release.collection.slug release_slug=release.slug= %}" />
 {% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}

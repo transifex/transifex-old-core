@@ -26,7 +26,11 @@ class POFileManager(models.Manager):
         return self.filter(language=language)
 
     def by_release(self, release):
-        """ Return a QuerySet for a specific release """
+        """
+        Return a QuerySet for a specific release.
+        
+        No ordering can take place here. Use key_dict instead.
+        """
         ctype = ContentType.objects.get(app_label='projects', model='component')
         comp_query = release.components.values('pk').query
         return self.filter(content_type=ctype, object_id__in=comp_query)
@@ -40,8 +44,14 @@ class POFileManager(models.Manager):
 
     def by_release_total(self, release):
         """
-        Yield a POFile for every language in a release containing the language
-        total statistics
+        Yield a virtual POFile for every language in a release.
+        
+        This POFile object aggregates the language total statistics in a
+        particular release. All POFile objects for each language-release tuple
+        are added together, generating a total number for this release. This is
+        mimicking something like: 'SELECT SUM(POFile.total) GROUP BY RELEASE'.
+        
+        This object is not stored in the database.
         """
         postats = self.by_release(release).filter(is_pot=True).values_list(
             'total', flat=True)
