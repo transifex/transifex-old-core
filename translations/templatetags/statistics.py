@@ -11,9 +11,10 @@ class StatBarsPositions(dict):
 
     Used to present bars for translation completion status.
     """
+
     class BarPos:
-        """A simple bar of a horizontal chart."""
         def __init__(self, width, left=0):
+            """Initialize a simple bar."""
             self.w = width
             self.l = left
 

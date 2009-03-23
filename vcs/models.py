@@ -9,15 +9,7 @@ class CheckOutError(Exception):
     pass
 
 def need_browser(fn):
-    """
-    Decorator to initialize the unit.browser when it is needed.
-
-    Usage: 
-    @need_browser
-    def func():
-        ...
-
-    """
+    """Decorator to initialize the unit.browser when it is needed."""
 
     def browser_fn(self, *args, **kw):
         try:
@@ -29,7 +21,6 @@ def need_browser(fn):
 
 
 class Unit(models.Model):
-
     """
     A snapshot of a VCS project, an instance of a repository's files.
     
@@ -111,7 +102,7 @@ class Unit(models.Model):
 
     @need_browser
     def prepare_repo(self):
-        """Abstration for the unit.browser.update."""
+        """Abstraction for the unit.browser.update."""
         try:
             logger.debug("Preparing repo for unit %s" % self.name)
             self.browser.update()
