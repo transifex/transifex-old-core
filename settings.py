@@ -180,6 +180,7 @@ INSTALLED_APPS = [
     'releases',
     'actionlog',
     'simplelock',
+    'repowatch',
 ]
 
 ####################
