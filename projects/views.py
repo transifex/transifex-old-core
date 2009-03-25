@@ -272,14 +272,25 @@ def component_submit_file(request, project_slug, component_slug,
 
         # For a new file
         if not filename:
-            if request.POST['targetfile'] == '':
+            if request.POST['targetfile'] == '' and \
+               request.POST['newtargetfile'] == '':
                 # TODO: Figure out why gettext is not working here
                 request.user.message_set.create(message=("Please enter" 
                                        " a target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
+            elif not request.POST['targetfile'] == '' and \
+                 not request.POST['newtargetfile'] == '':
+                # TODO: Figure out why gettext is not working here
+                request.user.message_set.create(message=("Please enter with" 
+                                       " only ONE target to upload the file."))
+                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
             else:
-                filename = request.POST['targetfile']
+                if request.POST['targetfile'] != '':
+                    filename = request.POST['targetfile']
+                else:
+                    filename = request.POST['newtargetfile']
 
             if not re.compile(component.file_filter).match(filename):
                 # TODO: Figure out why gettext is not working here

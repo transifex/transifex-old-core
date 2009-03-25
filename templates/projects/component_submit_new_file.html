@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load statistics %}
 <div class="generic_form">
 {% url component_submit_new_file component.project.slug component.slug as file_submit_url %}
 <span class="i16 add submit_button buttonized" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new translation" %}</span>
@@ -13,11 +14,23 @@
     <td><p class="helptext">{% trans "The new language translation file to be uploaded." %}</p></td>
     </tr>
     <tr>
-    <th>{% trans "Target file:" %} <span class="required">*</span></th>
-    <td><p class="fieldp"><input type="text" class="" name="targetfile"></p></td>
+    <th>{% trans "Select the target file:" %}</th>
+    <td><p class="fieldp">
+        <select class="" name="targetfile">
+            <option value="" >-----------</option>
+            {% for file in component.get_files %}
+                <option value="{{file}}" title="{{file}}">{{file|truncate_chars_middle:50}}</option>
+            {% endfor %}
+        </select>
+    </p></td>
     <td><p class="helptext">{% trans "The target file is the name o the new file language. It must matches with the component file filter." %}</p></td>
     </tr>
-    </tbody>
+    <tr>
+    <th>{% trans "or enter it here:" %}</th>
+    <td><p class="fieldp"><input type="text" class="" name="newtargetfile"></p></td>
+    <td>{% if stats.0.filename %} <p class="helptext">{% trans "Example: " %} {{stats.0.filename}}</p>{% endif %}</td>
+    </tr>
+   </tbody>
    </table>
    <p class="submit">  <input type="submit" class="i16 send_file" class="submit" size="10" value="{% trans "Send" %}"></p>
  </fieldset>
