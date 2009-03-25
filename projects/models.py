@@ -234,7 +234,7 @@ class Component(models.Model):
     objects = ComponentManager()
         
     def __unicode__(self):
-        return self.name
+        return u'%s (%s)' % (self.name, self.project)
 
     def __repr__(self):
         return _('<Component: %s>') % self.full_name

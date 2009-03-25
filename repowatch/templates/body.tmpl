@@ -1,19 +1,9 @@
-{% load i18n %}
-{% blocktrans %}Hello {{ first_name }}, this is Transifex at {{ hostname }}.{% endblocktrans %}
-
-{% if repo_changed %}
-{% blocktrans %}The repo for {{ component }} has been updated.{% endblocktrans %}
-
+{% load i18n %}{% blocktrans %}Hello {{ first_name }}, this is Transifex at {{ hostname }}.{% endblocktrans %}
+{% if repo_changed %}{% blocktrans %}The repo for {{ component }} has been updated.{% endblocktrans %}
 {% endif %}
-{% if files %}
-{% blocktrans %}The following files in {{ component }} have been updated:{% endblocktrans %}
-
-{% for file in files %}
-{{ file }}
-{% endfor %}
-
-{% endfor %}
+{% if files %}{% blocktrans %}The following files in {{ project }} | {{ component }} have been updated:{% endblocktrans %}
+{% for file in files %}{{ file }}
+{% endfor %}{% endif %}
 {% blocktrans %}Please log into Transifex at {{ url }} in order to see the changes.{% endblocktrans %}
-
 {% blocktrans %}Thanks,{% endblocktrans %}
   Transifex

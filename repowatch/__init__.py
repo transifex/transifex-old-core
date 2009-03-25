@@ -1,10 +1,16 @@
+import operator
+import itertools
+
 from django.core.mail import send_mail
 from django.template import loader, Context
+from django.contrib.sites.models import Site
+from django.utils.translation import ugettext as _
 
-class WatchException(Exception):
+from projects import signals
+from txcommon.log import logger
+
+class WatchException(StandardError):
     pass
-
-#TODO: patch update routine to compare revs
 
 def send_email(site, component, user, repo_changed, files):
     """
@@ -18,12 +24,55 @@ def send_email(site, component, user, repo_changed, files):
     files: List of paths being watched that changed
     """
     context = Context({'component': component.name,
+        'project': component.project.name,
         'first_name': user.first_name, 'hostname': site.domain,
-        'url': 'http://%s/' % site.domain, 'files': files,
+        'url': component.get_absolute_url(), 'files': files,
         'repo_changed': repo_changed})
-    subject = loader.get_template('templates/subject.tmpl').render(
-        context)
-    message = loader.get_template('templates/body.tmpl').render(
+    subject = loader.get_template('subject.tmpl').render(
+        context).strip('\n')
+    message = loader.get_template('body.tmpl').render(
         context)
     from_address = 'Transifex <donotreply@%s>' % site.domain
     send_mail(subject, message, from_address, [user.email])
+
+def findchangesbycomponent(component):
+    """
+    Looks through the watches for a specific component and
+    e-mails the users watching it
+    """
+    from repowatch.models import Watch
+    watches = Watch.objects.filter(component=component)
+    repochanged = False
+    changes = []
+    for watch in watches:
+        try:
+            newrev = component.get_rev(watch.path)
+            logger.error('repowatch: old: %s, new: %s' % (watch.rev,
+                newrev))
+            if newrev != watch.rev:
+                if not watch.path:
+                    repochanged = True
+                else:
+                    changes.append((watch.user, watch.path))
+                watch.rev = newrev
+                watch.save()
+        except ValueError:
+            continue    
+    if changes:
+        changes.sort(key=operator.itemgetter(0))
+        for usergroup in itertools.groupby(changes,
+            key=operator.itemgetter(0)):
+            send_email(Site.objects.get_current(), component,
+                usergroup[0], repochanged, [change[1] for change
+                in usergroup[1]])
+
+def compposthandler(sender, **kwargs):
+    if 'instance' in kwargs:
+        findchangesbycomponent(kwargs['instance'])
+
+signals.post_comp_prep.connect(compposthandler)
+
+watch_titles = {
+    'watch_add_title': _('Watch this file'),
+    'watch_remove_title': _('Stop watching this file'),
+}

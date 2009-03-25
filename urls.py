@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^admin/(.*)', admin.site.root),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^languages/', include('languages.urls')),
+    url(r'^watch/', include('repowatch.urls')),
 )
 
 # Choose auth app depending on whether authopenid was enabled or not
