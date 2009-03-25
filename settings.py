@@ -137,7 +137,9 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     # Enable protection against Cross Site Request Forgeries
-    'django.contrib.csrf.middleware.CsrfMiddleware',
+    # Django 1.0.2's CSRF middleware doesn't have enough functionality,
+    # so we pulled from Django dev
+    'external.csrf.middleware.CsrfMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
