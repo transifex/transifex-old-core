@@ -142,7 +142,7 @@ class HgBrowser(VCSBrowserMixin):
             return (int(self.repo.changectx(self.branch).node().encode('hex'),
                 16),)
         else:
-            f = self.repo.changectx(self.branch).filectx('NOTES')
+            f = self.repo.changectx(self.branch).filectx(obj)
             return (int(f.filectx(f.filerev()).node().encode('hex'),
                 16),)
 
