@@ -1,7 +1,5 @@
 import os
 
-from mercurial.repo import RepoError
-
 from django.conf import settings
 from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
