@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load statistics %}
 {% load locks %}
+{% load watches %}
 {% if stats %}
 <table class="stats_comp">
    <thead>
@@ -34,7 +35,7 @@
            <a class="i16 get_file nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
            {% pofile_lock stat %}
            {% if request.user.is_authenticated and stat.object.allows_submission and perms.translations.add_pofilelock %}{% include "projects/component_submit.html" %}{% endif %}
-           {% if request.user.is_authenticated and perms.repowatch.add_watch %}{% include "watch_toggle.html" %}{% endif %}
+           {% if request.user.is_authenticated and perms.repowatch.add_watch %}{% watch_toggle stat %}{% endif %}
         </td>
       </tr>
    {% endfor %}

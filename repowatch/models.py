@@ -16,16 +16,19 @@ class WatchManager(models.Manager):
         path: Path for file to watch, or None for a repo change
         """
         try:
-            watch = self.get(path=path, component=component,
-                user=user)
+            watch = self.get(path=path, component=component)
         except Watch.DoesNotExist:
-            watch = Watch(path=path, component=component, user=user)
+            watch = Watch(path=path, component=component)
+
         try:
             rev = component.get_rev(path)
         except ValueError:
             raise WatchException(_('Unable to add watch for path %r') % 
                 path)
         watch.rev = rev
+        watch.save()
+        # Adding user
+        watch.user.add(user)
         watch.save()
         return watch
 
@@ -38,8 +41,12 @@ class WatchManager(models.Manager):
         component: projects.models.Component to watch
         path: Path for file to watch, or None for a repo change
         """
-        watch = self.get(user=user, component=component, path=path)
-        watch.delete()
+        watch = self.get(user__id__exact=user.id, component=component, path=path)
+        watch.user.remove(user)
+
+        # if nobody is watching it
+        if not watch.user.all():
+            watch.delete()
 
     def get_watches(self, user, component):
         """
@@ -48,7 +55,7 @@ class WatchManager(models.Manager):
         user: django.contrib.auth.models.User owning the watches
         component: projects.models.Component being watched
         """
-        return self.filter(user=user, component=component)
+        return self.filter(user__id__exact=user.id, component=component)
 
     def update_watch(self, user, component, path=None):
         """
@@ -59,7 +66,7 @@ class WatchManager(models.Manager):
         path: Path for file to watch, or None for a repo change
         """
         try:
-            watch = self.get(user=user, component=component, path=path)
+            watch = self.get(user__id__exact=user.id, component=component, path=path)
             try:
                 rev = component.get_rev(path)
             except ValueError:
@@ -125,9 +132,9 @@ class Watch(models.Model):
         help_text='Latest revision seen')
     component = models.ForeignKey(Component,
         help_text='Component containing the repo to watch')
-    user = models.ForeignKey(User,
+    user = models.ManyToManyField(User, related_name='watches',
         help_text='User to notify upon detecting a change')
-    
+
     objects = WatchManager()
 
     def __unicode__(self):
@@ -140,9 +147,3 @@ class Watch(models.Model):
         verbose_name = _('watch')
         verbose_name_plural = _('watches')
 
-# Function to monkeypatch into translations models
-def __watched(self):
-    return len(self.object.watch_set.filter(path=self.filename)) > 0
-
-for m in (POFile,):
-    m.watched = __watched

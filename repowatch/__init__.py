@@ -12,28 +12,29 @@ from txcommon.log import logger
 class WatchException(StandardError):
     pass
 
-def send_email(site, component, user, repo_changed, files):
+def send_email(site, component, users, repo_changed, files):
     """
-    Sends email to a watcher for a specific component
+    Send email to watchers for a specific component
     
     site: django.contrib.sites.models.Site for the site sending
         the message
     component: projects.models.Component that had the change
-    user: django.contrib.auth.models.User that set the watch
+    users: django.contrib.auth.models.User list that set the watch
     repo_change: Whether or not the repo had a global change
     files: List of paths being watched that changed
     """
-    context = Context({'component': component.name,
-        'project': component.project.name,
-        'first_name': user.first_name, 'hostname': site.domain,
-        'url': component.get_absolute_url(), 'files': files,
-        'repo_changed': repo_changed})
-    subject = loader.get_template('subject.tmpl').render(
-        context).strip('\n')
-    message = loader.get_template('body.tmpl').render(
-        context)
-    from_address = 'Transifex <donotreply@%s>' % site.domain
-    send_mail(subject, message, from_address, [user.email])
+    for user in users:
+        context = Context({'component': component.name,
+            'project': component.project.name,
+            'first_name': user.first_name, 'hostname': site.domain,
+            'url': component.get_absolute_url(), 'files': files,
+            'repo_changed': repo_changed})
+        subject = loader.get_template('subject.tmpl').render(
+            context).strip('\n')
+        message = loader.get_template('body.tmpl').render(
+            context)
+        from_address = 'Transifex <donotreply@%s>' % site.domain
+        send_mail(subject, message, from_address, [user.email])
 
 def findchangesbycomponent(component):
     """
@@ -53,7 +54,7 @@ def findchangesbycomponent(component):
                 if not watch.path:
                     repochanged = True
                 else:
-                    changes.append((watch.user, watch.path))
+                    changes.append((watch.user.all(), watch.path))
                 watch.rev = newrev
                 watch.save()
         except ValueError:
