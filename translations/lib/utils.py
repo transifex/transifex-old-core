@@ -2,6 +2,8 @@
 import os
 import subprocess
 
+from django.core.files.uploadedfile import UploadedFile
+
 def python_to_args(**kwargs):
     """
     Converts python function arguments to command line arguments for
@@ -101,7 +103,11 @@ def run_command(command, *args, **kw):
 
     # Write the contents to the pipe
     if _input:
-        proc.stdin.write(_input)
+        if isinstance(_input, basestring):
+            proc.stdin.write(_input)
+        elif isinstance(_input, (file, UploadedFile)):
+            for content in _input:
+                proc.stdin.write(content)
 
     # Wait for the process to return
     stdout_value, stderr_value = proc.communicate()
