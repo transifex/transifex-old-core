@@ -1,5 +1,8 @@
 import os
 import re
+
+from django.core.files.uploadedfile import UploadedFile
+
 from txcommon.log import logger
 
 class BrowserError(Exception):
@@ -54,12 +57,24 @@ class VCSBrowserMixin:
         if not os.access(dirpath, os.F_OK):
             os.makedirs(dirpath)
 
-        if encode:
-            contents = contents.encode(encode)
-        logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
         fp = open(fullpath, 'w')
         try:
-            fp.write(contents)
+            if isinstance(contents, basestring):
+                if encode:
+                    contents = contents.encode(encode)
+                logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
+                fp.write(contents)
+            elif isinstance(contents, (file, UploadedFile)):
+                for chunk in contents:
+                    if encode:
+                        chunk = chunk.encode(encode)
+                    logger.debug("Saving %s bytes in file %s" %
+                                 (len(contents), fullpath))
+                    fp.write(chunk)
+            else:
+                raise ValueError("Given content to save to %s that I don't "
+                                 "know how to handle: %r" % (filename,
+                                 contents))
         finally:
             fp.close()
 

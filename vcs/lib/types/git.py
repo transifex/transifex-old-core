@@ -143,9 +143,10 @@ class GitBrowser(VCSBrowserMixin):
         self.update()
 
         for fieldname, uploadedfile in files.iteritems():
-            for contents in uploadedfile.chunks():
-                self.save_file_contents(uploadedfile.targetfile, contents)
-                self.repo.add(uploadedfile.targetfile)
+            self.save_file_contents(uploadedfile.targetfile,
+                uploadedfile)
+
+            self.repo.add(uploadedfile.targetfile)
         
         user = u'%s <%s>' % (user.username, user.email)
 

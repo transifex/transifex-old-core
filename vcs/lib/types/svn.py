@@ -130,8 +130,8 @@ class SvnBrowser(VCSBrowserMixin):
 
         # Save contents
         for fieldname, uploadedfile in files.iteritems():
-            for contents in uploadedfile.chunks():
-                self.save_file_contents(uploadedfile.targetfile, contents)
+            self.save_file_contents(uploadedfile.targetfile,
+                uploadedfile)
 
         # We have to calculate absolute filenames because of pysvn usage
         absolute_filenames = [os.path.join(self.path, uploadedfile.targetfile) \

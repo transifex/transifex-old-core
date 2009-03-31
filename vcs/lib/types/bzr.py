@@ -148,8 +148,8 @@ class BzrBrowser(VCSBrowserMixin):
         self.update()
 
         for fieldname, uploadedfile in files.iteritems():
-            for contents in uploadedfile.chunks():
-                self.save_file_contents(uploadedfile.targetfile, contents)
+            self.save_file_contents(uploadedfile.targetfile,
+                uploadedfile)
 
         # smart_add recursively checks all files in the tree
         self.work_tree.smart_add([self.path])

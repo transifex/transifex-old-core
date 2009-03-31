@@ -156,8 +156,8 @@ class HgBrowser(VCSBrowserMixin):
         self.update()
 
         for fieldname, uploadedfile in files.iteritems():
-            for contents in uploadedfile.chunks():
-                self.save_file_contents(uploadedfile.targetfile, contents)
+            self.save_file_contents(uploadedfile.targetfile,
+                uploadedfile)
 
         user = u'%s <%s>' % (user.username, user.email)
 

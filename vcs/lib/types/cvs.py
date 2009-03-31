@@ -159,8 +159,8 @@ class CvsBrowser(VCSBrowserMixin):
 
         # Save contents
         for fieldname, uploadedfile in files.iteritems():
-            for contents in uploadedfile.chunks():
-                self.save_file_contents(uploadedfile.targetfile, contents)
+            self.save_file_contents(uploadedfile.targetfile,
+                uploadedfile)
 
         # `cvs add` untracked files
         for uploadedfile in files.values():
