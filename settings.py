@@ -19,11 +19,19 @@ STATIC_SERVE = True
 # Choices: logging.DEBUG (default), .INFO, .WARNING, .ERROR, .CRITICAL
 LOG_LEVEL = logging.INFO
 
+
+###########
+# Management
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
+SEND_BROKEN_LINK_EMAILS=True
 MANAGERS = ADMINS
+
+# Used when emailing managers and admins
+EMAIL_SUBJECT_PREFIX = '[Transifex] '
 
 ###########
 # External app configuration
