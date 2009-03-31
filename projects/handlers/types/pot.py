@@ -22,9 +22,9 @@ class POTHandler:
     def get_manager(self):
         return self.tm
 
-    def set_stats_for_lang(self, lang):
+    def set_stats_for_lang(self, lang, try_to_merge=True):
         """Set stats for a specific language."""
-        return self.tm.create_stats(lang, self.component)
+        return self.tm.create_stats(lang, self.component, try_to_merge)
 
     def set_stats(self):
         """Calculate stats for all translations of the component."""

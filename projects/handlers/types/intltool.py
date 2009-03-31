@@ -13,10 +13,6 @@ class IntltoolHandler(pot.POTHandler):
     
     """
 
-    def set_stats_for_lang(self, lang, try_to_merge):
-        """Set stats for a specific language."""
-        return self.tm.create_stats(lang, self.component, try_to_merge)
-
     def set_stats(self):
         """
         Calculate stats for all translations of the component after 
