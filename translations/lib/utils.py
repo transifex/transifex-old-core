@@ -106,6 +106,7 @@ def run_command(command, *args, **kw):
         if isinstance(_input, basestring):
             proc.stdin.write(_input)
         elif isinstance(_input, (file, UploadedFile)):
+            _input.seek(0)
             for content in _input:
                 proc.stdin.write(content)
 

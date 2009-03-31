@@ -65,6 +65,7 @@ class VCSBrowserMixin:
                 logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
                 fp.write(contents)
             elif isinstance(contents, (file, UploadedFile)):
+                contents.seek(0)
                 for chunk in contents:
                     if encode:
                         chunk = chunk.encode(encode)
