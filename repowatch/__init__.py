@@ -26,8 +26,10 @@ def send_email(site, component, users, repo_changed, files):
     for user in users:
         context = Context({'component': component.name,
             'project': component.project.name,
-            'first_name': user.first_name, 'hostname': site.domain,
-            'url': component.get_absolute_url(), 'files': files,
+            'first_name': (user.first_name or user.username), 
+            'hostname': 'http://%s' % site.domain,
+            'url': 'http://%s%s' % (site.domain, component.get_absolute_url()),
+            'files': files,
             'repo_changed': repo_changed})
         subject = loader.get_template('subject.tmpl').render(
             context).strip('\n')
