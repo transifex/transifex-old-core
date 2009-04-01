@@ -181,7 +181,8 @@ class ComponentManager(models.Manager):
                                    language__id=language.id)
         poc = po.values('object_id').query
         return Component.objects.exclude(pk__in=poc).filter(
-                                                      releases__pk=release.pk)
+                            releases__pk=release.pk).order_by('project__name', 
+                                                              'name')
 
 
 class Component(models.Model):
