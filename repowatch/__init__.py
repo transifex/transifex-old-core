@@ -12,7 +12,7 @@ from txcommon.log import logger
 class WatchException(StandardError):
     pass
 
-def send_email(site, component, users, repo_changed, files):
+def _send_email(site, component, users, repo_changed, files):
     """
     Send email to watchers for a specific component
     
@@ -38,7 +38,7 @@ def send_email(site, component, users, repo_changed, files):
         from_address = 'Transifex <donotreply@%s>' % site.domain
         send_mail(subject, message, from_address, [user.email])
 
-def findchangesbycomponent(component):
+def _findchangesbycomponent(component):
     """
     Looks through the watches for a specific component and
     e-mails the users watching it
@@ -65,15 +65,15 @@ def findchangesbycomponent(component):
         changes.sort(key=operator.itemgetter(0))
         for usergroup in itertools.groupby(changes,
             key=operator.itemgetter(0)):
-            send_email(Site.objects.get_current(), component,
+            _send_email(Site.objects.get_current(), component,
                 usergroup[0], repochanged, [change[1] for change
                 in usergroup[1]])
 
-def compposthandler(sender, **kwargs):
+def _compposthandler(sender, **kwargs):
     if 'instance' in kwargs:
-        findchangesbycomponent(kwargs['instance'])
+        _findchangesbycomponent(kwargs['instance'])
 
-signals.post_comp_prep.connect(compposthandler)
+signals.post_comp_prep.connect(_compposthandler)
 
 watch_titles = {
     'watch_add_title': _('Watch this file'),

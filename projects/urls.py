@@ -112,6 +112,10 @@ urlpatterns += patterns('',
         view = component_submit_file,
         name = 'component_submit_file',),
     url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/toggle_watch/pofile/(?P<filename>(.*))$',
+        view = component_toggle_watch,
+        name = 'component_toggle_watch',),
+    url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/submit/$',
         view = component_submit_file,
         name = 'component_submit_new_file',),

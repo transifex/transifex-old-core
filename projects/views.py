@@ -28,6 +28,9 @@ from translations.models import (POFile, POFileLock)
 from translations.models import POFile
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403
+from txcommon.views import (json_result, json_error)
+from repowatch import WatchException, watch_titles
+from repowatch.models import Watch
 
 # Feeds
 
@@ -396,3 +399,44 @@ def component_toggle_lock_file(request, project_slug, component_slug,
     except:
         return HttpResponseRedirect(reverse('projects.views.component_detail',
                                         args=(project_slug, component_slug,)))
+
+
+@login_required
+@perm_required_with_403('repowatch.add_watch')
+@perm_required_with_403('repowatch.delete_watch')
+def component_toggle_watch(request, project_slug, component_slug, filename):
+    """ Add/Remove a watch for a path on a component for a specific user """
+
+    if request.method != 'POST':
+        return _error('Must use POST to activate')
+
+    component = get_object_or_404(Component, slug=component_slug,
+                                project__slug=project_slug)
+    pofile = get_object_or_404(POFile, component=component, filename=filename)
+
+    url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
+                                                  filename))
+    try:
+        watch = Watch.objects.get(path=filename, component=component, 
+                                  user__id__exact=request.user.id)
+        watch.user.remove(request.user)
+        result = {
+            'style': 'watch_add',
+            'title': watch_titles['watch_add_title'],
+            'id': pofile.id,
+            'url': url,
+            'error': None,
+        }
+    except Watch.DoesNotExist:
+        try:
+            Watch.objects.add_watch(request.user, component, filename)
+            result = {
+                'style': 'watch_remove',
+                'title': watch_titles['watch_remove_title'],
+                'id': pofile.id,
+                'url': url,
+                'error': None,
+            }
+        except WatchException, e:
+            return json_error(e.message, result)
+    return json_result(result)

@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from django.template import RequestContext
+from django.utils import simplejson
 from projects.models import Project
 from txcommon.log import logger
 from django.contrib.auth.forms import AuthenticationForm
@@ -31,3 +33,17 @@ def index(request):
          'form': AuthenticationForm(),
          'next': request.path},
           context_instance = RequestContext(request))
+
+# Ajax response
+
+def json_result(result):
+    return HttpResponse(simplejson.dumps(result))
+
+def json_error(message, result=None):
+    if result is None:
+        result = {}
+    result.update({
+        'style': 'error',
+        'error': message,
+    })
+    return json_result(result)

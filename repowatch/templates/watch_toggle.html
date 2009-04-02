@@ -1,9 +1,8 @@
 {% load i18n %}
 {% load watches %}
-{% url watch_add stat.pk as watch_add_url %}
-{% url watch_remove stat.pk as watch_remove_url %}
+{% url projects.views.component_toggle_watch stat.object.project.slug stat.object.slug stat.filename as toggle_watch_url %}
 {% if stat.watched %}
-<span id="watch-{{ stat.pk }}" class="i16 nodecoration_icon watch_remove submit_button buttonized_simple" title="{% watch_remove_title %}" onClick="watch_toggle(this, '{{ watch_remove_url }}')"></span>
+<span id="watch-pofile-{{ stat.id }}" class="i16 nodecoration_icon watch_remove submit_button buttonized_simple" title="{% watch_remove_title %}" onClick="watch_toggle(this, '{{ toggle_watch_url }}')"></span>
 {% else %}
-<span id="watch-{{ stat.pk }}" class="i16 nodecoration_icon watch_add submit_button buttonized_simple" title="{% watch_add_title %}" onClick="watch_toggle(this, '{{ watch_add_url }}')"></span>
+<span id="watch-pofile-{{ stat.id}}" class="i16 nodecoration_icon watch_add submit_button buttonized_simple" title="{% watch_add_title %}" onClick="watch_toggle(this, '{{ toggle_watch_url }}')"></span>
 {% endif %}

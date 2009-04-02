@@ -3,7 +3,7 @@ watch_classes = Array('watch_add', 'watch_remove');
 function watch_handler(data, textStatus)
 {
     j = JSON.parse(data);
-    obj = $('#watch-' + String(j.id))
+    obj = $('#watch-pofile-' + String(j.id))
     if (j.error)
     {
         obj.addClass(j.style);

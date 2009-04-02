@@ -23,7 +23,7 @@ def watch_toggle(context, stat):
         w = Watch.objects.get(path=stat.filename, component=stat.object, 
                           user__id__exact=user.id)
         stat.watched = True
-    except:
+    except Watch.DoesNotExist:
         stat.watched = False
 
     context['stat'] = stat

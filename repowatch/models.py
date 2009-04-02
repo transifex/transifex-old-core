@@ -15,11 +15,9 @@ class WatchManager(models.Manager):
         component: projects.models.Component to watch
         path: Path for file to watch, or None for a repo change
         """
-        try:
-            watch = self.get(path=path, component=component)
-        except Watch.DoesNotExist:
-            watch = Watch(path=path, component=component)
 
+        watch, created = Watch.objects.get_or_create(path=path, 
+                                                     component=component)
         try:
             rev = component.get_rev(path)
         except ValueError:
@@ -43,10 +41,6 @@ class WatchManager(models.Manager):
         """
         watch = self.get(user__id__exact=user.id, component=component, path=path)
         watch.user.remove(user)
-
-        # if nobody is watching it
-        if not watch.user.all():
-            watch.delete()
 
     def get_watches(self, user, component):
         """
