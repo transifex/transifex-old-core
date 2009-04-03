@@ -14,10 +14,9 @@ from django.dispatch import Signal
 from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext as _
 from django.utils.datastructures import MultiValueDictKeyError
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
-
-import settings
 
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
