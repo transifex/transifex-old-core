@@ -1,10 +1,18 @@
 {% load i18n %}
-{% url component_submit_file stat.object.project.slug stat.object.slug stat.filename as file_submit_url %}
+{% load submissions %}
+{% url component_submit_file pofile.object.project.slug pofile.object.slug pofile.filename as file_submit_url %}
 <span class="i16 nodecoration_icon submit_file submit_button buttonized_simple" title="{% trans "Send a translation for this language." %}"></span>
 <form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
   <input type="file" name="submited_file">
   <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
+  {% with pofile.locks.get.owner as owner %}
+    {% if pofile.locked %}
+      {% ifnotequal request.user.username owner.username %}
+      <p style="margin: 0px; color:#C27878;">This file is locked by someone else. Are you sure that you want to do it?</p>
+      {% endifnotequal %}
+    {% endif %}
+  {% endwith %}
 </fieldset>
 </form>
