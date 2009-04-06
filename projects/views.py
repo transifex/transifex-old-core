@@ -319,7 +319,7 @@ def component_submit_file(request, project_slug, component_slug,
 
         try:
 
-            if settings.MSGFMT_CHECK:
+            if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
                 component.trans.msgfmt_check(request.FILES['submited_file'])
@@ -333,10 +333,11 @@ def component_submit_file(request, project_slug, component_slug,
 
             logger.debug("Calculating %s stats for component %s" % 
                          (filename, component.full_name))
-            # TODO: Find out a better way to handle it. We might wand to merge
-            # the file with the POT before commmit, but it just must happen when
-            # the POT is not broken for intltool based projects.
-            component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
+            if filename.endswith('.po'):
+                # TODO: Find out a better way to handle it. We might wand to merge
+                # the file with the POT before commmit, but it just must happen when
+                # the POT is not broken for intltool based projects.
+                component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
 
             request.user.message_set.create(message=("File submitted " 
                                "successfully: %s" % filename))
