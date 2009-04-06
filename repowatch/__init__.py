@@ -36,7 +36,10 @@ def _send_email(site, component, users, repo_changed, files):
         message = loader.get_template('body.tmpl').render(
             context)
         from_address = 'Transifex <donotreply@%s>' % site.domain
-        send_mail(subject, message, from_address, [user.email])
+
+        # Temporary until compile repowatch with the notification app
+        send_mail(subject, message, from_address, [user.email], 
+                  fail_silently=True)
 
 def _findchangesbycomponent(component):
     """
