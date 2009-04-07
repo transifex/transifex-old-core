@@ -144,6 +144,12 @@ class POTManager(TransManagerMixin):
             stats = self.calcule_stats(lang, try_to_merge)
             f = self.get_langfile(lang)
             s = POFile.objects.get(object_id=object.id, filename=f)
+            if not s.language:
+                try:
+                    l = Language.objects.by_code_or_alias(code=lang)
+                    s.language=l
+                except Language.DoesNotExist:
+                    pass
         except POTStatsError:
             # TODO: It should probably be raised when a checkout of a 
             # module has a problem. Needs to decide what to do when it
