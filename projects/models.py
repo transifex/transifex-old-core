@@ -43,7 +43,7 @@ def cached_property(func):
         ...
 
     del(self.trans)
- 
+
     """
     def _set_cache(self):
         cache_attr = "__%s" % func.__name__
@@ -60,12 +60,12 @@ def cached_property(func):
             delattr(self, cache_attr)
         except AttributeError:
             pass
-        
+
     return property(_set_cache, fdel=_del_cache)
 
 
 class Project(models.Model):
-    
+
     """
     A project is a collection of translatable resources.
 
@@ -78,10 +78,10 @@ class Project(models.Model):
         ...
     IntegrityError: column slug is not unique
     >>> p.delete()
-    
+
     """
 
-    slug = models.SlugField(max_length=30, unique=True, 
+    slug = models.SlugField(max_length=30, unique=True,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(max_length=50,
@@ -100,7 +100,7 @@ class Project(models.Model):
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
-    
+
     tags = TagField()
 
     # Relations
@@ -111,7 +111,7 @@ class Project(models.Model):
                                          blank=True, null=True)
 
     # Normalized fields
-    long_description_html = models.TextField(blank=True, max_length=1000, 
+    long_description_html = models.TextField(blank=True, max_length=1000,
         help_text=_('Description in HTML.'), editable=False)
 
     def __unicode__(self):
@@ -131,13 +131,13 @@ class Project(models.Model):
         """Save the object in the database."""
         long_desc = escape(self.long_description)
         self.long_description_html = markdown.markdown(long_desc)
-        # Get a grip on the empty 'created' to detect a new addition. 
+        # Get a grip on the empty 'created' to detect a new addition.
         created = self.created
         super(Project, self).save(*args, **kwargs)
 
         for c in Component.objects.filter(project=self):
             c.save()
-        
+
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
@@ -156,7 +156,7 @@ log_model(Project)
 
 
 class ComponentManager(models.Manager):
-    
+
     def with_language(self, language):
         """
         Return distinct components which ship a language's files.
@@ -177,12 +177,12 @@ class ComponentManager(models.Manager):
         """
         comp_query = release.components.values('pk').query
         ctype = ContentType.objects.get_for_model(Component)
-        po = POFile.objects.filter(content_type=ctype, 
+        po = POFile.objects.filter(content_type=ctype,
                                    object_id__in=comp_query,
                                    language__id=language.id)
         poc = po.values('object_id').query
         return Component.objects.exclude(pk__in=poc).filter(
-                            releases__pk=release.pk).order_by('project__name', 
+                            releases__pk=release.pk).order_by('project__name',
                                                               'name')
 
 
@@ -218,7 +218,7 @@ class Component(models.Model):
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
-    
+
     # Normalized fields
     full_name = models.CharField(max_length=100, editable=False)
     long_description_html = models.TextField(blank=True,
@@ -233,13 +233,13 @@ class Component(models.Model):
 
     # Managers
     objects = ComponentManager()
-        
+
     def __unicode__(self):
         return u'%s (%s)' % (self.name, self.project)
 
     def __repr__(self):
         return _('<Component: %s>') % self.full_name
-    
+
     class Meta:
         unique_together = ("project", "slug")
         verbose_name = _('component')
@@ -255,8 +255,8 @@ class Component(models.Model):
 
     @cached_property
     def trans(self):
-        """ 
-        Cache TransHandler property field. 
+        """
+        Cache TransHandler property field.
 
         Allow the TransHandler initialization only when it is needed.
         """
@@ -280,7 +280,7 @@ class Component(models.Model):
         desc_escaped = escape(self.long_description)
         self.long_description_html = markdown.markdown(desc_escaped)
         self.full_name = self.get_full_name()
-        # Get a grip on the empty 'created' to detect a new addition. 
+        # Get a grip on the empty 'created' to detect a new addition.
         created = self.created
 
         if self.id:
@@ -298,9 +298,9 @@ class Component(models.Model):
             component_old.rename_static_dir(self.full_name)
 
         if not created and settings.ENABLE_NOTICES:
-            notification.send(User.objects.all(), 
-                              "projects_added_new_component",  
-                              {'project': self.project, 
+            notification.send(User.objects.all(),
+                              "projects_added_new_component",
+                              {'project': self.project,
                               'component': self,})
 
     def delete(self, *args, **kwargs):
@@ -312,7 +312,7 @@ class Component(models.Model):
     def set_unit(self, root, branch, type, web_frontend=None):
         """
         Associate a unit with this component.
-        
+
         Another place the same functionality happens is when the Component
         form is saved.
         """
@@ -325,15 +325,15 @@ class Component(models.Model):
         else:
             logger.debug("Unit for %s not found. Creating." % self.full_name)
             try:
-                u = Unit.objects.create(name=self.full_name, root=root, 
-                                        branch=branch, type=type, 
+                u = Unit.objects.create(name=self.full_name, root=root,
+                                        branch=branch, type=type,
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
             except self.IntegrityError:
                 logger.error("Yow! Unit exists but is not associated with %s! "
                           % self.full_name)
-                # TODO: Here we should probably send an e-mail to the 
+                # TODO: Here we should probably send an e-mail to the
                 # admin, because something very strange would be happening
                 pass
         return self.unit
@@ -342,9 +342,9 @@ class Component(models.Model):
         """Return a list of filtered files for the component."""
         return [f for f in self.unit.get_files(self.file_filter)]
 
-    def prepare_repo(self):
+    def prepare(self):
         """
-        Abstract unit.prepare_repo().
+        Abstract unit.prepare().
 
         This function creates/updates the Component local repository
         and then unset the TransHandler property cache for it be created
@@ -353,7 +353,7 @@ class Component(models.Model):
         logger.debug("Updating local repo for %s" % self.full_name)
         Signal.send(signals.pre_comp_prep, sender=Component,
             instance=self)
-        self.unit.prepare_repo()
+        self.unit.prepare()
         del(self.trans)
         Signal.send(signals.post_comp_prep, sender=Component,
             instance=self)
@@ -363,12 +363,12 @@ class Component(models.Model):
         Clear the local cache of the component.
 
         Delete statistics, teardown repo, remove static dir, rest unit.
-        """ 
+        """
         logger.debug("Clearing local cache for %s" % self.full_name)
         try:
             self.trans.clear_stats()
             self.delete_static_dir()
-            self.unit.teardown_repo()
+            self.unit.teardown()
             del(self.trans)
             if self.unit:
                 self.delete_static_dir()
@@ -376,7 +376,7 @@ class Component(models.Model):
                 self.unit.save()
         except:
              logger.error("Clearing cache failed for %s." % (self.full_name))
-         
+
     def get_rev(self, path=None):
         """Get revision of a path from the underlying Unit"""
         return self.unit.get_rev(path)
@@ -384,7 +384,7 @@ class Component(models.Model):
     def submit(self, files, msg, user):
         return self.unit.submit(files, msg, user)
 
-    # TODO: We might want to move the next two functions to another 
+    # TODO: We might want to move the next two functions to another
     # app later, like Utils or something
     def rename_static_dir(self, new_name):
         """Rename the directory of static content for a component"""
@@ -400,7 +400,7 @@ class Component(models.Model):
         """Delete the directory of static content for a component"""
         import shutil
         try:
-            shutil.rmtree(os.path.join(settings.MSGMERGE_DIR, 
+            shutil.rmtree(os.path.join(settings.MSGMERGE_DIR,
                                        self.full_name))
         except OSError:
             pass

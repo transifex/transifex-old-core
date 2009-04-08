@@ -103,7 +103,7 @@ class Command(LabelCommand):
             raise CommandError("No component with full name '%s'." % comp_name)
         if verbose:
             print '- %s' % (comp.full_name)
-        comp.prepare_repo()
+        comp.prepare()
         # Calculate statistics
         try:
             comp.trans.set_stats()

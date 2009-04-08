@@ -24,7 +24,7 @@ class GitTestCase(unittest.TestCase):
         """Test correct Git repo initialization."""
         from os import path
         from vcs.lib.types.git import REPO_PATH
-        self.unit.init_browser()
+        self.unit._init_browser()
         self.unit.browser.init_repo()
         local_unit_path = path.join(REPO_PATH, self.unit.name)
         self.assertTrue(path.isdir(local_unit_path))
@@ -32,7 +32,7 @@ class GitTestCase(unittest.TestCase):
     def test_get_file_contents(self):
         """Test that Git get_file_contents returns correct file size."""
         #FIXME: This is not the best way to test something like this!
-        self.unit.init_browser()
+        self.unit._init_browser()
         self.unit.browser.init_repo()
         self.assertEquals(len(self.unit.browser.get_file_contents('po/test_repo.pot')),
                           594)

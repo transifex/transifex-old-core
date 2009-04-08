@@ -15,7 +15,7 @@ def need_browser(fn):
         try:
             self.browser
         except AttributeError:
-            self.init_browser()
+            self._init_browser()
         return fn(self, *args, **kw)
     return browser_fn
 
@@ -80,13 +80,13 @@ class Unit(models.Model):
         super(Unit, self).save(*args, **kwargs)
 
         if unit_old and unit_old.name != self.name:
-            unit_old.rename_repo(self.name)
+            unit_old._rename_repo(self.name)
 
     def delete(self, *args, **kwargs):
-        self.teardown_repo()
+        self.teardown()
         super(Unit, self).delete(*args, **kwargs)
 
-    def init_browser(self):
+    def _init_browser(self):
         """
         Initializes an appropriate VCS browser object, depending
         on the VCS type of the project.
@@ -101,7 +101,7 @@ class Unit(models.Model):
                                branch=self.branch)
 
     @need_browser
-    def prepare_repo(self):
+    def prepare(self):
         """Abstraction for the unit.browser.update."""
         try:
             logger.debug("Preparing repo for unit %s" % self.name)
@@ -111,7 +111,7 @@ class Unit(models.Model):
         except:
             logger.debug("Repo update failed. Let's clean up and try again.")
             # Try once again with a clean local repo.
-            self.teardown_repo()
+            self.teardown()
             self.browser.setup_repo()
             #TODO: Do something if this fails.
             self.browser.update()
@@ -121,7 +121,7 @@ class Unit(models.Model):
         """Abstration for the unit.browser.get_files."""
         return self.browser.get_files(file_filter)
 
-    def teardown_repo(self):
+    def teardown(self):
         """Abstration for the unit.browser.teardown_repo."""
         try:
             logger.debug("Tearing down repo for unit '%s'" % self.name)
@@ -131,7 +131,7 @@ class Unit(models.Model):
            pass
 
     @need_browser
-    def rename_repo(self, new_name):
+    def _rename_repo(self, new_name):
         """Abstration for the unit.browser.rename_repo."""
         logger.debug("Renaming repo of unit '%s' to %s" % (self.name,
                                                            new_name))

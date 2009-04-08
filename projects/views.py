@@ -190,7 +190,7 @@ def component_set_stats(request, project_slug, component_slug):
                                   project__slug=project_slug)
     logger.debug("Requested stats calc for component %s" % component.full_name)
     # Checkout
-    component.prepare_repo()
+    component.prepare()
     # Calculate statistics
     try:
         component.trans.set_stats()
@@ -325,7 +325,7 @@ def component_submit_file(request, project_slug, component_slug,
                 component.trans.msgfmt_check(request.FILES['submited_file'])
 
             logger.debug("Checking out for component %s" % component.full_name)
-            component.prepare_repo()
+            component.prepare()
 
             logger.debug("Submitting %s for component %s" % 
                          (filename, component.full_name))
