@@ -1,6 +1,6 @@
 import os
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 
 class SvnTestCase(unittest.TestCase):
     """Test Subversion VCS support.
@@ -10,7 +10,7 @@ class SvnTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
-        self.unit = Unit.objects.create(
+        self.unit = VcsUnit.objects.create(
             name="Test-SVN",
             root='%s/test_repo/svn/checkout' % os.path.split(__file__)[0],
             branch='trunk', type='svn')

@@ -1,6 +1,6 @@
 import os
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 
 class BzrTestCase(unittest.TestCase):
     """Test Bzr VCS support.
@@ -10,7 +10,7 @@ class BzrTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
-        self.unit = Unit.objects.create(type='bzr',
+        self.unit = VcsUnit.objects.create(type='bzr',
             root='%s/test_repo/bzr' % os.path.split(__file__)[0],)
     def tearDown(self):
         self.unit.delete()

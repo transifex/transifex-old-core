@@ -1,6 +1,6 @@
 import os
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 
 
 class CvsTestCase(unittest.TestCase):
@@ -12,7 +12,7 @@ class CvsTestCase(unittest.TestCase):
     #TODO: Run the init stuff only when needed.
     def setUp(self):
 
-        self.unit = Unit.objects.create(
+        self.unit = VcsUnit.objects.create(
             name="Test-CVS",
             root='%s/test_repo/cvs/Test-CVS' % os.path.split(__file__)[0],
             type='cvs')

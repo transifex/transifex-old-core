@@ -1,6 +1,6 @@
 import os
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 
 class HgTestCase(unittest.TestCase):
     """Test Hg VCS support.
@@ -13,7 +13,7 @@ class HgTestCase(unittest.TestCase):
         self.root='%s/test_repo/hg' % os.path.split(__file__)[0]
         os.system('cd %s; hg init; hg add *; hg commit -m "Init repo"'
                   % self.root)
-        self.unit = Unit.objects.create(
+        self.unit = VcsUnit.objects.create(
             name="Test-HG",
             root=self.root,
             branch='tip', type='hg')

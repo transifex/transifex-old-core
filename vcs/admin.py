@@ -1,7 +1,7 @@
 from django.contrib import admin
-from vcs.models import Unit
+from vcs.models import VcsUnit
 
-class UnitAdmin(admin.ModelAdmin):
+class VcsUnitAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Unit, UnitAdmin)
+admin.site.register(VcsUnit, VcsUnitAdmin)

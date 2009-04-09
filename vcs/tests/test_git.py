@@ -1,6 +1,6 @@
 import os
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 from vcs.lib import RepoError
 
 class GitTestCase(unittest.TestCase):
@@ -11,7 +11,7 @@ class GitTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
-        self.unit = Unit.objects.create(
+        self.unit = VcsUnit.objects.create(
             name="Test-Git",
             root='%s/test_repo/git' % os.path.split(__file__)[0],
             branch='master', type='git')

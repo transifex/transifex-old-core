@@ -8,7 +8,7 @@ def transifex_paths():
     # Msgmerge dir
     yield s.MSGMERGE_DIR
     # Repo paths
-    for vcs in s.VCS_CHOICES.keys():
+    for vcs in s.CODEBASE_CHOICES.keys():
         yield s.REPO_PATHS[vcs]
 
 
@@ -17,7 +17,7 @@ class Command(NoArgsCommand):
 
     requires_model_validation = False
     can_import_settings = True
-    
+
     def handle_noargs(self, **options):
         for path in transifex_paths():
             try:

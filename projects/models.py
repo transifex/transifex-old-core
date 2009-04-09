@@ -19,7 +19,7 @@ from tagging.fields import TagField
 
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
-from vcs.models import Unit
+from vcs.models import VcsUnit
 from txcommon.log import (logger, log_model)
 from projects.handlers import get_trans_handler
 from projects import signals
@@ -223,7 +223,7 @@ class Component(models.Model):
 
     # Relations
     project = models.ForeignKey(Project)
-    unit = models.OneToOneField(Unit, blank=True, null=True, editable=False)
+    unit = models.OneToOneField(VcsUnit, blank=True, null=True, editable=False)
     pofiles = generic.GenericRelation(POFile)
     releases = models.ManyToManyField(CollectionRelease, related_name='components',
                                       blank=True, null=True)
@@ -320,15 +320,15 @@ class Component(models.Model):
             self.unit.type = type
             self.unit.web_frontend = web_frontend
         else:
-            logger.debug("Unit for %s not found. Creating." % self.full_name)
+            logger.debug("VcsUnit for %s not found. Creating." % self.full_name)
             try:
-                u = Unit.objects.create(name=self.full_name, root=root,
+                u = VcsUnit.objects.create(name=self.full_name, root=root,
                                         branch=branch, type=type,
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
             except self.IntegrityError:
-                logger.error("Yow! Unit exists but is not associated with %s! "
+                logger.error("Yow! VcsUnit exists but is not associated with %s! "
                           % self.full_name)
                 # TODO: Here we should probably send an e-mail to the
                 # admin, because something very strange would be happening
@@ -403,4 +403,4 @@ class Component(models.Model):
             pass
 
 log_model(Component)
-log_model(Unit)
+log_model(VcsUnit)

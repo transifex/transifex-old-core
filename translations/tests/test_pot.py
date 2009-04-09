@@ -1,5 +1,5 @@
 import unittest
-from vcs.models import Unit
+from vcs.models import VcsUnit
 from projects.models import Project, Component
 from translations.lib.types.pot import POTStatsError
 from translations.lib.types.pot import POTManager

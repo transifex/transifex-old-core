@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
-from projects.models import Project, Component, Unit
+from projects.models import Project, Component, VcsUnit
 
 
 class ProjectForm(forms.ModelForm):
@@ -28,5 +28,5 @@ class ComponentForm(forms.ModelForm):
 
 class UnitForm(forms.ModelForm):
     class Meta:
-        model = Unit
+        model = VcsUnit
         exclude= ('name',)
