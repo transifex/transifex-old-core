@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
+from django.dispatch import Signal
 from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext_lazy as _
 from django.utils.datastructures import MultiValueDictKeyError
@@ -20,6 +21,7 @@ import settings
 
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
+from projects import signals
 from txcommon.log import logger
 from actionlog.models import (log_addition, log_change, log_deletion, 
                               log_submission)
@@ -70,6 +72,9 @@ def project_create_update(request, project_slug=None):
             project_id = project.id
             project.save()
             project_form.save_m2m()
+            # TODO: Not sure if here is the best place to put it
+            Signal.send(signals.post_proj_save_m2m, sender=Project, 
+                        instance=project)
             if not project_id:
                 log_addition(request, project)
             else:

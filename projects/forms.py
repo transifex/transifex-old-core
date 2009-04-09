@@ -20,6 +20,11 @@ class ComponentForm(forms.ModelForm):
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
 
+        # Filtering releases by the collections of the project
+        collection_query = project.collections.values('pk').query
+        releases = self.fields["releases"].queryset.filter(
+                                           collection__id__in=collection_query)
+        self.fields["releases"].queryset = releases
 
 class UnitForm(forms.ModelForm):
     class Meta:

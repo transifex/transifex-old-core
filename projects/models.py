@@ -135,9 +135,6 @@ class Project(models.Model):
         created = self.created
         super(Project, self).save(*args, **kwargs)
 
-        for c in Component.objects.filter(project=self):
-            c.save()
-
         if not created and settings.ENABLE_NOTICES:
             notification.send(User.objects.all(), "projects_added_new",
                               {'project': self})
