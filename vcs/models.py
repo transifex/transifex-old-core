@@ -109,6 +109,7 @@ class VcsUnit(Unit):
         """Abstration for the vcsunit.browser.get_files."""
         return self.browser.get_files(file_filter)
 
+    @need_browser
     def teardown(self):
         """Abstration for the vcsunit.browser.teardown_repo."""
         try:
