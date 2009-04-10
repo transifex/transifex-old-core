@@ -131,6 +131,8 @@ def component_create_update(request, project_slug, component_slug=None):
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
         if component_form.is_valid() and unit_form.is_valid():
             component = component_form.save(commit=False)
+            if unit:
+              old_root = unit.root
             unit = unit_form.save(commit=False)            
             unit.name = component.get_full_name()
             unit.save()
@@ -138,6 +140,11 @@ def component_create_update(request, project_slug, component_slug=None):
             component_id = component.id
             component.save()
             component_form.save_m2m()
+
+            # Compare with the old root url and, if it has changed, clear cache
+            if old_root and old_root != unit.root:
+                component.clear_cache()
+
             if not component_id:
                 log_addition(request, component)
             else:

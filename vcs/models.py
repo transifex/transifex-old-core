@@ -70,6 +70,9 @@ class VcsUnit(Unit):
         if unit_old and unit_old.name != self.name:
             unit_old._rename_repo(self.name)
 
+        if unit_old and unit_old.root != self.root:
+            self.teardown()
+
     def delete(self, *args, **kwargs):
         self.teardown()
         super(VcsUnit, self).delete(*args, **kwargs)
