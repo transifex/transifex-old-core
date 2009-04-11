@@ -132,7 +132,9 @@ def component_create_update(request, project_slug, component_slug=None):
         if component_form.is_valid() and unit_form.is_valid():
             component = component_form.save(commit=False)
             if unit:
-              old_root = unit.root
+                old_root = unit.root
+            else:
+                old_root = None
             unit = unit_form.save(commit=False)            
             unit.name = component.get_full_name()
             unit.save()
