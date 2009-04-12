@@ -48,17 +48,21 @@ def language_detail(request, slug, *args, **kwargs):
         *args, **kwargs
     )
 
-
-def language_release(request, slug, collection_slug, release_slug):
-
-    language = get_object_or_404(Language, code__iexact=slug)
+def get_lang_rel_objs(language_slug, collection_slug, release_slug):
+    """
+    Shortcut function to return appropriate objects for lang-rel views.
+    """
+    language = get_object_or_404(Language, code__iexact=language_slug)
     collection = get_object_or_404(Collection, 
                                    slug__exact=collection_slug)
     release = get_object_or_404(Release, slug__exact=release_slug,
                                 collection=collection)
+    pofile_list = POFile.objects.by_language_and_release(language, release)
+    return language, collection, release, pofile_list
 
-    pofile_list = POFile.objects.by_language_and_release(language, 
-                                                         release)
+def language_release(request, slug, collection_slug, release_slug):
+    language, collection, release, pofile_list = get_lang_rel_objs(
+        language_slug, collection_slug, release_slug)
     untrans_comps = Component.objects.untranslated_by_lang_release(language, 
                                                                    release)
 
