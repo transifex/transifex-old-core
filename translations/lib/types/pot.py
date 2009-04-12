@@ -30,7 +30,7 @@ class POTManager(TransManagerMixin):
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
                                      os.path.basename(self.path))
 
-    def get_file_content(self, filename, is_msgmerged=False):
+    def get_file_path(self, filename, is_msgmerged=False):
         # All the files should be in the file_set, except the intltool
         # POT file that is created by the system
         if filename in self.file_set or \
@@ -39,12 +39,17 @@ class POTManager(TransManagerMixin):
                 file_path = os.path.join(self.msgmerge_path, filename)
             else:
                 file_path = os.path.join(self.path, filename)
-            filef = file(file_path, 'rb')
-            file_content = filef.read()
-            filef.close()
-            return file_content
         else:
             raise IOError("File not found.")
+        return file_path
+
+    def get_file_content(self, filename, is_msgmerged=False):
+        file_path = get_file_path(filename, is_msgmerged)
+        filef = file(file_path, 'rb')
+        file_content = filef.read()
+        filef.close()
+        return file_content
+
         
     def get_po_files(self):
         """ Return a list of PO filenames """
