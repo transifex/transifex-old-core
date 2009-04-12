@@ -3,7 +3,8 @@ from django.contrib import admin
 from models import Language
 from feeds import AllLanguages, LanguageReleaseFeed
 from views import (language_detail, slug_feed,
-                   language_release, language_release_feed)
+                   language_release, language_release_feed,
+                   language_release_download)
 
 admin.autodiscover()
 
@@ -51,5 +52,9 @@ urlpatterns += patterns('django.views.generic',
         regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
         view = language_release,
     ),
-
+    url(
+        name = 'language_release_download',
+        regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
+        view = language_release_download,
+    ),
 )

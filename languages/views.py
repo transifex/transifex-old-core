@@ -1,4 +1,6 @@
 import os
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic import list_detail
 from django.utils.translation import ugettext_lazy as _
@@ -62,7 +64,7 @@ def get_lang_rel_objs(language_slug, collection_slug, release_slug):
 
 def language_release(request, slug, collection_slug, release_slug):
     language, collection, release, pofile_list = get_lang_rel_objs(
-        language_slug, collection_slug, release_slug)
+        slug, collection_slug, release_slug)
     untrans_comps = Component.objects.untranslated_by_lang_release(language, 
                                                                    release)
 
@@ -73,3 +75,23 @@ def language_release(request, slug, collection_slug, release_slug):
         'untrans_comps': untrans_comps,
     }, context_instance=RequestContext(request))
 
+
+def language_release_download(request, slug, collection_slug, release_slug,
+                              filetype):
+    """
+    Download a compressed file of all files for a language-release.
+    """
+    language, collection, release, pofile_list = get_lang_rel_objs(
+        slug, collection_slug, release_slug)
+
+    filename = '%s.%s_%s' % (language.code, collection.slug, release.slug)
+    from translations.util.compressed import POCompressedArchive
+    try:
+        archive = POCompressedArchive(pofile_list, filename, filetype)
+        response = HttpResponse(file(archive.file_path).read())
+        response['Content-Disposition'] = 'attachment; filename=%s' % archive.filename
+        response['Content-Type'] = archive.content_type
+        archive.cleanup()
+    except NotImplementedError:
+        raise Http404
+    return response
