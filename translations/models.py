@@ -197,6 +197,13 @@ class POFile(models.Model):
             return True
         else:
             return False
+    @property
+    def symbolic_path(self):
+        """Return a path in the form project/component/pofile_path."""
+        path = self.object.trans.tm.get_file_path(self.filename)
+        return '%s/%s/%s' % (self.object.project.slug,
+                                 self.object.slug,
+                                 self.filename)
 
 class POFileLock(Lock):
     """A lock/hold on a POFile object."""
