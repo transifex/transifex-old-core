@@ -7,4 +7,4 @@ conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings',
 conffiles.sort()
 
 for f in conffiles:
-    execfile(f)
+    execfile(os.path.abspath(f))
