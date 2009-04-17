@@ -33,6 +33,15 @@ class Language(models.Model):
     code_aliases = models.CharField(_('Code aliases'), max_length=100,
         help_text=("A space-separated list of alternative locales."),
         null=True, default='')
+    specialchars = models.CharField(_("Special Chars"), max_length=255, 
+        help_text=_("Enter any special characters that users might find"
+                    " difficult to type"),
+        blank=True)
+    nplurals = models.SmallIntegerField(_("Number of Plurals"), default=0,
+        choices=nplural_choices)
+    pluralequation = models.CharField(_("Plural Equation"), max_length=255,
+        blank=True)
+
 
     # Managers
     objects = LanguageManager()
