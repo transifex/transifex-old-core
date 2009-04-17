@@ -59,6 +59,22 @@ improvements in the existing translations are submitted through Transifex at
 http://www.transifex.net/.
 
 
+Translation file archives
+:::::::::::::::::::::::::
+
+Transifex now adds support for downloading compressed archives containing the
+files belonging to a release for a particular language. The compressed archive
+types supported are **zip files** and gzipped **tarballs**.
+
+Translators can now retrieve a compressed file containing all the files needed
+to translate the release's components to their language. An example URL
+providing this feature is ``/languages/fr/collection/gnome/2.26/download_zip/``.
+
+This feature eliminates the need to download one file at a time, and is
+especially useful for very active contributors and people with slow Internet
+connectivity.
+
+
 User Interface improvements
 :::::::::::::::::::::::::::
 
@@ -79,6 +95,11 @@ Easy file selection for editing
   The 'advanced' submission form now supports either editing a remote file or
   creating a new one. The user can choose either to overwrite an existing
   file or create a new one.
+
+Sortable statistics tables
+  The tables presented are now sortable by a number of variables, including
+  the language name and the completion percentage, depending on how the user
+  prefers to view the list and find the information needed.
 
 
 Under the hood changes
