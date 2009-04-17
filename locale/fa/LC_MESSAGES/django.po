@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: D\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-19 06:06+0000\n"
+"POT-Creation-Date: 2009-04-17 19:39+0000\n"
 "PO-Revision-Date: 2009-02-20 23:51+0330\n"
 "Last-Translator: Danial Yousefi <danial@gmi.com>\n"
 "Language-Team: Persian <fedora-trans-fa@redhat.com>\n"
@@ -91,32 +91,82 @@ msgstr ""
 msgid "No history recorded yet."
 msgstr "هنوز چیزی اینجا وجود ندارد."
 
-#: languages/feeds.py:14
+#: codebases/models.py:27 languages/models.py:27 projects/models.py:87
+#: projects/models.py:196 releases/models.py:28 txcollections/models.py:26
+msgid "Name"
+msgstr "نام"
+
+#: codebases/models.py:28
+msgid "Root"
+msgstr "ریشه"
+
+#: codebases/models.py:29
+msgid "The URL of the codebase"
+msgstr ""
+
+#: codebases/models.py:30
+msgid "Type"
+msgstr "نوع"
+
+#: codebases/models.py:32
+#, python-format
+msgid "The codebase type (%s)"
+msgstr ""
+
+#: codebases/models.py:35
+msgid "The last time this unit was updated"
+msgstr ""
+
+#: codebases/models.py:44
+#, fuzzy
+msgid "unit"
+msgstr "ارائه بده"
+
+#: codebases/models.py:45
+msgid "units"
+msgstr ""
+
+#: languages/feeds.py:15
 #, python-format
 msgid "Languages on %(site_name)s"
 msgstr ""
 
-#: languages/feeds.py:17
+#: languages/feeds.py:18
 #, python-format
 msgid "The languages spoken on %s."
 msgstr ""
 
-#: languages/feeds.py:35
+#: languages/feeds.py:36
 #, python-format
-msgid "%(site_name)s: %(language)s :: %(collection)s :: %(release)s release"
+msgid "%(site_name)s: %(language)s :: %(release)s release"
 msgstr ""
 
 #: languages/feeds.py:42
-#, fuzzy, python-format
-msgid "Latest translations in %s."
-msgstr "ارائه ترجمه ها"
+#, python-format
+msgid "Latest translations for %(language)s language in %(release)s release."
+msgstr ""
 
-#: languages/models.py:43
+#: languages/models.py:29 projects/models.py:89 projects/models.py:198
+#: releases/models.py:30 txcollections/models.py:28
+#, fuzzy
+msgid "Description"
+msgstr "توصیف*:"
+
+#: languages/models.py:30
+#, fuzzy
+msgid "Code"
+msgstr "ماژول"
+
+#: languages/models.py:33
+msgid "Code aliases"
+msgstr ""
+
+#: languages/models.py:44
 #, fuzzy
 msgid "language"
 msgstr "زبان:"
 
-#: languages/models.py:44 templates/languages/language_list.html:15
+#: languages/models.py:45 templates/languages/language_list.html:15
 #, fuzzy
 msgid "languages"
 msgstr "زبان:"
@@ -127,8 +177,8 @@ msgid "Translated:"
 msgstr "ترجمه شد"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/lang_stats_table.html:26
+#: translations/templates/comp_stats_table.html:30
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
@@ -163,95 +213,249 @@ msgstr ""
 msgid "Latest components in project %s."
 msgstr ""
 
-#: projects/models.py:83 projects/models.py:177 releases/models.py:26
+#: projects/models.py:84 projects/models.py:193 releases/models.py:25
+#: txcollections/models.py:23
+msgid "Slug"
+msgstr ""
+
+#: projects/models.py:85 projects/models.py:194 releases/models.py:26
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:86 projects/models.py:180 releases/models.py:29
+#: projects/models.py:88 projects/models.py:197 releases/models.py:29
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr ""
 
-#: projects/models.py:88 projects/models.py:182
+#: projects/models.py:90 projects/models.py:199
 msgid "A sentence or two describing the object (optional)."
 msgstr ""
 
-#: projects/models.py:90 projects/models.py:184 txcollections/models.py:31
+#: projects/models.py:91 projects/models.py:200 releases/models.py:32
+#: txcollections/models.py:30
+#, fuzzy
+msgid "Long description"
+msgstr "توصیف*:"
+
+#: projects/models.py:93 projects/models.py:202 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr ""
 
-#: projects/models.py:93
+#: projects/models.py:94 txcollections/models.py:32
+#, fuzzy
+msgid "Homepage"
+msgstr "صفحه وب:"
+
+#: projects/models.py:95
+msgid "Feed"
+msgstr ""
+
+#: projects/models.py:96
 msgid "An RSS feed with updates on the project."
 msgstr ""
 
-#: projects/models.py:96 projects/models.py:199 releases/models.py:47
+#: projects/models.py:98 projects/models.py:217 releases/models.py:46
+#: txcollections/models.py:33
+msgid "Hidden"
+msgstr ""
+
+#: projects/models.py:99 projects/models.py:218 releases/models.py:47
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:98 projects/models.py:201 releases/models.py:49
+#: projects/models.py:100 projects/models.py:219 releases/models.py:48
+#: txcollections/models.py:35
+msgid "Enabled"
+msgstr "فعال شده"
+
+#: projects/models.py:101 projects/models.py:220 releases/models.py:49
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
 
-#: projects/models.py:113 projects/models.py:208 releases/models.py:55
+#: projects/models.py:105
+#, fuzzy
+msgid "Tags"
+msgstr "صفحه:"
+
+#: projects/models.py:110 templates/base.html:30
+#: templates/txcollections/base.html:6
+#: templates/txcollections/collection_list.html:14
+msgid "Collections"
+msgstr ""
+
+#: projects/models.py:112
+#, fuzzy
+msgid "Maintainers"
+msgstr "نگاهدارندگان پروژه"
+
+#: projects/models.py:116 projects/models.py:226 releases/models.py:54
+#: txcollections/models.py:43
+#, fuzzy
+msgid "HTML Description"
+msgstr "توصیف*:"
+
+#: projects/models.py:118 projects/models.py:228 releases/models.py:55
 #: txcollections/models.py:44
 #, fuzzy
 msgid "Description in HTML."
 msgstr "توصیف"
 
-#: projects/models.py:119
+#: projects/models.py:124
 #, python-format
 msgid "<Project: %s>"
 msgstr ""
 
-#: projects/models.py:122
+#: projects/models.py:127
 msgid "project"
 msgstr ""
 
-#: projects/models.py:123 templates/projects/project_list.html:18
+#: projects/models.py:128 templates/projects/project_list.html:18
 #: templates/releases/release_detail.html:72
 #: templates/txcollections/collection_detail.html:93
 msgid "projects"
 msgstr ""
 
-#: projects/models.py:186
+#: projects/models.py:203
+#, fuzzy
+msgid "Source language"
+msgstr "زبان:"
+
+#: projects/models.py:204
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr ""
 
-#: projects/models.py:190
+#: projects/models.py:206
+msgid "I18n type"
+msgstr ""
+
+#: projects/models.py:208
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr ""
 
-#: projects/models.py:193
+#: projects/models.py:210
+#, fuzzy
+msgid "File filter"
+msgstr "فیلتر فایل"
+
+#: projects/models.py:211
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 
-#: projects/models.py:196
+#: projects/models.py:213
+#, fuzzy
+msgid "Allows submission"
+msgstr ":: پیش نمایش واگذاری"
+
+#: projects/models.py:215
 msgid "Does this module repository allow write access?"
 msgstr ""
 
-#: projects/models.py:224
+#: projects/models.py:231
+#, fuzzy
+msgid "Project"
+msgstr "صفحه وب پروژه"
+
+#: projects/models.py:232
+#, fuzzy
+msgid "Unit"
+msgstr "ارائه بده"
+
+#: projects/models.py:236 templates/releases/base.html:6
+#: templates/releases/release_list.html:14
+msgid "Releases"
+msgstr ""
+
+#: projects/models.py:246
 #, python-format
 msgid "<Component: %s>"
 msgstr ""
 
-#: projects/models.py:228
+#: projects/models.py:250
 msgid "component"
 msgstr ""
 
-#: projects/models.py:229 templates/projects/component_list.html:15
+#: projects/models.py:251 templates/projects/component_list.html:15
 #, fuzzy
 msgid "components"
 msgstr "ماه"
 
-#: projects/views.py:95 projects/views.py:174
+#: projects/views.py:103 projects/views.py:191
 #, python-format
 msgid "The %s was deleted."
+msgstr ""
+
+#: projects/views.py:215
+msgid ""
+"The file filter of this intltool POT-based component does not  seem to allow "
+"the POTFILES.in file. Please fix it."
+msgstr ""
+
+#: projects/views.py:275
+msgid "This component does  not allow white access."
+msgstr ""
+
+#: projects/views.py:283
+#, fuzzy
+msgid "Please select a file from your system to be uploaded."
+msgstr "یک فایل از محل فعالیت خود انتخاب کنید."
+
+#: projects/views.py:292
+#, fuzzy
+msgid "Please enter a target to upload the file."
+msgstr "لطفا یک فایل برای آپلود انتخاب کنید."
+
+#: projects/views.py:298
+msgid "Please enter with only ONE target to upload the file."
+msgstr ""
+
+#: projects/views.py:309
+msgid "The target file does not match with the component file filter"
+msgstr ""
+
+#: projects/views.py:327
+#, fuzzy, python-format
+msgid "Sending translation for %s"
+msgstr "ارائه ترجمه ها"
+
+#: projects/views.py:351
+#, fuzzy, python-format
+msgid "File submitted successfully: %s"
+msgstr "واگذاری شما با موفقیت به اتمام رسید."
+
+#: projects/views.py:357
+#, fuzzy
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+"اخطار: PO file ی که ارائه دادید رسیدگی های صحت را نگذرانده است. لطفا دستور "
+"'msgfmt -c' را روی آن اجرا کنید تا خطاهای آن را قبل از ارائه دادن اصلاح "
+"نمایید."
+
+#: projects/views.py:366
+msgid "Sorry, an error is causing troubles to send your file."
+msgstr ""
+
+#: projects/views.py:370 projects/views.py:400
+msgid "Sorry, but you need to send a POST request."
+msgstr ""
+
+#: projects/views.py:389
+msgid "Lock removed."
+msgstr ""
+
+#: projects/views.py:392
+msgid "Error: Only the owner of a lock can remove it."
+msgstr ""
+
+#: projects/views.py:396
+msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 
 #: projects/management/__init__.py:12
@@ -278,14 +482,27 @@ msgstr ""
 msgid "Use Markdown syntax."
 msgstr ""
 
+#: releases/models.py:36
+#, fuzzy
+msgid "Release date"
+msgstr "لیست ماژول"
+
 #: releases/models.py:37
 msgid "When this release will be available."
+msgstr ""
+
+#: releases/models.py:38
+msgid "String freese date"
 msgstr ""
 
 #: releases/models.py:39
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
+msgstr ""
+
+#: releases/models.py:41
+msgid "Devel freeze date"
 msgstr ""
 
 #: releases/models.py:42
@@ -304,11 +521,32 @@ msgstr ""
 msgid "releases"
 msgstr ""
 
+#: repowatch/__init__.py:82
+msgid "Watch this file"
+msgstr ""
+
+#: repowatch/__init__.py:83
+msgid "Stop watching this file"
+msgstr ""
+
+#: repowatch/models.py:24
+#, python-format
+msgid "Unable to add watch for path %r"
+msgstr ""
+
+#: repowatch/models.py:88
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr ""
+
 #: repowatch/models.py:90
+msgid "You must enter at least a pair of parentheses containing nothing."
+msgstr ""
+
+#: repowatch/models.py:141
 msgid "watch"
 msgstr ""
 
-#: repowatch/models.py:91
+#: repowatch/models.py:142
 #, fuzzy
 msgid "watches"
 msgstr "انشعابات"
@@ -375,61 +613,56 @@ msgstr "خوش آمدید به"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base.html:21 txcommon/templates/common_homelink.html:2
+#: templates/base.html:24 txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
 msgstr ""
 
-#: templates/base.html:22
+#: templates/base.html:25
 msgid "Transifex logo"
 msgstr "لوگوی Transifex"
 
-#: templates/base.html:26
+#: templates/base.html:29
 msgid "The projects being served"
 msgstr ""
 
-#: templates/base.html:26 templates/projects/base.html:6
+#: templates/base.html:29 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 #, fuzzy
 msgid "Projects"
 msgstr "صفحه وب پروژه"
 
-#: templates/base.html:27
+#: templates/base.html:30
 msgid "Collections of projects"
 msgstr ""
 
-#: templates/base.html:27 templates/txcollections/base.html:6
-#: templates/txcollections/collection_list.html:14
-msgid "Collections"
-msgstr ""
-
-#: templates/base.html:28
+#: templates/base.html:31
 msgid "The languages our service serves"
 msgstr ""
 
-#: templates/base.html:28 templates/languages/base.html:5
+#: templates/base.html:31 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 #, fuzzy
 msgid "Languages"
 msgstr "زبان:"
 
-#: templates/base.html:34
+#: templates/base.html:37
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr ""
 
-#: templates/base.html:35
+#: templates/base.html:38
 #, fuzzy
 msgid "Sign out from the website"
 msgstr "بر روی صفحه وب ما."
 
-#: templates/base.html:35
+#: templates/base.html:38
 msgid "Sign out"
 msgstr ""
 
-#: templates/base.html:37 templates/authopenid/login_box.html:5
+#: templates/base.html:40 templates/authopenid/login_box.html:5
 #: templates/authopenid/login_box.html:12 templates/authopenid/signin.html:4
 #: templates/authopenid/signin.html.py:6 templates/authopenid/signin.html:31
 #: templates/authopenid/signin.html:37 templates/simpleauth/login_box.html:7
@@ -439,23 +672,19 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: templates/base.html:39
+#: templates/base.html:42
 msgid "Register"
 msgstr ""
 
-#: templates/base.html:43
-msgid "English"
-msgstr ""
-
-#: templates/base.html:94
+#: templates/base.html:103
 msgid "About"
 msgstr ""
 
-#: templates/base.html:94
+#: templates/base.html:103
 msgid "Get in contact with us"
 msgstr ""
 
-#: templates/base.html:94
+#: templates/base.html:103
 msgid "Feedback"
 msgstr ""
 
@@ -854,6 +1083,10 @@ msgid ""
 "you have any feedback to provide, please do so!"
 msgstr ""
 
+#: templates/contact_form/contact_form.html:22
+msgid "Send feedback"
+msgstr ""
+
 #: templates/contact_form/contact_form_sent.html:4
 msgid "Thanks for the beedback!"
 msgstr ""
@@ -903,23 +1136,41 @@ msgid ""
 "Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
 msgstr ""
 
-#: templates/languages/language_release.html:29
+#: templates/languages/language_release.html:33
 #, fuzzy
 msgid "Project/Component statistics"
 msgstr "آمارهای ترجمه"
 
-#: templates/languages/language_release.html:37
+#: templates/languages/language_release.html:47
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
 "check again."
 msgstr ""
 
-#: templates/languages/language_release.html:38
+#: templates/languages/language_release.html:48
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
+msgstr ""
+
+#: templates/languages/language_release.html:52
+#, fuzzy
+msgid "Untranslated Components"
+msgstr "ترجمه نشده"
+
+#: templates/languages/language_release.html:53
+msgid "Here you can find components registered to belong in "
+msgstr ""
+
+#: templates/languages/language_release.html:53
+#, fuzzy
+msgid ", but with no translations sent for "
+msgstr ", بستر ترجمه باز."
+
+#: templates/languages/language_release.html:53
+msgid " yet:"
 msgstr ""
 
 #: templates/notification/notices.html:4 templates/notification/notices.html:5
@@ -1013,113 +1264,113 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr ""
 
-#: templates/projects/component_detail.html:25
-#: templates/projects/project_detail.html:22
+#: templates/projects/component_detail.html:40
+#: templates/projects/project_detail.html:32
 #: templates/releases/release_detail.html:26
-#: templates/txcollections/collection_detail.html:22
-#: templates/txcollections/release_detail.html:26
+#: templates/txcollections/collection_detail.html:24
+#: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "اصلاح"
 
-#: templates/projects/component_detail.html:45
+#: templates/projects/component_detail.html:49
 msgid "Repository:"
 msgstr "مخزن:"
 
-#: templates/projects/component_detail.html:48
+#: templates/projects/component_detail.html:52
 msgid "Link to a web front-end to the source"
 msgstr ""
 
-#: templates/projects/component_detail.html:48
+#: templates/projects/component_detail.html:52
 msgid "web"
 msgstr ""
 
-#: templates/projects/component_detail.html:52
+#: templates/projects/component_detail.html:56
 msgid "Branch:"
 msgstr "انشعاب:"
 
-#: templates/projects/component_detail.html:56
+#: templates/projects/component_detail.html:60
 msgid "File filter:"
 msgstr ""
 
-#: templates/projects/component_detail.html:62
+#: templates/projects/component_detail.html:66
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/component_detail.html:70
+#: templates/projects/component_detail.html:74
 #, fuzzy
 msgid "Allows file submissions:"
 msgstr ":: پیش نمایش واگذاری"
 
-#: templates/projects/component_detail.html:81
+#: templates/projects/component_detail.html:85
 #, fuzzy
 msgid "Translation files"
 msgstr "آمارهای ترجمه"
 
-#: templates/projects/component_detail.html:86
+#: templates/projects/component_detail.html:90
 #, fuzzy
 msgid "Source file:"
 msgstr "فایل محلی"
 
-#: templates/projects/component_detail.html:91
+#: templates/projects/component_detail.html:95
 #, fuzzy
 msgid "entries"
 msgstr "مخازن"
 
-#: templates/projects/component_detail.html:92
-#: translations/templates/comp_stats_table.html:33
-#: translations/templates/lang_stats_table.html:31
+#: templates/projects/component_detail.html:96
+#: translations/templates/comp_stats_table.html:35
+#: translations/templates/lang_stats_table.html:33
 msgid "View "
 msgstr ""
 
-#: templates/projects/component_detail.html:93
-#: translations/templates/comp_stats_table.html:34
-#: translations/templates/lang_stats_table.html:32
+#: templates/projects/component_detail.html:97
+#: translations/templates/comp_stats_table.html:36
+#: translations/templates/lang_stats_table.html:34
 msgid "Download "
 msgstr ""
 
-#: templates/projects/component_detail.html:99
+#: templates/projects/component_detail.html:103
 msgid "Statistics last updated:"
 msgstr ""
 
-#: templates/projects/component_detail.html:101
+#: templates/projects/component_detail.html:105
 msgid "ago"
 msgstr ""
 
-#: templates/projects/component_detail.html:102
+#: templates/projects/component_detail.html:106
 msgid "Component not yet pulled from source repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:105
+#: templates/projects/component_detail.html:109
 msgid "Refresh and re-calculate statistics. It can take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:105
+#: templates/projects/component_detail.html:109
 msgid "Refresh cache"
 msgstr ""
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:114
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:114
 #, fuzzy
 msgid "Clear cache"
 msgstr "ذخیره گاه ماژول"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:130
 #: templates/projects/project_detail.html:96
 #, fuzzy
 msgid "History"
 msgstr "مسیر"
 
-#: templates/projects/component_detail.html:129
+#: templates/projects/component_detail.html:134
 #: templates/projects/project_detail.html:100
 msgid "None available"
 msgstr ""
 
-#: templates/projects/component_detail.html:152
+#: templates/projects/component_detail.html:157
 msgid "Delete component"
 msgstr ""
 
@@ -1139,6 +1390,11 @@ msgstr ""
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr ""
+
+#: templates/projects/component_form.html:35
+#, fuzzy
+msgid "Save component"
+msgstr "ماه"
 
 #: templates/projects/component_list.html:9
 #: templates/txcollections/collection_detail.html:62
@@ -1178,51 +1434,51 @@ msgid ""
 "\" or development branches like <code>HEAD</code>."
 msgstr ""
 
-#: templates/projects/component_submit.html:3
-msgid "Send a translation for this language."
-msgstr ""
-
-#: templates/projects/component_submit.html:6
-#, fuzzy
-msgid "Submit file"
-msgstr "ارائه بده"
-
-#: templates/projects/component_submit.html:8
-#: templates/projects/component_submit_new_file.html:22
-msgid "Send"
-msgstr ""
-
-#: templates/projects/component_submit_new_file.html:4
+#: templates/projects/component_submit_new_file.html:5
 msgid "Send a new translation for this component."
 msgstr ""
 
-#: templates/projects/component_submit_new_file.html:4
+#: templates/projects/component_submit_new_file.html:5
 #, fuzzy
 msgid "Add a new translation"
 msgstr "افزودن یک مخزن جدید"
 
-#: templates/projects/component_submit_new_file.html:7
+#: templates/projects/component_submit_new_file.html:8
 #, fuzzy
 msgid "Add a translation file"
 msgstr "\"Updated X translation\""
 
-#: templates/projects/component_submit_new_file.html:11
+#: templates/projects/component_submit_new_file.html:12
 #, fuzzy
 msgid "Local file:"
 msgstr "فایل محلی"
 
-#: templates/projects/component_submit_new_file.html:13
+#: templates/projects/component_submit_new_file.html:14
 msgid "The new language translation file to be uploaded."
 msgstr ""
 
-#: templates/projects/component_submit_new_file.html:16
-msgid "Target file:"
-msgstr ""
+#: templates/projects/component_submit_new_file.html:17
+#, fuzzy
+msgid "Select the target file:"
+msgstr "ماژول را انتخاب کنید"
 
-#: templates/projects/component_submit_new_file.html:18
+#: templates/projects/component_submit_new_file.html:26
 msgid ""
 "The target file is the name o the new file language. It must matches with "
 "the component file filter."
+msgstr ""
+
+#: templates/projects/component_submit_new_file.html:29
+msgid "or enter it here:"
+msgstr ""
+
+#: templates/projects/component_submit_new_file.html:31
+msgid "Example: "
+msgstr ""
+
+#: templates/projects/component_submit_new_file.html:35
+#: translations/templates/component_submit.html:9
+msgid "Send"
 msgstr ""
 
 #: templates/projects/project_confirm_delete.html:4
@@ -1254,14 +1510,14 @@ msgstr ""
 
 #: templates/projects/project_detail.html:38
 #: templates/txcollections/collection_detail.html:38
-#: templates/txcollections/release_detail.html:43
+#: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr ""
 
 #: templates/projects/project_detail.html:43
 #: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
-#: templates/txcollections/release_detail.html:47
+#: templates/txcollections/release_detail.html:50
 #, fuzzy
 msgid "Homepage:"
 msgstr "صفحه وب:"
@@ -1330,6 +1586,11 @@ msgstr ""
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr ""
 
+#: templates/projects/project_form.html:36
+#, fuzzy
+msgid "Save project"
+msgstr "پروژه خود را ثبت کنید"
+
 #: templates/projects/project_latests.html:3
 msgid "Latest Projects"
 msgstr ""
@@ -1368,10 +1629,6 @@ msgstr ""
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
 "it</a>!"
-msgstr ""
-
-#: templates/releases/base.html:6 templates/releases/release_list.html:14
-msgid "Releases"
 msgstr ""
 
 #: templates/releases/release_confirm_delete.html:4
@@ -1575,6 +1832,11 @@ msgstr ""
 msgid "Editing <a href=\"%(collection_url)s\">%(collection_name)s</a>"
 msgstr ""
 
+#: templates/txcollections/collection_form.html:36
+#, fuzzy
+msgid "Save collection"
+msgstr "افزودن یک ماژول جدید"
+
 #: templates/txcollections/collection_list.html:8
 #, fuzzy
 msgid "Collection list"
@@ -1621,23 +1883,23 @@ msgid ""
 "\">add it</a>!"
 msgstr ""
 
-#: templates/txcollections/release_detail.html:52
+#: templates/txcollections/release_detail.html:55
 msgid "Release date:"
 msgstr ""
 
-#: templates/txcollections/release_detail.html:56
+#: templates/txcollections/release_detail.html:59
 msgid "String freeze:"
 msgstr ""
 
-#: templates/txcollections/release_detail.html:60
+#: templates/txcollections/release_detail.html:63
 msgid "Devel freeze:"
 msgstr ""
 
-#: templates/txcollections/release_detail.html:68
+#: templates/txcollections/release_detail.html:71
 msgid "Translation statistics"
 msgstr "آمارهای ترجمه"
 
-#: templates/txcollections/release_detail.html:72
+#: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
 msgstr ""
 
@@ -1654,76 +1916,90 @@ msgid ""
 "      "
 msgstr ""
 
-#: translations/models.py:137
+#: templates/txcollections/release_form.html:44
+#, fuzzy
+msgid "Save release"
+msgstr "افزودن یک ماژول جدید"
+
+#: translations/models.py:147
 msgid "PO file"
 msgstr ""
 
-#: translations/models.py:138
+#: translations/models.py:148
 msgid "PO files"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:8
+#: translations/templates/comp_stats_table.html:10
 #: translations/templates/project_stats_table.html:6
 #: translations/templates/release_stats_table.html:7
 #, fuzzy
 msgid "Language"
 msgstr "زبان:"
 
-#: translations/templates/comp_stats_table.html:9
-#: translations/templates/lang_stats_table.html:10
+#: translations/templates/comp_stats_table.html:11
+#: translations/templates/lang_stats_table.html:12
 #: translations/templates/release_stats_table.html:8
 #, fuzzy
 msgid "Translations"
 msgstr "مترجمان"
 
-#: translations/templates/comp_stats_table.html:10
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/comp_stats_table.html:12
+#: translations/templates/lang_stats_table.html:13
 msgid "Options"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:18
+#: translations/templates/comp_stats_table.html:20
 #, fuzzy
 msgid "See statistics for this language"
 msgstr "آمار ترجمه برای این ماژول"
 
-#: translations/templates/comp_stats_table.html:20
+#: translations/templates/comp_stats_table.html:22
 #: translations/templates/release_stats_table.html:18
 #, fuzzy
 msgid "There is no language registered that matches with this file"
 msgstr "ماژول فعالی با این نام وجود ندارد."
 
-#: translations/templates/comp_stats_table.html:23
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/comp_stats_table.html:25
+#: translations/templates/lang_stats_table.html:23
 #: translations/templates/release_stats_table.html:21
 #, fuzzy
 msgid "Could not generate statistics for this file"
 msgstr "آمار ترجمه برای این ماژول"
 
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/lang_stats_table.html:26
+#: translations/templates/comp_stats_table.html:30
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
 msgid "Trans:"
 msgstr "Transifex"
 
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/lang_stats_table.html:26
+#: translations/templates/comp_stats_table.html:30
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
 msgid "Untrans:"
 msgstr "ترجمه نشده"
 
-#: translations/templates/lang_stats_table.html:9
+#: translations/templates/component_submit.html:4
+msgid "Send a translation for this language."
+msgstr ""
+
+#: translations/templates/component_submit.html:7
+#, fuzzy
+msgid "Submit file"
+msgstr "ارائه بده"
+
+#: translations/templates/lang_stats_table.html:11
 msgid "Project/Component"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:18
+#: translations/templates/lang_stats_table.html:20
 msgid "Go to this project page"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:19
+#: translations/templates/lang_stats_table.html:21
 msgid "Go to this component page"
 msgstr ""
 
@@ -1748,23 +2024,33 @@ msgstr ""
 msgid "See the detailed statistics for this language"
 msgstr "آمار ترجمه برای این ماژول"
 
-#: txcollections/feeds.py:11
+#: txcollections/feeds.py:15
 #, python-format
 msgid "Latest collections on %(site_name)s"
 msgstr ""
 
-#: txcollections/feeds.py:14
+#: txcollections/feeds.py:18
 msgid "Updates on changes and additions to collections."
 msgstr ""
 
-#: txcollections/feeds.py:30
+#: txcollections/feeds.py:34
 #, python-format
 msgid "%(site_name)s: %(collection)s collection"
 msgstr ""
 
-#: txcollections/feeds.py:35
+#: txcollections/feeds.py:39
 #, python-format
 msgid "Latest releases in the %s collection."
+msgstr ""
+
+#: txcollections/feeds.py:66
+#, python-format
+msgid "%(site_name)s: %(collection)s :: %(release)s release"
+msgstr ""
+
+#: txcollections/feeds.py:72
+#, python-format
+msgid "Translation statistics for all languages against %s release."
 msgstr ""
 
 #: txcollections/models.py:53
@@ -1781,44 +2067,45 @@ msgstr ""
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr ""
 
+#: txcommon/i18n.py:18
+#, python-format
+msgid "The LINGUAS file could not be opened: %s"
+msgstr "فایل LINGUAS قادر به باز شدن نبود: %s"
+
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "خانه"
 
-#: vcs/models.py:57
-msgid "The root URL of the project (without the branch)"
-msgstr ""
+#: vcs/models.py:48
+msgid "Branch"
+msgstr "انشعاب"
 
-#: vcs/models.py:60
-#, python-format
-msgid "The repository system type (%s)"
-msgstr ""
-
-#: vcs/models.py:63
+#: vcs/models.py:49
 msgid "A VCS branch this unit is associated with"
 msgstr ""
 
-#: vcs/models.py:65
+#: vcs/models.py:50
+msgid "Web frontend"
+msgstr ""
+
+#: vcs/models.py:52
 msgid "A URL to the project's web front-end"
 msgstr ""
 
-#: vcs/models.py:67
-msgid "The last time this unit was checked-out from its repo."
-msgstr ""
-
-#: vcs/models.py:73
+#: vcs/models.py:55
 #, python-format
-msgid "<Unit: %(name)s (%(type)s)>"
+msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr ""
 
-#: vcs/models.py:77
+#: vcs/models.py:58
 #, fuzzy
-msgid "unit"
+msgid "vcsunit"
 msgstr "ارائه بده"
 
-#: vcs/models.py:78
-msgid "units"
-msgstr ""
+#: vcs/models.py:59
+#, fuzzy
+msgid "vcsunits"
+msgstr "ارائه بده"
 
 #~ msgid "The path %s cannot be found"
 #~ msgstr "مسیر %s یافت نشد"
@@ -1856,17 +2143,11 @@ msgstr ""
 #~ "باید برای تعویض برای هر دو یک فایل موجود انتخاب کنید یا برای یکی "
 #~ "از ................"
 
-#~ msgid "Please choose a file to upload."
-#~ msgstr "لطفا یک فایل برای آپلود انتخاب کنید."
-
 #~ msgid "Please enter a log message for your submission."
 #~ msgstr "لطفا یک پیغام برای واگذاری خود ثبت کنید."
 
 #~ msgid "Preview"
 #~ msgstr "پیش نمایش"
-
-#~ msgid "Select a file from your workstation to upload."
-#~ msgstr "یک فایل از محل فعالیت خود انتخاب کنید."
 
 #~ msgid "Overwrite an existing file:"
 #~ msgstr "نوشتن مجدد روی یک فایل موجود:"
@@ -1893,9 +2174,6 @@ msgstr ""
 #~ msgid "Do not preview diffs in next screen. Useful for slow connections."
 #~ msgstr "تفاوت ها را در صفحه بعدی نمایش نده. برای اتصالات کم سرعت مناسب است."
 
-#~ msgid "Name"
-#~ msgstr "نام"
-
 #~ msgid "Summary"
 #~ msgstr "خلاصه"
 
@@ -1904,12 +2182,6 @@ msgstr ""
 
 #~ msgid "Repository"
 #~ msgstr "مخزن"
-
-#~ msgid "Branch"
-#~ msgstr "انشعاب"
-
-#~ msgid "Filefilter"
-#~ msgstr "فیلتر فایل"
 
 #~ msgid "Disabled"
 #~ msgstr "غیرفعال شده"
@@ -1948,15 +2220,6 @@ msgstr ""
 #~ "های حاضر در لیست \"فایل های موجود\" استفاده کنید."
 
 #~ msgid ""
-#~ "Warning: The PO file you submitted doesn't pass the checks for "
-#~ "correctness. Please run `msgfmt -c` on it and correct the errors before "
-#~ "submitting."
-#~ msgstr ""
-#~ "اخطار: PO file ی که ارائه دادید رسیدگی های صحت را نگذرانده است. لطفا "
-#~ "دستور 'msgfmt -c' را روی آن اجرا کنید تا خطاهای آن را قبل از ارائه دادن "
-#~ "اصلاح نمایید."
-
-#~ msgid ""
 #~ "There is a technical error with this module's Changelog file. Please "
 #~ "notify the administrators."
 #~ msgstr ""
@@ -1965,9 +2228,6 @@ msgstr ""
 
 #~ msgid "Something went wrong with your session. Please re-submit the page."
 #~ msgstr "مشکلات در نشست شما وجود دارد. لطفا این صفحه را مجددا ارائه دهید."
-
-#~ msgid "Your submission was committed successfully."
-#~ msgstr "واگذاری شما با موفقیت به اتمام رسید."
 
 #~ msgid ""
 #~ "There was a technical error with the commit/push of your submission, most "
@@ -2010,17 +2270,8 @@ msgstr ""
 #~ msgid "No such person"
 #~ msgstr "چنین فردی وجود ندارد."
 
-#~ msgid "Root"
-#~ msgstr "ریشه"
-
-#~ msgid "Type"
-#~ msgstr "نوع"
-
 #~ msgid "Add repository"
 #~ msgstr "افزودن مخزن"
-
-#~ msgid "Enabled"
-#~ msgstr "فعال شده"
 
 #~ msgid "Update a repository"
 #~ msgstr "بروزرسانی یک مخزن"
@@ -2061,9 +2312,6 @@ msgstr ""
 #~ msgid "File(s)"
 #~ msgstr "فایل(ها)"
 
-#~ msgid "Module"
-#~ msgstr "ماژول"
-
 #~ msgid "years"
 #~ msgstr "سال"
 
@@ -2093,9 +2341,6 @@ msgstr ""
 
 #~ msgid "minutes"
 #~ msgstr "دقیقه"
-
-#~ msgid "The LINGUAS file could not be opened: %s"
-#~ msgstr "فایل LINGUAS قادر به باز شدن نبود: %s"
 
 #~ msgid "%s :: Submission Log"
 #~ msgstr "%s :: گزارش واگذاری"
@@ -2298,9 +2543,6 @@ msgstr ""
 #~ msgid "Powered by"
 #~ msgstr "به قدرت"
 
-#~ msgid ", the open translation platform."
-#~ msgstr ", بستر ترجمه باز."
-
 #~ msgid "Please send any comments or corrections by opening a"
 #~ msgstr "لطفا دیدگاه ها یا انتقادات خود را ارسال کنید. از طریق باز کردن یک"
 
@@ -2321,9 +2563,6 @@ msgstr ""
 #~ msgstr ""
 #~ "یک ID برای ماژول. بر روی URL نشان داده شد, معمولا فقط توضیحات نشان داده "
 #~ "می شوند."
-
-#~ msgid "Description*:"
-#~ msgstr "توصیف*:"
 
 #~ msgid "The name of the module as it will appear on the pages"
 #~ msgstr "نام ماژول هنگامی که بر روی صفحات نمایش داده خوهد شد."
@@ -2690,9 +2929,6 @@ msgstr ""
 
 #~ msgid "5. Upload"
 #~ msgstr "۵. آپلود"
-
-#~ msgid "Select the module"
-#~ msgstr "ماژول را انتخاب کنید"
 
 #~ msgid ""
 #~ "you want your file to be submitted\n"
