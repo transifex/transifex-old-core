@@ -1,0 +1,136 @@
+.. _releases-0.6:
+
+=======================================
+ Transifex version 0.6.x release notes
+=======================================
+
+
+Transifex 0.6 (Magneto)
+=======================
+
+.. note::
+
+  This release is still in development and has not been published yet.
+
+Released:
+  To be announced
+
+
+Summary
+-------
+
+Welcome to the Transifex 0.6 release, codenamed Magneto_.
+
+This release marks a major release in the advancement of Transifex, and includes
+a number of new exciting new features and many, many bugfixes. It is currently
+scheduled to be released in late April 2009 and is targeted for new
+installations of Transifex and parties who choose to migrate to a new major
+version and enjoy the new features.
+
+Transifex 0.6 is intended for production use.
+
+
+What's new in Transifex 0.6
+---------------------------
+
+The following major features were introduced in this release.
+
+File monitoring
+:::::::::::::::
+
+Repowatch documentation.
+
+- Multiple users
+- Email notifications
+- How to use, enable, etc.
+
+
+Internationalization support
+::::::::::::::::::::::::::::
+
+Transifex 0.5 has included support for translation of its interface in various
+languages. This release makes this support available in the interface itself.
+Users can choose the language of their choice from a drop-down menu of available
+languages on the top-right part of the screen.
+
+Following the policy 'eat our own dogfood', Transifex is in fact translatable
+through Transifex itself. Volunteer contributions for new translations and
+improvements in the existing translations are submitted through Transifex at
+http://www.transifex.net/.
+
+
+User Interface improvements
+:::::::::::::::::::::::::::
+
+During the development cycle of 0.6, quite a few improvements in the user
+interface took place here and there. Here's a list of the most important ones:
+
+Untranslated components list
+  The language-release page now include a list of components which haven't
+  had any translations so far. This gives a better picture of the parts which
+  need translation to make the completion status increase.
+
+More RSS feeds
+  The release page with the completion percentage of each language is now
+  published also as an RSS feed, allowing people like release engineer to easily
+  check the translation status of their release.
+
+Easy file selection for editing
+  The 'advanced' submission form now supports either editing a remote file or
+  creating a new one. The user can choose either to overwrite an existing
+  file or create a new one.
+
+
+Under the hood changes
+::::::::::::::::::::::
+
+This release introduces some improvements in the platform itself, which might
+interest people who administrate their own Transifex instance or build on top
+of the platform.
+
+Revamped settings mechanism
+  ... (r456)
+
+Improved abstraction for repositories
+  Codebases, VCS, etc. (r461)
+
+
+Translations
+------------
+
+- Polish (Piotr Drąg)
+
+
+Bugfixes from 0.5.x
+-------------------
+
+In addition to the bugfixes introduced in the maintenance
+:ref:`0.5.x releases <releases-0.5>`, the following issues have also been fixed:
+
+- Fixed ordering in language-release feed (fixes #149) (Markos Fragkakis)
+- Default mode of operation is now DEBUG.
+- Run msgfmt check and stats calculation only for .po files
+- Changing a repository root url now deletes the local cache of the repository.
+
+
+
+Upgrading to 0.6
+----------------
+
+...
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Dimitris Glezos
+- Diego Búrigo Zacarão.
+- Ignacio Vazquez-Abrams
+- Christos Trochalakis
+- John Beredimas
+
+
+.. _Magneto: http://en.wikipedia.org/wiki/Magneto_(comics)
+
