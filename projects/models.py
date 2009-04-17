@@ -81,37 +81,40 @@ class Project(models.Model):
 
     """
 
-    slug = models.SlugField(max_length=30, unique=True,
+    slug = models.SlugField(_('Slug'), max_length=30, unique=True,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
-    name = models.CharField(max_length=50,
+    name = models.CharField(_('Name'), max_length=50,
         help_text=_('A string like a name or very short description.'))
-    description = models.CharField(blank=True, max_length=255,
+    description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
-    long_description = models.TextField(blank=True, max_length=1000,
+    long_description = models.TextField(_('Long description'), blank=True, 
+        max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
-    homepage = models.URLField(blank=True, verify_exists=False)
-    feed = models.CharField(blank=True, max_length=255,
+    homepage = models.URLField(_('Homepage'), blank=True, verify_exists=False)
+    feed = models.CharField(_('Feed'), blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
 
-    hidden = models.BooleanField(default=False, editable=False,
+    hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True, editable=False,
+    enabled = models.BooleanField(_('Enabled'),default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
-    tags = TagField()
+    tags = TagField(verbose_name=_('Tags'))
 
     # Relations
     # The collections this project belongs to.
-    collections = models.ManyToManyField(Collection, related_name='projects',
-                                         blank=True, null=True,)
-    maintainers = models.ManyToManyField(User, related_name='projects_maintaining',
-                                         blank=True, null=True)
+    collections = models.ManyToManyField(Collection, 
+        verbose_name=_('Collections'), related_name='projects',
+        blank=True, null=True,)
+    maintainers = models.ManyToManyField(User, verbose_name=_('Maintainers'),
+        related_name='projects_maintaining', blank=True, null=True)
 
     # Normalized fields
-    long_description_html = models.TextField(blank=True, max_length=1000,
+    long_description_html = models.TextField(_('HTML Description'), blank=True, 
+        max_length=1000,
         help_text=_('Description in HTML.'), editable=False)
 
     def __unicode__(self):
@@ -187,46 +190,51 @@ class Component(models.Model):
 
     """A component is a translatable resource."""
 
-    slug = models.SlugField(max_length=30,
+    slug = models.SlugField(_('Slug'), max_length=30,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
-    name = models.CharField(max_length=50,
+    name = models.CharField(_('Name'), max_length=50,
         help_text=_('A string like a name or very short description.'))
-    description = models.CharField(blank=True, max_length=255,
+    description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
-    long_description = models.TextField(blank=True, max_length=1000,
+    long_description = models.TextField(_('Long description'), blank=True, 
+        max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
-    source_lang = models.CharField(max_length=50,
+    source_lang = models.CharField(_('Source language'), max_length=50,
         help_text=_("The source language for this component, "
                     "eg. 'en', 'pt_BR', 'el'."))
-    i18n_type = models.CharField(max_length=20,
+    i18n_type = models.CharField(_('I18n type'), max_length=20,
         choices=settings.TRANS_CHOICES.items(),
         help_text=_("The code's type of i18n support (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
-    file_filter = models.CharField(max_length=50,
+    file_filter = models.CharField(_('File filter'), max_length=50,
         help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
 
-    allows_submission = models.BooleanField(default=False,
+    allows_submission = models.BooleanField(_('Allows submission'), 
+        default=False,
         help_text=_('Does this module repository allow write access?'))
 
-    hidden = models.BooleanField(default=False, editable=False,
+    hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True, editable=False,
+    enabled = models.BooleanField(_('Enabled'), default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
     # Normalized fields
     full_name = models.CharField(max_length=100, editable=False)
-    long_description_html = models.TextField(blank=True,
+    long_description_html = models.TextField(_('HTML Description'), 
+        blank=True,
         max_length=1000, help_text=_('Description in HTML.'), editable=False)
 
     # Relations
-    project = models.ForeignKey(Project)
-    unit = models.OneToOneField(VcsUnit, blank=True, null=True, editable=False)
+    project = models.ForeignKey(Project, verbose_name=_('Project'))
+    unit = models.OneToOneField(VcsUnit, verbose_name=_('Unit'),
+        blank=True, null=True, editable=False)
     pofiles = generic.GenericRelation(POFile)
-    releases = models.ManyToManyField(CollectionRelease, related_name='components',
-                                      blank=True, null=True)
+    releases = models.ManyToManyField(CollectionRelease,
+        verbose_name=_('Releases'), related_name='components',
+        blank=True, null=True)
 
     # Managers
     objects = ComponentManager()

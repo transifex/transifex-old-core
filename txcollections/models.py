@@ -20,19 +20,19 @@ class Collection(models.Model):
 
     """A collection of projects (aka big-picture project)."""
 
-    slug = models.SlugField(max_length=30,
+    slug = models.SlugField(_('Slug'), max_length=30,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
-    name = models.CharField(max_length=50,
+    name = models.CharField(_('Name'), max_length=50,
         help_text=_('A string like a name or very short description.'))
-    description = models.CharField(blank=True, max_length=255,
+    description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object.'))
-    long_description = models.TextField(blank=True, max_length=1000,
+    long_description = models.TextField(_('Long description'), blank=True, max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
-    homepage = models.URLField(blank=True, verify_exists=False)
-    hidden = models.BooleanField(default=False, editable=False,
+    homepage = models.URLField(_('Homepage'), blank=True, verify_exists=False)
+    hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
-    enabled = models.BooleanField(default=True, editable=False,
+    enabled = models.BooleanField(_('Enabled'), default=True, editable=False,
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
@@ -40,7 +40,7 @@ class Collection(models.Model):
     tags = TagField()
     
     # Normalized fields
-    long_description_html = models.TextField(blank=True, max_length=1000,
+    long_description_html = models.TextField(_('HTML Description'), blank=True, max_length=1000,
          help_text=_('Description in HTML.'), editable=False)
 
     # Managers

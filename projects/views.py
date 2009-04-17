@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.dispatch import Signal
 from django.views.generic import create_update, list_detail
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
@@ -211,8 +211,7 @@ def component_set_stats(request, project_slug, component_slug):
     except FileFilterError:
         logger.debug("File filter does not allow POTFILES.in file name"
                      " for %s component" % component.full_name)
-        # TODO: Figure out why gettext is not working here
-        request.user.message_set.create(message = (
+        request.user.message_set.create(message = _(
             "The file filter of this intltool POT-based component does not "
             " seem to allow the POTFILES.in file. Please fix it."))
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
@@ -273,7 +272,7 @@ def component_submit_file(request, project_slug, component_slug,
     component = get_object_or_404(Component, slug=component_slug,
                                     project__slug=project_slug)
     if not component.allows_submission:
-        request.user.message_set.create(message=("This component does " 
+        request.user.message_set.create(message=_("This component does " 
                             " not allow white access."))
         return HttpResponseRedirect(reverse('projects.views.component_detail', 
                             args=(project_slug, component_slug,)))
@@ -281,8 +280,7 @@ def component_submit_file(request, project_slug, component_slug,
     if request.method == 'POST':
 
         if not request.FILES.has_key('submited_file'):
-            # TODO: Figure out why gettext is not working here
-            request.user.message_set.create(message=("Please select a " 
+            request.user.message_set.create(message=_("Please select a " 
                                "file from your system to be uploaded."))
             return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
@@ -291,15 +289,13 @@ def component_submit_file(request, project_slug, component_slug,
         if not filename:
             if request.POST['targetfile'] == '' and \
                request.POST['newtargetfile'] == '':
-                # TODO: Figure out why gettext is not working here
-                request.user.message_set.create(message=("Please enter" 
+                request.user.message_set.create(message=_("Please enter" 
                                        " a target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
             elif not request.POST['targetfile'] == '' and \
                  not request.POST['newtargetfile'] == '':
-                # TODO: Figure out why gettext is not working here
-                request.user.message_set.create(message=("Please enter with" 
+                request.user.message_set.create(message=_("Please enter with" 
                                        " only ONE target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
@@ -310,8 +306,7 @@ def component_submit_file(request, project_slug, component_slug,
                     filename = request.POST['newtargetfile']
 
             if not re.compile(component.file_filter).match(filename):
-                # TODO: Figure out why gettext is not working here
-                request.user.message_set.create(message=("The target " 
+                request.user.message_set.create(message=_("The target " 
                                        "file does not match with the "
                                        "component file filter"))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
@@ -329,7 +324,7 @@ def component_submit_file(request, project_slug, component_slug,
             lang_code = component.trans.guess_language(filename)
 
         # TODO: put it somewhere else using the settings.py
-        msg="Sending translation for %s" % lang_name
+        msg=_("Sending translation for %s") % lang_name
 
         try:
 
@@ -353,13 +348,13 @@ def component_submit_file(request, project_slug, component_slug,
                 # the POT is not broken for intltool based projects.
                 component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
 
-            request.user.message_set.create(message=("File submitted " 
+            request.user.message_set.create(message=_("File submitted " 
                                "successfully: %s" % filename))
             log_submission(request, component,
                            'A translation has been submitted for %s' % lang_name)
         except ValueError: # msgfmt_check
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
-            request.user.message_set.create(message=("Your file does not" \
+            request.user.message_set.create(message=_("Your file does not" \
                                     " pass by the check for correctness" \
                                     " (msgfmt -c). Please run this command" \
                                     " on your system to see the errors."))
@@ -367,13 +362,11 @@ def component_submit_file(request, project_slug, component_slug,
             logger.debug("Error submiting translation file %s"
                          " for %s component: %r" % (filename,
                          component.full_name, e))
-           # TODO: Figure out why gettext is not working here
-            request.user.message_set.create(message = (
+            request.user.message_set.create(message = _(
                 "Sorry, an error is causing troubles to send your file."))
 
     else:
-        # TODO: Figure out why gettext is not working here
-        request.user.message_set.create(message = (
+        request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
@@ -393,21 +386,17 @@ def component_toggle_lock_file(request, project_slug, component_slug,
             lock = POFileLock.objects.get(pofile=pofile)
             if request.user.pk == lock.owner.pk:
                 lock.delete()
-                # TODO: Figure out why gettext is not working here
-                request.user.message_set.create(message="Lock removed.")
+                request.user.message_set.create(message=_("Lock removed."))
             else:
-                # TODO: Figure out why gettext is not working here
                 request.user.message_set.create(
-                    message="Error: Only the owner of a lock can remove it.")
+                    message=_("Error: Only the owner of a lock can remove it."))
         except POFileLock.DoesNotExist:
             lock = POFileLock.objects.create(pofile=pofile, owner=request.user)
-            # TODO: Figure out why gettext is not working here
             request.user.message_set.create(
-                message="Lock created. Please don't forget to remove it when "
-                "you're done.")
+                message=_("Lock created. Please don't forget to remove it when "
+                "you're done."))
     else:
-        # TODO: Figure out why gettext is not working here
-        request.user.message_set.create(message = (
+        request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
     try:
         return HttpResponseRedirect(request.META['HTTP_REFERER'])

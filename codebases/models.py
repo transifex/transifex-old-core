@@ -24,10 +24,10 @@ class Unit(models.Model):
       get_rev
       submit
     """
-    name = models.CharField(unique=True, max_length=100)
-    root = models.CharField(max_length=255,
+    name = models.CharField(_('Name'), unique=True, max_length=100)
+    root = models.CharField(_('Root'), max_length=255,
         help_text=_("The URL of the codebase"))
-    type = models.CharField(max_length=10,
+    type = models.CharField(_('Type'), max_length=10,
         choices=settings.CODEBASE_CHOICES.items(),
         help_text=_('The codebase type (%s)' %
                     ', '.join(settings.CODEBASE_CHOICES)))

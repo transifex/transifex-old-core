@@ -45,9 +45,10 @@ class VcsUnit(Unit):
 
     """
     
-    branch = models.CharField(max_length=255,
+    branch = models.CharField(_('Branch'), max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
-    web_frontend = models.CharField(blank=True, null=True, max_length=255,
+    web_frontend = models.CharField(_('Web frontend'), blank=True, null=True, 
+        max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
     def __repr__(self):

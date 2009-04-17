@@ -22,14 +22,15 @@ class Language(models.Model):
     """
     A spoken language or dialect, with a distinct locale.
     """
+    nplural_choices = ((0, u'unknown'), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6))
 
-    name = models.CharField(unique=True, max_length=50,
+    name = models.CharField(_('Name'), unique=True, max_length=50,
         help_text="The name of the language including dialect, script, etc.")
-    description = models.CharField(blank=True, max_length=255)
-    code = models.CharField(unique=True, max_length=50,
+    description = models.CharField(_('Description'), blank=True, max_length=255)
+    code = models.CharField(_('Code'), unique=True, max_length=50,
         help_text=("The primary language code, used in file naming, etc."
                    "(eg. pt_BR for Brazilian Portuguese.)"))
-    code_aliases = models.CharField(max_length=100,
+    code_aliases = models.CharField(_('Code aliases'), max_length=100,
         help_text=("A space-separated list of alternative locales."),
         null=True, default='')
 
