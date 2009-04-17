@@ -1,5 +1,7 @@
 {% extends "authopenid/base_profile.html" %}
 {% load i18n %}
+{% load pagination_tags %}
+{% load txcommontags %}
 
 {% block title %}{{ block.super }} | {% trans "Notifications" %}{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; {% trans "Notifications" %}{% endblock %}
@@ -10,7 +12,41 @@
 {% endblock %}
 
 {% block body %}
- 
+
+    <h1>{% trans "Notices" %}</h1>
+    
+    {% autopaginate notices %}
+    
+    {% if notices %}
+        <a href="{% url notification_mark_all_seen %}">{% trans "Mark all unseen notices seen" %}</a>
+        
+        {# TODO: get timezone support working with regroup #}
+        {% regroup notices by added.date as notices_by_date %}
+        
+        {% for date in notices_by_date %}
+            <h2 class="notice_date">{{ date.grouper }}</h2>
+            
+            {% for notice in date.list %}
+                {% if notice.is_unseen %}
+                    <div class="unseen_notice">
+                {% else %}
+                    <div class="notice">
+                {% endif %}
+                    <span class="notice_type">[{% trans notice.notice_type.display %}]</span>
+                    <span class="notice_message">{{ notice.message|safe }}</span>
+                    <span class="notice_time">{{ notice.added }}</span>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+        {% paginate %}
+        
+    {% else %}
+        <p>{% trans "No notices." %}</p>
+    {% endif %}
+
+<p>-------------------------------------------------------------</p>
+
     <div class="notice_settings">
        
         {% with user.email as user_email %}
@@ -33,7 +69,7 @@
                         <th>{{ header }}</th>
                     {% endfor %}
                 </tr>
-                {% for row in notice_settings.rows %}
+                {% for row in notice_settings.rows|notice_type_user_filter %}
                     <tr>
                         <td>{% trans row.notice_type.display %}<br/>
                             <span class="notice_type_description">{% trans row.notice_type.description %}</span>

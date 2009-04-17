@@ -1,7 +1,0 @@
-{% load i18n %}
-{% url project_detail slug=project.slug as project_url %}
-{% url component_detail project_slug=project.slug component_slug=component.slug as component_url %}
-{% blocktrans with project.slug as project_slug with component.slug as component_slug %}
-New component <a href="http://{{current_site}}{{component_url}}">{{component}}</a> has been added to the <a href="http://{{current_site}}{{project_url}}">{{project}}</a> project.
-{% endblocktrans %}
-

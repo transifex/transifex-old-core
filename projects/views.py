@@ -26,12 +26,12 @@ from actionlog.models import (log_addition, log_change, log_deletion,
                               log_submission)
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
-from translations.models import POFile
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403
 from txcommon.views import (json_result, json_error)
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
+from notification import models as notification
 
 # Feeds
 
@@ -78,6 +78,11 @@ def project_create_update(request, project_slug=None):
                 log_addition(request, project)
             else:
                 log_change(request, project, 'This project has been changed.')
+                if settings.ENABLE_NOTICES:
+                    notification.send_observation_notices_for(project,
+                                        signal='project_changed', 
+                                        extra_context={'project': project})
+
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project.slug]),)
     else:
@@ -105,6 +110,54 @@ def project_delete(request, project_slug):
         return render_to_response(
             'projects/project_confirm_delete.html', {'project': project,},
             context_instance=RequestContext(request))
+
+
+@login_required
+def project_toggle_watch(request, project_slug):
+    """ Add/Remove watches on a project for a specific user """
+
+    if request.method != 'POST':
+        return json_error(_('Must use POST to activate'))
+
+    if not settings.ENABLE_NOTICES:
+        return json_error(_('Notifation is not enabled'))
+
+    project = get_object_or_404(Project, slug=project_slug)
+    url = reverse('project_toggle_watch', args=(project_slug,))
+
+    project_signals = ['project_changed',
+                       'project_deleted',
+                       'project_component_added',
+                       'project_component_changed',
+                       'project_component_deleted']
+    try:
+        result = {
+            'style': 'watch_add',
+            'title': _('Watch this project'),
+            'project': True,
+            'url': url,
+            'error': None,
+        }
+
+        for signal in project_signals:
+            notification.stop_observing(project, request.user, signal)
+
+    except notification.ObservedItem.DoesNotExist:
+        try:
+            result = {
+                'style': 'watch_remove',
+                'title': _('Stop wathing this project'),
+                'project': True,
+                'url': url,
+                'error': None,
+            }
+
+            for signal in project_signals:
+                notification.observe(project, request.user, signal, signal)
+
+        except WatchException, e:
+            return json_error(e.message, result)
+    return json_result(result)
 
 
 # Components
@@ -148,9 +201,18 @@ def component_create_update(request, project_slug, component_slug=None):
 
             if not component_id:
                 log_addition(request, component)
+                if settings.ENABLE_NOTICES:
+                    notification.send_observation_notices_for(component.project,
+                            signal='project_component_added', 
+                            extra_context={'component': component})
             else:
                 log_change(request, component,
                            'This component has been changed.')
+                if settings.ENABLE_NOTICES:
+                    notification.send_observation_notices_for(component.project,
+                            signal='project_component_changed', 
+                            extra_context={'component': component})
+
             return HttpResponseRedirect(
                 reverse('component_detail',
                         args=[project_slug, component.slug]),)
@@ -188,7 +250,11 @@ def component_delete(request, project_slug, component_slug):
         component.delete()
         request.user.message_set.create(
             message=_("The %s was deleted.") % component.full_name)
-        log_deletion(request, component_, component_.name)        
+        log_deletion(request, component_, component_.name)
+        if settings.ENABLE_NOTICES:
+            notification.send_observation_notices_for(component_.project,
+                                signal='project_component_deleted', 
+                                extra_context={'component': component_})
         return HttpResponseRedirect(reverse('project_detail', 
                                      args=(project_slug,)))
     else:
@@ -351,6 +417,12 @@ def component_submit_file(request, project_slug, component_slug,
                                "successfully: %s" % filename))
             log_submission(request, component,
                            'A translation has been submitted for %s' % lang_name)
+ 
+            if settings.ENABLE_NOTICES:
+                notification.send_observation_notices_for(component.project,
+                       signal='project_component_file_submitted',
+                       extra_context={'component': component, 'filename':filename})
+
         except ValueError: # msgfmt_check
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
             request.user.message_set.create(message=_("Your file does not" \
@@ -430,6 +502,8 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
             'url': url,
             'error': None,
         }
+        notification.stop_observing(pofile, request.user, 
+                            signal='project_component_file_changed')
     except Watch.DoesNotExist:
         try:
             Watch.objects.add_watch(request.user, component, filename)
@@ -440,6 +514,10 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
                 'url': url,
                 'error': None,
             }
+            notification.observe(pofile, request.user,
+                                 'project_component_file_changed',
+                                 signal='project_component_file_changed')
         except WatchException, e:
             return json_error(e.message, result)
     return json_result(result)
+

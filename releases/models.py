@@ -5,11 +5,6 @@ from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 
-# The following is a tricky module, so we're including it only if needed
-if settings.ENABLE_NOTICES:
-    from notification import models as notification
-
-
 class Release(models.Model):
 
     """
@@ -68,7 +63,3 @@ class Release(models.Model):
         self.long_description_html = markdown.markdown(desc_escaped)
         created = self.created
         super(Release, self).save(*args, **kwargs)
-
-        if not created and settings.ENABLE_NOTICES:
-            notification.send(User.objects.all(), "releases_new_release",
-                              {'release': self})

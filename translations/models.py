@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
 from simplelock.models import Lock
+from txcommon.notifications import is_watched_by_user_signal
 
 
 class POFileManager(models.Manager):
@@ -204,6 +205,9 @@ class POFile(models.Model):
         return '%s/%s/%s' % (self.object.project.slug,
                                  self.object.slug,
                                  self.filename)
+
+    def is_watched_by(self, user, signal=None):
+        return is_watched_by_user_signal(self, user, signal)
 
 class POFileLock(Lock):
     """A lock/hold on a POFile object."""

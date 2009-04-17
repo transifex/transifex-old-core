@@ -1,6 +1,6 @@
-{% load i18n %}{% blocktrans %}You have received the following notice from {{ current_site }}:{{ message }}
-For changing how you receive notifications, please go to {{ notices_url }}.
+{% load i18n %}{% blocktrans %}Hello {{ user }}, this is Transifex at http://{{current_site}}.{% endblocktrans %}
+{{ message }}
+{% blocktrans %}For changing how you receive notifications, please go to {{ notices_url }}.{% endblocktrans %}
 
-Thank you,
-The Transifex team
-{% endblocktrans %}
+{% blocktrans %}Thank you,{% endblocktrans %}
+Transifex

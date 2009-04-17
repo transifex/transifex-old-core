@@ -21,12 +21,9 @@ from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from vcs.models import VcsUnit
 from txcommon.log import (logger, log_model)
+from txcommon.notifications import is_watched_by_user_signal
 from projects.handlers import get_trans_handler
 from projects import signals
-
-# The following is a tricky module, so we're including it only if needed
-if settings.ENABLE_NOTICES:
-    from notification import models as notification
 
 def cached_property(func):
     """
@@ -134,13 +131,7 @@ class Project(models.Model):
         """Save the object in the database."""
         long_desc = escape(self.long_description)
         self.long_description_html = markdown.markdown(long_desc)
-        # Get a grip on the empty 'created' to detect a new addition.
-        created = self.created
         super(Project, self).save(*args, **kwargs)
-
-        if not created and settings.ENABLE_NOTICES:
-            notification.send(User.objects.all(), "projects_added_new",
-                              {'project': self})
 
     def delete(self, *args, **kwargs):
         for c in Component.objects.filter(project=self):
@@ -150,6 +141,9 @@ class Project(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('project_detail', None, { 'slug': self.slug })
+
+    def is_watched_by(self, user, signal=None):
+        return is_watched_by_user_signal(self, user, signal)
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
@@ -285,8 +279,6 @@ class Component(models.Model):
         desc_escaped = escape(self.long_description)
         self.long_description_html = markdown.markdown(desc_escaped)
         self.full_name = self.get_full_name()
-        # Get a grip on the empty 'created' to detect a new addition.
-        created = self.created
 
         if self.id:
             component_old = Component.objects.get(id=self.id)
@@ -301,12 +293,6 @@ class Component(models.Model):
 
         if component_old and component_old.full_name != self.full_name:
             component_old.rename_static_dir(self.full_name)
-
-        if not created and settings.ENABLE_NOTICES:
-            notification.send(User.objects.all(),
-                              "projects_added_new_component",
-                              {'project': self.project,
-                              'component': self,})
 
     def delete(self, *args, **kwargs):
         self.clear_cache()

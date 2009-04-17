@@ -50,6 +50,10 @@ urlpatterns += patterns('',
         regex = '^(?P<project_slug>[-\w]+)/delete/$',
         view = project_delete,
         name = 'project_delete',),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/toggle_watch/$',
+        view = project_toggle_watch,
+        name = 'project_toggle_watch',),
 )
 
 urlpatterns += patterns('django.views.generic',

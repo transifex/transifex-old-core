@@ -107,3 +107,23 @@ def key_sort(l, *keys):
             return x
         l.sort(key=fun, reverse=reverse)
     return l
+
+
+# Temporary filter
+@register.filter
+def notice_type_user_filter(noticetype_list):
+    """
+    Filter a NoticeType list passed by parameter using the NOTICE_TYPES
+    dictionary that says which notice types must be shown to the user.
+
+    It is necessary by now until the upstream project have a model change to be 
+    able to do this filtering from the database.
+    """
+    from txcommon.management import NOTICE_TYPES
+    new_list=[]
+    for nt in noticetype_list:
+        for n in NOTICE_TYPES:
+            if nt['notice_type'].label == n["label"] \
+               and n["show_to_user"] == True:
+                new_list.append(nt)
+    return new_list

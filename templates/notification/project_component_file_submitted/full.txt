@@ -1,0 +1,5 @@
+{% load i18n %}{% url component_detail component.project.slug component.slug as component_url %}{% url project_detail component.project.slug as project_url %}{% with component.name as component_name %}{% with component.project.name as project_name %}
+{% blocktrans %}A file called '{{ filename }}' has been submitted to the '{{ component_name }}' of the '{{ project_name }}' project.{% endblocktrans %}
+
+{% blocktrans %}Please, visit Transifex at http://{{current_site}}{{component_url}} in order to see the changes.{% endblocktrans %}
+{% endwith %}{% endwith %}

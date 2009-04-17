@@ -3,43 +3,27 @@ import itertools
 
 from django.core.mail import send_mail
 from django.template import loader, Context
+from django.shortcuts import get_object_or_404
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 
 from projects import signals
 from txcommon.log import logger
+from translations.models import POFile
+from notification import models as notification
 
 class WatchException(StandardError):
     pass
 
-def _send_email(site, component, users, repo_changed, files):
+def _notify_watchers(component, files):
     """
-    Send email to watchers for a specific component
-    
-    site: django.contrib.sites.models.Site for the site sending
-        the message
-    component: projects.models.Component that had the change
-    users: django.contrib.auth.models.User list that set the watch
-    repo_change: Whether or not the repo had a global change
-    files: List of paths being watched that changed
+    Notify the watchers for a specific POFile
     """
-    for user in users:
-        context = Context({'component': component.name,
-            'project': component.project.name,
-            'first_name': (user.first_name or user.username), 
-            'hostname': 'http://%s' % site.domain,
-            'url': 'http://%s%s' % (site.domain, component.get_absolute_url()),
-            'files': files,
-            'repo_changed': repo_changed})
-        subject = loader.get_template('subject.tmpl').render(
-            context).strip('\n')
-        message = loader.get_template('body.tmpl').render(
-            context)
-        from_address = 'Transifex <donotreply@%s>' % site.domain
-
-        # Temporary until compile repowatch with the notification app
-        send_mail(subject, message, from_address, [user.email], 
-                  fail_silently=True)
+    pofile = get_object_or_404(POFile, component=component, filename=files[0])
+    notification.send_observation_notices_for(pofile,
+                            signal='project_component_file_changed', 
+                            extra_context={'component': component,
+                                           'files': files})
 
 def _findchangesbycomponent(component):
     """
@@ -68,9 +52,7 @@ def _findchangesbycomponent(component):
         changes.sort(key=operator.itemgetter(0))
         for usergroup in itertools.groupby(changes,
             key=operator.itemgetter(0)):
-            _send_email(Site.objects.get_current(), component,
-                usergroup[0], repochanged, [change[1] for change
-                in usergroup[1]])
+            _notify_watchers(component, [change[1] for change in usergroup[1]])
 
 def _compposthandler(sender, **kwargs):
     if 'instance' in kwargs:
@@ -79,6 +61,6 @@ def _compposthandler(sender, **kwargs):
 signals.post_comp_prep.connect(_compposthandler)
 
 watch_titles = {
-    'watch_add_title': _('Watch this file'),
-    'watch_remove_title': _('Stop watching this file'),
+    'watch_add_title': _('Watch it'),
+    'watch_remove_title': _('Stop watching it'),
 }

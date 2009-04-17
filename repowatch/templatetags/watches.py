@@ -1,5 +1,7 @@
+from django.core.urlresolvers import reverse
 from django import template
-from repowatch.models import Watch
+from translations.models import POFile
+from projects.models import Project
 from repowatch import watch_titles
 
 register = template.Library()
@@ -13,18 +15,22 @@ def watch_remove_title():
     return watch_titles['watch_remove_title']
 
 @register.inclusion_tag('watch_toggle.html', takes_context=True)
-def watch_toggle(context, stat):
+def watch_toggle(context, obj):
     """
-    Handle watch links for a POfile by the logged in user
+    Handle watch links for objects by the logged in user
     """
-    user = context['request'].user
-    try:
-        #TODO: Find out a better way to do it - more efficiently
-        w = Watch.objects.get(path=stat.filename, component=stat.object, 
-                          user__id__exact=user.id)
-        stat.watched = True
-    except Watch.DoesNotExist:
-        stat.watched = False
+    if isinstance(obj, Project):
+        obj.toggle_watch_url = reverse('project_toggle_watch', 
+                                       args=(obj.slug,))
+        obj.is_project = True
 
-    context['stat'] = stat
+    elif isinstance(obj, POFile):
+        obj.toggle_watch_url = reverse('component_toggle_watch',
+                                       args=(obj.object.project.slug, 
+                                       obj.object.slug, obj.filename,))
+        obj.is_pofile = True
+
+    user = context['request'].user
+    obj.is_watched = obj.is_watched_by(user)
+    context['obj'] = obj
     return context

@@ -1,6 +1,7 @@
+from django.conf import settings
 from projects.handlers.types import pot
 from txcommon.log import logger
-
+from notification import models as notification
 
 class IntltoolHandler(pot.POTHandler):
     """
@@ -26,6 +27,11 @@ class IntltoolHandler(pot.POTHandler):
         if not isIntltooled:
             logger.debug("intltool-update --pot has failed for %s" % 
                          self.component)
+
+            if settings.ENABLE_NOTICES:
+                notification.send(self.component.project.maintainers.all(),
+                                  'project_component_potfile_error',
+                                  {'component': self.component})
             is_msgmerged=False
         else:
             is_msgmerged=True

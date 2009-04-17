@@ -1,5 +1,0 @@
-{% load i18n %}{% url project_detail slug=project.slug as project_url %}
-{% blocktrans with project.slug as project_slug %}
-{{ user }} has created a new project called '{{project}}'.
-If you would like to access this new project, please visit: http://{{current_site}}{{project_url}}
-{% endblocktrans %}
