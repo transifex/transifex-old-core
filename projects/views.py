@@ -483,7 +483,7 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
     """ Add/Remove a watch for a path on a component for a specific user """
 
     if request.method != 'POST':
-        return _error('Must use POST to activate')
+        return json_error(_('Must use POST to activate'))
 
     component = get_object_or_404(Component, slug=component_slug,
                                 project__slug=project_slug)
