@@ -23,7 +23,8 @@ def _notify_watchers(component, files):
     notification.send_observation_notices_for(pofile,
                             signal='project_component_file_changed', 
                             extra_context={'component': component,
-                                           'files': files})
+                                           'files': files,
+                                           'pofile': pofile})
 
 def _findchangesbycomponent(component):
     """
