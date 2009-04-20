@@ -523,6 +523,9 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
     if request.method != 'POST':
         return json_error(_('Must use POST to activate'))
 
+    if not settings.ENABLE_NOTICES:
+        return json_error(_('Notifation is not enabled'))
+
     component = get_object_or_404(Component, slug=component_slug,
                                 project__slug=project_slug)
     pofile = get_object_or_404(POFile, component=component, filename=filename)
