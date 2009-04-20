@@ -32,6 +32,9 @@ from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from notification import models as notification
 
+# Temporary
+from txcommon import notifications as txnotification
+
 # Feeds
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
@@ -84,7 +87,7 @@ def project_create_update(request, project_slug=None):
                 nt = 'project_changed'
                 action_logging(request.user, [project], nt, context=context)
                 if settings.ENABLE_NOTICES:
-                    notification.send_observation_notices_for(project, 
+                    txnotification.send_observation_notices_for(project, 
                                         signal=nt, extra_context=context)
 
             return HttpResponseRedirect(reverse('project_detail',
@@ -216,13 +219,13 @@ def component_create_update(request, project_slug, component_slug=None):
                 nt = 'project_component_added'
                 action_logging(request.user, object_list, nt, context=context)
                 if settings.ENABLE_NOTICES:
-                    notification.send_observation_notices_for(component.project,
+                    txnotification.send_observation_notices_for(component.project,
                             signal=nt, extra_context=context)
             else:
                 nt = 'project_component_changed'
                 action_logging(request.user, object_list, nt, context=context)
                 if settings.ENABLE_NOTICES:
-                    notification.send_observation_notices_for(component.project,
+                    txnotification.send_observation_notices_for(component.project,
                             signal=nt, extra_context=context)
 
             return HttpResponseRedirect(
@@ -268,7 +271,7 @@ def component_delete(request, project_slug, component_slug):
         context = {'component': component_}
         action_logging(request.user, [component_.project], nt, context=context)
         if settings.ENABLE_NOTICES:
-            notification.send_observation_notices_for(component_.project,
+            txnotification.send_observation_notices_for(component_.project,
                                 signal=nt, extra_context=context)
 
         return HttpResponseRedirect(reverse('project_detail', 
@@ -455,7 +458,7 @@ def component_submit_file(request, project_slug, component_slug,
                         'pofile': postats}
             action_logging(request.user, object_list, nt, context=context)
             if settings.ENABLE_NOTICES:
-                notification.send_observation_notices_for(component.project,
+                txnotification.send_observation_notices_for(component.project,
                        signal=nt, extra_context=context)
 
         except ValueError: # msgfmt_check

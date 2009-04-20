@@ -11,6 +11,8 @@ from projects import signals
 from txcommon.log import logger
 from translations.models import POFile
 from notification import models as notification
+# Temporary
+from txcommon import notifications as txnotification
 
 class WatchException(StandardError):
     pass
@@ -20,7 +22,7 @@ def _notify_watchers(component, files):
     Notify the watchers for a specific POFile
     """
     pofile = get_object_or_404(POFile, component=component, filename=files[0])
-    notification.send_observation_notices_for(pofile,
+    txnotification.send_observation_notices_for(pofile,
                             signal='project_component_file_changed', 
                             extra_context={'component': component,
                                            'files': files,
