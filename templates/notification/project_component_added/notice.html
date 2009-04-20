@@ -1,3 +1,3 @@
 {% load i18n %}{% url component_detail component.project.slug component.slug as component_url %}{% url project_detail component.project.slug as project_url %}{% with component.name as component_name %}{% with component.project.name as project_name %}
-{% blocktrans %}A new component '<a href="{{ component_url }}">{{ component_name }}</a>' has been added to the '<a href="{{ project_url }}">{{ project_name }}</a>' project{% endblocktrans %}
+{% blocktrans %}A new component <a href="{{ component_url }}">{{ component_name }}</a> has been added to the <a href="{{ project_url }}">{{ project_name }}</a> project{% endblocktrans %}
 {% endwith %}{% endwith %}
