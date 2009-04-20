@@ -220,6 +220,19 @@ produced, run a fresh checkout::
 This command is usually used in a cronjob to refresh Transifex's cache and
 translation statistics every once in a while for translators.
 
+Internationalization (i18n) support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To be able to use Transifex with a localized interface, it is necessary to
+create the translations objects files (.mo) using one of the following commands,
+for example:
+    
+.. code-block:: bash
+
+    ./manage.py compilemessages -l pt_BR
+    or
+    ./manage.py compilemessages --all
+
 
 Customizing your Transifex instance
 -----------------------------------
