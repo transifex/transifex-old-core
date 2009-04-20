@@ -22,8 +22,7 @@ from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, UnitForm
 from projects import signals
 from txcommon.log import logger
-from actionlog.models import (log_addition, log_change, log_deletion, 
-                              log_submission)
+from actionlog.models import action_logging
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
@@ -71,17 +70,22 @@ def project_create_update(request, project_slug=None):
             project_id = project.id
             project.save()
             project_form.save_m2m()
+
             # TODO: Not sure if here is the best place to put it
             Signal.send(signals.post_proj_save_m2m, sender=Project, 
                         instance=project)
+
+            # ActionLog & Notification
+            context = {'project': project}
             if not project_id:
-                log_addition(request, project)
+                nt = 'project_added'
+                action_logging(request.user, [project], nt, context=context)
             else:
-                log_change(request, project, 'This project has been changed.')
+                nt = 'project_changed'
+                action_logging(request.user, [project], nt, context=context)
                 if settings.ENABLE_NOTICES:
-                    notification.send_observation_notices_for(project,
-                                        signal='project_changed', 
-                                        extra_context={'project': project})
+                    notification.send_observation_notices_for(project, 
+                                        signal=nt, extra_context=context)
 
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project.slug]),)
@@ -102,9 +106,15 @@ def project_delete(request, project_slug):
         import copy
         project_ = copy.copy(project)
         project.delete()
-        log_deletion(request, project_, project_.name)
+
         request.user.message_set.create(
             message=_("The %s was deleted.") % project.name)
+
+        # ActionLog & Notification
+        nt = 'project_deleted'
+        context={'project': project_}
+        action_logging(request.user, project_, nt, context=context)
+
         return HttpResponseRedirect(reverse('project_list'))
     else:
         return render_to_response(
@@ -199,19 +209,21 @@ def component_create_update(request, project_slug, component_slug=None):
             if old_root and old_root != unit.root:
                 component.clear_cache()
 
+            # ActionLog & Notification
+            context = {'component': component}
+            object_list = [component.project, component]
             if not component_id:
-                log_addition(request, component)
+                nt = 'project_component_added'
+                action_logging(request.user, object_list, nt, context=context)
                 if settings.ENABLE_NOTICES:
                     notification.send_observation_notices_for(component.project,
-                            signal='project_component_added', 
-                            extra_context={'component': component})
+                            signal=nt, extra_context=context)
             else:
-                log_change(request, component,
-                           'This component has been changed.')
+                nt = 'project_component_changed'
+                action_logging(request.user, object_list, nt, context=context)
                 if settings.ENABLE_NOTICES:
                     notification.send_observation_notices_for(component.project,
-                            signal='project_component_changed', 
-                            extra_context={'component': component})
+                            signal=nt, extra_context=context)
 
             return HttpResponseRedirect(
                 reverse('component_detail',
@@ -250,11 +262,15 @@ def component_delete(request, project_slug, component_slug):
         component.delete()
         request.user.message_set.create(
             message=_("The %s was deleted.") % component.full_name)
-        log_deletion(request, component_, component_.name)
+
+        # ActionLog & Notification
+        nt = 'project_component_deleted'
+        context = {'component': component_}
+        action_logging(request.user, [component_.project], nt, context=context)
         if settings.ENABLE_NOTICES:
             notification.send_observation_notices_for(component_.project,
-                                signal='project_component_deleted', 
-                                extra_context={'component': component_})
+                                signal=nt, extra_context=context)
+
         return HttpResponseRedirect(reverse('project_detail', 
                                      args=(project_slug,)))
     else:
@@ -336,6 +352,10 @@ def component_submit_file(request, project_slug, component_slug,
 
     component = get_object_or_404(Component, slug=component_slug,
                                     project__slug=project_slug)
+
+    # To be used by the ActionLog later
+    object_list = [component.project, component]
+
     if not component.allows_submission:
         request.user.message_set.create(message=_("This component does " 
                             " not allow white access."))
@@ -385,6 +405,7 @@ def component_submit_file(request, project_slug, component_slug,
             lang_name = postats.language.name
             lang_code = postats.language.code
         except (POFile.DoesNotExist, AttributeError):
+            postats = None
             lang_name = filename
             lang_code = component.trans.guess_language(filename)
 
@@ -413,15 +434,29 @@ def component_submit_file(request, project_slug, component_slug,
                 # the POT is not broken for intltool based projects.
                 component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
 
+                # Getting the new PO file stats after submit it
+                postats = POFile.objects.get(filename=filename,
+                                                 object_id=component.id)
+            else:
+                postats = None
+
+            # Append the language to the ActionLog object_list if it exist for
+            # this file
+            if hasattr(postats, 'language') and postats.language is not None:
+                object_list.append(postats.language)
+
             request.user.message_set.create(message=_("File submitted " 
                                "successfully: %s" % filename))
-            log_submission(request, component,
-                           'A translation has been submitted for %s' % lang_name)
- 
+
+            # ActionLog & Notification
+            nt = 'project_component_file_submitted'
+            context = {'component': component, 
+                        'filename':filename, 
+                        'pofile': postats}
+            action_logging(request.user, object_list, nt, context=context)
             if settings.ENABLE_NOTICES:
                 notification.send_observation_notices_for(component.project,
-                       signal='project_component_file_submitted',
-                       extra_context={'component': component, 'filename':filename})
+                       signal=nt, extra_context=context)
 
         except ValueError: # msgfmt_check
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
