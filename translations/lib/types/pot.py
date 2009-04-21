@@ -1,4 +1,5 @@
 import os, commands, re
+from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from translations.models import POFile, Language
@@ -50,7 +51,6 @@ class POTManager(TransManagerMixin):
         filef.close()
         return file_content
 
-        
     def get_po_files(self):
         """ Return a list of PO filenames """
 
@@ -61,12 +61,14 @@ class POTManager(TransManagerMixin):
         po_files.sort()
         return po_files
 
-    def get_langfile(self, lang):
-        """ Return a PO filename """
+    def get_langfiles(self, lang):
+        """ Return a list with the PO filenames for a specificy language """
 
+        files=[]
         for filepath in self.get_po_files():
             if self.guess_language(filepath) == lang:
-                return filepath
+                files.append(filepath)
+        return files
 
     def guess_language(self, filepath):
         """ Guess a language from a filepath """
@@ -115,18 +117,15 @@ class POTManager(TransManagerMixin):
                 'untranslated' : int(untranslated),
                 'error' : error,}
 
-    def calcule_stats(self, lang, try_to_merge):
+    def calculate_file_stats(self, filename, try_to_merge):
         """ 
-        Return the statistics of a specificy language for a object after
-        merging the file translation.
+        Return the statistics of a specificy file for an object after
+        merging the file with the source translation file (POT), if possible.
         """
-
-        filename = self.get_langfile(lang)
-
         # We might want to skip the msgmerge setting try_to_merge as False
         if try_to_merge:
-            (is_msgmerged, file_path) = self.msgmerge(filename,
-                                                      self.get_source_file())
+            source_file = self.get_source_file_for_pofile(filename)
+            (is_msgmerged, file_path) = self.msgmerge(filename, source_file)
         else:
             is_msgmerged=False
             file_path = os.path.join(self.path, filename)
@@ -143,15 +142,23 @@ class POTManager(TransManagerMixin):
                 'error': postats['error'],
                 'is_msgmerged': is_msgmerged}
 
-    def create_stats(self, lang, object, try_to_merge=True):
-        """Set the statistics of a specificy language for a object."""
+    def create_lang_stats(self, lang, object, try_to_merge=True):
+        """Set the statistics of a specificy language for an object."""
+
+        for filename in self.get_langfiles(lang):
+            self.create_file_stats(filename, object, try_to_merge)
+
+    def create_file_stats(self, filename, object, try_to_merge=True):
+        """Set the statistics of a specificy file for an object."""
+        lang_code = self.guess_language(filename)
         try:
-            stats = self.calcule_stats(lang, try_to_merge)
-            f = self.get_langfile(lang)
-            s = POFile.objects.get(object_id=object.id, filename=f)
+            stats = self.calculate_file_stats(filename, try_to_merge)
+            ctype = ContentType.objects.get_for_model(object)
+            s = POFile.objects.get(object_id=object.id, content_type=ctype,
+                                   filename=filename)
             if not s.language:
                 try:
-                    l = Language.objects.by_code_or_alias(code=lang)
+                    l = Language.objects.by_code_or_alias(code=lang_code)
                     s.language=l
                 except Language.DoesNotExist:
                     pass
@@ -162,50 +169,46 @@ class POTManager(TransManagerMixin):
             pass
         except POFile.DoesNotExist:
             try:
-                l = Language.objects.by_code_or_alias(code=lang)
+                l = Language.objects.by_code_or_alias(code=lang_code)
             except Language.DoesNotExist:
                 l = None
-            s = POFile.objects.create(language=l, filename=f, 
-                                           object=object)
+            s = POFile.objects.create(language=l, filename=filename,
+                                        object=object)
         s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
                     untrans=stats['untrans'], error=stats['error'])
         s.is_msgmerged = stats['is_msgmerged']
+        s.language_code = lang_code
         return s.save()
 
     def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""
-        try: 
-            return POFile.objects.filter(language=lang, 
+        try:
+            ctype = ContentType.objects.get_for_model(object)
+            return POFile.objects.filter(language=lang, content_type=ctype, 
                                          object_id=object.id)[0]
         except IndexError:
             return None
 
     def get_stats(self, object):
         """ Return a list of statistics of languages for an object."""
-        return POFile.objects.filter(
-                   object_id=object.id,
-                   is_pot=False,
-        ).order_by('-trans_perc')
+        return POFile.objects.by_object_total(object)
 
     def delete_stats_for_object(self, object):
         """ Delete all lang statistics of an object."""
-        POFile.objects.filter(object_id=object.id).delete()
+        ctype = ContentType.objects.get_for_model(object)
+        POFile.objects.filter(object_id=object.id, content_type=ctype).delete()
 
     def set_source_stats(self, object, is_msgmerged):
         """Set the source file (pot) in the database"""
 
-        potfile=self.get_source_file()
-        if potfile:
-            try:
-                p=POFile.objects.get(object_id=object.id, is_pot=True)
-                p.filename=potfile
-                p.is_msgmerged=is_msgmerged
-            except POFile.DoesNotExist:
-                p = POFile(filename=potfile,
-                        is_pot=True,
-                        object=object,
-                        is_msgmerged=is_msgmerged)
-
+        ctype = ContentType.objects.get_for_model(object)
+        potfiles=self.get_source_files()
+        for potfile in potfiles:
+            p, created = POFile.objects.get_or_create(filename=potfile,
+                                                      is_pot=True,
+                                                      content_type=ctype,
+                                                      object_id=object.id,
+                                                      is_msgmerged=is_msgmerged)
             stats = self.po_file_stats(potfile)
             p.set_stats(trans=stats['translated'], 
                         fuzzy=stats['fuzzy'], 
@@ -213,33 +216,38 @@ class POTManager(TransManagerMixin):
                         error=stats['error'])
 
             p.save()
-        else:
-            #TODO: We don't have a source file (POT), what should we do?
-            pass
 
     def get_source_stats(self, object):
         """
-        Return the source file (pot) statistics from the database
+        Return a list of the source file (pot) statistics from the database
         """
         try:
-            return POFile.objects.get(object_id=object.id, is_pot=True)
+            ctype = ContentType.objects.get_for_model(object)
+            return POFile.objects.filter(object_id=object.id, 
+                                         content_type=ctype, is_pot=True)
         except POFile.DoesNotExist:
             return None
 
-    def get_source_file(self):
+    def get_source_files(self):
         """
-        Return the source file (pot) path
+        Return a list with the source files (pot) paths 
 
         Try to find it in the file_set passed to the PO file instace. 
         If it still fauls, try to find the POT file in the filesystem.
         """
+        pofiles=[]
         for filename in self.file_set:
             if filename.endswith('.pot'):
-                return filename
+                pofiles.append(filename)
+
         # If there is no POT in the file_set, try to find it in
         # the file system
-        filename = self.get_intltool_source_file(self.msgmerge_path)
-        return filename
+        if not pofiles:
+            filename = self.get_intltool_source_file(self.msgmerge_path)
+            if filename:
+                pofiles.append(filename)
+
+        return pofiles
 
     def get_intltool_source_file(self, po_dir):
         """Return the POT file that might be created by intltool"""
@@ -251,6 +259,43 @@ class POTManager(TransManagerMixin):
                     # Return the relative path of the POT file without 
                     # the / in the start of the POT file path
                     return os.path.join(rel_path, filename)[1:]
+
+    def get_source_file_for_pofile(self, filename):
+        """ 
+        Find the related source file (POT) for a pofile when it has multiple
+        source files.
+
+        This method gets a filename as parameter and tries to discover the 
+        related POT file using two methods:
+        1. Trying to find a POT file with the same base path that the pofile.
+           Example: /foo/bar.pot and /foo/baz.po match on this method.
+
+        2. Trying to find a POT file with the same domain that the pofile in any
+           directory.
+           Example: /foo/bar.pot and /foo/baz/bar.po match on this method.
+           The domain in this case is 'bar'.
+
+        If no POT is found the method returns None.
+        """
+
+        # For filename='/foo/bar.po'
+        fb = os.path.basename(filename) # 'bar.po'
+        fp = filename.split(fb)[0]        # '/foo/'
+
+        source_files = self.get_source_files()
+
+        # Find the POT with the same domain or path that the filename,
+        # if the component has more that one POT file
+        if len(source_files) > 1:
+            for source in source_files:
+                sb = os.path.basename(source)[:-1] # *.po instead *.pot
+                pb = source.split(sb)[0]
+                if pb==fp or sb==fb:
+                    return source
+        elif len(source_files) == 1:
+            return source_files[0]
+        else:
+            return None
 
     def copy_file_to_static_dir(self, filename):
         """Copy a file to the destination"""

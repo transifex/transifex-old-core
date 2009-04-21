@@ -24,7 +24,7 @@ class POTHandler:
 
     def set_stats_for_lang(self, lang, try_to_merge=True):
         """Set stats for a specific language."""
-        return self.tm.create_stats(lang, self.component, try_to_merge)
+        return self.tm.create_lang_stats(lang, self.component, try_to_merge)
 
     def set_stats(self):
         """Calculate stats for all translations of the component."""
@@ -33,8 +33,9 @@ class POTHandler:
 
         # Copying the source file to the static dir
         try:
-            potfile = self.tm.get_source_file()
-            self.tm.copy_file_to_static_dir(potfile)
+            potfiles = self.tm.get_source_files()
+            for potfile in potfiles:
+                self.tm.copy_file_to_static_dir(potfile)
         except (AttributeError, IOError):
             # TODO: There is no source file (POT)
             # It looks like an intltool POT-based, what should we do?
