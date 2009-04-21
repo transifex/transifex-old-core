@@ -13,10 +13,10 @@ from simplelock.models import Lock
 from txcommon.notifications import is_watched_by_user_signal
 
 
-def _group_pofiles(postats, sorter_key, pot_total):
+def _group_pofiles(postats, grouping_key, pot_total):
     """
     Yield a virtual POFile grouped and summed by using a set of POFiles passed 
-    by parameter that have the same Language or language code
+    by parameter that have the same grouping_key, passed also by parameter
 
     This function is responsible for the aggregation of POFiles, summing the 
     statistics of each POFile and yield the virtual POFile resulted from the
@@ -26,14 +26,15 @@ def _group_pofiles(postats, sorter_key, pot_total):
     This virtual object is not stored in the database.
 
     Parameters:
-    postats: This is the set of POFiles to be aggregaded
-    sorter_key: A attribuite from the POFile model to use it to sort the postats
+    postats: This is the set of POFiles to be aggregated
+    grouping_key: A attribute from the POFile model to use it for grouping the 
+                  postats
     pot_total: This is the total (sum) of strings from the source files relative
-    to the set of POFiles.
+               to the set of POFiles.
 
     """
     from txcommon.log import logger
-    grouped_postats = groupby(postats, key=operator.attrgetter(sorter_key))
+    grouped_postats = groupby(postats, key=operator.attrgetter(grouping_key))
 
     for key, pofiles in grouped_postats:
         count = po_trans = po_fuzzy = po_untrans = po_total = 0 
@@ -50,24 +51,19 @@ def _group_pofiles(postats, sorter_key, pot_total):
             no_po = pot_total - po_total
         else:
             no_po = 0
-        po = POFile(id=pofile.id,
-                    trans=po_trans,
-                    fuzzy=po_fuzzy, 
-                    untrans=po_untrans + no_po, 
-                    total=po_total + no_po,
-                    object=pofile.object,
-                    filename=pofile.filename,
-                    language_code=pofile.language_code,
-                    language=pofile.language)
-        po.calculate_perc()
 
         if count > 1:
-            po.is_aggregated=True
-            po.counter = count
+            # It uses the last pofile present at the 'pofiles' for aggregating the
+            # stats sum. As it doesn't save the objects, it's safe to re-use then
+            # in order to save memory.
+            pofile.set_stats(po_trans, po_fuzzy, (po_untrans + no_po))
+            pofile.calculate_perc()
+            pofile.is_aggregated=True
         else:
-            po.is_aggregated=False
-            po.counter = count
-        yield po
+            pofile.is_aggregated=False
+
+        pofile.counter = count
+        yield pofile
 
 
 class POFileManager(models.Manager):
