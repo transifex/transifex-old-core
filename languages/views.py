@@ -59,7 +59,7 @@ def get_lang_rel_objs(language_slug, collection_slug, release_slug):
                                    slug__exact=collection_slug)
     release = get_object_or_404(Release, slug__exact=release_slug,
                                 collection=collection)
-    pofile_list = POFile.objects.by_language_and_release(language, release)
+    pofile_list = POFile.objects.by_language_and_release_total(language, release)
     return language, collection, release, pofile_list
 
 def language_release(request, slug, collection_slug, release_slug):

@@ -269,7 +269,7 @@ class Component(models.Model):
                 { 'project_slug': self.project.slug,
                  'component_slug': self.slug })
 
-    def get_pofiles(self):
+    def get_stats(self):
         return POFile.objects.get_for_object(self)
 
     def get_full_name(self):

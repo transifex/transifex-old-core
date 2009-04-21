@@ -51,7 +51,6 @@ def comp_stats_table(context, stats):
     Create a HTML table to presents the statistics of all 
     languages for a component.
     """
-
     context['stats'] = key_sort(stats, 'sort_id', '-trans_perc')
     return context
 
@@ -91,6 +90,15 @@ def release_stats_table(stats, collection, release):
     return {'stats': key_sort(stats, 'language.name', '-trans_perc'),
             'collection': collection,
             'release': release}
+
+@register.inclusion_tag("comp_lang_stats_table.html", takes_context=True)
+def comp_lang_stats_table(context, stats):
+    """
+    Create a HTML table to present the statistics of all files of a component
+    for a specific language.
+    """
+    context['stats'] = key_sort(stats, 'filename', '-trans_perc')
+    return context
 
 @register.inclusion_tag("stats_bar_full.html")
 def stats_bar_full(stat):

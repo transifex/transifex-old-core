@@ -1,0 +1,42 @@
+{% extends "projects/project_detail_childs.html" %}
+{% load statistics %}
+{% load markup %}
+{% load i18n %}
+
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <style type="text/css">
+    form.submit_form { display: none; }
+    form.submit_form fieldset { border: 2px dotted #ddd; }
+  </style>
+{% endblock %}
+
+{% block body_class %}{{ block.super }} project_detail{% endblock %}
+
+{% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }}{% endwith %}{% endblock %}
+
+{% block breadcrumb %}{% with component.project as project %}{{ block.super }} &raquo; <a href="{% url component_detail component.project.slug component.slug %}">{{ component.name }}</a> &raquo; {{ language.name }}{% endwith %}{% endblock %}
+
+
+{% block body_main %}
+  <div class="obj_bigdetails">
+  <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
+
+  <h3>{{ language.name }} {% trans "translation files" %}</h3>
+{% if language %}
+  {% comp_lang_stats_table stats %}
+
+  {% if request.user.is_authenticated and component.allows_submission and perms.projects.submit_file %}
+    {% include "projects/component_submit_new_file.html" %}
+  {% endif %}
+
+{% endif %}
+</div>
+
+{% endblock %}
+
+
+

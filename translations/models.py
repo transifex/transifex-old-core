@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import operator
 from datetime import datetime
 from django.db import models
 from django.db.models import permalink
@@ -12,15 +13,71 @@ from simplelock.models import Lock
 from txcommon.notifications import is_watched_by_user_signal
 
 
+def _group_pofiles(postats, sorter_key, pot_total):
+    """
+    Yield a virtual POFile grouped and summed by using a set of POFiles passed 
+    by parameter that have the same Language or language code
+
+    This function is responsible for the aggregation of POFiles, summing the 
+    statistics of each POFile and yield the virtual POFile resulted from the
+    operation. This virtual POfile has some extra attributes as 'is_aggregated'
+    and 'counter'.
+
+    This virtual object is not stored in the database.
+
+    Parameters:
+    postats: This is the set of POFiles to be aggregaded
+    sorter_key: A attribuite from the POFile model to use it to sort the postats
+    pot_total: This is the total (sum) of strings from the source files relative
+    to the set of POFiles.
+
+    """
+    from txcommon.log import logger
+    grouped_postats = groupby(postats, key=operator.attrgetter(sorter_key))
+
+    for key, pofiles in grouped_postats:
+        count = po_trans = po_fuzzy = po_untrans = po_total = 0 
+        for pofile in pofiles:
+            po_trans += pofile.trans
+            po_fuzzy += pofile.fuzzy
+            po_untrans += pofile.untrans
+            po_total += pofile.total
+            count += 1
+        if pot_total and pot_total > po_total:
+            # Compare the total of entries between POT and PO
+            # We need to sum entries as untranslated for languages 
+            # that even are not present in a component
+            no_po = pot_total - po_total
+        else:
+            no_po = 0
+        po = POFile(trans=po_trans,
+                    fuzzy=po_fuzzy, 
+                    untrans=po_untrans + no_po, 
+                    total=po_total + no_po,
+                    object=pofile.object,
+                    filename=pofile.filename,
+                    language_code=pofile.language_code,
+                    language=pofile.language)
+        po.calculate_perc()
+
+        if count > 1:
+            po.is_aggregated=True
+            po.counter = count
+        else:
+            po.is_aggregated=False
+            po.counter = count
+        yield po
+
+
 class POFileManager(models.Manager):
-    def get_for_object(self, obj):
+    def by_object(self, obj):
         """
         Create a queryset matching all POFiles associated with the given
         object.
         """
         ctype = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=ctype.pk,
-                           object_id=obj.pk)
+                           object_id=obj.pk).order_by('-trans_perc')
 
     def by_language(self, language):
         """ Return a list of objects statistics for a language."""
@@ -42,10 +99,15 @@ class POFileManager(models.Manager):
         """
         return self.by_release(release).filter(language=language)
 
+    def by_lang_code_and_object(self, language_code, obj):
+        """ 
+        Return a list of stats for a language and object.
+        """
+        return self.by_object(obj).filter(language_code=language_code)
 
     def by_release_total(self, release):
         """
-        Yield a virtual POFile for every language in a release.
+        Return a virtual POFile for every language in a release.
         
         This POFile object aggregates the language total statistics in a
         particular release. All POFile objects for each language-release tuple
@@ -60,35 +122,48 @@ class POFileManager(models.Manager):
 
         postats = self.by_release(release).filter(is_pot=False,
                                                   language__isnull=False)
+        return _group_pofiles(postats, 'sort_id', pot_total)
 
-        grouped_postats = groupby(postats, key=lambda po:po.language)
+    def by_object_total(self, obj):
+        """
+        Return a virtual POFile for every language in an object.
+        
+        This POFile object aggregates the language total statistics in a
+        particular object. All POFile objects for each language-object tuple
+        are added together, generating a total number for this object. This is
+        mimicking something like: 'SELECT SUM(POFile.total) GROUP BY OBJECT'.
+        
+        This object is not stored in the database.
+        """
 
-        for lang, pofiles in grouped_postats:
-            po_trans = po_fuzzy = po_untrans = po_total = 0 
-            for pofile in pofiles:
-                po_trans += pofile.trans
-                po_fuzzy += pofile.fuzzy
-                po_untrans += pofile.untrans
-                po_total += pofile.total
+        postats = self.by_object(obj).filter(is_pot=True).values_list(
+            'total', flat=True)
+        pot_total = sum(postats)
 
-            if pot_total and pot_total > po_total:
-                # Compare the total of entries between POT and PO
-                # We need to sum entries as untranslated for languages 
-                # that even are not present in a component
-                no_po = pot_total - po_total
-            else:
-                no_po = 0
+        postats = self.by_object(obj).filter(
+            is_pot=False).order_by('language__name')
 
-            po = self.model(trans=po_trans,
-                            fuzzy=po_fuzzy, 
-                            untrans=po_untrans + no_po, 
-                            total=po_total + no_po, 
-                            filename=lang.code, # Not used but needed
-                            object=lang, # Not used but needed
-                            language=lang)
-            po.calculate_perc()
-            yield po
+        return _group_pofiles(postats, 'sort_id', pot_total)
 
+
+    def by_language_and_release_total(self, language, release):
+        """
+        Return a virtual POFile for every language in an Language x Release.
+        
+        This POFile object aggregates the language total statistics in a
+        particular object. All POFile objects for each language-relation tuple
+        are added together, generating a total number for this object.
+        
+        This object is not stored in the database.
+        """
+        postats = self.by_language_and_release(language, release).filter(
+            is_pot=True).values_list('total', flat=True)
+        pot_total = sum(postats)
+
+        postats = self.by_language_and_release(language, release).filter(
+            is_pot=False).order_by('object_id')
+
+        return _group_pofiles(postats, 'object_id', pot_total)
 
 class POFile(models.Model):
     """
@@ -110,6 +185,7 @@ class POFile(models.Model):
     untrans = models.PositiveIntegerField(default=0)
     
     language = models.ForeignKey(Language, null=True)
+    language_code = models.CharField(null=True, max_length=20)
     filename = models.CharField(null=False, max_length=255)
 
     # This field is used to indicate whenever a file was created 
@@ -141,7 +217,7 @@ class POFile(models.Model):
         if self.language:
             return self.language.name.lower()
         else:
-            return self.filename.lower()
+            return self.language_code.lower()
 
     class Meta:
         unique_together = ("content_type", "object_id", "filename")
@@ -173,24 +249,6 @@ class POFile(models.Model):
         self.untrans = untrans
         self.error = error
         self.calculate_perc()
-    
-    def guess_lang(self):
-        """
-        Try to find the language of the POFile.
-
-        Return None if guesswork fails.
-        This method is currently specific to <lang>.po files.        
-        """
-        # FIXME: Per-i18n-type functionality is stroed in the transmanager,
-        # and this method should be there. Or, we should have this model
-        # tied to a particular manager. Design decision needed.
-
-        from os.path import basename
-        try:
-            lang_code = basename(self.filename[:-3:])
-            return Language.objects.get(code=lang_code)
-        except:
-            return
 
     @property
     def locked(self):

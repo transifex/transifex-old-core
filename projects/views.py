@@ -251,7 +251,33 @@ def component_detail(request, project_slug, component_slug):
         queryset = Component.objects.all(),
         object_id=component.id,
         template_object_name = "component",
-    )
+        )
+
+
+def component_language_detail(request, project_slug, component_slug,
+                                language_code=None):
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
+    try:
+        language = Language.objects.get(code=language_code)
+    except Language.DoesNotExist:
+        language = Language(code=language_code, name=language_code)
+
+    stats = POFile.objects.by_lang_code_and_object(language_code, component)
+
+    # If there no stats, raise a 404
+    if not stats:
+        raise Http404
+
+    return list_detail.object_detail(
+        request,
+        queryset = Component.objects.all(),
+        object_id=component.id,
+        template_object_name = "component",
+        template_name = "projects/component_lang_detail.html",
+        extra_context = {"language": language,
+                         "stats": stats},
+        )
 
 
 @login_required

@@ -5,10 +5,10 @@
 {% load submissions %}
 {% if stats %}
 {% url notification.views.notices as notices_url %}
-<table id="stats_lang" class="stats_comp tablesorter">
+<table id="stats_comp_lang" class="stats_comp tablesorter">
    <thead>
     <tr>
-      <th>{% trans "Project/Component" %}</th>
+      <th>{% trans "Files" %}</th>
       <th class="alcenter">{% trans "Translations" %}</th>
       <th>{% trans "Options" %}</th>
     </tr>
@@ -16,9 +16,8 @@
    <tbody>
    {% for stat in stats %} 
       <tr>
-        <td class="left name" id="{{stat.object.full_name}}">
-          <a href="{{stat.object.project.get_absolute_url}}" title="{% trans "Go to this project page" %}">{{stat.object.project.name}}</a> 
-          <span class="stat_message" > &raquo; <a href="{{stat.object.get_absolute_url}}#{{stat.language.code}}" title="{% trans "Go to this component page" %}">{{stat.object.name}}</a></span>
+        <td class="left name" id="{{stat.filename}}">
+              <span class="stat_message">{{stat.filename}}</span>
           {% if stat.error %}
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
           {% endif %}
@@ -28,10 +27,6 @@
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
         <td class="left actions">
-          {% if stat.is_aggregated %}
-            {% url component_language_detail stat.object.project.slug stat.object.slug stat.language_code as comp_lang_url %}
-            <a class="i16 multifile nodecoration_icon" href="{{ comp_lang_url }}" title="{% trans "Click here to see the multiple files for" %} {{ stat.language_code }}"></a>
-          {% else %}
            {% url component_view_file stat.object.project.slug stat.object.slug stat.filename as file_view_url %}
            {% url component_raw_file stat.object.project.slug stat.object.slug stat.filename as file_raw_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
@@ -39,7 +34,6 @@
            {% pofile_lock stat %}
            {% if request.user.is_authenticated and perms.repowatch.add_watch and notices_url %}{% watch_toggle stat %}{% endif %}
            {% if request.user.is_authenticated and stat.object.allows_submission and perms.translations.add_pofilelock %}{% pofile_submission stat %}{% endif %}
-          {% endif %} 
         </td>
       </tr>
    {% endfor %}
