@@ -50,7 +50,8 @@ def _group_pofiles(postats, sorter_key, pot_total):
             no_po = pot_total - po_total
         else:
             no_po = 0
-        po = POFile(trans=po_trans,
+        po = POFile(id=pofile.id,
+                    trans=po_trans,
                     fuzzy=po_fuzzy, 
                     untrans=po_untrans + no_po, 
                     total=po_total + no_po,
