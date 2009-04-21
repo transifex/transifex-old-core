@@ -44,7 +44,7 @@ class POTManager(TransManagerMixin):
         return file_path
 
     def get_file_content(self, filename, is_msgmerged=False):
-        file_path = get_file_path(filename, is_msgmerged)
+        file_path = self.get_file_path(filename, is_msgmerged)
         filef = file(file_path, 'rb')
         file_content = filef.read()
         filef.close()
