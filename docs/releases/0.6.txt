@@ -13,11 +13,7 @@ Transifex 0.6 (Magneto)
   This release is still in development and has not been published yet.
 
 Released:
-  To be announced
-
-
-Summary
--------
+  To be released in early May
 
 Welcome to the Transifex 0.6 release, codenamed Magneto_.
 
@@ -35,23 +31,55 @@ What's new in Transifex 0.6
 
 The following major features were introduced in this release.
 
-File monitoring
-:::::::::::::::
 
-Repowatch documentation.
+User Notifications
+::::::::::::::::::
 
-- Multiple users
-- Email notifications
-- How to use, enable, etc.
+Watching translation files
+  Transifex can now monitor the repositories it follows for changes and
+  identify when files have been modified. Users can 'watch' their favorite file
+  by clicking its 'Watch' icon, and get notified by Transifex when the file
+  has been changed, either by an upstream commit or by a submission through
+  Transifex itself.
+
+Watching projects
+  Users can also subscribe to projects and get notified, for example, whenever
+  new components are added or deleted. This can be useful when a user wants to
+  get notified when a project branches off for a new release.
+
+Notifying maintainers for I18n errors
+  Project maintainers are now being notified when their project has issues with
+  its i18n support causing translation statistics generation fails. An example
+  is intltool-powered projects having issues generating their source files
+  (POT).
+
+Notifications can be delivered in a number of ways. The user's latest
+notifications are collected on the user's profile page. In addition, users
+have the choice to also receive the notifications by email. In the future,
+more channels could be supported.
+
+
+Multiple files per language
+:::::::::::::::::::::::::::
+
+Transifex now adds support for components shipping multiple translation files
+per language. The groups of files per language-component are now identified and
+associated with their language, and their completion percentages are
+grouped in one statistics bar for the language. The breakdown of the files is
+shown on a separate page, along with the usual actions on each file (download,
+view, lock, etc).
+
+For each of these translation files, the source file is also identified and its
+contents are msgmerged with the files, producing up-to-date statistics. 
 
 
 Internationalization support
 ::::::::::::::::::::::::::::
 
-Transifex 0.5 has included support for translation of its interface in various
-languages. This release makes this support available in the interface itself.
-Users can choose the language of their choice from a drop-down menu of available
-languages on the top-right part of the screen.
+Transifex's user interface is now internationalized, and includes support for
+viewing it in the user's preferred language. A drop-down menu shows the
+available languages on the top-right part of the screen, allowing overriding
+of the detected preference.
 
 Following the policy 'eat our own dogfood', Transifex is in fact translatable
 through Transifex itself. Volunteer contributions for new translations and
