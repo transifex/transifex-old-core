@@ -2,9 +2,6 @@
 import os
 import re
 import codecs
-import pygments
-import pygments.lexers
-import pygments.formatters
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
@@ -349,24 +346,34 @@ def component_file(request, project_slug, component_slug, filename,
     fname = "%s.%s" % (component.full_name, os.path.basename(filename))
     logger.debug("Requested raw file %s" % filename)
     if view:
-        lexer = pygments.lexers.GettextLexer()
-        formatter = pygments.formatters.HtmlFormatter(linenos='inline')
-        encre = re.compile(r'"?Content-Type:.+? charset=([\w_\-:\.]+)')
-        m = encre.search(content)
-        encoding = 'UTF-8'
-        if m:
-            try:
-                codecs.lookup(m.group(1))
-                encoding = m.group(1)
-            except LookupError:
-                pass
-        context = Context({'body': pygments.highlight(content.decode(
-                                        encoding), lexer, formatter),
-                           'style': formatter.get_style_defs(),
-                           'title': "%s: %s" % (component.full_name,
-                                                os.path.basename(filename))})
-        content = loader.get_template('poview.html').render(context)
-        response = HttpResponse(content, mimetype='text/html; charset=UTF-8')
+        try:
+            import pygments
+            import pygments.lexers
+            import pygments.formatters
+
+            lexer = pygments.lexers.GettextLexer()
+            formatter = pygments.formatters.HtmlFormatter(linenos='inline')
+            encre = re.compile(r'"?Content-Type:.+? charset=([\w_\-:\.]+)')
+            m = encre.search(content)
+            encoding = 'UTF-8'
+            if m:
+                try:
+                    codecs.lookup(m.group(1))
+                    encoding = m.group(1)
+                except LookupError:
+                    pass
+            context = Context({'body': pygments.highlight(content.decode(
+                                            encoding), lexer, formatter),
+                               'style': formatter.get_style_defs(),
+                               'title': "%s: %s" % (component.full_name,
+                                                    os.path.basename(filename))})
+            content = loader.get_template('poview.html').render(context)
+            mimetype = 'text/html'
+        except ImportError:
+            # Oh well, no pygments available
+            mimetype = 'text/plain'
+        response = HttpResponse(content,
+            mimetype='%s; charset=UTF-8' % (mimetype,))
         attach = ""
     else:
         response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
