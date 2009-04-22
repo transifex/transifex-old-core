@@ -4,13 +4,17 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
 from projects.models import Project, Component, VcsUnit
-
+from txcommon.forms import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
 
 class ComponentForm(forms.ModelForm):
+    # TODO: Figure out how to keep this synced to Component.file_filter
+    file_filter = ValidRegexField(initial='po/.*', max_length=50,
+        help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
+
     class Meta:
         model = Component
 
