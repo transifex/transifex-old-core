@@ -32,8 +32,28 @@ What's new in Transifex 0.6
 The following major features were introduced in this release.
 
 
+Multiple files per language
+:::::::::::::::::::::::::::
+
+.. image:: ../_screenshots/0.6-multifile.png
+   :class: shot
+
+Transifex now adds support for components shipping multiple translation files
+per language. The groups of files per language-component are now identified and
+associated with their language, and their completion percentages are
+grouped in one statistics bar for the language. The breakdown of the files is
+shown on a separate page, along with the usual actions on each file (download,
+view, lock, etc).
+
+For each of these translation files, the source file is also identified and its
+contents are msgmerged with the files, producing up-to-date statistics. 
+
+
 User Notifications
 ::::::::::::::::::
+
+.. image:: ../_screenshots/0.6-notices.png
+   :class: shot
 
 Watching translation files
   Transifex can now monitor the repositories it follows for changes and
@@ -59,23 +79,12 @@ have the choice to also receive the notifications by email. In the future,
 more channels could be supported.
 
 
-Multiple files per language
-:::::::::::::::::::::::::::
-
-Transifex now adds support for components shipping multiple translation files
-per language. The groups of files per language-component are now identified and
-associated with their language, and their completion percentages are
-grouped in one statistics bar for the language. The breakdown of the files is
-shown on a separate page, along with the usual actions on each file (download,
-view, lock, etc).
-
-For each of these translation files, the source file is also identified and its
-contents are msgmerged with the files, producing up-to-date statistics. 
-
-
 Internationalization support
 ::::::::::::::::::::::::::::
 
+.. image:: ../_screenshots/0.6-langs.png
+   :class: shot
+   
 Transifex's user interface is now internationalized, and includes support for
 viewing it in the user's preferred language. A drop-down menu shows the
 available languages on the top-right part of the screen, allowing overriding
@@ -90,6 +99,9 @@ http://www.transifex.net/.
 Translation file archives
 :::::::::::::::::::::::::
 
+.. image:: ../_screenshots/0.6-zip.png
+   :class: shot
+   
 Transifex now adds support for downloading compressed archives containing the
 files belonging to a release for a particular language. The compressed archive
 types supported are **zip files** and gzipped **tarballs**.
@@ -110,24 +122,34 @@ During the development cycle of 0.6, quite a few improvements in the user
 interface took place here and there. Here's a list of the most important ones:
 
 Untranslated components list
-  The language-release page now include a list of components which haven't
-  had any translations so far. This gives a better picture of the parts which
-  need translation to make the completion status increase.
+""""""""""""""""""""""""""""
+The language-release page now include a list of components which haven't
+had any translations so far. This gives a better picture of the parts which
+need translation to make the completion status increase.
 
 More RSS feeds
-  The release page with the completion percentage of each language is now
-  published also as an RSS feed, allowing people like release engineer to easily
-  check the translation status of their release.
+""""""""""""""
+The release page with the completion percentage of each language is now
+published also as an RSS feed, allowing people like release engineer to easily
+check the translation status of their release.
 
 Easy file selection for editing
-  The 'advanced' submission form now supports either editing a remote file or
-  creating a new one. The user can choose either to overwrite an existing
-  file or create a new one.
+"""""""""""""""""""""""""""""""
+.. image:: ../_screenshots/0.6-target.png
+   :class: shot
+
+The 'advanced' submission form now supports either editing a remote file or
+creating a new one. The user can choose either to overwrite an existing
+file or create a new one.
 
 Sortable statistics tables
-  The tables presented are now sortable by a number of variables, including
-  the language name and the completion percentage, depending on how the user
-  prefers to view the list and find the information needed.
+""""""""""""""""""""""""""
+.. image:: ../_screenshots/0.6-sorting.png
+   :class: shot
+
+The tables presented are now sortable by a number of variables, including
+the language name and the completion percentage, depending on how the user
+prefers to view the list and find the information needed.
 
 
 Under the hood changes
@@ -138,11 +160,13 @@ interest people who administrate their own Transifex instance or build on top
 of the platform.
 
 Revamped settings mechanism
-  Settings are now organized in multiple files under the ``settings/``
-  directory, allowing easier management and override. (r456)
+"""""""""""""""""""""""""""
+Settings are now organized in multiple files under the ``settings/``
+directory, allowing easier management and override. (r456)
 
 Improved abstraction for repositories
-  Codebases, VCS, etc. (r461)
+"""""""""""""""""""""""""""""""""""""
+Codebases, VCS, etc. (r461)
 
 
 Translations
