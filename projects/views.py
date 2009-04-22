@@ -116,7 +116,7 @@ def project_delete(request, project_slug):
         # ActionLog & Notification
         nt = 'project_deleted'
         context={'project': project_}
-        action_logging(request.user, project_, nt, context=context)
+        action_logging(request.user, [project_], nt, context=context)
 
         return HttpResponseRedirect(reverse('project_list'))
     else:
