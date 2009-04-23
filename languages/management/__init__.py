@@ -15,7 +15,7 @@ def create_languages(app, created_models, verbosity, **kwargs):
                 confirm = raw_input('Please enter either "yes" or "no": ')
                 continue
             if confirm == 'yes':
-                call_command("txlanguages", interactive=True)
+                call_command("create_languages", interactive=True)
             break
 
 signals.post_syncdb.connect(create_languages,
