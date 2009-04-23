@@ -12,7 +12,7 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         print "Creating or updating languages"
         process_lang()
-        print "Finished"
+        print "Default set of languages initialized successfully."
 
 def process_lang():
     """Create or Update the default languages"""
