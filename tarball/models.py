@@ -19,6 +19,8 @@ class Tarball(Unit):
 #    checksum = CharField('Checksum of the downloaded tarball',
 #        max_length=128)
 
+    unit_types = ('tar',)
+
     def __repr__(self):
         return '<Tarball: %(name)s)>' % {'name': self.name}
 

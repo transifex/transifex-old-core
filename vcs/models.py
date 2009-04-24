@@ -51,6 +51,9 @@ class VcsUnit(Unit):
         max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
+    unit_types = tuple([x for x in 'bzr', 'cvs', 'git', 'hg', 'svn'
+        if x in settings.CODEBASE_CHOICES])
+
     def __repr__(self):
         return _('<VcsUnit: %(name)s (%(type)s)>') % {'name': self.name,
                                                    'type': self.type}
@@ -140,6 +143,10 @@ class VcsUnit(Unit):
         """Get revision of a path from the underlying VCS"""
         return self.browser.submit(files, msg, user)
         
+    @classmethod
+    def bootstrap_extra(cls, unit):
+        unit.branch = ''
+
 def suite():
     """
     Define the testing suite for Django's test runner.

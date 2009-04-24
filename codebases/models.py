@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import settings
 from codebases import need_browser
+from txcommon.models import inclusive_fields
 
 class Unit(models.Model):
     """
@@ -79,3 +80,38 @@ class Unit(models.Model):
         supplied contents
         """
         raise NotImplementedError()
+
+    def promote(self):
+        '''
+        Returns a descendent model that refers to this codebase
+        '''
+        for cls in self.__class__.__subclasses__():
+            if self.type in cls.unit_types:
+                return cls.bootstrap(self)
+        else:
+            raise ValueError('Unknown unit type %r' % self.type)
+
+    @classmethod
+    def bootstrap(cls, unit):
+        '''
+        Creates a descendent from a Unit and returns it, saving if a
+        new Unit descendant is created
+        '''
+        try:
+            newunit = cls.objects.get(pk=unit.pk)
+        except cls.DoesNotExist:
+            newunit = cls()
+            newunit.pk = unit.pk
+            cls.bootstrap_extra(newunit)
+            for field in inclusive_fields(type(unit)):
+                setattr(newunit, field.name, getattr(unit, field.name))
+            newunit.save()
+        return newunit
+
+    @classmethod
+    def bootstrap_extra(cls, unit):
+        '''
+        Extra initialization after bootstrapping
+        Descendents should override as necessary
+        '''
+        pass
