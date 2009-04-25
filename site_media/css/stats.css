@@ -27,8 +27,7 @@ table.stats {
 
 div.graph {
   height: 16px;
-  width: 100px;
-  border: 0px solid black; 
+  border: none; 
   position: relative;
   float: left;
 }
@@ -106,13 +105,14 @@ table.stats_comp {
   background-color: #f5f5f5;
 }
 
-.stats_comp td { 
+.stats_comp td {
   text-align: center;
   font-size: 100%;
   padding: 0px;
   margin: 0px;
   line-height: 1.8em;
   border-bottom: 1px solid #E3EAEE;
+  height: 24px;
 }
 
 .stats_comp td.left { 
@@ -130,31 +130,29 @@ table.stats_comp {
 }
 
 div.graph_comp {
-  height: 1.5em;
+  position: relative;
+  z-index: 1;
+  height: 20px;
   margin: 0px;
   padding: 0px;
-  width: 100px;
-  position: relative;
-  float: left;
   border-left: 1px solid #ddd;
+  margin-right: 1px; /* Due to the right border of div.untranslated_comp */
 }
 
 div.stats_string_comp{
-  height: 1.5em;
-  float: left;
+  position: absolute; 
+  z-index: 2;
   text-align: left;
   padding-left: 0.8em; 
-  position: absolute;
   font-size: 80%;
-  width: 95px;
   color: #69916a;
-  line-height: 20px;
+  height: 22px;
+  line-height: 22px;
 }
 
 div.translated_comp {
-  position: absolute; 
-  top: 0px;
-  height:100%; 
+  position: absolute;
+  height:100%;
   left: 0%; 
   background: #c1f8c2;
   background-repeat: repeat-x;
@@ -163,8 +161,7 @@ div.translated_comp {
 
  
 div.fuzzy_comp {
-  position: absolute; 
-  top: 0px;
+  position: absolute;
   height:100%; 
   background: #dae1ee;
   background-repeat: repeat-x;
@@ -172,9 +169,9 @@ div.fuzzy_comp {
 }
 
 div.untranslated_comp {
-  position: absolute; 
+  position: absolute;
   height:100%; 
-  top: 0px;
+  display: inline;
   background: #efefef;
   background-repeat: repeat-x;
   border-right: 1px solid #ddd;

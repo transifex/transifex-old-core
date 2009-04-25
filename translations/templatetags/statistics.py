@@ -1,5 +1,8 @@
-from django import template
+import operator
 import os
+
+from django import template
+
 from translations.models import Language
 from txcommon.templatetags.txcommontags import key_sort
 
@@ -18,12 +21,17 @@ class StatBarsPositions(dict):
             self.w = width
             self.l = left
 
-    def __init__(self, bar_data, border=1):
+    def __init__(self, bar_data, width=100, border=1):
         """
         A dictionary to hold the positions of named bars.
         
-        Accepts an ordered list (name, bar_width) of tuples to render and
-        a border to pad each consecutive non-zero-sized bar. Example:
+        Arguments:
+        
+        - An ordered list of tuples (name, bar_width) to render
+        - The width of the "100%" bar in pixels
+        - The width of a border to pad each consecutive non-zero-sized bar
+        
+        Example:
         
         >>> pos = [('a', 2), ('b', 1), border=1]
         >>> pos['a'].w
@@ -31,17 +39,30 @@ class StatBarsPositions(dict):
         >>> pos['b'].l   # Should return first bar width + border = 2
         3
         """
-        _left = 0
-        for t in bar_data:
-            self[t[0]] = self.BarPos(width=t[1], left=_left)
-            if t[1] > 0:
-                _left+=t[1]+border
+        innerwidth = width
+        if innerwidth < 0:
+            raise ValueError('Too many items (%d) for given width (%d) '
+                'and border (%d)' % (len(bar_data), width, border))
 
-def pos_from_stat(stat, border=1):
+        totsegwidth = reduce(operator.add, (x[1] for x in bar_data), 0)
+        oldend = 0
+        for segnum, segment in enumerate(bar_data):
+            if segment[1] < 0:
+                raise ValueError('Negative segment size (%d) given for '
+                    'element %d'% (segment[1], segnum + 1))
+            fl = oldend
+            fr = fl + segment[1] * innerwidth
+            oldend = fr
+            l = int(round(float(fl) / totsegwidth))
+            r = int(round(float(fr) / totsegwidth))
+            self[segment[0]] = self.BarPos(r - l, l)
+        return
+
+def pos_from_stat(stat, width, border=1):
     """Return a StatBarsPositions object for a POFile (stat)."""
     return StatBarsPositions([('trans', stat.trans_perc),
                               ('fuzzy', stat.fuzzy_perc),
-                              ('untrans', stat.untrans_perc)])
+                              ('untrans', stat.untrans_perc)], width)
 
 ## Template tags
 
@@ -101,22 +122,26 @@ def comp_lang_stats_table(context, stats):
     return context
 
 @register.inclusion_tag("stats_bar_full.html")
-def stats_bar_full(stat):
+def stats_bar_full(stat, width=100):
     """
-    Create a HTML bar to presents the full statistics 
+    Create a HTML bar to present the full statistics. 
+
+    Accepts an optional parameter to specify the width of the total bar.
     """
 
     return {'stat': stat,
-            'pos': pos_from_stat(stat),}
+            'pos': pos_from_stat(stat, width),}
 
 @register.inclusion_tag("stats_bar_trans.html")
-def stats_bar_trans(stat):
+def stats_bar_trans(stat, width=100):
     """
-    Create a HTML bar to presents only the translated the statistics 
+    Create an HTML bar to present only the translated statistics.
+
+    Accepts an optional parameter to specify the width of the total bar.
     """
 
     return {'stat': stat,
-            'pos': pos_from_stat(stat),}
+            'pos': pos_from_stat(stat, width),}
 
 
 @register.filter  

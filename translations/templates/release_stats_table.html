@@ -22,8 +22,8 @@
           {% endif %}
         </td>
         <td class="stats">
-          {% stats_bar_full stat %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
+          {% stats_bar_full stat 120 %}
         </td>
       </tr>
    {% endfor %}
