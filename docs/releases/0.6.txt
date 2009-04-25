@@ -90,6 +90,9 @@ viewing it in the user's preferred language. A drop-down menu shows the
 available languages on the top-right part of the screen, allowing overriding
 of the detected preference.
 
+A new management command has been added, ``txmakemessage``, which creates the
+PO files on-the-fly from the source code and templates.
+
 Following the policy 'eat our own dogfood', Transifex is in fact translatable
 through Transifex itself. Volunteer contributions for new translations and
 improvements in the existing translations are submitted through Transifex at
@@ -161,12 +164,32 @@ of the platform.
 
 Revamped settings mechanism
 """""""""""""""""""""""""""
+
 Settings are now organized in multiple files under the ``settings/``
 directory, allowing easier management and override. (r456)
 
 Improved abstraction for repositories
 """""""""""""""""""""""""""""""""""""
-Codebases, VCS, etc. (r461)
+
+Backend support for repositories has been improved to allow more types of
+repos to pull from. The new ``codebases`` application has been
+introduced which abstracts the VCS functionality for the ``vcs`` and
+``tarball`` applications.
+
+Improved languages support
+""""""""""""""""""""""""""
+
+- More languages have been added for commonly used locale codes (#200).
+- Language creation command added: ``(python manage.py) create_languages``.
+- After first syncdb, admin is prompted for language creation (#213).
+
+Action logging
+""""""""""""""
+
+The action log support has been re-engineered to allow more notifications of
+changes and better reporting. It includes more clear HTML templates and text
+and can refer to different objects resulting in increase of performance and
+usability.
 
 
 Translations
@@ -181,17 +204,28 @@ Bugfixes from 0.5.x
 In addition to the bugfixes introduced in the maintenance
 :ref:`0.5.x releases <releases-0.5>`, the following issues have also been fixed:
 
-- Fixed ordering in language-release feed (fixes #149) (Markos Fragkakis)
 - Default mode of operation is now DEBUG.
+- Fixed ordering in language-release feed (fixes #149) (Markos Fragkakis)
 - Run msgfmt check and stats calculation only for .po files
 - Changing a repository root url now deletes the local cache of the repository.
-
+- List of releases for components is now filtered by the collections chosen in
+  the project. Additionally, when a collection is dropped from a project, the
+  components of the project also reflect that change, removing releases related
+  to that collection.
+- Regular expressions in ComponentForm are now validated for correctness.
 
 
 Upgrading to 0.6
 ----------------
 
-...
+- The schema for the tables that store the remote repository information
+  has changed. If there is no information in the tables then a
+  ``python manage.py reset codebases tarball vcs`` will update your database.
+- The settings files have been broken down for easier maintenance in
+  ``settings/``. The ``settings.py`` file needs to be overwritten with the new
+  version and settings migrated to the respective ``.conf`` files. 
+
+(This section urgently needs more text.)
 
 
 Contributors
