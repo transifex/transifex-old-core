@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from codebases import need_browser
 from codebases.models import Unit
+from txcommon.log import logger
 
 class Tarball(Unit):
     '''
@@ -61,8 +62,7 @@ class Tarball(Unit):
         from tarball.lib import get_browser_object
         browser = get_browser_object(self.type)
         self.browser = browser(root=self.root,
-                               name=self.name,
-                               branch='tip')
+                               name=self.name)
 
     @need_browser
     def prepare(self):
@@ -76,15 +76,14 @@ class Tarball(Unit):
             logger.debug("Tarball update failed. Let's clean up and try again.")
             # Try once again with a clean local repo.
             self.teardown()
-            self.browser.setup_repo()
-            #TODO: Do something if this fails.
-            self.browser.update()
+            self.browser.setup_codebase()
 
     @need_browser
     def get_files(self, file_filter):
         """Abstration for the tarball.browser.get_files."""
         return self.browser.get_files(file_filter)
 
+    @need_browser
     def teardown(self):
         """Abstration for the vcsunit.browser.teardown_repo."""
         try:

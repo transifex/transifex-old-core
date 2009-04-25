@@ -6,12 +6,18 @@ resource: A file within a codebase
 codebase: A collection of files (VCS repo, tarball, etc.) that contains
   resources, some or all of which are to be translated
 """
+import operator
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import settings
 from codebases import need_browser
+from txcommon.log import log_model
 from txcommon.models import inclusive_fields
+
+UNIT_CHOICES = settings.CODEBASE_CHOICES.items()
+UNIT_CHOICES.sort(key=operator.itemgetter(0))
 
 class Unit(models.Model):
     """
@@ -29,7 +35,7 @@ class Unit(models.Model):
     root = models.CharField(_('Root'), max_length=255,
         help_text=_("The URL of the codebase"))
     type = models.CharField(_('Type'), max_length=10,
-        choices=settings.CODEBASE_CHOICES.items(),
+        choices=UNIT_CHOICES,
         help_text=_('The codebase type (%s)' %
                     ', '.join(settings.CODEBASE_CHOICES)))
     last_checkout = models.DateTimeField(null=True, editable=False,
@@ -85,7 +91,7 @@ class Unit(models.Model):
         '''
         Returns a descendent model that refers to this codebase
         '''
-        for cls in self.__class__.__subclasses__():
+        for cls in Unit.__subclasses__():
             if self.type in cls.unit_types:
                 return cls.bootstrap(self)
         else:
@@ -115,3 +121,5 @@ class Unit(models.Model):
         Descendents should override as necessary
         '''
         pass
+
+log_model(Unit)

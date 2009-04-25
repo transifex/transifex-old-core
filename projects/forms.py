@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
-from projects.models import Project, Component, VcsUnit
+from projects.models import Project, Component
 from txcommon.forms import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
@@ -29,8 +29,3 @@ class ComponentForm(forms.ModelForm):
         releases = self.fields["releases"].queryset.filter(
                                            collection__id__in=collection_query)
         self.fields["releases"].queryset = releases
-
-class UnitForm(forms.ModelForm):
-    class Meta:
-        model = VcsUnit
-        exclude= ('name',)

@@ -15,19 +15,23 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
+from codebases.forms import UnitForm
 from projects.models import Project, Component
-from projects.forms import ProjectForm, ComponentForm, UnitForm
+from projects.forms import ProjectForm, ComponentForm
 from projects import signals
+from tarball.forms import TarballSubForm
 from txcommon.log import logger
 from actionlog.models import action_logging
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403
+from txcommon.models import exclusive_fields
 from txcommon.views import (json_result, json_error)
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from notification import models as notification
+from vcs.forms import VcsUnitSubForm
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -200,6 +204,12 @@ def component_create_update(request, project_slug, component_slug=None):
             unit = unit_form.save(commit=False)            
             unit.name = component.get_full_name()
             unit.save()
+            unit = unit.promote()
+            for field in exclusive_fields(type(unit)):
+                setattr(unit, field.name,
+                    request.POST[(u'%s-%s' % (unit._meta.object_name,
+                    field.name)).encode('utf-8')])
+            unit.save()
             component.unit = unit
             component_id = component.id
             component.save()
@@ -232,9 +242,21 @@ def component_create_update(request, project_slug, component_slug=None):
         component_form = ComponentForm(project, instance=component,
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
+        # TODO: Find a sane way of doing this
+        _subforms = [VcsUnitSubForm, TarballSubForm]
+        _formd = {False: None, True: unit}
+        unit_subforms = [
+            {
+                'form': unitform(None,
+                    instance=_formd[unitform._meta.model == type(unit)],
+                    prefix=unicode(unitform.Meta.model._meta.object_name)),
+                'id': unitform.Meta.model._meta.object_name, 
+                'triggers': unitform.Meta.model.unit_types,
+            } for unitform in _subforms]
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
         'unit_form': unit_form,
+        'unit_subforms': unit_subforms,
         'project' : project,
         'component': component,
     }, context_instance=RequestContext(request))

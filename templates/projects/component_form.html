@@ -12,6 +12,42 @@
 {% else %}{% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}
 {% endif %}{% endblock %}
 
+{% block extra_head %}
+<script>
+triggers = new Object();
+{% for subform in unit_subforms %}{% for trigger in subform.triggers %}triggers["{{ trigger }}"] = "sub_{{ subform.id }}";
+{% endfor %}{% endfor %}
+prefaces = new Array({% for subform in unit_subforms %}"sub_{{ subform.id }}"{% if not forloop.last %}, {% endif %}{% endfor %});
+
+function on_change_type(obj)
+{
+    on = triggers[obj.attr("value")];
+    for (prefix in prefaces)
+    {
+        off = prefaces[prefix];
+        if (off == on)
+        {
+            continue;
+        };
+        $("[id^='" + off + "']").hide();
+    }
+    $("[id^='" + on + "']").show();
+}
+
+$(document).ready(
+    function ()
+    {
+        $("#id_unit-type").bind("change", function ()
+            {
+                on_change_type($("#id_unit-type"));
+            }
+        );
+        on_change_type($("#id_unit-type"));
+    }
+);
+</script>
+{% endblock %}
+
 {% block content_title %}
   {% if not component %}
     <h2 class="pagetitle">{% blocktrans with project.name as project_name %}New component for {{ project_name }}{% endblocktrans %}</h2>
@@ -30,6 +66,9 @@
     <tbody>
       {% form_as_table_rows component_form %}
       {% form_as_table_rows unit_form %}
+      {% for subform in unit_subforms %}
+      {% form_as_table_rows subform.form subform.id%}
+      {% endfor %}
     </tbody>
   </table>
   <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>

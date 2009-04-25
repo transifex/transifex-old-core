@@ -17,9 +17,9 @@ from django.utils.html import escape
 import tagging
 from tagging.fields import TagField
 
+from codebases.models import Unit
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
-from vcs.models import VcsUnit
 from txcommon.log import (logger, log_model)
 from txcommon.notifications import is_watched_by_user_signal
 from projects.handlers import get_trans_handler
@@ -226,8 +226,8 @@ class Component(models.Model):
 
     # Relations
     project = models.ForeignKey(Project, verbose_name=_('Project'))
-    unit = models.OneToOneField(VcsUnit, verbose_name=_('Unit'),
-        blank=True, null=True, editable=False)
+    _unit = models.OneToOneField(Unit, verbose_name=_('Unit'),
+        blank=True, null=True, editable=False, db_column='unit_id')
     pofiles = generic.GenericRelation(POFile)
     releases = models.ManyToManyField(CollectionRelease,
         verbose_name=_('Releases'), related_name='components',
@@ -235,6 +235,16 @@ class Component(models.Model):
 
     # Managers
     objects = ComponentManager()
+
+    def _get_unit(self):
+        if type(self._unit) == Unit:
+            self._unit = self._unit.promote()
+        return self._unit
+    
+    def _set_unit(self, newunit):
+        self._unit = newunit
+        
+    unit = property(_get_unit, _set_unit)
 
     def __unicode__(self):
         return u'%s (%s)' % (self.name, self.project)
@@ -400,4 +410,3 @@ class Component(models.Model):
             pass
 
 log_model(Component)
-log_model(VcsUnit)

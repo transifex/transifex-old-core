@@ -34,11 +34,11 @@ def txversion():
 # Forms
 
 @register.inclusion_tag("form_as_table_rows.html")
-def form_as_table_rows(form):
+def form_as_table_rows(form, id=None):
     """
     Create a form using HTML table rows.
     """
-    return {"form": form}
+    return {"form": form, "id": id}
 
 
 # Email Munger by cootetom

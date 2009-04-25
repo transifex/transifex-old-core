@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os, os.path
+import sys
 import tarfile
 import traceback
 
@@ -89,6 +90,7 @@ class TarballBrowser(BrowserMixin):
                         return
                 raise BrowserError(e)
 
+        logger.error(self.path)
         download = os.path.join(self.path, 'download')
         filename = os.path.join(download, self.name)
         extract = os.path.join(self.path, 'extract')

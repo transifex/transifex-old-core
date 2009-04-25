@@ -64,10 +64,12 @@ class VcsUnit(Unit):
         get_latest_by = 'created'
 
     def save(self, *args, **kwargs):
+        unit_old = None
         if self.id:
-            unit_old = VcsUnit.objects.get(id=self.id)
-        else:
-            unit_old = None
+            try:
+                unit_old = VcsUnit.objects.get(id=self.id)
+            except VcsUnit.DoesNotExist:
+                pass
 
         super(VcsUnit, self).save(*args, **kwargs)
 
