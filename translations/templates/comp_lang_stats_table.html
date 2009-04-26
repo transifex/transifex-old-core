@@ -22,10 +22,12 @@
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
           {% endif %}
         </td>
-        <td class="stats">
-          {% stats_bar_full stat %}
+        {% with 140 as barwidth %}
+        <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
+          {% stats_bar_full stat barwidth %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
         </td>
+        {% endwith %}
         <td class="left actions">
            {% url component_view_file stat.object.project.slug stat.object.slug stat.filename as file_view_url %}
            {% url component_raw_file stat.object.project.slug stat.object.slug stat.filename as file_raw_url %}

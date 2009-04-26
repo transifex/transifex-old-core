@@ -21,10 +21,12 @@
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
           {% endif %}
         </td>
-        <td class="stats">
+        {% with 140 as barwidth %}
+        <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
-          {% stats_bar_full stat 120 %}
+          {% stats_bar_full stat barwidth %}
         </td>
+        {% endwith %}
       </tr>
    {% endfor %}
    </tbody>
