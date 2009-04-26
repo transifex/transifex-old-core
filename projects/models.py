@@ -91,6 +91,9 @@ class Project(models.Model):
     homepage = models.URLField(_('Homepage'), blank=True, verify_exists=False)
     feed = models.CharField(_('Feed'), blank=True, max_length=255,
         help_text=_('An RSS feed with updates on the project.'))
+    bug_tracker = models.URLField(_('Bug tracker'), blank=True,
+        help_text=_('The URL for the webiste tracking bugs and tickets '
+                    '(Bugzilla, Trac, etc.)'))
 
     hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))

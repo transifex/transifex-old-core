@@ -56,6 +56,12 @@
       <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></td>
     </tr>
     {% endif %}
+    {% if project.bug_tracker %}
+    <tr>
+      <th class="bug i16">{% trans "Bug tracker:" %}</th>
+      <td><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></td>
+    </tr>
+    {% endif %}
     {% if project.tags %}
     <tr>
       <th class="i16 tag">{% trans "Tags:" %}</th>
