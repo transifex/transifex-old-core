@@ -6,6 +6,8 @@ resource: A file within a codebase
 codebase: A collection of files (VCS repo, tarball, etc.) that contains
   resources, some or all of which are to be translated
 """
+from datetime import datetime
+
 from django.utils.translation import ugettext_lazy as _
 
 from codebases import need_browser

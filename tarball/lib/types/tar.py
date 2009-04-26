@@ -155,3 +155,12 @@ class TarballBrowser(BrowserMixin):
                         addremove=True, logfile=None, 
                         user=user.encode('utf-8'),
                         date=None)
+    @need_codebase
+    def update(self):
+        try:
+            if hasattr(self, 'filepath'):
+                hg.repository(ui, self.filepath)
+            else:
+                raise RepoError()
+        except RepoError:
+            self.init_codebase()
