@@ -45,6 +45,12 @@ class StatBarsPositions(dict):
                 'and border (%d)' % (len(bar_data), width, border))
 
         totsegwidth = reduce(operator.add, (x[1] for x in bar_data), 0)
+        if totsegwidth == 0:
+            # No translations whatsoever
+            self['trans'] = self.BarPos(width, 0)
+            self['fuzzy'] = self.BarPos(0, width)
+            self['untrans'] = self.BarPos(0, width)
+            return
         oldend = 0
         for segnum, segment in enumerate(bar_data):
             if segment[1] < 0:
