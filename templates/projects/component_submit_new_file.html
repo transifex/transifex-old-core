@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load statistics %}
+{% load truncate %}
 <div class="generic_form">
 {% url component_submit_new_file component.project.slug component.slug as file_submit_url %}
 <span class="i16 add submit_button buttonized" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new translation" %}</span>
