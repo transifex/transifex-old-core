@@ -13,13 +13,12 @@ Source1:    django-settings.py.in
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:  noarch
 
-BuildRequires:  python-sphinx
-Requires:   Django django-authopenid django-contact-form django-evolution
+BuildRequires:  Django python-sphinx gettext-devel
+Requires:   Django django-authopenid django-contact-form
 Requires:   django-notification django-pagination django-tagging
 Requires:   python-markdown python-polib python-pygments
-Requires:   mercurial
-Requires:   intltool >= 0.40.5
-Requires:   python-urlgrabber
+Requires:   mercurial python-urlgrabber
+Requires:   intltool >= 0.37.1
 
 %description
 Transifex is a web-system that facilitates the process of submitting
@@ -40,58 +39,72 @@ This package adds extra options to Transifex.
   * git support
 
 %prep
-%setup -q
+%setup -qcTn %{name}
+tar --strip-components 1 -zxf %{SOURCE0}
+sed -e 's!share/locale!.*/locale!' /usr/lib/rpm/find-lang.sh > my-find-lang.sh
 
 %build
+rm -rf .hg* build-tools
+rm -r vcs/tests
+python manage.py syncdb --noinput
 cd docs
 make html
+cd ..
+# Django's compilemessages command seems to walk all over the place
+#python manage.py compilemessages
+find locale -name django.po -execdir msgfmt --check-format -o django.mo {} \;
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 find -mindepth 1 -maxdepth 1 -type d \( \( -name .hg -o \
-    -name build-tools -o -name docs \) -prune -o -print \) | \
-    xargs cp -a -t $RPM_BUILD_ROOT/%{_datadir}/%{name}
+    -name build-tools -o -name docs -o -name settings \) -prune -o \
+    -print \) | xargs cp -a -t $RPM_BUILD_ROOT/%{_datadir}/%{name}
 cp -a *.py $RPM_BUILD_ROOT%{_datadir}/%{name}
+find $RPM_BUILD_ROOT%{_datadir}/%{name}/locale -name \*.po -exec rm {} +
 
-for vcs in cvs svn bzr hg git
+for vcs in cvs svn bzr hg git tar
 do
     mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/scratchdir/sources/"$vcs"
 done
 
 install -d -m 0755 $RPM_BUILD_ROOT/%{confdir}
 
-sed -n -e '/ADDITIONAL VCS OPTIONS/q;p' \
-    $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py > \
-    $RPM_BUILD_ROOT%{confdir}/00-default.conf
-
-sed -n -e '/EXTRA LOCAL SETTINGS/q;/ADDITIONAL VCS OPTIONS/,$p' \
-    $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py > \
-    $RPM_BUILD_ROOT%{confdir}/10-extras.conf
+cp -a settings/*.conf $RPM_BUILD_ROOT/%{confdir}
 
 sed -e 's!\[\[confpath\]\]!%{confdir}!' %{SOURCE1} > \
     $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py
+
+sh my-find-lang.sh $RPM_BUILD_ROOT django transifex.lst
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if grep -q '[[SECRETKEY]]' %{confdir}/%{name}/00-default.conf
+if grep -q '\[\[SECRETKEY\]\]' %{confdir}/10-base.conf
 then
     key=$(python << EOF
 import random
-print ''.join(chr(random.randint(35, 126)) for x in xrange(40))
+print ''.join(chr(random.randint(35, 126)) for x in xrange(40)).replace('&',
+    '\&')
 EOF
 )
     sed -i -e "s!\[\[SECRETKEY\]\]!$key!" \
-        %{confdir}/%{name}/00-default.conf
+        %{confdir}/10-base.conf
 fi
 
-%files
+%files -f transifex.lst
 %defattr(-,root,root,-)
 %doc LICENSE README docs/_build/html
 %dir %{confdir}
-%config(noreplace) %{confdir}/00-default.conf
+%config(noreplace) %{confdir}/10-base.conf
+%config(noreplace) %{confdir}/20-engines.conf
+%config(noreplace) %{confdir}/30-site.conf
+%config(noreplace) %{confdir}/40-apps.conf
+%config(noreplace) %{confdir}/50-project.conf
+%config(noreplace) %{confdir}/60-vcs.conf
+%config(noreplace) %{confdir}/65-tarball.conf
+%config(noreplace) %{confdir}/70-translation.conf
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/__init__.py
 %{_datadir}/%{name}/__init__.py[co]
@@ -99,16 +112,21 @@ fi
 %exclude %{_datadir}/%{name}/manage.py[co]
 %{_datadir}/%{name}/settings.py
 %{_datadir}/%{name}/settings.py[co]
-%exclude %{_datadir}/%{name}/settings_*.py*
 %{_datadir}/%{name}/urls.py
 %{_datadir}/%{name}/urls.py[co]
 %{_datadir}/%{name}/actionlog
+%{_datadir}/%{name}/codebases
+%{_datadir}/%{name}/external
 %{_datadir}/%{name}/languages
+%dir %{_datadir}/%{name}/locale
+%{_datadir}/%{name}/locale/LINGUAS
 %{_datadir}/%{name}/projects
 %{_datadir}/%{name}/releases
 %{_datadir}/%{name}/repowatch
+%{_datadir}/%{name}/simpleauth
 %{_datadir}/%{name}/simplelock
 %{_datadir}/%{name}/site_media
+%{_datadir}/%{name}/tarball
 %{_datadir}/%{name}/templates
 %{_datadir}/%{name}/txcommon
 %{_datadir}/%{name}/translations
@@ -124,6 +142,8 @@ fi
 %{_datadir}/%{name}/vcs/lib/support/__init__.py[co]
 %{_datadir}/%{name}/vcs/lib/support/commands.py
 %{_datadir}/%{name}/vcs/lib/support/commands.py[co]
+%{_datadir}/%{name}/vcs/lib/support/hg.py
+%{_datadir}/%{name}/vcs/lib/support/hg.py[co]
 %dir %{_datadir}/%{name}/vcs/lib/types
 %{_datadir}/%{name}/vcs/lib/types/__init__.py
 %{_datadir}/%{name}/vcs/lib/types/__init__.py[co]
@@ -131,17 +151,16 @@ fi
 %{_datadir}/%{name}/vcs/lib/types/dummy.py[co]
 %{_datadir}/%{name}/vcs/lib/types/hg.py
 %{_datadir}/%{name}/vcs/lib/types/hg.py[co]
-%{_datadir}/%{name}/vcs/management/
-%{_datadir}/%{name}/vcs/tests/
 %dir %{_localstatedir}/lib/%{name}
 %dir %{_localstatedir}/lib/%{name}/scratchdir
 %dir %{_localstatedir}/lib/%{name}/scratchdir/sources
 %dir %{_localstatedir}/lib/%{name}/scratchdir/sources/hg
+%dir %{_localstatedir}/lib/%{name}/scratchdir/sources/tar
 
 %files extras
 %defattr(-,root,root,-)
 %doc LICENSE README
-%config(noreplace) %{confdir}/10-extras.conf
+%config(noreplace) %{confdir}/80-vcs-extras.conf
 %{_datadir}/%{name}/vcs/lib/support/cvs.py
 %{_datadir}/%{name}/vcs/lib/support/cvs.py[co]
 %{_datadir}/%{name}/vcs/lib/types/cvs.py

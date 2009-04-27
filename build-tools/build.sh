@@ -13,6 +13,16 @@ if [ ! "$#" = "1" ]; then
 	exit 1
 fi
 
+function build {
+rpmbuild --define "_builddir $1/BUILD" \
+	--define "_buildrootdir $1/BUILDROOT" \
+	--define "_rpmdir $1/RPMS" \
+	--define "_sourcedir $1/SOURCES" \
+	--define "_srcrpmdir $1/SRPMS" \
+	--define "_build_name_fmt %%{name}-%%{version}-%%{release}.%%{arch}.rpm" \
+	"$2" --nodeps "$1"/SPECS/transifex.spec
+}
+
 rootdir="$(mktemp -d -p $PWD -t txbuild-XXXXXXXX)"
 
 for dir in BUILD BUILDROOT RPMS SOURCES SPECS SRPMS; do
@@ -34,22 +44,8 @@ tar cfz transifex-$1.tar.gz transifex-$1
 rm -rf transifex-$1
 popd
 
-rpmbuild --define "_builddir $rootdir/BUILD" \
-	--define "_buildrootdir $rootdir/BUILDROOT" \
-	--define "_rpmdir $rootdir/RPMS" \
-	--define "_sourcedir $rootdir/SOURCES" \
-	--define "_srcrpmdir $rootdir/SRPMS" \
-	--define "_build_name_fmt %%{name}-%%{version}-%%{release}.%%{arch}.rpm" \
-	-bb --nodeps "$rootdir"/SPECS/transifex.spec
-
-rpmbuild --define "_builddir $rootdir/BUILD" \
-	--define "_buildrootdir $rootdir/BUILDROOT" \
-	--define "_rpmdir $rootdir/RPMS" \
-	--define "_sourcedir $rootdir/SOURCES" \
-	--define "_srcrpmdir $rootdir/SRPMS" \
-	--define "_build_name_fmt %%{name}-%%{version}-%%{release}.%%{arch}.rpm" \
-	--define "dist %{nil}" \
-	-bs --nodeps "$rootdir"/SPECS/transifex.spec
+build "$rootdir" -bb || exit 1
+build "$rootdir" -bs || exit 2
 
 find "$rootdir" -name '*.rpm' -exec cp {} . \;
 rm -rf "$rootdir"
