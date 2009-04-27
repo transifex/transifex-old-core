@@ -81,6 +81,8 @@
         {% if component.allows_submission %}<span class="i16 tick_circle"></span>
         {% else %}<span class="i16 stop"></span>
         {% endif %}
+        {# FIXME: tar too restrictive #}
+        {% ifequal component.unit.type "tar" %}<sup><span class="note" title="{% trans "Tarball support is read-only: Submissions will not pushed to the maintainer or the upstream repo." %}">{% trans "note" %}</span></sup>{% endifequal %}
       </td>
     </tr>
   </table>
@@ -118,6 +120,8 @@
         <form action="{% url component_clear_cache component.project.slug component.slug %}" class="microform">
             <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
         </form>
+        {# FIXME: tar too restrictive #}
+        {% ifequal component.unit.type "tar" %}<sup><span class="warning" title="{% trans "Any locally modified data will be overwritten with fresh copies." %}">{% trans "warning" %}</span></sup>{% endifequal %}
         {% endif %}
       </td>
     </tr>
