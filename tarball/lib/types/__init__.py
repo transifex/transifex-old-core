@@ -30,7 +30,9 @@ class BrowserMixin:
 
     def get_file(self, filename):
         """Return a file pointer of the requested file."""
-        fullpath = os.path.join(self.path, filename)
+        path = self.filepath
+        fullpath = os.path.join(path, filename)
+        logger.debug('Retrieving %r' % (fullpath))
         fp = open(fullpath, 'r')
         return fp
 
@@ -59,7 +61,7 @@ class BrowserMixin:
         the <encode> encoding.
         
         """
-        fullpath = os.path.join(self.path, filename)
+        fullpath = os.path.join(self.filepath, filename)
         dirpath = os.path.dirname(fullpath)
         if not os.access(dirpath, os.F_OK):
             os.makedirs(dirpath)
@@ -104,9 +106,9 @@ class BrowserMixin:
         to the sresource path.
         
         """
-        for root, dirs, files in os.walk(self.path):
+        for root, dirs, files in os.walk(self.filepath):
             # remove sresource path to create relative path
-            relative_root = root.split(self.path, 1)[1]
+            relative_root = root.split(self.filepath, 1)[1]
             # the first characher is '/' we need to remove it
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
@@ -121,6 +123,7 @@ class BrowserMixin:
 
         """
         for rel_root, dirs, files in self.walk():
+            # TODO: ignore VCS metadata
             for filename in files:
                 filename = os.path.join(rel_root, filename)
                 if filefilter:

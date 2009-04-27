@@ -14,10 +14,19 @@ class POTHandler:
 
     def __init__(self, component):
         self.component = component
+        # TODO: Make Unit init the browser on its own 
+        component.unit._init_browser()
+        browser = component.unit.browser
+        if hasattr(browser, 'filepath'):
+            filepath = browser.filepath
+        else:
+            filepath = None
+        logger.debug('File path: %s' % filepath)
         self.tm = POTManager(component.get_files(),
-                             component.unit.browser.path, 
+                             browser.path, 
                              component.source_lang,
-                             component.file_filter)
+                             component.file_filter,
+                             filepath)
 
     def get_manager(self):
         return self.tm

@@ -46,6 +46,7 @@ class TarballBrowser(BrowserMixin):
         assert os.path.commonprefix(
             [self.path, codebase_path]) == codebase_path, (
             "Unit checkout path outside of nominal repo checkout path.")
+        self.filepath = os.path.join(self.path, 'extract')
 
     def _download(self, url, filename):
         try:
@@ -90,7 +91,6 @@ class TarballBrowser(BrowserMixin):
                         return
                 raise BrowserError(e)
 
-        logger.error(self.path)
         download = os.path.join(self.path, 'download')
         filename = os.path.join(download, self.name)
         extract = os.path.join(self.path, 'extract')
@@ -155,6 +155,7 @@ class TarballBrowser(BrowserMixin):
                         addremove=True, logfile=None, 
                         user=user.encode('utf-8'),
                         date=None)
+
     @need_codebase
     def update(self):
         try:

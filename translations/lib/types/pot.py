@@ -23,13 +23,16 @@ class FileFilterError(Exception):
 class POTManager(TransManagerMixin):
     """ A browser class for POT files. """
 
-    def __init__(self, file_set, path, source_lang, file_filter):
+    def __init__(self, file_set, path, source_lang, file_filter,
+        filepath=None):
         self.file_set = file_set
-        self.path = path
+        if filepath is None:
+            filepath = path
+        self.path = filepath
         self.source_lang = source_lang
         self.file_filter = file_filter
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
-                                     os.path.basename(self.path))
+                                     os.path.basename(path))
 
     def get_file_path(self, filename, is_msgmerged=False):
         # All the files should be in the file_set, except the intltool
