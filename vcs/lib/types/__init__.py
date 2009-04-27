@@ -2,7 +2,9 @@ import os
 import re
 
 from django.core.files.uploadedfile import UploadedFile
+from django.template import Context, Template
 
+import settings
 from txcommon.log import logger
 
 class BrowserError(Exception):
@@ -145,3 +147,15 @@ class VCSBrowserMixin:
         except IOError:
             pass
 
+    def _get_user(self, user):
+        if hasattr(settings, 'VCS_USER_TEMPLATE'):
+            template = Template(settings.VCS_USER_TEMPLATE)
+            context = Context({'user': user})
+            header = template.render(context)
+        else:
+            if user.first_name:
+                name = ' '.join((user.first_name, user.last_name))
+            else:
+                name = user.username
+            header = '%s <%s>' % (name, user.email)
+        return header

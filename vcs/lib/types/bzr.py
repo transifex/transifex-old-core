@@ -153,7 +153,7 @@ class BzrBrowser(VCSBrowserMixin):
 
         # smart_add recursively checks all files in the tree
         self.work_tree.smart_add([self.path])
-        user = u'%s <%s>' % (user.username, user.email)
+        user = self._get_user(user)
 
         self.work_tree.commit(message=msg.encode('utf-8'),
                 revprops={'author': user.encode('utf-8')})

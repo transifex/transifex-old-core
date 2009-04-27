@@ -148,7 +148,7 @@ class GitBrowser(VCSBrowserMixin):
 
             self.repo.add(uploadedfile.targetfile)
         
-        user = u'%s <%s>' % (user.username, user.email)
+        user = self._get_user(user)
 
         self.repo.commit(m=msg.encode('utf-8'), 
                          author=user.encode('utf-8'))
