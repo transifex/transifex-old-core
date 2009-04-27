@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = env PYTHONPATH=".." DJANGO_SETTINGS_MODULE="settings" sphinx-build
+SPHINXBUILD   = env PYTHONPATH="../transifex" DJANGO_SETTINGS_MODULE="settings" sphinx-build
 PAPER         =
 
 # Internal variables.
