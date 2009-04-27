@@ -41,6 +41,10 @@ On Fedora you can run the following command to install all those VCS::
 
     yum install cvs subversion pysvn mercurial git bzr bzrtools 
 
+If you're enabling the tarball support, you also need urlgrabber::
+
+    yum install python-urlgrabber 
+
 
 Installing Django
 -----------------
@@ -60,9 +64,9 @@ even use `easy_install` to setup the package. On Fedora you can just run::
 Installing Python dependencies
 ------------------------------
 
-This is the generic method for creating a development enviroment for
+This is the generic method for creating a development environment for
 Transifex. We strongly suggest running those commands inside a virtualenv
-enviroment instead of running them as root. For an example of a Virtualenv
+environment instead of running them as root. For an example of a Virtualenv
 setup, take a look at the `Virtualenv example`_ wiki page. You can also
 install some of these dependencies as packages in your distribution, if they
 are available.
