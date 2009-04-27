@@ -40,8 +40,8 @@ def _findchangesbycomponent(component):
     for watch in watches:
         try:
             newrev = component.get_rev(watch.path)
-            logger.error('repowatch: old: %s, new: %s' % (watch.rev,
-                newrev))
+            logger.debug('Repowatch revision file %s: Old: %s, New: %s' % (
+                watch.path, watch.rev, newrev))
             if newrev != watch.rev:
                 if not watch.path:
                     repochanged = True
