@@ -191,6 +191,7 @@ def component_create_update(request, project_slug, component_slug=None):
     else:
         component = None
         unit = None
+    unit_subforms = []
     if request.method == 'POST':
         component_form = ComponentForm(project, request.POST,
                                        instance=component, prefix='component')
