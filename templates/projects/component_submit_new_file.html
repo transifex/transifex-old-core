@@ -31,6 +31,11 @@
     <td><p class="fieldp"><input type="text" class="" name="newtargetfile"></p></td>
     <td>{% if stats.0.filename %} <p class="helptext">{% trans "Example: " %} {{stats.0.filename}}</p>{% endif %}</td>
     </tr>
+    <tr>
+    <th>{% trans "Commit message:" %} <span class="required">*</span></th>
+    <td><p class="fieldp"><textarea id="commit_message" name="message" class="" rows="2" cols="50"></textarea></p></td>
+    <td><p class="helptext">{% trans "Example: Updates to Brazilian Portuguese translation" %}</p></td>
+    </tr>
    </tbody>
    </table>
    <p class="submit">  <input type="submit" class="i16 send_file" class="submit" size="10" value="{% trans "Send" %}"></p>

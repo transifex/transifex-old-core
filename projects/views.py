@@ -455,21 +455,26 @@ def component_submit_file(request, project_slug, component_slug,
                                        "component file filter"))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
+
+            if not request.POST['message']:
+                request.user.message_set.create(message=
+                    _("Enter a message for the commit"))
+                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(project_slug, component_slug,)))
+
         # Adding extra field to the instance
         request.FILES['submited_file'].targetfile = filename
 
         try:
             postats = POFile.objects.get(filename=filename,
                                          object_id=component.id)
-            lang_name = postats.language.name
             lang_code = postats.language.code
         except (POFile.DoesNotExist, AttributeError):
             postats = None
-            lang_name = filename
             lang_code = component.trans.guess_language(filename)
 
-        # TODO: put it somewhere else using the settings.py
-        msg=_("Sending translation for %s") % lang_name
+        msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
+                                          'domain' : request.get_host()}
 
         try:
 

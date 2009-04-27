@@ -216,6 +216,10 @@ class POFile(models.Model):
         else:
             return self.language_code.lower()
 
+    @property
+    def lang_or_code(self):
+        return self.language or self.language_code
+
     class Meta:
         unique_together = ("content_type", "object_id", "filename")
         verbose_name = _('PO file')
