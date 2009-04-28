@@ -24,8 +24,8 @@
         </td>
         {% with 140 as barwidth %}
         <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
-          {% stats_bar_full stat barwidth %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}%</div> 
+          {% stats_bar_full stat barwidth %}
         </td>
         {% endwith %}
         <td class="left actions">
