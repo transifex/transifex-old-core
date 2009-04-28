@@ -249,15 +249,17 @@ In addition to the bugfixes introduced in the maintenance
 Upgrading to 0.6
 ----------------
 
-- The schema for the tables that store the remote repository information
-  has changed. If there is no information in the tables then a
-  ``python manage.py reset codebases tarball vcs`` will update your database.
+- The schema has undergone many changes, and 0.6 includes code to perform
+  a schema evolution using ``django-evolution``. To use it, first add
+  ``django_evolution`` to ``INSTALLED_APPS`` in the 0.5.x Transifex
+  configuration, then run ``python manage.py syncdb``. Proceed to upgrade
+  the project to 0.6, then run ``python manage.py syncdb``, ``python
+  manage.py evolve ---execute``, and then ``python manage.py syncdb`` again.
+  The first invocation of ``syncdb`` will result in an exception, but this
+  may be safely ignored.
 - The settings files have been broken down for easier maintenance in
   ``settings/``. The ``settings.py`` file needs to be overwritten with the new
   version and settings migrated to the respective ``.conf`` files. 
-
-(This section urgently needs more text.)
-
 
 Contributors
 ------------

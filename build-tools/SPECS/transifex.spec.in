@@ -14,9 +14,9 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:  noarch
 
 BuildRequires:  Django python-sphinx gettext-devel
-Requires:   Django django-authopenid django-contact-form
+Requires:   Django django-authopenid=0.9.6 django-contact-form
 Requires:   django-notification django-pagination django-tagging
-Requires:   python-markdown python-polib python-pygments
+Requires:   python-markdown python-polib python-pygments django-evolution
 Requires:   mercurial python-urlgrabber
 Requires:   intltool >= 0.37.1
 

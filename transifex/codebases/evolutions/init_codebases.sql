@@ -1,0 +1,15 @@
+DROP TABLE tarball_tarball;
+DROP TABLE vcs_vcsunit;
+DROP TABLE codebases_unit;
+ALTER TABLE vcs_unit RENAME TO codebases_unit;
+ALTER SEQUENCE vcs_unit_id_seq RENAME TO codebases_unit_id_seq;
+ALTER TABLE codebases_unit DROP CONSTRAINT vcs_unit_name_key;
+ALTER TABLE codebases_unit ADD CONSTRAINT codebases_unit_name_key UNIQUE(name);
+ALTER TABLE projects_component DROP CONSTRAINT projects_component_unit_id_fkey;
+ALTER TABLE projects_component ADD FOREIGN KEY(unit_id) REFERENCES codebases_unit (id) DEFERRABLE INITIALLY DEFERRED;
+SELECT id AS unit_ptr_id, branch, web_frontend INTO vcs_vcsunit FROM codebases_unit;
+ALTER TABLE vcs_vcsunit ADD PRIMARY KEY(unit_ptr_id);
+ALTER TABLE vcs_vcsunit ADD FOREIGN KEY(unit_ptr_id) REFERENCES codebases_unit (id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE vcs_vcsunit ALTER COLUMN branch SET NOT NULL;
+ALTER TABLE codebases_unit DROP COLUMN branch;
+ALTER TABLE codebases_unit DROP COLUMN web_frontend;
