@@ -48,13 +48,10 @@ translation files. These submissions are not being pushed upstream to the
 tarball but reside on the Transifex server itself. In the future, translations
 could be sent to an email address too.
 
-.. warning::
-
-  Clearing the local cache of tarball brings in a newly pulled tarball,
-  overwriting the local files. Projects enabling submissions to tarballs
-  should note that any submissions sent would be overwritten with a fresh
-  extract of the tarball from the remote server.
- 
+**Warning**: Clearing the local cache of tarball brings in a newly pulled
+tarball, overwriting the local files. Projects enabling submissions to tarballs
+should note that any submissions sent would be overwritten with a fresh extract
+of the tarball from the remote server.
 
 
 User Notifications
@@ -178,9 +175,18 @@ Sortable statistics tables
 The tables presented are now sortable by a number of variables, including
 the language name and the completion percentage.
 
+Commit improvements
+"""""""""""""""""""
+Custom file submissions can now define their own message to be used for the
+file submission. This allows users to publish the state of the translation and
+other useful information to be shared with the project maintainer and the rest
+of the translators.
+
+In addition, commits are now using the user's full name in the author commit
+information instead of just the username.
+
 Better whitespace usage
 """""""""""""""""""""""
-
 Statistics bars now support arbitrary lengths (and by default longer), making
 better use of the whitespace, increasing readability and allowing the designer
 to more easily choose how to present the information.
@@ -195,13 +201,11 @@ of the platform.
 
 Revamped settings mechanism
 """""""""""""""""""""""""""
-
 Settings are now organized in multiple files under the ``settings/``
 directory, allowing easier management and override. (r456)
 
 Improved abstraction for repositories
 """""""""""""""""""""""""""""""""""""
-
 Backend support for repositories has been improved to allow more types of
 repos to pull from. The new ``codebases`` application has been
 introduced which abstracts the VCS functionality for the ``vcs`` and
@@ -216,11 +220,16 @@ Improved languages support
 
 Action logging
 """"""""""""""
-
 The action log support has been re-engineered to allow more notifications of
 changes and better reporting. It includes more clear HTML templates and text
 and can refer to different objects resulting in increase of performance and
 usability.
+
+Standard code directory structure
+"""""""""""""""""""""""""""""""""
+The transifex code has been moved under the ``transifex/`` directory in the
+source tree. This improves the packaging and installation procedure, avoiding
+common pitfalls with python imports.
 
 
 Translations
@@ -244,22 +253,28 @@ In addition to the bugfixes introduced in the maintenance
   components of the project also reflect that change, removing releases related
   to that collection.
 - Regular expressions in ComponentForm are now validated for correctness.
+- Added setup_repo to svn-browser (fixes #131)
 
 
 Upgrading to 0.6
 ----------------
 
-- The schema has undergone many changes, and 0.6 includes code to perform
-  a schema evolution using ``django-evolution``. To use it, first add
-  ``django_evolution`` to ``INSTALLED_APPS`` in the 0.5.x Transifex
-  configuration, then run ``python manage.py syncdb``. Proceed to upgrade
-  the project to 0.6, then run ``python manage.py syncdb``, ``python
-  manage.py evolve ---execute``, and then ``python manage.py syncdb`` again.
-  The first invocation of ``syncdb`` will result in an exception, but this
-  may be safely ignored.
-- The settings files have been broken down for easier maintenance in
-  ``settings/``. The ``settings.py`` file needs to be overwritten with the new
-  version and settings migrated to the respective ``.conf`` files. 
+The schema has undergone many changes, and 0.6 includes code to perform
+a schema evolution using ``django-evolution``. To use it, follow these steps:
+  
+- Add ``django_evolution`` to ``INSTALLED_APPS`` in the 0.5.x Transifex
+  configuration.
+- Run ``python manage.py syncdb`` to get the required tables set up.
+- Proceed to upgrade the project to v0.6, eg. by deploying the new package.
+- Run ``python manage.py syncdb``. This might result in an exception, but
+  this may be safely ignored.
+- Run ``python manage.py evolve ---execute``, and then ``python manage.py
+  syncdb`` again.
+
+The settings files have been broken down for easier maintenance in
+``settings/``. The ``settings.py`` file needs to be overwritten with the new
+version and settings migrated to the respective ``.conf`` files. 
+
 
 Contributors
 ------------
@@ -267,11 +282,8 @@ Contributors
 The following people have contributed to this release, with one way or another:
 
 - Dimitris Glezos
-- Diego Búrigo Zacarão.
+- Diego Búrigo Zacarão
 - Ignacio Vazquez-Abrams
-- Christos Trochalakis
 - John Beredimas
 
-
 .. _Apocalypse: http://en.wikipedia.org/wiki/Apocalypse_(comics)
-
