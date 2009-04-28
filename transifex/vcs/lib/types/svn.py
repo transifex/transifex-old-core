@@ -69,14 +69,20 @@ class SvnBrowser(VCSBrowserMixin):
         return repo_path
 
 
-    def init_repo(self):
+    def setup_repo(self):
         """
         Initialize repository for the first time.
         
         Commands used:
         svn co <remote_path> <self.path>
-        
         """
+        #FIXME: This doesn't look 100% right, but it works and seems to
+        # follow pysvn's instructions.
+        self.init_repo()
+
+
+    def init_repo(self):
+        """Initialize the ``client`` variable on the browser."""
         try:
             self.client.checkout(self.remote_path, self.path)
         except Exception, e:
