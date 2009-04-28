@@ -22,12 +22,18 @@ def _notify_watchers(component, files):
     """
     Notify the watchers for a specific POFile
     """
-    pofile = get_object_or_404(POFile, component=component, filename=files[0])
-    txnotification.send_observation_notices_for(pofile,
+    try:
+        pofile = POFile.objects.select_related().get(component=component,
+                                                     filename=files[0])
+        txnotification.send_observation_notices_for(pofile,
                             signal='project_component_file_changed', 
                             extra_context={'component': component,
                                            'files': files,
                                            'pofile': pofile})
+    except POFile.DoesNotExist:
+        # TODO: Think about it when a POFile is deleted and recreated after 
+        # the prepare repo method
+        pass
 
 def _findchangesbycomponent(component):
     """
