@@ -5,6 +5,7 @@ import os.path
 import pysvn
 
 from django.conf import settings
+from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 
 REPO_PATH = settings.REPO_PATHS['svn']
@@ -54,7 +55,7 @@ class SvnBrowser(VCSBrowserMixin):
         assert os.path.commonprefix(
             [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
-            
+
         self.client = pysvn.Client()
 
 
@@ -76,8 +77,11 @@ class SvnBrowser(VCSBrowserMixin):
         svn co <remote_path> <self.path>
         
         """
+        try:
+            self.client.checkout(self.remote_path, self.path)
+        except Exception, e:
+            raise RepoError("Checkout from remote repository failed.")
 
-        self.client.checkout(self.remote_path, self.path)
 
     def _clean_dir(self):
         """
