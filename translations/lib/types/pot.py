@@ -201,6 +201,13 @@ class POTManager(TransManagerMixin):
         ctype = ContentType.objects.get_for_model(object)
         POFile.objects.filter(object_id=object.id, content_type=ctype).delete()
 
+    def delete_stats_for_file_object(self, filename, object):
+        """Delete a specific pofile of an object"""
+        ctype = ContentType.objects.get_for_model(object)
+        POFile.objects.filter(filename=filename, object_id=object.id, 
+            content_type=ctype).delete()
+        self.delete_file_from_static_dir(filename)
+
     def set_source_stats(self, object, is_msgmerged):
         """Set the source file (pot) in the database"""
 
@@ -310,6 +317,14 @@ class POTManager(TransManagerMixin):
             os.makedirs(os.path.dirname(dest))
 
         shutil.copyfile(os.path.join(self.path, filename), dest)
+
+    def delete_file_from_static_dir(self, filename):
+        """Delete a file from the static cache dir"""
+        dest = os.path.join(self.msgmerge_path, filename)
+        try:
+            os.remove(dest)
+        except OSError:
+            pass
 
     def msgmerge(self, pofile, potfile):
         """

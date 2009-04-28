@@ -44,3 +44,5 @@ class IntltoolHandler(pot.POTHandler):
 
         # Cleaning the repository after running intltool-update
         self.component.unit.browser._clean_dir()
+
+        self.clear_old_stats()

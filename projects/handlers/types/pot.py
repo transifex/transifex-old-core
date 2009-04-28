@@ -1,4 +1,5 @@
 from translations.lib.types.pot import POTManager
+from translations.models import POFile
 from txcommon.log import logger
 
 class POTHandler:
@@ -55,6 +56,25 @@ class POTHandler:
 
         for lang in self.tm.get_langs():
             self.set_stats_for_lang(lang)
+
+        self.clear_old_stats()
+
+    def clear_old_stats(self):
+        """
+        Clear stats present on the database and msgmerge dir, that are not 
+        anymore in the upstream repository
+        """
+        pofiles = POFile.objects.select_related().filter(
+            component=self.component)
+        pots = self.tm.get_source_files()
+        files = self.tm.get_po_files()
+        for pot in pots:
+            files.append(pot)
+        logger.info(files)
+        for stat in pofiles:
+            if stat.filename not in files:
+                self.tm.delete_file_from_static_dir(stat.filename)
+                stat.delete()
 
     def clear_stats(self):
         """Clear stats for all translations of the component."""
