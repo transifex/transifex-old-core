@@ -70,7 +70,6 @@ class POTHandler:
         files = self.tm.get_po_files()
         for pot in pots:
             files.append(pot)
-        logger.info(files)
         for stat in pofiles:
             if stat.filename not in files:
                 self.tm.delete_file_from_static_dir(stat.filename)
