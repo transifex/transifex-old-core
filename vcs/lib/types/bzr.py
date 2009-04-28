@@ -128,14 +128,18 @@ class BzrBrowser(VCSBrowserMixin):
         Get the current revision of the repository or a specific
         object.
         """
-        if not obj:
-            return self.repo.last_revision_info()[0:1]
-        else:
-            m = self.repo.get_revision_id_to_revno_map()
-            t = self.repo.repository.revision_tree(
-                self.repo.last_revision())
-            i = t.inventory[t.path2id(obj)]
-            return m[i.revision]
+        try:
+            if not obj:
+                return self.repo.last_revision_info()[0:1]
+            else:
+                m = self.repo.get_revision_id_to_revno_map()
+                t = self.repo.repository.revision_tree(
+                    self.repo.last_revision())
+                i = t.inventory[t.path2id(obj)]
+                return m[i.revision]
+        # TODO: Make it more specific
+        except:
+            raise BrowserError()
 
     @need_repo
     def submit(self, files, msg, user):

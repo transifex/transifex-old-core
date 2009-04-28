@@ -113,11 +113,15 @@ class SvnBrowser(VCSBrowserMixin):
         Commands used:
         svn info
         """
-        if not obj:
-            entry = self.client.info(self.path)
-        else:
-            entry = self.client.info(os.path.join(self.path, obj))
-        return (entry.commit_revision.number,)
+        try:
+            if not obj:
+                entry = self.client.info(self.path)
+            else:
+                entry = self.client.info(os.path.join(self.path, obj))
+            return (entry.commit_revision.number,)
+        # TODO: Make it more specific
+        except:
+            raise BrowserError()
 
     @need_repo
     def submit(self, files, msg, user):

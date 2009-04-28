@@ -131,13 +131,16 @@ class TarballBrowser(BrowserMixin):
         Get the current revision of the repository or a specific
         object
         '''
-        if not obj:
-            return (int(self.codebase.changectx(self.branch).node().
-                encode('hex'), 16),)
-        else:
-            f = self.codebase.changectx(self.branch).filectx(obj)
-            return (int(f.filectx(f.filerev()).node().encode('hex'),
-                16),)
+        try:
+            if not obj:
+                return (int(self.codebase.changectx(self.branch).node().
+                    encode('hex'), 16),)
+            else:
+                f = self.codebase.changectx(self.branch).filectx(obj)
+                return (int(f.filectx(f.filerev()).node().encode('hex'),
+                    16),)
+        except LookupError, e:
+            raise BrowserError(e)
 
     @need_codebase
     def submit(self, files, msg, user):

@@ -131,12 +131,16 @@ class GitBrowser(VCSBrowserMixin):
         git show-ref refs/heads/<branch>
         git log -1 --pretty=format:%H <obj>
         """
-        if not obj:
-            refspec = 'refs/heads/%s' % self.branch
-            rev = self.repo.show_ref(refspec).split()[0]
-        else:
-            rev = self.repo.log('-1', '--pretty=format:%H', obj)
-        return (int(rev, 16),)
+        try:
+            if not obj:
+                refspec = 'refs/heads/%s' % self.branch
+                rev = self.repo.show_ref(refspec).split()[0]
+            else:
+                rev = self.repo.log('-1', '--pretty=format:%H', obj)
+            return (int(rev, 16),)
+        # TODO: Make it more specific
+        except:
+            raise BrowserError()
 
     @need_repo
     def submit(self, files, msg, user):

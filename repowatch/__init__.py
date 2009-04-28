@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from projects import signals
 from txcommon.log import logger
 from translations.models import POFile
+from vcs.lib.types import BrowserError
 from notification import models as notification
 # Temporary
 from txcommon import notifications as txnotification
@@ -49,8 +50,8 @@ def _findchangesbycomponent(component):
                     changes.append((watch.user.all(), watch.path))
                 watch.rev = newrev
                 watch.save()
-        except ValueError:
-            continue    
+        except (ValueError, BrowserError):
+            continue
     if changes:
         changes.sort(key=operator.itemgetter(0))
         for usergroup in itertools.groupby(changes,
