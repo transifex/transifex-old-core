@@ -52,12 +52,13 @@ def _group_pofiles(postats, grouping_key, pot_total):
         else:
             no_po = 0
 
+        # It uses the last pofile present at the 'pofiles' for aggregating the
+        # stats sum. As it doesn't save the objects, it's safe to re-use then
+        # in order to save memory.
+        pofile.set_stats(po_trans, po_fuzzy, (po_untrans + no_po))
+        pofile.calculate_perc()
+
         if count > 1:
-            # It uses the last pofile present at the 'pofiles' for aggregating the
-            # stats sum. As it doesn't save the objects, it's safe to re-use then
-            # in order to save memory.
-            pofile.set_stats(po_trans, po_fuzzy, (po_untrans + no_po))
-            pofile.calculate_perc()
             pofile.is_aggregated=True
         else:
             pofile.is_aggregated=False
