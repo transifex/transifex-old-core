@@ -35,7 +35,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'Transifex'
-copyright = 'Dimitris Glezos and contributors'
+copyright = '<a href="http://www.indifex.com">Indifex</a> and the <a href="http://transifex.org/">Transifex</a> Community'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.

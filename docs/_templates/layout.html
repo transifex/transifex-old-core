@@ -84,4 +84,24 @@
 {% block relbar2 %}{% endblock %}
 {% block sidebar1 %}{% endblock %}
 {% block sidebar2 %}{% endblock %}
-{% block footer %}{% endblock %}
+{%- block footer %}
+    <div class="footer">
+    {%- if hasdoc('copyright') %}
+      &copy; <a href="{{ pathto('copyright') }}">Copyright</a> {{ copyright }}.
+    {%- else %}
+      &copy; Copyright {{ copyright }}.
+    {%- endif %}
+    {%- if last_updated %}
+      Last updated on {{ last_updated }}{%- if show_sphinx %} using <a href="http://sphinx.pocoo.org/">Sphinx</a>{%- endif %}.
+    {%- endif %}
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4362397-5");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+{%- endblock %}
