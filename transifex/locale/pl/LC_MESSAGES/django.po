@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-17 19:39+0000\n"
-"PO-Revision-Date: 2009-03-26 21:10+0100\n"
+"PO-Revision-Date: 2009-04-30 17:38+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "Dodatek"
 
 #: actionlog/models.py:17 templates/notification/notices.html:49
 msgid "Change"
-msgstr "Zmień"
+msgstr "Zmiana"
 
 #: actionlog/models.py:18
 msgid "Deletion"
@@ -82,29 +82,28 @@ msgstr "Nie zarejestrowano jeszcze historii."
 #: codebases/models.py:27 languages/models.py:27 projects/models.py:87
 #: projects/models.py:196 releases/models.py:28 txcollections/models.py:26
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: codebases/models.py:28
 msgid "Root"
-msgstr ""
+msgstr "Root"
 
 #: codebases/models.py:29
 msgid "The URL of the codebase"
-msgstr ""
+msgstr "Adres URL kodu źródłowego"
 
 #: codebases/models.py:30
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #: codebases/models.py:32
-#, fuzzy, python-format
+#, python-format
 msgid "The codebase type (%s)"
-msgstr "Typ obsługi internacjonalizacji kodu (%s)"
+msgstr "Typ kodu źródłowego (%s)"
 
 #: codebases/models.py:35
-#, fuzzy
 msgid "The last time this unit was updated"
-msgstr "Czas ostatniego pobrania jednostki z repozytorium."
+msgstr "Czas ostatniej aktualizacji jednostki"
 
 #: codebases/models.py:44
 msgid "unit"
@@ -125,29 +124,27 @@ msgid "The languages spoken on %s."
 msgstr "Języki używane w %s."
 
 #: languages/feeds.py:36
-#, fuzzy, python-format
+#, python-format
 msgid "%(site_name)s: %(language)s :: %(release)s release"
-msgstr "%(site_name)s: %(language)s :: %(collection)s :: wydanie %(release)s"
+msgstr "%(site_name)s: %(language)s :: wydanie %(release)s"
 
 #: languages/feeds.py:42
-#, fuzzy, python-format
+#, python-format
 msgid "Latest translations for %(language)s language in %(release)s release."
-msgstr "%(site_name)s: %(language)s :: %(collection)s :: wydanie %(release)s"
+msgstr "Najnowsze tłumaczenia dla języka %(language)s w wydaniu %(release)s."
 
 #: languages/models.py:29 projects/models.py:89 projects/models.py:198
 #: releases/models.py:30 txcollections/models.py:28
-#, fuzzy
 msgid "Description"
-msgstr "Opis w języku HTML."
+msgstr "Opis"
 
 #: languages/models.py:30
 msgid "Code"
-msgstr ""
+msgstr "Kod źródłowy"
 
 #: languages/models.py:33
-#, fuzzy
 msgid "Code aliases"
-msgstr "wydania"
+msgstr "Aliasy kodu źrółowego"
 
 #: languages/models.py:44
 msgid "language"
@@ -199,7 +196,7 @@ msgstr "Najnowsze składniki w projekcie %s."
 #: projects/models.py:84 projects/models.py:193 releases/models.py:25
 #: txcollections/models.py:23
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: projects/models.py:85 projects/models.py:194 releases/models.py:26
 #: txcollections/models.py:24
@@ -222,21 +219,19 @@ msgstr "Zdanie lub dwa opisujące projekt (opcjonalne)."
 #: projects/models.py:91 projects/models.py:200 releases/models.py:32
 #: txcollections/models.py:30
 msgid "Long description"
-msgstr ""
+msgstr "Długi opis"
 
 #: projects/models.py:93 projects/models.py:202 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Dłuższy opis (opcjonalny). Użyj składni \"Markdown\"."
 
 #: projects/models.py:94 txcollections/models.py:32
-#, fuzzy
 msgid "Homepage"
-msgstr "Strona domowa:"
+msgstr "Strona domowa"
 
 #: projects/models.py:95
-#, fuzzy
 msgid "Feed"
-msgstr "Opinie"
+msgstr "Kanał"
 
 #: projects/models.py:96
 msgid "An RSS feed with updates on the project."
@@ -245,7 +240,7 @@ msgstr "Kanał RSS z aktualizacjami projektu."
 #: projects/models.py:98 projects/models.py:217 releases/models.py:46
 #: txcollections/models.py:33
 msgid "Hidden"
-msgstr ""
+msgstr "Ukryte"
 
 #: projects/models.py:99 projects/models.py:218 releases/models.py:47
 #: txcollections/models.py:34
@@ -255,7 +250,7 @@ msgstr "Ukryć ten obiekt z widoku listy?"
 #: projects/models.py:100 projects/models.py:219 releases/models.py:48
 #: txcollections/models.py:35
 msgid "Enabled"
-msgstr ""
+msgstr "Włączone"
 
 #: projects/models.py:101 projects/models.py:220 releases/models.py:49
 #: txcollections/models.py:36
@@ -263,9 +258,8 @@ msgid "Enable this object or disable its use?"
 msgstr "Włączyć ten obiekt lub wyłączyć jego użycie?"
 
 #: projects/models.py:105
-#, fuzzy
 msgid "Tags"
-msgstr "Znaczniki:"
+msgstr "Znaczniki"
 
 #: projects/models.py:110 templates/base.html:30
 #: templates/txcollections/base.html:6
@@ -274,15 +268,13 @@ msgid "Collections"
 msgstr "Zestawy"
 
 #: projects/models.py:112
-#, fuzzy
 msgid "Maintainers"
-msgstr "Opiekun:"
+msgstr "Opiekunowie"
 
 #: projects/models.py:116 projects/models.py:226 releases/models.py:54
 #: txcollections/models.py:43
-#, fuzzy
 msgid "HTML Description"
-msgstr "Opis w języku HTML."
+msgstr "Opis w języku HTML"
 
 #: projects/models.py:118 projects/models.py:228 releases/models.py:55
 #: txcollections/models.py:44
@@ -305,9 +297,8 @@ msgid "projects"
 msgstr "projekty"
 
 #: projects/models.py:203
-#, fuzzy
 msgid "Source language"
-msgstr "język"
+msgstr "Język źródłowy"
 
 #: projects/models.py:204
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
@@ -315,40 +306,36 @@ msgstr "Język źródłowy dla tego składnika, np. \"en\", \"pt_BR\", \"el\"."
 
 #: projects/models.py:206
 msgid "I18n type"
-msgstr ""
+msgstr "Typ internacjonalizacji"
 
 #: projects/models.py:208
 #, python-format
 msgid "The code's type of i18n support (%s)"
-msgstr "Typ obsługi internacjonalizacji kodu (%s)"
+msgstr "Typ obsługi internacjonalizacji kodu źródłowego (%s)"
 
 #: projects/models.py:210
-#, fuzzy
 msgid "File filter"
-msgstr "Filtr plików:"
+msgstr "Filtr plików"
 
 #: projects/models.py:211
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Wyrażenie regularne do filtrowania plików. Np. \"po/.*\""
 
 #: projects/models.py:213
-#, fuzzy
 msgid "Allows submission"
-msgstr "Umożliwia wysyłanie plików:"
+msgstr "Umożliwienie wysyłanie plików"
 
 #: projects/models.py:215
 msgid "Does this module repository allow write access?"
 msgstr "Czy repozytorium tego modułu umożliwia dostęp do zapisu?"
 
 #: projects/models.py:231
-#, fuzzy
 msgid "Project"
-msgstr "Projekty"
+msgstr "Projekt"
 
 #: projects/models.py:232
-#, fuzzy
 msgid "Unit"
-msgstr "jednostka"
+msgstr "Jednostka"
 
 #: projects/models.py:236 templates/releases/base.html:6
 #: templates/releases/release_list.html:14
@@ -378,66 +365,66 @@ msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
+"Filtr plików tego składnika opartego na plikach POT i intltool nie umożliwia "
+"używania pliku POTFILES.in. Napraw to."
 
 #: projects/views.py:275
-#, fuzzy
 msgid "This component does  not allow white access."
-msgstr "Czy repozytorium tego modułu umożliwia dostęp do zapisu?"
+msgstr "Ten składnik nie pozwala na biały dostęp."
 
 #: projects/views.py:283
 msgid "Please select a file from your system to be uploaded."
-msgstr ""
+msgstr "Wybierz plik ze swojego systemu do wysłania."
 
 #: projects/views.py:292
 msgid "Please enter a target to upload the file."
-msgstr ""
+msgstr "Podaj plik docelowy do wysłania."
 
 #: projects/views.py:298
 msgid "Please enter with only ONE target to upload the file."
-msgstr ""
+msgstr "Podaj tylko JEDEN plik docelowy do wysłania."
 
 #: projects/views.py:309
-#, fuzzy
 msgid "The target file does not match with the component file filter"
-msgstr ""
-"Plik docelowy to nazwa pliku nowego języka. Musi zgadzać się z filtrem "
-"plików składnika."
+msgstr "Plik docelowy nie zgadza się z filtrem plików składnika"
 
 #: projects/views.py:327
-#, fuzzy, python-format
+#, python-format
 msgid "Sending translation for %s"
-msgstr "Wyślij tłumaczenie dla tego języka."
+msgstr "Wysyłanie tłumaczenia dla %s"
 
 #: projects/views.py:351
 #, python-format
 msgid "File submitted successfully: %s"
-msgstr ""
+msgstr "Pomyślnie wysłano plik: %s"
 
 #: projects/views.py:357
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
 msgstr ""
+"Plik nie przechodzi sprawdzenia poprawności (msgfmt -c). Wykonaj te "
+"polecenie w swoim systemie, aby zobaczyć błędy."
 
 #: projects/views.py:366
 msgid "Sorry, an error is causing troubles to send your file."
-msgstr ""
+msgstr "Przepraszamy, błąd powoduje problemy podczas wysyłania pliku."
 
 #: projects/views.py:370 projects/views.py:400
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "Przepraszamy, ale musisz wysłać żądanie POST."
 
 #: projects/views.py:389
 msgid "Lock removed."
-msgstr ""
+msgstr "Usunięto blokadę."
 
 #: projects/views.py:392
 msgid "Error: Only the owner of a lock can remove it."
-msgstr ""
+msgstr "Błąd: tylko właściciel blokady może ją usunąć."
 
 #: projects/views.py:396
 msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
+msgstr "Utworzono blokadę. Nie zapomnij jej usunąć, kiedy skończysz."
 
 #: projects/management/__init__.py:12
 msgid "New Project Added"
@@ -464,18 +451,16 @@ msgid "Use Markdown syntax."
 msgstr "Użyj składni \"Markdown\"."
 
 #: releases/models.py:36
-#, fuzzy
 msgid "Release date"
-msgstr "Data wydania:"
+msgstr "Data wydania"
 
 #: releases/models.py:37
 msgid "When this release will be available."
 msgstr "Kiedy to wydanie będzie dostępne."
 
 #: releases/models.py:38
-#, fuzzy
 msgid "String freese date"
-msgstr "Zamrożenie łańcuchów:"
+msgstr "Data zamrożenia łańcuchów"
 
 #: releases/models.py:39
 msgid ""
@@ -486,9 +471,8 @@ msgstr ""
 "na tłumaczenie nie będą dodawane/modyfikowane."
 
 #: releases/models.py:41
-#, fuzzy
 msgid "Devel freeze date"
-msgstr "Zamrożenie rozwoju:"
+msgstr "Data zamrożenia rozwoju"
 
 #: releases/models.py:42
 msgid ""
@@ -510,24 +494,25 @@ msgstr "wydania"
 
 #: repowatch/__init__.py:82
 msgid "Watch this file"
-msgstr ""
+msgstr "Obserwuj ten plik"
 
 #: repowatch/__init__.py:83
 msgid "Stop watching this file"
-msgstr ""
+msgstr "Przestań obserwować ten plik"
 
 #: repowatch/models.py:24
 #, python-format
 msgid "Unable to add watch for path %r"
-msgstr ""
+msgstr "Nie można dodać obserwacji do ścieżki %r"
 
 #: repowatch/models.py:88
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr ""
+"Podaj zero lub więcej liczb całkowitych oddzielonych przecinkami w nawiasach."
 
 #: repowatch/models.py:90
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "Musisz podać co najmniej jedną nic nie zawierającą parę nawiasów."
 
 #: repowatch/models.py:141
 msgid "watch"
@@ -1093,9 +1078,8 @@ msgstr ""
 "to śmiało!"
 
 #: templates/contact_form/contact_form.html:22
-#, fuzzy
 msgid "Send feedback"
-msgstr "Opinie"
+msgstr "Wyślij opinię"
 
 #: templates/contact_form/contact_form_sent.html:4
 msgid "Thanks for the beedback!"
@@ -1174,21 +1158,20 @@ msgstr ""
 "\">daj nam znać</a>."
 
 #: templates/languages/language_release.html:52
-#, fuzzy
 msgid "Untranslated Components"
-msgstr "Nieprzetłumaczone:"
+msgstr "Nieprzetłumaczone składniki"
 
 #: templates/languages/language_release.html:53
 msgid "Here you can find components registered to belong in "
-msgstr ""
+msgstr "Tutaj można znaleźć składniki zarejestrowane w "
 
 #: templates/languages/language_release.html:53
 msgid ", but with no translations sent for "
-msgstr ""
+msgstr ", ale bez wysłanych tłumaczeń dla języka "
 
 #: templates/languages/language_release.html:53
 msgid " yet:"
-msgstr ""
+msgstr ":"
 
 #: templates/notification/notices.html:4 templates/notification/notices.html:5
 msgid "Notifications"
@@ -1417,9 +1400,8 @@ msgid "New component for %(project_name)s"
 msgstr "Nowy składnik dla %(project_name)s"
 
 #: templates/projects/component_form.html:35
-#, fuzzy
 msgid "Save component"
-msgstr "składnik"
+msgstr "Zapisz składnik"
 
 #: templates/projects/component_list.html:9
 #: templates/txcollections/collection_detail.html:62
@@ -1482,9 +1464,8 @@ msgid "The new language translation file to be uploaded."
 msgstr "Plik tłumaczenia nowego języka do wysłania."
 
 #: templates/projects/component_submit_new_file.html:17
-#, fuzzy
 msgid "Select the target file:"
-msgstr "Plik docelowy:"
+msgstr "Wybierz plik docelowy:"
 
 #: templates/projects/component_submit_new_file.html:26
 msgid ""
@@ -1496,11 +1477,11 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:29
 msgid "or enter it here:"
-msgstr ""
+msgstr "lub podaj tutaj:"
 
 #: templates/projects/component_submit_new_file.html:31
 msgid "Example: "
-msgstr ""
+msgstr "Przykład: "
 
 #: templates/projects/component_submit_new_file.html:35
 #: translations/templates/component_submit.html:9
@@ -1614,9 +1595,8 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Modyfikowanie <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form.html:36
-#, fuzzy
 msgid "Save project"
-msgstr "Jeden projekt"
+msgstr "Zapisz projekt"
 
 #: templates/projects/project_latests.html:3
 msgid "Latest Projects"
@@ -1872,9 +1852,8 @@ msgid "Editing <a href=\"%(collection_url)s\">%(collection_name)s</a>"
 msgstr "Modyfikowanie <a href=\"%(collection_url)s\">%(collection_name)s</a>"
 
 #: templates/txcollections/collection_form.html:36
-#, fuzzy
 msgid "Save collection"
-msgstr "zestaw"
+msgstr "Zapisz zestaw"
 
 #: templates/txcollections/collection_list.html:8
 msgid "Collection list"
@@ -1960,9 +1939,8 @@ msgstr ""
 "      "
 
 #: templates/txcollections/release_form.html:44
-#, fuzzy
 msgid "Save release"
-msgstr "Jedno wydanie"
+msgstr "Zapisz wydanie"
 
 #: translations/models.py:147
 msgid "PO file"
@@ -2079,14 +2057,14 @@ msgid "Latest releases in the %s collection."
 msgstr "Najnowsze wydania w zestawie %s."
 
 #: txcollections/feeds.py:66
-#, fuzzy, python-format
+#, python-format
 msgid "%(site_name)s: %(collection)s :: %(release)s release"
-msgstr "%(site_name)s: %(language)s :: %(collection)s :: wydanie %(release)s"
+msgstr "%(site_name)s: %(collection)s :: wydanie %(release)s"
 
 #: txcollections/feeds.py:72
 #, python-format
 msgid "Translation statistics for all languages against %s release."
-msgstr ""
+msgstr "Statystyki tłumaczenia dla wszystkich języków w wydaniu %s."
 
 #: txcollections/models.py:53
 #, python-format
@@ -2105,16 +2083,15 @@ msgstr "<Wydanie: %(rel)s (Zestaw %(col)s)>"
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
-msgstr ""
+msgstr "Nie można otworzyć pliku LINGUAS: %s"
 
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Strona domowa"
 
 #: vcs/models.py:48
-#, fuzzy
 msgid "Branch"
-msgstr "Gałąź:"
+msgstr "Gałąź"
 
 #: vcs/models.py:49
 msgid "A VCS branch this unit is associated with"
@@ -2122,35 +2099,21 @@ msgstr "Gałąź VCS, z którą ta jednostka jest powiązania"
 
 #: vcs/models.py:50
 msgid "Web frontend"
-msgstr ""
+msgstr "Interfejs WWW"
 
 #: vcs/models.py:52
 msgid "A URL to the project's web front-end"
 msgstr "Adres URL interfejsu WWW projektu"
 
 #: vcs/models.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr "<Jednostka: %(name)s (%(type)s)>"
+msgstr "<JednostkaVCS: %(name)s (%(type)s)>"
 
 #: vcs/models.py:58
-#, fuzzy
 msgid "vcsunit"
-msgstr "jednostka"
+msgstr "jednostka VCS"
 
 #: vcs/models.py:59
-#, fuzzy
 msgid "vcsunits"
-msgstr "jednostki"
-
-#~ msgid "Latest translations in %s."
-#~ msgstr "Najnowsze tłumaczenia w %s."
-
-#~ msgid "English"
-#~ msgstr "angielski"
-
-#~ msgid "The root URL of the project (without the branch)"
-#~ msgstr "Adres URL roota projektu (bez gałęzi)"
-
-#~ msgid "The repository system type (%s)"
-#~ msgstr "Typ systemu repozytorium (%s)"
+msgstr "jednostki VCS"
