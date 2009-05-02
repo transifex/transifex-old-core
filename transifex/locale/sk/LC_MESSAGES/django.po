@@ -8,56 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-17 19:39+0000\n"
+"POT-Creation-Date: 2009-05-01 04:07+0000\n"
 "PO-Revision-Date: 2009-05-01 21:58+0200\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: actionlog/models.py:16
-msgid "Addition"
-msgstr "Pridanie"
-
-#: actionlog/models.py:17 templates/notification/notices.html:49
-msgid "Change"
-msgstr "Zmena"
-
-#: actionlog/models.py:18
-msgid "Deletion"
-msgstr "Odstránenie"
-
-#: actionlog/models.py:19
-msgid "Submission"
-msgstr "Príspevok"
-
-#: actionlog/models.py:32
-msgid "action time"
-msgstr "čas akcie"
-
-#: actionlog/models.py:36
-msgid "object id"
-msgstr "id objektu"
-
-#: actionlog/models.py:37
-msgid "object repr"
-msgstr "repr objektu"
-
-#: actionlog/models.py:38
-msgid "action flag"
-msgstr "príznak akcie"
-
-#: actionlog/models.py:40
-msgid "change message"
-msgstr "zmenová správa"
-
-#: actionlog/models.py:43
+#: actionlog/models.py:50
 msgid "log entry"
 msgstr "záznam v logu"
 
-#: actionlog/models.py:44
+#: actionlog/models.py:51
 msgid "log entries"
 msgstr "záznamy v logu"
 
@@ -81,37 +45,37 @@ msgstr "j. F Y G:i:s O"
 msgid "No history recorded yet."
 msgstr "Zatiaľ bez histórie."
 
-#: codebases/models.py:27 languages/models.py:27 projects/models.py:87
-#: projects/models.py:196 releases/models.py:28 txcollections/models.py:26
+#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
+#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
 msgid "Name"
 msgstr "Názov"
 
-#: codebases/models.py:28
+#: codebases/models.py:35
 msgid "Root"
 msgstr "Koreň"
 
-#: codebases/models.py:29
+#: codebases/models.py:36
 msgid "The URL of the codebase"
 msgstr "URL pre základňu kódu"
 
-#: codebases/models.py:30
+#: codebases/models.py:37
 msgid "Type"
 msgstr "Typ"
 
-#: codebases/models.py:32
+#: codebases/models.py:39
 #, python-format
 msgid "The codebase type (%s)"
 msgstr "Typ základne kódu (%s)"
 
-#: codebases/models.py:35
+#: codebases/models.py:42
 msgid "The last time this unit was updated"
 msgstr "Čas poslednej aktualizácie tejto jednotky"
 
-#: codebases/models.py:44
+#: codebases/models.py:51
 msgid "unit"
 msgstr "jednotka"
 
-#: codebases/models.py:45
+#: codebases/models.py:52
 msgid "units"
 msgstr "jednotky"
 
@@ -135,8 +99,8 @@ msgstr "%(site_name)s: %(language)s :: vydanie %(release)s"
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr "Najnovšie preklady pre jazyk %(language)s vo vydaní %(release)s."
 
-#: languages/models.py:29 projects/models.py:89 projects/models.py:198
-#: releases/models.py:30 txcollections/models.py:28
+#: languages/models.py:29 projects/models.py:86 projects/models.py:195
+#: releases/models.py:25 txcollections/models.py:28
 msgid "Description"
 msgstr "Popis"
 
@@ -148,22 +112,426 @@ msgstr "Kód"
 msgid "Code aliases"
 msgstr "Aliasy kódu"
 
-#: languages/models.py:44
+#: languages/models.py:36
+msgid "Special Chars"
+msgstr ""
+
+#: languages/models.py:37
+msgid "Enter any special characters that users might find difficult to type"
+msgstr ""
+
+#: languages/models.py:40
+msgid "Number of Plurals"
+msgstr ""
+
+#: languages/models.py:42
+msgid "Plural Equation"
+msgstr ""
+
+#: languages/models.py:53
 msgid "language"
 msgstr "jazyk"
 
-#: languages/models.py:45 templates/languages/language_list.html:15
+#: languages/models.py:54 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "jazyky"
+
+#: languages/management/commands/create_languages.py:26
+msgid "Afrikaans"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:40
+msgid "Amharic"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:45
+msgid "Arabic"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:52
+msgid "Assamese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:60
+msgid "Azerbaijani"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:67
+#, fuzzy
+msgid "Balochi"
+msgstr "Vetva"
+
+#: languages/management/commands/create_languages.py:73
+msgid "Belarusian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:81
+msgid "Bulgarian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:89
+#, fuzzy
+msgid "Bengali"
+msgstr "Právna poznámka"
+
+#: languages/management/commands/create_languages.py:97
+msgid "Bengali (India)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:110
+msgid "Bosnian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:118
+msgid "Catalan (Valencian)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:126
+msgid "Czech"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:134
+msgid "Welsh"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:142
+#, fuzzy
+msgid "Danish"
+msgstr "Detaily"
+
+#: languages/management/commands/create_languages.py:150
+msgid "German"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:158
+msgid "Swiss German"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:166
+msgid "Dzongkha"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:174
+#, fuzzy
+msgid "Greek"
+msgstr "týždeň"
+
+#: languages/management/commands/create_languages.py:181
+msgid "English"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:189
+msgid "English (United Kingdom)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:197
+msgid "English (South Africa)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:210
+msgid "Spanish (Castilian)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:218
+msgid "Estonian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:226
+msgid "Basque"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:233
+msgid "Persian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:241
+msgid "Finnish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:255
+#, fuzzy
+msgid "French"
+msgstr "Vetva"
+
+#: languages/management/commands/create_languages.py:263
+msgid "Friulian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:271
+msgid "Western Frisian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:279
+msgid "Irish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:287
+msgid "Galician"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:295
+msgid "Gujarati"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:302
+msgid "Hebrew"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:310
+msgid "Hindi"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:318
+msgid "Croatian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:325
+msgid "Haitian (Haitian Creole)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:333
+msgid "Hungarian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:340
+msgid "Armenian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:346
+msgid "Indonesian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:353
+msgid "Iloko"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:358
+msgid "Icelandic"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:366
+msgid "Italian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:374
+msgid "Japanese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:382
+#, fuzzy
+msgid "Georgian"
+msgstr "Prihlásenie"
+
+#: languages/management/commands/create_languages.py:395
+#, fuzzy
+msgid "Kannada"
+msgstr "a"
+
+#: languages/management/commands/create_languages.py:401
+msgid "Korean"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:409
+msgid "Kurdish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:422
+#, fuzzy
+msgid "Lao"
+msgstr " "
+
+#: languages/management/commands/create_languages.py:428
+msgid "Lithuanian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:436
+msgid "Latvian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:443
+msgid "Maithili"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:448
+msgid "Macedonian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:453
+msgid "Malayalam"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:466
+msgid "Mongolian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:473
+msgid "Marathi"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:480
+msgid "Malay"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:488
+msgid "Maltese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:495
+msgid "Burmese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:506
+msgid "Norwegian Bokmål"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:513
+msgid "Nepali"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:521
+msgid "Dutch (Flemish)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:529
+msgid "Norwegian Nynorsk"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:536
+msgid "Norwegian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:542
+msgid "Northern Sotho"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:550
+msgid "Oriya"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:557
+msgid "Panjabi (Punjabi)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:570
+msgid "Polish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:586
+msgid "Portuguese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:595
+msgid "Brazilian Portuguese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:603
+msgid "Romanian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:611
+msgid "Russian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:618
+msgid "Sinhala"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:624
+msgid "Slovak"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:632
+msgid "Slovenian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:640
+msgid "Albanian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:648
+msgid "Serbian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:656
+msgid "Serbian (Latin)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:665
+msgid "Sotho, Southern"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:673
+msgid "Swedish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:681
+#, fuzzy
+msgid "Tamil"
+msgstr "Email"
+
+#: languages/management/commands/create_languages.py:688
+#, fuzzy
+msgid "Telugu"
+msgstr "\"Slug\""
+
+#: languages/management/commands/create_languages.py:693
+msgid "Tajik"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:698
+msgid "Thai"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:703
+#, fuzzy
+msgid "Tagalog"
+msgstr " "
+
+#: languages/management/commands/create_languages.py:715
+msgid "Turkish"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:722
+msgid "Urdu"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:728
+msgid "Ukrainian"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:742
+msgid "Vietnamese"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:749
+msgid "Wolof"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:764
+msgid "Chinese (China)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:774
+msgid "Chinese (Hong Kong)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:784
+msgid "Chinese (Taiwan)"
+msgstr ""
+
+#: languages/management/commands/create_languages.py:792
+msgid "Zulu"
+msgstr ""
 
 #: languages/templates/feeds/language_release_description.html:4
 msgid "Translated:"
 msgstr "Preložené:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:19
+#: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
 msgstr "Nepresné:"
@@ -195,12 +563,16 @@ msgstr "%(site_name)s: Súčasti v %(project)s"
 msgid "Latest components in project %s."
 msgstr "Najnovšie súčasti v projekte %s."
 
-#: projects/models.py:84 projects/models.py:193 releases/models.py:25
+#: projects/forms.py:16 projects/models.py:208
+msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+msgstr "Regulárny výraz na filtrovanie nechránených súborov. Napr. 'po/.*'"
+
+#: projects/models.py:81 projects/models.py:190 releases/models.py:20
 #: txcollections/models.py:23
 msgid "Slug"
 msgstr "\"Slug\""
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:26
+#: projects/models.py:82 projects/models.py:191 releases/models.py:21
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -209,52 +581,61 @@ msgstr ""
 "Krátky popisok na použitie v URL, obsahujúci len písmená, číslice, "
 "podtrhovníky alebo spojovníky."
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:29
+#: projects/models.py:85 projects/models.py:194 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "Reťazec podobný názvu alebo veľmi krátkemu popisu."
 
-#: projects/models.py:90 projects/models.py:199
+#: projects/models.py:87 projects/models.py:196
 msgid "A sentence or two describing the object (optional)."
 msgstr "Veta alebo dve popisujúca objekt (voliteľné)."
 
-#: projects/models.py:91 projects/models.py:200 releases/models.py:32
+#: projects/models.py:88 projects/models.py:197 releases/models.py:27
 #: txcollections/models.py:30
 msgid "Long description"
 msgstr "Dlhý popis"
 
-#: projects/models.py:93 projects/models.py:202 txcollections/models.py:31
+#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Dlhší popis (voliteľné). Použite syntax Markdown."
 
-#: projects/models.py:94 txcollections/models.py:32
+#: projects/models.py:91 txcollections/models.py:32
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: projects/models.py:95
+#: projects/models.py:92
 msgid "Feed"
 msgstr "Zdroj"
 
-#: projects/models.py:96
+#: projects/models.py:93
 msgid "An RSS feed with updates on the project."
 msgstr "RSS zdroj s aktualizáciami o projekte."
 
-#: projects/models.py:98 projects/models.py:217 releases/models.py:46
+#: projects/models.py:94
+msgid "Bug tracker"
+msgstr ""
+
+#: projects/models.py:95
+msgid ""
+"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+msgstr ""
+
+#: projects/models.py:98 projects/models.py:214 releases/models.py:41
 #: txcollections/models.py:33
 msgid "Hidden"
 msgstr "Skrytý"
 
-#: projects/models.py:99 projects/models.py:218 releases/models.py:47
+#: projects/models.py:99 projects/models.py:215 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr "Skryť tento objekt zo zoznamu?"
 
-#: projects/models.py:100 projects/models.py:219 releases/models.py:48
+#: projects/models.py:100 projects/models.py:216 releases/models.py:43
 #: txcollections/models.py:35
 msgid "Enabled"
 msgstr "Povolené"
 
-#: projects/models.py:101 projects/models.py:220 releases/models.py:49
+#: projects/models.py:101 projects/models.py:217 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr "Povoliť tento objekt alebo zakázať jeho použitie?"
@@ -273,12 +654,12 @@ msgstr "Zbierky"
 msgid "Maintainers"
 msgstr "Správcovia"
 
-#: projects/models.py:116 projects/models.py:226 releases/models.py:54
+#: projects/models.py:116 projects/models.py:223 releases/models.py:49
 #: txcollections/models.py:43
 msgid "HTML Description"
 msgstr "HTML popis"
 
-#: projects/models.py:118 projects/models.py:228 releases/models.py:55
+#: projects/models.py:118 projects/models.py:225 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Popis v HTML."
@@ -298,205 +679,208 @@ msgstr "projekt"
 msgid "projects"
 msgstr "projekty"
 
-#: projects/models.py:203
+#: projects/models.py:200
 msgid "Source language"
 msgstr "Zdrojový jazyk"
 
-#: projects/models.py:204
+#: projects/models.py:201
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Zdrojový jazyk tohto komponentu, napr. 'en', 'sk_SK', 'el'."
 
-#: projects/models.py:206
+#: projects/models.py:203
 msgid "I18n type"
 msgstr "I18n typ"
 
-#: projects/models.py:208
+#: projects/models.py:205
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr "Typ podpory i18n v kóde (%s)"
 
-#: projects/models.py:210
+#: projects/models.py:207
 msgid "File filter"
 msgstr "Filter súborov"
 
-#: projects/models.py:211
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
-msgstr "Regulárny výraz na filtrovanie nechránených súborov. Napr. 'po/.*'"
-
-#: projects/models.py:213
+#: projects/models.py:210
 msgid "Allows submission"
 msgstr "Povoľuje príspevky"
 
-#: projects/models.py:215
+#: projects/models.py:212
 msgid "Does this module repository allow write access?"
 msgstr "Povoľuje repozitár modulu prístup na zápis?"
 
-#: projects/models.py:231
+#: projects/models.py:228
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:232
+#: projects/models.py:229
 msgid "Unit"
 msgstr "Jednotka"
 
-#: projects/models.py:236 templates/releases/base.html:6
+#: projects/models.py:233 templates/releases/base.html:6
 #: templates/releases/release_list.html:14
 msgid "Releases"
 msgstr "Vydania"
 
-#: projects/models.py:246
+#: projects/models.py:253
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Komponent: %s>"
 
-#: projects/models.py:250
+#: projects/models.py:257
 msgid "component"
 msgstr "komponent"
 
-#: projects/models.py:251 templates/projects/component_list.html:15
+#: projects/models.py:258 templates/projects/component_list.html:15
 msgid "components"
 msgstr "komponenty"
 
-#: projects/views.py:103 projects/views.py:191
+#: projects/views.py:115 projects/views.py:313
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s bol zmazaný."
 
-#: projects/views.py:215
+#: projects/views.py:134 projects/views.py:585
+msgid "Must use POST to activate"
+msgstr ""
+
+#: projects/views.py:137 projects/views.py:588
+#, fuzzy
+msgid "Notifation is not enabled"
+msgstr "Nastavenia oznamovania"
+
+#: projects/views.py:150
+#, fuzzy
+msgid "Watch this project"
+msgstr "Sledovať tento súbor"
+
+#: projects/views.py:163
+#, fuzzy
+msgid "Stop wathing this project"
+msgstr "Ukončiť sledovanie tohto súboru"
+
+#: projects/views.py:345
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
-msgstr "Nezdá sa, že by súborový filter tohto na POT založeného komponentu povoľoval "
+msgstr ""
+"Nezdá sa, že by súborový filter tohto na POT založeného komponentu povoľoval "
 "súbor POTFILES.in. Opravte ho, prosím."
 
-#: projects/views.py:275
+#: projects/views.py:419
 msgid "This component does  not allow white access."
 msgstr "Tento komponent nepovoľuje prístup na zápis."
 
-#: projects/views.py:283
+#: projects/views.py:427
 msgid "Please select a file from your system to be uploaded."
 msgstr "Zvoľte súbor z vášho systému, ktorý chcete odoslať."
 
-#: projects/views.py:292
+#: projects/views.py:436
 msgid "Please enter a target to upload the file."
 msgstr "Prosím, zvoľte si cieľ na odoslanie súboru."
 
-#: projects/views.py:298
+#: projects/views.py:442
 msgid "Please enter with only ONE target to upload the file."
 msgstr "Prosím, zadajte len JEDEN cieľ na odoslanie súboru."
 
-#: projects/views.py:309
+#: projects/views.py:453
 msgid "The target file does not match with the component file filter"
 msgstr "Cieľ sa nezhoduje so súborovým filtrom komponentu."
 
-#: projects/views.py:327
-#, python-format
-msgid "Sending translation for %s"
-msgstr "Odosielanie prekladu pre %s"
+#: projects/views.py:461
+msgid "Enter a message for the commit"
+msgstr ""
 
-#: projects/views.py:351
+#: projects/views.py:512
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Súbor bol úspešne odoslaný: %s"
 
-#: projects/views.py:357
+#: projects/views.py:527
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
 msgstr ""
-"Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, "
-"pre zobrazenie chýb spustite tento príkaz na vašom systéme."
+"Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
+"zobrazenie chýb spustite tento príkaz na vašom systéme."
 
-#: projects/views.py:366
+#: projects/views.py:536
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr "Ospravedlňujeme sa, chyba neumožňuje odoslať váš súbor."
 
-#: projects/views.py:370 projects/views.py:400
+#: projects/views.py:540 projects/views.py:570
 msgid "Sorry, but you need to send a POST request."
 msgstr "Ospravedlňujeme sa, ale musíte odoslať POST požiadavku."
 
-#: projects/views.py:389
+#: projects/views.py:559
 msgid "Lock removed."
 msgstr "Uzamknutie odstránené."
 
-#: projects/views.py:392
+#: projects/views.py:562
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Chyba: len vlastník uzamknutia ho môže odstrániť."
 
-#: projects/views.py:396
+#: projects/views.py:566
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Uzamknutie vytvorené. Prosím, nezabudnite ho po skončení odstrániť."
 
-#: projects/management/__init__.py:12
-msgid "New Project Added"
-msgstr "Pridaný nový projekt"
-
-#: projects/management/__init__.py:13
-msgid "when a new project is added"
-msgstr "keď je pridaný nový projekt"
-
-#: projects/management/__init__.py:16
-msgid "New Component Added"
-msgstr "Pridaný nový komponent"
-
-#: projects/management/__init__.py:17
-msgid "when a new component is added"
-msgstr "keď je pridaný nový komponent"
-
-#: releases/models.py:31 txcollections/models.py:29
+#: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
 msgstr "Veta alebo dve popisujúca tento objekt."
 
-#: releases/models.py:33
+#: releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "Použite syntax Markdown."
 
-#: releases/models.py:36
+#: releases/models.py:31
 msgid "Release date"
 msgstr "Dátum vydania"
 
-#: releases/models.py:37
+#: releases/models.py:32
 msgid "When this release will be available."
 msgstr "Kedy bude toto vydanie dostupné."
 
-#: releases/models.py:38
+#: releases/models.py:33
 msgid "String freese date"
 msgstr "Dátum zmrazenia reťazcov"
 
-#: releases/models.py:39
+#: releases/models.py:34
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
-msgstr "Kedy budú preložiteľné reťazce zmrazené (žiadne reťazce ovplyvňujúce "
+msgstr ""
+"Kedy budú preložiteľné reťazce zmrazené (žiadne reťazce ovplyvňujúce "
 "preklady nebudú môcť byť pridané ani zmenené)."
 
-#: releases/models.py:41
+#: releases/models.py:36
 msgid "Devel freeze date"
 msgstr "Dátum zmrazenia vývoja"
 
-#: releases/models.py:42
+#: releases/models.py:37
 msgid ""
 "The last date packages from this release can be built from the developers, "
 "and thus, translations to be built in the packages of it."
-msgstr "Posledný dátum, kedy balíčky z tohto vydania môžu byť zostavené vývojármi, "
-"a tým budú aj preklady zostavené v príslušných balíčkoch."
+msgstr ""
+"Posledný dátum, kedy balíčky z tohto vydania môžu byť zostavené vývojármi, a "
+"tým budú aj preklady zostavené v príslušných balíčkoch."
 
-#: releases/models.py:59
+#: releases/models.py:54
 msgid "release"
 msgstr "vydanie"
 
-#: releases/models.py:60 templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:20
 #: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "vydania"
 
-#: repowatch/__init__.py:82
-msgid "Watch this file"
-msgstr "Sledovať tento súbor"
+#: repowatch/__init__.py:74
+#, fuzzy
+msgid "Watch it"
+msgstr "sledovanie"
 
-#: repowatch/__init__.py:83
-msgid "Stop watching this file"
+#: repowatch/__init__.py:75
+#, fuzzy
+msgid "Stop watching it"
 msgstr "Ukončiť sledovanie tohto súboru"
 
 #: repowatch/models.py:24
@@ -528,6 +912,14 @@ msgstr "Uzamknutie"
 msgid "Locks"
 msgstr "Uzamknutia"
 
+#: tarball/models.py:31
+msgid "tarball"
+msgstr ""
+
+#: tarball/models.py:32
+msgid "tarballs"
+msgstr ""
+
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Prístup zakázaný"
@@ -543,7 +935,8 @@ msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
 "case."
 msgstr ""
-"Tu je odkaz na <a href=\"%(home)s\">domovskú stránku</a>. Viete, pre každý prípad."
+"Tu je odkaz na <a href=\"%(home)s\">domovskú stránku</a>. Viete, pre každý "
+"prípad."
 
 #: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
@@ -553,7 +946,8 @@ msgstr "Stránka nenájdená"
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://transifex.org/newticket'>let us know</a>."
-msgstr "Zdá sa že ste nasledovali zlý odkaz. Ak si myslíte, že to je naša chyba, <a "
+msgstr ""
+"Zdá sa že ste nasledovali zlý odkaz. Ak si myslíte, že to je naša chyba, <a "
 "href='http://transifex.org/newticket'>dajte nám vedieť</a>, prosím."
 
 #: templates/500.html:4 templates/500.html.py:7
@@ -661,8 +1055,8 @@ msgid ""
 "Transifex is a service aimed at helping translators keep track of their "
 "favourite translation projects."
 msgstr ""
-"Transifex je služba zameraná na pomoc prekladateľom v udržiavaní "
-"prehľadu o ich obľúbenom prekladateľskom projekte."
+"Transifex je služba zameraná na pomoc prekladateľom v udržiavaní prehľadu o "
+"ich obľúbenom prekladateľskom projekte."
 
 #: templates/index.html:31
 #, python-format
@@ -698,7 +1092,8 @@ msgstr "Výsledky vyhľadávania (%(result_count)s)"
 msgid ""
 "No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr ""
-"Žiadne projekty nájdené pre \"%(q)s\". Mali by ste trochu zmeniť vyhľadávací reťazec."
+"Žiadne projekty nájdené pre \"%(q)s\". Mali by ste trochu zmeniť vyhľadávací "
+"reťazec."
 
 #: templates/search.html:61
 msgid "Couldn't find your project? Why don't you go ahead and "
@@ -743,8 +1138,8 @@ msgid ""
 "reset email if you request one."
 msgstr ""
 "Tu môžete zmeniť emailovú adresu spojenú s vašim účtom.\n"
-"Udržujte, prosím, túto adresu aktuálnu, aby sme vám mohli poslať "
-"email na obnovenie hesla, ak to požiadate."
+"Udržujte, prosím, túto adresu aktuálnu, aby sme vám mohli poslať email na "
+"obnovenie hesla, ak to požiadate."
 
 #: templates/authopenid/changeemail.html:15
 #: templates/authopenid/changeopenid.html:12
@@ -848,8 +1243,8 @@ msgid ""
 "\t"
 msgstr ""
 "\n"
-"\t<p>Ak sa pripájate po prvý raz, spojte svoje OpenID s novým účtom. Ak členom "
-"už ste, prepojte ho s vašim existujúcim účtom.</p>\n"
+"\t<p>Ak sa pripájate po prvý raz, spojte svoje OpenID s novým účtom. Ak "
+"členom už ste, prepojte ho s vašim existujúcim účtom.</p>\n"
 "\t"
 
 #: templates/authopenid/complete.html:49
@@ -877,7 +1272,8 @@ msgstr "Odstrániť účet"
 msgid ""
 "Note: After deleting your account, anyone will be able to register this "
 "username."
-msgstr "Poznámka: Po odstránení svojho účtu si toto používateľské meno môže "
+msgstr ""
+"Poznámka: Po odstránení svojho účtu si toto používateľské meno môže "
 "zaregistrovať ktokoľvek."
 
 #: templates/authopenid/delete.html:14
@@ -938,8 +1334,8 @@ msgid ""
 msgstr ""
 "Žiaden strach! Tu môžete požiadať o obnovenie hesla zadaním používateľského "
 "mena, ktoré používate. Následne dostanete potvrdzovací email s vašim novým "
-"heslom. Toto nové heslo bude aktivované len ak budete nasledovať odkaz v tomto "
-"emaile."
+"heslom. Toto nové heslo bude aktivované len ak budete nasledovať odkaz v "
+"tomto emaile."
 
 #: templates/authopenid/sendpw.html:27
 msgid "Send new password"
@@ -1108,9 +1504,8 @@ msgid ""
 "No releases are registered for this collection yet. Why don't you <a href=\"%"
 "(release_create)s\">add one</a>?"
 msgstr ""
-""
-"Žiadne vydanie zatiaľ nie je pre túto zbierku zaregistrované. Prečo <a href=\"%"
-"(release_create)s\">nepridáte nejaké</a>?"
+"Žiadne vydanie zatiaľ nie je pre túto zbierku zaregistrované. Prečo <a href="
+"\"%(release_create)s\">nepridáte nejaké</a>?"
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1124,7 +1519,8 @@ msgstr "Zatiaľ žiadne zaregistrované jazyky. :-("
 #, python-format
 msgid ""
 "Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
-msgstr "Nenašli ste svoj jazyk? <a href=\"%(contact_form)s\">Dajte nám vedieť</a>!"
+msgstr ""
+"Nenašli ste svoj jazyk? <a href=\"%(contact_form)s\">Dajte nám vedieť</a>!"
 
 #: templates/languages/language_release.html:33
 msgid "Project/Component statistics"
@@ -1146,8 +1542,8 @@ msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"Ak si myslíte, že by toto nemalo nastať, prosím, <a href=\"%(contact_form)s\">"
-"dajte nám vedieť</a>."
+"Ak si myslíte, že by toto nemalo nastať, prosím, <a href=\"%(contact_form)s"
+"\">dajte nám vedieť</a>."
 
 #: templates/languages/language_release.html:52
 msgid "Untranslated Components"
@@ -1165,41 +1561,56 @@ msgstr ", ale zatiaľ bez odoslaných prekladov pre "
 msgid " yet:"
 msgstr ":"
 
-#: templates/notification/notices.html:4 templates/notification/notices.html:5
+#: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
 msgstr "Oznamovania"
 
-#: templates/notification/notices.html:6
+#: templates/notification/notices.html:8
 msgid "Notification settings"
 msgstr "Nastavenia oznamovania"
 
-#: templates/notification/notices.html:18
+#: templates/notification/notices.html:16
+#, fuzzy
+msgid "Notices"
+msgstr "Správa"
+
+#: templates/notification/notices.html:21
+msgid "Mark all unseen notices seen"
+msgstr ""
+
+#: templates/notification/notices.html:45
+#, fuzzy
+msgid "No notices."
+msgstr "Správa"
+
+#: templates/notification/notices.html:54
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
 "the notifications available for you on the list bellow and choose which "
 "events you would like to be notificated by email."
-msgstr "Môžete prijímať oznámenia kedykoľvek nastane v systéme Transifex nejaká "
-"udalosť. Prezrite si vám dostupné oznamovania v nižšie uvedenom zozname "
-"a zvoľte si udalosti, o ktorých chcete byť oboznamovaný emailom."
+msgstr ""
+"Môžete prijímať oznámenia kedykoľvek nastane v systéme Transifex nejaká "
+"udalosť. Prezrite si vám dostupné oznamovania v nižšie uvedenom zozname a "
+"zvoľte si udalosti, o ktorých chcete byť oboznamovaný emailom."
 
-#: templates/notification/notices.html:19
+#: templates/notification/notices.html:55
 msgid "Primary email"
 msgstr "Primárny email"
 
-#: templates/notification/notices.html:20
+#: templates/notification/notices.html:56
 msgid "change under"
 msgstr "zmena pod"
 
-#: templates/notification/notices.html:20
-#: templates/notification/notices.html:23
+#: templates/notification/notices.html:56
+#: templates/notification/notices.html:59
 msgid "Account"
 msgstr "Účet"
 
-#: templates/notification/notices.html:22
+#: templates/notification/notices.html:58
 msgid "Note"
 msgstr "Poznámka"
 
-#: templates/notification/notices.html:23
+#: templates/notification/notices.html:59
 msgid ""
 "You do not have a verified email address to which notices can be sent. You "
 "can add one by going to"
@@ -1207,36 +1618,113 @@ msgstr ""
 "Nemáte overenú emailovú adresu, na ktorú by oznámenia mohli byť odosielané. "
 "Môžete si takú pridať navštívením"
 
-#: templates/notification/notices.html:31
+#: templates/notification/notices.html:67
 msgid "Notification Type"
 msgstr "Typ oznámenia"
+
+#: templates/notification/notices.html:85
+msgid "Change"
+msgstr "Zmena"
 
 #: templates/notification/single.html:5 templates/notification/single.html:8
 msgid "Notice"
 msgstr "Správa"
 
-#: templates/notification/projects_added_new/teaser.html:2
-#, python-format
+#: templates/notification/project_added/notice.html:2
+#, fuzzy, python-format
 msgid ""
-"\n"
-"New project <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</"
-"a> has been added.\n"
+"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
 msgstr ""
 "\n"
-"Bol pridaný nový projekt <a href=\"http://%(current_site)s%(project_url)s\">"
-"%(project)s</a>.\n"
+"Bol pridaný nový projekt <a href=\"http://%(current_site)s%(project_url)s\">%"
+"(project)s</a>.\n"
 
-#: templates/notification/projects_added_new_component/teaser.html:4
-#, python-format
+#: templates/notification/project_changed/notice.html:2
+#, fuzzy, python-format
 msgid ""
-"\n"
-"New component <a href=\"http://%(current_site)s%(component_url)s\">%"
-"(component)s</a> has been added to the <a href=\"http://%(current_site)s%"
-"(project_url)s\">%(project)s</a> project.\n"
+"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
 msgstr ""
 "\n"
-"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%"
-"(component)s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"Bol pridaný nový projekt <a href=\"http://%(current_site)s%(project_url)s\">%"
+"(project)s</a>.\n"
+
+#: templates/notification/project_component_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
+"been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a>.\n"
+
+#: templates/notification/project_component_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a>.\n"
+
+#: templates/notification/project_component_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The component '%(component_name)s' has been deleted from the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a>.\n"
+
+#: templates/notification/project_component_file_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
+"have been updated:"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a>.\n"
+
+#: templates/notification/project_component_file_submitted/notice.html:2
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
+msgstr ""
+
+#: templates/notification/project_component_file_submitted/notice.html:2
+#, python-format
+msgid "A file called '%(filename)s'"
+msgstr ""
+
+#: templates/notification/project_component_file_submitted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a>.\n"
+
+#: templates/notification/project_component_potfile_error/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The source file (POT) has some problems and can not be created/updated to "
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"\n"
+"Nová súčasť <a href=\"http://%(current_site)s%(component_url)s\">%(component)"
+"s</a> bola pridaná do projektu <a href=\"http://%(current_site)s%"
 "(project_url)s\">%(project)s</a>.\n"
 
 #: templates/projects/component_confirm_delete.html:6
@@ -1268,108 +1756,132 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Áno, som si istý!"
 
-#: templates/projects/component_detail.html:40
-#: templates/projects/project_detail.html:32
+#: templates/projects/component_detail.html:41
+#: templates/projects/project_detail.html:34
 #: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Upraviť"
 
-#: templates/projects/component_detail.html:49
+#: templates/projects/component_detail.html:50
 msgid "Repository:"
 msgstr "Repozitár:"
 
-#: templates/projects/component_detail.html:52
+#: templates/projects/component_detail.html:53
+#: templates/projects/component_detail.html:55
 msgid "Link to a web front-end to the source"
 msgstr "Odkaz na webové rozhranie k zdrojom"
 
-#: templates/projects/component_detail.html:52
+#: templates/projects/component_detail.html:53
+#: templates/projects/component_detail.html:55
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:56
+#: templates/projects/component_detail.html:60
 msgid "Branch:"
 msgstr "Vetva:"
 
-#: templates/projects/component_detail.html:60
+#: templates/projects/component_detail.html:65
 msgid "File filter:"
 msgstr "Filter súborov:"
 
-#: templates/projects/component_detail.html:66
+#: templates/projects/component_detail.html:71
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Vydanie:"
 msgstr[1] "Vydania:"
 msgstr[2] "Vydania:"
 
-#: templates/projects/component_detail.html:74
-msgid "Allows file submissions:"
-msgstr "Povoľuje prispievanie súborov:"
+#: templates/projects/component_detail.html:79
+#, fuzzy
+msgid "Allows submissions:"
+msgstr "Povoľuje príspevky"
 
 #: templates/projects/component_detail.html:85
+msgid ""
+"Tarball support is read-only: Submissions will not pushed to the maintainer "
+"or the upstream repo."
+msgstr ""
+
+#: templates/projects/component_detail.html:85
+#, fuzzy
+msgid "note"
+msgstr "Poznámka"
+
+#: templates/projects/component_detail.html:92
 msgid "Translation files"
 msgstr "Preložiteľné súbory"
 
-#: templates/projects/component_detail.html:90
+#: templates/projects/component_detail.html:97
 msgid "Source file:"
 msgstr "Zdrojový súbor:"
 
-#: templates/projects/component_detail.html:95
+#: templates/projects/component_detail.html:102
 msgid "entries"
 msgstr "položky"
 
-#: templates/projects/component_detail.html:96
-#: translations/templates/comp_stats_table.html:35
-#: translations/templates/lang_stats_table.html:33
+#: templates/projects/component_detail.html:103
+#: translations/templates/comp_lang_stats_table.html:34
+#: translations/templates/comp_stats_table.html:42
+#: translations/templates/lang_stats_table.html:39
 msgid "View "
 msgstr "Zobraziť "
 
-#: templates/projects/component_detail.html:97
-#: translations/templates/comp_stats_table.html:36
-#: translations/templates/lang_stats_table.html:34
+#: templates/projects/component_detail.html:104
+#: translations/templates/comp_lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:43
+#: translations/templates/lang_stats_table.html:40
 msgid "Download "
 msgstr "Stiahnuť "
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:110
 msgid "Statistics last updated:"
 msgstr "Štatistiky aktualizované v čase pred:"
 
-#: templates/projects/component_detail.html:105
+#: templates/projects/component_detail.html:112
 msgid "ago"
 msgstr " "
 
-#: templates/projects/component_detail.html:106
+#: templates/projects/component_detail.html:113
 msgid "Component not yet pulled from source repository."
 msgstr "Súčast zatiaľ nie je získaná zo zdrojového repozitára."
 
-#: templates/projects/component_detail.html:109
+#: templates/projects/component_detail.html:116
 msgid "Refresh and re-calculate statistics. It can take some time."
 msgstr "Obnoviť a znovu spočítať štatistiky. Môže to nejaký čas trvať."
 
-#: templates/projects/component_detail.html:109
+#: templates/projects/component_detail.html:116
 msgid "Refresh cache"
 msgstr "Obnoviť vyrovnávaciu pamäť"
 
-#: templates/projects/component_detail.html:114
+#: templates/projects/component_detail.html:121
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Vyčistiť lokálne dáta Transifex-u pre čisté získanie"
 
-#: templates/projects/component_detail.html:114
+#: templates/projects/component_detail.html:121
 msgid "Clear cache"
 msgstr "Vyčistiť vyrovnávaciu pamäť"
 
-#: templates/projects/component_detail.html:130
-#: templates/projects/project_detail.html:96
+#: templates/projects/component_detail.html:124
+msgid "Any locally modified data will be overwritten with fresh copies."
+msgstr ""
+
+#: templates/projects/component_detail.html:124
+msgid "warning"
+msgstr ""
+
+#: templates/projects/component_detail.html:139
+#: templates/projects/project_detail.html:114
 msgid "History"
 msgstr "História"
 
-#: templates/projects/component_detail.html:134
-#: templates/projects/project_detail.html:100
+#: templates/projects/component_detail.html:143
+#: templates/projects/project_detail.html:118
 msgid "None available"
 msgstr "Žiadna dostupná"
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:159
 msgid "Delete component"
 msgstr "Odstrániť súčasť"
 
@@ -1380,19 +1892,24 @@ msgstr "Pridať súčasť"
 
 #: templates/projects/component_form.html:7
 #: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:19
+#: templates/projects/component_form.html:55
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "Upraviť %(component_name)s"
 
-#: templates/projects/component_form.html:17
+#: templates/projects/component_form.html:53
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Nová súčasť pre %(project_name)s"
 
-#: templates/projects/component_form.html:35
+#: templates/projects/component_form.html:74
 msgid "Save component"
 msgstr "Uložiť súčasť"
+
+#: templates/projects/component_lang_detail.html:28
+#, fuzzy
+msgid "translation files"
+msgstr "Preložiteľné súbory"
 
 #: templates/projects/component_list.html:9
 #: templates/txcollections/collection_detail.html:62
@@ -1428,36 +1945,37 @@ msgid ""
 "which consist of actual files.\n"
 "    Examples of components of a software project could be \"UI\" and \"Docs"
 "\" or development branches like <code>HEAD</code>."
-msgstr "<em>Súčasti</em> sú menšie, samoobsahujúce časti väčšieho projektu, ktoré "
-"sa skladajú zo skutočných súborov.\n"
-"    Príklady súčastí softvérového projektu môžu byť \"UI\" a \"Docs\" alebo vývojové "
-"vetvy ako <code>HEAD</code>."
+msgstr ""
+"<em>Súčasti</em> sú menšie, samoobsahujúce časti väčšieho projektu, ktoré sa "
+"skladajú zo skutočných súborov.\n"
+"    Príklady súčastí softvérového projektu môžu byť \"UI\" a \"Docs\" alebo "
+"vývojové vetvy ako <code>HEAD</code>."
 
-#: templates/projects/component_submit_new_file.html:5
+#: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
 msgstr "Odoslať nový preklad pre túto súčasť."
 
-#: templates/projects/component_submit_new_file.html:5
+#: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
 msgstr "Pridať nový preklad"
 
-#: templates/projects/component_submit_new_file.html:8
+#: templates/projects/component_submit_new_file.html:9
 msgid "Add a translation file"
 msgstr "Pridať preložiteľný súbor"
 
-#: templates/projects/component_submit_new_file.html:12
+#: templates/projects/component_submit_new_file.html:13
 msgid "Local file:"
 msgstr "Lokálny súbor:"
 
-#: templates/projects/component_submit_new_file.html:14
+#: templates/projects/component_submit_new_file.html:15
 msgid "The new language translation file to be uploaded."
 msgstr "Nový jazykový preložiteľný súbor na odoslanie."
 
-#: templates/projects/component_submit_new_file.html:17
+#: templates/projects/component_submit_new_file.html:18
 msgid "Select the target file:"
 msgstr "Zvoľte cieľový súbor:"
 
-#: templates/projects/component_submit_new_file.html:26
+#: templates/projects/component_submit_new_file.html:27
 msgid ""
 "The target file is the name o the new file language. It must matches with "
 "the component file filter."
@@ -1465,15 +1983,24 @@ msgstr ""
 "Cieľový súbor v repozitári je názov nového jazykového súboru. Musí vyhovovať "
 "súborovému filtru súčasti."
 
-#: templates/projects/component_submit_new_file.html:29
+#: templates/projects/component_submit_new_file.html:30
 msgid "or enter it here:"
 msgstr "alebo ho zadajte tu:"
 
-#: templates/projects/component_submit_new_file.html:31
+#: templates/projects/component_submit_new_file.html:32
 msgid "Example: "
 msgstr "Príklad:"
 
 #: templates/projects/component_submit_new_file.html:35
+#, fuzzy
+msgid "Commit message:"
+msgstr "Odosielacia správa"
+
+#: templates/projects/component_submit_new_file.html:37
+msgid "Example: Updates to Brazilian Portuguese translation"
+msgstr ""
+
+#: templates/projects/component_submit_new_file.html:41
 #: translations/templates/component_submit.html:9
 msgid "Send"
 msgstr "Odoslať"
@@ -1508,25 +2035,39 @@ msgstr ""
 "  Ste si istý, že chcete nadobro odstrániť zaregistrovaný projekt '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:38
+#: templates/projects/project_detail.html:40
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Detaily"
 
-#: templates/projects/project_detail.html:43
+#: templates/projects/project_detail.html:47
+#, fuzzy
+msgid "Watch:"
+msgstr "sledovanie"
+
+#: templates/projects/project_detail.html:55
 #: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
 msgstr "Domovská stránka:"
 
-#: templates/projects/project_detail.html:44
+#: templates/projects/project_detail.html:56
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Domovská stránka pre %(project_name)s"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:61
+msgid "Bug tracker:"
+msgstr ""
+
+#: templates/projects/project_detail.html:62
+#, fuzzy, python-format
+msgid "Bug tracker for %(project_name)s"
+msgstr "Domovská stránka pre %(project_name)s"
+
+#: templates/projects/project_detail.html:67
 #: templates/projects/project_list.html:46
 #: templates/releases/release_detail.html:50
 #: templates/releases/release_list.html:43
@@ -1535,31 +2076,31 @@ msgstr "Domovská stránka pre %(project_name)s"
 msgid "Tags:"
 msgstr "Štítky:"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:76
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Zbierka:"
 msgstr[1] "Zbierky:"
 msgstr[2] "Zbierky:"
 
-#: templates/projects/project_detail.html:68
+#: templates/projects/project_detail.html:86
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Správca:"
 msgstr[1] "Správcovia:"
 msgstr[2] "Správcovia:"
 
-#: templates/projects/project_detail.html:82
+#: templates/projects/project_detail.html:100
 #: templates/releases/release_detail.html:58
 msgid "External links:"
 msgstr "Externé odkazy:"
 
-#: templates/projects/project_detail.html:84
+#: templates/projects/project_detail.html:102
 #: templates/releases/release_detail.html:60
 msgid "Screenshots"
 msgstr "Snímky obrazovky"
 
-#: templates/projects/project_detail.html:117
+#: templates/projects/project_detail.html:136
 msgid "Delete project"
 msgstr "Odstrániť projekt"
 
@@ -1623,8 +2164,9 @@ msgstr "Prečo <a href=\"%(project_create)s\">nepridáte nejaký</a>?"
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
 "it</a>!"
-msgstr "Nenašli ste svoj projekt? Pokračujte a <a href=\"%(project_create)s\">pridajte "
-"ho</a>!"
+msgstr ""
+"Nenašli ste svoj projekt? Pokračujte a <a href=\"%(project_create)s"
+"\">pridajte ho</a>!"
 
 #: templates/releases/release_confirm_delete.html:4
 #, python-format
@@ -1670,8 +2212,8 @@ msgid ""
 "No projects are registered for this release yet. <a href=\"%(project_list)s"
 "\">Find projects</a> and add them to this release."
 msgstr ""
-"Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href=\"%(project_list)s"
-"\">Vyhľadajte projekty</a> a pridajte ich do tohto vydania."
+"Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href=\"%"
+"(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tohto vydania."
 
 #: templates/releases/release_detail.html:97
 msgid "Delete release"
@@ -1742,8 +2284,9 @@ msgstr "Prečo <a href=\"%(release_create)s\">nepridáte nejaké</a>?"
 msgid ""
 "Couldn't find your release? Go ahead and <a href=\"%(release_create)s\">add "
 "it</a>!"
-msgstr "Nenašli ste svoje vydanie? Pokračujte a <a href=\"%(release_create)s\">pridajte "
-"ho</a>!"
+msgstr ""
+"Nenašli ste svoje vydanie? Pokračujte a <a href=\"%(release_create)s"
+"\">pridajte ho</a>!"
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -1753,7 +2296,8 @@ msgstr "<p>Odhlásili ste sa."
 msgid ""
 "Any settings associated with your account are presented and possibly "
 "modified here."
-msgstr "Tu sú zobrazené a umožnená je úprava nastavení spojených s vašim účtom."
+msgstr ""
+"Tu sú zobrazené a umožnená je úprava nastavení spojených s vašim účtom."
 
 #: templates/simpleauth/signin.html:10
 msgid ""
@@ -1761,8 +2305,8 @@ msgid ""
 "<p>Please login in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
-"<p>Prosím, prihláste sa pomocou svojho emailu alebo používateľského "
-"mena.<br />\n"
+"<p>Prosím, prihláste sa pomocou svojho emailu alebo používateľského mena."
+"<br />\n"
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -1810,8 +2354,8 @@ msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
-"Zatiaľ nie sú pre túto zbierku zaregistrované žiadne projekty. <a href=\"%(project_list)"
-"s\">Vyhľadajte projekty</a> a pridajte ich do tejto zbierky."
+"Zatiaľ nie sú pre túto zbierku zaregistrované žiadne projekty. <a href=\"%"
+"(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tejto zbierky."
 
 #: templates/txcollections/collection_detail.html:119
 msgid "Delete collection"
@@ -1885,7 +2429,8 @@ msgstr "Prečo <a href=\"%(collection_create)s\">nepridáte nejakú</a>?"
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
 "\">add it</a>!"
-msgstr "Nenašli ste svoju zbierku? Pokračujte a <a href=\"%(collection_create)s"
+msgstr ""
+"Nenašli ste svoju zbierku? Pokračujte a <a href=\"%(collection_create)s"
 "\">pridajte ju</a>!"
 
 #: templates/txcollections/release_detail.html:55
@@ -1928,59 +2473,74 @@ msgstr ""
 msgid "Save release"
 msgstr "Uložiť vydanie"
 
-#: translations/models.py:147
+#: translations/models.py:226
 msgid "PO file"
 msgstr "PO súbor"
 
-#: translations/models.py:148
+#: translations/models.py:227
 msgid "PO files"
 msgstr "PO súbory"
 
-#: translations/templates/comp_stats_table.html:10
-#: translations/templates/project_stats_table.html:6
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "Jazyk"
+#: translations/templates/comp_lang_stats_table.html:11
+#, fuzzy
+msgid "Files"
+msgstr "Súbor(y)"
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:12
+#: translations/templates/comp_stats_table.html:12
 #: translations/templates/lang_stats_table.html:12
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Preklady"
 
-#: translations/templates/comp_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:13
+#: translations/templates/comp_stats_table.html:13
 #: translations/templates/lang_stats_table.html:13
 msgid "Options"
 msgstr "Voľby"
 
-#: translations/templates/comp_stats_table.html:20
-msgid "See statistics for this language"
-msgstr "Pozrieť štatistiky pre tento jazyk"
-
-#: translations/templates/comp_stats_table.html:22
-#: translations/templates/release_stats_table.html:18
-msgid "There is no language registered that matches with this file"
-msgstr "Neexistuje zaregistrovaný jazyk, ktorý sa zhoduje s týmto súborom"
-
-#: translations/templates/comp_stats_table.html:25
+#: translations/templates/comp_lang_stats_table.html:22
+#: translations/templates/comp_stats_table.html:26
 #: translations/templates/lang_stats_table.html:23
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Nie je možné vygenerovať štatistiky pre tento súbor"
 
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:19
+#: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Trans:"
 msgstr "Prelož.:"
 
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:19
+#: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "Neprel.:"
+
+#: translations/templates/comp_stats_table.html:11
+#: translations/templates/project_stats_table.html:7
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "Jazyk"
+
+#: translations/templates/comp_stats_table.html:21
+msgid "See statistics for this language"
+msgstr "Pozrieť štatistiky pre tento jazyk"
+
+#: translations/templates/comp_stats_table.html:23
+#, fuzzy
+msgid "There is no language registered that matches with this code"
+msgstr "Neexistuje zaregistrovaný jazyk, ktorý sa zhoduje s týmto súborom"
+
+#: translations/templates/comp_stats_table.html:38
+#: translations/templates/lang_stats_table.html:35
+msgid "Click here to see the multiple files for"
+msgstr ""
 
 #: translations/templates/component_submit.html:4
 msgid "Send a translation for this language."
@@ -2016,11 +2576,16 @@ msgstr "Uzamknúť tento súbor, aby ostatní vedeli, že na ňom pracujete."
 
 #: translations/templates/pofile_lock.html:21
 msgid "This file is unlocked. Most likely noone is working with it right now."
-msgstr "Tento súbor nie je uzamknutý. Pravdepodobne na ňom teraz nikto nepracuje."
+msgstr ""
+"Tento súbor nie je uzamknutý. Pravdepodobne na ňom teraz nikto nepracuje."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
 msgstr "Pozrieť detailné štatistiky pre tento jazyk"
+
+#: translations/templates/release_stats_table.html:18
+msgid "There is no language registered that matches with this file"
+msgstr "Neexistuje zaregistrovaný jazyk, ktorý sa zhoduje s týmto súborom"
 
 #: txcollections/feeds.py:15
 #, python-format
@@ -2065,10 +2630,198 @@ msgstr "zbierka"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr "<Vydanie: %(rel)s (Zbierka %(col)s)>"
 
+#: txcommon/forms.py:14
+msgid "Enter a valid regular expression."
+msgstr ""
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "Súbor LINGUAS sa nepodarilo otvoriť: %s"
+
+#: txcommon/management/__init__.py:9
+msgid "New Project Added"
+msgstr "Pridaný nový projekt"
+
+#: txcommon/management/__init__.py:10
+msgid "when a new project is added"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:16
+#, fuzzy
+msgid "Project Changed"
+msgstr "Súčasť projektu"
+
+#: txcommon/management/__init__.py:17
+#, fuzzy
+msgid "when a project is changed"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:23
+#, fuzzy
+msgid "Project Deleted"
+msgstr "Zoznam projektov"
+
+#: txcommon/management/__init__.py:24
+#, fuzzy
+msgid "when a project is deleted"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:30
+msgid "New Component Added"
+msgstr "Pridaný nový komponent"
+
+#: txcommon/management/__init__.py:31
+#, fuzzy
+msgid "when a new component is added to a project"
+msgstr "keď je pridaný nový komponent"
+
+#: txcommon/management/__init__.py:37
+#, fuzzy
+msgid "Component Changed"
+msgstr "Pridaný nový komponent"
+
+#: txcommon/management/__init__.py:38
+#, fuzzy
+msgid "when a component of a project is changed"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:44
+#, fuzzy
+msgid "Component Deleted"
+msgstr "Pridaný nový komponent"
+
+#: txcommon/management/__init__.py:45
+#, fuzzy
+msgid "when a component of a project is deleted"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:51
+#, fuzzy
+msgid "File Submitted"
+msgstr "Filter súborov"
+
+#: txcommon/management/__init__.py:52
+#, fuzzy
+msgid "when a component file of a project is submitted"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:59
+#, fuzzy
+msgid "Translation File Changed"
+msgstr "Preložiteľné súbory"
+
+#: txcommon/management/__init__.py:60
+#, fuzzy
+msgid "when a component translation file of a project is changed"
+msgstr "Nový jazykový preložiteľný súbor na odoslanie."
+
+#: txcommon/management/__init__.py:67
+msgid "Translation Source File (POT) has a Problem"
+msgstr ""
+
+#: txcommon/management/__init__.py:68
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
+msgstr ""
+
+#: txcommon/management/__init__.py:76
+#, fuzzy
+msgid "New Collection Added"
+msgstr "Pridaný nový projekt"
+
+#: txcommon/management/__init__.py:77
+#, fuzzy
+msgid "when a new collection is added"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:83
+#, fuzzy
+msgid "Collection Changed"
+msgstr "Zbierky"
+
+#: txcommon/management/__init__.py:84
+#, fuzzy
+msgid "when a collection is changed"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:90
+#, fuzzy
+msgid "Collection Deleted"
+msgstr "Zoznam zbierok"
+
+#: txcommon/management/__init__.py:91
+#, fuzzy
+msgid "when a collection is deleted"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:97
+#, fuzzy
+msgid "Project Added to a Collection"
+msgstr "Pridať zbierku"
+
+#: txcommon/management/__init__.py:98
+#, fuzzy
+msgid "when a new project is added to a collection"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:104
+#, fuzzy
+msgid "Project Deleted from a Collection"
+msgstr "Odstrániť zbierku"
+
+#: txcommon/management/__init__.py:105
+#, fuzzy
+msgid "when a project is deleted from a collection"
+msgstr "keď je pridaný nový projekt"
+
+#: txcommon/management/__init__.py:111
+msgid "New Release Added for a Watched Collection"
+msgstr ""
+
+#: txcommon/management/__init__.py:112
+#, fuzzy
+msgid "when a new release is added to a collection"
+msgstr "Najnovšie vydania v zbierke %s."
+
+#: txcommon/management/__init__.py:119
+#, fuzzy
+msgid "Release Changed"
+msgstr "Dátum vydania"
+
+#: txcommon/management/__init__.py:120
+msgid "when a release of a collection is changed"
+msgstr ""
+
+#: txcommon/management/__init__.py:125
+#, fuzzy
+msgid "Release Deleted"
+msgstr "Dátum vydania"
+
+#: txcommon/management/__init__.py:126
+msgid "when a release of a collection is deleted"
+msgstr ""
+
+#: txcommon/management/__init__.py:131
+#, fuzzy
+msgid "Release Added to a Collection"
+msgstr "Pridať zbierku"
+
+#: txcommon/management/__init__.py:132
+#, fuzzy
+msgid "when a release is added to a collection"
+msgstr "Najnovšie vydania v zbierke %s."
+
+#: txcommon/management/__init__.py:137
+#, fuzzy
+msgid "Release Deleted from a Collection"
+msgstr "Odstrániť zbierku"
+
+#: txcommon/management/__init__.py:138
+#, fuzzy
+msgid "when a release is deleted to a collection"
+msgstr "Najnovšie vydania v zbierke %s."
 
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
@@ -2090,1231 +2843,15 @@ msgstr "WWW rozhranie"
 msgid "A URL to the project's web front-end"
 msgstr "URL na WWW rozhranie projektu"
 
-#: vcs/models.py:55
+#: vcs/models.py:58
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr "<VcsJednotka: %(name)s (%(type)s)>"
 
-#: vcs/models.py:58
+#: vcs/models.py:61
 msgid "vcsunit"
 msgstr "vcsjednotka"
 
-#: vcs/models.py:59
+#: vcs/models.py:62
 msgid "vcsunits"
 msgstr "vcsjednotky"
-
-#~ msgid "The path %s cannot be found"
-#~ msgstr "Cesta %s nebola nájdená"
-
-#~ msgid ""
-#~ "The credentials you supplied were not correct or did not grant access to "
-#~ "this resource."
-#~ msgstr ""
-#~ "Zadané prihlasovacie údaje sú nesprávne alebo vás neoprávňujú k prístupu "
-#~ "k tomuto zdroju."
-
-#~ msgid "You must provide your credentials before accessing this resource."
-#~ msgstr ""
-#~ "Pred prístupom k tomuto zdroju musíte zadať vaše prihlasovacie údaje."
-
-#~ msgid "The language '%s' is not available"
-#~ msgstr "Jazyk '%s' nie je dostupný"
-
-#~ msgid ""
-#~ "There is a technical error with the module '%s' (no branches are "
-#~ "registered for it)."
-#~ msgstr ""
-#~ "V module '%s' sa vyskytla technická chyba (nie sú preň registrované "
-#~ "žiadne vetvy)"
-
-#~ msgid "There is a technical error with the module '%s'"
-#~ msgstr "V module '%s' sa vyskytla technická chyba"
-
-#~ msgid "You should provide a destination file."
-#~ msgstr "Mali by ste zvoliť cieľový súbor."
-
-#~ msgid ""
-#~ "You should either choose an existing file to substitute or provide a name "
-#~ "for a new one (and not both)."
-#~ msgstr ""
-#~ "Musíte buď zvoliť existujúci súbor pre nahradenie alebo zadať názov pre "
-#~ "nový súbor (ale nie oboje)."
-
-#~ msgid "Please enter a log message for your submission."
-#~ msgstr "Prosím, zadajte správu do protokolu o vašom príspevku."
-
-#~ msgid "Preview"
-#~ msgstr "Náhľad"
-
-#~ msgid "Overwrite an existing file:"
-#~ msgstr "Prepísať existujúci súbor:"
-
-#~ msgid "Either select the file your submission will replace..."
-#~ msgstr "Buď zvoľte súbor, ktorý vašim príspevok nahradíte..."
-
-#~ msgid "or, type the name for a new one:"
-#~ msgstr "alebo zadajte názov nového súboru:"
-
-#~ msgid "For example: 'po/pt.po'."
-#~ msgstr "Napríklad: 'po/sk.po'."
-
-#~ msgid ""
-#~ "A commit message is a log or record of the changes made by a commit. For "
-#~ "example: \"Updated X translation\""
-#~ msgstr ""
-#~ "Odosielacia správa je záznam zmien spôsobených odoslaním. Napríklad: "
-#~ "\"Updated Slovak translation\""
-
-#~ msgid "Skip diff preview"
-#~ msgstr "Preskočiť náhľad zmien"
-
-#~ msgid "Do not preview diffs in next screen. Useful for slow connections."
-#~ msgstr ""
-#~ "Nezobraziť na nasledujúcej obrazovke náhľad zmien. Vhodné pre pomalé "
-#~ "pripojenia."
-
-#~ msgid "Summary"
-#~ msgstr "Zhrnutie"
-
-#~ msgid "Repository"
-#~ msgstr "Repozitár"
-
-#~ msgid "Scmmodule"
-#~ msgstr "Scm modul"
-
-#~ msgid "Filefilter"
-#~ msgstr "Filter súborov"
-
-#~ msgid "Disabled"
-#~ msgstr "Zakázané"
-
-#~ msgid ""
-#~ "There is one or more problems with the form validation. Please correct it."
-#~ msgstr ""
-#~ "Pri overení formulára sa vyskytli nejaké chyby. Opravte ich, prosím."
-
-#~ msgid "Invalid module."
-#~ msgstr "Neplatný modul."
-
-#~ msgid "Invalid branch."
-#~ msgstr "Neplatná vetva."
-
-#~ msgid "There seems to be a problem. Please contact the administrator!"
-#~ msgstr "Vyskytol sa asi problém. Upovedomte správcov, prosím."
-
-#~ msgid "Something went wrong with your submission. Path: %s"
-#~ msgstr "S odoslaním vášho príspevku sa stalo niečo zlé. Cesta: %s"
-
-#~ msgid ""
-#~ "Please choose only one of the two overwrite options: Either substitute an "
-#~ "existing file or provide a name for a new one."
-#~ msgstr ""
-#~ "Zvoľte, prosím, len jednu z prepisovacích možností: buď nahraďte "
-#~ "existujúci súbor, alebo zadajte názov pre nový."
-
-#~ msgid ""
-#~ "The filename you chose isn't allowed to be used. Please use a filename "
-#~ "similar to the ones present in the list of existing files."
-#~ msgstr ""
-#~ "Zvolený názov súboru nie je povolený. Použite, prosím, názov súboru "
-#~ "podobný tým v zozname existujúcich súborov."
-
-#~ msgid ""
-#~ "There is a technical error with this module's Changelog file. Please "
-#~ "notify the administrators."
-#~ msgstr ""
-#~ "So súborom Changelog tohto modulu nastala technická chyba. Upovedomte "
-#~ "správcov, prosím."
-
-#~ msgid "Something went wrong with your session. Please re-submit the page."
-#~ msgstr "S vašou reláciou sa stalo niečo zlé. Opakujte odoslanie, prosím."
-
-#~ msgid ""
-#~ "There was a technical error with the commit/push of your submission, most "
-#~ "likely because of a misconfiguration of the system. Try refreshing the "
-#~ "module's cache and retry submitting."
-#~ msgstr ""
-#~ "Vyskytol sa technický problém pri odoslaní/pretlačení, pravdepodobne pre "
-#~ "nesprávne nastavenie systému. Pokúste sa obnoviť cache modulu a odoslanie "
-#~ "zopakovať."
-
-#~ msgid ""
-#~ "The administrators will look into the log files and try to find out what "
-#~ "went wrong."
-#~ msgstr ""
-#~ "Správcovia prezrú súbory záznamov a pokúsia sa zistiť, čo sa pokazilo."
-
-#~ msgid "There was an error with your form."
-#~ msgstr "S vašim formulárom nastala chyba."
-
-#~ msgid "Something went wrong with your submission."
-#~ msgstr "S odoslaním vášho príspevku sa stalo niečo zlé."
-
-#~ msgid "Error: A module with this name already exists."
-#~ msgstr "Chyba: Modul s týmto názvom už existuje."
-
-#~ msgid ""
-#~ "Module '%s' added. If you haven't done so already, don't forget to "
-#~ "configure the SSH keys for it."
-#~ msgstr ""
-#~ "Modul '%s' pridaný. Ak ste tak ešte nespravili, nezabudnite nastaviť preň "
-#~ "SSH kľúče."
-
-#~ msgid "Invalid module/branch."
-#~ msgstr "Neplatný modul/vetva."
-
-#~ msgid "This module cannot be updated."
-#~ msgstr "Tento modul sa nedá aktualizovať."
-
-#~ msgid "No such person"
-#~ msgstr "Osoba neexistuje"
-
-#~ msgid "Add repository"
-#~ msgstr "Pridať repozitár"
-
-#~ msgid "Update a repository"
-#~ msgstr "Aktualizovať repozitár"
-
-#~ msgid "Update repository"
-#~ msgstr "Aktualizovať repozitár"
-
-#~ msgid "Invalid repository."
-#~ msgstr "Neplatný repozitár."
-
-#~ msgid "Add a new repository"
-#~ msgstr "Pridať nový repozitár"
-
-#~ msgid "You can not change the repository name."
-#~ msgstr "Nemôžete zmeniť názov repozitára."
-
-#~ msgid "Error: A repository with this name already exists."
-#~ msgstr "Chyba: Repozitár s týmto názvom už existuje."
-
-#~ msgid "Error: There was an error to add the data into the database"
-#~ msgstr "Chyba: Pri pridávaní údajov do databázy sa vyskytla chyba"
-
-#~ msgid "Repository '%(repo)s' has been %(action)s."
-#~ msgstr "Repoitár '%(repo)s' bol '%(action)s'."
-
-#~ msgid "updated"
-#~ msgstr "aktualizovaný"
-
-#~ msgid "added"
-#~ msgstr "pridaný"
-
-#~ msgid "Error: Could not delete the repository. %s"
-#~ msgstr "Chyba: Nepodarilo sa odstrániť repozitár. %s"
-
-#~ msgid "Repository '%s' has been deleted successfully."
-#~ msgstr "Repozitár '%s' bol úspešne odstránený."
-
-#~ msgid "File(s)"
-#~ msgstr "Súbor(y)"
-
-#~ msgid "Timestamp"
-#~ msgstr "Dátum a čas"
-
-#~ msgid "years"
-#~ msgstr "roky"
-
-#~ msgid "month"
-#~ msgstr "mesiac"
-
-#~ msgid "week"
-#~ msgstr "týždeň"
-
-#~ msgid "weeks"
-#~ msgstr "týždne"
-
-#~ msgid "day"
-#~ msgstr "deň"
-
-#~ msgid "days"
-#~ msgstr "dni"
-
-#~ msgid "hour"
-#~ msgstr "hodina"
-
-#~ msgid "hours"
-#~ msgstr "hodiny"
-
-#~ msgid "minute"
-#~ msgstr "minúta"
-
-#~ msgid "minutes"
-#~ msgstr "minúty"
-
-#~ msgid "%(number)d %(type)s"
-#~ msgstr "%(number)d %(type)s"
-
-#~ msgid "%s :: Submission Log"
-#~ msgstr "%s :: Záznam odoslaní"
-
-#~ msgid "Log of recent submits"
-#~ msgstr "Záznam nedávnych odoslaní"
-
-#~ msgid "show more"
-#~ msgstr "zobraziť viac"
-
-#~ msgid "%s :: Home"
-#~ msgstr "%s :: Domov"
-
-#~ msgid ", a web system for distributed translation submissions."
-#~ msgstr ", webový systém na distribuované odosielanie prekladov."
-
-#~ msgid ""
-#~ "Submit translations to upstream projects without the need to learn\n"
-#~ "    the tricks of different version control systems."
-#~ msgstr ""
-#~ "Odosielajte preklady do upstream projektov bez nutnosti učenia sa\n"
-#~ " trikov rozličných systémov správy verzií."
-
-#~ msgid "Read more to submit translations"
-#~ msgstr "Čítajte viac pre odoslanie prekladov"
-
-#~ msgid "Jump to the modules!"
-#~ msgstr "Hurá na moduly!"
-
-#~ msgid ""
-#~ "Receive translations directly to your project's repository, without the "
-#~ "management overhead of loads of accounts and big access control lists."
-#~ msgstr ""
-#~ "Prijímajte preklady priamo do repozitára vášho projektu, bez zbytočnej "
-#~ "réžie spravovania množstva účtov a veľkých zoznamov kontroly prístupu."
-
-#~ msgid "Read more to register a module"
-#~ msgstr "Čítajte viac pre registráciu modulu"
-
-#~ msgid "Administrators"
-#~ msgstr "Správcovia"
-
-#~ msgid "Submission Log"
-#~ msgstr "Záznam o odoslaniach"
-
-#~ msgid "Translated by: %(trans)s."
-#~ msgstr "Preklad od: %(trans)s."
-
-#~ msgid "translator-credits"
-#~ msgstr "Pavol Šimo <palo.simo@gmail.com>"
-
-#~ msgid "%s :: Authenticate"
-#~ msgstr "%s :: Overenie sa"
-
-#~ msgid "Authenticate"
-#~ msgstr "Overiť sa"
-
-#~ msgid ""
-#~ "You may authenticate using your existing credentials in the account "
-#~ "system of"
-#~ msgstr "Môžete sa prihlásiť pomocou vašich údajov v systéme účtov"
-
-#~ msgid ":: Information for maintainers"
-#~ msgstr ":: Informácia pre správcov"
-
-#~ msgid "Information for maintainers"
-#~ msgstr "Informácia pre správcov"
-
-#~ msgid ""
-#~ "If you are a project maintainer, you can have Transifex's\n"
-#~ "  community contribute translations to your project easily. The basic "
-#~ "idea\n"
-#~ "  is that you create a special user on your"
-#~ msgstr ""
-#~ "Ak ste správca projektu, ľahko môžete nechať komunitu Transifexu "
-#~ "prispievať prekladmi do vášho projektu. Základná myšlienka je, že "
-#~ "vytvoríte špeciálneho používateľa vo vašom"
-
-#~ msgid "Version Control   System"
-#~ msgstr "Systém správy verzií"
-
-#~ msgid "VCS"
-#~ msgstr "VCS"
-
-#~ msgid ""
-#~ "and we use that user to commit translations for all\n"
-#~ "  Fedora translators."
-#~ msgstr ""
-#~ "a tento používateľ sa použije pre odosielanie prekladov všetkých "
-#~ "prekladateľov Transifexu."
-
-#~ msgid "Here's what you need to do to get it going:"
-#~ msgstr "Tu je všetko, čo potrebujete spraviť, aby to šlapalo:"
-
-#~ msgid "1. Let us know"
-#~ msgstr "1. Dajte nám vedieť"
-
-#~ msgid ""
-#~ "Tell us about your module by contacting your project's administrator\n"
-#~ "    (eg. by opening a bug report or ticket), attaching the following "
-#~ "information:"
-#~ msgstr ""
-#~ "Povedzte nám o vašom module kontaktovaním správcu projektu (napr. "
-#~ "otvorením hlásenia o chybe alebo lístka), pripojením nasledujúcich "
-#~ "informácií:"
-
-#~ msgid "Module name"
-#~ msgstr "Názov modulu"
-
-#~ msgid "VCS root, Module, Branch"
-#~ msgstr "Koreň VCS, modul, vetva"
-
-#~ msgid "Web front-end to VCS"
-#~ msgstr "WWW rozhranie na VCS"
-
-#~ msgid "File filter (eg. '"
-#~ msgstr "Filter súborov (napríklad "
-
-#~ msgid ".*/po/.*"
-#~ msgstr ".*/po/.*"
-
-#~ msgid "Translations' changelog file (if applicable)"
-#~ msgstr "Zmenový súbor prekladu (ak je)"
-
-#~ msgid "Contact point (name, email, role in project)"
-#~ msgstr "Kontakt (meno, email, rola v projekte)"
-
-#~ msgid "2. Repository access"
-#~ msgstr "2. Prístup k repozitáru"
-
-#~ msgid "Check out the"
-#~ msgstr "Prehľadajte"
-
-#~ msgid ""
-#~ "repositories\n"
-#~ "    we are serving"
-#~ msgstr "repozitáre, ktoré obsluhujeme"
-
-#~ msgid "and see if your project's repo is there."
-#~ msgstr "a zistite, či je tam repozitár vášho projektu."
-
-#~ msgid "If it is, then we have already setup a user that accesses your repo."
-#~ msgstr ""
-#~ "Ak áno, tak sme používateľa na prístup do vášho repozitára už nastavili."
-
-#~ msgid ""
-#~ "If your repo isn't listed, then we'll need to register it. An admin\n"
-#~ "        will send you the public part of an SSH key in order for you to "
-#~ "create\n"
-#~ "        an SSH user (eg. 'transifex') with access to your VCS."
-#~ msgstr ""
-#~ "Ak váš repozitár nie je v zozname, musíte si ho zaregistrovať. Správca "
-#~ "vám pošle verejný SSH kľúč, aby ste mohli vytvoriť SSH používateľa (napr. "
-#~ "'transifex') s prístupom do vášho VCS."
-
-#~ msgid ""
-#~ "Alternatively, if you're on a decentralized VCS, you may use a\n"
-#~ "        public service like"
-#~ msgstr ""
-#~ "Alebo ak máte decentralizovaný VCS, môžete použiť verejnú službu ako"
-
-#~ msgid "Gitorious"
-#~ msgstr "Gitorious"
-
-#~ msgid "or"
-#~ msgstr "alebo"
-
-#~ msgid "freeHg"
-#~ msgstr "freeHg"
-
-#~ msgid ""
-#~ ",\n"
-#~ "        where Transifex will have access to."
-#~ msgstr ", kam bude mať Transifex prístup."
-
-#~ msgid "3. Enabling the module"
-#~ msgstr "3. Zapnutie modulu"
-
-#~ msgid ""
-#~ "We'll add your module to our Transifex instance, test the write access\n"
-#~ "    and report back."
-#~ msgstr ""
-#~ "Pridáme váš modul do inštancie Transifexu, overíme zápisové práva a dáme "
-#~ "vám vedieť."
-
-#~ msgid "4. FIN"
-#~ msgstr "4. Hotovo"
-
-#~ msgid ""
-#~ "That's it! After this point, our translation community can contribute\n"
-#~ "    to your project without any other effort from your part."
-#~ msgstr ""
-#~ "A je to! Odteraz naša prekladateľská komunita môže prispievať do vášho "
-#~ "projektu bez akéhokoľvek vášho zásahu."
-
-#~ msgid "Transifex home"
-#~ msgstr "Transifex domov"
-
-#~ msgid "Modules accepting translations through Transifex"
-#~ msgstr "Moduly prijímajúce preklady cez Transifex"
-
-#~ msgid "Modules"
-#~ msgstr "Moduly"
-
-#~ msgid "Repositories configured"
-#~ msgstr "Nakonfigurované repozitáre"
-
-#~ msgid "Repos"
-#~ msgstr "Repozitáre"
-
-#~ msgid "Welcome %s!"
-#~ msgstr "Vitaj, %s!"
-
-#~ msgid "logout"
-#~ msgstr "odhlásiť"
-
-#~ msgid "Powered by"
-#~ msgstr "Prináša vám"
-
-#~ msgid "Please send any comments or corrections by opening a"
-#~ msgstr "Pripomienky alebo opravy posielajte, prosím, otvorením"
-
-#~ msgid ":: Add a new module"
-#~ msgstr ":: Pridať nový modul"
-
-#~ msgid ""
-#~ "Here are some explanations about the fields above. Required fields are\n"
-#~ "marked with a '*'."
-#~ msgstr ""
-#~ "Tu sú vysvetlenia niektorých vyššieuvedených políčok. Povinné polia sú "
-#~ "označené '*'."
-
-#~ msgid "Name*:"
-#~ msgstr "Názov*:"
-
-#~ msgid ""
-#~ "An ID for the module. Shown on the URL, usually only the description is "
-#~ "shown."
-#~ msgstr ""
-#~ "Identifikátor modulu. Je súčasťou URL, bežne sa zobrazuje len popis."
-
-#~ msgid "Description*:"
-#~ msgstr "Popis*:"
-
-#~ msgid "The name of the module as it will appear on the pages"
-#~ msgstr "Názov modulu, ktorý sa zobrazuje na stránkach"
-
-#~ msgid "Summary:"
-#~ msgstr "Zhrnutie:"
-
-#~ msgid "One or two sentences"
-#~ msgstr "Jednou alebo dvoma vetami"
-
-#~ msgid ""
-#~ "The homepage for the module, where people can find more information about "
-#~ "it"
-#~ msgstr "Domovské stránky modulu, kde možu ľudia nájsť o ňom viac informácií"
-
-#~ msgid "Repository*:"
-#~ msgstr "Repozitár*:"
-
-#~ msgid ""
-#~ "A repository root, in centralized-VCS terms. That is, a domain/URL that "
-#~ "hosts\n"
-#~ "  many VCS modules. Eg:"
-#~ msgstr ""
-#~ "Koreň repozitára, z pohľadu centralizovaného VCS. Čiže doména/URL, ktorá "
-#~ "spravuje niekoľko VCS modulov. Napr."
-
-#~ msgid "git.foo.com"
-#~ msgstr "git.foo.com"
-
-#~ msgid ""
-#~ ". Each repository is accessed by\n"
-#~ "  transifex using a different SSH key, chosen from the domain of the repo."
-#~ msgstr ""
-#~ ". Do každého repozitára pristupuje transifex pomocou iného SSH kľúča, "
-#~ "zvoleného pomocou domény repozitára."
-
-#~ msgid "VCS module*:"
-#~ msgstr "VCS modul*:"
-
-#~ msgid "The module directory (usually a subdirectory of the repo root)"
-#~ msgstr "Priečinok modulu (väčšinou podpriečinok koreňa repozitára)"
-
-#~ msgid "Directory:"
-#~ msgstr "Priečinok:"
-
-#~ msgid ""
-#~ "A directory inside scmmodule one wants to expose to transifex. For "
-#~ "example in"
-#~ msgstr ""
-#~ "Priečinok vovnútri scmmodulu, ktorý má byť vystavený pre transifex. "
-#~ "Napríklad v"
-
-#~ msgid "/vcs-root/module-name/{client,server}/po/"
-#~ msgstr "/vcs-root/module-name/{client,server}/po/"
-
-#~ msgid ""
-#~ ", the directory would be 'client'.\n"
-#~ "  Everything in transifex will be shown relative to that directory."
-#~ msgstr ""
-#~ ", priečinok bude 'client'. Všetko v transifexe bude zobrazené relatívne k "
-#~ "tomuto priečinku."
-
-#~ msgid "Branch*:"
-#~ msgstr "Vetva*:"
-
-#~ msgid "A branch name. If it doesn't exist in our DB, we'll add it."
-#~ msgstr "Názov vetvy. Ak v našej databáze neexistuje, pridáme ju."
-
-#~ msgid "Only files matching this regex will be shown/allowed. Eg: '.*/po/.*'"
-#~ msgstr ""
-#~ "Zobrazené/povolené budú len súbory vyhovujúce zadanému regulárnemu "
-#~ "výrazu. Napr. '.*/po/.*'"
-
-#~ msgid "Changelog:"
-#~ msgstr "Changelog:"
-
-#~ msgid ""
-#~ "A changelog file to be updated automatically with each submit. Should be\n"
-#~ "  relative to 'directory'."
-#~ msgstr ""
-#~ "Súbor changelog bude automaticky aktualizovaný každým príspevkom. Mal by "
-#~ "byť relatívny k 'priečinku'."
-
-#~ msgid "Front-end:"
-#~ msgstr "WWW rozhranie:"
-
-#~ msgid "Back to modules"
-#~ msgstr "Naspäť na moduly"
-
-#~ msgid "Submit to %s"
-#~ msgstr "Odoslať do %s"
-
-#~ msgid "Module information"
-#~ msgstr "Informácie o module"
-
-#~ msgid "Web front-end for the versioning system"
-#~ msgstr "WWW rozhranie systému správy verzií"
-
-#~ msgid "VCS web front-end"
-#~ msgstr "WWW rozhranie VCS"
-
-#~ msgid "info"
-#~ msgstr "info"
-
-#~ msgid "Root:"
-#~ msgstr "Koreň:"
-
-#~ msgid "Module in"
-#~ msgstr "Modul v"
-
-#~ msgid "Version Control System"
-#~ msgstr "Systém správy verzií (VCS)"
-
-#~ msgid "show all"
-#~ msgstr "zobraziť všetko"
-
-#~ msgid "Branches (%(num)s):"
-#~ msgstr "Vetvy (%(num)s):"
-
-#~ msgid "Translation submission"
-#~ msgstr "Odoslanie prekladu"
-
-#~ msgid ""
-#~ "This module is configured to receive translations through this web system."
-#~ msgstr ""
-#~ "Tento modul je nastavený na prijímanie prekladov cez tento WWW systém."
-
-#~ msgid "Authenticated users are presented with a file submission form."
-#~ msgstr "Overeným používateľom sa zobrazí formulár na odoslanie súboru."
-
-#~ msgid "Authenticate as a translator"
-#~ msgstr "Overiť sa ako prekladateľ"
-
-#~ msgid "The local, checked-out copy of this module was last updated %s ago."
-#~ msgstr ""
-#~ "Lokálna, stiahnutá kópia tohto modulu bola naposledy aktualizovaná: %s."
-
-#~ msgid ""
-#~ "To update the local version of the module and pull fresh changes from "
-#~ "the\n"
-#~ "  repository (it will happen anyway before the final submission), click "
-#~ "the\n"
-#~ "  Refresh button. Depending on the module, this might take a while."
-#~ msgstr ""
-#~ "Pre aktualizovanie lokálnej verzie a získanie čerstvých zmien z "
-#~ "repozitára (stane sa to aj tak pred konečným odoslaním), kliknite na "
-#~ "tlačidlo Obnoviť. V závislosti od modulu, môže to chvíľku trvať."
-
-#~ msgid ""
-#~ "You may submit files to this module by filling out the following form."
-#~ msgstr "Prispieť súbormi môžete vyplnením nasledujúceho formulára."
-
-#~ msgid "Target branch"
-#~ msgstr "Cieľová vetva"
-
-#~ msgid ""
-#~ "This module has serveral branches (versions)\n"
-#~ "    registered. Usually submissions happen on the main branch "
-#~ "(highlighted\n"
-#~ "    in the list), but some modules might require translations to be\n"
-#~ "    submitted to a different patch for a particular release."
-#~ msgstr ""
-#~ "Tento modul má registrovaných niekoľko vetiev (verzií). Väčšinou sa "
-#~ "odosiela do hlavnej vetvy (v zozname zvýraznenej), no niektoré moduly "
-#~ "môžu vyžadovať odoslanie prekladov pre isté vydania do inej vetvy."
-
-#~ msgid ":: Module list"
-#~ msgstr ":: Zoznam modulov"
-
-#~ msgid "Modules and repositories"
-#~ msgstr "Moduly a repozitáre"
-
-#~ msgid ""
-#~ "Here's a list of all the modules that are currently accepting "
-#~ "contributions."
-#~ msgstr ""
-#~ "Tu je zoznam všetkých modulov, ktoré momentálne prijímajú príspevky."
-
-#~ msgid "Please preview the submission before hitting the \"Submit!\" button."
-#~ msgstr ""
-#~ "Prosím, prezrite si odoslanie ešte pred stlačením tlačidla \"Odoslať!\"."
-
-#~ msgid "Repository root:"
-#~ msgstr "Koreň repozitára:"
-
-#~ msgid "Module in VCS:"
-#~ msgstr "Modul v VCS:"
-
-#~ msgid "(web front-end)"
-#~ msgstr "(WWW rozhranie)"
-
-#~ msgid "Differences"
-#~ msgstr "Rozdiely"
-
-#~ msgid "Here are the changes about to be submitted."
-#~ msgstr "Tu sú zmeny určené na odoslanie."
-
-#~ msgid "Files changed:"
-#~ msgstr "Zmenené súbory:"
-
-#~ msgid "(%s lines)"
-#~ msgstr "(%s riadkov)"
-
-#~ msgid ""
-#~ "Note: Diffsets are not being previewed. Please make sure you are\n"
-#~ "  committing the right file/content before continuing. You might also "
-#~ "want to\n"
-#~ "  verify the diff from the module's source code web frontend right after "
-#~ "the sumbission."
-#~ msgstr ""
-#~ "Poznámka: Rozdiely nie sú zobrazované. Uistite sa, prosím, že odosielate "
-#~ "ten správny súbor/obsah ešte pred jeho odoslaním. Taktiež by ste mali "
-#~ "rozdiely overiť zo zdrojových kódov na WWW rozhraní po odoslaní súboru."
-
-#~ msgid "Commit message"
-#~ msgstr "Odosielacia správa"
-
-#~ msgid "The following message will be used for submitting the file to the"
-#~ msgstr "Nasledujúca správa sa použije pre odoslanie súboru do"
-
-#~ msgid ":: People"
-#~ msgstr ":: Ľudia"
-
-#~ msgid "Transifexians"
-#~ msgstr "Transifexania"
-
-#~ msgid "The system has information on the following people:"
-#~ msgstr "Systém má informácie o nasledovných ľuďoch:"
-
-#~ msgid ":: Person ::"
-#~ msgstr ":: Osoba ::"
-
-#~ msgid ":: Repositories"
-#~ msgstr ":: Repozitáre"
-
-#~ msgid ""
-#~ "Here's a list of the repositories we are currently serving translations "
-#~ "to."
-#~ msgstr ""
-#~ "Tu je zoznam repozitárov, ku ktorým momentálne poskytujeme preklady."
-
-#~ msgid ""
-#~ "An ID for the repository. Shown on the URL, usually only the description "
-#~ "is shown."
-#~ msgstr ""
-#~ "Identifikátor repozitára. Súčasť URL, normálne sa zobrazuje len pois."
-
-#~ msgid "The name of the repository as it will appear on the pages"
-#~ msgstr "Názov repozitára, ako sa bude zobrazovať na stránkach"
-
-#~ msgid "Root*:"
-#~ msgstr "Koreň*:"
-
-#~ msgid ""
-#~ "The URI/location of the repository. Could be anything acceptable for the\n"
-#~ "  particular VCS, for example a local directory ("
-#~ msgstr ""
-#~ "URI/umiestnenie repozitára. Môže byť hocičo akceptovateľné príslušným "
-#~ "VCS, napríklad lokálny priečinok ("
-
-#~ msgid "/foo/bar"
-#~ msgstr "/foo/bar"
-
-#~ msgid ""
-#~ "), a URI\n"
-#~ "  (eg."
-#~ msgstr "), URI (napr."
-
-#~ msgid "ssh://"
-#~ msgstr "ssh://"
-
-#~ msgid "http://"
-#~ msgstr "http://"
-
-#~ msgid "...), etc."
-#~ msgstr "...) atď."
-
-#~ msgid ""
-#~ "The homepage for the repository/project, where people can find more "
-#~ "information about it"
-#~ msgstr ""
-#~ "Domovská stránka repozitára/projektu, kde môžu ľudia nájsť o ňom viac "
-#~ "informácií."
-
-#~ msgid "Destination file"
-#~ msgstr "Cieľový súbor"
-
-#~ msgid ""
-#~ "A commit message is a log or record of the changes made by a commit.\n"
-#~ "  For example:"
-#~ msgstr ""
-#~ "Odosielacia správa je záznam zmien spôsobených odoslaním.\n"
-#~ " Napríklad:"
-
-#~ msgid "Note: This module keeps a track of contributions in a"
-#~ msgstr "Poznámka: Tento modul uchováva záznam príspevkov v súbore"
-
-#~ msgid ""
-#~ "file. Your submission will trigger an automatic\n"
-#~ "  update of the file"
-#~ msgstr ". Váš príspevok spustí automatickú aktualizáciu súboru"
-
-#~ msgid ""
-#~ "in this module's\n"
-#~ "  repository."
-#~ msgstr "v repozitári tohto modulu."
-
-#~ msgid ":: Information for submitting translations"
-#~ msgstr ":: Informácia pre odosielanie prekladov"
-
-#~ msgid "Information for translators"
-#~ msgstr "Informácia pre prekladateľov"
-
-#~ msgid ""
-#~ "Translators can use the web system to submit translations to\n"
-#~ "  the projects registered."
-#~ msgstr ""
-#~ "Prekladatelia môžu použiť tento WWW systém na odosielanie prekladov do "
-#~ "zaregistrovaných projektov."
-
-#~ msgid "Here's what you need to do:"
-#~ msgstr "Tu je, čo potrebujete spraviť:"
-
-#~ msgid "1. Obtain a PO file"
-#~ msgstr "1. Získať PO súbor"
-
-#~ msgid ""
-#~ "You can checkout the module from the\n"
-#~ "    repository it is hosted, anonymously or not. Alternatively, if your "
-#~ "project \n"
-#~ "    provides you with a translation statistics software with direct "
-#~ "links\n"
-#~ "    to PO files of projects, you may use that. Or, you might have "
-#~ "received a PO file by email.\n"
-#~ "    As long as you have a PO file to translate and submit!"
-#~ msgstr ""
-#~ "Môžete si stiahnuť modul z domovského repozitára, anonymne alebo nie. "
-#~ "Alternatívne, ak projekt poskytuje štatistiky prekladov s priamymi "
-#~ "odkazmi na PO súbory projektov, môžete ich použiť. Alebo ste mohli dostať "
-#~ "PO súbor emailom. Za predpokladu, že máte PO súbor na preklad a odoslanie!"
-
-#~ msgid "2. Translate"
-#~ msgstr "2. Preložiť"
-
-#~ msgid ""
-#~ "Translate the file, make corrections, etc. Be aware that some projects "
-#~ "might\n"
-#~ "    not auto-merge the POT file with the PO ones, so you may need to "
-#~ "download the POT file as well\n"
-#~ "    and merge them together with"
-#~ msgstr ""
-#~ "Preložte súbor, preveďte opravy, atď. Majte na mysli, že niektoré "
-#~ "projekty nemusia automaticky zlučovať POT súbor so súbormi PO, takže "
-#~ "môžete potrebovať stiahnuť si aj súbor POT a zlúčiť ich spolu pomocou"
-
-#~ msgid "msgmerge lang.old.po potfile.pot > lang.po"
-#~ msgstr "msgmerge jazyk.old.po potsubor.pot > jazyk.po"
-
-#~ msgid "3. Validate"
-#~ msgstr "3. Zvalidovať"
-
-#~ msgid ""
-#~ "Check your file for validity, correctness, and completeness with a "
-#~ "command like"
-#~ msgstr "Overte platnosť, bezchybovosť a úplnosť súboru pomocou príkazu ako"
-
-#~ msgid "msgfmt -c --statistics"
-#~ msgstr "msgfmt -c --statistics"
-
-#~ msgid "4. Login"
-#~ msgstr "4. Prihlásiť sa"
-
-#~ msgid ""
-#~ "with your username and password. You may need to be a member\n"
-#~ "    of a particular user group to be able to submit translations. If you "
-#~ "aren't already a member of the translations group,\n"
-#~ "    check out your project's FAQ on how to become a member."
-#~ msgstr ""
-#~ "pomocou vášho používateľského mena a hesla. Asi musíte byť členom "
-#~ "patričnej skupiny používateľov, aby ste mohli preklady odosielať. Ak ešte "
-#~ "nie ste členom prekladateľskej skupiny, preverte FAQ projektu o tom, ako "
-#~ "sa členom stať."
-
-#~ msgid "5. Upload"
-#~ msgstr "5. Nahrať"
-
-#~ msgid ""
-#~ "you want your file to be submitted\n"
-#~ "    to. Select the file from your system, choose a destination, write a "
-#~ "changelog entry, and click\n"
-#~ "    'Preview'."
-#~ msgstr ""
-#~ "do ktorého chcete odoslať váš súbor. Vyberte súbor z vášho systému, "
-#~ "zvoľte si cieľ, napíšte zoznam zmien a kliknite na 'Náhľad'."
-
-#~ msgid "6. Confirm and submit"
-#~ msgstr "6. Potvrdiť a odoslať"
-
-#~ msgid ""
-#~ "Preview the diff between the original and new file, and the commit "
-#~ "message.\n"
-#~ "    If everything seems OK, click 'Submit' and you're done."
-#~ msgstr ""
-#~ "Prezrite rozdiely medzi originálnym a novým súborom a odosielaciu správu. "
-#~ "Ak všetko vyzerá byť správne, kliknite 'Odoslať' a je to."
-
-#~ msgid "Jump to modules"
-#~ msgstr "Skočiť na moduly"
-
-#~ msgid "Please log in."
-#~ msgstr "Prihláste sa, prosím."
-
-#~ msgid "Text to display as the legend for the fieldset"
-#~ msgstr "Text pre zobrazenie ako popis k poliam"
-
-#~ msgid "You must select a local file to upload."
-#~ msgstr "Musíte si zvoliť lokálny súbor pre odoslanie."
-
-#~ msgid "You haven't selected a file to upload and a target file."
-#~ msgstr "Nezvolili ste súbor pre odoslanie ani cieľový súbor."
-
-#~ msgid "There was no module matching your request for %s."
-#~ msgstr "Nenašiel sa žiaden modul vyhovujúci vašej požiadavke pre %s"
-
-#~ msgid "hosted.fedoraproject.org"
-#~ msgstr "hosted.fedoraproject.org"
-
-#~ msgid ""
-#~ "server,\n"
-#~ "which supports CVS, Subversion, git, and VCSs. Any module on any VCS "
-#~ "could be served."
-#~ msgstr ""
-#~ "server,\n"
-#~ "ktorý podporuje CVS, Subversion, git VCS. Ľubovoľný modul na ľubovoľnom "
-#~ "VCS môže byť obslúžený."
-
-#~ msgid "Examples of such projects are projects hosted on the"
-#~ msgstr "Príklady takých projektov sú projekty hosťované na stránke"
-
-#~ msgid ""
-#~ "Fedora translators can submit translations to various projects using this "
-#~ "web system.\n"
-#~ "    A translator can contribute to upstream projects without the need for "
-#~ "him to learn\n"
-#~ "    the tricks and request access to different version control systems "
-#~ "(VCS), or an\n"
-#~ "    administrator to create accounts and add access control lists (ACLs) "
-#~ "for 1000 people."
-#~ msgstr ""
-#~ "Prekladatelia Fedory môžu pomocou tohto systému odosielať preklady do "
-#~ "rôznych projektov.    Prekladateľ môže prispievať do projektov hlavného "
-#~ "prúdu bez nutnosti učenia sa    trikov a vyžadovania prístupu do rôznych "
-#~ "systémov správy verzií (VCS), a taktiež    správca nemusí vytvárať účty a "
-#~ "pridávať zoznamy kontroly prístupu (ACL) pre 1000 ľudí."
-
-#~ msgid ""
-#~ "Give the Fedora translation community the opportunity to contribute to "
-#~ "your project's translations."
-#~ msgstr ""
-#~ "Dajte komunite prekladateľov Fedory šancu prispievať k prekladom vášho "
-#~ "projektu."
-
-#~ msgid ""
-#~ "Use the web system to submit translations to the projects registered on "
-#~ "this system."
-#~ msgstr ""
-#~ "Použite tento webový systém pre odosielanie prekladov do projektov, ktoré "
-#~ "sú v tomto systéme zaregistrované."
-
-#~ msgid "Fedora Translations :: Submit"
-#~ msgstr "Preklady Fedory :: Odoslanie"
-
-#~ msgid "Back"
-#~ msgstr "Naspäť"
-
-#~ msgid ""
-#~ "page\n"
-#~ "        and follow the instructions there."
-#~ msgstr "a postupujte podľa tam uvedených inštrukcií."
-
-#~ msgid ""
-#~ "To commit translations through the web system, you need to be a member\n"
-#~ "        of the Fedora translations team. To learn how to do this, please "
-#~ "navigate to\n"
-#~ "        the"
-#~ msgstr ""
-#~ "Pre odoslanie prekladov cez tento webový systém musíte byť členom\n"
-#~ "        tímu prekladateľov Fedory. Pre zistenie, ako sa ním stať, "
-#~ "nasmerujte sa, prosím, na\n"
-#~ "        "
-
-#~ msgid "←"
-#~ msgstr "←"
-
-#~ msgid "Fedora Translations :: Authenticate"
-#~ msgstr "Preklady Fedory :: Overenie"
-
-#~ msgid "<module-name>/po/*po"
-#~ msgstr "<názov_modulu>/po/*po"
-
-#~ msgid "."
-#~ msgstr "."
-
-#~ msgid ""
-#~ "If it is, then we have already setup a user that access your repo and\n"
-#~ "    you just need to let us know of the additional module you want to "
-#~ "enable\n"
-#~ "    submissions to."
-#~ msgstr ""
-#~ "Ak áno, už sme nastavili používateľa s prístupom do vášho repozitára a už "
-#~ "iba potrebujete dať nám vedieť o ďalších moduloch, do ktorých chcete "
-#~ "povoliť odosielanie."
-
-#~ msgid ""
-#~ "To register your module, you just fill in the basic information we need\n"
-#~ "    to know about it. You may restrict access to it, and only show the "
-#~ "users\n"
-#~ "    specific files you want them to commit to, for example:"
-#~ msgstr ""
-#~ "Pre zaregistrovanie modulu stačí vyplniť základné informácie, o ktorých "
-#~ "potrebujeme vedieť. Môžete k nemu obmedziť prístup a uviesť len súbory "
-#~ "špecifické pre používateľov, ktorým chcete povoliť odosielanie. Napríklad:"
-
-#~ msgid "Fedora Translations :: Information for maintainers"
-#~ msgstr "Preklady Fedory :: Informácia pre správcov"
-
-#~ msgid "FLP home"
-#~ msgstr "Domovská stránka FLP"
-
-#~ msgid "Fedora Home"
-#~ msgstr "Domovská stránka Fedory"
-
-#~ msgid "Legal"
-#~ msgstr "Právna poznámka"
-
-#~ msgid "Planet"
-#~ msgstr "Planéta"
-
-#~ msgid "Trademark Guidelines"
-#~ msgstr "Pravidlá použitia ochrannej značky"
-
-#~ msgid "Wiki"
-#~ msgstr "Wiki"
-
-#~ msgid "websites team"
-#~ msgstr "tímu WWW stránok"
-
-#~ msgid "Logged in"
-#~ msgstr "Prihlásený"
-
-#~ msgid ""
-#~ "These pages are still not authorative. Do not rely upon this data yet."
-#~ msgstr ""
-#~ "Tieto stránky stále nie sú oficiálne. Zatiaľ sa na tieto údaje "
-#~ "nespoliehajte."
-
-#~ msgid ""
-#~ "Copyright © 2007 Red Hat, Inc. and others.  All Rights Reserved.\n"
-#~ "        Please send any comments or corrections to the"
-#~ msgstr ""
-#~ "Copyright &copy; 2007 Red Hat, Inc. a iní.  Všetky práva vyhradené.\n"
-#~ "        Prosím pošlite všetky komentáre alebo opravy na adresu"
-
-#~ msgid ""
-#~ "The Fedora Project is maintained and driven by the community and "
-#~ "sponsored by Red Hat.  \n"
-#~ "          This is a community maintained site.  Red Hat is not "
-#~ "responsible for content."
-#~ msgstr ""
-#~ "Projekt Fedora je spravovaný a vedený komunitou a sponzorovaný "
-#~ "spoločnosťou Red Hat.  Toto je stránka spravovaná komunitou.  Red Hat "
-#~ "nezodpovedá za jej obsah."
-
-#~ msgid "Collaborative knowledge"
-#~ msgstr "Kolektívna zbierka znalostí"
-
-#~ msgid "Fedora documentation"
-#~ msgstr "Dokumentácia Fedory"
-
-#~ msgid "The voices of the community"
-#~ msgstr "Ohlasy komunity"
-
-#~ msgid "login"
-#~ msgstr "prihlásite"
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "("
-#~ msgstr "("
-
-#~ msgid "Once you"
-#~ msgstr "Ak sa"
-
-#~ msgid ", or view an"
-#~ msgstr ", alebo si zobrazte"
-
-#~ msgid "By module name"
-#~ msgstr "Podľa názvu modulu"
-
-#~ msgid "By repository"
-#~ msgstr "Podľa repozitára"
-
-#~ msgid "Table of contents"
-#~ msgstr "Obsah"
-
-#~ msgid "\"."
-#~ msgstr "\"."
-
-#~ msgid ","
-#~ msgstr ","
-
-#~ msgid ""
-#~ ", for cvs, svn, hg, and git respectively. If you\n"
-#~ "          want to submit a file to an older branch, use the appropriate "
-#~ "set\n"
-#~ "          of controls and leave the others empty."
-#~ msgstr ""
-#~ ", jednotlivo pre cvs, svn, hg a git. Ak chcete odoslať súbor do staršej "
-#~ "vetvy, použite príslušné ovládacie prvky a ponechajte ostatné prázdne."
-
-#~ msgid "HEAD"
-#~ msgstr "HEAD"
-
-#~ msgid "and"
-#~ msgstr "a"
-
-#~ msgid "master"
-#~ msgstr "master"
-
-#~ msgid "po/pt_BR.po"
-#~ msgstr "po/sk_SK.po"
-
-#~ msgid "tip"
-#~ msgstr "tip"
-
-#~ msgid "trunk"
-#~ msgstr "trunk"
-
-#~ msgid "~/myproject/pt_BR.po"
-#~ msgstr "~/myproject/sk_SK.po"
-
-#~ msgid "1. Select a local file"
-#~ msgstr "1. Zvoľte lokálny súbor"
-
-#~ msgid "3. Write a commit message"
-#~ msgstr "3. Napíšte odosielaciu správu"
-
-#~ msgid ""
-#~ "If you want to create a new file, type a name for it in the input box.\n"
-#~ "      You may use the list of existing files as a reference for file "
-#~ "names."
-#~ msgstr ""
-#~ "Ak chcete vytvoriť nový súbor, uveďte jeho názov vo vstupnom poli. Môžete "
-#~ "použiť zoznam existujúcich súborov ako odkaz pre názvy súborov."
-
-#~ msgid ""
-#~ "Select the file from the server your file should replace (where to place\n"
-#~ "    itself). For example,"
-#~ msgstr ""
-#~ "Zvoľte súbor na servri, ktorý bude nahradený vašim súborom (kam ho "
-#~ "umiestniť). Napríklad,"
-
-#~ msgid ""
-#~ "This module has serveral branches (versions)\n"
-#~ "          registered. Usually, submissions occur on the latest branch, "
-#~ "which\n"
-#~ "          is"
-#~ msgstr ""
-#~ "Tento modul má zaregistrovaných niekoľko vetiev (verzií). Bežne sa váš "
-#~ "príspevok dostane do najnovšej vetvy, ktorá je"
-
-#~ msgid "how to join the FLP"
-#~ msgstr "ako sa zapojiť do FLP"
-
-#~ msgid ""
-#~ "with your Fedora Account System username and password. You need to be a "
-#~ "member\n"
-#~ "      of the"
-#~ msgstr ""
-#~ "vašim používateľským menom a heslom Systému účtov Fedory. Musíte byť "
-#~ "členom skupiny"
-
-#~ msgid "your personal page"
-#~ msgstr "vaša osobná stránka"
-
-#~ msgid "→"
-#~ msgstr "→"
-
-#~ msgid "cvsl10n"
-#~ msgstr "cvsl10n"
-
-#~ msgid ""
-#~ "group to be able to submit translations. If you aren't already a member "
-#~ "of our translations group,\n"
-#~ "      read"
-#~ msgstr ""
-#~ ", aby ste mohli odosielať preklady. Ak ešte členom našej skupiny "
-#~ "prekladateľov nie ste, prečítajte si"
-
-#~ msgid ""
-#~ "Preview the diff between the original and new file, and the commit "
-#~ "message, on which your\n"
-#~ "      name and email will be appended, so that the project maintainer "
-#~ "knows who committed the file from\n"
-#~ "      the Fedora side. Click 'Submit'."
-#~ msgstr ""
-#~ "Prezrite si rozdiely medzi pôvodným a novým súborom a odosielaciu správu, "
-#~ "do ktorej bude pripojené vaše meno a email, aby správca projektu vedel, "
-#~ "kto súbor odoslal zo stránky Fedory. Kliknite na 'Odoslať'."
-
-#~ msgid ""
-#~ "You can checkout the module from the\n"
-#~ "      repository it is hosted, anonymously or not. Alternatively, our"
-#~ msgstr ""
-#~ "Modul môžete získať (checkout) z repozitára, v ktorom je uložený, buď "
-#~ "anonymne, alebo nie. Alternatívne, náš"
-
-#~ msgid "Confirm"
-#~ msgstr "Potvrdiť"
-
-#~ msgid "You may view your past submissions at any time by visiting"
-#~ msgstr "Kedykoľvek si môžete prezrieť predchádzajúce odoslania navštívením"
-
-#~ msgid "You may view your past submissions at any time."
-#~ msgstr "Prezrieť predchádzajúce odoslania si môžete kedykoľvek."
