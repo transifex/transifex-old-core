@@ -2,6 +2,7 @@ $(document).ready(function(){
 
     // ordering for Release stats table
     $("#stats_release").tablesorter({
+        widgets: ['zebra'],
         headers: {
             1: { sorter: "percent"}
         },
@@ -17,6 +18,7 @@ $(document).ready(function(){
 
     // ordering for Language x Release stats table
     $("#stats_lang").tablesorter({
+        widgets: ['zebra'],
         headers: {
             1: { sorter: "percent"},
             2: { sorter: false } // Do not sort the third column
@@ -33,6 +35,7 @@ $(document).ready(function(){
 
     // ordering for Component stats table
     $("#stats_comp").tablesorter({
+        widgets: ['zebra'],
         headers: {
             1: { sorter: "percent"},
             2: { sorter: false } // Do not sort the third column
@@ -49,6 +52,7 @@ $(document).ready(function(){
 
     // ordering for Component Multifile Language stats table
     $("#stats_comp_lang").tablesorter({
+        widgets: ['zebra'],
         headers: {
             1: { sorter: "percent"},
             2: { sorter: false } // Do not sort the third column
