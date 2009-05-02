@@ -30,7 +30,7 @@ class Release(models.Model):
 
     release_date = models.DateTimeField(_('Release date'), blank=True, null=True,
         help_text=_('When this release will be available.'))
-    stringfreeze_date = models.DateTimeField(_('String freese date'), blank=True, null=True,
+    stringfreeze_date = models.DateTimeField(_('String freeze date'), blank=True, null=True,
         help_text=_("When the translatable strings will be frozen (no strings "
                     "can be added/modified which affect translations."))
     develfreeze_date = models.DateTimeField(_('Devel freeze date'), blank=True, null=True,
