@@ -4,7 +4,7 @@ import re
 from django.core.files.uploadedfile import UploadedFile
 from django.template import Context, Template
 
-import settings
+from django.conf import settings
 from txcommon.log import logger
 
 class BrowserError(Exception):
@@ -90,6 +90,21 @@ class VCSBrowserMixin:
         lines = contents.splitlines(1)
         return ''.join(unified_diff(lines, content.splitlines(1)))
 
+    def valid_filename(self, filename, filefilter=None):
+        """
+        Checks if it has access to a filename checking against the 
+        ``IGNORE_WILDCARD_LIST`` in settings and a ``filefilter``, if passed by
+        parameter.
+        
+        Return boolean 
+        """
+        filter_check = True
+        if filefilter and not re.compile(filefilter).match(filename):
+            filter_check = False
+
+        return not re.compile(settings.IGNORE_WILDCARD_LIST).match(
+            '/%s' % filename) and filter_check
+
     def walk(self):
         """
         Wrapper around os.walk() function.
@@ -105,7 +120,6 @@ class VCSBrowserMixin:
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
 
-    #FIXME: Filtering should be put in a different method.
     def get_files(self, filefilter=None):
         """
         Return files 
@@ -117,11 +131,11 @@ class VCSBrowserMixin:
         for rel_root, dirs, files in self.walk():
             for filename in files:
                 filename = os.path.join(rel_root, filename)
-                if filefilter:
-                    if re.compile(filefilter).match(filename):
-                        yield filename
-                else:
-                    yield filename                
+
+                if not self.valid_filename(filename, filefilter):
+                    continue
+
+                yield filename
         
     def teardown_repo(self):
         """
