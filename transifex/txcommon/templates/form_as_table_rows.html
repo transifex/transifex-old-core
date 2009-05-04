@@ -2,13 +2,17 @@
 {% load txcommontags %}
 {% if form %}
     {% for field in form %}
-    <tr{% if id %} id="sub_{{ id }}{{ forloop.counter}}" style="display:none"{% endif %}>
-    <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
-    <td>
-        <p class="fieldp">{{ field }}</p>
-        {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
-    </td>
-    <td><p class="helptext">{{ field.help_text }}</p></td>
-    </tr>
+        {% if field.is_hidden %}
+            {{ field }}
+        {% else %}
+            <tr{% if id %} id="sub_{{ id }}{{ forloop.counter}}" style="display:none"{% endif %}>
+            <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
+            <td>
+                <p class="fieldp">{{ field }}</p>
+                {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
+            </td>
+            <td><p class="helptext">{{ field.help_text }}</p></td>
+            </tr>
+        {% endif %}
     {% endfor %}
 {% endif %}
