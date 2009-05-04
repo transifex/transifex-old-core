@@ -42,7 +42,7 @@ msgstr "Volver al inicio"
 
 #: actionlog/models.py:36
 msgid "object id"
-msgstr ""
+msgstr "identificador de objeto"
 
 #: actionlog/models.py:37
 #, fuzzy
@@ -51,19 +51,19 @@ msgstr "PÃ¡gina Web del proyecto"
 
 #: actionlog/models.py:38
 msgid "action flag"
-msgstr ""
+msgstr "bandera de acción"
 
 #: actionlog/models.py:40
 msgid "change message"
-msgstr ""
+msgstr "mensaje de cambio"
 
 #: actionlog/models.py:43
 msgid "log entry"
-msgstr ""
+msgstr "registro de entrada"
 
 #: actionlog/models.py:44
 msgid "log entries"
-msgstr ""
+msgstr "registro de entradas"
 
 #: actionlog/templates/object_action_list.html:6
 msgid "Date/time"
@@ -134,17 +134,17 @@ msgstr "Idiomas en %(site_name)s"
 #: languages/feeds.py:18
 #, python-format
 msgid "The languages spoken on %s."
-msgstr ""
+msgstr "Los idomas que se hablan en %s."
 
 #: languages/feeds.py:36
 #, python-format
 msgid "%(site_name)s: %(language)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s: %(language)s :: lanzamiento %(release)s"
 
 #: languages/feeds.py:42
 #, python-format
 msgid "Latest translations for %(language)s language in %(release)s release."
-msgstr ""
+msgstr "Ultima traducción para idioma %(language)s en lanzamiento %(release)s"
 
 #: languages/models.py:29
 #: projects/models.py:89
@@ -160,7 +160,7 @@ msgstr "Código"
 
 #: languages/models.py:33
 msgid "Code aliases"
-msgstr ""
+msgstr "Código alias"
 
 #: languages/models.py:44
 msgid "language"
@@ -198,12 +198,12 @@ msgstr "Ultimos proyectos en %(site_name)s"
 
 #: projects/feeds.py:14
 msgid "Updates on changes and additions to registered projects."
-msgstr ""
+msgstr "Actualizaciones sobre los cambios y adiciones a los proyectos registrados."
 
 #: projects/feeds.py:30
 #, python-format
 msgid "%(site_name)s: Components in %(project)s"
-msgstr ""
+msgstr "%(site_name)s: Componentes en %(project)s"
 
 #: projects/feeds.py:35
 #, python-format
@@ -222,14 +222,14 @@ msgstr ""
 #: releases/models.py:26
 #: txcollections/models.py:24
 msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
-msgstr ""
+msgstr "Una breve etiqueta que se utilizará en la URL, que sólo contiene letras, números o guiones o subrayado."
 
 #: projects/models.py:88
 #: projects/models.py:197
 #: releases/models.py:29
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
-msgstr ""
+msgstr "Una cadena como nombre o muy breve descripción."
 
 #: projects/models.py:90
 #: projects/models.py:199
@@ -254,27 +254,32 @@ msgstr ""
 msgid "Homepage"
 msgstr "Página Principal"
 
+# Ver si se debe traducir feed y como corresponderia
 #: projects/models.py:95
+#, fuzzy
 msgid "Feed"
-msgstr ""
+msgstr "Feed"
 
+# Ver si se debe traducir feed y como corresponderia
 #: projects/models.py:96
+#, fuzzy
 msgid "An RSS feed with updates on the project."
-msgstr ""
+msgstr "Un feed RSS con actualizaciones en el proyecto."
 
 #: projects/models.py:98
 #: projects/models.py:217
 #: releases/models.py:46
 #: txcollections/models.py:33
 msgid "Hidden"
-msgstr ""
+msgstr "Oculto"
 
 #: projects/models.py:99
 #: projects/models.py:218
 #: releases/models.py:47
 #: txcollections/models.py:34
+#, fuzzy
 msgid "Hide this object from the list view?"
-msgstr ""
+msgstr "¿Ocultar este objeto de la vista de lista?"
 
 #: projects/models.py:100
 #: projects/models.py:219
@@ -288,7 +293,7 @@ msgstr "Habilitado"
 #: releases/models.py:49
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
-msgstr ""
+msgstr "¿Activar o desactivar el uso del objeto?"
 
 #: projects/models.py:105
 msgid "Tags"
@@ -323,7 +328,7 @@ msgstr "Descripción en HTML."
 #: projects/models.py:124
 #, python-format
 msgid "<Project: %s>"
-msgstr ""
+msgstr "<Project: %s>"
 
 #: projects/models.py:127
 msgid "project"
@@ -343,7 +348,7 @@ msgstr "Idioma:"
 
 #: projects/models.py:204
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
-msgstr ""
+msgstr "El idoma fuente de este componente, ej. 'en', 'pt_BR', 'el'."
 
 #: projects/models.py:206
 msgid "I18n type"
@@ -449,12 +454,12 @@ msgstr "Advertencia: El archivo PO que enviÃ³ no pasa las pruebas de correcciÃ³n
 
 #: projects/views.py:366
 msgid "Sorry, an error is causing troubles to send your file."
-msgstr ""
+msgstr "Lo sentimos, un error está causando problemas para enviar el archivo."
 
 #: projects/views.py:370
 #: projects/views.py:400
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "Lo sentimos, pero usted tendrá que enviar una solicitud POST."
 
 #: projects/views.py:389
 msgid "Lock removed."
@@ -494,12 +499,13 @@ msgid "Use Markdown syntax."
 msgstr ""
 
 #: releases/models.py:36
+#, fuzzy
 msgid "Release date"
 msgstr "Fecha de lanzamiento"
 
 #: releases/models.py:37
 msgid "When this release will be available."
-msgstr ""
+msgstr "Cuando esta versión este disponible."
 
 #: releases/models.py:38
 msgid "String freese date"
@@ -518,6 +524,7 @@ msgid "The last date packages from this release can be built from the developers
 msgstr ""
 
 #: releases/models.py:59
+#, fuzzy
 msgid "release"
 msgstr "lanzamiento"
 
@@ -525,6 +532,7 @@ msgstr "lanzamiento"
 #: templates/languages/language_detail.html:20
 #: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
+#, fuzzy
 msgid "releases"
 msgstr "lanzamientos"
 
@@ -547,7 +555,7 @@ msgstr ""
 
 #: repowatch/models.py:90
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "Debe introducir al menos un par de paréntesis sin contenido."
 
 #: repowatch/models.py:141
 msgid "watch"
@@ -574,7 +582,7 @@ msgstr "Acceso denegado"
 
 #: templates/403.html:12
 msgid "Looks like you do not have the necessary permissions to the required action."
-msgstr ""
+msgstr "Parece que usted no tiene los permisos necesarios para la acción requerida."
 
 #: templates/403.html:15
 #: templates/404.html:15
@@ -598,11 +606,11 @@ msgstr "Página no disponible"
 
 #: templates/500.html:12
 msgid "We're sorry, but the requested page is currently unavailable."
-msgstr ""
+msgstr "Lo sentimos, pero la página solicitada no está disponible actualmente."
 
 #: templates/500.html:14
 msgid "We're messing around with things internally, and the server had a bit of a hiccup."
-msgstr ""
+msgstr "Estamos jugando un poco con las cosas internamente, y el servidor tiene un poco de hipo."
 
 #: templates/500.html:16
 msgid "Please try again later."
@@ -629,7 +637,7 @@ msgstr "Logotipo de Transifex"
 
 #: templates/base.html:29
 msgid "The projects being served"
-msgstr ""
+msgstr "Los proyectos que se sirve"
 
 #: templates/base.html:29
 #: templates/projects/base.html:6
@@ -643,7 +651,7 @@ msgstr "Colecciones de proyectos"
 
 #: templates/base.html:31
 msgid "The languages our service serves"
-msgstr ""
+msgstr "Los idiomas que nuestro servicio sirve"
 
 #: templates/base.html:31
 #: templates/languages/base.html:5
@@ -683,7 +691,7 @@ msgstr "Ingresar"
 
 #: templates/base.html:42
 msgid "Register"
-msgstr ""
+msgstr "Registro"
 
 #: templates/base.html:103
 msgid "About"
@@ -699,7 +707,7 @@ msgstr ""
 
 #: templates/index.html:27
 msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
-msgstr ""
+msgstr "Transifex es un servicio destinado a ayudar a los traductores con el seguimiento de sus proyectos de traducción favoritos."
 
 #: templates/index.html:31
 #, python-format
@@ -728,7 +736,7 @@ msgstr "Resultados de búsqueda"
 #: templates/search.html:28
 #, python-format
 msgid "Search Results (%(result_count)s)"
-msgstr ""
+msgstr "Resultados de búsqueda (%(result_count)s)"
 
 #: templates/search.html:51
 #, python-format
@@ -745,7 +753,7 @@ msgstr "agregar esto"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
-msgstr ""
+msgstr "Encontrar proyectos por nombre, descripción, etc."
 
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
@@ -835,7 +843,7 @@ msgstr "Cambiar contraseña"
 
 #: templates/authopenid/changepw.html:9
 msgid "You can use the following form to change your password."
-msgstr ""
+msgstr "Puede utilizar el siguiente formulario para cambiar su contraseña."
 
 #: templates/authopenid/changepw.html:20
 msgid "Current password"
@@ -857,7 +865,7 @@ msgstr "Verficiación OpenID"
 
 #: templates/authopenid/complete.html:13
 msgid "Your OpenID is verified! "
-msgstr ""
+msgstr "¡Se verificó su OpenID!"
 
 #: templates/authopenid/complete.html:14
 msgid ""
@@ -868,7 +876,7 @@ msgstr ""
 
 #: templates/authopenid/complete.html:18
 msgid "Associate your OpenID"
-msgstr ""
+msgstr "Asocie su OpenID"
 
 #: templates/authopenid/complete.html:19
 msgid ""
@@ -889,7 +897,7 @@ msgstr "Nombre de Usuario"
 
 #: templates/authopenid/complete.html:65
 msgid "An exisiting account"
-msgstr ""
+msgstr "Una cuenta existente"
 
 #: templates/authopenid/delete.html:4
 #: templates/authopenid/delete.html.py:6
@@ -903,7 +911,7 @@ msgstr "Eliminar cuenta"
 
 #: templates/authopenid/delete.html:9
 msgid "Note: After deleting your account, anyone will be able to register this username."
-msgstr ""
+msgstr "Nota: Después de eliminar su cuenta, cualquier persona podrá registrar este nombre de usuario."
 
 #: templates/authopenid/delete.html:14
 msgid "Check confirm box, if you want delete your account."
@@ -962,7 +970,7 @@ msgstr "¡Perdí mi contraseña!"
 
 #: templates/authopenid/sendpw.html:10
 msgid "No worries! Here you can ask to reset your password by entering the username you use. You will then get a confirmation email with your new password. The new password will be activated only after you have clicked on the link in the email."
-msgstr ""
+msgstr "¡No se preocupe! Aquí usted puede pedir restablecer su contraseña introduciendo su nombre de usuario que utilice. A continuación, recibirá un correo electrónico de confirmación con su nueva contraseña. La nueva contraseña se activará sólo después de haber hecho clic en el vínculo del correo electrónico."
 
 #: templates/authopenid/sendpw.html:27
 msgid "Send new password"
@@ -1636,6 +1644,7 @@ msgstr ""
 #: templates/txcollections/release_form.html:12
 #: templates/txcollections/release_form.html:17
 #: templates/txcollections/release_form.html:23
+#, fuzzy
 msgid "Add a release"
 msgstr "Agregar lanzamiento"
 
@@ -1656,6 +1665,7 @@ msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
 msgstr ""
 
 #: templates/releases/release_list.html:8
+#, fuzzy
 msgid "Release list"
 msgstr "Lista de lanzamiento"
 
@@ -1665,10 +1675,12 @@ msgid "Releases with tag '%(tag)s'"
 msgstr ""
 
 #: templates/releases/release_list.html:18
+#, fuzzy
 msgid "Releases on Transifex"
 msgstr "Lanzamientos en Transifex"
 
 #: templates/releases/release_list.html:25
+#, fuzzy
 msgid "Add a new release"
 msgstr "Agregar nuevo lanzamiento"
 
@@ -1822,6 +1834,7 @@ msgid "Couldn't find your collection? Go ahead and <a href=\"%(collection_create
 msgstr ""
 
 #: templates/txcollections/release_detail.html:55
+#, fuzzy
 msgid "Release date:"
 msgstr "Fecha de Lanzamiento:"
 
