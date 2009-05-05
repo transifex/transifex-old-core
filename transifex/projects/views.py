@@ -243,17 +243,18 @@ def component_create_update(request, project_slug, component_slug=None):
         component_form = ComponentForm(project, instance=component,
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
-        # TODO: Find a sane way of doing this
-        _subforms = [VcsUnitSubForm, TarballSubForm]
-        _formd = {False: None, True: unit}
-        unit_subforms = [
-            {
-                'form': unitform(None,
-                    instance=_formd[unitform._meta.model == type(unit)],
-                    prefix=unicode(unitform.Meta.model._meta.object_name)),
-                'id': unitform.Meta.model._meta.object_name, 
-                'triggers': unitform.Meta.model.unit_types,
-            } for unitform in _subforms]
+
+    # TODO: Find a sane way of doing this
+    _subforms = [VcsUnitSubForm, TarballSubForm]
+    _formd = {False: None, True: unit}
+    unit_subforms = [
+        {
+            'form': unitform(None,
+                instance=_formd[unitform._meta.model == type(unit)],
+                prefix=unicode(unitform.Meta.model._meta.object_name)),
+            'id': unitform.Meta.model._meta.object_name, 
+            'triggers': unitform.Meta.model.unit_types,
+        } for unitform in _subforms]
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
         'unit_form': unit_form,
