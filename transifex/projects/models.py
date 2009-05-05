@@ -217,6 +217,9 @@ class Component(models.Model):
         help_text=_('Enable this object or disable its use?'))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
+    should_calculate = models.BooleanField(_('Calculate statistics?'),
+        default=True, help_text=_('Should statistics be calculated for '
+        'this component?'))
 
     # Normalized fields
     full_name = models.CharField(max_length=100, editable=False)

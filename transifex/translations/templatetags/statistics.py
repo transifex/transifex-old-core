@@ -73,12 +73,13 @@ def pos_from_stat(stat, width, border=1):
 ## Template tags
 
 @register.inclusion_tag('comp_stats_table.html', takes_context=True)
-def comp_stats_table(context, stats):
+def comp_stats_table(context, stats, calculated=True):
     """
     Create a HTML table to presents the statistics of all 
     languages for a component.
     """
     context['stats'] = key_sort(stats, 'sort_id', '-trans_perc')
+    context['calculated'] = calculated
     return context
 
 @register.inclusion_tag("project_stats_table.html")

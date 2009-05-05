@@ -28,8 +28,12 @@
         </td>
         {% with 140 as barwidth %}
         <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
+          {% if calculated %}
           <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}% <span class='trans_detail'>({{stat.trans}}/{{stat.fuzzy}}/{{stat.untrans}})<span></div> 
           {% stats_bar_full stat barwidth %}
+          {% else %}
+          <div class="compact">{% trans "(not calculated)" %}</div>
+          {% endif %}
         </td>
         {% endwith %}
         <td class="left actions">

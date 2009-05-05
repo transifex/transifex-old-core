@@ -56,7 +56,6 @@ def _group_pofiles(postats, grouping_key, pot_total):
         # stats sum. As it doesn't save the objects, it's safe to re-use then
         # in order to save memory.
         pofile.set_stats(po_trans, po_fuzzy, (po_untrans + no_po))
-        pofile.calculate_perc()
 
         if count > 1:
             pofile.is_aggregated=True
@@ -235,22 +234,26 @@ class POFile(models.Model):
 
     def calculate_perc(self):
         """Update normalized percentage statistics fields."""
-        try:
-            self.trans_perc = self.trans * 100 / self.total
-            self.fuzzy_perc = self.fuzzy * 100 / self.total
-            self.untrans_perc = self.untrans * 100 / self.total
-        except ZeroDivisionError:
-            self.trans_perc = 0
-            self.fuzzy_perc = 0
-            self.untrans_perc = 0
+        if (hasattr(self.object, 'should_calculate') and
+            self.object.should_calculate):
+            try:
+                self.trans_perc = self.trans * 100 / self.total
+                self.fuzzy_perc = self.fuzzy * 100 / self.total
+                self.untrans_perc = self.untrans * 100 / self.total
+            except ZeroDivisionError:
+                self.trans_perc = 0
+                self.fuzzy_perc = 0
+                self.untrans_perc = 0
 
     def set_stats(self, trans=0, fuzzy=0, untrans=0, error=False):
-        self.total = trans + fuzzy + untrans
-        self.trans = trans
-        self.fuzzy = fuzzy
-        self.untrans = untrans
-        self.error = error
-        self.calculate_perc()
+        if (hasattr(self.object, 'should_calculate') and
+            self.object.should_calculate):
+            self.total = trans + fuzzy + untrans
+            self.trans = trans
+            self.fuzzy = fuzzy
+            self.untrans = untrans
+            self.error = error
+            self.calculate_perc()
 
     @property
     def locked(self):

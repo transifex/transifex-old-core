@@ -5,6 +5,9 @@
 {% load truncate %}
 
 {% block extra_head %}
+  <script type="text/javascript">
+  var calcstats = {{ component.should_calculate|lower }};
+  </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
@@ -127,7 +130,7 @@
     </tr>
 </table>
 {% with component.trans.get_stats as stats %} 
-{% comp_stats_table stats %}
+{% comp_stats_table stats component.should_calculate %}
 
 {% if request.user.is_authenticated and component.allows_submission and perms.projects.submit_file %}
    {% include "projects/component_submit_new_file.html" %}
