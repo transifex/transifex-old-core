@@ -5,4 +5,4 @@ from codebases.models import Unit
 class UnitForm(forms.ModelForm):
     class Meta:
         model = Unit
-        exclude = ('name',)
+        fields = ['type',]

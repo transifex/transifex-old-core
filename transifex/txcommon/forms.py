@@ -1,16 +1,35 @@
 import re
 
-from django.forms import CharField, ValidationError
-from django.utils.translation import ugettext_lazy as _
+from codebases.forms import UnitForm
+from tarball.forms import TarballSubForm
+from vcs.forms import VcsUnitSubForm
 
-class ValidRegexField(CharField):
-    def __init__(self, max_length=None, min_length=None, error_message=None, *args, **kwargs):
-        super(ValidRegexField, self).__init__(max_length, min_length, *args, **kwargs)
+def unit_sub_forms(unit, post_request=None):
+    """
+    Return a list of Unit SubForms with different fields based on the unit types
 
-    def clean(self, value):
-        value = super(ValidRegexField, self).clean(value)
-        try:
-            return re.compile(value).pattern
-        except re.error, e:
-            raise ValidationError(_('Enter a valid regular expression.'))
+    ``unit``: It's an instance of the Unit model
+    ``post_request``: The POST request sent to populate the Forms
+    """
 
+    if post_request:
+        unit_form = UnitForm(post_request, instance=unit, prefix='unit')
+        try: 
+            unit_instance = unit_form.save(commit=False)
+        except ValueError:
+            unit_instance = unit
+    else: 
+        unit_instance = unit
+
+    _subforms = [VcsUnitSubForm,TarballSubForm]
+    _formd = {False: None, True: unit_instance}
+    return [
+        {
+            'form': unitform(post_request,
+                instance=_formd[unitform._meta.model == type(unit)],
+                prefix=unicode(unitform.Meta.model._meta.object_name)),
+            'id': unitform.Meta.model._meta.object_name, 
+            'triggers': unitform.Meta.model.unit_types,
+        } for unitform in _subforms]
+
+    

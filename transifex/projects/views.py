@@ -17,7 +17,7 @@ from django.contrib.syndication.views import feed
 
 from codebases.forms import UnitForm
 from projects.models import Project, Component
-from projects.forms import ProjectForm, ComponentForm
+from projects.forms import ProjectForm, ComponentForm, ComponentAllowSubForm
 from projects import signals
 from tarball.forms import TarballSubForm
 from txcommon.log import logger
@@ -26,6 +26,7 @@ from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403
+from txcommon.forms import unit_sub_forms
 from txcommon.models import exclusive_fields
 from txcommon.views import (json_result, json_error)
 from repowatch import WatchException, watch_titles
@@ -196,69 +197,86 @@ def component_create_update(request, project_slug, component_slug=None):
         component_form = ComponentForm(project, request.POST,
                                        instance=component, prefix='component')
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
-        if component_form.is_valid() and unit_form.is_valid():
-            component = component_form.save(commit=False)
-            if unit:
-                old_root = unit.root
+        allow_subform = ComponentAllowSubForm(request.POST, instance=component)
+        unit_subforms = unit_sub_forms(unit, request.POST)
+
+        # Submission tab
+        if request.POST.has_key('submission_form'):
+            if allow_subform.is_valid() and component is not None:
+                allow_subform.save()
+                # TODO: Add an ActionLog and Notification here for this action
+                return HttpResponseRedirect( reverse('component_detail',
+                    args=[project_slug, component.slug]),)
+
+        # Checkout tab
+        else:
+            # TODO: Too much tied, but how can we do it in a better way?
+            if request.POST['unit-type']=='tar':
+                current_unit_subform = unit_subforms[1]['form']
             else:
-                old_root = None
-            unit = unit_form.save(commit=False)            
-            unit.name = component.get_full_name()
-            unit.save()
-            unit = unit.promote()
-            for field in exclusive_fields(type(unit)):
-                setattr(unit, field.name,
-                    request.POST[(u'%s-%s' % (unit._meta.object_name,
-                    field.name)).encode('utf-8')])
-            unit.save()
-            component.unit = unit
-            component_id = component.id
-            component.save()
-            component_form.save_m2m()
+                current_unit_subform = unit_subforms[0]['form']
 
-            # Compare with the old root url and, if it has changed, clear cache
-            if old_root and old_root != unit.root:
-                component.clear_cache()
+            if component_form.is_valid() and unit_form.is_valid() and \
+                current_unit_subform.is_valid():
 
-            # ActionLog & Notification
-            context = {'component': component}
-            object_list = [component.project, component]
-            if not component_id:
-                nt = 'project_component_added'
-                action_logging(request.user, object_list, nt, context=context)
-                if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(component.project,
-                            signal=nt, extra_context=context)
-            else:
-                nt = 'project_component_changed'
-                action_logging(request.user, object_list, nt, context=context)
-                if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(component.project,
-                            signal=nt, extra_context=context)
+                component = component_form.save(commit=False)
+                if unit:
+                    old_root = unit.root
+                else:
+                    old_root = None
+                unit = unit_form.save(commit=False)
+                unit.name = component.get_full_name()
+                unit.save()
+                unit = unit.promote()
 
-            return HttpResponseRedirect(
-                reverse('component_detail',
+                # Here we overwrite the unit fields with the subforms unit fields
+                # One thing not very nice is the fact we save the unit two times
+                # TODO: Figure out how make it better
+                for field in exclusive_fields(type(unit), except_fields=['root']):
+                    setattr(unit, field.name, 
+                        current_unit_subform.cleaned_data[field.name])
+                unit.save()
+
+                component.unit = unit
+                component_id = component.id
+                component.save()
+                component_form.save_m2m()
+
+                # Compare with the old root url and, if it has changed, clear cache
+                if old_root and old_root != unit.root:
+                    component.clear_cache()
+
+                # ActionLog & Notification
+                context = {'component': component}
+                object_list = [component.project, component]
+                if not component_id:
+                    nt = 'project_component_added'
+                    action_logging(request.user, object_list, nt, context=context)
+                    if settings.ENABLE_NOTICES:
+                        txnotification.send_observation_notices_for(component.project,
+                                signal=nt, extra_context=context)
+                else:
+                    nt = 'project_component_changed'
+                    action_logging(request.user, object_list, nt, context=context)
+                    if settings.ENABLE_NOTICES:
+                        txnotification.send_observation_notices_for(component.project,
+                                signal=nt, extra_context=context)
+
+                return HttpResponseRedirect(
+                    reverse('component_detail',
                         args=[project_slug, component.slug]),)
     else:
         component_form = ComponentForm(project, instance=component,
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
+        allow_subform = ComponentAllowSubForm(instance=component)
 
-    # TODO: Find a sane way of doing this
-    _subforms = [VcsUnitSubForm, TarballSubForm]
-    _formd = {False: None, True: unit}
-    unit_subforms = [
-        {
-            'form': unitform(None,
-                instance=_formd[unitform._meta.model == type(unit)],
-                prefix=unicode(unitform.Meta.model._meta.object_name)),
-            'id': unitform.Meta.model._meta.object_name, 
-            'triggers': unitform.Meta.model.unit_types,
-        } for unitform in _subforms]
+        unit_subforms = unit_sub_forms(unit)
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
         'unit_form': unit_form,
         'unit_subforms': unit_subforms,
+        'allow_subform': allow_subform,
         'project' : project,
         'component': component,
     }, context_instance=RequestContext(request))

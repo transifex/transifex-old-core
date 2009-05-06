@@ -13,6 +13,9 @@
 {% endif %}{% endblock %}
 
 {% block extra_head %}
+  <link type="text/css" href="{{ MEDIA_URL }}css/ui.tabs.css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
 <script>
 triggers = new Object();
 {% for subform in unit_subforms %}{% for trigger in subform.triggers %}triggers["{{ trigger }}"] = "sub_{{ subform.id }}";
@@ -37,12 +40,22 @@ function on_change_type(obj)
 $(document).ready(
     function ()
     {
+        // Tabs
+        $("#component-tabs").tabs({ 
+            fx: { opacity: "toggle", duration: "fast"},
+            {% if not component.id %}
+            disabled: [1], // disable submission tab while we don't have the component saved
+            {% endif %}
+        });
+
+        // Unit Subforms
         $("#id_unit-type").bind("change", function ()
             {
                 on_change_type($("#id_unit-type"));
             }
         );
         on_change_type($("#id_unit-type"));
+
     }
 );
 </script>
@@ -61,17 +74,38 @@ $(document).ready(
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
-  <form action='' method='post'>
-  <table>
-    <tbody>
-      {% form_as_table_rows component_form %}
-      {% form_as_table_rows unit_form %}
-      {% for subform in unit_subforms %}
-      {% form_as_table_rows subform.form subform.id%}
-      {% endfor %}
-    </tbody>
-  </table>
-  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
-  </form>
+
+    <div id="component-tabs">
+        <ul>
+            <li><a href="#tab-1"><span>{% trans "Checkout" %}</span></a></li>
+            <li><a href="#tab-2"><span>{% trans "Submission" %}</span></a></li>
+        </ul>
+        <div id="tab-1">
+            <form action='' method='post'>
+                <table>
+                    <tbody>
+                    {% form_as_table_rows component_form %}
+                    {% form_as_table_rows unit_form %}
+                    {% for subform in unit_subforms %}
+                    {% form_as_table_rows subform.form subform.id %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
+            </form>
+        </div>
+        <div id="tab-2">
+            <form action='' method='post'>
+                <table>
+                    <tbody>
+                    {% form_as_table_rows allow_subform %}
+                    </tbody>
+                </table>
+                <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
+            </form>
+        </div>
+    </div>
+
+  
   </div>
 {% endblock %}

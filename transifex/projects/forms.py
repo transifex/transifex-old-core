@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 
 from projects.models import Project, Component
-from txcommon.forms import ValidRegexField
+from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -17,6 +17,8 @@ class ComponentForm(forms.ModelForm):
 
     class Meta:
         model = Component
+        exclude = ('allows_submission',)
+
 
     def __init__(self, project, *args, **kwargs):
         super(ComponentForm, self).__init__(*args, **kwargs)
@@ -29,3 +31,13 @@ class ComponentForm(forms.ModelForm):
         releases = self.fields["releases"].queryset.filter(
                                            collection__id__in=collection_query)
         self.fields["releases"].queryset = releases
+
+
+class ComponentAllowSubForm(forms.ModelForm):
+
+    submission_form = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
+    class Meta:
+        model = Component
+        fields = ['allows_submission',]
+
