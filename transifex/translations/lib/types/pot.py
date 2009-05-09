@@ -234,7 +234,7 @@ class POTManager(TransManagerMixin):
         try:
             ctype = ContentType.objects.get_for_model(object)
             return POFile.objects.filter(object_id=object.id, 
-                                         content_type=ctype, is_pot=True)
+                content_type=ctype, is_pot=True).order_by('filename')
         except POFile.DoesNotExist:
             return None
 
