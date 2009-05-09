@@ -150,3 +150,12 @@ def stats_bar_trans(stat, width=100):
     return {'stat': stat,
             'pos': pos_from_stat(stat, width),}
 
+
+@register.inclusion_tag("source_files.html", takes_context=True)
+def render_source_files(context, sources):
+    """
+    Create an HTML to present only the source files.
+    """
+
+    context['sources'] = sources
+    return context

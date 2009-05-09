@@ -7,6 +7,17 @@
 {% block extra_head %}
   <script type="text/javascript">
   var calcstats = {{ component.should_calculate|lower }};
+
+  $(function(){
+
+      // Toogle to source files list
+      $("#source-troggle").click(function () {
+           $("#source-stats").slideToggle("slow");
+      });
+
+  });
+
+
   </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
@@ -109,13 +120,7 @@
 	<tr>
 	  <th class="source_code i16">{% trans "Source file:" %}</th>
 	  <td>
-          {% for source_stat in component.trans.get_source_stats %}
-	  {% url component_raw_file component.project.slug component.slug source_stat.filename as source_raw_url %}
-	  {% url component_view_file component.project.slug component.slug source_stat.filename as source_view_url %}
-	    <code style="margin-right: 0.7em;">{{ source_stat.filename }} ({{ source_stat.total }} {% trans "entries" %})</code>
-	    <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_stat.filename }}" href="{{ source_view_url }}"></a>
-	    <a class="i16 get_file nodecoration_icon" title="{% trans "Download " %}{{ source_stat.filename }}" href="{{ source_raw_url }}"></a><br/>
-	  {% endfor %}
+          {% render_source_files component.trans.get_source_stats %}
 	  </td>
 	</tr>
   {% endif %}

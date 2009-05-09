@@ -1,0 +1,27 @@
+{% load i18n %}
+{% if sources %}
+{% with sources|length as sources_number %}
+ {% ifnotequal sources_number 1 %}
+  <span id="source-troggle" class="i16 multifile buttonized_simple" title="{% trans "Click here to show or hide the source files" %}">{% blocktrans %}This component has {{ sources_number}} source files{% endblocktrans %}</span>
+ {% endifnotequal %}
+
+  <table id="source-stats" class="stats_comp stats_comp_source" {% ifnotequal sources_number 1 %} style="display:none;" {% endifnotequal %}>
+   <tbody>
+   {% for source_stat in sources %} 
+      <tr>
+        <td class="left name" id="{{source_stat.filename}}">
+           <span class="stat_message" >{{ source_stat.filename }} ({{ source_stat.total }} {% trans "entries" %})</span>
+        </td>
+        <td class="action">
+            {% url component_raw_file source_stat.object.project.slug source_stat.object.slug source_stat.filename as source_raw_url %}
+            {% url component_view_file source_stat.object.project.slug source_stat.object.slug source_stat.filename as source_view_url %}
+            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{ source_stat.filename }}" href="{{ source_view_url }}"></a>
+            <a class="i16 get_file nodecoration_icon" title="{% trans "Download " %}{{ source_stat.filename }}" href="{{ source_raw_url }}"></a><br/>
+        </td>
+      </tr>
+   {% endfor %}
+   </tbody>
+  </table>
+{% endwith %}
+{%  endif %}
+
