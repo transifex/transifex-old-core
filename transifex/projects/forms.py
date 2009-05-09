@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
+from django.conf import settings
 
 from projects.models import Project, Component
 from txcommon.validators import ValidRegexField
@@ -17,7 +18,7 @@ class ComponentForm(forms.ModelForm):
 
     class Meta:
         model = Component
-        exclude = ('allows_submission',)
+        exclude = ('allows_submission', 'submission_type',)
 
 
     def __init__(self, project, *args, **kwargs):
@@ -36,8 +37,19 @@ class ComponentForm(forms.ModelForm):
 class ComponentAllowSubForm(forms.ModelForm):
 
     submission_form = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+    submission_type = forms.ChoiceField(label=_('Submit to'), required=False,
+        help_text=_("Choose how this component should handle submissions of files."
+                    "The options here are available based on the component type"))
 
     class Meta:
         model = Component
-        fields = ['allows_submission',]
+        fields = ['allows_submission', 'submission_type',]
+
+    def __init__(self, *args, **kwargs):
+        super(ComponentAllowSubForm, self).__init__(*args, **kwargs)
+        if kwargs['instance']:
+            codebase_type = kwargs['instance'].unit.type
+            self.fields["submission_type"].choices = \
+                settings.SUBMISSION_CHOICES[codebase_type].items()
+
 

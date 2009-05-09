@@ -210,6 +210,8 @@ class Component(models.Model):
     allows_submission = models.BooleanField(_('Allows submission'), 
         default=False,
         help_text=_('Does this module repository allow write access?'))
+    submission_type = models.CharField(_('Submit to'), blank=True, 
+        max_length=10)
 
     hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))

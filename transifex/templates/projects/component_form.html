@@ -37,6 +37,14 @@ function on_change_type(obj)
     $("[id^='" + on + "']").show();
 }
 
+function toggle_submission_status() {
+    if ($("#id_allows_submission").is(":checked")) {
+        $("#id_submission_type").removeAttr("disabled");
+    } else {
+        $("#id_submission_type").attr("disabled", true);
+    }
+}
+
 $(document).ready(
     function ()
     {
@@ -55,6 +63,16 @@ $(document).ready(
             }
         );
         on_change_type($("#id_unit-type"));
+
+
+        // Submission forms
+        $("#id_allows_submission").bind("change", function ()
+            {
+                toggle_submission_status();
+            }
+        );
+        toggle_submission_status();
+
 
     }
 );

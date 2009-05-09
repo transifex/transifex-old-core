@@ -81,11 +81,21 @@
     <tr>
       <th class="i16 allow_file">{% trans "Allows submissions:" %}</th>
       <td>
-        {% if component.allows_submission %}<span class="i16 tick_circle"></span>
-        {% else %}<span class="i16 stop"></span>
+        {% if component.allows_submission %}
+            <span class="i16 tick_circle"></span>
+            {% ifequal component.submission_type 'email' %}
+                {% ifequal component.unit.type 'tar' %}
+                    <sup><span class="note" title="{% trans "This component supports local storing of submitted files and also sends the files to the maintainers' email." %}">{% trans "note" %}</span></sup>
+                {% else %}
+                    <sup><span class="note" title="{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers' emails and the statistics will reflect the change once the files are committed upstream." %}">{% trans "note" %}</span></sup>
+                {% endifequal %}
+            {% endifequal %}
+            {% ifequal component.submission_type 'ssh' %}
+                <sup><span class="note" title="{% trans "This component supports local storing of submitted files and also sends the files direct to the upstream repository." %}">{% trans "note" %}</span></sup>
+            {% endifequal %}
+        {% else %}
+            <span class="i16 stop"></span>
         {% endif %}
-        {# FIXME: tar too restrictive #}
-        {% ifequal component.unit.type "tar" %}<sup><span class="note" title="{% trans "Tarball support is read-only: Submissions will not pushed to the maintainer or the upstream repo." %}">{% trans "note" %}</span></sup>{% endifequal %}
       </td>
     </tr>
   </table>

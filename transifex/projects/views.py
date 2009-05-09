@@ -33,6 +33,7 @@ from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from notification import models as notification
 from vcs.forms import VcsUnitSubForm
+from submissions import submit_by_email
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -270,7 +271,6 @@ def component_create_update(request, project_slug, component_slug=None):
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
         allow_subform = ComponentAllowSubForm(instance=component)
-
         unit_subforms = unit_sub_forms(unit)
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
@@ -507,7 +507,14 @@ def component_submit_file(request, project_slug, component_slug,
 
             logger.debug("Submitting %s for component %s" % 
                          (filename, component.full_name))
-            component.submit(request.FILES, msg, request.user)
+
+            if component.submission_type=='ssh' or component.unit.type=='tar':
+                component.submit(request.FILES, msg, request.user)
+
+            if component.submission_type=='email':
+                logger.debug("Sending %s for component %s by email" % 
+                            (filename, component.full_name))
+                submit_by_email(component, request.FILES, request.user)
 
             logger.debug("Calculating %s stats for component %s" % 
                          (filename, component.full_name))
