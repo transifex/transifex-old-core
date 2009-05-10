@@ -17,19 +17,21 @@
 
 
     // Tooltip for submission note
-    {% ifequal component.submission_type 'email' %}
-        {% ifequal component.unit.type 'tar' %}
-                submission_note='{% trans "This component supports local storing of submitted files and also sends the files to the maintainers\' email." %}'
-        {% else %}
-                submission_note='{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers\' emails and the statistics will reflect the change once the files are committed upstream." %}'
+    {% if component.allows_submission %}
+        {% ifequal component.submission_type 'email' %}
+            {% ifequal component.unit.type 'tar' %}
+                    submission_note='{% trans "This component supports local storing of submitted files and also sends the files to the maintainers\' email." %}'
+            {% else %}
+                    submission_note='{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers\' emails and the statistics will reflect the change once the files are committed upstream." %}'
+            {% endifequal %}
         {% endifequal %}
-    {% endifequal %}
-    {% ifequal component.submission_type 'ssh' %}
-            submission_note='{% trans "This component supports local storing of submitted files and also sends the files direct to the upstream repository." %}'
-    {% endifequal %}
+        {% ifequal component.submission_type 'ssh' %}
+                submission_note='{% trans "This component supports local storing of submitted files and also sends the files direct to the upstream repository." %}'
+        {% endifequal %}
 
-    tooltip('#note', submission_note);
+        tooltip('#note', submission_note);
 
+    {% endif %}
   });
 
 
