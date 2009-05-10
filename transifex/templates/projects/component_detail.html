@@ -15,6 +15,21 @@
            $("#source-stats").slideToggle("slow");
       });
 
+
+    // Tooltip for submission note
+    {% ifequal component.submission_type 'email' %}
+        {% ifequal component.unit.type 'tar' %}
+                submission_note='{% trans "This component supports local storing of submitted files and also sends the files to the maintainers\' email." %}'
+        {% else %}
+                submission_note='{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers\' emails and the statistics will reflect the change once the files are committed upstream." %}'
+        {% endifequal %}
+    {% endifequal %}
+    {% ifequal component.submission_type 'ssh' %}
+            submission_note='{% trans "This component supports local storing of submitted files and also sends the files direct to the upstream repository." %}'
+    {% endifequal %}
+
+    tooltip('#note', submission_note);
+
   });
 
 
@@ -22,6 +37,7 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   <style type="text/css">
     form.submit_form { display: none; }
@@ -94,16 +110,7 @@
       <td>
         {% if component.allows_submission %}
             <span class="i16 tick_circle"></span>
-            {% ifequal component.submission_type 'email' %}
-                {% ifequal component.unit.type 'tar' %}
-                    <sup><span class="note" title="{% trans "This component supports local storing of submitted files and also sends the files to the maintainers' email." %}">{% trans "note" %}</span></sup>
-                {% else %}
-                    <sup><span class="note" title="{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers' emails and the statistics will reflect the change once the files are committed upstream." %}">{% trans "note" %}</span></sup>
-                {% endifequal %}
-            {% endifequal %}
-            {% ifequal component.submission_type 'ssh' %}
-                <sup><span class="note" title="{% trans "This component supports local storing of submitted files and also sends the files direct to the upstream repository." %}">{% trans "note" %}</span></sup>
-            {% endifequal %}
+            <sup><span id="note" class="note buttonized_simple" >{% trans "Note" %}</span></sup>
         {% else %}
             <span class="i16 stop"></span>
         {% endif %}
