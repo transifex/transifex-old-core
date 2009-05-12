@@ -14,7 +14,7 @@
   <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Say goodbye to <em>{{ component_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
 <p>{% blocktrans with component.project.name as project_name and component.name as component_name %}
   Are you sure you want to permanently delete the component '{{ component_name }}' which belongs to {{ project_name }}?

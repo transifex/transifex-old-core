@@ -21,7 +21,7 @@
 {% block breadcrumb %}{% with component.project as project %}{{ block.super }} &raquo; <a href="{% url component_detail component.project.slug component.slug %}">{{ component.name }}</a> &raquo; {{ language.name }}{% endwith %}{% endblock %}
 
 
-{% block body_main %}
+{% block content_main %}
   <div class="obj_bigdetails">
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 

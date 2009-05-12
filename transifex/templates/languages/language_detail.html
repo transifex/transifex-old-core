@@ -11,7 +11,7 @@
 
 {% block content_title %}<h2 class="pagetitle">{{ language.name }} <sup class="entry_metalink">{{ language.code }}</sup></h2>{% endblock %}
 
-{% block body_main %}
+{% block content_main %}
 
  {% for collection in collection_list %}
   {% url collection_release_create slug=collection.slug as release_create %}

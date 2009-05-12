@@ -5,7 +5,7 @@
 {% block breadcrumb %}{{ block.super }} &raquo; {% trans "Password reset" %}{% endblock %}
 {% block content_title %}<h2 class="pagetitle">{% trans "I lost my password!" %}</h2>{% endblock %}
 
-{% block body %}
+{% block content %}
 
 <p class="settings-descr">{% trans "No worries! Here you can ask to reset your password by entering the username you use. You will then get a confirmation email with your new password. The new password will be activated only after you have clicked on the link in the email." %}</p>
 {% if form.errors %}

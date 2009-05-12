@@ -27,11 +27,11 @@
   {% endif %}
 {% endblock %}
 
-{% block body_sec %}
+{% block content_sec %}
   <a class="simlink" href="{% url collection_latest_feed %}" title="Collections feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
 {% endblock %}
 
-{% block body_main %}
+{% block content_main %}
   {% autopaginate collection_list 5 %}
   <div class="collection_list obj_biglist">
   <div class="pagination_top">{% paginate %}</div>

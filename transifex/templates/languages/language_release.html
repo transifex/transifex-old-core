@@ -20,13 +20,13 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url language_detail language.code %}">{{ language.name }}</a> &raquo; {{ release.name }}{% endblock %}
 
-{% block body_sec %}
+{% block content_sec %}
   <a class="simlink" href="{% url language_release_feed language_slug=language.code collection_slug=release.collection.slug release_slug=release.slug %}" title="Statistics feed for this language and release"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{{ language.name }}<sup class="entry_metalink">{{ release.name }}</sup></h2>{% endblock %}
 
-{% block body_main %}
+{% block content_main %}
 
 {% if pofile_list %}
 

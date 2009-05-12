@@ -14,11 +14,11 @@
 
 {% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} {% render_metacount language_list _("languages") %}</h2>{% endblock %}
 
-{% block body_sec %}
+{% block content_sec %}
   <a class="simlink" href="{% url languages_latest_feed %}" title="Languages feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
 {% endblock %}
 
-{% block body_main %}
+{% block content_main %}
   <div class="languages_list multicolumn3">
     <ul class="simple">
     {% for language in language_list %}<li class="i16 language name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>{% endfor %}
