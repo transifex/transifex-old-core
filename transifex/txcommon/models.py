@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
 import datetime
+from django.db.models.signals import post_save
 from django.db.models.fields.related import OneToOneField
 from django.db import models
 from userprofile.models import BaseProfile
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from languages.models import Language
+from txcommon.signals import add_user_to_registered_group
 
 GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 
@@ -23,6 +26,8 @@ class Profile(BaseProfile):
     about = models.TextField(_('About yourself'), max_length=140, blank=True,
         help_text=_('Short words about you (140 chars).'))
     looking_for_work = models.BooleanField(_('Looking for work?'), default=False)
+
+post_save.connect(add_user_to_registered_group, sender=Profile)
 
 
 def exclusive_fields(inmodel, except_fields=[]):
