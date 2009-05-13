@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
 
-<form name="fauth" action="{% url user_signin %}?next={{next}}" method="post">
+<form name="fauth" action="{% url login %}?next={{next}}" method="post">
 <div class="generic_form" id="login_index login-block">
 <fieldset>
   <legend>{% trans "Sign in" %}</legend>

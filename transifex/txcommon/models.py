@@ -1,4 +1,29 @@
+import datetime
 from django.db.models.fields.related import OneToOneField
+from django.db import models
+from userprofile.models import BaseProfile
+from django.utils.translation import ugettext as _
+from django.conf import settings
+from languages.models import Language
+
+GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
+
+class Profile(BaseProfile):
+    """
+    Profile class to used as a base for the django-profile app
+    """
+    firstname = models.CharField(_('First name'), max_length=255, blank=True)
+    surname = models.CharField(_('Surname'), max_length=255, blank=True)
+
+    native_language = models.ForeignKey(Language, blank=True, 
+        verbose_name=_('Native Language'), null=True)
+    blog = models.URLField(_('Blog'), blank=True)
+    linked_in = models.URLField(_('LinkedIn'), blank=True)
+    twitter = models.URLField(_('Twitter'), blank=True)
+    about = models.TextField(_('About yourself'), max_length=140, blank=True,
+        help_text=_('Short words about you (140 chars).'))
+    looking_for_work = models.BooleanField(_('Looking for work?'), default=False)
+
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''

@@ -17,13 +17,13 @@ urlpatterns = patterns('',
     url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
-# Choose auth app depending on whether authopenid was enabled or not
-if settings.ENABLE_OPENID:
+if settings.ENABLE_SIMPLEAUTH:
     urlpatterns += patterns('',
-        url(r'^account/', include('django_authopenid.urls')),)
+        url(r'^accounts/', include('simpleauth.urls')),)
 else:
     urlpatterns += patterns('',
-        url(r'^account/', include('simpleauth.urls')),)
+        url(r'^accounts/', include('userprofile.urls')),
+    )
 
 if settings.STATIC_SERVE:
     urlpatterns += patterns('',

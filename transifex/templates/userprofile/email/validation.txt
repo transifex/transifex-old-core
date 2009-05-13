@@ -1,0 +1,12 @@
+{% load i18n %}{% blocktrans %}Hello, this is Transifex at http://{{ domain }}.{% endblocktrans %}
+
+{% blocktrans %}You're receiving this e-mail because you requested an e-mail validation{% endblocktrans %}.
+
+{% trans "Following this link, you will validate your e-mail address:" %}
+
+http://{{ domain }}{% url email_validation_process key %}
+
+{% trans "Your username, in case you've forgotten:" %} {{ user.username }}
+
+{% blocktrans %}Thank you,{% endblocktrans %}
+Transifex
