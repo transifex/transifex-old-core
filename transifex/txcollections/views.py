@@ -102,7 +102,7 @@ def release_detail(request, slug, release_slug, *args, **kwargs):
     return list_detail.object_detail(
         request,
         queryset = Release.objects.all(),
-        slug=release_slug,
+        object_id = release.id,
         extra_context = {'pofile_list': pofile_list,
                          'release': release,
                          'collection': collection},
