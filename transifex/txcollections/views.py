@@ -110,6 +110,28 @@ def release_detail(request, slug, release_slug, *args, **kwargs):
 
 @login_required
 @perm_required_with_403('txcollections.delete_collectionrelease')
-def release_delete(*args, **kwargs):
-    kwargs['post_delete_redirect'] = reverse('collection_detail', args=[kwargs['slug']])
-    return limited_delete_object(*args, **kwargs)
+def collection_release_delete(request, collection_slug, release_slug):
+    release = get_object_or_404(Release, slug=release_slug,
+                                  collection__slug=collection_slug)
+    if request.method == 'POST':
+        import copy
+        release_ = copy.copy(release)
+        release.delete()
+        request.user.message_set.create(
+            message=_("The %s was deleted.") % release.name)
+
+        # ActionLog & Notification
+        #nt = 'collection_release_deleted'
+        #context = {'component': component_}
+        #action_logging(request.user, [component_.project], nt, context=context)
+        #if settings.ENABLE_NOTICES:
+            #txnotification.send_observation_notices_for(component_.project,
+                                #signal=nt, extra_context=context)
+
+        return HttpResponseRedirect(reverse('collection_detail', 
+                                     args=(collection_slug,)))
+    else:
+        return render_to_response('txcollections/release_confirm_delete.html',
+                                  {'release': release,},
+                                  context_instance=RequestContext(request))
+

@@ -99,11 +99,10 @@ urlpatterns += patterns('',
         kwargs = {'model': Release,
                   'template_object_name': 'release'}),
     url(
-        regex = '^(?P<slug>[-\w]+)/(?P<release_slug>[-\w]+)/delete/$',
-        view = release_delete,
-        name = 'collection_release_delete',
-        kwargs = {'model': Release,
-                  'template_object_name': 'release'}),
+        regex = '^(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/delete/$',
+        view = collection_release_delete,
+        name = 'collection_release_delete',),
+
     url (
         regex = '^(?P<slug>[-\w]+)/release-added/$',
         view = 'django.views.generic.list_detail.object_detail',
