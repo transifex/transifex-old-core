@@ -20,7 +20,7 @@ class Collection(models.Model):
 
     """A collection of projects (aka big-picture project)."""
 
-    slug = models.SlugField(_('Slug'), max_length=30,
+    slug = models.SlugField(_('Slug'), max_length=30, unique=True,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
