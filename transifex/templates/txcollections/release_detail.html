@@ -83,7 +83,7 @@
   <div id="content_footer_center">
     {% if request.user.is_authenticated and perms.txcollections.delete_collectionrelease %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url collection_release_delete collection.slug release.slug %}">{% trans "Delete collection" %}</a>
+      <a class="i16 delete buttonized" href="{% url collection_release_delete collection.slug release.slug %}">{% trans "Delete release" %}</a>
     </div>
     {% endif %}
   </div>
