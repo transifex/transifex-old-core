@@ -84,7 +84,8 @@ class SvnBrowser(VCSBrowserMixin):
     def init_repo(self):
         """Initialize the ``client`` variable on the browser."""
         try:
-            self.client.checkout(self.remote_path, self.path)
+            self.client.checkout(self.remote_path, self.path,
+                ignore_externals=True)
         except Exception, e:
             raise RepoError("Checkout from remote repository failed.")
 
