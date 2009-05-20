@@ -34,11 +34,17 @@ $(document).ready(function(){
     });
 
     // ordering for Component stats table
-    if (calcstats) {
+        // Just enable sorting for the stats column if there are stats
+        if (typeof calcstats == "undefined" || calcstats == true){
+            statscol = "percent";
+        }else{
+            statscol = false;
+        }
+
         $("#stats_comp").tablesorter({
             widgets: ['zebra'],
             headers: {
-                1: { sorter: "percent"},
+                1: { sorter: statscol },
                 2: { sorter: false } // Do not sort the third column
             },
             textExtraction: { // Take value inside an object for the columns
@@ -50,7 +56,6 @@ $(document).ready(function(){
                 }
             }
         });
-    }
 
     // ordering for Component Multifile Language stats table
     $("#stats_comp_lang").tablesorter({
