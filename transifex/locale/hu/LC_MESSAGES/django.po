@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-17 19:40+0000\n"
-"PO-Revision-Date: 2009-05-21 07:56+0200\n"
+"PO-Revision-Date: 2009-05-21 19:25+0200\n"
 "Last-Translator: Sulyok Péter <peti@fedoraproject.org>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -1867,7 +1867,7 @@ msgstr "Nincs még gyűjtemény. :-("
 #: templates/txcollections/collection_list.html:55
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
-msgstr ""
+msgstr "Miért nem <a href=\"%(collection_create)s\">ad hozzá egyet</a>?"
 
 #: templates/txcollections/collection_list.html:63
 #, python-format
@@ -1875,6 +1875,8 @@ msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
 "\">add it</a>!"
 msgstr ""
+"Nem találja gyűjteményét? <a href=\"%(collection_create)s\">"
+"Adja hozzá</a>!"
 
 #: templates/txcollections/release_detail.html:55
 msgid "Release date:"
@@ -1882,11 +1884,11 @@ msgstr "Kiadás dátum:"
 
 #: templates/txcollections/release_detail.html:59
 msgid "String freeze:"
-msgstr ""
+msgstr "Szöveg befagyasztás:"
 
 #: templates/txcollections/release_detail.html:63
 msgid "Devel freeze:"
-msgstr ""
+msgstr "Fejlesztés befagyasztás:"
 
 #: templates/txcollections/release_detail.html:71
 msgid "Translation statistics"
@@ -1894,12 +1896,12 @@ msgstr "Fordítás statisztikák"
 
 #: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
-msgstr ""
+msgstr "Nincs fordítás e kiadáshoz. :-("
 
 #: templates/txcollections/release_form.html:18
 #, python-format
 msgid "Edit <em>%(release_name)s</em> release"
-msgstr ""
+msgstr "<em>%(release_name)s</em> kiadás szerkesztése"
 
 #: templates/txcollections/release_form.html:26
 #, python-format
@@ -1908,6 +1910,9 @@ msgid ""
 "        Editing <a href=\"%(release_url)s\">%(release_name)s</a>\n"
 "      "
 msgstr ""
+"\n"
+"········<a·href=\"%(release_url)s\">%(release_name)s</a> szerkesztése\n"
+"······"
 
 #: templates/txcollections/release_form.html:44
 msgid "Save release"
@@ -1969,7 +1974,7 @@ msgstr "Még:"
 
 #: translations/templates/component_submit.html:4
 msgid "Send a translation for this language."
-msgstr ""
+msgstr "Küldjön fordítást e nyelvhez."
 
 #: translations/templates/component_submit.html:7
 msgid "Submit file"
@@ -1977,31 +1982,31 @@ msgstr "Fájl beadás"
 
 #: translations/templates/lang_stats_table.html:11
 msgid "Project/Component"
-msgstr ""
+msgstr "Terv/összetevő"
 
 #: translations/templates/lang_stats_table.html:20
 msgid "Go to this project page"
-msgstr ""
+msgstr "A terv oldalára ugrás"
 
 #: translations/templates/lang_stats_table.html:21
 msgid "Go to this component page"
-msgstr ""
+msgstr "Az összetevő oldalára ugrás"
 
 #: translations/templates/pofile_lock.html:8
 msgid "Unlock this file when you're finished working with it."
-msgstr ""
+msgstr "Vegye le a lakatot, miután befejezte a munkát a fájlon."
 
 #: translations/templates/pofile_lock.html:12
 msgid "This file is locked, indicating someone is working with it."
-msgstr ""
+msgstr "E fájlt lelakatolták, ami azt jelzi, hogy valaki dolgozik rajta."
 
 #: translations/templates/pofile_lock.html:18
 msgid "Lock this file to notify others you're working with it."
-msgstr ""
+msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: dolgozik rajta."
 
 #: translations/templates/pofile_lock.html:21
 msgid "This file is unlocked. Most likely noone is working with it right now."
-msgstr ""
+msgstr "A fájl nincs lelakatolva. Valószínű, hogy most nem dolgoznak rajta."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -2010,31 +2015,31 @@ msgstr "Részletes fordítási statisztikák e nyelvhez"
 #: txcollections/feeds.py:15
 #, python-format
 msgid "Latest collections on %(site_name)s"
-msgstr ""
+msgstr "Legfrissebb gyűjtemények %(site_name)s helyen"
 
 #: txcollections/feeds.py:18
 msgid "Updates on changes and additions to collections."
-msgstr ""
+msgstr "Gyűjtemény változások és bővítések frissítései."
 
 #: txcollections/feeds.py:34
 #, python-format
 msgid "%(site_name)s: %(collection)s collection"
-msgstr ""
+msgstr "%(site_name)s:·%(collection)s·gyűjtemény"
 
 #: txcollections/feeds.py:39
 #, python-format
 msgid "Latest releases in the %s collection."
-msgstr ""
+msgstr "Legújabb kiadások %s gyűjteményben."
 
 #: txcollections/feeds.py:66
 #, python-format
 msgid "%(site_name)s: %(collection)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s:·%(collection)s·::·%(release)s·kiadás"
 
 #: txcollections/feeds.py:72
 #, python-format
 msgid "Translation statistics for all languages against %s release."
-msgstr ""
+msgstr "Fordítás statisztikák minden nyelvre %s kiadásból."
 
 #: txcollections/models.py:53
 #, python-format
@@ -2065,7 +2070,7 @@ msgstr "Ág"
 
 #: vcs/models.py:49
 msgid "A VCS branch this unit is associated with"
-msgstr ""
+msgstr "VCS ág, amihez ezt az egységet társították"
 
 #: vcs/models.py:50
 msgid "Web frontend"
@@ -2073,7 +2078,7 @@ msgstr "Web előtét"
 
 #: vcs/models.py:52
 msgid "A URL to the project's web front-end"
-msgstr ""
+msgstr "URL a terv web felületéhez"
 
 #: vcs/models.py:55
 #, python-format
