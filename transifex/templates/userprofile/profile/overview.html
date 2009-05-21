@@ -100,5 +100,10 @@
 		{% else %}
 			<a href="{% url profile_edit_location %}">{% trans "Change location" %}</a>
 		{% endif %}
+                {% url notification.views.notices as notices_url %}
+                {% if notices_url %}
+                <br />
+                <a href="{{notices_url}}">{% trans "Change notifications" %}</a>
+                {% endif %}
 	</div>
 {% endblock %}
