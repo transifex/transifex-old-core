@@ -3,20 +3,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-01 04:07+0000\n"
-"PO-Revision-Date: 2009-05-16 19:35+0200\n"
+"POT-Creation-Date: 2009-04-17 19:40+0000\n"
+"PO-Revision-Date: 2009-05-21 07:56+0200\n"
 "Last-Translator: Sulyok Péter <peti@fedoraproject.org>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:16
+msgid "Addition"
+msgstr "Hozzáadás"
+
+#: actionlog/models.py:17 templates/notification/notices.html:49
+msgid "Change"
+msgstr "Változás"
+
+#: actionlog/models.py:18
+msgid "Deletion"
+msgstr "Törlés"
+
+#: actionlog/models.py:19
+msgid "Submission"
+msgstr "Beküldés"
+
+#: actionlog/models.py:32
+msgid "action time"
+msgstr "történt"
+
+#: actionlog/models.py:36
+msgid "object id"
+msgstr "tárgy az"
+
+#: actionlog/models.py:37
+msgid "object repr"
+msgstr "object repr"
+
+#: actionlog/models.py:38
+msgid "action flag"
+msgstr "tett jelzés"
+
+#: actionlog/models.py:40
+msgid "change message"
+msgstr "változás üzenet"
+
+#: actionlog/models.py:43
 msgid "log entry"
 msgstr "napló bejegyzés"
 
-#: actionlog/models.py:51
+#: actionlog/models.py:44
 msgid "log entries"
 msgstr "napló bejegyzések"
 
@@ -40,37 +76,37 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Még nincs történet."
 
-#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
-#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
+#: codebases/models.py:27 languages/models.py:27 projects/models.py:87
+#: projects/models.py:196 releases/models.py:28 txcollections/models.py:26
 msgid "Name"
 msgstr "Név"
 
-#: codebases/models.py:35
+#: codebases/models.py:28
 msgid "Root"
 msgstr "Gyökér"
 
-#: codebases/models.py:36
+#: codebases/models.py:29
 msgid "The URL of the codebase"
 msgstr "A kód alap URL-je"
 
-#: codebases/models.py:37
+#: codebases/models.py:30
 msgid "Type"
 msgstr "Típus"
 
-#: codebases/models.py:39
+#: codebases/models.py:32
 #, python-format
 msgid "The codebase type (%s)"
 msgstr "A kód alap típusa (%s)"
 
-#: codebases/models.py:42
+#: codebases/models.py:35
 msgid "The last time this unit was updated"
 msgstr "Utolsó frissítés ideje"
 
-#: codebases/models.py:51
+#: codebases/models.py:44
 msgid "unit"
 msgstr "egység"
 
-#: codebases/models.py:52
+#: codebases/models.py:45
 msgid "units"
 msgstr "egységek"
 
@@ -94,8 +130,8 @@ msgstr "%(site_name)s: %(language)s :: %(release)s kiadás"
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr "Legújabb fordítások %(language)s nyelvre %(release)s kiadásban."
 
-#: languages/models.py:29 projects/models.py:86 projects/models.py:195
-#: releases/models.py:25 txcollections/models.py:28
+#: languages/models.py:29 projects/models.py:89 projects/models.py:198
+#: releases/models.py:30 txcollections/models.py:28
 msgid "Description"
 msgstr "Leírás"
 
@@ -107,425 +143,22 @@ msgstr "Kód"
 msgid "Code aliases"
 msgstr "Kód álnevek"
 
-#: languages/models.py:36
-msgid "Special Chars"
-msgstr ""
-
-#: languages/models.py:37
-msgid "Enter any special characters that users might find difficult to type"
-msgstr ""
-
-#: languages/models.py:40
-msgid "Number of Plurals"
-msgstr ""
-
-#: languages/models.py:42
-msgid "Plural Equation"
-msgstr ""
-
-#: languages/models.py:53
+#: languages/models.py:44
 msgid "language"
 msgstr "nyelv"
 
-#: languages/models.py:54 templates/languages/language_list.html:15
+#: languages/models.py:45 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "nyelvek"
-
-#: languages/management/commands/create_languages.py:26
-msgid "Afrikaans"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:40
-msgid "Amharic"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:45
-msgid "Arabic"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:52
-msgid "Assamese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:60
-msgid "Azerbaijani"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:67
-#, fuzzy
-msgid "Balochi"
-msgstr "Ág"
-
-#: languages/management/commands/create_languages.py:73
-msgid "Belarusian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:81
-msgid "Bulgarian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:89
-#, fuzzy
-msgid "Bengali"
-msgstr "Jogi"
-
-#: languages/management/commands/create_languages.py:97
-msgid "Bengali (India)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:110
-msgid "Bosnian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:118
-msgid "Catalan (Valencian)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:126
-msgid "Czech"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:134
-msgid "Welsh"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:142
-#, fuzzy
-msgid "Danish"
-msgstr "Részletek"
-
-#: languages/management/commands/create_languages.py:150
-msgid "German"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:158
-msgid "Swiss German"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:166
-msgid "Dzongkha"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:174
-#, fuzzy
-msgid "Greek"
-msgstr "hét"
-
-#: languages/management/commands/create_languages.py:181
-msgid "English"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:189
-msgid "English (United Kingdom)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:197
-msgid "English (South Africa)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:210
-msgid "Spanish (Castilian)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:218
-msgid "Estonian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:226
-msgid "Basque"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:233
-msgid "Persian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:241
-msgid "Finnish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:255
-#, fuzzy
-msgid "French"
-msgstr "Ág"
-
-#: languages/management/commands/create_languages.py:263
-msgid "Friulian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:271
-msgid "Western Frisian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:279
-msgid "Irish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:287
-msgid "Galician"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:295
-msgid "Gujarati"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:302
-msgid "Hebrew"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:310
-msgid "Hindi"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:318
-msgid "Croatian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:325
-msgid "Haitian (Haitian Creole)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:333
-msgid "Hungarian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:340
-msgid "Armenian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:346
-msgid "Indonesian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:353
-msgid "Iloko"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:358
-msgid "Icelandic"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:366
-msgid "Italian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:374
-msgid "Japanese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:382
-#, fuzzy
-msgid "Georgian"
-msgstr "Bejelentkezés"
-
-#: languages/management/commands/create_languages.py:395
-msgid "Kannada"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:401
-msgid "Korean"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:409
-msgid "Kurdish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:422
-#, fuzzy
-msgid "Lao"
-msgstr "előtt"
-
-#: languages/management/commands/create_languages.py:428
-msgid "Lithuanian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:436
-msgid "Latvian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:443
-msgid "Maithili"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:448
-msgid "Macedonian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:453
-msgid "Malayalam"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:466
-msgid "Mongolian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:473
-msgid "Marathi"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:480
-msgid "Malay"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:488
-msgid "Maltese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:495
-msgid "Burmese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:506
-msgid "Norwegian Bokmål"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:513
-msgid "Nepali"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:521
-msgid "Dutch (Flemish)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:529
-msgid "Norwegian Nynorsk"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:536
-msgid "Norwegian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:542
-msgid "Northern Sotho"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:550
-msgid "Oriya"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:557
-msgid "Panjabi (Punjabi)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:570
-msgid "Polish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:586
-msgid "Portuguese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:595
-msgid "Brazilian Portuguese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:603
-msgid "Romanian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:611
-msgid "Russian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:618
-msgid "Sinhala"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:624
-msgid "Slovak"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:632
-msgid "Slovenian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:640
-msgid "Albanian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:648
-msgid "Serbian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:656
-msgid "Serbian (Latin)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:665
-msgid "Sotho, Southern"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:673
-msgid "Swedish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:681
-#, fuzzy
-msgid "Tamil"
-msgstr "Csapatok"
-
-#: languages/management/commands/create_languages.py:688
-#, fuzzy
-msgid "Telugu"
-msgstr "Csonk"
-
-#: languages/management/commands/create_languages.py:693
-msgid "Tajik"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:698
-msgid "Thai"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:703
-#, fuzzy
-msgid "Tagalog"
-msgstr "előtt"
-
-#: languages/management/commands/create_languages.py:715
-msgid "Turkish"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:722
-msgid "Urdu"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:728
-msgid "Ukrainian"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:742
-msgid "Vietnamese"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:749
-msgid "Wolof"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:764
-msgid "Chinese (China)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:774
-msgid "Chinese (Hong Kong)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:784
-msgid "Chinese (Taiwan)"
-msgstr ""
-
-#: languages/management/commands/create_languages.py:792
-msgid "Zulu"
-msgstr ""
 
 #: languages/templates/feeds/language_release_description.html:4
 msgid "Translated:"
 msgstr "Lefordítva:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:20
+#: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
 msgstr "Ellenőrizendő:"
@@ -557,16 +190,12 @@ msgstr "%(site_name)s: %(project)s összetevői"
 msgid "Latest components in project %s."
 msgstr "Legújabb összetevők %s tervben"
 
-#: projects/forms.py:16 projects/models.py:208
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
-msgstr ""
-
-#: projects/models.py:81 projects/models.py:190 releases/models.py:20
+#: projects/models.py:84 projects/models.py:193 releases/models.py:25
 #: txcollections/models.py:23
 msgid "Slug"
 msgstr "Csonk"
 
-#: projects/models.py:82 projects/models.py:191 releases/models.py:21
+#: projects/models.py:85 projects/models.py:194 releases/models.py:26
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -575,61 +204,52 @@ msgstr ""
 "Az URL-ben használt rövid címke. Csak betűt, számot, aláhúzást vagy "
 "kötőjelet tartalmazhat."
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:24
+#: projects/models.py:88 projects/models.py:197 releases/models.py:29
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "Névszerű szöveg vagy rövid leírás."
 
-#: projects/models.py:87 projects/models.py:196
+#: projects/models.py:90 projects/models.py:199
 msgid "A sentence or two describing the object (optional)."
 msgstr "Egy-két mondat a tárgyról (nem kötelező)."
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:27
+#: projects/models.py:91 projects/models.py:200 releases/models.py:32
 #: txcollections/models.py:30
 msgid "Long description"
 msgstr "Hosszú leírás"
 
-#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
+#: projects/models.py:93 projects/models.py:202 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Hosszabb leírás (nem kötelező) Markdown használatával."
 
-#: projects/models.py:91 txcollections/models.py:32
+#: projects/models.py:94 txcollections/models.py:32
 msgid "Homepage"
 msgstr "Honlap"
 
-#: projects/models.py:92
+#: projects/models.py:95
 msgid "Feed"
 msgstr "Hírek"
 
-#: projects/models.py:93
+#: projects/models.py:96
 msgid "An RSS feed with updates on the project."
 msgstr "RSS adás a tervről szóló hírekkel."
 
-#: projects/models.py:94
-msgid "Bug tracker"
-msgstr ""
-
-#: projects/models.py:95
-msgid ""
-"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
-msgstr ""
-
-#: projects/models.py:98 projects/models.py:214 releases/models.py:41
+#: projects/models.py:98 projects/models.py:217 releases/models.py:46
 #: txcollections/models.py:33
 msgid "Hidden"
 msgstr "Rejtett"
 
-#: projects/models.py:99 projects/models.py:215 releases/models.py:42
+#: projects/models.py:99 projects/models.py:218 releases/models.py:47
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr "Elrejtsük e tárgyat a lista nézetből."
 
-#: projects/models.py:100 projects/models.py:216 releases/models.py:43
+#: projects/models.py:100 projects/models.py:219 releases/models.py:48
 #: txcollections/models.py:35
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: projects/models.py:101 projects/models.py:217 releases/models.py:44
+#: projects/models.py:101 projects/models.py:220 releases/models.py:49
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr "Engedélyezi vagy tiltja e tárgy használatát?"
@@ -648,12 +268,12 @@ msgstr "Gyűjtemények"
 msgid "Maintainers"
 msgstr "Karbantartók"
 
-#: projects/models.py:116 projects/models.py:223 releases/models.py:49
+#: projects/models.py:116 projects/models.py:226 releases/models.py:54
 #: txcollections/models.py:43
 msgid "HTML Description"
 msgstr "HTML leírás"
 
-#: projects/models.py:118 projects/models.py:225 releases/models.py:50
+#: projects/models.py:118 projects/models.py:228 releases/models.py:55
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Leírás HTML-ben."
@@ -673,120 +293,109 @@ msgstr "terv"
 msgid "projects"
 msgstr "tervek"
 
-#: projects/models.py:200
+#: projects/models.py:203
 msgid "Source language"
 msgstr "Forrás nyelv"
 
-#: projects/models.py:201
+#: projects/models.py:204
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
-msgstr ""
+msgstr "Ez összetevő forrás nyelve, pl. „en”, „pt_BR”, „el”, „hu”."
 
-#: projects/models.py:203
+#: projects/models.py:206
 msgid "I18n type"
-msgstr ""
+msgstr "I18n típus"
 
-#: projects/models.py:205
+#: projects/models.py:208
 #, python-format
 msgid "The code's type of i18n support (%s)"
-msgstr ""
+msgstr "A kód i18n támogatásának típusa (%s)"
 
-#: projects/models.py:207
+#: projects/models.py:210
 msgid "File filter"
 msgstr "Fájl szűrő"
 
-#: projects/models.py:210
+#: projects/models.py:211
+msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+msgstr "Regkif. a megjelenő fájlok szűrésére. Pl: „po/.*”"
+
+#: projects/models.py:213
 msgid "Allows submission"
 msgstr "Beküldhető"
 
-#: projects/models.py:212
+#: projects/models.py:215
 msgid "Does this module repository allow write access?"
-msgstr ""
+msgstr "Megengedi e modul tároló az írást?"
 
-#: projects/models.py:228
+#: projects/models.py:231
 msgid "Project"
 msgstr "Terv"
 
-#: projects/models.py:229
+#: projects/models.py:232
 msgid "Unit"
 msgstr "Egység"
 
-#: projects/models.py:233 templates/releases/base.html:6
+#: projects/models.py:236 templates/releases/base.html:6
 #: templates/releases/release_list.html:14
 msgid "Releases"
 msgstr "Kiadások"
 
-#: projects/models.py:253
+#: projects/models.py:246
 #, python-format
 msgid "<Component: %s>"
-msgstr ""
+msgstr "<Összetevő: %s>"
 
-#: projects/models.py:257
+#: projects/models.py:250
 msgid "component"
-msgstr ""
+msgstr "összetevő"
 
-#: projects/models.py:258 templates/projects/component_list.html:15
+#: projects/models.py:251 templates/projects/component_list.html:15
 msgid "components"
 msgstr "összetevők"
 
-#: projects/views.py:115 projects/views.py:313
+#: projects/views.py:103 projects/views.py:191
 #, python-format
 msgid "The %s was deleted."
-msgstr ""
+msgstr "%s törölve."
 
-#: projects/views.py:134 projects/views.py:585
-msgid "Must use POST to activate"
-msgstr ""
-
-#: projects/views.py:137 projects/views.py:588
-#, fuzzy
-msgid "Notifation is not enabled"
-msgstr "Értesítés beállítás"
-
-#: projects/views.py:150
-#, fuzzy
-msgid "Watch this project"
-msgstr "Legújabb tervek"
-
-#: projects/views.py:163
-msgid "Stop wathing this project"
-msgstr ""
-
-#: projects/views.py:345
+#: projects/views.py:215
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
+"A fájl szűrő e intltool POT alapú összetevőhöz látszólag nem engedi meg "
+"a POTFILES.in fájlt. Kérem javítsa."
 
-#: projects/views.py:419
+#: projects/views.py:275
 msgid "This component does  not allow white access."
-msgstr ""
+msgstr "Az összetevő nem enged meg fehér hozzáférést."
 
-#: projects/views.py:427
+#: projects/views.py:283
 msgid "Please select a file from your system to be uploaded."
 msgstr "Válasszon feltöltendő fájlt a saját gépéről."
 
-#: projects/views.py:436
+#: projects/views.py:292
 msgid "Please enter a target to upload the file."
 msgstr "Kérem válasszon célt a feltöltéshez."
 
-#: projects/views.py:442
+#: projects/views.py:298
 msgid "Please enter with only ONE target to upload the file."
-msgstr ""
+msgstr "Kérem csak EGY célt adjon meg fájl feltöltéshez."
 
-#: projects/views.py:453
+#: projects/views.py:309
 msgid "The target file does not match with the component file filter"
-msgstr ""
+msgstr "A cél fájl nem illeszkedik az összetevő fájl szűrőre"
 
-#: projects/views.py:461
-msgid "Enter a message for the commit"
-msgstr ""
+#: projects/views.py:327
+#, python-format
+msgid "Sending translation for %s"
+msgstr "%s fordítás beküldése"
 
-#: projects/views.py:512
+#: projects/views.py:351
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "%s fájlt sikerült beküldeni."
 
-#: projects/views.py:527
+#: projects/views.py:357
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
@@ -794,96 +403,116 @@ msgstr ""
 "Hiba: A beküldött PO fájl helytelen. Kérem futtassa rá az „msgfmt -c” "
 "parancsot, és javítsa a hibákat beküldés előtt!"
 
-#: projects/views.py:536
+#: projects/views.py:366
 msgid "Sorry, an error is causing troubles to send your file."
-msgstr ""
+msgstr "Sajnálom, hiba akadályozza a fájl elküldését."
 
-#: projects/views.py:540 projects/views.py:570
+#: projects/views.py:370 projects/views.py:400
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "Sajnálom, de POST kérelmet kell küldeni."
 
-#: projects/views.py:559
+#: projects/views.py:389
 msgid "Lock removed."
-msgstr ""
+msgstr "Lakat leszedve."
 
-#: projects/views.py:562
+#: projects/views.py:392
 msgid "Error: Only the owner of a lock can remove it."
-msgstr ""
+msgstr "Hiba: Csak a lakat tulajdonosa szedheti le azt."
 
-#: projects/views.py:566
+#: projects/views.py:396
 msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
+msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 
-#: releases/models.py:26 txcollections/models.py:29
+#: projects/management/__init__.py:12
+msgid "New Project Added"
+msgstr "Új terv hozzáadva"
+
+#: projects/management/__init__.py:13
+msgid "when a new project is added"
+msgstr "amikor új tervet adtak hozzá"
+
+#: projects/management/__init__.py:16
+msgid "New Component Added"
+msgstr "Új összetevő hozzáadva"
+
+#: projects/management/__init__.py:17
+msgid "when a new component is added"
+msgstr "amikor új összetevőt adtak hozzá"
+
+#: releases/models.py:31 txcollections/models.py:29
 msgid "A sentence or two describing the object."
-msgstr ""
+msgstr "Egy-két mondat a tárgyról."
 
-#: releases/models.py:28
+#: releases/models.py:33
 msgid "Use Markdown syntax."
-msgstr ""
+msgstr "Markdown jelölés használata."
 
-#: releases/models.py:31
+#: releases/models.py:36
 msgid "Release date"
 msgstr "Kiadás dátum"
 
-#: releases/models.py:32
+#: releases/models.py:37
 msgid "When this release will be available."
-msgstr ""
+msgstr "Amint e kiadás elérhető lesz."
 
-#: releases/models.py:33
+#: releases/models.py:38
 msgid "String freese date"
-msgstr ""
+msgstr "Szöveg befagyasztás dátuma"
 
-#: releases/models.py:34
+#: releases/models.py:39
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
 msgstr ""
+"Amikor a fordítandó szövegeket befagyasztják (nem lehet szöveget "
+"hozzáadni/változtatni, ami befolyásolná a fordítást)."
 
-#: releases/models.py:36
+#: releases/models.py:41
 msgid "Devel freeze date"
 msgstr "Fejlesztés befagyasztás dátum"
 
-#: releases/models.py:37
+#: releases/models.py:42
 msgid ""
 "The last date packages from this release can be built from the developers, "
 "and thus, translations to be built in the packages of it."
 msgstr ""
+"Az utolsó dátum, amikor e kiadásból csomagokat építhetnek a fejlesztők, "
+"és így a fordításokat beépíthetik a csomagokba."
 
-#: releases/models.py:54
+#: releases/models.py:59
 msgid "release"
 msgstr "kiadás"
 
-#: releases/models.py:55 templates/languages/language_detail.html:20
+#: releases/models.py:60 templates/languages/language_detail.html:20
 #: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "kiadások"
 
-#: repowatch/__init__.py:74
-msgid "Watch it"
-msgstr ""
+#: repowatch/__init__.py:82
+msgid "Watch this file"
+msgstr "E fájl figyelése"
 
-#: repowatch/__init__.py:75
-msgid "Stop watching it"
-msgstr ""
+#: repowatch/__init__.py:83
+msgid "Stop watching this file"
+msgstr "E fájl tovább nem figyelése"
 
 #: repowatch/models.py:24
 #, python-format
 msgid "Unable to add watch for path %r"
-msgstr ""
+msgstr "Nem lehet %r ösvényhez figyelőt rendelni"
 
 #: repowatch/models.py:88
 msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
+msgstr "0 vagy több vesszővel elválasztott egész megadása zárójelek közt."
 
 #: repowatch/models.py:90
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "Legalább egy pár üres zárójelet meg kell adni."
 
 #: repowatch/models.py:141
 msgid "watch"
-msgstr ""
+msgstr "figyelő"
 
 #: repowatch/models.py:142
 msgid "watches"
@@ -897,22 +526,15 @@ msgstr "Lakat"
 msgid "Locks"
 msgstr "Lakatok"
 
-#: tarball/models.py:31
-msgid "tarball"
-msgstr ""
-
-#: tarball/models.py:32
-msgid "tarballs"
-msgstr ""
-
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
-msgstr ""
+msgstr "Tiltott hozzáférés"
 
 #: templates/403.html:12
 msgid ""
 "Looks like you do not have the necessary permissions to the required action."
 msgstr ""
+"Úgy tűnik, önnek nincs meg az igényelt tetthez szükséges joga."
 
 #: templates/403.html:15 templates/404.html:15
 #, python-format
@@ -920,34 +542,38 @@ msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
 "case."
 msgstr ""
+"Íme a <a·href=\"%(home)s\">honlap</a> hivatkozás. Minden esetre."
 
 #: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
-msgstr ""
+msgstr "Nincs ilyen oldal"
 
 #: templates/404.html:12
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
+"Úgy tűnik, rossz hivatkozást követett. Ha úgy gondolja, hogy ez a "
+"mi hibánk, kérem <a·href='http://transifex.org/newticket'>jelezze</a>."
 
 #: templates/500.html:4 templates/500.html.py:7
 msgid "Page unavailable"
-msgstr ""
+msgstr "Oldal elérhetetlen"
 
 #: templates/500.html:12
 msgid "We're sorry, but the requested page is currently unavailable."
-msgstr ""
+msgstr "Sajnáljuk, de az igényelt oldal jelenleg elérhetetlen."
 
 #: templates/500.html:14
 msgid ""
 "We're messing around with things internally, and the server had a bit of a "
 "hiccup."
 msgstr ""
+"Belső dolgokat kavarunk, és a szolgáló csuklott egyet."
 
 #: templates/500.html:16
 msgid "Please try again later."
-msgstr ""
+msgstr "Kérem próbálkozzék később."
 
 #: templates/about.html:9 templates/index.html:9
 msgid "Welcome to Transifex"
@@ -959,7 +585,7 @@ msgstr "Transifex"
 
 #: templates/base.html:24 txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
-msgstr ""
+msgstr "Menjen a nyitó oldalra"
 
 #: templates/base.html:25
 msgid "Transifex logo"
@@ -967,7 +593,7 @@ msgstr "Transifex logó"
 
 #: templates/base.html:29
 msgid "The projects being served"
-msgstr ""
+msgstr "A kiszolgált tervek"
 
 #: templates/base.html:29 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
@@ -976,11 +602,11 @@ msgstr "Tervek"
 
 #: templates/base.html:30
 msgid "Collections of projects"
-msgstr ""
+msgstr "Tervek gyűjteményei"
 
 #: templates/base.html:31
 msgid "The languages our service serves"
-msgstr ""
+msgstr "Kiszolgált nyelvek"
 
 #: templates/base.html:31 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
@@ -994,6 +620,8 @@ msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr ""
+"Üdvözlöm <a·title=\"Profile·settings\"·href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
 
 #: templates/base.html:38
 msgid "Sign out from the website"
@@ -1001,7 +629,7 @@ msgstr "Kijelentkezés a webhelyről"
 
 #: templates/base.html:38
 msgid "Sign out"
-msgstr ""
+msgstr "Kijelentkezés"
 
 #: templates/base.html:40 templates/authopenid/login_box.html:5
 #: templates/authopenid/login_box.html:12 templates/authopenid/signin.html:4
@@ -1011,11 +639,11 @@ msgstr ""
 #: templates/simpleauth/logout.html.py:6 templates/simpleauth/signin.html:4
 #: templates/simpleauth/signin.html.py:6
 msgid "Sign in"
-msgstr ""
+msgstr "Bejelentkezés"
 
 #: templates/base.html:42
 msgid "Register"
-msgstr ""
+msgstr "Beiratkozás"
 
 #: templates/base.html:103
 msgid "About"
@@ -1023,23 +651,26 @@ msgstr "Névjegy"
 
 #: templates/base.html:103
 msgid "Get in contact with us"
-msgstr ""
+msgstr "Lépjen kapcsolatba velünk"
 
 #: templates/base.html:103
 msgid "Feedback"
-msgstr ""
+msgstr "Visszajelzés"
 
 #: templates/index.html:27
 msgid ""
 "Transifex is a service aimed at helping translators keep track of their "
 "favourite translation projects."
 msgstr ""
+"Transifex szolgáltatás törekszik fordítókat segíteni, hogy nyomon "
+"kövessék a kedvenc honosításaikat."
 
 #: templates/index.html:31
 #, python-format
 msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
+"Lehet az <a·href=\"%(project_list)s\">összes tervet</a> is böngészni."
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
@@ -1048,30 +679,31 @@ msgstr "Keresés"
 
 #: templates/search.html:9
 msgid "Results"
-msgstr ""
+msgstr "Eredmény"
 
 #: templates/search.html:15
 msgid "Search projects"
-msgstr ""
+msgstr "Terv keresés"
 
 #: templates/search.html:15
 msgid "Search results"
-msgstr ""
+msgstr "Keresés eredménye"
 
 #: templates/search.html:28
 #, python-format
 msgid "Search Results (%(result_count)s)"
-msgstr ""
+msgstr "Keresés eredménye (%(result_count)s)"
 
 #: templates/search.html:51
 #, python-format
 msgid ""
 "No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr ""
+"Nincs terv „%(q)s” lekérdezésre. Talán változtatna kissé a lekérdezésen?"
 
 #: templates/search.html:61
 msgid "Couldn't find your project? Why don't you go ahead and "
-msgstr ""
+msgstr "Nem találja a tervét? Miért nem megy előre, és "
 
 #: templates/search.html:61
 msgid "add it"
@@ -1079,7 +711,7 @@ msgstr "hozzáadás"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
-msgstr ""
+msgstr "Terv keresése név, leírás, stb. szerint."
 
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
@@ -1088,17 +720,17 @@ msgstr ""
 #: templates/simpleauth/base_profile.html:7
 #: templates/simpleauth/settings.html:5
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/authopenid/base_profile.html:10
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
-msgstr ""
+msgstr "Profil beállítás"
 
 #: templates/authopenid/changeemail.html:4
 #: templates/authopenid/changeemail.html:6
 msgid "Change my email"
-msgstr ""
+msgstr "Saját levél megváltoztatása"
 
 #: templates/authopenid/changeemail.html:5
 msgid "Change email address"
@@ -1111,6 +743,9 @@ msgid ""
 "Please keep this email address up to date so we can send you a password-"
 "reset email if you request one."
 msgstr ""
+"Ez az ahol a számlájához tartozó levél címet változtathatja.\n"
+"Kérem tartsa e levél címet frissen, hogy jelszó törlés leveleket "
+"küldhessünk, ha ilyet kérne."
 
 #: templates/authopenid/changeemail.html:15
 #: templates/authopenid/changeopenid.html:12
@@ -1119,12 +754,12 @@ msgstr ""
 #: templates/authopenid/delete.html:23 templates/authopenid/sendpw.html:12
 #: templates/authopenid/signin.html:19 templates/authopenid/signup.html:17
 msgid "Please correct errors below:"
-msgstr ""
+msgstr "Kérem javítsa az alábbi hibákat:"
 
 #: templates/authopenid/changeemail.html:32
 #: templates/authopenid/complete.html:51
 msgid "Email"
-msgstr ""
+msgstr "Levél"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
@@ -1140,37 +775,38 @@ msgstr "Email változtatás"
 #: templates/authopenid/changeopenid.html:5
 #: templates/authopenid/changeopenid.html:27
 msgid "Change OpenID"
-msgstr ""
+msgstr "OpenID változtatás"
 
 #: templates/authopenid/changeopenid.html:6
 msgid "Change my OpenID"
-msgstr ""
+msgstr "Saját OpenID megváltoztatása"
 
 #: templates/authopenid/changeopenid.html:10
 msgid ""
 "This is where you can change the OpenID URL associated with your account."
 msgstr ""
+"Ez az ahol a számlájához tartozó OpenID URL-t változtathatja."
 
 #: templates/authopenid/changeopenid.html:26
 msgid "OpenID URL:"
-msgstr ""
+msgstr "OpenID URL:"
 
 #: templates/authopenid/changepw.html:4 templates/authopenid/changepw.html:6
 msgid "Change my password"
-msgstr ""
+msgstr "Saját jelszó megváltoztatása"
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
 msgid "Change password"
-msgstr ""
+msgstr "Jelszó változtatás"
 
 #: templates/authopenid/changepw.html:9
 msgid "You can use the following form to change your password."
-msgstr ""
+msgstr "A következő űrlapot használhatja jelszó változtatásra."
 
 #: templates/authopenid/changepw.html:20
 msgid "Current password"
-msgstr ""
+msgstr "Jelenlegi jelszó"
 
 #: templates/authopenid/changepw.html:21
 msgid "New password"
@@ -1178,16 +814,16 @@ msgstr "Új jelszó"
 
 #: templates/authopenid/changepw.html:22
 msgid "New password again"
-msgstr ""
+msgstr "Új jelszó ismét"
 
 #: templates/authopenid/complete.html:4 templates/authopenid/complete.html:5
 #: templates/authopenid/complete.html:6
 msgid "OpenID verification"
-msgstr ""
+msgstr "OpenID ellenőrzés"
 
 #: templates/authopenid/complete.html:13
 msgid "Your OpenID is verified! "
-msgstr ""
+msgstr "OpenID ellenőrizve!"
 
 #: templates/authopenid/complete.html:14
 msgid ""
@@ -1196,10 +832,14 @@ msgid ""
 "You can change the association later in your preferences.</p>\n"
 "\t"
 msgstr ""
+"\n"
+"\t<p>Az ön·OpenID-ja most már társítható új vagy meglévő tagsághoz.·"
+"Később a társítást megváltoztathatja a saját beállításában.</p>\n"
+"\t"
 
 #: templates/authopenid/complete.html:18
 msgid "Associate your OpenID"
-msgstr ""
+msgstr "OpenID társítása"
 
 #: templates/authopenid/complete.html:19
 msgid ""
@@ -1209,6 +849,10 @@ msgid ""
 "p>\n"
 "\t"
 msgstr ""
+"\n"
+"\t<p>Ha először áll be, társítsa az OpenID-ját egy új számlához.·"
+"Ha ön már tag,·társítsa a meglévő számlájához.</p>\n"
+"\t"
 
 #: templates/authopenid/complete.html:49
 msgid "A new account"
@@ -1235,7 +879,8 @@ msgstr "Számla törlése"
 msgid ""
 "Note: After deleting your account, anyone will be able to register this "
 "username."
-msgstr "Megjegyzés: A számlája törlése után bárki beiratkozhat e néven."
+msgstr ""
+"Megjegyzés: A számlája törlése után bárki beiratkozhat e néven."
 
 #: templates/authopenid/delete.html:14
 msgid "Check confirm box, if you want delete your account."
@@ -1354,8 +999,8 @@ msgid ""
 "<br />\n"
 msgstr ""
 "\n"
-"<p>Kérem jelentkezzen be levélcímet, nevet vagy OpenID URL-t használva.<br /"
-">\n"
+"<p>Kérem jelentkezzen be levélcímet, nevet vagy OpenID URL-t használva."
+"<br />\n"
 
 #: templates/authopenid/signup.html:4 templates/authopenid/signup.html.py:5
 msgid "Join us"
@@ -1422,8 +1067,8 @@ msgid ""
 "We'd like to make this web service as useful as possible for our users. If "
 "you have any feedback to provide, please do so!"
 msgstr ""
-"Szeretnénk e szolgáltatást olyan hasznossá tenni a használóinknak, amennyire "
-"csak lehet. Ha tud visszajelzést adni, kérjük tegye meg!"
+"Szeretnénk e szolgáltatást olyan hasznossá tenni a használóinknak, "
+"amennyire csak lehet. Ha tud visszajelzést adni, kérjük tegye meg!"
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
@@ -1454,7 +1099,8 @@ msgid ""
 "The %(collection)s collection includes the following groups of shipped "
 "components:"
 msgstr ""
-"A %(collection)s gyűjtemény a következő összetevők csoportjait tartalmazza:"
+"A %(collection)s gyűjtemény a következő összetevők csoportjait "
+"tartalmazza:"
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
@@ -1492,8 +1138,8 @@ msgid ""
 "check again."
 msgstr ""
 "Transifex keresett e nyelvhez és kiadáshoz tartozó fordítás fájlt tartalmazó "
-"tervet, de nem talált. Próbáljon meg beküldeni egy ilyen fájlt, és nézze meg "
-"újra."
+"tervet, de nem talált. Próbáljon meg beküldeni egy ilyen fájlt, és nézze "
+"meg újra."
 
 #: templates/languages/language_release.html:48
 #, python-format
@@ -1501,8 +1147,8 @@ msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href=\"%"
-"(contact_form)s\">tudassa velünk</a>."
+"Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href=\"%(contact_form)s\">"
+"tudassa velünk</a>."
 
 #: templates/languages/language_release.html:52
 msgid "Untranslated Components"
@@ -1520,56 +1166,42 @@ msgstr ", de a következők fordítása nélkül: "
 msgid " yet:"
 msgstr " még:"
 
-#: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:4 templates/notification/notices.html:5
 msgid "Notifications"
 msgstr "Értesítések"
 
-#: templates/notification/notices.html:8
+#: templates/notification/notices.html:6
 msgid "Notification settings"
 msgstr "Értesítés beállítás"
 
-#: templates/notification/notices.html:16
-#, fuzzy
-msgid "Notices"
-msgstr "Megjegyzés"
-
-#: templates/notification/notices.html:21
-msgid "Mark all unseen notices seen"
-msgstr ""
-
-#: templates/notification/notices.html:45
-#, fuzzy
-msgid "No notices."
-msgstr "Megjegyzés"
-
-#: templates/notification/notices.html:54
+#: templates/notification/notices.html:18
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
 "the notifications available for you on the list bellow and choose which "
 "events you would like to be notificated by email."
 msgstr ""
-"Bármely Transifexben történő eseményről kaphat értesítést. Nézze meg az "
-"rendelkezésre álló értesítéseket az alábbi felsorolásban, és válassza ki, "
+"Bármely Transifexben történő eseményről kaphat értesítést. Nézze meg "
+"az rendelkezésre álló értesítéseket az alábbi felsorolásban, és válassza ki, "
 "mely eseményekről szeretne értesítő levelet kapni."
 
-#: templates/notification/notices.html:55
+#: templates/notification/notices.html:19
 msgid "Primary email"
 msgstr "Elsődleges levél"
 
-#: templates/notification/notices.html:56
+#: templates/notification/notices.html:20
 msgid "change under"
 msgstr "változtatás helye"
 
-#: templates/notification/notices.html:56
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:20
+#: templates/notification/notices.html:23
 msgid "Account"
 msgstr "Számla"
 
-#: templates/notification/notices.html:58
+#: templates/notification/notices.html:22
 msgid "Note"
 msgstr "Megjegyzés"
 
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:23
 msgid ""
 "You do not have a verified email address to which notices can be sent. You "
 "can add one by going to"
@@ -1577,114 +1209,37 @@ msgstr ""
 "Nincs ellenőrzött levélcíme, amire küldhetnénk értesítést. Hozzáadhat egyet, "
 "ha ide megy: "
 
-#: templates/notification/notices.html:67
+#: templates/notification/notices.html:31
 msgid "Notification Type"
 msgstr "Értesítés típus"
-
-#: templates/notification/notices.html:85
-msgid "Change"
-msgstr "Változás"
 
 #: templates/notification/single.html:5 templates/notification/single.html:8
 msgid "Notice"
 msgstr "Megjegyzés"
 
-#: templates/notification/project_added/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr ""
-"\n"
-"Az új terv hozzáadva: <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a>.\n"
-
-#: templates/notification/project_changed/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
-msgstr ""
-"\n"
-"Az új terv hozzáadva: <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a>.\n"
-
-#: templates/notification/project_component_added/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
-"been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
-
-#: templates/notification/project_component_changed/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
-"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
-msgstr ""
-"\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
-
-#: templates/notification/project_component_deleted/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The component '%(component_name)s' has been deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
-
-#: templates/notification/project_component_file_changed/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
-"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
-"have been updated:"
-msgstr ""
-"\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-msgid ""
-"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"(%(trans_perc)s%)"
-msgstr ""
-
-#: templates/notification/project_component_file_submitted/notice.html:2
+#: templates/notification/projects_added_new/teaser.html:2
 #, python-format
-msgid "A file called '%(filename)s'"
-msgstr ""
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-#, fuzzy, python-format
 msgid ""
-"has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
-"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+"\n"
+"New project <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</"
+"a> has been added.\n"
 msgstr ""
 "\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
+"Az új terv hozzáadva: <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</"
+"a>.\n"
 
-#: templates/notification/project_component_potfile_error/notice.html:2
-#, fuzzy, python-format
+#: templates/notification/projects_added_new_component/teaser.html:4
+#, python-format
 msgid ""
-"The source file (POT) has some problems and can not be created/updated to "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"\n"
+"New component <a href=\"http://%(current_site)s%(component_url)s\">%"
+"(component)s</a> has been added to the <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a> project.\n"
 msgstr ""
 "\n"
-"<a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> "
-"összetevő hozzáadva <a href=\"http://%(current_site)s%(project_url)s\">%"
-"(project)s</a> tervhez.\n"
+"<a href=\"http://%(current_site)s%(component_url)s\">%"
+"(component)s</a> összetevő hozzáadva <a href=\"http://%(current_site)s%"
+"(project_url)s\">%(project)s</a> tervhez.\n"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1705,8 +1260,8 @@ msgid ""
 "(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Biztos, hogy véglegesen törölni akarja %(project_name)s „%(component_name)"
-"s”·összetevőjét?\n"
+"  Biztos, hogy véglegesen törölni akarja %(project_name)s "
+"„%(component_name)s”·összetevőjét?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -1715,131 +1270,107 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Igen, biztos vagyok benne!"
 
-#: templates/projects/component_detail.html:41
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:40
+#: templates/projects/project_detail.html:32
 #: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: templates/projects/component_detail.html:50
+#: templates/projects/component_detail.html:49
 msgid "Repository:"
 msgstr "Tároló:"
 
-#: templates/projects/component_detail.html:53
-#: templates/projects/component_detail.html:55
+#: templates/projects/component_detail.html:52
 msgid "Link to a web front-end to the source"
 msgstr "A forrás honlapjára mutató hivatkozás"
 
-#: templates/projects/component_detail.html:53
-#: templates/projects/component_detail.html:55
+#: templates/projects/component_detail.html:52
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:60
+#: templates/projects/component_detail.html:56
 msgid "Branch:"
 msgstr "Ág:"
 
-#: templates/projects/component_detail.html:65
+#: templates/projects/component_detail.html:60
 msgid "File filter:"
 msgstr "Fájl szűrő:"
 
-#: templates/projects/component_detail.html:71
+#: templates/projects/component_detail.html:66
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Kiadás:"
 msgstr[1] "Kiadások:"
 
-#: templates/projects/component_detail.html:79
-#, fuzzy
-msgid "Allows submissions:"
-msgstr "Beküldhető"
+#: templates/projects/component_detail.html:74
+msgid "Allows file submissions:"
+msgstr "Beküldhető:"
 
 #: templates/projects/component_detail.html:85
-msgid ""
-"Tarball support is read-only: Submissions will not pushed to the maintainer "
-"or the upstream repo."
-msgstr ""
-
-#: templates/projects/component_detail.html:85
-#, fuzzy
-msgid "note"
-msgstr "Megjegyzés"
-
-#: templates/projects/component_detail.html:92
 msgid "Translation files"
 msgstr "Fordítás fájlok"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:90
 msgid "Source file:"
 msgstr "Forrás fájl:"
 
-#: templates/projects/component_detail.html:102
+#: templates/projects/component_detail.html:95
 msgid "entries"
 msgstr "bejegyzések"
 
-#: templates/projects/component_detail.html:103
-#: translations/templates/comp_lang_stats_table.html:34
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:39
+#: templates/projects/component_detail.html:96
+#: translations/templates/comp_stats_table.html:35
+#: translations/templates/lang_stats_table.html:33
 msgid "View "
 msgstr "Nézet"
 
-#: templates/projects/component_detail.html:104
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:43
-#: translations/templates/lang_stats_table.html:40
+#: templates/projects/component_detail.html:97
+#: translations/templates/comp_stats_table.html:36
+#: translations/templates/lang_stats_table.html:34
 msgid "Download "
 msgstr "Letöltés "
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:103
 msgid "Statistics last updated:"
 msgstr "Statisztikák utoljára frissítve:"
 
-#: templates/projects/component_detail.html:112
+#: templates/projects/component_detail.html:105
 msgid "ago"
 msgstr "előtt"
 
-#: templates/projects/component_detail.html:113
+#: templates/projects/component_detail.html:106
 msgid "Component not yet pulled from source repository."
 msgstr "Még nem húzták be az összetevőt a forrás tárolóból."
 
-#: templates/projects/component_detail.html:116
+#: templates/projects/component_detail.html:109
 msgid "Refresh and re-calculate statistics. It can take some time."
 msgstr "Statisztikák frissítése és újraszámítása. Némi időbe telhet."
 
-#: templates/projects/component_detail.html:116
+#: templates/projects/component_detail.html:109
 msgid "Refresh cache"
 msgstr "Gyorstár frissítése"
 
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:114
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Transifex helyi adatai törlése tiszta lehúzáshoz"
 
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:114
 msgid "Clear cache"
 msgstr "Gyorstár törlés"
 
-#: templates/projects/component_detail.html:124
-msgid "Any locally modified data will be overwritten with fresh copies."
-msgstr ""
-
-#: templates/projects/component_detail.html:124
-msgid "warning"
-msgstr ""
-
-#: templates/projects/component_detail.html:139
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:130
+#: templates/projects/project_detail.html:96
 msgid "History"
 msgstr "Történet"
 
-#: templates/projects/component_detail.html:143
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:134
+#: templates/projects/project_detail.html:100
 msgid "None available"
 msgstr "Nincs rendelkezésre álló"
 
-#: templates/projects/component_detail.html:159
+#: templates/projects/component_detail.html:157
 msgid "Delete component"
 msgstr "Összetevő törlése"
 
@@ -1850,24 +1381,19 @@ msgstr "Összetevő hozzáadása"
 
 #: templates/projects/component_form.html:7
 #: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:55
+#: templates/projects/component_form.html:19
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "%(component_name)s szerkesztése"
 
-#: templates/projects/component_form.html:53
+#: templates/projects/component_form.html:17
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Új komponens %(project_name)s tervhez"
 
-#: templates/projects/component_form.html:74
+#: templates/projects/component_form.html:35
 msgid "Save component"
 msgstr "Összetevő mentés"
-
-#: templates/projects/component_lang_detail.html:28
-#, fuzzy
-msgid "translation files"
-msgstr "Fordítás fájlok"
 
 #: templates/projects/component_list.html:9
 #: templates/txcollections/collection_detail.html:62
@@ -1903,55 +1429,51 @@ msgid ""
 "    Examples of components of a software project could be \"UI\" and \"Docs"
 "\" or development branches like <code>HEAD</code>."
 msgstr ""
+"Az <em>összetevők</em>·kicsi,·önálló részei egy nagy tervnek, ami "
+"tényleges fájlokból áll.\n"
+"    Összetevős tervekre példa a „UI” és „Docs” vagy a fejlesztés ágak mint a <code>HEAD</code>."
 
-#: templates/projects/component_submit_new_file.html:6
+#: templates/projects/component_submit_new_file.html:5
 msgid "Send a new translation for this component."
-msgstr ""
+msgstr "Új fordítás beküldése erre az összetevőre."
 
-#: templates/projects/component_submit_new_file.html:6
+#: templates/projects/component_submit_new_file.html:5
 msgid "Add a new translation"
 msgstr "Új fordítás hozzáadása"
 
-#: templates/projects/component_submit_new_file.html:9
+#: templates/projects/component_submit_new_file.html:8
 msgid "Add a translation file"
 msgstr "Fordítás fájl hozzáadás"
 
-#: templates/projects/component_submit_new_file.html:13
+#: templates/projects/component_submit_new_file.html:12
 msgid "Local file:"
 msgstr "Helyi fájl:"
 
-#: templates/projects/component_submit_new_file.html:15
+#: templates/projects/component_submit_new_file.html:14
 msgid "The new language translation file to be uploaded."
-msgstr ""
+msgstr "Az új nyelv feltöltendő fordítás fájlja."
 
-#: templates/projects/component_submit_new_file.html:18
+#: templates/projects/component_submit_new_file.html:17
 msgid "Select the target file:"
 msgstr "Válasszon cél fájlt:"
 
-#: templates/projects/component_submit_new_file.html:27
+#: templates/projects/component_submit_new_file.html:26
 msgid ""
 "The target file is the name o the new file language. It must matches with "
 "the component file filter."
 msgstr ""
+"A cél fájl a név vagy az új fájl nyelve. Illenie kell az összetevő szűrőjéhez."
+""
 
-#: templates/projects/component_submit_new_file.html:30
+#: templates/projects/component_submit_new_file.html:29
 msgid "or enter it here:"
 msgstr "vagy adja meg itt:"
 
-#: templates/projects/component_submit_new_file.html:32
+#: templates/projects/component_submit_new_file.html:31
 msgid "Example: "
 msgstr "Példa: "
 
 #: templates/projects/component_submit_new_file.html:35
-#, fuzzy
-msgid "Commit message:"
-msgstr "Kísérő szöveg"
-
-#: templates/projects/component_submit_new_file.html:37
-msgid "Example: Updates to Brazilian Portuguese translation"
-msgstr ""
-
-#: templates/projects/component_submit_new_file.html:41
 #: translations/templates/component_submit.html:9
 msgid "Send"
 msgstr "Küldés"
@@ -1982,40 +1504,28 @@ msgid ""
 "  Are you sure you want to permanently delete the registered project '%"
 "(project_name)s'?\n"
 msgstr ""
+"\n"
+"  Biztos, hogy véglegesen törölni akarja „%(project_name)s” tervet?\n"
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:38
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Részletek"
 
-#: templates/projects/project_detail.html:47
-#, fuzzy
-msgid "Watch:"
-msgstr "figyelők"
-
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:43
 #: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
 msgstr "Honlap:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:44
 #, python-format
 msgid "Homepage for %(project_name)s"
-msgstr ""
+msgstr "%(project_name)s honlapja"
 
-#: templates/projects/project_detail.html:61
-msgid "Bug tracker:"
-msgstr ""
-
-#: templates/projects/project_detail.html:62
-#, fuzzy, python-format
-msgid "Bug tracker for %(project_name)s"
-msgstr "Új komponens %(project_name)s tervhez"
-
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:49
 #: templates/projects/project_list.html:46
 #: templates/releases/release_detail.html:50
 #: templates/releases/release_list.html:43
@@ -2024,30 +1534,27 @@ msgstr "Új komponens %(project_name)s tervhez"
 msgid "Tags:"
 msgstr "Címkék:"
 
-#: templates/projects/project_detail.html:76
-#, fuzzy
+#: templates/projects/project_detail.html:58
 msgid "Collection:"
-msgid_plural "Collections:"
-msgstr[0] "Gyűjtemény:"
-msgstr[1] "Gyűjtemény:"
+msgstr "Gyűjtemény:"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:68
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Karbantartó:"
 msgstr[1] "Karbantartók:"
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:82
 #: templates/releases/release_detail.html:58
 msgid "External links:"
 msgstr "Külső hivatkozások:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:84
 #: templates/releases/release_detail.html:60
 msgid "Screenshots"
 msgstr "Képernyőképek"
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:117
 msgid "Delete project"
 msgstr "Terv törlés"
 
@@ -2099,12 +1606,12 @@ msgstr "Új terv hozzáadása"
 
 #: templates/projects/project_list.html:54
 msgid "No projects registered yet. :-("
-msgstr ""
+msgstr "Nincs még terv. :-("
 
 #: templates/projects/project_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
-msgstr ""
+msgstr "Miért nem <a href=\"%(project_create)s\">ad hozzá egyet</a>?"
 
 #: templates/projects/project_list.html:64
 #, python-format
@@ -2112,6 +1619,7 @@ msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
 "it</a>!"
 msgstr ""
+"Nem találja a tervét? <a·href=\"%(project_create)s\">Adja hozzá</a>!"
 
 #: templates/releases/release_confirm_delete.html:4
 #, python-format
@@ -2121,12 +1629,12 @@ msgstr "%(release_name)s törlése"
 #: templates/releases/release_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(release_name)s</em>"
-msgstr ""
+msgstr "<em>%(release_name)s</em> törlése"
 
 #: templates/releases/release_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr ""
+msgstr "Búcsút int <em>%(release_name)s</em> kiadásnak?"
 
 #: templates/releases/release_confirm_delete.html:14
 #, python-format
@@ -2135,11 +1643,13 @@ msgid ""
 "  Are you sure you want to permanently delete the registered release '%"
 "(release_name)s'?\n"
 msgstr ""
+"\n"
+"  Biztos, hogy véglegesen törölni akarja „%(release_name)s” kiadást?\n"
 
 #: templates/releases/release_detail.html:45
 #, python-format
 msgid "Homepage for %(release_name)s"
-msgstr ""
+msgstr "%(release_name)s honlapja"
 
 #: templates/releases/release_detail.html:71
 msgid "Project in release"
@@ -2153,6 +1663,8 @@ msgid ""
 "No projects are registered for this release yet. <a href=\"%(project_list)s"
 "\">Find projects</a> and add them to this release."
 msgstr ""
+"Nincs e kiadásba besorolt terv. <a·href=\"%(project_list)s\">"
+"Keressen terveket</a>, és adja hozzá őket e kiadáshoz."
 
 #: templates/releases/release_detail.html:97
 msgid "Delete release"
@@ -2171,17 +1683,17 @@ msgstr "Kiadás hozzáadása"
 #: templates/txcollections/release_form.html:13
 #, python-format
 msgid "Edit %(release_name)s"
-msgstr ""
+msgstr "%(release_name)s szerkesztése"
 
 #: templates/releases/release_form.html:12
 #, python-format
 msgid "Edit <em>%(release_name)s</em>"
-msgstr ""
+msgstr "<em>%(release_name)s</em> szerkesztése"
 
 #: templates/releases/release_form.html:20
 #, python-format
 msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
-msgstr ""
+msgstr "<a·href=\"%(release_url)s\">%(release_name)s</a> szerkesztése"
 
 #: templates/releases/release_list.html:8
 msgid "Release list"
@@ -2190,7 +1702,7 @@ msgstr "Kiadás lista"
 #: templates/releases/release_list.html:17
 #, python-format
 msgid "Releases with tag '%(tag)s'"
-msgstr ""
+msgstr "Kiadások „%(tag)s” címkével"
 
 #: templates/releases/release_list.html:18
 msgid "Releases on Transifex"
@@ -2204,18 +1716,16 @@ msgstr "Új kiadás hozzáadása"
 #: templates/txcollections/collection_list.html:45
 #, python-format
 msgid "1 project"
-msgid_plural "%(counter)s projects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr "1 terv"
 
 #: templates/releases/release_list.html:49
 msgid "No releases registered yet. :-("
-msgstr ""
+msgstr "Nincs még kiadás. :-("
 
 #: templates/releases/release_list.html:51
 #, python-format
 msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
+msgstr "Miért nem <a·href=\"%(release_create)s\">ad hozzá egyet</a>?"
 
 #: templates/releases/release_list.html:59
 #, python-format
@@ -2223,37 +1733,42 @@ msgid ""
 "Couldn't find your release? Go ahead and <a href=\"%(release_create)s\">add "
 "it</a>!"
 msgstr ""
+"Nem találja a kiadását? <a·href=\"%(release_create)s\">Adja hozzá</a>!"
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
-msgstr ""
+msgstr "<p>Kijelentkezett."
 
 #: templates/simpleauth/settings.html:15
 msgid ""
 "Any settings associated with your account are presented and possibly "
 "modified here."
 msgstr ""
+"Itt minden a saját számlához tartozó beállítás megjelenik és "
+"változtatható."
 
 #: templates/simpleauth/signin.html:10
 msgid ""
 "\n"
 "<p>Please login in with your email or screen name.<br />\n"
 msgstr ""
+"\n"
+"<p>Jelentkezzék be kérem a levél címével vagy nevével.<br />\n"
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
 msgid "Delete %(collection_name)s"
-msgstr ""
+msgstr "%(collection_name)s törlése"
 
 #: templates/txcollections/collection_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(collection_name)s</em>"
-msgstr ""
+msgstr "<em>%(collection_name)s</em> törlése"
 
 #: templates/txcollections/collection_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(collection_name)s</em>?"
-msgstr ""
+msgstr "Búcsút int <em>%(collection_name)s</em> gyűjteménynek?"
 
 #: templates/txcollections/collection_confirm_delete.html:14
 #, python-format
@@ -2262,11 +1777,13 @@ msgid ""
 "  Are you sure you want to permanently delete the registered collection '%"
 "(collection_name)s'?\n"
 msgstr ""
+"\n"
+"  Biztos, hogy véglegesen törölni akarja „%(collection_name)s” gyűjteményt?\n"
 
 #: templates/txcollections/collection_detail.html:43
 #, python-format
 msgid "Homepage for %(collection_name)s"
-msgstr ""
+msgstr "%(collection_name)s honlapja"
 
 #: templates/txcollections/collection_detail.html:92
 #, python-format
@@ -2275,7 +1792,7 @@ msgstr "Tervek %(collection)s gyűjteményben"
 
 #: templates/txcollections/collection_detail.html:97
 msgid "Projects currently registered to belong in this collection:"
-msgstr ""
+msgstr "Jelenleg a következő terveket soroljuk e gyűjteménybe:"
 
 #: templates/txcollections/collection_detail.html:107
 #, python-format
@@ -2283,31 +1800,33 @@ msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
+"Nincs még e gyűjteménybe sorolt terv. <a·href=\"%(project_list)"
+"s\">Keressen terveket</a>, és adja őket e gyűjteményhez."
 
 #: templates/txcollections/collection_detail.html:119
 msgid "Delete collection"
-msgstr ""
+msgstr "Gyűjtemény törlés"
 
 #: templates/txcollections/collection_form.html:6
 #: templates/txcollections/collection_form.html:11
 #: templates/txcollections/collection_form.html:17
 msgid "Add a collection"
-msgstr ""
+msgstr "Gyűjtemény hozzáadás"
 
 #: templates/txcollections/collection_form.html:7
 #, python-format
 msgid "Edit %(collection_name)s"
-msgstr ""
+msgstr "%(collection_name)s szerkesztése"
 
 #: templates/txcollections/collection_form.html:12
 #, python-format
 msgid "Edit <em>%(collection_name)s</em>"
-msgstr ""
+msgstr "<em>%(collection_name)s</em> szerkesztése"
 
 #: templates/txcollections/collection_form.html:20
 #, python-format
 msgid "Editing <a href=\"%(collection_url)s\">%(collection_name)s</a>"
-msgstr ""
+msgstr "<a·href=\"%(collection_url)s\">%(collection_name)s</a> szerkesztése"
 
 #: templates/txcollections/collection_form.html:36
 msgid "Save collection"
@@ -2320,15 +1839,15 @@ msgstr "Gyűjtemény lista"
 #: templates/txcollections/collection_list.html:17
 #, python-format
 msgid "Collections with tag '%(tag)s'"
-msgstr ""
+msgstr "Gyűjtemények „%(tag)s” címkével"
 
 #: templates/txcollections/collection_list.html:18
 msgid "Collections on Transifex"
-msgstr ""
+msgstr "Gyűjtemények Transifexben"
 
 #: templates/txcollections/collection_list.html:19 txcollections/models.py:57
 msgid "collections"
-msgstr ""
+msgstr "gyűjtemények"
 
 #: templates/txcollections/collection_list.html:25
 msgid "Add a new collection"
@@ -2343,7 +1862,7 @@ msgstr[1] "%(counter)s kiadás"
 
 #: templates/txcollections/collection_list.html:53
 msgid "No collections registered yet. :-("
-msgstr ""
+msgstr "Nincs még gyűjtemény. :-("
 
 #: templates/txcollections/collection_list.html:55
 #, python-format
@@ -2394,74 +1913,59 @@ msgstr ""
 msgid "Save release"
 msgstr "Kiadás mentés"
 
-#: translations/models.py:226
+#: translations/models.py:147
 msgid "PO file"
 msgstr "PO fájl"
 
-#: translations/models.py:227
+#: translations/models.py:148
 msgid "PO files"
 msgstr "PO fájlok"
 
-#: translations/templates/comp_lang_stats_table.html:11
-#, fuzzy
-msgid "Files"
-msgstr "Fájl(ok)"
+#: translations/templates/comp_stats_table.html:10
+#: translations/templates/project_stats_table.html:6
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "Nyelv"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
+#: translations/templates/comp_stats_table.html:11
 #: translations/templates/lang_stats_table.html:12
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Fordítások"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
+#: translations/templates/comp_stats_table.html:12
 #: translations/templates/lang_stats_table.html:13
 msgid "Options"
 msgstr "Opciók"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
+#: translations/templates/comp_stats_table.html:20
+msgid "See statistics for this language"
+msgstr "Statisztikák e nyelvhez"
+
+#: translations/templates/comp_stats_table.html:22
+#: translations/templates/release_stats_table.html:18
+msgid "There is no language registered that matches with this file"
+msgstr "Nincs e fájlhoz illeszkedő nyelv"
+
+#: translations/templates/comp_stats_table.html:25
 #: translations/templates/lang_stats_table.html:23
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Nem sikerült statisztikát készíteni e fájlhoz"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:20
+#: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 msgid "Trans:"
 msgstr "Kész:"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
-#: translations/templates/project_stats_table.html:20
+#: translations/templates/project_stats_table.html:19
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "Még:"
-
-#: translations/templates/comp_stats_table.html:11
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "Nyelv"
-
-#: translations/templates/comp_stats_table.html:21
-msgid "See statistics for this language"
-msgstr "Statisztikák e nyelvhez"
-
-#: translations/templates/comp_stats_table.html:23
-#, fuzzy
-msgid "There is no language registered that matches with this code"
-msgstr "Nincs e fájlhoz illeszkedő nyelv"
-
-#: translations/templates/comp_stats_table.html:38
-#: translations/templates/lang_stats_table.html:35
-msgid "Click here to see the multiple files for"
-msgstr ""
 
 #: translations/templates/component_submit.html:4
 msgid "Send a translation for this language."
@@ -2502,10 +2006,6 @@ msgstr ""
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
 msgstr "Részletes fordítási statisztikák e nyelvhez"
-
-#: translations/templates/release_stats_table.html:18
-msgid "There is no language registered that matches with this file"
-msgstr "Nincs e fájlhoz illeszkedő nyelv"
 
 #: txcollections/feeds.py:15
 #, python-format
@@ -2550,185 +2050,10 @@ msgstr "gyűjtemény"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr "<Release: %(rel)s (Collection %(col)s)>"
 
-#: txcommon/forms.py:14
-msgid "Enter a valid regular expression."
-msgstr ""
-
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "A LINGUAS fájl nem nyitható meg: %s"
-
-#: txcommon/management/__init__.py:9
-msgid "New Project Added"
-msgstr ""
-
-#: txcommon/management/__init__.py:10
-msgid "when a new project is added"
-msgstr ""
-
-#: txcommon/management/__init__.py:16
-#, fuzzy
-msgid "Project Changed"
-msgstr "Terv összetevő"
-
-#: txcommon/management/__init__.py:17
-msgid "when a project is changed"
-msgstr ""
-
-#: txcommon/management/__init__.py:23
-#, fuzzy
-msgid "Project Deleted"
-msgstr "Terv lista"
-
-#: txcommon/management/__init__.py:24
-#, fuzzy
-msgid "when a project is deleted"
-msgstr "Terv kiadás"
-
-#: txcommon/management/__init__.py:30
-msgid "New Component Added"
-msgstr ""
-
-#: txcommon/management/__init__.py:31
-msgid "when a new component is added to a project"
-msgstr ""
-
-#: txcommon/management/__init__.py:37
-msgid "Component Changed"
-msgstr ""
-
-#: txcommon/management/__init__.py:38
-#, fuzzy
-msgid "when a component of a project is changed"
-msgstr "Új komponens %(project_name)s tervhez"
-
-#: txcommon/management/__init__.py:44
-msgid "Component Deleted"
-msgstr ""
-
-#: txcommon/management/__init__.py:45
-#, fuzzy
-msgid "when a component of a project is deleted"
-msgstr "Legújabb összetevők %s tervben"
-
-#: txcommon/management/__init__.py:51
-#, fuzzy
-msgid "File Submitted"
-msgstr "Fájl szűrő"
-
-#: txcommon/management/__init__.py:52
-msgid "when a component file of a project is submitted"
-msgstr ""
-
-#: txcommon/management/__init__.py:59
-#, fuzzy
-msgid "Translation File Changed"
-msgstr "Fordítás fájlok"
-
-#: txcommon/management/__init__.py:60
-msgid "when a component translation file of a project is changed"
-msgstr ""
-
-#: txcommon/management/__init__.py:67
-msgid "Translation Source File (POT) has a Problem"
-msgstr ""
-
-#: txcommon/management/__init__.py:68
-msgid ""
-"when the source file (POT) of a component that you are a maintainer has a "
-"problem"
-msgstr ""
-
-#: txcommon/management/__init__.py:76
-#, fuzzy
-msgid "New Collection Added"
-msgstr "Gyűjtemények"
-
-#: txcommon/management/__init__.py:77
-#, fuzzy
-msgid "when a new collection is added"
-msgstr "Gyűtemény hozzáadás"
-
-#: txcommon/management/__init__.py:83
-#, fuzzy
-msgid "Collection Changed"
-msgstr "Gyűjtemények"
-
-#: txcommon/management/__init__.py:84
-msgid "when a collection is changed"
-msgstr ""
-
-#: txcommon/management/__init__.py:90
-#, fuzzy
-msgid "Collection Deleted"
-msgstr "Gyűjtemény lista"
-
-#: txcommon/management/__init__.py:91
-#, fuzzy
-msgid "when a collection is deleted"
-msgstr "%(collection)s·kiadások"
-
-#: txcommon/management/__init__.py:97
-#, fuzzy
-msgid "Project Added to a Collection"
-msgstr "Tervek %(collection)s gyűjteményben"
-
-#: txcommon/management/__init__.py:98
-msgid "when a new project is added to a collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:104
-#, fuzzy
-msgid "Project Deleted from a Collection"
-msgstr "Tervek %(collection)s gyűjteményben"
-
-#: txcommon/management/__init__.py:105
-msgid "when a project is deleted from a collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:111
-msgid "New Release Added for a Watched Collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:112
-msgid "when a new release is added to a collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:119
-#, fuzzy
-msgid "Release Changed"
-msgstr "Kiadás dátum"
-
-#: txcommon/management/__init__.py:120
-msgid "when a release of a collection is changed"
-msgstr ""
-
-#: txcommon/management/__init__.py:125
-#, fuzzy
-msgid "Release Deleted"
-msgstr "Kiadás dátum"
-
-#: txcommon/management/__init__.py:126
-msgid "when a release of a collection is deleted"
-msgstr ""
-
-#: txcommon/management/__init__.py:131
-#, fuzzy
-msgid "Release Added to a Collection"
-msgstr "Gyűtemény hozzáadás"
-
-#: txcommon/management/__init__.py:132
-msgid "when a release is added to a collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:137
-msgid "Release Deleted from a Collection"
-msgstr ""
-
-#: txcommon/management/__init__.py:138
-msgid "when a release is deleted to a collection"
-msgstr ""
 
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
@@ -2750,15 +2075,1168 @@ msgstr "Web előtét"
 msgid "A URL to the project's web front-end"
 msgstr ""
 
-#: vcs/models.py:58
+#: vcs/models.py:55
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
-#: vcs/models.py:61
+#: vcs/models.py:58
 msgid "vcsunit"
 msgstr "vcsunit"
 
-#: vcs/models.py:62
+#: vcs/models.py:59
 msgid "vcsunits"
 msgstr "vcsunits"
+
+#~ msgid "The path %s cannot be found"
+#~ msgstr "„%s” út nem található"
+
+#~ msgid ""
+#~ "The credentials you supplied were not correct or did not grant access to "
+#~ "this resource."
+#~ msgstr ""
+#~ "Az benyújtott igazolások hibásak, vagy nem jogosítják fel hozzáférésre "
+#~ "ehhez az erőforráshoz."
+
+#~ msgid "You must provide your credentials before accessing this resource."
+#~ msgstr ""
+#~ "Fel kell mutatni az igazolásait mielőtt hozzáférhetne eme erőforráshoz."
+
+#~ msgid "The language '%s' is not available"
+#~ msgstr "„%s” nyelv nem elérhető."
+
+#~ msgid "Something fishy is happening here..."
+#~ msgstr "Itt valami gyanús történik…"
+
+#~ msgid ""
+#~ "There is a technical error with the module '%s' (no branches are "
+#~ "registered for it)."
+#~ msgstr "Műszaki hiba van „%s” modullal (nincs regisztrált ág)."
+
+#~ msgid "There is a technical error with the module '%s'"
+#~ msgstr "Műszaki hiba van „%s” modullal."
+
+#~ msgid "You should provide a destination file."
+#~ msgstr "Meg kell adni egy célfájlt."
+
+#~ msgid ""
+#~ "You should either choose an existing file to substitute or provide a name "
+#~ "for a new one (and not both)."
+#~ msgstr ""
+#~ "Vagy egy meglévő felülírandó fájlt kell választani, vagy egy új nevet "
+#~ "kell megadni!"
+
+#~ msgid "Please enter a log message for your submission."
+#~ msgstr "Kérem adja meg a napló üzenetet a beküldéshez."
+
+#~ msgid "Preview"
+#~ msgstr "Előnézet"
+
+#~ msgid "Overwrite an existing file:"
+#~ msgstr "Meglévő fájl felülírása:"
+
+#~ msgid "Either select the file your submission will replace..."
+#~ msgstr "Vagy válassza ki a lecserélendő fájlt…"
+
+#~ msgid "or, type the name for a new one:"
+#~ msgstr "vagy, gépeljen be nevet egy újhoz:"
+
+#~ msgid "For example: 'po/pt.po'."
+#~ msgstr "Például: „po/hu.po”."
+
+#~ msgid ""
+#~ "A commit message is a log or record of the changes made by a commit. For "
+#~ "example: \"Updated X translation\""
+#~ msgstr ""
+#~ "A kísérő szöveg egy napló vagy feljegyzés a változásokról, amit a "
+#~ "beküldés okoz. Például: „Updated Hungarian translation”"
+
+#~ msgid "Skip diff preview"
+#~ msgstr "Diff előnézet átugrása"
+
+#~ msgid "Do not preview diffs in next screen. Useful for slow connections."
+#~ msgstr ""
+#~ "Változások előnézet mellőzése a következő képernyőn. Hasznos lassú "
+#~ "kapcsolatoknál."
+
+#~ msgid "Summary"
+#~ msgstr "Összegzés"
+
+#~ msgid "Webpage"
+#~ msgstr "Weblap"
+
+#~ msgid "Repository"
+#~ msgstr "Tároló"
+
+#~ msgid "Scmmodule"
+#~ msgstr "Scmmodule"
+
+#~ msgid "Filefilter"
+#~ msgstr "Fájlszűrő"
+
+#~ msgid "Disabled"
+#~ msgstr "Tiltva"
+
+#~ msgid ""
+#~ "There is one or more problems with the form validation. Please correct it."
+#~ msgstr "Baj van a kérdőív érvényesítésével. Kérem javítsa ki."
+
+#~ msgid "Invalid module."
+#~ msgstr "Érvénytelen modul."
+
+#~ msgid "Invalid branch."
+#~ msgstr "Érvénytelen ág."
+
+#~ msgid "Something went wrong with your submission. Path: %s"
+#~ msgstr "Valami baj történt a beküldéssel. Út: %s"
+
+#~ msgid ""
+#~ "Please choose only one of the two overwrite options: Either substitute an "
+#~ "existing file or provide a name for a new one."
+#~ msgstr ""
+#~ "Kérem csak egy felülírás opciót válasszon: Vagy helyettesítsen egy "
+#~ "meglévő fájlt, vagy adjon meg egy nevet egy újnak!"
+
+#~ msgid ""
+#~ "The filename you chose isn't allowed to be used. Please use a filename "
+#~ "similar to the ones present in the list of existing files."
+#~ msgstr ""
+#~ "A választott fájlnév nem engedélyezett. Kérem használjon a meglévő fájlok "
+#~ "listájában levőkhöz hasonló fájlnevet!"
+
+#~ msgid ""
+#~ "There is a technical error with this module's Changelog file. Please "
+#~ "notify the administrators."
+#~ msgstr ""
+#~ "Műszaki hiba van a modul Changelog fájljával. Kérem tájékoztassa az "
+#~ "adminisztrátorokat!"
+
+#~ msgid ""
+#~ "The encoding of the uploaded file doesn't seem like UTF-8. Since diff "
+#~ "previewing is not yet supported for non-UTF-8 files, it will not be "
+#~ "available for this submission."
+#~ msgstr ""
+#~ "A feltöltött fájl kódolása nem tűnik UTF-8-asnak. Mivel diff előnézetet "
+#~ "nem támogatunk nem UTF-8 fájlokra, nem lesz elérhető e beküldésre."
+
+#~ msgid ""
+#~ "The encoding of the target file doesn't seem like UTF-8. Since diff "
+#~ "previewing is not yet supported for non-UTF-8 files, it will not be "
+#~ "available for this submission."
+#~ msgstr ""
+#~ "A cél fájl kódolása nem tűnik UTF-8-asnak. Mivel diff előnézetet nem "
+#~ "támogatunk nem UTF-8 fájlokra, nem lesz elérhető e beküldésre."
+
+#~ msgid ""
+#~ "The file you submitted is identical to the target on our server (empty "
+#~ "diffset). Try refreshing the module's cache and retry submitting."
+#~ msgstr ""
+#~ "A beküldött fájl megegyezik a céllal a kiszolgálónkon (üres diff halmaz). "
+#~ "Próbálja frissíteni a modul gyorstárát, és ismételje meg a beküldést!"
+
+#~ msgid "Something went wrong with your session. Please re-submit the page."
+#~ msgstr "Valami baj van a beküldéssel. Kérem küldje újra a lapot!"
+
+#~ msgid ""
+#~ "There was a technical error with the commit/push of your submission, most "
+#~ "likely because of a misconfiguration of the system. Try refreshing the "
+#~ "module's cache and retry submitting."
+#~ msgstr ""
+#~ "Műszaki hiba történt a beküldés feldolgozásakor/nyomásakor "
+#~ "legvalószínűbben a rendszer hibás beállításából adódóan. Próbálja "
+#~ "frissíteni a modul gyorstárát, és próbálja ismét a beküldést!"
+
+#~ msgid ""
+#~ "The administrators will look into the log files and try to find out what "
+#~ "went wrong."
+#~ msgstr ""
+#~ "Az adminisztrátorok megnézik a naplókat, és megpróbálják kitalálni mi baj "
+#~ "történt."
+
+#~ msgid "There was an error with your form."
+#~ msgstr "Hibás az űrlap."
+
+#~ msgid "Something went wrong with your submission."
+#~ msgstr "Valami baj van a beküldéssel."
+
+#~ msgid "Error: A module with this name already exists."
+#~ msgstr "Hiba: Már van ilyen nevű modul."
+
+#~ msgid ""
+#~ "Module '%s' added. If you haven't done so already, don't forget to "
+#~ "configure the SSH keys for it."
+#~ msgstr ""
+#~ "„%s” modul hozzáadva. Ha még nem tette volna meg, ne felejtse el "
+#~ "beállítani hozzá az SSH kulcsokat!"
+
+#~ msgid "Invalid module/branch."
+#~ msgstr "Érvénytelen modul/ág."
+
+#~ msgid "No such person"
+#~ msgstr "Nincs ilyen személy"
+
+#~ msgid "Add repository"
+#~ msgstr "Tároló hozzáadása"
+
+#~ msgid "Update a repository"
+#~ msgstr "Tároló frissítése"
+
+#~ msgid "Update repository"
+#~ msgstr "Tároló frissítése"
+
+#~ msgid "Invalid repository."
+#~ msgstr "Érvénytelen tároló."
+
+#~ msgid "Add a new repository"
+#~ msgstr "Tároló hozzáadása"
+
+#~ msgid "You can not change the repository name."
+#~ msgstr "Nem változtathatja meg a tároló nevét."
+
+#~ msgid "Error: A repository with this name already exists."
+#~ msgstr "Hiba: Már van ilyen nevű tároló."
+
+#~ msgid "Error: There was an error to add the data into the database"
+#~ msgstr "Hiba: Az adatok adatbázisba betöltésekor hiba történt"
+
+#~ msgid "Repository '%(repo)s' has been %(action)s."
+#~ msgstr "„%(repo)s” tároló %(action)s."
+
+#~ msgid "updated"
+#~ msgstr "időszerűsítve"
+
+#~ msgid "added"
+#~ msgstr "hozzáadva"
+
+#~ msgid "Error: Could not delete the repository. %s"
+#~ msgstr "Hiba: Nem lehetett törölni a tárolót. %s"
+
+#~ msgid "Repository '%s' has been deleted successfully."
+#~ msgstr "„%s” tárolót sikerült törölni."
+
+#~ msgid "File(s)"
+#~ msgstr "Fájl(ok)"
+
+#~ msgid "Timestamp"
+#~ msgstr "Időpecsét"
+
+#~ msgid "years"
+#~ msgstr "év"
+
+#~ msgid "month"
+#~ msgstr "hónap"
+
+#~ msgid "week"
+#~ msgstr "hét"
+
+#~ msgid "weeks"
+#~ msgstr "hét"
+
+#~ msgid "day"
+#~ msgstr "nap"
+
+#~ msgid "days"
+#~ msgstr "nap"
+
+#~ msgid "hour"
+#~ msgstr "óra"
+
+#~ msgid "hours"
+#~ msgstr "óra"
+
+#~ msgid "minute"
+#~ msgstr "perc"
+
+#~ msgid "minutes"
+#~ msgstr "perc"
+
+#~ msgid "%(number)d %(type)s"
+#~ msgstr "%(number)d %(type)s"
+
+#~ msgid "%s :: Submission Log"
+#~ msgstr "%s :: Beküldés napló"
+
+#~ msgid "Log of recent submits"
+#~ msgstr "Legutóbbi beküldések naplója"
+
+#~ msgid "%s :: Home"
+#~ msgstr "%s :: Haza"
+
+#~ msgid ", a web system for distributed translation submissions."
+#~ msgstr ", egy webes rendszer elosztott fordítás beküldéshez."
+
+#~ msgid ""
+#~ "Submit translations to upstream projects without the need to learn\n"
+#~ "    the tricks of different version control systems."
+#~ msgstr ""
+#~ "Beküldhetnek fordításokat felmenő tervekbe úgy, hogy nincs szükség a "
+#~ "különböző változáskezelő rendszerek trükkjeinek elsajátítására."
+
+#~ msgid "Read more to submit translations"
+#~ msgstr "További olvasnivaló fordítások beküldéséről"
+
+#~ msgid "Jump to the modules!"
+#~ msgstr "Ugrás a modulokra!"
+
+#~ msgid ""
+#~ "Receive translations directly to your project's repository, without the "
+#~ "management overhead of loads of accounts and big access control lists."
+#~ msgstr ""
+#~ "Fogadjanak fordításokat közvetlenül a terv tárolójába, rengeteg számla és "
+#~ "hozzáférés lista igazgatás terhe nélkül."
+
+#~ msgid "Read more to register a module"
+#~ msgstr "További olvasnivaló modul regisztrációjáról"
+
+#~ msgid "Administrators"
+#~ msgstr "Adminisztrátoroknak"
+
+#~ msgid "Submission Log"
+#~ msgstr "Beküldés napló"
+
+#~ msgid "Translated by: %(trans)s."
+#~ msgstr "Fordította: %(trans)s."
+
+#~ msgid "translator-credits"
+#~ msgstr "peti at fedoraproject dot org"
+
+#~ msgid "%s :: Authenticate"
+#~ msgstr "%s :: Hitelesítés"
+
+#~ msgid "Authenticate"
+#~ msgstr "Hitelesítés"
+
+#~ msgid ""
+#~ "You may authenticate using your existing credentials in the account "
+#~ "system of"
+#~ msgstr ""
+#~ "Hitelesítheti magát a meglévő igazolványaival következő számlarendszerből:"
+
+#~ msgid ":: Information for maintainers"
+#~ msgstr ":: Tájékoztató karbantartóknak"
+
+#~ msgid "Information for maintainers"
+#~ msgstr "Tájékoztató karbantartóknak"
+
+#~ msgid ""
+#~ "If you are a project maintainer, you can have Transifex's\n"
+#~ "  community contribute translations to your project easily. The basic "
+#~ "idea\n"
+#~ "  is that you create a special user on your"
+#~ msgstr ""
+#~ "Ha ön egy terv karbantartója, a Fedora fordító közössége könnyen\n"
+#~ "  hozzájárulhat fordításokkal a tervéhez. Az alapötlet az, hogy a ön\n"
+#~ "  teremt külön egy használót a "
+
+#~ msgid "Version Control   System"
+#~ msgstr "Változáskezelő rendszer (VCS)"
+
+#~ msgid "VCS"
+#~ msgstr "VCS"
+
+#~ msgid ""
+#~ "and we use that user to commit translations for all\n"
+#~ "  Fedora translators."
+#~ msgstr ""
+#~ "rendszerében, és azt a használót használjuk fordítások beadására minden "
+#~ "Fedora fordító helyett."
+
+#~ msgid "Here's what you need to do to get it going:"
+#~ msgstr "Íme amit tenni kell működtetéséhez:"
+
+#~ msgid "1. Let us know"
+#~ msgstr "1. Tudassa velünk"
+
+#~ msgid ""
+#~ "Tell us about your module by contacting your project's administrator\n"
+#~ "    (eg. by opening a bug report or ticket), attaching the following "
+#~ "information:"
+#~ msgstr ""
+#~ "Meséljen nekünk a moduljáról a terv adminisztrátorának megkeresésével\n"
+#~ "     (pl. hibajelentés vagy jegy nyitásával), a következő adatokat "
+#~ "csatolva:"
+
+#~ msgid "Module name"
+#~ msgstr "Modul név"
+
+#~ msgid "VCS root, Module, Branch"
+#~ msgstr "VCS gyökér, modul, ág"
+
+#~ msgid "Web front-end to VCS"
+#~ msgstr "Web előtét VCS-hez"
+
+#~ msgid "File filter (eg. '"
+#~ msgstr "Fájlszűrő (pl. '"
+
+#~ msgid ".*/po/.*"
+#~ msgstr ".*/po/.*"
+
+#~ msgid "Translations' changelog file (if applicable)"
+#~ msgstr "Fordítás változásnapló fájl (ha releváns)"
+
+#~ msgid "Contact point (name, email, role in project)"
+#~ msgstr "Kapcsolat végpont (név, email, szerep a tervben)"
+
+#~ msgid "2. Repository access"
+#~ msgstr "2. Tároló hozzáférés"
+
+#~ msgid "Check out the"
+#~ msgstr "Nézze meg a"
+
+#~ msgid ""
+#~ "repositories\n"
+#~ "    we are serving"
+#~ msgstr "tárolókat, amiket szolgáltatunk"
+
+#~ msgid "and see if your project's repo is there."
+#~ msgstr ", és lássa hogy a terv tára ott van!"
+
+#~ msgid "If it is, then we have already setup a user that accesses your repo."
+#~ msgstr ""
+#~ "Ha igen, akkor már beállítottunk egy használót, ami hozzáférhet a tárhoz."
+
+#~ msgid ""
+#~ "If your repo isn't listed, then we'll need to register it. An admin\n"
+#~ "        will send you the public part of an SSH key in order for you to "
+#~ "create\n"
+#~ "        an SSH user (eg. 'transifex') with access to your VCS."
+#~ msgstr ""
+#~ "Ha az ön tárja nincs felsorolva, akkor regisztrálnia kell. Egy "
+#~ "rendszergazda\n"
+#~ "        el fogja küldeni önnek egy SSH kulcspár nyilvános részét, hogy "
+#~ "ön\n"
+#~ "        teremthessen egy SSH használót (pl. „fedora-transifex”), ami "
+#~ "hozzáfér az ön VCS-éhez."
+
+#~ msgid ""
+#~ "Alternatively, if you're on a decentralized VCS, you may use a\n"
+#~ "        public service like"
+#~ msgstr ""
+#~ "Különben, ha ön egy elosztott VCS-en van, használhat egy nyilvános "
+#~ "szolgáltatást, mint a"
+
+#~ msgid "Gitorious"
+#~ msgstr "Gitorious"
+
+#~ msgid "or"
+#~ msgstr "vagy"
+
+#~ msgid "freeHg"
+#~ msgstr "freeHg"
+
+#~ msgid ""
+#~ ",\n"
+#~ "        where Transifex will have access to."
+#~ msgstr ", ahol Transifexnek lesz hozzáférése."
+
+#~ msgid "3. Enabling the module"
+#~ msgstr "3. Modul engedélyezése"
+
+#~ msgid ""
+#~ "We'll add your module to our Transifex instance, test the write access\n"
+#~ "    and report back."
+#~ msgstr ""
+#~ "Hozzá fogjuk adni az ön modulját a mi Transifex példányunkhoz, "
+#~ "kipróbáljukaz író hozzáférést, és visszajelzünk."
+
+#~ msgid "4. FIN"
+#~ msgstr "4. VÉGE"
+
+#~ msgid ""
+#~ "That's it! After this point, our translation community can contribute\n"
+#~ "    to your project without any other effort from your part."
+#~ msgstr ""
+#~ "Ennyi! Ezután a mi fordító közösségünk bedolgozhat az ön tervébe az ön "
+#~ "részéről történő további erőfeszítés nélkül."
+
+#~ msgid "Transifex home"
+#~ msgstr "Transifex haza"
+
+#~ msgid "Modules accepting translations through Transifex"
+#~ msgstr "Transifexen beküldhető modulok"
+
+#~ msgid "Modules"
+#~ msgstr "Modulok"
+
+#~ msgid "Repositories configured"
+#~ msgstr "Beállított tárolók"
+
+#~ msgid "Repos"
+#~ msgstr "Tárolók"
+
+#~ msgid "Welcome %s!"
+#~ msgstr "Üdvözöli %s!"
+
+#~ msgid "logout"
+#~ msgstr "kijelentkezés"
+
+#~ msgid "Powered by"
+#~ msgstr "Hajtja"
+
+#~ msgid "Please send any comments or corrections by opening a"
+#~ msgstr "Kérem küldjön bármilyen megjegyzést vagy javítást megnyitva egy "
+
+#~ msgid ":: Add a new module"
+#~ msgstr ":: Új modul hozzáadása"
+
+#~ msgid ""
+#~ "Here are some explanations about the fields above. Required fields are\n"
+#~ "marked with a '*'."
+#~ msgstr "Íme némi magyarázat a fenti mezőkre: A szükséges mezőket „*” jelzi."
+
+#~ msgid "Name*:"
+#~ msgstr "Név*:"
+
+#~ msgid ""
+#~ "An ID for the module. Shown on the URL, usually only the description is "
+#~ "shown."
+#~ msgstr ""
+#~ "Azonosító a modulnak. Az URL-ben jelenik meg. Rendszerint csak a leírás."
+
+#~ msgid "The name of the module as it will appear on the pages"
+#~ msgstr "A modul neve, ahogy a lapokon fog megjelenni"
+
+#~ msgid "Summary:"
+#~ msgstr "Összegzés:"
+
+#~ msgid "One or two sentences"
+#~ msgstr "Egy-két mondat"
+
+#~ msgid ""
+#~ "The homepage for the module, where people can find more information about "
+#~ "it"
+#~ msgstr ""
+#~ "A modul honlapja, ahol az emberek további tájékoztatás kaphatnak róla"
+
+#~ msgid "Repository*:"
+#~ msgstr "Tároló*:"
+
+#~ msgid ""
+#~ "A repository root, in centralized-VCS terms. That is, a domain/URL that "
+#~ "hosts\n"
+#~ "  many VCS modules. Eg:"
+#~ msgstr ""
+#~ "Tároló gyökér – központosított változáskezelő kifejezéssel. Azaz egy "
+#~ "tartomány/URL ami sok változáskezelő rendszer modult tartalmaz. Pl:"
+
+#~ msgid "git.foo.com"
+#~ msgstr "git.foo.com"
+
+#~ msgid ""
+#~ ". Each repository is accessed by\n"
+#~ "  transifex using a different SSH key, chosen from the domain of the repo."
+#~ msgstr ""
+#~ ". Transifex minden tárolót, a tár tartományából választva, különböző SSH "
+#~ "kulccsal ér el."
+
+#~ msgid "VCS module*:"
+#~ msgstr "VCS modul*:"
+
+#~ msgid "The module directory (usually a subdirectory of the repo root)"
+#~ msgstr "A modul mappa (rendszerint a tár gyökér almappája)"
+
+#~ msgid "Directory:"
+#~ msgstr "Mappa:"
+
+#~ msgid ""
+#~ "A directory inside scmmodule one wants to expose to transifex. For "
+#~ "example in"
+#~ msgstr "Scmmodule-beli mappa, amit transifexnek akarnak mutatni. Például"
+
+#~ msgid "/vcs-root/module-name/{client,server}/po/"
+#~ msgstr "/vcs-root/module-name/{client,server}/po/"
+
+#~ msgid ""
+#~ ", the directory would be 'client'.\n"
+#~ "  Everything in transifex will be shown relative to that directory."
+#~ msgstr ""
+#~ ", esetében a mappa „client” volna. Transifexben minden e mappához "
+#~ "viszonyítva jelenik majd meg."
+
+#~ msgid "Branch*:"
+#~ msgstr "Ág*:"
+
+#~ msgid "A branch name. If it doesn't exist in our DB, we'll add it."
+#~ msgstr "Ág neve. Ha még nincs az adatbázisban, hozzáadjuk."
+
+#~ msgid "Only files matching this regex will be shown/allowed. Eg: '.*/po/.*'"
+#~ msgstr ""
+#~ "Csak a következő reguláris kifejezéssel egyező fájlokat mutatják/"
+#~ "engedélyezik. Pl. „.*/po/.*”"
+
+#~ msgid "Changelog:"
+#~ msgstr "Változásnapló:"
+
+#~ msgid ""
+#~ "A changelog file to be updated automatically with each submit. Should be\n"
+#~ "  relative to 'directory'."
+#~ msgstr ""
+#~ "Egy változásnapló fájlt önműködően frissítenek minden egyes beküldéskor. "
+#~ "A „Mappa” helyről kiindulva kell megadni."
+
+#~ msgid "Front-end:"
+#~ msgstr "Előtét:"
+
+#~ msgid "Back to modules"
+#~ msgstr "Vissza a modulokhoz"
+
+#~ msgid "Submit to %s"
+#~ msgstr "Beküldés %s helyre"
+
+#~ msgid "Module information"
+#~ msgstr "Modul tájékoztató"
+
+#~ msgid "Web front-end for the versioning system"
+#~ msgstr "Web előtét a változáskezelő rendszerhez"
+
+#~ msgid "VCS web front-end"
+#~ msgstr "VCS web előtét"
+
+#~ msgid "info"
+#~ msgstr "infó"
+
+#~ msgid "Root:"
+#~ msgstr "Gyökér:"
+
+#~ msgid "Module in"
+#~ msgstr "Modul be"
+
+#~ msgid "Version Control System"
+#~ msgstr "változáskezelő rendszer"
+
+#~ msgid "show all"
+#~ msgstr "minden"
+
+#~ msgid "Branches (%(num)s):"
+#~ msgstr "Ágak (%(num)s):"
+
+#~ msgid "Translation submission"
+#~ msgstr "Fordítás beküldése"
+
+#~ msgid ""
+#~ "This module is configured to receive translations through this web system."
+#~ msgstr ""
+#~ "E modult beállították fordítások fogadására e webes rendszeren keresztül."
+
+#~ msgid "Authenticated users are presented with a file submission form."
+#~ msgstr "Hitelesített Fedora fordítók kapnak egy fájl beküldő űrlapot."
+
+#~ msgid "Authenticate as a translator"
+#~ msgstr "Fordító hitelesítése"
+
+#~ msgid "The local, checked-out copy of this module was last updated %s ago."
+#~ msgstr "A helyi, kivett másolat utolsó frissítése óta eltelt %s."
+
+#~ msgid ""
+#~ "To update the local version of the module and pull fresh changes from "
+#~ "the\n"
+#~ "  repository (it will happen anyway before the final submission), click "
+#~ "the\n"
+#~ "  Refresh button. Depending on the module, this might take a while."
+#~ msgstr ""
+#~ "A modul helyi változatának frissítéséhez, és friss változások "
+#~ "előhúzásához a tárolóból (mindenképpen megtörténik a végső beküldés "
+#~ "előtt), a Frissítés gombra kell kattintani. Ez modultól függően eltarthat "
+#~ "egy ideig."
+
+#~ msgid ""
+#~ "You may submit files to this module by filling out the following form."
+#~ msgstr "A következő űrlap kitöltésével küldhetnek be fájlokat e modulhoz."
+
+#~ msgid "Target branch"
+#~ msgstr "Cél ág"
+
+#~ msgid ""
+#~ "This module has serveral branches (versions)\n"
+#~ "    registered. Usually submissions happen on the main branch "
+#~ "(highlighted\n"
+#~ "    in the list), but some modules might require translations to be\n"
+#~ "    submitted to a different patch for a particular release."
+#~ msgstr ""
+#~ "E modulnak több ágát (változatát) regisztrálták. Rendszerint\n"
+#~ "     a beküldés a fő ágba történik (a listában kiemelve), de néhány\n"
+#~ "     modul igényelheti, hogy különböző foltot küldjenek be egy\n"
+#~ "     bizonyos kiadáshoz."
+
+#~ msgid ":: Module list"
+#~ msgstr ":: Modul lista"
+
+#~ msgid "Modules and repositories"
+#~ msgstr "Modulok és tárolók"
+
+#~ msgid ""
+#~ "Here's a list of all the modules that are currently accepting "
+#~ "contributions."
+#~ msgstr "Íme a jelenleg hozzájárulást fogadó modulok listája."
+
+#~ msgid "Preview submission"
+#~ msgstr "Beküldés előnézet"
+
+#~ msgid "Please preview the submission before hitting the \"Submit!\" button."
+#~ msgstr ""
+#~ "Kérem tekintse meg a beküldést mielőtt megnyomja a „Beküldés” gombot!"
+
+#~ msgid "Repository root:"
+#~ msgstr "Tároló gyökér"
+
+#~ msgid "Module in VCS:"
+#~ msgstr "Modul VCS-ben:"
+
+#~ msgid "(web front-end)"
+#~ msgstr "(web előtét)"
+
+#~ msgid "Differences"
+#~ msgstr "Különbségek"
+
+#~ msgid "Here are the changes about to be submitted."
+#~ msgstr "Íme a beküldendő változások."
+
+#~ msgid "The module's changelog file will be updated as follows."
+#~ msgstr "A modul változásnapló fájl a következőképpen bővül."
+
+#~ msgid "Files changed:"
+#~ msgstr "Megváltozott fájlok:"
+
+#~ msgid "(%s lines)"
+#~ msgstr "(%s sor)"
+
+#~ msgid ""
+#~ "Note: Diffsets are not being previewed. Please make sure you are\n"
+#~ "  committing the right file/content before continuing. You might also "
+#~ "want to\n"
+#~ "  verify the diff from the module's source code web frontend right after "
+#~ "the sumbission."
+#~ msgstr ""
+#~ "Megjegyzés: Változáshalmaz előnézet mellőzve. Kérem mielőtt folytatja, "
+#~ "bizonyosodjon meg arról, hogy a megfelelő fájlt/tartalmat adja be. A "
+#~ "modul forráskódjából is ellenőrizheti a különbségeket a forrás web "
+#~ "előtétén keresztül rögtön a beküldés után."
+
+#~ msgid "Commit message"
+#~ msgstr "Kísérő szöveg"
+
+#~ msgid "The following message will be used for submitting the file to the"
+#~ msgstr ""
+#~ "A következő üzenetet használják, amikor a fájlt beadják a "
+#~ "változáskezelőbe – "
+
+#~ msgid ":: People"
+#~ msgstr ":: Emberek"
+
+#~ msgid "Transifexians"
+#~ msgstr "Transifexiaiak"
+
+#~ msgid "The system has information on the following people:"
+#~ msgstr "A rendszerben a következő emberekről van tájékoztató:"
+
+#~ msgid ":: Person ::"
+#~ msgstr ":: Személy ::"
+
+#~ msgid ":: Repositories"
+#~ msgstr ":: Tárolók"
+
+#~ msgid ""
+#~ "Here's a list of the repositories we are currently serving translations "
+#~ "to."
+#~ msgstr "Íme a jelenleg fordításokkal kiszolgált tárolók listája."
+
+#~ msgid ""
+#~ "An ID for the repository. Shown on the URL, usually only the description "
+#~ "is shown."
+#~ msgstr ""
+#~ "Azonosító a tárolónak. Az URL-ben – rendszerint csak a leírás – jelenik "
+#~ "meg."
+
+#~ msgid "The name of the repository as it will appear on the pages"
+#~ msgstr "A tároló neve, ahogy a lapokon fog megjelenni"
+
+#~ msgid "Root*:"
+#~ msgstr "Root*:"
+
+#~ msgid ""
+#~ "The URI/location of the repository. Could be anything acceptable for the\n"
+#~ "  particular VCS, for example a local directory ("
+#~ msgstr ""
+#~ "A tároló URI-je/helye. Lehet bármi, ami elfogadható az illető "
+#~ "változáskövetőnek. Pl a helyi mappa ("
+
+#~ msgid "/foo/bar"
+#~ msgstr "/foo/bar"
+
+#~ msgid ""
+#~ "), a URI\n"
+#~ "  (eg."
+#~ msgstr "), egy URI (pl."
+
+#~ msgid "ssh://"
+#~ msgstr "ssh://"
+
+#~ msgid "http://"
+#~ msgstr "http://"
+
+#~ msgid "...), etc."
+#~ msgstr "...), stb."
+
+#~ msgid ""
+#~ "The homepage for the repository/project, where people can find more "
+#~ "information about it"
+#~ msgstr ""
+#~ "A tároló/terv honlapja, ahol az emberek további tájékoztatást találhatnak "
+#~ "róla"
+
+#~ msgid "Destination file"
+#~ msgstr "Célfájl"
+
+#~ msgid ""
+#~ "A commit message is a log or record of the changes made by a commit.\n"
+#~ "  For example:"
+#~ msgstr ""
+#~ "A kísérő szöveg egy napló vagy feljegyzés a változásokról, amit a "
+#~ "beküldés okoz. Például:"
+
+#~ msgid "\"Updated X translation\""
+#~ msgstr "„Updated Hungarian translation”"
+
+#~ msgid "Note: This module keeps a track of contributions in a"
+#~ msgstr "Megjegyzés: E modul nyomon követi a hozzájárulásokat"
+
+#~ msgid ""
+#~ "file. Your submission will trigger an automatic\n"
+#~ "  update of the file"
+#~ msgstr "egy fájlban. A beküldés önműködően kiváltja a fájl frissítést"
+
+#~ msgid ""
+#~ "in this module's\n"
+#~ "  repository."
+#~ msgstr "e modul tárolójában."
+
+#~ msgid ":: Information for submitting translations"
+#~ msgstr ":: Tájékoztató fordítások beküldéséről"
+
+#~ msgid "Information for translators"
+#~ msgstr "Tájékoztató fordítóknak"
+
+#~ msgid ""
+#~ "Translators can use the web system to submit translations to\n"
+#~ "  the projects registered."
+#~ msgstr ""
+#~ "Fordítók használhatják a webes rendszert, hogy fordításokat küldjenek be "
+#~ "a regisztrált tervekbe."
+
+#~ msgid "Here's what you need to do:"
+#~ msgstr "Ezeket kell tenni:"
+
+#~ msgid "1. Obtain a PO file"
+#~ msgstr "1. PO fájl beszerzése"
+
+#~ msgid ""
+#~ "You can checkout the module from the\n"
+#~ "    repository it is hosted, anonymously or not. Alternatively, if your "
+#~ "project \n"
+#~ "    provides you with a translation statistics software with direct "
+#~ "links\n"
+#~ "    to PO files of projects, you may use that. Or, you might have "
+#~ "received a PO file by email.\n"
+#~ "    As long as you have a PO file to translate and submit!"
+#~ msgstr ""
+#~ "Kiveheti a modult a gazda tárolóból névtelenül vagy másképp.\n"
+#~ "    Ha a terv tartalmaz fordítási statisztikákat közvetlen "
+#~ "hivatkozásokkal\n"
+#~ "    a terv PO fájljaira, akkor azt is lehet használni. Akár üzenetben\n"
+#~ "    is kaphatnak PO fájlt.\n"
+#~ "    Mindaddig, amíg van fordítandó és beküldendő PO fájl!"
+
+#~ msgid "2. Translate"
+#~ msgstr "2. Fordítás"
+
+#~ msgid ""
+#~ "Translate the file, make corrections, etc. Be aware that some projects "
+#~ "might\n"
+#~ "    not auto-merge the POT file with the PO ones, so you may need to "
+#~ "download the POT file as well\n"
+#~ "    and merge them together with"
+#~ msgstr ""
+#~ "Fordíthatják a fájlt, javíthatják, és így tovább. Fontos tudni azonban, "
+#~ "hogy néhány terv nem fésüli a POT fájt össze a PO-kkal, tehát a POT fájlt "
+#~ "is le kell tölteni, és összefésülni a következőképpen:"
+
+#~ msgid "msgmerge lang.old.po potfile.pot > lang.po"
+#~ msgstr "msgmerge hu.old.po potfájl.pot > hu.po"
+
+#~ msgid "3. Validate"
+#~ msgstr "3. Ellenőrzés"
+
+#~ msgid ""
+#~ "Check your file for validity, correctness, and completeness with a "
+#~ "command like"
+#~ msgstr ""
+#~ "Érvényesség, helyesség és teljesség ellenőrzése a következőképpen "
+#~ "történhet:"
+
+#~ msgid "msgfmt -c --statistics"
+#~ msgstr "msgfmt -c --statistics hu.po"
+
+#~ msgid "4. Login"
+#~ msgstr "4. Bejelentkezés"
+
+#~ msgid ""
+#~ "with your username and password. You may need to be a member\n"
+#~ "    of a particular user group to be able to submit translations. If you "
+#~ "aren't already a member of the translations group,\n"
+#~ "    check out your project's FAQ on how to become a member."
+#~ msgstr ""
+#~ "a használó nevével és jelszavával. Talán egy csoport tagjának kell lenni\n"
+#~ "    hogy beküldhessen fordításokat. Ha még nem tagja a honosító "
+#~ "csoportnak\n"
+#~ "    nézze meg a tervének megfelelő FAQ-ját, hogy megtudja mikéntválhat "
+#~ "taggá."
+
+#~ msgid "5. Upload"
+#~ msgstr "5. Feltöltés"
+
+#~ msgid ""
+#~ "you want your file to be submitted\n"
+#~ "    to. Select the file from your system, choose a destination, write a "
+#~ "changelog entry, and click\n"
+#~ "    'Preview'."
+#~ msgstr ""
+#~ "ahova a fájlt be akarja küldeni! Válassza ki a fájlt a rendszerében, "
+#~ "válasszon célt, írjon bejegyzést a változásnaplóba, és kattintson az "
+#~ "„Előnézet” gombra!"
+
+#~ msgid "6. Confirm and submit"
+#~ msgstr "6. Megerősítés és beadás"
+
+#~ msgid ""
+#~ "Preview the diff between the original and new file, and the commit "
+#~ "message.\n"
+#~ "    If everything seems OK, click 'Submit' and you're done."
+#~ msgstr ""
+#~ "Tekintse meg a változásokat az eredeti fájlhoz képest, és a beadási "
+#~ "üzenetet.Ha mindent rendben talál, kattintson a „Beadás” gombra, és ön "
+#~ "kész' van."
+
+#~ msgid "Jump to modules"
+#~ msgstr "Ugrás a modulokra"
+
+#~ msgid "Fedora Translations :: Submit :: Submission log"
+#~ msgstr "Fedora fordítások :: Beküldés :: Beküldés napló"
+
+#~ msgid "show more"
+#~ msgstr "lássunk többet"
+
+#~ msgid "Fedora Translations :: Submit"
+#~ msgstr "Fedora fordítások :: Beküldés"
+
+#~ msgid "Fedora Translations :: Authenticate"
+#~ msgstr "Fedora fordítások :: Hitelesítés"
+
+#~ msgid ""
+#~ "You may authenticate using\n"
+#~ "  your"
+#~ msgstr "Hitelesítéshez használhatja az ön"
+
+#~ msgid "Fedora Account System"
+#~ msgstr "Fedora Számlarendszer"
+
+#~ msgid ""
+#~ "credentials\n"
+#~ "  ("
+#~ msgstr "igazolásait ("
+
+#~ msgid "more info"
+#~ msgstr "további infó"
+
+#~ msgid ""
+#~ "To commit translations through the web system, you need to be a member\n"
+#~ "  of the Fedora translations team ('cvsl10n' group in the Fedora Account "
+#~ "System).\n"
+#~ "  To learn how to do this, please refer to\n"
+#~ "  the"
+#~ msgstr ""
+#~ "Ahhoz, hogy a webes rendszerben beküldhessék a fordításokat, a Fedora "
+#~ "fordító csapat tagjává kell válni („cvsl10n” csoport a Fedora "
+#~ "Számlarendszerben). Ehhez nyújt segítséget a"
+
+#~ msgid "Translation Quick Start Guide"
+#~ msgstr "Fordítás gyorstalpaló"
+
+#~ msgid "If you need some help, contact your"
+#~ msgstr "Ha segítség kell, a "
+
+#~ msgid "local team"
+#~ msgstr "helyi csapat"
+
+#~ msgid ""
+#~ "or\n"
+#~ "  the"
+#~ msgstr "vagy a "
+
+#~ msgid "directly."
+#~ msgstr "tagjaival lépjen kapcsolatba közvetlenül!"
+
+#~ msgid "Fedora Translations :: Information for maintainers"
+#~ msgstr "Fedora fordítások :: Tájékoztató karbantartóknak"
+
+#~ msgid ""
+#~ "Tell us about your module\n"
+#~ "    by"
+#~ msgstr "Meséljen a moduljáról "
+
+#~ msgid "opening a \"bug\" report"
+#~ msgstr "„hibajelentést” nyitva"
+
+#~ msgid ""
+#~ "with\n"
+#~ "    the following information:"
+#~ msgstr "a következő adatokkal:"
+
+#~ msgid "FedoraHosted.org"
+#~ msgstr "FedoraHosted.org"
+
+#~ msgid "Fedora Project homepage"
+#~ msgstr "Fedora Terv honlapja"
+
+#~ msgid "Fedora Localization Project home"
+#~ msgstr "Fedora Lokalizáció Terv honlap"
+
+#~ msgid "FLP home"
+#~ msgstr "FLP honlap"
+
+#~ msgid "Translatable modules (docs, applications, etc.)"
+#~ msgstr "Fordítható modulok (doksi, alkalmazás, stb.)"
+
+#~ msgid "Localization Teams"
+#~ msgstr "Lokalizáló csapatok"
+
+#~ msgid "Teams"
+#~ msgstr "Csapatok"
+
+#~ msgid "Release cycles (F7, F8, etc.)"
+#~ msgstr "Kiadási ciklusok (F7, F8, stb.)"
+
+#~ msgid "Submit translations through Transifex"
+#~ msgstr "Fordítás beküldése Transifexen"
+
+#~ msgid "Submit (Tx)"
+#~ msgstr "Beküldés (Tx)"
+
+#~ msgid "Help"
+#~ msgstr "Súgó"
+
+#~ msgid "Join the Fedora Localization Project"
+#~ msgstr "Beállás a Fedora Lokalizáció Tervbe"
+
+#~ msgid "Join the FLP"
+#~ msgstr "Beállás a FLP-be"
+
+#~ msgid "Frequently asked questions about the website"
+#~ msgstr "Gyakran elhangzó kérdések a webhelyről"
+
+#~ msgid "Website FAQ"
+#~ msgstr "Webhely GYIK"
+
+#~ msgid "Fedora Localization Project wiki pages"
+#~ msgstr "Fedora Lokalizáció Terv wiki lapjai"
+
+#~ msgid "Wiki pages"
+#~ msgstr "Wiki lapok"
+
+#~ msgid "Fedora Home"
+#~ msgstr "Fedora Otthon"
+
+#~ msgid "Fedora documentation"
+#~ msgstr "Fedora dokumentáció"
+
+#~ msgid "Collaborative knowledge"
+#~ msgstr "Közösségi tudás"
+
+#~ msgid "Wiki"
+#~ msgstr "Wiki"
+
+#~ msgid "The voices of the community"
+#~ msgstr "A közösség hangjai"
+
+#~ msgid "Planet"
+#~ msgstr "Bolygó"
+
+#~ msgid "Community webpages"
+#~ msgstr "Közösségi weblapok"
+
+#~ msgid ""
+#~ "Copyright © 2007 Red Hat, Inc. and others.  All Rights Reserved.\n"
+#~ "        Please send any comments or corrections to the"
+#~ msgstr ""
+#~ "Szerzői jog © 2007. Red Hat, Inc. és mások. Minden jog fenntartva. Kérem "
+#~ "küldjön minden megjegyzést vagy javítást a "
+
+#~ msgid "websites team"
+#~ msgstr "webhely csapatnak"
+
+#~ msgid ""
+#~ "The Fedora Project is maintained and driven by the community and "
+#~ "sponsored by Red Hat.  \n"
+#~ "          This is a community maintained site.  Red Hat is not "
+#~ "responsible for content."
+#~ msgstr ""
+#~ "A Fedora Tervet a közösség tartja fent és vezeti a Red Hat támogatásával. "
+#~ "Ez egy közösségi hely. Red Hat nem felelős a tartalomért."
+
+#~ msgid "Legal"
+#~ msgstr "Jogi"
+
+#~ msgid "Trademark Guidelines"
+#~ msgstr "Védjegy útmutató"
+
+#~ msgid "Fedora Translations :: Submit :: Add a new module"
+#~ msgstr "Fedora fordítások :: Beküldés :: Új modul hozzáadása"
+
+#~ msgid "Fedora Translations :: Submit :: %(module)s"
+#~ msgstr "Fedora fordítások :: Beküldés :: %(module)s"
+
+#~ msgid ""
+#~ "to\n"
+#~ "    identify which branch of this module is used for each release."
+#~ msgstr "hogy megtudja a modul melyik kiadása melyik ágat használja."
+
+#~ msgid "Fedora Translations :: Submit :: Modules"
+#~ msgstr "Fedora fordítások :: Beküldés :: Modulok"
+
+#~ msgid "Fedora Translations :: Preview submission"
+#~ msgstr "Fedora fordítások :: Beküldés előnézet"
+
+#~ msgid "Fedora Translations :: Submit :: People"
+#~ msgstr "Fedora fordítások :: Beküldés :: Emberek"
+
+#~ msgid "Fedora contributors"
+#~ msgstr "Feodra hozzájárulók"
+
+#~ msgid "Fedora Translations :: Submit :: Add a new repository"
+#~ msgstr "Fedora fordítások :: Beküldés :: Új tároló hozzáadása"
+
+#~ msgid ""
+#~ "You can checkout the module from the\n"
+#~ "    repository it is hosted, anonymously or not. Alternatively, our"
+#~ msgstr ""
+#~ "Kiveheti a modult a tárolóból, ahová elhelyezték, névtelenül vagy nem. "
+#~ "Különben a"
+
+#~ msgid ""
+#~ "with your Fedora Account System username and password. You need to be a "
+#~ "member\n"
+#~ "    of the"
+#~ msgstr "Fedora Számlarendszerbeli névvel és jelszóval. A "
+
+#~ msgid "cvsl10n"
+#~ msgstr "cvsl10n"
+
+#~ msgid ""
+#~ "group to be able to submit translations. If you aren't already a member "
+#~ "of our translations group,\n"
+#~ "    read"
+#~ msgstr ""
+#~ "csoport tagjának kell lenni a fordítások beküldéséhez. Ha még nem a "
+#~ "fordító csoportunk tagja, olvassa el a "
+
+#~ msgid "how to join the FLP"
+#~ msgstr "hogyan csatlakozzunk az FLP-hezt"
