@@ -1,7 +1,14 @@
 import os
 
 from bzrlib import bzrdir
-from bzrlib.plugins.bzrtools import clean_tree
+
+try:
+    # clean_tree is available on bzr 0.14.x
+    from bzrlib import clean_tree
+except ImportError:
+    # Grab clean_tree from older bzrtools plugin
+    from bzrlib.plugins.bzrtools import clean_tree
+
 from bzrlib.errors import NotBranchError
 
 from django.conf import settings
