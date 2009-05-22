@@ -26,7 +26,7 @@
     {% if results %}
       <h3 class="pagetitle">
         {% with results|length as result_count %}{% blocktrans %}Search Results ({{ result_count }}){% endblocktrans %}</h3>{% endwith %}
-      {% autopaginate results 5 %}
+      {% autopaginate results 10 %}
       <div class="project_list">
       {% for project in results %}
         {% highlight terms as name %} {# set `name` object #}
