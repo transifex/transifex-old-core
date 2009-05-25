@@ -108,6 +108,10 @@ urlpatterns += patterns('',
         name = 'component_view_file',
         kwargs = {'view': True },),
     url(
+        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit/(?P<filename>(.*))$',
+        view = component_file_edit,
+        name = 'component_edit_file',),
+    url(
         regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/toggle_lock/(?P<filename>(.*))$',
         view = component_toggle_lock_file,
         name = 'component_toggle_lock_file',),

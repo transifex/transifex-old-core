@@ -1,0 +1,59 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+
+{% block title %}
+{% with pofile.object as component %}
+{{ block.super }}
+| {{ component.project.name }}
+| {% blocktrans with component.name as component_name %}{{ component_name }}{% endblocktrans %}
+| {% blocktrans with pofile.filename as filename %}Translate '{{ filename }}'{% endblocktrans %}
+{% endwith %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% with pofile.object as component %}
+{{ block.super }}
+&raquo; <a href="{{ component.project.get_absolute_url }}">{{ component.project.name }}</a>
+&raquo; <a href="{{ component.get_absolute_url }}">{{ component.name }}</a>
+&raquo; {% blocktrans with pofile.filename as filename %}Translate '<code>{{ filename }}</code>'{% endblocktrans %}
+{% endwith %}
+{% endblock %}
+
+{% block content_title %}
+<h2 class="pagetitle">{% blocktrans with component.name as component_name and pofile.filename as filename %}Translate '<code>{{ filename }}</code>'{% endblocktrans %}</h2>
+{% endblock %}
+
+{% block body %}
+{% if pofile.total %}
+  <h3>Current status</h3>
+  <table class="definition">
+  <tr>
+    <th>Translated:</dt>
+      <td>{{ pofile.trans }} {% ifnotequal pofile.trans_perc 0 %}({{ pofile.trans_perc }}%){% endifnotequal %}</dd>
+  </tr>
+  <tr>
+    <th>Untranslated:</dt>
+      <td>{{ pofile.untrans }} {% ifnotequal pofile.untrans_perc 0 %}({{ pofile.untrans_perc }}%){% endifnotequal %}</dd>
+  </tr>
+  <tr>
+    <th>Total strings:</dt>
+      <td>{{ pofile.total }}</dd>
+  </tr>
+  </table>
+{% endif %}
+  
+  <h3>Live translation</h3>
+
+  {% if form_message %}
+    <p class="message i16 bell">{{ form_message }}</p>
+  {% endif %}
+  <form action='' method='post'>
+  <table class="trans_web_edit">
+    {% with pofile_form as form %} 
+    {% include "webtrans/transfile_form.html" %}
+    {% endwith %}
+  </table>
+  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Submit translations" %}" /></p>
+  </form>
+{% endblock %}

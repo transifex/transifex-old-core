@@ -1,4 +1,5 @@
 import os, commands, re
+import polib
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
@@ -53,6 +54,19 @@ class POTManager(TransManagerMixin):
         file_content = filef.read()
         filef.close()
         return file_content
+
+    def get_po_entries(self, filename):
+        """Return a Django form field for the component"""
+        from django import forms
+        if filename in self.file_set:
+            file_path = os.path.join(self.path, filename)
+            try:
+                po = polib.pofile(file_path)
+            except IOError:
+                pass
+            else:
+                return po
+        return None
 
     def get_po_files(self):
         """ Return a list of PO filenames """

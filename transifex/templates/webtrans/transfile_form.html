@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load txcommontags %}
+{% if form %}
+{% for field in form %}
+  <tr class="{% cycle 'odd' 'even' %}">
+    <th class="msg">{{ field.label }}</th>
+    <td class="trans">{{ field }}</td>
+    <td>{% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
+    <td class="notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
+    <td class="notes"><span class="helptext">{% for occ in field.occurrences %}{{ occ }}<br/>{% endfor %}</span></td>
+{% comment %}<td>{% if field.field.required %}<span class="required">*</span>{% endif %}</td>{% endcomment %}
+  </tr>
+{% endfor %}
+{% endif %}

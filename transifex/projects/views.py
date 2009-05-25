@@ -423,6 +423,17 @@ def component_file(request, project_slug, component_slug, filename,
     response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
     return response
 
+
+def component_file_edit(request, project_slug, component_slug, filename, 
+                        is_msgmerged=True):
+    from webtrans.views import transfile_edit
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
+    #FIXME: This approach hits the database twice!
+    # See also: http://transifex.org/ticket/210
+    pofile = POFile.objects.get(filename=filename, component=component)
+    return transfile_edit(request, pofile.id)
+
 @login_required
 @perm_required_with_403('projects.submit_file')
 def component_submit_file(request, project_slug, component_slug, 

@@ -1,3 +1,5 @@
+import os
+import polib
 from translations.lib.types.pot import POTManager
 from translations.models import POFile
 from txcommon.log import logger
@@ -8,7 +10,7 @@ class POTHandler:
     
     You can use this higher-level object to interact with a
     component's statistics instead of meddling with the lower-
-    level POTManager. Each Component obect gets one of these
+    level POTManager. Each Component object gets one of these
     as ``component.trans``.
     
     """
@@ -82,7 +84,6 @@ class POTHandler:
         logger.debug("Clearing stats for %s" % self.component)
         self.tm.delete_stats_for_object(self.component)
 
-        
     def get_stats(self):
         """Return stats for the component."""
         return self.tm.get_stats(self.component)
@@ -91,8 +92,15 @@ class POTHandler:
         """Return stats for the component."""
         return self.tm.get_file_content(filename, is_msgmerged)
 
+    def get_po_entries(self, filename):
+        """Return a Django form field for the component"""
+        return self.tm.get_po_entries(filename)
+
     def get_source_stats(self):
         return self.tm.get_source_stats(self.component)
+
+    def get_source_file(self):
+        return self.tm.get_source_file()
 
     def guess_language(self, filename):
         """Set stats for a specific language."""
