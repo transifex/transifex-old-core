@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-25 18:40+0000\n"
-"PO-Revision-Date: 2009-05-01 20:41+0200\n"
+"PO-Revision-Date: 2009-05-26 00:11+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -556,15 +556,16 @@ msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Wyrażenie regularne do filtrowania plików. Np. \"po/.*\""
 
 #: projects/forms.py:40 projects/models.py:213
-#, fuzzy
 msgid "Submit to"
-msgstr "Wyślij plik"
+msgstr "Wyślij do"
 
 #: projects/forms.py:41
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
+"Wybierz, jak ten składnik powinien obsługiwać wysyłanie plików. Dostępne "
+"opcje są oparte na typie składnika"
 
 #: projects/models.py:81 projects/models.py:190 releases/models.py:20
 #: txcollections/models.py:23
@@ -709,14 +710,12 @@ msgid "Does this module repository allow write access?"
 msgstr "Czy repozytorium tego modułu umożliwia dostęp do zapisu?"
 
 #: projects/models.py:222
-#, fuzzy
 msgid "Calculate statistics?"
-msgstr "Statystyki tłumaczenia"
+msgstr "Obliczać statystyki?"
 
 #: projects/models.py:223
-#, fuzzy
 msgid "Should statistics be calculated for this component?"
-msgstr "Wyślij nowe tłumaczenie dla tego składnika."
+msgstr "Czy statystyki powinny być obliczane dla tego składnika?"
 
 #: projects/models.py:233
 msgid "Project"
@@ -847,7 +846,6 @@ msgid "When this release will be available."
 msgstr "Kiedy to wydanie będzie dostępne."
 
 #: releases/models.py:33
-#, fuzzy
 msgid "String freeze date"
 msgstr "Data zamrożenia łańcuchów"
 
@@ -901,7 +899,7 @@ msgstr ""
 
 #: repowatch/models.py:90
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr "Musisz podać co najmniej jedną nic nie zawierającą parę nawiasów."
+msgstr "Należy podać co najmniej jedną nic nie zawierającą parę nawiasów."
 
 #: repowatch/models.py:141
 msgid "watch"
@@ -1616,7 +1614,7 @@ msgid ""
 msgstr ""
 "Można otrzymywać powiadomienia, kiedy nastąpi jakieś zdarzenie w "
 "Transifeksie. Sprawdź dostępne powiadomienia na poniższej liście i wybierz, "
-"o których zdarzeniach chcesz być powiadamiany przez e-mail."
+"o których zdarzeniach chcesz być powiadamiany przez wiadomości e-mail."
 
 #: templates/notification/notices.html:55
 msgid "Primary email"
@@ -1776,6 +1774,8 @@ msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
 msgstr ""
+"Ten składnik obsługuje lokalne przechowywanie wysłanych plików, a także "
+"wysyła je na adres e-mail opiekuna."
 
 #: templates/projects/component_detail.html:25
 msgid ""
@@ -1783,12 +1783,17 @@ msgid ""
 "submitted files will be sends to the maintainers\\' emails and the "
 "statistics will reflect the change once the files are committed upstream."
 msgstr ""
+"Ten składnik nie obsługuje lokalnego przechowywania wysłanych plików. Będą "
+"one wysyłane na adres e-mail opiekuna, a statystyki będą uwzględniały zmianę "
+"po wysłaniu plików do oryginalnego projektu przez opiekuna."
 
 #: templates/projects/component_detail.html:29
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
 msgstr ""
+"Ten składnik obsługuje lokalne przechowywanie wysłanych plików, a także "
+"wysyła je bezpośrednio do repozytorium oryginalnego projektu."
 
 #: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
@@ -1909,12 +1914,11 @@ msgstr "Nowy składnik dla %(project_name)s"
 
 #: templates/projects/component_form.html:98
 msgid "Checkout"
-msgstr ""
+msgstr "Pobieranie"
 
 #: templates/projects/component_form.html:99
-#, fuzzy
 msgid "Submission"
-msgstr "Umożliwienie wysyłanie plików"
+msgstr "Wysyłanie"
 
 #: templates/projects/component_form.html:112
 #: templates/projects/component_form.html:122
@@ -2493,50 +2497,47 @@ msgstr "Zapisz wydanie"
 
 #: templates/userprofile/menu.html:5
 msgid "Overview"
-msgstr ""
+msgstr "Przegląd"
 
 #: templates/userprofile/menu.html:6
 #: templates/userprofile/profile/personal.html:36
 msgid "Personal information"
-msgstr ""
+msgstr "Informacje osobiste"
 
 #: templates/userprofile/menu.html:7
 msgid "Avatar"
-msgstr ""
+msgstr "Awatar"
 
 #: templates/userprofile/menu.html:8
 #: templates/userprofile/profile/overview.html:60
 #: templates/userprofile/profile/public.html:38
-#, fuzzy
 msgid "Location"
-msgstr "Działanie"
+msgstr "Położenie"
 
 #: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:22
-#, fuzzy
 msgid "Remove profile"
-msgstr "Profil"
+msgstr "Usuń profil"
 
 #: templates/userprofile/account/email_validation.html:4
 #: templates/userprofile/account/email_validation.html:23
 msgid "E-mail change"
-msgstr ""
+msgstr "Zmiana adresu e-mail"
 
 #: templates/userprofile/account/email_validation.html:4
 #: templates/userprofile/account/email_validation.html:23
 #: templates/userprofile/account/email_validation.html:40
 #: templates/userprofile/account/email_validation_processed.html:20
 msgid "Add e-mail"
-msgstr ""
+msgstr "Dodaj adres e-mail"
 
 #: templates/userprofile/account/email_validation.html:24
-#, fuzzy
 msgid "New e-mail address"
-msgstr "Zmień adres e-mail"
+msgstr "Nowy adres e-mail"
 
 #: templates/userprofile/account/email_validation.html:34
 msgid "Send confirmation"
-msgstr ""
+msgstr "Wyślij potwierdzenie"
 
 #: templates/userprofile/account/email_validation.html:41
 #: templates/userprofile/account/email_validation_processed.html:21
@@ -2544,45 +2545,48 @@ msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
 "confirmation"
 msgstr ""
+"Podaj nowy adres e-mail. Zostanie na niego wysłana wiadomość e-mail, aby go "
+"przetestować i potwierdzić"
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
-msgstr ""
+msgstr "Pomyślnie sprawdzono adres e-mail"
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail change unsuccessful"
-msgstr ""
+msgstr "Zmiana adresu e-mail nie powiodła się"
 
 #: templates/userprofile/account/email_validation_done.html:14
-#, fuzzy
 msgid "E-mail address validated successfully"
-msgstr "Pomyślnie wysłano plik: %s"
+msgstr "Pomyślnie sprawdzono adres e-mail"
 
 #: templates/userprofile/account/email_validation_done.html:16
 msgid ""
 "The key you received via e-mail is no longer valid. Please try the e-mail "
 "validation process again"
 msgstr ""
+"Klucz otrzymany przez adres e-mail nie jest już prawidłowy. Spróbuj ponownie "
+"wykonać proces sprawdzenia adresu e-mail"
 
 #: templates/userprofile/account/email_validation_done.html:23
 #: templates/userprofile/account/email_validation_reset_response.html:22
 msgid "E-mail validation process"
-msgstr ""
+msgstr "Proces sprawdzenia adresu e-mail"
 
 #: templates/userprofile/account/email_validation_done.html:24
 #: templates/userprofile/account/email_validation_reset_response.html:23
 msgid "You can manage the e-mail validation process from the"
-msgstr ""
+msgstr "Można zarządzać procesem sprawdzenia adresu e-mail ze"
 
 #: templates/userprofile/account/email_validation_done.html:24
 #: templates/userprofile/account/email_validation_reset_response.html:23
 msgid "overview page"
-msgstr ""
+msgstr "strony przeglądu"
 
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:13
 msgid "E-mail change processed"
-msgstr ""
+msgstr "Przetworzono zmianę adresu e-mail"
 
 #: templates/userprofile/account/email_validation_processed.html:14
 msgid ""
@@ -2590,21 +2594,23 @@ msgid ""
 "Please access to your e-mail and complete this process following the "
 "instructions specified in the e-mail body"
 msgstr ""
+"Wiadomość e-mail została wysłana na nowy adres e-mail, aby go sprawdzić i "
+"aktywować. Przejdź do swojej poczty e-mail i zakończ proces postępując "
+"zgodnie z instrukcjami podanymi w wiadomości e-mail"
 
 #: templates/userprofile/account/email_validation_reset.html:4
 #: templates/userprofile/account/email_validation_reset.html:19
 #: templates/userprofile/account/email_validation_reset.html:36
 msgid "Resend e-mail validation"
-msgstr ""
+msgstr "Ponownie wyślij sprawdzenie adresu e-mail"
 
 #: templates/userprofile/account/email_validation_reset.html:20
-#, fuzzy
 msgid "Insert your e-mail address"
-msgstr "Podaj adres e-mail:"
+msgstr "Podaj adres e-mail"
 
 #: templates/userprofile/account/email_validation_reset.html:30
 msgid "Resend confirmation"
-msgstr ""
+msgstr "Ponownie wyślij potwierdzenie"
 
 #: templates/userprofile/account/email_validation_reset.html:37
 msgid ""
@@ -2612,79 +2618,76 @@ msgid ""
 "site. Insert the e-mail address yu have registered with so we can resend the "
 "validation e-mail to you again"
 msgstr ""
+"Nie sprawdzono adresu e-mail, więc nie możesz wejść na stronę. Podaj adres "
+"e-mail, za pomocą którego się zarejestrowałeś, aby można było ponownie "
+"wysłać wiadomość e-mail sprawdzenia"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
-msgstr ""
+msgstr "Wysłano wiadomość e-mail sprawdzenia"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Your user account was already active"
-msgstr ""
+msgstr "Konto jest już aktywne"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "We've e-mailed you the e-mail validation link"
-msgstr ""
+msgstr "Wysłano wiadomość e-mail z odnośnikiem sprawdzenia"
 
 #: templates/userprofile/account/email_validation_reset_response.html:16
 msgid "Your e-mail was already validated"
-msgstr ""
+msgstr "Adres e-mail został już sprawdzony"
 
 #: templates/userprofile/account/login.html:4
 #: templates/userprofile/account/login.html:19
 msgid "User login"
-msgstr ""
+msgstr "Login użytkownika"
 
 #: templates/userprofile/account/login.html:42
 msgid "Utilities"
-msgstr ""
+msgstr "Narzędzia"
 
 #: templates/userprofile/account/login.html:46
 #: templates/userprofile/profile/overview.html:95
 msgid "Resend validation e-mail"
-msgstr ""
+msgstr "Ponownie wyślij wiadomość e-mail sprawdzenia"
 
 #: templates/userprofile/account/login.html:48
-#, fuzzy
 msgid "Sign up!"
-msgstr "Wyloguj się"
+msgstr "Zarejestruj się!"
 
 #: templates/userprofile/account/logout.html:4
 #: templates/userprofile/account/logout.html:9
 msgid "Logged out"
-msgstr ""
+msgstr "Wylogowano"
 
 #: templates/userprofile/account/logout.html:10
-#, fuzzy
 msgid "You've been logged out"
-msgstr "<p>Zostałeś wylogowany."
+msgstr "Zostałeś wylogowany"
 
 #: templates/userprofile/account/logout.html:10
 msgid "Log in again"
-msgstr ""
+msgstr "Zaloguj się ponownie"
 
 #: templates/userprofile/account/password_change.html:4
 #: templates/userprofile/account/password_change.html:23
 #: templates/userprofile/account/password_reset_confirm.html:4
-#, fuzzy
 msgid "Password change for"
-msgstr "Przywrócenie hasła"
+msgstr "Zmiana hasła dla"
 
 #: templates/userprofile/account/password_change.html:24
-#, fuzzy
 msgid "Old password"
-msgstr "Nowe hasło"
+msgstr "Stare hasło"
 
 #: templates/userprofile/account/password_change.html:36
 #: templates/userprofile/account/password_reset_confirm.html:32
-#, fuzzy
 msgid "Confirm password"
-msgstr "Potwierdź hasło:"
+msgstr "Potwierdź hasło"
 
 #: templates/userprofile/account/password_change.html:52
 #: templates/userprofile/account/password_change_done.html:19
-#, fuzzy
 msgid "Password change"
-msgstr "Hasło"
+msgstr "Zmiana hasła"
 
 #: templates/userprofile/account/password_change.html:53
 #: templates/userprofile/account/password_change_done.html:20
@@ -2692,42 +2695,39 @@ msgid ""
 "Password change utility page. Please enter your new password twice so we can "
 "verify you typed it in correctly"
 msgstr ""
+"Strona narzędzia zmiany hasła. Podaj nowe hasło dwa razy, aby można było "
+"sprawdzić, czy poprawnie je wpisałeś"
 
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
-#, fuzzy
 msgid "Password change successful"
-msgstr "Przywrócenie hasła"
+msgstr "Pomyślnie zmieniono hasło"
 
 #: templates/userprofile/account/password_change_done.html:13
 msgid "The password has been changed successfully"
-msgstr ""
+msgstr "Pomyślnie zmieniono hasło"
 
 #: templates/userprofile/account/password_expired.html:4
-#, fuzzy
 msgid "Password key expired"
-msgstr "Przywrócenie hasła"
+msgstr "Klucz hasła wygasł"
 
 #: templates/userprofile/account/password_expired.html:9
 msgid ""
 "The password key you're trying to use is expired. Please, request a new one"
-msgstr ""
+msgstr "Hasło, którego próbujesz użyć wygasło. Poproś o nowe"
 
 #: templates/userprofile/account/password_reset.html:21
-#, fuzzy
 msgid "E-mail address"
-msgstr "Zmień adres e-mail"
+msgstr "Adres e-mail"
 
 #: templates/userprofile/account/password_reset.html:31
-#, fuzzy
 msgid "Reset my password"
-msgstr "Zgubiłem hasło!"
+msgstr "Przywróć hasło"
 
 #: templates/userprofile/account/password_reset.html:37
 #: templates/userprofile/account/password_reset_done.html:16
-#, fuzzy
 msgid "Password reset form"
-msgstr "Przywrócenie hasła"
+msgstr "Formularz przywrócenia hasła"
 
 #: templates/userprofile/account/password_reset.html:38
 #: templates/userprofile/account/password_reset_done.html:17
@@ -2735,10 +2735,12 @@ msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
 "password and e-mail the new one to you"
 msgstr ""
+"Zapomniałeś hasło? Podaj adres e-mail, a hasło zostanie przywrócone i "
+"wysłane do ciebie"
 
 #: templates/userprofile/account/password_reset_complete.html:13
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr ""
+msgstr "Hasło zostało ustawione. Można się teraz zalogować."
 
 #: templates/userprofile/account/password_reset_complete.html:20
 #: templates/userprofile/account/password_reset_confirm.html:56
@@ -2746,40 +2748,43 @@ msgid ""
 "Password reset utility page. Please enter your new password twice so we can "
 "verify you typed it in correctly"
 msgstr ""
+"Strona narzędzia przywrócenia hasła. Podaj nowe hasło dwa razy, aby można "
+"było sprawdzić, czy poprawnie je wpisałeś"
 
 #: templates/userprofile/account/password_reset_confirm.html:47
-#, fuzzy
 msgid "Password reset unsuccessful"
-msgstr "Przywrócenie hasła"
+msgstr "Przywrócenie hasła nie powiodło się"
 
 #: templates/userprofile/account/password_reset_confirm.html:48
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
+"Odnośnik przywrócenia hasła jest nieprawidłowy, prawdopodobnie ponieważ "
+"został już użyty. Poproś o nowe przywrócenie hasła."
 
 #: templates/userprofile/account/password_reset_done.html:4
 #: templates/userprofile/account/password_reset_done.html:9
-#, fuzzy
 msgid "Password reset successful"
-msgstr "Przywrócenie hasła"
+msgstr "Pomyślnie przywrócono hasło"
 
 #: templates/userprofile/account/password_reset_done.html:10
 msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
 "receiving it shortly"
 msgstr ""
+"Wysłano wiadomość e-mail z instrukcjami uzyskania nowego hasła. Powinieneś "
+"go niedługo otrzymać"
 
 #: templates/userprofile/account/registration.html:4
 #: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
-msgstr ""
+msgstr "Rejestracja użytkownika"
 
 #: templates/userprofile/account/registration.html:22
 #: templates/userprofile/account/registration_done.html:19
-#, fuzzy
 msgid "Register a new account"
-msgstr "Nowe konto"
+msgstr "Zarejestruj nowe konto"
 
 #: templates/userprofile/account/registration.html:23
 #: templates/userprofile/account/registration_done.html:20
@@ -2787,10 +2792,12 @@ msgid ""
 "Joining this community is quick and easy. You only need to fill the form to "
 "get access to all the private content"
 msgstr ""
+"Dołączenie do tej społeczności jest szybkie i proste. Musisz tylko wypełnić "
+"formularz. aby uzyskać dostęp do całej prywatnej zawartości"
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
-msgstr ""
+msgstr "Zakończono rejestrację"
 
 #: templates/userprofile/account/registration_done.html:10
 msgid ""
@@ -2798,6 +2805,9 @@ msgid ""
 "url has been sent to your e-mail address. You must access this message on "
 "your e-mail account to finish the registration process."
 msgstr ""
+"Pomyślnie zarejestrowano nowe konto, a adres aktywacji konta został wysłany "
+"na adres e-mail. Należy przeczytać tę wiadomość na koncie e-mail, aby "
+"zakończyć proces rejestracji."
 
 #: templates/userprofile/account/registration_done.html:13
 #, python-format
@@ -2805,204 +2815,198 @@ msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
+"Pomyślnie zarejestrowano nowe konto. Przejdź do <a href=\"%"
+"(overview_url)s\">strony logowania</a>, aby uwierzytelnić się i zacząć "
+"używać tej strony."
 
 #: templates/userprofile/account/includes/registration_form.html:11
-#, fuzzy
 msgid "E-mail"
 msgstr "Adres e-mail"
 
 #: templates/userprofile/account/includes/registration_form.html:11
-#, fuzzy
 msgid "optional"
-msgstr "Opcje"
+msgstr "opcjonalne"
 
 #: templates/userprofile/account/includes/registration_form.html:23
-#, fuzzy
 msgid "Password (again)"
-msgstr "Ponownie nowe hasło"
+msgstr "Hasło (ponownie)"
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:38
 msgid "Choose the location of your avatar"
-msgstr ""
+msgstr "Wybierz położenie awatara"
 
 #: templates/userprofile/avatar/choose.html:41
 msgid "Select an image from disk"
-msgstr ""
+msgstr "Wybierz obraz z dysku"
 
 #: templates/userprofile/avatar/choose.html:43
 #: templates/userprofile/avatar/choose.html:49
 #: templates/userprofile/avatar/crop.html:35
 msgid "Done"
-msgstr ""
+msgstr "Zakończono"
 
 #: templates/userprofile/avatar/choose.html:47
 msgid ""
 "Select an image from a remote URL. Put the URL on the input below and we'll "
 "retrieve the image for you"
 msgstr ""
+"Wybierz obraz ze zdalnego adresu URL. Podaj adres URL w polu poniżej, a "
+"obraz zostanie pobrany"
 
 #: templates/userprofile/avatar/choose.html:54
 msgid "Search on Picasa Web"
-msgstr ""
+msgstr "Znajdź na Picasa Web"
 
 #: templates/userprofile/avatar/choose.html:79
 #: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
-msgstr ""
+msgstr "Strona wyboru awatara"
 
 #: templates/userprofile/avatar/choose.html:80
 #: templates/userprofile/avatar/crop.html:42
 msgid ""
 "You have several options to select the image you want as avatar on your "
 "profile"
-msgstr ""
+msgstr "Istnieje kilka opcji wyboru obrazu, który ma zostać awatarem w profilu"
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
 msgid "Crop &amp; resize the area you want"
-msgstr ""
+msgstr "Przytnij i zmień rozmiar obszaru, który chcesz wykorzystać"
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
-msgstr ""
+msgstr "Usuń informacje osobiste"
 
 #: templates/userprofile/profile/delete.html:14
 msgid "Delete your personal information"
-msgstr ""
+msgstr "Usuń informacje osobiste"
 
 #: templates/userprofile/profile/delete.html:15
 msgid "Are you sure?"
-msgstr ""
+msgstr "Jesteś pewny?"
 
 #: templates/userprofile/profile/delete.html:15
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: templates/userprofile/profile/delete.html:23
 msgid ""
 "It erases all your private data except your username. You can refill the "
 "information later if you want to"
 msgstr ""
+"Usuwa wszystkie prywatne dane, poza nazwą użytkownika. Później można "
+"ponownie wypełnić te informacje"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
 msgid "%(user)s's Dashboard"
-msgstr ""
+msgstr "Strona główna użytkownika %(user)s"
 
 #: templates/userprofile/profile/location.html:21
 msgid "Define your location"
-msgstr ""
+msgstr "Określ swoje położenie"
 
 #: templates/userprofile/profile/location.html:21
 msgid "Auto-discover location"
-msgstr ""
+msgstr "Automatyczne wykrywanie położenia"
 
 #: templates/userprofile/profile/location.html:22
 #: templates/userprofile/profile/overview.html:51
 #: templates/userprofile/profile/public.html:35
-#, fuzzy
 msgid "Country"
-msgstr "wpis dziennika"
+msgstr "Państwo"
 
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
-msgstr ""
+msgstr "Wczytywanie..."
 
 #: templates/userprofile/profile/location.html:26
-#, fuzzy
 msgid "Location:"
-msgstr "Zestaw:"
+msgstr "Położenie:"
 
 #: templates/userprofile/profile/location.html:27
-#, fuzzy
 msgid "Position"
-msgstr "Opis"
+msgstr "Pozycja"
 
 #: templates/userprofile/profile/location.html:35
 #: templates/userprofile/profile/personal.html:30
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: templates/userprofile/profile/location.html:40
 msgid "Location information"
-msgstr ""
+msgstr "Informacje o położeniu"
 
 #: templates/userprofile/profile/location.html:41
 msgid "Define your location information"
-msgstr ""
+msgstr "Określ informacje o położeniu"
 
 #: templates/userprofile/profile/overview.html:4
 #: templates/userprofile/profile/overview.html:32
 msgid "Overview of your profile"
-msgstr ""
+msgstr "Przegląd profilu"
 
 #: templates/userprofile/profile/overview.html:37
-#, fuzzy
 msgid "Change avatar"
-msgstr "Zmień hasło"
+msgstr "Zmień awatar"
 
 #: templates/userprofile/profile/overview.html:37
 msgid "Add avatar"
-msgstr ""
+msgstr "Dodaj awatar"
 
 #: templates/userprofile/profile/overview.html:42
-#, fuzzy
 msgid "E-mail:"
-msgstr "Adres e-mail"
+msgstr "Adres e-mail:"
 
 #: templates/userprofile/profile/overview.html:44
 msgid "Not set yet"
-msgstr ""
+msgstr "Nie ustawiono jeszcze"
 
 #: templates/userprofile/profile/overview.html:46
 msgid " (Not validated)"
-msgstr ""
+msgstr " (nie sprawdzono)"
 
 #: templates/userprofile/profile/overview.html:55
 #: templates/userprofile/profile/overview.html:64
 #: templates/userprofile/profile/overview.html:73
-#, fuzzy
 msgid "Not set"
-msgstr "Uwaga"
+msgstr "Nie ustawiono"
 
 #: templates/userprofile/profile/overview.html:91
 msgid "Management:"
-msgstr ""
+msgstr "Zarządzanie:"
 
 #: templates/userprofile/profile/overview.html:94
-#, fuzzy
 msgid "Change your e-mail address"
 msgstr "Zmień adres e-mail"
 
 #: templates/userprofile/profile/overview.html:94
-#, fuzzy
 msgid "Add your e-mail address"
-msgstr "Podaj adres e-mail:"
+msgstr "Dodaj adres e-mail"
 
 #: templates/userprofile/profile/overview.html:99
-#, fuzzy
 msgid "Add location"
-msgstr "Dodaj zestaw"
+msgstr "Dodaj położenie"
 
 #: templates/userprofile/profile/overview.html:101
-#, fuzzy
 msgid "Change location"
-msgstr "Zmień powiadomienia"
+msgstr "Zmień położenie"
 
 #: templates/userprofile/profile/personal.html:4
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
-msgstr ""
+msgstr "Zmodyfikuj informacje osobiste"
 
 #: templates/userprofile/profile/personal.html:37
 msgid "Insert some information about you"
-msgstr ""
+msgstr "Podaj kilka informacji o sobie"
 
 #: templates/userprofile/profile/public.html:27
-#, fuzzy, python-format
+#, python-format
 msgid "Public profile of %(user)s"
-msgstr "Profil użytkownika %(user)s"
+msgstr "Publiczny profil użytkownika %(user)s"
 
 #: translations/models.py:225
 msgid "PO file"
@@ -3082,7 +3086,7 @@ msgstr "Brak zarejestrowanego języka, który pasuje do tego kodu"
 
 #: translations/templates/comp_stats_table.html:35
 msgid "(not calculated)"
-msgstr ""
+msgstr "(nie obliczono)"
 
 #: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:35
@@ -3135,14 +3139,13 @@ msgid "There is no language registered that matches with this file"
 msgstr "Brak zarejestrowanego języka, który pasuje do tego pliku"
 
 #: translations/templates/source_files.html:5
-#, fuzzy
 msgid "Click here to show or hide the source files"
-msgstr "Naciśnij tutaj, aby zobaczyć wiele plików dla"
+msgstr "Naciśnij tutaj, aby wyświetlić lub ukryć pliki źródłowe"
 
 #: translations/templates/source_files.html:5
 #, python-format
 msgid "This component has %(sources_number)s source files"
-msgstr ""
+msgstr "Ten składnik posiada %(sources_number)s plików źródłowych"
 
 #: translations/templates/source_files.html:13
 msgid "entries"
@@ -3197,53 +3200,48 @@ msgid "The LINGUAS file could not be opened: %s"
 msgstr "Nie można otworzyć pliku LINGUAS: %s"
 
 #: txcommon/models.py:12
-#, fuzzy
 msgid "Female"
-msgstr "Kanał"
+msgstr "Kobieta"
 
 #: txcommon/models.py:12
-#, fuzzy
 msgid "Male"
-msgstr "maltański"
+msgstr "Mężczyzna"
 
 #: txcommon/models.py:18
-#, fuzzy
 msgid "First name"
-msgstr "wietnamski"
+msgstr "Imię"
 
 #: txcommon/models.py:19
-#, fuzzy
 msgid "Surname"
-msgstr "Nazwa użytkownika"
+msgstr "Nazwisko"
 
 #: txcommon/models.py:22
-#, fuzzy
 msgid "Native Language"
 msgstr "Język"
 
 #: txcommon/models.py:23
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: txcommon/models.py:24
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: txcommon/models.py:25
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: txcommon/models.py:26
 msgid "About yourself"
-msgstr ""
+msgstr "O sobie"
 
 #: txcommon/models.py:27
 msgid "Short words about you (140 chars)."
-msgstr ""
+msgstr "Kilka słów o sobie (140 znaków)."
 
 #: txcommon/models.py:28
 msgid "Looking for work?"
-msgstr ""
+msgstr "Szukasz pracy?"
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3251,11 +3249,11 @@ msgstr "Podaj prawidłowe wyrażenie regularne."
 
 #: txcommon/validators.py:28
 msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr ""
+msgstr "Adres URL roota nie wskazuje na plik .tar.gz lub .tgz"
 
 #: txcommon/validators.py:31
 msgid "The root url must start with http:// or ftp://"
-msgstr ""
+msgstr "Adres URL roota musi zaczynać się od http:// lub ftp://"
 
 #: txcommon/management/__init__.py:9
 msgid "New Project Added"
@@ -3418,7 +3416,7 @@ msgstr "Strona domowa"
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
-msgstr ""
+msgstr "Ten typ repozytorium wymaga gałęzi"
 
 #: vcs/models.py:48
 msgid "Branch"
@@ -3448,13 +3446,3 @@ msgstr "jednostka VCS"
 #: vcs/models.py:62
 msgid "vcsunits"
 msgstr "jednostki VCS"
-
-#~ msgid ""
-#~ "Tarball support is read-only: Submissions will not pushed to the "
-#~ "maintainer or the upstream repo."
-#~ msgstr ""
-#~ "Obsługa archiwów tar jest tylko do odczytu: wysyłanie nie zostanie "
-#~ "przekazane do opiekuna lub repozytorium projektu."
-
-#~ msgid "note"
-#~ msgstr "uwaga"
