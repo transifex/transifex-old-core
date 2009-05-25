@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-01 04:07+0000\n"
+"POT-Creation-Date: 2009-05-25 18:40+0000\n"
 "PO-Revision-Date: 2009-05-12 09:51+0800\n"
 "Last-Translator: TianShixiong <tiansworld@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -526,7 +526,7 @@ msgstr "已翻译:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:32
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -560,8 +560,19 @@ msgstr ""
 msgid "Latest components in project %s."
 msgstr ""
 
-#: projects/forms.py:16 projects/models.py:208
+#: projects/forms.py:17 projects/models.py:208
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+msgstr ""
+
+#: projects/forms.py:40 projects/models.py:213
+#, fuzzy
+msgid "Submit to"
+msgstr "提交文件"
+
+#: projects/forms.py:41
+msgid ""
+"Choose how this component should handle submissions of files.The options "
+"here are available based on the component type"
 msgstr ""
 
 #: projects/models.py:81 projects/models.py:190 releases/models.py:20
@@ -615,22 +626,22 @@ msgid ""
 "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr ""
 
-#: projects/models.py:98 projects/models.py:214 releases/models.py:41
+#: projects/models.py:98 projects/models.py:216 releases/models.py:41
 #: txcollections/models.py:33
 msgid "Hidden"
 msgstr ""
 
-#: projects/models.py:99 projects/models.py:215 releases/models.py:42
+#: projects/models.py:99 projects/models.py:217 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:100 projects/models.py:216 releases/models.py:43
+#: projects/models.py:100 projects/models.py:218 releases/models.py:43
 #: txcollections/models.py:35
 msgid "Enabled"
 msgstr "启用"
 
-#: projects/models.py:101 projects/models.py:217 releases/models.py:44
+#: projects/models.py:101 projects/models.py:219 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
@@ -639,7 +650,7 @@ msgstr ""
 msgid "Tags"
 msgstr "标签"
 
-#: projects/models.py:110 templates/base.html:30
+#: projects/models.py:110 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
@@ -649,12 +660,12 @@ msgstr ""
 msgid "Maintainers"
 msgstr "维护人员"
 
-#: projects/models.py:116 projects/models.py:223 releases/models.py:49
+#: projects/models.py:116 projects/models.py:228 releases/models.py:49
 #: txcollections/models.py:43
 msgid "HTML Description"
 msgstr "HTML描述"
 
-#: projects/models.py:118 projects/models.py:225 releases/models.py:50
+#: projects/models.py:118 projects/models.py:230 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "HTML描述"
@@ -703,114 +714,123 @@ msgstr "允许提交"
 msgid "Does this module repository allow write access?"
 msgstr "此模块库允许写如吗？"
 
-#: projects/models.py:228
+#: projects/models.py:222
+#, fuzzy
+msgid "Calculate statistics?"
+msgstr "翻译统计"
+
+#: projects/models.py:223
+msgid "Should statistics be calculated for this component?"
+msgstr ""
+
+#: projects/models.py:233
 msgid "Project"
 msgstr "项目"
 
-#: projects/models.py:229
+#: projects/models.py:234
 msgid "Unit"
 msgstr "单元"
 
-#: projects/models.py:233 templates/releases/base.html:6
+#: projects/models.py:238 templates/releases/base.html:6
 #: templates/releases/release_list.html:14
 msgid "Releases"
 msgstr ""
 
-#: projects/models.py:253
+#: projects/models.py:258
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Component: %s>"
 
-#: projects/models.py:257
+#: projects/models.py:262
 msgid "component"
 msgstr "组件"
 
-#: projects/models.py:258 templates/projects/component_list.html:15
+#: projects/models.py:263 templates/projects/component_list.html:15
 msgid "components"
 msgstr "组件"
 
-#: projects/views.py:115 projects/views.py:313
+#: projects/views.py:117 projects/views.py:332 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s已删除"
 
-#: projects/views.py:134 projects/views.py:585
+#: projects/views.py:136 projects/views.py:611
 msgid "Must use POST to activate"
 msgstr ""
 
-#: projects/views.py:137 projects/views.py:588
+#: projects/views.py:139 projects/views.py:614
 #, fuzzy
 msgid "Notifation is not enabled"
 msgstr "通知设置"
 
-#: projects/views.py:150
+#: projects/views.py:152
 #, fuzzy
 msgid "Watch this project"
 msgstr "搜索项目"
 
-#: projects/views.py:163
+#: projects/views.py:165
 msgid "Stop wathing this project"
 msgstr ""
 
-#: projects/views.py:345
+#: projects/views.py:364
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:419
+#: projects/views.py:438
 msgid "This component does  not allow white access."
 msgstr ""
 
-#: projects/views.py:427
+#: projects/views.py:446
 msgid "Please select a file from your system to be uploaded."
 msgstr "从您的计算机上选择要上传的文件。"
 
-#: projects/views.py:436
+#: projects/views.py:455
 msgid "Please enter a target to upload the file."
 msgstr "请选择目标文件来更新。"
 
-#: projects/views.py:442
+#: projects/views.py:461
 msgid "Please enter with only ONE target to upload the file."
 msgstr ""
 
-#: projects/views.py:453
+#: projects/views.py:472
 msgid "The target file does not match with the component file filter"
 msgstr ""
 
-#: projects/views.py:461
+#: projects/views.py:480
 msgid "Enter a message for the commit"
 msgstr ""
 
-#: projects/views.py:512
+#: projects/views.py:538
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "文件成功提交：%s"
 
-#: projects/views.py:527
+#: projects/views.py:553
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
 msgstr ""
 "您所提交的PO文件并没有经过正确性检查(msgfmt -c)。请运行此命令查看错误。"
 
-#: projects/views.py:536
+#: projects/views.py:562
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr ""
 
-#: projects/views.py:540 projects/views.py:570
+#: projects/views.py:566 projects/views.py:596
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:559
+#: projects/views.py:585
 msgid "Lock removed."
 msgstr "锁定去除。"
 
-#: projects/views.py:562
+#: projects/views.py:588
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "错误：只有锁定者可以解除锁定。"
 
-#: projects/views.py:566
+#: projects/views.py:592
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "已锁定。当您完成后别忘了解除锁定。"
 
@@ -831,7 +851,7 @@ msgid "When this release will be available."
 msgstr ""
 
 #: releases/models.py:33
-msgid "String freese date"
+msgid "String freeze date"
 msgstr ""
 
 #: releases/models.py:34
@@ -953,43 +973,43 @@ msgstr ""
 msgid "Welcome to Transifex"
 msgstr "欢迎来到Transifex"
 
-#: templates/base.html:8 templates/flatpages/default.html:4
+#: templates/base-sample.html:8 templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base.html:24 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
 msgstr "到起始页"
 
-#: templates/base.html:25
+#: templates/base-sample.html:35
 msgid "Transifex logo"
 msgstr "Transifex标志"
 
-#: templates/base.html:29
+#: templates/base-sample.html:39
 msgid "The projects being served"
 msgstr ""
 
-#: templates/base.html:29 templates/projects/base.html:6
+#: templates/base-sample.html:39 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "项目"
 
-#: templates/base.html:30
+#: templates/base-sample.html:40
 msgid "Collections of projects"
 msgstr "项目集合"
 
-#: templates/base.html:31
+#: templates/base-sample.html:41
 #, fuzzy
 msgid "The languages our service serves"
 msgstr "我们所提供的语言"
 
-#: templates/base.html:31 templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "语言"
 
-#: templates/base.html:37
+#: templates/base-sample.html:47
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
@@ -998,15 +1018,15 @@ msgstr ""
 "欢迎<a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)"
 "s</a>！"
 
-#: templates/base.html:38
+#: templates/base-sample.html:48
 msgid "Sign out from the website"
 msgstr "从网站退出"
 
-#: templates/base.html:38
+#: templates/base-sample.html:48
 msgid "Sign out"
 msgstr "退出"
 
-#: templates/base.html:40 templates/authopenid/login_box.html:5
+#: templates/base-sample.html:50 templates/authopenid/login_box.html:5
 #: templates/authopenid/login_box.html:12 templates/authopenid/signin.html:4
 #: templates/authopenid/signin.html.py:6 templates/authopenid/signin.html:31
 #: templates/authopenid/signin.html:37 templates/simpleauth/login_box.html:7
@@ -1016,19 +1036,20 @@ msgstr "退出"
 msgid "Sign in"
 msgstr "登录"
 
-#: templates/base.html:42
+#: templates/base-sample.html:53
+#: templates/userprofile/account/includes/registration_form.html:33
 msgid "Register"
 msgstr "注册"
 
-#: templates/base.html:103
+#: templates/base-sample.html:115
 msgid "About"
 msgstr "关于"
 
-#: templates/base.html:103
+#: templates/base-sample.html:115
 msgid "Get in contact with us"
 msgstr "与我们保持联系"
 
-#: templates/base.html:103
+#: templates/base-sample.html:115
 msgid "Feedback"
 msgstr "反馈"
 
@@ -1046,6 +1067,7 @@ msgstr "您也可以通过<a href=\"%(project_list)s\">全部项目</a>浏览。
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
+#: templates/userprofile/avatar/choose.html:57
 msgid "Search"
 msgstr "搜索"
 
@@ -1089,7 +1111,7 @@ msgstr "按名称，描述等查找项目。"
 #: templates/authopenid/settings.html:18
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5
+#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
 msgid "Profile"
 msgstr "资料"
 
@@ -1131,6 +1153,8 @@ msgstr "邮箱"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
+#: templates/userprofile/account/login.html:26
+#: templates/userprofile/account/includes/registration_form.html:17
 msgid "Password"
 msgstr "密码"
 
@@ -1164,6 +1188,7 @@ msgstr "更改我的密码"
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
+#: templates/userprofile/profile/overview.html:92
 msgid "Change password"
 msgstr "更改密码"
 
@@ -1176,6 +1201,8 @@ msgid "Current password"
 msgstr "当前密码"
 
 #: templates/authopenid/changepw.html:21
+#: templates/userprofile/account/password_change.html:30
+#: templates/userprofile/account/password_reset_confirm.html:26
 msgid "New password"
 msgstr "新密码"
 
@@ -1227,6 +1254,9 @@ msgstr "新帐户"
 
 #: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
+#: templates/userprofile/account/login.html:20
+#: templates/userprofile/account/includes/registration_form.html:5
+#: templates/userprofile/profile/public.html:33
 msgid "Username"
 msgstr "用户名"
 
@@ -1274,6 +1304,7 @@ msgid "Delete account permanently"
 msgstr "永久性删除帐户"
 
 #: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
+#: templates/userprofile/profile/overview.html:41
 msgid "Username:"
 msgstr "用户名:"
 
@@ -1286,10 +1317,15 @@ msgid "Sign in with OpenID"
 msgstr "用OpenID登录"
 
 #: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
+#: templates/userprofile/account/login.html:44
 msgid "Lost your password?"
 msgstr "丢失密码了吗？"
 
 #: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
+#: templates/userprofile/account/password_reset.html:4
+#: templates/userprofile/account/password_reset.html:20
+#: templates/userprofile/account/password_reset_complete.html:19
+#: templates/userprofile/account/password_reset_confirm.html:55
 msgid "Password reset"
 msgstr "重设密码"
 
@@ -1339,6 +1375,7 @@ msgid "Change openid associated to your account"
 msgstr "修改关联于您帐户的openid"
 
 #: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
+#: templates/userprofile/profile/overview.html:106
 msgid "Change notifications"
 msgstr "修改通知"
 
@@ -1352,6 +1389,7 @@ msgstr "从网站删除您的用户名和所有信息"
 
 #: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
+#: templates/userprofile/account/login.html:36
 msgid "Login"
 msgstr "登录"
 
@@ -1554,6 +1592,7 @@ msgid "Account"
 msgstr "帐户"
 
 #: templates/notification/notices.html:58
+#: templates/projects/component_detail.html:115
 msgid "Note"
 msgstr "注意"
 
@@ -1568,6 +1607,8 @@ msgid "Notification Type"
 msgstr "通知类型"
 
 #: templates/notification/notices.html:85
+#: templates/userprofile/account/password_change.html:46
+#: templates/userprofile/account/password_reset_confirm.html:42
 msgid "Change"
 msgstr "变更"
 
@@ -1695,10 +1736,30 @@ msgstr ""
 #: templates/projects/project_confirm_delete.html:21
 #: templates/releases/release_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
+#: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
 msgstr "是，我确定！"
 
-#: templates/projects/component_detail.html:41
+#: templates/projects/component_detail.html:23
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files to the maintainers\\' email."
+msgstr ""
+
+#: templates/projects/component_detail.html:25
+msgid ""
+"This component does not support local storing of submitted files. The "
+"submitted files will be sends to the maintainers\\' emails and the "
+"statistics will reflect the change once the files are committed upstream."
+msgstr ""
+
+#: templates/projects/component_detail.html:29
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files direct to the upstream repository."
+msgstr ""
+
+#: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
 #: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
@@ -1706,125 +1767,95 @@ msgstr "是，我确定！"
 msgid "Edit"
 msgstr "编辑"
 
-#: templates/projects/component_detail.html:50
+#: templates/projects/component_detail.html:82
 msgid "Repository:"
 msgstr "库:"
 
-#: templates/projects/component_detail.html:53
-#: templates/projects/component_detail.html:55
+#: templates/projects/component_detail.html:85
+#: templates/projects/component_detail.html:87
 #, fuzzy
 msgid "Link to a web front-end to the source"
 msgstr "一个指向网络前端模块的VCS URL链接"
 
-#: templates/projects/component_detail.html:53
-#: templates/projects/component_detail.html:55
+#: templates/projects/component_detail.html:85
+#: templates/projects/component_detail.html:87
 msgid "web"
 msgstr "网页"
 
-#: templates/projects/component_detail.html:60
+#: templates/projects/component_detail.html:92
 msgid "Branch:"
 msgstr "分支:"
 
-#: templates/projects/component_detail.html:65
+#: templates/projects/component_detail.html:97
 msgid "File filter:"
 msgstr "文件过滤器:"
 
-#: templates/projects/component_detail.html:71
+#: templates/projects/component_detail.html:103
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/component_detail.html:79
+#: templates/projects/component_detail.html:111
 #, fuzzy
 msgid "Allows submissions:"
 msgstr "允许提交"
 
-#: templates/projects/component_detail.html:85
-msgid ""
-"Tarball support is read-only: Submissions will not pushed to the maintainer "
-"or the upstream repo."
-msgstr ""
-
-#: templates/projects/component_detail.html:85
-#, fuzzy
-msgid "note"
-msgstr "注意"
-
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:125
 msgid "Translation files"
 msgstr "翻译文件"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:130
 msgid "Source file:"
 msgstr "源文件："
 
-#: templates/projects/component_detail.html:102
-#, fuzzy
-msgid "entries"
-msgstr "库"
-
-#: templates/projects/component_detail.html:103
-#: translations/templates/comp_lang_stats_table.html:34
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:39
-msgid "View "
-msgstr "浏览"
-
-#: templates/projects/component_detail.html:104
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:43
-#: translations/templates/lang_stats_table.html:40
-msgid "Download "
-msgstr "下载"
-
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:137
 msgid "Statistics last updated:"
 msgstr "上次更新的统计："
 
-#: templates/projects/component_detail.html:112
+#: templates/projects/component_detail.html:139
 msgid "ago"
 msgstr "以前"
 
-#: templates/projects/component_detail.html:113
+#: templates/projects/component_detail.html:140
 msgid "Component not yet pulled from source repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:116
+#: templates/projects/component_detail.html:143
 msgid "Refresh and re-calculate statistics. It can take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:116
+#: templates/projects/component_detail.html:143
 msgid "Refresh cache"
 msgstr ""
 
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:148
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:148
 msgid "Clear cache"
 msgstr "清除缓存"
 
-#: templates/projects/component_detail.html:124
+#: templates/projects/component_detail.html:151
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 
-#: templates/projects/component_detail.html:124
+#: templates/projects/component_detail.html:151
 msgid "warning"
 msgstr ""
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:166
 #: templates/projects/project_detail.html:114
 msgid "History"
 msgstr "历史"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:170
 #: templates/projects/project_detail.html:118
 msgid "None available"
 msgstr ""
 
-#: templates/projects/component_detail.html:159
+#: templates/projects/component_detail.html:186
 msgid "Delete component"
 msgstr ""
 
@@ -1835,17 +1866,27 @@ msgstr ""
 
 #: templates/projects/component_form.html:7
 #: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:55
+#: templates/projects/component_form.html:86
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr ""
 
-#: templates/projects/component_form.html:53
+#: templates/projects/component_form.html:84
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr ""
 
-#: templates/projects/component_form.html:74
+#: templates/projects/component_form.html:98
+msgid "Checkout"
+msgstr ""
+
+#: templates/projects/component_form.html:99
+#, fuzzy
+msgid "Submission"
+msgstr "允许提交"
+
+#: templates/projects/component_form.html:112
+#: templates/projects/component_form.html:122
 msgid "Save component"
 msgstr "保存组件"
 
@@ -1954,6 +1995,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr "删除<em>%(project_name)s</em>"
 
 #: templates/projects/project_confirm_delete.html:8
+#: templates/userprofile/avatar/choose.html:86
 msgid "Delete"
 msgstr "删除"
 
@@ -2104,21 +2146,25 @@ msgid ""
 msgstr "找不到您的项目吗？继续然后<a href=\"%(project_create)s\">添加</a>！"
 
 #: templates/releases/release_confirm_delete.html:4
+#: templates/txcollections/release_confirm_delete.html:4
 #, python-format
 msgid "Delete %(release_name)s"
 msgstr "删除%(release_name)s"
 
 #: templates/releases/release_confirm_delete.html:6
+#: templates/txcollections/release_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(release_name)s</em>"
 msgstr "删除<em>%(release_name)s</em>"
 
 #: templates/releases/release_confirm_delete.html:9
+#: templates/txcollections/release_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(release_name)s</em>?"
 msgstr ""
 
 #: templates/releases/release_confirm_delete.html:14
+#: templates/txcollections/release_confirm_delete.html:14
 #, python-format
 msgid ""
 "\n"
@@ -2146,6 +2192,7 @@ msgid ""
 msgstr ""
 
 #: templates/releases/release_detail.html:97
+#: templates/txcollections/release_detail.html:86
 msgid "Delete release"
 msgstr ""
 
@@ -2389,11 +2436,523 @@ msgstr ""
 msgid "Save release"
 msgstr "保存发布"
 
-#: translations/models.py:226
+#: templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr ""
+
+#: templates/userprofile/menu.html:6
+#: templates/userprofile/profile/personal.html:36
+msgid "Personal information"
+msgstr ""
+
+#: templates/userprofile/menu.html:7
+msgid "Avatar"
+msgstr ""
+
+#: templates/userprofile/menu.html:8
+#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/public.html:38
+#, fuzzy
+msgid "Location"
+msgstr "动作"
+
+#: templates/userprofile/menu.html:9
+#: templates/userprofile/profile/delete.html:22
+#, fuzzy
+msgid "Remove profile"
+msgstr "您的资料"
+
+#: templates/userprofile/account/email_validation.html:4
+#: templates/userprofile/account/email_validation.html:23
+msgid "E-mail change"
+msgstr ""
+
+#: templates/userprofile/account/email_validation.html:4
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:40
+#: templates/userprofile/account/email_validation_processed.html:20
+msgid "Add e-mail"
+msgstr ""
+
+#: templates/userprofile/account/email_validation.html:24
+#, fuzzy
+msgid "New e-mail address"
+msgstr "更改E-mail地址"
+
+#: templates/userprofile/account/email_validation.html:34
+msgid "Send confirmation"
+msgstr ""
+
+#: templates/userprofile/account/email_validation.html:41
+#: templates/userprofile/account/email_validation_processed.html:21
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:4
+msgid "E-mail validation successful"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:4
+msgid "E-mail change unsuccessful"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:14
+#, fuzzy
+msgid "E-mail address validated successfully"
+msgstr "文件成功提交：%s"
+
+#: templates/userprofile/account/email_validation_done.html:16
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:23
+#: templates/userprofile/account/email_validation_reset_response.html:22
+msgid "E-mail validation process"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:24
+#: templates/userprofile/account/email_validation_reset_response.html:23
+msgid "You can manage the e-mail validation process from the"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:24
+#: templates/userprofile/account/email_validation_reset_response.html:23
+msgid "overview page"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_processed.html:4
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid "E-mail change processed"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_processed.html:14
+msgid ""
+"An e-mail has been sent to the new e-mail address to verify and activate it. "
+"Please access to your e-mail and complete this process following the "
+"instructions specified in the e-mail body"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset.html:4
+#: templates/userprofile/account/email_validation_reset.html:19
+#: templates/userprofile/account/email_validation_reset.html:36
+msgid "Resend e-mail validation"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset.html:20
+#, fuzzy
+msgid "Insert your e-mail address"
+msgstr "输入您的电子邮件地址："
+
+#: templates/userprofile/account/email_validation_reset.html:30
+msgid "Resend confirmation"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset.html:37
+msgid ""
+"If you haven't validated your e-mail address yet you couldn't get into the "
+"site. Insert the e-mail address yu have registered with so we can resend the "
+"validation e-mail to you again"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:4
+msgid "Validation e-mail sent"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:4
+msgid "Your user account was already active"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "We've e-mailed you the e-mail validation link"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:16
+msgid "Your e-mail was already validated"
+msgstr ""
+
+#: templates/userprofile/account/login.html:4
+#: templates/userprofile/account/login.html:19
+msgid "User login"
+msgstr ""
+
+#: templates/userprofile/account/login.html:42
+msgid "Utilities"
+msgstr ""
+
+#: templates/userprofile/account/login.html:46
+#: templates/userprofile/profile/overview.html:95
+msgid "Resend validation e-mail"
+msgstr ""
+
+#: templates/userprofile/account/login.html:48
+#, fuzzy
+msgid "Sign up!"
+msgstr "退出"
+
+#: templates/userprofile/account/logout.html:4
+#: templates/userprofile/account/logout.html:9
+msgid "Logged out"
+msgstr ""
+
+#: templates/userprofile/account/logout.html:10
+#, fuzzy
+msgid "You've been logged out"
+msgstr "<p>您已经退出。"
+
+#: templates/userprofile/account/logout.html:10
+msgid "Log in again"
+msgstr ""
+
+#: templates/userprofile/account/password_change.html:4
+#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_reset_confirm.html:4
+#, fuzzy
+msgid "Password change for"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_change.html:24
+#, fuzzy
+msgid "Old password"
+msgstr "新密码"
+
+#: templates/userprofile/account/password_change.html:36
+#: templates/userprofile/account/password_reset_confirm.html:32
+#, fuzzy
+msgid "Confirm password"
+msgstr "确认您的密码："
+
+#: templates/userprofile/account/password_change.html:52
+#: templates/userprofile/account/password_change_done.html:19
+#, fuzzy
+msgid "Password change"
+msgstr "密码"
+
+#: templates/userprofile/account/password_change.html:53
+#: templates/userprofile/account/password_change_done.html:20
+msgid ""
+"Password change utility page. Please enter your new password twice so we can "
+"verify you typed it in correctly"
+msgstr ""
+
+#: templates/userprofile/account/password_change_done.html:4
+#: templates/userprofile/account/password_reset_complete.html:4
+#, fuzzy
+msgid "Password change successful"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_change_done.html:13
+msgid "The password has been changed successfully"
+msgstr ""
+
+#: templates/userprofile/account/password_expired.html:4
+#, fuzzy
+msgid "Password key expired"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_expired.html:9
+msgid ""
+"The password key you're trying to use is expired. Please, request a new one"
+msgstr ""
+
+#: templates/userprofile/account/password_reset.html:21
+#, fuzzy
+msgid "E-mail address"
+msgstr "更改E-mail地址"
+
+#: templates/userprofile/account/password_reset.html:31
+#, fuzzy
+msgid "Reset my password"
+msgstr "我的密码丢失了！"
+
+#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset_done.html:16
+#, fuzzy
+msgid "Password reset form"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset_done.html:17
+msgid ""
+"Forgotten your password? Enter your e-mail address, and we'll reset your "
+"password and e-mail the new one to you"
+msgstr ""
+
+#: templates/userprofile/account/password_reset_complete.html:13
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: templates/userprofile/account/password_reset_complete.html:20
+#: templates/userprofile/account/password_reset_confirm.html:56
+msgid ""
+"Password reset utility page. Please enter your new password twice so we can "
+"verify you typed it in correctly"
+msgstr ""
+
+#: templates/userprofile/account/password_reset_confirm.html:47
+#, fuzzy
+msgid "Password reset unsuccessful"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_reset_confirm.html:48
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: templates/userprofile/account/password_reset_done.html:4
+#: templates/userprofile/account/password_reset_done.html:9
+#, fuzzy
+msgid "Password reset successful"
+msgstr "重设密码"
+
+#: templates/userprofile/account/password_reset_done.html:10
+msgid ""
+"We've e-mailed you the instructions to obtain a new password. You should be "
+"receiving it shortly"
+msgstr ""
+
+#: templates/userprofile/account/registration.html:4
+#: templates/userprofile/account/includes/registration_form.html:4
+msgid "User registration"
+msgstr ""
+
+#: templates/userprofile/account/registration.html:22
+#: templates/userprofile/account/registration_done.html:19
+#, fuzzy
+msgid "Register a new account"
+msgstr "新帐户"
+
+#: templates/userprofile/account/registration.html:23
+#: templates/userprofile/account/registration_done.html:20
+msgid ""
+"Joining this community is quick and easy. You only need to fill the form to "
+"get access to all the private content"
+msgstr ""
+
+#: templates/userprofile/account/registration_done.html:4
+msgid "Registration complete"
+msgstr ""
+
+#: templates/userprofile/account/registration_done.html:10
+msgid ""
+"You have successfully registered a new account, and an account activation "
+"url has been sent to your e-mail address. You must access this message on "
+"your e-mail account to finish the registration process."
+msgstr ""
+
+#: templates/userprofile/account/registration_done.html:13
+#, python-format
+msgid ""
+"You have successfully registered a new account. Go to the <a href=\"%"
+"(overview_url)s\">login page</a> to authenticate and start using this site."
+msgstr ""
+
+#: templates/userprofile/account/includes/registration_form.html:11
+#, fuzzy
+msgid "E-mail"
+msgstr "邮箱"
+
+#: templates/userprofile/account/includes/registration_form.html:11
+#, fuzzy
+msgid "optional"
+msgstr "选项"
+
+#: templates/userprofile/account/includes/registration_form.html:23
+#, fuzzy
+msgid "Password (again)"
+msgstr "再次输入新密码"
+
+#: templates/userprofile/avatar/choose.html:4
+#: templates/userprofile/avatar/choose.html:38
+msgid "Choose the location of your avatar"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:41
+msgid "Select an image from disk"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:43
+#: templates/userprofile/avatar/choose.html:49
+#: templates/userprofile/avatar/crop.html:35
+msgid "Done"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:47
+msgid ""
+"Select an image from a remote URL. Put the URL on the input below and we'll "
+"retrieve the image for you"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:54
+msgid "Search on Picasa Web"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:79
+#: templates/userprofile/avatar/crop.html:41
+msgid "Avatar selection page"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:80
+#: templates/userprofile/avatar/crop.html:42
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile"
+msgstr ""
+
+#: templates/userprofile/avatar/crop.html:4
+#: templates/userprofile/avatar/crop.html:19
+msgid "Crop &amp; resize the area you want"
+msgstr ""
+
+#: templates/userprofile/profile/delete.html:4
+msgid "Delete personal information"
+msgstr ""
+
+#: templates/userprofile/profile/delete.html:14
+msgid "Delete your personal information"
+msgstr ""
+
+#: templates/userprofile/profile/delete.html:15
+msgid "Are you sure?"
+msgstr ""
+
+#: templates/userprofile/profile/delete.html:15
+msgid "Yes"
+msgstr ""
+
+#: templates/userprofile/profile/delete.html:23
+msgid ""
+"It erases all your private data except your username. You can refill the "
+"information later if you want to"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:4
+#, python-format
+msgid "%(user)s's Dashboard"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:21
+msgid "Define your location"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:21
+msgid "Auto-discover location"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:22
+#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/public.html:35
+msgid "Country"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:22
+msgid "Loading..."
+msgstr ""
+
+#: templates/userprofile/profile/location.html:26
+#, fuzzy
+msgid "Location:"
+msgstr "集合："
+
+#: templates/userprofile/profile/location.html:27
+#, fuzzy
+msgid "Position"
+msgstr "描述"
+
+#: templates/userprofile/profile/location.html:35
+#: templates/userprofile/profile/personal.html:30
+msgid "Save"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:40
+msgid "Location information"
+msgstr ""
+
+#: templates/userprofile/profile/location.html:41
+msgid "Define your location information"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:4
+#: templates/userprofile/profile/overview.html:32
+msgid "Overview of your profile"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:37
+#, fuzzy
+msgid "Change avatar"
+msgstr "更改密码"
+
+#: templates/userprofile/profile/overview.html:37
+msgid "Add avatar"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:42
+#, fuzzy
+msgid "E-mail:"
+msgstr "邮箱"
+
+#: templates/userprofile/profile/overview.html:44
+msgid "Not set yet"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:46
+msgid " (Not validated)"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:55
+#: templates/userprofile/profile/overview.html:64
+#: templates/userprofile/profile/overview.html:73
+#, fuzzy
+msgid "Not set"
+msgstr "注意"
+
+#: templates/userprofile/profile/overview.html:91
+msgid "Management:"
+msgstr ""
+
+#: templates/userprofile/profile/overview.html:94
+#, fuzzy
+msgid "Change your e-mail address"
+msgstr "更改E-mail地址"
+
+#: templates/userprofile/profile/overview.html:94
+#, fuzzy
+msgid "Add your e-mail address"
+msgstr "输入您的电子邮件地址："
+
+#: templates/userprofile/profile/overview.html:99
+#, fuzzy
+msgid "Add location"
+msgstr "添加集合"
+
+#: templates/userprofile/profile/overview.html:101
+#, fuzzy
+msgid "Change location"
+msgstr "修改通知"
+
+#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:27
+msgid "Edit your personal information"
+msgstr ""
+
+#: templates/userprofile/profile/personal.html:37
+msgid "Insert some information about you"
+msgstr ""
+
+#: templates/userprofile/profile/public.html:27
+#, fuzzy, python-format
+msgid "Public profile of %(user)s"
+msgstr "您的资料，%(user)s"
+
+#: translations/models.py:225
 msgid "PO file"
 msgstr "PO文件"
 
-#: translations/models.py:227
+#: translations/models.py:226
 msgid "PO files"
 msgstr "PO文件"
 
@@ -2423,7 +2982,7 @@ msgid "Could not generate statistics for this file"
 msgstr "无法统计该文件"
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:32
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2431,12 +2990,26 @@ msgid "Trans:"
 msgstr "已翻译："
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:32
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "未翻译："
+
+#: translations/templates/comp_lang_stats_table.html:34
+#: translations/templates/comp_stats_table.html:46
+#: translations/templates/lang_stats_table.html:39
+#: translations/templates/source_files.html:18
+msgid "View "
+msgstr "浏览"
+
+#: translations/templates/comp_lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
+#: translations/templates/source_files.html:19
+msgid "Download "
+msgstr "下载"
 
 #: translations/templates/comp_stats_table.html:11
 #: translations/templates/project_stats_table.html:7
@@ -2453,7 +3026,11 @@ msgstr "查看该语言的统计"
 msgid "There is no language registered that matches with this code"
 msgstr "对应此名称的模块不存在."
 
-#: translations/templates/comp_stats_table.html:38
+#: translations/templates/comp_stats_table.html:35
+msgid "(not calculated)"
+msgstr ""
+
+#: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:35
 msgid "Click here to see the multiple files for"
 msgstr ""
@@ -2503,6 +3080,20 @@ msgstr "查看该语言的统计详情"
 msgid "There is no language registered that matches with this file"
 msgstr "对应此名称的模块不存在."
 
+#: translations/templates/source_files.html:5
+msgid "Click here to show or hide the source files"
+msgstr ""
+
+#: translations/templates/source_files.html:5
+#, python-format
+msgid "This component has %(sources_number)s source files"
+msgstr ""
+
+#: translations/templates/source_files.html:13
+#, fuzzy
+msgid "entries"
+msgstr "库"
+
 #: txcollections/feeds.py:15
 #, python-format
 msgid "Latest collections on %(site_name)s"
@@ -2546,14 +3137,68 @@ msgstr ""
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr ""
 
-#: txcommon/forms.py:14
-msgid "Enter a valid regular expression."
-msgstr ""
-
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "LINGUAS文件无法打开: %s"
+
+#: txcommon/models.py:12
+msgid "Female"
+msgstr ""
+
+#: txcommon/models.py:12
+msgid "Male"
+msgstr ""
+
+#: txcommon/models.py:18
+msgid "First name"
+msgstr ""
+
+#: txcommon/models.py:19
+#, fuzzy
+msgid "Surname"
+msgstr "用户名"
+
+#: txcommon/models.py:22
+#, fuzzy
+msgid "Native Language"
+msgstr "语言"
+
+#: txcommon/models.py:23
+msgid "Blog"
+msgstr ""
+
+#: txcommon/models.py:24
+msgid "LinkedIn"
+msgstr ""
+
+#: txcommon/models.py:25
+msgid "Twitter"
+msgstr ""
+
+#: txcommon/models.py:26
+msgid "About yourself"
+msgstr ""
+
+#: txcommon/models.py:27
+msgid "Short words about you (140 chars)."
+msgstr ""
+
+#: txcommon/models.py:28
+msgid "Looking for work?"
+msgstr ""
+
+#: txcommon/validators.py:15
+msgid "Enter a valid regular expression."
+msgstr ""
+
+#: txcommon/validators.py:28
+msgid "The root url does not point to a .tar.gz or .tgz file"
+msgstr ""
+
+#: txcommon/validators.py:31
+msgid "The root url must start with http:// or ftp://"
+msgstr ""
 
 #: txcommon/management/__init__.py:9
 msgid "New Project Added"
@@ -2731,6 +3376,10 @@ msgstr ""
 msgid "Home"
 msgstr "主页"
 
+#: vcs/forms.py:29
+msgid "This type of repository needs a branch"
+msgstr ""
+
 #: vcs/models.py:48
 msgid "Branch"
 msgstr "分支"
@@ -2759,3 +3408,7 @@ msgstr "vcs单元"
 #: vcs/models.py:62
 msgid "vcsunits"
 msgstr "vcs单元"
+
+#, fuzzy
+#~ msgid "note"
+#~ msgstr "注意"
