@@ -60,6 +60,23 @@ def txversion():
     """Return the version of Transifex"""
     return txcommon.version
 
+
+class CounterNode(template.Node):
+    """A template node to count how many times it was called."""
+    def __init__(self):
+        self.count = 0
+
+    def render(self, context):
+        self.count += 1
+        return self.count
+
+@register.tag
+def counter(parser, token):
+    return CounterNode()
+
+
+
+
 # Forms
 
 @register.inclusion_tag("form_as_table_rows.html")

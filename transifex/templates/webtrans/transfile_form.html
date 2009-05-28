@@ -8,6 +8,7 @@
   {% else %}
   {% if "msgstr_field"|in_list:field.name %} 
   <tr id="{{field.name}}" >
+    <td class="num">{% counter %}</td>
     <td class="msg">{{ field.label }}</td>
     <td class="trans">{{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
     <td class="notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
