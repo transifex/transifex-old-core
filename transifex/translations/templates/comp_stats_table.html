@@ -46,10 +46,12 @@
            {% url component_edit_file stat.object.project.slug stat.object.slug stat.filename as file_edit_url %}
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 get_file nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
-           <a class="i16 edit nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
            {% pofile_lock stat %}
            {% if request.user.is_authenticated and perms.repowatch.add_watch and notices_url %}{% watch_toggle stat %}{% endif %}
-           {% if request.user.is_authenticated and stat.object.allows_submission and perms.translations.add_pofilelock %}{% pofile_submission stat %}{% endif %}
+           {% if request.user.is_authenticated and stat.object.allows_submission and perms.translations.add_pofilelock %}
+             <a class="i16 edit nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
+             {% pofile_submission stat %}
+           {% endif %}
           {% endif %} 
         </td>
       </tr>

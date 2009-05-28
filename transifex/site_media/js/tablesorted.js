@@ -74,4 +74,15 @@ $(document).ready(function(){
         }
     });
 
+
+    // ordering for Web editing form table
+    $("#trans_web_edit").tablesorter({
+        widgets: ['zebra'],
+        headers: {
+            2: { sorter: false },
+            3: { sorter: false },
+            4: { sorter: false },
+        },
+    });
+
 });

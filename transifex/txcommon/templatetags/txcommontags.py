@@ -156,3 +156,8 @@ def notice_type_user_filter(noticetype_list):
                and n["show_to_user"] == True:
                 new_list.append(nt)
     return new_list
+
+@register.filter
+def in_list(value, arg):
+    """Check if a value is present in a list."""
+    return value in arg

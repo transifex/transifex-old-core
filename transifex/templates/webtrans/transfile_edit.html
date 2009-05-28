@@ -2,6 +2,13 @@
 {% load i18n %}
 {% load txcommontags %}
 
+{% block extra_head %}
+<link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/table_pagination.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/web_editor.js"></script>
+{% endblock %}
+
 {% block title %}
 {% with pofile.object as component %}
 {{ block.super }}
@@ -25,6 +32,17 @@
 {% endblock %}
 
 {% block content %}
+
+
+  <fieldset style="float: right; margin-top: 25px;">
+  <legend>Show me:</legend>
+  <ul class="simple" style="margin: 0;">
+    <li><span class="translated" ><input id="only_translated" type="checkbox" checked="checked" name="only_translated"/> Translated</span></li>
+    <li><span class="fuzzy" ><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/> Fuzzy</span></li>
+    <li><span class="untranslated"><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/> Untranslated</span></li>
+  </ul>
+  </fieldset>
+
 {% if pofile.total %}
   <h3>Current status</h3>
   <table class="definition">
@@ -49,10 +67,20 @@
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
   <form action='' method='post'>
-  <table class="trans_web_edit">
+  <table id="trans_web_edit" class="trans_web_edit stats_comp tablesorter">
+   <thead>
+    <tr>
+      <th>{% trans "Source String" %}</th>
+      <th>{% trans "Translation" %}</th>
+      <th>{% trans "Occurrences" %}</th>
+      <th>{% trans "Fuzzy?" %}</th>
+    </tr>
+   </thead>
+   <tbody>
     {% with pofile_form as form %} 
     {% include "webtrans/transfile_form.html" %}
     {% endwith %}
+   </tbody>
   </table>
   <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Submit translations" %}" /></p>
   </form>

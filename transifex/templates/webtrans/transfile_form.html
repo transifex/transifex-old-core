@@ -1,14 +1,19 @@
 {% load i18n %}
 {% load txcommontags %}
+{% load webeditortags %}
 {% if form %}
 {% for field in form %}
-  <tr class="{% cycle 'odd' 'even' %}">
-    <th class="msg">{{ field.label }}</th>
-    <td class="trans">{{ field }}</td>
-    <td>{% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
+  {% if field.is_hidden %}
+    {{ field }}
+  {% else %}
+  {% if "msgstr_field"|in_list:field.name %} 
+  <tr id="{{field.name}}" >
+    <td class="msg">{{ field.label }}</td>
+    <td class="trans">{{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
     <td class="notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
-    <td class="notes"><span class="helptext">{% for occ in field.occurrences %}{{ occ }}<br/>{% endfor %}</span></td>
-{% comment %}<td>{% if field.field.required %}<span class="required">*</span>{% endif %}</td>{% endcomment %}
+    <td class="notes"><span class="helptext">{{ field|fuzzy_field:form|safe }}</span></td>
   </tr>
+  {% endif %}
+  {% endif %}
 {% endfor %}
 {% endif %}
