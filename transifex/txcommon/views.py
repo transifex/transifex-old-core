@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.utils import simplejson
 from projects.models import Project
+from languages.models import Language
 from txcommon.log import logger
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -28,10 +29,15 @@ def search(request):
 
 def index(request):
     latest_projects = Project.objects.order_by('-created')[:5]
+    num_projects = len(Project.objects.all())
+    num_languages = len(Language.objects.all())
     return render_to_response("index.html",
         {'latest_projects': latest_projects,
          'form': AuthenticationForm(),
-         'next': request.path},
+         'next': request.path,
+         'num_projects': num_projects,
+         'num_languages': num_languages,
+         },
           context_instance = RequestContext(request))
 
 # Ajax response
