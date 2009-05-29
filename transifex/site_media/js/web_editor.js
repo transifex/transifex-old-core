@@ -26,25 +26,37 @@ function toggle_entries(entries_status){
         .trigger("appendCache");
 }
 
+function fuzzy(nkey){
+    $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
+    $("input[name='fuzzy_field_"+nkey+"']").attr('checked', true);
+    $("textarea[name='msgstr_field_"+nkey+"']")
+        .addClass('fuzzy')
+        .removeClass('translated')
+        .removeClass('untranslated');
+}
+
+function unfuzzy(nkey){
+    $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
+    $("input[name='fuzzy_field_"+nkey+"']").attr('checked', false);
+    $node = $("textarea[name='msgstr_field_"+nkey+"']")
+    $node.removeClass('fuzzy');
+    if($node.val() == ''){
+        $node.addClass('untranslated');
+    }else{
+        $node.addClass('translated');
+    }
+}
+
 $(function(){
 
     // Actions for when the Fuzzy checkbox changes
     $("input[name*='fuzzy_field_']").change(function () {
-        nkey = $(this).attr('name').split('fuzzy_field_')[1];
 
-        $("input[name*='changed_field_"+nkey+"']").attr('value', 'True');
-        if(this.checked){
-            $("textarea[name='msgstr_field_"+nkey+"']")
-                .addClass('fuzzy')
-                .removeClass('translated')
-                .removeClass('untranslated');
+        nkey = $(this).attr('name').split('fuzzy_field_')[1];
+        if($(this).is(":checked")){
+            fuzzy(nkey)
         }else{
-            $("textarea[name='msgstr_field_"+nkey+"']").removeClass('fuzzy');
-            if($("textarea[name='msgstr_field_"+nkey+"']").val() == ''){
-                $("textarea[name='msgstr_field_"+nkey+"']").addClass('untranslated');
-            }else{
-                $("textarea[name='msgstr_field_"+nkey+"']").addClass('translated');
-            }
+            unfuzzy(nkey)
         }
     })
 

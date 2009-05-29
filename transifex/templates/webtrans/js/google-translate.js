@@ -18,6 +18,8 @@ google.setOnLoadCallback(function() {
 	        google.language.translate(orig, "en", "{{ pofile.language_code }}", function(result) {
 	            if (!result.error) {
 	                trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
+                        nkey = trans.attr('name').split('msgstr_field_')[1];
+                        fuzzy(nkey); // from web_editor.js
 	                a.hide();
 	            } else {
 	                a.before($('<span class="alert">'+result.error.message+'</span>'))
