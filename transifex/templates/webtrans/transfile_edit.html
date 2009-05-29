@@ -45,33 +45,30 @@
 
 {% block content %}
 
-  <fieldset style="float: right; margin-top: 25px;">
-  <legend>Show me:</legend>
-  <ul class="simple" style="margin: 0;">
-    <li><span class="translated" ><input id="only_translated" type="checkbox" checked="checked" name="only_translated"/> Translated</span></li>
-    <li><span class="fuzzy" ><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/> Fuzzy</span></li>
-    <li><span class="untranslated"><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/> Untranslated</span></li>
-  </ul>
-  </fieldset>
-
 {% if pofile.total %}
   <h3>Current status</h3>
-  <table class="definition">
+  <table class="definition stats_totals">
   <tr>
-    <th>Translated:</dt>
-      <td id="total_translated">{{ pofile.trans }} {% ifnotequal pofile.trans_perc 0 %}({{ pofile.trans_perc }}%){% endifnotequal %}</dd>
+    <th class="translated">Translated:</span></th>
+      <td id="total_translated">{{ pofile.trans }}</td>
+      <td id="total_translated_perc">{% ifnotequal pofile.trans_perc 0 %}({{ pofile.trans_perc }}%){% endifnotequal %}</td>
+      <td><input id="only_translated" type="checkbox" checked="checked" name="only_translated"/></td>
   </tr>
   <tr>
-    <th>Fuzzy:</dt>
-      <td id="total_fuzzy">{{ pofile.fuzzy }} {% ifnotequal pofile.fuzzy_perc 0 %}({{ pofile.fuzzy_perc }}%){% endifnotequal %}</dd>
+    <th class="fuzzy">Fuzzy:</th>
+      <td id="total_fuzzy">{{ pofile.fuzzy }}</td>
+      <td id="total_fuzzy_perc">{% ifnotequal pofile.fuzzy_perc 0 %}({{ pofile.fuzzy_perc }}%){% endifnotequal %}</td>
+      <td><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/></span></td>
   </tr>
   <tr>
-    <th>Untranslated:</dt>
-      <td id="total_untranslated">{{ pofile.untrans }} {% ifnotequal pofile.untrans_perc 0 %}({{ pofile.untrans_perc }}%){% endifnotequal %}</dd>
+    <th class="untranslated">Untranslated:</th>
+      <td id="total_untranslated">{{ pofile.untrans }}</td>
+      <td id="total_untranslated_perc">{% ifnotequal pofile.untrans_perc 0 %}({{ pofile.untrans_perc }}%){% endifnotequal %}</td>
+      <td><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/></span></td>
   </tr>
   <tr>
-    <th>Total strings:</dt>
-      <td id="total">{{ pofile.total }}</dd>
+    <th>Total strings:</th>
+      <td id="total">{{ pofile.total }}</td>
   </tr>
   </table>
 {% endif %}
