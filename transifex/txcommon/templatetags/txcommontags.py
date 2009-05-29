@@ -3,10 +3,39 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
-
+from projects.models import Project
 import txcommon
 
 register = template.Library()
+
+class LatestProjects(template.Node):
+
+    def __init__(self, number=5):
+        self.number = number
+
+    def render(self, context):
+        try:
+            latest_projects = Project.objects.order_by('-created')[:self.number]
+        except ValueError:
+            latest_projects = None
+
+        context['latest_projects'] = latest_projects
+        return ''
+
+class DoGetLatestProjects:
+
+    def __init__(self):
+        pass
+
+    def __call__(self, parser, token):
+        tokens = token.contents.split()
+        if not tokens[1].isdigit():
+            raise template.TemplateSyntaxError, \
+                "The argument for '%s' must be an integer" % tokens[0]
+        return LatestProjects(tokens[1])
+
+register.tag('get_latest_projects', DoGetLatestProjects())
+
 
 @register.inclusion_tag("common_render_metacount.html")
 def render_metacount(list, countable):
