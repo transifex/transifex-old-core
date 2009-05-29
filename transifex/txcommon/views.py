@@ -28,8 +28,8 @@ def search(request):
           context_instance = RequestContext(request))
 
 def index(request):
-    num_projects = len(Project.objects.all())
-    num_languages = len(Language.objects.all())
+    num_projects = Project.objects.count()
+    num_languages = Language.objects.count()
     return render_to_response("index.html",
         {'form': AuthenticationForm(),
          'next': request.path,
