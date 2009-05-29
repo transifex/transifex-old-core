@@ -10,7 +10,9 @@
   <tr id="{{field.name}}" >
     <td class="num">{% counter %}</td>
     <td class="msg">{{ field.label }}</td>
-    <td class="trans">{{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
+    <td class="trans">
+      {{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
+{% if WEBTRANS_SUGGESTIONS %}    <td class="notes suggest_container"><a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a></td>{% endif %}
     <td class="notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
     <td class="notes"><span class="helptext">{{ field|fuzzy_field:form|safe }}</span></td>
   </tr>

@@ -1,7 +1,9 @@
 {% load i18n %}
 {% load submissions %}
 {% url component_submit_file pofile.object.project.slug pofile.object.slug pofile.filename as file_submit_url %}
-<span class="i16 nodecoration_icon submit_file submit_button buttonized_simple" title="{% trans "Send a translation for this language." %}"></span>
+{% with pofile.filename as pofile_filename %}
+  <span class="i16 nodecoration_icon send_file submit_button buttonized_simple" title="{% blocktrans %}Submit a translation for {{ pofile_filename }}{% endblocktrans %}"></span>
+{% endwith %}
 <form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>

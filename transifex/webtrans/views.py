@@ -23,8 +23,11 @@ from forms import TranslationForm
 # Temporary
 from txcommon import notifications as txnotification
 
-def transfile_edit(request, pofile_id):
+# Enable Google translation suggestions
+WEBTRANS_SUGGESTIONS = getattr(settings, 'WEBTRANS_SUGGESTIONS', True)
 
+
+def transfile_edit(request, pofile_id):
     pofile = get_object_or_404(POFile, pk=pofile_id)
     po_entries = pofile.object.trans.get_po_entries(pofile.filename)
     filename = pofile.filename
@@ -138,4 +141,5 @@ def transfile_edit(request, pofile_id):
     return render_to_response('webtrans/transfile_edit.html', {
         'pofile': pofile,
         'pofile_form': form,
+        'WEBTRANS_SUGGESTIONS': WEBTRANS_SUGGESTIONS,
     }, context_instance=RequestContext(request))

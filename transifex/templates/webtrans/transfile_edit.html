@@ -7,6 +7,17 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/table_pagination.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/web_editor.js"></script>
+
+<!-- Google suggest -->
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>    
+<script type="text/javascript">
+//<!--
+{% if WEBTRANS_SUGGESTIONS %}
+  google.load("language", "1");
+  {% include 'webtrans/js/google-translate.js' %}
+{% endif %}
+//-->
+</script>
 {% endblock %}
 
 {% block title %}
@@ -33,7 +44,6 @@
 
 {% block content %}
 
-
   <fieldset style="float: right; margin-top: 25px;">
   <legend>Show me:</legend>
   <ul class="simple" style="margin: 0;">
@@ -48,15 +58,19 @@
   <table class="definition">
   <tr>
     <th>Translated:</dt>
-      <td>{{ pofile.trans }} {% ifnotequal pofile.trans_perc 0 %}({{ pofile.trans_perc }}%){% endifnotequal %}</dd>
+      <td id="total_translated">{{ pofile.trans }} {% ifnotequal pofile.trans_perc 0 %}({{ pofile.trans_perc }}%){% endifnotequal %}</dd>
+  </tr>
+  <tr>
+    <th>Fuzzy:</dt>
+      <td id="total_fuzzy">{{ pofile.fuzzy }} {% ifnotequal pofile.fuzzy_perc 0 %}({{ pofile.fuzzy_perc }}%){% endifnotequal %}</dd>
   </tr>
   <tr>
     <th>Untranslated:</dt>
-      <td>{{ pofile.untrans }} {% ifnotequal pofile.untrans_perc 0 %}({{ pofile.untrans_perc }}%){% endifnotequal %}</dd>
+      <td id="total_untranslated">{{ pofile.untrans }} {% ifnotequal pofile.untrans_perc 0 %}({{ pofile.untrans_perc }}%){% endifnotequal %}</dd>
   </tr>
   <tr>
     <th>Total strings:</dt>
-      <td>{{ pofile.total }}</dd>
+      <td id="total">{{ pofile.total }}</dd>
   </tr>
   </table>
 {% endif %}
@@ -73,6 +87,7 @@
       <th>{% trans "#" %}</th>
       <th>{% trans "Source String" %}</th>
       <th>{% trans "Translation" %}</th>
+{% if WEBTRANS_SUGGESTIONS %}      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>{% endif %}
       <th>{% trans "Occurrences" %}</th>
       <th>{% trans "Fuzzy?" %}</th>
     </tr>
