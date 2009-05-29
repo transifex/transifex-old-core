@@ -79,9 +79,9 @@ $(document).ready(function(){
     $("#trans_web_edit").tablesorter({
         widgets: ['zebra'],
         headers: {
-            2: { sorter: false },
             3: { sorter: false },
             4: { sorter: false },
+            5: { sorter: false },
         },
     });
 
