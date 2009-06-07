@@ -19,7 +19,9 @@ google.setOnLoadCallback(function() {
 	            if (!result.error) {
 	                trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
                         nkey = trans.attr('name').split('msgstr_field_')[1];
-                        fuzzy(nkey); // from web_editor.js
+                        // from web_editor.js:
+                        fuzzy(nkey);
+                        update_totals();
 	                a.hide();
 	            } else {
 	                a.before($('<span class="alert">'+result.error.message+'</span>'))

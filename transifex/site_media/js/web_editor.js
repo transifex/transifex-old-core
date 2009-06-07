@@ -47,8 +47,47 @@ function unfuzzy(nkey){
     }
 }
 
-$(function(){
+/* Update totals functions */
 
+// FIXME: This should be global or something, not calculated every time.
+// These should be called once when the page loads. They make sure that the
+// total sum shown reflects the actual table.
+function get_total_sum() { return $("textarea").length; }
+function update_total_sum() {  $("#total_sum").text(get_total_sum()); }
+
+function get_total(w) { return $("textarea." + w).length; }
+function get_total_perc(w) {
+    // Return the percentage of the count
+    if (w != 'untrans') {
+        num = get_total(w);
+    } else {
+        // Hack to always have a total percentage sum of 100%:
+        num = get_total_sum() - get_total("translated") - get_total("fuzzy");
+    }
+    return Math.round(num * 100 / get_total_sum());
+}
+
+function update_total(w) {
+    $("#total_" + w).text(get_total(w));
+    $("#total_" + w + "_perc").text(get_total_perc(w) + '%');
+}
+
+function update_totals() {
+    // Update the totals
+    // Should be called whenever something on the table changes.
+    update_total('translated');
+    update_total('fuzzy');
+    update_total('untranslated');
+}
+
+
+/* The juice */
+
+$(function(){
+    // Run a first update on the totals, just to be sure they are accurate.
+    update_total_sum();
+    update_totals();
+    
     // Actions for when the Fuzzy checkbox changes
     $("input[name*='fuzzy_field_']").change(function () {
 
@@ -58,6 +97,7 @@ $(function(){
         }else{
             unfuzzy(nkey)
         }
+        update_totals();
     })
 
       // Actions for when the Translation field changes
@@ -80,6 +120,7 @@ $(function(){
             $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', '');
         }
         $("input[name='fuzzy_field_"+nkey+"']").attr('checked', false);
+        update_totals();
     })
 
     // Disabling the Fuzzy checkbox for untranslated entries
