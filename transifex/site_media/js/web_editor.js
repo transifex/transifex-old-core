@@ -149,5 +149,11 @@ $(function(){
     })
 
     table_pagination('table.trans_web_edit')
+    
+    // Other options
+    
+    $("input[name='toggle_occurences']").change(function(){
+        $('.occurences').toggle();
+    })
 
 });

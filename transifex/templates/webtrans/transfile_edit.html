@@ -47,9 +47,20 @@
 
 {% if pofile.total %}
   <h3>Current status</h3>
+
+<fieldset class="floatright">
+  <legend>Settings</legend>
+  <table class="definition">
+  <tr>
+    <th>Show occurences:</th>
+    <td><input id="toggle_occurences" type="checkbox" checked="checked" name="toggle_occurences" /></td>
+  </tr>
+  </table>
+</fieldset>
+
   <table class="definition stats_totals">
   <tr>
-    <th class="translated">Translated</span></th>
+    <th class="translated">Translated</th>
       <td id="total_translated">{{ pofile.trans }}</td>
       <td id="total_translated_perc">{{ pofile.trans_perc }}%</td>
       <td><input id="only_translated" type="checkbox" checked="checked" name="only_translated"/></td>
@@ -58,13 +69,13 @@
     <th class="fuzzy">Fuzzy</th>
       <td id="total_fuzzy">{{ pofile.fuzzy }}</td>
       <td id="total_fuzzy_perc">{{ pofile.fuzzy_perc }}%</td>
-      <td><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/></span></td>
+      <td><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/></td>
   </tr>
   <tr>
     <th class="untranslated">Untranslated</th>
       <td id="total_untranslated">{{ pofile.untrans }}</td>
       <td id="total_untranslated_perc">{{ pofile.untrans_perc }}%</td>
-      <td><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/></span></td>
+      <td><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/></td>
   </tr>
   <tr class="last">
     <th>Total</th>
@@ -72,7 +83,7 @@
   </tr>
   </table>
 {% endif %}
-  
+
   <h3>Live translation</h3>
 
   {% if form_message %}
@@ -86,7 +97,7 @@
       <th>{% trans "Source String" %}</th>
       <th>{% trans "Translation" %}</th>
 {% if WEBTRANS_SUGGESTIONS %}      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>{% endif %}
-      <th>{% trans "Occurrences" %}</th>
+      <th class="occurences">{% trans "Occurrences" %}</th>
       <th>{% trans "Fuzzy?" %}</th>
     </tr>
    </thead>
