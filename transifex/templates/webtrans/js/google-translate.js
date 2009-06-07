@@ -21,6 +21,7 @@ google.setOnLoadCallback(function() {
                         nkey = trans.attr('name').split('msgstr_field_')[1];
                         // from web_editor.js:
                         fuzzy(nkey);
+                        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', '');
                         update_totals();
 	                a.hide();
 	            } else {
