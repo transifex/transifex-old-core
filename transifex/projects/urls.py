@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
+from django.conf import settings
 from tagging.views import tagged_object_list
 
 from projects.models import Project
@@ -140,12 +141,12 @@ urlpatterns += patterns('',
 )
 
 #TODO: Make this setting work throughout the applications
-#if getattr(settings, 'ENABLE_WEBTRANS', True):
-urlpatterns += patterns('',
-    url(
-        regex = ('^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/'
-                 'edit/(?P<filename>(.*))$'),
-        view = component_file_edit,
-        name = 'component_edit_file',),
-    )
+if getattr(settings, 'ENABLE_WEBTRANS', True):
+    urlpatterns += patterns('',
+        url(
+            regex = ('^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/'
+                    'edit/(?P<filename>(.*))$'),
+            view = component_file_edit,
+            name = 'component_edit_file',),
+        )
 
