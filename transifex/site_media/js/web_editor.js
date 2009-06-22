@@ -152,8 +152,13 @@ $(function(){
     
     // Other options
     
+    // Actions for show/hide occurrence column in the table
     $("input[name='toggle_occurences']").change(function(){
-        $('.occurences').toggle();
+        if($(this).is(":checked")){
+            $(".occurences").attr("style", "");
+        }else{
+            $(".occurences").attr("style", "display: none");
+        }
     })
 
 });
