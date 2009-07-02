@@ -383,7 +383,7 @@ def component_file(request, project_slug, component_slug, filename,
                                   project__slug=project_slug)
     try:
         content = component.trans.get_file_content(filename, is_msgmerged)
-    except IOError:
+    except (TypeError, IOError):
         raise Http404
     fname = "%s.%s" % (component.full_name, os.path.basename(filename))
     logger.debug("Requested raw file %s" % filename)
