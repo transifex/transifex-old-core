@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 from django.contrib import admin
 from models import Language
 from feeds import AllLanguages, LanguageReleaseFeed
@@ -52,9 +53,14 @@ urlpatterns += patterns('django.views.generic',
         regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
         view = language_release,
     ),
-    url(
-        name = 'language_release_download',
-        regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
-        view = language_release_download,
-    ),
+)
+
+#TODO: Make this setting work throughout the applications
+if getattr(settings, 'ENABLE_COMPRESSED_DOWNLOAD', True):
+    urlpatterns += patterns('',
+        url(
+            name = 'language_release_download',
+            regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
+            view = language_release_download,
+        ),
 )

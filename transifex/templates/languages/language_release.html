@@ -34,12 +34,17 @@
 
 {% lang_stats_table pofile_list %}
 
-<h4>Download</h4>
+{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="zip" as zip_download_url %}
+{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="targz" as targz_download_url %}
 
-Receive all the translation files in a compressed archive.
-<a class="i16 compress buttonized" href="{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="zip" %}">Get <code>.zip</code></a>
-<a class="i16 compress buttonized" href="{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="targz" %}">Get <code>.tar.gz</code></a>
+ {% if zip_download_url %}
+ <h4>Download</h4>
 
+ Receive all the translation files in a compressed archive.
+ <a class="i16 compress buttonized" href="{{ zip_download_url }}">Get <code>.zip</code></a>
+ <a class="i16 compress buttonized" href="{{ targz_download_url }}">Get <code>.tar.gz</code></a>
+ {% endif %}
+ 
 {% endif %}
 
 {% if not pofile_list %}
