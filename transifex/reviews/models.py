@@ -7,7 +7,7 @@ POReviewRequest: A file under review entry in the database.
 
 from django.db import models
 from django.contrib.auth.models import User
-from transifex.tralnslations.models import POFile
+from transifex.translations.models import POFile
 
 class POReviewRequest(models.Model):
     """A POReviewRequest is a review representation of a PO file.
@@ -36,7 +36,7 @@ class POReviewRequest(models.Model):
     resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES, default='N')    
     created_on = models.DateTimeField(auto_now_add=True, 
         help_text="Date and time of creation")
-    last_updated = models.DateTimeField(auto_add=True, 
+    last_updated = models.DateTimeField(auto_now=True, 
         help_text="Date and time of last update")
 
     def __unicode__(self):
