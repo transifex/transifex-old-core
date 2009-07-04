@@ -150,3 +150,12 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
             name = 'component_edit_file',),
         )
 
+#TODO: Make this setting work throughout the applications
+if getattr(settings, 'ENABLE_REVIEWS', True):
+    urlpatterns += patterns('',
+        url(
+            regex = ('^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/'
+                     'reviews/(?P<filename>(.*))$'),
+            view = review_list,
+            name = 'review_list',),)
+

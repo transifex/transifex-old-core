@@ -660,3 +660,14 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
             return json_error(e.message, result)
     return json_result(result)
 
+
+def review_list(request, project_slug, component_slug, filename):
+    from reviews.views import transfile_review_list
+    component = get_object_or_404(Component, slug=component_slug,
+                                  project__slug=project_slug)
+    #FIXME: This approach hits the database twice!
+    # See also: http://transifex.org/ticket/210
+    pofile = POFile.objects.get(filename=filename, component=component)
+    return transfile_review_list(request, pofile.id)
+
+
