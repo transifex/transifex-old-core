@@ -7,7 +7,13 @@ POReviewRequest: A file under review entry in the database.
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 from transifex.translations.models import POFile
+
+class POReviewRequestManager(models.Manager):
+    def open_reviews(self, language):
+        """ Return a list of active Requests. """
+        return self.filter(status='O')
 
 class POReviewRequest(models.Model):
     """A POReviewRequest is a review representation of a PO file.
@@ -29,15 +35,22 @@ class POReviewRequest(models.Model):
                      ('A', 'Accepted'),
                      ('R', 'Rejected'),)
 
-    # Core fields
-    pofile = models.ForeignKey(POFile)
-    author = models.ForeignKey(User)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O')
-    resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES, default='N')    
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O',
+        help_text="The review's status (open, closed, etc.)")
+    resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES,
+        default='N', help_text="The review's resolution/closing state.")    
     created_on = models.DateTimeField(auto_now_add=True, 
         help_text="Date and time of creation")
     last_updated = models.DateTimeField(auto_now=True, 
         help_text="Date and time of last update")
+
+    # Relations
+    pofile = models.ForeignKey(POFile, verbose_name=_('PO File'),
+                               related_name='reviews',)
+    author = models.ForeignKey(User)
+
+    # Managers
+    open_reviews = POReviewRequestManager()
 
     def __unicode__(self):
         return u"%(pofile)s %(id)s" % {
