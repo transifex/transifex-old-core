@@ -1,5 +1,9 @@
 from django.contrib import admin
 from reviews.models import POReviewRequest
+from translations.models import POFile
 
-admin.site.register(POReviewRequest)
+class POReviewRequestAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in POReviewRequest._meta.fields]
+
+admin.site.register(POReviewRequest, POReviewRequestAdmin)
 
