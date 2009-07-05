@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 from transifex.translations.models import POFile
 
 class POReviewRequestManager(models.Manager):
-    def open_reviews(self, language):
+    def open_reviews(self):
         """ Return a list of active Requests. """
         return self.filter(status='O')
 

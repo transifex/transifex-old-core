@@ -13,7 +13,7 @@ from reviews.models import POReviewRequest
 
 def transfile_review_list(request, pofile_id):
     pofile = get_object_or_404(POFile, pk=pofile_id)
-    reviews = POReviewRequest.objects.filter(pofile=pofile)
+    reviews = pofile.reviews.open_reviews()
     return render_to_response('reviews/review_list.html', {
         'pofile': pofile,
         'reviews': reviews,
