@@ -31,8 +31,9 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Active reviews</h2>
+  <h2>{% trans "Active reviews" %}</h2>
 
+{% if reviews %}
 <table class="tablesorter">
    <thead>
     <tr>
@@ -52,4 +53,8 @@
      </tr>
   {% endfor %}
   </table>
+{% else %}
+    <p>{% trans "No reviews yet!" %}</p>
+{% endif %}
+
 {% endblock %}
