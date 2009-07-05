@@ -6,6 +6,12 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript">
+  $(document).ready(function() { 
+      $(".tablesorter").tablesorter(); 
+  }); 
+  </script>
+
 {% endblock %}
 
 {% block title %}
@@ -31,30 +37,48 @@
 {% endblock %}
 
 {% block content %}
-  <h2>{% trans "Active reviews" %}</h2>
+  <h2>{% trans "Open Reviews" %}</h2>
 
 {% if reviews %}
 <table class="tablesorter">
-   <thead>
+  <thead>
     <tr>
       <th>{% trans "Review ID" %}</th>
       <th>{% trans "Requester" %}</th>
-      <th>{% trans "Resolution" %}</th>
-      <th>{% trans "Date" %}</th>
+      <th>{% trans "File" %}</th>
+      <th>{% trans "When" %}</th>
     </tr>
-   </thead>
-   <tbody>
-   {% for review in reviews %}
-     <tr>
-       <td>{{ review.id }}</td>
-       <td>{{ review.author }}</td>
-       <td>{{ review.resolution }}</td>
-       <td>{{ review.created_on }}</td>
-     </tr>
-  {% endfor %}
-  </table>
+  </thead>
+  <tbody>
+{% for review in reviews %}
+    <tr>
+      <td>{{ review.id }}</td>
+      <td>{{ review.author }}</td>
+      <td><a href="#FIXME">#FIXME</a></td>
+      <td>{{ review.created_on|timesince }} ago</td>
+    </tr>
+{% endfor %}
+</table>
 {% else %}
-    <p>{% trans "No reviews yet!" %}</p>
+<p>{% trans "No open reviews!" %}</p>
 {% endif %}
+
+<h2 class="i16 add">{% trans "Request a new translation review" %}</h2>
+
+<p class="i16 tip compact clear">
+  Use the following form to upload a file and request a review
+  from another translator. He may login and review your work and provide
+  any feedback needed, or simply submit your file to the upstream project.
+</p>
+
+<div class="generic_form">
+  <form action='' method='post'>
+  <table>
+  <tbody>
+    {% form_as_table_rows form %}
+  </tbody>
+  </table>
+  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Request Review" %}" /></p>
+</div>
 
 {% endblock %}
