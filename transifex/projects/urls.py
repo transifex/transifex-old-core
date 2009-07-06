@@ -4,7 +4,8 @@ from django.conf import settings
 from tagging.views import tagged_object_list
 
 from projects.models import Project
-from projects.views import * 
+from projects.views import *
+from reviews.views import review_list
 from feeds import (LatestProjects, ProjectFeed)
 
 admin.autodiscover()
@@ -155,7 +156,7 @@ if getattr(settings, 'ENABLE_REVIEWS', True):
     urlpatterns += patterns('',
         url(
             regex = ('^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/'
-                     'reviews/(?P<filename>(.*))$'),
+                     'reviews/$'),
             view = review_list,
             name = 'review_list',),)
 

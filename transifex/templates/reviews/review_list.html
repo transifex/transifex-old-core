@@ -1,4 +1,4 @@
-{% extends "projects/base.html" %}
+{% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
 {% load txcommontags %}
 
@@ -15,26 +15,13 @@
   <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
-{% block title %}
-{% with pofile.object as component %}
-{{ block.super }}
-| {{ component.project.name }}
-| {% blocktrans with component.name as component_name %}{{ component_name }}{% endblocktrans %}
-| {% blocktrans with pofile.filename as filename %}Reviews for '{{ filename }}'{% endblocktrans %}
-{% endwith %}
-{% endblock %}
+{% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }} | {% trans "Reviews" %}{% endwith %}{% endblock %}
 
-{% block breadcrumb %}
-{% with pofile.object as component %}
-{{ block.super }}
-&raquo; <a href="{{ component.project.get_absolute_url }}">{{ component.project.name }}</a>
-&raquo; <a href="{{ component.get_absolute_url }}">{{ component.name }}</a>
-&raquo; {% blocktrans with pofile.filename as filename %}Reviews for '<code>{{ filename }}</code>'{% endblocktrans %}
-{% endwith %}
-{% endblock %}
+{% block breadcrumb %}{% with component.project as project %}{{ block.super }} &raquo; <a href="{% url component_detail component.project.slug component.slug %}">{{ component.name }}</a> &raquo; {% trans "Reviews" %}{% endwith %}{% endblock %}
+
 
 {% block content_title %}
-<h2 class="pagetitle">{% blocktrans with component.name as component_name and pofile.filename as filename %}Reviews for '<code>{{ filename }}</code>'{% endblocktrans %}</h2>
+<h2 class="pagetitle">{% blocktrans with component.name as component_name %}Reviews{% endblocktrans %}</h2>
 {% endblock %}
 
 {% block content %}
