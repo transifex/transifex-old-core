@@ -22,9 +22,11 @@ class POReviewRequest(models.Model):
     "open" or "closed". By default the PO review is created as "open".
     The reviewer marks it as "closed", if he accepted or rejected the 
     translation. This is indicated to the resolution field.
-    the file can be commented. When a reviewer approves the translation,
-    the review resolution. Otherwise, it 
-    is rejected.
+    When a reviewer approves the translation, the review resolution takes 
+    the values 'Accepted'. Otherwise, if he wants to reject it, 
+    it is marked as 'Rejected'. The resolution 'Null' vakue is used as 
+    the default. The po file can also be commented and the comments are 
+    stored in this model.
      
     """
     
