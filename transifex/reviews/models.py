@@ -52,6 +52,7 @@ class POReviewRequest(models.Model):
     author = models.ForeignKey(User)
 
     # Managers
+    objects = models.Manager() # The default manager
     open_reviews = POReviewRequestManager()
 
     def __unicode__(self):
