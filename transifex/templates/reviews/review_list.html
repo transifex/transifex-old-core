@@ -11,7 +11,8 @@
       $(".tablesorter").tablesorter(); 
   }); 
   </script>
-
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}
@@ -40,25 +41,34 @@
   <h2>{% trans "Open Reviews" %}</h2>
 
 {% if reviews %}
-<table class="tablesorter">
-  <thead>
-    <tr>
-      <th>{% trans "Review ID" %}</th>
-      <th>{% trans "Requester" %}</th>
-      <th>{% trans "File" %}</th>
-      <th>{% trans "When" %}</th>
-    </tr>
-  </thead>
-  <tbody>
 {% for review in reviews %}
+
+<h3>{% blocktrans with review.id as review_id %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
+ <table class="definition">
+  <tbody>
     <tr>
-      <td>{{ review.id }}</td>
-      <td>{{ review.author }}</td>
-      <td><a href="#FIXME">#FIXME</a></td>
-      <td>{{ review.created_on|timesince }} ago</td>
+      <th class="i16 filter">{% trans "Information" %}</th>
+      <td>{% blocktrans with review.author as author and review.created_on|timesince as time_since %}{{ author }}, {{ time_since }} ago{% endblocktrans %}</td>
     </tr>
-{% endfor %}
+    <tr>
+      <th class="i16 submit_file">{% trans "File" %}</th>
+      <td><a href="#FIXME">#FIXME</a></td>
+    </tr>
+  </tbody>
 </table>
+
+{% if request.user.is_authenticated and perms.reviews.change_review %}
+
+    <a class="i16 reviews buttonized houdini_toggler">{% trans "Review" %}</a>
+    <form class="houdini" action="" class="microform">
+    <fieldset>
+      <textarea cols="30"></textarea><br/>
+      <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit">
+      <input class="i16 reject" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit">
+    </fieldset>
+    </form>
+{% endif %}
+{% endfor %}
 {% else %}
 <p>{% trans "No open reviews!" %}</p>
 {% endif %}
