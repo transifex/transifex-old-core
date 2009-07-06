@@ -8,6 +8,8 @@ POReviewRequest: A file under review entry in the database.
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+
+from projects.models import Component
 from transifex.translations.models import POFile
 
 class POReviewRequestManager(models.Manager):
@@ -40,15 +42,17 @@ class POReviewRequest(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O',
         help_text="The review's status (open, closed, etc.)")
     resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES,
-        default='N', help_text="The review's resolution/closing state.")    
-    created_on = models.DateTimeField(auto_now_add=True, 
+        default='N', help_text="The review's resolution/closing state.")
+    created_on = models.DateTimeField(auto_now_add=True,
         help_text="Date and time of creation")
-    last_updated = models.DateTimeField(auto_now=True, 
+    last_updated = models.DateTimeField(auto_now=True,
         help_text="Date and time of last update")
 
     # Relations
-    pofile = models.ForeignKey(POFile, verbose_name=_('PO File'),
-                               related_name='reviews',)
+    component = models.ForeignKey(Component, verbose_name=_('Component'),
+                                  related_name='reviews')
+#    pofile = models.ForeignKey(POFile, verbose_name=_('PO File'),
+#                               related_name='reviews',)
     author = models.ForeignKey(User)
 
     # Managers
@@ -56,7 +60,15 @@ class POReviewRequest(models.Model):
     open_reviews = POReviewRequestManager()
 
     def __unicode__(self):
-        return u"%(pofile)s %(id)s" % {
-            'pofile': self.pofile,
+        return u"%(component)s (%(id)s)" % {
+            'component': self.component,
             'id': self.id,
             }
+    
+    @property
+    def is_closed(self):
+        return (self.status == 'C')
+
+    @property
+    def is_open(self):
+        return (self.status == 'O')

@@ -29,8 +29,10 @@
 
 {% if reviews %}
 {% for review in reviews %}
+{% with review.id as review_id %}
+{% url review_modify review_id as modify_url %}
 
-<h3>{% blocktrans with review.id as review_id %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
+<h3>{% blocktrans %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
  <table class="definition">
   <tbody>
     <tr>
@@ -41,20 +43,35 @@
       <th class="i16 submit_file">{% trans "File" %}</th>
       <td><a href="#FIXME">#FIXME</a></td>
     </tr>
+    <tr>
+      <th class="i16 status">{% trans "Status" %}</th>
+      <td>
+        {{ review.get_status_display }}
+        {% ifnotequal review.resolution 'N' %}({{ review.get_resolution_display }}){% endifnotequal %}
+        {% if request.user.is_authenticated and perms.reviews.change_review %}
+{% if review.is_closed %}
+    <form class="microform" action="{{ modify_url }}" method='post'>
+      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="{% trans "Reopen" %}" type="submit" name="reopen">
+    </form>
+{% endif %}
+{% endif %}
+      </td>
+    </tr>
+{% if request.user.is_authenticated and perms.reviews.change_review and review.is_open %}
+    <tr>
+      <th class="i16 reviews">{% trans "Close Review" %}</th>
+      <td>
+        <form action="{{ modify_url }}" class="microform" method='post'>
+          <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit" name="accept">
+          <input class="i16 reject" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit" name="reject">
+        </form>
+      </td>
+    </tr>
+{% endif %}
   </tbody>
 </table>
 
-{% if request.user.is_authenticated and perms.reviews.change_review %}
-
-    <a class="i16 reviews buttonized houdini_toggler">{% trans "Review" %}</a>
-    <form class="houdini" action="" class="microform">
-    <fieldset>
-      <textarea cols="30"></textarea><br/>
-      <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit">
-      <input class="i16 reject" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit">
-    </fieldset>
-    </form>
-{% endif %}
+{% endwith %}
 {% endfor %}
 {% else %}
 <p>{% trans "No open reviews!" %}</p>
