@@ -2,9 +2,9 @@
 {% load submissions %}
 {% url component_submit_file pofile.object.project.slug pofile.object.slug pofile.filename as file_submit_url %}
 {% with pofile.filename as pofile_filename %}
-  <span class="i16 nodecoration_icon send_file submit_button buttonized_simple" title="{% blocktrans %}Submit a translation for {{ pofile_filename }}{% endblocktrans %}"></span>
+  <span class="i16 nodecoration_icon send_file submit_button buttonized_simple houdini_toggler" title="{% blocktrans %}Submit a translation for {{ pofile_filename }}{% endblocktrans %}"></span>
 {% endwith %}
-<form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
+<form class="submit_form compact houdini" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
   <input type="file" name="submited_file">

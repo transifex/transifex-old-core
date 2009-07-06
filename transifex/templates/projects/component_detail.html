@@ -34,17 +34,15 @@
     {% endif %}
   });
 
-
   </script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-  <style type="text/css">
-    form.submit_form { display: none; }
-    form.submit_form fieldset { border: 2px dotted #ddd; }
-  </style>
 {% endblock %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
