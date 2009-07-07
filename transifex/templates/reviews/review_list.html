@@ -27,8 +27,7 @@
 {% block content %}
   <h2>{% trans "Open Reviews" %}</h2>
 
-{% if reviews %}
-{% for review in reviews %}
+{% for review in component.reviews.open_reviews.all %}
 {% with review.id as review_id %}
 {% url review_modify review_id as modify_url %}
 
@@ -49,11 +48,6 @@
         {{ review.get_status_display }}
         {% ifnotequal review.resolution 'N' %}({{ review.get_resolution_display }}){% endifnotequal %}
         {% if request.user.is_authenticated and perms.reviews.change_review %}
-{% if review.is_closed %}
-    <form class="microform" action="{{ modify_url }}" method='post'>
-      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="{% trans "Reopen" %}" type="submit" name="reopen">
-    </form>
-{% endif %}
 {% endif %}
       </td>
     </tr>
@@ -73,11 +67,47 @@
 
 {% endwith %}
 {% endfor %}
-{% else %}
-<p>{% trans "No open reviews!" %}</p>
+
+{% if not component.reviews.open_reviews %}
+  <p>{% trans "No open reviews!" %}</p>
 {% endif %}
 
-<h2 class="i16 add">{% trans "Request a new translation review" %}</h2>
+
+<h2>{% trans "Closed Reviews" %}</h2>
+
+<table class="tablesorter">
+  <thead>
+    <tr>
+      <th>{% trans "ID" %}</th>
+      <th>{% trans "Author" %}</th>
+      <th>{% trans "Resolution" %}</th>
+      <th>{% trans "Action" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for review in component.reviews.closed_reviews.all %}
+{% with review.id as review_id %}
+{% url review_modify review_id as modify_url %}
+  <tr>
+    <td>{{ review_id }}</td>
+    <td>{{ review.author }}</td>
+    <td>{{ review.get_resolution_display }}</td>
+    <td><form class="microform" action="{{ modify_url }}" method='post'>
+      <input class="i16 redo nodecoration_icon" title="{% trans "Reopen review request" %}"  value="" type="submit" name="reopen" type="image">
+    </form>
+    </td>
+  </tr>
+{% endwith %}
+{% endfor %}
+</tbody>
+</table>
+
+{% if not component.reviews.closed_reviews.all %}
+  <p>{% trans "No closed reviews!" %}</p>
+{% endif %}
+
+
+<h2>{% trans "Request a new translation review" %}</h2>
 
 <p class="i16 tip compact clear">
   Use the following form to upload a file and request a review
@@ -92,7 +122,7 @@
     {% form_as_table_rows form %}
   </tbody>
   </table>
-  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Request Review" %}" /></p>
+  <p class="submit"><input type="submit" class="i16 add" value="{% trans "Request Review" %}" /></p>
 </div>
 
 {% endblock %}

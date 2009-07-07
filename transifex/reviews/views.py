@@ -18,7 +18,6 @@ from translations.models import POFile
 def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
-    reviews = POReviewRequest.open_reviews.all()
     if request.method == 'POST': # If the form has been submitted...
         form = POFileSubmissionForm(request.POST)
     else:
@@ -27,7 +26,6 @@ def review_list(request, project_slug, component_slug):
     return render_to_response('reviews/review_list.html', {
         'component': component,
         'form': form,
-        'reviews': reviews,
     }, context_instance=RequestContext(request))
 
 

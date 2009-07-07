@@ -13,9 +13,15 @@ from projects.models import Component
 from transifex.translations.models import POFile
 
 class POReviewRequestManager(models.Manager):
+
     def open_reviews(self):
         """ Return a list of active Requests. """
         return self.filter(status='O')
+
+    def closed_reviews(self):
+        """ Return a list of inactive Requests. """
+        return self.filter(status='C')
+
 
 class POReviewRequest(models.Model):
     """A POReviewRequest is a review representation of a PO file.
@@ -56,15 +62,21 @@ class POReviewRequest(models.Model):
     author = models.ForeignKey(User)
 
     # Managers
-    objects = models.Manager() # The default manager
-    open_reviews = POReviewRequestManager()
+    objects = POReviewRequestManager()
 
     def __unicode__(self):
         return u"%(component)s (%(id)s)" % {
             'component': self.component,
             'id': self.id,
             }
-    
+
+    class Meta:
+        verbose_name = _('Review Request')
+        verbose_name_plural = _('Review Requests')
+        ordering  = ('-created_on',)
+        get_latest_by = 'created_on'
+
+
     @property
     def is_closed(self):
         return (self.status == 'C')
