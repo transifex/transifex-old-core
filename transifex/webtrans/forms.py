@@ -9,6 +9,8 @@ from projects.models import Project, Component
 
 def calculate_rows(entry):
     text = getattr(entry, 'msgid', entry)
+    if isinstance(text, str):
+        text = text.decode(getattr(entry, 'encoding', 'UTF-8'))
     replacement = polib.escape(text).replace(r'\n','<br />\n')
     lines = mark_safe(replacement).split(u'\n')
     return sum(len(line)/40 for k, line in enumerate(lines)) + 1
