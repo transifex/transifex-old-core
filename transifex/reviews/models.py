@@ -9,7 +9,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from projects.models import Component
 from transifex.translations.models import POFile 
@@ -46,6 +46,8 @@ class POReviewRequest(models.Model):
                      ('A', 'Accepted'),
                      ('R', 'Rejected'),)
 
+    description = models.CharField(max_length=300, blank=True, null=True,
+        help_text="Describe your review request.")
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O',
         help_text="The review's status (open, closed, etc.)")
     resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES,

@@ -35,7 +35,11 @@
  <table class="definition">
   <tbody>
     <tr>
-      <th class="i16 filter">{% trans "Information" %}</th>
+      <th class="i16 filter">{% trans "Description" %}</th>
+      <td>{{ review.description }}</td>
+    </tr>
+    <tr>
+      <th class="i16 action">{% trans "Who and when" %}</th>
       <td>{% blocktrans with review.author as author and review.created_on|timesince as time_since %}{{ author }}, {{ time_since }} ago{% endblocktrans %}</td>
     </tr>
     <tr>
@@ -96,7 +100,7 @@
     <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td>{{ review.get_resolution_display }}</td>
     <td><form class="microform" action="{{ modify_url }}" method='post'>
-      <input class="i16 redo nodecoration_icon" title="{% trans "Reopen review request" %}"  value="" type="submit" name="reopen" type="image">
+      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">
     </form>
     </td>
   </tr>

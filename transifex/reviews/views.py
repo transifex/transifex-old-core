@@ -36,8 +36,10 @@ def review_add(request, component_id):
         form = POFileSubmissionForm(request.POST, request.FILES)
         if form.is_valid() and 'review_file' in request.FILES:
             file = request.FILES['review_file']
-            r = POReviewRequest(component=component, author=request.user,
-                                file_name=os.path.basename(file.name))
+            r = POReviewRequest(author=request.user,
+                                description=form.cleaned_data['description'],
+                                file_name=os.path.basename(file.name),
+                                component=component)
             r.save()
             target = os.path.join(settings.REVIEWS_ROOT, r.full_review_filename)
             save_file(target, file)
