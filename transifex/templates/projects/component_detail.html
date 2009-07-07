@@ -22,7 +22,7 @@
             {% ifequal component.unit.type 'tar' %}
                     submission_note='{% trans "This component supports local storing of submitted files and also sends the files to the maintainers\' email." %}'
             {% else %}
-                    submission_note='{% trans "This component does not support local storing of submitted files. The submitted files will be sends to the maintainers\' emails and the statistics will reflect the change once the files are committed upstream." %}'
+                    submission_note='{% trans "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\' emails and the statistics will reflect the change once the files are committed upstream." %}'
             {% endifequal %}
         {% endifequal %}
         {% ifequal component.submission_type 'ssh' %}
@@ -140,7 +140,7 @@
         {% else %}{% trans "Component not yet pulled from source repository." %}{% endif %}
         {% if perms.projects.refresh_stats %}
         <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
-            <input title="{% trans "Refresh and re-calculate statistics. It can take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
+            <input title="{% trans "Refresh and re-calculate statistics. This action may take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
         </form>
         {% endif %}
         {% if perms.projects.clear_cache %}

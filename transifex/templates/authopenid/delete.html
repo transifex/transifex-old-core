@@ -11,7 +11,7 @@
 {% if form.errors %}
 <p class="errors">{% trans "Please correct errors below:" %}<br />
 	{% if form.confirm.errors %} 
-    <span class="error">{% trans "Check confirm box, if you want delete your account." %}</span><br />
+    <span class="error">{% trans "Check the confirm box, if you really want to delete your account." %}</span><br />
 	{% endif %}
 	{% if form.password.errors %} 
     <span class="error">{% trans "Password:" %} {{ form.password.errors|join:", " }}</span>

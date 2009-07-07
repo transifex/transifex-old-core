@@ -135,7 +135,7 @@ NOTICE_TYPES = [
             },
             {   "label": "collection_release_component_deleted",
                 "display": _("Release Deleted from a Collection"), 
-                "description": _("when a release is deleted to a collection"), 
+                "description": _("when a release is deleted from a collection"), 
                 "default": 2,
                 "show_to_user": False,
             },

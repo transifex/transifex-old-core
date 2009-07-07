@@ -24,7 +24,7 @@ class Profile(BaseProfile):
     linked_in = models.URLField(_('LinkedIn'), blank=True)
     twitter = models.URLField(_('Twitter'), blank=True)
     about = models.TextField(_('About yourself'), max_length=140, blank=True,
-        help_text=_('Short words about you (140 chars).'))
+        help_text=_('Short description of yourself (140 chars).'))
     looking_for_work = models.BooleanField(_('Looking for work?'), default=False)
 
 post_save.connect(add_user_to_registered_group, sender=Profile)

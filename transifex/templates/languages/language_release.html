@@ -55,7 +55,8 @@
 
 {% if untrans_comps %}
   <h3>{% blocktrans %}Untranslated Components{% endblocktrans %}</h3>
-  <p class="explanation">{% blocktrans %}Here you can find components registered to belong in {% endblocktrans %}{{ release.name }}{% blocktrans %}, but with no translations sent for {% endblocktrans %}{{ language.name }}{% blocktrans %} yet:{% endblocktrans %}</p>
+  <p class="explanation">
+  {% blocktrans with release.name as release_name and language.name as language_name %}The following components will be included in {{ release_name }}, but there are no translations sent for {{language_name}} yet.{% endblocktrans %}</p>
   <div class="component_list">
   <ul class="simple">
   {% for comp in untrans_comps %}

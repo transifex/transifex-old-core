@@ -35,8 +35,8 @@ class Release(models.Model):
                     "can be added/modified which affect translations."))
     develfreeze_date = models.DateTimeField(_('Devel freeze date'), blank=True, null=True,
         help_text=_("The last date packages from this release can be built "
-                    "from the developers, and thus, translations to be "
-                    "built in the packages of it."))
+                    "from the developers. Translations sent after this date "
+                    "will not be included in the released version."))
     
     hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))

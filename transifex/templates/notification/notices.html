@@ -51,7 +51,7 @@
        
         {% with user.email as user_email %}
         {% if user_email %}
-            <p>{% blocktrans %}You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list bellow and choose which events you would like to be notificated by email.{% endblocktrans %}</p>
+            <p>{% blocktrans %}You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list below and choose which events you would like to be notified by email.{% endblocktrans %}</p>
             <p>{% trans "Primary email" %}: <strong>{{ user_email }}</strong>
             <br />({% trans "change under" %} <a href="{% url password_change %}">{% trans "Account" %}</a>)
         {% else %}

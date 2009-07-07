@@ -448,7 +448,7 @@ def component_submit_file(request, project_slug, component_slug,
 
     if not component.allows_submission:
         request.user.message_set.create(message=_("This component does " 
-                            " not allow white access."))
+                            " not allow write access."))
         return HttpResponseRedirect(reverse('projects.views.component_detail', 
                             args=(project_slug, component_slug,)))
 
@@ -470,7 +470,7 @@ def component_submit_file(request, project_slug, component_slug,
                                 args=(project_slug, component_slug,)))
             elif not request.POST['targetfile'] == '' and \
                  not request.POST['newtargetfile'] == '':
-                request.user.message_set.create(message=_("Please enter with" 
+                request.user.message_set.create(message=_("Please enter" 
                                        " only ONE target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
@@ -489,7 +489,7 @@ def component_submit_file(request, project_slug, component_slug,
 
             if not request.POST['message']:
                 request.user.message_set.create(message=
-                    _("Enter a message for the commit"))
+                    _("Enter a commit message"))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
@@ -563,7 +563,7 @@ def component_submit_file(request, project_slug, component_slug,
         except ValueError: # msgfmt_check
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
             request.user.message_set.create(message=_("Your file does not" \
-                                    " pass by the check for correctness" \
+                                    " pass correctness checks" \
                                     " (msgfmt -c). Please run this command" \
                                     " on your system to see the errors."))
         except StandardError, e:
@@ -571,7 +571,7 @@ def component_submit_file(request, project_slug, component_slug,
                          " for %s component: %r" % (filename,
                          component.full_name, e))
             request.user.message_set.create(message = _(
-                "Sorry, an error is causing troubles to send your file."))
+                "Sorry, your file could not be sent because of an error."))
 
     else:
         request.user.message_set.create(message = _(
