@@ -39,26 +39,26 @@ class POReviewRequest(models.Model):
      
     """
     
-    STATUS_CHOICES = (('O', 'Open'),
-                     ('C', 'Closed'),)
+    STATUS_CHOICES = (('O', _('Open')),
+                     ('C', _('Closed')),)
 
-    RESOLUTION_CHOICES = (('N', 'Null'),
-                     ('A', 'Accepted'),
-                     ('R', 'Rejected'),)
+    RESOLUTION_CHOICES = (('N', _('Null')),
+                     ('A', _('Accepted')),
+                     ('R', _('Rejected')),)
 
     description = models.CharField(max_length=300, blank=True, null=True,
         help_text="Describe your review request.")
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O',
-        help_text="The review's status (open, closed, etc.)")
+        help_text=_("The review's status (open, closed, etc.)"))
     resolution = models.CharField(max_length=1, choices=RESOLUTION_CHOICES,
-        default='N', help_text="The review's resolution/closing state.")
+        default='N', help_text=_("The review's resolution/closing state."))
     created_on = models.DateTimeField(auto_now_add=True,
-        help_text="Date and time of creation")
+        help_text=_("Date and time of creation"))
     last_updated = models.DateTimeField(auto_now=True,
-        help_text="Date and time of last update")
+        help_text=_("Date and time of last update"))
 
     file_name = models.CharField(max_length=200, editable=False,
-        help_text="The review file name")
+        help_text=_("The review file name"), )
 
     # Relations
     component = models.ForeignKey(Component, verbose_name=_('Component'),
@@ -79,8 +79,8 @@ class POReviewRequest(models.Model):
     class Meta:
         verbose_name = _('Review Request')
         verbose_name_plural = _('Review Requests')
-        ordering  = ('-created_on',)
-        get_latest_by = 'created_on'
+        ordering  = (_('-created_on'),)
+        get_latest_by = _('created_on')
 
 
     @property
