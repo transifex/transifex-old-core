@@ -1,4 +1,7 @@
-<form enctype="multipart/form-data" action='' method='post'>
+{% load txcommontags %}
+{% load i18n %}
+
+<form enctype="multipart/form-data" action='{% url review_add component.id %}' method='post'>
   <table>
   <tbody>
     {% form_as_table_rows form %}

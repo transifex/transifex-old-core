@@ -21,11 +21,11 @@
 
 
 {% block content_title %}
-<h2 class="pagetitle">{% blocktrans with component.name as component_name %}Reviews{% endblocktrans %}</h2>
+<h2 class="pagetitle">{% trans "Requests" %}</h2>
 {% endblock %}
 
 {% block content %}
-  <h2>{% trans "Open Reviews" %}</h2>
+  <h2>{% trans "Open Requests" %}</h2>
 
 {% for review in component.reviews.open_reviews.all %}
 {% with review.id as review_id %}
@@ -69,11 +69,11 @@
 {% endfor %}
 
 {% if not component.reviews.open_reviews %}
-  <p>{% trans "No open reviews!" %}</p>
+  <p>{% trans "No open requests!" %}</p>
 {% endif %}
 
 
-<h2>{% trans "Closed Reviews" %}</h2>
+<h2>{% trans "Closed Requests" %}</h2>
 
 <table class="tablesorter">
   <thead>
@@ -103,7 +103,7 @@
 </table>
 
 {% if not component.reviews.closed_reviews.all %}
-  <p>{% trans "No closed reviews!" %}</p>
+  <p>{% trans "No closed requests!" %}</p>
 {% endif %}
 
 
@@ -116,13 +116,7 @@
 </p>
 
 <div class="generic_form">
-  <form action='' method='post'>
-  <table>
-  <tbody>
-    {% form_as_table_rows form %}
-  </tbody>
-  </table>
-  <p class="submit"><input type="submit" class="i16 add" value="{% trans "Request Review" %}" /></p>
+  {% include 'reviews/review_form.html' %}
 </div>
 
 {% endblock %}

@@ -17,16 +17,36 @@ from translations.models import POFile
 
 def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
-                                  project__slug=project_slug)
-    if request.method == 'POST': # If the form has been submitted...
-        form = POFileSubmissionForm(request.POST)
-    else:
-        form = POFileSubmissionForm()
-        
+                                  project__slug=project_slug)      
+    form = POFileSubmissionForm()
     return render_to_response('reviews/review_list.html', {
         'component': component,
         'form': form,
     }, context_instance=RequestContext(request))
+
+
+def review_add(request, component_id):
+    REVIEWS_DIR = getattr(settings, 'REVIEWS_DIR', '')
+
+    component = get_object_or_404(Component, pk=component_id)
+    if request.method == 'POST': # If the form has been submitted...
+        form = POFileSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            r = POReviewRequest(component=component, author=request.user)
+            r.save()
+            return HttpResponseRedirect(
+                reverse('review_list', args=[component.project.slug,
+                                             component.slug]))
+        else:
+            return render_to_response('reviews/review_list.html', {
+                'component': component,
+                'form': form,
+            }, context_instance=RequestContext(request))
+    else:
+        form = POFileSubmissionForm()
+        
+    return HttpResponseRedirect(
+        reverse('review_list', args=[component.project.slug, component.slug]))
 
 
 @login_required
