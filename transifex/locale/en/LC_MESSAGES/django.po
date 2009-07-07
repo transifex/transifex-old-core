@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-25 18:40+0000\n"
+"POT-Creation-Date: 2009-07-07 17:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -670,7 +670,6 @@ msgid "project"
 msgstr ""
 
 #: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/releases/release_detail.html:72
 #: templates/txcollections/collection_detail.html:93
 msgid "projects"
 msgstr ""
@@ -720,8 +719,7 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
-#: projects/models.py:238 templates/releases/base.html:6
-#: templates/releases/release_list.html:14
+#: projects/models.py:238
 msgid "Releases"
 msgstr ""
 
@@ -743,11 +741,11 @@ msgstr ""
 msgid "The %s was deleted."
 msgstr ""
 
-#: projects/views.py:136 projects/views.py:611
+#: projects/views.py:136 projects/views.py:623
 msgid "Must use POST to activate"
 msgstr ""
 
-#: projects/views.py:139 projects/views.py:614
+#: projects/views.py:139 projects/views.py:626
 msgid "Notifation is not enabled"
 msgstr ""
 
@@ -765,58 +763,58 @@ msgid ""
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:438
-msgid "This component does  not allow white access."
+#: projects/views.py:450
+msgid "This component does  not allow write access."
 msgstr ""
 
-#: projects/views.py:446
+#: projects/views.py:458
 msgid "Please select a file from your system to be uploaded."
 msgstr ""
 
-#: projects/views.py:455
+#: projects/views.py:467
 msgid "Please enter a target to upload the file."
 msgstr ""
 
-#: projects/views.py:461
-msgid "Please enter with only ONE target to upload the file."
+#: projects/views.py:473
+msgid "Please enter only ONE target to upload the file."
 msgstr ""
 
-#: projects/views.py:472
+#: projects/views.py:484
 msgid "The target file does not match with the component file filter"
 msgstr ""
 
-#: projects/views.py:480
-msgid "Enter a message for the commit"
+#: projects/views.py:492
+msgid "Enter a commit message"
 msgstr ""
 
-#: projects/views.py:538
+#: projects/views.py:550 webtrans/views.py:120
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr ""
 
-#: projects/views.py:553
+#: projects/views.py:565
 msgid ""
-"Your file does not pass by the check for correctness (msgfmt -c). Please run "
-"this command on your system to see the errors."
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
 msgstr ""
 
-#: projects/views.py:562
-msgid "Sorry, an error is causing troubles to send your file."
+#: projects/views.py:574
+msgid "Sorry, your file could not be sent because of an error."
 msgstr ""
 
-#: projects/views.py:566 projects/views.py:596
+#: projects/views.py:578 projects/views.py:608
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:585
+#: projects/views.py:597
 msgid "Lock removed."
 msgstr ""
 
-#: projects/views.py:588
+#: projects/views.py:600
 msgid "Error: Only the owner of a lock can remove it."
 msgstr ""
 
-#: projects/views.py:592
+#: projects/views.py:604
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 
@@ -852,8 +850,9 @@ msgstr ""
 
 #: releases/models.py:37
 msgid ""
-"The last date packages from this release can be built from the developers, "
-"and thus, translations to be built in the packages of it."
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 
 #: releases/models.py:54
@@ -861,7 +860,6 @@ msgid "release"
 msgstr ""
 
 #: releases/models.py:55 templates/languages/language_detail.html:20
-#: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr ""
@@ -917,7 +915,7 @@ msgstr ""
 
 #: templates/403.html:12
 msgid ""
-"Looks like you do not have the necessary permissions to the required action."
+"Looks like you do not have the necessary permissions for the required action."
 msgstr ""
 
 #: templates/403.html:15 templates/404.html:15
@@ -1254,7 +1252,7 @@ msgid ""
 msgstr ""
 
 #: templates/authopenid/delete.html:14
-msgid "Check confirm box, if you want delete your account."
+msgid "Check the confirm box, if you really want to delete your account."
 msgstr ""
 
 #: templates/authopenid/delete.html:17 templates/authopenid/login_box.html:11
@@ -1388,7 +1386,7 @@ msgid ""
 "\n"
 "<p>There are two ways to join: with an email and screen name or with an "
 "OpenID.</p>\n"
-"<p>Enter information only for the type of sign up you want to do.</p>\n"
+"<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
 
 #: templates/authopenid/signup.html:15
@@ -1443,7 +1441,7 @@ msgid "Send feedback"
 msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:4
-msgid "Thanks for the beedback!"
+msgid "Thanks for the feedback!"
 msgstr ""
 
 #: templates/contact_form/contact_form_sent.html:7
@@ -1494,34 +1492,29 @@ msgstr ""
 msgid "Project/Component statistics"
 msgstr ""
 
-#: templates/languages/language_release.html:47
+#: templates/languages/language_release.html:52
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
 "check again."
 msgstr ""
 
-#: templates/languages/language_release.html:48
+#: templates/languages/language_release.html:53
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
 
-#: templates/languages/language_release.html:52
+#: templates/languages/language_release.html:57
 msgid "Untranslated Components"
 msgstr ""
 
-#: templates/languages/language_release.html:53
-msgid "Here you can find components registered to belong in "
-msgstr ""
-
-#: templates/languages/language_release.html:53
-msgid ", but with no translations sent for "
-msgstr ""
-
-#: templates/languages/language_release.html:53
-msgid " yet:"
+#: templates/languages/language_release.html:59
+#, python-format
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
 msgstr ""
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
@@ -1547,8 +1540,8 @@ msgstr ""
 #: templates/notification/notices.html:54
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list bellow and choose which "
-"events you would like to be notificated by email."
+"the notifications available for you on the list below and choose which "
+"events you would like to be notified by email."
 msgstr ""
 
 #: templates/notification/notices.html:55
@@ -1677,7 +1670,6 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/releases/release_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1692,8 +1684,8 @@ msgstr ""
 #: templates/projects/component_detail.html:25
 msgid ""
 "This component does not support local storing of submitted files. The "
-"submitted files will be sends to the maintainers\\' emails and the "
-"statistics will reflect the change once the files are committed upstream."
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 
 #: templates/projects/component_detail.html:29
@@ -1704,7 +1696,6 @@ msgstr ""
 
 #: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
-#: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
@@ -1763,7 +1754,7 @@ msgid "Component not yet pulled from source repository."
 msgstr ""
 
 #: templates/projects/component_detail.html:143
-msgid "Refresh and re-calculate statistics. It can take some time."
+msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 
 #: templates/projects/component_detail.html:143
@@ -1895,7 +1886,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:27
 msgid ""
-"The target file is the name o the new file language. It must matches with "
+"The target file is the name of the new file language. It must matches with "
 "the component file filter."
 msgstr ""
 
@@ -1916,7 +1907,7 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:41
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:11
 msgid "Send"
 msgstr ""
 
@@ -1959,7 +1950,6 @@ msgid "Watch:"
 msgstr ""
 
 #: templates/projects/project_detail.html:55
-#: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
@@ -1981,8 +1971,6 @@ msgstr ""
 
 #: templates/projects/project_detail.html:67
 #: templates/projects/project_list.html:46
-#: templates/releases/release_detail.html:50
-#: templates/releases/release_list.html:43
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
@@ -2001,12 +1989,10 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/projects/project_detail.html:100
-#: templates/releases/release_detail.html:58
 msgid "External links:"
 msgstr ""
 
 #: templates/projects/project_detail.html:102
-#: templates/releases/release_detail.html:60
 msgid "Screenshots"
 msgstr ""
 
@@ -2039,7 +2025,7 @@ msgstr ""
 msgid "Save project"
 msgstr ""
 
-#: templates/projects/project_latests.html:3
+#: templates/projects/project_latests.html:6
 msgid "Latest Projects"
 msgstr ""
 
@@ -2076,130 +2062,14 @@ msgid ""
 "it</a>!"
 msgstr ""
 
-#: templates/releases/release_confirm_delete.html:4
-#: templates/txcollections/release_confirm_delete.html:4
-#, python-format
-msgid "Delete %(release_name)s"
-msgstr ""
-
-#: templates/releases/release_confirm_delete.html:6
-#: templates/txcollections/release_confirm_delete.html:6
-#, python-format
-msgid "Delete <em>%(release_name)s</em>"
-msgstr ""
-
-#: templates/releases/release_confirm_delete.html:9
-#: templates/txcollections/release_confirm_delete.html:9
-#, python-format
-msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr ""
-
-#: templates/releases/release_confirm_delete.html:14
-#: templates/txcollections/release_confirm_delete.html:14
-#, python-format
-msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered release '%"
-"(release_name)s'?\n"
-msgstr ""
-
-#: templates/releases/release_detail.html:45
-#, python-format
-msgid "Homepage for %(release_name)s"
-msgstr ""
-
-#: templates/releases/release_detail.html:71
-msgid "Project in release"
-msgid_plural "Projects in release"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/releases/release_detail.html:85
-#, python-format
-msgid ""
-"No projects are registered for this release yet. <a href=\"%(project_list)s"
-"\">Find projects</a> and add them to this release."
-msgstr ""
-
-#: templates/releases/release_detail.html:97
-#: templates/txcollections/release_detail.html:86
-msgid "Delete release"
-msgstr ""
-
-#: templates/releases/release_form.html:6
-#: templates/releases/release_form.html:11
-#: templates/releases/release_form.html:17
-#: templates/txcollections/release_form.html:12
-#: templates/txcollections/release_form.html:17
-#: templates/txcollections/release_form.html:23
-msgid "Add a release"
-msgstr ""
-
-#: templates/releases/release_form.html:7
-#: templates/txcollections/release_form.html:13
-#, python-format
-msgid "Edit %(release_name)s"
-msgstr ""
-
-#: templates/releases/release_form.html:12
-#, python-format
-msgid "Edit <em>%(release_name)s</em>"
-msgstr ""
-
-#: templates/releases/release_form.html:20
-#, python-format
-msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
-msgstr ""
-
-#: templates/releases/release_list.html:8
-msgid "Release list"
-msgstr ""
-
-#: templates/releases/release_list.html:17
-#, python-format
-msgid "Releases with tag '%(tag)s'"
-msgstr ""
-
-#: templates/releases/release_list.html:18
-msgid "Releases on Transifex"
-msgstr ""
-
-#: templates/releases/release_list.html:25
-msgid "Add a new release"
-msgstr ""
-
-#: templates/releases/release_list.html:42
-#: templates/txcollections/collection_list.html:45
-#, python-format
-msgid "1 project"
-msgid_plural "%(counter)s projects"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/releases/release_list.html:49
-msgid "No releases registered yet. :-("
-msgstr ""
-
-#: templates/releases/release_list.html:51
-#, python-format
-msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
-
-#: templates/releases/release_list.html:59
-#, python-format
-msgid ""
-"Couldn't find your release? Go ahead and <a href=\"%(release_create)s\">add "
-"it</a>!"
-msgstr ""
-
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr ""
 
 #: templates/simpleauth/settings.html:15
 msgid ""
-"Any settings associated with your account are presented and possibly "
-"modified here."
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 
 #: templates/simpleauth/signin.html:10
@@ -2309,6 +2179,13 @@ msgid_plural "%(counter)s releases"
 msgstr[0] ""
 msgstr[1] ""
 
+#: templates/txcollections/collection_list.html:45
+#, python-format
+msgid "1 project"
+msgid_plural "%(counter)s projects"
+msgstr[0] ""
+msgstr[1] ""
+
 #: templates/txcollections/collection_list.html:53
 msgid "No collections registered yet. :-("
 msgstr ""
@@ -2323,6 +2200,29 @@ msgstr ""
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
 "\">add it</a>!"
+msgstr ""
+
+#: templates/txcollections/release_confirm_delete.html:4
+#, python-format
+msgid "Delete %(release_name)s"
+msgstr ""
+
+#: templates/txcollections/release_confirm_delete.html:6
+#, python-format
+msgid "Delete <em>%(release_name)s</em>"
+msgstr ""
+
+#: templates/txcollections/release_confirm_delete.html:9
+#, python-format
+msgid "Say goodbye to <em>%(release_name)s</em>?"
+msgstr ""
+
+#: templates/txcollections/release_confirm_delete.html:14
+#, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
 msgstr ""
 
 #: templates/txcollections/release_detail.html:55
@@ -2343,6 +2243,21 @@ msgstr ""
 
 #: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
+msgstr ""
+
+#: templates/txcollections/release_detail.html:86
+msgid "Delete release"
+msgstr ""
+
+#: templates/txcollections/release_form.html:12
+#: templates/txcollections/release_form.html:17
+#: templates/txcollections/release_form.html:23
+msgid "Add a release"
+msgstr ""
+
+#: templates/txcollections/release_form.html:13
+#, python-format
+msgid "Edit %(release_name)s"
 msgstr ""
 
 #: templates/txcollections/release_form.html:18
@@ -2474,9 +2389,9 @@ msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:37
 msgid ""
-"If you haven't validated your e-mail address yet you couldn't get into the "
-"site. Insert the e-mail address yu have registered with so we can resend the "
-"validation e-mail to you again"
+"If you haven't validated your e-mail address yet you will not be able to "
+"login. Insert your registered e-mail address to receive the validation e-"
+"mail again"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
@@ -2843,6 +2758,58 @@ msgstr ""
 msgid "Public profile of %(user)s"
 msgstr ""
 
+#: templates/webtrans/transfile_edit.html:28
+#, python-format
+msgid "%(component_name)s"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:29
+#, python-format
+msgid "Translate '%(filename)s'"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:38
+#: templates/webtrans/transfile_edit.html:43
+#, python-format
+msgid "Translate '<code>%(filename)s</code>'"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:96
+msgid "#"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:97
+msgid "Source String"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:98
+msgid "Translation"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:99
+msgid "Auto-translate"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:99
+msgid "AT"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:100
+msgid "Occurrences"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:101
+msgid "Fuzzy?"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:110
+msgid "Submit translations"
+msgstr ""
+
+#: templates/webtrans/transfile_form.html:15
+msgid "Auto-suggest translation"
+msgstr ""
+
 #: translations/models.py:225
 msgid "PO file"
 msgstr ""
@@ -2891,18 +2858,24 @@ msgstr ""
 msgid "Untrans:"
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:34
-#: translations/templates/comp_stats_table.html:46
-#: translations/templates/lang_stats_table.html:39
+#: translations/templates/comp_lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:36
+#: translations/templates/comp_stats_table.html:48
+#: translations/templates/lang_stats_table.html:41
 #: translations/templates/source_files.html:19
 msgid "Download "
+msgstr ""
+
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
+msgid "Edit "
 msgstr ""
 
 #: translations/templates/comp_stats_table.html:11
@@ -2928,11 +2901,12 @@ msgstr ""
 msgid "Click here to see the multiple files for"
 msgstr ""
 
-#: translations/templates/component_submit.html:4
-msgid "Send a translation for this language."
+#: translations/templates/component_submit.html:5
+#, python-format
+msgid "Submit a translation for %(pofile_filename)s"
 msgstr ""
 
-#: translations/templates/component_submit.html:7
+#: translations/templates/component_submit.html:9
 msgid "Submit file"
 msgstr ""
 
@@ -3070,7 +3044,7 @@ msgid "About yourself"
 msgstr ""
 
 #: txcommon/models.py:27
-msgid "Short words about you (140 chars)."
+msgid "Short description of yourself (140 chars)."
 msgstr ""
 
 #: txcommon/models.py:28
@@ -3240,7 +3214,7 @@ msgid "Release Deleted from a Collection"
 msgstr ""
 
 #: txcommon/management/__init__.py:138
-msgid "when a release is deleted to a collection"
+msgid "when a release is deleted from a collection"
 msgstr ""
 
 #: txcommon/templates/common_homelink.html:2
@@ -3278,4 +3252,14 @@ msgstr ""
 
 #: vcs/models.py:62
 msgid "vcsunits"
+msgstr ""
+
+#: webtrans/views.py:125
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+
+#: webtrans/views.py:134
+msgid "Sorry, an error is causing troubles to send your file."
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-25 18:40+0000\n"
+"POT-Creation-Date: 2009-07-07 17:39+0000\n"
 "PO-Revision-Date: 2009-05-29 11:47+0200\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -118,7 +118,8 @@ msgstr "Špeciálne znaky"
 
 #: languages/models.py:37
 msgid "Enter any special characters that users might find difficult to type"
-msgstr "Zadajte špeciálne znaky, ktorých napísanie môže spôsobovať používateľom "
+msgstr ""
+"Zadajte špeciálne znaky, ktorých napísanie môže spôsobovať používateľom "
 "problémy"
 
 #: languages/models.py:40
@@ -566,8 +567,8 @@ msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
-"Zvoľte si, ako by mala táto súčasť spravovať prispievanie súbormi. Tu povolené "
-"voľby závisia od typu súčasti"
+"Zvoľte si, ako by mala táto súčasť spravovať prispievanie súbormi. Tu "
+"povolené voľby závisia od typu súčasti"
 
 #: projects/models.py:81 projects/models.py:190 releases/models.py:20
 #: txcollections/models.py:23
@@ -677,7 +678,6 @@ msgid "project"
 msgstr "projekt"
 
 #: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/releases/release_detail.html:72
 #: templates/txcollections/collection_detail.html:93
 msgid "projects"
 msgstr "projekty"
@@ -727,8 +727,7 @@ msgstr "Projekt"
 msgid "Unit"
 msgstr "Jednotka"
 
-#: projects/models.py:238 templates/releases/base.html:6
-#: templates/releases/release_list.html:14
+#: projects/models.py:238
 msgid "Releases"
 msgstr "Vydania"
 
@@ -750,11 +749,11 @@ msgstr "komponenty"
 msgid "The %s was deleted."
 msgstr "%s bol zmazaný."
 
-#: projects/views.py:136 projects/views.py:611
+#: projects/views.py:136 projects/views.py:623
 msgid "Must use POST to activate"
 msgstr "Na aktivovanie treba použiť POST"
 
-#: projects/views.py:139 projects/views.py:614
+#: projects/views.py:139 projects/views.py:626
 msgid "Notifation is not enabled"
 msgstr "Oznamovania nie sú povolené"
 
@@ -774,60 +773,64 @@ msgstr ""
 "Nezdá sa, že by súborový filter tohto na POT založeného komponentu povoľoval "
 "súbor POTFILES.in. Opravte ho, prosím."
 
-#: projects/views.py:438
-msgid "This component does  not allow white access."
+#: projects/views.py:450
+#, fuzzy
+msgid "This component does  not allow write access."
 msgstr "Tento komponent nepovoľuje prístup na zápis."
 
-#: projects/views.py:446
+#: projects/views.py:458
 msgid "Please select a file from your system to be uploaded."
 msgstr "Zvoľte súbor z vášho systému, ktorý chcete odoslať."
 
-#: projects/views.py:455
+#: projects/views.py:467
 msgid "Please enter a target to upload the file."
 msgstr "Prosím, zvoľte si cieľ na odoslanie súboru."
 
-#: projects/views.py:461
-msgid "Please enter with only ONE target to upload the file."
+#: projects/views.py:473
+#, fuzzy
+msgid "Please enter only ONE target to upload the file."
 msgstr "Prosím, zadajte len JEDEN cieľ na odoslanie súboru."
 
-#: projects/views.py:472
+#: projects/views.py:484
 msgid "The target file does not match with the component file filter"
 msgstr "Cieľ sa nezhoduje so súborovým filtrom komponentu."
 
-#: projects/views.py:480
-msgid "Enter a message for the commit"
-msgstr "Zadajte správu pre začlenenie"
+#: projects/views.py:492
+#, fuzzy
+msgid "Enter a commit message"
+msgstr "Začleňovacia správa:"
 
-#: projects/views.py:538
+#: projects/views.py:550 webtrans/views.py:120
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Súbor bol úspešne odoslaný: %s"
 
-#: projects/views.py:553
+#: projects/views.py:565
+#, fuzzy
 msgid ""
-"Your file does not pass by the check for correctness (msgfmt -c). Please run "
-"this command on your system to see the errors."
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
 msgstr ""
 "Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
 "zobrazenie chýb spustite tento príkaz na vašom systéme."
 
-#: projects/views.py:562
-msgid "Sorry, an error is causing troubles to send your file."
-msgstr "Ospravedlňujeme sa, chyba neumožňuje odoslať váš súbor."
+#: projects/views.py:574
+msgid "Sorry, your file could not be sent because of an error."
+msgstr ""
 
-#: projects/views.py:566 projects/views.py:596
+#: projects/views.py:578 projects/views.py:608
 msgid "Sorry, but you need to send a POST request."
 msgstr "Ospravedlňujeme sa, ale musíte odoslať POST požiadavku."
 
-#: projects/views.py:585
+#: projects/views.py:597
 msgid "Lock removed."
 msgstr "Uzamknutie odstránené."
 
-#: projects/views.py:588
+#: projects/views.py:600
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Chyba: len vlastník uzamknutia ho môže odstrániť."
 
-#: projects/views.py:592
+#: projects/views.py:604
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Uzamknutie vytvorené. Prosím, nezabudnite ho po skončení odstrániť."
 
@@ -864,9 +867,11 @@ msgid "Devel freeze date"
 msgstr "Dátum zmrazenia vývoja"
 
 #: releases/models.py:37
+#, fuzzy
 msgid ""
-"The last date packages from this release can be built from the developers, "
-"and thus, translations to be built in the packages of it."
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 "Posledný dátum, kedy balíčky z tohto vydania môžu byť zostavené vývojármi, a "
 "tým budú aj preklady zostavené v príslušných balíčkoch."
@@ -876,7 +881,6 @@ msgid "release"
 msgstr "vydanie"
 
 #: releases/models.py:55 templates/languages/language_detail.html:20
-#: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "vydania"
@@ -931,8 +935,9 @@ msgid "Forbidden access"
 msgstr "Prístup zakázaný"
 
 #: templates/403.html:12
+#, fuzzy
 msgid ""
-"Looks like you do not have the necessary permissions to the required action."
+"Looks like you do not have the necessary permissions for the required action."
 msgstr "Zdá sa že na požadovanú akciu nemáte potrebné oprávnenia."
 
 #: templates/403.html:15 templates/404.html:15
@@ -1293,7 +1298,8 @@ msgstr ""
 "zaregistrovať ktokoľvek."
 
 #: templates/authopenid/delete.html:14
-msgid "Check confirm box, if you want delete your account."
+#, fuzzy
+msgid "Check the confirm box, if you really want to delete your account."
 msgstr "Ak chcete odstrániť svoj účet, zaškrtnite potvrdzovaciu voľbu."
 
 #: templates/authopenid/delete.html:17 templates/authopenid/login_box.html:11
@@ -1430,11 +1436,12 @@ msgid "Create your account"
 msgstr "Vytvoriť svoj účet"
 
 #: templates/authopenid/signup.html:10
+#, fuzzy
 msgid ""
 "\n"
 "<p>There are two ways to join: with an email and screen name or with an "
 "OpenID.</p>\n"
-"<p>Enter information only for the type of sign up you want to do.</p>\n"
+"<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
 "\n"
 "<p>Sú dva spôsoby, ako sa pridať: pomocou emailu a používateľského mena "
@@ -1495,7 +1502,8 @@ msgid "Send feedback"
 msgstr "Odoslať odozvu"
 
 #: templates/contact_form/contact_form_sent.html:4
-msgid "Thanks for the beedback!"
+#, fuzzy
+msgid "Thanks for the feedback!"
 msgstr "Ďakujeme za odozvu!"
 
 #: templates/contact_form/contact_form_sent.html:7
@@ -1550,7 +1558,7 @@ msgstr ""
 msgid "Project/Component statistics"
 msgstr "Štatistiky projektov/súčastí"
 
-#: templates/languages/language_release.html:47
+#: templates/languages/language_release.html:52
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
@@ -1560,7 +1568,7 @@ msgstr ""
 "vydanie, ale žiadne nenašiel. Pokúste sa takýto súbor odoslať a potom opäť "
 "skontrolovať."
 
-#: templates/languages/language_release.html:48
+#: templates/languages/language_release.html:53
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
@@ -1569,21 +1577,16 @@ msgstr ""
 "Ak si myslíte, že by toto nemalo nastať, prosím, <a href=\"%(contact_form)s"
 "\">dajte nám vedieť</a>."
 
-#: templates/languages/language_release.html:52
+#: templates/languages/language_release.html:57
 msgid "Untranslated Components"
 msgstr "Nepreložené súčasti"
 
-#: templates/languages/language_release.html:53
-msgid "Here you can find components registered to belong in "
-msgstr "Tu nájdete súčasti zaregistrované pod "
-
-#: templates/languages/language_release.html:53
-msgid ", but with no translations sent for "
-msgstr ", ale zatiaľ bez odoslaných prekladov pre "
-
-#: templates/languages/language_release.html:53
-msgid " yet:"
-msgstr ":"
+#: templates/languages/language_release.html:59
+#, python-format
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
+msgstr ""
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
@@ -1606,10 +1609,11 @@ msgid "No notices."
 msgstr "Žiadne oznamy."
 
 #: templates/notification/notices.html:54
+#, fuzzy
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list bellow and choose which "
-"events you would like to be notificated by email."
+"the notifications available for you on the list below and choose which "
+"events you would like to be notified by email."
 msgstr ""
 "Môžete prijímať oznámenia kedykoľvek nastane v systéme Transifex nejaká "
 "udalosť. Prezrite si vám dostupné oznamovania v nižšie uvedenom zozname a "
@@ -1659,8 +1663,7 @@ msgstr "Správa"
 #, python-format
 msgid ""
 "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr ""
-"Bol pridaný nový projekt <a href=\"%(project_url)s\"%(project)s</a>"
+msgstr "Bol pridaný nový projekt <a href=\"%(project_url)s\"%(project)s</a>"
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
@@ -1762,7 +1765,6 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/releases/release_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1777,14 +1779,15 @@ msgstr ""
 "odosiela na email správcu."
 
 #: templates/projects/component_detail.html:25
+#, fuzzy
 msgid ""
 "This component does not support local storing of submitted files. The "
-"submitted files will be sends to the maintainers\\' emails and the "
-"statistics will reflect the change once the files are committed upstream."
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 "Táto súčasť nepodporuje lokálne ukladanie prispievaných súborov. Odoslané "
-"súbory budú odoslané na email správcu a štatistiky budú odrážať zmeny až "
-"keď sa súbory začlenia do hlavného prúdu vývoja."
+"súbory budú odoslané na email správcu a štatistiky budú odrážať zmeny až keď "
+"sa súbory začlenia do hlavného prúdu vývoja."
 
 #: templates/projects/component_detail.html:29
 msgid ""
@@ -1796,7 +1799,6 @@ msgstr ""
 
 #: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
-#: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
@@ -1856,7 +1858,8 @@ msgid "Component not yet pulled from source repository."
 msgstr "Súčast zatiaľ nie je získaná zo zdrojového repozitára."
 
 #: templates/projects/component_detail.html:143
-msgid "Refresh and re-calculate statistics. It can take some time."
+#, fuzzy
+msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Obnoviť a znovu spočítať štatistiky. Môže to nejaký čas trvať."
 
 #: templates/projects/component_detail.html:143
@@ -1992,8 +1995,9 @@ msgid "Select the target file:"
 msgstr "Zvoľte cieľový súbor:"
 
 #: templates/projects/component_submit_new_file.html:27
+#, fuzzy
 msgid ""
-"The target file is the name o the new file language. It must matches with "
+"The target file is the name of the new file language. It must matches with "
 "the component file filter."
 msgstr ""
 "Cieľový súbor v repozitári je názov nového jazykového súboru. Musí vyhovovať "
@@ -2016,7 +2020,7 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr "Príklad: Aktualizácie prekladu jazyka Brazílska Portugalčina"
 
 #: templates/projects/component_submit_new_file.html:41
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:11
 msgid "Send"
 msgstr "Odoslať"
 
@@ -2062,7 +2066,6 @@ msgid "Watch:"
 msgstr "Sledovať:"
 
 #: templates/projects/project_detail.html:55
-#: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
@@ -2084,8 +2087,6 @@ msgstr "Sledovač chýb pre %(project_name)s"
 
 #: templates/projects/project_detail.html:67
 #: templates/projects/project_list.html:46
-#: templates/releases/release_detail.html:50
-#: templates/releases/release_list.html:43
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
@@ -2106,12 +2107,10 @@ msgstr[1] "Správcovia:"
 msgstr[2] "Správcovia:"
 
 #: templates/projects/project_detail.html:100
-#: templates/releases/release_detail.html:58
 msgid "External links:"
 msgstr "Externé odkazy:"
 
 #: templates/projects/project_detail.html:102
-#: templates/releases/release_detail.html:60
 msgid "Screenshots"
 msgstr "Snímky obrazovky"
 
@@ -2144,7 +2143,7 @@ msgstr "Úprava projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgid "Save project"
 msgstr "Uložiť projekt"
 
-#: templates/projects/project_latests.html:3
+#: templates/projects/project_latests.html:6
 msgid "Latest Projects"
 msgstr "Najnovšie projekty"
 
@@ -2183,139 +2182,15 @@ msgstr ""
 "Nenašli ste svoj projekt? Pokračujte a <a href=\"%(project_create)s"
 "\">pridajte ho</a>!"
 
-#: templates/releases/release_confirm_delete.html:4
-#: templates/txcollections/release_confirm_delete.html:4
-#, python-format
-msgid "Delete %(release_name)s"
-msgstr "Odstrániť %(release_name)s"
-
-#: templates/releases/release_confirm_delete.html:6
-#: templates/txcollections/release_confirm_delete.html:6
-#, python-format
-msgid "Delete <em>%(release_name)s</em>"
-msgstr "Odstrániť <em>%(release_name)s</em>"
-
-#: templates/releases/release_confirm_delete.html:9
-#: templates/txcollections/release_confirm_delete.html:9
-#, python-format
-msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr "Dať zbohom vydaniu <em>%(release_name)s</em>?"
-
-#: templates/releases/release_confirm_delete.html:14
-#: templates/txcollections/release_confirm_delete.html:14
-#, python-format
-msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered release '%"
-"(release_name)s'?\n"
-msgstr ""
-"\n"
-"  Ste si istý, že chcete nadobro odstrániť zaregistrované vydanie '%"
-"(release_name)s'?\n"
-
-#: templates/releases/release_detail.html:45
-#, python-format
-msgid "Homepage for %(release_name)s"
-msgstr "Domovská stránka pre %(release_name)s"
-
-#: templates/releases/release_detail.html:71
-msgid "Project in release"
-msgid_plural "Projects in release"
-msgstr[0] "Projekt vo vydaní"
-msgstr[1] "Projekty vo vydaní"
-msgstr[2] "Projekty vo vydaní"
-
-#: templates/releases/release_detail.html:85
-#, python-format
-msgid ""
-"No projects are registered for this release yet. <a href=\"%(project_list)s"
-"\">Find projects</a> and add them to this release."
-msgstr ""
-"Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href=\"%"
-"(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tohto vydania."
-
-#: templates/releases/release_detail.html:97
-#: templates/txcollections/release_detail.html:86
-msgid "Delete release"
-msgstr "Odstrániť vydanie"
-
-#: templates/releases/release_form.html:6
-#: templates/releases/release_form.html:11
-#: templates/releases/release_form.html:17
-#: templates/txcollections/release_form.html:12
-#: templates/txcollections/release_form.html:17
-#: templates/txcollections/release_form.html:23
-msgid "Add a release"
-msgstr "Pridať vydanie"
-
-#: templates/releases/release_form.html:7
-#: templates/txcollections/release_form.html:13
-#, python-format
-msgid "Edit %(release_name)s"
-msgstr "Upraviť %(release_name)s"
-
-#: templates/releases/release_form.html:12
-#, python-format
-msgid "Edit <em>%(release_name)s</em>"
-msgstr "Upraviť <em>%(release_name)s</em>"
-
-#: templates/releases/release_form.html:20
-#, python-format
-msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
-msgstr "Úprava vydania <a·href=\"%(release_url)s\">%(release_name)s</a>"
-
-#: templates/releases/release_list.html:8
-msgid "Release list"
-msgstr "Zoznam vydaní"
-
-#: templates/releases/release_list.html:17
-#, python-format
-msgid "Releases with tag '%(tag)s'"
-msgstr "Vydania so štítkom '%(tag)s'"
-
-#: templates/releases/release_list.html:18
-msgid "Releases on Transifex"
-msgstr "Vydania v systéme Transifex"
-
-#: templates/releases/release_list.html:25
-msgid "Add a new release"
-msgstr "Pridať nové vydanie"
-
-#: templates/releases/release_list.html:42
-#: templates/txcollections/collection_list.html:45
-#, python-format
-msgid "1 project"
-msgid_plural "%(counter)s projects"
-msgstr[0] "1 projekt"
-msgstr[1] "%(counter)s projekty"
-msgstr[2] "%(counter)s projektov"
-
-#: templates/releases/release_list.html:49
-msgid "No releases registered yet. :-("
-msgstr "Zatiaľ žiadne zaregistrované vydania. :-("
-
-#: templates/releases/release_list.html:51
-#, python-format
-msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr "Prečo <a href=\"%(release_create)s\">nepridáte nejaké</a>?"
-
-#: templates/releases/release_list.html:59
-#, python-format
-msgid ""
-"Couldn't find your release? Go ahead and <a href=\"%(release_create)s\">add "
-"it</a>!"
-msgstr ""
-"Nenašli ste svoje vydanie? Pokračujte a <a href=\"%(release_create)s"
-"\">pridajte ho</a>!"
-
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Odhlásili ste sa."
 
 #: templates/simpleauth/settings.html:15
+#, fuzzy
 msgid ""
-"Any settings associated with your account are presented and possibly "
-"modified here."
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 "Tu sú zobrazené a umožnená je úprava nastavení spojených s vašim účtom."
 
@@ -2435,6 +2310,14 @@ msgstr[0] "1 vydanie"
 msgstr[1] "%(counter)s vydania"
 msgstr[2] "%(counter)s vydaní"
 
+#: templates/txcollections/collection_list.html:45
+#, python-format
+msgid "1 project"
+msgid_plural "%(counter)s projects"
+msgstr[0] "1 projekt"
+msgstr[1] "%(counter)s projekty"
+msgstr[2] "%(counter)s projektov"
+
 #: templates/txcollections/collection_list.html:53
 msgid "No collections registered yet. :-("
 msgstr "Zatiaľ žiadne zaregistrované vydania. :-("
@@ -2452,6 +2335,32 @@ msgid ""
 msgstr ""
 "Nenašli ste svoju zbierku? Pokračujte a <a href=\"%(collection_create)s"
 "\">pridajte ju</a>!"
+
+#: templates/txcollections/release_confirm_delete.html:4
+#, python-format
+msgid "Delete %(release_name)s"
+msgstr "Odstrániť %(release_name)s"
+
+#: templates/txcollections/release_confirm_delete.html:6
+#, python-format
+msgid "Delete <em>%(release_name)s</em>"
+msgstr "Odstrániť <em>%(release_name)s</em>"
+
+#: templates/txcollections/release_confirm_delete.html:9
+#, python-format
+msgid "Say goodbye to <em>%(release_name)s</em>?"
+msgstr "Dať zbohom vydaniu <em>%(release_name)s</em>?"
+
+#: templates/txcollections/release_confirm_delete.html:14
+#, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
+msgstr ""
+"\n"
+"  Ste si istý, že chcete nadobro odstrániť zaregistrované vydanie '%"
+"(release_name)s'?\n"
 
 #: templates/txcollections/release_detail.html:55
 msgid "Release date:"
@@ -2472,6 +2381,21 @@ msgstr "Štatistiky prekladov"
 #: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
 msgstr "Žiadne preklady pridané do tohto vydania. :-("
+
+#: templates/txcollections/release_detail.html:86
+msgid "Delete release"
+msgstr "Odstrániť vydanie"
+
+#: templates/txcollections/release_form.html:12
+#: templates/txcollections/release_form.html:17
+#: templates/txcollections/release_form.html:23
+msgid "Add a release"
+msgstr "Pridať vydanie"
+
+#: templates/txcollections/release_form.html:13
+#, python-format
+msgid "Edit %(release_name)s"
+msgstr "Upraviť %(release_name)s"
 
 #: templates/txcollections/release_form.html:18
 #, python-format
@@ -2611,10 +2535,11 @@ msgid "Resend confirmation"
 msgstr "Znova odoslať potvrdenie"
 
 #: templates/userprofile/account/email_validation_reset.html:37
+#, fuzzy
 msgid ""
-"If you haven't validated your e-mail address yet you couldn't get into the "
-"site. Insert the e-mail address yu have registered with so we can resend the "
-"validation e-mail to you again"
+"If you haven't validated your e-mail address yet you will not be able to "
+"login. Insert your registered e-mail address to receive the validation e-"
+"mail again"
 msgstr ""
 "Na stránky sa nemôžete dostať ak ste ešte neoverili vašu e-mailovú adresu. "
 "Zadajte e-mailovú adresu, s ktorou ste sa zaregistrovali, aby sme vám mohli "
@@ -2693,8 +2618,8 @@ msgid ""
 "Password change utility page. Please enter your new password twice so we can "
 "verify you typed it in correctly"
 msgstr ""
-"Stránka nástroja na zmenu hesla. Zadajte, prosím, vaše heslo dvakrát, aby sme "
-"si overili, že ste ho napísali správne"
+"Stránka nástroja na zmenu hesla. Zadajte, prosím, vaše heslo dvakrát, aby "
+"sme si overili, že ste ho napísali správne"
 
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
@@ -2734,8 +2659,8 @@ msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
 "password and e-mail the new one to you"
 msgstr ""
-"Zabudli ste svoje heslo? Zadajte vašu e-mailovú adresu a my vám heslo obnovíme "
-"a nové vám pošleme e-mailom"
+"Zabudli ste svoje heslo? Zadajte vašu e-mailovú adresu a my vám heslo "
+"obnovíme a nové vám pošleme e-mailom"
 
 #: templates/userprofile/account/password_reset_complete.html:13
 msgid "Your password has been set.  You may go ahead and log in now."
@@ -2747,8 +2672,8 @@ msgid ""
 "Password reset utility page. Please enter your new password twice so we can "
 "verify you typed it in correctly"
 msgstr ""
-"Stránka nástroja na obnovenie hesla. Zadajte, prosím, vaše heslo dvakrát, aby "
-"sme si overili, že ste ho napísali správne"
+"Stránka nástroja na obnovenie hesla. Zadajte, prosím, vaše heslo dvakrát, "
+"aby sme si overili, že ste ho napísali správne"
 
 #: templates/userprofile/account/password_reset_confirm.html:47
 msgid "Password reset unsuccessful"
@@ -2791,8 +2716,8 @@ msgid ""
 "Joining this community is quick and easy. You only need to fill the form to "
 "get access to all the private content"
 msgstr ""
-"Pripojením sa k tejto komunite je rýchle a jednoduché. Potrebujete len vyplniť "
-"formulár a získate prístup ku všetkému vnútornému obsahu"
+"Pripojením sa k tejto komunite je rýchle a jednoduché. Potrebujete len "
+"vyplniť formulár a získate prístup ku všetkému vnútornému obsahu"
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
@@ -2814,9 +2739,9 @@ msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
-"Úspešne ste zaregistrovali nový účet. Navštívte <a href=\"%(overview_url)s\""
-">prihlasovaciu stránku</a> pre overenie totožnosti a začatie používania týchto "
-"stránok."
+"Úspešne ste zaregistrovali nový účet. Navštívte <a href=\"%(overview_url)s"
+"\">prihlasovaciu stránku</a> pre overenie totožnosti a začatie používania "
+"týchto stránok."
 
 #: templates/userprofile/account/includes/registration_form.html:11
 msgid "E-mail"
@@ -2850,8 +2775,8 @@ msgid ""
 "Select an image from a remote URL. Put the URL on the input below and we'll "
 "retrieve the image for you"
 msgstr ""
-"Zvoliť obrázok zo vzdialenej URL. Vložte URL do vstupného políčka nižšie a my "
-"získame ten obrázok za vás"
+"Zvoliť obrázok zo vzdialenej URL. Vložte URL do vstupného políčka nižšie a "
+"my získame ten obrázok za vás"
 
 #: templates/userprofile/avatar/choose.html:54
 msgid "Search on Picasa Web"
@@ -3009,6 +2934,64 @@ msgstr "Vložte nejaké informácie o sebe"
 msgid "Public profile of %(user)s"
 msgstr "Verejný profil používateľa %(user)s"
 
+#: templates/webtrans/transfile_edit.html:28
+#, fuzzy, python-format
+msgid "%(component_name)s"
+msgstr "Upraviť %(component_name)s"
+
+#: templates/webtrans/transfile_edit.html:29
+#, fuzzy, python-format
+msgid "Translate '%(filename)s'"
+msgstr "Súbor s názvom '%(filename)s'"
+
+#: templates/webtrans/transfile_edit.html:38
+#: templates/webtrans/transfile_edit.html:43
+#, fuzzy, python-format
+msgid "Translate '<code>%(filename)s</code>'"
+msgstr "Odstrániť <em>%(release_name)s</em>"
+
+#: templates/webtrans/transfile_edit.html:96
+msgid "#"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:97
+#, fuzzy
+msgid "Source String"
+msgstr "Zdrojový jazyk"
+
+#: templates/webtrans/transfile_edit.html:98
+#, fuzzy
+msgid "Translation"
+msgstr "Preklady"
+
+#: templates/webtrans/transfile_edit.html:99
+#, fuzzy
+msgid "Auto-translate"
+msgstr "Nepreložené:"
+
+#: templates/webtrans/transfile_edit.html:99
+msgid "AT"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:100
+msgid "Occurrences"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:101
+#, fuzzy
+msgid "Fuzzy?"
+msgstr "Nepresné:"
+
+#: templates/webtrans/transfile_edit.html:110
+#, fuzzy
+msgid "Submit translations"
+msgstr "Preklady"
+
+#: templates/webtrans/transfile_form.html:15
+#, fuzzy
+msgid "Auto-suggest translation"
+msgstr "Pridať nový preklad"
+
 #: translations/models.py:225
 msgid "PO file"
 msgstr "PO súbor"
@@ -3057,19 +3040,26 @@ msgstr "Prelož.:"
 msgid "Untrans:"
 msgstr "Neprel.:"
 
-#: translations/templates/comp_lang_stats_table.html:34
-#: translations/templates/comp_stats_table.html:46
-#: translations/templates/lang_stats_table.html:39
+#: translations/templates/comp_lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Zobraziť "
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:36
+#: translations/templates/comp_stats_table.html:48
+#: translations/templates/lang_stats_table.html:41
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Stiahnuť "
+
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
+#, fuzzy
+msgid "Edit "
+msgstr "Upraviť"
 
 #: translations/templates/comp_stats_table.html:11
 #: translations/templates/project_stats_table.html:7
@@ -3094,11 +3084,12 @@ msgstr "(nepočítané)"
 msgid "Click here to see the multiple files for"
 msgstr "Kliknite sem na zobrazenie viacerých súborov pre "
 
-#: translations/templates/component_submit.html:4
-msgid "Send a translation for this language."
+#: translations/templates/component_submit.html:5
+#, fuzzy, python-format
+msgid "Submit a translation for %(pofile_filename)s"
 msgstr "Odoslať preklad pre tento jazyk"
 
-#: translations/templates/component_submit.html:7
+#: translations/templates/component_submit.html:9
 msgid "Submit file"
 msgstr "Odovzdať súbor"
 
@@ -3237,7 +3228,8 @@ msgid "About yourself"
 msgstr "O vás"
 
 #: txcommon/models.py:27
-msgid "Short words about you (140 chars)."
+#, fuzzy
+msgid "Short description of yourself (140 chars)."
 msgstr "Zopár slov o vás (140 znakov)"
 
 #: txcommon/models.py:28
@@ -3409,7 +3401,8 @@ msgid "Release Deleted from a Collection"
 msgstr "Vydanie odstránené zo zbierky"
 
 #: txcommon/management/__init__.py:138
-msgid "when a release is deleted to a collection"
+#, fuzzy
+msgid "when a release is deleted from a collection"
 msgstr "keď je vydanie odstránené zo zbiekry"
 
 #: txcommon/templates/common_homelink.html:2
@@ -3449,3 +3442,73 @@ msgstr "vcsjednotka"
 msgid "vcsunits"
 msgstr "vcsjednotky"
 
+#: webtrans/views.py:125
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+"Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
+"zobrazenie chýb spustite tento príkaz na vašom systéme."
+
+#: webtrans/views.py:134
+msgid "Sorry, an error is causing troubles to send your file."
+msgstr "Ospravedlňujeme sa, chyba neumožňuje odoslať váš súbor."
+
+#~ msgid "Enter a message for the commit"
+#~ msgstr "Zadajte správu pre začlenenie"
+
+#~ msgid "Here you can find components registered to belong in "
+#~ msgstr "Tu nájdete súčasti zaregistrované pod "
+
+#~ msgid ", but with no translations sent for "
+#~ msgstr ", ale zatiaľ bez odoslaných prekladov pre "
+
+#~ msgid " yet:"
+#~ msgstr ":"
+
+#~ msgid "Homepage for %(release_name)s"
+#~ msgstr "Domovská stránka pre %(release_name)s"
+
+#~ msgid "Project in release"
+#~ msgid_plural "Projects in release"
+#~ msgstr[0] "Projekt vo vydaní"
+#~ msgstr[1] "Projekty vo vydaní"
+#~ msgstr[2] "Projekty vo vydaní"
+
+#~ msgid ""
+#~ "No projects are registered for this release yet. <a href=\"%(project_list)"
+#~ "s\">Find projects</a> and add them to this release."
+#~ msgstr ""
+#~ "Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href=\"%"
+#~ "(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tohto vydania."
+
+#~ msgid "Edit <em>%(release_name)s</em>"
+#~ msgstr "Upraviť <em>%(release_name)s</em>"
+
+#~ msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
+#~ msgstr "Úprava vydania <a·href=\"%(release_url)s\">%(release_name)s</a>"
+
+#~ msgid "Release list"
+#~ msgstr "Zoznam vydaní"
+
+#~ msgid "Releases with tag '%(tag)s'"
+#~ msgstr "Vydania so štítkom '%(tag)s'"
+
+#~ msgid "Releases on Transifex"
+#~ msgstr "Vydania v systéme Transifex"
+
+#~ msgid "Add a new release"
+#~ msgstr "Pridať nové vydanie"
+
+#~ msgid "No releases registered yet. :-("
+#~ msgstr "Zatiaľ žiadne zaregistrované vydania. :-("
+
+#~ msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
+#~ msgstr "Prečo <a href=\"%(release_create)s\">nepridáte nejaké</a>?"
+
+#~ msgid ""
+#~ "Couldn't find your release? Go ahead and <a href=\"%(release_create)s"
+#~ "\">add it</a>!"
+#~ msgstr ""
+#~ "Nenašli ste svoje vydanie? Pokračujte a <a href=\"%(release_create)s"
+#~ "\">pridajte ho</a>!"

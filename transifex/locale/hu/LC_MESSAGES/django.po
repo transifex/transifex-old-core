@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-25 18:41+0000\n"
+"POT-Creation-Date: 2009-07-07 17:41+0000\n"
 "PO-Revision-Date: 2009-05-26 08:00+0200\n"
 "Last-Translator: Sulyok Péter <peti@fedoraproject.org>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: actionlog/models.py:50
 msgid "log entry"
@@ -670,7 +670,6 @@ msgid "project"
 msgstr "terv"
 
 #: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/releases/release_detail.html:72
 #: templates/txcollections/collection_detail.html:93
 msgid "projects"
 msgstr "tervek"
@@ -720,8 +719,7 @@ msgstr "Terv"
 msgid "Unit"
 msgstr "Egység"
 
-#: projects/models.py:238 templates/releases/base.html:6
-#: templates/releases/release_list.html:14
+#: projects/models.py:238
 msgid "Releases"
 msgstr "Kiadások"
 
@@ -743,11 +741,11 @@ msgstr "összetevők"
 msgid "The %s was deleted."
 msgstr "%s törölve."
 
-#: projects/views.py:136 projects/views.py:611
+#: projects/views.py:136 projects/views.py:623
 msgid "Must use POST to activate"
 msgstr "POST kell az aktiváláshoz"
 
-#: projects/views.py:139 projects/views.py:614
+#: projects/views.py:139 projects/views.py:626
 msgid "Notifation is not enabled"
 msgstr "Értesítés tiltott"
 
@@ -767,60 +765,64 @@ msgstr ""
 "A fájl szűrő e intltool POT alapú összetevőhöz látszólag nem engedi meg a "
 "POTFILES.in fájlt. Kérem javítsa."
 
-#: projects/views.py:438
-msgid "This component does  not allow white access."
+#: projects/views.py:450
+#, fuzzy
+msgid "This component does  not allow write access."
 msgstr "Az összetevő nem enged meg fehér hozzáférést."
 
-#: projects/views.py:446
+#: projects/views.py:458
 msgid "Please select a file from your system to be uploaded."
 msgstr "Válasszon feltöltendő fájlt a saját gépéről."
 
-#: projects/views.py:455
+#: projects/views.py:467
 msgid "Please enter a target to upload the file."
 msgstr "Kérem válasszon célt a feltöltéshez."
 
-#: projects/views.py:461
-msgid "Please enter with only ONE target to upload the file."
+#: projects/views.py:473
+#, fuzzy
+msgid "Please enter only ONE target to upload the file."
 msgstr "Kérem csak EGY célt adjon meg fájl feltöltéshez."
 
-#: projects/views.py:472
+#: projects/views.py:484
 msgid "The target file does not match with the component file filter"
 msgstr "A cél fájl nem illeszkedik az összetevő fájl szűrőre"
 
-#: projects/views.py:480
-msgid "Enter a message for the commit"
-msgstr "Adjon meg egy kísérő üzenetet"
+#: projects/views.py:492
+#, fuzzy
+msgid "Enter a commit message"
+msgstr "Kísérő szöveg:"
 
-#: projects/views.py:538
+#: projects/views.py:550 webtrans/views.py:120
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "%s fájlt sikerült beküldeni."
 
-#: projects/views.py:553
+#: projects/views.py:565
+#, fuzzy
 msgid ""
-"Your file does not pass by the check for correctness (msgfmt -c). Please run "
-"this command on your system to see the errors."
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
 msgstr ""
 "Hiba: A beküldött PO fájl helytelen. Kérem futtassa rá az „msgfmt -c” "
 "parancsot, és javítsa a hibákat beküldés előtt!"
 
-#: projects/views.py:562
-msgid "Sorry, an error is causing troubles to send your file."
-msgstr "Sajnálom, hiba akadályozza a fájl elküldését."
+#: projects/views.py:574
+msgid "Sorry, your file could not be sent because of an error."
+msgstr ""
 
-#: projects/views.py:566 projects/views.py:596
+#: projects/views.py:578 projects/views.py:608
 msgid "Sorry, but you need to send a POST request."
 msgstr "Sajnálom, de POST kérelmet kell küldeni."
 
-#: projects/views.py:585
+#: projects/views.py:597
 msgid "Lock removed."
 msgstr "Lakat leszedve."
 
-#: projects/views.py:588
+#: projects/views.py:600
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Hiba: Csak a lakat tulajdonosa szedheti le azt."
 
-#: projects/views.py:592
+#: projects/views.py:604
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 
@@ -857,9 +859,11 @@ msgid "Devel freeze date"
 msgstr "Fejlesztés befagyasztás dátum"
 
 #: releases/models.py:37
+#, fuzzy
 msgid ""
-"The last date packages from this release can be built from the developers, "
-"and thus, translations to be built in the packages of it."
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 "Az utolsó dátum, amikor e kiadásból csomagokat építhetnek a fejlesztők, és "
 "így a fordításokat beépíthetik a csomagokba."
@@ -869,7 +873,6 @@ msgid "release"
 msgstr "kiadás"
 
 #: releases/models.py:55 templates/languages/language_detail.html:20
-#: templates/releases/release_list.html:18
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "kiadások"
@@ -924,8 +927,9 @@ msgid "Forbidden access"
 msgstr "Tiltott hozzáférés"
 
 #: templates/403.html:12
+#, fuzzy
 msgid ""
-"Looks like you do not have the necessary permissions to the required action."
+"Looks like you do not have the necessary permissions for the required action."
 msgstr "Úgy tűnik, önnek nincs meg az igényelt tetthez szükséges joga."
 
 #: templates/403.html:15 templates/404.html:15
@@ -1280,7 +1284,8 @@ msgid ""
 msgstr "Megjegyzés: A számlája törlése után bárki beiratkozhat e néven."
 
 #: templates/authopenid/delete.html:14
-msgid "Check confirm box, if you want delete your account."
+#, fuzzy
+msgid "Check the confirm box, if you really want to delete your account."
 msgstr "Pipálja be a megerősítés dobozt, ha törölni akarja a számláját."
 
 #: templates/authopenid/delete.html:17 templates/authopenid/login_box.html:11
@@ -1416,11 +1421,12 @@ msgid "Create your account"
 msgstr "Számla teremtés"
 
 #: templates/authopenid/signup.html:10
+#, fuzzy
 msgid ""
 "\n"
 "<p>There are two ways to join: with an email and screen name or with an "
 "OpenID.</p>\n"
-"<p>Enter information only for the type of sign up you want to do.</p>\n"
+"<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
 "\n"
 "<p>Két módon állhat be: levélcímmel és névvel vagy OpenID-val.</p>\n"
@@ -1480,7 +1486,8 @@ msgid "Send feedback"
 msgstr "Visszajelzés küldése"
 
 #: templates/contact_form/contact_form_sent.html:4
-msgid "Thanks for the beedback!"
+#, fuzzy
+msgid "Thanks for the feedback!"
 msgstr "Köszönjük a visszajelzést!"
 
 #: templates/contact_form/contact_form_sent.html:7
@@ -1535,7 +1542,7 @@ msgstr ""
 msgid "Project/Component statistics"
 msgstr "Terv/összetevő statisztikák"
 
-#: templates/languages/language_release.html:47
+#: templates/languages/language_release.html:52
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
@@ -1545,7 +1552,7 @@ msgstr ""
 "tervet, de nem talált. Próbáljon meg beküldeni egy ilyen fájlt, és nézze meg "
 "újra."
 
-#: templates/languages/language_release.html:48
+#: templates/languages/language_release.html:53
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
@@ -1554,21 +1561,16 @@ msgstr ""
 "Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href=\"%"
 "(contact_form)s\">tudassa velünk</a>."
 
-#: templates/languages/language_release.html:52
+#: templates/languages/language_release.html:57
 msgid "Untranslated Components"
 msgstr "Fordítatlan összetevők"
 
-#: templates/languages/language_release.html:53
-msgid "Here you can find components registered to belong in "
-msgstr "Itt találhatnak a következőhöz tartozó összetevőket: "
-
-#: templates/languages/language_release.html:53
-msgid ", but with no translations sent for "
-msgstr ", de a következők fordítása nélkül: "
-
-#: templates/languages/language_release.html:53
-msgid " yet:"
-msgstr " még:"
+#: templates/languages/language_release.html:59
+#, python-format
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
+msgstr ""
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
@@ -1591,10 +1593,11 @@ msgid "No notices."
 msgstr "Nincs megjegyzés."
 
 #: templates/notification/notices.html:54
+#, fuzzy
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list bellow and choose which "
-"events you would like to be notificated by email."
+"the notifications available for you on the list below and choose which "
+"events you would like to be notified by email."
 msgstr ""
 "Bármely Transifexben történő eseményről kaphat értesítést. Nézze meg az "
 "rendelkezésre álló értesítéseket az alábbi felsorolásban, és válassza ki, "
@@ -1747,7 +1750,6 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/releases/release_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1762,10 +1764,11 @@ msgstr ""
 "karbantartók levél címére küldi azokat."
 
 #: templates/projects/component_detail.html:25
+#, fuzzy
 msgid ""
 "This component does not support local storing of submitted files. The "
-"submitted files will be sends to the maintainers\\' emails and the "
-"statistics will reflect the change once the files are committed upstream."
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 "Ez az összetevő nem támogatja a beküldött fájlok helyi tárolását. A "
 "beküldött fájlokat a karbantartók levél címére küldi, és a statisztikák "
@@ -1781,7 +1784,6 @@ msgstr ""
 
 #: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
-#: templates/releases/release_detail.html:26
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
@@ -1840,7 +1842,8 @@ msgid "Component not yet pulled from source repository."
 msgstr "Még nem húzták be az összetevőt a forrás tárolóból."
 
 #: templates/projects/component_detail.html:143
-msgid "Refresh and re-calculate statistics. It can take some time."
+#, fuzzy
+msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Statisztikák frissítése és újraszámítása. Némi időbe telhet."
 
 #: templates/projects/component_detail.html:143
@@ -1975,8 +1978,9 @@ msgid "Select the target file:"
 msgstr "Válasszon cél fájlt:"
 
 #: templates/projects/component_submit_new_file.html:27
+#, fuzzy
 msgid ""
-"The target file is the name o the new file language. It must matches with "
+"The target file is the name of the new file language. It must matches with "
 "the component file filter."
 msgstr ""
 "A cél fájl a név vagy az új fájl nyelve. Illenie kell az összetevő "
@@ -1999,7 +2003,7 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr "Példa: Updates to Hungarian translation"
 
 #: templates/projects/component_submit_new_file.html:41
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:11
 msgid "Send"
 msgstr "Küldés"
 
@@ -2044,7 +2048,6 @@ msgid "Watch:"
 msgstr "Figyelés:"
 
 #: templates/projects/project_detail.html:55
-#: templates/releases/release_detail.html:44
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
@@ -2066,8 +2069,6 @@ msgstr "%(project_name)s hibakövetője"
 
 #: templates/projects/project_detail.html:67
 #: templates/projects/project_list.html:46
-#: templates/releases/release_detail.html:50
-#: templates/releases/release_list.html:43
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
@@ -2086,12 +2087,10 @@ msgstr[0] "Karbantartó:"
 msgstr[1] "Karbantartók:"
 
 #: templates/projects/project_detail.html:100
-#: templates/releases/release_detail.html:58
 msgid "External links:"
 msgstr "Külső hivatkozások:"
 
 #: templates/projects/project_detail.html:102
-#: templates/releases/release_detail.html:60
 msgid "Screenshots"
 msgstr "Képernyőképek"
 
@@ -2124,7 +2123,7 @@ msgstr "<a·href=\"%(project_url)s\">%(project_name)s</a> szerkesztése"
 msgid "Save project"
 msgstr "Terv mentés"
 
-#: templates/projects/project_latests.html:3
+#: templates/projects/project_latests.html:6
 msgid "Latest Projects"
 msgstr "Legújabb tervek"
 
@@ -2161,134 +2160,15 @@ msgid ""
 "it</a>!"
 msgstr "Nem találja a tervét? <a·href=\"%(project_create)s\">Adja hozzá</a>!"
 
-#: templates/releases/release_confirm_delete.html:4
-#: templates/txcollections/release_confirm_delete.html:4
-#, python-format
-msgid "Delete %(release_name)s"
-msgstr "%(release_name)s törlése"
-
-#: templates/releases/release_confirm_delete.html:6
-#: templates/txcollections/release_confirm_delete.html:6
-#, python-format
-msgid "Delete <em>%(release_name)s</em>"
-msgstr "<em>%(release_name)s</em> törlése"
-
-#: templates/releases/release_confirm_delete.html:9
-#: templates/txcollections/release_confirm_delete.html:9
-#, python-format
-msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr "Búcsút int <em>%(release_name)s</em> kiadásnak?"
-
-#: templates/releases/release_confirm_delete.html:14
-#: templates/txcollections/release_confirm_delete.html:14
-#, python-format
-msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered release '%"
-"(release_name)s'?\n"
-msgstr ""
-"\n"
-"  Biztos, hogy véglegesen törölni akarja „%(release_name)s” kiadást?\n"
-
-#: templates/releases/release_detail.html:45
-#, python-format
-msgid "Homepage for %(release_name)s"
-msgstr "%(release_name)s honlapja"
-
-#: templates/releases/release_detail.html:71
-msgid "Project in release"
-msgid_plural "Projects in release"
-msgstr[0] "Terv a kiadásban"
-msgstr[1] "Tervek a kiadásban"
-
-#: templates/releases/release_detail.html:85
-#, python-format
-msgid ""
-"No projects are registered for this release yet. <a href=\"%(project_list)s"
-"\">Find projects</a> and add them to this release."
-msgstr ""
-"Nincs e kiadásba besorolt terv. <a·href=\"%(project_list)s\">Keressen "
-"terveket</a>, és adja hozzá őket e kiadáshoz."
-
-#: templates/releases/release_detail.html:97
-#: templates/txcollections/release_detail.html:86
-msgid "Delete release"
-msgstr "Kiadás törlés"
-
-#: templates/releases/release_form.html:6
-#: templates/releases/release_form.html:11
-#: templates/releases/release_form.html:17
-#: templates/txcollections/release_form.html:12
-#: templates/txcollections/release_form.html:17
-#: templates/txcollections/release_form.html:23
-msgid "Add a release"
-msgstr "Kiadás hozzáadása"
-
-#: templates/releases/release_form.html:7
-#: templates/txcollections/release_form.html:13
-#, python-format
-msgid "Edit %(release_name)s"
-msgstr "%(release_name)s szerkesztése"
-
-#: templates/releases/release_form.html:12
-#, python-format
-msgid "Edit <em>%(release_name)s</em>"
-msgstr "<em>%(release_name)s</em> szerkesztése"
-
-#: templates/releases/release_form.html:20
-#, python-format
-msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
-msgstr "<a·href=\"%(release_url)s\">%(release_name)s</a> szerkesztése"
-
-#: templates/releases/release_list.html:8
-msgid "Release list"
-msgstr "Kiadás lista"
-
-#: templates/releases/release_list.html:17
-#, python-format
-msgid "Releases with tag '%(tag)s'"
-msgstr "Kiadások „%(tag)s” címkével"
-
-#: templates/releases/release_list.html:18
-msgid "Releases on Transifex"
-msgstr "Kiadások Transifexen"
-
-#: templates/releases/release_list.html:25
-msgid "Add a new release"
-msgstr "Új kiadás hozzáadása"
-
-#: templates/releases/release_list.html:42
-#: templates/txcollections/collection_list.html:45
-#, python-format
-msgid "1 project"
-msgid_plural "%(counter)s projects"
-msgstr[0] "1 terv"
-msgstr[1] "%(counter)s terv"
-
-#: templates/releases/release_list.html:49
-msgid "No releases registered yet. :-("
-msgstr "Nincs még kiadás. :-("
-
-#: templates/releases/release_list.html:51
-#, python-format
-msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr "Miért nem <a·href=\"%(release_create)s\">ad hozzá egyet</a>?"
-
-#: templates/releases/release_list.html:59
-#, python-format
-msgid ""
-"Couldn't find your release? Go ahead and <a href=\"%(release_create)s\">add "
-"it</a>!"
-msgstr "Nem találja a kiadását? <a·href=\"%(release_create)s\">Adja hozzá</a>!"
-
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Kijelentkezett."
 
 #: templates/simpleauth/settings.html:15
+#, fuzzy
 msgid ""
-"Any settings associated with your account are presented and possibly "
-"modified here."
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 "Itt minden a saját számlához tartozó beállítás megjelenik és változtatható."
 
@@ -2405,6 +2285,13 @@ msgid_plural "%(counter)s releases"
 msgstr[0] "1 kiadás"
 msgstr[1] "%(counter)s kiadás"
 
+#: templates/txcollections/collection_list.html:45
+#, python-format
+msgid "1 project"
+msgid_plural "%(counter)s projects"
+msgstr[0] "1 terv"
+msgstr[1] "%(counter)s terv"
+
 #: templates/txcollections/collection_list.html:53
 msgid "No collections registered yet. :-("
 msgstr "Nincs még gyűjtemény. :-("
@@ -2421,6 +2308,31 @@ msgid ""
 "\">add it</a>!"
 msgstr ""
 "Nem találja gyűjteményét? <a href=\"%(collection_create)s\">Adja hozzá</a>!"
+
+#: templates/txcollections/release_confirm_delete.html:4
+#, python-format
+msgid "Delete %(release_name)s"
+msgstr "%(release_name)s törlése"
+
+#: templates/txcollections/release_confirm_delete.html:6
+#, python-format
+msgid "Delete <em>%(release_name)s</em>"
+msgstr "<em>%(release_name)s</em> törlése"
+
+#: templates/txcollections/release_confirm_delete.html:9
+#, python-format
+msgid "Say goodbye to <em>%(release_name)s</em>?"
+msgstr "Búcsút int <em>%(release_name)s</em> kiadásnak?"
+
+#: templates/txcollections/release_confirm_delete.html:14
+#, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
+msgstr ""
+"\n"
+"  Biztos, hogy véglegesen törölni akarja „%(release_name)s” kiadást?\n"
 
 #: templates/txcollections/release_detail.html:55
 msgid "Release date:"
@@ -2441,6 +2353,21 @@ msgstr "Fordítás statisztikák"
 #: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
 msgstr "Nincs fordítás e kiadáshoz. :-("
+
+#: templates/txcollections/release_detail.html:86
+msgid "Delete release"
+msgstr "Kiadás törlés"
+
+#: templates/txcollections/release_form.html:12
+#: templates/txcollections/release_form.html:17
+#: templates/txcollections/release_form.html:23
+msgid "Add a release"
+msgstr "Kiadás hozzáadása"
+
+#: templates/txcollections/release_form.html:13
+#, python-format
+msgid "Edit %(release_name)s"
+msgstr "%(release_name)s szerkesztése"
 
 #: templates/txcollections/release_form.html:18
 #, python-format
@@ -2532,8 +2459,8 @@ msgid ""
 "The key you received via e-mail is no longer valid. Please try the e-mail "
 "validation process again"
 msgstr ""
-"A levélben kapott kulcs már nem érvényes. Kérem próbálja újra a "
-"levél érvényesítés folyamatot"
+"A levélben kapott kulcs már nem érvényes. Kérem próbálja újra a levél "
+"érvényesítés folyamatot"
 
 #: templates/userprofile/account/email_validation_done.html:23
 #: templates/userprofile/account/email_validation_reset_response.html:22
@@ -2562,8 +2489,8 @@ msgid ""
 "instructions specified in the e-mail body"
 msgstr ""
 "Levelet küldtünk az új levél címre, hogy ellenőrizzük és érvényesítsük. "
-"Kérem nézze meg a leveleit, és fejezze be a folyamatot a levélben "
-"leírtakat követve."
+"Kérem nézze meg a leveleit, és fejezze be a folyamatot a levélben leírtakat "
+"követve."
 
 #: templates/userprofile/account/email_validation_reset.html:4
 #: templates/userprofile/account/email_validation_reset.html:19
@@ -2580,14 +2507,15 @@ msgid "Resend confirmation"
 msgstr "Megerősítés újraküldése"
 
 #: templates/userprofile/account/email_validation_reset.html:37
+#, fuzzy
 msgid ""
-"If you haven't validated your e-mail address yet you couldn't get into the "
-"site. Insert the e-mail address yu have registered with so we can resend the "
-"validation e-mail to you again"
+"If you haven't validated your e-mail address yet you will not be able to "
+"login. Insert your registered e-mail address to receive the validation e-"
+"mail again"
 msgstr ""
-"Ha még nem érvényesítette levél címét, akkor még nem léphetett be. "
-"Adja meg a levél címet, amivel beiratkozott, hogy újra küldhessük az "
-"érvényesítés levelet"
+"Ha még nem érvényesítette levél címét, akkor még nem léphetett be. Adja meg "
+"a levél címet, amivel beiratkozott, hogy újra küldhessük az érvényesítés "
+"levelet"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2681,8 +2609,7 @@ msgstr "Jelszó lejárt"
 #: templates/userprofile/account/password_expired.html:9
 msgid ""
 "The password key you're trying to use is expired. Please, request a new one"
-msgstr ""
-"A jelszó, amivel próbálkozik már lejárt. Kérem igényeljen egy újat"
+msgstr "A jelszó, amivel próbálkozik már lejárt. Kérem igényeljen egy újat"
 
 #: templates/userprofile/account/password_reset.html:21
 msgid "E-mail address"
@@ -2728,8 +2655,8 @@ msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
-"A jelszó törlés hivatkozás érvénytelen. Valószínüleg már használták.  "
-"Kérem igényeljen egy új jelszó törlést."
+"A jelszó törlés hivatkozás érvénytelen. Valószínüleg már használták.  Kérem "
+"igényeljen egy új jelszó törlést."
 
 #: templates/userprofile/account/password_reset_done.html:4
 #: templates/userprofile/account/password_reset_done.html:9
@@ -2741,8 +2668,8 @@ msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
 "receiving it shortly"
 msgstr ""
-"Elküldtük önnek levélben az új jelszó megszerzéséhez szükséges "
-"tudnivalókat. Hamarosan megkapja"
+"Elküldtük önnek levélben az új jelszó megszerzéséhez szükséges tudnivalókat. "
+"Hamarosan megkapja"
 
 #: templates/userprofile/account/registration.html:4
 #: templates/userprofile/account/includes/registration_form.html:4
@@ -2783,9 +2710,9 @@ msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
-"Sikerült beiratkoznia egy új számlára. Menjen a <a·href=\"%"
-"(overview_url)s\">bejelentkezés lapra</a>, hogy hitelesítse magát, "
-"és elkezdje használni ezt a szolgáltatást."
+"Sikerült beiratkoznia egy új számlára. Menjen a <a·href=\"%(overview_url)s"
+"\">bejelentkezés lapra</a>, hogy hitelesítse magát, és elkezdje használni "
+"ezt a szolgáltatást."
 
 #: templates/userprofile/account/includes/registration_form.html:11
 msgid "E-mail"
@@ -2836,8 +2763,7 @@ msgstr "Kép választás lap"
 msgid ""
 "You have several options to select the image you want as avatar on your "
 "profile"
-msgstr ""
-"Számos lehetősége van, hogy kiválassza a képét a saját adataihoz"
+msgstr "Számos lehetősége van, hogy kiválassza a képét a saját adataihoz"
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
@@ -2865,8 +2791,8 @@ msgid ""
 "It erases all your private data except your username. You can refill the "
 "information later if you want to"
 msgstr ""
-"Minden saját adatot töröl kivéve a használó nevet. Később újra "
-"kitöltheti adatokkal, ha akarja"
+"Minden saját adatot töröl kivéve a használó nevet. Később újra kitöltheti "
+"adatokkal, ha akarja"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2977,6 +2903,64 @@ msgstr "Adjon meg néhány adatot magáról"
 msgid "Public profile of %(user)s"
 msgstr "%(user)s nyilvános adatai"
 
+#: templates/webtrans/transfile_edit.html:28
+#, fuzzy, python-format
+msgid "%(component_name)s"
+msgstr "%(component_name)s szerkesztése"
+
+#: templates/webtrans/transfile_edit.html:29
+#, fuzzy, python-format
+msgid "Translate '%(filename)s'"
+msgstr "„%(filename)s” nevű fájl"
+
+#: templates/webtrans/transfile_edit.html:38
+#: templates/webtrans/transfile_edit.html:43
+#, fuzzy, python-format
+msgid "Translate '<code>%(filename)s</code>'"
+msgstr "<em>%(release_name)s</em> törlése"
+
+#: templates/webtrans/transfile_edit.html:96
+msgid "#"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:97
+#, fuzzy
+msgid "Source String"
+msgstr "Forrás nyelv"
+
+#: templates/webtrans/transfile_edit.html:98
+#, fuzzy
+msgid "Translation"
+msgstr "Fordítások"
+
+#: templates/webtrans/transfile_edit.html:99
+#, fuzzy
+msgid "Auto-translate"
+msgstr "Fordítatlan:"
+
+#: templates/webtrans/transfile_edit.html:99
+msgid "AT"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:100
+msgid "Occurrences"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:101
+#, fuzzy
+msgid "Fuzzy?"
+msgstr "Ellenőrizendő:"
+
+#: templates/webtrans/transfile_edit.html:110
+#, fuzzy
+msgid "Submit translations"
+msgstr "Fordítások"
+
+#: templates/webtrans/transfile_form.html:15
+#, fuzzy
+msgid "Auto-suggest translation"
+msgstr "Új fordítás hozzáadása"
+
 #: translations/models.py:225
 msgid "PO file"
 msgstr "PO fájl"
@@ -3025,19 +3009,26 @@ msgstr "Kész:"
 msgid "Untrans:"
 msgstr "Még:"
 
-#: translations/templates/comp_lang_stats_table.html:34
-#: translations/templates/comp_stats_table.html:46
-#: translations/templates/lang_stats_table.html:39
+#: translations/templates/comp_lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Nézet"
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:36
+#: translations/templates/comp_stats_table.html:48
+#: translations/templates/lang_stats_table.html:41
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Letöltés "
+
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
+#, fuzzy
+msgid "Edit "
+msgstr "Szerkesztés"
 
 #: translations/templates/comp_stats_table.html:11
 #: translations/templates/project_stats_table.html:7
@@ -3062,11 +3053,12 @@ msgstr "(nem számítják)"
 msgid "Click here to see the multiple files for"
 msgstr "Kattintson ide, és több fájlt lát"
 
-#: translations/templates/component_submit.html:4
-msgid "Send a translation for this language."
+#: translations/templates/component_submit.html:5
+#, fuzzy, python-format
+msgid "Submit a translation for %(pofile_filename)s"
 msgstr "Küldjön fordítást e nyelvhez."
 
-#: translations/templates/component_submit.html:7
+#: translations/templates/component_submit.html:9
 msgid "Submit file"
 msgstr "Fájl beadás"
 
@@ -3204,7 +3196,8 @@ msgid "About yourself"
 msgstr "Bemutatkozás"
 
 #: txcommon/models.py:27
-msgid "Short words about you (140 chars)."
+#, fuzzy
+msgid "Short description of yourself (140 chars)."
 msgstr "Rövid jellemzés (140 betű)."
 
 #: txcommon/models.py:28
@@ -3374,7 +3367,8 @@ msgid "Release Deleted from a Collection"
 msgstr "Kiadás törlése gyűjteményből"
 
 #: txcommon/management/__init__.py:138
-msgid "when a release is deleted to a collection"
+#, fuzzy
+msgid "when a release is deleted from a collection"
 msgstr "amikor kiadást törölnek gyűjteményből"
 
 #: txcommon/templates/common_homelink.html:2
@@ -3413,6 +3407,75 @@ msgstr "vcsunit"
 #: vcs/models.py:62
 msgid "vcsunits"
 msgstr "vcsunits"
+
+#: webtrans/views.py:125
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+"Hiba: A beküldött PO fájl helytelen. Kérem futtassa rá az „msgfmt -c” "
+"parancsot, és javítsa a hibákat beküldés előtt!"
+
+#: webtrans/views.py:134
+msgid "Sorry, an error is causing troubles to send your file."
+msgstr "Sajnálom, hiba akadályozza a fájl elküldését."
+
+#~ msgid "Enter a message for the commit"
+#~ msgstr "Adjon meg egy kísérő üzenetet"
+
+#~ msgid "Here you can find components registered to belong in "
+#~ msgstr "Itt találhatnak a következőhöz tartozó összetevőket: "
+
+#~ msgid ", but with no translations sent for "
+#~ msgstr ", de a következők fordítása nélkül: "
+
+#~ msgid " yet:"
+#~ msgstr " még:"
+
+#~ msgid "Homepage for %(release_name)s"
+#~ msgstr "%(release_name)s honlapja"
+
+#~ msgid "Project in release"
+#~ msgid_plural "Projects in release"
+#~ msgstr[0] "Terv a kiadásban"
+#~ msgstr[1] "Tervek a kiadásban"
+
+#~ msgid ""
+#~ "No projects are registered for this release yet. <a href=\"%(project_list)"
+#~ "s\">Find projects</a> and add them to this release."
+#~ msgstr ""
+#~ "Nincs e kiadásba besorolt terv. <a·href=\"%(project_list)s\">Keressen "
+#~ "terveket</a>, és adja hozzá őket e kiadáshoz."
+
+#~ msgid "Edit <em>%(release_name)s</em>"
+#~ msgstr "<em>%(release_name)s</em> szerkesztése"
+
+#~ msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
+#~ msgstr "<a·href=\"%(release_url)s\">%(release_name)s</a> szerkesztése"
+
+#~ msgid "Release list"
+#~ msgstr "Kiadás lista"
+
+#~ msgid "Releases with tag '%(tag)s'"
+#~ msgstr "Kiadások „%(tag)s” címkével"
+
+#~ msgid "Releases on Transifex"
+#~ msgstr "Kiadások Transifexen"
+
+#~ msgid "Add a new release"
+#~ msgstr "Új kiadás hozzáadása"
+
+#~ msgid "No releases registered yet. :-("
+#~ msgstr "Nincs még kiadás. :-("
+
+#~ msgid "Why don't you <a href=\"%(release_create)s\">add one</a>?"
+#~ msgstr "Miért nem <a·href=\"%(release_create)s\">ad hozzá egyet</a>?"
+
+#~ msgid ""
+#~ "Couldn't find your release? Go ahead and <a href=\"%(release_create)s"
+#~ "\">add it</a>!"
+#~ msgstr ""
+#~ "Nem találja a kiadását? <a·href=\"%(release_create)s\">Adja hozzá</a>!"
 
 #~ msgid ""
 #~ "Tarball support is read-only: Submissions will not pushed to the "
