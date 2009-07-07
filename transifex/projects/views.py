@@ -431,7 +431,8 @@ def component_file_edit(request, project_slug, component_slug, filename,
                                   project__slug=project_slug)
     #FIXME: This approach hits the database twice!
     # See also: http://transifex.org/ticket/210
-    pofile = POFile.objects.get(filename=filename, component=component)
+    pofile = get_object_or_404(POFile, filename=filename,
+        component=component)
     return transfile_edit(request, pofile.id)
 
 @login_required
