@@ -5,12 +5,14 @@ of the review request. The following definitions are used:
 POReviewRequest: A file under review entry in the database.
 """
 
+import os
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from projects.models import Component
-from transifex.translations.models import POFile
+from transifex.translations.models import POFile 
 
 class POReviewRequestManager(models.Manager):
 
@@ -21,7 +23,6 @@ class POReviewRequestManager(models.Manager):
     def closed_reviews(self):
         """ Return a list of inactive Requests. """
         return self.filter(status='C')
-
 
 class POReviewRequest(models.Model):
     """A POReviewRequest is a review representation of a PO file.
@@ -54,6 +55,9 @@ class POReviewRequest(models.Model):
     last_updated = models.DateTimeField(auto_now=True,
         help_text="Date and time of last update")
 
+    file_name = models.CharField(max_length=200, editable=False,
+        help_text="The review file name")
+
     # Relations
     component = models.ForeignKey(Component, verbose_name=_('Component'),
                                   related_name='reviews')
@@ -84,3 +88,13 @@ class POReviewRequest(models.Model):
     @property
     def is_open(self):
         return (self.status == 'O')
+
+    @property
+    def full_review_filename(self):
+        return '%d.%s' % (self.id, self.file_name)
+        
+    @property
+    def file_url(self):
+        return settings.REVIEWS_URL + self.full_review_filename
+
+    

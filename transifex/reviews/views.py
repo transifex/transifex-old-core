@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from polib import unescape
 
 from django.core.urlresolvers import reverse
@@ -14,6 +15,8 @@ from projects.models import Component
 from reviews.models import POReviewRequest
 from reviews.forms import POFileSubmissionForm
 from translations.models import POFile
+from txcommon.lib.storage import save_file
+
 
 def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
@@ -26,14 +29,18 @@ def review_list(request, project_slug, component_slug):
 
 
 def review_add(request, component_id):
-    REVIEWS_DIR = getattr(settings, 'REVIEWS_DIR', '')
+    MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', '')
 
     component = get_object_or_404(Component, pk=component_id)
     if request.method == 'POST': # If the form has been submitted...
         form = POFileSubmissionForm(request.POST, request.FILES)
-        if form.is_valid():
-            r = POReviewRequest(component=component, author=request.user)
+        if form.is_valid() and 'review_file' in request.FILES:
+            file = request.FILES['review_file']
+            r = POReviewRequest(component=component, author=request.user,
+                                file_name=os.path.basename(file.name))
             r.save()
+            target = os.path.join(settings.REVIEWS_ROOT, r.full_review_filename)
+            save_file(target, file)
             return HttpResponseRedirect(
                 reverse('review_list', args=[component.project.slug,
                                              component.slug]))

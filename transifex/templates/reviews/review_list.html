@@ -40,7 +40,7 @@
     </tr>
     <tr>
       <th class="i16 submit_file">{% trans "File" %}</th>
-      <td><a href="#FIXME">#FIXME</a></td>
+      <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     </tr>
     <tr>
       <th class="i16 status">{% trans "Status" %}</th>
@@ -75,11 +75,13 @@
 
 <h2>{% trans "Closed Requests" %}</h2>
 
+{% if component.reviews.closed_reviews.all %}
 <table class="tablesorter">
   <thead>
     <tr>
       <th>{% trans "ID" %}</th>
       <th>{% trans "Author" %}</th>
+      <th>{% trans "File" %}</th>
       <th>{% trans "Resolution" %}</th>
       <th>{% trans "Action" %}</th>
     </tr>
@@ -91,6 +93,7 @@
   <tr>
     <td>{{ review_id }}</td>
     <td>{{ review.author }}</td>
+    <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td>{{ review.get_resolution_display }}</td>
     <td><form class="microform" action="{{ modify_url }}" method='post'>
       <input class="i16 redo nodecoration_icon" title="{% trans "Reopen review request" %}"  value="" type="submit" name="reopen" type="image">
@@ -101,6 +104,7 @@
 {% endfor %}
 </tbody>
 </table>
+{% endif %}
 
 {% if not component.reviews.closed_reviews.all %}
   <p>{% trans "No closed requests!" %}</p>
