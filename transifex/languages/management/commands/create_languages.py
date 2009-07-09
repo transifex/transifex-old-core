@@ -54,6 +54,13 @@ def process_lang():
     as_.pluralequation = '(n!=1)'
     as_.save()
 
+#   Asturian
+    ast, created = Language.objects.get_or_create(code='ast')
+    ast.name = _(u'Asturian')
+    ast.nplurals = '2'
+    ast.pluralequation = '(n!=1)'
+    ast.save()
+
 #   Azərbaycan
 #   Azerbaijani
     az, created = Language.objects.get_or_create(code='az')
