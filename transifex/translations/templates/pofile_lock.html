@@ -1,7 +1,9 @@
 {% load i18n %}
 {% load statistics %}
+{% load permissions %}
 {% url component_toggle_lock_file pofile.object.project.slug pofile.object.slug pofile.filename as toggle_lock_url %}
 {% with pofile.locks.get.owner as owner %}
+{% get_permission "project_perm.maintain" for request.user and pofile.object.project as "is_maintainer" %}
 {% if pofile.locked %}
   {% ifequal request.user.username owner.username %}
     <form action="{{ toggle_lock_url }}" method="POST" class="microform">
@@ -13,7 +15,7 @@
     <span class="stat_message">({{ owner }})</span>
   {% endifequal %}
 {% else %}
-  {% if request.user.is_authenticated and perms.translations.add_pofilelock %}
+  {% if perms.translations.add_pofilelock or is_maintainer %}
    <form action="{{ toggle_lock_url }}" method="POST" class="microform">
         <input title="{% trans "Lock this file to notify others you're working with it." %}" class="i16 lock_none nodecoration_icon image_submit_type" value="" type="image">
     </form>

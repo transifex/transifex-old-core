@@ -3,6 +3,8 @@
 {% load locks %}
 {% load watches %}
 {% load submissions %}
+{% load permissions %}
+
 {% if stats %}
 {% url notification.views.notices as notices_url %}
 <table id="stats_lang" class="stats_comp tablesorter">
@@ -14,7 +16,9 @@
     </tr>
    </thead>
    <tbody>
-   {% for stat in stats %} 
+   {% for stat in stats %}
+    {% get_permission "project_perm.submit_file" for request.user and stat.object.project as "can_submit_file" %}
+    {% get_permission "project_perm.maintain" for request.user and stat.object.project as "is_maintainer" %}
       <tr>
         <td class="left name" id="{{stat.object.full_name}}">
           <a href="{{stat.object.project.get_absolute_url}}" title="{% trans "Go to this project page" %}">{{stat.object.project.name}}</a> 
@@ -40,12 +44,18 @@
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 get_file nodecoration_icon" title="{% trans "Download " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
            {% pofile_lock stat %}
-           {% if request.user.is_authenticated and perms.repowatch.add_watch and notices_url %}{% watch_toggle stat %}{% endif %}
-           {% if request.user.is_authenticated and stat.object.allows_submission and perms.projects.submit_file %}
-             {% if file_edit_url %}
-                <a class="i16 edit_file nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
+           {% if notices_url %}
+             {% if perms.repowatch.add_watch or is_maintainer %}
+                {% watch_toggle stat %}
              {% endif %}
-             {% pofile_submission stat %}
+           {% endif %}
+           {% if stat.object.allows_submission %}
+             {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
+               {% if file_edit_url %}
+                 <a class="i16 edit_file nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
+               {% endif %}
+               {% pofile_submission stat %}
+             {% endif %}
            {% endif %}
           {% endif %} 
         </td>

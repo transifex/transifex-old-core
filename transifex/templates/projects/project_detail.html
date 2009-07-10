@@ -4,6 +4,7 @@
 {% load txcommontags %}
 {% load statistics %}
 {% load watches %}
+{% load permissions %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -30,7 +31,8 @@
   {% endif %}
   {% endwith %}
 
-  {% if request.user.is_authenticated and perms.projects.change_project %}
+  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+  {% if perms.projects.change_project or is_maintainer %}
   <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
   
@@ -131,7 +133,8 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated and perms.projects.delete_project %}
+    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+    {% if perms.projects.delete_project or is_maintainer %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>
     </div>

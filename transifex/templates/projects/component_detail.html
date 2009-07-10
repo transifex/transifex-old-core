@@ -3,6 +3,7 @@
 {% load markup %}
 {% load i18n %}
 {% load truncate %}
+{% load permissions %}
 
 {% block extra_head %}
   <script type="text/javascript">
@@ -69,9 +70,10 @@
   {% endif %}
   {% endwith %}
 
-{% if request.user.is_authenticated and perms.projects.add_component %}
-  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
-{% endif %}
+  {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
+  {% if perms.projects.add_component or is_maintainer %}
+    <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
 
 {% if component.unit %}
 <div id="vcs_details">
@@ -138,12 +140,12 @@
       <td>
         {% if component.unit.last_checkout %}<strong>{{component.unit.last_checkout|timesince}}</strong> {% trans "ago" %}.
         {% else %}{% trans "Component not yet pulled from source repository." %}{% endif %}
-        {% if perms.projects.refresh_stats %}
+        {% if perms.projects.refresh_stats or is_maintainer %}
         <form action="{% url component_set_stats component.project.slug component.slug %}" class="microform">
             <input title="{% trans "Refresh and re-calculate statistics. This action may take some time." %}" class="i16 stats_edit" value="{% trans "Refresh cache" %}" type="submit">
         </form>
         {% endif %}
-        {% if perms.projects.clear_cache %}
+        {% if perms.projects.clear_cache or is_maintainer %}
         <form action="{% url component_clear_cache component.project.slug component.slug %}" class="microform">
             <input title="{% trans "Reset Transifex's local data for a clean pull" %}" class="i16 cache_empty" value="{% trans "Clear cache" %}" type="submit">
         </form>
@@ -156,8 +158,11 @@
 {% with component.trans.get_stats as stats %} 
 {% comp_stats_table stats component.should_calculate %}
 
-{% if request.user.is_authenticated and component.allows_submission and perms.projects.submit_file %}
+{% if component.allows_submission %}
+ {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
+ {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
    {% include "projects/component_submit_new_file.html" %}
+ {% endif %}
 {% endif %}
 
 {% endwith %}
@@ -181,7 +186,8 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated and perms.projects.delete_component %}
+    {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
+    {% if perms.projects.delete_component or is_maintainer %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url component_delete project_slug=component.project.slug component_slug=component.slug %}">{% trans "Delete component" %}</a>
     </div>

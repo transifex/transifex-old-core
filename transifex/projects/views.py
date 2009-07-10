@@ -25,7 +25,7 @@ from actionlog.models import action_logging
 from translations.lib.types.pot import FileFilterError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
-from txcommon.decorators import perm_required_with_403
+from txcommon.decorators import perm_required_with_403, one_perm_required_or_403
 from txcommon.forms import unit_sub_forms
 from txcommon.models import exclusive_fields
 from txcommon.views import (json_result, json_error)
@@ -58,9 +58,14 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 # Projects
 
+pr_project_add_change = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.add_project'),
+    ('general',  'projects.change_project'),
+)
 @login_required
-@perm_required_with_403('projects.add_project')
-@perm_required_with_403('projects.change_project')
+@one_perm_required_or_403(pr_project_add_change, 
+    (Project, 'slug__contains', 'project_slug'))
 def project_create_update(request, project_slug=None):
 
     if project_slug:
@@ -104,8 +109,13 @@ def project_create_update(request, project_slug=None):
     }, context_instance=RequestContext(request))
 
 
+pr_project_delete = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.delete_project'),
+)
 @login_required
-@perm_required_with_403('projects.delete_project')
+@one_perm_required_or_403(pr_project_delete, 
+    (Project, 'slug__contains', 'project_slug'))
 def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
@@ -178,9 +188,14 @@ def project_toggle_watch(request, project_slug):
 
 # Components
 
+pr_component_add_change = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.add_component'),
+    ('general',  'projects.change_component'),
+)
 @login_required
-@perm_required_with_403('projects.add_component')
-@perm_required_with_403('projects.change_component')
+@one_perm_required_or_403(pr_component_add_change, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_create_update(request, project_slug, component_slug=None):
     """
     Create & update components. Handles associated units
@@ -319,8 +334,13 @@ def component_language_detail(request, project_slug, component_slug,
         )
 
 
+pr_component_delete = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.delete_component'),
+)
 @login_required
-@perm_required_with_403('projects.delete_component')
+@one_perm_required_or_403(pr_component_delete, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_delete(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -346,8 +366,13 @@ def component_delete(request, project_slug, component_slug):
                                   {'component': component,},
                                   context_instance=RequestContext(request))
 
+pr_component_set_stats = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.refresh_stats'),
+)
 @login_required
-@perm_required_with_403('projects.refresh_stats')
+@one_perm_required_or_403(pr_component_set_stats, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -367,8 +392,13 @@ def component_set_stats(request, project_slug, component_slug):
                                 args=(project_slug, component_slug,)))
 
 
+pr_component_clear_cache = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.clear_cache'),
+)
 @login_required
-@perm_required_with_403('projects.clear_cache')
+@one_perm_required_or_403(pr_component_clear_cache, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -424,6 +454,15 @@ def component_file(request, project_slug, component_slug, filename,
     return response
 
 
+# for the next two views
+pr_component_submit_file = (
+    ('granular', 'project_perm.maintain'),
+    ('granular', 'project_perm.submit_file'),
+    ('general',  'projects.submit_file'),
+)
+@login_required
+@one_perm_required_or_403(pr_component_submit_file, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_file_edit(request, project_slug, component_slug, filename, 
                         is_msgmerged=True):
     from webtrans.views import transfile_edit
@@ -435,8 +474,10 @@ def component_file_edit(request, project_slug, component_slug, filename,
         component=component)
     return transfile_edit(request, pofile.id)
 
+
 @login_required
-@perm_required_with_403('projects.submit_file')
+@one_perm_required_or_403(pr_component_submit_file, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_submit_file(request, project_slug, component_slug, 
                           filename=None):
 
@@ -580,9 +621,14 @@ def component_submit_file(request, project_slug, component_slug,
                                 args=(project_slug, component_slug,)))
 
 
+pr_component_lock_file = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'translations.add_pofilelock'),
+    ('general',  'translations.delete_pofilelock'),
+)
 @login_required
-@perm_required_with_403('translations.add_pofilelock')
-@perm_required_with_403('translations.delete_pofilelock')
+@one_perm_required_or_403(pr_component_lock_file, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_toggle_lock_file(request, project_slug, component_slug,
                                filename):
     if request.method == 'POST':
@@ -613,9 +659,14 @@ def component_toggle_lock_file(request, project_slug, component_slug,
                                         args=(project_slug, component_slug,)))
 
 
+pr_component_watch_file = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'repowatch.add_watch'),
+    ('general',  'repowatch.delete_watch'),
+)
 @login_required
-@perm_required_with_403('repowatch.add_watch')
-@perm_required_with_403('repowatch.delete_watch')
+@one_perm_required_or_403(pr_component_watch_file, 
+    (Project, 'slug__contains', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
     """ Add/Remove a watch for a path on a component for a specific user """
 
