@@ -412,7 +412,7 @@ def process_lang():
 
 #   Kashmiri
     ks, created = Language.objects.get_or_create(code='ks')
-    ks.name = _(u'Hindi')
+    ks.name = _(u'Kashmiri')
     ks.nplurals = '2'
     ks.pluralequation = '(n != 1)'
     ks.save()
