@@ -247,25 +247,36 @@ Transifex leverages the power of Django's Sites_ framework to make it easy
 to have instances of Transifex on differnet domains using the same models
 and database.
 
-Upon installation, a single website is created in the database called
-'example.com'. This value is used in a number of places, including emails sent
-by the system. You can customize this value in two ways:
+If you have imported the sample data, a single website is created in the
+database called 'example.com'. If you haven't, you'll need to create it.
+
+This value is used in a number of places, including emails sent by the system.
+You can edit or create your default website in two ways:
 
 * Using the `Django admin panel`_: By default Transifex comes with a handy
   admin panel. This is mounted by default at ``/admin/`` (this value can be
-  changed from your settings file.
+  changed from your settings file).
   
   Login to the admin panel using the credentials you created during the
-  database creation step. You'll find the 'example.com' entry in the ``Sites``
-  model, which you can edit to your needs.
+  database creation step, and navigate to the ``Sites`` model. There, you can
+  either edit the default site or create your own.
 
-* Using the command line::
+* Alternatively, you may use the command line:
 
-    from django.contrib.sites.models import Site
-    current_site = Site.objects.get_current()
-    current_site.name = 'Transifex'
-    current_site.domain = 'mydomain.com'
-    current_site.save()
+  .. code-block:: pycon
+
+    $ python manage.py shell
+    >>> from django.contrib.sites.models import Site
+
+    >>> # To edit the existing one:
+    >>> current_site = Site.objects.get_current()
+    >>> current_site.domain = 'mydomain.com'
+    >>> current_site.name = 'Transifex'
+    >>> current_site.save()
+
+    >>> # To create your own:
+    >>> s = Site(domain='mydomain.com', name='Transifex')
+    >>> s.save()
 
 User Interface
 ~~~~~~~~~~~~~~
