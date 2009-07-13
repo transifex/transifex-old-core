@@ -265,6 +265,7 @@ You can edit or create your default website in two ways:
 
   .. code-block:: pycon
 
+    $ cd transifex
     $ python manage.py shell
     >>> from django.contrib.sites.models import Site
 
@@ -277,6 +278,20 @@ You can edit or create your default website in two ways:
     >>> # To create your own:
     >>> s = Site(domain='mydomain.com', name='Transifex')
     >>> s.save()
+
+Administrator accounts
+~~~~~~~~~~~~~~~~~~~~~~
+
+Admin users are able to login to Transifex's admin panel, at ``/admin/`` and
+have full control over the whole website content. If you haven't created one
+in the steps above, you can do so as follows::
+
+    $ python manage.py createsuperuser
+    Username (Leave blank to use 'mits'): myadminuser
+    E-mail address: admin@example.com
+    Password: 
+    Password (again): 
+    Superuser created successfully.
 
 User Interface
 ~~~~~~~~~~~~~~
