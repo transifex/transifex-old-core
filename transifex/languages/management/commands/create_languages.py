@@ -47,6 +47,13 @@ def process_lang():
     ar.pluralequation = 'n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5'
     ar.save()
 
+#   Argentinian Spanish
+    es_ar, created = Language.objects.get_or_create(code='es_AR')
+    es_ar.name = _(u'Spanish (Argentinian)')
+    es_ar.nplurals = '2'
+    es_ar.pluralequation = '(n != 1)'
+    es_ar.save()
+
 #   Assamese
     as_, created = Language.objects.get_or_create(code='as')
     as_.name = _(u'Assamese')
