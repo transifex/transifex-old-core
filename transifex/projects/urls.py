@@ -52,6 +52,14 @@ urlpatterns += patterns('',
         view = project_delete,
         name = 'project_delete',),
     url(
+        regex = '^(?P<project_slug>[-\w]+)/permissions/$',
+        view = project_add_permission,
+        name = 'project_add_permission',),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/permissions/(?P<permission_pk>[-\w]+)/delete/$',
+        view = project_delete_permission,
+        name = 'project_delete_permission',),
+    url(
         regex = '^(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,
         name = 'project_toggle_watch',),

@@ -1,0 +1,83 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+
+{% block title %}
+  {% if not project %}{{ block.super }} | {% trans "Add a project" %}
+  {% else %}{{ block.super }} | {% blocktrans with project.name as project_name %}Edit {{ project_name}}{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+  {% if not project %}{{ block.super }} &raquo; {% trans "Add a project" %}
+  {% else %}{{ block.super }} &raquo; {% blocktrans with project.name as project_name %}Edit <em>{{ project_name}}</em>{% endblocktrans %}{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+  <link type="text/css" href="{{ MEDIA_URL }}css/ui.tabs.css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
+<script>
+$(document).ready(
+    function ()
+    {
+        // Tabs
+        $("#project-tabs").tabs({ 
+            //spinner: false,
+            fx: { opacity: "toggle", duration: "fast"},
+            {% if not project.id %}  
+            disabled: [1],
+            {% endif %}
+            {% if project_permission %}
+            selected: 1,
+            {% endif %}
+        });
+
+        // Make it load the pages as normal links instead of load via Ajax
+        $("#project-tabs").bind('tabsselect', 
+            function(event, ui) {
+                url = $.data(ui.tab, 'load.tabs')
+                if( url ) {
+                    location.href = url;
+                    return false;
+                }
+                return true;
+            });
+    }
+);
+</script>
+{% endblock %}
+
+{% block content_title %}
+  {% if not project %}
+    <h2 class="pagetitle">{% trans "Add a project" %}</h2>
+  {% else %}
+    <h2 class="pagetitle">
+      {% blocktrans with project.name as project_name and project.get_absolute_url as project_url %}Editing <a href="{{ project_url }}">{{ project_name }}</a>{% endblocktrans %}
+    </h2>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="project_create generic_form">
+{% if form_message %}
+<p class="message i16 bell">{{ form_message }}</p>
+{% endif %}
+<div id="project-tabs">
+<ul>
+    <li><a href="{% if project_permission %}{% url project_edit project_slug=project.slug %}{% endif %}#tab-1"><span>{% trans "Details" %}</span></a></li>
+    <li><a href="{% if project_permission %}{% else %}{% if project %}{% txadd_url_for_obj project %}{% endif %}{% endif %}#tab-2"><span>{% trans "Access Control" %}</span></a></li>
+</ul>
+
+{% if project_permission %}  
+    {% include "projects/project_form_permissions.html" %}
+{% else %}
+    {% include "projects/project_form.html" %}
+{% endif %}
+
+</div>
+</div>
+
+{% endblock %}

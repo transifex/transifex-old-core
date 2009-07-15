@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if delete_url %}
+<form class="microform delete_permission" method="post" enctype="multipart/form-data" action="{{ delete_url }}">
+    <input type="hidden" name="next" value="{{ next }}"/>
+    <input class="i16 delete" type="submit" value="{% trans "Revoke permission" %}"/>
+</form>
+{% endif %}

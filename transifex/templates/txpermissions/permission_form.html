@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load txcommontags %}
+{% if form %}
+<form method="post" enctype="multipart/form-data" action="{{ form_url }}" class="add-permission">
+    <input type="hidden" name="next" value="{{ next }}"/>
+    <table>
+        <tbody>
+            {% form_as_table_rows form %}
+        </tbody>
+    </table>
+    <p class="submit">
+        <input class="i16 submit" type="submit" value="{% trans "Grant permission" %}"/>
+    </p>
+</form>
+{% endif %}

@@ -1,39 +1,18 @@
-{% extends "projects/base.html" %}
 {% load i18n %}
 {% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
 
-{% block title %}
-  {% if not project %}{{ block.super }} | {% trans "Add a project" %}
-  {% else %}{{ block.super }} | {% blocktrans with project.name as project_name %}Edit {{ project_name}}{% endblocktrans %}{% endif %}
-{% endblock %}
+<div id="tab-1">
+    <form action='' method='post'>
+    <table>
+        <tbody>
+        {% form_as_table_rows project_form %}
+        </tbody>
+    </table>
+    <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save project" %}" /></p>
+    </form>
+    </div>
+<div id="tab-2"></div>
 
-{% block breadcrumb %}
-  {% if not project %}{{ block.super }} &raquo; {% trans "Add a project" %}
-  {% else %}{{ block.super }} &raquo; {% blocktrans with project.name as project_name %}Edit <em>{{ project_name}}</em>{% endblocktrans %}{% endif %}
-{% endblock %}
 
-{% block content_title %}
-  {% if not project %}
-    <h2 class="pagetitle">{% trans "Add a project" %}</h2>
-  {% else %}
-    <h2 class="pagetitle">
-      {% blocktrans with project.name as project_name and project.get_absolute_url as project_url %}Editing <a href="{{ project_url }}">{{ project_name }}</a>{% endblocktrans %}
-    </h2>
-  {% endif %}
-{% endblock %}
-
-{% block content %}
-  <div class="project_create generic_form">
-  {% if form_message %}
-    <p class="message i16 bell">{{ form_message }}</p>
-  {% endif %}
-  <form action='' method='post'>
-  <table>
-    <tbody>
-    {% form_as_table_rows project_form %}
-    </tbody>
-  </table>
-  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save project" %}" /></p>
-  </form>
-  </div>
-{% endblock %}

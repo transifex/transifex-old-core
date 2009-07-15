@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from django.utils.datastructures import MultiValueDictKeyError
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import feed
 
 from codebases.forms import UnitForm
@@ -34,6 +35,8 @@ from repowatch.models import Watch
 from notification import models as notification
 from vcs.forms import VcsUnitSubForm
 from submissions import submit_by_email
+from authority.models import Permission
+from txpermissions.views import add_permission, delete_permission
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -103,7 +106,7 @@ def project_create_update(request, project_slug=None):
     else:
         project_form = ProjectForm(instance=project, prefix='project')
 
-    return render_to_response('projects/project_form.html', {
+    return render_to_response('projects/project_form_base.html', {
         'project_form': project_form,
         'project': project,
     }, context_instance=RequestContext(request))
@@ -136,6 +139,36 @@ def project_delete(request, project_slug):
         return render_to_response(
             'projects/project_confirm_delete.html', {'project': project,},
             context_instance=RequestContext(request))
+
+
+pr_project_add_perm = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'authority.add_permission'),
+)
+@login_required
+@one_perm_required_or_403(pr_project_add_perm, 
+    (Project, 'slug__contains', 'project_slug'))
+def project_add_permission(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
+    return add_permission(request, project, {
+        'project_permission': True,
+        'project': project, },
+        template_name='projects/project_form_base.html')
+
+
+pr_project_delete_perm = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'authority.delete_permission'),
+)
+@login_required
+@one_perm_required_or_403(pr_project_delete_perm, 
+    (Project, 'slug__contains', 'project_slug'))
+def project_delete_permission(request, project_slug, permission_pk):
+    project = get_object_or_404(Project, slug=project_slug)
+    ctype = ContentType.objects.get_for_model(Project)
+    permission = get_object_or_404(Permission, object_id=project.pk, 
+                                   content_type=ctype, id=permission_pk)
+    return delete_permission(request, permission)
 
 
 @login_required
