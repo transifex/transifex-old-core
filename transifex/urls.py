@@ -8,7 +8,7 @@ authority.autodiscover()
 urlpatterns = patterns('',
     #url(r'^$', 'django.views.generic.simple.direct_to_template',
     #    {'template': 'index.html'}, name='home'),
-    url(r'^$', 'txcommon.views.index', name='home'),
+    url(r'^$', 'txcommon.views.index', name='transifex.home'),
     url(r'^projects/', include('projects.urls')),
     url(r'^collections/', include('txcollections.urls')),
     url(r'^search/$', 'txcommon.views.search', name='search'),
