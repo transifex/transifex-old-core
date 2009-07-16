@@ -19,7 +19,7 @@ from txcommon.log import logger
 from submissions import submit_by_email
 
 from forms import TranslationForm
-from webtrans.templatetags.webeditortags import is_under_max_number
+from webtrans.templatetags.webeditortags import webtrans_is_under_max
 from authority.views import permission_denied
 
 # Temporary
@@ -35,7 +35,7 @@ def transfile_edit(request, pofile_id):
     component = pofile.object
     lang_code = pofile.language_code
 
-    if not is_under_max_number(pofile.total):
+    if not webtrans_is_under_max(pofile.total):
         return permission_denied(request)
 
     if request.method == "POST":
