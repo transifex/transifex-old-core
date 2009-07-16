@@ -41,11 +41,11 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
     url(
         regex = '^add/$',
-        view = project_create_update,
+        view = project_create,
         name = 'project_create'),
     url(
         regex = '^(?P<project_slug>[-\w]+)/edit/$',
-        view = project_create_update,
+        view = project_update,
         name = 'project_edit',),
     url(
         regex = '^(?P<project_slug>[-\w]+)/delete/$',

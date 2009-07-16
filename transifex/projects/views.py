@@ -61,15 +61,30 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 # Projects
 
-pr_project_add_change = (
+
+pr_project_add = (
     ('granular', 'project_perm.maintain'),
     ('general',  'projects.add_project'),
+)
+@login_required
+@one_perm_required_or_403(pr_project_add, 
+    (Project, 'slug__contains', 'project_slug'))
+def project_create(request):
+    return _project_create_update(request)
+
+
+pr_project_add_change = (
+    ('granular', 'project_perm.maintain'),
     ('general',  'projects.change_project'),
 )
 @login_required
 @one_perm_required_or_403(pr_project_add_change, 
     (Project, 'slug__contains', 'project_slug'))
-def project_create_update(request, project_slug=None):
+def project_update(request, project_slug):
+        return _project_create_update(request, project_slug)
+
+
+def _project_create_update(request, project_slug=None):
 
     if project_slug:
         project = get_object_or_404(Project, slug=project_slug)
