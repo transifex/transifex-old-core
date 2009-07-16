@@ -4,6 +4,7 @@
 {% load watches %}
 {% load submissions %}
 {% load permissions %}
+{% load webeditortags %}
 
 {% if stats %}
 {% get_permission "project_perm.submit_file" for request.user and stats.0.object.project as "can_submit_file" %}
@@ -58,7 +59,7 @@
            {% endif %}
            {% if stat.object.allows_submission %}
              {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
-               {% if file_edit_url %}
+               {% if file_edit_url and stat.total|webtrans_is_under_max %}
                  <a class="i16 edit_file nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
                {% endif %}
                {% pofile_submission stat %}

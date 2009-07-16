@@ -19,6 +19,8 @@ from txcommon.log import logger
 from submissions import submit_by_email
 
 from forms import TranslationForm
+from webtrans.templatetags.webeditortags import is_under_max_number
+from authority.views import permission_denied
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -26,13 +28,15 @@ from txcommon import notifications as txnotification
 # Enable Google translation suggestions
 WEBTRANS_SUGGESTIONS = getattr(settings, 'WEBTRANS_SUGGESTIONS', True)
 
-
 def transfile_edit(request, pofile_id):
     pofile = get_object_or_404(POFile, pk=pofile_id)
     po_entries = pofile.object.trans.get_po_entries(pofile.filename)
     filename = pofile.filename
     component = pofile.object
     lang_code = pofile.language_code
+
+    if not is_under_max_number(pofile.total):
+        return permission_denied(request)
 
     if request.method == "POST":
         for fieldname, value in request.POST.items():
