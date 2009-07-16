@@ -2,6 +2,7 @@
 {% load statistics %}
 {% load markup %}
 {% load i18n %}
+{% load permissions %}
 
 {% block extra_head %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
@@ -28,10 +29,14 @@
   <h3>{{ language.name }} {% trans "translation files" %}</h3>
 {% if language %}
   {% comp_lang_stats_table stats %}
-
-  {% if request.user.is_authenticated and component.allows_submission and perms.projects.submit_file %}
-    {% include "projects/component_submit_new_file.html" %}
-  {% endif %}
+ 
+{% if component.allows_submission %}
+ {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
+ {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
+ {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
+   {% include "projects/component_submit_new_file.html" %}
+ {% endif %}
+{% endif %}
 
 {% endif %}
 </div>
