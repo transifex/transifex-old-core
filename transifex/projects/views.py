@@ -104,7 +104,14 @@ def project_create_update(request, project_slug=None):
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project.slug]),)
     else:
-        project_form = ProjectForm(instance=project, prefix='project')
+        # Make the current user the maintainer when adding a project
+        if project:
+            initial_data = {}
+        else:
+            initial_data = {"maintainers": [request.user.pk]}
+
+        project_form = ProjectForm(instance=project, prefix='project',
+                                   initial=initial_data)
 
     return render_to_response('projects/project_form_base.html', {
         'project_form': project_form,
