@@ -63,12 +63,10 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 
 pr_project_add = (
-    ('granular', 'project_perm.maintain'),
     ('general',  'projects.add_project'),
 )
 @login_required
-@one_perm_required_or_403(pr_project_add, 
-    (Project, 'slug__contains', 'project_slug'))
+@one_perm_required_or_403(pr_project_add)
 def project_create(request):
     return _project_create_update(request)
 
