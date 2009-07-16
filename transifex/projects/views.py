@@ -77,7 +77,7 @@ pr_project_add_change = (
 )
 @login_required
 @one_perm_required_or_403(pr_project_add_change, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def project_update(request, project_slug):
         return _project_create_update(request, project_slug)
 
@@ -138,7 +138,7 @@ pr_project_delete = (
 )
 @login_required
 @one_perm_required_or_403(pr_project_delete, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
@@ -167,7 +167,7 @@ pr_project_add_perm = (
 )
 @login_required
 @one_perm_required_or_403(pr_project_add_perm, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def project_add_permission(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     return add_permission(request, project, {
@@ -182,7 +182,7 @@ pr_project_delete_perm = (
 )
 @login_required
 @one_perm_required_or_403(pr_project_delete_perm, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def project_delete_permission(request, project_slug, permission_pk):
     project = get_object_or_404(Project, slug=project_slug)
     ctype = ContentType.objects.get_for_model(Project)
@@ -248,7 +248,7 @@ pr_component_add_change = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_add_change, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_create_update(request, project_slug, component_slug=None):
     """
     Create & update components. Handles associated units
@@ -393,7 +393,7 @@ pr_component_delete = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_delete, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_delete(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -425,7 +425,7 @@ pr_component_set_stats = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_set_stats, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -451,7 +451,7 @@ pr_component_clear_cache = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_clear_cache, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -515,7 +515,7 @@ pr_component_submit_file = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_submit_file, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_file_edit(request, project_slug, component_slug, filename, 
                         is_msgmerged=True):
     from webtrans.views import transfile_edit
@@ -530,7 +530,7 @@ def component_file_edit(request, project_slug, component_slug, filename,
 
 @login_required
 @one_perm_required_or_403(pr_component_submit_file, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_submit_file(request, project_slug, component_slug, 
                           filename=None):
 
@@ -681,7 +681,7 @@ pr_component_lock_file = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_lock_file, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_toggle_lock_file(request, project_slug, component_slug,
                                filename):
     if request.method == 'POST':
@@ -719,7 +719,7 @@ pr_component_watch_file = (
 )
 @login_required
 @one_perm_required_or_403(pr_component_watch_file, 
-    (Project, 'slug__contains', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
     """ Add/Remove a watch for a path on a component for a specific user """
 
