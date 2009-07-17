@@ -114,9 +114,11 @@ def process_lang():
     bn_IN.save()
 
 #   Tibetan
-#   bo.name = _(u'Tibetan')
-#   bo.nplurals = '1'
-#   bo.pluralequation = '0'
+    bo, created = Language.objects.get_or_create(code='bo')
+    bo.name = _(u'Tibetan')
+    bo.nplurals = '1'
+    bo.pluralequation = '0'
+    bo.save()
 
 #   Bosanski
 #   Bosnian
