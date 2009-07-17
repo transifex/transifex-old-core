@@ -18,10 +18,15 @@
   <link type="text/css" href="{{ MEDIA_URL }}css/ui.tabs.css" rel="stylesheet" />
   <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
 <script>
 $(document).ready(
     function ()
     {
+        {% if not project.id %}
+            tooltip('#tab-link-2', "{% trans "Access control will be enabled once the project is created" %}");
+        {% endif %}
+        
         // Tabs
         $("#project-tabs").tabs({ 
             //spinner: false,
@@ -44,6 +49,7 @@ $(document).ready(
                 }
                 return true;
             });
+
     }
 );
 </script>
@@ -67,8 +73,8 @@ $(document).ready(
 {% endif %}
 <div id="project-tabs">
 <ul>
-    <li><a href="{% if project_permission %}{% url project_edit project_slug=project.slug %}{% endif %}#tab-1"><span>{% trans "Details" %}</span></a></li>
-    <li><a href="{% if project_permission %}{% else %}{% if project %}{% txadd_url_for_obj project %}{% endif %}{% endif %}#tab-2"><span>{% trans "Access Control" %}</span></a></li>
+    <li><a id="tab-link-1" href="{% if project_permission %}{% url project_edit project_slug=project.slug %}{% endif %}#tab-1"><span>{% trans "Details" %}</span></a></li>
+    <li><a id="tab-link-2" href="{% if project_permission %}{% else %}{% if project %}{% txadd_url_for_obj project %}{% endif %}{% endif %}#tab-2"><span>{% trans "Access Control" %}</span></a></li>
 </ul>
 
 {% if project_permission %}  
