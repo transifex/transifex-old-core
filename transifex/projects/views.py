@@ -523,8 +523,10 @@ def component_file_edit(request, project_slug, component_slug, filename,
                                   project__slug=project_slug)
     #FIXME: This approach hits the database twice!
     # See also: http://transifex.org/ticket/210
-    pofile = get_object_or_404(POFile, filename=filename,
-        component=component)
+    ctype = ContentType.objects.get_for_model(Component)
+    pofile = get_object_or_404(POFile, object_id=component.pk,
+                               content_type=ctype, filename=filename)
+
     return transfile_edit(request, pofile.id)
 
 
@@ -687,7 +689,10 @@ def component_toggle_lock_file(request, project_slug, component_slug,
     if request.method == 'POST':
         component = get_object_or_404(Component, slug=component_slug,
                                     project__slug=project_slug)
-        pofile = get_object_or_404(POFile, component=component, filename=filename)
+        ctype = ContentType.objects.get_for_model(Component)
+
+        pofile = get_object_or_404(POFile, object_id=component.pk, 
+                                   content_type=ctype, filename=filename)
 
         try:
             lock = POFileLock.objects.get(pofile=pofile)
@@ -731,7 +736,10 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
 
     component = get_object_or_404(Component, slug=component_slug,
                                 project__slug=project_slug)
-    pofile = get_object_or_404(POFile, component=component, filename=filename)
+    ctype = ContentType.objects.get_for_model(Component)
+
+    pofile = get_object_or_404(POFile, object_id=component.pk, 
+                               content_type=ctype, filename=filename)
 
     url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
                                                   filename))
