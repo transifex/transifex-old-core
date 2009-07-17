@@ -183,13 +183,13 @@ class POFile(models.Model):
     
     language = models.ForeignKey(Language, null=True)
     language_code = models.CharField(null=True, max_length=20)
-    filename = models.CharField(null=False, max_length=255)
+    filename = models.CharField(null=False, max_length=255, db_index=True)
 
     # This field is used to indicate whenever a file was created 
     # by the system, even a POT file through intltool-update
     # We might rename it later
     is_msgmerged = models.BooleanField(default=True, editable=False)
-    is_pot = models.BooleanField(default=False, editable=False)
+    is_pot = models.BooleanField(default=False, editable=False, db_index=True)
 
     enabled = models.BooleanField(default=True, editable=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
