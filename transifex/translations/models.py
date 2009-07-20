@@ -138,7 +138,7 @@ class POFileManager(models.Manager):
         pot_total = sum(postats)
 
         postats = self.by_object(obj).filter(
-            is_pot=False).order_by('language__name')
+            is_pot=False).order_by('language_code')
 
         return _group_pofiles(postats, 'sort_id', pot_total)
 
