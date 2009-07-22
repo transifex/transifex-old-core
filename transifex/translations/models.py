@@ -10,6 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
 from simplelock.models import Lock
+from txcommon.models import IntegerTupleField
 from txcommon.notifications import is_watched_by_user_signal
 
 
@@ -200,6 +201,9 @@ class POFile(models.Model):
     trans_perc = models.PositiveIntegerField(default=0, editable=False)
     fuzzy_perc = models.PositiveIntegerField(default=0, editable=False)
     untrans_perc = models.PositiveIntegerField(default=100, editable=False)
+
+    rev = IntegerTupleField(max_length=64, null=True,
+        help_text='Latest revision seen')
 
     # Managers
     objects = POFileManager()

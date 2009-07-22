@@ -171,32 +171,37 @@ class POTManager(TransManagerMixin):
         """Set the statistics of a specificy file for an object."""
         lang_code = self.guess_language(filename)
         try:
-            stats = self.calculate_file_stats(filename, try_to_merge)
             ctype = ContentType.objects.get_for_model(object)
-            s = POFile.objects.get(object_id=object.id, content_type=ctype,
-                                   filename=filename)
+            s, created = POFile.objects.get_or_create(object_id=object.id,
+                content_type=ctype, filename=filename)
+
             if not s.language:
                 try:
                     l = Language.objects.by_code_or_alias(code=lang_code)
                     s.language=l
                 except Language.DoesNotExist:
                     pass
+            s.language_code = lang_code
+
+            calcstats = True
+            rev = None
+            if hasattr(object, 'get_rev'):
+                rev = object.get_rev(filename)
+                if rev == s.rev:
+                    calcstats = False
+            if calcstats:
+                stats = self.calculate_file_stats(filename, try_to_merge)
         except POTStatsError:
             # TODO: It should probably be raised when a checkout of a 
             # module has a problem. Needs to decide what to do when it
             # happens
-            pass
-        except POFile.DoesNotExist:
-            try:
-                l = Language.objects.by_code_or_alias(code=lang_code)
-            except Language.DoesNotExist:
-                l = None
-            s = POFile.objects.create(language=l, filename=filename,
-                                        object=object)
-        s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
-                    untrans=stats['untrans'], error=stats['error'])
-        s.is_msgmerged = stats['is_msgmerged']
-        s.language_code = lang_code
+            calc_stats = False
+        if calcstats:
+            s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
+                untrans=stats['untrans'], error=stats['error'])
+            s.is_msgmerged = stats['is_msgmerged']
+            if rev:
+                s.rev = rev
         return s.save()
 
     def stats_for_lang_object(self, lang, object):

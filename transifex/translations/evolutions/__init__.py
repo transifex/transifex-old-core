@@ -1,1 +1,1 @@
-SEQUENCE = ['06_add_lang_code']
+SEQUENCE = ['06_add_lang_code', 'add_rev']
