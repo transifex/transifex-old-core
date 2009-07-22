@@ -101,7 +101,9 @@ class POTManager(TransManagerMixin):
 
         langs = []
         for filepath in self.get_po_files():
-            langs.append(self.guess_language(filepath))
+            lang_code = self.guess_language(filepath)
+            if lang_code not in langs:
+                langs.append(lang_code)
         langs.sort()
         return langs
 
