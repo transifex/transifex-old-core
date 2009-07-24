@@ -5,7 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from projects.models import Component
 from repowatch import WatchException
 from translations.models import POFile
-from txcommon.models import IntegerTupleField
 
 class WatchManager(models.Manager):
     def add_watch(self, user, component, path=None):
@@ -75,7 +74,7 @@ class Watch(models.Model):
     path = models.CharField(max_length=128, null=True, default=None,
         help_text='Path to the file within the repo, or NULL for the '
         'whole repo')
-    rev = IntegerTupleField(max_length=64, null=True,
+    rev = models.CharField(max_length=64, null=True,
         help_text='Latest revision seen')
     component = models.ForeignKey(Component,
         help_text='Component containing the repo to watch')
