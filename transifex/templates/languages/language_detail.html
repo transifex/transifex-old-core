@@ -14,7 +14,6 @@
 {% block content_main %}
 
  {% for collection in collection_list %}
-  {% url collection_release_create slug=collection.slug as release_create %}
   {% with collection.releases.all as releases %}
   <h3>{% blocktrans %}{{ collection }} Releases{% endblocktrans %}
   {% render_metacount releases _("releases") %}
@@ -31,8 +30,10 @@
   </ul>
   </div>
   {% else %}
-    {% url release_create as collection_list %}
+    {% if request.user.is_authenticated and perms.txcollections.add_release %}
+    {% url collection_release_create slug=collection.slug as release_create %}
     <p class="i16 tip">{% blocktrans %}No releases are registered for this collection yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
+    {% endif %}
   {% endif %}
   {% endwith %}
 

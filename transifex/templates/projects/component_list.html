@@ -1,12 +1,12 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div id="components" class="components">
 
   <div class="editlinks">
   <p><a class="simlink" href="{% url project_feed param=project.slug %}" title="Project feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p>
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   {% if perms.projects.add_component or is_maintainer %}
     <p><a class="i16 add buttonized" href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></p>
   {% endif %}
@@ -44,8 +44,11 @@
   {% endif %}
   {% else %}
   <p>{% trans "No components are registered for this project yet." %}
+    {% if perms.projects.add_component or is_maintainer %}
     <a href="{% url component_create project_slug=project.slug %}">{% trans "Add one!" %}</a>
-  </p>{% endif %}
+    {% endif %}
+  </p>
+    {% endif %}
   {% endwith %}
   <p class="i16 tip compact clear">
     {% blocktrans %}<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.

@@ -59,7 +59,7 @@
   <div class="editlinks">
     <p><a class="simlink" href="{% url collection_feed param=collection.slug %}" title="collection feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p>
       {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
-    <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
+        <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
       {% endif %}
     </p>
   </div>
@@ -80,9 +80,9 @@
   </ul>
   </div>
   {% else %}
-{% url release_create as collection_list %}
-    <p class="i16 tip">{% blocktrans %}No releases are registered for this collection yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
-  {% endif %}
+    {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
+      <p class="i16 tip">{% blocktrans %}No releases are registered for this collection yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
+    {% endif %}
   {% endwith %}
 </div>
 

@@ -51,15 +51,19 @@
   </div>
   {% if not collection_list %}
   <p>{% trans "No collections registered yet. :-(" %}</p>
+  {% if request.user.is_authenticated and perms.txcollections.add_collection %}
   {% url collection_create as collection_create %}
   <p>{% blocktrans %}Why don't you <a href="{{ collection_create }}">add one</a>?{% endblocktrans %}</p>
+  {% endif %}
   {% endif %}
   
 {% endblock %}
 
 {% block content_footer %}
+{% if request.user.is_authenticated and perms.txcollections.add_collection %}
 {% url collection_create as collection_create %}
   <div id="content_footer_center">
     <p><span class="i16 tip">{% blocktrans %}Couldn't find your collection? Go ahead and <a href="{{ collection_create }}">add it</a>!{% endblocktrans %}</span></p>
   </div>
+{% endif %}
 {% endblock %}

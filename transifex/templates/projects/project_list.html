@@ -52,15 +52,19 @@
   </div>
   {% if not project_list %}
   <p>{% trans "No projects registered yet. :-(" %}</p>
+    {% if request.user.is_authenticated and perms.projects.add_project %}
   {% url project_create as project_create %}
   <p>{% blocktrans %}Why don't you <a href="{{ project_create }}">add one</a>?{% endblocktrans %}</p>
+    {% endif %}
   {% endif %}
   
 {% endblock %}
 
 {% block content_footer %}
+{% if request.user.is_authenticated and perms.projects.add_project %}
 {% url project_create as project_create %}
   <div id="content_footer_center">
     <p><span class="i16 tip">{% blocktrans %}Couldn't find your project? Go ahead and <a href="{{ project_create }}">add it</a>!{% endblocktrans %}</span></p>
   </div>
+{% endif %}
 {% endblock %}
