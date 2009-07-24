@@ -21,7 +21,7 @@
 {% block content_main %}
   <div class="languages_list multicolumn3">
     <ul class="simple">
-    {% for language in language_list %}<li class="i16 language name"><a href="{{ language.get_absolute_url }}">{{ language }}</a></li>{% endfor %}
+    {% for language in language_list %}<li class="i16 language name"><a href="{{ language.get_absolute_url }}">{% trans language.name %} ({{language.code}})</a></li>{% endfor %}
     </ul>
   </div>
   {% if not language_list %}
