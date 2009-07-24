@@ -110,7 +110,7 @@ class Project(models.Model):
         verbose_name=_('Collections'), related_name='projects',
         blank=True, null=True,)
     maintainers = models.ManyToManyField(User, verbose_name=_('Maintainers'),
-        related_name='projects_maintaining', blank=True, null=True)
+        related_name='projects_maintaining', blank=False, null=True)
 
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'), blank=True, 
