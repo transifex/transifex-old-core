@@ -487,8 +487,13 @@ def component_file(request, project_slug, component_slug, filename,
                     encoding = m.group(1)
                 except LookupError:
                     pass
-            context = Context({'body': pygments.highlight(content.decode(
-                                            encoding), lexer, formatter),
+            try:
+                # Try to convert to UTF and present it as it should look like
+                content = content.decode(encoding)
+            except UnicodeDecodeError:
+                # Oh well, let's just show it as it is.
+                pass
+            context = Context({'body': pygments.highlight(content, lexer, formatter),
                                'style': formatter.get_style_defs(),
                                'title': "%s: %s" % (component.full_name,
                                                     os.path.basename(filename))})
