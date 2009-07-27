@@ -19,7 +19,7 @@
 
   {% if components %}
   <div class="component_list">
-  {% for comp in components|slice:"0:4" %}
+  {% for comp in components|slice:"0:6" %}
     <div class="entry">
       <p class="name"><a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>
       <sup class="entry_metalink">
@@ -35,9 +35,9 @@
     </div>
     {% endfor %}
   </div>
-  {% if components|slice:"4:" %}<p class="more">
+  {% if components|slice:"6:" %}<p class="more">
   More components:  
-  {% for comp in components|slice:"4:" %}
+  {% for comp in components|slice:"6:" %}
     <a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>{% if not forloop.last %},{% endif %}
   {% endfor %}
   </p>
