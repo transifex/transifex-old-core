@@ -1,9 +1,9 @@
 #----- Evolution for projects
 from django_evolution.mutations import *
-from django.db import models
+from txcommon.db.models import IntegerTupleField
 
 MUTATIONS = [
-    AddField('POFile', 'rev', models.CharField, initial=None,
+    AddField('POFile', 'rev', IntegerTupleField, initial=None,
         max_length=64, null=True)
 ]
 #----------------------
