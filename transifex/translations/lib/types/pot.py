@@ -195,7 +195,7 @@ class POTManager(TransManagerMixin):
             # TODO: It should probably be raised when a checkout of a 
             # module has a problem. Needs to decide what to do when it
             # happens
-            calc_stats = False
+            calcstats = False
         if calcstats:
             s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
                 untrans=stats['untrans'], error=stats['error'])
