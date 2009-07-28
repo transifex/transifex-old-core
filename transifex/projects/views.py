@@ -20,6 +20,7 @@ from codebases.forms import UnitForm
 from projects.models import Project, Component
 from projects.forms import ProjectForm, ComponentForm, ComponentAllowSubForm
 from projects import signals
+from projects.permissions import ProjectPermission
 from tarball.forms import TarballSubForm
 from txcommon.log import logger
 from actionlog.models import action_logging
@@ -36,10 +37,23 @@ from notification import models as notification
 from vcs.forms import VcsUnitSubForm
 from submissions import submit_by_email
 from authority.models import Permission
-from txpermissions.views import add_permission, delete_permission
-
+from authority.views import permission_denied
+from txpermissions.views import (add_permission_or_request,
+                                 approve_permission_request,
+                                 delete_permission_or_request)
 # Temporary
 from txcommon import notifications as txnotification
+
+def _get_project_and_permission(project_slug, permission_pk):
+    """ 
+    Handler to return a project and a permission instance or a 404 error, based 
+    on the slugs passed by parameter.
+    """
+    project = get_object_or_404(Project, slug=project_slug)
+    ctype = ContentType.objects.get_for_model(Project)
+    permission = get_object_or_404(Permission, object_id=project.pk, 
+                                   content_type=ctype, id=permission_pk)
+    return project, permission
 
 # Feeds
 
@@ -169,11 +183,49 @@ pr_project_add_perm = (
 @one_perm_required_or_403(pr_project_add_perm, 
     (Project, 'slug__exact', 'project_slug'))
 def project_add_permission(request, project_slug):
+    """ 
+    Return a view with a form for adding a permission for an user.
+    
+    This view is an abstraction of a txpermissions.views method to be able to
+    apply granular permission on it using a decorator. 
+    """
     project = get_object_or_404(Project, slug=project_slug)
-    return add_permission(request, project, {
-        'project_permission': True,
-        'project': project, },
+    return add_permission_or_request(request, project, 
+        view_name='project_add_permission',
+        approved=True,
+        extra_context={
+            'project_permission': True,
+            'project': project, },
         template_name='projects/project_form_base.html')
+
+
+@login_required
+def project_add_permission_request(request, project_slug):
+    """ 
+    Return a view with a form for adding a request of permission for an user.
+
+    This view is an abstraction of a txpermissions.views method. 
+    """
+    project = get_object_or_404(Project, slug=project_slug)
+    return add_permission_or_request(request, project,
+        view_name='project_add_permission_request',
+        approved=False,
+        extra_context={
+            'project_permission': True,
+            'project': project, },
+        template_name='projects/project_form_base.html')
+
+
+pr_project_approve_perm = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'authority.approve_permission_requests'),
+)
+@login_required
+@one_perm_required_or_403(pr_project_approve_perm, 
+    (Project, 'slug__exact', 'project_slug'))
+def project_approve_permission_request(request, project_slug, permission_pk):
+    project, permission=_get_project_and_permission(project_slug, permission_pk)
+    return approve_permission_request(request, permission)
 
 
 pr_project_delete_perm = (
@@ -184,12 +236,31 @@ pr_project_delete_perm = (
 @one_perm_required_or_403(pr_project_delete_perm, 
     (Project, 'slug__exact', 'project_slug'))
 def project_delete_permission(request, project_slug, permission_pk):
-    project = get_object_or_404(Project, slug=project_slug)
-    ctype = ContentType.objects.get_for_model(Project)
-    permission = get_object_or_404(Permission, object_id=project.pk, 
-                                   content_type=ctype, id=permission_pk)
-    return delete_permission(request, permission)
+    """ 
+    View for deleting a permission of an user.
 
+    This view is an abstraction of a txpermissions.views method to be able to
+    apply granular permission on it using a decorator. 
+    """
+    project, permission=_get_project_and_permission(project_slug, permission_pk)
+    return delete_permission_or_request(request, permission, True)
+
+
+@login_required
+def project_delete_permission_request(request, project_slug, permission_pk):
+    """ 
+    View for deleting a request of permission of an user.
+
+    This view is an abstraction of a txpermissions.views method. 
+    """
+    project, permission=_get_project_and_permission(project_slug, permission_pk)
+
+    check = ProjectPermission(request.user)
+    if check.maintain(project) or request.user.has_perm('authority.delete_permission') \
+        or request.user.pk == permission.creator.pk:
+        return delete_permission_or_request(request, permission, False)
+
+    return permission_denied(request)
 
 @login_required
 def project_toggle_watch(request, project_slug):

@@ -52,13 +52,25 @@ urlpatterns += patterns('',
         view = project_delete,
         name = 'project_delete',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/permissions/$',
+        regex = '^(?P<project_slug>[-\w]+)/access/permission/add/$',
         view = project_add_permission,
-        name = 'project_add_permission',),
+        name = 'project_add_permission'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/permissions/(?P<permission_pk>[-\w]+)/delete/$',
+        regex = '^(?P<project_slug>[-\w]+)/access/permission/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
-        name = 'project_delete_permission',),
+        name = 'project_delete_permission'),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/access/request/add/$',
+        view = project_add_permission_request,
+        name = 'project_add_permission_request'),
+    url(
+        regex = '^(?P<project_slug>[-\w]+)/access/request/(?P<permission_pk>\d+)/delete/$',
+        view = project_delete_permission_request,
+        name = 'project_delete_permission_request'),
+        
+    url(regex = '^(?P<project_slug>[-\w]+)/access/request/(?P<permission_pk>\d+)/approve/$',
+        view = project_approve_permission_request,
+        name = "project_approve_permission_request"),
     url(
         regex = '^(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,

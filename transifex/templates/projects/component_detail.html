@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load truncate %}
 {% load permissions %}
+{% load txpermissions %}
 
 {% block extra_head %}
   <script type="text/javascript">
@@ -154,6 +155,24 @@
         {% endif %}
       </td>
     </tr>
+
+{% if component.allows_submission %}
+  {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
+    {% if not can_submit_file and not is_maintainer%}
+    <tr>
+      <th class="i16 user">{% trans "Become a translator:" %}</th>
+      <td>
+      {% get_permission_request "project_perm.submit_file" for request.user and component.project,component as "can_submit_file_request" %}
+      {% if can_submit_file_request %}
+         <a href="{% url project_add_permission_request component.project.slug %}">{% trans "Your request is pending for approval." %}<a/>
+      {% else %}
+          {% txpermission_request_form for component.project using "project_perm.submit_file" %}
+      {% endif %}
+      </td>
+    </tr>    
+  {% endif %}
+{% endif %} 
+
 </table>
 {% with component.trans.get_stats as stats %} 
 {% comp_stats_table stats component.should_calculate %}

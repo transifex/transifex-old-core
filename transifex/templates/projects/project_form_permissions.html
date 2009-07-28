@@ -5,22 +5,55 @@
 
 <div id="tab-1"></div>
 <div id="tab-2">
-<h3>{% trans "Give access to a translator to send translations to your project" %}</h3>
 
-{% if form %}
+{% if approved %}
+  <h3>{% trans "Give access to a translator to send translations to your project" %}</h3>
+{% else %}
+  <h3>{% trans "Requests for access to submit files" %}</h3>
+{% endif %}
+
+{% get_permission "project_perm.submit_file" for request.user and project as "can_submit_file" %}
+{% get_permission_request "project_perm.submit_file" for request.user and project as "can_submit_file_request" %}
+
+
+<div class="separate">
+{% if form and not can_submit_file_request %}
     {% include "txpermissions/permission_form.html" %}
 {% else %}
-    {% txpermission_form project "project_perm.submit_file" %}
+    {% if approved %}
+        {% txpermission_form for project using "project_perm.submit_file" %}
+    {% else %}
+        {% if not can_submit_file and not can_submit_file_request %}
+            {% txpermission_request_form for project using "project_perm.submit_file" %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+</div>
+
+
+{% get_permission_requests project as "all_permission_requests" %}
+{% if all_permission_requests %}
+<div class="separate">
+<h4>{% trans "Pending requests:" %}</h4>
+<ul>
+{% for perm in all_permission_requests %}
+    <li>{{ perm.user }} {% txpermission_request_approve_form project perm %} {% txpermission_request_delete_form project perm %}</li>
+{% endfor %}
+</ul>
+</div>
 {% endif %}
 
 {% get_permissions project as "all_permissions" %}
 {% if all_permissions %}
+<div class="separate">
 <h4>{% trans "Users with guaranteed access to submit files:" %}</h4>
 <ul>
 {% for perm in all_permissions %}
-    <li>{{ perm.user }} - {% txpermission_delete_form project perm %}</li>
+    <li>{{ perm.user }} {% txpermission_delete_form project perm %}</li>
 {% endfor %}
 </ul>
+</div>
 {% endif %}
+
 </div>
 
