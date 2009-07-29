@@ -1,0 +1,93 @@
+.. _intro-running:
+
+Running Transifex
+=================
+
+At this point you probably have Transifex up and running, probably with some
+initial data. This section will help you with some common tasks around how to
+run and customize Transifex.
+
+Customizing your Transifex instance
+-----------------------------------
+
+Administrator accounts
+~~~~~~~~~~~~~~~~~~~~~~
+
+Admin users are able to login to Transifex's admin panel, at ``/admin/`` and
+have full control over the whole website content. If you haven't created one
+in the steps above, you can do so as follows::
+
+    $ python manage.py createsuperuser
+    Username (Leave blank to use 'mits'): myadminuser
+    E-mail address: admin@example.com
+    Password: 
+    Password (again): 
+    Superuser created successfully.
+
+User Interface
+~~~~~~~~~~~~~~
+
+The default Transifex interface lives in the ``templates`` directory and can
+be customized at will.
+
+You can also customize the theme by copying this directory to a differnet
+location and updating the ``TEMPLATE_DIR`` setting with this new location.
+
+Finally, Django supports multiple locations of template source files, which it
+searches in order. Instead of copying the entire template directory, you can
+simply copy particular files you'd like to override and define the
+``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
+to be searched (first entry takes preference over second, etc).
+
+Submissions
+-----------
+
+Now you should be able to add your own projects and present
+translation completion statistics for them. This applies if you have added your
+repositories over protocols which do not require authentication, such as
+``http``, ``git`` and so on.
+
+You'll also be able to submit files to these repositories, if they support
+anonymous pushing. But since most repositories require authentication for
+pushing, you can setup Transifex to also be able to use the ``ssh`` for
+communicating with versioning systems.
+
+To push over ssh, you'll need **ssh-agent** an SSH keypair: the private key
+will be on the Transifex server and the public key on the remote server to
+which Tx will ssh to.
+
+To create the SSH keypairs, just run ``ssh-keygen``. The public key should be
+put in the ``~/.ssh/`` directory of the remote system, and the private key
+in ``~/.ssh/`` of the local system, where ``~`` is the home directory of the
+user Transifex is run as. 
+
+You can hook-up
+``ssh-agent`` with Transifex in the usual way: The simple way is firing up
+the agent, then ``ssh-add`` the keys and run your webserver in that
+environment. This basically allows Transifex to run with the appropriate
+environment variables setup (basically, it's the ``SSH_AUTH_SOCK`. In a
+production environment, all you need is to run Transifex with the necessary
+environment variable set, and ssh should work.
+
+Testing submissions
+~~~~~~~~~~~~~~~~~~~
+
+First of all, test the access of the SSH key: Ride your agent by setting up
+``SSH_AUTH_SOCK`` and try a connection to the remote SSH machine (the following
+will differ in your case)::
+
+    export SSH_AUTH_SOCK=/tmp/keyring-qse2vh/ssh
+    hg clone ssh://example.com/myrepo    
+
+If the above clone succeeds, ssh access work for this project. If you have
+certain ACLs on the server, you might also need to test push support by
+issuing a dummy commit on a file in your repo::
+
+    echo ' ' >> myfile
+    hg commit -m 'Testing Transifex access -- please ignore!"
+    hg push
+
+To test an SSH submission through Transifex, create a project and component
+which uses ssh as the protocol. Enable submissions on the *Edit Component* page,
+*Submissions* tab. Then click on *Refresh Stats*. It should take some time and
+then present some nice charts on the page.

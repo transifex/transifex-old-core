@@ -191,6 +191,48 @@ Fire up your browser at ``http://localhost:8088/`` and grab a cup of coffee.
     in your ``settings.py`` file, like the ``REPO_PATH`` for example.
     Without those paths created, the checkout for these VCS, among others will
     fail.
+    
+Site Domain and Name
+~~~~~~~~~~~~~~~~~~~~
+
+Transifex leverages the power of Django's Sites_ framework to make it easy
+to have instances of Transifex on differnet domains using the same models
+and database.
+
+If you have imported the sample data, a single website is created in the
+database called 'example.com'. If you haven't, you'll need to create it.
+
+This value is used in a number of places, including emails sent by the system.
+You can edit or create your default website in two ways:
+
+* Using the `Django admin panel`_: By default Transifex comes with a handy
+  admin panel. This is mounted by default at ``/admin/`` (this value can be
+  changed from your settings file).
+  
+  Login to the admin panel using the credentials you created during the
+  database creation step, and navigate to the ``Sites`` model. There, you can
+  either edit the default site or create your own.
+
+* Alternatively, you may use the command line:
+
+  .. code-block:: pycon
+
+    $ cd transifex
+    $ python manage.py shell
+    >>> from django.contrib.sites.models import Site
+
+    >>> # To edit the existing one:
+    >>> current_site = Site.objects.get_current()
+    >>> current_site.domain = 'mydomain.com'
+    >>> current_site.name = 'Transifex'
+    >>> current_site.save()
+
+    >>> # To create your own:
+    >>> s = Site(domain='mydomain.com', name='Transifex')
+    >>> s.save()
+
+You can now proceed to the next section to import some data, or read about
+managing your instance right away.
 
 Import some data
 ~~~~~~~~~~~~~~~~
@@ -236,78 +278,6 @@ for example:
     ./manage.py compilemessages -l pt_BR
     or
     ./manage.py compilemessages --all
-
-
-Customizing your Transifex instance
------------------------------------
-
-Site Domain and Name
-~~~~~~~~~~~~~~~~~~~~
-
-Transifex leverages the power of Django's Sites_ framework to make it easy
-to have instances of Transifex on differnet domains using the same models
-and database.
-
-If you have imported the sample data, a single website is created in the
-database called 'example.com'. If you haven't, you'll need to create it.
-
-This value is used in a number of places, including emails sent by the system.
-You can edit or create your default website in two ways:
-
-* Using the `Django admin panel`_: By default Transifex comes with a handy
-  admin panel. This is mounted by default at ``/admin/`` (this value can be
-  changed from your settings file).
-  
-  Login to the admin panel using the credentials you created during the
-  database creation step, and navigate to the ``Sites`` model. There, you can
-  either edit the default site or create your own.
-
-* Alternatively, you may use the command line:
-
-  .. code-block:: pycon
-
-    $ cd transifex
-    $ python manage.py shell
-    >>> from django.contrib.sites.models import Site
-
-    >>> # To edit the existing one:
-    >>> current_site = Site.objects.get_current()
-    >>> current_site.domain = 'mydomain.com'
-    >>> current_site.name = 'Transifex'
-    >>> current_site.save()
-
-    >>> # To create your own:
-    >>> s = Site(domain='mydomain.com', name='Transifex')
-    >>> s.save()
-
-Administrator accounts
-~~~~~~~~~~~~~~~~~~~~~~
-
-Admin users are able to login to Transifex's admin panel, at ``/admin/`` and
-have full control over the whole website content. If you haven't created one
-in the steps above, you can do so as follows::
-
-    $ python manage.py createsuperuser
-    Username (Leave blank to use 'mits'): myadminuser
-    E-mail address: admin@example.com
-    Password: 
-    Password (again): 
-    Superuser created successfully.
-
-User Interface
-~~~~~~~~~~~~~~
-
-The default Transifex interface lives in the ``templates`` directory and can
-be customized at will.
-
-You can also customize the theme by copying this directory to a differnet
-location and updating the ``TEMPLATE_DIR`` setting with this new location.
-
-Finally, Django supports multiple locations of template source files, which it
-searches in order. Instead of copying the entire template directory, you can
-simply copy particular files you'd like to override and define the
-``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
-to be searched (first entry takes preference over second, etc).  
 
 
 Debugging
