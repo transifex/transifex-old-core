@@ -5,7 +5,7 @@ import markdown
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.db import models
+from django.db import models, IntegrityError
 from django.db.models import permalink
 from django.dispatch import Signal
 from django.forms import ModelForm
@@ -339,8 +339,8 @@ class Component(models.Model):
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
-            except self.IntegrityError:
-                logger.error("Yow! Unit exists but is not associated with %s! "
+            except IntegrityError:
+                logger.error("Yow! VcsUnit exists but is not associated with %s! "
                           % self.full_name)
                 # TODO: Here we should probably send an e-mail to the
                 # admin, because something very strange would be happening
