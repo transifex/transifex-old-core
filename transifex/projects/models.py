@@ -332,15 +332,15 @@ class Component(models.Model):
             self.unit.type = type
             self.unit.web_frontend = web_frontend
         else:
-            logger.debug("VcsUnit for %s not found. Creating." % self.full_name)
+            logger.debug("Unit for %s not found. Creating." % self.full_name)
             try:
-                u = VcsUnit.objects.create(name=self.full_name, root=root,
+                u = Unit.objects.create(name=self.full_name, root=root,
                                         branch=branch, type=type,
                                         web_frontend=web_frontend)
                 u.save()
                 self.unit = u
             except self.IntegrityError:
-                logger.error("Yow! VcsUnit exists but is not associated with %s! "
+                logger.error("Yow! Unit exists but is not associated with %s! "
                           % self.full_name)
                 # TODO: Here we should probably send an e-mail to the
                 # admin, because something very strange would be happening
