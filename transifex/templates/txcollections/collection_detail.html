@@ -83,6 +83,7 @@
     {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
       <p class="i16 tip">{% blocktrans %}No releases are registered for this collection yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
     {% endif %}
+  {% endif %}
   {% endwith %}
 </div>
 
