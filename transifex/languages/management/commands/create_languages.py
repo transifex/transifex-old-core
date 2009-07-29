@@ -216,9 +216,11 @@ def process_lang():
     en_ZA.save()
 
 #   Esperanto
-#   eo.name = _(u'Esperanto')
-#   eo.nplurals = '2'
-#   eo.pluralequation = '(n != 1)'
+    eo, created = Language.objects.get_or_create(code='eo')
+    eo.name = _(u'Esperanto')
+    eo.nplurals = '2'
+    eo.pluralequation = '(n!=1)'
+    eo.save()
 
 #   Español
 #   Spanish
@@ -293,8 +295,8 @@ def process_lang():
 #   Irish
     ga, created = Language.objects.get_or_create(code='ga')
     ga.name = _(u'Irish')
-    ga.nplurals = '3'
-    ga.pluralequation = 'n==1 ? 0 : n==2 ? 1 : 2'
+    ga.nplurals = '5'
+    ga.pluralequation = '(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4)'
     ga.save()
 
 #   Galego
@@ -433,6 +435,20 @@ def process_lang():
     ku.nplurals = '2'
     ku.pluralequation = '(n != 1)'
     ku.save()
+
+#   Kirgyz
+    ky, created = Language.objects.get_or_create(code='ky')
+    ky.name = _(u'Kirgyz')
+    ky.nplurals = '1'
+    ky.pluralequation = '(0)'
+    ky.save()
+
+#   Latin
+    la, created = Language.objects.get_or_create(code='la')
+    la.name = _(u'Latin')
+    la.nplurals = '2'
+    la.pluralequation = '(n!=1)'
+    la.save()
 
 #   Lëtzebuergesch
 #   Letzeburgesch
@@ -779,6 +795,13 @@ def process_lang():
 #   wa.name = _(u'Waloon')
 #   wa.nplurals = '2'
 #   wa.pluralequation = '(n > 1)'
+
+#   Xhosa
+    xh, created = Language.objects.get_or_create(code='xh')
+    xh.name = _(u'Xhosa')
+    xh.nplurals = '2'
+    xh.pluralequation = '(n!=1)'
+    xh.save()
 
 #   简体中文
 #   Simplified Chinese (China mainland used below, but also used in Singapore and Malaysia)
