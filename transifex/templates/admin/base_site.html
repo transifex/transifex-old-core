@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Transifex' %}{% endblock %}
+
+{% block extrahead %}<link media="screen" href="{{ MEDIA_URL }}css/admin.css" type="text/css" rel="stylesheet" />{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Transifex administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
