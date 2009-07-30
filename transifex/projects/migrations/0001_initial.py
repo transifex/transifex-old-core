@@ -119,7 +119,8 @@ class Migration:
             'long_description_html': ('models.TextField', ["_('HTML Description')"], {'max_length': '1000', 'editable': 'False', 'blank': 'True'}),
             'modified': ('models.DateTimeField', [], {'auto_now': 'True', 'editable': 'False'}),
             'name': ('models.CharField', ["_('Name')"], {'max_length': '50'}),
-            'pofiles': ('generic.GenericRelation', ['POFile'], {}),
+            # It's NOT a real field
+            #'pofiles': ('generic.GenericRelation', ['POFile'], {}),
             'project': ('models.ForeignKey', ['Project'], {'verbose_name': "_('Project')"}),
             'releases': ('models.ManyToManyField', ['CollectionRelease'], {'related_name': "'components'", 'null': 'True', 'verbose_name': "_('Releases')", 'blank': 'True'}),
             'slug': ('models.SlugField', ["_('Slug')"], {'max_length': '30'}),
