@@ -18,6 +18,8 @@ import tagging
 from tagging.fields import TagField
 
 from codebases.models import Unit
+from vcs.models import VcsUnit
+from tarball.models import Tarball
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
 from txcommon.log import (logger, log_model)
@@ -318,15 +320,31 @@ class Component(models.Model):
             self.unit.delete()
         super(Component, self).delete(*args, **kwargs)
 
-    def set_unit(self, root, branch, type, web_frontend=None):
+    def set_unit(self, root, type, branch=None, web_frontend=None):
         """
         Associate a unit with this component.
 
         Another place the same functionality happens is when the Component
         form is saved.
         """
+        
+        #TODO: Find a clever solution (less tied) for the next if
+        # Necessary to recreate it when unit changes from vcs to tar 
+        # and vice-versa
+        if self.unit and ((self.unit.type != 'tar' and type == 'tar') or
+            (self.unit.type == 'tar' and type != 'tar')):
+                logger.debug("Unit type changed. Cleaning cache it for %s." % 
+                    self.full_name)
+                self.clear_cache()
+                self.unit.delete()
+                self.unit = None
+
         if self.unit:
+            logger.debug("Updating Unit for %s." % self.full_name)
             self.unit.name = self.full_name
+            # Clean the Unit repo case the root url changed
+            if self.unit.root != root:
+                self.clear_cache()
             self.unit.root = root
             self.unit.branch = branch
             self.unit.type = type
@@ -334,18 +352,22 @@ class Component(models.Model):
         else:
             logger.debug("Unit for %s not found. Creating." % self.full_name)
             try:
-                u = Unit.objects.create(name=self.full_name, root=root,
-                                        branch=branch, type=type,
-                                        web_frontend=web_frontend)
+                if branch and type!='tar':
+                    u = VcsUnit.objects.create(name=self.full_name, root=root,
+                        type=type, branch=branch, web_frontend=web_frontend)
+                else:
+                    u = Tarball.objects.create(name=self.full_name, root=root,
+                        type=type)
                 u.save()
                 self.unit = u
-            except IntegrityError:
-                logger.error("Yow! VcsUnit exists but is not associated with %s! "
+            except IntegrityError, e:
+                logger.error("Yow! Unit exists but is not associated with %s! "
                           % self.full_name)
+                print e
                 # TODO: Here we should probably send an e-mail to the
                 # admin, because something very strange would be happening
                 pass
-        return self.unit
+        return self.save()
 
     def get_files(self):
         """Return a list of filtered files for the component."""
