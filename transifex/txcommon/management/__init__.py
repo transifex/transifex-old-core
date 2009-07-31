@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db.models import signals
 from django.utils.translation import ugettext_noop as _
+from txcommon import models as txcommon_app
 
 # This is temporary
 NOTICE_TYPES = [
@@ -151,6 +152,6 @@ try:
                                                 n["description"], 
                                                 n["default"])
 
-    signals.post_syncdb.connect(create_notice_types, sender=notification)
+    signals.post_syncdb.connect(create_notice_types, sender=txcommon_app)
 except ImportError:
     print "Skipping creation of NoticeTypes as notification app not found"
