@@ -204,15 +204,31 @@ to have the fixture updated:
      ./manage.py loaddata txcommon/fixtures/sample_data.json
 
 2. Make changes to the models.
-3. If an evolution is required, get a hint for it, and if it looks OK, copy
-   the lines up to and including the ones with dashes to a file like
-   ``txcommon/evolutions/001_add_X_field.py``::
+3. Probably a migration will be required.
+
+   From the Release 0.7, Transifex uses South for managing the schema 
+   migrations of models. To get the migration script related to your model
+   change run::
    
-     mg evolve --hint
+     ./manage.py startmigration <app_name> <migration_name> --auto
+
+   Note that a new python script with the <migration_name> will be created under
+   the <app_name>/migrations/ dir. As it's an automatic detection, please, have 
+   a look on it for checking if it is really reflecting your changes correctly. 
+   After check it, you can test it running::
    
-   Note that in complex changes the evolution application might not be able
-   to proceed (for example when adding a non-null column). In this case you
-   can delete the column and re-add it, add it as null and change it, etc.
+     ./manage.py migrate <app_name> --db-dry-run
+   
+   In complex changes the South application might not be able to proceed 
+   automatically (for example when adding a non-null column). In this case you can
+   delete the column and re-add it, add it as null and change it, etc. South 
+   also supports to write manual migrations and more information can be found 
+   at http://south.aeracode.org/wiki/Documentation.
+   
+   Once your migration pass through the above command without errors, you can
+   proceed the migration in the database skipping the option --db-dry-run::
+       
+      ./manage.py migrate <app_name>
 
 4. With the new DB schema in place, dump the data again::
 
@@ -223,8 +239,8 @@ to have the fixture updated:
 
      ./manage.py flush --noinput
      ./manage.py syncdb --noinput
-     mg loaddata txcommon/fixtures/sample_data.json
-     mg loaddata txcommon/fixtures/sample_users.json
+     ./manage.py loaddata txcommon/fixtures/sample_data.json
+     ./manage.py loaddata txcommon/fixtures/sample_users.json
 
    Open up your browser to check everything looks OK and that your changes
    have been included as you'd expect.
