@@ -173,6 +173,18 @@ installation should be very simple. Customize ``settings/*.conf`` and
 To enable Transifex's notifications you'll need to switch the relevant setting
 called ENABLE_NOTICES to ``True``.
 
+.. note::
+ 
+    Ensure the database server defined in the settings files is properly
+    configured and running, and that your selected database is using UTF-8.
+    Depending on the backend, this is achieved in different ways; for example,
+    in MySQl, you might want to modify ``my.cnf`` or create the database with
+    a command similar to the following:
+    
+    .. code-block:: sql
+
+        CREATE DATABASE db_name DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 Once you're done configuring, run inside the project directory::
 
     ./manage.py syncdb
