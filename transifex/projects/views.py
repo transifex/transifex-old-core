@@ -25,6 +25,7 @@ from tarball.forms import TarballSubForm
 from txcommon.log import logger
 from actionlog.models import action_logging
 from translations.lib.types.pot import FileFilterError
+from translations.lib.types.publican import PotDirError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403, one_perm_required_or_403
@@ -520,6 +521,15 @@ def component_set_stats(request, project_slug, component_slug):
         request.user.message_set.create(message = _(
             "The file filter of this intltool POT-based component does not "
             " seem to allow the POTFILES.in file. Please fix it."))
+
+    except PotDirError:
+        logger.debug("There is no 'pot' directory in the set of files. %s does "
+                     "not seem to be a Publian like project."
+                     % component.full_name)
+        request.user.message_set.create(message = _("There is no 'pot' "
+            "directory named in the set of files of this Publian like "
+            "component. Maybe its file filter is not allowing access to it."))
+
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
