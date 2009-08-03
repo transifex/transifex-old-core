@@ -18,5 +18,8 @@ def create_languages(app, created_models, verbosity, **kwargs):
                 call_command("create_languages", interactive=True)
             break
 
-signals.post_syncdb.connect(create_languages,
-    sender=lang_app, dispatch_uid = "languages.management.create_languages")
+# South's migrate does not accept a --noinput flag. Because we want to be able
+# to call these in a non-interactive way, we're disabling it for now and asking
+# the user installing Tx to call create_languages manually. 
+#signals.post_syncdb.connect(create_languages,
+#    sender=lang_app, dispatch_uid = "languages.management.create_languages")
