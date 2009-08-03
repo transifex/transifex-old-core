@@ -187,16 +187,20 @@ called ENABLE_NOTICES to ``True``.
 
 Once you're done configuring, run inside the project directory::
 
+    ./manage.py txcreatedirs
     ./manage.py syncdb
     ./manage.py migrate
-    ./manage.py txcreatedirs
+    ./manage.py create_languages
     ./manage.py runserver 8088
 
-The first command will create the necessary database tables. It will also ask
-you to create an admin user (superuser), who will have access to the admin panel
-(by default accessible through ``/admin/``).
+The first command will create the necessary directories on the disk. ``syncdb``
+will create the database tables, and ask you to create an admin user
+(superuser), who will have access to the admin panel. The latter is by default
+accessible through ``/admin/``, something you can customize by modifying the
+file ``transifex/urls.py``.
 
-Fire up your browser at ``http://localhost:8088/`` and grab a cup of coffee.
+Now, you can fire up your browser at ``http://localhost:8088/``, grab a cup of
+coffee and lean back.
 
 .. warning::
  
