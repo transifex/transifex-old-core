@@ -340,6 +340,9 @@ def component_create_update(request, project_slug, component_slug=None):
         allow_subform = ComponentAllowSubForm(request.POST, instance=component)
         unit_subforms = unit_sub_forms(unit, request.POST)
 
+        old_i18n_type = None
+        old_root = None
+
         # Submission tab
         if request.POST.has_key('submission_form'):
             if allow_subform.is_valid() and component is not None:
@@ -359,11 +362,12 @@ def component_create_update(request, project_slug, component_slug=None):
             if component_form.is_valid() and unit_form.is_valid() and \
                 current_unit_subform.is_valid():
 
+                if component: 
+                    old_i18n_type = component.i18n_type
                 component = component_form.save(commit=False)
+
                 if unit:
                     old_root = unit.root
-                else:
-                    old_root = None
                 unit = unit_form.save(commit=False)
                 unit.name = component.get_full_name()
                 unit.save()
@@ -381,6 +385,10 @@ def component_create_update(request, project_slug, component_slug=None):
                 component_id = component.id
                 component.save()
                 component_form.save_m2m()
+
+                # If i18n type changed, clean the POfile objects for this comp.
+                if old_i18n_type != component.i18n_type:
+                    component.trans.clear_stats()
 
                 # Compare with the old root url and, if it has changed, clear cache
                 if old_root and old_root != unit.root:
