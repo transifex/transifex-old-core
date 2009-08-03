@@ -15,11 +15,11 @@ def create_languages(app, created_models, verbosity, **kwargs):
                 confirm = raw_input('Please enter either "yes" or "no": ')
                 continue
             if confirm == 'yes':
-                call_command("create_languages", interactive=True)
+                call_command("txcreatelanguages", interactive=True)
             break
 
 # South's migrate does not accept a --noinput flag. Because we want to be able
 # to call these in a non-interactive way, we're disabling it for now and asking
-# the user installing Tx to call create_languages manually. 
+# the user installing Tx to call txcreatelanguages manually. 
 #signals.post_syncdb.connect(create_languages,
 #    sender=lang_app, dispatch_uid = "languages.management.create_languages")
