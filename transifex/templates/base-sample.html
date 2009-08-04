@@ -47,7 +47,7 @@
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
               <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform"><input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" /></form>
           {% else %}
-              <a href="{% url login %}?next={{request.path}}">{% trans "Sign in" %}</a>
+              <a href="{% url login %}?next={{request|get_next}}">{% trans "Sign in" %}</a>
               {% url signup as signup_url %}
               {% if signup_url %}
               | <a href="{{ signup_url }}">{% trans "Register" %}</a>

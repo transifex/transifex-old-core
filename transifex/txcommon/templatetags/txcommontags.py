@@ -178,3 +178,11 @@ def notice_type_user_filter(noticetype_list):
 def in_list(value, arg):
     """Check if a value is present in a list."""
     return value in arg
+
+@register.filter
+def get_next(request):
+    """Return the next path from the request."""
+    next = request.GET.get('next')
+    if not next:
+        next = request.path
+    return next
