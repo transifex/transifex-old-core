@@ -76,7 +76,7 @@
 			</ul>
 			{% if form.errors %}
 			{% for error,desc in form.errors.items %}
-			<p class="small quiet red">* {{desc|join:"; "}}</p>
+			<p class="fielderrors">* {{desc|join:"; "}}</p>
 			{% endfor %}
 			{% endif %}
 		</fieldset>
