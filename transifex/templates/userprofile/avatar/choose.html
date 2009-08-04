@@ -33,6 +33,15 @@
 {% endblock %}
 
 {% block userprofile_content %}
+  <h2>{% trans "Avatar selection page" %}</h2>
+  <p>{% trans "You have several options to select the image you want as avatar on your profile." %}</p>
+
+  {% load avatars %}
+  <div class="center">
+        <img class="border" alt="{{ request.user }}" id="avatarimg" src="{% avatar 96 %}" />
+    {% if user.get_profile.has_avatar %}<p id="avatardelete" style="text-align: center;"><a href="{{ request.path_info }}delete/" class="delavatar">{% trans "Delete" %}</a></p>{% endif %}
+    </div>
+    <div class="generic_form">
 	<form action="{% url profile_edit_avatar %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 		<fieldset>
 			<legend>{% trans "Choose the location of your avatar" %}</legend>
@@ -72,17 +81,5 @@
 			{% endif %}
 		</fieldset>
 </form>
-{% endblock %}
-
-{% block userprofile_content_related %}
-  <div class="box">
-    <h3>{% trans "Avatar selection page" %}</h3>
-		<p>{% trans "You have several options to select the image you want as avatar on your profile" %}.</p>
-  </div>
-
-	{% load avatars %}
-  <div class="center">
-		<img class="border" alt="{{ request.user }}" id="avatarimg" src="{% avatar 96 %}" />
-    {% if user.get_profile.has_avatar %}<p id="avatardelete" style="text-align: center;"><a href="{{ request.path_info }}delete/" class="delavatar">{% trans "Delete" %}</a></p>{% endif %}
-	</div>
+</div>
 {% endblock %}

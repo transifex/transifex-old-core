@@ -27,9 +27,7 @@
 
 {% block userprofile_content %}
 	{% load avatars %}
-	<form action="" method="post">
-	<fieldset>
-		<legend>{% trans "Overview of your profile" %}</legend>
+		<h2>{% trans "Overview of your profile" %}</h2>
 		<div id="avatar" class="{{ css_classes.overview_avatar }} center">
 			<a href="{% url profile_edit_avatar %}">
 				<img class="border" src="{% avatar 96 %}" />
@@ -82,8 +80,6 @@
 			<div id="location" style="width: 480px; height: 240px;"></div>
 		</div>
 		{% endif %}
-	</fieldset>
-	</form>
 {% endblock %}
 
 {% block userprofile_content_related %}

@@ -9,18 +9,14 @@
 {% endblock %}
 
 {% block userprofile_content %}
+    <h2>{% trans "E-mail validation process" %}</h2>
+    <p>{% url profile_overview as profile_overview %}{% blocktrans %}You can manage the e-mail validation process from the <a href="{{ profile_overview }}"overview page</a>. %}</p>
+
 	<div class="{% if successful %}success{% else %}error{% endif %}">
 	{% if successful %}
-  <p>{% trans "E-mail address validated successfully" %}.</p>
+    <p>{% trans "E-mail address validated successfully." %}</p>
 	{% else %}
-	<p>{% trans "The key you received via e-mail is no longer valid. Please try the e-mail validation process again" %}.</p>
+	<p>{% trans "The key you received via e-mail is no longer valid. Please try the e-mail validation process again." %}</p>
 	{% endif %}
 	</div>
-{% endblock %}
-
-{% block userprofile_content_related %}
-  <div class="box">
-    <h3>{% trans "E-mail validation process" %}</h3>
-    <p>{% trans "You can manage the e-mail validation process from the" %} <a href="{% url profile_overview %}">{% trans "overview page" %}.</p>
-  </div>
 {% endblock %}
