@@ -1,6 +1,9 @@
 {% load i18n %}
 {% load txcommontags %}
 {% if form %}
+    {% if form.non_field_errors %}
+        <ul class="fielderrors">{{ form.non_field_errors }}</ul>
+    {% endif %}
     {% for field in form %}
         {% if field.is_hidden %}
             {{ field }}
