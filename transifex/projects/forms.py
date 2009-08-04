@@ -10,6 +10,18 @@ from txcommon.validators import ValidRegexField
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
+        exclude = ('anyone_submit',)
+
+
+class ProjectAccessSubForm(forms.ModelForm):
+
+    access_control_form = forms.BooleanField(widget=forms.HiddenInput, 
+                                             initial=True)
+
+    class Meta:
+        model = Project
+        fields = ('anyone_submit','access_control_form',)
+
 
 class ComponentForm(forms.ModelForm):
     # TODO: Figure out how to keep this synced to Component.file_filter

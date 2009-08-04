@@ -57,6 +57,10 @@ $(document).ready(
                 }
                 return true;
             });
+            
+        $("#id_anyone_submit").change(function(){
+            $(this).parents("form").submit();
+            })
     }
 );
 </script>

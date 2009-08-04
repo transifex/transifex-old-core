@@ -18,7 +18,10 @@ class ProjectPermission(BasePermission):
 
     def submit_file(self, project=None, component=None):
         if project:
-            return self.browse_project(obj=project)
+            if project.anyone_submit:
+                return True
+            else:
+                return self.browse_project(obj=project)
         return False
     submit_file.short_description=_('Is allowed to submit file to this project')
 

@@ -96,6 +96,9 @@ class Project(models.Model):
     bug_tracker = models.URLField(_('Bug tracker'), blank=True,
         help_text=_('The URL for the webiste tracking bugs and tickets '
                     '(Bugzilla, Trac, etc.)'))
+    anyone_submit = models.BooleanField(_('Anyone can submit'), 
+        default=False, blank=False,
+        help_text=_('Does anyone can submit translations to this project?'))
 
     hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))

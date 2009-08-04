@@ -18,7 +18,8 @@ from django.contrib.syndication.views import feed
 
 from codebases.forms import UnitForm
 from projects.models import Project, Component
-from projects.forms import ProjectForm, ComponentForm, ComponentAllowSubForm
+from projects.forms import (ProjectAccessSubForm, ProjectForm, ComponentForm, 
+                            ComponentAllowSubForm)
 from projects import signals
 from projects.permissions import ProjectPermission
 from tarball.forms import TarballSubForm
@@ -105,32 +106,42 @@ def _project_create_update(request, project_slug=None):
         project = None
 
     if request.method == 'POST':
-        project_form = ProjectForm(request.POST, instance=project, 
-                                   prefix='project') 
-        if project_form.is_valid(): 
-            project = project_form.save(commit=False)
-            project_id = project.id
-            project.save()
-            project_form.save_m2m()
+        # Access Control tab
+        if request.POST.has_key('access_control_form'):
+            anyone_subform = ProjectAccessSubForm(request.POST, instance=project)
+            if anyone_subform.is_valid():
+                anyone_subform.save()
+                # TODO: Add an ActionLog and Notification here for this action
+                return HttpResponseRedirect(request.POST['next'])
 
-            # TODO: Not sure if here is the best place to put it
-            Signal.send(signals.post_proj_save_m2m, sender=Project, 
-                        instance=project)
+        # Details tab
+        else:
+            project_form = ProjectForm(request.POST, instance=project, 
+                                    prefix='project') 
+            if project_form.is_valid(): 
+                project = project_form.save(commit=False)
+                project_id = project.id
+                project.save()
+                project_form.save_m2m()
 
-            # ActionLog & Notification
-            context = {'project': project}
-            if not project_id:
-                nt = 'project_added'
-                action_logging(request.user, [project], nt, context=context)
-            else:
-                nt = 'project_changed'
-                action_logging(request.user, [project], nt, context=context)
-                if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(project, 
-                                        signal=nt, extra_context=context)
+                # TODO: Not sure if here is the best place to put it
+                Signal.send(signals.post_proj_save_m2m, sender=Project, 
+                            instance=project)
 
-            return HttpResponseRedirect(reverse('project_detail',
-                                        args=[project.slug]),)
+                # ActionLog & Notification
+                context = {'project': project}
+                if not project_id:
+                    nt = 'project_added'
+                    action_logging(request.user, [project], nt, context=context)
+                else:
+                    nt = 'project_changed'
+                    action_logging(request.user, [project], nt, context=context)
+                    if settings.ENABLE_NOTICES:
+                        txnotification.send_observation_notices_for(project, 
+                                            signal=nt, extra_context=context)
+
+                return HttpResponseRedirect(reverse('project_detail',
+                                            args=[project.slug]),)
     else:
         # Make the current user the maintainer when adding a project
         if project:
@@ -196,7 +207,9 @@ def project_add_permission(request, project_slug):
         approved=True,
         extra_context={
             'project_permission': True,
-            'project': project, },
+            'project': project,
+            'project_form': ProjectAccessSubForm(instance=project),
+        },
         template_name='projects/project_form_base.html')
 
 
@@ -213,7 +226,9 @@ def project_add_permission_request(request, project_slug):
         approved=False,
         extra_context={
             'project_permission': True,
-            'project': project, },
+            'project': project, 
+            'project_form': ProjectAccessSubForm(instance=project),
+        },
         template_name='projects/project_form_base.html')
 
 
