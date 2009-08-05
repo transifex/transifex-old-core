@@ -58,7 +58,7 @@ class MessageField(forms.CharField):
         self.occurrences=entry.occurrences
         if not attrs:
             attrs = {}
-        attrs.update({'rows': calculate_rows(entry), 'cols': 50,})
+        attrs.update({'rows': calculate_rows(entry), 'cols': 30,})
         if not widget:
             widget=MessageWidget(attrs=attrs)
         super(MessageField, self).__init__(attrs, widget=widget,

@@ -1,0 +1,322 @@
+.. _releases-0.7:
+
+=======================================
+ Transifex version 0.7.x release notes
+=======================================
+
+
+Transifex 0.7-RC1 (Pyro) 火
+===========================
+
+Welcome to the Transifex 0.7-RC1 release, codenamed Pyro_.
+
+Released:
+  Early August 2009
+
+This is the pre-release of 0.7, aimed to encourage testing and thus catching
+bugs early on.
+
+Transifex 0.7 is intended for production use and is targeted for new
+installations of Transifex and parties who choose to migrate to a new major
+version and enjoy the new features.
+
+Here's a 40K-foot view of the release in numbers::
+
+    236 files changed, 51520 insertions(+), 23895 deletions(-)
+
+
+What's new in Transifex 0.7
+---------------------------
+
+The following major features were introduced in this release.
+
+Online Translation Editor
+:::::::::::::::::::::::::
+
+One of the often requested features in Transifex was an online translation
+editor. Users would like to perform simple translation tasks straight from
+their browser.
+
+Transifex 0.7 includes an exciting feature in beta mode: 'Lotte', the
+lightweight online translation editor.
+
+Projects which have enabled translation submission get a new icon, which
+translators can click to translate through the browser. Of course, the choice
+of uploading normal translated files still applies.
+
+Note that currently Lotte is enabled only for files with less than 100 strings.
+Improvements to the interface to enable efficient handling of larger files are
+scheduled with a next release.
+
+.. image:: ../_screenshots/0.7/0.7_lotte.png
+   :class: shot2 alcenter
+
+
+More control to Project Maintainers
+:::::::::::::::::::::::::::::::::::
+
+.. image:: ../_screenshots/0.7/0.7_edit-project.png
+   :class: shot2
+
+This release features a major addition to the Transifex engine, which unlocks
+a multitude of new possibilities for controlling who can do what on the
+service. Support is now included for fine-grained permission control, allowing
+the definition of access control lists for a variety of actions.
+
+These fine-grained permissions come *in addition* to the global permission
+support Transifex includes. One user of your deployment can have the permission
+"Can do Foo on any project", and another one the "Can do Foo on project Bar"
+one.
+
+Project details control
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Project maintainers are now able to modify the details of their projects. They
+can alter the associated information, control the components they have
+registered and the releases they are assigned to.
+
+Registering projects
+~~~~~~~~~~~~~~~~~~~~
+
+.. image:: ../_screenshots/0.7/0.7_acl.png
+   :class: shot2
+
+Transifex now allows users to register their own projects. People who do this
+automatically become maintainers of the project, and later on they can choose
+to pass on the maintainership to other people, or simply add more people on
+the maintainers list.
+
+To enable this feature, the admin needs to give the permission
+'projects.add_project' to the group of users with the name 'registered'.
+This can be done as usual from the admin panel.
+
+Per-project submitters list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Project maintainers are now able to choose who can submit files to their
+repository. This can help the maintainer form a group of translators who he
+trusts, which is specific to his project. Using a special form, one can add
+one by one the translators they trust.
+
+Additionally, users themselves can request access to a project. The maintainer
+will be notified with this request and act upon it. The user has the choice to
+revoke his request, if he chooses so.
+
+.. image:: ../_screenshots/0.7/0.7_request-submit-access.png
+   :class: shot2 alcenter
+
+Submissions via email
+:::::::::::::::::::::
+
+In addition to submitting files to remote versioning systems over SSH,
+Transifex now supports submission via email to the project maintainers. This
+could be useful for setup scenarios such as the following:
+
+1. The content repository is living behind a firewall and/or NAT, making
+   external connections harder to configure and manage.
+
+2. The upstream repository does not allow SSH access (eg. it only supports
+   ``https``).
+
+3. The repository pulls from a tarball hosted on the net (eg. it's an archived
+   release), to which Transifex has no way to submit files.  
+
+4. The maintainer chooses to have a tighter control of what is landing in his
+   repository.
+
+.. image:: ../_screenshots/0.7/0.7_submit-via-email.png
+   :class: shot2 alcenter
+
+.. note::
+
+    Submissions via email are **not** stored on the Transifex server. The
+    translation statistics are not updated with the commit, since there is no
+    way to know if the maintainer is indeed going to commit the file in his
+    repository.
+
+
+User Profiles
+:::::::::::::
+
+.. image:: ../_screenshots/0.7/0.7_avatar.png
+   :class: shot2
+
+Transifex 0.7 features a brand new backend for user account and profile
+management. Users are able to include information about themselves and manage
+their account in detail. Here are some of the features supported:
+
+- Avatar support
+- Google Maps Integration for specifying the user's exact location
+- Standard account features: Register for a new account, login/logout
+- Password management (change password, recover lost one, etc.)
+- Email address modification 
+- Ability to clear profile information
+
+.. warning::
+
+    OpenID was dropped in this release. The plan is to re-add it in a next
+    release, depending on the feedback from our users. 
+
+Publican-like I18n Support
+::::::::::::::::::::::::::
+
+.. image:: ../_screenshots/0.7/0.7_publican.png
+   :class: shot2
+
+This new i18n support method allows handling of Publican-like documents. These
+include multiple source and translation files, allowing more than one people
+translating the same language by working on different files at the same time.
+Publican is the base tool for building the Fedora Project documents such as
+the Release Notes.
+
+
+Other new features
+------------------
+
+.. image:: ../_screenshots/0.7/0.7_zebra.png
+   :class: shot2
+
+- Preliminary setuptools support
+- Add user to a default 'registered' group
+- Speed improvements across the platform
+- Added zebra style to the stats tables
+- Divided Component form in tabs and fixed the validation issues
+- Added toggle to expand and collapse the multi source files div #220
+- Added tooltip for submission note
+- Added missed option to delete releases
+- Made base template inheritable for easier overriding.
+- Added support for dynamic Table Of Contents in pages.
+- Added option in settings to enable download of compressed files
+- Added number of languages and projects to the index view
+- Added templatetag get_latest_projects
+- Support for new languages:
+
+  - Asturian (ast)
+  - Esperanto (eo)
+  - Irish (ga)
+  - Kashmiri (ks)
+  - Kirgyz (ky)
+  - Latin (la)
+  - Xhosa (xh)
+ 
+- Made the current user the maintainer when adding a project
+- Replaced django-evolution with South
+- Added 0.6-0.7 schema migration
+
+
+Translations
+------------
+
+- Catalan (xconde)
+- Chinese Simplified (tiansworld)
+- Greek (thalia)
+- Hungarian (peti)
+- Polish (Piotr Drąg)
+- Russian (aguskov)
+- Slovak (palos)
+- Spanish (elsupergomez)
+
+Bugfixes from previous release
+------------------------------
+
+The following issues have been fixed in this release:
+
+- Aggregate untranslated strings also for single files
+- Added support to hidden fields to the form_as_table_rows templatetag
+- Added filter for VCS stuff (i.e. .hg/) be ignored by default #91
+- Added CharField validation for ValidRegexField as well
+- The component unit_subforms must be loaded always
+- Changed name of the body block to make Tx compatible with others django apps
+- Added evolution for Component.submission_type (#227)
+- Collection slug should be unique
+- Query releases on the database by id and not by slug
+- Added evolution for Collection.slug (#231)
+- Ignore svn externals
+- Forward compatible import for clean_tree.
+- Flatpages are now by default considered in Markdown format.
+- Checking proper permission for submitting a file #246
+- Removed obsolete 'release' application templates.
+- Catching TypeError exception when looking for files
+- Correct urls for changing email in the notices page
+- Correct contact info for language addition.
+- Split up project_create_update view for having different perms
+- Fix / improve the English messages in several files
+- Not needed granular permission for adding a project
+- Enabled editor user to enter the admin panel
+- Permission check missed in language multi-file template
+- Find object for checking perm by using the slug__exact
+- Added a tooltip for the access control part of the project
+- Avoided query slowness for generic relations
+- Added support for Tibetan language
+- Added index to is_pot and filename in the POFile model
+- Ordering list by language_code for stats grouping
+- Removed unneeded admin registration
+- Fixed duplication in the get_langs method
+- Calculate stats only on file change within the repo
+- form_as_table_rows must display errors for hidden fields
+- Projects maintainers are required now
+- Dropped using of custom revision field
+- More permissions checks in templates for "Add Project" etc.
+- Avoid choking in PO viewing when a file has incorrect encoding.
+- Re-enabled custom revision field
+- Added permission request feature for projects
+- Return endif template tag left out by mistake.
+- Fixed component.set_unit method (#270)
+- Added installation tip for database encoding (by Og Maciel).
+- Clean POFile objects when a component i18n type changes
+
+
+Upgrading to 0.7
+----------------
+
+Dependencies
+::::::::::::
+
+The following dependencies were *added* in this version:
+
+- Imaging (Python Imaging Library, PIL)
+- polib
+- django-authority
+- South
+- userprofile
+
+The following dependencies were *removed* in this version:
+
+- python-openid
+- django-evolution
+
+For instructions on how to install them, refer to the
+:ref:`Installation docs <intro-install>`. You'll need to complete this step
+before actually doing the database upgrade.
+
+Upgrade instructions
+::::::::::::::::::::
+
+Transifex includes script which will automatically migrate your database to
+the new schema. All you need to do, from a clean 0.6 schema, is run the
+following::
+
+    ./manage.py syncdb
+    ./manage.py migrate 0001_initial --all --fake
+    ./manage.py migrate
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Dimitris Glezos
+- Diego Búrigo Zacarão
+- Jannis Leidel
+- John Beredimas
+- Ignacio Vazquez-Abrams
+- Dimitris Bousis
+- Og Maciel
+- John Gakos
+- Manolis Kiagias
+- Professor Charles Xavier
+
+For a list of our awesome translators, refer to the `Translations`_ section.
+
+.. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
