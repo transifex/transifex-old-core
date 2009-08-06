@@ -309,18 +309,38 @@ the new schema from the previous version. All you need to do, from a clean
     v0.6. Instructions to do this can be found in relevant section of the
     :ref:`Transifex 0.6 release notes <releases-0.6>`.
 
-Introducing the Transifex Appliance
-:::::::::::::::::::::::::::::::::::
+Getting Transifex 0.7
+---------------------
+
+Project and community managers who want to deploy Transifex for their 
+own community can get Transifex in a variety of ways. 
+
+A tarball of Transifex 0.7 is available at http://transifex.org/files/.
+
+RPM packages for Fedora 9, Fedora 10, and Fedora Rawhide are or will 
+soon be available via yum::
+
+    yum install transifex transifex-extras 
+
+RPM packages for RHEL 5, CentOS 5, and Scientific Linux 5 will be 
+available in `Fedora EPEL`_. 
+
+
+The Transifex Appliance
+:::::::::::::::::::::::
 
 If you want to play with the latest Transifex code, you may want to use our
 development images for the Transifex Appliance. Following the stand-alone,
 "batteries included" model of software appliances, you get a complete
 Transifex system with all dependencies and services pre-configured so that
 you can start experimenting with it right away. Choose from ISO, VMware or EC2
-images, for both x86 and x86_64 architectures. Your appliances can be updated
-using its own web based management system by pointing your browser to the
-appliance’s IP using port 8003 with the credentials admin and password. Make
-sure to change the password once you’ve successfully logged in.
+images, for both x86 and x86_64 architectures to run on a virtual machine,
+dedicated server or using a virtualization software.
+
+Your appliances can be updated using its own web based management system by
+pointing your browser to the appliance’s IP using port 8003. Login with the
+credentials 'admin' and 'password'. Make sure to change the password once
+you’ve successfully logged in.
 
 This release is based on the development branch of Transifex, where a couple of
 projects have already been created for you to play with. Log in using either
@@ -329,9 +349,15 @@ tinker to your heart’s content!
 
 Make sure to read the documentation and file issues/send us your feedback.
 
-Transifex Appliance web site: http://www.rpath.org/web/project/transifex/
-* Development images: http://www.rpath.org/web/project/transifex/release?id=6497
-* Stable images: http://www.rpath.org/web/project/transifex/release?id=6409
+Transifex Appliance web site:
+ http://www.rpath.org/web/project/transifex/
+
+Stable images:
+ http://www.rpath.org/web/project/transifex/release?id=6409
+
+Development images:
+ http://www.rpath.org/web/project/transifex/release?id=6497
+
 
 Contributors
 ------------
@@ -352,3 +378,4 @@ The following people have contributed to this release, with one way or another:
 For a list of our awesome translators, refer to the `Translations`_ section.
 
 .. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
+.. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
