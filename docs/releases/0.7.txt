@@ -269,6 +269,8 @@ The following issues have been fixed in this release:
 Upgrading to 0.7
 ----------------
 
+To upgrade the code, update your package distribution as usual.
+
 Dependencies
 ::::::::::::
 
@@ -289,16 +291,23 @@ For instructions on how to install them, refer to the
 :ref:`Installation docs <intro-install>`. You'll need to complete this step
 before actually doing the database upgrade.
 
-Upgrade instructions
-::::::::::::::::::::
+Database migration
+::::::::::::::::::
 
-Transifex includes script which will automatically migrate your database to
-the new schema. All you need to do, from a clean 0.6 schema, is run the
-following::
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. All you need to do, from a clean
+0.6 schema, is run the following::
 
     ./manage.py syncdb
     ./manage.py migrate 0001_initial --all --fake
     ./manage.py migrate
+
+.. note::
+
+    Transifex does not support direct database migration from 0.5 to 0.7. To
+    upgrade from a 0.5 schema it's necessary to first upgrade your schema to
+    v0.6. Instructions to do this can be found in relevant section of the
+    :ref:`Transifex 0.6 release notes <releases-0.6>`.
 
 
 Contributors

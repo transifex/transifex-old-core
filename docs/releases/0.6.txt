@@ -261,7 +261,14 @@ Upgrading to 0.6
 ----------------
 
 The schema has undergone many changes, and 0.6 includes code to perform
-a schema evolution using ``django-evolution``. To use it, follow these steps:
+a schema evolution using ``django-evolution``.
+
+.. warning::
+
+    Due to heavy changes in the schema, the following were only tested and
+    guaranteed to work only with PostgreSQL.
+
+Here are the steps:
   
 - Add ``django_evolution`` to ``INSTALLED_APPS`` in the 0.5.x Transifex
   configuration.
@@ -272,9 +279,22 @@ a schema evolution using ``django-evolution``. To use it, follow these steps:
 - Run ``python manage.py evolve ---execute``, and then ``python manage.py
   syncdb`` again.
 
-The settings files have been broken down for easier maintenance in
-``settings/``. The ``settings.py`` file needs to be overwritten with the new
-version and settings migrated to the respective ``.conf`` files. 
+Finally, execute the following code on the command line::
+
+    cd <transifex_path>/transifex/
+    ./manage.py shell
+    
+    from translations.models import POFile
+    for po in POFile.objects.all():
+        if po.language:
+            po.language_code = po.language.code
+        else:
+            po.language_code = po.object.trans.tm.guess_language(po.filename)
+        po.save()
+
+Also note that the settings files have been broken down for easier maintenance
+in ``settings/``. The ``settings.py`` file needs to be overwritten with the
+new version and settings migrated to the respective ``.conf`` files.
 
 
 Contributors
