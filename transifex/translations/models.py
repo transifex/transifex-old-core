@@ -213,12 +213,16 @@ class POFile(models.Model):
             'file': self.filename,
             'type': self.content_type,
             'obj': self.object,}
+
     @property
     def sort_id(self):
         if self.language:
             return self.language.name.lower()
-        else:
+        elif self.language_code:
             return self.language_code.lower()
+        else:
+            # In case no language was found to the POFile
+            return self.filename.lower()
 
     @property
     def lang_or_code(self):
