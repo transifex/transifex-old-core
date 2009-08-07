@@ -39,7 +39,7 @@ class Command(LabelCommand):
     requires_model_validation = False
     
     def handle(self, *comps, **options):
-        """Override default method to make it work without arguments.""" 
+        """Override default method to make it work without arguments."""
         _continue = options.get('continue')
         skip = options.get('skip')
         if _continue and not os.access(os.path.dirname(__file__), os.W_OK):

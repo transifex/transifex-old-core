@@ -78,7 +78,7 @@ class POFileManager(models.Manager):
                            object_id=obj.pk).order_by('-trans_perc')
 
     def by_language(self, language):
-        """ Return a list of objects statistics for a language."""
+        """Return a list of objects statistics for a language."""
         return self.filter(language=language)
 
     def by_release(self, release):
@@ -92,13 +92,13 @@ class POFileManager(models.Manager):
         return self.filter(content_type=ctype, object_id__in=comp_query)
 
     def by_language_and_release(self, language, release):
-        """ 
+        """
         Return a list of stats object for a language and release.
         """
         return self.by_release(release).filter(language=language)
 
     def by_lang_code_and_object(self, language_code, obj):
-        """ 
+        """
         Return a list of stats for a language and object.
         """
         return self.by_object(obj).filter(language_code=language_code)

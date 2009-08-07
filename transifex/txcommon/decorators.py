@@ -75,18 +75,19 @@ def one_perm_required(perms, *model_lookups, **kwargs):
     enabled for an object or a general permission from the django permission 
     system, redirecting to the log-in page if necessary.
     
-    Use example:
-    # Permissions required for setting stats
-    pr_set_stats = (
-        ('granular', 'project_permission.maintain'),
-        ('general',  'projects.refresh_stats'),
-       #(<perm_type>, <perm_name>),
-    )
+    Example::
+
+      # Permissions required for setting stats
+      pr_set_stats = (
+          ('granular', 'project_permission.maintain'),
+          ('general',  'projects.refresh_stats'),
+         #(<perm_type>, <perm_name>),
+      )
     
-    @one_perm_required_or_403(pr_set_stats, 
-        (Project, 'slug__contains', 'project_slug'))
-    def component_set_stats(request, project_slug, component_slug):
-        bla bla bla
+      @one_perm_required_or_403(pr_set_stats, 
+          (Project, 'slug__contains', 'project_slug'))
+      def component_set_stats(request, project_slug, component_slug):
+          bla bla bla
         
     In the example above the decorator checks for the `maintain` permission
     for a Project object, taking the project_slug from the view 

@@ -47,7 +47,7 @@ from txpermissions.views import (add_permission_or_request,
 from txcommon import notifications as txnotification
 
 def _get_project_and_permission(project_slug, permission_pk):
-    """ 
+    """
     Handler to return a project and a permission instance or a 404 error, based 
     on the slugs passed by parameter.
     """
@@ -195,7 +195,7 @@ pr_project_add_perm = (
 @one_perm_required_or_403(pr_project_add_perm, 
     (Project, 'slug__exact', 'project_slug'))
 def project_add_permission(request, project_slug):
-    """ 
+    """
     Return a view with a form for adding a permission for an user.
     
     This view is an abstraction of a txpermissions.views method to be able to
@@ -215,7 +215,7 @@ def project_add_permission(request, project_slug):
 
 @login_required
 def project_add_permission_request(request, project_slug):
-    """ 
+    """
     Return a view with a form for adding a request of permission for an user.
 
     This view is an abstraction of a txpermissions.views method. 
@@ -252,7 +252,7 @@ pr_project_delete_perm = (
 @one_perm_required_or_403(pr_project_delete_perm, 
     (Project, 'slug__exact', 'project_slug'))
 def project_delete_permission(request, project_slug, permission_pk):
-    """ 
+    """
     View for deleting a permission of an user.
 
     This view is an abstraction of a txpermissions.views method to be able to
@@ -264,7 +264,7 @@ def project_delete_permission(request, project_slug, permission_pk):
 
 @login_required
 def project_delete_permission_request(request, project_slug, permission_pk):
-    """ 
+    """
     View for deleting a request of permission of an user.
 
     This view is an abstraction of a txpermissions.views method. 
@@ -280,7 +280,7 @@ def project_delete_permission_request(request, project_slug, permission_pk):
 
 @login_required
 def project_toggle_watch(request, project_slug):
-    """ Add/Remove watches on a project for a specific user """
+    """Add/Remove watches on a project for a specific user."""
 
     if request.method != 'POST':
         return json_error(_('Must use POST to activate'))
@@ -835,7 +835,7 @@ pr_component_watch_file = (
 @one_perm_required_or_403(pr_component_watch_file, 
     (Project, 'slug__exact', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
-    """ Add/Remove a watch for a path on a component for a specific user """
+    """Add/Remove a watch for a path on a component for a specific user."""
 
     if request.method != 'POST':
         return json_error(_('Must use POST to activate'))

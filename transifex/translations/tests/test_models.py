@@ -6,7 +6,7 @@ class TranslationModelsTestCase(unittest.TestCase):
     Test Translation Models.
     
     Supplementary tests, in addition to doctests.   
-    """ 
+    """
 
 #    def setUp(self):
 #        self.pofile = POFile(object=self.language, language=self.language)

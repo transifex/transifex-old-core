@@ -6,7 +6,7 @@ class BzrTestCase(unittest.TestCase):
     """Test Bzr VCS support.
     
     Supplementary tests, in addition to doctests.   
-    """ 
+    """
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):

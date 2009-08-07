@@ -52,7 +52,7 @@ class PublicanManager(POTManager):
 
 
     def get_langs_from_makefile(self):
-        """ 
+        """
         Return the languages available in the OTHER_LANGS setting of the 
         Makefile. Case it does not exist return an empty list.
 
@@ -75,7 +75,7 @@ class PublicanManager(POTManager):
 
 
     def guess_language(self, filepath, pot_dir_index=None):
-        """ 
+        """
         Guess a language code from a filepath by finding the 'pot' dir position
 
         The method for looking for the language code consist on finding a 

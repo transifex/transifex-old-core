@@ -22,7 +22,7 @@ class FileFilterError(Exception):
                " for intltool POT-based projects."
 
 class POTManager(TransManagerMixin):
-    """ A browser class for POT files. """
+    """A browser class for POT files."""
 
     def __init__(self, file_set, path, source_lang, file_filter,
         filepath=None):
@@ -56,7 +56,7 @@ class POTManager(TransManagerMixin):
         return file_content
 
     def get_po_entries(self, filename):
-        """Return a Django form field for the component"""
+        """Return a Django form field for the component."""
         from django import forms
         if filename in self.file_set:
             file_path = os.path.join(self.path, filename)
@@ -69,7 +69,7 @@ class POTManager(TransManagerMixin):
         return None
 
     def get_po_files(self):
-        """ Return a list of PO filenames """
+        """Return a list of PO filenames."""
 
         po_files = []
         for filename in self.file_set:
@@ -79,7 +79,7 @@ class POTManager(TransManagerMixin):
         return po_files
 
     def get_langfiles(self, lang):
-        """ Return a list with the PO filenames for a specificy language """
+        """Return a list with the PO filenames for a specificy language."""
 
         files=[]
         for filepath in self.get_po_files():
@@ -88,7 +88,7 @@ class POTManager(TransManagerMixin):
         return files
 
     def guess_language(self, filepath):
-        """ Guess a language from a filepath """
+        """Guess a language from a filepath."""
 
         if 'LC_MESSAGES' in filepath:
             fp = filepath.split('LC_MESSAGES')
@@ -97,7 +97,7 @@ class POTManager(TransManagerMixin):
             return os.path.basename(filepath[:-3:])
 
     def get_langs(self):
-        """ Return all langs tha have a po file for a object """
+        """Return all langs tha have a po file for a object."""
 
         langs = []
         for filepath in self.get_po_files():
@@ -109,7 +109,7 @@ class POTManager(TransManagerMixin):
 
 
     def po_file_stats(self, pofile):
-        """ Calculate stats for a POT/PO file """
+        """Calculate stats for a POT/PO file."""
         error = False
         pofile = os.path.join(self.msgmerge_path, pofile)
 
@@ -137,7 +137,7 @@ class POTManager(TransManagerMixin):
                 'error' : error,}
 
     def calculate_file_stats(self, filename, try_to_merge):
-        """ 
+        """
         Return the statistics of a specificy file for an object after
         merging the file with the source translation file (POT), if possible.
         """
@@ -214,11 +214,11 @@ class POTManager(TransManagerMixin):
             return None
 
     def get_stats(self, object):
-        """ Return a list of statistics of languages for an object."""
+        """Return a list of statistics of languages for an object."""
         return POFile.objects.by_object_total(object)
 
     def delete_stats_for_object(self, object):
-        """ Delete all lang statistics of an object."""
+        """Delete all lang statistics of an object."""
         ctype = ContentType.objects.get_for_model(object)
         POFile.objects.filter(object_id=object.id, content_type=ctype).delete()
 
@@ -292,17 +292,19 @@ class POTManager(TransManagerMixin):
                     return os.path.join(rel_path, filename)[1:]
 
     def get_source_file_for_pofile(self, filename):
-        """ 
+        """
         Find the related source file (POT) for a pofile when it has multiple
         source files.
 
         This method gets a filename as parameter and tries to discover the 
         related POT file using two methods:
+        
         1. Trying to find a POT file with the same base path that the pofile.
            Example: /foo/bar.pot and /foo/baz.po match on this method.
 
         2. Trying to find a POT file with the same domain that the pofile in any
            directory.
+        
            Example: /foo/bar.pot and /foo/baz/bar.po match on this method.
            The domain in this case is 'bar'.
 
@@ -374,7 +376,7 @@ class POTManager(TransManagerMixin):
         return (is_msgmerged, outpo)
 
     def guess_po_dir(self):
-        """ Guess the po/ diretory to run intltool """
+        """Guess the po/ diretory to run intltool."""
         for filename in self.file_set:
             if 'POTFILES.in' in filename:
                 if self.file_filter:

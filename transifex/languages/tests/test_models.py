@@ -6,7 +6,7 @@ class LanguageModelsTestCase(unittest.TestCase):
     Test Translation Models.
     
     Supplementary tests, in addition to doctests.   
-    """ 
+    """
 
     def test_lang_create(self):
         """

@@ -9,7 +9,7 @@ from django.contrib.contenttypes import generic
 
 class LanguageManager(models.Manager):
     def by_code_or_alias(self, code):        
-        """ 
+        """
         Return a language that matches either with the code or something
         inside the code_aliases field.
         """

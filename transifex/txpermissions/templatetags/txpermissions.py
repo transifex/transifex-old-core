@@ -26,7 +26,7 @@ def _base_permission_form(context, obj, perm, view_name):
 
 @register.simple_tag
 def txurl_for_obj(view_name, obj):
-    """ 
+    """
     Return the reverse url for a given obj and view_name based on the 
     object slug
     """
@@ -35,13 +35,13 @@ def txurl_for_obj(view_name, obj):
 
 @register.simple_tag
 def txadd_url_for_obj(obj):
-    """ Return the reverse url for adding permissions to an object. """
+    """Return the reverse url for adding permissions to an object"""
     return txurl_for_obj(u'%s_add_permission' % obj._meta.module_name, obj)
 
 
 @register.simple_tag
 def txrequest_url_for_obj(obj):
-    """ Return the reverse url for adding permission request to an object. """
+    """Return the reverse url for adding permission request to an object"""
     return txurl_for_obj(u'%s_add_permission_request' % obj._meta.module_name, 
                          obj)
 

@@ -2,8 +2,10 @@
 This module contains a model that is expected to be used for the
 codebases used by Transifex. The following definitions are used:
 
-resource: A file within a codebase
-codebase: A collection of files (VCS repo, tarball, etc.) that contains
+resource:
+  A file within a codebase
+codebase:
+  A collection of files (VCS repo, tarball, etc.) that contains
   resources, some or all of which are to be translated
 """
 from datetime import datetime
@@ -60,7 +62,7 @@ class Tarball(Unit):
         
         The initialization will raise an exception if the type
         is not specified in the model.
-        """   
+        """  
         from tarball.lib import get_browser_object
         browser = get_browser_object(self.type)
         self.browser = browser(root=self.root,

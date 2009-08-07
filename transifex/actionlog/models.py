@@ -34,8 +34,9 @@ def _get_formatted_message(label, context):
     return msg
 
 class LogEntry(models.Model):
+    """A Entry in an object's log."""
     user = models.ForeignKey(User, blank=True, null=True, 
-            related_name="tx_user_action")
+                             related_name="tx_user_action")
 
     object_id = models.IntegerField(blank=True, null=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
@@ -62,19 +63,25 @@ class LogEntry(models.Model):
         super(LogEntry, self).save(*args, **kwargs)
 
 def action_logging(user, object_list, action_type, message=None, context=None):
-    """ 
-    Add ActionLog using a set of parameters
+    """
+    Add ActionLog using a set of parameters.
     
-    user: The user that did the action.
-    object_list: A list of objects that should be created the actionlog for.
-    action_type: Label of a type of action from the NoticeType model.
-    message: A message to be included at the actionlog. If no message is passed
-             it will try do render a message using the notice.html from the
-             notification application.
-    contex: To render the message using the notification files, sometimes it is 
-            necessary to pass some vars by using a context.
+    user:
+      The user that did the action.
+    object_list:
+      A list of objects that should be created the actionlog for.
+    action_type:
+      Label of a type of action from the NoticeType model.
+    message:
+      A message to be included at the actionlog. If no message is passed
+      it will try do render a message using the notice.html from the
+      notification application.
+    contex:
+      To render the message using the notification files, sometimes it is 
+      necessary to pass some vars by using a context.
 
-    Usage:
+    Usage::
+
         al = 'project_component_added'
         context = {'component': object}
         action_logging(request.user, [object], al , context=context):

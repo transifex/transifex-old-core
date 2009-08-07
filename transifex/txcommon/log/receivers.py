@@ -1,7 +1,7 @@
 
 """
 Logging receivers for signals by models, etc.
-""" 
+"""
 
 def model_named(sender, message='', **kwargs):
     """

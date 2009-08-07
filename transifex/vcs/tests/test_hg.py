@@ -6,7 +6,7 @@ class HgTestCase(unittest.TestCase):
     """Test Hg VCS support.
     
     Supplementary tests, in addition to doctests.   
-    """ 
+    """
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):

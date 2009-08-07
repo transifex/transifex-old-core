@@ -8,7 +8,7 @@ class POTTestCaseBase(unittest.TestCase):
     """Test POT support.
     
     Supplementary tests, in addition to doctests.   
-    """ 
+    """
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
