@@ -51,17 +51,22 @@ setup(
     setup_requires = [
         "Django >= 1.0",
         "Pygments >= 0.9",
-        "Sphinx >= 0.5",
+        "Sphinx >= 0.4.2",
     ],
     install_requires = [
         "Django >= 1.0",
+        "urlgrabber",
+        "httplib2",
+        "polib",
         "Pygments >= 0.9",
+#        "PIL",
         "contact_form >= 0.3", # hg 97559a887345 or newer
-        "django-authopenid == 0.9.6",
-        "django-evolution",
         "django-notification >= 0.1.2",
         "django-pagination >= 1.0.5",
         "tagging >= 0.3_pre",
+        "django-authority",
+        "django-piston",
+        "South",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
