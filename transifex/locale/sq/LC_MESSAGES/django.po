@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-07 17:40+0000\n"
+"POT-Creation-Date: 2009-08-07 16:12+0000\n"
 "PO-Revision-Date: 2008-09-29 02:07+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <besnik@programeshqip.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:51
 msgid "log entry"
 msgstr ""
 
-#: actionlog/models.py:51
+#: actionlog/models.py:52
 msgid "log entries"
 msgstr ""
 
@@ -46,39 +46,44 @@ msgstr ""
 msgid "No history recorded yet."
 msgstr ""
 
-#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
-#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:26
+#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Emër"
 
-#: codebases/models.py:35
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Root"
 msgstr "/Z_vogëlo"
 
-#: codebases/models.py:36
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr ""
 
-#: codebases/models.py:37
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Lloj"
 
-#: codebases/models.py:39
+#: codebases/models.py:41
 #, python-format
 msgid "The codebase type (%s)"
 msgstr ""
 
-#: codebases/models.py:42
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr ""
 
-#: codebases/models.py:51
+#: codebases/models.py:53
 #, fuzzy
 msgid "unit"
 msgstr "Dil"
 
-#: codebases/models.py:52
+#: codebases/models.py:54
 msgid "units"
 msgstr ""
 
@@ -102,23 +107,27 @@ msgstr ""
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr ""
 
-#: languages/models.py:29 projects/models.py:86 projects/models.py:195
-#: releases/models.py:25 txcollections/models.py:28
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:15
+#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
+#: txcollections/migrations/0001_initial.py:33
 #, fuzzy
 msgid "Description"
 msgstr "Përshkrim"
 
-#: languages/models.py:30
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 #, fuzzy
 msgid "Code"
 msgstr "Modem"
 
-#: languages/models.py:33
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 #, fuzzy
 msgid "Code aliases"
 msgstr "Aliase"
 
-#: languages/models.py:36
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr ""
 
@@ -126,11 +135,11 @@ msgstr ""
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 
-#: languages/models.py:40
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr ""
 
-#: languages/models.py:42
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr ""
 
@@ -142,421 +151,457 @@ msgstr ""
 msgid "languages"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:26
+#: languages/management/commands/txcreatelanguages.py:26
 msgid "Afrikaans"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:40
+#: languages/management/commands/txcreatelanguages.py:40
 #, fuzzy
 msgid "Amharic"
 msgstr "Automatike"
 
-#: languages/management/commands/create_languages.py:45
+#: languages/management/commands/txcreatelanguages.py:45
 msgid "Arabic"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:52
+#: languages/management/commands/txcreatelanguages.py:52
+msgid "Spanish (Argentinian)"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:59
 msgid "Assamese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:60
+#: languages/management/commands/txcreatelanguages.py:66
+#, fuzzy
+msgid "Asturian"
+msgstr "Austri"
+
+#: languages/management/commands/txcreatelanguages.py:74
 msgid "Azerbaijani"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:67
+#: languages/management/commands/txcreatelanguages.py:81
 #, fuzzy
 msgid "Balochi"
 msgstr "Francë"
 
-#: languages/management/commands/create_languages.py:73
+#: languages/management/commands/txcreatelanguages.py:87
 #, fuzzy
 msgid "Belarusian"
 msgstr "Bullgari"
 
-#: languages/management/commands/create_languages.py:81
+#: languages/management/commands/txcreatelanguages.py:95
 #, fuzzy
 msgid "Bulgarian"
 msgstr "Bullgari"
 
-#: languages/management/commands/create_languages.py:89
+#: languages/management/commands/txcreatelanguages.py:103
 msgid "Bengali"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:97
+#: languages/management/commands/txcreatelanguages.py:111
 msgid "Bengali (India)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:110
+#: languages/management/commands/txcreatelanguages.py:118
+#, fuzzy
+msgid "Tibetan"
+msgstr "Vietnam"
+
+#: languages/management/commands/txcreatelanguages.py:126
 msgid "Bosnian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:118
+#: languages/management/commands/txcreatelanguages.py:134
 msgid "Catalan (Valencian)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:126
+#: languages/management/commands/txcreatelanguages.py:142
 msgid "Czech"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:134
+#: languages/management/commands/txcreatelanguages.py:150
 msgid "Welsh"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:142
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Danish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:150
+#: languages/management/commands/txcreatelanguages.py:166
 #, fuzzy
 msgid "German"
 msgstr "Gjermani"
 
-#: languages/management/commands/create_languages.py:158
+#: languages/management/commands/txcreatelanguages.py:174
 #, fuzzy
 msgid "Swiss German"
 msgstr "Gjermani"
 
-#: languages/management/commands/create_languages.py:166
+#: languages/management/commands/txcreatelanguages.py:182
 msgid "Dzongkha"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:174
+#: languages/management/commands/txcreatelanguages.py:190
 #, fuzzy
 msgid "Greek"
 msgstr "Suedi"
 
-#: languages/management/commands/create_languages.py:181
+#: languages/management/commands/txcreatelanguages.py:197
 msgid "English"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:189
+#: languages/management/commands/txcreatelanguages.py:205
 #, fuzzy
 msgid "English (United Kingdom)"
 msgstr "Mbretëri e Bashkuar"
 
-#: languages/management/commands/create_languages.py:197
+#: languages/management/commands/txcreatelanguages.py:213
 msgid "English (South Africa)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:210
+#: languages/management/commands/txcreatelanguages.py:220
+msgid "Esperanto"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:228
 msgid "Spanish (Castilian)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:218
+#: languages/management/commands/txcreatelanguages.py:236
 msgid "Estonian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:226
+#: languages/management/commands/txcreatelanguages.py:244
 msgid "Basque"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:233
+#: languages/management/commands/txcreatelanguages.py:251
 #, fuzzy
 msgid "Persian"
 msgstr "Palestinë"
 
-#: languages/management/commands/create_languages.py:241
+#: languages/management/commands/txcreatelanguages.py:259
 msgid "Finnish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:255
+#: languages/management/commands/txcreatelanguages.py:273
 #, fuzzy
 msgid "French"
 msgstr "Francë"
 
-#: languages/management/commands/create_languages.py:263
+#: languages/management/commands/txcreatelanguages.py:281
 #, fuzzy
 msgid "Friulian"
 msgstr "Finlandë"
 
-#: languages/management/commands/create_languages.py:271
+#: languages/management/commands/txcreatelanguages.py:289
 msgid "Western Frisian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:279
+#: languages/management/commands/txcreatelanguages.py:297
 msgid "Irish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:287
+#: languages/management/commands/txcreatelanguages.py:305
 msgid "Galician"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:295
+#: languages/management/commands/txcreatelanguages.py:313
 msgid "Gujarati"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:302
+#: languages/management/commands/txcreatelanguages.py:320
 msgid "Hebrew"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:310
+#: languages/management/commands/txcreatelanguages.py:328
 #, fuzzy
 msgid "Hindi"
 msgstr "Indi"
 
-#: languages/management/commands/create_languages.py:318
+#: languages/management/commands/txcreatelanguages.py:336
 #, fuzzy
 msgid "Croatian"
 msgstr "Kroaci"
 
-#: languages/management/commands/create_languages.py:325
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Haitian (Haitian Creole)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:333
+#: languages/management/commands/txcreatelanguages.py:351
 #, fuzzy
 msgid "Hungarian"
 msgstr "Hungari"
 
-#: languages/management/commands/create_languages.py:340
+#: languages/management/commands/txcreatelanguages.py:358
 #, fuzzy
 msgid "Armenian"
 msgstr "Argjentinë"
 
-#: languages/management/commands/create_languages.py:346
+#: languages/management/commands/txcreatelanguages.py:364
 #, fuzzy
 msgid "Indonesian"
 msgstr "Indonezi"
 
-#: languages/management/commands/create_languages.py:353
+#: languages/management/commands/txcreatelanguages.py:371
 msgid "Iloko"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:358
+#: languages/management/commands/txcreatelanguages.py:376
 #, fuzzy
 msgid "Icelandic"
 msgstr "Islandë"
 
-#: languages/management/commands/create_languages.py:366
+#: languages/management/commands/txcreatelanguages.py:384
 #, fuzzy
 msgid "Italian"
 msgstr "Itali"
 
-#: languages/management/commands/create_languages.py:374
+#: languages/management/commands/txcreatelanguages.py:392
 #, fuzzy
 msgid "Japanese"
 msgstr "Japoni"
 
-#: languages/management/commands/create_languages.py:382
+#: languages/management/commands/txcreatelanguages.py:400
 #, fuzzy
 msgid "Georgian"
 msgstr "Gjermani"
 
-#: languages/management/commands/create_languages.py:395
+#: languages/management/commands/txcreatelanguages.py:413
 #, fuzzy
 msgid "Kannada"
 msgstr "Kanada"
 
-#: languages/management/commands/create_languages.py:401
+#: languages/management/commands/txcreatelanguages.py:419
 #, fuzzy
 msgid "Korean"
 msgstr "Irlandë"
 
-#: languages/management/commands/create_languages.py:409
+#: languages/management/commands/txcreatelanguages.py:426
+msgid "Kashmiri"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:434
 msgid "Kurdish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:422
+#: languages/management/commands/txcreatelanguages.py:441
+msgid "Kirgyz"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:448
+#, fuzzy
+msgid "Latin"
+msgstr "Taivan"
+
+#: languages/management/commands/txcreatelanguages.py:461
 #, fuzzy
 msgid "Lao"
 msgstr "E ulët"
 
-#: languages/management/commands/create_languages.py:428
+#: languages/management/commands/txcreatelanguages.py:467
 #, fuzzy
 msgid "Lithuanian"
 msgstr "Lituani"
 
-#: languages/management/commands/create_languages.py:436
+#: languages/management/commands/txcreatelanguages.py:475
 #, fuzzy
 msgid "Latvian"
 msgstr "Taivan"
 
-#: languages/management/commands/create_languages.py:443
+#: languages/management/commands/txcreatelanguages.py:482
 msgid "Maithili"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:448
+#: languages/management/commands/txcreatelanguages.py:487
 #, fuzzy
 msgid "Macedonian"
 msgstr "Maqedoni"
 
-#: languages/management/commands/create_languages.py:453
+#: languages/management/commands/txcreatelanguages.py:492
 #, fuzzy
 msgid "Malayalam"
 msgstr "Malajzi"
 
-#: languages/management/commands/create_languages.py:466
+#: languages/management/commands/txcreatelanguages.py:505
 msgid "Mongolian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:473
+#: languages/management/commands/txcreatelanguages.py:512
 msgid "Marathi"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:480
+#: languages/management/commands/txcreatelanguages.py:519
 #, fuzzy
 msgid "Malay"
 msgstr "Maltë"
 
-#: languages/management/commands/create_languages.py:488
+#: languages/management/commands/txcreatelanguages.py:527
 #, fuzzy
 msgid "Maltese"
 msgstr "Maltë"
 
-#: languages/management/commands/create_languages.py:495
+#: languages/management/commands/txcreatelanguages.py:534
 msgid "Burmese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:506
+#: languages/management/commands/txcreatelanguages.py:545
 msgid "Norwegian Bokmål"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:513
+#: languages/management/commands/txcreatelanguages.py:552
 msgid "Nepali"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:521
+#: languages/management/commands/txcreatelanguages.py:560
 msgid "Dutch (Flemish)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:529
+#: languages/management/commands/txcreatelanguages.py:568
 msgid "Norwegian Nynorsk"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:536
+#: languages/management/commands/txcreatelanguages.py:575
 #, fuzzy
 msgid "Norwegian"
 msgstr "Norvegji"
 
-#: languages/management/commands/create_languages.py:542
+#: languages/management/commands/txcreatelanguages.py:581
 msgid "Northern Sotho"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:550
+#: languages/management/commands/txcreatelanguages.py:589
 msgid "Oriya"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:557
+#: languages/management/commands/txcreatelanguages.py:596
 msgid "Panjabi (Punjabi)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:570
+#: languages/management/commands/txcreatelanguages.py:609
 msgid "Polish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:586
+#: languages/management/commands/txcreatelanguages.py:625
 #, fuzzy
 msgid "Portuguese"
 msgstr "Portugali"
 
-#: languages/management/commands/create_languages.py:595
+#: languages/management/commands/txcreatelanguages.py:634
 msgid "Brazilian Portuguese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:603
+#: languages/management/commands/txcreatelanguages.py:642
 #, fuzzy
 msgid "Romanian"
 msgstr "Rumani"
 
-#: languages/management/commands/create_languages.py:611
+#: languages/management/commands/txcreatelanguages.py:650
 #, fuzzy
 msgid "Russian"
 msgstr "Rusi"
 
-#: languages/management/commands/create_languages.py:618
+#: languages/management/commands/txcreatelanguages.py:657
 msgid "Sinhala"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:624
+#: languages/management/commands/txcreatelanguages.py:663
 #, fuzzy
 msgid "Slovak"
 msgstr "Slovaki"
 
-#: languages/management/commands/create_languages.py:632
+#: languages/management/commands/txcreatelanguages.py:671
 #, fuzzy
 msgid "Slovenian"
 msgstr "Slloveni"
 
-#: languages/management/commands/create_languages.py:640
+#: languages/management/commands/txcreatelanguages.py:679
 #, fuzzy
 msgid "Albanian"
 msgstr "Shqipëri"
 
-#: languages/management/commands/create_languages.py:648
+#: languages/management/commands/txcreatelanguages.py:687
 msgid "Serbian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:656
+#: languages/management/commands/txcreatelanguages.py:695
 msgid "Serbian (Latin)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:665
+#: languages/management/commands/txcreatelanguages.py:704
 msgid "Sotho, Southern"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:673
+#: languages/management/commands/txcreatelanguages.py:712
 msgid "Swedish"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:681
+#: languages/management/commands/txcreatelanguages.py:720
 #, fuzzy
 msgid "Tamil"
 msgstr "Tailandë"
 
-#: languages/management/commands/create_languages.py:688
+#: languages/management/commands/txcreatelanguages.py:727
 #, fuzzy
 msgid "Telugu"
 msgstr "Belgjikë"
 
-#: languages/management/commands/create_languages.py:693
+#: languages/management/commands/txcreatelanguages.py:732
 msgid "Tajik"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:698
+#: languages/management/commands/txcreatelanguages.py:737
 #, fuzzy
 msgid "Thai"
 msgstr "Tailandë"
 
-#: languages/management/commands/create_languages.py:703
+#: languages/management/commands/txcreatelanguages.py:742
 msgid "Tagalog"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:715
+#: languages/management/commands/txcreatelanguages.py:754
 #, fuzzy
 msgid "Turkish"
 msgstr "Turqi"
 
-#: languages/management/commands/create_languages.py:722
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Urdu"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:728
+#: languages/management/commands/txcreatelanguages.py:767
 #, fuzzy
 msgid "Ukrainian"
 msgstr "Ukrainë"
 
-#: languages/management/commands/create_languages.py:742
+#: languages/management/commands/txcreatelanguages.py:781
 msgid "Vietnamese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:749
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Wolof"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:764
+#: languages/management/commands/txcreatelanguages.py:801
+#, fuzzy
+msgid "Xhosa"
+msgstr "_Orë"
+
+#: languages/management/commands/txcreatelanguages.py:810
 msgid "Chinese (China)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:774
+#: languages/management/commands/txcreatelanguages.py:820
 #, fuzzy
 msgid "Chinese (Hong Kong)"
 msgstr "Hong Kong"
 
-#: languages/management/commands/create_languages.py:784
+#: languages/management/commands/txcreatelanguages.py:830
 msgid "Chinese (Taiwan)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:792
+#: languages/management/commands/txcreatelanguages.py:838
 msgid "Zulu"
 msgstr ""
 
@@ -566,9 +611,9 @@ msgid "Translated:"
 msgstr "Nivel Ngjitjeje"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
@@ -602,286 +647,329 @@ msgstr ""
 msgid "Latest components in project %s."
 msgstr ""
 
-#: projects/forms.py:17 projects/models.py:208
+#: projects/forms.py:29 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 
-#: projects/forms.py:40 projects/models.py:213
+#: projects/forms.py:52 projects/models.py:218
+#: projects/migrations/0002_release_06_07.py:15
 #, fuzzy
 msgid "Submit to"
 msgstr "Dil"
 
-#: projects/forms.py:41
+#: projects/forms.py:53
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
 
-#: projects/models.py:81 projects/models.py:190 releases/models.py:20
-#: txcollections/models.py:23
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:14
+#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
+#: txcollections/migrations/0001_initial.py:32
+#: txcollections/migrations/0002_release_06_07.py:11
+#: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:82 projects/models.py:191 releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr ""
 
-#: projects/models.py:87 projects/models.py:196
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr ""
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:27
-#: txcollections/models.py:30
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:25
+#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
+#: txcollections/migrations/0001_initial.py:42
 #, fuzzy
 msgid "Long description"
 msgstr "Përshkrim"
 
-#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr ""
 
-#: projects/models.py:91 txcollections/models.py:32
+#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 #, fuzzy
 msgid "Homepage"
 msgstr "Emërstrehë:"
 
-#: projects/models.py:92
+#: projects/models.py:94 projects/migrations/0001_initial.py:13
 msgid "Feed"
 msgstr ""
 
-#: projects/models.py:93
+#: projects/models.py:95
 msgid "An RSS feed with updates on the project."
 msgstr ""
 
-#: projects/models.py:94
+#: projects/models.py:96 projects/migrations/0001_initial.py:22
 msgid "Bug tracker"
 msgstr ""
 
-#: projects/models.py:95
+#: projects/models.py:97
 msgid ""
 "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr ""
 
-#: projects/models.py:98 projects/models.py:216 releases/models.py:41
-#: txcollections/models.py:33
+#: projects/models.py:99
+#: projects/migrations/0003_add_anyone_submit_field.py:12
+msgid "Anyone can submit"
+msgstr ""
+
+#: projects/models.py:101
+msgid "Does anyone can submit translations to this project?"
+msgstr ""
+
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:23
+#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
+#: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr ""
 
-#: projects/models.py:99 projects/models.py:217 releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:100 projects/models.py:218 releases/models.py:43
-#: txcollections/models.py:35
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
+#: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr ""
 
-#: projects/models.py:101 projects/models.py:219 releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
 
-#: projects/models.py:105
+#: projects/models.py:110 projects/migrations/0001_initial.py:18
 #, fuzzy
 msgid "Tags"
 msgstr "Nivel Ngjitjeje"
 
-#: projects/models.py:110 templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 #, fuzzy
 msgid "Collections"
 msgstr "Lidhje CTC"
 
-#: projects/models.py:112
+#: projects/models.py:117
 msgid "Maintainers"
 msgstr ""
 
-#: projects/models.py:116 projects/models.py:228 releases/models.py:49
-#: txcollections/models.py:43
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:17
+#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
+#: txcollections/migrations/0001_initial.py:35
 #, fuzzy
 msgid "HTML Description"
 msgstr "Përshkrim"
 
-#: projects/models.py:118 projects/models.py:230 releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 #, fuzzy
 msgid "Description in HTML."
 msgstr "Përshkrim"
 
-#: projects/models.py:124
+#: projects/models.py:129
 #, python-format
 msgid "<Project: %s>"
 msgstr ""
 
-#: projects/models.py:127
+#: projects/models.py:132
 msgid "project"
 msgstr ""
 
-#: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/txcollections/collection_detail.html:93
+#: projects/models.py:133 templates/projects/project_list.html:18
+#: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr ""
 
-#: projects/models.py:200
+#: projects/models.py:205 projects/migrations/0001_initial.py:47
 #, fuzzy
 msgid "Source language"
 msgstr "Rrjet Vendor"
 
-#: projects/models.py:201
+#: projects/models.py:206
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr ""
 
-#: projects/models.py:203
+#: projects/models.py:208 projects/migrations/0001_initial.py:37
 msgid "I18n type"
 msgstr ""
 
-#: projects/models.py:205
+#: projects/models.py:210
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr ""
 
-#: projects/models.py:207
+#: projects/models.py:212 projects/migrations/0001_initial.py:38
 msgid "File filter"
 msgstr ""
 
-#: projects/models.py:210
+#: projects/models.py:215 projects/migrations/0001_initial.py:46
 #, fuzzy
 msgid "Allows submission"
 msgstr "Dil"
 
-#: projects/models.py:212
+#: projects/models.py:217
 msgid "Does this module repository allow write access?"
 msgstr ""
 
-#: projects/models.py:222
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr ""
 
-#: projects/models.py:223
+#: projects/models.py:228
 msgid "Should statistics be calculated for this component?"
 msgstr ""
 
-#: projects/models.py:233
+#: projects/models.py:238 projects/migrations/0001_initial.py:41
 #, fuzzy
 msgid "Project"
 msgstr "Importo Listë Sametime..."
 
-#: projects/models.py:234
+#: projects/models.py:239 projects/migrations/0001_initial.py:32
 #, fuzzy
 msgid "Unit"
 msgstr "Dil"
 
-#: projects/models.py:238
+#: projects/models.py:243
 #, fuzzy
 msgid "Releases"
 msgstr "Aliase"
 
-#: projects/models.py:258
+#: projects/models.py:263
 #, fuzzy, python-format
 msgid "<Component: %s>"
 msgstr "Përmbajtje"
 
-#: projects/models.py:262
+#: projects/models.py:267
 msgid "component"
 msgstr ""
 
-#: projects/models.py:263 templates/projects/component_list.html:15
+#: projects/models.py:268 templates/projects/component_list.html:17
 #, fuzzy
 msgid "components"
 msgstr "Përmbajtje"
 
-#: projects/views.py:117 projects/views.py:332 txcollections/views.py:121
+#: projects/permissions.py:17
+#, fuzzy
+msgid "Is allowed to maintain this project"
+msgstr "Po kalohet te profili %s"
+
+#: projects/permissions.py:26
+msgid "Is allowed to submit file to this project"
+msgstr ""
+
+#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr ""
 
-#: projects/views.py:136 projects/views.py:623
+#: projects/views.py:286 projects/views.py:841
 msgid "Must use POST to activate"
 msgstr ""
 
-#: projects/views.py:139 projects/views.py:626
+#: projects/views.py:289 projects/views.py:844
 #, fuzzy
 msgid "Notifation is not enabled"
 msgstr "Varg _gatitjeje modemi:"
 
-#: projects/views.py:152
+#: projects/views.py:302
 #, fuzzy
 msgid "Watch this project"
 msgstr "Përzgjidhni profil"
 
-#: projects/views.py:165
+#: projects/views.py:315
 #, fuzzy
 msgid "Stop wathing this project"
 msgstr "Po kalohet te profili %s"
 
-#: projects/views.py:364
+#: projects/views.py:537
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:450
+#: projects/views.py:544
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+
+#: projects/views.py:655
 msgid "This component does  not allow write access."
 msgstr ""
 
-#: projects/views.py:458
+#: projects/views.py:663
 msgid "Please select a file from your system to be uploaded."
 msgstr ""
 
-#: projects/views.py:467
+#: projects/views.py:672
 msgid "Please enter a target to upload the file."
 msgstr ""
 
-#: projects/views.py:473
+#: projects/views.py:678
 msgid "Please enter only ONE target to upload the file."
 msgstr ""
 
-#: projects/views.py:484
+#: projects/views.py:689
 msgid "The target file does not match with the component file filter"
 msgstr ""
 
-#: projects/views.py:492
+#: projects/views.py:697
 msgid "Enter a commit message"
 msgstr ""
 
-#: projects/views.py:550 webtrans/views.py:120
+#: projects/views.py:755 webtrans/views.py:124
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr ""
 
-#: projects/views.py:565
+#: projects/views.py:770
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
 msgstr ""
 
-#: projects/views.py:574
+#: projects/views.py:779
 msgid "Sorry, your file could not be sent because of an error."
 msgstr ""
 
-#: projects/views.py:578 projects/views.py:608
+#: projects/views.py:783 projects/views.py:821
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:597
+#: projects/views.py:810
 msgid "Lock removed."
 msgstr ""
 
-#: projects/views.py:600
+#: projects/views.py:813
 msgid "Error: Only the owner of a lock can remove it."
 msgstr ""
 
-#: projects/views.py:604
+#: projects/views.py:817
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 
@@ -893,7 +981,7 @@ msgstr ""
 msgid "Use Markdown syntax."
 msgstr ""
 
-#: releases/models.py:31
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Release date"
 msgstr "Aliase:"
@@ -912,7 +1000,7 @@ msgid ""
 "modified which affect translations."
 msgstr ""
 
-#: releases/models.py:36
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr ""
 
@@ -928,7 +1016,7 @@ msgstr ""
 msgid "release"
 msgstr "Greqi"
 
-#: releases/models.py:55 templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 #, fuzzy
 msgid "releases"
@@ -943,24 +1031,16 @@ msgstr ""
 msgid "Stop watching it"
 msgstr "Po kalohet te profili %s"
 
-#: repowatch/models.py:24
+#: repowatch/models.py:25
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr ""
 
-#: repowatch/models.py:88
-msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
-
-#: repowatch/models.py:90
-msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
-
-#: repowatch/models.py:141
+#: repowatch/models.py:94
 msgid "watch"
 msgstr ""
 
-#: repowatch/models.py:142
+#: repowatch/models.py:95
 #, fuzzy
 msgid "watches"
 msgstr "Francë"
@@ -974,11 +1054,11 @@ msgstr "ok"
 msgid "Locks"
 msgstr ""
 
-#: tarball/models.py:31
+#: tarball/models.py:33
 msgid "tarball"
 msgstr ""
 
-#: tarball/models.py:32
+#: tarball/models.py:34
 msgid "tarballs"
 msgstr ""
 
@@ -1031,7 +1111,8 @@ msgstr ""
 msgid "Welcome to Transifex"
 msgstr "Nivel Ngjitjeje"
 
-#: templates/base-sample.html:8 templates/flatpages/default.html:5
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/flatpages/default.html:5
 #, fuzzy
 msgid "Transifex"
 msgstr "Nivel Ngjitjeje"
@@ -1093,7 +1174,7 @@ msgid "Sign in"
 msgstr ""
 
 #: templates/base-sample.html:53
-#: templates/userprofile/account/includes/registration_form.html:33
+#: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr ""
 
@@ -1124,7 +1205,7 @@ msgstr ""
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:57
+#: templates/userprofile/avatar/choose.html:66
 #, fuzzy
 msgid "Search"
 msgstr "Shërbim"
@@ -1152,17 +1233,21 @@ msgid ""
 "No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr ""
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
 msgstr ""
 
-#: templates/search.html:61
+#: templates/search.html:62
 #, fuzzy
 msgid "add it"
 msgstr "_Përpunoni"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
+msgstr ""
+
+#: templates/admin/base_site.html:9
+msgid "Transifex administration"
 msgstr ""
 
 #: templates/authopenid/base_profile.html:4
@@ -1214,8 +1299,6 @@ msgstr ""
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
-#: templates/userprofile/account/login.html:26
-#: templates/userprofile/account/includes/registration_form.html:17
 #, fuzzy
 msgid "Password"
 msgstr "_Fjalëkalim:"
@@ -1251,7 +1334,8 @@ msgstr ""
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
-#: templates/userprofile/profile/overview.html:92
+#: templates/userprofile/account/password_reset_confirm.html:31
+#: templates/userprofile/profile/overview.html:88
 msgid "Change password"
 msgstr ""
 
@@ -1266,8 +1350,6 @@ msgid "Current password"
 msgstr "Fjalëkalim _vetjak:"
 
 #: templates/authopenid/changepw.html:21
-#: templates/userprofile/account/password_change.html:30
-#: templates/userprofile/account/password_reset_confirm.html:26
 #, fuzzy
 msgid "New password"
 msgstr "_Fjalëkalim:"
@@ -1313,8 +1395,6 @@ msgstr ""
 
 #: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
-#: templates/userprofile/account/login.html:20
-#: templates/userprofile/account/includes/registration_form.html:5
 #: templates/userprofile/profile/public.html:33
 #, fuzzy
 msgid "Username"
@@ -1365,7 +1445,7 @@ msgid "Delete account permanently"
 msgstr ""
 
 #: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:41
+#: templates/userprofile/profile/overview.html:39
 #, fuzzy
 msgid "Username:"
 msgstr "Emërstrehë:"
@@ -1379,15 +1459,14 @@ msgid "Sign in with OpenID"
 msgstr ""
 
 #: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:44
+#: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
 msgstr ""
 
 #: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:4
-#: templates/userprofile/account/password_reset.html:20
-#: templates/userprofile/account/password_reset_complete.html:19
-#: templates/userprofile/account/password_reset_confirm.html:55
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:22
 #, fuzzy
 msgid "Password reset"
 msgstr "_Fjalëkalim:"
@@ -1440,7 +1519,7 @@ msgid "Change openid associated to your account"
 msgstr ""
 
 #: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:106
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr ""
 
@@ -1454,7 +1533,8 @@ msgstr ""
 
 #: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:36
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 #, fuzzy
 msgid "Login"
 msgstr "Emër hyrjeje:"
@@ -1549,13 +1629,13 @@ msgstr ""
 msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/languages/language_detail.html:19
+#: templates/languages/language_detail.html:18
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
 msgstr ""
 
-#: templates/languages/language_detail.html:25
+#: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
 msgid ""
@@ -1580,9 +1660,8 @@ msgid "No languages registered yet. :-("
 msgstr ""
 
 #: templates/languages/language_list.html:35
-#, python-format
 msgid ""
-"Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 
 #: templates/languages/language_release.html:33
@@ -1661,7 +1740,7 @@ msgid "Account"
 msgstr "Rregullim Llogarie"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:115
+#: templates/projects/component_detail.html:118
 #, fuzzy
 msgid "Note"
 msgstr "Asnjë"
@@ -1677,8 +1756,8 @@ msgid "Notification Type"
 msgstr ""
 
 #: templates/notification/notices.html:85
-#: templates/userprofile/account/password_change.html:46
-#: templates/userprofile/account/password_reset_confirm.html:42
+#: templates/userprofile/account/email_validation.html:31
+#: templates/userprofile/account/password_change.html:29
 #, fuzzy
 msgid "Change"
 msgstr "Kanal:"
@@ -1781,125 +1860,133 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr ""
 
-#: templates/projects/component_detail.html:23
+#: templates/projects/component_detail.html:25
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
 msgstr ""
 
-#: templates/projects/component_detail.html:25
+#: templates/projects/component_detail.html:27
 msgid ""
 "This component does not support local storing of submitted files. The "
 "submitted files will be sent to the maintainers\\' emails and the statistics "
 "will reflect the change once the files are committed upstream."
 msgstr ""
 
-#: templates/projects/component_detail.html:29
+#: templates/projects/component_detail.html:31
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:73
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:76
+#: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 #, fuzzy
 msgid "Edit"
 msgstr "_Përpunoni"
 
-#: templates/projects/component_detail.html:82
+#: templates/projects/component_detail.html:85
 msgid "Repository:"
 msgstr ""
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "Link to a web front-end to the source"
 msgstr ""
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "web"
 msgstr ""
 
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:95
 #, fuzzy
 msgid "Branch:"
 msgstr "Francë"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:100
 msgid "File filter:"
 msgstr ""
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:106
 #, fuzzy
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Aliase:"
 msgstr[1] "Aliase:"
 
-#: templates/projects/component_detail.html:111
+#: templates/projects/component_detail.html:114
 #, fuzzy
 msgid "Allows submissions:"
 msgstr "Dil"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:128
 #, fuzzy
 msgid "Translation files"
 msgstr "Nivel Ngjitjeje"
 
-#: templates/projects/component_detail.html:130
+#: templates/projects/component_detail.html:133
 #, fuzzy
 msgid "Source file:"
 msgstr "Rrjet Vendor"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:140
 msgid "Statistics last updated:"
 msgstr ""
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:142
 msgid "ago"
 msgstr ""
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:143
 msgid "Component not yet pulled from source repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh cache"
 msgstr ""
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Clear cache"
 msgstr ""
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "warning"
 msgstr ""
 
-#: templates/projects/component_detail.html:166
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:163
+msgid "Become a translator:"
+msgstr ""
+
+#: templates/projects/component_detail.html:167
+msgid "Your request is pending for approval."
+msgstr ""
+
+#: templates/projects/component_detail.html:190
+#: templates/projects/project_detail.html:116
 msgid "History"
 msgstr ""
 
-#: templates/projects/component_detail.html:170
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:194
+#: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr ""
 
-#: templates/projects/component_detail.html:186
+#: templates/projects/component_detail.html:211
 msgid "Delete component"
 msgstr ""
 
@@ -1935,41 +2022,41 @@ msgstr "Dil"
 msgid "Save component"
 msgstr "Përmbajtje"
 
-#: templates/projects/component_lang_detail.html:28
+#: templates/projects/component_lang_detail.html:29
 #, fuzzy
 msgid "translation files"
 msgstr "Nivel Ngjitjeje"
 
-#: templates/projects/component_list.html:9
+#: templates/projects/component_list.html:11
 #: templates/txcollections/collection_detail.html:62
 #, fuzzy
 msgid "Add"
 msgstr "_Shtoni..."
 
-#: templates/projects/component_list.html:14
+#: templates/projects/component_list.html:16
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/component_list.html:25
+#: templates/projects/component_list.html:27
 #, fuzzy
 msgid "edit"
 msgstr "_Përpunoni"
 
-#: templates/projects/component_list.html:28
+#: templates/projects/component_list.html:30
 msgid "del"
 msgstr ""
 
-#: templates/projects/component_list.html:44
+#: templates/projects/component_list.html:46
 msgid "No components are registered for this project yet."
 msgstr ""
 
-#: templates/projects/component_list.html:45
+#: templates/projects/component_list.html:48
 msgid "Add one!"
 msgstr ""
 
-#: templates/projects/component_list.html:49
+#: templates/projects/component_list.html:54
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -2044,7 +2131,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr ""
 
 #: templates/projects/project_confirm_delete.html:8
-#: templates/userprofile/avatar/choose.html:86
+#: templates/userprofile/avatar/choose.html:42
 #, fuzzy
 msgid "Delete"
 msgstr "_Fshije"
@@ -2062,97 +2149,123 @@ msgid ""
 "(project_name)s'?\n"
 msgstr ""
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:42
+#: templates/projects/project_form_base.html:87
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr ""
 
-#: templates/projects/project_detail.html:47
+#: templates/projects/project_detail.html:49
 #, fuzzy
 msgid "Watch:"
 msgstr "Francë"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 #, fuzzy
 msgid "Homepage:"
 msgstr "Emërstrehë:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_detail.html:61
+#: templates/projects/project_detail.html:63
 #, fuzzy
 msgid "Bug tracker:"
 msgstr "Nivel Ngjitjeje"
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:69
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr ""
 
-#: templates/projects/project_detail.html:76
+#: templates/projects/project_detail.html:78
 #, fuzzy
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Lidhje CTC"
 msgstr[1] "Lidhje CTC"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:88
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:102
 msgid "External links:"
 msgstr ""
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:104
 msgid "Screenshots"
 msgstr ""
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:139
 #, fuzzy
 msgid "Delete project"
 msgstr "Përzgjidhni profil"
 
-#: templates/projects/project_form.html:6
-#: templates/projects/project_form.html:11
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:13
+#, fuzzy
+msgid "Save project"
+msgstr "Përzgjidhni profil"
+
+#: templates/projects/project_form_base.html:8
+#: templates/projects/project_form_base.html:13
+#: templates/projects/project_form_base.html:71
 msgid "Add a project"
 msgstr ""
 
-#: templates/projects/project_form.html:7
+#: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_form.html:12
+#: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
 msgstr ""
 
-#: templates/projects/project_form.html:20
+#: templates/projects/project_form_base.html:27
+msgid "Access control will be enabled once the project is created"
+msgstr ""
+
+#: templates/projects/project_form_base.html:74
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr ""
 
-#: templates/projects/project_form.html:36
-#, fuzzy
-msgid "Save project"
-msgstr "Përzgjidhni profil"
+#: templates/projects/project_form_base.html:88
+msgid "Access Control"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:10
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:12
+msgid "Requests for access to submit files"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:51
+msgid "Pending requests:"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:63
+msgid "Users with guaranteed access to submit files:"
+msgstr ""
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2182,12 +2295,12 @@ msgstr "Shto Lloj të ri Pajisjeje"
 msgid "No projects registered yet. :-("
 msgstr ""
 
-#: templates/projects/project_list.html:56
+#: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr ""
 
-#: templates/projects/project_list.html:64
+#: templates/projects/project_list.html:67
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2238,23 +2351,23 @@ msgstr ""
 msgid "Homepage for %(collection_name)s"
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:92
+#: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:97
+#: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:107
+#: templates/txcollections/collection_detail.html:108
 #, python-format
 msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:119
+#: templates/txcollections/collection_detail.html:120
 #, fuzzy
 msgid "Delete collection"
 msgstr "Lidhje Ethernet"
@@ -2327,12 +2440,12 @@ msgstr[1] ""
 msgid "No collections registered yet. :-("
 msgstr ""
 
-#: templates/txcollections/collection_list.html:55
+#: templates/txcollections/collection_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
 msgstr ""
 
-#: templates/txcollections/collection_list.html:63
+#: templates/txcollections/collection_list.html:66
 #, python-format
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
@@ -2416,13 +2529,40 @@ msgstr ""
 msgid "Save release"
 msgstr "Greqi"
 
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with guarantied access to submit files:"
+msgstr ""
+
+#: templates/txpermissions/permission_delete_form.html:5
+msgid "Revoke permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:13
+msgid "Grant permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:15
+msgid "Request permission"
+msgstr ""
+
+#: templates/txpermissions/permission_request_approve_form.html:5
+msgid "Approve request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:6
+msgid "Withdraw request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:8
+msgid "Deny request"
+msgstr ""
+
 #: templates/userprofile/menu.html:5
 #, fuzzy
 msgid "Overview"
 msgstr "_Mundësues"
 
 #: templates/userprofile/menu.html:6
-#: templates/userprofile/profile/personal.html:36
 #, fuzzy
 msgid "Personal information"
 msgstr "Formësim Modemi"
@@ -2432,46 +2572,38 @@ msgid "Avatar"
 msgstr ""
 
 #: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:38
 #, fuzzy
 msgid "Location"
 msgstr "Veprues"
 
 #: templates/userprofile/menu.html:9
-#: templates/userprofile/profile/delete.html:22
+#: templates/userprofile/profile/delete.html:12
 #, fuzzy
 msgid "Remove profile"
 msgstr "Profil i Ri"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:5
 #, fuzzy
 msgid "E-mail change"
 msgstr "Nofkat u ndryshuan"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation.html:40
-#: templates/userprofile/account/email_validation_processed.html:20
+#: templates/userprofile/account/email_validation.html:5
+#: templates/userprofile/account/email_validation_processed.html:12
 msgid "Add e-mail"
 msgstr ""
 
-#: templates/userprofile/account/email_validation.html:24
+#: templates/userprofile/account/email_validation.html:22
 #, fuzzy
-msgid "New e-mail address"
+msgid "Add a new e-mail address"
 msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
 
-#: templates/userprofile/account/email_validation.html:34
-#, fuzzy
-msgid "Send confirmation"
-msgstr "Po ruhet formësimi..."
-
-#: templates/userprofile/account/email_validation.html:41
-#: templates/userprofile/account/email_validation_processed.html:21
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation_processed.html:13
 msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
-"confirmation"
+"confirmation."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:4
@@ -2482,65 +2614,56 @@ msgstr ""
 msgid "E-mail change unsuccessful"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:14
-msgid "E-mail address validated successfully"
-msgstr ""
-
-#: templates/userprofile/account/email_validation_done.html:16
-msgid ""
-"The key you received via e-mail is no longer valid. Please try the e-mail "
-"validation process again"
-msgstr ""
-
-#: templates/userprofile/account/email_validation_done.html:23
-#: templates/userprofile/account/email_validation_reset_response.html:22
+#: templates/userprofile/account/email_validation_done.html:12
+#: templates/userprofile/account/email_validation_reset_response.html:13
 msgid "E-mail validation process"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "You can manage the e-mail validation process from the"
+#: templates/userprofile/account/email_validation_done.html:13
+#, python-format
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "overview page"
+#: templates/userprofile/account/email_validation_done.html:17
+msgid "E-mail address validated successfully."
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:19
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_processed.html:4
-#: templates/userprofile/account/email_validation_processed.html:13
+#: templates/userprofile/account/email_validation_processed.html:16
 msgid "E-mail change processed"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_processed.html:14
+#: templates/userprofile/account/email_validation_processed.html:17
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
 "Please access to your e-mail and complete this process following the "
-"instructions specified in the e-mail body"
+"instructions specified in the e-mail body."
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset.html:4
-#: templates/userprofile/account/email_validation_reset.html:19
-#: templates/userprofile/account/email_validation_reset.html:36
+#: templates/userprofile/account/email_validation_reset.html:5
+#: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset.html:20
-#, fuzzy
-msgid "Insert your e-mail address"
-msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
-
-#: templates/userprofile/account/email_validation_reset.html:30
-#, fuzzy
-msgid "Resend confirmation"
-msgstr "Po ngarkohet formësimi"
-
-#: templates/userprofile/account/email_validation_reset.html:37
+#: templates/userprofile/account/email_validation_reset.html:19
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "login. Insert your registered e-mail address to receive the validation e-"
-"mail again"
+"mail again."
 msgstr ""
+
+#: templates/userprofile/account/email_validation_reset.html:26
+#, fuzzy
+msgid "Resend confirmation"
+msgstr "Po ngarkohet formësimi"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2551,74 +2674,72 @@ msgid "Your user account was already active"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
-msgid "We've e-mailed you the e-mail validation link"
+msgid "You can manage the e-mail validation process from the"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset_response.html:16
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "overview page"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:17
+msgid "We've e-mailed you the e-mail validation link."
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
 msgstr ""
 
-#: templates/userprofile/account/login.html:4
-#: templates/userprofile/account/login.html:19
+#: templates/userprofile/account/login.html:5
 msgid "User login"
 msgstr ""
 
-#: templates/userprofile/account/login.html:42
+#: templates/userprofile/account/login.html:19
+msgid "Enter your username and password to login."
+msgstr ""
+
+#: templates/userprofile/account/login.html:36
 #, fuzzy
 msgid "Utilities"
 msgstr "Filipine"
 
-#: templates/userprofile/account/login.html:46
-#: templates/userprofile/profile/overview.html:95
+#: templates/userprofile/account/login.html:40
+#: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
 msgstr ""
 
-#: templates/userprofile/account/login.html:48
+#: templates/userprofile/account/login.html:42
 msgid "Sign up!"
 msgstr ""
 
-#: templates/userprofile/account/logout.html:4
-#: templates/userprofile/account/logout.html:9
+#: templates/userprofile/account/logout.html:5
+#: templates/userprofile/account/logout.html:10
 msgid "Logged out"
 msgstr ""
 
-#: templates/userprofile/account/logout.html:10
-msgid "You've been logged out"
+#: templates/userprofile/account/logout.html:11
+msgid "You've been logged out."
 msgstr ""
 
-#: templates/userprofile/account/logout.html:10
+#: templates/userprofile/account/logout.html:11
 msgid "Log in again"
 msgstr ""
 
-#: templates/userprofile/account/password_change.html:4
-#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:4
 #, fuzzy
 msgid "Password change for"
 msgstr "_Fjalëkalim:"
 
-#: templates/userprofile/account/password_change.html:24
-#, fuzzy
-msgid "Old password"
-msgstr "_Fjalëkalim:"
-
-#: templates/userprofile/account/password_change.html:36
-#: templates/userprofile/account/password_reset_confirm.html:32
-#, fuzzy
-msgid "Confirm password"
-msgstr "Fjalëkalim _vetjak:"
-
-#: templates/userprofile/account/password_change.html:52
-#: templates/userprofile/account/password_change_done.html:19
+#: templates/userprofile/account/password_change.html:22
+#: templates/userprofile/account/password_change_done.html:12
 #, fuzzy
 msgid "Password change"
 msgstr "_Fjalëkalim:"
 
-#: templates/userprofile/account/password_change.html:53
-#: templates/userprofile/account/password_change_done.html:20
+#: templates/userprofile/account/password_change.html:23
 msgid ""
-"Password change utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/userprofile/account/password_change_done.html:4
@@ -2627,9 +2748,10 @@ msgstr ""
 msgid "Password change successful"
 msgstr "_Fjalëkalim:"
 
-#: templates/userprofile/account/password_change_done.html:13
-msgid "The password has been changed successfully"
-msgstr ""
+#: templates/userprofile/account/password_change_done.html:14
+#, fuzzy
+msgid "The password has been changed successfully."
+msgstr "_Fjalëkalim:"
 
 #: templates/userprofile/account/password_expired.html:4
 #, fuzzy
@@ -2638,49 +2760,37 @@ msgstr "_Fjalëkalim:"
 
 #: templates/userprofile/account/password_expired.html:9
 msgid ""
-"The password key you're trying to use is expired. Please, request a new one"
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 
-#: templates/userprofile/account/password_reset.html:21
-#, fuzzy
-msgid "E-mail address"
-msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
-
-#: templates/userprofile/account/password_reset.html:31
-#, fuzzy
-msgid "Reset my password"
-msgstr "_Fjalëkalim:"
-
-#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 #, fuzzy
 msgid "Password reset form"
 msgstr "_Fjalëkalim:"
 
-#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
 msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
-"password and e-mail the new one to you"
+"password and e-mail the new one to you."
 msgstr ""
 
-#: templates/userprofile/account/password_reset_complete.html:13
+#: templates/userprofile/account/password_reset.html:27
+#, fuzzy
+msgid "Reset my password"
+msgstr "_Fjalëkalim:"
+
+#: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 
-#: templates/userprofile/account/password_reset_complete.html:20
-#: templates/userprofile/account/password_reset_confirm.html:56
-msgid ""
-"Password reset utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
-msgstr ""
-
-#: templates/userprofile/account/password_reset_confirm.html:47
+#: templates/userprofile/account/password_reset_confirm.html:37
 #, fuzzy
 msgid "Password reset unsuccessful"
 msgstr "_Fjalëkalim:"
 
-#: templates/userprofile/account/password_reset_confirm.html:48
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -2695,94 +2805,81 @@ msgstr "_Fjalëkalim:"
 #: templates/userprofile/account/password_reset_done.html:10
 msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
-"receiving it shortly"
+"receiving it shortly."
 msgstr ""
 
 #: templates/userprofile/account/registration.html:4
-#: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
 msgstr ""
 
-#: templates/userprofile/account/registration.html:22
-#: templates/userprofile/account/registration_done.html:19
-msgid "Register a new account"
-msgstr ""
+#: templates/userprofile/account/registration.html:17
+#, fuzzy
+msgid "Register for a Transifex account"
+msgstr "Nivel Ngjitjeje"
 
-#: templates/userprofile/account/registration.html:23
-#: templates/userprofile/account/registration_done.html:20
+#: templates/userprofile/account/registration.html:18
 msgid ""
-"Joining this community is quick and easy. You only need to fill the form to "
-"get access to all the private content"
+"Joining the Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
 msgstr ""
 
-#: templates/userprofile/account/registration_done.html:10
+#: templates/userprofile/account/registration_done.html:8
+msgid "Register a new account"
+msgstr ""
+
+#: templates/userprofile/account/registration_done.html:12
 msgid ""
 "You have successfully registered a new account, and an account activation "
 "url has been sent to your e-mail address. You must access this message on "
 "your e-mail account to finish the registration process."
 msgstr ""
 
-#: templates/userprofile/account/registration_done.html:13
+#: templates/userprofile/account/registration_done.html:15
 #, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
 
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "E-mail"
-msgstr ""
-
-#: templates/userprofile/account/includes/registration_form.html:11
-#, fuzzy
-msgid "optional"
-msgstr "_Mundësi"
-
-#: templates/userprofile/account/includes/registration_form.html:23
-#, fuzzy
-msgid "Password (again)"
-msgstr "Fjalëkalim (_sërish)"
-
 #: templates/userprofile/avatar/choose.html:4
-#: templates/userprofile/avatar/choose.html:38
+#: templates/userprofile/avatar/choose.html:47
 msgid "Choose the location of your avatar"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:41
+#: templates/userprofile/avatar/choose.html:36
+#: templates/userprofile/avatar/crop.html:41
+msgid "Avatar selection page"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:37
+#: templates/userprofile/avatar/crop.html:42
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile."
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:43
-#: templates/userprofile/avatar/choose.html:49
+#: templates/userprofile/avatar/choose.html:52
+#: templates/userprofile/avatar/choose.html:58
 #: templates/userprofile/avatar/crop.html:35
 #, fuzzy
 msgid "Done"
 msgstr "asnjë"
 
-#: templates/userprofile/avatar/choose.html:47
+#: templates/userprofile/avatar/choose.html:56
 msgid ""
 "Select an image from a remote URL. Put the URL on the input below and we'll "
 "retrieve the image for you"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:54
+#: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:79
-#: templates/userprofile/avatar/crop.html:41
-msgid "Avatar selection page"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:80
-#: templates/userprofile/avatar/crop.html:42
-msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile"
 msgstr ""
 
 #: templates/userprofile/avatar/crop.html:4
@@ -2795,24 +2892,20 @@ msgstr ""
 msgid "Delete personal information"
 msgstr "Formësim Modemi"
 
-#: templates/userprofile/profile/delete.html:14
-#, fuzzy
-msgid "Delete your personal information"
-msgstr "Formësim Modemi"
+#: templates/userprofile/profile/delete.html:13
+msgid ""
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
+msgstr ""
 
-#: templates/userprofile/profile/delete.html:15
+#: templates/userprofile/profile/delete.html:17
 msgid "Are you sure?"
 msgstr ""
 
-#: templates/userprofile/profile/delete.html:15
-msgid "Yes"
-msgstr ""
-
-#: templates/userprofile/profile/delete.html:23
-msgid ""
-"It erases all your private data except your username. You can refill the "
-"information later if you want to"
-msgstr ""
+#: templates/userprofile/profile/delete.html:18
+#, fuzzy
+msgid "Delete my data"
+msgstr "Aliase:"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2828,7 +2921,7 @@ msgid "Auto-discover location"
 msgstr ""
 
 #: templates/userprofile/profile/location.html:22
-#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 #, fuzzy
 msgid "Country"
@@ -2850,7 +2943,7 @@ msgid "Position"
 msgstr "Përshkrim"
 
 #: templates/userprofile/profile/location.html:35
-#: templates/userprofile/profile/personal.html:30
+#: templates/userprofile/profile/personal.html:36
 msgid "Save"
 msgstr ""
 
@@ -2861,74 +2954,74 @@ msgstr "Formësim Modemi"
 
 #: templates/userprofile/profile/location.html:41
 #, fuzzy
-msgid "Define your location information"
+msgid "Define your location information."
 msgstr "Formësim Modemi"
 
 #: templates/userprofile/profile/overview.html:4
-#: templates/userprofile/profile/overview.html:32
+#: templates/userprofile/profile/overview.html:30
 msgid "Overview of your profile"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 #, fuzzy
 msgid "Change avatar"
 msgstr "Kanal:"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Add avatar"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:42
+#: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:44
+#: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:46
+#: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:55
-#: templates/userprofile/profile/overview.html:64
-#: templates/userprofile/profile/overview.html:73
+#: templates/userprofile/profile/overview.html:53
+#: templates/userprofile/profile/overview.html:62
+#: templates/userprofile/profile/overview.html:71
 #, fuzzy
 msgid "Not set"
 msgstr "Asnjë"
 
-#: templates/userprofile/profile/overview.html:91
+#: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 #, fuzzy
 msgid "Change your e-mail address"
 msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 #, fuzzy
 msgid "Add your e-mail address"
 msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
 
-#: templates/userprofile/profile/overview.html:99
+#: templates/userprofile/profile/overview.html:95
 #, fuzzy
 msgid "Add location"
 msgstr "Lidhje me modem"
 
-#: templates/userprofile/profile/overview.html:101
+#: templates/userprofile/profile/overview.html:97
 #, fuzzy
 msgid "Change location"
 msgstr "Kanal:"
 
-#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 #, fuzzy
 msgid "Edit your personal information"
 msgstr "Formësim Modemi"
 
-#: templates/userprofile/profile/personal.html:37
-msgid "Insert some information about you"
+#: templates/userprofile/profile/personal.html:29
+msgid "Insert some information about you."
 msgstr ""
 
 #: templates/userprofile/profile/public.html:27
@@ -2993,101 +3086,101 @@ msgstr "Nivel Ngjitjeje"
 msgid "Auto-suggest translation"
 msgstr "Shto Lloj të ri Pajisjeje"
 
-#: translations/models.py:225
+#: translations/models.py:233
 #, fuzzy
 msgid "PO file"
 msgstr "Profil"
 
-#: translations/models.py:226
+#: translations/models.py:234
 #, fuzzy
 msgid "PO files"
 msgstr "Profil"
 
-#: translations/templates/comp_lang_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:16
 #, fuzzy
 msgid "Files"
 msgstr "Profil"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
-#: translations/templates/lang_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:17
+#: translations/templates/comp_stats_table.html:17
+#: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 #, fuzzy
 msgid "Translations"
 msgstr "Nivel Ngjitjeje"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
-#: translations/templates/lang_stats_table.html:13
+#: translations/templates/comp_lang_stats_table.html:18
+#: translations/templates/comp_stats_table.html:18
+#: translations/templates/lang_stats_table.html:16
 #, fuzzy
 msgid "Options"
 msgstr "_Mundësi"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
-#: translations/templates/lang_stats_table.html:23
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
 msgid "Trans:"
 msgstr "Nivel Ngjitjeje"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:40
+#: translations/templates/comp_stats_table.html:52
+#: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
-msgstr ""
-
-#: translations/templates/comp_lang_stats_table.html:36
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:41
-#: translations/templates/source_files.html:19
-msgid "Download "
 msgstr ""
 
 #: translations/templates/comp_lang_stats_table.html:41
 #: translations/templates/comp_stats_table.html:53
 #: translations/templates/lang_stats_table.html:46
+#: translations/templates/source_files.html:19
+msgid "Download "
+msgstr ""
+
+#: translations/templates/comp_lang_stats_table.html:51
+#: translations/templates/comp_stats_table.html:63
+#: translations/templates/lang_stats_table.html:56
 #, fuzzy
 msgid "Edit "
 msgstr "_Përpunoni"
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:21
+#: translations/templates/comp_stats_table.html:26
 msgid "See statistics for this language"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:23
+#: translations/templates/comp_stats_table.html:28
 msgid "There is no language registered that matches with this code"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:35
+#: translations/templates/comp_stats_table.html:40
 msgid "(not calculated)"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr ""
 
@@ -3101,31 +3194,31 @@ msgstr "Vendmbrritje"
 msgid "Submit file"
 msgstr "Dil"
 
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:20
+#: translations/templates/lang_stats_table.html:25
 msgid "Go to this project page"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/lang_stats_table.html:26
 msgid "Go to this component page"
 msgstr ""
 
-#: translations/templates/pofile_lock.html:8
+#: translations/templates/pofile_lock.html:10
 msgid "Unlock this file when you're finished working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:12
+#: translations/templates/pofile_lock.html:14
 msgid "This file is locked, indicating someone is working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:18
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:23
 msgid "This file is unlocked. Most likely noone is working with it right now."
 msgstr ""
 
@@ -3195,6 +3288,11 @@ msgstr "Lidhje %s"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr ""
 
+#: txcollections/migrations/0001_initial.py:20
+#, fuzzy
+msgid "String freese date"
+msgstr "Aliase:"
+
 #: txcommon/i18n.py:18
 #, fuzzy, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3209,34 +3307,34 @@ msgstr ""
 msgid "Male"
 msgstr "Maltë"
 
-#: txcommon/models.py:18
+#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
 #, fuzzy
 msgid "First name"
 msgstr "_Emërstrehë:"
 
-#: txcommon/models.py:19
+#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
 #, fuzzy
 msgid "Surname"
 msgstr "Emërstrehë:"
 
-#: txcommon/models.py:22
+#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
 #, fuzzy
 msgid "Native Language"
 msgstr "Rrjet Vendor"
 
-#: txcommon/models.py:23
+#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
 msgid "Blog"
 msgstr ""
 
-#: txcommon/models.py:24
+#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
 msgid "LinkedIn"
 msgstr ""
 
-#: txcommon/models.py:25
+#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
 msgid "Twitter"
 msgstr ""
 
-#: txcommon/models.py:26
+#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
 msgid "About yourself"
 msgstr ""
 
@@ -3244,7 +3342,7 @@ msgstr ""
 msgid "Short description of yourself (140 chars)."
 msgstr ""
 
-#: txcommon/models.py:28
+#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
 msgid "Looking for work?"
 msgstr ""
 
@@ -3260,174 +3358,182 @@ msgstr ""
 msgid "The root url must start with http:// or ftp://"
 msgstr ""
 
-#: txcommon/management/__init__.py:9
-msgid "New Project Added"
+#: txcommon/db/models.py:26
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr ""
+
+#: txcommon/db/models.py:28
+msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr ""
 
 #: txcommon/management/__init__.py:10
+msgid "New Project Added"
+msgstr ""
+
+#: txcommon/management/__init__.py:11
 msgid "when a new project is added"
 msgstr ""
 
-#: txcommon/management/__init__.py:16
+#: txcommon/management/__init__.py:17
 #, fuzzy
 msgid "Project Changed"
 msgstr "Importo Listë Sametime..."
 
-#: txcommon/management/__init__.py:17
+#: txcommon/management/__init__.py:18
 msgid "when a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:23
+#: txcommon/management/__init__.py:24
 #, fuzzy
 msgid "Project Deleted"
 msgstr "Importo Listë Sametime..."
 
-#: txcommon/management/__init__.py:24
+#: txcommon/management/__init__.py:25
 msgid "when a project is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:30
+#: txcommon/management/__init__.py:31
 msgid "New Component Added"
 msgstr ""
 
-#: txcommon/management/__init__.py:31
+#: txcommon/management/__init__.py:32
 msgid "when a new component is added to a project"
 msgstr ""
 
-#: txcommon/management/__init__.py:37
+#: txcommon/management/__init__.py:38
 #, fuzzy
 msgid "Component Changed"
 msgstr "Përmbajtje"
 
-#: txcommon/management/__init__.py:38
+#: txcommon/management/__init__.py:39
 msgid "when a component of a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:44
+#: txcommon/management/__init__.py:45
 #, fuzzy
 msgid "Component Deleted"
 msgstr "Përmbajtje"
 
-#: txcommon/management/__init__.py:45
+#: txcommon/management/__init__.py:46
 msgid "when a component of a project is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:51
+#: txcommon/management/__init__.py:52
 msgid "File Submitted"
 msgstr ""
 
-#: txcommon/management/__init__.py:52
+#: txcommon/management/__init__.py:53
 msgid "when a component file of a project is submitted"
 msgstr ""
 
-#: txcommon/management/__init__.py:59
+#: txcommon/management/__init__.py:60
 #, fuzzy
 msgid "Translation File Changed"
 msgstr "Nivel Ngjitjeje"
 
-#: txcommon/management/__init__.py:60
+#: txcommon/management/__init__.py:61
 msgid "when a component translation file of a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:67
+#: txcommon/management/__init__.py:68
 msgid "Translation Source File (POT) has a Problem"
 msgstr ""
 
-#: txcommon/management/__init__.py:68
+#: txcommon/management/__init__.py:69
 msgid ""
 "when the source file (POT) of a component that you are a maintainer has a "
 "problem"
 msgstr ""
 
-#: txcommon/management/__init__.py:76
+#: txcommon/management/__init__.py:77
 #, fuzzy
 msgid "New Collection Added"
 msgstr "Lidhje CTC"
 
-#: txcommon/management/__init__.py:77
+#: txcommon/management/__init__.py:78
 #, fuzzy
 msgid "when a new collection is added"
 msgstr "Shto Lloj të ri Pajisjeje"
 
-#: txcommon/management/__init__.py:83
+#: txcommon/management/__init__.py:84
 #, fuzzy
 msgid "Collection Changed"
 msgstr "Lidhje CTC"
 
-#: txcommon/management/__init__.py:84
+#: txcommon/management/__init__.py:85
 msgid "when a collection is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:90
+#: txcommon/management/__init__.py:91
 #, fuzzy
 msgid "Collection Deleted"
 msgstr "Lidhje CTC"
 
-#: txcommon/management/__init__.py:91
+#: txcommon/management/__init__.py:92
 msgid "when a collection is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:97
+#: txcommon/management/__init__.py:98
 #, fuzzy
 msgid "Project Added to a Collection"
 msgstr "Lidhje me modem"
 
-#: txcommon/management/__init__.py:98
+#: txcommon/management/__init__.py:99
 msgid "when a new project is added to a collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:104
+#: txcommon/management/__init__.py:105
 #, fuzzy
 msgid "Project Deleted from a Collection"
 msgstr "Lidhje Ethernet"
 
-#: txcommon/management/__init__.py:105
+#: txcommon/management/__init__.py:106
 msgid "when a project is deleted from a collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:111
+#: txcommon/management/__init__.py:112
 msgid "New Release Added for a Watched Collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:112
+#: txcommon/management/__init__.py:113
 #, fuzzy
 msgid "when a new release is added to a collection"
 msgstr "Krijo lidhje %s të re."
 
-#: txcommon/management/__init__.py:119
+#: txcommon/management/__init__.py:120
 #, fuzzy
 msgid "Release Changed"
 msgstr "Aliase:"
 
-#: txcommon/management/__init__.py:120
+#: txcommon/management/__init__.py:121
 msgid "when a release of a collection is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:125
+#: txcommon/management/__init__.py:126
 #, fuzzy
 msgid "Release Deleted"
 msgstr "Aliase:"
 
-#: txcommon/management/__init__.py:126
+#: txcommon/management/__init__.py:127
 msgid "when a release of a collection is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:131
+#: txcommon/management/__init__.py:132
 #, fuzzy
 msgid "Release Added to a Collection"
 msgstr "Lidhje me modem"
 
-#: txcommon/management/__init__.py:132
+#: txcommon/management/__init__.py:133
 #, fuzzy
 msgid "when a release is added to a collection"
 msgstr "Krijo lidhje %s të re."
 
-#: txcommon/management/__init__.py:137
+#: txcommon/management/__init__.py:138
 #, fuzzy
 msgid "Release Deleted from a Collection"
 msgstr "Lidhje Ethernet"
 
-#: txcommon/management/__init__.py:138
+#: txcommon/management/__init__.py:139
 #, fuzzy
 msgid "when a release is deleted from a collection"
 msgstr "Krijo lidhje %s të re."
@@ -3436,6 +3542,22 @@ msgstr "Krijo lidhje %s të re."
 #, fuzzy
 msgid "Home"
 msgstr "Emërstrehë:"
+
+#: txpermissions/views.py:45
+msgid "You added a permission request."
+msgstr ""
+
+#: txpermissions/views.py:74
+msgid "You approved the permission request."
+msgstr ""
+
+#: txpermissions/views.py:92
+msgid "You removed the permission."
+msgstr ""
+
+#: txpermissions/views.py:94
+msgid "You removed the permission request."
+msgstr ""
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
@@ -3473,19 +3595,47 @@ msgstr "Dil"
 msgid "vcsunits"
 msgstr "Dil"
 
-#: webtrans/views.py:125
+#: webtrans/views.py:129
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
 msgstr ""
 
-#: webtrans/views.py:134
+#: webtrans/views.py:138
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr ""
 
 #, fuzzy
-#~ msgid "Releases on Transifex"
-#~ msgstr "Nivel Ngjitjeje"
+#~ msgid "Send confirmation"
+#~ msgstr "Po ruhet formësimi..."
+
+#, fuzzy
+#~ msgid "Insert your e-mail address"
+#~ msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
+
+#, fuzzy
+#~ msgid "Old password"
+#~ msgstr "_Fjalëkalim:"
+
+#, fuzzy
+#~ msgid "Confirm password"
+#~ msgstr "Fjalëkalim _vetjak:"
+
+#, fuzzy
+#~ msgid "E-mail address"
+#~ msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
+
+#, fuzzy
+#~ msgid "optional"
+#~ msgstr "_Mundësi"
+
+#, fuzzy
+#~ msgid "Password (again)"
+#~ msgstr "Fjalëkalim (_sërish)"
+
+#, fuzzy
+#~ msgid "Delete your personal information"
+#~ msgstr "Formësim Modemi"
 
 #, fuzzy
 #~ msgid "Add a new release"
@@ -3522,10 +3672,6 @@ msgstr ""
 #~ msgstr "Rrjet Vendor"
 
 #, fuzzy
-#~ msgid "Timestamp"
-#~ msgstr "Vietnam"
-
-#, fuzzy
 #~ msgid "Module"
 #~ msgstr "Mënyrë:"
 
@@ -3535,10 +3681,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "hour"
-#~ msgstr "_Orë"
-
-#, fuzzy
-#~ msgid "hours"
 #~ msgstr "_Orë"
 
 #, fuzzy
@@ -4102,9 +4244,6 @@ msgstr ""
 
 #~ msgid "Australia"
 #~ msgstr "Australi"
-
-#~ msgid "Austria"
-#~ msgstr "Austri"
 
 #~ msgid "Bosnia and Hercegovina"
 #~ msgstr "Bosnjë dhe Hercegovinë"

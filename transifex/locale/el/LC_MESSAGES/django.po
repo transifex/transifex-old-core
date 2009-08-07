@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-07 17:40+0000\n"
+"POT-Creation-Date: 2009-08-07 16:12+0000\n"
 "PO-Revision-Date: 2009-07-23 22:08+0200\n"
 "Last-Translator: thalia papoutsaki <saliyath@gmail.com>\n"
 "Language-Team: Greek <fedora-trans-el@redhat.com>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KAider 0.1\n"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:51
 msgid "log entry"
 msgstr ""
 
-#: actionlog/models.py:51
+#: actionlog/models.py:52
 msgid "log entries"
 msgstr ""
 
@@ -47,41 +47,42 @@ msgstr ""
 msgid "No history recorded yet."
 msgstr ""
 
-#: codebases/models.py:34
-#: languages/models.py:27
-#: projects/models.py:84
-#: projects/models.py:193
-#: releases/models.py:23
-#: txcollections/models.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:26
+#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Όνομα"
 
-#: codebases/models.py:35
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Root"
 
-#: codebases/models.py:36
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr ""
 
-#: codebases/models.py:37
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Τύπος"
 
-#: codebases/models.py:39
+#: codebases/models.py:41
 #, python-format
 msgid "The codebase type (%s)"
 msgstr ""
 
-#: codebases/models.py:42
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr ""
 
-#: codebases/models.py:51
+#: codebases/models.py:53
 msgid "unit"
 msgstr ""
 
-#: codebases/models.py:52
+#: codebases/models.py:54
 msgid "units"
 msgstr ""
 
@@ -105,26 +106,27 @@ msgstr ""
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr ""
 
-#: languages/models.py:29
-#: projects/models.py:86
-#: projects/models.py:195
-#: releases/models.py:25
-#: txcollections/models.py:28
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:15
+#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
+#: txcollections/migrations/0001_initial.py:33
 #, fuzzy
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: languages/models.py:30
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 #, fuzzy
 msgid "Code"
 msgstr "Άρθρωμα"
 
-#: languages/models.py:33
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 #, fuzzy
 msgid "Code aliases"
 msgstr "Λίστα έργων"
 
-#: languages/models.py:36
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr ""
 
@@ -132,11 +134,11 @@ msgstr ""
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 
-#: languages/models.py:40
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr ""
 
-#: languages/models.py:42
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Plural Equation"
 msgstr "Πελάτης"
@@ -145,398 +147,431 @@ msgstr "Πελάτης"
 msgid "language"
 msgstr "Γλώσσα"
 
-#: languages/models.py:54
-#: templates/languages/language_list.html:15
+#: languages/models.py:54 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "Γλώσσες"
 
-#: languages/management/commands/create_languages.py:26
+#: languages/management/commands/txcreatelanguages.py:26
 msgid "Afrikaans"
 msgstr "Αφρικανικά"
 
-#: languages/management/commands/create_languages.py:40
+#: languages/management/commands/txcreatelanguages.py:40
 msgid "Amharic"
 msgstr "Amharic"
 
-#: languages/management/commands/create_languages.py:45
+#: languages/management/commands/txcreatelanguages.py:45
 msgid "Arabic"
 msgstr "Αραβική"
 
-#: languages/management/commands/create_languages.py:52
+#: languages/management/commands/txcreatelanguages.py:52
+msgid "Spanish (Argentinian)"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:59
 msgid "Assamese"
 msgstr "Ασαμίγια"
 
-#: languages/management/commands/create_languages.py:60
+#: languages/management/commands/txcreatelanguages.py:66
+#, fuzzy
+msgid "Asturian"
+msgstr "Εσθονική"
+
+#: languages/management/commands/txcreatelanguages.py:74
 msgid "Azerbaijani"
 msgstr "Αζερμπαϊτζανική"
 
-#: languages/management/commands/create_languages.py:67
+#: languages/management/commands/txcreatelanguages.py:81
 #, fuzzy
 msgid "Balochi"
 msgstr "Κλάδος"
 
-#: languages/management/commands/create_languages.py:73
+#: languages/management/commands/txcreatelanguages.py:87
 #, fuzzy
 msgid "Belarusian"
 msgstr "Βουλγαρική"
 
-#: languages/management/commands/create_languages.py:81
+#: languages/management/commands/txcreatelanguages.py:95
 msgid "Bulgarian"
 msgstr "Βουλγαρική"
 
-#: languages/management/commands/create_languages.py:89
+#: languages/management/commands/txcreatelanguages.py:103
 msgid "Bengali"
 msgstr "Μπενγκάλι"
 
-#: languages/management/commands/create_languages.py:97
+#: languages/management/commands/txcreatelanguages.py:111
 msgid "Bengali (India)"
 msgstr "Μπενγκάλι Ινδία"
 
-#: languages/management/commands/create_languages.py:110
+#: languages/management/commands/txcreatelanguages.py:118
+msgid "Tibetan"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:126
 msgid "Bosnian"
 msgstr "Βοσνιακή"
 
-#: languages/management/commands/create_languages.py:118
+#: languages/management/commands/txcreatelanguages.py:134
 msgid "Catalan (Valencian)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:126
+#: languages/management/commands/txcreatelanguages.py:142
 msgid "Czech"
 msgstr "Τσέχικη"
 
-#: languages/management/commands/create_languages.py:134
+#: languages/management/commands/txcreatelanguages.py:150
 msgid "Welsh"
 msgstr "Ουαλική"
 
-#: languages/management/commands/create_languages.py:142
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Danish"
 msgstr "Δανική"
 
-#: languages/management/commands/create_languages.py:150
+#: languages/management/commands/txcreatelanguages.py:166
 msgid "German"
 msgstr "Γερμανικά"
 
-#: languages/management/commands/create_languages.py:158
+#: languages/management/commands/txcreatelanguages.py:174
 #, fuzzy
 msgid "Swiss German"
 msgstr "Γερμανικά"
 
-#: languages/management/commands/create_languages.py:166
+#: languages/management/commands/txcreatelanguages.py:182
 msgid "Dzongkha"
 msgstr "Ντζόγκα"
 
-#: languages/management/commands/create_languages.py:174
+#: languages/management/commands/txcreatelanguages.py:190
 msgid "Greek"
 msgstr "Ελληνικά"
 
-#: languages/management/commands/create_languages.py:181
+#: languages/management/commands/txcreatelanguages.py:197
 msgid "English"
 msgstr "Αγγλικά"
 
-#: languages/management/commands/create_languages.py:189
+#: languages/management/commands/txcreatelanguages.py:205
 msgid "English (United Kingdom)"
 msgstr "Αγγλικά (Ηνωμένο Βασίλειο)"
 
-#: languages/management/commands/create_languages.py:197
+#: languages/management/commands/txcreatelanguages.py:213
 msgid "English (South Africa)"
 msgstr "Αγγλικά (Νότιος Αφρική)"
 
-#: languages/management/commands/create_languages.py:210
+#: languages/management/commands/txcreatelanguages.py:220
+msgid "Esperanto"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:228
 msgid "Spanish (Castilian)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:218
+#: languages/management/commands/txcreatelanguages.py:236
 msgid "Estonian"
 msgstr "Εσθονική"
 
-#: languages/management/commands/create_languages.py:226
+#: languages/management/commands/txcreatelanguages.py:244
 msgid "Basque"
 msgstr "Βασκικά"
 
-#: languages/management/commands/create_languages.py:233
+#: languages/management/commands/txcreatelanguages.py:251
 msgid "Persian"
 msgstr "Περσικά"
 
-#: languages/management/commands/create_languages.py:241
+#: languages/management/commands/txcreatelanguages.py:259
 msgid "Finnish"
 msgstr "Φινλανδικά"
 
-#: languages/management/commands/create_languages.py:255
+#: languages/management/commands/txcreatelanguages.py:273
 msgid "French"
 msgstr "Γαλλικά"
 
-#: languages/management/commands/create_languages.py:263
+#: languages/management/commands/txcreatelanguages.py:281
 msgid "Friulian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:271
+#: languages/management/commands/txcreatelanguages.py:289
 msgid "Western Frisian"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:279
+#: languages/management/commands/txcreatelanguages.py:297
 #, fuzzy
 msgid "Irish"
 msgstr "Τουρκική"
 
-#: languages/management/commands/create_languages.py:287
+#: languages/management/commands/txcreatelanguages.py:305
 msgid "Galician"
 msgstr "Galician"
 
-#: languages/management/commands/create_languages.py:295
+#: languages/management/commands/txcreatelanguages.py:313
 msgid "Gujarati"
 msgstr "Γκουγιαράτι"
 
-#: languages/management/commands/create_languages.py:302
+#: languages/management/commands/txcreatelanguages.py:320
 msgid "Hebrew"
 msgstr "Εβραϊκή"
 
-#: languages/management/commands/create_languages.py:310
+#: languages/management/commands/txcreatelanguages.py:328
 msgid "Hindi"
 msgstr "Χίντι"
 
-#: languages/management/commands/create_languages.py:318
+#: languages/management/commands/txcreatelanguages.py:336
 msgid "Croatian"
 msgstr "Κροατική"
 
-#: languages/management/commands/create_languages.py:325
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Haitian (Haitian Creole)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:333
+#: languages/management/commands/txcreatelanguages.py:351
 msgid "Hungarian"
 msgstr "Ουγγρικά"
 
-#: languages/management/commands/create_languages.py:340
+#: languages/management/commands/txcreatelanguages.py:358
 msgid "Armenian"
 msgstr "Αρμενική"
 
-#: languages/management/commands/create_languages.py:346
+#: languages/management/commands/txcreatelanguages.py:364
 msgid "Indonesian"
 msgstr "Ινδονησιακή"
 
-#: languages/management/commands/create_languages.py:353
+#: languages/management/commands/txcreatelanguages.py:371
 msgid "Iloko"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:358
+#: languages/management/commands/txcreatelanguages.py:376
 msgid "Icelandic"
 msgstr "Ισλανδικά"
 
-#: languages/management/commands/create_languages.py:366
+#: languages/management/commands/txcreatelanguages.py:384
 msgid "Italian"
 msgstr "Ιταλική"
 
-#: languages/management/commands/create_languages.py:374
+#: languages/management/commands/txcreatelanguages.py:392
 msgid "Japanese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:382
+#: languages/management/commands/txcreatelanguages.py:400
 #, fuzzy
 msgid "Georgian"
 msgstr "Γερμανικά"
 
-#: languages/management/commands/create_languages.py:395
+#: languages/management/commands/txcreatelanguages.py:413
 msgid "Kannada"
 msgstr "Kannada"
 
-#: languages/management/commands/create_languages.py:401
+#: languages/management/commands/txcreatelanguages.py:419
 msgid "Korean"
 msgstr "Κορεάτικα"
 
-#: languages/management/commands/create_languages.py:409
+#: languages/management/commands/txcreatelanguages.py:426
+msgid "Kashmiri"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:434
 #, fuzzy
 msgid "Kurdish"
 msgstr "Τουρκική"
 
-#: languages/management/commands/create_languages.py:422
+#: languages/management/commands/txcreatelanguages.py:441
+msgid "Kirgyz"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:448
+#, fuzzy
+msgid "Latin"
+msgstr "Latvian"
+
+#: languages/management/commands/txcreatelanguages.py:461
 msgid "Lao"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:428
+#: languages/management/commands/txcreatelanguages.py:467
 msgid "Lithuanian"
 msgstr "Λιθουανικά"
 
-#: languages/management/commands/create_languages.py:436
+#: languages/management/commands/txcreatelanguages.py:475
 msgid "Latvian"
 msgstr "Latvian"
 
-#: languages/management/commands/create_languages.py:443
+#: languages/management/commands/txcreatelanguages.py:482
 #, fuzzy
 msgid "Maithili"
 msgstr "Μάραθι"
 
-#: languages/management/commands/create_languages.py:448
+#: languages/management/commands/txcreatelanguages.py:487
 msgid "Macedonian"
 msgstr "Σλαβομακεδονική"
 
-#: languages/management/commands/create_languages.py:453
+#: languages/management/commands/txcreatelanguages.py:492
 msgid "Malayalam"
 msgstr "Μαλαιαλάμ"
 
-#: languages/management/commands/create_languages.py:466
+#: languages/management/commands/txcreatelanguages.py:505
 msgid "Mongolian"
 msgstr "Μογγολική"
 
-#: languages/management/commands/create_languages.py:473
+#: languages/management/commands/txcreatelanguages.py:512
 msgid "Marathi"
 msgstr "Μάραθι"
 
-#: languages/management/commands/create_languages.py:480
+#: languages/management/commands/txcreatelanguages.py:519
 #, fuzzy
 msgid "Malay"
 msgstr "Μαλαισιακή"
 
-#: languages/management/commands/create_languages.py:488
+#: languages/management/commands/txcreatelanguages.py:527
 #, fuzzy
 msgid "Maltese"
 msgstr "Πιο πρόσφατο"
 
-#: languages/management/commands/create_languages.py:495
+#: languages/management/commands/txcreatelanguages.py:534
 msgid "Burmese"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:506
+#: languages/management/commands/txcreatelanguages.py:545
 #, fuzzy
 msgid "Norwegian Bokmål"
 msgstr "Νορβηγική Μπουκμάλ"
 
-#: languages/management/commands/create_languages.py:513
+#: languages/management/commands/txcreatelanguages.py:552
 #, fuzzy
 msgid "Nepali"
 msgstr "Μπενγκάλι"
 
-#: languages/management/commands/create_languages.py:521
+#: languages/management/commands/txcreatelanguages.py:560
 msgid "Dutch (Flemish)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:529
+#: languages/management/commands/txcreatelanguages.py:568
 msgid "Norwegian Nynorsk"
 msgstr "Norwegian Nynorsk"
 
-#: languages/management/commands/create_languages.py:536
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Norwegian"
 msgstr "Νορβηγική"
 
-#: languages/management/commands/create_languages.py:542
+#: languages/management/commands/txcreatelanguages.py:581
 msgid "Northern Sotho"
 msgstr "Northern Sotho"
 
-#: languages/management/commands/create_languages.py:550
+#: languages/management/commands/txcreatelanguages.py:589
 msgid "Oriya"
 msgstr "Oriya"
 
-#: languages/management/commands/create_languages.py:557
+#: languages/management/commands/txcreatelanguages.py:596
 msgid "Panjabi (Punjabi)"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:570
+#: languages/management/commands/txcreatelanguages.py:609
 msgid "Polish"
 msgstr "Πολωνικά"
 
-#: languages/management/commands/create_languages.py:586
+#: languages/management/commands/txcreatelanguages.py:625
 msgid "Portuguese"
 msgstr "Πορτογαλικά"
 
-#: languages/management/commands/create_languages.py:595
+#: languages/management/commands/txcreatelanguages.py:634
 msgid "Brazilian Portuguese"
 msgstr "Βραζιλιάνικα Πορτογαλικά"
 
-#: languages/management/commands/create_languages.py:603
+#: languages/management/commands/txcreatelanguages.py:642
 msgid "Romanian"
 msgstr "Ρουμανική"
 
-#: languages/management/commands/create_languages.py:611
+#: languages/management/commands/txcreatelanguages.py:650
 msgid "Russian"
 msgstr "Ρωσική"
 
-#: languages/management/commands/create_languages.py:618
+#: languages/management/commands/txcreatelanguages.py:657
 msgid "Sinhala"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:624
+#: languages/management/commands/txcreatelanguages.py:663
 msgid "Slovak"
 msgstr "Σλοβακικά"
 
-#: languages/management/commands/create_languages.py:632
+#: languages/management/commands/txcreatelanguages.py:671
 msgid "Slovenian"
 msgstr "Σλοβενική"
 
-#: languages/management/commands/create_languages.py:640
+#: languages/management/commands/txcreatelanguages.py:679
 msgid "Albanian"
 msgstr "Αλβανικά"
 
-#: languages/management/commands/create_languages.py:648
+#: languages/management/commands/txcreatelanguages.py:687
 msgid "Serbian"
 msgstr "Σερβική"
 
-#: languages/management/commands/create_languages.py:656
+#: languages/management/commands/txcreatelanguages.py:695
 msgid "Serbian (Latin)"
 msgstr "Σερβική"
 
-#: languages/management/commands/create_languages.py:665
+#: languages/management/commands/txcreatelanguages.py:704
 msgid "Sotho, Southern"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:673
+#: languages/management/commands/txcreatelanguages.py:712
 msgid "Swedish"
 msgstr "Σουηδικά"
 
-#: languages/management/commands/create_languages.py:681
+#: languages/management/commands/txcreatelanguages.py:720
 msgid "Tamil"
 msgstr "Ταμίλ"
 
-#: languages/management/commands/create_languages.py:688
+#: languages/management/commands/txcreatelanguages.py:727
 msgid "Telugu"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:693
+#: languages/management/commands/txcreatelanguages.py:732
 msgid "Tajik"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:698
+#: languages/management/commands/txcreatelanguages.py:737
 msgid "Thai"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:703
+#: languages/management/commands/txcreatelanguages.py:742
 msgid "Tagalog"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:715
+#: languages/management/commands/txcreatelanguages.py:754
 msgid "Turkish"
 msgstr "Τουρκική"
 
-#: languages/management/commands/create_languages.py:722
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Urdu"
 msgstr "Ουρντού"
 
-#: languages/management/commands/create_languages.py:728
+#: languages/management/commands/txcreatelanguages.py:767
 msgid "Ukrainian"
 msgstr "Ουκρανική"
 
-#: languages/management/commands/create_languages.py:742
+#: languages/management/commands/txcreatelanguages.py:781
 msgid "Vietnamese"
 msgstr "Βιετναμέζικη"
 
-#: languages/management/commands/create_languages.py:749
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Wolof"
 msgstr ""
 
-#: languages/management/commands/create_languages.py:764
+#: languages/management/commands/txcreatelanguages.py:801
+msgid "Xhosa"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:810
 #, fuzzy
 msgid "Chinese (China)"
 msgstr "Κινέζικα Παραδοσιακή"
 
-#: languages/management/commands/create_languages.py:774
+#: languages/management/commands/txcreatelanguages.py:820
 #, fuzzy
 msgid "Chinese (Hong Kong)"
 msgstr "Κινέζικα Παραδοσιακή"
 
-#: languages/management/commands/create_languages.py:784
+#: languages/management/commands/txcreatelanguages.py:830
 #, fuzzy
 msgid "Chinese (Taiwan)"
 msgstr "Κινέζικα Παραδοσιακή"
 
-#: languages/management/commands/create_languages.py:792
+#: languages/management/commands/txcreatelanguages.py:838
 msgid "Zulu"
 msgstr "Ζουλού"
 
@@ -545,9 +580,9 @@ msgid "Translated:"
 msgstr "Μεταφράστηκε:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
@@ -581,319 +616,334 @@ msgstr ""
 msgid "Latest components in project %s."
 msgstr ""
 
-#: projects/forms.py:17
-#: projects/models.py:208
+#: projects/forms.py:29 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 
-#: projects/forms.py:40
-#: projects/models.py:213
+#: projects/forms.py:52 projects/models.py:218
+#: projects/migrations/0002_release_06_07.py:15
 #, fuzzy
 msgid "Submit to"
 msgstr "Υποβολή αρχείων στο %s"
 
-#: projects/forms.py:41
-msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
+#: projects/forms.py:53
+msgid ""
+"Choose how this component should handle submissions of files.The options "
+"here are available based on the component type"
 msgstr ""
 
-#: projects/models.py:81
-#: projects/models.py:190
-#: releases/models.py:20
-#: txcollections/models.py:23
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:14
+#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
+#: txcollections/migrations/0001_initial.py:32
+#: txcollections/migrations/0002_release_06_07.py:11
+#: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:82
-#: projects/models.py:191
-#: releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
-msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:85
-#: projects/models.py:194
-#: releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr ""
 
-#: projects/models.py:87
-#: projects/models.py:196
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr ""
 
-#: projects/models.py:88
-#: projects/models.py:197
-#: releases/models.py:27
-#: txcollections/models.py:30
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:25
+#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
+#: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Εκτενής Περιγραφή"
 
-#: projects/models.py:90
-#: projects/models.py:199
-#: txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr ""
 
-#: projects/models.py:91
-#: txcollections/models.py:32
+#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 #, fuzzy
 msgid "Homepage"
 msgstr "Ιστοσελίδα χρήστη:"
 
-#: projects/models.py:92
+#: projects/models.py:94 projects/migrations/0001_initial.py:13
 #, fuzzy
 msgid "Feed"
 msgstr "Feed"
 
-#: projects/models.py:93
+#: projects/models.py:95
 msgid "An RSS feed with updates on the project."
 msgstr ""
 
-#: projects/models.py:94
+#: projects/models.py:96 projects/migrations/0001_initial.py:22
 msgid "Bug tracker"
 msgstr ""
 
-#: projects/models.py:95
-msgid "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
-msgstr ""
-
-#: projects/models.py:98
-#: projects/models.py:216
-#: releases/models.py:41
-#: txcollections/models.py:33
-msgid "Hidden"
+#: projects/models.py:97
+msgid ""
+"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr ""
 
 #: projects/models.py:99
-#: projects/models.py:217
-#: releases/models.py:42
+#: projects/migrations/0003_add_anyone_submit_field.py:12
+msgid "Anyone can submit"
+msgstr ""
+
+#: projects/models.py:101
+msgid "Does anyone can submit translations to this project?"
+msgstr ""
+
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:23
+#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
+#: txcollections/migrations/0001_initial.py:40
+msgid "Hidden"
+msgstr ""
+
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:100
-#: projects/models.py:218
-#: releases/models.py:43
-#: txcollections/models.py:35
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
+#: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Ενεργοποιημένο"
 
-#: projects/models.py:101
-#: projects/models.py:219
-#: releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
 
-#: projects/models.py:105
+#: projects/models.py:110 projects/migrations/0001_initial.py:18
 #, fuzzy
 msgid "Tags"
 msgstr "Ομάδες"
 
-#: projects/models.py:110
-#: templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
 msgstr "Συλλογές"
 
-#: projects/models.py:112
+#: projects/models.py:117
 #, fuzzy
 msgid "Maintainers"
 msgstr "Συντηρεί:"
 
-#: projects/models.py:116
-#: projects/models.py:228
-#: releases/models.py:49
-#: txcollections/models.py:43
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:17
+#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
+#: txcollections/migrations/0001_initial.py:35
 #, fuzzy
 msgid "HTML Description"
 msgstr "Περιγραφή"
 
-#: projects/models.py:118
-#: projects/models.py:230
-#: releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 #, fuzzy
 msgid "Description in HTML."
 msgstr "Περιγραφή"
 
-#: projects/models.py:124
+#: projects/models.py:129
 #, python-format
 msgid "<Project: %s>"
 msgstr ""
 
-#: projects/models.py:127
+#: projects/models.py:132
 msgid "project"
 msgstr "έργο"
 
-#: projects/models.py:128
-#: templates/projects/project_list.html:18
-#: templates/txcollections/collection_detail.html:93
+#: projects/models.py:133 templates/projects/project_list.html:18
+#: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr ""
 
-#: projects/models.py:200
+#: projects/models.py:205 projects/migrations/0001_initial.py:47
 #, fuzzy
 msgid "Source language"
 msgstr "Γλώσσες του Fedora"
 
-#: projects/models.py:201
+#: projects/models.py:206
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr ""
 
-#: projects/models.py:203
+#: projects/models.py:208 projects/migrations/0001_initial.py:37
 msgid "I18n type"
 msgstr ""
 
-#: projects/models.py:205
+#: projects/models.py:210
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr ""
 
-#: projects/models.py:207
+#: projects/models.py:212 projects/migrations/0001_initial.py:38
 #, fuzzy
 msgid "File filter"
 msgstr "Φίλτρο αρχείων"
 
-#: projects/models.py:210
+#: projects/models.py:215 projects/migrations/0001_initial.py:46
 #, fuzzy
 msgid "Allows submission"
 msgstr "Μεταφράσεις Fedora :: Προεπισκόπηση υποβολής"
 
-#: projects/models.py:212
+#: projects/models.py:217
 msgid "Does this module repository allow write access?"
 msgstr ""
 
-#: projects/models.py:222
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 #, fuzzy
 msgid "Calculate statistics?"
 msgstr "Translation"
 
-#: projects/models.py:223
+#: projects/models.py:228
 msgid "Should statistics be calculated for this component?"
 msgstr ""
 
-#: projects/models.py:233
+#: projects/models.py:238 projects/migrations/0001_initial.py:41
 #, fuzzy
 msgid "Project"
 msgstr "Οικοσελίδα Έργου Fedora"
 
-#: projects/models.py:234
+#: projects/models.py:239 projects/migrations/0001_initial.py:32
 msgid "Unit"
 msgstr ""
 
-#: projects/models.py:238
+#: projects/models.py:243
 #, fuzzy
 msgid "Releases"
 msgstr "Κυκλοφορία"
 
-#: projects/models.py:258
+#: projects/models.py:263
 #, python-format
 msgid "<Component: %s>"
 msgstr ""
 
-#: projects/models.py:262
+#: projects/models.py:267
 #, fuzzy
 msgid "component"
 msgstr "σχόλιο"
 
-#: projects/models.py:263
-#: templates/projects/component_list.html:15
+#: projects/models.py:268 templates/projects/component_list.html:17
 #, fuzzy
 msgid "components"
 msgstr "σχόλιο"
 
-#: projects/views.py:117
-#: projects/views.py:332
-#: txcollections/views.py:121
+#: projects/permissions.py:17
+msgid "Is allowed to maintain this project"
+msgstr ""
+
+#: projects/permissions.py:26
+msgid "Is allowed to submit file to this project"
+msgstr ""
+
+#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr ""
 
-#: projects/views.py:136
-#: projects/views.py:623
+#: projects/views.py:286 projects/views.py:841
 msgid "Must use POST to activate"
 msgstr ""
 
-#: projects/views.py:139
-#: projects/views.py:626
+#: projects/views.py:289 projects/views.py:844
 msgid "Notifation is not enabled"
 msgstr ""
 
-#: projects/views.py:152
+#: projects/views.py:302
 #, fuzzy
 msgid "Watch this project"
 msgstr "Αποτελέσματα αναζήτησης"
 
-#: projects/views.py:165
+#: projects/views.py:315
 msgid "Stop wathing this project"
 msgstr ""
 
-#: projects/views.py:364
-msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
+#: projects/views.py:537
+msgid ""
+"The file filter of this intltool POT-based component does not  seem to allow "
+"the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:450
+#: projects/views.py:544
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+
+#: projects/views.py:655
 msgid "This component does  not allow write access."
 msgstr ""
 
-#: projects/views.py:458
+#: projects/views.py:663
 #, fuzzy
 msgid "Please select a file from your system to be uploaded."
 msgstr "Επιλέξετε ένα αρχείο από το σταθμό εργασίας σας για υποβολή."
 
-#: projects/views.py:467
+#: projects/views.py:672
 msgid "Please enter a target to upload the file."
 msgstr ""
 
-#: projects/views.py:473
+#: projects/views.py:678
 msgid "Please enter only ONE target to upload the file."
 msgstr ""
 
-#: projects/views.py:484
+#: projects/views.py:689
 msgid "The target file does not match with the component file filter"
 msgstr ""
 
-#: projects/views.py:492
+#: projects/views.py:697
 #, fuzzy
 msgid "Enter a commit message"
 msgstr "Μήνυμα εναπόθεσης"
 
-#: projects/views.py:550
-#: webtrans/views.py:120
+#: projects/views.py:755 webtrans/views.py:124
 #, fuzzy, python-format
 msgid "File submitted successfully: %s"
 msgstr "Η υποβολή σας εναποτέθηκε με επιτυχία."
 
-#: projects/views.py:565
-msgid "Your file does not pass correctness checks (msgfmt -c). Please run this command on your system to see the errors."
+#: projects/views.py:770
+msgid ""
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
 msgstr ""
 
-#: projects/views.py:574
+#: projects/views.py:779
 msgid "Sorry, your file could not be sent because of an error."
 msgstr ""
 
-#: projects/views.py:578
-#: projects/views.py:608
+#: projects/views.py:783 projects/views.py:821
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:597
+#: projects/views.py:810
 msgid "Lock removed."
 msgstr ""
 
-#: projects/views.py:600
+#: projects/views.py:813
 msgid "Error: Only the owner of a lock can remove it."
 msgstr ""
 
-#: projects/views.py:604
+#: projects/views.py:817
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 
-#: releases/models.py:26
-#: txcollections/models.py:29
+#: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
 msgstr ""
 
@@ -901,7 +951,7 @@ msgstr ""
 msgid "Use Markdown syntax."
 msgstr ""
 
-#: releases/models.py:31
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Release date"
 msgstr "Εκδόσεις"
@@ -916,16 +966,21 @@ msgid "String freeze date"
 msgstr "Εκδόσεις"
 
 #: releases/models.py:34
-msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
+msgid ""
+"When the translatable strings will be frozen (no strings can be added/"
+"modified which affect translations."
 msgstr ""
 
-#: releases/models.py:36
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 #, fuzzy
 msgid "Devel freeze date"
 msgstr "Εκδόσεις"
 
 #: releases/models.py:37
-msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
+msgid ""
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 
 #: releases/models.py:54
@@ -933,8 +988,7 @@ msgstr ""
 msgid "release"
 msgstr "Κυκλοφορία"
 
-#: releases/models.py:55
-#: templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 #, fuzzy
 msgid "releases"
@@ -949,25 +1003,17 @@ msgstr "Ολλανδική"
 msgid "Stop watching it"
 msgstr ""
 
-#: repowatch/models.py:24
+#: repowatch/models.py:25
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr ""
 
-#: repowatch/models.py:88
-msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
-
-#: repowatch/models.py:90
-msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
-
-#: repowatch/models.py:141
+#: repowatch/models.py:94
 #, fuzzy
 msgid "watch"
 msgstr "Ολλανδική"
 
-#: repowatch/models.py:142
+#: repowatch/models.py:95
 #, fuzzy
 msgid "watches"
 msgstr "Κλάδοι"
@@ -982,40 +1028,41 @@ msgstr "Locale"
 msgid "Locks"
 msgstr "Τεκμηρίωση"
 
-#: tarball/models.py:31
+#: tarball/models.py:33
 msgid "tarball"
 msgstr ""
 
-#: tarball/models.py:32
+#: tarball/models.py:34
 msgid "tarballs"
 msgstr ""
 
-#: templates/403.html:4
-#: templates/403.html.py:7
+#: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr ""
 
 #: templates/403.html:12
-msgid "Looks like you do not have the necessary permissions for the required action."
+msgid ""
+"Looks like you do not have the necessary permissions for the required action."
 msgstr ""
 
-#: templates/403.html:15
-#: templates/404.html:15
+#: templates/403.html:15 templates/404.html:15
 #, python-format
-msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
+msgid ""
+"Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
+"case."
 msgstr ""
 
-#: templates/404.html:4
-#: templates/404.html.py:7
+#: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
 msgstr ""
 
 #: templates/404.html:12
-msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
+msgid ""
+"Looks like you followed a bad link. If you think it's our fault, please <a "
+"href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
 
-#: templates/500.html:4
-#: templates/500.html.py:7
+#: templates/500.html:4 templates/500.html.py:7
 msgid "Page unavailable"
 msgstr ""
 
@@ -1024,25 +1071,25 @@ msgid "We're sorry, but the requested page is currently unavailable."
 msgstr ""
 
 #: templates/500.html:14
-msgid "We're messing around with things internally, and the server had a bit of a hiccup."
+msgid ""
+"We're messing around with things internally, and the server had a bit of a "
+"hiccup."
 msgstr ""
 
 #: templates/500.html:16
 msgid "Please try again later."
 msgstr ""
 
-#: templates/about.html:9
-#: templates/index.html:9
+#: templates/about.html:9 templates/index.html:9
 msgid "Welcome to Transifex"
 msgstr "Καλωσήρθατε στο Transifex"
 
-#: templates/base-sample.html:8
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34
-#: txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
 msgstr ""
 
@@ -1055,8 +1102,7 @@ msgstr "Transifex logo"
 msgid "The projects being served"
 msgstr ""
 
-#: templates/base-sample.html:39
-#: templates/projects/base.html:6
+#: templates/base-sample.html:39 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 #, fuzzy
 msgid "Projects"
@@ -1071,8 +1117,7 @@ msgstr "Συλλογές"
 msgid "The languages our service serves"
 msgstr ""
 
-#: templates/base-sample.html:41
-#: templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
@@ -1080,7 +1125,9 @@ msgstr "Γλώσσες"
 
 #: templates/base-sample.html:47
 #, python-format
-msgid "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
+msgid ""
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
 msgstr ""
 
 #: templates/base-sample.html:48
@@ -1092,24 +1139,18 @@ msgstr "Ιστότοποι Fedora"
 msgid "Sign out"
 msgstr "Έξοδος"
 
-#: templates/base-sample.html:50
-#: templates/authopenid/login_box.html:5
-#: templates/authopenid/login_box.html:12
-#: templates/authopenid/signin.html:4
-#: templates/authopenid/signin.html.py:6
-#: templates/authopenid/signin.html:31
-#: templates/authopenid/signin.html:37
-#: templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17
-#: templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:6
-#: templates/simpleauth/signin.html:4
+#: templates/base-sample.html:50 templates/authopenid/login_box.html:5
+#: templates/authopenid/login_box.html:12 templates/authopenid/signin.html:4
+#: templates/authopenid/signin.html.py:6 templates/authopenid/signin.html:31
+#: templates/authopenid/signin.html:37 templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
+#: templates/simpleauth/logout.html.py:6 templates/simpleauth/signin.html:4
 #: templates/simpleauth/signin.html.py:6
 msgid "Sign in"
 msgstr "Είσοδος"
 
 #: templates/base-sample.html:53
-#: templates/userprofile/account/includes/registration_form.html:33
+#: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr ""
 
@@ -1126,19 +1167,20 @@ msgid "Feedback"
 msgstr ""
 
 #: templates/index.html:27
-msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
+msgid ""
+"Transifex is a service aimed at helping translators keep track of their "
+"favourite translation projects."
 msgstr ""
 
 #: templates/index.html:31
 #, python-format
-msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
+msgid ""
+"You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 
-#: templates/search.html:7
-#: templates/search.html.py:9
-#: templates/search_form.html:6
-#: templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:57
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6 templates/search_form_plain.html:5
+#: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -1162,14 +1204,15 @@ msgstr ""
 
 #: templates/search.html:51
 #, python-format
-msgid "No projects found for \"%(q)s\". You might want to change your query a bit."
+msgid ""
+"No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr ""
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
 msgstr ""
 
-#: templates/search.html:61
+#: templates/search.html:62
 #, fuzzy
 msgid "add it"
 msgstr "Επεξεργασία"
@@ -1178,13 +1221,17 @@ msgstr "Επεξεργασία"
 msgid "Find projects by name, description, etc."
 msgstr ""
 
+#: templates/admin/base_site.html:9
+#, fuzzy
+msgid "Transifex administration"
+msgstr "Εργαλείο διαχείρισης εκτυπωτών"
+
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
 #: templates/authopenid/settings.html:18
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5
-#: templates/userprofile/base_2col.html:3
+#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
 msgid "Profile"
 msgstr "Προφίλ"
 
@@ -1205,20 +1252,18 @@ msgstr "E-mail διεύθυνση"
 
 #: templates/authopenid/changeemail.html:10
 msgid ""
-"This is where you can change the email address associated with your account.\n"
-"Please keep this email address up to date so we can send you a password-reset email if you request one."
+"This is where you can change the email address associated with your "
+"account.\n"
+"Please keep this email address up to date so we can send you a password-"
+"reset email if you request one."
 msgstr ""
 
 #: templates/authopenid/changeemail.html:15
 #: templates/authopenid/changeopenid.html:12
-#: templates/authopenid/changepw.html:12
-#: templates/authopenid/complete.html:25
-#: templates/authopenid/complete.html:35
-#: templates/authopenid/delete.html:12
-#: templates/authopenid/delete.html:23
-#: templates/authopenid/sendpw.html:12
-#: templates/authopenid/signin.html:19
-#: templates/authopenid/signup.html:17
+#: templates/authopenid/changepw.html:12 templates/authopenid/complete.html:25
+#: templates/authopenid/complete.html:35 templates/authopenid/delete.html:12
+#: templates/authopenid/delete.html:23 templates/authopenid/sendpw.html:12
+#: templates/authopenid/signin.html:19 templates/authopenid/signup.html:17
 msgid "Please correct errors below:"
 msgstr ""
 
@@ -1229,8 +1274,6 @@ msgstr "Email"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
-#: templates/userprofile/account/login.html:26
-#: templates/userprofile/account/includes/registration_form.html:17
 msgid "Password"
 msgstr "Συνθηματικό:"
 
@@ -1250,22 +1293,22 @@ msgid "Change my OpenID"
 msgstr ""
 
 #: templates/authopenid/changeopenid.html:10
-msgid "This is where you can change the OpenID URL associated with your account."
+msgid ""
+"This is where you can change the OpenID URL associated with your account."
 msgstr ""
 
 #: templates/authopenid/changeopenid.html:26
 msgid "OpenID URL:"
 msgstr ""
 
-#: templates/authopenid/changepw.html:4
-#: templates/authopenid/changepw.html:6
+#: templates/authopenid/changepw.html:4 templates/authopenid/changepw.html:6
 msgid "Change my password"
 msgstr "Αλλαγή του συνθηματικού μου"
 
-#: templates/authopenid/changepw.html:5
-#: templates/authopenid/changepw.html:23
+#: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
-#: templates/userprofile/profile/overview.html:92
+#: templates/userprofile/account/password_reset_confirm.html:31
+#: templates/userprofile/profile/overview.html:88
 msgid "Change password"
 msgstr "Αλλαγή συνθηματικού"
 
@@ -1278,8 +1321,6 @@ msgid "Current password"
 msgstr ""
 
 #: templates/authopenid/changepw.html:21
-#: templates/userprofile/account/password_change.html:30
-#: templates/userprofile/account/password_reset_confirm.html:26
 msgid "New password"
 msgstr "Νέο Συνθηματικό:"
 
@@ -1287,8 +1328,7 @@ msgstr "Νέο Συνθηματικό:"
 msgid "New password again"
 msgstr ""
 
-#: templates/authopenid/complete.html:4
-#: templates/authopenid/complete.html:5
+#: templates/authopenid/complete.html:4 templates/authopenid/complete.html:5
 #: templates/authopenid/complete.html:6
 msgid "OpenID verification"
 msgstr ""
@@ -1300,7 +1340,8 @@ msgstr ""
 #: templates/authopenid/complete.html:14
 msgid ""
 "\n"
-"\t<p>Your OpenID can now be associated with a new or existing membership. You can change the association later in your preferences.</p>\n"
+"\t<p>Your OpenID can now be associated with a new or existing membership. "
+"You can change the association later in your preferences.</p>\n"
 "\t"
 msgstr ""
 
@@ -1311,7 +1352,9 @@ msgstr ""
 #: templates/authopenid/complete.html:19
 msgid ""
 "\n"
-"\t<p>If you're joining for the first time, associate your OpenID with a new account. If you're already a member, associate with your existing account.</p>\n"
+"\t<p>If you're joining for the first time, associate your OpenID with a new "
+"account. If you're already a member, associate with your existing account.</"
+"p>\n"
 "\t"
 msgstr ""
 
@@ -1320,11 +1363,8 @@ msgstr ""
 msgid "A new account"
 msgstr "Ένας νέος λογαριασμός"
 
-#: templates/authopenid/complete.html:50
-#: templates/authopenid/complete.html:66
+#: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
-#: templates/userprofile/account/login.html:20
-#: templates/userprofile/account/includes/registration_form.html:5
 #: templates/userprofile/profile/public.html:33
 msgid "Username"
 msgstr "Όνομα χρήστη"
@@ -1334,26 +1374,25 @@ msgstr "Όνομα χρήστη"
 msgid "An exisiting account"
 msgstr "Ένας υπάρχων λογαριασμός"
 
-#: templates/authopenid/delete.html:4
-#: templates/authopenid/delete.html.py:6
+#: templates/authopenid/delete.html:4 templates/authopenid/delete.html.py:6
 msgid "Delete my account"
 msgstr "Διαγραφή του λογαριασμού μου"
 
-#: templates/authopenid/delete.html:5
-#: templates/authopenid/settings.html:47
+#: templates/authopenid/delete.html:5 templates/authopenid/settings.html:47
 msgid "Delete account"
 msgstr "Διαγραφή λογαριασμού"
 
 #: templates/authopenid/delete.html:9
-msgid "Note: After deleting your account, anyone will be able to register this username."
+msgid ""
+"Note: After deleting your account, anyone will be able to register this "
+"username."
 msgstr ""
 
 #: templates/authopenid/delete.html:14
 msgid "Check the confirm box, if you really want to delete your account."
 msgstr ""
 
-#: templates/authopenid/delete.html:17
-#: templates/authopenid/login_box.html:11
+#: templates/authopenid/delete.html:17 templates/authopenid/login_box.html:11
 #: templates/authopenid/signin.html:36
 msgid "Password:"
 msgstr "Συνθηματικό:"
@@ -1374,34 +1413,28 @@ msgstr ""
 msgid "Delete account permanently"
 msgstr ""
 
-#: templates/authopenid/login_box.html:10
-#: templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:41
+#: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
+#: templates/userprofile/profile/overview.html:39
 msgid "Username:"
 msgstr "Όνομα χρήστη:"
 
-#: templates/authopenid/login_box.html:14
-#: templates/authopenid/signin.html:39
+#: templates/authopenid/login_box.html:14 templates/authopenid/signin.html:39
 msgid "Or, with your OpenID:"
 msgstr ""
 
-#: templates/authopenid/login_box.html:20
-#: templates/authopenid/signin.html:42
+#: templates/authopenid/login_box.html:20 templates/authopenid/signin.html:42
 msgid "Sign in with OpenID"
 msgstr ""
 
-#: templates/authopenid/login_box.html:22
-#: templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:44
+#: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
+#: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
 msgstr ""
 
-#: templates/authopenid/sendpw.html:4
-#: templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:4
-#: templates/userprofile/account/password_reset.html:20
-#: templates/userprofile/account/password_reset_complete.html:19
-#: templates/userprofile/account/password_reset_confirm.html:55
+#: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:22
 #, fuzzy
 msgid "Password reset"
 msgstr "Συνθηματικό:"
@@ -1411,20 +1444,22 @@ msgid "I lost my password!"
 msgstr ""
 
 #: templates/authopenid/sendpw.html:10
-msgid "No worries! Here you can ask to reset your password by entering the username you use. You will then get a confirmation email with your new password. The new password will be activated only after you have clicked on the link in the email."
+msgid ""
+"No worries! Here you can ask to reset your password by entering the username "
+"you use. You will then get a confirmation email with your new password. The "
+"new password will be activated only after you have clicked on the link in "
+"the email."
 msgstr ""
 
 #: templates/authopenid/sendpw.html:27
 msgid "Send new password"
 msgstr ""
 
-#: templates/authopenid/settings.html:17
-#: templates/simpleauth/settings.html:4
+#: templates/authopenid/settings.html:17 templates/simpleauth/settings.html:4
 msgid "Your Profile"
 msgstr "Το προφίλ σας"
 
-#: templates/authopenid/settings.html:22
-#: templates/simpleauth/settings.html:9
+#: templates/authopenid/settings.html:22 templates/simpleauth/settings.html:9
 #, python-format
 msgid "Your profile, %(user)s"
 msgstr ""
@@ -1449,14 +1484,12 @@ msgstr ""
 msgid "Change openid associated to your account"
 msgstr ""
 
-#: templates/authopenid/settings.html:44
-#: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:106
+#: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr ""
 
-#: templates/authopenid/settings.html:45
-#: templates/simpleauth/settings.html:24
+#: templates/authopenid/settings.html:45 templates/simpleauth/settings.html:24
 msgid "Change notifications associated to your account"
 msgstr ""
 
@@ -1464,21 +1497,21 @@ msgstr ""
 msgid "Erase your username and all your data from website"
 msgstr ""
 
-#: templates/authopenid/signin.html:5
-#: templates/simpleauth/logout.html:5
+#: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:36
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Login"
 msgstr "Σύνδεση"
 
 #: templates/authopenid/signin.html:10
 msgid ""
 "\n"
-"<p>Please login in with your email or screen name, or using your OpenID URL.<br />\n"
+"<p>Please login in with your email or screen name, or using your OpenID URL."
+"<br />\n"
 msgstr ""
 
-#: templates/authopenid/signup.html:4
-#: templates/authopenid/signup.html.py:5
+#: templates/authopenid/signup.html:4 templates/authopenid/signup.html.py:5
 msgid "Join us"
 msgstr ""
 
@@ -1489,7 +1522,8 @@ msgstr "Δημιουργείστε τον λογαριασμό σας"
 #: templates/authopenid/signup.html:10
 msgid ""
 "\n"
-"<p>There are two ways to join: with an email and screen name or with an OpenID.</p>\n"
+"<p>There are two ways to join: with an email and screen name or with an "
+"OpenID.</p>\n"
 "<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
 
@@ -1537,7 +1571,9 @@ msgid "Let us know what you think!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:10
-msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
+msgid ""
+"We'd like to make this web service as useful as possible for our users. If "
+"you have any feedback to provide, please do so!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:22
@@ -1556,22 +1592,26 @@ msgstr "Ευχαριστούμε!"
 msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/languages/language_detail.html:19
+#: templates/languages/language_detail.html:18
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
 msgstr ""
 
-#: templates/languages/language_detail.html:25
+#: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
-msgid "The %(collection)s collection includes the following groups of shipped components:"
+msgid ""
+"The %(collection)s collection includes the following groups of shipped "
+"components:"
 msgstr ""
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
 #, python-format
-msgid "No releases are registered for this collection yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
+msgid ""
+"No releases are registered for this collection yet. Why don't you <a href=\"%"
+"(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/languages/language_list.html:15
@@ -1583,8 +1623,8 @@ msgid "No languages registered yet. :-("
 msgstr ""
 
 #: templates/languages/language_list.html:35
-#, python-format
-msgid "Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
+msgid ""
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 
 #: templates/languages/language_release.html:33
@@ -1593,12 +1633,17 @@ msgid "Project/Component statistics"
 msgstr "Translation"
 
 #: templates/languages/language_release.html:52
-msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
+msgid ""
+"Transifex searched for projects containing translation files for this "
+"language and release, but couldn't find any. Try submitting such a file and "
+"check again."
 msgstr ""
 
 #: templates/languages/language_release.html:53
 #, python-format
-msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
+msgid ""
+"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
+"us know</a>."
 msgstr ""
 
 #: templates/languages/language_release.html:57
@@ -1608,11 +1653,12 @@ msgstr "Μεταφράστηκε"
 
 #: templates/languages/language_release.html:59
 #, python-format
-msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
 msgstr ""
 
-#: templates/notification/notices.html:6
-#: templates/notification/notices.html:7
+#: templates/notification/notices.html:6 templates/notification/notices.html:7
 #, fuzzy
 msgid "Notifications"
 msgstr "Εφαρμογές"
@@ -1636,7 +1682,10 @@ msgid "No notices."
 msgstr "Ειδοποιήσεις"
 
 #: templates/notification/notices.html:54
-msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list below and choose which events you would like to be notified by email."
+msgid ""
+"You can receive notifications whenever an event occurs in Transifex. Check "
+"the notifications available for you on the list below and choose which "
+"events you would like to be notified by email."
 msgstr ""
 
 #: templates/notification/notices.html:55
@@ -1653,12 +1702,14 @@ msgid "Account"
 msgstr "Λογαριασμός"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:115
+#: templates/projects/component_detail.html:118
 msgid "Note"
 msgstr "σημείωση"
 
 #: templates/notification/notices.html:59
-msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
+msgid ""
+"You do not have a verified email address to which notices can be sent. You "
+"can add one by going to"
 msgstr ""
 
 #: templates/notification/notices.html:67
@@ -1666,50 +1717,62 @@ msgid "Notification Type"
 msgstr ""
 
 #: templates/notification/notices.html:85
-#: templates/userprofile/account/password_change.html:46
-#: templates/userprofile/account/password_reset_confirm.html:42
+#: templates/userprofile/account/email_validation.html:31
+#: templates/userprofile/account/password_change.html:29
 #, fuzzy
 msgid "Change"
 msgstr "Changelog"
 
-#: templates/notification/single.html:5
-#: templates/notification/single.html:8
+#: templates/notification/single.html:5 templates/notification/single.html:8
 #, fuzzy
 msgid "Notice"
 msgstr "Ειδοποιήσεις"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
-msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
+msgid ""
+"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
 msgstr ""
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
-msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
+msgid ""
+"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
 msgstr ""
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
-msgid "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
+"been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
-msgid "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgid ""
+"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
 msgstr ""
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
-msgid "The component '%(component_name)s' has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"The component '%(component_name)s' has been deleted from the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
-msgid "The following files in the <a href=\"%(component_url)s\">%(component_name)s</a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project have been updated:"
+msgid ""
+"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
+"have been updated:"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
@@ -1719,12 +1782,17 @@ msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
-msgid "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
-msgid "The source file (POT) has some problems and can not be created/updated to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"The source file (POT) has some problems and can not be created/updated to "
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:6
@@ -1742,7 +1810,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
+"  Are you sure you want to permanently delete the component '%"
+"(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
@@ -1753,120 +1822,136 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Ναι, είμαι σίγουρος/η!!"
 
-#: templates/projects/component_detail.html:23
-msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
-msgstr ""
-
 #: templates/projects/component_detail.html:25
-msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files to the maintainers\\' email."
 msgstr ""
 
-#: templates/projects/component_detail.html:29
-msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
+#: templates/projects/component_detail.html:27
+msgid ""
+"This component does not support local storing of submitted files. The "
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 
-#: templates/projects/component_detail.html:73
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:31
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files direct to the upstream repository."
+msgstr ""
+
+#: templates/projects/component_detail.html:76
+#: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: templates/projects/component_detail.html:82
+#: templates/projects/component_detail.html:85
 #, fuzzy
 msgid "Repository:"
 msgstr "Αποθετήριο:"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "Link to a web front-end to the source"
 msgstr ""
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:95
 #, fuzzy
 msgid "Branch:"
 msgstr "Κλάδοι"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:100
 msgid "File filter:"
 msgstr ""
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:106
 #, fuzzy
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Κυκλοφορία"
 msgstr[1] "Κυκλοφορία"
 
-#: templates/projects/component_detail.html:111
+#: templates/projects/component_detail.html:114
 #, fuzzy
 msgid "Allows submissions:"
 msgstr "Μεταφράσεις Fedora :: Προεπισκόπηση υποβολής"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:128
 #, fuzzy
 msgid "Translation files"
 msgstr "Translation"
 
-#: templates/projects/component_detail.html:130
+#: templates/projects/component_detail.html:133
 msgid "Source file:"
 msgstr ""
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:140
 #, fuzzy
 msgid "Statistics last updated:"
 msgstr "Σελίδες wiki FLP"
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:142
 msgid "ago"
 msgstr ""
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:143
 msgid "Component not yet pulled from source repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh cache"
 msgstr ""
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 #, fuzzy
 msgid "Clear cache"
 msgstr "Όνομα"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "warning"
 msgstr "προειδοποίηση"
 
-#: templates/projects/component_detail.html:166
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:163
+#, fuzzy
+msgid "Become a translator:"
+msgstr "Αναγνώριση"
+
+#: templates/projects/component_detail.html:167
+msgid "Your request is pending for approval."
+msgstr ""
+
+#: templates/projects/component_detail.html:190
+#: templates/projects/project_detail.html:116
 #, fuzzy
 msgid "History"
 msgstr "Κατάλογος"
 
-#: templates/projects/component_detail.html:170
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:194
+#: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr ""
 
-#: templates/projects/component_detail.html:186
+#: templates/projects/component_detail.html:211
 msgid "Delete component"
 msgstr ""
 
@@ -1902,44 +1987,46 @@ msgstr "Υποβάλετε μεταφράσεις"
 msgid "Save component"
 msgstr "σχόλιο"
 
-#: templates/projects/component_lang_detail.html:28
+#: templates/projects/component_lang_detail.html:29
 #, fuzzy
 msgid "translation files"
 msgstr "Translation"
 
-#: templates/projects/component_list.html:9
+#: templates/projects/component_list.html:11
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: templates/projects/component_list.html:14
+#: templates/projects/component_list.html:16
 #, fuzzy
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Κοινές οντότητες"
 msgstr[1] "Κοινές οντότητες"
 
-#: templates/projects/component_list.html:25
+#: templates/projects/component_list.html:27
 msgid "edit"
 msgstr "επεξεργασία"
 
-#: templates/projects/component_list.html:28
+#: templates/projects/component_list.html:30
 msgid "del"
 msgstr ""
 
-#: templates/projects/component_list.html:44
+#: templates/projects/component_list.html:46
 msgid "No components are registered for this project yet."
 msgstr ""
 
-#: templates/projects/component_list.html:45
+#: templates/projects/component_list.html:48
 #, fuzzy
 msgid "Add one!"
 msgstr "Όλα τα αρθρώματα"
 
-#: templates/projects/component_list.html:49
+#: templates/projects/component_list.html:54
 msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
+"<em>Components</em> are smaller, self-contained parts of a larger project "
+"which consist of actual files.\n"
+"    Examples of components of a software project could be \"UI\" and \"Docs"
+"\" or development branches like <code>HEAD</code>."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
@@ -1970,7 +2057,9 @@ msgid "Select the target file:"
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:27
-msgid "The target file is the name of the new file language. It must matches with the component file filter."
+msgid ""
+"The target file is the name of the new file language. It must matches with "
+"the component file filter."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:30
@@ -2006,7 +2095,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr ""
 
 #: templates/projects/project_confirm_delete.html:8
-#: templates/userprofile/avatar/choose.html:86
+#: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -2019,42 +2108,44 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
+"  Are you sure you want to permanently delete the registered project '%"
+"(project_name)s'?\n"
 msgstr ""
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:42
+#: templates/projects/project_form_base.html:87
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Λεπτομέρειες"
 
-#: templates/projects/project_detail.html:47
+#: templates/projects/project_detail.html:49
 #, fuzzy
 msgid "Watch:"
 msgstr "Ολλανδική"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 #, fuzzy
 msgid "Homepage:"
 msgstr "Ιστοσελίδα χρήστη:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_detail.html:61
+#: templates/projects/project_detail.html:63
 msgid "Bug tracker:"
 msgstr ""
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:69
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
@@ -2062,57 +2153,82 @@ msgstr ""
 msgid "Tags:"
 msgstr "Ομάδες"
 
-#: templates/projects/project_detail.html:76
+#: templates/projects/project_detail.html:78
 #, fuzzy
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Συλλογές"
 msgstr[1] "Συλλογές"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:88
 #, fuzzy
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Συντηρεί:"
 msgstr[1] "Συντηρεί:"
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:102
 msgid "External links:"
 msgstr ""
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:104
 msgid "Screenshots"
 msgstr ""
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:139
 msgid "Delete project"
 msgstr ""
 
-#: templates/projects/project_form.html:6
-#: templates/projects/project_form.html:11
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:13
+#, fuzzy
+msgid "Save project"
+msgstr "Αποτελέσματα αναζήτησης"
+
+#: templates/projects/project_form_base.html:8
+#: templates/projects/project_form_base.html:13
+#: templates/projects/project_form_base.html:71
 msgid "Add a project"
 msgstr ""
 
-#: templates/projects/project_form.html:7
+#: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr ""
 
-#: templates/projects/project_form.html:12
+#: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
 msgstr ""
 
-#: templates/projects/project_form.html:20
+#: templates/projects/project_form_base.html:27
+msgid "Access control will be enabled once the project is created"
+msgstr ""
+
+#: templates/projects/project_form_base.html:74
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr ""
 
-#: templates/projects/project_form.html:36
-#, fuzzy
-msgid "Save project"
-msgstr "Αποτελέσματα αναζήτησης"
+#: templates/projects/project_form_base.html:88
+msgid "Access Control"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:10
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:12
+msgid "Requests for access to submit files"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:51
+msgid "Pending requests:"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:63
+msgid "Users with guaranteed access to submit files:"
+msgstr ""
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2142,14 +2258,16 @@ msgstr "Αποθετήριο"
 msgid "No projects registered yet. :-("
 msgstr ""
 
-#: templates/projects/project_list.html:56
+#: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr ""
 
-#: templates/projects/project_list.html:64
+#: templates/projects/project_list.html:67
 #, python-format
-msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
+msgid ""
+"Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
+"it</a>!"
 msgstr ""
 
 #: templates/simpleauth/logout.html:9
@@ -2157,7 +2275,9 @@ msgid "<p>You have been logged out."
 msgstr ""
 
 #: templates/simpleauth/settings.html:15
-msgid "Any settings associated with your account are presented and may be modified here."
+msgid ""
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 
 #: templates/simpleauth/signin.html:10
@@ -2185,7 +2305,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered collection '%(collection_name)s'?\n"
+"  Are you sure you want to permanently delete the registered collection '%"
+"(collection_name)s'?\n"
 msgstr ""
 
 #: templates/txcollections/collection_detail.html:43
@@ -2193,21 +2314,23 @@ msgstr ""
 msgid "Homepage for %(collection_name)s"
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:92
+#: templates/txcollections/collection_detail.html:93
 #, fuzzy, python-format
 msgid "Projects in %(collection)s"
 msgstr "Συντηρητές έργων"
 
-#: templates/txcollections/collection_detail.html:97
+#: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:107
+#: templates/txcollections/collection_detail.html:108
 #, python-format
-msgid "No projects are registered for this collection yet. <a href=\"%(project_list)s\">Find projects</a> and add them to this collection."
+msgid ""
+"No projects are registered for this collection yet. <a href=\"%(project_list)"
+"s\">Find projects</a> and add them to this collection."
 msgstr ""
 
-#: templates/txcollections/collection_detail.html:119
+#: templates/txcollections/collection_detail.html:120
 #, fuzzy
 msgid "Delete collection"
 msgstr "Συλλογές"
@@ -2254,8 +2377,7 @@ msgstr ""
 msgid "Collections on Transifex"
 msgstr "Συλλογές"
 
-#: templates/txcollections/collection_list.html:19
-#: txcollections/models.py:57
+#: templates/txcollections/collection_list.html:19 txcollections/models.py:57
 #, fuzzy
 msgid "collections"
 msgstr "Συλλογές"
@@ -2283,14 +2405,16 @@ msgstr[1] ""
 msgid "No collections registered yet. :-("
 msgstr ""
 
-#: templates/txcollections/collection_list.html:55
+#: templates/txcollections/collection_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
 msgstr ""
 
-#: templates/txcollections/collection_list.html:63
+#: templates/txcollections/collection_list.html:66
 #, python-format
-msgid "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s\">add it</a>!"
+msgid ""
+"Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
+"\">add it</a>!"
 msgstr ""
 
 #: templates/txcollections/release_confirm_delete.html:4
@@ -2312,7 +2436,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered release '%(release_name)s'?\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
 msgstr ""
 
 #: templates/txcollections/release_detail.html:55
@@ -2372,12 +2497,40 @@ msgstr ""
 msgid "Save release"
 msgstr "Κυκλοφορία"
 
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with guarantied access to submit files:"
+msgstr ""
+
+#: templates/txpermissions/permission_delete_form.html:5
+msgid "Revoke permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:13
+#, fuzzy
+msgid "Grant permission"
+msgstr "Υποβολή μεταφράσεων"
+
+#: templates/txpermissions/permission_form.html:15
+msgid "Request permission"
+msgstr ""
+
+#: templates/txpermissions/permission_request_approve_form.html:5
+msgid "Approve request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:6
+msgid "Withdraw request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:8
+msgid "Deny request"
+msgstr ""
+
 #: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Προεπισκόπηση"
 
 #: templates/userprofile/menu.html:6
-#: templates/userprofile/profile/personal.html:36
 #, fuzzy
 msgid "Personal information"
 msgstr "Πληροφορίες επικοινωνίας"
@@ -2387,42 +2540,36 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:38
 #, fuzzy
 msgid "Location"
 msgstr "Εφαρμογές"
 
 #: templates/userprofile/menu.html:9
-#: templates/userprofile/profile/delete.html:22
+#: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr ""
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:5
 msgid "E-mail change"
 msgstr "Αλλαγή E-mail"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation.html:40
-#: templates/userprofile/account/email_validation_processed.html:20
+#: templates/userprofile/account/email_validation.html:5
+#: templates/userprofile/account/email_validation_processed.html:12
 msgid "Add e-mail"
 msgstr "Προσθήκη e-mail"
 
-#: templates/userprofile/account/email_validation.html:24
+#: templates/userprofile/account/email_validation.html:22
 #, fuzzy
-msgid "New e-mail address"
+msgid "Add a new e-mail address"
 msgstr "E-mail διεύθυνση"
 
-#: templates/userprofile/account/email_validation.html:34
-#, fuzzy
-msgid "Send confirmation"
-msgstr "Πληροφορίες αρθρώματος"
-
-#: templates/userprofile/account/email_validation.html:41
-#: templates/userprofile/account/email_validation_processed.html:21
-msgid "Insert the new e-mail address. An e-mail will be send to it for testing and confirmation"
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:4
@@ -2433,56 +2580,55 @@ msgstr ""
 msgid "E-mail change unsuccessful"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:14
-#, fuzzy
-msgid "E-mail address validated successfully"
-msgstr "Η υποβολή σας εναποτέθηκε με επιτυχία."
-
-#: templates/userprofile/account/email_validation_done.html:16
-msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again"
-msgstr ""
-
-#: templates/userprofile/account/email_validation_done.html:23
-#: templates/userprofile/account/email_validation_reset_response.html:22
+#: templates/userprofile/account/email_validation_done.html:12
+#: templates/userprofile/account/email_validation_reset_response.html:13
 msgid "E-mail validation process"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "You can manage the e-mail validation process from the"
+#: templates/userprofile/account/email_validation_done.html:13
+#, python-format
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
 msgstr ""
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "overview page"
+#: templates/userprofile/account/email_validation_done.html:17
+#, fuzzy
+msgid "E-mail address validated successfully."
+msgstr "Η υποβολή σας εναποτέθηκε με επιτυχία."
+
+#: templates/userprofile/account/email_validation_done.html:19
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_processed.html:4
-#: templates/userprofile/account/email_validation_processed.html:13
+#: templates/userprofile/account/email_validation_processed.html:16
 msgid "E-mail change processed"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_processed.html:14
-msgid "An e-mail has been sent to the new e-mail address to verify and activate it. Please access to your e-mail and complete this process following the instructions specified in the e-mail body"
+#: templates/userprofile/account/email_validation_processed.html:17
+msgid ""
+"An e-mail has been sent to the new e-mail address to verify and activate it. "
+"Please access to your e-mail and complete this process following the "
+"instructions specified in the e-mail body."
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset.html:4
-#: templates/userprofile/account/email_validation_reset.html:19
-#: templates/userprofile/account/email_validation_reset.html:36
+#: templates/userprofile/account/email_validation_reset.html:5
+#: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset.html:20
-#, fuzzy
-msgid "Insert your e-mail address"
-msgstr "E-mail διεύθυνση"
-
-#: templates/userprofile/account/email_validation_reset.html:30
-msgid "Resend confirmation"
+#: templates/userprofile/account/email_validation_reset.html:19
+msgid ""
+"If you haven't validated your e-mail address yet you will not be able to "
+"login. Insert your registered e-mail address to receive the validation e-"
+"mail again."
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset.html:37
-msgid "If you haven't validated your e-mail address yet you will not be able to login. Insert your registered e-mail address to receive the validation e-mail again"
+#: templates/userprofile/account/email_validation_reset.html:26
+msgid "Resend confirmation"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
@@ -2495,72 +2641,72 @@ msgid "Your user account was already active"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
-msgid "We've e-mailed you the e-mail validation link"
+msgid "You can manage the e-mail validation process from the"
 msgstr ""
 
-#: templates/userprofile/account/email_validation_reset_response.html:16
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "overview page"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:17
+msgid "We've e-mailed you the e-mail validation link."
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
 msgstr ""
 
-#: templates/userprofile/account/login.html:4
-#: templates/userprofile/account/login.html:19
+#: templates/userprofile/account/login.html:5
 msgid "User login"
 msgstr ""
 
-#: templates/userprofile/account/login.html:42
+#: templates/userprofile/account/login.html:19
+msgid "Enter your username and password to login."
+msgstr ""
+
+#: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr ""
 
-#: templates/userprofile/account/login.html:46
-#: templates/userprofile/profile/overview.html:95
+#: templates/userprofile/account/login.html:40
+#: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
 msgstr ""
 
-#: templates/userprofile/account/login.html:48
+#: templates/userprofile/account/login.html:42
 msgid "Sign up!"
 msgstr ""
 
-#: templates/userprofile/account/logout.html:4
-#: templates/userprofile/account/logout.html:9
+#: templates/userprofile/account/logout.html:5
+#: templates/userprofile/account/logout.html:10
 #, fuzzy
 msgid "Logged out"
 msgstr "Root"
 
-#: templates/userprofile/account/logout.html:10
-msgid "You've been logged out"
+#: templates/userprofile/account/logout.html:11
+msgid "You've been logged out."
 msgstr ""
 
-#: templates/userprofile/account/logout.html:10
+#: templates/userprofile/account/logout.html:11
 msgid "Log in again"
 msgstr ""
 
-#: templates/userprofile/account/password_change.html:4
-#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:4
 #, fuzzy
 msgid "Password change for"
 msgstr "Συνθηματικό:"
 
-#: templates/userprofile/account/password_change.html:24
-#, fuzzy
-msgid "Old password"
-msgstr "Συνθηματικό:"
-
-#: templates/userprofile/account/password_change.html:36
-#: templates/userprofile/account/password_reset_confirm.html:32
-#, fuzzy
-msgid "Confirm password"
-msgstr "Συνθηματικό:"
-
-#: templates/userprofile/account/password_change.html:52
-#: templates/userprofile/account/password_change_done.html:19
+#: templates/userprofile/account/password_change.html:22
+#: templates/userprofile/account/password_change_done.html:12
 #, fuzzy
 msgid "Password change"
 msgstr "Συνθηματικό:"
 
-#: templates/userprofile/account/password_change.html:53
-#: templates/userprofile/account/password_change_done.html:20
-msgid "Password change utility page. Please enter your new password twice so we can verify you typed it in correctly"
+#: templates/userprofile/account/password_change.html:23
+msgid ""
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/userprofile/account/password_change_done.html:4
@@ -2569,9 +2715,10 @@ msgstr ""
 msgid "Password change successful"
 msgstr "Συνθηματικό:"
 
-#: templates/userprofile/account/password_change_done.html:13
-msgid "The password has been changed successfully"
-msgstr ""
+#: templates/userprofile/account/password_change_done.html:14
+#, fuzzy
+msgid "The password has been changed successfully."
+msgstr "Συνθηματικό:"
 
 #: templates/userprofile/account/password_expired.html:4
 #, fuzzy
@@ -2579,46 +2726,41 @@ msgid "Password key expired"
 msgstr "Συνθηματικό:"
 
 #: templates/userprofile/account/password_expired.html:9
-msgid "The password key you're trying to use is expired. Please, request a new one"
+msgid ""
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 
-#: templates/userprofile/account/password_reset.html:21
-#, fuzzy
-msgid "E-mail address"
-msgstr "E-mail διεύθυνση"
-
-#: templates/userprofile/account/password_reset.html:31
-#, fuzzy
-msgid "Reset my password"
-msgstr "Συνθηματικό:"
-
-#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 #, fuzzy
 msgid "Password reset form"
 msgstr "Συνθηματικό:"
 
-#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
-msgid "Forgotten your password? Enter your e-mail address, and we'll reset your password and e-mail the new one to you"
+msgid ""
+"Forgotten your password? Enter your e-mail address, and we'll reset your "
+"password and e-mail the new one to you."
 msgstr ""
 
-#: templates/userprofile/account/password_reset_complete.html:13
+#: templates/userprofile/account/password_reset.html:27
+#, fuzzy
+msgid "Reset my password"
+msgstr "Συνθηματικό:"
+
+#: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 
-#: templates/userprofile/account/password_reset_complete.html:20
-#: templates/userprofile/account/password_reset_confirm.html:56
-msgid "Password reset utility page. Please enter your new password twice so we can verify you typed it in correctly"
-msgstr ""
-
-#: templates/userprofile/account/password_reset_confirm.html:47
+#: templates/userprofile/account/password_reset_confirm.html:37
 #, fuzzy
 msgid "Password reset unsuccessful"
 msgstr "Συνθηματικό:"
 
-#: templates/userprofile/account/password_reset_confirm.html:48
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+#: templates/userprofile/account/password_reset_confirm.html:38
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
 msgstr ""
 
 #: templates/userprofile/account/password_reset_done.html:4
@@ -2628,83 +2770,82 @@ msgid "Password reset successful"
 msgstr "Συνθηματικό:"
 
 #: templates/userprofile/account/password_reset_done.html:10
-msgid "We've e-mailed you the instructions to obtain a new password. You should be receiving it shortly"
+msgid ""
+"We've e-mailed you the instructions to obtain a new password. You should be "
+"receiving it shortly."
 msgstr ""
 
 #: templates/userprofile/account/registration.html:4
-#: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
 msgstr ""
 
-#: templates/userprofile/account/registration.html:22
-#: templates/userprofile/account/registration_done.html:19
-msgid "Register a new account"
-msgstr ""
+#: templates/userprofile/account/registration.html:17
+#, fuzzy
+msgid "Register for a Transifex account"
+msgstr "Εκδόσεις"
 
-#: templates/userprofile/account/registration.html:23
-#: templates/userprofile/account/registration_done.html:20
-msgid "Joining this community is quick and easy. You only need to fill the form to get access to all the private content"
+#: templates/userprofile/account/registration.html:18
+msgid ""
+"Joining the Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
 msgstr ""
 
-#: templates/userprofile/account/registration_done.html:10
-msgid "You have successfully registered a new account, and an account activation url has been sent to your e-mail address. You must access this message on your e-mail account to finish the registration process."
+#: templates/userprofile/account/registration_done.html:8
+msgid "Register a new account"
 msgstr ""
 
-#: templates/userprofile/account/registration_done.html:13
+#: templates/userprofile/account/registration_done.html:12
+msgid ""
+"You have successfully registered a new account, and an account activation "
+"url has been sent to your e-mail address. You must access this message on "
+"your e-mail account to finish the registration process."
+msgstr ""
+
+#: templates/userprofile/account/registration_done.html:15
 #, python-format
-msgid "You have successfully registered a new account. Go to the <a href=\"%(overview_url)s\">login page</a> to authenticate and start using this site."
+msgid ""
+"You have successfully registered a new account. Go to the <a href=\"%"
+"(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
-
-#: templates/userprofile/account/includes/registration_form.html:11
-#, fuzzy
-msgid "E-mail"
-msgstr "Ταμίλ"
-
-#: templates/userprofile/account/includes/registration_form.html:11
-#, fuzzy
-msgid "optional"
-msgstr "Ενότητες PO"
-
-#: templates/userprofile/account/includes/registration_form.html:23
-#, fuzzy
-msgid "Password (again)"
-msgstr "Συνθηματικό:"
 
 #: templates/userprofile/avatar/choose.html:4
-#: templates/userprofile/avatar/choose.html:38
+#: templates/userprofile/avatar/choose.html:47
 msgid "Choose the location of your avatar"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:41
-msgid "Select an image from disk"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:43
-#: templates/userprofile/avatar/choose.html:49
-#: templates/userprofile/avatar/crop.html:35
-msgid "Done"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:47
-msgid "Select an image from a remote URL. Put the URL on the input below and we'll retrieve the image for you"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:54
-msgid "Search on Picasa Web"
-msgstr ""
-
-#: templates/userprofile/avatar/choose.html:79
+#: templates/userprofile/avatar/choose.html:36
 #: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:80
+#: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
-msgid "You have several options to select the image you want as avatar on your profile"
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile."
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:50
+msgid "Select an image from disk"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:52
+#: templates/userprofile/avatar/choose.html:58
+#: templates/userprofile/avatar/crop.html:35
+msgid "Done"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:56
+msgid ""
+"Select an image from a remote URL. Put the URL on the input below and we'll "
+"retrieve the image for you"
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:63
+msgid "Search on Picasa Web"
 msgstr ""
 
 #: templates/userprofile/avatar/crop.html:4
@@ -2717,22 +2858,20 @@ msgstr ""
 msgid "Delete personal information"
 msgstr "Πληροφορίες επικοινωνίας"
 
-#: templates/userprofile/profile/delete.html:14
-#, fuzzy
-msgid "Delete your personal information"
-msgstr "Πληροφορίες αρθρώματος"
+#: templates/userprofile/profile/delete.html:13
+msgid ""
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
+msgstr ""
 
-#: templates/userprofile/profile/delete.html:15
+#: templates/userprofile/profile/delete.html:17
 msgid "Are you sure?"
 msgstr "Είστε σίγουρος/η;"
 
-#: templates/userprofile/profile/delete.html:15
-msgid "Yes"
-msgstr "Ναι"
-
-#: templates/userprofile/profile/delete.html:23
-msgid "It erases all your private data except your username. You can refill the information later if you want to"
-msgstr ""
+#: templates/userprofile/profile/delete.html:18
+#, fuzzy
+msgid "Delete my data"
+msgstr "Διαγραφή του λογαριασμού μου"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2748,7 +2887,7 @@ msgid "Auto-discover location"
 msgstr ""
 
 #: templates/userprofile/profile/location.html:22
-#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Χώρα"
@@ -2768,7 +2907,7 @@ msgid "Position"
 msgstr "Περιγραφή"
 
 #: templates/userprofile/profile/location.html:35
-#: templates/userprofile/profile/personal.html:30
+#: templates/userprofile/profile/personal.html:36
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -2779,74 +2918,74 @@ msgstr "Πληροφορίες επικοινωνίας"
 
 #: templates/userprofile/profile/location.html:41
 #, fuzzy
-msgid "Define your location information"
+msgid "Define your location information."
 msgstr "Πληροφορίες αρθρώματος"
 
 #: templates/userprofile/profile/overview.html:4
-#: templates/userprofile/profile/overview.html:32
+#: templates/userprofile/profile/overview.html:30
 msgid "Overview of your profile"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 #, fuzzy
 msgid "Change avatar"
 msgstr "Changelog"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Add avatar"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:42
+#: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "E-mail:"
 
-#: templates/userprofile/profile/overview.html:44
+#: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:46
+#: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:55
-#: templates/userprofile/profile/overview.html:64
-#: templates/userprofile/profile/overview.html:73
+#: templates/userprofile/profile/overview.html:53
+#: templates/userprofile/profile/overview.html:62
+#: templates/userprofile/profile/overview.html:71
 #, fuzzy
 msgid "Not set"
 msgstr "Ειδοποιήσεις"
 
-#: templates/userprofile/profile/overview.html:91
+#: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 #, fuzzy
 msgid "Change your e-mail address"
 msgstr "E-mail διεύθυνση"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 #, fuzzy
 msgid "Add your e-mail address"
 msgstr "E-mail διεύθυνση"
 
-#: templates/userprofile/profile/overview.html:99
+#: templates/userprofile/profile/overview.html:95
 #, fuzzy
 msgid "Add location"
 msgstr "Συλλογές"
 
-#: templates/userprofile/profile/overview.html:101
+#: templates/userprofile/profile/overview.html:97
 #, fuzzy
 msgid "Change location"
 msgstr "Changelog"
 
-#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 #, fuzzy
 msgid "Edit your personal information"
 msgstr "Πληροφορίες αρθρώματος"
 
-#: templates/userprofile/profile/personal.html:37
-msgid "Insert some information about you"
+#: templates/userprofile/profile/personal.html:29
+msgid "Insert some information about you."
 msgstr ""
 
 #: templates/userprofile/profile/public.html:27
@@ -2910,98 +3049,98 @@ msgstr "Αναζήτηση μεταφράσεων"
 msgid "Auto-suggest translation"
 msgstr "Πελάτης"
 
-#: translations/models.py:225
+#: translations/models.py:233
 #, fuzzy
 msgid "PO file"
 msgstr "Λήψη αρχείου PO"
 
-#: translations/models.py:226
+#: translations/models.py:234
 msgid "PO files"
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:16
 msgid "Files"
 msgstr "Αρχείο(α)"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
-#: translations/templates/lang_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:17
+#: translations/templates/comp_stats_table.html:17
+#: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Μεταφράσεις"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
-#: translations/templates/lang_stats_table.html:13
+#: translations/templates/comp_lang_stats_table.html:18
+#: translations/templates/comp_stats_table.html:18
+#: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Επιλογές"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
-#: translations/templates/lang_stats_table.html:23
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
 msgid "Trans:"
 msgstr "Αποστολή (Transifex)"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 #, fuzzy
 msgid "Untrans:"
 msgstr "Μεταφράστηκε"
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:40
+#: translations/templates/comp_stats_table.html:52
+#: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr ""
 
-#: translations/templates/comp_lang_stats_table.html:36
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:41
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 #, fuzzy
 msgid "Download "
 msgstr "Λήψη αρχείου PO"
 
-#: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
-#: translations/templates/lang_stats_table.html:46
+#: translations/templates/comp_lang_stats_table.html:51
+#: translations/templates/comp_stats_table.html:63
+#: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Επεξεργασία"
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Γλώσσα"
 
-#: translations/templates/comp_stats_table.html:21
+#: translations/templates/comp_stats_table.html:26
 msgid "See statistics for this language"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:23
+#: translations/templates/comp_stats_table.html:28
 msgid "There is no language registered that matches with this code"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:35
+#: translations/templates/comp_stats_table.html:40
 msgid "(not calculated)"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr ""
 
@@ -3015,31 +3154,31 @@ msgstr "Πελάτης"
 msgid "Submit file"
 msgstr "Αποστολή (Transifex)"
 
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:20
+#: translations/templates/lang_stats_table.html:25
 msgid "Go to this project page"
 msgstr ""
 
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/lang_stats_table.html:26
 msgid "Go to this component page"
 msgstr ""
 
-#: translations/templates/pofile_lock.html:8
+#: translations/templates/pofile_lock.html:10
 msgid "Unlock this file when you're finished working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:12
+#: translations/templates/pofile_lock.html:14
 msgid "This file is locked, indicating someone is working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:18
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:23
 msgid "This file is unlocked. Most likely noone is working with it right now."
 msgstr ""
 
@@ -3108,6 +3247,11 @@ msgstr "Συλλογή"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr ""
 
+#: txcollections/migrations/0001_initial.py:20
+#, fuzzy
+msgid "String freese date"
+msgstr "Εκδόσεις"
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3123,32 +3267,32 @@ msgstr "Fedora"
 msgid "Male"
 msgstr "Μαλαισιακή"
 
-#: txcommon/models.py:18
+#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
 msgid "First name"
 msgstr "Όνομα"
 
-#: txcommon/models.py:19
+#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
 msgid "Surname"
 msgstr "Επίθετο"
 
-#: txcommon/models.py:22
+#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
 #, fuzzy
 msgid "Native Language"
 msgstr "Γλώσσα ιστότοπου"
 
-#: txcommon/models.py:23
+#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:24
+#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25
+#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26
+#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
 msgid "About yourself"
 msgstr ""
 
@@ -3156,7 +3300,7 @@ msgstr ""
 msgid "Short description of yourself (140 chars)."
 msgstr ""
 
-#: txcommon/models.py:28
+#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
 msgid "Looking for work?"
 msgstr ""
 
@@ -3172,175 +3316,185 @@ msgstr ""
 msgid "The root url must start with http:// or ftp://"
 msgstr ""
 
-#: txcommon/management/__init__.py:9
-msgid "New Project Added"
+#: txcommon/db/models.py:26
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr ""
+
+#: txcommon/db/models.py:28
+msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr ""
 
 #: txcommon/management/__init__.py:10
+msgid "New Project Added"
+msgstr ""
+
+#: txcommon/management/__init__.py:11
 msgid "when a new project is added"
 msgstr ""
 
-#: txcommon/management/__init__.py:16
+#: txcommon/management/__init__.py:17
 #, fuzzy
 msgid "Project Changed"
 msgstr "Κοινές οντότητες"
 
-#: txcommon/management/__init__.py:17
+#: txcommon/management/__init__.py:18
 msgid "when a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:23
+#: txcommon/management/__init__.py:24
 #, fuzzy
 msgid "Project Deleted"
 msgstr "Συντηρητές έργων"
 
-#: txcommon/management/__init__.py:24
+#: txcommon/management/__init__.py:25
 #, fuzzy
 msgid "when a project is deleted"
 msgstr "Οικοσελίδα Έργου Fedora"
 
-#: txcommon/management/__init__.py:30
+#: txcommon/management/__init__.py:31
 msgid "New Component Added"
 msgstr ""
 
-#: txcommon/management/__init__.py:31
+#: txcommon/management/__init__.py:32
 msgid "when a new component is added to a project"
 msgstr ""
 
-#: txcommon/management/__init__.py:37
+#: txcommon/management/__init__.py:38
 #, fuzzy
 msgid "Component Changed"
 msgstr "σχόλιο"
 
-#: txcommon/management/__init__.py:38
+#: txcommon/management/__init__.py:39
 msgid "when a component of a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:44
+#: txcommon/management/__init__.py:45
 #, fuzzy
 msgid "Component Deleted"
 msgstr "σχόλιο"
 
-#: txcommon/management/__init__.py:45
+#: txcommon/management/__init__.py:46
 msgid "when a component of a project is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:51
+#: txcommon/management/__init__.py:52
 #, fuzzy
 msgid "File Submitted"
 msgstr "Φίλτρο αρχείων"
 
-#: txcommon/management/__init__.py:52
+#: txcommon/management/__init__.py:53
 msgid "when a component file of a project is submitted"
 msgstr ""
 
-#: txcommon/management/__init__.py:59
+#: txcommon/management/__init__.py:60
 #, fuzzy
 msgid "Translation File Changed"
 msgstr "Translation"
 
-#: txcommon/management/__init__.py:60
+#: txcommon/management/__init__.py:61
 msgid "when a component translation file of a project is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:67
+#: txcommon/management/__init__.py:68
 msgid "Translation Source File (POT) has a Problem"
 msgstr ""
 
-#: txcommon/management/__init__.py:68
-msgid "when the source file (POT) of a component that you are a maintainer has a problem"
+#: txcommon/management/__init__.py:69
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
 msgstr ""
 
-#: txcommon/management/__init__.py:76
+#: txcommon/management/__init__.py:77
 #, fuzzy
 msgid "New Collection Added"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:77
+#: txcommon/management/__init__.py:78
 #, fuzzy
 msgid "when a new collection is added"
 msgstr "Όλα τα αρθρώματα"
 
-#: txcommon/management/__init__.py:83
+#: txcommon/management/__init__.py:84
 #, fuzzy
 msgid "Collection Changed"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:84
+#: txcommon/management/__init__.py:85
 msgid "when a collection is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:90
+#: txcommon/management/__init__.py:91
 #, fuzzy
 msgid "Collection Deleted"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:91
+#: txcommon/management/__init__.py:92
 #, fuzzy
 msgid "when a collection is deleted"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:97
+#: txcommon/management/__init__.py:98
 #, fuzzy
 msgid "Project Added to a Collection"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:98
+#: txcommon/management/__init__.py:99
 msgid "when a new project is added to a collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:104
+#: txcommon/management/__init__.py:105
 #, fuzzy
 msgid "Project Deleted from a Collection"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:105
+#: txcommon/management/__init__.py:106
 msgid "when a project is deleted from a collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:111
+#: txcommon/management/__init__.py:112
 msgid "New Release Added for a Watched Collection"
 msgstr ""
 
-#: txcommon/management/__init__.py:112
+#: txcommon/management/__init__.py:113
 #, fuzzy
 msgid "when a new release is added to a collection"
 msgstr "ελευθέρωση devel"
 
-#: txcommon/management/__init__.py:119
+#: txcommon/management/__init__.py:120
 #, fuzzy
 msgid "Release Changed"
 msgstr "Εκδόσεις"
 
-#: txcommon/management/__init__.py:120
+#: txcommon/management/__init__.py:121
 msgid "when a release of a collection is changed"
 msgstr ""
 
-#: txcommon/management/__init__.py:125
+#: txcommon/management/__init__.py:126
 #, fuzzy
 msgid "Release Deleted"
 msgstr "Εκδόσεις"
 
-#: txcommon/management/__init__.py:126
+#: txcommon/management/__init__.py:127
 msgid "when a release of a collection is deleted"
 msgstr ""
 
-#: txcommon/management/__init__.py:131
+#: txcommon/management/__init__.py:132
 #, fuzzy
 msgid "Release Added to a Collection"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:132
+#: txcommon/management/__init__.py:133
 #, fuzzy
 msgid "when a release is added to a collection"
 msgstr "ελευθέρωση devel"
 
-#: txcommon/management/__init__.py:137
+#: txcommon/management/__init__.py:138
 #, fuzzy
 msgid "Release Deleted from a Collection"
 msgstr "Συλλογές"
 
-#: txcommon/management/__init__.py:138
+#: txcommon/management/__init__.py:139
 #, fuzzy
 msgid "when a release is deleted from a collection"
 msgstr "ελευθέρωση devel"
@@ -3349,6 +3503,22 @@ msgstr "ελευθέρωση devel"
 #, fuzzy
 msgid "Home"
 msgstr "Προσωπική σελίδα:"
+
+#: txpermissions/views.py:45
+msgid "You added a permission request."
+msgstr ""
+
+#: txpermissions/views.py:74
+msgid "You approved the permission request."
+msgstr ""
+
+#: txpermissions/views.py:92
+msgid "You removed the permission."
+msgstr ""
+
+#: txpermissions/views.py:94
+msgid "You removed the permission request."
+msgstr ""
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
@@ -3384,13 +3554,54 @@ msgstr "vcsunit"
 msgid "vcsunits"
 msgstr "vcsunits"
 
-#: webtrans/views.py:125
-msgid "Your file does not pass by the check for correctness (msgfmt -c). Please run this command on your system to see the errors."
+#: webtrans/views.py:129
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
 msgstr ""
 
-#: webtrans/views.py:134
+#: webtrans/views.py:138
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Send confirmation"
+#~ msgstr "Πληροφορίες αρθρώματος"
+
+#, fuzzy
+#~ msgid "Insert your e-mail address"
+#~ msgstr "E-mail διεύθυνση"
+
+#, fuzzy
+#~ msgid "Old password"
+#~ msgstr "Συνθηματικό:"
+
+#, fuzzy
+#~ msgid "Confirm password"
+#~ msgstr "Συνθηματικό:"
+
+#, fuzzy
+#~ msgid "E-mail address"
+#~ msgstr "E-mail διεύθυνση"
+
+#, fuzzy
+#~ msgid "E-mail"
+#~ msgstr "Ταμίλ"
+
+#, fuzzy
+#~ msgid "optional"
+#~ msgstr "Ενότητες PO"
+
+#, fuzzy
+#~ msgid "Password (again)"
+#~ msgstr "Συνθηματικό:"
+
+#, fuzzy
+#~ msgid "Delete your personal information"
+#~ msgstr "Πληροφορίες αρθρώματος"
+
+#~ msgid "Yes"
+#~ msgstr "Ναι"
 
 #, fuzzy
 #~ msgid "Project in release"
@@ -3400,10 +3611,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Release list"
-#~ msgstr "Εκδόσεις"
-
-#, fuzzy
-#~ msgid "Releases on Transifex"
 #~ msgstr "Εκδόσεις"
 
 #, fuzzy
@@ -3429,22 +3636,29 @@ msgstr ""
 #, fuzzy
 #~ msgid "Latest translations in %s."
 #~ msgstr "Μεταφράσεις ιστοσελίδας"
+
 #~ msgid "Overwrite an existing file:"
 #~ msgstr "Αντικατάσταση υπάρχοντος αρχείου:"
+
 #~ msgid "Either select the file your submission will replace..."
 #~ msgstr "Επιλέξτε το αρχείο που η υποβολή σας θα αντικαταστήσει..."
+
 #~ msgid "or, type the name for a new one:"
 #~ msgstr "ή, πληκτρολογήστε το όνομα για ένα νέο αρχείο:"
+
 #~ msgid "For example: 'po/pt.po'."
 #~ msgstr "Για παράδειγμα: 'po/el.po'."
+
 #~ msgid ""
 #~ "A commit message is a log or record of the changes made by a commit. For "
 #~ "example: \"Updated X translation\""
 #~ msgstr ""
 #~ "Το μήνυμα εναπόθεσης (commit message) είναι μια καταγραφή των αλλαγών που "
 #~ "γίνονται από μια εναπόθεση. Για παράδειγμα: \"Updated Greek translation\""
+
 #~ msgid "Skip diff preview"
 #~ msgstr "Χωρίς προεπισκόπηση αλλαγών"
+
 #~ msgid "Do not preview diffs in next screen. Useful for slow connections."
 #~ msgstr ""
 #~ "Να μη γίνει εμφάνιση των diffs στην επόμενη οθόνη. Χρήσιμο για αργές "
@@ -3457,10 +3671,13 @@ msgstr ""
 #, fuzzy
 #~ msgid "Webpage"
 #~ msgstr "Ιστοσελίδα χρήστη:"
+
 #~ msgid "Repository"
 #~ msgstr "Αποθετήριο"
+
 #~ msgid "Scmmodule"
 #~ msgstr "Άρθρωμα στο SCM"
+
 #~ msgid "Disabled"
 #~ msgstr "Απενεργοποιημένο"
 
@@ -3483,8 +3700,10 @@ msgstr ""
 #, fuzzy
 #~ msgid "Invalid repository."
 #~ msgstr "Αποθετήριο"
+
 #~ msgid "updated"
 #~ msgstr "ενημερώθηκε"
+
 #~ msgid "added"
 #~ msgstr "προστέθηκε"
 
@@ -3503,16 +3722,20 @@ msgstr ""
 #, fuzzy
 #~ msgid "%s :: Home"
 #~ msgstr "Προσωπική σελίδα:"
+
 #~ msgid ", a web system for distributed translation submissions."
 #~ msgstr ", ένα σύστημα για κατανεμημένες υποβολές μεταφράσεων."
+
 #~ msgid ""
 #~ "Submit translations to upstream projects without the need to learn\n"
 #~ "    the tricks of different version control systems."
 #~ msgstr ""
 #~ "Υποβάλετε μεταφράσεις σε upstream έργα χωρίς να χρειάζεται να μάθετε\n"
 #~ "τα κόλπα για διαφορετικά συστήματα διαχείρισης εκδόσεων αρχείων."
+
 #~ msgid "Read more to submit translations"
 #~ msgstr "Πληροφορίες για υποβολή μεταφράσεων"
+
 #~ msgid "Jump to the modules!"
 #~ msgstr "Μετάβαση στη λίστα έργων!"
 
@@ -3524,24 +3747,30 @@ msgstr ""
 #~ "Λάβετε μεταφράσεις από την κοινότητα του Fedora απευθείας στο αποθετήριο "
 #~ "του έργου σας, χωρίς επιβαρύνσεις διαχείρισης πολλών λογαριασμών και "
 #~ "μεγάλων access control lists."
+
 #~ msgid "Read more to register a module"
 #~ msgstr "Πληροφορίες για καταχώρηση έργου"
+
 #~ msgid "Administrators"
 #~ msgstr "Διαχειριστές"
+
 #~ msgid "Translated by: %(trans)s."
 #~ msgstr "Μετάφραση από: %(trans)s"
+
 #~ msgid "translator-credits"
 #~ msgstr "Δημήτρης Γλέζος (2008)"
 
 #, fuzzy
 #~ msgid "%s :: Authenticate"
 #~ msgstr "Αναγνώριση"
+
 #~ msgid "Authenticate"
 #~ msgstr "Αναγνώριση"
 
 #, fuzzy
 #~ msgid ":: Information for maintainers"
 #~ msgstr "Πληροφορίες για μεταφραστές"
+
 #~ msgid "Module name"
 #~ msgstr "Όνομα"
 
@@ -3556,6 +3785,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "Modules accepting translations through Transifex"
 #~ msgstr "Αποστολή μεταφράσεων με το Transifex"
+
 #~ msgid "Modules"
 #~ msgstr "Αρθρώματα"
 
@@ -3602,8 +3832,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "Module in"
 #~ msgstr "Άρθρωμα"
-#~ msgid "Translation submission"
-#~ msgstr "Υποβολή μεταφράσεων"
+
 #~ msgid ""
 #~ "This module is configured to receive translations through this web system."
 #~ msgstr ""
@@ -3615,8 +3844,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Αναγνωρισμένοι μεταφραστές του Fedora (μέλη της ομάδας 'cvsl10n') "
 #~ "παρουσιάζονται με μια φόρμα υποβολής αρχείων."
-#~ msgid "Authenticate as a translator"
-#~ msgstr "Αναγνώριση"
 
 #, fuzzy
 #~ msgid "Target branch"
@@ -3625,8 +3852,10 @@ msgstr ""
 #, fuzzy
 #~ msgid ":: Module list"
 #~ msgstr "Λίστα έργων"
+
 #~ msgid "Modules and repositories"
 #~ msgstr "Έργα και Αποθετήρια"
+
 #~ msgid ""
 #~ "Here's a list of all the modules that are currently accepting "
 #~ "contributions."
@@ -3663,6 +3892,7 @@ msgstr ""
 #, fuzzy
 #~ msgid ":: Information for submitting translations"
 #~ msgstr "Πληροφορίες για μεταφραστές"
+
 #~ msgid "Information for translators"
 #~ msgstr "Πληροφορίες για μεταφραστές"
 
@@ -3677,18 +3907,23 @@ msgstr ""
 #, fuzzy
 #~ msgid "Fedora Translations :: Submit"
 #~ msgstr "Μεταφράσεις Fedora"
+
 #~ msgid "Fedora Translations :: Authenticate"
 #~ msgstr "Μεταφράσεις Fedora :: Αναγνώριση χρήστη"
+
 #~ msgid ""
 #~ "You may authenticate using\n"
 #~ "  your"
 #~ msgstr "Μπορείτε να συνδείτε χρησιμοποιώντας τα αναγνωριστικά σας στο"
+
 #~ msgid "Fedora Account System"
 #~ msgstr "Fedora Account System"
+
 #~ msgid ""
 #~ "credentials\n"
 #~ "  ("
 #~ msgstr "("
+
 #~ msgid "more info"
 #~ msgstr "περισσότερες πληροφορίες"
 
@@ -3703,48 +3938,66 @@ msgstr ""
 #, fuzzy
 #~ msgid "FedoraHosted.org"
 #~ msgstr "fedoraproject.org"
+
 #~ msgid "Fedora Project homepage"
 #~ msgstr "Οικοσελίδα Έργου Fedora"
+
 #~ msgid "Navigation"
 #~ msgstr "Περιήγηση"
+
 #~ msgid "Fedora Localization Project home"
 #~ msgstr "Οικοσελίδα Έργου μεταφράσεων Fedora"
+
 #~ msgid "FLP home"
 #~ msgstr "Οικοσελίδα FLP"
+
 #~ msgid "Translatable modules (docs, applications, etc.)"
 #~ msgstr "Μεταφράσιμοι πόροι (τεκμηρίωση, εφαρμογές, κλπ.)"
+
 #~ msgid "Release cycles (F7, F8, etc.)"
 #~ msgstr "Κύκλοι κυκλοφορίας (F7, F8, κλπ.)"
 
 #, fuzzy
 #~ msgid "Submit translations through Transifex"
 #~ msgstr "Αποστολή μεταφράσεων με το Transifex"
+
 #~ msgid "Join the Fedora Localization Project"
 #~ msgstr "Γίνετε μέλος του Έργου μεταφράσεων Fedora"
+
 #~ msgid "Join the FLP"
 #~ msgstr "Γίνετε μέλος του FLP"
+
 #~ msgid "Frequently asked questions about the website"
 #~ msgstr "Συχνές ερωτήσεις για τον ιστότοπο"
+
 #~ msgid "Website FAQ"
 #~ msgstr "FAQ ιστότοπου"
+
 #~ msgid "Fedora Localization Project wiki pages"
 #~ msgstr "Wiki σελίδες Έργου μεταφράσεων Fedora"
 
 #, fuzzy
 #~ msgid "Wiki pages"
 #~ msgstr "Σελίδες wiki FLP"
+
 #~ msgid "Fedora Home"
 #~ msgstr "Οικοσελίδα Fedora"
+
 #~ msgid "Fedora documentation"
 #~ msgstr "Τεκμηρίωση του Fedora"
+
 #~ msgid "Collaborative knowledge"
 #~ msgstr "Συλλογική γνώση"
+
 #~ msgid "Wiki"
 #~ msgstr "Wiki"
+
 #~ msgid "The voices of the community"
 #~ msgstr "Οι φωνή της κοινότητας"
+
 #~ msgid "Planet"
 #~ msgstr "Πλανήτης"
+
 #~ msgid "Community webpages"
 #~ msgstr "Ιστοσελίδες κοινότητας"
 
@@ -3770,26 +4023,31 @@ msgstr ""
 #~ "Το έργο Fedora συντηρείται και οδηγείται από την κοινότητα και "
 #~ "επιχορηγείται από τη Red Hat.  Αυτός είναι ένας ιστότοπος που συντηρείται "
 #~ "από την κοινότητα.  Η Red Hat δεν είναι υπεύθυνη για το περιεχόμενο."
+
 #~ msgid "Legal"
 #~ msgstr "Νομικά"
+
 #~ msgid "Trademark Guidelines"
 #~ msgstr "Οδηγίες για σήματα κατατεθέντα"
 
 #, fuzzy
 #~ msgid "Fedora Translations :: Submit :: %(module)s"
 #~ msgstr "Μεταφράσεις Fedora"
+
 #~ msgid "Fedora Translations :: Submit :: Modules"
 #~ msgstr "Μεταφράσεις Fedora :: Υποβολή :: Έργα"
 
 #, fuzzy
 #~ msgid "Fedora Translations :: Submit :: People"
 #~ msgstr "Μεταφράσεις Fedora"
+
 #~ msgid "Fedora contributors"
 #~ msgstr "Συντελεστές Fedora"
 
 #, fuzzy
 #~ msgid "how to join the FLP"
 #~ msgstr "Γίνετε μέλος του FLP"
+
 #~ msgid "%(module/id)"
 #~ msgstr "%(module/id)"
 
@@ -3804,12 +4062,14 @@ msgstr ""
 #, fuzzy
 #~ msgid "A desktop environment switcher for GNOME, KDE and AnotherLevel"
 #~ msgstr "για GNOME KDE και"
+
 #~ msgid "A graphical interface for administering users and groups"
 #~ msgstr "Ένα γραφικό εργαλείο διαχείρησης χρηστών και ομάδων"
 
 #, fuzzy
 #~ msgid "A graphical interface for configuring desktop effects"
 #~ msgstr "Ένα γραφικό εργαλείο για τον εντοπισμό και ρύθμιση καρτών ήχου"
+
 #~ msgid "A graphical interface for configuring the X Window System display"
 #~ msgstr ""
 #~ "Ένα γραφικό εργαλείο για ρύθμιση της εμφάνισης του συστήματος παραθύρων X"
@@ -3818,19 +4078,26 @@ msgstr ""
 #~ msgid "A graphical interface for configuring the boot loader"
 #~ msgstr ""
 #~ "Ένα γραφικό εργαλείο για ρύθμιση της εμφάνισης του συστήματος παραθύρων X"
+
 #~ msgid "A graphical interface for detecting and configuring soundcards"
 #~ msgstr "Ένα γραφικό εργαλείο για τον εντοπισμό και ρύθμιση καρτών ήχου"
+
 #~ msgid "A graphical interface for making kickstart files"
 #~ msgstr "Ένα γραφικό εργαλείο για τη δημιουργία αρχείων kickstart"
+
 #~ msgid "A graphical interface for modifying system date and time"
 #~ msgstr ""
 #~ "Ένα γραφικό εργαλείο για τη ρύθμιση της ημερομηνίας και ώρας συστήματος"
+
 #~ msgid "A graphical interface for modifying the keyboard"
 #~ msgstr "Ένα γραφικό εργαλείο για τη ρύθμιση του πληκτρολογίου"
+
 #~ msgid "A graphical interface for modifying the rootpassword"
 #~ msgstr "Ένα γραφικό εργαλείο για την αλλαγή του συνθηματικού του υπερχρήστη"
+
 #~ msgid "A graphical interface for modifying the system language"
 #~ msgstr "Ένα γραφικό εργαλείο για την αλλαγή της γλώσσας συστήματος"
+
 #~ msgid "A graphical interface for modifying the system security level"
 #~ msgstr ""
 #~ "Ένα γραφικό εργαλείο για την αλλαγή του επιπέδου ασφαλείας του συστήματος"
@@ -3842,16 +4109,17 @@ msgstr ""
 #, fuzzy
 #~ msgid "A graphical user interface for basic firewall setup"
 #~ msgstr "Ένα γραφικό εργαλείο για τη δημιουργία αρχείων kickstart"
-#~ msgid "A printer administration tool"
-#~ msgstr "Εργαλείο διαχείρισης εκτυπωτών"
+
 #~ msgid "A python library for manipulating kickstart files"
 #~ msgstr "Βιβλιοθήκη python για τη διαχείριση αρχείων kickstart"
+
 #~ msgid "A system tool for maintaining the /etc/rc*.d hierarchy"
 #~ msgstr "Εργαλείο συστήματος για τη διαχείριση της ιεραρχίας /etc/rc*.d"
 
 #, fuzzy
 #~ msgid "A text mode system configuration tool"
 #~ msgstr "Εργαλείο αρχικής ρύθμισης συστήματος"
+
 #~ msgid "A user and group account administration library"
 #~ msgstr "Βιβλιοθήκη διαχείρισης λογαριασμών χρηστών και ομάδων"
 
@@ -3866,6 +4134,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "An easy to use Apache web server configuration utility"
 #~ msgstr "Εργαλείο αρχικής ρύθμισης συστήματος"
+
 #~ msgid ""
 #~ "Command line tool for setting up authentication from network services"
 #~ msgstr ""
@@ -3875,8 +4144,10 @@ msgstr ""
 #, fuzzy
 #~ msgid "Configuration and data files for the desktop menus"
 #~ msgstr "Ρυθμίσεις και αρχεία για"
+
 #~ msgid "Describes Fedora, the Fedora Project, and how you can help"
 #~ msgstr "Περιγράφει το Fedora, το Έργο Fedora και πως μπορείτε να βοηθήσετε"
+
 #~ msgid "Desktop Input Method configuration tool"
 #~ msgstr "Εργαλείο ρύθμισης της μεθόδου εισαγωγής"
 
@@ -3907,18 +4178,21 @@ msgstr ""
 #, fuzzy
 #~ msgid "Docs :: Release Notes"
 #~ msgstr "Σημειώσεις κυκλοφορίας"
+
 #~ msgid "Fedora Websites"
 #~ msgstr "Ιστότοποι Fedora"
 
 #, fuzzy
 #~ msgid "Fedora hardware profiler"
 #~ msgstr "Υλικό"
+
 #~ msgid "Fedora package descriptions, summaries, and groups"
 #~ msgstr "Περιγραφές πακέτων του Fedora, περιλήψεις και ομάδες"
 
 #, fuzzy
 #~ msgid "Fedora's main websites"
 #~ msgstr "Ιστότοποι Fedora"
+
 #~ msgid "General information for CD and DVD media"
 #~ msgstr "Γενικές πληροφορίες για μέσα CD και DVD"
 
@@ -3933,18 +4207,23 @@ msgstr ""
 #, fuzzy
 #~ msgid "Helps troubleshoot SELinux problems"
 #~ msgstr "SELinux για"
+
 #~ msgid "How to download ISO images and create CD and DVD media"
 #~ msgstr "Πως θα κατεβάσετε εικόνες ISO και να δημιουργήσετε μέσα CD και DVD"
+
 #~ msgid "Initial system configuration utility"
 #~ msgstr "Εργαλείο αρχικής ρύθμισης συστήματος"
+
 #~ msgid "Library of python code used by programs in Red Hat Linux"
 #~ msgstr "Βιβλιοθήκη κώδικα python σε χρήση από προγράμματα στο Red Hat Linux"
 
 #, fuzzy
 #~ msgid "Library providing a simple API virtualization"
 #~ msgstr "Βιβλιοθήκη a"
+
 #~ msgid "NFS server configuration tool"
 #~ msgstr "Εργαλείο ρύθμισης εξυπηρετητή NFS"
+
 #~ msgid "Package Installation, Removal and Update Tools"
 #~ msgstr "Εργαλεία εγκατάστασης, αφαίρεσης και ενημέρωσης πακέτων"
 
@@ -3955,8 +4234,10 @@ msgstr ""
 #, fuzzy
 #~ msgid "Python library for configuring and running X"
 #~ msgstr "Python για και εκτελείται Χ"
+
 #~ msgid "SELinux policy core utilities"
 #~ msgstr "Κύρια εργαλεία πολιτικών SELinux"
+
 #~ msgid "Samba server configuration tool"
 #~ msgstr "Εργαλείο ρύθμισης εξυπηρετητή Samba"
 
@@ -3971,14 +4252,17 @@ msgstr ""
 #, fuzzy
 #~ msgid "The Mail Transport Agent Switcher"
 #~ msgstr "Μεταφορά Ατζέντης"
+
 #~ msgid "The RPM Package Manager"
 #~ msgstr "Ο διαχειριστής πακέτων RPM"
 
 #, fuzzy
 #~ msgid "The Red Hat BIND DNS Configuration Tool"
 #~ msgstr "Κόκκινο DNS Ρυθμίσεις Εργαλείο"
+
 #~ msgid "The inittab file and the /etc/init.d scripts"
 #~ msgstr "Το αρχείο inittab και οι δέσμες ενεργειών /etc/init.d"
+
 #~ msgid "The release notes for Fedora"
 #~ msgstr "Οι σημειώσεις κυκλοφορίας για το Fedora"
 
@@ -3993,6 +4277,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "Tools for certain user account management tasks"
 #~ msgstr "Εργαλεία για χρήστης λογαριασμός εργασίες"
+
 #~ msgid "Virtual Machine Manager"
 #~ msgstr "Διαχειριστής εικονικών μηχανών"
 
@@ -4003,34 +4288,45 @@ msgstr ""
 #, fuzzy
 #~ msgid "desc: package descriptions"
 #~ msgstr "πακέτο"
+
 #~ msgid "revisor (Fedora Unity)"
 #~ msgstr "revisor (Fedora Unity)"
+
 #~ msgid "rpm (rpm.org)"
 #~ msgstr "rpm (rpm.org)"
+
 #~ msgid "summary: package summaries"
 #~ msgstr "summary: περίληψη πακέτων"
 
 #, fuzzy
 #~ msgid "talk.fedoraproject.org"
 #~ msgstr "fedoraproject.org"
+
 #~ msgid "translate.fpo"
 #~ msgstr "translate.fpo"
+
 #~ msgid "yum (duke.edu)"
 #~ msgstr "yum (duke.edu)"
+
 #~ msgid "Documentation"
 #~ msgstr "Τεκμηρίωση"
+
 #~ msgid "Fedora 9 (Sulphur)"
 #~ msgstr "Fedora 9 (Sulphur)"
+
 #~ msgid "Fedora applications"
 #~ msgstr "Εφαρμογές Fedora"
 
 #, fuzzy
 #~ msgid "Package summaries and descriptions"
 #~ msgstr "πακέτο"
+
 #~ msgid "Red Hat Enterprise Linux 5"
 #~ msgstr "Red Hat Enterprise Linux 5"
+
 #~ msgid "Various Fedora resources"
 #~ msgstr "Διάφοροι πόροι Fedora"
+
 #~ msgid "%(lang)s Translation Team"
 #~ msgstr "Ομάδα μετάφρασης: %(lang)s"
 
@@ -4057,23 +4353,29 @@ msgstr ""
 #, fuzzy
 #~ msgid "Serbian Team"
 #~ msgstr "Σερβική"
+
 #~ msgid ""
 #~ "Please send any comments or corrections to the <a href=\"mailto:"
 #~ "webmaster@fedoraproject.org\">websites team</a>."
 #~ msgstr ""
 #~ "Παρακαλούμε όπως στείλατε κάθε σχόλιο ή διόρθωση στην <a href=\"mailto:"
 #~ "webmaster@fedoraproject.org\">ομάδα διαχείρισης ιστότοπων</a>."
+
 #~ msgid "Search for a string in the translation database"
 #~ msgstr "Αναζήτηση μιας συμβολοσειράς στη βάση δεδομένων μεταφράσεων"
+
 #~ msgid ""
 #~ "These pages are still not authorative. Do not rely upon this data yet."
 #~ msgstr ""
 #~ "Αυτές οι σελίδες δεν είναι επίσημες. Μη βασιστείτε ακόμη σε αυτά τα "
 #~ "δεδομένα."
+
 #~ msgid "The Fedora Localization Project"
 #~ msgstr "Το Έργο τοπικοποίησης Fedora"
+
 #~ msgid "Welcome to the Fedora Localization Project!"
 #~ msgstr "Καλώς ήλθατε στο Έργο τοπικοποίησης του Fedora (FLP)!"
+
 #~ msgid ""
 #~ "The FLP works to make <a href=\"http://fedoraproject.org/\">Fedora</a> "
 #~ "and other locally-hosted projects available to as many people as possible "
@@ -4087,12 +4389,14 @@ msgstr ""
 #~ "τεκμηρίωση και ιστοσελίδες σε συγκεκριμένες γλώσσες, περιοχές, και "
 #~ "κουλτούρες. Αυτή η διαδικασία ονομάζεται <em>τοπικοποίηση</em> "
 #~ "(Localization, <acronym title=\"Localization\">L10N</acronym>)."
+
 #~ msgid ""
 #~ "In these pages you can find information about our group and the resources "
 #~ "we maintain."
 #~ msgstr ""
 #~ "Σε αυτές τις σελίδες μπορείτε να βρείτε πληροφορίες για την ομάδα μας και "
 #~ "τους πόρους που συντηρούμε."
+
 #~ msgid ""
 #~ "If you want to help Fedora reach out to more people by translating it to "
 #~ "your language, join our team! You can read the <a href=\"http://docs."
@@ -4106,6 +4410,7 @@ msgstr ""
 #~ "fedoraproject.org/translation-quick-start-guide/\">Γρήγορο "
 #~ "οδηγόμετάφρασης</a> και τις <a href=\"http://fedoraproject.org/wiki/L10N"
 #~ "\">wiki σελίδες</a> μας."
+
 #~ msgid ""
 #~ "A list of Fedora localization teams, with full information about each "
 #~ "one, such as primary contact, webpages, and mailing list information."
@@ -4113,12 +4418,14 @@ msgstr ""
 #~ "Ένας κατάλογος από ομάδες τοπικοποίησης του Fedora, με πλήρεις "
 #~ "πληροφορίες για κάθε μία, όπως σημεία επικοινωνίας, ιστοσελίδες, και "
 #~ "πληροφορίες για ομάδες συζητήσεων."
+
 #~ msgid ""
 #~ "A list of all languages that are being managed by the <a href=\"teams/"
 #~ "\">Localization Teams</a>."
 #~ msgstr ""
 #~ "Κατάλογος με όλες τις γλώσσες οι οποίες συντηρούνται από <a href=\"teams/"
 #~ "\">ομάδες τοπικοποίησης</a>."
+
 #~ msgid ""
 #~ "Some teams manage more than one language (usually simple variants), and "
 #~ "here you can see all the languages Fedora and related projects are being "
@@ -4127,6 +4434,7 @@ msgstr ""
 #~ "Κάποιες ομάδες διαχειρίζονται περισσότερες από μία γλώσσες (συνήθως απλές "
 #~ "παραλλαγές), και εδώ μπορείτε να δείτε όλες τις γλώσσες που είναι "
 #~ "μεταφρασμένα το Fedora και παρεμφερή του έργα."
+
 #~ msgid ""
 #~ "A list of major Fedora release sets; a release set is a release of "
 #~ "software related to Fedora."
@@ -4134,26 +4442,31 @@ msgstr ""
 #~ "Ένας κατάλογος από σημαντικά σύνολα κυκλοφορίας του Fedora. Ένα σύνολο "
 #~ "κυκλοφορίας είναι συνήθως μια ομάδα πόρων (πχ. πακέτων) που είναι "
 #~ "σχετικοί με το Fedora κι έχουν την ίδια φιλοσοφία κυκλοφορίας."
+
 #~ msgid ""
 #~ "Examples of release sets are \"Fedora 7\", \"Fedora Core 6\" or \"RHEL 5"
 #~ "\"."
 #~ msgstr ""
 #~ "Παραδείγματα συνόλων κυκλοφορίας είναι \"Fedora 7\", \"Fedora 8\" ή "
 #~ "\"RHEL 5\"."
+
 #~ msgid ""
 #~ "Official Fedora release sets are further divided into categories such as "
 #~ "\"Applications\" and \"Documentation\"."
 #~ msgstr ""
 #~ "Τα επίσημα σύνολα κυκλοφορίας του Fedora χωρίζονται περαιτέρω σε "
 #~ "κατηγορίες όπως \"Εφαρμογές\" και \"Τεκμηρίωση\"."
+
 #~ msgid ""
 #~ "Look here if you want to compare language support in any of these release "
 #~ "sets."
 #~ msgstr ""
 #~ "Κοιτάξτε εδώ αν θέλετε να συγκρίνετε τη γλωσσική υποστήριξη σε "
 #~ "οποιοδήποτε από αυτά τα σύνολα κυκλοφοριών."
+
 #~ msgid "Statistics for all modules are found here."
 #~ msgstr "Εδώ μπορούν να βρεθούν στατιστικά μεταφράσεων για όλα τα αρθρώματα."
+
 #~ msgid ""
 #~ "Modules are separate libraries or applications, with one or more branches "
 #~ "of development included."
@@ -4161,6 +4474,7 @@ msgstr ""
 #~ "Τα αρθρώματα είναι ξεχωριστές βιβλιοθήκες ή εφαρμογές, και μπορεί να "
 #~ "συμπεριλαμβάνουν ένα ή περισσότερα κλάδοι ανάπτυξης (development "
 #~ "branches)."
+
 #~ msgid ""
 #~ "They are usually taken from CVS, and we keep all relevant information on "
 #~ "them (Bugzilla details, webpages, maintainer information, etc.)."
@@ -4168,12 +4482,14 @@ msgstr ""
 #~ "Συνήθως λαμβάνονται από το CVS, και διατηρούμε όλες τις σχετικές "
 #~ "πληροφορίες σχετικά με αυτά (λεπτομέρειες Bugzilla, ιστοσελίδες, "
 #~ "πληροφορίες συντηρητή, κλπ.)."
+
 #~ msgid ""
 #~ "You can use Transifex to submit your translations to repositories you "
 #~ "don't have direct access to."
 #~ msgstr ""
 #~ "Μπορείτε να χρησιμοποιήσετε το Transifex για να υποβάλετε τις μεταφράσεις "
 #~ "σας σε αποθετήρια στα οποία δεν έχετε άμεση πρόσβαση."
+
 #~ msgid ""
 #~ "Translation statistics proudly powered by GNOME's <a href=\"http://live."
 #~ "gnome.org/TranslationProject/NewStatusPages\">Damned Lies</a>."
@@ -4181,8 +4497,10 @@ msgstr ""
 #~ "Τα στατιστικά μεταφράσεων παράγονται από το λογισμικό <a href=\"http://"
 #~ "live.gnome.org/TranslationProject/NewStatusPages\">Damned Lies</a> του "
 #~ "GNOME."
+
 #~ msgid "Graph"
 #~ msgstr "Γράφημα"
+
 #~ msgid "%(cat)s (%(percent)s%% translated)"
 #~ msgstr "%(cat)s (μεταφράστηκε %(percent)s%%)"
 
@@ -4191,8 +4509,10 @@ msgstr ""
 #~ "The modules of this release are not part of the Fedora CVS repository. "
 #~ "Check each module's webpage to see where to send translations."
 #~ msgstr "από ελευθέρωση όχι τμήμα από Fedora CVS άρθρωμα σελίδα."
+
 #~ msgid "Fedora Languages"
 #~ msgstr "Γλώσσες του Fedora"
+
 #~ msgid ""
 #~ "If your language isn't listed below, you can <a href=\"http://"
 #~ "fedoraproject.org/wiki/L10N/Maintainer\">create a team</a> that maintains "
@@ -4201,14 +4521,17 @@ msgstr ""
 #~ "Αν η γλώσσα σας δεν εμφανίζεται παρακάτω, μπορείτε να <a href=\"http://"
 #~ "fedoraproject.org/wiki/L10N/Maintainer\">δημιουργήσετε μια ομάδα</a> η "
 #~ "οποία συντηρεί τη γλώσσα,και να γίνεται ο συντονιστής της."
+
 #~ msgid "Fedora is being translated to the following languages:"
 #~ msgstr "Το Fedora μεταφράζεται στις παρακάτω γλώσσες:"
 
 #, fuzzy
 #~ msgid "Fedora is currently not being translated to any language. :("
 #~ msgstr "Fedora είναι όχι κάθε"
+
 #~ msgid "Translated Fedora modules"
 #~ msgstr "Μεταφρασμένα αρθρώματα του Fedora"
+
 #~ msgid ""
 #~ "<em>Modules</em> are individual components that get localized. They might "
 #~ "or might not contain submodules; for example, an application might also "
@@ -4218,6 +4541,7 @@ msgstr ""
 #~ "μεταφραστούν. Μπορεί να περιέχουν υπο-αρθρώματα, ή και όχι. Για "
 #~ "παράδειγμα, μία εφαρμογή μπορεί να έχει και ένα αρχείο βοήθειας να "
 #~ "αντιστοιχεί με αυτή."
+
 #~ msgid ""
 #~ "Information on how to commit to each repository can be found <a href="
 #~ "\"http://fedoraproject.org/wiki/L10N/Tools#modules\">on our wiki space</"
@@ -4230,6 +4554,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "There are currently no modules to supply damned lies for."
 #~ msgstr "όχι για πμ για<a href=\"danilo@gnome.org\"></a> about!"
+
 #~ msgid "Select a release set below to see more information about it:"
 #~ msgstr ""
 #~ "Επιλέξτε ένα σετ κυκλοφορίας για να εμφανίσετε περισσότερες πληροφορίες "
@@ -4238,10 +4563,12 @@ msgstr ""
 #, fuzzy
 #~ msgid "There are currently no releases defined."
 #~ msgstr "όχι μέσα GNOME"
+
 #~ msgid "Following is a list of Fedora's localization teams."
 #~ msgstr ""
 #~ "Παρακάτω υπάρχει ένας κατάλογος με γλώσσες στις οποίες μεταφράζεται το "
 #~ "Fedora."
+
 #~ msgid ""
 #~ "If there is no team for your language, you can easily <a href=\"http://"
 #~ "fedoraproject.org/wiki/L10N/Maintainer\">start your own team</a>."
@@ -4249,6 +4576,7 @@ msgstr ""
 #~ "Αν δεν υπάρχει ομάδα για τη γλώσσα σας, μπορείτε εύκολα να <a href="
 #~ "\"http://fedoraproject.org/wiki/L10N/Maintainer\">ξεκινήσετε τη δική σας "
 #~ "ομάδα</a>."
+
 #~ msgid ""
 #~ "To change your team's information, please <a href=\"https://bugzilla."
 #~ "redhat.com/bugzilla/enter_bug.cgi?product=Fedora%20Localization&amp;"
@@ -4257,6 +4585,7 @@ msgstr ""
 #~ "Για να τροποποιήσετε τις πληροφορίες της ομάδας σας, <a href=\"https://"
 #~ "bugzilla.redhat.com/bugzilla/enter_bug.cgi?product=Fedora%"
 #~ "20Localization&amp;component=Website\">ανοίξτε μια αναφορά σφάλματος</a>."
+
 #~ msgid ""
 #~ "If your language has no coordinator, take your chance and <a href="
 #~ "\"http://fedoraproject.org/wiki/L10N/Maintainer\">become the coordinator "
@@ -4265,48 +4594,65 @@ msgstr ""
 #~ "Αν η γλώσσα σας δεν έχει συντονιστή, πάρτε την ευκαιρία και <a href="
 #~ "\"http://fedoraproject.org/wiki/L10N/Maintainer\">γίνετε ο συντονιστής "
 #~ "της ομάδας</a>."
+
 #~ msgid "Select a team below to see more information about it."
 #~ msgstr ""
 #~ "Επιλέξτε παρακάτω μια ομάδα για να εμφανίσετε περισσότερες πληροφορίες "
 #~ "για αυτή."
+
 #~ msgid "Coordinated by %(coordinator)s"
 #~ msgstr "Συντονίζεται από %(coordinator)s"
+
 #~ msgid "Team has no registered coordinator"
 #~ msgstr "Η ομάδα δεν έχει ορίσει υπεύθυνο"
 
 #, fuzzy
 #~ msgid "There are currently no translation teams in Fedora. :("
 #~ msgstr "όχι μέσα Fedora"
+
 #~ msgid "Source code management"
 #~ msgstr "Διαχείριση πηγαίου κώδικα"
+
 #~ msgid "CVS root"
 #~ msgstr "Ριζικός κατάλογος CVS"
+
 #~ msgid "SVN root"
 #~ msgstr "Ριζικός κατάλογος SVN"
+
 #~ msgid "HG root"
 #~ msgstr "Ριζικός κατάλογος HG"
+
 #~ msgid "GIT root"
 #~ msgstr "Ριζικός κατάλογος GIT"
+
 #~ msgid "Bug reporting"
 #~ msgstr "Αναφορές σφαλμάτων"
+
 #~ msgid "Report bugs for %s"
 #~ msgstr "Αναφορές σφαλμάτων για %s"
+
 #~ msgid "Show existing bugs"
 #~ msgstr "Εμφάνιση υπάρχοντων σφαλμάτων"
+
 #~ msgid "This branch is currently string-frozen."
 #~ msgstr "Αυτός ο κλάδος βρίσκεται σε πάγωμα συμβολοσειρών."
 
 #, fuzzy
 #~ msgid "There are no contributors, Fedora created itself from nothing."
 #~ msgstr "όχι Fedora από τίποτα."
+
 #~ msgid "Instant messaging:"
 #~ msgstr "Άμεση αποστολή μηνύματος:"
+
 #~ msgid "%(module)s"
 #~ msgstr "%(module)s"
+
 #~ msgid "Coordinates:"
 #~ msgstr "Συντονίζει:"
+
 #~ msgid "%(team)s"
 #~ msgstr "%(team)s"
+
 #~ msgid "Bugzilla account:"
 #~ msgstr "Λογαριασμός Bugzilla:"
 
@@ -4317,42 +4663,58 @@ msgstr ""
 #, fuzzy
 #~ msgid "In language:"
 #~ msgstr "Γλώσσα"
+
 #~ msgid "msgid (original string)"
 #~ msgstr "msgid (αρχική συμβολοσειρά)"
+
 #~ msgid "msgstr (translated string)"
 #~ msgstr "msgstr (μεταφρασμένη συμβολοσειρά)"
+
 #~ msgid "Other options:"
 #~ msgstr "Άλλες επιλογές:"
 
 #, fuzzy
 #~ msgid "Search in fuzzy translations"
 #~ msgstr "Πελάτης"
+
 #~ msgid "POT file (%(potsize)s message)"
 #~ msgid_plural "POT file (%(potsize)s messages)"
 #~ msgstr[0] "Αρχείο POT (%(potsize)s μήνυμα)"
 #~ msgstr[1] "Αρχείο POT (%(potsize)s μηνύματα)"
+
 #~ msgid "updated on %(date)s"
 #~ msgstr "ενημερώθηκε στις %(date)s"
+
 #~ msgid "What are all these warnings and errors?"
 #~ msgstr "Τι είναι αυτές οι προειδοποιήσεις και τα σφάλματα;"
+
 #~ msgid "What are these?"
 #~ msgstr "Τι είναι αυτά;"
+
 #~ msgid "Mailing List:"
 #~ msgstr "Λίστα ηλ. ταχυδρομείου:"
+
 #~ msgid "Send email to the list"
 #~ msgstr "Αποστολή e-mail στη λίστα"
+
 #~ msgid "Subscribe"
 #~ msgstr "Εγγραφή"
+
 #~ msgid "Bugzilla:"
 #~ msgstr "Bugzilla:"
+
 #~ msgid "Report Bug in Translation"
 #~ msgstr "Αναφορά σφάλματος στη μετάφραση"
+
 #~ msgid "Show Existing Bugs"
 #~ msgstr "Υπάρχοντα σφάλματα"
+
 #~ msgid "Coordinator"
 #~ msgstr "Συντονιστής"
+
 #~ msgid "nobody"
 #~ msgstr "κανένας"
+
 #~ msgid ""
 #~ "Either the information for this team coordinator is missing, or ... "
 #~ "perhaps <em>you</em> could <a href=\"http://fedoraproject.org/wiki/L10N/"
@@ -4361,40 +4723,53 @@ msgstr ""
 #~ "Οι πληροφορίες για τον υπεύθυνο αυτής της ομάδας λείπουν, ή... "
 #~ "ίσως<em>εσείς</em> θα μπορούσατε να <a href=\"http://fedoraproject.org/"
 #~ "wiki/L10N/Join\">ξεκινήσετε αυτήν την ομάδα</a>?"
+
 #~ msgid "IRC"
 #~ msgstr "IRC"
+
 #~ msgid "Can't generate POT file, using old one."
 #~ msgstr "Αδυναμία δημιουργίας αρχείου POT, γίνεται χρήση του παλιού."
+
 #~ msgid "Can't generate POT file, using old one if it exists."
 #~ msgstr ""
 #~ "Αδυναμία δημιουργίας αρχείου POT, γίνεται χρήση του παλιού, αν υπάρχει."
+
 #~ msgid "There is no translation team in charge of '%s' translation."
 #~ msgstr "Δεν υπάρχει ομάδα μετάφρασης υπεύθυνη για τη μετάφραση σε '%s'."
+
 #~ msgid "Entry for this language is not present in LINGUAS file."
 #~ msgstr "Αυτή η γλώσσα δεν εμφανίζεται στο αρχείο LINGUAS."
+
 #~ msgid ""
 #~ "Entry for this language is not present in ALL_LINGUAS in configure file."
 #~ msgstr "Αυτή η γλώσσα δεν εμφανίζεται στο ALL_LINGUAS αρχείο ρύθμισης."
+
 #~ msgid ""
 #~ "Don't know where to look if this language is actually used, ask the "
 #~ "module maintainer."
 #~ msgstr ""
 #~ "Αδυναμία εύρεσης για το κατά πόσον αυτή η γλώσσσα χρησιμοποιείται, "
 #~ "ρωτήστε τον συντηρητή του αρθρώματος."
+
 #~ msgid "Errors while running 'intltool-update -m' check."
 #~ msgstr "Σφάλματα κατά την εκτέλεση του ελέγχου 'intltool-update -m'."
+
 #~ msgid "There are some missing files from POTFILES.in: %s"
 #~ msgstr "Υπάρχουν αρχεία που λείπουν από το POTFILES.in: %s"
+
 #~ msgid ""
 #~ "Following files are referenced in either POTFILES.in or POTFILES.skip, "
 #~ "yet they don't exist: %s"
 #~ msgstr ""
 #~ "Τα παρακάτω αρχεία αναφέρονται σε ένα από τα POTFILES.in και POTFILES."
 #~ "skip, ωστόσο δεν υπάρχουν: %s"
+
 #~ msgid "PO file '%s' doesn't exist."
 #~ msgstr "Το αρχείο PO '%s' δεν υπάρχει."
+
 #~ msgid "Fedora 8"
 #~ msgstr "Fedora 8"
+
 #~ msgid "Fedora 8 (Werewolf)"
 #~ msgstr "Fedora 8 (Werewolf)"
 
@@ -4413,6 +4788,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "Bulgarian Team"
 #~ msgstr "Βουλγαρική"
+
 #~ msgid "Greek Team"
 #~ msgstr "Ελληνικά ομάδα"
 
@@ -4427,17 +4803,23 @@ msgstr ""
 #, fuzzy
 #~ msgid "Swedish Team"
 #~ msgstr "Σουηδική Ομάδα"
+
 #~ msgid "Fedora 8 release notes (F-8 dir branch)"
 #~ msgstr "Σημειώσεις κυκλοφορίας του Fedora 8 (κατάλογος F-8)"
+
 #~ msgid "A drawing application with support for users on different computers"
 #~ msgstr ""
 #~ "Εφαρμογή ζωγραφικής με υποστήριξη για χρήστες σε διαφορετικούς υπολογιστές"
+
 #~ msgid "Balloon"
 #~ msgstr "Balloon"
+
 #~ msgid "BroomMorphs"
 #~ msgstr "BroomMorphs"
+
 #~ msgid "Connect activity"
 #~ msgstr "Δραστηριότητα σύνδεσης"
+
 #~ msgid "EToys"
 #~ msgstr "EToys"
 
@@ -4464,6 +4846,7 @@ msgstr ""
 #, fuzzy
 #~ msgid "Movies"
 #~ msgstr "Αρθρώματα"
+
 #~ msgid "OLPC"
 #~ msgstr "OLPC"
 
@@ -4478,20 +4861,24 @@ msgstr ""
 #, fuzzy
 #~ msgid "OLPC :: Sugar"
 #~ msgstr "Εξωτερικό"
+
 #~ msgid "ST80"
 #~ msgstr "ST80"
+
 #~ msgid "The basic text editing application on the laptops"
 #~ msgstr "Η βασική εφαρμογή επεξεργασίας κειμένου σε φορητούς υπολογιστές"
 
 #, fuzzy
 #~ msgid "Tools"
 #~ msgstr "Συνολικά"
+
 #~ msgid "Software"
 #~ msgstr "Λογισμικό"
 
 #, fuzzy
 #~ msgid "A CD-ROM mounting utility"
 #~ msgstr "CD"
+
 #~ msgid "Artwork for Red Hat default look-and-feel"
 #~ msgstr "Γραφικά για την προεπιλεγμένη όψη Red Hat"
 
@@ -4499,12 +4886,13 @@ msgstr ""
 #~ msgid ""
 #~ "Comps file and header lists for the Red Hat Enterprise Linux distribution"
 #~ msgstr "αρχείο και για Κόκκινο Linux διανομή"
+
 #~ msgid "RHN Applet for GNOME"
 #~ msgstr "Εφαρμογίδιο RHN για GNOME"
 
 #, fuzzy
 #~ msgid "The Red Hat Linux hardware probing tool"
 #~ msgstr "Κόκκινο Linux"
+
 #~ msgid "readahead"
 #~ msgstr "readahead"
-

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: russian\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-07 17:40+0000\n"
+"POT-Creation-Date: 2009-08-07 16:11+0000\n"
 "PO-Revision-Date: 2009-06-26 21:40+0500\n"
 "Last-Translator: Azamat H. Hackimov <azamat.hackimov@gmail.com>\n"
 "Language-Team: russian team <fedora-trans-ru@redhat.com>\n"
@@ -23,11 +23,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : (n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2;\n"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:51
 msgid "log entry"
 msgstr ""
 
-#: actionlog/models.py:51
+#: actionlog/models.py:52
 msgid "log entries"
 msgstr ""
 
@@ -51,38 +51,43 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr ""
 
-#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
-#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:26
+#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Имя"
 
-#: codebases/models.py:35
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Root"
 msgstr "Root"
 
-#: codebases/models.py:36
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr ""
 
-#: codebases/models.py:37
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Тип"
 
-#: codebases/models.py:39
+#: codebases/models.py:41
 #, python-format
 msgid "The codebase type (%s)"
 msgstr ""
 
-#: codebases/models.py:42
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr ""
 
-#: codebases/models.py:51
+#: codebases/models.py:53
 msgid "unit"
 msgstr "элемент"
 
-#: codebases/models.py:52
+#: codebases/models.py:54
 msgid "units"
 msgstr "элементы"
 
@@ -106,20 +111,24 @@ msgstr "%(site_name)s: %(language)s :: релиз %(release)s"
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr "Последние переводы для языка %(language)s в релизе %(release)s."
 
-#: languages/models.py:29 projects/models.py:86 projects/models.py:195
-#: releases/models.py:25 txcollections/models.py:28
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:15
+#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
+#: txcollections/migrations/0001_initial.py:33
 msgid "Description"
 msgstr "Описание"
 
-#: languages/models.py:30
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Код"
 
-#: languages/models.py:33
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr ""
 
-#: languages/models.py:36
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Специальные символы"
 
@@ -127,11 +136,11 @@ msgstr "Специальные символы"
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 
-#: languages/models.py:40
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Число множественных форм"
 
-#: languages/models.py:42
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Форма множественного числа"
 
@@ -143,379 +152,414 @@ msgstr "язык"
 msgid "languages"
 msgstr "языки"
 
-#: languages/management/commands/create_languages.py:26
+#: languages/management/commands/txcreatelanguages.py:26
 msgid "Afrikaans"
 msgstr "Африкаанс"
 
-#: languages/management/commands/create_languages.py:40
+#: languages/management/commands/txcreatelanguages.py:40
 msgid "Amharic"
 msgstr "Амхарский"
 
-#: languages/management/commands/create_languages.py:45
+#: languages/management/commands/txcreatelanguages.py:45
 msgid "Arabic"
 msgstr "Арабский"
 
-#: languages/management/commands/create_languages.py:52
+#: languages/management/commands/txcreatelanguages.py:52
+#, fuzzy
+msgid "Spanish (Argentinian)"
+msgstr "Испанский (Кастилия)"
+
+#: languages/management/commands/txcreatelanguages.py:59
 msgid "Assamese"
 msgstr "Ассамский"
 
-#: languages/management/commands/create_languages.py:60
+#: languages/management/commands/txcreatelanguages.py:66
+#, fuzzy
+msgid "Asturian"
+msgstr "Эстонский"
+
+#: languages/management/commands/txcreatelanguages.py:74
 msgid "Azerbaijani"
 msgstr "Азербайджанский"
 
-#: languages/management/commands/create_languages.py:67
+#: languages/management/commands/txcreatelanguages.py:81
 msgid "Balochi"
 msgstr "Белуджский"
 
-#: languages/management/commands/create_languages.py:73
+#: languages/management/commands/txcreatelanguages.py:87
 msgid "Belarusian"
 msgstr "Белорусский"
 
-#: languages/management/commands/create_languages.py:81
+#: languages/management/commands/txcreatelanguages.py:95
 msgid "Bulgarian"
 msgstr "Болгарский"
 
-#: languages/management/commands/create_languages.py:89
+#: languages/management/commands/txcreatelanguages.py:103
 msgid "Bengali"
 msgstr "Бенгальский"
 
-#: languages/management/commands/create_languages.py:97
+#: languages/management/commands/txcreatelanguages.py:111
 msgid "Bengali (India)"
 msgstr "Бенгальский (Индия)"
 
-#: languages/management/commands/create_languages.py:110
+#: languages/management/commands/txcreatelanguages.py:118
+msgid "Tibetan"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:126
 msgid "Bosnian"
 msgstr "Боснийский"
 
-#: languages/management/commands/create_languages.py:118
+#: languages/management/commands/txcreatelanguages.py:134
 msgid "Catalan (Valencian)"
 msgstr "Каталанский (Валенсия)"
 
-#: languages/management/commands/create_languages.py:126
+#: languages/management/commands/txcreatelanguages.py:142
 msgid "Czech"
 msgstr "Чешский"
 
-#: languages/management/commands/create_languages.py:134
+#: languages/management/commands/txcreatelanguages.py:150
 msgid "Welsh"
 msgstr "Валлийский"
 
-#: languages/management/commands/create_languages.py:142
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Danish"
 msgstr "Датский"
 
-#: languages/management/commands/create_languages.py:150
+#: languages/management/commands/txcreatelanguages.py:166
 msgid "German"
 msgstr "Немецкий"
 
-#: languages/management/commands/create_languages.py:158
+#: languages/management/commands/txcreatelanguages.py:174
 msgid "Swiss German"
 msgstr "Швейцарский немецкий"
 
-#: languages/management/commands/create_languages.py:166
+#: languages/management/commands/txcreatelanguages.py:182
 msgid "Dzongkha"
 msgstr "Дзонг-кэ"
 
-#: languages/management/commands/create_languages.py:174
+#: languages/management/commands/txcreatelanguages.py:190
 msgid "Greek"
 msgstr "Греческий"
 
-#: languages/management/commands/create_languages.py:181
+#: languages/management/commands/txcreatelanguages.py:197
 msgid "English"
 msgstr "Английский"
 
-#: languages/management/commands/create_languages.py:189
+#: languages/management/commands/txcreatelanguages.py:205
 msgid "English (United Kingdom)"
 msgstr "Английский (Великобритания)"
 
-#: languages/management/commands/create_languages.py:197
+#: languages/management/commands/txcreatelanguages.py:213
 msgid "English (South Africa)"
 msgstr "Английский (Южная Африка)"
 
-#: languages/management/commands/create_languages.py:210
+#: languages/management/commands/txcreatelanguages.py:220
+msgid "Esperanto"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:228
 msgid "Spanish (Castilian)"
 msgstr "Испанский (Кастилия)"
 
-#: languages/management/commands/create_languages.py:218
+#: languages/management/commands/txcreatelanguages.py:236
 msgid "Estonian"
 msgstr "Эстонский"
 
-#: languages/management/commands/create_languages.py:226
+#: languages/management/commands/txcreatelanguages.py:244
 msgid "Basque"
 msgstr "Баскский"
 
-#: languages/management/commands/create_languages.py:233
+#: languages/management/commands/txcreatelanguages.py:251
 msgid "Persian"
 msgstr "Персидский"
 
-#: languages/management/commands/create_languages.py:241
+#: languages/management/commands/txcreatelanguages.py:259
 msgid "Finnish"
 msgstr "Финский"
 
-#: languages/management/commands/create_languages.py:255
+#: languages/management/commands/txcreatelanguages.py:273
 msgid "French"
 msgstr "Французский"
 
-#: languages/management/commands/create_languages.py:263
+#: languages/management/commands/txcreatelanguages.py:281
 msgid "Friulian"
 msgstr "Фриульский"
 
-#: languages/management/commands/create_languages.py:271
+#: languages/management/commands/txcreatelanguages.py:289
 msgid "Western Frisian"
 msgstr "Западнофризский"
 
-#: languages/management/commands/create_languages.py:279
+#: languages/management/commands/txcreatelanguages.py:297
 msgid "Irish"
 msgstr "Ирландский"
 
-#: languages/management/commands/create_languages.py:287
+#: languages/management/commands/txcreatelanguages.py:305
 msgid "Galician"
 msgstr "Галисийский"
 
-#: languages/management/commands/create_languages.py:295
+#: languages/management/commands/txcreatelanguages.py:313
 msgid "Gujarati"
 msgstr "Гуджарати"
 
-#: languages/management/commands/create_languages.py:302
+#: languages/management/commands/txcreatelanguages.py:320
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: languages/management/commands/create_languages.py:310
+#: languages/management/commands/txcreatelanguages.py:328
 msgid "Hindi"
 msgstr "Хинди"
 
-#: languages/management/commands/create_languages.py:318
+#: languages/management/commands/txcreatelanguages.py:336
 msgid "Croatian"
 msgstr "Хорватский"
 
-#: languages/management/commands/create_languages.py:325
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Haitian (Haitian Creole)"
 msgstr "Гаитянский креольский"
 
-#: languages/management/commands/create_languages.py:333
+#: languages/management/commands/txcreatelanguages.py:351
 msgid "Hungarian"
 msgstr "Венгерский"
 
-#: languages/management/commands/create_languages.py:340
+#: languages/management/commands/txcreatelanguages.py:358
 msgid "Armenian"
 msgstr "Армянский"
 
-#: languages/management/commands/create_languages.py:346
+#: languages/management/commands/txcreatelanguages.py:364
 msgid "Indonesian"
 msgstr "Индонезийский"
 
-#: languages/management/commands/create_languages.py:353
+#: languages/management/commands/txcreatelanguages.py:371
 msgid "Iloko"
 msgstr "Илоко"
 
-#: languages/management/commands/create_languages.py:358
+#: languages/management/commands/txcreatelanguages.py:376
 msgid "Icelandic"
 msgstr "Исландский"
 
-#: languages/management/commands/create_languages.py:366
+#: languages/management/commands/txcreatelanguages.py:384
 msgid "Italian"
 msgstr "Итальянский"
 
-#: languages/management/commands/create_languages.py:374
+#: languages/management/commands/txcreatelanguages.py:392
 msgid "Japanese"
 msgstr "Японский"
 
-#: languages/management/commands/create_languages.py:382
+#: languages/management/commands/txcreatelanguages.py:400
 msgid "Georgian"
 msgstr "Грузинский"
 
-#: languages/management/commands/create_languages.py:395
+#: languages/management/commands/txcreatelanguages.py:413
 msgid "Kannada"
 msgstr "Каннада"
 
-#: languages/management/commands/create_languages.py:401
+#: languages/management/commands/txcreatelanguages.py:419
 msgid "Korean"
 msgstr "Корейский"
 
-#: languages/management/commands/create_languages.py:409
+#: languages/management/commands/txcreatelanguages.py:426
+msgid "Kashmiri"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:434
 msgid "Kurdish"
 msgstr "Курдский"
 
-#: languages/management/commands/create_languages.py:422
+#: languages/management/commands/txcreatelanguages.py:441
+msgid "Kirgyz"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:448
+#, fuzzy
+msgid "Latin"
+msgstr "Латвийский"
+
+#: languages/management/commands/txcreatelanguages.py:461
 msgid "Lao"
 msgstr "Лаосский"
 
-#: languages/management/commands/create_languages.py:428
+#: languages/management/commands/txcreatelanguages.py:467
 msgid "Lithuanian"
 msgstr "Литовский"
 
-#: languages/management/commands/create_languages.py:436
+#: languages/management/commands/txcreatelanguages.py:475
 msgid "Latvian"
 msgstr "Латвийский"
 
-#: languages/management/commands/create_languages.py:443
+#: languages/management/commands/txcreatelanguages.py:482
 msgid "Maithili"
 msgstr "Майтхили"
 
-#: languages/management/commands/create_languages.py:448
+#: languages/management/commands/txcreatelanguages.py:487
 msgid "Macedonian"
 msgstr "Македонский"
 
-#: languages/management/commands/create_languages.py:453
+#: languages/management/commands/txcreatelanguages.py:492
 msgid "Malayalam"
 msgstr "Малайялам"
 
-#: languages/management/commands/create_languages.py:466
+#: languages/management/commands/txcreatelanguages.py:505
 msgid "Mongolian"
 msgstr "Монгольский"
 
-#: languages/management/commands/create_languages.py:473
+#: languages/management/commands/txcreatelanguages.py:512
 msgid "Marathi"
 msgstr "Маратхи"
 
-#: languages/management/commands/create_languages.py:480
+#: languages/management/commands/txcreatelanguages.py:519
 msgid "Malay"
 msgstr "Малайский"
 
-#: languages/management/commands/create_languages.py:488
+#: languages/management/commands/txcreatelanguages.py:527
 msgid "Maltese"
 msgstr "Мальтийский"
 
-#: languages/management/commands/create_languages.py:495
+#: languages/management/commands/txcreatelanguages.py:534
 msgid "Burmese"
 msgstr "Бирманский"
 
-#: languages/management/commands/create_languages.py:506
+#: languages/management/commands/txcreatelanguages.py:545
 msgid "Norwegian Bokmål"
 msgstr "Норвежский (букмол)"
 
-#: languages/management/commands/create_languages.py:513
+#: languages/management/commands/txcreatelanguages.py:552
 msgid "Nepali"
 msgstr "Непальский"
 
-#: languages/management/commands/create_languages.py:521
+#: languages/management/commands/txcreatelanguages.py:560
 msgid "Dutch (Flemish)"
 msgstr "Голландский (Фламандский)"
 
-#: languages/management/commands/create_languages.py:529
+#: languages/management/commands/txcreatelanguages.py:568
 msgid "Norwegian Nynorsk"
 msgstr "Норвежский (нюнорск)"
 
-#: languages/management/commands/create_languages.py:536
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Norwegian"
 msgstr "Норвежский"
 
-#: languages/management/commands/create_languages.py:542
+#: languages/management/commands/txcreatelanguages.py:581
 msgid "Northern Sotho"
 msgstr "Северный сото"
 
-#: languages/management/commands/create_languages.py:550
+#: languages/management/commands/txcreatelanguages.py:589
 msgid "Oriya"
 msgstr "Ория"
 
-#: languages/management/commands/create_languages.py:557
+#: languages/management/commands/txcreatelanguages.py:596
 msgid "Panjabi (Punjabi)"
 msgstr "Пенджабский"
 
-#: languages/management/commands/create_languages.py:570
+#: languages/management/commands/txcreatelanguages.py:609
 msgid "Polish"
 msgstr "Польский"
 
-#: languages/management/commands/create_languages.py:586
+#: languages/management/commands/txcreatelanguages.py:625
 msgid "Portuguese"
 msgstr "Португальский"
 
-#: languages/management/commands/create_languages.py:595
+#: languages/management/commands/txcreatelanguages.py:634
 msgid "Brazilian Portuguese"
 msgstr "Бразильский португальский"
 
-#: languages/management/commands/create_languages.py:603
+#: languages/management/commands/txcreatelanguages.py:642
 msgid "Romanian"
 msgstr "Румынский"
 
-#: languages/management/commands/create_languages.py:611
+#: languages/management/commands/txcreatelanguages.py:650
 msgid "Russian"
 msgstr "Русский"
 
-#: languages/management/commands/create_languages.py:618
+#: languages/management/commands/txcreatelanguages.py:657
 msgid "Sinhala"
 msgstr "Сингальский"
 
-#: languages/management/commands/create_languages.py:624
+#: languages/management/commands/txcreatelanguages.py:663
 msgid "Slovak"
 msgstr "Словацкий"
 
-#: languages/management/commands/create_languages.py:632
+#: languages/management/commands/txcreatelanguages.py:671
 msgid "Slovenian"
 msgstr "Словенский"
 
-#: languages/management/commands/create_languages.py:640
+#: languages/management/commands/txcreatelanguages.py:679
 msgid "Albanian"
 msgstr "Албанский"
 
-#: languages/management/commands/create_languages.py:648
+#: languages/management/commands/txcreatelanguages.py:687
 msgid "Serbian"
 msgstr "Сербский"
 
-#: languages/management/commands/create_languages.py:656
+#: languages/management/commands/txcreatelanguages.py:695
 msgid "Serbian (Latin)"
 msgstr "Сербский латинский"
 
-#: languages/management/commands/create_languages.py:665
+#: languages/management/commands/txcreatelanguages.py:704
 msgid "Sotho, Southern"
 msgstr "Южный сото"
 
-#: languages/management/commands/create_languages.py:673
+#: languages/management/commands/txcreatelanguages.py:712
 msgid "Swedish"
 msgstr "Шведский"
 
-#: languages/management/commands/create_languages.py:681
+#: languages/management/commands/txcreatelanguages.py:720
 msgid "Tamil"
 msgstr "Тамильский"
 
-#: languages/management/commands/create_languages.py:688
+#: languages/management/commands/txcreatelanguages.py:727
 msgid "Telugu"
 msgstr "Телугу"
 
-#: languages/management/commands/create_languages.py:693
+#: languages/management/commands/txcreatelanguages.py:732
 msgid "Tajik"
 msgstr "Таджикский"
 
-#: languages/management/commands/create_languages.py:698
+#: languages/management/commands/txcreatelanguages.py:737
 msgid "Thai"
 msgstr "Тайский"
 
-#: languages/management/commands/create_languages.py:703
+#: languages/management/commands/txcreatelanguages.py:742
 msgid "Tagalog"
 msgstr "Тагальский"
 
-#: languages/management/commands/create_languages.py:715
+#: languages/management/commands/txcreatelanguages.py:754
 msgid "Turkish"
 msgstr "Турецкий"
 
-#: languages/management/commands/create_languages.py:722
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Urdu"
 msgstr "Урду"
 
-#: languages/management/commands/create_languages.py:728
+#: languages/management/commands/txcreatelanguages.py:767
 msgid "Ukrainian"
 msgstr "Украинский"
 
-#: languages/management/commands/create_languages.py:742
+#: languages/management/commands/txcreatelanguages.py:781
 msgid "Vietnamese"
 msgstr "Вьетнамский"
 
-#: languages/management/commands/create_languages.py:749
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Wolof"
 msgstr "Волоф"
 
-#: languages/management/commands/create_languages.py:764
+#: languages/management/commands/txcreatelanguages.py:801
+msgid "Xhosa"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:810
 msgid "Chinese (China)"
 msgstr "Китайский (Китай)"
 
-#: languages/management/commands/create_languages.py:774
+#: languages/management/commands/txcreatelanguages.py:820
 msgid "Chinese (Hong Kong)"
 msgstr "Китайский (Гонконг)"
 
-#: languages/management/commands/create_languages.py:784
+#: languages/management/commands/txcreatelanguages.py:830
 msgid "Chinese (Taiwan)"
 msgstr "Китайский (Тайвань)"
 
-#: languages/management/commands/create_languages.py:792
+#: languages/management/commands/txcreatelanguages.py:838
 msgid "Zulu"
 msgstr "Зулусский"
 
@@ -524,9 +568,9 @@ msgid "Translated:"
 msgstr "Переведено:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
@@ -559,27 +603,33 @@ msgstr "%(site_name)s: Компоненты в %(project)s"
 msgid "Latest components in project %s."
 msgstr "Последние компоненты в проекте %s."
 
-#: projects/forms.py:17 projects/models.py:208
+#: projects/forms.py:29 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Регулярное выражение для выделения файлов, например, «po/.*»."
 
-#: projects/forms.py:40 projects/models.py:213
+#: projects/forms.py:52 projects/models.py:218
+#: projects/migrations/0002_release_06_07.py:15
 #, fuzzy
 msgid "Submit to"
 msgstr "Передать фаил"
 
-#: projects/forms.py:41
+#: projects/forms.py:53
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
 
-#: projects/models.py:81 projects/models.py:190 releases/models.py:20
-#: txcollections/models.py:23
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:14
+#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
+#: txcollections/migrations/0001_initial.py:32
+#: txcollections/migrations/0002_release_06_07.py:11
+#: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr "Часть URL"
 
-#: projects/models.py:82 projects/models.py:191 releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -588,230 +638,267 @@ msgstr ""
 "Короткий псевдоним, который будет использоваться в URL, может содержать "
 "только буквы, цифры, подчеркивания и дефисы."
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "Строка, содержащая очень короткое описание."
 
-#: projects/models.py:87 projects/models.py:196
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr "Пара предложений, описывающих объект (необязательно)."
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:27
-#: txcollections/models.py:30
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:25
+#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
+#: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Полное описание"
 
-#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr ""
 "Более полное описание (не обязательно). Используйте синтаксис Markdown."
 
-#: projects/models.py:91 txcollections/models.py:32
+#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Домашняя страница"
 
-#: projects/models.py:92
+#: projects/models.py:94 projects/migrations/0001_initial.py:13
 msgid "Feed"
 msgstr "Лента новостей"
 
-#: projects/models.py:93
+#: projects/models.py:95
 msgid "An RSS feed with updates on the project."
 msgstr "RSS-лента с обновлениями проекта."
 
-#: projects/models.py:94
+#: projects/models.py:96 projects/migrations/0001_initial.py:22
 msgid "Bug tracker"
 msgstr "Система отслеживания ошибок"
 
-#: projects/models.py:95
+#: projects/models.py:97
 msgid ""
 "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr "URL сайта, отслеживающего ошибки (Bugzilla, Trac и др.)"
 
-#: projects/models.py:98 projects/models.py:216 releases/models.py:41
-#: txcollections/models.py:33
+#: projects/models.py:99
+#: projects/migrations/0003_add_anyone_submit_field.py:12
+msgid "Anyone can submit"
+msgstr ""
+
+#: projects/models.py:101
+msgid "Does anyone can submit translations to this project?"
+msgstr ""
+
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:23
+#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
+#: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr "Скрытый"
 
-#: projects/models.py:99 projects/models.py:217 releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:100 projects/models.py:218 releases/models.py:43
-#: txcollections/models.py:35
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
+#: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Доступен"
 
-#: projects/models.py:101 projects/models.py:219 releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
 
-#: projects/models.py:105
+#: projects/models.py:110 projects/migrations/0001_initial.py:18
 msgid "Tags"
 msgstr "Теги"
 
-#: projects/models.py:110 templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
 msgstr "Коллекции"
 
-#: projects/models.py:112
+#: projects/models.py:117
 msgid "Maintainers"
 msgstr ""
 
-#: projects/models.py:116 projects/models.py:228 releases/models.py:49
-#: txcollections/models.py:43
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:17
+#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
+#: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
 msgstr "HTML Описание"
 
-#: projects/models.py:118 projects/models.py:230 releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Описание на HTML."
 
-#: projects/models.py:124
+#: projects/models.py:129
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Проект: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:132
 msgid "project"
 msgstr "проект"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/txcollections/collection_detail.html:93
+#: projects/models.py:133 templates/projects/project_list.html:18
+#: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr "проекты"
 
-#: projects/models.py:200
+#: projects/models.py:205 projects/migrations/0001_initial.py:47
 msgid "Source language"
 msgstr "Исходный язык"
 
-#: projects/models.py:201
+#: projects/models.py:206
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Исходный компонент данного компонента, например «en», «pt_BR», «el» и др."
 
-#: projects/models.py:203
+#: projects/models.py:208 projects/migrations/0001_initial.py:37
 msgid "I18n type"
 msgstr "i18n тип"
 
-#: projects/models.py:205
+#: projects/models.py:210
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr ""
 
-#: projects/models.py:207
+#: projects/models.py:212 projects/migrations/0001_initial.py:38
 msgid "File filter"
 msgstr "Фильтр файлов"
 
-#: projects/models.py:210
+#: projects/models.py:215 projects/migrations/0001_initial.py:46
 #, fuzzy
 msgid "Allows submission"
 msgstr "Подтвердить"
 
-#: projects/models.py:212
+#: projects/models.py:217
 msgid "Does this module repository allow write access?"
 msgstr "Есть ли в хранилище доступ по записи?"
 
-#: projects/models.py:222
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 #, fuzzy
 msgid "Calculate statistics?"
 msgstr "Статистика перевода"
 
-#: projects/models.py:223
+#: projects/models.py:228
 msgid "Should statistics be calculated for this component?"
 msgstr ""
 
-#: projects/models.py:233
+#: projects/models.py:238 projects/migrations/0001_initial.py:41
 msgid "Project"
 msgstr "Проект"
 
-#: projects/models.py:234
+#: projects/models.py:239 projects/migrations/0001_initial.py:32
 #, fuzzy
 msgid "Unit"
 msgstr "Подтвердить"
 
-#: projects/models.py:238
+#: projects/models.py:243
 msgid "Releases"
 msgstr "Релизы"
 
-#: projects/models.py:258
+#: projects/models.py:263
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Компонент: %s>"
 
-#: projects/models.py:262
+#: projects/models.py:267
 msgid "component"
 msgstr "компонет"
 
-#: projects/models.py:263 templates/projects/component_list.html:15
+#: projects/models.py:268 templates/projects/component_list.html:17
 msgid "components"
 msgstr "комоненты"
 
-#: projects/views.py:117 projects/views.py:332 txcollections/views.py:121
+#: projects/permissions.py:17
+#, fuzzy
+msgid "Is allowed to maintain this project"
+msgstr "Не следить за этим проектом"
+
+#: projects/permissions.py:26
+msgid "Is allowed to submit file to this project"
+msgstr ""
+
+#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s был удален."
 
-#: projects/views.py:136 projects/views.py:623
+#: projects/views.py:286 projects/views.py:841
 msgid "Must use POST to activate"
 msgstr ""
 
-#: projects/views.py:139 projects/views.py:626
+#: projects/views.py:289 projects/views.py:844
 msgid "Notifation is not enabled"
 msgstr "Оповещения не включены"
 
-#: projects/views.py:152
+#: projects/views.py:302
 msgid "Watch this project"
 msgstr "Следить за проектом"
 
-#: projects/views.py:165
+#: projects/views.py:315
 msgid "Stop wathing this project"
 msgstr "Не следить за этим проектом"
 
-#: projects/views.py:364
+#: projects/views.py:537
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:450
+#: projects/views.py:544
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+
+#: projects/views.py:655
 #, fuzzy
 msgid "This component does  not allow write access."
 msgstr "Есть ли в хранилище доступ по записи?"
 
-#: projects/views.py:458
+#: projects/views.py:663
 #, fuzzy
 msgid "Please select a file from your system to be uploaded."
 msgstr "Выберите файл для загрузки."
 
-#: projects/views.py:467
+#: projects/views.py:672
 #, fuzzy
 msgid "Please enter a target to upload the file."
 msgstr "Выберите файл для загрузки."
 
-#: projects/views.py:473
+#: projects/views.py:678
 #, fuzzy
 msgid "Please enter only ONE target to upload the file."
 msgstr "Указывайте только ОДИН файл для загрузки."
 
-#: projects/views.py:484
+#: projects/views.py:689
 msgid "The target file does not match with the component file filter"
 msgstr ""
 
-#: projects/views.py:492
+#: projects/views.py:697
 msgid "Enter a commit message"
 msgstr ""
 
-#: projects/views.py:550 webtrans/views.py:120
+#: projects/views.py:755 webtrans/views.py:124
 #, fuzzy, python-format
 msgid "File submitted successfully: %s"
 msgstr "Ваши изменения успешно размещены."
 
-#: projects/views.py:565
+#: projects/views.py:770
 #, fuzzy
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
@@ -820,23 +907,23 @@ msgstr ""
 "Ваш файл не прошел проверку на корректность (msgfmt -c). Пожалуйста "
 "выполните эту команду в своей системе для просмотра ошибок."
 
-#: projects/views.py:574
+#: projects/views.py:779
 msgid "Sorry, your file could not be sent because of an error."
 msgstr ""
 
-#: projects/views.py:578 projects/views.py:608
+#: projects/views.py:783 projects/views.py:821
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:597
+#: projects/views.py:810
 msgid "Lock removed."
 msgstr "Блокировка удалена."
 
-#: projects/views.py:600
+#: projects/views.py:813
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Ошибка: только владелец блокировки может удалить ее."
 
-#: projects/views.py:604
+#: projects/views.py:817
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Блокировка создана. Не забудьте ее удалить после завершения."
 
@@ -848,7 +935,7 @@ msgstr "Пара предложений, описывающих объект."
 msgid "Use Markdown syntax."
 msgstr "Использовать синтаксис Markdown."
 
-#: releases/models.py:31
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 msgid "Release date"
 msgstr "Дата релиза"
 
@@ -866,7 +953,7 @@ msgid ""
 "modified which affect translations."
 msgstr ""
 
-#: releases/models.py:36
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr "Дата заморозки разработки"
 
@@ -881,7 +968,7 @@ msgstr ""
 msgid "release"
 msgstr "выпуск"
 
-#: releases/models.py:55 templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "выпуски"
@@ -894,24 +981,16 @@ msgstr "Следить"
 msgid "Stop watching it"
 msgstr ""
 
-#: repowatch/models.py:24
+#: repowatch/models.py:25
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr ""
 
-#: repowatch/models.py:88
-msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
-
-#: repowatch/models.py:90
-msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
-
-#: repowatch/models.py:141
+#: repowatch/models.py:94
 msgid "watch"
 msgstr "следить"
 
-#: repowatch/models.py:142
+#: repowatch/models.py:95
 #, fuzzy
 msgid "watches"
 msgstr "наблюдать"
@@ -924,11 +1003,11 @@ msgstr "Блокировка"
 msgid "Locks"
 msgstr "Блокировки"
 
-#: tarball/models.py:31
+#: tarball/models.py:33
 msgid "tarball"
 msgstr "архив"
 
-#: tarball/models.py:32
+#: tarball/models.py:34
 msgid "tarballs"
 msgstr "архивы"
 
@@ -985,7 +1064,8 @@ msgstr "Попробуйте позже."
 msgid "Welcome to Transifex"
 msgstr "Добро пожаловать в Transifex"
 
-#: templates/base-sample.html:8 templates/flatpages/default.html:5
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
@@ -1048,7 +1128,7 @@ msgid "Sign in"
 msgstr "Войти"
 
 #: templates/base-sample.html:53
-#: templates/userprofile/account/includes/registration_form.html:33
+#: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Регистрация"
 
@@ -1081,7 +1161,7 @@ msgstr ""
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:57
+#: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Поиск"
 
@@ -1108,17 +1188,21 @@ msgid ""
 "No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr "Для «%(q)s» не найдено ни одного проекта. Измените немного запрос."
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
 msgstr "Не можете найти свой проект? Вы можете его "
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "add it"
 msgstr "добавить"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Поиск проектов по имени, описанию и так далее."
+
+#: templates/admin/base_site.html:9
+msgid "Transifex administration"
+msgstr ""
 
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
@@ -1170,8 +1254,6 @@ msgstr "Email"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
-#: templates/userprofile/account/login.html:26
-#: templates/userprofile/account/includes/registration_form.html:17
 msgid "Password"
 msgstr "Пароль"
 
@@ -1206,7 +1288,8 @@ msgstr "Изменить мой пароль"
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
-#: templates/userprofile/profile/overview.html:92
+#: templates/userprofile/account/password_reset_confirm.html:31
+#: templates/userprofile/profile/overview.html:88
 msgid "Change password"
 msgstr "Изменить пароль"
 
@@ -1219,8 +1302,6 @@ msgid "Current password"
 msgstr "Текущий пароль"
 
 #: templates/authopenid/changepw.html:21
-#: templates/userprofile/account/password_change.html:30
-#: templates/userprofile/account/password_reset_confirm.html:26
 msgid "New password"
 msgstr "Новый пароль"
 
@@ -1264,8 +1345,6 @@ msgstr "Новая учетная запись"
 
 #: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
-#: templates/userprofile/account/login.html:20
-#: templates/userprofile/account/includes/registration_form.html:5
 #: templates/userprofile/profile/public.html:33
 msgid "Username"
 msgstr "Имя пользователя"
@@ -1317,7 +1396,7 @@ msgid "Delete account permanently"
 msgstr "Навсегда удалить учетную запись"
 
 #: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:41
+#: templates/userprofile/profile/overview.html:39
 msgid "Username:"
 msgstr "Имя пользователя:"
 
@@ -1330,15 +1409,14 @@ msgid "Sign in with OpenID"
 msgstr "Войти с помощью OpenID"
 
 #: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:44
+#: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
 msgstr "Забыли свой пароль?"
 
 #: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:4
-#: templates/userprofile/account/password_reset.html:20
-#: templates/userprofile/account/password_reset_complete.html:19
-#: templates/userprofile/account/password_reset_confirm.html:55
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:22
 msgid "Password reset"
 msgstr "Сброс пароля"
 
@@ -1388,7 +1466,7 @@ msgid "Change openid associated to your account"
 msgstr ""
 
 #: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:106
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr ""
 
@@ -1402,7 +1480,8 @@ msgstr ""
 
 #: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:36
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Login"
 msgstr "Логин"
 
@@ -1492,13 +1571,13 @@ msgstr "Спасибо!"
 msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/languages/language_detail.html:19
+#: templates/languages/language_detail.html:18
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
 msgstr "Релизы %(collection)s"
 
-#: templates/languages/language_detail.html:25
+#: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
 msgid ""
@@ -1523,9 +1602,9 @@ msgid "No languages registered yet. :-("
 msgstr "Пока не зарегистрировано ни одного языка. :-("
 
 #: templates/languages/language_list.html:35
-#, python-format
+#, fuzzy
 msgid ""
-"Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 "Не можете найти свой язык? <a href=\"%(contact_form)s\">Дайте нам знать</a>!"
 
@@ -1601,7 +1680,7 @@ msgid "Account"
 msgstr "Учетная запись"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:115
+#: templates/projects/component_detail.html:118
 msgid "Note"
 msgstr ""
 
@@ -1616,8 +1695,8 @@ msgid "Notification Type"
 msgstr "Тип оповещения"
 
 #: templates/notification/notices.html:85
-#: templates/userprofile/account/password_change.html:46
-#: templates/userprofile/account/password_reset_confirm.html:42
+#: templates/userprofile/account/email_validation.html:31
+#: templates/userprofile/account/password_change.html:29
 msgid "Change"
 msgstr "Изменить"
 
@@ -1735,122 +1814,130 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Да, все правильно!"
 
-#: templates/projects/component_detail.html:23
+#: templates/projects/component_detail.html:25
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
 msgstr ""
 
-#: templates/projects/component_detail.html:25
+#: templates/projects/component_detail.html:27
 msgid ""
 "This component does not support local storing of submitted files. The "
 "submitted files will be sent to the maintainers\\' emails and the statistics "
 "will reflect the change once the files are committed upstream."
 msgstr ""
 
-#: templates/projects/component_detail.html:29
+#: templates/projects/component_detail.html:31
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:73
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:76
+#: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Править"
 
-#: templates/projects/component_detail.html:82
+#: templates/projects/component_detail.html:85
 msgid "Repository:"
 msgstr "Хранилище:"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "Link to a web front-end to the source"
 msgstr "Ссылка к веб-интерфейсу к исходным файлам"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "web"
 msgstr "веб"
 
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:95
 msgid "Branch:"
 msgstr "Ветка:"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:100
 msgid "File filter:"
 msgstr "Фильтр файлов:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:106
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Выпуск:"
 msgstr[1] "Выпуски:"
 msgstr[2] "Выпуски:"
 
-#: templates/projects/component_detail.html:111
+#: templates/projects/component_detail.html:114
 #, fuzzy
 msgid "Allows submissions:"
 msgstr "Подтвердить"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:128
 msgid "Translation files"
 msgstr "Переведенные файлы"
 
-#: templates/projects/component_detail.html:130
+#: templates/projects/component_detail.html:133
 msgid "Source file:"
 msgstr "Исходный файл:"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:140
 msgid "Statistics last updated:"
 msgstr "Последнее обновление статистики:"
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:142
 msgid "ago"
 msgstr "назад"
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:143
 msgid "Component not yet pulled from source repository."
 msgstr "Компонент еще не был извлечен из исходного хранилища."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 #, fuzzy
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Обновить и пересчитать статистику. Это может занять некоторое время."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh cache"
 msgstr "Обновить кэш"
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Clear cache"
 msgstr "Очистить кэш"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Все локально измененные данные будут перезаписаны новыми копиями."
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "warning"
 msgstr "предупреждение"
 
-#: templates/projects/component_detail.html:166
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:163
+msgid "Become a translator:"
+msgstr ""
+
+#: templates/projects/component_detail.html:167
+msgid "Your request is pending for approval."
+msgstr ""
+
+#: templates/projects/component_detail.html:190
+#: templates/projects/project_detail.html:116
 msgid "History"
 msgstr "История"
 
-#: templates/projects/component_detail.html:170
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:194
+#: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr ""
 
-#: templates/projects/component_detail.html:186
+#: templates/projects/component_detail.html:211
 msgid "Delete component"
 msgstr "Удалить компонент"
 
@@ -1885,40 +1972,40 @@ msgstr "Подтвердить"
 msgid "Save component"
 msgstr "Сохранить компонент"
 
-#: templates/projects/component_lang_detail.html:28
+#: templates/projects/component_lang_detail.html:29
 msgid "translation files"
 msgstr "файлы перевода"
 
-#: templates/projects/component_list.html:9
+#: templates/projects/component_list.html:11
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Добавить"
 
-#: templates/projects/component_list.html:14
+#: templates/projects/component_list.html:16
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Компонент проекта"
 msgstr[1] "Компоненты проекта"
 msgstr[2] "Компоненты проекта"
 
-#: templates/projects/component_list.html:25
+#: templates/projects/component_list.html:27
 msgid "edit"
 msgstr "править"
 
-#: templates/projects/component_list.html:28
+#: templates/projects/component_list.html:30
 msgid "del"
 msgstr "удалить"
 
-#: templates/projects/component_list.html:44
+#: templates/projects/component_list.html:46
 msgid "No components are registered for this project yet."
 msgstr ""
 
-#: templates/projects/component_list.html:45
+#: templates/projects/component_list.html:48
 #, fuzzy
 msgid "Add one!"
 msgstr "Все модули"
 
-#: templates/projects/component_list.html:49
+#: templates/projects/component_list.html:54
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -1992,7 +2079,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr "Удаление <em>%(project_name)s</em>"
 
 #: templates/projects/project_confirm_delete.html:8
-#: templates/userprofile/avatar/choose.html:86
+#: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
 msgstr "Удалить"
 
@@ -2012,93 +2099,119 @@ msgstr ""
 "  Вы уверены, что хотите навсегда удалить зарегистрированный проект «%"
 "(project_name)s»?\n"
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:42
+#: templates/projects/project_form_base.html:87
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Детали"
 
-#: templates/projects/project_detail.html:47
+#: templates/projects/project_detail.html:49
 #, fuzzy
 msgid "Watch:"
 msgstr "Ветки"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
 msgstr "Домашняя страница:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Домашняя страница %(project_name)s"
 
-#: templates/projects/project_detail.html:61
+#: templates/projects/project_detail.html:63
 msgid "Bug tracker:"
 msgstr "Система отслеживания ошибок:"
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Система отслеживания ошибок для %(project_name)s"
 
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:69
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Теги:"
 
-#: templates/projects/project_detail.html:76
+#: templates/projects/project_detail.html:78
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Коллекция:"
 msgstr[1] "Коллекции:"
 msgstr[2] "Коллекции:"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:88
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:102
 msgid "External links:"
 msgstr "Внешние ссылки:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:104
 msgid "Screenshots"
 msgstr "Скриншоты"
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:139
 msgid "Delete project"
 msgstr "Удалить проект"
 
-#: templates/projects/project_form.html:6
-#: templates/projects/project_form.html:11
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:13
+msgid "Save project"
+msgstr "Сохранить проект"
+
+#: templates/projects/project_form_base.html:8
+#: templates/projects/project_form_base.html:13
+#: templates/projects/project_form_base.html:71
 msgid "Add a project"
 msgstr "Добавить проект"
 
-#: templates/projects/project_form.html:7
+#: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Править %(project_name)s"
 
-#: templates/projects/project_form.html:12
+#: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
 msgstr "Править <em>%(project_name)s</em>"
 
-#: templates/projects/project_form.html:20
+#: templates/projects/project_form_base.html:27
+msgid "Access control will be enabled once the project is created"
+msgstr ""
+
+#: templates/projects/project_form_base.html:74
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Редактирование <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form.html:36
-msgid "Save project"
-msgstr "Сохранить проект"
+#: templates/projects/project_form_base.html:88
+msgid "Access Control"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:10
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:12
+msgid "Requests for access to submit files"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:51
+msgid "Pending requests:"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:63
+msgid "Users with guaranteed access to submit files:"
+msgstr ""
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2125,12 +2238,12 @@ msgstr "Добавить новый проект"
 msgid "No projects registered yet. :-("
 msgstr "Еще не зарегистрировано ни одного проекта :-("
 
-#: templates/projects/project_list.html:56
+#: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr "Почему бы вам не <a href=\"%(project_create)s\">добавить один</a>?"
 
-#: templates/projects/project_list.html:64
+#: templates/projects/project_list.html:67
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2186,16 +2299,16 @@ msgstr ""
 msgid "Homepage for %(collection_name)s"
 msgstr "Домашняя страница %(collection_name)s"
 
-#: templates/txcollections/collection_detail.html:92
+#: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
 msgstr "Проекты в %(collection)s"
 
-#: templates/txcollections/collection_detail.html:97
+#: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
 msgstr "Проекты, зарегистрированные в этой коллекции:"
 
-#: templates/txcollections/collection_detail.html:107
+#: templates/txcollections/collection_detail.html:108
 #, python-format
 msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
@@ -2204,7 +2317,7 @@ msgstr ""
 "В этой коллекции не зарегистрировано ни одного проекта. <a href=\"%"
 "(project_list)s\">Поищите</a> и добавьте их в эту коллекцию."
 
-#: templates/txcollections/collection_detail.html:119
+#: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
 msgstr "Удалить коллекцию"
 
@@ -2274,12 +2387,12 @@ msgstr[2] "%(counter)s проектов"
 msgid "No collections registered yet. :-("
 msgstr "Пока не зарегистрировано ни одной коллекции :-("
 
-#: templates/txcollections/collection_list.html:55
+#: templates/txcollections/collection_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
 msgstr "Почему бы вам не <a href=\"%(collection_create)s\">добавить одну</a>?"
 
-#: templates/txcollections/collection_list.html:63
+#: templates/txcollections/collection_list.html:66
 #, python-format
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
@@ -2369,12 +2482,39 @@ msgstr ""
 msgid "Save release"
 msgstr "Сохранить выпуск"
 
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with guarantied access to submit files:"
+msgstr ""
+
+#: templates/txpermissions/permission_delete_form.html:5
+msgid "Revoke permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:13
+msgid "Grant permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:15
+msgid "Request permission"
+msgstr ""
+
+#: templates/txpermissions/permission_request_approve_form.html:5
+msgid "Approve request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:6
+msgid "Withdraw request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:8
+msgid "Deny request"
+msgstr ""
+
 #: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Обзор"
 
 #: templates/userprofile/menu.html:6
-#: templates/userprofile/profile/personal.html:36
 msgid "Personal information"
 msgstr "Персональная информация"
 
@@ -2383,41 +2523,36 @@ msgid "Avatar"
 msgstr "Аватар"
 
 #: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:38
 msgid "Location"
 msgstr "Расположение"
 
 #: templates/userprofile/menu.html:9
-#: templates/userprofile/profile/delete.html:22
+#: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Удалить профиль"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:5
 msgid "E-mail change"
 msgstr "Смена e-mail"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation.html:40
-#: templates/userprofile/account/email_validation_processed.html:20
+#: templates/userprofile/account/email_validation.html:5
+#: templates/userprofile/account/email_validation_processed.html:12
 msgid "Add e-mail"
 msgstr "Добавить e-mail"
 
-#: templates/userprofile/account/email_validation.html:24
-msgid "New e-mail address"
+#: templates/userprofile/account/email_validation.html:22
+#, fuzzy
+msgid "Add a new e-mail address"
 msgstr "Новый адрес e-mail"
 
-#: templates/userprofile/account/email_validation.html:34
-msgid "Send confirmation"
-msgstr "Отправить подтверждение"
-
-#: templates/userprofile/account/email_validation.html:41
-#: templates/userprofile/account/email_validation_processed.html:21
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation_processed.html:13
+#, fuzzy
 msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
-"confirmation"
+"confirmation."
 msgstr ""
 "Введите новый адрес e-mail. На него будет отправлено письмо для проверки и "
 "подтверждения"
@@ -2430,68 +2565,63 @@ msgstr "E-mail успешно проверен"
 msgid "E-mail change unsuccessful"
 msgstr "Смена e-mail завершилась неудачно"
 
-#: templates/userprofile/account/email_validation_done.html:14
-msgid "E-mail address validated successfully"
+#: templates/userprofile/account/email_validation_done.html:12
+#: templates/userprofile/account/email_validation_reset_response.html:13
+msgid "E-mail validation process"
+msgstr "Процесс валидации e-mail"
+
+#: templates/userprofile/account/email_validation_done.html:13
+#, python-format
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
+msgstr ""
+
+#: templates/userprofile/account/email_validation_done.html:17
+#, fuzzy
+msgid "E-mail address validated successfully."
 msgstr "Адрес e-mail был успешно проверен."
 
-#: templates/userprofile/account/email_validation_done.html:16
+#: templates/userprofile/account/email_validation_done.html:19
+#, fuzzy
 msgid ""
 "The key you received via e-mail is no longer valid. Please try the e-mail "
-"validation process again"
+"validation process again."
 msgstr ""
 "Полученный вами по e-mail ключ больше не валиден. Попробуйте пройти процесс "
 "проверки e-mail снова"
 
-#: templates/userprofile/account/email_validation_done.html:23
-#: templates/userprofile/account/email_validation_reset_response.html:22
-msgid "E-mail validation process"
-msgstr "Процесс валидации e-mail"
-
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "You can manage the e-mail validation process from the"
-msgstr ""
-
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "overview page"
-msgstr ""
-
 #: templates/userprofile/account/email_validation_processed.html:4
-#: templates/userprofile/account/email_validation_processed.html:13
+#: templates/userprofile/account/email_validation_processed.html:16
 msgid "E-mail change processed"
 msgstr "Изменение e-mail обработано"
 
-#: templates/userprofile/account/email_validation_processed.html:14
+#: templates/userprofile/account/email_validation_processed.html:17
+#, fuzzy
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
 "Please access to your e-mail and complete this process following the "
-"instructions specified in the e-mail body"
+"instructions specified in the e-mail body."
 msgstr ""
 "Для проверки и активации на новый электронный адрес было отправлено письмо. "
 "Найдите это письмо в своем почтовом ящике и выполните инструкции, указанные "
 "в письме"
 
-#: templates/userprofile/account/email_validation_reset.html:4
-#: templates/userprofile/account/email_validation_reset.html:19
-#: templates/userprofile/account/email_validation_reset.html:36
+#: templates/userprofile/account/email_validation_reset.html:5
+#: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
 msgstr "Отправить заново проверочное письмо"
 
-#: templates/userprofile/account/email_validation_reset.html:20
-msgid "Insert your e-mail address"
-msgstr "Вставьте свой e-mail адрес"
-
-#: templates/userprofile/account/email_validation_reset.html:30
-msgid "Resend confirmation"
-msgstr "Заново отправить подтверждение"
-
-#: templates/userprofile/account/email_validation_reset.html:37
+#: templates/userprofile/account/email_validation_reset.html:19
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "login. Insert your registered e-mail address to receive the validation e-"
-"mail again"
+"mail again."
 msgstr ""
+
+#: templates/userprofile/account/email_validation_reset.html:26
+msgid "Resend confirmation"
+msgstr "Заново отправить подтверждение"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2502,69 +2632,72 @@ msgid "Your user account was already active"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
-msgid "We've e-mailed you the e-mail validation link"
+msgid "You can manage the e-mail validation process from the"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "overview page"
+msgstr ""
+
+#: templates/userprofile/account/email_validation_reset_response.html:17
+#, fuzzy
+msgid "We've e-mailed you the e-mail validation link."
 msgstr "Мы отправили вам письмо с проверочной ссылкой"
 
-#: templates/userprofile/account/email_validation_reset_response.html:16
+#: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
 msgstr "Ваш e-mail уже проверен"
 
-#: templates/userprofile/account/login.html:4
-#: templates/userprofile/account/login.html:19
+#: templates/userprofile/account/login.html:5
 msgid "User login"
 msgstr "Вход пользователя"
 
-#: templates/userprofile/account/login.html:42
+#: templates/userprofile/account/login.html:19
+msgid "Enter your username and password to login."
+msgstr ""
+
+#: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr ""
 
-#: templates/userprofile/account/login.html:46
-#: templates/userprofile/profile/overview.html:95
+#: templates/userprofile/account/login.html:40
+#: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
 msgstr "Отправить заново проверочное письмо"
 
-#: templates/userprofile/account/login.html:48
+#: templates/userprofile/account/login.html:42
 msgid "Sign up!"
 msgstr "Войти!"
 
-#: templates/userprofile/account/logout.html:4
-#: templates/userprofile/account/logout.html:9
+#: templates/userprofile/account/logout.html:5
+#: templates/userprofile/account/logout.html:10
 msgid "Logged out"
 msgstr "Сессия завершена"
 
-#: templates/userprofile/account/logout.html:10
-msgid "You've been logged out"
+#: templates/userprofile/account/logout.html:11
+#, fuzzy
+msgid "You've been logged out."
 msgstr "Вы вышли"
 
-#: templates/userprofile/account/logout.html:10
+#: templates/userprofile/account/logout.html:11
 msgid "Log in again"
 msgstr "Войти снова"
 
-#: templates/userprofile/account/password_change.html:4
-#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:4
 msgid "Password change for"
 msgstr "Смена пароля для"
 
-#: templates/userprofile/account/password_change.html:24
-msgid "Old password"
-msgstr "Старый пароль"
-
-#: templates/userprofile/account/password_change.html:36
-#: templates/userprofile/account/password_reset_confirm.html:32
-msgid "Confirm password"
-msgstr "Подтверждение пароля"
-
-#: templates/userprofile/account/password_change.html:52
-#: templates/userprofile/account/password_change_done.html:19
+#: templates/userprofile/account/password_change.html:22
+#: templates/userprofile/account/password_change_done.html:12
 msgid "Password change"
 msgstr "Смена пароля"
 
-#: templates/userprofile/account/password_change.html:53
-#: templates/userprofile/account/password_change_done.html:20
+#: templates/userprofile/account/password_change.html:23
+#, fuzzy
 msgid ""
-"Password change utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 "Страница смены пароля. Введите новый пароль дважды, чтобы удостовериться, "
 "что вы ввели его правильно"
@@ -2574,8 +2707,9 @@ msgstr ""
 msgid "Password change successful"
 msgstr "Пароль успешно изменен"
 
-#: templates/userprofile/account/password_change_done.html:13
-msgid "The password has been changed successfully"
+#: templates/userprofile/account/password_change_done.html:14
+#, fuzzy
+msgid "The password has been changed successfully."
 msgstr "Пароль был успешно изменен"
 
 #: templates/userprofile/account/password_expired.html:4
@@ -2584,49 +2718,37 @@ msgstr "Ключ для пароля истек"
 
 #: templates/userprofile/account/password_expired.html:9
 msgid ""
-"The password key you're trying to use is expired. Please, request a new one"
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 
-#: templates/userprofile/account/password_reset.html:21
-msgid "E-mail address"
-msgstr "Адрес e-mail"
-
-#: templates/userprofile/account/password_reset.html:31
-msgid "Reset my password"
-msgstr "Сбросить мой пароль"
-
-#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 msgid "Password reset form"
 msgstr "Форма сброса пароля"
 
-#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
+#, fuzzy
 msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
-"password and e-mail the new one to you"
+"password and e-mail the new one to you."
 msgstr ""
 "Забыли свой пароль? Введите свой e-mail, и мы сбросим ваш пароль и отправим "
 "вам письмо с новым"
 
-#: templates/userprofile/account/password_reset_complete.html:13
+#: templates/userprofile/account/password_reset.html:27
+msgid "Reset my password"
+msgstr "Сбросить мой пароль"
+
+#: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr "Ваш пароль был установлен. Теперь вы можете войти."
 
-#: templates/userprofile/account/password_reset_complete.html:20
-#: templates/userprofile/account/password_reset_confirm.html:56
-msgid ""
-"Password reset utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
-msgstr ""
-"Страница сброса пароля. Введите новый пароль дважды, чтобы удостовериться, "
-"что вы ввели его правильно"
-
-#: templates/userprofile/account/password_reset_confirm.html:47
+#: templates/userprofile/account/password_reset_confirm.html:37
 msgid "Password reset unsuccessful"
 msgstr "Пароль не был сброшен"
 
-#: templates/userprofile/account/password_reset_confirm.html:48
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -2640,34 +2762,36 @@ msgid "Password reset successful"
 msgstr "Пароль успешно сброшен"
 
 #: templates/userprofile/account/password_reset_done.html:10
+#, fuzzy
 msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
-"receiving it shortly"
+"receiving it shortly."
 msgstr ""
 "Мы выслали вам инструкцию по получению нового пароля. Скоро вы ее получите"
 
 #: templates/userprofile/account/registration.html:4
-#: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
 msgstr "Регистрация пользователя"
 
-#: templates/userprofile/account/registration.html:22
-#: templates/userprofile/account/registration_done.html:19
-msgid "Register a new account"
+#: templates/userprofile/account/registration.html:17
+#, fuzzy
+msgid "Register for a Transifex account"
 msgstr "Зарегистрировать новую учетную запись"
 
-#: templates/userprofile/account/registration.html:23
-#: templates/userprofile/account/registration_done.html:20
+#: templates/userprofile/account/registration.html:18
 msgid ""
-"Joining this community is quick and easy. You only need to fill the form to "
-"get access to all the private content"
+"Joining the Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
 msgstr "Регистрация завершена"
 
-#: templates/userprofile/account/registration_done.html:10
+#: templates/userprofile/account/registration_done.html:8
+msgid "Register a new account"
+msgstr "Зарегистрировать новую учетную запись"
+
+#: templates/userprofile/account/registration_done.html:12
 msgid ""
 "You have successfully registered a new account, and an account activation "
 "url has been sent to your e-mail address. You must access this message on "
@@ -2677,7 +2801,7 @@ msgstr ""
 "было отправлено письмо с ссылкой активации учетной записи. Вы должны "
 "получить доступ к этому письму для завершения процесса регистрации."
 
-#: templates/userprofile/account/registration_done.html:13
+#: templates/userprofile/account/registration_done.html:15
 #, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
@@ -2687,54 +2811,42 @@ msgstr ""
 "(overview_url)s\">страницу входа</a> для аутентификации и начала работы на "
 "сайте."
 
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "E-mail"
-msgstr "E-mail"
-
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "optional"
-msgstr "необязательно"
-
-#: templates/userprofile/account/includes/registration_form.html:23
-msgid "Password (again)"
-msgstr "Пароль (еще раз)"
-
 #: templates/userprofile/avatar/choose.html:4
-#: templates/userprofile/avatar/choose.html:38
+#: templates/userprofile/avatar/choose.html:47
 msgid "Choose the location of your avatar"
 msgstr "Выберите расположение своего автара"
 
-#: templates/userprofile/avatar/choose.html:41
+#: templates/userprofile/avatar/choose.html:36
+#: templates/userprofile/avatar/crop.html:41
+msgid "Avatar selection page"
+msgstr "Страница выбора аватары"
+
+#: templates/userprofile/avatar/choose.html:37
+#: templates/userprofile/avatar/crop.html:42
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile."
+msgstr ""
+
+#: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
 msgstr "Выбрать изображение с диска"
 
-#: templates/userprofile/avatar/choose.html:43
-#: templates/userprofile/avatar/choose.html:49
+#: templates/userprofile/avatar/choose.html:52
+#: templates/userprofile/avatar/choose.html:58
 #: templates/userprofile/avatar/crop.html:35
 msgid "Done"
 msgstr "Готово"
 
-#: templates/userprofile/avatar/choose.html:47
+#: templates/userprofile/avatar/choose.html:56
 msgid ""
 "Select an image from a remote URL. Put the URL on the input below and we'll "
 "retrieve the image for you"
 msgstr ""
 
-#: templates/userprofile/avatar/choose.html:54
+#: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
 msgstr "Искать в Picasa Web"
-
-#: templates/userprofile/avatar/choose.html:79
-#: templates/userprofile/avatar/crop.html:41
-msgid "Avatar selection page"
-msgstr "Страница выбора аватары"
-
-#: templates/userprofile/avatar/choose.html:80
-#: templates/userprofile/avatar/crop.html:42
-msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile"
-msgstr ""
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
@@ -2745,25 +2857,23 @@ msgstr ""
 msgid "Delete personal information"
 msgstr "Удалить персональную информацию"
 
-#: templates/userprofile/profile/delete.html:14
-msgid "Delete your personal information"
-msgstr "Удалить свою персональную информацию"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Are you sure?"
-msgstr "Вы уверены?"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Yes"
-msgstr "Да"
-
-#: templates/userprofile/profile/delete.html:23
+#: templates/userprofile/profile/delete.html:13
+#, fuzzy
 msgid ""
-"It erases all your private data except your username. You can refill the "
-"information later if you want to"
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
 msgstr ""
 "Это удалит все персональные данные, за исключением имени пользователя. При "
 "необходимости вы можете заполнить заново эту информацию позднее."
+
+#: templates/userprofile/profile/delete.html:17
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+#: templates/userprofile/profile/delete.html:18
+#, fuzzy
+msgid "Delete my data"
+msgstr "Удалить мою учетную запись"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2779,7 +2889,7 @@ msgid "Auto-discover location"
 msgstr "Автоопределение расположения"
 
 #: templates/userprofile/profile/location.html:22
-#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Страна"
@@ -2798,7 +2908,7 @@ msgid "Position"
 msgstr "Описание"
 
 #: templates/userprofile/profile/location.html:35
-#: templates/userprofile/profile/personal.html:30
+#: templates/userprofile/profile/personal.html:36
 msgid "Save"
 msgstr "Сохранить"
 
@@ -2807,67 +2917,69 @@ msgid "Location information"
 msgstr "Информация расположения"
 
 #: templates/userprofile/profile/location.html:41
-msgid "Define your location information"
-msgstr ""
+#, fuzzy
+msgid "Define your location information."
+msgstr "Определить свое расположение"
 
 #: templates/userprofile/profile/overview.html:4
-#: templates/userprofile/profile/overview.html:32
+#: templates/userprofile/profile/overview.html:30
 msgid "Overview of your profile"
 msgstr "Обзор профиля"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Change avatar"
 msgstr "Изменить аватар"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Add avatar"
 msgstr "Добавить аватар"
 
-#: templates/userprofile/profile/overview.html:42
+#: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "E-mail:"
 
-#: templates/userprofile/profile/overview.html:44
+#: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:46
+#: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
 msgstr ""
 
-#: templates/userprofile/profile/overview.html:55
-#: templates/userprofile/profile/overview.html:64
-#: templates/userprofile/profile/overview.html:73
+#: templates/userprofile/profile/overview.html:53
+#: templates/userprofile/profile/overview.html:62
+#: templates/userprofile/profile/overview.html:71
 msgid "Not set"
 msgstr "Не установлено"
 
-#: templates/userprofile/profile/overview.html:91
+#: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Управление:"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
 msgstr "Изменить свой email-адрес"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
 msgstr "Добавьте свой e-mail адрес"
 
-#: templates/userprofile/profile/overview.html:99
+#: templates/userprofile/profile/overview.html:95
 msgid "Add location"
 msgstr "Добавить расположение"
 
-#: templates/userprofile/profile/overview.html:101
+#: templates/userprofile/profile/overview.html:97
 msgid "Change location"
 msgstr "Изменений расположение"
 
-#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
 msgstr ""
 
-#: templates/userprofile/profile/personal.html:37
-msgid "Insert some information about you"
+#: templates/userprofile/profile/personal.html:29
+#, fuzzy
+msgid "Insert some information about you."
 msgstr "Добавьте о себе какую-либо информацию"
 
 #: templates/userprofile/profile/public.html:27
@@ -2933,95 +3045,95 @@ msgstr "Переводы"
 msgid "Auto-suggest translation"
 msgstr "Добавить новый перевод"
 
-#: translations/models.py:225
+#: translations/models.py:233
 msgid "PO file"
 msgstr "PO-файл"
 
-#: translations/models.py:226
+#: translations/models.py:234
 msgid "PO files"
 msgstr "PO-файлы"
 
-#: translations/templates/comp_lang_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:16
 msgid "Files"
 msgstr "Файлы"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
-#: translations/templates/lang_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:17
+#: translations/templates/comp_stats_table.html:17
+#: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Переводы"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
-#: translations/templates/lang_stats_table.html:13
+#: translations/templates/comp_lang_stats_table.html:18
+#: translations/templates/comp_stats_table.html:18
+#: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Опции"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
-#: translations/templates/lang_stats_table.html:23
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Невозможно сгенерировать статистику для данного файла"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Trans:"
 msgstr "Перевед.:"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "Неперевед.:"
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:40
+#: translations/templates/comp_stats_table.html:52
+#: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Просмотр"
 
-#: translations/templates/comp_lang_stats_table.html:36
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:41
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Скачать"
 
-#: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
-#: translations/templates/lang_stats_table.html:46
+#: translations/templates/comp_lang_stats_table.html:51
+#: translations/templates/comp_stats_table.html:63
+#: translations/templates/lang_stats_table.html:56
 #, fuzzy
 msgid "Edit "
 msgstr "Править"
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Язык"
 
-#: translations/templates/comp_stats_table.html:21
+#: translations/templates/comp_stats_table.html:26
 msgid "See statistics for this language"
 msgstr "Посмотреть статистику для этого языка"
 
-#: translations/templates/comp_stats_table.html:23
+#: translations/templates/comp_stats_table.html:28
 msgid "There is no language registered that matches with this code"
 msgstr "Нет зарегистрированного языка, связанного с этим кодом"
 
-#: translations/templates/comp_stats_table.html:35
+#: translations/templates/comp_stats_table.html:40
 msgid "(not calculated)"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr ""
 
@@ -3034,31 +3146,31 @@ msgstr "Отправить перевод для этого языка."
 msgid "Submit file"
 msgstr "Передать файл"
 
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
 msgstr "Проект/Компонент"
 
-#: translations/templates/lang_stats_table.html:20
+#: translations/templates/lang_stats_table.html:25
 msgid "Go to this project page"
 msgstr "Перейти на страницу этого проекта"
 
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/lang_stats_table.html:26
 msgid "Go to this component page"
 msgstr ""
 
-#: translations/templates/pofile_lock.html:8
+#: translations/templates/pofile_lock.html:10
 msgid "Unlock this file when you're finished working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:12
+#: translations/templates/pofile_lock.html:14
 msgid "This file is locked, indicating someone is working with it."
 msgstr "Этот файл заблокирован, кто-то над ним уже работает."
 
-#: translations/templates/pofile_lock.html:18
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr ""
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:23
 msgid "This file is unlocked. Most likely noone is working with it right now."
 msgstr ""
 "Этот файл разблокирован. Скорее всего, над ним сейчас никто не работает."
@@ -3127,6 +3239,11 @@ msgstr "коллекция"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr "<Релиз: %(rel)s (Коллекция %(col)s)>"
 
+#: txcollections/migrations/0001_initial.py:20
+#, fuzzy
+msgid "String freese date"
+msgstr "Дата заморозки строк"
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3141,31 +3258,31 @@ msgstr ""
 msgid "Male"
 msgstr "Мальтийский"
 
-#: txcommon/models.py:18
+#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
 msgid "First name"
 msgstr "Имя"
 
-#: txcommon/models.py:19
+#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
 msgid "Surname"
 msgstr "Фамилия"
 
-#: txcommon/models.py:22
+#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
 msgid "Native Language"
 msgstr "Родной язык"
 
-#: txcommon/models.py:23
+#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
 msgid "Blog"
 msgstr "Блог"
 
-#: txcommon/models.py:24
+#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25
+#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26
+#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
 msgid "About yourself"
 msgstr "О себе"
 
@@ -3174,7 +3291,7 @@ msgstr "О себе"
 msgid "Short description of yourself (140 chars)."
 msgstr "Кратко о себе (140 символов)."
 
-#: txcommon/models.py:28
+#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
 msgid "Looking for work?"
 msgstr "Ищите работу?"
 
@@ -3190,158 +3307,166 @@ msgstr ""
 msgid "The root url must start with http:// or ftp://"
 msgstr ""
 
-#: txcommon/management/__init__.py:9
+#: txcommon/db/models.py:26
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr ""
+
+#: txcommon/db/models.py:28
+msgid "You must enter at least a pair of parentheses containing nothing."
+msgstr ""
+
+#: txcommon/management/__init__.py:10
 msgid "New Project Added"
 msgstr "Добавлен новый проект"
 
-#: txcommon/management/__init__.py:10
+#: txcommon/management/__init__.py:11
 msgid "when a new project is added"
 msgstr "при добавлении нового проекта"
 
-#: txcommon/management/__init__.py:16
+#: txcommon/management/__init__.py:17
 msgid "Project Changed"
 msgstr "Изменен проект"
 
-#: txcommon/management/__init__.py:17
+#: txcommon/management/__init__.py:18
 msgid "when a project is changed"
 msgstr "при изменении проекта"
 
-#: txcommon/management/__init__.py:23
+#: txcommon/management/__init__.py:24
 msgid "Project Deleted"
 msgstr "Удален проект"
 
-#: txcommon/management/__init__.py:24
+#: txcommon/management/__init__.py:25
 msgid "when a project is deleted"
 msgstr "при удалении проекта"
 
-#: txcommon/management/__init__.py:30
+#: txcommon/management/__init__.py:31
 msgid "New Component Added"
 msgstr "Добавлен новый компонент"
 
-#: txcommon/management/__init__.py:31
+#: txcommon/management/__init__.py:32
 msgid "when a new component is added to a project"
 msgstr "при добавлении нового компонента в проект"
 
-#: txcommon/management/__init__.py:37
+#: txcommon/management/__init__.py:38
 msgid "Component Changed"
 msgstr "Изменен компонент"
 
-#: txcommon/management/__init__.py:38
+#: txcommon/management/__init__.py:39
 msgid "when a component of a project is changed"
 msgstr "при изменении компонента проекта"
 
-#: txcommon/management/__init__.py:44
+#: txcommon/management/__init__.py:45
 msgid "Component Deleted"
 msgstr "Удален компонент"
 
-#: txcommon/management/__init__.py:45
+#: txcommon/management/__init__.py:46
 msgid "when a component of a project is deleted"
 msgstr "при удалении компонента проекта"
 
-#: txcommon/management/__init__.py:51
+#: txcommon/management/__init__.py:52
 #, fuzzy
 msgid "File Submitted"
 msgstr "Фильтр файла"
 
-#: txcommon/management/__init__.py:52
+#: txcommon/management/__init__.py:53
 msgid "when a component file of a project is submitted"
 msgstr ""
 
-#: txcommon/management/__init__.py:59
+#: txcommon/management/__init__.py:60
 msgid "Translation File Changed"
 msgstr "Изменен файл перевода"
 
-#: txcommon/management/__init__.py:60
+#: txcommon/management/__init__.py:61
 msgid "when a component translation file of a project is changed"
 msgstr "при изменении файла перевода компонента проекта"
 
-#: txcommon/management/__init__.py:67
+#: txcommon/management/__init__.py:68
 msgid "Translation Source File (POT) has a Problem"
 msgstr "В шаблоне перевода (POT) есть проблемы"
 
-#: txcommon/management/__init__.py:68
+#: txcommon/management/__init__.py:69
 msgid ""
 "when the source file (POT) of a component that you are a maintainer has a "
 "problem"
 msgstr "пр"
 
-#: txcommon/management/__init__.py:76
+#: txcommon/management/__init__.py:77
 msgid "New Collection Added"
 msgstr "Добавлена новая коллекция"
 
-#: txcommon/management/__init__.py:77
+#: txcommon/management/__init__.py:78
 msgid "when a new collection is added"
 msgstr "когда добавлена новая коллекция"
 
-#: txcommon/management/__init__.py:83
+#: txcommon/management/__init__.py:84
 msgid "Collection Changed"
 msgstr "Изменена коллекция"
 
-#: txcommon/management/__init__.py:84
+#: txcommon/management/__init__.py:85
 msgid "when a collection is changed"
 msgstr "при изменении коллекции"
 
-#: txcommon/management/__init__.py:90
+#: txcommon/management/__init__.py:91
 msgid "Collection Deleted"
 msgstr "Удалена коллекция"
 
-#: txcommon/management/__init__.py:91
+#: txcommon/management/__init__.py:92
 msgid "when a collection is deleted"
 msgstr "при удалении коллекции"
 
-#: txcommon/management/__init__.py:97
+#: txcommon/management/__init__.py:98
 msgid "Project Added to a Collection"
 msgstr "В коллекцию добавлен проект"
 
-#: txcommon/management/__init__.py:98
+#: txcommon/management/__init__.py:99
 msgid "when a new project is added to a collection"
 msgstr "при добавлении нового проекта в коллекцию"
 
-#: txcommon/management/__init__.py:104
+#: txcommon/management/__init__.py:105
 msgid "Project Deleted from a Collection"
 msgstr "Проект удален из коллекции"
 
-#: txcommon/management/__init__.py:105
+#: txcommon/management/__init__.py:106
 msgid "when a project is deleted from a collection"
 msgstr "при удалении проекта из коллекции"
 
-#: txcommon/management/__init__.py:111
+#: txcommon/management/__init__.py:112
 msgid "New Release Added for a Watched Collection"
 msgstr "Добавлен новый релиз в отслеживаемую коллекцию"
 
-#: txcommon/management/__init__.py:112
+#: txcommon/management/__init__.py:113
 msgid "when a new release is added to a collection"
 msgstr "при добавлении нового релиза в коллекцию"
 
-#: txcommon/management/__init__.py:119
+#: txcommon/management/__init__.py:120
 msgid "Release Changed"
 msgstr "Изменен релиз"
 
-#: txcommon/management/__init__.py:120
+#: txcommon/management/__init__.py:121
 msgid "when a release of a collection is changed"
 msgstr "при изменении релиза в коллекции"
 
-#: txcommon/management/__init__.py:125
+#: txcommon/management/__init__.py:126
 msgid "Release Deleted"
 msgstr "Удален релиз"
 
-#: txcommon/management/__init__.py:126
+#: txcommon/management/__init__.py:127
 msgid "when a release of a collection is deleted"
 msgstr "при удалении релиза в коллекции"
 
-#: txcommon/management/__init__.py:131
+#: txcommon/management/__init__.py:132
 msgid "Release Added to a Collection"
 msgstr "В коллекцию добавлен релиз"
 
-#: txcommon/management/__init__.py:132
+#: txcommon/management/__init__.py:133
 msgid "when a release is added to a collection"
 msgstr "при добавлении релиза в коллекцию"
 
-#: txcommon/management/__init__.py:137
+#: txcommon/management/__init__.py:138
 msgid "Release Deleted from a Collection"
 msgstr "Удален релиз из коллекции"
 
-#: txcommon/management/__init__.py:138
+#: txcommon/management/__init__.py:139
 #, fuzzy
 msgid "when a release is deleted from a collection"
 msgstr "при удалении релиза из коллекции"
@@ -3349,6 +3474,22 @@ msgstr "при удалении релиза из коллекции"
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Домой"
+
+#: txpermissions/views.py:45
+msgid "You added a permission request."
+msgstr ""
+
+#: txpermissions/views.py:74
+msgid "You approved the permission request."
+msgstr ""
+
+#: txpermissions/views.py:92
+msgid "You removed the permission."
+msgstr ""
+
+#: txpermissions/views.py:94
+msgid "You removed the permission request."
+msgstr ""
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
@@ -3385,7 +3526,7 @@ msgstr "Подтвердить"
 msgid "vcsunits"
 msgstr "Подтвердить"
 
-#: webtrans/views.py:125
+#: webtrans/views.py:129
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
@@ -3393,9 +3534,46 @@ msgstr ""
 "Ваш файл не прошел проверку на корректность (msgfmt -c). Пожалуйста "
 "выполните эту команду в своей системе для просмотра ошибок."
 
-#: webtrans/views.py:134
+#: webtrans/views.py:138
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr ""
+
+#~ msgid "Send confirmation"
+#~ msgstr "Отправить подтверждение"
+
+#~ msgid "Insert your e-mail address"
+#~ msgstr "Вставьте свой e-mail адрес"
+
+#~ msgid "Old password"
+#~ msgstr "Старый пароль"
+
+#~ msgid "Confirm password"
+#~ msgstr "Подтверждение пароля"
+
+#~ msgid "E-mail address"
+#~ msgstr "Адрес e-mail"
+
+#~ msgid ""
+#~ "Password reset utility page. Please enter your new password twice so we "
+#~ "can verify you typed it in correctly"
+#~ msgstr ""
+#~ "Страница сброса пароля. Введите новый пароль дважды, чтобы "
+#~ "удостовериться, что вы ввели его правильно"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#~ msgid "optional"
+#~ msgstr "необязательно"
+
+#~ msgid "Password (again)"
+#~ msgstr "Пароль (еще раз)"
+
+#~ msgid "Delete your personal information"
+#~ msgstr "Удалить свою персональную информацию"
+
+#~ msgid "Yes"
+#~ msgstr "Да"
 
 #~ msgid "Homepage for %(release_name)s"
 #~ msgstr "Домашняя страница для %(release_name)s"

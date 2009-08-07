@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-07 17:39+0000\n"
+"POT-Creation-Date: 2009-08-07 16:12+0000\n"
 "PO-Revision-Date: 2009-07-08 09:55+0200\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:51
 msgid "log entry"
 msgstr "záznam v logu"
 
-#: actionlog/models.py:51
+#: actionlog/models.py:52
 msgid "log entries"
 msgstr "záznamy v logu"
 
@@ -45,37 +45,42 @@ msgstr "j. F Y G:i:s O"
 msgid "No history recorded yet."
 msgstr "Zatiaľ bez histórie."
 
-#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
-#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:26
+#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Názov"
 
-#: codebases/models.py:35
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Koreň"
 
-#: codebases/models.py:36
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr "URL pre základňu kódu"
 
-#: codebases/models.py:37
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Typ"
 
-#: codebases/models.py:39
+#: codebases/models.py:41
 #, python-format
 msgid "The codebase type (%s)"
 msgstr "Typ základne kódu (%s)"
 
-#: codebases/models.py:42
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr "Čas poslednej aktualizácie tejto jednotky"
 
-#: codebases/models.py:51
+#: codebases/models.py:53
 msgid "unit"
 msgstr "jednotka"
 
-#: codebases/models.py:52
+#: codebases/models.py:54
 msgid "units"
 msgstr "jednotky"
 
@@ -99,20 +104,24 @@ msgstr "%(site_name)s: %(language)s :: vydanie %(release)s"
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr "Najnovšie preklady pre jazyk %(language)s vo vydaní %(release)s."
 
-#: languages/models.py:29 projects/models.py:86 projects/models.py:195
-#: releases/models.py:25 txcollections/models.py:28
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:15
+#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
+#: txcollections/migrations/0001_initial.py:33
 msgid "Description"
 msgstr "Popis"
 
-#: languages/models.py:30
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kód"
 
-#: languages/models.py:33
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "Aliasy kódu"
 
-#: languages/models.py:36
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Špeciálne znaky"
 
@@ -122,11 +131,11 @@ msgstr ""
 "Zadajte špeciálne znaky, ktorých napísanie môže spôsobovať používateľom "
 "problémy"
 
-#: languages/models.py:40
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Počet plurálnych foriem"
 
-#: languages/models.py:42
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Výraz plurálnych foriem"
 
@@ -138,379 +147,414 @@ msgstr "jazyk"
 msgid "languages"
 msgstr "jazyky"
 
-#: languages/management/commands/create_languages.py:26
+#: languages/management/commands/txcreatelanguages.py:26
 msgid "Afrikaans"
 msgstr "afrikánsky"
 
-#: languages/management/commands/create_languages.py:40
+#: languages/management/commands/txcreatelanguages.py:40
 msgid "Amharic"
 msgstr "amhársky"
 
-#: languages/management/commands/create_languages.py:45
+#: languages/management/commands/txcreatelanguages.py:45
 msgid "Arabic"
 msgstr "arabský"
 
-#: languages/management/commands/create_languages.py:52
+#: languages/management/commands/txcreatelanguages.py:52
+#, fuzzy
+msgid "Spanish (Argentinian)"
+msgstr "španielsky (Kastília)"
+
+#: languages/management/commands/txcreatelanguages.py:59
 msgid "Assamese"
 msgstr "asamský"
 
-#: languages/management/commands/create_languages.py:60
+#: languages/management/commands/txcreatelanguages.py:66
+#, fuzzy
+msgid "Asturian"
+msgstr "estónsky"
+
+#: languages/management/commands/txcreatelanguages.py:74
 msgid "Azerbaijani"
 msgstr "azerbajdžanský"
 
-#: languages/management/commands/create_languages.py:67
+#: languages/management/commands/txcreatelanguages.py:81
 msgid "Balochi"
 msgstr "balúcky"
 
-#: languages/management/commands/create_languages.py:73
+#: languages/management/commands/txcreatelanguages.py:87
 msgid "Belarusian"
 msgstr "bieloruský"
 
-#: languages/management/commands/create_languages.py:81
+#: languages/management/commands/txcreatelanguages.py:95
 msgid "Bulgarian"
 msgstr "bulharský"
 
-#: languages/management/commands/create_languages.py:89
+#: languages/management/commands/txcreatelanguages.py:103
 msgid "Bengali"
 msgstr "bengálsky"
 
-#: languages/management/commands/create_languages.py:97
+#: languages/management/commands/txcreatelanguages.py:111
 msgid "Bengali (India)"
 msgstr "bengálsky (India)"
 
-#: languages/management/commands/create_languages.py:110
+#: languages/management/commands/txcreatelanguages.py:118
+msgid "Tibetan"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:126
 msgid "Bosnian"
 msgstr "bosniansky"
 
-#: languages/management/commands/create_languages.py:118
+#: languages/management/commands/txcreatelanguages.py:134
 msgid "Catalan (Valencian)"
 msgstr "katalánsky (Valencia)"
 
-#: languages/management/commands/create_languages.py:126
+#: languages/management/commands/txcreatelanguages.py:142
 msgid "Czech"
 msgstr "český"
 
-#: languages/management/commands/create_languages.py:134
+#: languages/management/commands/txcreatelanguages.py:150
 msgid "Welsh"
 msgstr "waleský"
 
-#: languages/management/commands/create_languages.py:142
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Danish"
 msgstr "dánsky"
 
-#: languages/management/commands/create_languages.py:150
+#: languages/management/commands/txcreatelanguages.py:166
 msgid "German"
 msgstr "nemecký"
 
-#: languages/management/commands/create_languages.py:158
+#: languages/management/commands/txcreatelanguages.py:174
 msgid "Swiss German"
 msgstr "nemecký (Švajčiarsko)"
 
-#: languages/management/commands/create_languages.py:166
+#: languages/management/commands/txcreatelanguages.py:182
 msgid "Dzongkha"
 msgstr "dzongchä"
 
-#: languages/management/commands/create_languages.py:174
+#: languages/management/commands/txcreatelanguages.py:190
 msgid "Greek"
 msgstr "grécky"
 
-#: languages/management/commands/create_languages.py:181
+#: languages/management/commands/txcreatelanguages.py:197
 msgid "English"
 msgstr "anglický"
 
-#: languages/management/commands/create_languages.py:189
+#: languages/management/commands/txcreatelanguages.py:205
 msgid "English (United Kingdom)"
 msgstr "anglický (Veľká Británia)"
 
-#: languages/management/commands/create_languages.py:197
+#: languages/management/commands/txcreatelanguages.py:213
 msgid "English (South Africa)"
 msgstr "anglický (Južná Afrika)"
 
-#: languages/management/commands/create_languages.py:210
+#: languages/management/commands/txcreatelanguages.py:220
+msgid "Esperanto"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:228
 msgid "Spanish (Castilian)"
 msgstr "španielsky (Kastília)"
 
-#: languages/management/commands/create_languages.py:218
+#: languages/management/commands/txcreatelanguages.py:236
 msgid "Estonian"
 msgstr "estónsky"
 
-#: languages/management/commands/create_languages.py:226
+#: languages/management/commands/txcreatelanguages.py:244
 msgid "Basque"
 msgstr "baskický"
 
-#: languages/management/commands/create_languages.py:233
+#: languages/management/commands/txcreatelanguages.py:251
 msgid "Persian"
 msgstr "perzský"
 
-#: languages/management/commands/create_languages.py:241
+#: languages/management/commands/txcreatelanguages.py:259
 msgid "Finnish"
 msgstr "fínsky"
 
-#: languages/management/commands/create_languages.py:255
+#: languages/management/commands/txcreatelanguages.py:273
 msgid "French"
 msgstr "francúzsky"
 
-#: languages/management/commands/create_languages.py:263
+#: languages/management/commands/txcreatelanguages.py:281
 msgid "Friulian"
 msgstr "friulský"
 
-#: languages/management/commands/create_languages.py:271
+#: languages/management/commands/txcreatelanguages.py:289
 msgid "Western Frisian"
 msgstr "frízsky západný"
 
-#: languages/management/commands/create_languages.py:279
+#: languages/management/commands/txcreatelanguages.py:297
 msgid "Irish"
 msgstr "írsky"
 
-#: languages/management/commands/create_languages.py:287
+#: languages/management/commands/txcreatelanguages.py:305
 msgid "Galician"
 msgstr "galícijský"
 
-#: languages/management/commands/create_languages.py:295
+#: languages/management/commands/txcreatelanguages.py:313
 msgid "Gujarati"
 msgstr "gudžarátsky"
 
-#: languages/management/commands/create_languages.py:302
+#: languages/management/commands/txcreatelanguages.py:320
 msgid "Hebrew"
 msgstr "hebrejský"
 
-#: languages/management/commands/create_languages.py:310
+#: languages/management/commands/txcreatelanguages.py:328
 msgid "Hindi"
 msgstr "hindský"
 
-#: languages/management/commands/create_languages.py:318
+#: languages/management/commands/txcreatelanguages.py:336
 msgid "Croatian"
 msgstr "chorvátsky"
 
-#: languages/management/commands/create_languages.py:325
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Haitian (Haitian Creole)"
 msgstr "haitský - haitská kreolčina"
 
-#: languages/management/commands/create_languages.py:333
+#: languages/management/commands/txcreatelanguages.py:351
 msgid "Hungarian"
 msgstr "maďarský"
 
-#: languages/management/commands/create_languages.py:340
+#: languages/management/commands/txcreatelanguages.py:358
 msgid "Armenian"
 msgstr "arménsky"
 
-#: languages/management/commands/create_languages.py:346
+#: languages/management/commands/txcreatelanguages.py:364
 msgid "Indonesian"
 msgstr "indonézsky"
 
-#: languages/management/commands/create_languages.py:353
+#: languages/management/commands/txcreatelanguages.py:371
 msgid "Iloko"
 msgstr "iloko"
 
-#: languages/management/commands/create_languages.py:358
+#: languages/management/commands/txcreatelanguages.py:376
 msgid "Icelandic"
 msgstr "islandský"
 
-#: languages/management/commands/create_languages.py:366
+#: languages/management/commands/txcreatelanguages.py:384
 msgid "Italian"
 msgstr "taliansky"
 
-#: languages/management/commands/create_languages.py:374
+#: languages/management/commands/txcreatelanguages.py:392
 msgid "Japanese"
 msgstr "japonský"
 
-#: languages/management/commands/create_languages.py:382
+#: languages/management/commands/txcreatelanguages.py:400
 msgid "Georgian"
 msgstr "gruzínsky"
 
-#: languages/management/commands/create_languages.py:395
+#: languages/management/commands/txcreatelanguages.py:413
 msgid "Kannada"
 msgstr "kannadský"
 
-#: languages/management/commands/create_languages.py:401
+#: languages/management/commands/txcreatelanguages.py:419
 msgid "Korean"
 msgstr "kórejský"
 
-#: languages/management/commands/create_languages.py:409
+#: languages/management/commands/txcreatelanguages.py:426
+msgid "Kashmiri"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:434
 msgid "Kurdish"
 msgstr "kurdský"
 
-#: languages/management/commands/create_languages.py:422
+#: languages/management/commands/txcreatelanguages.py:441
+msgid "Kirgyz"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:448
+#, fuzzy
+msgid "Latin"
+msgstr "lotyšský"
+
+#: languages/management/commands/txcreatelanguages.py:461
 msgid "Lao"
 msgstr "laoský"
 
-#: languages/management/commands/create_languages.py:428
+#: languages/management/commands/txcreatelanguages.py:467
 msgid "Lithuanian"
 msgstr "litovský"
 
-#: languages/management/commands/create_languages.py:436
+#: languages/management/commands/txcreatelanguages.py:475
 msgid "Latvian"
 msgstr "lotyšský"
 
-#: languages/management/commands/create_languages.py:443
+#: languages/management/commands/txcreatelanguages.py:482
 msgid "Maithili"
 msgstr "maithilsky"
 
-#: languages/management/commands/create_languages.py:448
+#: languages/management/commands/txcreatelanguages.py:487
 msgid "Macedonian"
 msgstr "macedónsky"
 
-#: languages/management/commands/create_languages.py:453
+#: languages/management/commands/txcreatelanguages.py:492
 msgid "Malayalam"
 msgstr "malajalámsky"
 
-#: languages/management/commands/create_languages.py:466
+#: languages/management/commands/txcreatelanguages.py:505
 msgid "Mongolian"
 msgstr "mongolský"
 
-#: languages/management/commands/create_languages.py:473
+#: languages/management/commands/txcreatelanguages.py:512
 msgid "Marathi"
 msgstr "maráthsky"
 
-#: languages/management/commands/create_languages.py:480
+#: languages/management/commands/txcreatelanguages.py:519
 msgid "Malay"
 msgstr "malajský"
 
-#: languages/management/commands/create_languages.py:488
+#: languages/management/commands/txcreatelanguages.py:527
 msgid "Maltese"
 msgstr "maltský"
 
-#: languages/management/commands/create_languages.py:495
+#: languages/management/commands/txcreatelanguages.py:534
 msgid "Burmese"
 msgstr "barmský"
 
-#: languages/management/commands/create_languages.py:506
+#: languages/management/commands/txcreatelanguages.py:545
 msgid "Norwegian Bokmål"
 msgstr "nórsky - bokmål"
 
-#: languages/management/commands/create_languages.py:513
+#: languages/management/commands/txcreatelanguages.py:552
 msgid "Nepali"
 msgstr "nepálsky"
 
-#: languages/management/commands/create_languages.py:521
+#: languages/management/commands/txcreatelanguages.py:560
 msgid "Dutch (Flemish)"
 msgstr "holandský - flámčina"
 
-#: languages/management/commands/create_languages.py:529
+#: languages/management/commands/txcreatelanguages.py:568
 msgid "Norwegian Nynorsk"
 msgstr "nórsky - nynorsk"
 
-#: languages/management/commands/create_languages.py:536
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Norwegian"
 msgstr "nórsky"
 
-#: languages/management/commands/create_languages.py:542
+#: languages/management/commands/txcreatelanguages.py:581
 msgid "Northern Sotho"
 msgstr "sothský - severný"
 
-#: languages/management/commands/create_languages.py:550
+#: languages/management/commands/txcreatelanguages.py:589
 msgid "Oriya"
 msgstr "urijský"
 
-#: languages/management/commands/create_languages.py:557
+#: languages/management/commands/txcreatelanguages.py:596
 msgid "Panjabi (Punjabi)"
 msgstr "pandžábsky"
 
-#: languages/management/commands/create_languages.py:570
+#: languages/management/commands/txcreatelanguages.py:609
 msgid "Polish"
 msgstr "poľský"
 
-#: languages/management/commands/create_languages.py:586
+#: languages/management/commands/txcreatelanguages.py:625
 msgid "Portuguese"
 msgstr "portugalský"
 
-#: languages/management/commands/create_languages.py:595
+#: languages/management/commands/txcreatelanguages.py:634
 msgid "Brazilian Portuguese"
 msgstr "portugalský (Brazília)"
 
-#: languages/management/commands/create_languages.py:603
+#: languages/management/commands/txcreatelanguages.py:642
 msgid "Romanian"
 msgstr "rumunský"
 
-#: languages/management/commands/create_languages.py:611
+#: languages/management/commands/txcreatelanguages.py:650
 msgid "Russian"
 msgstr "ruský"
 
-#: languages/management/commands/create_languages.py:618
+#: languages/management/commands/txcreatelanguages.py:657
 msgid "Sinhala"
 msgstr "sinhalský"
 
-#: languages/management/commands/create_languages.py:624
+#: languages/management/commands/txcreatelanguages.py:663
 msgid "Slovak"
 msgstr "slovenský"
 
-#: languages/management/commands/create_languages.py:632
+#: languages/management/commands/txcreatelanguages.py:671
 msgid "Slovenian"
 msgstr "slovinský"
 
-#: languages/management/commands/create_languages.py:640
+#: languages/management/commands/txcreatelanguages.py:679
 msgid "Albanian"
 msgstr "albánsky"
 
-#: languages/management/commands/create_languages.py:648
+#: languages/management/commands/txcreatelanguages.py:687
 msgid "Serbian"
 msgstr "srbský"
 
-#: languages/management/commands/create_languages.py:656
+#: languages/management/commands/txcreatelanguages.py:695
 msgid "Serbian (Latin)"
 msgstr "srbský - latinka"
 
-#: languages/management/commands/create_languages.py:665
+#: languages/management/commands/txcreatelanguages.py:704
 msgid "Sotho, Southern"
 msgstr "sothský - južný"
 
-#: languages/management/commands/create_languages.py:673
+#: languages/management/commands/txcreatelanguages.py:712
 msgid "Swedish"
 msgstr "švédsky"
 
-#: languages/management/commands/create_languages.py:681
+#: languages/management/commands/txcreatelanguages.py:720
 msgid "Tamil"
 msgstr "tamilský"
 
-#: languages/management/commands/create_languages.py:688
+#: languages/management/commands/txcreatelanguages.py:727
 msgid "Telugu"
 msgstr "telúgsky"
 
-#: languages/management/commands/create_languages.py:693
+#: languages/management/commands/txcreatelanguages.py:732
 msgid "Tajik"
 msgstr "tadžikský"
 
-#: languages/management/commands/create_languages.py:698
+#: languages/management/commands/txcreatelanguages.py:737
 msgid "Thai"
 msgstr "thajský"
 
-#: languages/management/commands/create_languages.py:703
+#: languages/management/commands/txcreatelanguages.py:742
 msgid "Tagalog"
 msgstr "tagalský"
 
-#: languages/management/commands/create_languages.py:715
+#: languages/management/commands/txcreatelanguages.py:754
 msgid "Turkish"
 msgstr "turecký"
 
-#: languages/management/commands/create_languages.py:722
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Urdu"
 msgstr "urdský"
 
-#: languages/management/commands/create_languages.py:728
+#: languages/management/commands/txcreatelanguages.py:767
 msgid "Ukrainian"
 msgstr "ukrajinský"
 
-#: languages/management/commands/create_languages.py:742
+#: languages/management/commands/txcreatelanguages.py:781
 msgid "Vietnamese"
 msgstr "vietnamský"
 
-#: languages/management/commands/create_languages.py:749
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Wolof"
 msgstr "wolofský"
 
-#: languages/management/commands/create_languages.py:764
+#: languages/management/commands/txcreatelanguages.py:801
+msgid "Xhosa"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:810
 msgid "Chinese (China)"
 msgstr "čínsky (Čína)"
 
-#: languages/management/commands/create_languages.py:774
+#: languages/management/commands/txcreatelanguages.py:820
 msgid "Chinese (Hong Kong)"
 msgstr "čínsky (Hong Kong)"
 
-#: languages/management/commands/create_languages.py:784
+#: languages/management/commands/txcreatelanguages.py:830
 msgid "Chinese (Taiwan)"
 msgstr "čínsky (Taiwan)"
 
-#: languages/management/commands/create_languages.py:792
+#: languages/management/commands/txcreatelanguages.py:838
 msgid "Zulu"
 msgstr "zuluský"
 
@@ -519,9 +563,9 @@ msgid "Translated:"
 msgstr "Preložené:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
@@ -554,15 +598,16 @@ msgstr "%(site_name)s: Súčasti v %(project)s"
 msgid "Latest components in project %s."
 msgstr "Najnovšie súčasti v projekte %s."
 
-#: projects/forms.py:17 projects/models.py:208
+#: projects/forms.py:29 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Regulárny výraz na filtrovanie vystavených súborov. Napr. 'po/.*'"
 
-#: projects/forms.py:40 projects/models.py:213
+#: projects/forms.py:52 projects/models.py:218
+#: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Príspevky do"
 
-#: projects/forms.py:41
+#: projects/forms.py:53
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
@@ -570,12 +615,17 @@ msgstr ""
 "Zvoľte si, ako by mala táto súčasť spravovať prispievanie súbormi. Tu "
 "povolené voľby závisia od typu súčasti"
 
-#: projects/models.py:81 projects/models.py:190 releases/models.py:20
-#: txcollections/models.py:23
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:14
+#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
+#: txcollections/migrations/0001_initial.py:32
+#: txcollections/migrations/0002_release_06_07.py:11
+#: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr "\"Slug\""
 
-#: projects/models.py:82 projects/models.py:191 releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -584,188 +634,220 @@ msgstr ""
 "Krátky popisok na použitie v URL, obsahujúci len písmená, číslice, "
 "podtrhovníky alebo spojovníky."
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "Reťazec podobný názvu alebo veľmi krátkemu popisu."
 
-#: projects/models.py:87 projects/models.py:196
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr "Veta alebo dve popisujúca objekt (voliteľné)."
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:27
-#: txcollections/models.py:30
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:25
+#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
+#: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Dlhý popis"
 
-#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Dlhší popis (voliteľné). Použite syntax Markdown."
 
-#: projects/models.py:91 txcollections/models.py:32
+#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Domovská stránka"
 
-#: projects/models.py:92
+#: projects/models.py:94 projects/migrations/0001_initial.py:13
 msgid "Feed"
 msgstr "Zdroj"
 
-#: projects/models.py:93
+#: projects/models.py:95
 msgid "An RSS feed with updates on the project."
 msgstr "RSS zdroj s aktualizáciami o projekte."
 
-#: projects/models.py:94
+#: projects/models.py:96 projects/migrations/0001_initial.py:22
 msgid "Bug tracker"
 msgstr "Sledovač chýb"
 
-#: projects/models.py:95
+#: projects/models.py:97
 msgid ""
 "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr ""
 "URL pre WWW stránky na sledovanie chýb a pripomienok (Bugzilla, Trac, atď.)"
 
-#: projects/models.py:98 projects/models.py:216 releases/models.py:41
-#: txcollections/models.py:33
+#: projects/models.py:99
+#: projects/migrations/0003_add_anyone_submit_field.py:12
+msgid "Anyone can submit"
+msgstr ""
+
+#: projects/models.py:101
+#, fuzzy
+msgid "Does anyone can submit translations to this project?"
+msgstr "Odoslať nový preklad pre túto súčasť."
+
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:23
+#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
+#: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr "Skrytý"
 
-#: projects/models.py:99 projects/models.py:217 releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr "Skryť tento objekt zo zoznamu?"
 
-#: projects/models.py:100 projects/models.py:218 releases/models.py:43
-#: txcollections/models.py:35
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
+#: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Povolené"
 
-#: projects/models.py:101 projects/models.py:219 releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr "Povoliť tento objekt alebo zakázať jeho použitie?"
 
-#: projects/models.py:105
+#: projects/models.py:110 projects/migrations/0001_initial.py:18
 msgid "Tags"
 msgstr "Štítky"
 
-#: projects/models.py:110 templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
 msgstr "Zbierky"
 
-#: projects/models.py:112
+#: projects/models.py:117
 msgid "Maintainers"
 msgstr "Správcovia"
 
-#: projects/models.py:116 projects/models.py:228 releases/models.py:49
-#: txcollections/models.py:43
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:17
+#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
+#: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
 msgstr "HTML popis"
 
-#: projects/models.py:118 projects/models.py:230 releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Popis v HTML."
 
-#: projects/models.py:124
+#: projects/models.py:129
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Projekt: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:132
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/txcollections/collection_detail.html:93
+#: projects/models.py:133 templates/projects/project_list.html:18
+#: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr "projekty"
 
-#: projects/models.py:200
+#: projects/models.py:205 projects/migrations/0001_initial.py:47
 msgid "Source language"
 msgstr "Zdrojový jazyk"
 
-#: projects/models.py:201
+#: projects/models.py:206
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Zdrojový jazyk tohto komponentu, napr. 'en', 'sk_SK', 'el'."
 
-#: projects/models.py:203
+#: projects/models.py:208 projects/migrations/0001_initial.py:37
 msgid "I18n type"
 msgstr "I18n typ"
 
-#: projects/models.py:205
+#: projects/models.py:210
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr "Typ podpory i18n v kóde (%s)"
 
-#: projects/models.py:207
+#: projects/models.py:212 projects/migrations/0001_initial.py:38
 msgid "File filter"
 msgstr "Filter súborov"
 
-#: projects/models.py:210
+#: projects/models.py:215 projects/migrations/0001_initial.py:46
 msgid "Allows submission"
 msgstr "Povoľuje príspevky"
 
-#: projects/models.py:212
+#: projects/models.py:217
 msgid "Does this module repository allow write access?"
 msgstr "Povoľuje repozitár modulu prístup na zápis?"
 
-#: projects/models.py:222
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "Spočítať štatistiky?"
 
-#: projects/models.py:223
+#: projects/models.py:228
 msgid "Should statistics be calculated for this component?"
 msgstr "Majú byť pre túto súčasť počítané štatistiky?"
 
-#: projects/models.py:233
+#: projects/models.py:238 projects/migrations/0001_initial.py:41
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:234
+#: projects/models.py:239 projects/migrations/0001_initial.py:32
 msgid "Unit"
 msgstr "Jednotka"
 
-#: projects/models.py:238
+#: projects/models.py:243
 msgid "Releases"
 msgstr "Vydania"
 
-#: projects/models.py:258
+#: projects/models.py:263
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Komponent: %s>"
 
-#: projects/models.py:262
+#: projects/models.py:267
 msgid "component"
 msgstr "komponent"
 
-#: projects/models.py:263 templates/projects/component_list.html:15
+#: projects/models.py:268 templates/projects/component_list.html:17
 msgid "components"
 msgstr "komponenty"
 
-#: projects/views.py:117 projects/views.py:332 txcollections/views.py:121
+#: projects/permissions.py:17
+#, fuzzy
+msgid "Is allowed to maintain this project"
+msgstr "Ukončiť sledovanie tohto projektu"
+
+#: projects/permissions.py:26
+msgid "Is allowed to submit file to this project"
+msgstr ""
+
+#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s bol zmazaný."
 
-#: projects/views.py:136 projects/views.py:623
+#: projects/views.py:286 projects/views.py:841
 msgid "Must use POST to activate"
 msgstr "Na aktivovanie treba použiť POST"
 
-#: projects/views.py:139 projects/views.py:626
+#: projects/views.py:289 projects/views.py:844
 msgid "Notifation is not enabled"
 msgstr "Oznamovania nie sú povolené"
 
-#: projects/views.py:152
+#: projects/views.py:302
 msgid "Watch this project"
 msgstr "Sledovať tento projekt"
 
-#: projects/views.py:165
+#: projects/views.py:315
 msgid "Stop wathing this project"
 msgstr "Ukončiť sledovanie tohto projektu"
 
-#: projects/views.py:364
+#: projects/views.py:537
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -773,36 +855,42 @@ msgstr ""
 "Nezdá sa, že by súborový filter tohto na POT založeného komponentu povoľoval "
 "súbor POTFILES.in. Opravte ho, prosím."
 
-#: projects/views.py:450
+#: projects/views.py:544
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+
+#: projects/views.py:655
 msgid "This component does  not allow write access."
 msgstr "Tento komponent nepovoľuje prístup na zápis."
 
-#: projects/views.py:458
+#: projects/views.py:663
 msgid "Please select a file from your system to be uploaded."
 msgstr "Zvoľte súbor z vášho systému, ktorý chcete odoslať."
 
-#: projects/views.py:467
+#: projects/views.py:672
 msgid "Please enter a target to upload the file."
 msgstr "Prosím, zvoľte si cieľ na odoslanie súboru."
 
-#: projects/views.py:473
+#: projects/views.py:678
 msgid "Please enter only ONE target to upload the file."
 msgstr "Prosím, zadajte len JEDEN cieľ na odoslanie súboru."
 
-#: projects/views.py:484
+#: projects/views.py:689
 msgid "The target file does not match with the component file filter"
 msgstr "Cieľ sa nezhoduje so súborovým filtrom komponentu."
 
-#: projects/views.py:492
+#: projects/views.py:697
 msgid "Enter a commit message"
 msgstr "Zadajte začleňovaciu správu"
 
-#: projects/views.py:550 webtrans/views.py:120
+#: projects/views.py:755 webtrans/views.py:124
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Súbor bol úspešne odoslaný: %s"
 
-#: projects/views.py:565
+#: projects/views.py:770
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -810,23 +898,23 @@ msgstr ""
 "Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
 "zobrazenie chýb spustite tento príkaz na vašom systéme."
 
-#: projects/views.py:574
+#: projects/views.py:779
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Ospravedlňujeme sa, váš súbor nemohol byť odoslaný pre chybu."
 
-#: projects/views.py:578 projects/views.py:608
+#: projects/views.py:783 projects/views.py:821
 msgid "Sorry, but you need to send a POST request."
 msgstr "Ospravedlňujeme sa, ale musíte odoslať POST požiadavku."
 
-#: projects/views.py:597
+#: projects/views.py:810
 msgid "Lock removed."
 msgstr "Uzamknutie odstránené."
 
-#: projects/views.py:600
+#: projects/views.py:813
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Chyba: len vlastník uzamknutia ho môže odstrániť."
 
-#: projects/views.py:604
+#: projects/views.py:817
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Uzamknutie vytvorené. Prosím, nezabudnite ho po skončení odstrániť."
 
@@ -838,7 +926,7 @@ msgstr "Veta alebo dve popisujúca tento objekt."
 msgid "Use Markdown syntax."
 msgstr "Použite syntax Markdown."
 
-#: releases/models.py:31
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 msgid "Release date"
 msgstr "Dátum vydania"
 
@@ -858,7 +946,7 @@ msgstr ""
 "Kedy budú preložiteľné reťazce zmrazené (žiadne reťazce ovplyvňujúce "
 "preklady nebudú môcť byť pridané ani zmenené)."
 
-#: releases/models.py:36
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr "Dátum zmrazenia vývoja"
 
@@ -875,7 +963,7 @@ msgstr ""
 msgid "release"
 msgstr "vydanie"
 
-#: releases/models.py:55 templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "vydania"
@@ -888,24 +976,16 @@ msgstr "Sledovať ho"
 msgid "Stop watching it"
 msgstr "Ukončiť jeho sledovanie"
 
-#: repowatch/models.py:24
+#: repowatch/models.py:25
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr "Nie je možné pridať sledovanie pre cestu %r"
 
-#: repowatch/models.py:88
-msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr "Zadajte 0 alebo viac čiarkami oddelených celých čísel v zátvorkách."
-
-#: repowatch/models.py:90
-msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr "Musíte zadať aspoň jeden pár prázdnych zátvoriek."
-
-#: repowatch/models.py:141
+#: repowatch/models.py:94
 msgid "watch"
 msgstr "sledovanie"
 
-#: repowatch/models.py:142
+#: repowatch/models.py:95
 msgid "watches"
 msgstr "sledovania"
 
@@ -917,11 +997,11 @@ msgstr "Uzamknutie"
 msgid "Locks"
 msgstr "Uzamknutia"
 
-#: tarball/models.py:31
+#: tarball/models.py:33
 msgid "tarball"
 msgstr "tar balíček"
 
-#: tarball/models.py:32
+#: tarball/models.py:34
 msgid "tarballs"
 msgstr "tar balíčky"
 
@@ -977,7 +1057,8 @@ msgstr "Skúste neskôr, prosím."
 msgid "Welcome to Transifex"
 msgstr "Víta vás Transifex"
 
-#: templates/base-sample.html:8 templates/flatpages/default.html:5
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
@@ -1040,7 +1121,7 @@ msgid "Sign in"
 msgstr "Prihlásiť sa"
 
 #: templates/base-sample.html:53
-#: templates/userprofile/account/includes/registration_form.html:33
+#: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Zaregistrovať sa"
 
@@ -1073,7 +1154,7 @@ msgstr ""
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:57
+#: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Vyhľadať"
 
@@ -1102,17 +1183,21 @@ msgstr ""
 "Žiadne projekty nájdené pre \"%(q)s\". Mali by ste trochu zmeniť vyhľadávací "
 "reťazec."
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
 msgstr "Nenašli ste svoj projekt? Skúste pokračovať a "
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "add it"
 msgstr "pridať ho"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Vyhľadať projekty podľa názvu, popisu, atď."
+
+#: templates/admin/base_site.html:9
+msgid "Transifex administration"
+msgstr ""
 
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
@@ -1164,8 +1249,6 @@ msgstr "Email"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
-#: templates/userprofile/account/login.html:26
-#: templates/userprofile/account/includes/registration_form.html:17
 msgid "Password"
 msgstr "Heslo"
 
@@ -1199,7 +1282,8 @@ msgstr "Zmeniť svoje heslo"
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
-#: templates/userprofile/profile/overview.html:92
+#: templates/userprofile/account/password_reset_confirm.html:31
+#: templates/userprofile/profile/overview.html:88
 msgid "Change password"
 msgstr "Zmeniť heslo"
 
@@ -1212,8 +1296,6 @@ msgid "Current password"
 msgstr "Súčasné heslo"
 
 #: templates/authopenid/changepw.html:21
-#: templates/userprofile/account/password_change.html:30
-#: templates/userprofile/account/password_reset_confirm.html:26
 msgid "New password"
 msgstr "Nové heslo"
 
@@ -1265,8 +1347,6 @@ msgstr "Nový účet"
 
 #: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
-#: templates/userprofile/account/login.html:20
-#: templates/userprofile/account/includes/registration_form.html:5
 #: templates/userprofile/profile/public.html:33
 msgid "Username"
 msgstr "Používateľské meno"
@@ -1317,7 +1397,7 @@ msgid "Delete account permanently"
 msgstr "Vymazať účet natrvalo"
 
 #: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:41
+#: templates/userprofile/profile/overview.html:39
 msgid "Username:"
 msgstr "Používateľské meno:"
 
@@ -1330,15 +1410,14 @@ msgid "Sign in with OpenID"
 msgstr "Prihlásiť sa pomocou OpenID"
 
 #: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:44
+#: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
 msgstr "Zabudli ste svoje heslo?"
 
 #: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:4
-#: templates/userprofile/account/password_reset.html:20
-#: templates/userprofile/account/password_reset_complete.html:19
-#: templates/userprofile/account/password_reset_confirm.html:55
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:22
 msgid "Password reset"
 msgstr "Obnovenie hesla"
 
@@ -1392,7 +1471,7 @@ msgid "Change openid associated to your account"
 msgstr "Zmeniť OpenID spojené s vašim účtom"
 
 #: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:106
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr "Oznámenia o zmenách"
 
@@ -1406,7 +1485,8 @@ msgstr "Vymazať svoje používateľskú meno a všetky údaje z WWW stránok"
 
 #: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:36
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Login"
 msgstr "Prihlásenie"
 
@@ -1505,13 +1585,13 @@ msgstr "Vďaka!"
 msgid "Thank you for your feedback."
 msgstr "Ďakujeme vám za vašu odozvu."
 
-#: templates/languages/language_detail.html:19
+#: templates/languages/language_detail.html:18
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
 msgstr "%(collection)s vydania"
 
-#: templates/languages/language_detail.html:25
+#: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
 msgid ""
@@ -1539,9 +1619,9 @@ msgid "No languages registered yet. :-("
 msgstr "Zatiaľ žiadne zaregistrované jazyky. :-("
 
 #: templates/languages/language_list.html:35
-#, python-format
+#, fuzzy
 msgid ""
-"Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 "Nenašli ste svoj jazyk? <a href=\"%(contact_form)s\">Dajte nám vedieť</a>!"
 
@@ -1577,8 +1657,9 @@ msgstr "Nepreložené súčasti"
 msgid ""
 "The following components will be included in %(release_name)s, but there are "
 "no translations sent for %(language_name)s yet."
-msgstr "Nasledujúce komponenty budú zaradené do vydania %(release_name)s, ale "
-"pre jazyk %(language_name)s preň zatiaľ neboli odoslané žiadne preklady."
+msgstr ""
+"Nasledujúce komponenty budú zaradené do vydania %(release_name)s, ale pre "
+"jazyk %(language_name)s preň zatiaľ neboli odoslané žiadne preklady."
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
@@ -1624,7 +1705,7 @@ msgid "Account"
 msgstr "Účet"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:115
+#: templates/projects/component_detail.html:118
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1641,8 +1722,8 @@ msgid "Notification Type"
 msgstr "Typ oznámenia"
 
 #: templates/notification/notices.html:85
-#: templates/userprofile/account/password_change.html:46
-#: templates/userprofile/account/password_reset_confirm.html:42
+#: templates/userprofile/account/email_validation.html:31
+#: templates/userprofile/account/password_change.html:29
 msgid "Change"
 msgstr "Zmena"
 
@@ -1761,7 +1842,7 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Áno, som si istý!"
 
-#: templates/projects/component_detail.html:23
+#: templates/projects/component_detail.html:25
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
@@ -1769,7 +1850,7 @@ msgstr ""
 "Táto súčasť podporuje lokálne ukladanie prispievaných súborov a tiež súbory "
 "odosiela na email správcu."
 
-#: templates/projects/component_detail.html:25
+#: templates/projects/component_detail.html:27
 msgid ""
 "This component does not support local storing of submitted files. The "
 "submitted files will be sent to the maintainers\\' emails and the statistics "
@@ -1779,7 +1860,7 @@ msgstr ""
 "súbory budú odoslané na emaily správcov a štatistiky budú odrážať zmeny až "
 "keď sa súbory začlenia do hlavného prúdu vývoja."
 
-#: templates/projects/component_detail.html:29
+#: templates/projects/component_detail.html:31
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
@@ -1787,101 +1868,109 @@ msgstr ""
 "Táto súčasť podporuje lokálne ukladanie prispievaných súborov. a taktiež ich "
 "priamo odosiela do repozitára hlavného prúdu vývoja."
 
-#: templates/projects/component_detail.html:73
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:76
+#: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Upraviť"
 
-#: templates/projects/component_detail.html:82
+#: templates/projects/component_detail.html:85
 msgid "Repository:"
 msgstr "Repozitár:"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "Link to a web front-end to the source"
 msgstr "Odkaz na webové rozhranie k zdrojom"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:95
 msgid "Branch:"
 msgstr "Vetva:"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:100
 msgid "File filter:"
 msgstr "Filter súborov:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:106
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Vydanie:"
 msgstr[1] "Vydania:"
 msgstr[2] "Vydania:"
 
-#: templates/projects/component_detail.html:111
+#: templates/projects/component_detail.html:114
 msgid "Allows submissions:"
 msgstr "Povoľuje príspevky:"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:128
 msgid "Translation files"
 msgstr "Preložiteľné súbory"
 
-#: templates/projects/component_detail.html:130
+#: templates/projects/component_detail.html:133
 msgid "Source file:"
 msgstr "Zdrojový súbor:"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:140
 msgid "Statistics last updated:"
 msgstr "Štatistiky aktualizované v čase pred:"
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:142
 msgid "ago"
 msgstr " "
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:143
 msgid "Component not yet pulled from source repository."
 msgstr "Súčast zatiaľ nie je získaná zo zdrojového repozitára."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Obnoviť a znovu spočítať štatistiky. Akcia môže nejaký čas trvať."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh cache"
 msgstr "Obnoviť vyrovnávaciu pamäť"
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Vyčistiť lokálne dáta Transifex-u pre čisté získanie"
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Clear cache"
 msgstr "Vyčistiť vyrovnávaciu pamäť"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Všetky lokálne upravené údaje budú prepísané čerstvými kópiami."
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "warning"
 msgstr "upozornenie"
 
-#: templates/projects/component_detail.html:166
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:163
+msgid "Become a translator:"
+msgstr ""
+
+#: templates/projects/component_detail.html:167
+msgid "Your request is pending for approval."
+msgstr ""
+
+#: templates/projects/component_detail.html:190
+#: templates/projects/project_detail.html:116
 msgid "History"
 msgstr "História"
 
-#: templates/projects/component_detail.html:170
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:194
+#: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr "Žiadna dostupná"
 
-#: templates/projects/component_detail.html:186
+#: templates/projects/component_detail.html:211
 msgid "Delete component"
 msgstr "Odstrániť súčasť"
 
@@ -1915,39 +2004,39 @@ msgstr "Prispievanie"
 msgid "Save component"
 msgstr "Uložiť súčasť"
 
-#: templates/projects/component_lang_detail.html:28
+#: templates/projects/component_lang_detail.html:29
 msgid "translation files"
 msgstr "preložiteľné súbory"
 
-#: templates/projects/component_list.html:9
+#: templates/projects/component_list.html:11
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Pridať"
 
-#: templates/projects/component_list.html:14
+#: templates/projects/component_list.html:16
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Súčasť projektu"
 msgstr[1] "Súčasti projektu"
 msgstr[2] "Súčasti projektu"
 
-#: templates/projects/component_list.html:25
+#: templates/projects/component_list.html:27
 msgid "edit"
 msgstr "upraviť"
 
-#: templates/projects/component_list.html:28
+#: templates/projects/component_list.html:30
 msgid "del"
 msgstr "odstr"
 
-#: templates/projects/component_list.html:44
+#: templates/projects/component_list.html:46
 msgid "No components are registered for this project yet."
 msgstr "Zatiaľ žiadne zaregistrované súčasti pre tento projekt."
 
-#: templates/projects/component_list.html:45
+#: templates/projects/component_list.html:48
 msgid "Add one!"
 msgstr "Pridať nejakú!"
 
-#: templates/projects/component_list.html:49
+#: templates/projects/component_list.html:54
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -2023,7 +2112,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr "Odstrániť <em>%(project_name)s</em>"
 
 #: templates/projects/project_confirm_delete.html:8
-#: templates/userprofile/avatar/choose.html:86
+#: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
 msgstr "Odstrániť"
 
@@ -2043,93 +2132,119 @@ msgstr ""
 "  Ste si istý, že chcete nadobro odstrániť zaregistrovaný projekt '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:42
+#: templates/projects/project_form_base.html:87
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Detaily"
 
-#: templates/projects/project_detail.html:47
+#: templates/projects/project_detail.html:49
 msgid "Watch:"
 msgstr "Sledovať:"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
 msgstr "Domovská stránka:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Domovská stránka pre %(project_name)s"
 
-#: templates/projects/project_detail.html:61
+#: templates/projects/project_detail.html:63
 msgid "Bug tracker:"
 msgstr "Sledovač chýb:"
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Sledovač chýb pre %(project_name)s"
 
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:69
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Štítky:"
 
-#: templates/projects/project_detail.html:76
+#: templates/projects/project_detail.html:78
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Zbierka:"
 msgstr[1] "Zbierky:"
 msgstr[2] "Zbierky:"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:88
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Správca:"
 msgstr[1] "Správcovia:"
 msgstr[2] "Správcovia:"
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:102
 msgid "External links:"
 msgstr "Externé odkazy:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:104
 msgid "Screenshots"
 msgstr "Snímky obrazovky"
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:139
 msgid "Delete project"
 msgstr "Odstrániť projekt"
 
-#: templates/projects/project_form.html:6
-#: templates/projects/project_form.html:11
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:13
+msgid "Save project"
+msgstr "Uložiť projekt"
+
+#: templates/projects/project_form_base.html:8
+#: templates/projects/project_form_base.html:13
+#: templates/projects/project_form_base.html:71
 msgid "Add a project"
 msgstr "Pridať projekt"
 
-#: templates/projects/project_form.html:7
+#: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Upraviť %(project_name)s"
 
-#: templates/projects/project_form.html:12
+#: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
 msgstr "Upraviť <em>%(project_name)s</em>"
 
-#: templates/projects/project_form.html:20
+#: templates/projects/project_form_base.html:27
+msgid "Access control will be enabled once the project is created"
+msgstr ""
+
+#: templates/projects/project_form_base.html:74
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Úprava projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form.html:36
-msgid "Save project"
-msgstr "Uložiť projekt"
+#: templates/projects/project_form_base.html:88
+msgid "Access Control"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:10
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:12
+msgid "Requests for access to submit files"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:51
+msgid "Pending requests:"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:63
+msgid "Users with guaranteed access to submit files:"
+msgstr ""
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2156,12 +2271,12 @@ msgstr "Pridať nový projekt"
 msgid "No projects registered yet. :-("
 msgstr "Zatiaľ žiadne zaregistrované projekty. :-("
 
-#: templates/projects/project_list.html:56
+#: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr "Prečo <a href=\"%(project_create)s\">nepridáte nejaký</a>?"
 
-#: templates/projects/project_list.html:64
+#: templates/projects/project_list.html:67
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2221,16 +2336,16 @@ msgstr ""
 msgid "Homepage for %(collection_name)s"
 msgstr "Domovská stránka pre %(collection_name)s"
 
-#: templates/txcollections/collection_detail.html:92
+#: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
 msgstr "Projekty v %(collection)s"
 
-#: templates/txcollections/collection_detail.html:97
+#: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
 msgstr "Projekty aktuálne zaregistrované pod touto zbierkou:"
 
-#: templates/txcollections/collection_detail.html:107
+#: templates/txcollections/collection_detail.html:108
 #, python-format
 msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
@@ -2239,7 +2354,7 @@ msgstr ""
 "Zatiaľ nie sú pre túto zbierku zaregistrované žiadne projekty. <a href=\"%"
 "(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tejto zbierky."
 
-#: templates/txcollections/collection_detail.html:119
+#: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
 msgstr "Odstrániť zbierku"
 
@@ -2309,12 +2424,12 @@ msgstr[2] "%(counter)s projektov"
 msgid "No collections registered yet. :-("
 msgstr "Zatiaľ žiadne zaregistrované vydania. :-("
 
-#: templates/txcollections/collection_list.html:55
+#: templates/txcollections/collection_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
 msgstr "Prečo <a href=\"%(collection_create)s\">nepridáte nejakú</a>?"
 
-#: templates/txcollections/collection_list.html:63
+#: templates/txcollections/collection_list.html:66
 #, python-format
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
@@ -2404,12 +2519,39 @@ msgstr ""
 msgid "Save release"
 msgstr "Uložiť vydanie"
 
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with guarantied access to submit files:"
+msgstr ""
+
+#: templates/txpermissions/permission_delete_form.html:5
+msgid "Revoke permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:13
+msgid "Grant permission"
+msgstr ""
+
+#: templates/txpermissions/permission_form.html:15
+msgid "Request permission"
+msgstr ""
+
+#: templates/txpermissions/permission_request_approve_form.html:5
+msgid "Approve request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:6
+msgid "Withdraw request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:8
+msgid "Deny request"
+msgstr ""
+
 #: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Náhľad"
 
 #: templates/userprofile/menu.html:6
-#: templates/userprofile/profile/personal.html:36
 msgid "Personal information"
 msgstr "Osobné informácie"
 
@@ -2418,41 +2560,36 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:38
 msgid "Location"
 msgstr "Umiestnenie"
 
 #: templates/userprofile/menu.html:9
-#: templates/userprofile/profile/delete.html:22
+#: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Odstrániť profil"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:5
 msgid "E-mail change"
 msgstr "Zmena e-mailovej adresy"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation.html:40
-#: templates/userprofile/account/email_validation_processed.html:20
+#: templates/userprofile/account/email_validation.html:5
+#: templates/userprofile/account/email_validation_processed.html:12
 msgid "Add e-mail"
 msgstr "Pridanie e-mailovej adresy"
 
-#: templates/userprofile/account/email_validation.html:24
-msgid "New e-mail address"
+#: templates/userprofile/account/email_validation.html:22
+#, fuzzy
+msgid "Add a new e-mail address"
 msgstr "Nová e-mailová adresa"
 
-#: templates/userprofile/account/email_validation.html:34
-msgid "Send confirmation"
-msgstr "Odoslať potvrdenie"
-
-#: templates/userprofile/account/email_validation.html:41
-#: templates/userprofile/account/email_validation_processed.html:21
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation_processed.html:13
+#, fuzzy
 msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
-"confirmation"
+"confirmation."
 msgstr ""
 "Zadajte novú e-mailovú adresu. Bude na ňu odoslaný e-mail na otestovanie a "
 "potvrdenie"
@@ -2465,71 +2602,67 @@ msgstr "Úspešné overenie e-mailovej adresy"
 msgid "E-mail change unsuccessful"
 msgstr "Neúspešná zmena e-mailovej adresy"
 
-#: templates/userprofile/account/email_validation_done.html:14
-msgid "E-mail address validated successfully"
+#: templates/userprofile/account/email_validation_done.html:12
+#: templates/userprofile/account/email_validation_reset_response.html:13
+msgid "E-mail validation process"
+msgstr "Proces overenia e-mailovej adresy"
+
+#: templates/userprofile/account/email_validation_done.html:13
+#, fuzzy, python-format
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
+msgstr "Viesť proces overenia e-mailovej adresy môžete zo"
+
+#: templates/userprofile/account/email_validation_done.html:17
+#, fuzzy
+msgid "E-mail address validated successfully."
 msgstr "E-mailová adresa bola úspešne overená"
 
-#: templates/userprofile/account/email_validation_done.html:16
+#: templates/userprofile/account/email_validation_done.html:19
+#, fuzzy
 msgid ""
 "The key you received via e-mail is no longer valid. Please try the e-mail "
-"validation process again"
+"validation process again."
 msgstr ""
 "Kľúč, ktorý ste obdržali e-mailov už nie je platný. Vyskúšajte, prosím, "
 "proces overenia e-mailovej adresy znova"
 
-#: templates/userprofile/account/email_validation_done.html:23
-#: templates/userprofile/account/email_validation_reset_response.html:22
-msgid "E-mail validation process"
-msgstr "Proces overenia e-mailovej adresy"
-
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "You can manage the e-mail validation process from the"
-msgstr "Viesť proces overenia e-mailovej adresy môžete zo"
-
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "overview page"
-msgstr "stránky náhľadu"
-
 #: templates/userprofile/account/email_validation_processed.html:4
-#: templates/userprofile/account/email_validation_processed.html:13
+#: templates/userprofile/account/email_validation_processed.html:16
 msgid "E-mail change processed"
 msgstr "Zmena e-mailovej adresy spracovaná"
 
-#: templates/userprofile/account/email_validation_processed.html:14
+#: templates/userprofile/account/email_validation_processed.html:17
+#, fuzzy
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
 "Please access to your e-mail and complete this process following the "
-"instructions specified in the e-mail body"
+"instructions specified in the e-mail body."
 msgstr ""
 "Na novú e-mailovú adresu bol odoslaný e-mail na jej overenie a aktivovanie. "
 "Pristúpte, prosím, ku svojmu e-mailu a dokončite tento proces nasledovaním "
 "inštrukcií uvedených v tele e-mailu."
 
-#: templates/userprofile/account/email_validation_reset.html:4
-#: templates/userprofile/account/email_validation_reset.html:19
-#: templates/userprofile/account/email_validation_reset.html:36
+#: templates/userprofile/account/email_validation_reset.html:5
+#: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
 msgstr "Znova odoslať overenie e-mailovej adresy"
 
-#: templates/userprofile/account/email_validation_reset.html:20
-msgid "Insert your e-mail address"
-msgstr "Zadajte svoju e-mailovú adresu:"
-
-#: templates/userprofile/account/email_validation_reset.html:30
-msgid "Resend confirmation"
-msgstr "Znova odoslať potvrdenie"
-
-#: templates/userprofile/account/email_validation_reset.html:37
+#: templates/userprofile/account/email_validation_reset.html:19
+#, fuzzy
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "login. Insert your registered e-mail address to receive the validation e-"
-"mail again"
+"mail again."
 msgstr ""
 "Prihlásiť sa nemôžete, pokiaľ ste ešte neoverili vašu e-mailovú adresu. "
 "Zadajte e-mailovú adresu, s ktorou ste sa zaregistrovali, aby sme vám mohli "
 "opäť odoslať overovací e-mail."
+
+#: templates/userprofile/account/email_validation_reset.html:26
+msgid "Resend confirmation"
+msgstr "Znova odoslať potvrdenie"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2540,69 +2673,73 @@ msgid "Your user account was already active"
 msgstr "Váš používateľský účet už bol aktívny"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
-msgid "We've e-mailed you the e-mail validation link"
+msgid "You can manage the e-mail validation process from the"
+msgstr "Viesť proces overenia e-mailovej adresy môžete zo"
+
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "overview page"
+msgstr "stránky náhľadu"
+
+#: templates/userprofile/account/email_validation_reset_response.html:17
+#, fuzzy
+msgid "We've e-mailed you the e-mail validation link."
 msgstr "E-mailom sme vám odoslali overovací odkaz"
 
-#: templates/userprofile/account/email_validation_reset_response.html:16
+#: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
 msgstr "Vaša e-mailová adresa už bola overená"
 
-#: templates/userprofile/account/login.html:4
-#: templates/userprofile/account/login.html:19
+#: templates/userprofile/account/login.html:5
 msgid "User login"
 msgstr "Prihlásenie používateľa"
 
-#: templates/userprofile/account/login.html:42
+#: templates/userprofile/account/login.html:19
+#, fuzzy
+msgid "Enter your username and password to login."
+msgstr "Vymazať svoje používateľskú meno a všetky údaje z WWW stránok"
+
+#: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr "Nástroje"
 
-#: templates/userprofile/account/login.html:46
-#: templates/userprofile/profile/overview.html:95
+#: templates/userprofile/account/login.html:40
+#: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
 msgstr "Znova odoslať overovací e-mail"
 
-#: templates/userprofile/account/login.html:48
+#: templates/userprofile/account/login.html:42
 msgid "Sign up!"
 msgstr "Zapíšte sa!"
 
-#: templates/userprofile/account/logout.html:4
-#: templates/userprofile/account/logout.html:9
+#: templates/userprofile/account/logout.html:5
+#: templates/userprofile/account/logout.html:10
 msgid "Logged out"
 msgstr "Odhlásený"
 
-#: templates/userprofile/account/logout.html:10
-msgid "You've been logged out"
+#: templates/userprofile/account/logout.html:11
+#, fuzzy
+msgid "You've been logged out."
 msgstr "Odhlásili ste sa"
 
-#: templates/userprofile/account/logout.html:10
+#: templates/userprofile/account/logout.html:11
 msgid "Log in again"
 msgstr "Znova sa prihlásiť"
 
-#: templates/userprofile/account/password_change.html:4
-#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:4
 msgid "Password change for"
 msgstr "Zmena hesla pre"
 
-#: templates/userprofile/account/password_change.html:24
-msgid "Old password"
-msgstr "Staré heslo"
-
-#: templates/userprofile/account/password_change.html:36
-#: templates/userprofile/account/password_reset_confirm.html:32
-msgid "Confirm password"
-msgstr "Potvrdenie hesla"
-
-#: templates/userprofile/account/password_change.html:52
-#: templates/userprofile/account/password_change_done.html:19
+#: templates/userprofile/account/password_change.html:22
+#: templates/userprofile/account/password_change_done.html:12
 msgid "Password change"
 msgstr "Zmena hesla"
 
-#: templates/userprofile/account/password_change.html:53
-#: templates/userprofile/account/password_change_done.html:20
+#: templates/userprofile/account/password_change.html:23
+#, fuzzy
 msgid ""
-"Password change utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 "Stránka nástroja na zmenu hesla. Zadajte, prosím, vaše heslo dvakrát, aby "
 "sme si overili, že ste ho napísali správne"
@@ -2612,8 +2749,9 @@ msgstr ""
 msgid "Password change successful"
 msgstr "Úspešná zmena hesla"
 
-#: templates/userprofile/account/password_change_done.html:13
-msgid "The password has been changed successfully"
+#: templates/userprofile/account/password_change_done.html:14
+#, fuzzy
+msgid "The password has been changed successfully."
 msgstr "Heslo bolo úspešne zmenené"
 
 #: templates/userprofile/account/password_expired.html:4
@@ -2621,51 +2759,40 @@ msgid "Password key expired"
 msgstr "Kľúču hesla vypršala platnosť"
 
 #: templates/userprofile/account/password_expired.html:9
+#, fuzzy
 msgid ""
-"The password key you're trying to use is expired. Please, request a new one"
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 "Kľúč hesla, ktorý sa pokúšate použiť, expiroval. Vyžiadajte si, prosím, nový"
 
-#: templates/userprofile/account/password_reset.html:21
-msgid "E-mail address"
-msgstr "E-mailová adresa"
-
-#: templates/userprofile/account/password_reset.html:31
-msgid "Reset my password"
-msgstr "Obnovenie hesla"
-
-#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 msgid "Password reset form"
 msgstr "Formulár obnovenia hesla"
 
-#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
+#, fuzzy
 msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
-"password and e-mail the new one to you"
+"password and e-mail the new one to you."
 msgstr ""
 "Zabudli ste svoje heslo? Zadajte vašu e-mailovú adresu a my vám heslo "
 "obnovíme a nové vám pošleme e-mailom"
 
-#: templates/userprofile/account/password_reset_complete.html:13
+#: templates/userprofile/account/password_reset.html:27
+msgid "Reset my password"
+msgstr "Obnovenie hesla"
+
+#: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr "Vaše heslo bolo nastavené. Teraz môžete pokračovať a prihlásiť sa."
 
-#: templates/userprofile/account/password_reset_complete.html:20
-#: templates/userprofile/account/password_reset_confirm.html:56
-msgid ""
-"Password reset utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
-msgstr ""
-"Stránka nástroja na obnovenie hesla. Zadajte, prosím, vaše heslo dvakrát, "
-"aby sme si overili, že ste ho napísali správne"
-
-#: templates/userprofile/account/password_reset_confirm.html:47
+#: templates/userprofile/account/password_reset_confirm.html:37
 msgid "Password reset unsuccessful"
 msgstr "Neúspešné obnovenie hesla"
 
-#: templates/userprofile/account/password_reset_confirm.html:48
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -2679,37 +2806,37 @@ msgid "Password reset successful"
 msgstr "Úspešné obnovenie hesla"
 
 #: templates/userprofile/account/password_reset_done.html:10
+#, fuzzy
 msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
-"receiving it shortly"
+"receiving it shortly."
 msgstr ""
 "Odoslali sme vám e-mailom inštrukcie na získanie nového hesla. Mali by ste "
 "ho čoskoro dostať"
 
 #: templates/userprofile/account/registration.html:4
-#: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
 msgstr "Registrácia používateľa"
 
-#: templates/userprofile/account/registration.html:22
-#: templates/userprofile/account/registration_done.html:19
-msgid "Register a new account"
+#: templates/userprofile/account/registration.html:17
+#, fuzzy
+msgid "Register for a Transifex account"
 msgstr "Zaregistrovanie nového účtu"
 
-#: templates/userprofile/account/registration.html:23
-#: templates/userprofile/account/registration_done.html:20
+#: templates/userprofile/account/registration.html:18
 msgid ""
-"Joining this community is quick and easy. You only need to fill the form to "
-"get access to all the private content"
+"Joining the Transifex is quick and easy. Just fill in the following form."
 msgstr ""
-"Pripojením sa k tejto komunite je rýchle a jednoduché. Potrebujete len "
-"vyplniť formulár a získate prístup ku všetkému vnútornému obsahu"
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
 msgstr "Registrácia dokončená"
 
-#: templates/userprofile/account/registration_done.html:10
+#: templates/userprofile/account/registration_done.html:8
+msgid "Register a new account"
+msgstr "Zaregistrovanie nového účtu"
+
+#: templates/userprofile/account/registration_done.html:12
 msgid ""
 "You have successfully registered a new account, and an account activation "
 "url has been sent to your e-mail address. You must access this message on "
@@ -2719,7 +2846,7 @@ msgstr ""
 "na vašu e-mailovú adresu. Na ukončenie aktivačného procesu si musíte túto "
 "správu z vášho e-mailového účtu prečítať."
 
-#: templates/userprofile/account/registration_done.html:13
+#: templates/userprofile/account/registration_done.html:15
 #, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
@@ -2729,34 +2856,37 @@ msgstr ""
 "\">prihlasovaciu stránku</a> pre overenie totožnosti a začatie používania "
 "týchto stránok."
 
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "E-mail"
-msgstr "E-mail"
-
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "optional"
-msgstr "voliteľné"
-
-#: templates/userprofile/account/includes/registration_form.html:23
-msgid "Password (again)"
-msgstr "Heslo (zopakovať)"
-
 #: templates/userprofile/avatar/choose.html:4
-#: templates/userprofile/avatar/choose.html:38
+#: templates/userprofile/avatar/choose.html:47
 msgid "Choose the location of your avatar"
 msgstr "Zvoľte si umiestnenie vášho zosobnenia"
 
-#: templates/userprofile/avatar/choose.html:41
+#: templates/userprofile/avatar/choose.html:36
+#: templates/userprofile/avatar/crop.html:41
+msgid "Avatar selection page"
+msgstr "Stránka voľby avatara"
+
+#: templates/userprofile/avatar/choose.html:37
+#: templates/userprofile/avatar/crop.html:42
+#, fuzzy
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile."
+msgstr ""
+"Na zvolenie vami žiadaného obrázka pre avatar vo vašom profile máte niekoľko "
+"možností"
+
+#: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
 msgstr "Zvoliť obrázok z disku"
 
-#: templates/userprofile/avatar/choose.html:43
-#: templates/userprofile/avatar/choose.html:49
+#: templates/userprofile/avatar/choose.html:52
+#: templates/userprofile/avatar/choose.html:58
 #: templates/userprofile/avatar/crop.html:35
 msgid "Done"
 msgstr "Hotovo"
 
-#: templates/userprofile/avatar/choose.html:47
+#: templates/userprofile/avatar/choose.html:56
 msgid ""
 "Select an image from a remote URL. Put the URL on the input below and we'll "
 "retrieve the image for you"
@@ -2764,23 +2894,9 @@ msgstr ""
 "Zvoliť obrázok zo vzdialenej URL. Vložte URL do vstupného políčka nižšie a "
 "my získame ten obrázok za vás"
 
-#: templates/userprofile/avatar/choose.html:54
+#: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
 msgstr "Vyhľadať na Picasa Web"
-
-#: templates/userprofile/avatar/choose.html:79
-#: templates/userprofile/avatar/crop.html:41
-msgid "Avatar selection page"
-msgstr "Stránka voľby avatara"
-
-#: templates/userprofile/avatar/choose.html:80
-#: templates/userprofile/avatar/crop.html:42
-msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile"
-msgstr ""
-"Na zvolenie vami žiadaného obrázka pre avatar vo vašom profile máte niekoľko "
-"možností"
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
@@ -2791,25 +2907,23 @@ msgstr "Orezanie a zmena veľkosti požadovanej oblasti"
 msgid "Delete personal information"
 msgstr "Odstránenie osobných informácií"
 
-#: templates/userprofile/profile/delete.html:14
-msgid "Delete your personal information"
-msgstr "Odstrániť vaše osobné informácie"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Are you sure?"
-msgstr "Ste si istý?"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Yes"
-msgstr "Áno"
-
-#: templates/userprofile/profile/delete.html:23
+#: templates/userprofile/profile/delete.html:13
+#, fuzzy
 msgid ""
-"It erases all your private data except your username. You can refill the "
-"information later if you want to"
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
 msgstr ""
 "Odstráni to všetky vaše súkromné údaje okrem používateľského mena. Ak budete "
 "chcieť, tieto údaje môžete opäť vyplniť inokedy"
+
+#: templates/userprofile/profile/delete.html:17
+msgid "Are you sure?"
+msgstr "Ste si istý?"
+
+#: templates/userprofile/profile/delete.html:18
+#, fuzzy
+msgid "Delete my data"
+msgstr "Odstrániť svoj účet"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2825,7 +2939,7 @@ msgid "Auto-discover location"
 msgstr "Automaticky zistiť umiestnenie"
 
 #: templates/userprofile/profile/location.html:22
-#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Krajina"
@@ -2843,7 +2957,7 @@ msgid "Position"
 msgstr "Pozícia"
 
 #: templates/userprofile/profile/location.html:35
-#: templates/userprofile/profile/personal.html:30
+#: templates/userprofile/profile/personal.html:36
 msgid "Save"
 msgstr "Uložiť"
 
@@ -2852,67 +2966,69 @@ msgid "Location information"
 msgstr "Informácie o umiestnení"
 
 #: templates/userprofile/profile/location.html:41
-msgid "Define your location information"
+#, fuzzy
+msgid "Define your location information."
 msgstr "Zadajte informácie o svojom umiestnení"
 
 #: templates/userprofile/profile/overview.html:4
-#: templates/userprofile/profile/overview.html:32
+#: templates/userprofile/profile/overview.html:30
 msgid "Overview of your profile"
 msgstr "Náhľad vášho profilu"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Change avatar"
 msgstr "Zmeniť avatar"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Add avatar"
 msgstr "Pridať avatar"
 
-#: templates/userprofile/profile/overview.html:42
+#: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "E-mail:"
 
-#: templates/userprofile/profile/overview.html:44
+#: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
 msgstr "Zatiaľ nenastavený"
 
-#: templates/userprofile/profile/overview.html:46
+#: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
 msgstr " (neoverený)"
 
-#: templates/userprofile/profile/overview.html:55
-#: templates/userprofile/profile/overview.html:64
-#: templates/userprofile/profile/overview.html:73
+#: templates/userprofile/profile/overview.html:53
+#: templates/userprofile/profile/overview.html:62
+#: templates/userprofile/profile/overview.html:71
 msgid "Not set"
 msgstr "Nenastavené"
 
-#: templates/userprofile/profile/overview.html:91
+#: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Správa:"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
 msgstr "Zmeniť e-mailovú adresu"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
 msgstr "Pridať e-mailovú adresu"
 
-#: templates/userprofile/profile/overview.html:99
+#: templates/userprofile/profile/overview.html:95
 msgid "Add location"
 msgstr "Pridať umiestnenie"
 
-#: templates/userprofile/profile/overview.html:101
+#: templates/userprofile/profile/overview.html:97
 msgid "Change location"
 msgstr "Zmeniť umiestnenie"
 
-#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
 msgstr "Upraviť osobné informácie"
 
-#: templates/userprofile/profile/personal.html:37
-msgid "Insert some information about you"
+#: templates/userprofile/profile/personal.html:29
+#, fuzzy
+msgid "Insert some information about you."
 msgstr "Vložte nejaké informácie o sebe"
 
 #: templates/userprofile/profile/public.html:27
@@ -2972,94 +3088,94 @@ msgstr "Odoslať preklady"
 msgid "Auto-suggest translation"
 msgstr "Navrhnúť preklad"
 
-#: translations/models.py:225
+#: translations/models.py:233
 msgid "PO file"
 msgstr "PO súbor"
 
-#: translations/models.py:226
+#: translations/models.py:234
 msgid "PO files"
 msgstr "PO súbory"
 
-#: translations/templates/comp_lang_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:16
 msgid "Files"
 msgstr "Súbory"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
-#: translations/templates/lang_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:17
+#: translations/templates/comp_stats_table.html:17
+#: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Preklady"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
-#: translations/templates/lang_stats_table.html:13
+#: translations/templates/comp_lang_stats_table.html:18
+#: translations/templates/comp_stats_table.html:18
+#: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Voľby"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
-#: translations/templates/lang_stats_table.html:23
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Nie je možné vygenerovať štatistiky pre tento súbor"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Trans:"
 msgstr "Prelož.:"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "Neprel.:"
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:40
+#: translations/templates/comp_stats_table.html:52
+#: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Zobraziť "
 
-#: translations/templates/comp_lang_stats_table.html:36
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:41
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Stiahnuť "
 
-#: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
-#: translations/templates/lang_stats_table.html:46
+#: translations/templates/comp_lang_stats_table.html:51
+#: translations/templates/comp_stats_table.html:63
+#: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Upraviť "
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Jazyk"
 
-#: translations/templates/comp_stats_table.html:21
+#: translations/templates/comp_stats_table.html:26
 msgid "See statistics for this language"
 msgstr "Pozrieť štatistiky pre tento jazyk"
 
-#: translations/templates/comp_stats_table.html:23
+#: translations/templates/comp_stats_table.html:28
 msgid "There is no language registered that matches with this code"
 msgstr "Neexistuje zaregistrovaný jazyk, ktorý sa zhoduje s týmto kódom"
 
-#: translations/templates/comp_stats_table.html:35
+#: translations/templates/comp_stats_table.html:40
 msgid "(not calculated)"
 msgstr "(nepočítané)"
 
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "Kliknite sem na zobrazenie viacerých súborov pre "
 
@@ -3072,31 +3188,31 @@ msgstr "Odoslať preklad pre %(pofile_filename)s"
 msgid "Submit file"
 msgstr "Odovzdať súbor"
 
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
 msgstr "Projekt/súčasť"
 
-#: translations/templates/lang_stats_table.html:20
+#: translations/templates/lang_stats_table.html:25
 msgid "Go to this project page"
 msgstr "Na stránku tohto projektu"
 
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/lang_stats_table.html:26
 msgid "Go to this component page"
 msgstr "Na stránku tejto súčasti"
 
-#: translations/templates/pofile_lock.html:8
+#: translations/templates/pofile_lock.html:10
 msgid "Unlock this file when you're finished working with it."
 msgstr "Odomknite tento súbor, keď skončíte s prácou na ňom."
 
-#: translations/templates/pofile_lock.html:12
+#: translations/templates/pofile_lock.html:14
 msgid "This file is locked, indicating someone is working with it."
 msgstr "Tento súbor je uzamknutý, čo znamená, že niekto na ňom pracuje."
 
-#: translations/templates/pofile_lock.html:18
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr "Uzamknúť tento súbor, aby ostatní vedeli, že na ňom pracujete."
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:23
 msgid "This file is unlocked. Most likely noone is working with it right now."
 msgstr ""
 "Tento súbor nie je uzamknutý. Pravdepodobne na ňom teraz nikto nepracuje."
@@ -3165,6 +3281,11 @@ msgstr "zbierka"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr "<Vydanie: %(rel)s (Zbierka %(col)s)>"
 
+#: txcollections/migrations/0001_initial.py:20
+#, fuzzy
+msgid "String freese date"
+msgstr "Dátum zmrazenia reťazcov"
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3178,31 +3299,31 @@ msgstr "Žena"
 msgid "Male"
 msgstr "Muž"
 
-#: txcommon/models.py:18
+#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
 msgid "First name"
 msgstr "Meno"
 
-#: txcommon/models.py:19
+#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
 msgid "Surname"
 msgstr "Priezvisko"
 
-#: txcommon/models.py:22
+#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
 msgid "Native Language"
 msgstr "Rodný jazyk"
 
-#: txcommon/models.py:23
+#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:24
+#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25
+#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26
+#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
 msgid "About yourself"
 msgstr "O vás"
 
@@ -3210,7 +3331,7 @@ msgstr "O vás"
 msgid "Short description of yourself (140 chars)."
 msgstr "Zopár slov o vás (140 znakov)."
 
-#: txcommon/models.py:28
+#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
 msgid "Looking for work?"
 msgstr "Hľadáte prácu?"
 
@@ -3226,75 +3347,83 @@ msgstr "Koreňová URL neukazuje na súbor .tar.gz alebo .tgz"
 msgid "The root url must start with http:// or ftp://"
 msgstr "Koreňová URL musí začínať na http:// alebo https://"
 
-#: txcommon/management/__init__.py:9
+#: txcommon/db/models.py:26
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr "Zadajte 0 alebo viac čiarkami oddelených celých čísel v zátvorkách."
+
+#: txcommon/db/models.py:28
+msgid "You must enter at least a pair of parentheses containing nothing."
+msgstr "Musíte zadať aspoň jeden pár prázdnych zátvoriek."
+
+#: txcommon/management/__init__.py:10
 msgid "New Project Added"
 msgstr "Pridaný nový projekt"
 
-#: txcommon/management/__init__.py:10
+#: txcommon/management/__init__.py:11
 msgid "when a new project is added"
 msgstr "keď je pridaný nový projekt"
 
-#: txcommon/management/__init__.py:16
+#: txcommon/management/__init__.py:17
 msgid "Project Changed"
 msgstr "Projekt sa zmenil"
 
-#: txcommon/management/__init__.py:17
+#: txcommon/management/__init__.py:18
 msgid "when a project is changed"
 msgstr "keď je projekt zmenený"
 
-#: txcommon/management/__init__.py:23
+#: txcommon/management/__init__.py:24
 msgid "Project Deleted"
 msgstr "Projekt odstránený"
 
-#: txcommon/management/__init__.py:24
+#: txcommon/management/__init__.py:25
 msgid "when a project is deleted"
 msgstr "keď je projekt odstránený"
 
-#: txcommon/management/__init__.py:30
+#: txcommon/management/__init__.py:31
 msgid "New Component Added"
 msgstr "Pridaná nová súčasť"
 
-#: txcommon/management/__init__.py:31
+#: txcommon/management/__init__.py:32
 msgid "when a new component is added to a project"
 msgstr "keď je do projektu pridaná nová súčasť"
 
-#: txcommon/management/__init__.py:37
+#: txcommon/management/__init__.py:38
 msgid "Component Changed"
 msgstr "Súčasť zmenená"
 
-#: txcommon/management/__init__.py:38
+#: txcommon/management/__init__.py:39
 msgid "when a component of a project is changed"
 msgstr "keď je súčasť projektu zmenená"
 
-#: txcommon/management/__init__.py:44
+#: txcommon/management/__init__.py:45
 msgid "Component Deleted"
 msgstr "Súčasť odstránená"
 
-#: txcommon/management/__init__.py:45
+#: txcommon/management/__init__.py:46
 msgid "when a component of a project is deleted"
 msgstr "keď je súčasť projektu odstránená"
 
-#: txcommon/management/__init__.py:51
+#: txcommon/management/__init__.py:52
 msgid "File Submitted"
 msgstr "Súbor odoslaný"
 
-#: txcommon/management/__init__.py:52
+#: txcommon/management/__init__.py:53
 msgid "when a component file of a project is submitted"
 msgstr "keď je odoslaný súbor súčasti projektu"
 
-#: txcommon/management/__init__.py:59
+#: txcommon/management/__init__.py:60
 msgid "Translation File Changed"
 msgstr "Preložiteľný súbor zmenený"
 
-#: txcommon/management/__init__.py:60
+#: txcommon/management/__init__.py:61
 msgid "when a component translation file of a project is changed"
 msgstr "keď je preložiteľný súbor súčasti projektu zmenený"
 
-#: txcommon/management/__init__.py:67
+#: txcommon/management/__init__.py:68
 msgid "Translation Source File (POT) has a Problem"
 msgstr "Zdrojový súbor prekladu (POT) má problém"
 
-#: txcommon/management/__init__.py:68
+#: txcommon/management/__init__.py:69
 msgid ""
 "when the source file (POT) of a component that you are a maintainer has a "
 "problem"
@@ -3302,89 +3431,105 @@ msgstr ""
 "ak je problém v zdrojovom súbore prekladu (POT) komponentu, ktorého ste "
 "správcom"
 
-#: txcommon/management/__init__.py:76
+#: txcommon/management/__init__.py:77
 msgid "New Collection Added"
 msgstr "Pridaná nová zbierka"
 
-#: txcommon/management/__init__.py:77
+#: txcommon/management/__init__.py:78
 msgid "when a new collection is added"
 msgstr "keď je pridaná nová zbierka"
 
-#: txcommon/management/__init__.py:83
+#: txcommon/management/__init__.py:84
 msgid "Collection Changed"
 msgstr "Zbierka zmenená"
 
-#: txcommon/management/__init__.py:84
+#: txcommon/management/__init__.py:85
 msgid "when a collection is changed"
 msgstr "keď je zbierka zmenená"
 
-#: txcommon/management/__init__.py:90
+#: txcommon/management/__init__.py:91
 msgid "Collection Deleted"
 msgstr "Zbierka odstránená"
 
-#: txcommon/management/__init__.py:91
+#: txcommon/management/__init__.py:92
 msgid "when a collection is deleted"
 msgstr "keď je zbierka odstránená"
 
-#: txcommon/management/__init__.py:97
+#: txcommon/management/__init__.py:98
 msgid "Project Added to a Collection"
 msgstr "Projekt pridaný do zbierky"
 
-#: txcommon/management/__init__.py:98
+#: txcommon/management/__init__.py:99
 msgid "when a new project is added to a collection"
 msgstr "keď je do zbierky pridaný nový projekt"
 
-#: txcommon/management/__init__.py:104
+#: txcommon/management/__init__.py:105
 msgid "Project Deleted from a Collection"
 msgstr "Projekt odstránený zo zbierky"
 
-#: txcommon/management/__init__.py:105
+#: txcommon/management/__init__.py:106
 msgid "when a project is deleted from a collection"
 msgstr "keď je projekt odstránený zo zbierky"
 
-#: txcommon/management/__init__.py:111
+#: txcommon/management/__init__.py:112
 msgid "New Release Added for a Watched Collection"
 msgstr "Nové vydanie pridané do sledovanej zbierky"
 
-#: txcommon/management/__init__.py:112
+#: txcommon/management/__init__.py:113
 msgid "when a new release is added to a collection"
 msgstr "keď je do zbierky pridané nové vydanie"
 
-#: txcommon/management/__init__.py:119
+#: txcommon/management/__init__.py:120
 msgid "Release Changed"
 msgstr "Vydanie zmenené"
 
-#: txcommon/management/__init__.py:120
+#: txcommon/management/__init__.py:121
 msgid "when a release of a collection is changed"
 msgstr "keď je vydanie v zbierke zmenené"
 
-#: txcommon/management/__init__.py:125
+#: txcommon/management/__init__.py:126
 msgid "Release Deleted"
 msgstr "Vydanie odstránené"
 
-#: txcommon/management/__init__.py:126
+#: txcommon/management/__init__.py:127
 msgid "when a release of a collection is deleted"
 msgstr "keď je vydanie v zbierke odstránené"
 
-#: txcommon/management/__init__.py:131
+#: txcommon/management/__init__.py:132
 msgid "Release Added to a Collection"
 msgstr "Vydanie pridané do zbierky"
 
-#: txcommon/management/__init__.py:132
+#: txcommon/management/__init__.py:133
 msgid "when a release is added to a collection"
 msgstr "keď je vydanie pridané do zbierky"
 
-#: txcommon/management/__init__.py:137
+#: txcommon/management/__init__.py:138
 msgid "Release Deleted from a Collection"
 msgstr "Vydanie odstránené zo zbierky"
 
-#: txcommon/management/__init__.py:138
+#: txcommon/management/__init__.py:139
 msgid "when a release is deleted from a collection"
 msgstr "keď je vydanie odstránené zo zbiekry"
 
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Domov"
+
+#: txpermissions/views.py:45
+msgid "You added a permission request."
+msgstr ""
+
+#: txpermissions/views.py:74
+msgid "You approved the permission request."
+msgstr ""
+
+#: txpermissions/views.py:92
+msgid "You removed the permission."
+msgstr ""
+
+#: txpermissions/views.py:94
+msgid "You removed the permission request."
+msgstr ""
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
@@ -3419,7 +3564,7 @@ msgstr "vcsjednotka"
 msgid "vcsunits"
 msgstr "vcsjednotky"
 
-#: webtrans/views.py:125
+#: webtrans/views.py:129
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
@@ -3427,9 +3572,53 @@ msgstr ""
 "Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
 "zobrazenie chýb spustite tento príkaz na vašom systéme."
 
-#: webtrans/views.py:134
+#: webtrans/views.py:138
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr "Ospravedlňujeme sa, chyba neumožňuje odoslať váš súbor."
+
+#~ msgid "Send confirmation"
+#~ msgstr "Odoslať potvrdenie"
+
+#~ msgid "Insert your e-mail address"
+#~ msgstr "Zadajte svoju e-mailovú adresu:"
+
+#~ msgid "Old password"
+#~ msgstr "Staré heslo"
+
+#~ msgid "Confirm password"
+#~ msgstr "Potvrdenie hesla"
+
+#~ msgid "E-mail address"
+#~ msgstr "E-mailová adresa"
+
+#~ msgid ""
+#~ "Password reset utility page. Please enter your new password twice so we "
+#~ "can verify you typed it in correctly"
+#~ msgstr ""
+#~ "Stránka nástroja na obnovenie hesla. Zadajte, prosím, vaše heslo dvakrát, "
+#~ "aby sme si overili, že ste ho napísali správne"
+
+#~ msgid ""
+#~ "Joining this community is quick and easy. You only need to fill the form "
+#~ "to get access to all the private content"
+#~ msgstr ""
+#~ "Pripojením sa k tejto komunite je rýchle a jednoduché. Potrebujete len "
+#~ "vyplniť formulár a získate prístup ku všetkému vnútornému obsahu"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#~ msgid "optional"
+#~ msgstr "voliteľné"
+
+#~ msgid "Password (again)"
+#~ msgstr "Heslo (zopakovať)"
+
+#~ msgid "Delete your personal information"
+#~ msgstr "Odstrániť vaše osobné informácie"
+
+#~ msgid "Yes"
+#~ msgstr "Áno"
 
 #~ msgid "Enter a message for the commit"
 #~ msgstr "Zadajte správu pre začlenenie"

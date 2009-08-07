@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-07 17:41+0000\n"
+"POT-Creation-Date: 2009-08-07 16:11+0000\n"
 "PO-Revision-Date: 2009-08-07 13:55+0200\n"
 "Last-Translator: Kris Thomsen <lakristho@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: actionlog/models.py:50
+#: actionlog/models.py:51
 msgid "log entry"
 msgstr "log element"
 
-#: actionlog/models.py:51
+#: actionlog/models.py:52
 msgid "log entries"
 msgstr "log elementer"
 
@@ -44,37 +44,42 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Ingen historik endnu."
 
-#: codebases/models.py:34 languages/models.py:27 projects/models.py:84
-#: projects/models.py:193 releases/models.py:23 txcollections/models.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:26
+#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Navn"
 
-#: codebases/models.py:35
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Rod"
 
-#: codebases/models.py:36
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr "Kodebasens URL"
 
-#: codebases/models.py:37
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Type"
 
-#: codebases/models.py:39
+#: codebases/models.py:41
 #, python-format
 msgid "The codebase type (%s)"
 msgstr "Kodebasens type (%s)"
 
-#: codebases/models.py:42
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr "Sidste gang denne enhed blev opdateret"
 
-#: codebases/models.py:51
+#: codebases/models.py:53
 msgid "unit"
 msgstr "enhed"
 
-#: codebases/models.py:52
+#: codebases/models.py:54
 msgid "units"
 msgstr "enheder"
 
@@ -98,20 +103,24 @@ msgstr "%(site_name)s: %(language)s :: %(release)s udgivelse"
 msgid "Latest translations for %(language)s language in %(release)s release."
 msgstr "Nyeste oversættelser for %(language)s sprog i %(release)s udgivelse."
 
-#: languages/models.py:29 projects/models.py:86 projects/models.py:195
-#: releases/models.py:25 txcollections/models.py:28
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:15
+#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
+#: txcollections/migrations/0001_initial.py:33
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: languages/models.py:30
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kode"
 
-#: languages/models.py:33
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "Kode aliaser"
 
-#: languages/models.py:36
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Specielle tegn"
 
@@ -119,11 +128,11 @@ msgstr "Specielle tegn"
 msgid "Enter any special characters that users might find difficult to type"
 msgstr "Indtast alle specielle tegn som brugere kan finde besværlige at skrive"
 
-#: languages/models.py:40
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Antal af flertalsformer"
 
-#: languages/models.py:42
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Flertalsudregning"
 
@@ -135,379 +144,416 @@ msgstr "sprog"
 msgid "languages"
 msgstr "sprog"
 
-#: languages/management/commands/create_languages.py:26
+#: languages/management/commands/txcreatelanguages.py:26
 msgid "Afrikaans"
 msgstr "Afrikaansk"
 
-#: languages/management/commands/create_languages.py:40
+#: languages/management/commands/txcreatelanguages.py:40
 msgid "Amharic"
 msgstr "Amharic"
 
-#: languages/management/commands/create_languages.py:45
+#: languages/management/commands/txcreatelanguages.py:45
 msgid "Arabic"
 msgstr "Arabisk"
 
-#: languages/management/commands/create_languages.py:52
+#: languages/management/commands/txcreatelanguages.py:52
+#, fuzzy
+msgid "Spanish (Argentinian)"
+msgstr "Spansk (Castilian)"
+
+#: languages/management/commands/txcreatelanguages.py:59
 msgid "Assamese"
 msgstr "Assamesisk"
 
-#: languages/management/commands/create_languages.py:60
+#: languages/management/commands/txcreatelanguages.py:66
+#, fuzzy
+msgid "Asturian"
+msgstr "Estisk"
+
+#: languages/management/commands/txcreatelanguages.py:74
 msgid "Azerbaijani"
 msgstr "Azerbaijansk"
 
-#: languages/management/commands/create_languages.py:67
+#: languages/management/commands/txcreatelanguages.py:81
 msgid "Balochi"
 msgstr "Balochi"
 
-#: languages/management/commands/create_languages.py:73
+#: languages/management/commands/txcreatelanguages.py:87
 msgid "Belarusian"
 msgstr "Hviderussisk"
 
-#: languages/management/commands/create_languages.py:81
+#: languages/management/commands/txcreatelanguages.py:95
 msgid "Bulgarian"
 msgstr "Bulgarsk"
 
-#: languages/management/commands/create_languages.py:89
+#: languages/management/commands/txcreatelanguages.py:103
 msgid "Bengali"
 msgstr "Bengalesk"
 
-#: languages/management/commands/create_languages.py:97
+#: languages/management/commands/txcreatelanguages.py:111
 msgid "Bengali (India)"
 msgstr "Bengalesk (Indien)"
 
-#: languages/management/commands/create_languages.py:110
+#: languages/management/commands/txcreatelanguages.py:118
+#, fuzzy
+msgid "Tibetan"
+msgstr "Tidsstämpel"
+
+#: languages/management/commands/txcreatelanguages.py:126
 msgid "Bosnian"
 msgstr "Bosnisk"
 
-#: languages/management/commands/create_languages.py:118
+#: languages/management/commands/txcreatelanguages.py:134
 msgid "Catalan (Valencian)"
 msgstr "Katalansk (Valencian)"
 
-#: languages/management/commands/create_languages.py:126
+#: languages/management/commands/txcreatelanguages.py:142
 msgid "Czech"
 msgstr "Tjekkisk"
 
-#: languages/management/commands/create_languages.py:134
+#: languages/management/commands/txcreatelanguages.py:150
 msgid "Welsh"
 msgstr "Walisisk"
 
-#: languages/management/commands/create_languages.py:142
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Danish"
 msgstr "Dansk"
 
-#: languages/management/commands/create_languages.py:150
+#: languages/management/commands/txcreatelanguages.py:166
 msgid "German"
 msgstr "Tysk"
 
-#: languages/management/commands/create_languages.py:158
+#: languages/management/commands/txcreatelanguages.py:174
 msgid "Swiss German"
 msgstr "Schweizertysk"
 
-#: languages/management/commands/create_languages.py:166
+#: languages/management/commands/txcreatelanguages.py:182
 msgid "Dzongkha"
 msgstr "Dzongkha"
 
-#: languages/management/commands/create_languages.py:174
+#: languages/management/commands/txcreatelanguages.py:190
 msgid "Greek"
 msgstr "Græsk"
 
-#: languages/management/commands/create_languages.py:181
+#: languages/management/commands/txcreatelanguages.py:197
 msgid "English"
 msgstr "Engelsk"
 
-#: languages/management/commands/create_languages.py:189
+#: languages/management/commands/txcreatelanguages.py:205
 msgid "English (United Kingdom)"
 msgstr "Engelsk (Storbritanien)"
 
-#: languages/management/commands/create_languages.py:197
+#: languages/management/commands/txcreatelanguages.py:213
 msgid "English (South Africa)"
 msgstr "Engelsk (Sydafrika)"
 
-#: languages/management/commands/create_languages.py:210
+#: languages/management/commands/txcreatelanguages.py:220
+msgid "Esperanto"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:228
 msgid "Spanish (Castilian)"
 msgstr "Spansk (Castilian)"
 
-#: languages/management/commands/create_languages.py:218
+#: languages/management/commands/txcreatelanguages.py:236
 msgid "Estonian"
 msgstr "Estisk"
 
-#: languages/management/commands/create_languages.py:226
+#: languages/management/commands/txcreatelanguages.py:244
 msgid "Basque"
 msgstr "Baskisk"
 
-#: languages/management/commands/create_languages.py:233
+#: languages/management/commands/txcreatelanguages.py:251
 msgid "Persian"
 msgstr "Persisk"
 
-#: languages/management/commands/create_languages.py:241
+#: languages/management/commands/txcreatelanguages.py:259
 msgid "Finnish"
 msgstr "Finsk"
 
-#: languages/management/commands/create_languages.py:255
+#: languages/management/commands/txcreatelanguages.py:273
 msgid "French"
 msgstr "Fransk"
 
-#: languages/management/commands/create_languages.py:263
+#: languages/management/commands/txcreatelanguages.py:281
 msgid "Friulian"
 msgstr "Friulian"
 
-#: languages/management/commands/create_languages.py:271
+#: languages/management/commands/txcreatelanguages.py:289
 msgid "Western Frisian"
 msgstr "Vestfrisisk"
 
-#: languages/management/commands/create_languages.py:279
+#: languages/management/commands/txcreatelanguages.py:297
 msgid "Irish"
 msgstr "Irsk"
 
-#: languages/management/commands/create_languages.py:287
+#: languages/management/commands/txcreatelanguages.py:305
 msgid "Galician"
 msgstr "Galician"
 
-#: languages/management/commands/create_languages.py:295
+#: languages/management/commands/txcreatelanguages.py:313
 msgid "Gujarati"
 msgstr "Gujarati"
 
-#: languages/management/commands/create_languages.py:302
+#: languages/management/commands/txcreatelanguages.py:320
 msgid "Hebrew"
 msgstr "Hebraisk"
 
-#: languages/management/commands/create_languages.py:310
+#: languages/management/commands/txcreatelanguages.py:328
 msgid "Hindi"
 msgstr "Hindi"
 
-#: languages/management/commands/create_languages.py:318
+#: languages/management/commands/txcreatelanguages.py:336
 msgid "Croatian"
 msgstr "Kroatisk"
 
-#: languages/management/commands/create_languages.py:325
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Haitian (Haitian Creole)"
 msgstr "Haitian (Haitian Creole)"
 
-#: languages/management/commands/create_languages.py:333
+#: languages/management/commands/txcreatelanguages.py:351
 msgid "Hungarian"
 msgstr "Ungarsk"
 
-#: languages/management/commands/create_languages.py:340
+#: languages/management/commands/txcreatelanguages.py:358
 msgid "Armenian"
 msgstr "Armensk"
 
-#: languages/management/commands/create_languages.py:346
+#: languages/management/commands/txcreatelanguages.py:364
 msgid "Indonesian"
 msgstr "Indonesisk"
 
-#: languages/management/commands/create_languages.py:353
+#: languages/management/commands/txcreatelanguages.py:371
 msgid "Iloko"
 msgstr "Iloko"
 
-#: languages/management/commands/create_languages.py:358
+#: languages/management/commands/txcreatelanguages.py:376
 msgid "Icelandic"
 msgstr "Islandsk"
 
-#: languages/management/commands/create_languages.py:366
+#: languages/management/commands/txcreatelanguages.py:384
 msgid "Italian"
 msgstr "Italiensk"
 
-#: languages/management/commands/create_languages.py:374
+#: languages/management/commands/txcreatelanguages.py:392
 msgid "Japanese"
 msgstr "Japansk"
 
-#: languages/management/commands/create_languages.py:382
+#: languages/management/commands/txcreatelanguages.py:400
 msgid "Georgian"
 msgstr "Georgisk"
 
-#: languages/management/commands/create_languages.py:395
+#: languages/management/commands/txcreatelanguages.py:413
 msgid "Kannada"
 msgstr "Kannada"
 
-#: languages/management/commands/create_languages.py:401
+#: languages/management/commands/txcreatelanguages.py:419
 msgid "Korean"
 msgstr "Koreansk"
 
-#: languages/management/commands/create_languages.py:409
+#: languages/management/commands/txcreatelanguages.py:426
+msgid "Kashmiri"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:434
 msgid "Kurdish"
 msgstr "Kurdisk"
 
-#: languages/management/commands/create_languages.py:422
+#: languages/management/commands/txcreatelanguages.py:441
+msgid "Kirgyz"
+msgstr ""
+
+#: languages/management/commands/txcreatelanguages.py:448
+#, fuzzy
+msgid "Latin"
+msgstr "Lettisk"
+
+#: languages/management/commands/txcreatelanguages.py:461
 msgid "Lao"
 msgstr "Lao"
 
-#: languages/management/commands/create_languages.py:428
+#: languages/management/commands/txcreatelanguages.py:467
 msgid "Lithuanian"
 msgstr "Lithausk"
 
-#: languages/management/commands/create_languages.py:436
+#: languages/management/commands/txcreatelanguages.py:475
 msgid "Latvian"
 msgstr "Lettisk"
 
-#: languages/management/commands/create_languages.py:443
+#: languages/management/commands/txcreatelanguages.py:482
 msgid "Maithili"
 msgstr "Maithili"
 
-#: languages/management/commands/create_languages.py:448
+#: languages/management/commands/txcreatelanguages.py:487
 msgid "Macedonian"
 msgstr "Makedonsk"
 
-#: languages/management/commands/create_languages.py:453
+#: languages/management/commands/txcreatelanguages.py:492
 msgid "Malayalam"
 msgstr "Malayalam"
 
-#: languages/management/commands/create_languages.py:466
+#: languages/management/commands/txcreatelanguages.py:505
 msgid "Mongolian"
 msgstr "Mongolsk"
 
-#: languages/management/commands/create_languages.py:473
+#: languages/management/commands/txcreatelanguages.py:512
 msgid "Marathi"
 msgstr "Marathi"
 
-#: languages/management/commands/create_languages.py:480
+#: languages/management/commands/txcreatelanguages.py:519
 msgid "Malay"
 msgstr "Malaysisk"
 
-#: languages/management/commands/create_languages.py:488
+#: languages/management/commands/txcreatelanguages.py:527
 msgid "Maltese"
 msgstr "Maltesisk"
 
-#: languages/management/commands/create_languages.py:495
+#: languages/management/commands/txcreatelanguages.py:534
 msgid "Burmese"
 msgstr "Burmesisk"
 
-#: languages/management/commands/create_languages.py:506
+#: languages/management/commands/txcreatelanguages.py:545
 msgid "Norwegian Bokmål"
 msgstr "Norsk Bokmål"
 
-#: languages/management/commands/create_languages.py:513
+#: languages/management/commands/txcreatelanguages.py:552
 msgid "Nepali"
 msgstr "Nepalisisk"
 
-#: languages/management/commands/create_languages.py:521
+#: languages/management/commands/txcreatelanguages.py:560
 msgid "Dutch (Flemish)"
 msgstr "Hollandsk (Flemish)"
 
-#: languages/management/commands/create_languages.py:529
+#: languages/management/commands/txcreatelanguages.py:568
 msgid "Norwegian Nynorsk"
 msgstr "Norsk Nynorsk"
 
-#: languages/management/commands/create_languages.py:536
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Norwegian"
 msgstr "Norsk"
 
-#: languages/management/commands/create_languages.py:542
+#: languages/management/commands/txcreatelanguages.py:581
 msgid "Northern Sotho"
 msgstr "Nord Sotho"
 
-#: languages/management/commands/create_languages.py:550
+#: languages/management/commands/txcreatelanguages.py:589
 msgid "Oriya"
 msgstr "Oriya"
 
-#: languages/management/commands/create_languages.py:557
+#: languages/management/commands/txcreatelanguages.py:596
 msgid "Panjabi (Punjabi)"
 msgstr "Panjabi (Punjabi)"
 
-#: languages/management/commands/create_languages.py:570
+#: languages/management/commands/txcreatelanguages.py:609
 msgid "Polish"
 msgstr "Polsk"
 
-#: languages/management/commands/create_languages.py:586
+#: languages/management/commands/txcreatelanguages.py:625
 msgid "Portuguese"
 msgstr "Portugisisk"
 
-#: languages/management/commands/create_languages.py:595
+#: languages/management/commands/txcreatelanguages.py:634
 msgid "Brazilian Portuguese"
 msgstr "Brasiliansk Portugisisk"
 
-#: languages/management/commands/create_languages.py:603
+#: languages/management/commands/txcreatelanguages.py:642
 msgid "Romanian"
 msgstr "Rumænsk"
 
-#: languages/management/commands/create_languages.py:611
+#: languages/management/commands/txcreatelanguages.py:650
 msgid "Russian"
 msgstr "Russisk"
 
-#: languages/management/commands/create_languages.py:618
+#: languages/management/commands/txcreatelanguages.py:657
 msgid "Sinhala"
 msgstr "Sinhala"
 
-#: languages/management/commands/create_languages.py:624
+#: languages/management/commands/txcreatelanguages.py:663
 msgid "Slovak"
 msgstr "Slovakisk"
 
-#: languages/management/commands/create_languages.py:632
+#: languages/management/commands/txcreatelanguages.py:671
 msgid "Slovenian"
 msgstr "Slovensk"
 
-#: languages/management/commands/create_languages.py:640
+#: languages/management/commands/txcreatelanguages.py:679
 msgid "Albanian"
 msgstr "Albansk"
 
-#: languages/management/commands/create_languages.py:648
+#: languages/management/commands/txcreatelanguages.py:687
 msgid "Serbian"
 msgstr "Serbisk"
 
-#: languages/management/commands/create_languages.py:656
+#: languages/management/commands/txcreatelanguages.py:695
 msgid "Serbian (Latin)"
 msgstr "Serbisk (Latin)"
 
-#: languages/management/commands/create_languages.py:665
+#: languages/management/commands/txcreatelanguages.py:704
 msgid "Sotho, Southern"
 msgstr "Syd Sotho"
 
-#: languages/management/commands/create_languages.py:673
+#: languages/management/commands/txcreatelanguages.py:712
 msgid "Swedish"
 msgstr "Svensk"
 
-#: languages/management/commands/create_languages.py:681
+#: languages/management/commands/txcreatelanguages.py:720
 msgid "Tamil"
 msgstr "Tamilsk"
 
-#: languages/management/commands/create_languages.py:688
+#: languages/management/commands/txcreatelanguages.py:727
 msgid "Telugu"
 msgstr "Telugu"
 
-#: languages/management/commands/create_languages.py:693
+#: languages/management/commands/txcreatelanguages.py:732
 msgid "Tajik"
 msgstr "Tajik"
 
-#: languages/management/commands/create_languages.py:698
+#: languages/management/commands/txcreatelanguages.py:737
 msgid "Thai"
 msgstr "Thai"
 
-#: languages/management/commands/create_languages.py:703
+#: languages/management/commands/txcreatelanguages.py:742
 msgid "Tagalog"
 msgstr "Tagalog"
 
-#: languages/management/commands/create_languages.py:715
+#: languages/management/commands/txcreatelanguages.py:754
 msgid "Turkish"
 msgstr "Tyrkisk"
 
-#: languages/management/commands/create_languages.py:722
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Urdu"
 msgstr "Urdu"
 
-#: languages/management/commands/create_languages.py:728
+#: languages/management/commands/txcreatelanguages.py:767
 msgid "Ukrainian"
 msgstr "Ukrainsk"
 
-#: languages/management/commands/create_languages.py:742
+#: languages/management/commands/txcreatelanguages.py:781
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
 
-#: languages/management/commands/create_languages.py:749
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Wolof"
 msgstr "Wolof"
 
-#: languages/management/commands/create_languages.py:764
+#: languages/management/commands/txcreatelanguages.py:801
+#, fuzzy
+msgid "Xhosa"
+msgstr "timmar"
+
+#: languages/management/commands/txcreatelanguages.py:810
 msgid "Chinese (China)"
 msgstr "Kinesisk (Kina)"
 
-#: languages/management/commands/create_languages.py:774
+#: languages/management/commands/txcreatelanguages.py:820
 msgid "Chinese (Hong Kong)"
 msgstr "Kinesisk (Hong Kong)"
 
-#: languages/management/commands/create_languages.py:784
+#: languages/management/commands/txcreatelanguages.py:830
 msgid "Chinese (Taiwan)"
 msgstr "Kinesisk (Taiwan)"
 
-#: languages/management/commands/create_languages.py:792
+#: languages/management/commands/txcreatelanguages.py:838
 msgid "Zulu"
 msgstr "Zulu"
 
@@ -516,9 +562,9 @@ msgid "Translated:"
 msgstr "Oversatte:"
 
 #: languages/templates/feeds/language_release_description.html:5
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Fuzzy:"
@@ -551,28 +597,34 @@ msgstr "%(site_name)s: Komponenter i %(project)s"
 msgid "Latest components in project %s."
 msgstr "Nyeste komponenter i projekt %s."
 
-#: projects/forms.py:17 projects/models.py:208
+#: projects/forms.py:29 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Et regex til at filtrere de viste filer. For eksempel: \"po/.*\""
 
-#: projects/forms.py:40 projects/models.py:213
+#: projects/forms.py:52 projects/models.py:218
+#: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Indsend til"
 
-#: projects/forms.py:41
+#: projects/forms.py:53
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
-"Vælg hvordan denne komponent skal håndtere indsendelser af filer. Valgmulighederne "
-"her er tilgængelige baseret på komponenttypen"
+"Vælg hvordan denne komponent skal håndtere indsendelser af filer. "
+"Valgmulighederne her er tilgængelige baseret på komponenttypen"
 
-#: projects/models.py:81 projects/models.py:190 releases/models.py:20
-#: txcollections/models.py:23
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:14
+#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
+#: txcollections/migrations/0001_initial.py:32
+#: txcollections/migrations/0002_release_06_07.py:11
+#: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr "Snegl"
 
-#: projects/models.py:82 projects/models.py:191 releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -581,225 +633,264 @@ msgstr ""
 "Et kort mærke brugt i URL'en, indeholder kun bogstaver, tal, underscores "
 "eller bindestreger."
 
-#: projects/models.py:85 projects/models.py:194 releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "En streng som for eksempel et navn eller en meget kort beskrivelse."
 
-#: projects/models.py:87 projects/models.py:196
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr "En sætning eller to som beskriver objektet (valgfri)."
 
-#: projects/models.py:88 projects/models.py:197 releases/models.py:27
-#: txcollections/models.py:30
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:25
+#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
+#: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Lang beskrivelse"
 
-#: projects/models.py:90 projects/models.py:199 txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "En længere beskrivelse (valgfri). Brug Markdown-syntaks."
 
-#: projects/models.py:91 txcollections/models.py:32
+#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Websted"
 
-#: projects/models.py:92
+#: projects/models.py:94 projects/migrations/0001_initial.py:13
 msgid "Feed"
 msgstr "Strøm"
 
-#: projects/models.py:93
+#: projects/models.py:95
 msgid "An RSS feed with updates on the project."
 msgstr "En RSS-strøm med opdateringer om projektet."
 
-#: projects/models.py:94
+#: projects/models.py:96 projects/migrations/0001_initial.py:22
 msgid "Bug tracker"
 msgstr "Fejlsøger"
 
-#: projects/models.py:95
+#: projects/models.py:97
 msgid ""
 "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
 msgstr ""
 "URL'en til webstedet som håndterer fejl og billetter (Bugzilla, Trac osv.)"
 
-#: projects/models.py:98 projects/models.py:216 releases/models.py:41
-#: txcollections/models.py:33
+#: projects/models.py:99
+#: projects/migrations/0003_add_anyone_submit_field.py:12
+#, fuzzy
+msgid "Anyone can submit"
+msgstr "6. Bekräfta och skicka in"
+
+#: projects/models.py:101
+#, fuzzy
+msgid "Does anyone can submit translations to this project?"
+msgstr "Send en ny oversættelse for denne komponent."
+
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:23
+#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
+#: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr "Skjult"
 
-#: projects/models.py:99 projects/models.py:217 releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr "Skjul dette objekt fra listevisningen?"
 
-#: projects/models.py:100 projects/models.py:218 releases/models.py:43
-#: txcollections/models.py:35
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
+#: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Aktiveret"
 
-#: projects/models.py:101 projects/models.py:219 releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr "Aktivér dette objekt eller deaktivér dens brug?"
 
-#: projects/models.py:105
+#: projects/models.py:110 projects/migrations/0001_initial.py:18
 msgid "Tags"
 msgstr "Stikord"
 
-#: projects/models.py:110 templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
 msgstr "Samlinger"
 
-#: projects/models.py:112
+#: projects/models.py:117
 msgid "Maintainers"
 msgstr "Projektansvarlige"
 
-#: projects/models.py:116 projects/models.py:228 releases/models.py:49
-#: txcollections/models.py:43
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:17
+#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
+#: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
 msgstr "HTML beskrivelse"
 
-#: projects/models.py:118 projects/models.py:230 releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Beskrivelse i HTML."
 
-#: projects/models.py:124
+#: projects/models.py:129
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Projekt: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:132
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
-#: templates/txcollections/collection_detail.html:93
+#: projects/models.py:133 templates/projects/project_list.html:18
+#: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr "projekter"
 
-#: projects/models.py:200
+#: projects/models.py:205 projects/migrations/0001_initial.py:47
 msgid "Source language"
 msgstr "Kildesprog"
 
-#: projects/models.py:201
+#: projects/models.py:206
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Kildesproget for denne komponent, f.eks. \"en\", \"pt_BR\", \"el\"."
 
-#: projects/models.py:203
+#: projects/models.py:208 projects/migrations/0001_initial.py:37
 msgid "I18n type"
 msgstr "I18n-type"
 
-#: projects/models.py:205
+#: projects/models.py:210
 #, python-format
 msgid "The code's type of i18n support (%s)"
 msgstr "Kodernes type af i18n-understøttelse (%s)"
 
-#: projects/models.py:207
+#: projects/models.py:212 projects/migrations/0001_initial.py:38
 msgid "File filter"
 msgstr "Filfilter"
 
-#: projects/models.py:210
+#: projects/models.py:215 projects/migrations/0001_initial.py:46
 msgid "Allows submission"
 msgstr "Tillader indsendelse"
 
-#: projects/models.py:212
+#: projects/models.py:217
 msgid "Does this module repository allow write access?"
 msgstr "Tillader dette moduls arkiv skriveadgang?"
 
-#: projects/models.py:222
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "Udregn statistikker?"
 
-#: projects/models.py:223
+#: projects/models.py:228
 msgid "Should statistics be calculated for this component?"
 msgstr "Skal der udregnes statistikker for denne komponent?"
 
-#: projects/models.py:233
+#: projects/models.py:238 projects/migrations/0001_initial.py:41
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:234
+#: projects/models.py:239 projects/migrations/0001_initial.py:32
 msgid "Unit"
 msgstr "Enhed"
 
-#: projects/models.py:238
+#: projects/models.py:243
 msgid "Releases"
 msgstr "Udgivelser"
 
-#: projects/models.py:258
+#: projects/models.py:263
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Komponent: %s>"
 
-#: projects/models.py:262
+#: projects/models.py:267
 msgid "component"
 msgstr "komponent"
 
-#: projects/models.py:263 templates/projects/component_list.html:15
+#: projects/models.py:268 templates/projects/component_list.html:17
 msgid "components"
 msgstr "komponenter"
 
-#: projects/views.py:117 projects/views.py:332 txcollections/views.py:121
+#: projects/permissions.py:17
+#, fuzzy
+msgid "Is allowed to maintain this project"
+msgstr "Følg ikke dette projekt"
+
+#: projects/permissions.py:26
+msgid "Is allowed to submit file to this project"
+msgstr ""
+
+#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s blev slettet."
 
-#: projects/views.py:136 projects/views.py:623
+#: projects/views.py:286 projects/views.py:841
 msgid "Must use POST to activate"
 msgstr "Skal bruge POST for at aktivere"
 
-#: projects/views.py:139 projects/views.py:626
+#: projects/views.py:289 projects/views.py:844
 msgid "Notifation is not enabled"
 msgstr "Notifikation er ikke aktiveret"
 
-#: projects/views.py:152
+#: projects/views.py:302
 msgid "Watch this project"
 msgstr "Følg dette projekt"
 
-#: projects/views.py:165
+#: projects/views.py:315
 msgid "Stop wathing this project"
 msgstr "Følg ikke dette projekt"
 
-#: projects/views.py:364
+#: projects/views.py:537
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
-"Filfilteret af denne intltool POT-baserede komponent ser ikke ud til at tillade "
-"POTFILES.in-filen. Ret det venligst."
+"Filfilteret af denne intltool POT-baserede komponent ser ikke ud til at "
+"tillade POTFILES.in-filen. Ret det venligst."
 
-#: projects/views.py:450
+#: projects/views.py:544
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+
+#: projects/views.py:655
 msgid "This component does  not allow write access."
 msgstr "Denne komponent tillader ikke skriveadgang."
 
-#: projects/views.py:458
+#: projects/views.py:663
 msgid "Please select a file from your system to be uploaded."
 msgstr "Vælg en fil fra dit system som skal lægges op."
 
-#: projects/views.py:467
+#: projects/views.py:672
 msgid "Please enter a target to upload the file."
 msgstr "Indtast stedet hvor filen skal lægges op."
 
-#: projects/views.py:473
+#: projects/views.py:678
 msgid "Please enter only ONE target to upload the file."
 msgstr "Indtast kun èt sted hvor filen skal lægges op."
 
-#: projects/views.py:484
+#: projects/views.py:689
 msgid "The target file does not match with the component file filter"
 msgstr "Målfilen passer ikke med komponentens filfilter"
 
-#: projects/views.py:492
+#: projects/views.py:697
 msgid "Enter a commit message"
 msgstr "Indtast en indsendingsbesked"
 
-#: projects/views.py:550 webtrans/views.py:120
+#: projects/views.py:755 webtrans/views.py:124
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Fil indsendt med succes: %s"
 
-#: projects/views.py:565
+#: projects/views.py:770
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -807,23 +898,23 @@ msgstr ""
 "Din fil kunne ikke gå igennem korrekthedskontrollerne (msgfmt -c) Kør denne "
 "kommando på dit system for at se fejlene."
 
-#: projects/views.py:574
+#: projects/views.py:779
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Beklager, din fil kunne ikke sendes på grund af en fejl."
 
-#: projects/views.py:578 projects/views.py:608
+#: projects/views.py:783 projects/views.py:821
 msgid "Sorry, but you need to send a POST request."
 msgstr "Beklager, men du skal sende en POST-forespørgsel."
 
-#: projects/views.py:597
+#: projects/views.py:810
 msgid "Lock removed."
 msgstr "Lås fjernet."
 
-#: projects/views.py:600
+#: projects/views.py:813
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Fejl: Kun ejeren af låsen kan fjerne den."
 
-#: projects/views.py:604
+#: projects/views.py:817
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lås oprettet. Husk at fjerne den når du er færdig."
 
@@ -835,7 +926,7 @@ msgstr "En sætning eller to som beskriver objektet."
 msgid "Use Markdown syntax."
 msgstr "Brug Markdown-syntaks."
 
-#: releases/models.py:31
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 msgid "Release date"
 msgstr "Dato for udgivelse"
 
@@ -855,7 +946,7 @@ msgstr ""
 "Når de oversætbare strenge vil blive frosset (ingen strenge kan tilføjes/"
 "ændres som berører oversættelser."
 
-#: releases/models.py:36
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr "Dato for udviklingsfrys"
 
@@ -865,15 +956,15 @@ msgid ""
 "Translations sent after this date will not be included in the released "
 "version."
 msgstr ""
-"Den sidste dato hvor pakker fra denne udgivelse kan blive bygget fra udviklerne. "
-"Oversættelser sendt efter denne dato vil ikke blive inkluderet i den udgivne "
-"version."
+"Den sidste dato hvor pakker fra denne udgivelse kan blive bygget fra "
+"udviklerne. Oversættelser sendt efter denne dato vil ikke blive inkluderet i "
+"den udgivne version."
 
 #: releases/models.py:54
 msgid "release"
 msgstr "udgivelse"
 
-#: releases/models.py:55 templates/languages/language_detail.html:20
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "udgivelser"
@@ -886,24 +977,16 @@ msgstr "Overvåg den"
 msgid "Stop watching it"
 msgstr "Lad være med at overvåge den"
 
-#: repowatch/models.py:24
+#: repowatch/models.py:25
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr "Kunne ikke tilføje overvågning til sti %r"
 
-#: repowatch/models.py:88
-msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr "Indtast 0 eller flere heltal, separerede med komma, i paranteser."
-
-#: repowatch/models.py:90
-msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr "Du skal mindst indtaste et par tomme paranteser."
-
-#: repowatch/models.py:141
+#: repowatch/models.py:94
 msgid "watch"
 msgstr "overvåg"
 
-#: repowatch/models.py:142
+#: repowatch/models.py:95
 msgid "watches"
 msgstr "overvåger"
 
@@ -915,11 +998,11 @@ msgstr "Lås"
 msgid "Locks"
 msgstr "Låse"
 
-#: tarball/models.py:31
+#: tarball/models.py:33
 msgid "tarball"
 msgstr "tar-arkiv"
 
-#: tarball/models.py:32
+#: tarball/models.py:34
 msgid "tarballs"
 msgstr "tar-arkiver"
 
@@ -939,8 +1022,8 @@ msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
 "case."
 msgstr ""
-"Her er en henvisning til <a href=\"%(home)s\">webstedet</a>. Du ved, bare for "
-"en sikkerheds skyld."
+"Her er en henvisning til <a href=\"%(home)s\">webstedet</a>. Du ved, bare "
+"for en sikkerheds skyld."
 
 #: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
@@ -951,8 +1034,8 @@ msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
-"Det ser ud til at du har fulgt en dårlig henvisning. Hvis du tror dette er vores "
-"fejl, så <a href='http://transifex.org/newticket'>fortæl os det</a>."
+"Det ser ud til at du har fulgt en dårlig henvisning. Hvis du tror dette er "
+"vores fejl, så <a href='http://transifex.org/newticket'>fortæl os det</a>."
 
 #: templates/500.html:4 templates/500.html.py:7
 msgid "Page unavailable"
@@ -960,14 +1043,14 @@ msgstr "Side utilgængelig"
 
 #: templates/500.html:12
 msgid "We're sorry, but the requested page is currently unavailable."
-msgstr "Vi beklager, men den forespurgte side er ikke tilgængelig i øjeblikket."
+msgstr ""
+"Vi beklager, men den forespurgte side er ikke tilgængelig i øjeblikket."
 
 #: templates/500.html:14
 msgid ""
 "We're messing around with things internally, and the server had a bit of a "
 "hiccup."
-msgstr ""
-"Vi roder rundt med ting internt, og serveren havde et mindre problem."
+msgstr "Vi roder rundt med ting internt, og serveren havde et mindre problem."
 
 #: templates/500.html:16
 msgid "Please try again later."
@@ -977,7 +1060,8 @@ msgstr "Prøv igen senere."
 msgid "Welcome to Transifex"
 msgstr "Velkommen til Transifex"
 
-#: templates/base-sample.html:8 templates/flatpages/default.html:5
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
@@ -1040,7 +1124,7 @@ msgid "Sign in"
 msgstr "Log ind"
 
 #: templates/base-sample.html:53
-#: templates/userprofile/account/includes/registration_form.html:33
+#: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Registrér"
 
@@ -1073,7 +1157,7 @@ msgstr ""
 
 #: templates/search.html:7 templates/search.html.py:9
 #: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:57
+#: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Søg"
 
@@ -1099,19 +1183,25 @@ msgstr "Søgeresultater (%(result_count)s)"
 msgid ""
 "No projects found for \"%(q)s\". You might want to change your query a bit."
 msgstr ""
-"Ingen projekter fundet for \"%(q)s\". Du kan prøve at ændre din søgning en smule."
+"Ingen projekter fundet for \"%(q)s\". Du kan prøve at ændre din søgning en "
+"smule."
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
 msgstr "Kunne ikke finde dit projekt= Hvorfor går du ikke foran og "
 
-#: templates/search.html:61
+#: templates/search.html:62
 msgid "add it"
 msgstr "tilføjer det"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Find projekter efter navn, beskrivelse osv."
+
+#: templates/admin/base_site.html:9
+#, fuzzy
+msgid "Transifex administration"
+msgstr "Transifexianer"
 
 #: templates/authopenid/base_profile.html:4
 #: templates/authopenid/base_profile.html:7
@@ -1144,8 +1234,8 @@ msgid ""
 "reset email if you request one."
 msgstr ""
 "Det er her du kan ændre din e-post-adresse associeret med din konto.\n"
-"Hold denne e-post-adresse opdateret så vi kan sende dig en nulstil-adgangskode-e-post "
-"hvis du har brug for en."
+"Hold denne e-post-adresse opdateret så vi kan sende dig en nulstil-"
+"adgangskode-e-post hvis du har brug for en."
 
 #: templates/authopenid/changeemail.html:15
 #: templates/authopenid/changeopenid.html:12
@@ -1163,8 +1253,6 @@ msgstr "E-post"
 
 #: templates/authopenid/changeemail.html:33
 #: templates/authopenid/complete.html:67
-#: templates/userprofile/account/login.html:26
-#: templates/userprofile/account/includes/registration_form.html:17
 msgid "Password"
 msgstr "Adgangskode"
 
@@ -1186,8 +1274,7 @@ msgstr "Ændr mit OpenID"
 #: templates/authopenid/changeopenid.html:10
 msgid ""
 "This is where you can change the OpenID URL associated with your account."
-msgstr ""
-"Det er her du kan ændre OpenID-URL'en associeret med din konto."
+msgstr "Det er her du kan ændre OpenID-URL'en associeret med din konto."
 
 #: templates/authopenid/changeopenid.html:26
 msgid "OpenID URL:"
@@ -1199,7 +1286,8 @@ msgstr "Ændr min adgangskode"
 
 #: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
 #: templates/authopenid/settings.html:34
-#: templates/userprofile/profile/overview.html:92
+#: templates/userprofile/account/password_reset_confirm.html:31
+#: templates/userprofile/profile/overview.html:88
 msgid "Change password"
 msgstr "Ændr adgangskode"
 
@@ -1212,8 +1300,6 @@ msgid "Current password"
 msgstr "Nuværende adgangskode"
 
 #: templates/authopenid/changepw.html:21
-#: templates/userprofile/account/password_change.html:30
-#: templates/userprofile/account/password_reset_confirm.html:26
 msgid "New password"
 msgstr "Ny adgangskode"
 
@@ -1238,8 +1324,8 @@ msgid ""
 "\t"
 msgstr ""
 "\n"
-"\t<p>Dit OpenID kan nu blive associeret med et nyt eller eksisterende medlemsskab. "
-"Du kan ændre associationen senere i dine indstillinger.</p>\n"
+"\t<p>Dit OpenID kan nu blive associeret med et nyt eller eksisterende "
+"medlemsskab. Du kan ændre associationen senere i dine indstillinger.</p>\n"
 "\t"
 
 #: templates/authopenid/complete.html:18
@@ -1255,9 +1341,9 @@ msgid ""
 "\t"
 msgstr ""
 "\n"
-"\t<p>Hvis du tilmelder dig for første gang, skal du associere dit OpenID med en ny "
-"konto. Hvis du allerede er medlem, skal du associere med din eksisterende konto.</"
-"p>\n"
+"\t<p>Hvis du tilmelder dig for første gang, skal du associere dit OpenID med "
+"en ny konto. Hvis du allerede er medlem, skal du associere med din "
+"eksisterende konto.</p>\n"
 "\t"
 
 #: templates/authopenid/complete.html:49
@@ -1266,8 +1352,6 @@ msgstr "En ny konto"
 
 #: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
 #: templates/authopenid/sendpw.html:25
-#: templates/userprofile/account/login.html:20
-#: templates/userprofile/account/includes/registration_form.html:5
 #: templates/userprofile/profile/public.html:33
 msgid "Username"
 msgstr "Brugernavn"
@@ -1318,7 +1402,7 @@ msgid "Delete account permanently"
 msgstr "Slet konto permanent"
 
 #: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:41
+#: templates/userprofile/profile/overview.html:39
 msgid "Username:"
 msgstr "Brugernavn:"
 
@@ -1331,15 +1415,14 @@ msgid "Sign in with OpenID"
 msgstr "Log ind med OpenID"
 
 #: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:44
+#: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
 msgstr "Mistet din adgangskode?"
 
 #: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:4
-#: templates/userprofile/account/password_reset.html:20
-#: templates/userprofile/account/password_reset_complete.html:19
-#: templates/userprofile/account/password_reset_confirm.html:55
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:22
 msgid "Password reset"
 msgstr "Nulstil adgangskode"
 
@@ -1355,9 +1438,9 @@ msgid ""
 "the email."
 msgstr ""
 "Ingen bekymringer! Her kan du bede os om at nulstille din adgangskode ved at "
-"indtaste det brugernavn du bruger. Du vil derefter modtage en bekræftelses-e-post "
-"med din ny adgangskode. Den nye adgangskode vil blive aktiveret nåt du har "
-"klikket på linket i e-posten."
+"indtaste det brugernavn du bruger. Du vil derefter modtage en bekræftelses-e-"
+"post med din ny adgangskode. Den nye adgangskode vil blive aktiveret nåt du "
+"har klikket på linket i e-posten."
 
 #: templates/authopenid/sendpw.html:27
 msgid "Send new password"
@@ -1393,7 +1476,7 @@ msgid "Change openid associated to your account"
 msgstr "Ændr OpenID-asssocieret med din konto"
 
 #: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:106
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr "Ændr påmindelser"
 
@@ -1407,7 +1490,8 @@ msgstr "Slet dit brugernavn og alle dine data fra webstedet"
 
 #: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
 #: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:36
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Login"
 msgstr "Log ind"
 
@@ -1418,8 +1502,8 @@ msgid ""
 "<br />\n"
 msgstr ""
 "\n"
-"<p>Log ind med din e-post eller brugernavn, eller brug din OpenID-URL."
-"<br />\n"
+"<p>Log ind med din e-post eller brugernavn, eller brug din OpenID-URL.<br /"
+">\n"
 
 #: templates/authopenid/signup.html:4 templates/authopenid/signup.html.py:5
 msgid "Join us"
@@ -1437,8 +1521,8 @@ msgid ""
 "<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
 "\n"
-"<p>Der er to måder at tilmelde sig: med en e-post og et brugernavn eller med et "
-"OpenID.</p>\n"
+"<p>Der er to måder at tilmelde sig: med en e-post og et brugernavn eller med "
+"et OpenID.</p>\n"
 "<p>Indtast kun informationer til den type konto du vil have.</p>\n"
 
 #: templates/authopenid/signup.html:15
@@ -1487,8 +1571,8 @@ msgid ""
 "We'd like to make this web service as useful as possible for our users. If "
 "you have any feedback to provide, please do so!"
 msgstr ""
-"Vi vil gerne gøre vores webtjenester så brugbare som muligt for vores brugere. "
-"Hvis du har nogen tilbagemeldinger at komme med, så kom med dem!"
+"Vi vil gerne gøre vores webtjenester så brugbare som muligt for vores "
+"brugere. Hvis du har nogen tilbagemeldinger at komme med, så kom med dem!"
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
@@ -1506,13 +1590,13 @@ msgstr "Tak!"
 msgid "Thank you for your feedback."
 msgstr "Tak for din tilbagemelding."
 
-#: templates/languages/language_detail.html:19
+#: templates/languages/language_detail.html:18
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
 msgstr "%(collection)s udgivelser"
 
-#: templates/languages/language_detail.html:25
+#: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
 msgid ""
@@ -1541,11 +1625,12 @@ msgid "No languages registered yet. :-("
 msgstr "Ingen sprog registreret endnu. :-("
 
 #: templates/languages/language_list.html:35
-#, python-format
+#, fuzzy
 msgid ""
-"Couldn't find your lanugage? <a href=\"%(contact_form)s\">Let us know</a>!"
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
-"Kunne du ikke finde dit sprog? <a href=\"%(contact_form)s\">Fortæl os det</a>!"
+"Kunne du ikke finde dit sprog? <a href=\"%(contact_form)s\">Fortæl os det</"
+"a>!"
 
 #: templates/languages/language_release.html:33
 msgid "Project/Component statistics"
@@ -1558,8 +1643,8 @@ msgid ""
 "check again."
 msgstr ""
 "Transifex søgte efter projekter som indeholdt oversættelsesfiler for dette "
-"sprog og udgivelse, men kunne ikke finde nogen. Prøv at indsende sådan en fil "
-"og kontrollér igen."
+"sprog og udgivelse, men kunne ikke finde nogen. Prøv at indsende sådan en "
+"fil og kontrollér igen."
 
 #: templates/languages/language_release.html:53
 #, python-format
@@ -1567,7 +1652,8 @@ msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"Hvis du ikke mener at dette burde ske, <a href=\"%(contact_form)s\">fortæl os det</a>."
+"Hvis du ikke mener at dette burde ske, <a href=\"%(contact_form)s\">fortæl "
+"os det</a>."
 
 #: templates/languages/language_release.html:57
 msgid "Untranslated Components"
@@ -1626,7 +1712,7 @@ msgid "Account"
 msgstr "Konto"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:115
+#: templates/projects/component_detail.html:118
 msgid "Note"
 msgstr "Note"
 
@@ -1643,8 +1729,8 @@ msgid "Notification Type"
 msgstr "Type af påmindelse"
 
 #: templates/notification/notices.html:85
-#: templates/userprofile/account/password_change.html:46
-#: templates/userprofile/account/password_reset_confirm.html:42
+#: templates/userprofile/account/email_validation.html:31
+#: templates/userprofile/account/password_change.html:29
 msgid "Change"
 msgstr "Ændring"
 
@@ -1663,8 +1749,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
-msgstr ""
-"Projektet <a href=\"%(project_url)s\">%(project)s</a> er blevet ændret"
+msgstr "Projektet <a href=\"%(project_url)s\">%(project)s</a> er blevet ændret"
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
@@ -1672,8 +1757,9 @@ msgid ""
 "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
 "been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"En ny komponent <a href=\"%(component_url)s\">%(component_name)s</a> er blevet "
-"tilføjet til <a href=\"%(project_url)s\">%(project_name)s</a> projektet"
+"En ny komponent <a href=\"%(component_url)s\">%(component_name)s</a> er "
+"blevet tilføjet til <a href=\"%(project_url)s\">%(project_name)s</a> "
+"projektet"
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
@@ -1681,8 +1767,8 @@ msgid ""
 "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
 msgstr ""
-"Komponenten <a href=\"%(component_url)s\">%(component_name)s</a> i <a "
-"href=\"%(project_url)s\">%(project_name)s</a> projektet er blevet ændret"
+"Komponenten <a href=\"%(component_url)s\">%(component_name)s</a> i <a href="
+"\"%(project_url)s\">%(project_name)s</a> projektet er blevet ændret"
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
@@ -1692,6 +1778,7 @@ msgid ""
 msgstr ""
 "Komponenten \"%(component_name)s\" er blevet slettet fra <a href=\"%"
 "(project_url)s\">%(project_name)s</a> projektet"
+
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
 msgid ""
@@ -1699,8 +1786,8 @@ msgid ""
 "a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
 "have been updated:"
 msgstr ""
-"Følgende filer i <a href=\"%(component_url)s\">%(component_name)s</a>"
-"komponenten i <a href=\"%(project_url)s\">%(project_name)s</a> projektet "
+"Følgende filer i <a href=\"%(component_url)s\">%(component_name)s</"
+"a>komponenten i <a href=\"%(project_url)s\">%(project_name)s</a> projektet "
 "er blevet opdateret:"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
@@ -1722,8 +1809,8 @@ msgid ""
 "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"er blevet indsendt til <a href=\"%(component_url)s\">%(component_name)s</"
-"a> i <a href=\"%(project_url)s\">%(project_name)s</a> projektet"
+"er blevet indsendt til <a href=\"%(component_url)s\">%(component_name)s</a> "
+"i <a href=\"%(project_url)s\">%(project_name)s</a> projektet"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
@@ -1732,9 +1819,9 @@ msgid ""
 "the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"Kildefilen (POT) har nogen problemer og kan ikke oprettes/opdateres til "
-"<a href=\"%(component_url)s\">%(component_name)s</a> i <a href=\"%"
-"(project_url)s\">%(project_name)s</a> projektet"
+"Kildefilen (POT) har nogen problemer og kan ikke oprettes/opdateres til <a "
+"href=\"%(component_url)s\">%(component_name)s</a> i <a href=\"%(project_url)s"
+"\">%(project_name)s</a> projektet"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1755,8 +1842,8 @@ msgid ""
 "(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Er du sikker på du vil slette komponenten \"%(component_name)s\""
-"som hører til %(project_name)s permanent?\n"
+"  Er du sikker på du vil slette komponenten \"%(component_name)s\"som hører "
+"til %(project_name)s permanent?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -1765,126 +1852,137 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Ja, jeg er sikker!"
 
-#: templates/projects/component_detail.html:23
+#: templates/projects/component_detail.html:25
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
 msgstr ""
-"Denne komponent understøtter lokal opbevaring af indsendte filer og sender også "
-"filerne til de projektansvarliges e-post."
+"Denne komponent understøtter lokal opbevaring af indsendte filer og sender "
+"også filerne til de projektansvarliges e-post."
 
-#: templates/projects/component_detail.html:25
+#: templates/projects/component_detail.html:27
 msgid ""
 "This component does not support local storing of submitted files. The "
 "submitted files will be sent to the maintainers\\' emails and the statistics "
 "will reflect the change once the files are committed upstream."
 msgstr ""
-"Denne komponent understøtter ikke lokal opbevaring af indsende filer. "
-"De indsendte filer vil blive sendt til de projektansvarliges e-poster og statistikkerne "
-"vil reflektere ændringen så snart filerne bliver sendt upstream."
+"Denne komponent understøtter ikke lokal opbevaring af indsende filer. De "
+"indsendte filer vil blive sendt til de projektansvarliges e-poster og "
+"statistikkerne vil reflektere ændringen så snart filerne bliver sendt "
+"upstream."
 
-#: templates/projects/component_detail.html:29
+#: templates/projects/component_detail.html:31
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
 msgstr ""
-"Denne komponent understøtter lokal opbevaring af indsendte filer og sender også "
-"filerne direkte til upstream-arkivet."
+"Denne komponent understøtter lokal opbevaring af indsendte filer og sender "
+"også filerne direkte til upstream-arkivet."
 
-#: templates/projects/component_detail.html:73
-#: templates/projects/project_detail.html:34
+#: templates/projects/component_detail.html:76
+#: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:39
 msgid "Edit"
 msgstr "Redigér"
 
-#: templates/projects/component_detail.html:82
+#: templates/projects/component_detail.html:85
 msgid "Repository:"
 msgstr "Arkiv:"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "Link to a web front-end to the source"
 msgstr "Henvisning til web-grænseflade til kildekoden"
 
-#: templates/projects/component_detail.html:85
-#: templates/projects/component_detail.html:87
+#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:90
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:95
 msgid "Branch:"
 msgstr "Gren:"
 
-#: templates/projects/component_detail.html:97
+#: templates/projects/component_detail.html:100
 msgid "File filter:"
 msgstr "Filfilter:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:106
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Udgivelse:"
 msgstr[1] "Udgivelser:"
 
-#: templates/projects/component_detail.html:111
+#: templates/projects/component_detail.html:114
 msgid "Allows submissions:"
 msgstr "Tillader indsendelser:"
 
-#: templates/projects/component_detail.html:125
+#: templates/projects/component_detail.html:128
 msgid "Translation files"
 msgstr "Oversættelsesfiler"
 
-#: templates/projects/component_detail.html:130
+#: templates/projects/component_detail.html:133
 msgid "Source file:"
 msgstr "Kildefil:"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:140
 msgid "Statistics last updated:"
 msgstr "Statistikker sidst opdateret:"
 
-#: templates/projects/component_detail.html:139
+#: templates/projects/component_detail.html:142
 msgid "ago"
 msgstr "siden"
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:143
 msgid "Component not yet pulled from source repository."
 msgstr "Komponent er endnu ikke hentet fra kildearkiv."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh and re-calculate statistics. This action may take some time."
-msgstr "Genopfrisk og genudregn statistikker. Denne handling kan tage noget tid."
+msgstr ""
+"Genopfrisk og genudregn statistikker. Denne handling kan tage noget tid."
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:146
 msgid "Refresh cache"
 msgstr "Genopfrisk cache"
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Nulstil Transifex' lokale data for en ren hentning"
 
-#: templates/projects/component_detail.html:148
+#: templates/projects/component_detail.html:151
 msgid "Clear cache"
 msgstr "Ryd cache"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Ethvert lokalt ændret data vil blive overskrevet med friske kopier."
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:154
 msgid "warning"
 msgstr "advarsel"
 
-#: templates/projects/component_detail.html:166
-#: templates/projects/project_detail.html:114
+#: templates/projects/component_detail.html:163
+#, fuzzy
+msgid "Become a translator:"
+msgstr "Autentisera som en översättare"
+
+#: templates/projects/component_detail.html:167
+msgid "Your request is pending for approval."
+msgstr ""
+
+#: templates/projects/component_detail.html:190
+#: templates/projects/project_detail.html:116
 msgid "History"
 msgstr "Historik"
 
-#: templates/projects/component_detail.html:170
-#: templates/projects/project_detail.html:118
+#: templates/projects/component_detail.html:194
+#: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr "Ingen tilgængelige"
 
-#: templates/projects/component_detail.html:186
+#: templates/projects/component_detail.html:211
 msgid "Delete component"
 msgstr "Slet komponent"
 
@@ -1918,38 +2016,38 @@ msgstr "Indsendelse"
 msgid "Save component"
 msgstr "Gem komponent"
 
-#: templates/projects/component_lang_detail.html:28
+#: templates/projects/component_lang_detail.html:29
 msgid "translation files"
 msgstr "oversættelsesfiler"
 
-#: templates/projects/component_list.html:9
+#: templates/projects/component_list.html:11
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Tilføj"
 
-#: templates/projects/component_list.html:14
+#: templates/projects/component_list.html:16
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Projektkomponent"
 msgstr[1] "Projektkomponenter"
 
-#: templates/projects/component_list.html:25
+#: templates/projects/component_list.html:27
 msgid "edit"
 msgstr "redigér"
 
-#: templates/projects/component_list.html:28
+#: templates/projects/component_list.html:30
 msgid "del"
 msgstr "slet"
 
-#: templates/projects/component_list.html:44
+#: templates/projects/component_list.html:46
 msgid "No components are registered for this project yet."
 msgstr "Ingen komponenter er registrerede i dette projekt endnu."
 
-#: templates/projects/component_list.html:45
+#: templates/projects/component_list.html:48
 msgid "Add one!"
 msgstr "Tilføj en!"
 
-#: templates/projects/component_list.html:49
+#: templates/projects/component_list.html:54
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -1958,8 +2056,8 @@ msgid ""
 msgstr ""
 "<em>Komponenter</em> er mindre, selv-indeholdende dele af et større projekt "
 "som består af egentlige filer.\n"
-"    Eksempler på komponenter i et softwareprojekt kunne være \"UI\" og \"Dokumentation"
-"\" eller udviklingsgrene som f.eks. <code>HEAD</code>."
+"    Eksempler på komponenter i et softwareprojekt kunne være \"UI\" og "
+"\"Dokumentation\" eller udviklingsgrene som f.eks. <code>HEAD</code>."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
@@ -2025,7 +2123,7 @@ msgid "Delete <em>%(project_name)s</em>"
 msgstr "Slet <em>%(project_name)s</em>"
 
 #: templates/projects/project_confirm_delete.html:8
-#: templates/userprofile/avatar/choose.html:86
+#: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
 msgstr "Slet"
 
@@ -2045,91 +2143,117 @@ msgstr ""
 "  Er du sikker på at du vil slette det registrerede projekts \"%"
 "(project_name)s\" permanent?\n"
 
-#: templates/projects/project_detail.html:40
+#: templates/projects/project_detail.html:42
+#: templates/projects/project_form_base.html:87
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:46
 msgid "Details"
 msgstr "Detaljer"
 
-#: templates/projects/project_detail.html:47
+#: templates/projects/project_detail.html:49
 msgid "Watch:"
 msgstr "Overvåg:"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:50
 msgid "Homepage:"
 msgstr "Websted:"
 
-#: templates/projects/project_detail.html:56
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Websted for %(project_name)s"
 
-#: templates/projects/project_detail.html:61
+#: templates/projects/project_detail.html:63
 msgid "Bug tracker:"
 msgstr "Fejlsøger:"
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Fejlsøger for %(project_name)s"
 
-#: templates/projects/project_detail.html:67
+#: templates/projects/project_detail.html:69
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Mærker:"
 
-#: templates/projects/project_detail.html:76
+#: templates/projects/project_detail.html:78
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Samling:"
 msgstr[1] "Samlinger:"
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:88
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Projektansvarlig:"
 msgstr[1] "Projektansvarlige:"
 
-#: templates/projects/project_detail.html:100
+#: templates/projects/project_detail.html:102
 msgid "External links:"
 msgstr "Eksterne henvisninger:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:104
 msgid "Screenshots"
 msgstr "Skærmbilleder"
 
-#: templates/projects/project_detail.html:136
+#: templates/projects/project_detail.html:139
 msgid "Delete project"
 msgstr "Slet projekt"
 
-#: templates/projects/project_form.html:6
-#: templates/projects/project_form.html:11
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:13
+msgid "Save project"
+msgstr "Gem projekt"
+
+#: templates/projects/project_form_base.html:8
+#: templates/projects/project_form_base.html:13
+#: templates/projects/project_form_base.html:71
 msgid "Add a project"
 msgstr "Tilføj et projekt"
 
-#: templates/projects/project_form.html:7
+#: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Redigér %(project_name)s"
 
-#: templates/projects/project_form.html:12
+#: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
 msgstr "Redigér <em>%(project_name)s</em>"
 
-#: templates/projects/project_form.html:20
+#: templates/projects/project_form_base.html:27
+msgid "Access control will be enabled once the project is created"
+msgstr ""
+
+#: templates/projects/project_form_base.html:74
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Redigerer <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form.html:36
-msgid "Save project"
-msgstr "Gem projekt"
+#: templates/projects/project_form_base.html:88
+msgid "Access Control"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:10
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:12
+msgid "Requests for access to submit files"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:51
+msgid "Pending requests:"
+msgstr ""
+
+#: templates/projects/project_form_permissions.html:63
+msgid "Users with guaranteed access to submit files:"
+msgstr ""
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2156,19 +2280,19 @@ msgstr "Tilføj et ny projekt"
 msgid "No projects registered yet. :-("
 msgstr "Ingen projekter registreret endnu. :-("
 
-#: templates/projects/project_list.html:56
+#: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr "Hvorfor <a href=\"%(project_create)s\">tilføjer</a> du ikke en?"
 
-#: templates/projects/project_list.html:64
+#: templates/projects/project_list.html:67
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
 "it</a>!"
 msgstr ""
-"Kunne du ikke finde dit projekt? Kom igang og <a href=\"%(project_create)s\">tilføj "
-"det</a>!"
+"Kunne du ikke finde dit projekt? Kom igang og <a href=\"%(project_create)s"
+"\">tilføj det</a>!"
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -2179,8 +2303,7 @@ msgid ""
 "Any settings associated with your account are presented and may be modified "
 "here."
 msgstr ""
-"Alle indstillinger associeret med din konto er præsenteret og kan ændres "
-"her."
+"Alle indstillinger associeret med din konto er præsenteret og kan ændres her."
 
 #: templates/simpleauth/signin.html:10
 msgid ""
@@ -2221,25 +2344,25 @@ msgstr ""
 msgid "Homepage for %(collection_name)s"
 msgstr "Websted for %(collection_name)s"
 
-#: templates/txcollections/collection_detail.html:92
+#: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
 msgstr "Projekter i %(collection)s"
 
-#: templates/txcollections/collection_detail.html:97
+#: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
 msgstr "Projekter registreret som hører til denne samling lige nu:"
 
-#: templates/txcollections/collection_detail.html:107
+#: templates/txcollections/collection_detail.html:108
 #, python-format
 msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
-"Ingen projekter er registreret i denne samling endnu. <a href=\"%(project_list)"
-"s\">Find projekter</a> og tilføj dem til denne samling."
+"Ingen projekter er registreret i denne samling endnu. <a href=\"%"
+"(project_list)s\">Find projekter</a> og tilføj dem til denne samling."
 
-#: templates/txcollections/collection_detail.html:119
+#: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
 msgstr "Slet samling"
 
@@ -2307,12 +2430,12 @@ msgstr[1] "%(counter)s projekter"
 msgid "No collections registered yet. :-("
 msgstr "Ingen samlinger registreret endnu. :-("
 
-#: templates/txcollections/collection_list.html:55
+#: templates/txcollections/collection_list.html:56
 #, python-format
 msgid "Why don't you <a href=\"%(collection_create)s\">add one</a>?"
 msgstr "Hvorfor <a href=\"%(collection_create)s\">tilføjer</a> du ikke en?"
 
-#: templates/txcollections/collection_list.html:63
+#: templates/txcollections/collection_list.html:66
 #, python-format
 msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
@@ -2402,12 +2525,41 @@ msgstr ""
 msgid "Save release"
 msgstr "Gem udgivelse"
 
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with guarantied access to submit files:"
+msgstr ""
+
+#: templates/txpermissions/permission_delete_form.html:5
+#, fuzzy
+msgid "Revoke permission"
+msgstr "Förhandsvisa insändning"
+
+#: templates/txpermissions/permission_form.html:13
+#, fuzzy
+msgid "Grant permission"
+msgstr "Överlämnande av översättning"
+
+#: templates/txpermissions/permission_form.html:15
+msgid "Request permission"
+msgstr ""
+
+#: templates/txpermissions/permission_request_approve_form.html:5
+msgid "Approve request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:6
+msgid "Withdraw request"
+msgstr ""
+
+#: templates/txpermissions/permission_request_delete_form.html:8
+msgid "Deny request"
+msgstr ""
+
 #: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Overblik"
 
 #: templates/userprofile/menu.html:6
-#: templates/userprofile/profile/personal.html:36
 msgid "Personal information"
 msgstr "Personlig information"
 
@@ -2416,44 +2568,39 @@ msgid "Avatar"
 msgstr "Profilbillede"
 
 #: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:60
+#: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:38
 msgid "Location"
 msgstr "Lokation"
 
 #: templates/userprofile/menu.html:9
-#: templates/userprofile/profile/delete.html:22
+#: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Fjern profil"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation.html:5
 msgid "E-mail change"
 msgstr "Ændring af e-post"
 
-#: templates/userprofile/account/email_validation.html:4
-#: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation.html:40
-#: templates/userprofile/account/email_validation_processed.html:20
+#: templates/userprofile/account/email_validation.html:5
+#: templates/userprofile/account/email_validation_processed.html:12
 msgid "Add e-mail"
 msgstr "Tilføj e-post"
 
-#: templates/userprofile/account/email_validation.html:24
-msgid "New e-mail address"
+#: templates/userprofile/account/email_validation.html:22
+#, fuzzy
+msgid "Add a new e-mail address"
 msgstr "Ny e-post-adresse"
 
-#: templates/userprofile/account/email_validation.html:34
-msgid "Send confirmation"
-msgstr "Send bekræftelse"
-
-#: templates/userprofile/account/email_validation.html:41
-#: templates/userprofile/account/email_validation_processed.html:21
+#: templates/userprofile/account/email_validation.html:23
+#: templates/userprofile/account/email_validation_processed.html:13
+#, fuzzy
 msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
-"confirmation"
+"confirmation."
 msgstr ""
-"Indsæt den nye e-post-adresse. En e-post vil blive sendt til den for kontrol og "
-"bekræftelse"
+"Indsæt den nye e-post-adresse. En e-post vil blive sendt til den for kontrol "
+"og bekræftelse"
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
@@ -2463,71 +2610,67 @@ msgstr "E-post-validering uden problemer"
 msgid "E-mail change unsuccessful"
 msgstr "Ændring af e-post med problemer"
 
-#: templates/userprofile/account/email_validation_done.html:14
-msgid "E-mail address validated successfully"
-msgstr "E-post-adresse validerede uden problemer"
-
-#: templates/userprofile/account/email_validation_done.html:16
-msgid ""
-"The key you received via e-mail is no longer valid. Please try the e-mail "
-"validation process again"
-msgstr ""
-"Nøglen du modtog via e-post er ikke længere gyldig. Prøv e-post-valideringsprocessen "
-"igen"
-
-#: templates/userprofile/account/email_validation_done.html:23
-#: templates/userprofile/account/email_validation_reset_response.html:22
+#: templates/userprofile/account/email_validation_done.html:12
+#: templates/userprofile/account/email_validation_reset_response.html:13
 msgid "E-mail validation process"
 msgstr "E-post-valideringsproces"
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "You can manage the e-mail validation process from the"
+#: templates/userprofile/account/email_validation_done.html:13
+#, fuzzy, python-format
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
 msgstr "Du kan håndtere e-post-valideringsprocessen fra"
 
-#: templates/userprofile/account/email_validation_done.html:24
-#: templates/userprofile/account/email_validation_reset_response.html:23
-msgid "overview page"
-msgstr "overbliksside"
+#: templates/userprofile/account/email_validation_done.html:17
+#, fuzzy
+msgid "E-mail address validated successfully."
+msgstr "E-post-adresse validerede uden problemer"
+
+#: templates/userprofile/account/email_validation_done.html:19
+#, fuzzy
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
+msgstr ""
+"Nøglen du modtog via e-post er ikke længere gyldig. Prøv e-post-"
+"valideringsprocessen igen"
 
 #: templates/userprofile/account/email_validation_processed.html:4
-#: templates/userprofile/account/email_validation_processed.html:13
+#: templates/userprofile/account/email_validation_processed.html:16
 msgid "E-mail change processed"
 msgstr "Ændring af e-post gennemført"
 
-#: templates/userprofile/account/email_validation_processed.html:14
+#: templates/userprofile/account/email_validation_processed.html:17
+#, fuzzy
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
 "Please access to your e-mail and complete this process following the "
-"instructions specified in the e-mail body"
+"instructions specified in the e-mail body."
 msgstr ""
-"En e-post er blevet sendt til den nye e-post-adresse for at godkende og aktivere den. "
-"Åben din e-post og gør processen færdig ved at følge instruktionerne "
-"angivet i e-post-kroppen"
+"En e-post er blevet sendt til den nye e-post-adresse for at godkende og "
+"aktivere den. Åben din e-post og gør processen færdig ved at følge "
+"instruktionerne angivet i e-post-kroppen"
 
-#: templates/userprofile/account/email_validation_reset.html:4
-#: templates/userprofile/account/email_validation_reset.html:19
-#: templates/userprofile/account/email_validation_reset.html:36
+#: templates/userprofile/account/email_validation_reset.html:5
+#: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
 msgstr "Gensend e-post-validering"
 
-#: templates/userprofile/account/email_validation_reset.html:20
-msgid "Insert your e-mail address"
-msgstr "Indsæt din e-post-adresse"
-
-#: templates/userprofile/account/email_validation_reset.html:30
-msgid "Resend confirmation"
-msgstr "Gensend bekræftelse"
-
-#: templates/userprofile/account/email_validation_reset.html:37
+#: templates/userprofile/account/email_validation_reset.html:19
+#, fuzzy
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "login. Insert your registered e-mail address to receive the validation e-"
-"mail again"
+"mail again."
 msgstr ""
-"Hvis du ikke har valideret din e-post-adresse endnu vil du ikke være i stand til "
-"at logge ind. Indsæt din registrerede e-post-adresse for at modtage validerings-"
-"e-posten igen"
+"Hvis du ikke har valideret din e-post-adresse endnu vil du ikke være i stand "
+"til at logge ind. Indsæt din registrerede e-post-adresse for at modtage "
+"validerings-e-posten igen"
+
+#: templates/userprofile/account/email_validation_reset.html:26
+msgid "Resend confirmation"
+msgstr "Gensend bekræftelse"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2538,80 +2681,85 @@ msgid "Your user account was already active"
 msgstr "Din brugerkonto var allerede aktiv"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
-msgid "We've e-mailed you the e-mail validation link"
+msgid "You can manage the e-mail validation process from the"
+msgstr "Du kan håndtere e-post-valideringsprocessen fra"
+
+#: templates/userprofile/account/email_validation_reset_response.html:14
+msgid "overview page"
+msgstr "overbliksside"
+
+#: templates/userprofile/account/email_validation_reset_response.html:17
+#, fuzzy
+msgid "We've e-mailed you the e-mail validation link."
 msgstr "Vi har sendt en e-post med e-post valideringshenvisningen"
 
-#: templates/userprofile/account/email_validation_reset_response.html:16
+#: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
 msgstr "Din e-post var allerede valideret"
 
-#: templates/userprofile/account/login.html:4
-#: templates/userprofile/account/login.html:19
+#: templates/userprofile/account/login.html:5
 msgid "User login"
 msgstr "Bruger logind"
 
-#: templates/userprofile/account/login.html:42
+#: templates/userprofile/account/login.html:19
+#, fuzzy
+msgid "Enter your username and password to login."
+msgstr "Slet dit brugernavn og alle dine data fra webstedet"
+
+#: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr "Hjælpeværktøjer"
 
-#: templates/userprofile/account/login.html:46
-#: templates/userprofile/profile/overview.html:95
+#: templates/userprofile/account/login.html:40
+#: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
 msgstr "Gensend validerings e-post"
 
-#: templates/userprofile/account/login.html:48
+#: templates/userprofile/account/login.html:42
 msgid "Sign up!"
 msgstr "Tilmeld!"
 
-#: templates/userprofile/account/logout.html:4
-#: templates/userprofile/account/logout.html:9
+#: templates/userprofile/account/logout.html:5
+#: templates/userprofile/account/logout.html:10
 msgid "Logged out"
 msgstr "Logget ud"
 
-#: templates/userprofile/account/logout.html:10
-msgid "You've been logged out"
+#: templates/userprofile/account/logout.html:11
+#, fuzzy
+msgid "You've been logged out."
 msgstr "Du er blevet logget ud"
 
-#: templates/userprofile/account/logout.html:10
+#: templates/userprofile/account/logout.html:11
 msgid "Log in again"
 msgstr "Log ind igen"
 
-#: templates/userprofile/account/password_change.html:4
-#: templates/userprofile/account/password_change.html:23
+#: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:4
 msgid "Password change for"
 msgstr "Ændring af adgangskode for"
 
-#: templates/userprofile/account/password_change.html:24
-msgid "Old password"
-msgstr "Gammel adgangskode"
-
-#: templates/userprofile/account/password_change.html:36
-#: templates/userprofile/account/password_reset_confirm.html:32
-msgid "Confirm password"
-msgstr "Bekræft adgangskode"
-
-#: templates/userprofile/account/password_change.html:52
-#: templates/userprofile/account/password_change_done.html:19
+#: templates/userprofile/account/password_change.html:22
+#: templates/userprofile/account/password_change_done.html:12
 msgid "Password change"
 msgstr "Ændring af adgangskode"
 
-#: templates/userprofile/account/password_change.html:53
-#: templates/userprofile/account/password_change_done.html:20
+#: templates/userprofile/account/password_change.html:23
+#, fuzzy
 msgid ""
-"Password change utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
-"Værktøjssiden til adgangskodeændring. Indtast din ny adgangskode to gange så vi "
-"kan verificere at du har tastet den rigtigt"
+"Værktøjssiden til adgangskodeændring. Indtast din ny adgangskode to gange så "
+"vi kan verificere at du har tastet den rigtigt"
 
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
 msgid "Password change successful"
 msgstr "Adgangskode ændret uden problemer"
 
-#: templates/userprofile/account/password_change_done.html:13
-msgid "The password has been changed successfully"
+#: templates/userprofile/account/password_change_done.html:14
+#, fuzzy
+msgid "The password has been changed successfully."
 msgstr "Adgangskoden er blevet ændret uden problemer"
 
 #: templates/userprofile/account/password_expired.html:4
@@ -2619,51 +2767,40 @@ msgid "Password key expired"
 msgstr "Nøgle for adgangskode er udløbet"
 
 #: templates/userprofile/account/password_expired.html:9
+#, fuzzy
 msgid ""
-"The password key you're trying to use is expired. Please, request a new one"
-msgstr ""
-"Adgangskodenøglen du prøver at bruge er udløbet. Spørg efter en ny en"
+"The password key you're trying to use is expired. Please, request a new one."
+msgstr "Adgangskodenøglen du prøver at bruge er udløbet. Spørg efter en ny en"
 
-#: templates/userprofile/account/password_reset.html:21
-msgid "E-mail address"
-msgstr "E-post-adresse"
-
-#: templates/userprofile/account/password_reset.html:31
-msgid "Reset my password"
-msgstr "Nulstil min adgangskode"
-
-#: templates/userprofile/account/password_reset.html:37
+#: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 msgid "Password reset form"
 msgstr "Adgangskode nulstillet form"
 
-#: templates/userprofile/account/password_reset.html:38
+#: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
+#, fuzzy
 msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
-"password and e-mail the new one to you"
+"password and e-mail the new one to you."
 msgstr ""
 "Glemt din adgangskode? Indtast din e-post-adresse og vi vil nulstille din "
 "adgangskode og sende en ny til dig"
 
-#: templates/userprofile/account/password_reset_complete.html:13
+#: templates/userprofile/account/password_reset.html:27
+msgid "Reset my password"
+msgstr "Nulstil min adgangskode"
+
+#: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr "Din adgangskode er blevet indstillet.  Du kan fortsætte og logge ind nu."
-
-#: templates/userprofile/account/password_reset_complete.html:20
-#: templates/userprofile/account/password_reset_confirm.html:56
-msgid ""
-"Password reset utility page. Please enter your new password twice so we can "
-"verify you typed it in correctly"
 msgstr ""
-"Værktøjssiden til nulstilning af adgangskode. Indtast din nye adgangskode to gange "
-"så vi kan verificere at du har tastet den rigtigt"
+"Din adgangskode er blevet indstillet.  Du kan fortsætte og logge ind nu."
 
-#: templates/userprofile/account/password_reset_confirm.html:47
+#: templates/userprofile/account/password_reset_confirm.html:37
 msgid "Password reset unsuccessful"
 msgstr "Adgangskode kunne ikke nulstilles"
 
-#: templates/userprofile/account/password_reset_confirm.html:48
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -2677,107 +2814,97 @@ msgid "Password reset successful"
 msgstr "Adgangskode nulstillet uden problemer"
 
 #: templates/userprofile/account/password_reset_done.html:10
+#, fuzzy
 msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
-"receiving it shortly"
+"receiving it shortly."
 msgstr ""
 "Vi har sendt dig instruktionerne til at få en ny adgangskode. Du bør snart "
 "modtage den"
 
 #: templates/userprofile/account/registration.html:4
-#: templates/userprofile/account/includes/registration_form.html:4
 msgid "User registration"
 msgstr "Brugerregistrering"
 
-#: templates/userprofile/account/registration.html:22
-#: templates/userprofile/account/registration_done.html:19
-msgid "Register a new account"
+#: templates/userprofile/account/registration.html:17
+#, fuzzy
+msgid "Register for a Transifex account"
 msgstr "Registrér en ny konto"
 
-#: templates/userprofile/account/registration.html:23
-#: templates/userprofile/account/registration_done.html:20
+#: templates/userprofile/account/registration.html:18
 msgid ""
-"Joining this community is quick and easy. You only need to fill the form to "
-"get access to all the private content"
+"Joining the Transifex is quick and easy. Just fill in the following form."
 msgstr ""
-"Tilmelding i dette fællesskab er hurtigt og let. Du behøver kun at udfylde "
-"formularen for at få adgang til alt det private indhold"
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
 msgstr "Registrering færdig"
 
-#: templates/userprofile/account/registration_done.html:10
+#: templates/userprofile/account/registration_done.html:8
+msgid "Register a new account"
+msgstr "Registrér en ny konto"
+
+#: templates/userprofile/account/registration_done.html:12
 msgid ""
 "You have successfully registered a new account, and an account activation "
 "url has been sent to your e-mail address. You must access this message on "
 "your e-mail account to finish the registration process."
 msgstr ""
 "Du har registreret en ny konto uden problemer, og en konto-aktiverings-URL "
-"er blevet sendt til din e-post-adresse. Du skal åbne denne besked på din "
-"e-post-konto for at færdiggøre registreringsprocessen."
+"er blevet sendt til din e-post-adresse. Du skal åbne denne besked på din e-"
+"post-konto for at færdiggøre registreringsprocessen."
 
-#: templates/userprofile/account/registration_done.html:13
+#: templates/userprofile/account/registration_done.html:15
 #, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">login page</a> to authenticate and start using this site."
 msgstr ""
 "Du har registreret en ny konto uden problemer. Gå til <a href=\"%"
-"(overview_url)s\">logindsiden</a> for at bekræfte din identitet og begynde at bruge denne side."
-
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "E-mail"
-msgstr "E-post"
-
-#: templates/userprofile/account/includes/registration_form.html:11
-msgid "optional"
-msgstr "valgfri"
-
-#: templates/userprofile/account/includes/registration_form.html:23
-msgid "Password (again)"
-msgstr "Adgangskode (igen)"
+"(overview_url)s\">logindsiden</a> for at bekræfte din identitet og begynde "
+"at bruge denne side."
 
 #: templates/userprofile/avatar/choose.html:4
-#: templates/userprofile/avatar/choose.html:38
+#: templates/userprofile/avatar/choose.html:47
 msgid "Choose the location of your avatar"
 msgstr "Vælg lokationen på dit profilbillede"
 
-#: templates/userprofile/avatar/choose.html:41
-msgid "Select an image from disk"
-msgstr "Vælg et billede fra disk"
-
-#: templates/userprofile/avatar/choose.html:43
-#: templates/userprofile/avatar/choose.html:49
-#: templates/userprofile/avatar/crop.html:35
-msgid "Done"
-msgstr "Færdig"
-
-#: templates/userprofile/avatar/choose.html:47
-msgid ""
-"Select an image from a remote URL. Put the URL on the input below and we'll "
-"retrieve the image for you"
-msgstr ""
-"Vælg et billede fra en fjern-URL. Skriv URL'en i input-feltet nedenfor og vi vil "
-"hente billedet for dig"
-
-#: templates/userprofile/avatar/choose.html:54
-msgid "Search on Picasa Web"
-msgstr "Søg på Picasa Web"
-
-#: templates/userprofile/avatar/choose.html:79
+#: templates/userprofile/avatar/choose.html:36
 #: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr "Valgside for profilbillede"
 
-#: templates/userprofile/avatar/choose.html:80
+#: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
+#, fuzzy
 msgid ""
 "You have several options to select the image you want as avatar on your "
-"profile"
+"profile."
 msgstr ""
-"Du har flere muligheder for at vælge det billede du vil bruge som profilbillede "
-"på din profil" 
+"Du har flere muligheder for at vælge det billede du vil bruge som "
+"profilbillede på din profil"
+
+#: templates/userprofile/avatar/choose.html:50
+msgid "Select an image from disk"
+msgstr "Vælg et billede fra disk"
+
+#: templates/userprofile/avatar/choose.html:52
+#: templates/userprofile/avatar/choose.html:58
+#: templates/userprofile/avatar/crop.html:35
+msgid "Done"
+msgstr "Færdig"
+
+#: templates/userprofile/avatar/choose.html:56
+msgid ""
+"Select an image from a remote URL. Put the URL on the input below and we'll "
+"retrieve the image for you"
+msgstr ""
+"Vælg et billede fra en fjern-URL. Skriv URL'en i input-feltet nedenfor og vi "
+"vil hente billedet for dig"
+
+#: templates/userprofile/avatar/choose.html:63
+msgid "Search on Picasa Web"
+msgstr "Søg på Picasa Web"
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
@@ -2788,25 +2915,23 @@ msgstr "Beskær &amp; justér størrelse på det omrøde du ønsker"
 msgid "Delete personal information"
 msgstr "Slet personlig information"
 
-#: templates/userprofile/profile/delete.html:14
-msgid "Delete your personal information"
-msgstr "Slet din personlige information"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Are you sure?"
-msgstr "Er du sikker?"
-
-#: templates/userprofile/profile/delete.html:15
-msgid "Yes"
-msgstr "Ja"
-
-#: templates/userprofile/profile/delete.html:23
+#: templates/userprofile/profile/delete.html:13
+#, fuzzy
 msgid ""
-"It erases all your private data except your username. You can refill the "
-"information later if you want to"
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
 msgstr ""
 "Den sletter alle din private data undtagen dit brugernavn. Du kan stadig "
 "genfylde informationen senere, hvis du vil"
+
+#: templates/userprofile/profile/delete.html:17
+msgid "Are you sure?"
+msgstr "Er du sikker?"
+
+#: templates/userprofile/profile/delete.html:18
+#, fuzzy
+msgid "Delete my data"
+msgstr "Slet min konto"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -2822,7 +2947,7 @@ msgid "Auto-discover location"
 msgstr "Autoopdag lokation"
 
 #: templates/userprofile/profile/location.html:22
-#: templates/userprofile/profile/overview.html:51
+#: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Land"
@@ -2840,7 +2965,7 @@ msgid "Position"
 msgstr "Position"
 
 #: templates/userprofile/profile/location.html:35
-#: templates/userprofile/profile/personal.html:30
+#: templates/userprofile/profile/personal.html:36
 msgid "Save"
 msgstr "Gem"
 
@@ -2849,67 +2974,69 @@ msgid "Location information"
 msgstr "Lokationsinformation"
 
 #: templates/userprofile/profile/location.html:41
-msgid "Define your location information"
+#, fuzzy
+msgid "Define your location information."
 msgstr "Indstil din lokationsinformation"
 
 #: templates/userprofile/profile/overview.html:4
-#: templates/userprofile/profile/overview.html:32
+#: templates/userprofile/profile/overview.html:30
 msgid "Overview of your profile"
 msgstr "Overblik over din profil"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Change avatar"
 msgstr "Skift profilbillede"
 
-#: templates/userprofile/profile/overview.html:37
+#: templates/userprofile/profile/overview.html:35
 msgid "Add avatar"
 msgstr "Tilføj profilbillede"
 
-#: templates/userprofile/profile/overview.html:42
+#: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "E-post:"
 
-#: templates/userprofile/profile/overview.html:44
+#: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
 msgstr "Ikke indstillet endnu"
 
-#: templates/userprofile/profile/overview.html:46
+#: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
 msgstr " (Ikke valideret)"
 
-#: templates/userprofile/profile/overview.html:55
-#: templates/userprofile/profile/overview.html:64
-#: templates/userprofile/profile/overview.html:73
+#: templates/userprofile/profile/overview.html:53
+#: templates/userprofile/profile/overview.html:62
+#: templates/userprofile/profile/overview.html:71
 msgid "Not set"
 msgstr "Ikke indstillet"
 
-#: templates/userprofile/profile/overview.html:91
+#: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Håndtering:"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
 msgstr "Ændr din e-post-adresse"
 
-#: templates/userprofile/profile/overview.html:94
+#: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
 msgstr "Tilføj din e-post-adresse"
 
-#: templates/userprofile/profile/overview.html:99
+#: templates/userprofile/profile/overview.html:95
 msgid "Add location"
 msgstr "Tilføj lokation"
 
-#: templates/userprofile/profile/overview.html:101
+#: templates/userprofile/profile/overview.html:97
 msgid "Change location"
 msgstr "Ændr lokation"
 
-#: templates/userprofile/profile/personal.html:4
+#: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
 msgstr "Redigér din personlige information"
 
-#: templates/userprofile/profile/personal.html:37
-msgid "Insert some information about you"
+#: templates/userprofile/profile/personal.html:29
+#, fuzzy
+msgid "Insert some information about you."
 msgstr "Indsæt noget information om dig"
 
 #: templates/userprofile/profile/public.html:27
@@ -2969,94 +3096,94 @@ msgstr "Indsend oversættelser"
 msgid "Auto-suggest translation"
 msgstr "Autoforslag oversættelse"
 
-#: translations/models.py:225
+#: translations/models.py:233
 msgid "PO file"
 msgstr "PO-fil"
 
-#: translations/models.py:226
+#: translations/models.py:234
 msgid "PO files"
 msgstr "PO-filer"
 
-#: translations/templates/comp_lang_stats_table.html:11
+#: translations/templates/comp_lang_stats_table.html:16
 msgid "Files"
 msgstr "Filer"
 
-#: translations/templates/comp_lang_stats_table.html:12
-#: translations/templates/comp_stats_table.html:12
-#: translations/templates/lang_stats_table.html:12
+#: translations/templates/comp_lang_stats_table.html:17
+#: translations/templates/comp_stats_table.html:17
+#: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Oversættelser"
 
-#: translations/templates/comp_lang_stats_table.html:13
-#: translations/templates/comp_stats_table.html:13
-#: translations/templates/lang_stats_table.html:13
+#: translations/templates/comp_lang_stats_table.html:18
+#: translations/templates/comp_stats_table.html:18
+#: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Indstillinger"
 
-#: translations/templates/comp_lang_stats_table.html:22
-#: translations/templates/comp_stats_table.html:26
-#: translations/templates/lang_stats_table.html:23
+#: translations/templates/comp_lang_stats_table.html:27
+#: translations/templates/comp_stats_table.html:31
+#: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Kunne ikke generere statistikker for denne fil"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Trans:"
 msgstr "Oversatte:"
 
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:32
-#: translations/templates/lang_stats_table.html:28
+#: translations/templates/comp_lang_stats_table.html:32
+#: translations/templates/comp_stats_table.html:37
+#: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
 msgid "Untrans:"
 msgstr "Uoversatte:"
 
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:47
-#: translations/templates/lang_stats_table.html:40
+#: translations/templates/comp_lang_stats_table.html:40
+#: translations/templates/comp_stats_table.html:52
+#: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Vis "
 
-#: translations/templates/comp_lang_stats_table.html:36
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:41
+#: translations/templates/comp_lang_stats_table.html:41
+#: translations/templates/comp_stats_table.html:53
+#: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Hent "
 
-#: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
-#: translations/templates/lang_stats_table.html:46
+#: translations/templates/comp_lang_stats_table.html:51
+#: translations/templates/comp_stats_table.html:63
+#: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Redigér "
 
-#: translations/templates/comp_stats_table.html:11
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Sprog"
 
-#: translations/templates/comp_stats_table.html:21
+#: translations/templates/comp_stats_table.html:26
 msgid "See statistics for this language"
 msgstr "Se statistikker for dette sprog"
 
-#: translations/templates/comp_stats_table.html:23
+#: translations/templates/comp_stats_table.html:28
 msgid "There is no language registered that matches with this code"
 msgstr "Der er ikke noget registreret sprog der passer med denne kode"
 
-#: translations/templates/comp_stats_table.html:35
+#: translations/templates/comp_stats_table.html:40
 msgid "(not calculated)"
 msgstr "(ikke udregnet)"
 
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:35
+#: translations/templates/comp_stats_table.html:47
+#: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "Klik her for at se flere filer for"
 
@@ -3069,33 +3196,34 @@ msgstr "Indsend en oversættelse for %(pofile_filename)s"
 msgid "Submit file"
 msgstr "Indsend fil"
 
-#: translations/templates/lang_stats_table.html:11
+#: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
 msgstr "Projekt/komponent"
 
-#: translations/templates/lang_stats_table.html:20
+#: translations/templates/lang_stats_table.html:25
 msgid "Go to this project page"
 msgstr "Gå til dette projekts side"
 
-#: translations/templates/lang_stats_table.html:21
+#: translations/templates/lang_stats_table.html:26
 msgid "Go to this component page"
 msgstr "Gå til denne komponents side"
 
-#: translations/templates/pofile_lock.html:8
+#: translations/templates/pofile_lock.html:10
 msgid "Unlock this file when you're finished working with it."
 msgstr "Fjern låsen fra denne fil når du er færdig med den."
 
-#: translations/templates/pofile_lock.html:12
+#: translations/templates/pofile_lock.html:14
 msgid "This file is locked, indicating someone is working with it."
 msgstr "Denne fil er låst, hvilket betyder at nogen arbejder på den."
 
-#: translations/templates/pofile_lock.html:18
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr "Lås denne fil for at vise andre at du arbejder på den."
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:23
 msgid "This file is unlocked. Most likely noone is working with it right now."
-msgstr "Denne fil er ulåst. Højst sandsynligt fordi ingen arbejder på den lige nu."
+msgstr ""
+"Denne fil er ulåst. Højst sandsynligt fordi ingen arbejder på den lige nu."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -3161,6 +3289,11 @@ msgstr "samling"
 msgid "<Release: %(rel)s (Collection %(col)s)>"
 msgstr "<Udgivelse: %(rel)s (Samling %(col)s)>"
 
+#: txcollections/migrations/0001_initial.py:20
+#, fuzzy
+msgid "String freese date"
+msgstr "Dato for strengefrys"
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3174,31 +3307,31 @@ msgstr "Kvinde"
 msgid "Male"
 msgstr "Mand"
 
-#: txcommon/models.py:18
+#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
 msgid "First name"
 msgstr "Fornavn"
 
-#: txcommon/models.py:19
+#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
 msgid "Surname"
 msgstr "Efternavn"
 
-#: txcommon/models.py:22
+#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
 msgid "Native Language"
 msgstr "Modersmål"
 
-#: txcommon/models.py:23
+#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:24
+#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25
+#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26
+#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
 msgid "About yourself"
 msgstr "Om dig selv"
 
@@ -3206,7 +3339,7 @@ msgstr "Om dig selv"
 msgid "Short description of yourself (140 chars)."
 msgstr "Kort beskrivelse af dig selv (140 tegn)."
 
-#: txcommon/models.py:28
+#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
 msgid "Looking for work?"
 msgstr "Søger du efter arbejde?"
 
@@ -3222,75 +3355,83 @@ msgstr "Rod-URL'en peger ikke på en .tar.gz- eller .tgz-file"
 msgid "The root url must start with http:// or ftp://"
 msgstr "Rod-URL'en skal starte med http:// eller ftp://"
 
-#: txcommon/management/__init__.py:9
+#: txcommon/db/models.py:26
+msgid "Enter 0 or more comma-separated integers in parentheses."
+msgstr "Indtast 0 eller flere heltal, separerede med komma, i paranteser."
+
+#: txcommon/db/models.py:28
+msgid "You must enter at least a pair of parentheses containing nothing."
+msgstr "Du skal mindst indtaste et par tomme paranteser."
+
+#: txcommon/management/__init__.py:10
 msgid "New Project Added"
 msgstr "Nyt projekt tilføjet"
 
-#: txcommon/management/__init__.py:10
+#: txcommon/management/__init__.py:11
 msgid "when a new project is added"
 msgstr "når et nyt projekt er tilføjet"
 
-#: txcommon/management/__init__.py:16
+#: txcommon/management/__init__.py:17
 msgid "Project Changed"
 msgstr "Projekt ændret"
 
-#: txcommon/management/__init__.py:17
+#: txcommon/management/__init__.py:18
 msgid "when a project is changed"
 msgstr "når et projekt er ændret"
 
-#: txcommon/management/__init__.py:23
+#: txcommon/management/__init__.py:24
 msgid "Project Deleted"
 msgstr "Projekt slettet"
 
-#: txcommon/management/__init__.py:24
+#: txcommon/management/__init__.py:25
 msgid "when a project is deleted"
 msgstr "når et projekt er slettet"
 
-#: txcommon/management/__init__.py:30
+#: txcommon/management/__init__.py:31
 msgid "New Component Added"
 msgstr "Ny komponent tilføjet"
 
-#: txcommon/management/__init__.py:31
+#: txcommon/management/__init__.py:32
 msgid "when a new component is added to a project"
 msgstr "når en ny komponent er føjet til et projekt"
 
-#: txcommon/management/__init__.py:37
+#: txcommon/management/__init__.py:38
 msgid "Component Changed"
 msgstr "Komponent ændret"
 
-#: txcommon/management/__init__.py:38
+#: txcommon/management/__init__.py:39
 msgid "when a component of a project is changed"
 msgstr "når en komponent fra et projekt er ændret"
 
-#: txcommon/management/__init__.py:44
+#: txcommon/management/__init__.py:45
 msgid "Component Deleted"
 msgstr "Komponent slettet"
 
-#: txcommon/management/__init__.py:45
+#: txcommon/management/__init__.py:46
 msgid "when a component of a project is deleted"
 msgstr "når en komponent fra et projekt er slettet"
 
-#: txcommon/management/__init__.py:51
+#: txcommon/management/__init__.py:52
 msgid "File Submitted"
 msgstr "Fil indsendt"
 
-#: txcommon/management/__init__.py:52
+#: txcommon/management/__init__.py:53
 msgid "when a component file of a project is submitted"
 msgstr "når en komponentfil fra et projekt er sendt ind"
 
-#: txcommon/management/__init__.py:59
+#: txcommon/management/__init__.py:60
 msgid "Translation File Changed"
 msgstr "Oversættelsesfil ændret"
 
-#: txcommon/management/__init__.py:60
+#: txcommon/management/__init__.py:61
 msgid "when a component translation file of a project is changed"
 msgstr "når en komponents oversættelsesfil fra et projekt er ændret"
 
-#: txcommon/management/__init__.py:67
+#: txcommon/management/__init__.py:68
 msgid "Translation Source File (POT) has a Problem"
 msgstr "Oversættelseskildefil (POT) har et problem"
 
-#: txcommon/management/__init__.py:68
+#: txcommon/management/__init__.py:69
 msgid ""
 "when the source file (POT) of a component that you are a maintainer has a "
 "problem"
@@ -3298,89 +3439,105 @@ msgstr ""
 "når kildefilen (POT) af en komponent som du er projektansvarlig for har et "
 "problem"
 
-#: txcommon/management/__init__.py:76
+#: txcommon/management/__init__.py:77
 msgid "New Collection Added"
 msgstr "Ny samling tilføjet"
 
-#: txcommon/management/__init__.py:77
+#: txcommon/management/__init__.py:78
 msgid "when a new collection is added"
 msgstr "når en ny samling er tilføjet"
 
-#: txcommon/management/__init__.py:83
+#: txcommon/management/__init__.py:84
 msgid "Collection Changed"
 msgstr "Samling ændret"
 
-#: txcommon/management/__init__.py:84
+#: txcommon/management/__init__.py:85
 msgid "when a collection is changed"
 msgstr "når en samling er ændret"
 
-#: txcommon/management/__init__.py:90
+#: txcommon/management/__init__.py:91
 msgid "Collection Deleted"
 msgstr "Samling slettet"
 
-#: txcommon/management/__init__.py:91
+#: txcommon/management/__init__.py:92
 msgid "when a collection is deleted"
 msgstr "når en samling er slettet"
 
-#: txcommon/management/__init__.py:97
+#: txcommon/management/__init__.py:98
 msgid "Project Added to a Collection"
 msgstr "Projekt føjet til en samling"
 
-#: txcommon/management/__init__.py:98
+#: txcommon/management/__init__.py:99
 msgid "when a new project is added to a collection"
 msgstr "når et nyt projekt er føjet til en samling"
 
-#: txcommon/management/__init__.py:104
+#: txcommon/management/__init__.py:105
 msgid "Project Deleted from a Collection"
 msgstr "Projekt slettet fra en samling"
 
-#: txcommon/management/__init__.py:105
+#: txcommon/management/__init__.py:106
 msgid "when a project is deleted from a collection"
 msgstr "når et projekt er slettet fra en samling"
 
-#: txcommon/management/__init__.py:111
+#: txcommon/management/__init__.py:112
 msgid "New Release Added for a Watched Collection"
 msgstr "Ny udgivelse føjet til en overvåget samling"
 
-#: txcommon/management/__init__.py:112
+#: txcommon/management/__init__.py:113
 msgid "when a new release is added to a collection"
 msgstr "når en ny udgivelse er føjet til en samling"
 
-#: txcommon/management/__init__.py:119
+#: txcommon/management/__init__.py:120
 msgid "Release Changed"
 msgstr "Udgivelse ændret"
 
-#: txcommon/management/__init__.py:120
+#: txcommon/management/__init__.py:121
 msgid "when a release of a collection is changed"
 msgstr "når en udgivelse af en samling er ændret"
 
-#: txcommon/management/__init__.py:125
+#: txcommon/management/__init__.py:126
 msgid "Release Deleted"
 msgstr "Udgivelse slettet"
 
-#: txcommon/management/__init__.py:126
+#: txcommon/management/__init__.py:127
 msgid "when a release of a collection is deleted"
 msgstr "når en udgivelse af en samling er slettet"
 
-#: txcommon/management/__init__.py:131
+#: txcommon/management/__init__.py:132
 msgid "Release Added to a Collection"
 msgstr "Udgivelse føjet til en samling"
 
-#: txcommon/management/__init__.py:132
+#: txcommon/management/__init__.py:133
 msgid "when a release is added to a collection"
 msgstr "når en udgivelse er føjet til en samling"
 
-#: txcommon/management/__init__.py:137
+#: txcommon/management/__init__.py:138
 msgid "Release Deleted from a Collection"
 msgstr "Udgivelse slettet fra en samling"
 
-#: txcommon/management/__init__.py:138
+#: txcommon/management/__init__.py:139
 msgid "when a release is deleted from a collection"
 msgstr "når en udgivelse er slettet fra en samling"
 
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Hjem"
+
+#: txpermissions/views.py:45
+msgid "You added a permission request."
+msgstr ""
+
+#: txpermissions/views.py:74
+msgid "You approved the permission request."
+msgstr ""
+
+#: txpermissions/views.py:92
+msgid "You removed the permission."
+msgstr ""
+
+#: txpermissions/views.py:94
+msgid "You removed the permission request."
+msgstr ""
 
 #: vcs/forms.py:29
 msgid "This type of repository needs a branch"
@@ -3415,7 +3572,7 @@ msgstr "vcsunit"
 msgid "vcsunits"
 msgstr "vcsunits"
 
-#: webtrans/views.py:125
+#: webtrans/views.py:129
 msgid ""
 "Your file does not pass by the check for correctness (msgfmt -c). Please run "
 "this command on your system to see the errors."
@@ -3423,9 +3580,53 @@ msgstr ""
 "Din fil kunne ikke gå igennem korrekthedskontrollen (msgfmt -c). Kør denne "
 "kommando på dit system for at se fejlene."
 
-#: webtrans/views.py:134
+#: webtrans/views.py:138
 msgid "Sorry, an error is causing troubles to send your file."
 msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
+
+#~ msgid "Send confirmation"
+#~ msgstr "Send bekræftelse"
+
+#~ msgid "Insert your e-mail address"
+#~ msgstr "Indsæt din e-post-adresse"
+
+#~ msgid "Old password"
+#~ msgstr "Gammel adgangskode"
+
+#~ msgid "Confirm password"
+#~ msgstr "Bekræft adgangskode"
+
+#~ msgid "E-mail address"
+#~ msgstr "E-post-adresse"
+
+#~ msgid ""
+#~ "Password reset utility page. Please enter your new password twice so we "
+#~ "can verify you typed it in correctly"
+#~ msgstr ""
+#~ "Værktøjssiden til nulstilning af adgangskode. Indtast din nye adgangskode "
+#~ "to gange så vi kan verificere at du har tastet den rigtigt"
+
+#~ msgid ""
+#~ "Joining this community is quick and easy. You only need to fill the form "
+#~ "to get access to all the private content"
+#~ msgstr ""
+#~ "Tilmelding i dette fællesskab er hurtigt og let. Du behøver kun at "
+#~ "udfylde formularen for at få adgang til alt det private indhold"
+
+#~ msgid "E-mail"
+#~ msgstr "E-post"
+
+#~ msgid "optional"
+#~ msgstr "valgfri"
+
+#~ msgid "Password (again)"
+#~ msgstr "Adgangskode (igen)"
+
+#~ msgid "Delete your personal information"
+#~ msgstr "Slet din personlige information"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
 
 #~ msgid ", but with no translations sent for "
 #~ msgstr ", den öppna översättningsplattformen."
@@ -3683,9 +3884,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 #~ msgid "Error: Could not delete the repository. %s"
 #~ msgstr "Fel: Kunde inte radera datalagret. %s"
 
-#~ msgid "Timestamp"
-#~ msgstr "Tidsstämpel"
-
 #~ msgid "years"
 #~ msgstr "år"
 
@@ -3703,9 +3901,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 
 #~ msgid "hour"
 #~ msgstr "timme"
-
-#~ msgid "hours"
-#~ msgstr "timmar"
 
 #~ msgid "minute"
 #~ msgstr "minut"
@@ -4074,9 +4269,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 #~ msgid "Branches (%(num)s):"
 #~ msgstr "Grenar (%(num)s):"
 
-#~ msgid "Translation submission"
-#~ msgstr "Överlämnande av översättning"
-
 #~ msgid ""
 #~ "This module is configured to receive translations through this web system."
 #~ msgstr ""
@@ -4084,9 +4276,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 
 #~ msgid "Authenticated users are presented with a file submission form."
 #~ msgstr "Autentiserade användare visas ett formulär för filöverlämning."
-
-#~ msgid "Authenticate as a translator"
-#~ msgstr "Autentisera som en översättare"
 
 #~ msgid "The local, checked-out copy of this module was last updated %s ago."
 #~ msgstr ""
@@ -4137,9 +4326,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 #~ "contributions."
 #~ msgstr "Här är en lista över alla moduler som accepterar översättningar."
 
-#~ msgid "Preview submission"
-#~ msgstr "Förhandsvisa insändning"
-
 #~ msgid "Please preview the submission before hitting the \"Submit!\" button."
 #~ msgstr ""
 #~ "Förhandsgranska din överlämning innan du trycker på \"Överlämna!\"-"
@@ -4183,9 +4369,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 
 #~ msgid ":: People"
 #~ msgstr ":: Personer"
-
-#~ msgid "Transifexians"
-#~ msgstr "Transifexianer"
 
 #~ msgid "The system has information on the following people:"
 #~ msgstr "Systemet har information om följande personer:"
@@ -4369,9 +4552,6 @@ msgstr "Beklager, en fejl giver problemer med indsendelsen af din fil."
 #~ "    till. Välj filen från ditt system, välj en destination, skriv en "
 #~ "changelog-notis och klicka\n"
 #~ "    'Förhandsgranska'."
-
-#~ msgid "6. Confirm and submit"
-#~ msgstr "6. Bekräfta och skicka in"
 
 #~ msgid ""
 #~ "Preview the diff between the original and new file, and the commit "
