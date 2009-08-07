@@ -61,11 +61,10 @@ put in the ``~/.ssh/`` directory of the remote system, and the private key
 in ``~/.ssh/`` of the local system, where ``~`` is the home directory of the
 user Transifex is run as. 
 
-You can hook-up
-``ssh-agent`` with Transifex in the usual way: The simple way is firing up
-the agent, then ``ssh-add`` the keys and run your webserver in that
-environment. This basically allows Transifex to run with the appropriate
-environment variables setup (basically, it's the ``SSH_AUTH_SOCK`. In a
+You can hook-up ``ssh-agent`` with Transifex in the usual way: The simple way
+is firing up the agent, then ``ssh-add`` the keys and run your webserver in
+that environment. This basically allows Transifex to run with the appropriate
+environment variables setup (basically, it's the ``SSH_AUTH_SOCK``. In a
 production environment, all you need is to run Transifex with the necessary
 environment variable set, and ssh should work.
 
