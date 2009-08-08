@@ -45,10 +45,11 @@ setup(
     author="The Transifex community and the staff of Indifex",
     author_email="transifex-devel@googlegroups.com",
     url="http://transifex.org/",
-#    download_url="http://transifex.org/files",
     license="GPLv2",
     dependency_links = [
         "http://dist.repoze.org/PIL-1.1.6.tar.gz",
+        "http://www.aeracode.org/releases/south/south-0.6-rc1.tar.gz",
+        "http://transifex.org/files/deps/",
         "http://pypi.python.org/simple",
     ],
     setup_requires = [
@@ -60,8 +61,9 @@ setup(
         "Django >= 1.0",
         "urlgrabber",
         "markdown",
+        "userprofile",
         "httplib2",
-        "polib",
+        "polib >= 0.4.2",
         "Pygments >= 0.9",
         "PIL == 1.1.6",
         "contact_form >= 0.3", # hg 97559a887345 or newer
