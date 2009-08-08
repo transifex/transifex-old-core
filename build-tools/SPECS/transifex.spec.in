@@ -14,10 +14,10 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:  noarch
 
 BuildRequires:  Django python-sphinx gettext-devel
-Requires:   Django django-authopenid=0.9.6 django-contact-form
+Requires:   Django django-contact-form django-piston django-profile django-south
 Requires:   django-notification django-pagination django-tagging
-Requires:   python-markdown python-polib python-pygments django-evolution
-Requires:   mercurial python-urlgrabber
+Requires:   python-markdown python-polib python-pygments django-authority
+Requires:   mercurial <= 1.1.1 python-urlgrabber PIL == 1.1.6 python-polib
 Requires:   intltool >= 0.37.1
 
 %description
@@ -47,6 +47,7 @@ cd transifex
 rm -rf .hg* build-tools
 rm -r vcs/tests
 python manage.py syncdb --noinput
+python manage.py migrate
 cd ..
 cd docs
 make html
@@ -130,11 +131,13 @@ fi
 %{_datadir}/%{name}/simpleauth
 %{_datadir}/%{name}/simplelock
 %{_datadir}/%{name}/site_media
+%{_datadir}/%{name}/submissions
 %{_datadir}/%{name}/tarball
 %{_datadir}/%{name}/templates
 %{_datadir}/%{name}/txcommon
 %{_datadir}/%{name}/translations
 %{_datadir}/%{name}/txcollections
+%{_datadir}/%{name}/txpermissions
 %dir %{_datadir}/%{name}/vcs
 %{_datadir}/%{name}/vcs/*.py
 %{_datadir}/%{name}/vcs/*.py[co]
@@ -155,6 +158,7 @@ fi
 %{_datadir}/%{name}/vcs/lib/types/dummy.py[co]
 %{_datadir}/%{name}/vcs/lib/types/hg.py
 %{_datadir}/%{name}/vcs/lib/types/hg.py[co]
+%{_datadir}/%{name}/webtrans
 %dir %{_localstatedir}/lib/%{name}
 %dir %{_localstatedir}/lib/%{name}/scratchdir
 %dir %{_localstatedir}/lib/%{name}/scratchdir/sources
