@@ -98,7 +98,7 @@ class Project(models.Model):
                     '(Bugzilla, Trac, etc.)'))
     anyone_submit = models.BooleanField(_('Anyone can submit'), 
         default=False, blank=False,
-        help_text=_('Does anyone can submit translations to this project?'))
+        help_text=_('Can anyone submit files to this project?'))
 
     hidden = models.BooleanField(_('Hidden'), default=False, editable=False,
         help_text=_('Hide this object from the list view?'))
