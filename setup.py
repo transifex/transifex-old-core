@@ -66,7 +66,7 @@ setup(
         "tagging >= 0.3_pre",
         "django-authority",
         "django-piston",
-        "South",
+        "South >= 0.6-rc1",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
