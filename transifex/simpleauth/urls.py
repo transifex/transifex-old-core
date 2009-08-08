@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from simpleauth.views import login, logout, account_settings
 
 urlpatterns = patterns('',
-    url(r'^signin/$', login, name='login'),
-    url(r'^signout/$', logout, name='logout'),
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', logout, name='logout'),
     url(r'^$', account_settings, name='profile_overview'),
 )
