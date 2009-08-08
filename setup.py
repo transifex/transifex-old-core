@@ -56,6 +56,7 @@ setup(
     install_requires = [
         "Django >= 1.0",
         "urlgrabber",
+        "markdown",
         "httplib2",
         "polib",
         "Pygments >= 0.9",
