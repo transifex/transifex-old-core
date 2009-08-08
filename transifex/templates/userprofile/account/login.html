@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load txcommontags %}
 
-{% block title %}{% trans "User login" %}{% endblock %}
+{% block title %}{% trans "User sign in" %}{% endblock %}
 {% block robots %}noindex,nofollow{% endblock %}
 
 {% block extrajs %}
@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block userprofile_content %}
-  <h2>{% trans "Login" %}</h2>
-  <p>{% trans "Enter your username and password to login." %}</p>
+  <h2>{% trans "Sign in" %}</h2>
+  <p>{% trans "Enter your username and password to sign in." %}</p>
     
   <div class="generic_form">
     <form action="{% if next %}?next={{ next }}{% endif %}" method="post" accept-charset="utf-8">
@@ -24,7 +24,7 @@
     <table><tbody>
       {% form_as_table_rows form %}
     </tbody></table>
-    <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Login" %}" /></p>
+    <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Sign in" %}" /></p>
     </fieldset>
     </form>
   </div>
