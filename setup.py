@@ -47,7 +47,10 @@ setup(
     url="http://transifex.org/",
 #    download_url="http://transifex.org/files",
     license="GPLv2",
-
+    dependency_links = [
+        "http://dist.repoze.org/PIL-1.1.6.tar.gz",
+        "http://pypi.python.org/simple",
+    ],
     setup_requires = [
         "Django >= 1.0",
         "Pygments >= 0.9",
@@ -60,7 +63,7 @@ setup(
         "httplib2",
         "polib",
         "Pygments >= 0.9",
-#        "PIL",
+        "PIL == 1.1.6",
         "contact_form >= 0.3", # hg 97559a887345 or newer
         "django-notification >= 0.1.2",
         "django-pagination >= 1.0.5",
