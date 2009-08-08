@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -18,6 +19,10 @@ def logout(request, template_name='simpleauth/logged_out.html'):
 def login(request, template_name='simpleauth/signin.html'):
     """Login the user to the website and redirect back."""
     next = clean_next(request.GET.get('next'))
+    # By default keep the user logged in for 3 weeks
+    # TODO: Make this an option with a checkbox (#129)
+    login_duration = getattr(settings, 'LOGIN_DAYS', 21) * 60 * 60 * 24 
+    request.session.set_expiry(login_duration)
     return auth_login(request, template_name=template_name,
                       redirect_field_name='next')
 
