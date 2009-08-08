@@ -1,12 +1,14 @@
 import os
 import time
 import os.path
+import traceback
 
 import pysvn
 
 from django.conf import settings
 from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
+from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['svn']
 
@@ -87,6 +89,7 @@ class SvnBrowser(VCSBrowserMixin):
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
         except Exception, e:
+            logger.error(traceback.format_exc())
             raise RepoError("Checkout from remote repository failed.")
 
 
@@ -132,6 +135,7 @@ class SvnBrowser(VCSBrowserMixin):
             return (entry.commit_revision.number,)
         # TODO: Make it more specific
         except:
+            logger.error(traceback.format_exc())
             raise BrowserError()
 
     @need_repo

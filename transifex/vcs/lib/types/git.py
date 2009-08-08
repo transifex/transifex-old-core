@@ -1,9 +1,11 @@
 import os
+import traceback
 
 from django.conf import settings
 from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 from vcs.lib.support.git import repository, clone
+from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['git']
 
@@ -105,6 +107,7 @@ class GitBrowser(VCSBrowserMixin):
         try:
             self.repo.reset('--hard')
         except:
+            logger.error(traceback.format_exc())
             pass
         
     @need_repo
@@ -140,6 +143,7 @@ class GitBrowser(VCSBrowserMixin):
             return (int(rev, 16),)
         # TODO: Make it more specific
         except:
+            logger.error(traceback.format_exc())
             raise BrowserError()
 
     @need_repo

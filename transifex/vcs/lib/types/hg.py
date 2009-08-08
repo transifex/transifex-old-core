@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import traceback
 
 from mercurial import hg, commands
 from vcs.lib.support.hg import ui
@@ -10,6 +11,7 @@ except:
 
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
+from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['hg']
 
@@ -82,6 +84,7 @@ class HgBrowser(VCSBrowserMixin):
             repo = hg.repository(ui, self.path)
         except RepoError, e:
             # Remote repo error
+            logger.error(traceback.format_exc())
             raise BrowserError, e
 
         return repo
@@ -131,6 +134,7 @@ class HgBrowser(VCSBrowserMixin):
             commands.pull(self.repo.ui, self.repo, rev=None, force=False, update=True)
             commands.update(self.repo.ui, self.repo, self.branch)
         except RepoError, e:
+            logger.error(traceback.format_exc())
             raise BrowserError, e
 
     @need_repo

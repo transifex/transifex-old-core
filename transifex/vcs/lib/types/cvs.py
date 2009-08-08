@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 import time
+import traceback
 import os.path
 
 from django.conf import settings
 from vcs.lib import RepoError
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
 from vcs.lib.support.cvs import repository, checkout
+from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['cvs']
 
@@ -154,6 +156,7 @@ class CvsBrowser(VCSBrowserMixin):
             return tuple(int(p) for p in rev.split('.'))
         # TODO: Make it more specific
         except:
+            logger.error(traceback.format_exc())
             raise BrowserError()
 
     @need_repo

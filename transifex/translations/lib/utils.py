@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import subprocess
+import traceback
 
 from django.core.files.uploadedfile import UploadedFile
+from txcommon.log import logger
 
 def python_to_args(**kwargs):
     """
@@ -120,6 +122,7 @@ def run_command(command, *args, **kw):
         stderr_value = stderr_value.rstrip()
 
     if with_exceptions and status != 0:
+        logger.error(stderr_value)
         raise CommandError(command, status, stderr_value)
 
     # Allow access to the command's status code

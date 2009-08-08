@@ -1,5 +1,5 @@
 import os
-
+import traceback
 from bzrlib import bzrdir
 
 try:
@@ -13,6 +13,7 @@ from bzrlib.errors import NotBranchError
 
 from django.conf import settings
 from vcs.lib.types import (VCSBrowserMixin, BrowserError)
+from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['bzr']
 
@@ -146,6 +147,7 @@ class BzrBrowser(VCSBrowserMixin):
                 return m[i.revision]
         # TODO: Make it more specific
         except:
+            logger.error(traceback.format_exc())
             raise BrowserError()
 
     @need_repo

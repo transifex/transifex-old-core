@@ -1,3 +1,4 @@
+import traceback
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template import loader, Context
@@ -36,5 +37,5 @@ def submit_by_email(component, attachments, sender):
                     mail.attach(attach.targetfile, chunk, attach.content_type)
             mail.send()
         except StandardError, e:
-            logger.error(e)
+            logger.error(traceback.format_exc())
             raise SubmitError('Unable to submit file via email')

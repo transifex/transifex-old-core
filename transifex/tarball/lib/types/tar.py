@@ -89,6 +89,7 @@ class TarballBrowser(BrowserMixin):
                 if e.errno == 17:
                     if os.path.isdir(path):
                         return
+                logger.error(traceback.format_exc())
                 raise BrowserError(e)
 
         download = os.path.join(self.path, 'download')
@@ -112,6 +113,7 @@ class TarballBrowser(BrowserMixin):
         try:
             return repo
         except RepoError, e:
+            logger.error(traceback.format_exc())
             raise BrowserError(e)
 
     def init_codebase(self):
@@ -140,6 +142,7 @@ class TarballBrowser(BrowserMixin):
                 return (int(f.filectx(f.filerev()).node().encode('hex'),
                     16),)
         except LookupError, e:
+            logger.error(traceback.format_exc())
             raise BrowserError(e)
 
     @need_codebase
@@ -167,4 +170,5 @@ class TarballBrowser(BrowserMixin):
             else:
                 raise RepoError()
         except RepoError:
+            logger.error(traceback.format_exc())
             self.init_codebase()

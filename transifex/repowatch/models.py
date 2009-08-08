@@ -1,3 +1,4 @@
+import traceback
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -6,6 +7,7 @@ from projects.models import Component
 from repowatch import WatchException
 from translations.models import POFile
 from txcommon.db.models import IntegerTupleField
+from txcommon.log import logger
 
 class WatchManager(models.Manager):
     def add_watch(self, user, component, path=None):
@@ -22,6 +24,7 @@ class WatchManager(models.Manager):
         try:
             rev = component.get_rev(path)
         except ValueError:
+            logger.error(traceback.format_exc())
             raise WatchException(_('Unable to add watch for path %r') % 
                 path)
         watch.rev = rev
