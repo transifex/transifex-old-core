@@ -20,7 +20,7 @@
    </thead>
    <tbody>
    {% for stat in stats %} 
-      <tr>
+      <tr class="{% number_range stat.trans_perc %}">
         <td class="left name" id="{{stat.filename}}">
               <span class="stat_message">{{stat.filename}}</span>
           {% if stat.error %}

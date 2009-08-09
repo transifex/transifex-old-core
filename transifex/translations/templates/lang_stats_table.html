@@ -20,7 +20,7 @@
    {% for stat in stats %}
     {% get_permission "project_perm.submit_file" for request.user and stat.object.project as "can_submit_file" %}
     {% get_permission "project_perm.maintain" for request.user and stat.object.project as "is_maintainer" %}
-      <tr>
+      <tr class="{% number_range stat.trans_perc %}">
         <td class="left name" id="{{stat.object.full_name}}">
           <a href="{{stat.object.project.get_absolute_url}}" title="{% trans "Go to this project page" %}">{{stat.object.project.name}}</a> 
           <span class="stat_message" > &raquo; <a href="{{stat.object.get_absolute_url}}#{{stat.language.code}}" title="{% trans "Go to this component page" %}">{{stat.object.name}}</a></span>

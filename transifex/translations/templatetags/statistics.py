@@ -159,3 +159,22 @@ def render_source_files(context, sources):
 
     context['sources'] = sources
     return context
+
+@register.inclusion_tag("number_range.html")
+def number_range(number):
+    """Return a number to group completion stats based on their number.
+    
+    Depending on the categories defined, different classes will be returned.
+    For example, with the following constant, this will return
+    'lt50' for numbers less than 50 and gt50 for numbers between 50-100.
+    In the case of multiple matches, the first match is returned.
+    
+    RANGES = {'lt50': (0, 49),
+              'gt50': (50, 100)}
+    """
+
+    RANGES = {'incomplete': (0, 99),
+              'complete': (100, 100)}
+    for (r, w) in RANGES.items():
+        if w[0] <= number <= w[1]:
+            return {'range': r }

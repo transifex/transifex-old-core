@@ -12,7 +12,7 @@
    </thead>
    <tbody>        
    {% for language, comp in stats.items %}
-    <tr>
+    <tr class="{% number_range stat.trans_perc %}">
       <td class="left name" id="{{language.code}}">{{ language.name }} ({{language.code}})</td>    
       {% for name, stat in comp.items %}
         {% with 140 as barwidth %}

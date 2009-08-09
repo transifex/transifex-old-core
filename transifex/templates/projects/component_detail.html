@@ -7,6 +7,11 @@
 {% load txpermissions %}
 
 {% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+
   <script type="text/javascript">
   var calcstats = {{ component.should_calculate|lower }};
 
@@ -34,14 +39,13 @@
         tooltip('#note', submission_note);
 
     {% endif %}
+
+    {% include "translations/stats_table_filter_header.html" %}
+
   });
 
 
   </script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   <style type="text/css">
     form.submit_form { display: none; }
@@ -174,6 +178,9 @@
 {% endif %} 
 
 </table>
+
+{% include "translations/stats_table_filter_box.html" %}
+
 {% with component.trans.get_stats as stats %} 
 {% comp_stats_table stats component.should_calculate %}
 

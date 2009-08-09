@@ -1,3 +1,18 @@
+
+function toggle_entries(entries_status){
+    /*
+    Toggle entries of the online translation form filtering the rows by the
+    status of each entry.
+    */
+    $('.'+entries_status).each(function(){
+        if($("input[name='show_"+entries_status+"']").is(':checked')){
+            $(this).removeClass('hidden_field');
+        } else {
+            $(this).addClass('hidden_field');
+        }
+    })
+};
+
 $(document).ready(function(){
 
     // ordering for Release stats table
