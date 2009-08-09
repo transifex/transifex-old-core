@@ -64,8 +64,8 @@ def transfile_edit(request, pofile_id):
         edited_file = SimpleUploadedFile(filename, po_entries.__str__())
         edited_file.targetfile = filename
         submitted_file = {filename: edited_file}
-        msg = 'Updates for %s translation' % pofile.lang_or_code
-
+        msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
+                                          'domain' : request.get_host()}
 
         #TODO: This code right now duplicates stuff from the submit_file view
         # in the projects app. It will be moved to a centralized place once
