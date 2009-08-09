@@ -50,14 +50,6 @@ def process_lang():
     ar.pluralequation = 'n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5'
     ar.save()
 
-#   Argentinian Spanish
-    es_ar, created = Language.objects.get_or_create(code='es_AR')
-    es_ar.code_aliases='es-AR'
-    es_ar.name = _(u'Spanish (Argentinian)')
-    es_ar.nplurals = '2'
-    es_ar.pluralequation = '(n != 1)'
-    es_ar.save()
-
 #   Assamese
     as_, created = Language.objects.get_or_create(code='as')
     as_.code_aliases='as-IN'
@@ -258,6 +250,14 @@ def process_lang():
     es.nplurals = '2'
     es.pluralequation = '(n != 1)'
     es.save()
+
+#   Argentinian Spanish
+    es_ar, created = Language.objects.get_or_create(code='es_AR')
+    es_ar.code_aliases='es-AR'
+    es_ar.name = _(u'Spanish (Argentinian)')
+    es_ar.nplurals = '2'
+    es_ar.pluralequation = '(n != 1)'
+    es_ar.save()
 
 #   Eesti
 #   Estonian
@@ -704,10 +704,10 @@ def process_lang():
     pt.save()
 
 #   Português do Brasil
-#   Brazilian Portuguese
+#   Portuguese (Brazilian)
     pt_BR, created = Language.objects.get_or_create(code='pt_BR')
     pt_BR.code_aliases = 'pt-br pt-BR'
-    pt_BR.name = _(u'Brazilian Portuguese')
+    pt_BR.name = _(u'Portuguese (Brazilian)')
     pt_BR.nplurals = '2'
     pt_BR.pluralequation = '(n > 1)'
     pt_BR.save()
