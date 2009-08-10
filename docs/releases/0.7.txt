@@ -51,7 +51,6 @@ scheduled with a next release.
 .. image:: ../_screenshots/0.7/0.7_lotte.png
    :class: shot2 alcenter
 
-
 More control to Project Maintainers
 :::::::::::::::::::::::::::::::::::
 
@@ -134,7 +133,6 @@ could be useful for setup scenarios such as the following:
     way to know if the maintainer is indeed going to commit the file in his
     repository.
 
-
 User Profiles
 :::::::::::::
 
@@ -173,23 +171,27 @@ the Release Notes.
 Other new features
 ------------------
 
+User sign in changes
+::::::::::::::::::::
+
+- By default users are kept logged in for 3 weeks. This is an option which can
+  be configured by the administrator from the setting files.
+- Upon account creation, users are now automatically added to a group called
+  'registered'. This way, admins can add permissions to all eponymous users,
+  distinguishing them from the anonymous ones.
+- Replaced 'Log in' template occurrences to 'Sign in'.
+
+I18n support improvements
+:::::::::::::::::::::::::
+
 .. image:: ../_screenshots/0.7/0.7_zebra.png
    :class: shot2
 
-- Preliminary setuptools support
-- Add user to a default 'registered' group
-- Speed improvements across the platform
-- Added zebra style to the stats tables
-- Divided Component form in tabs and fixed the validation issues
-- Added toggle to expand and collapse the multi source files div #220
-- Added tooltip for submission note
-- Added missed option to delete releases
-- Made base template inheritable for easier overriding.
-- Added support for dynamic Table Of Contents in pages.
-- Added option in settings to enable download of compressed files
-- Added number of languages and projects to the index view
-- Added templatetag get_latest_projects
-- Support for new languages:
+- A new command was added, ``./manage.py txcompilemessages``, which replaces
+  Django's own ``compilemessages``, since the latter recursively builds all PO
+  files for many more things than the ones we need. This affects admins who are
+  building their own Transifex PO files.
+- 0.7 adds built-in support for the following new languages:
 
   - Asturian (ast)
   - Esperanto (eo)
@@ -198,14 +200,35 @@ Other new features
   - Kirgyz (ky)
   - Latin (la)
   - Xhosa (xh)
- 
-- Made the current user the maintainer when adding a project
+
+- Added support for a whooping set of language code aliases (#267).
+- Added number of languages and projects to the index view
+- Added toggle to expand and collapse the multi source files div (#220).
+- Commit messages are now by default prepended with the keyword 'l10n' prefix
+  (#209). This option is configurable through the setting files.
+- Commit messages now have the user's profile info embedded instead of just
+  the username (#235).
+
+Misc new features
+:::::::::::::::::
+
+- Preliminary setuptools support
+- Speed improvements across the platform
+- Divided Component form in tabs and fixed the validation issues
+- Added tooltip for submission note
+- Made base template inheritable for easier overriding.
+- Added support for dynamic Table Of Contents in pages.
+- Added option in settings to enable download of compressed files
+- Added templatetag get_latest_projects
 - Replaced django-evolution with South
-- Added 0.6-0.7 schema migration
+- Added buildout support
+- Added zebra style to the stats tables
 
 
 Translations
 ------------
+
+The following translations of Transifex were added or updated in this release: 
 
 - Catalan (xconde)
 - Chinese Simplified (tiansworld)
@@ -216,14 +239,16 @@ Translations
 - Slovak (palos)
 - Spanish (elsupergomez)
 
+
 Bugfixes from previous release
 ------------------------------
 
 The following issues have been fixed in this release:
 
+- Added missed option to delete releases
 - Aggregate untranslated strings also for single files
 - Added support to hidden fields to the form_as_table_rows templatetag
-- Added filter for VCS stuff (i.e. .hg/) be ignored by default #91
+- Added filter for VCS stuff (i.e. .hg/) be ignored by default (#91)
 - Added CharField validation for ValidRegexField as well
 - The component unit_subforms must be loaded always
 - Changed name of the body block to make Tx compatible with others django apps
@@ -234,7 +259,7 @@ The following issues have been fixed in this release:
 - Ignore svn externals
 - Forward compatible import for clean_tree.
 - Flatpages are now by default considered in Markdown format.
-- Checking proper permission for submitting a file #246
+- Checking proper permission for submitting a file (#246)
 - Removed obsolete 'release' application templates.
 - Catching TypeError exception when looking for files
 - Correct urls for changing email in the notices page
@@ -264,6 +289,7 @@ The following issues have been fixed in this release:
 - Fixed component.set_unit method (#270)
 - Added installation tip for database encoding (by Og Maciel).
 - Clean POFile objects when a component i18n type changes
+- Standardize in calling home link as 'transifex.home'
 
 
 Upgrading to 0.7
@@ -309,6 +335,7 @@ the new schema from the previous version. All you need to do, from a clean
     upgrade from a 0.5 schema it's necessary to first upgrade your schema to
     v0.6. Instructions to do this can be found in relevant section of the
     :ref:`Transifex 0.6 release notes <upgrading-to-0-6>`.
+
 
 Getting Transifex 0.7
 ---------------------
@@ -374,6 +401,7 @@ The following people have contributed to this release, with one way or another:
 - Og Maciel
 - John Gakos
 - Manolis Kiagias
+- Ruediger Landmann
 - Professor Charles Xavier
 
 For a list of our awesome translators, refer to the `Translations`_ section.
