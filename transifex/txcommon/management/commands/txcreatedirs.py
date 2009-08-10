@@ -10,6 +10,8 @@ def transifex_paths():
     # Repo paths
     for vcs in s.CODEBASE_CHOICES.keys():
         yield s.REPO_PATHS[vcs]
+    # Log path
+    yield s.LOG_PATH
 
 
 class Command(NoArgsCommand):
