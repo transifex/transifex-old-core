@@ -14,6 +14,7 @@ from actionlog.models import action_logging
 from projects.models import Component
 from projects.views import component_submit_file
 from translations.models import POFile
+from txcommon.models import get_profile_or_user
 from txcommon.views import json_result
 from txcommon.log import logger
 from submissions import submit_by_email
@@ -84,7 +85,8 @@ def transfile_edit(request, pofile_id):
                         (filename, component.full_name))
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
-                component.submit(submitted_file, msg, request.user)
+                component.submit(submitted_file, msg, 
+                                 get_profile_or_user(request.user))
 
             if component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 

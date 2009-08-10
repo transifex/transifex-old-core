@@ -31,7 +31,7 @@ from translations.models import (POFile, POFileLock)
 from languages.models import Language
 from txcommon.decorators import perm_required_with_403, one_perm_required_or_403
 from txcommon.forms import unit_sub_forms
-from txcommon.models import exclusive_fields
+from txcommon.models import exclusive_fields, get_profile_or_user
 from txcommon.views import (json_result, json_error)
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
@@ -726,7 +726,8 @@ def component_submit_file(request, project_slug, component_slug,
                          (filename, component.full_name))
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
-                component.submit(request.FILES, msg, request.user)
+                component.submit(request.FILES, msg, 
+                                 get_profile_or_user(request.user))
 
             if component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 

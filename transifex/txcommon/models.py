@@ -11,6 +11,18 @@ from txcommon.signals import add_user_to_registered_group
 
 GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 
+def get_profile_or_user(user):
+    """
+    Return the Profile of the user or the User itself case the app simpleauth
+    is being used instead.
+
+    ``user`` must be a django.contrib.auth.models.User based instance 
+    """
+    try:
+        return Profile.objects.get(user__pk=user.pk)
+    except Profile.DoesNotExist:
+        return user
+
 class Profile(BaseProfile):
     """
     Profile class to used as a base for the django-profile app
