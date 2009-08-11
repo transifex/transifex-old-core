@@ -5,7 +5,7 @@ import os
 import glob
 from codecs import BOM
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py as _build_py
 
 from transifex.txcommon import version
@@ -79,8 +79,7 @@ setup(
     ],
 
     zip_safe=False,
-    package_dir={'': 'transifex'},
-    packages=[''],
+    packages=find_packages(),
     include_package_data=True,
     package_data = package_data,
     keywords = (
