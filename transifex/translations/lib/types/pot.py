@@ -189,6 +189,12 @@ class POTManager(TransManagerMixin):
                 rev = object.get_rev(filename)
                 if rev == s.rev:
                     calcstats = False
+
+            # For intltool components that the pot file has changes, it's
+            # necessary to recalc the stats even if the 'rev' is the same
+            if object.i18n_type=='INTLTOOL' and try_to_merge:
+                calcstats = True
+
             if calcstats:
                 stats = self.calculate_file_stats(filename, try_to_merge)
         except POTStatsError:
