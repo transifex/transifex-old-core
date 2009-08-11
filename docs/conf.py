@@ -17,6 +17,8 @@ import os
 # If your extensions are in another directory, add it here.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../transifex')))
 
+from txcommon import (version as txversion, version_info)
+
 # General configuration
 # ---------------------
 
@@ -41,9 +43,9 @@ copyright = '<a href="http://www.indifex.com">Indifex</a> and the <a href="http:
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '0.7'
+version = '.'.join([str(v) for v in version_info[:2]])
 # The full version, including alpha/beta/rc tags.
-release = '0.7-RC1'
+release = txversion
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
