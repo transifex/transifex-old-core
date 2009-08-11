@@ -9,17 +9,18 @@ function watch_handler(data, textStatus)
     else
         obj = $('#watch-pofile-' + String(j.id))
 
-
     if (j.error)
     {
-        obj.addClass(j.style);
         obj.attr('title', j.error);
+        obj.addClass(j.style);
+        obj.removeClass('waiting');
     }
     else
     {
-        obj.addClass(j.style);
         obj.attr('title', j.title);
         obj.click(click_function(obj, j.url));
+        obj.addClass(j.style);
+        obj.removeClass('waiting');
     };
 }
 
@@ -36,6 +37,7 @@ function watch_toggle(obj, url)
     obj.onclick = null;
     o = $(obj);
     o.unbind('click');
+    o.addClass('waiting'); /* will be removed in the callback */
     for (cls in watch_classes)
     {
         if (o.hasClass(watch_classes[cls]))
@@ -43,6 +45,5 @@ function watch_toggle(obj, url)
             o.removeClass(watch_classes[cls]);
         }
     }
-    
     $.post(url=url, callback=watch_handler, type='json');
 }

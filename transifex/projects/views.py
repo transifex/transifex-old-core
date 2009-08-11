@@ -281,7 +281,7 @@ def project_delete_permission_request(request, project_slug, permission_pk):
 @login_required
 def project_toggle_watch(request, project_slug):
     """Add/Remove watches on a project for a specific user."""
-
+    time.sleep(5)
     if request.method != 'POST':
         return json_error(_('Must use POST to activate'))
 
