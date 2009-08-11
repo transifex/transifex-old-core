@@ -47,8 +47,8 @@ setup(
     url="http://transifex.org/",
     license="GPLv2",
     dependency_links = [
-        "http://dist.repoze.org/PIL-1.1.6.tar.gz",
-        "http://www.aeracode.org/releases/south/south-0.6-rc1.tar.gz",
+        "http://dist.repoze.org/",
+        "http://www.aeracode.org/releases/south/",
         "http://transifex.org/files/deps/",
         "http://pypi.python.org/simple",
     ],
