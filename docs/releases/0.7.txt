@@ -209,6 +209,14 @@ I18n support improvements
 - Commit messages now have the user's profile info embedded instead of just
   the username (#235).
 
+Logging
+:::::::
+
+Transifex now comes pre-configured with logging support to a file on the disk
+in the ``logs/`` directory. You can control the verbosity through the
+corresponding configuration options. Make sure the directory is created by
+running the command ``./manage.py txcreatedirs``.          
+
 Misc new features
 :::::::::::::::::
 
@@ -226,6 +234,10 @@ Misc new features
 - Added option to filter out completed files in a statistics table.
 - Upon clicking 'Watch', user is now presented with a 'waiting' icon while
   he waits for his watch to be activated through AJAX.
+- Switched use of 'tip' to 'default' for main HG branch. It's not a good
+  practice using 'tip' as the main branch.
+- *All* tracebacks (500 errors) are now logged, printed out or notified to the
+  admins for immediate action and future reference.
 
 
 Translations
@@ -243,8 +255,8 @@ The following translations of Transifex were added or updated in this release:
 - Spanish (elsupergomez)
 
 
-Bugfixes from previous release
-------------------------------
+Various Improvements and Bugfixes
+---------------------------------
 
 The following issues have been fixed in this release:
 
@@ -281,7 +293,6 @@ The following issues have been fixed in this release:
 - Removed unneeded admin registration
 - Fixed duplication in the get_langs method
 - Calculate stats only on file change within the repo
-- form_as_table_rows must display errors for hidden fields
 - Projects maintainers are required now
 - Dropped using of custom revision field
 - More permissions checks in templates for "Add Project" etc.
@@ -295,6 +306,16 @@ The following issues have been fixed in this release:
 - Standardize in calling home link as 'transifex.home'
 - Login required when a guest user asking for email validation (fixed
   upstream).
+- Become compatible with newer versions of hg.
+- Show rich tooltip for locking icons.
+- form_as_table_rows must display errors for hidden fields
+
+Documentation improvements
+::::::::::::::::::::::::::
+
+- Moved compiled files in ``html`` directory.
+- Make Sphinx automagically understand our version/release.
+- Minor theme redesign (mostly colors).
 
 
 Upgrading to 0.7
