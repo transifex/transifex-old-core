@@ -547,9 +547,10 @@ def component_set_stats(request, project_slug, component_slug):
                 "component. Maybe its file filter is not allowing access to it."))
 
     else:
-        logger.debug("Component %s has should_calculate=False" % component)
+        logger.debug("Statistics calculation is disabled for the '%s' component."
+                     % component)
         request.user.message_set.create(message = _(
-            "This component is set up for do not calculate statistics."))
+            "This component is not configured for statistics calculation."))
 
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))

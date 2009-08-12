@@ -114,4 +114,4 @@ class Command(LabelCommand):
                 sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
                 sys.exit(1)
         else:
-            print "Component '%s' has should_calculate=False." % comp_name
+            print "Statistics calculation is disabled for the particular component."
