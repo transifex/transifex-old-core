@@ -1,6 +1,6 @@
 To build the docs, I usually do something like:
 
 workon current
-export DJANGO_SETTINGS_MODULE='settings'
 make clean && make html
-scpresume _build/html/* opendev@opendev.gr:webapps/txo_docs/
+cd html
+scpresume * txo:webapps/txo_docs/
