@@ -1,10 +1,17 @@
-include LICENSE README
-recursive-include transifex/templates *.html *.txt *.xrdf
-recursive-include transifex/*/templates *.html *.tmpl
+recursive-include transifex/templates *.html *.txt *.tmpl
+recursive-include transifex/*/templates *.html *.txt *.tmpl
+
 recursive-include transifex/settings *.conf
-recursive-include transifex/site_media *
+exclude transifex/settings/*-local.conf
+
+graft transifex/site_media
 recursive-include transifex *.json *js
-recursive-include docs *
+
+include LICENSE README
+recursive-include docs *.txt
+graft docs/html
+
 recursive-include build-tools *
+
 include transifex/locale/LINGUAS
 recursive-include transifex/locale *.po
