@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 
-from mercurial import ui, hg, commands
+from mercurial import hg, commands
+from vcs.lib.support.hg import ui
 try:
     from mercurial.repo import RepoError # mercurial-1.1.x
 except:
@@ -74,11 +75,11 @@ class HgBrowser(VCSBrowserMixin):
         """
 
         try:
-            remote_repo, repo = hg.clone(ui.ui(), self.remote_path,
+            remote_repo, repo = hg.clone(ui, self.remote_path,
                                          self.path)
             commands.update(repo.ui, repo, self.branch)
             #TODO: Why is the following needed, since it's defined above?
-            repo = hg.repository(ui.ui(), self.path)
+            repo = hg.repository(ui, self.path)
         except RepoError, e:
             # Remote repo error
             raise BrowserError, e
@@ -94,7 +95,7 @@ class HgBrowser(VCSBrowserMixin):
         """
         
         try:
-            self.repo = hg.repository(ui.ui(), self.path)
+            self.repo = hg.repository(ui, self.path)
         except RepoError:
             self.repo = self.setup_repo()
 
