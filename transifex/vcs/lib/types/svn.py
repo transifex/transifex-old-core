@@ -41,7 +41,7 @@ class SvnBrowser(VCSBrowserMixin):
     # Pysvn is somewhat different from the mercurial and git apis.
     # We have to specify the full path to svn commands in order to work.
 
-    def __init__(self, root, name=None, branch='trunk'):
+    def __init__(self, root, name=None, branch=None):
         # If name isn't given, let's take the last part of the root
         # Eg. root = 'http://example.com/foo/baz' -> name='baz'
         if not name:
@@ -64,11 +64,14 @@ class SvnBrowser(VCSBrowserMixin):
     @property
     def remote_path(self):
         """Calculate remote path using the standard svn layout."""
-        if self.branch == u'trunk':
-            repo_path = "%s/trunk" % self.root
+        if self.branch:
+            if self.branch == u'trunk':
+                repo_path = "%s/trunk" % self.root
+            else:
+                repo_path = "%s/branches/%s" % (self.root, self.branch)
+            return repo_path
         else:
-            repo_path = "%s/branches/%s" % (self.root, self.branch)
-        return repo_path
+            return self.root
 
 
     def setup_repo(self):
