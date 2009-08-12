@@ -29,8 +29,8 @@ class HgBrowser(VCSBrowserMixin):
     Mercurial homepage: http://www.selenic.com/mercurial/
 
     >>> b = HgBrowser(root='http://code.transifex.org/transifex',
-    ... name='test-hg', branch='tip')
-    >>> HgBrowser(root='foo', name='../..', branch='tip')
+    ... name='test-hg', branch='default')
+    >>> HgBrowser(root='foo', name='../..', branch='default')
     Traceback (most recent call last):
       ...
     AssertionError: Unit checkout path outside of nominal repo checkout path.
@@ -38,7 +38,7 @@ class HgBrowser(VCSBrowserMixin):
     """
 
    
-    def __init__(self, root, name=None, branch='tip'):
+    def __init__(self, root, name=None, branch='default'):
         # If name isn't given, let's take the last part of the root
         # Eg. root = 'http://example.com/foo/baz' -> name='baz'
         if not name:

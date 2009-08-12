@@ -36,7 +36,7 @@ class TarballBrowser(BrowserMixin):
         codebase_path = settings.REPO_PATHS['tar']
         
         self.root = root
-        self.branch = 'tip'
+        self.branch = 'default'
         
         self.path = os.path.normpath(os.path.join(
             codebase_path, name))
