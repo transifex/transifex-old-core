@@ -6,7 +6,11 @@ from txcommon.models import *
 from userprofile.countries import CountryField
 
 class Migration:
-    
+
+    depends_on = (
+        ("languages", "0001_initial"),
+    )
+
     def forwards(self, orm):
         
         # Adding model 'Profile'
