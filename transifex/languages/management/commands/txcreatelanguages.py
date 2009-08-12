@@ -222,7 +222,7 @@ def process_lang():
 #   English (United States)
     en_US, created = Language.objects.get_or_create(code='en_US')
     en_US.code_aliases='en-US'
-    en_US.name = _(u'English')
+    en_US.name = _(u'English (United States)')
     en_US.nplurals = '2'
     en_US.pluralequation = '(n != 1)'
     en_US.save()
@@ -419,12 +419,12 @@ def process_lang():
     ilo.save()
 
 #   Icelandic
-    islang, created = Language.objects.get_or_create(code='is')
-    is.code_aliases='is-IS'
-    islang.name = _(u'Icelandic')
-    islang.nplurals = '2'
-    islang.pluralequation = '(n != 1)'
-    islang.save()
+    is_, created = Language.objects.get_or_create(code='is')
+    is_.code_aliases='is-IS'
+    is_.name = _(u'Icelandic')
+    is_.nplurals = '2'
+    is_.pluralequation = '(n != 1)'
+    is_.save()
 
 #   Italiano
 #   Italian
