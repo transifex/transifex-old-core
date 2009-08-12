@@ -1,7 +1,6 @@
 from exceptions import Exception
 import logging
 import os
-import traceback
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import (LabelCommand, CommandError)
@@ -43,7 +42,6 @@ class Command(LabelCommand):
         """Override default method to make it work without arguments."""
         _continue = options.get('continue')
         skip = options.get('skip')
-        verbose = options.get('verbose')
         if _continue and not os.access(os.path.dirname(__file__), os.W_OK):
             raise CommandError("Insufficient rights to resume file.")
             
@@ -81,8 +79,6 @@ class Command(LabelCommand):
                         print("Failed refreshing %s." % comp)
                         pass
                     else:
-                        if verbose:
-                            print traceback.format_exc()
                         raise CommandError("Error refreshing stats for %s. "
                             "Use --skip to ignore broken ones)." % comp)
                 if _continue and not errors.has_key(comp):
@@ -107,13 +103,15 @@ class Command(LabelCommand):
             raise CommandError("No component with full name '%s'." % comp_name)
         if verbose:
             print '- %s' % (comp.full_name)
-        comp.prepare()
-        # Calculate statistics
-        try:
-            comp.trans.set_stats()
-        except:
-            if verbose:
-                print traceback.format_exc()
-            raise CommandError("Error in setting stats for %s." % comp.full_name)
-            sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
-            sys.exit(1)
+        
+        if comp.should_calculate:
+            comp.prepare()
+            # Calculate statistics
+            try:
+                comp.trans.set_stats()
+            except:
+                raise CommandError("Error in setting stats for %s." % comp.full_name)
+                sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
+                sys.exit(1)
+        else:
+            print "Component '%s' has should_calculate=False." % comp_name

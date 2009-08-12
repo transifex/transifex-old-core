@@ -525,25 +525,31 @@ def component_set_stats(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     logger.debug("Requested stats calc for component %s" % component.full_name)
-    # Checkout
-    component.prepare()
-    # Calculate statistics
-    try:
-        component.trans.set_stats()
-    except FileFilterError:
-        logger.debug("File filter does not allow POTFILES.in file name"
-                     " for %s component" % component.full_name)
-        request.user.message_set.create(message = _(
-            "The file filter of this intltool POT-based component does not "
-            " seem to allow the POTFILES.in file. Please fix it."))
+    if component.should_calculate:
+        # Checkout
+        component.prepare()
+        # Calculate statistics
+        try:
+            component.trans.set_stats()
+        except FileFilterError:
+            logger.debug("File filter does not allow POTFILES.in file name"
+                        " for %s component" % component.full_name)
+            request.user.message_set.create(message = _(
+                "The file filter of this intltool POT-based component does not "
+                " seem to allow the POTFILES.in file. Please fix it."))
 
-    except PotDirError:
-        logger.debug("There is no 'pot' directory in the set of files. %s does "
-                     "not seem to be a Publian like project."
-                     % component.full_name)
-        request.user.message_set.create(message = _("There is no 'pot' "
-            "directory named in the set of files of this Publian like "
-            "component. Maybe its file filter is not allowing access to it."))
+        except PotDirError:
+            logger.debug("There is no 'pot' directory in the set of files. %s does "
+                        "not seem to be a Publian like project."
+                        % component.full_name)
+            request.user.message_set.create(message = _("There is no 'pot' "
+                "directory named in the set of files of this Publian like "
+                "component. Maybe its file filter is not allowing access to it."))
+
+    else:
+        logger.debug("Component %s has should_calculate=False" % component)
+        request.user.message_set.create(message = _(
+            "This component is set up for do not calculate statistics."))
 
     return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))

@@ -182,7 +182,7 @@
 {% include "translations/stats_table_filter_box.html" %}
 
 {% with component.trans.get_stats as stats %} 
-{% comp_stats_table stats component.should_calculate %}
+{% comp_stats_table stats %}
 
 {% if component.allows_submission %}
  {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
