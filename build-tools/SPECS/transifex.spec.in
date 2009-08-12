@@ -14,10 +14,10 @@ BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:  noarch
 
 BuildRequires:  Django python-sphinx gettext-devel
-Requires:   Django django-contact-form django-piston django-profile django-south
+Requires:   Django django-contact-form django-piston django-profile Django-south
 Requires:   django-notification django-pagination django-tagging
 Requires:   python-markdown python-polib python-pygments django-authority
-Requires:   mercurial <= 1.1.1 python-urlgrabber PIL == 1.1.6 python-polib
+Requires:   mercurial python-urlgrabber PIL >= 1.1.6 python-polib
 Requires:   intltool >= 0.37.1
 
 %description
@@ -48,13 +48,11 @@ rm -rf .hg* build-tools
 rm -r vcs/tests
 python manage.py syncdb --noinput
 python manage.py migrate
+python manage.py txcompilemessages
 cd ..
 cd docs
 make html
 cd ..
-# Django's compilemessages command seems to walk all over the place
-#python manage.py compilemessages
-find transifex/locale -name django.po -execdir msgfmt --check-format -o django.mo {} \;
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -71,9 +69,14 @@ do
     mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}/scratchdir/sources/"$vcs"
 done
 
+mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log/%{name}
+
 install -d -m 0755 $RPM_BUILD_ROOT/%{confdir}
 
 cp -a settings/*.conf $RPM_BUILD_ROOT/%{confdir}
+
+sed -i -e 's!^\(LOG_PATH = \).*$!\1%{_localstatedir}/log/%{name}!' \
+    $RPM_BUILD_ROOT/%{confdir}/10-base.conf
 
 sed -e 's!\[\[confpath\]\]!%{confdir}!' %{SOURCE1} > \
     $RPM_BUILD_ROOT%{_datadir}/%{name}/settings.py
