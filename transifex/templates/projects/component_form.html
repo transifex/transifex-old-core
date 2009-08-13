@@ -22,6 +22,12 @@ triggers = new Object();
 {% endfor %}{% endfor %}
 prefaces = new Array({% for subform in unit_subforms %}"sub_{{ subform.id }}"{% if not forloop.last %}, {% endif %}{% endfor %});
 
+// Create a array based on settings.BRANCH_SUPPORT
+branch_support = new Object();
+{% for entry, value in branch_support.items %}
+branch_support["{{ entry }}"] = {{value|lower}};
+{% endfor %}
+
 function on_change_type(obj)
 {
     on = triggers[obj.attr("value")];
@@ -35,6 +41,14 @@ function on_change_type(obj)
         $("[id^='" + off + "']").hide();
     }
     $("[id^='" + on + "']").show();
+
+    // Show/hide the branch field based on the settings.BRANCH_SUPPORT
+    if (branch_support[obj.attr("value")]){
+        $("input[id='branch']").parents('tr:eq(0)').show();
+    }else{
+        $("input[id='branch']").parents('tr:eq(0)').hide();
+        $("input[id='branch']").attr('value','');
+    }
 }
 
 function toggle_submission_status() {

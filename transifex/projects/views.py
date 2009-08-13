@@ -442,6 +442,7 @@ def component_create_update(request, project_slug, component_slug=None):
         'allow_subform': allow_subform,
         'project' : project,
         'component': component,
+        'branch_support': settings.BRANCH_SUPPORT,
     }, context_instance=RequestContext(request))
 
 
