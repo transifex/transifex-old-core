@@ -1,6 +1,7 @@
 from exceptions import Exception
 import logging
 import os
+import traceback
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import (LabelCommand, CommandError)
@@ -42,6 +43,7 @@ class Command(LabelCommand):
         """Override default method to make it work without arguments."""
         _continue = options.get('continue')
         skip = options.get('skip')
+        verbose = options.get('verbose')
         if _continue and not os.access(os.path.dirname(__file__), os.W_OK):
             raise CommandError("Insufficient rights to resume file.")
             
@@ -79,6 +81,8 @@ class Command(LabelCommand):
                         print("Failed refreshing %s." % comp)
                         pass
                     else:
+                        if verbose:
+                            print traceback.format_exc()
                         raise CommandError("Error refreshing stats for %s. "
                             "Use --skip to ignore broken ones)." % comp)
                 if _continue and not errors.has_key(comp):
