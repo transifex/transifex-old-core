@@ -774,7 +774,7 @@ def process_lang():
 
 #   Serbian
     srLatin, created = Language.objects.get_or_create(code='sr@latin')
-    srLatin.code_aliases = 'sr@Latin sr@latn sr@Latn sr-Latn-RS sr-Latn'
+    srLatin.code_aliases = 'sr@Latin sr@latn sr@Latn sr-Latn-RS sr-Latn sr_Latn'
     srLatin.name = _(u'Serbian (Latin)')
     srLatin.nplurals = '3'
     srLatin.pluralequation = '(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)'
