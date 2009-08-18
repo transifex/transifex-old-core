@@ -44,12 +44,12 @@ def transfile_edit(request, pofile_id):
             if 'msgid_field_' in fieldname:
                 nkey = fieldname.split('msgid_field_')[1]
                 if request.POST.get('changed_field_%s' % nkey, None) == 'True':
-                    entry = po_entries.find(unescape(value.encode('utf-8')))
+                    entry = po_entries.find(unescape(value))
 
                     #TODO: Find out why it's needed to remove it first
                     po_entries.remove(entry)
 
-                    string = request.POST['msgstr_field_%s' % nkey].encode('utf-8')
+                    string = request.POST['msgstr_field_%s' % nkey]
                     entry.msgstr = unescape(string);
 
                     # Taking care of fuzzies flags
@@ -62,7 +62,8 @@ def transfile_edit(request, pofile_id):
 
                     po_entries.append(entry)
 
-        edited_file = SimpleUploadedFile(filename, po_entries.__str__())
+        po_contents = po_entries.__str__().encode('utf-8')
+        edited_file = SimpleUploadedFile(filename, po_contents)
         edited_file.targetfile = filename
         submitted_file = {filename: edited_file}
         msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
@@ -76,7 +77,7 @@ def transfile_edit(request, pofile_id):
             if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
-                component.trans.msgfmt_check(edited_file)
+                component.trans.msgfmt_check(edited_file.read())
 
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare()
