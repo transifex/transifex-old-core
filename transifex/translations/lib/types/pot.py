@@ -59,7 +59,7 @@ class POTManager(TransManagerMixin):
         """Return a Django form field for the component."""
         from django import forms
         if filename in self.file_set:
-            file_path = os.path.join(self.path, filename)
+            file_path = os.path.join(self.msgmerge_path, filename)
             try:
                 po = polib.pofile(file_path)
             except IOError:
