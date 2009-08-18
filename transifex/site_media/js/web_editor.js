@@ -64,7 +64,7 @@ function get_total_perc(w) {
         // Hack to always have a total percentage sum of 100%:
         num = get_total_sum() - get_total("translated") - get_total("fuzzy");
     }
-    return Math.round(num * 100 / get_total_sum());
+    return Math.floor(num * 100 / get_total_sum());
 }
 
 function update_total(w) {
