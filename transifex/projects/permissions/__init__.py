@@ -15,6 +15,10 @@ pr_project_delete = (
     ('general',  'projects.delete_project'),
 )
 
+pr_project_view_log = (
+    ('granular', 'project_perm.maintain'),
+)
+
 pr_project_add_perm = (
     ('granular', 'project_perm.maintain'),
     ('general',  'authority.add_permission'),

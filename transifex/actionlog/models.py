@@ -33,6 +33,12 @@ def _get_formatted_message(label, context):
 
     return msg
 
+class LogEntryManager(models.Manager):
+    def by_object(self, obj):
+        """Return LogEntries for a related object."""
+        ctype = ContentType.objects.get_for_model(obj)
+        return self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
+
 class LogEntry(models.Model):
     """A Entry in an object's log."""
     user = models.ForeignKey(User, blank=True, null=True, 
@@ -47,6 +53,9 @@ class LogEntry(models.Model):
     object_name = models.CharField(blank=True, max_length=200)
     message = models.TextField(blank=True, null=True)
 
+    # Managers
+    objects = LogEntryManager()
+    
     class Meta:
         verbose_name = _('log entry')
         verbose_name_plural = _('log entries')
@@ -56,14 +65,28 @@ class LogEntry(models.Model):
         return u'%s.%s.%s' % (self.action_type, self.object_name, self.user)
 
     def __repr__(self):
-        return smart_unicode(self.action_time)
-
+        return smart_unicode("<LogEntry %d (%s)>" % (self.id,
+                                                     self.action_type.label))
 
     def save(self, *args, **kwargs):
         """Save the object in the database."""
         if self.action_time is None:
            self.action_time = datetime.datetime.now()
         super(LogEntry, self).save(*args, **kwargs)
+    
+    @property
+    def action_type_short(self):
+        """
+        Return a shortened, generalized version of an action type.
+        
+        Useful for presenting an image signifying an action type. Example::
+        
+        >>> print l.action_type
+        <NoticeType: project_component_added>
+        >>> print l.action_type_short
+        u'added'
+        """
+        return self.action_type.label.split('_')[-1]
 
 def action_logging(user, object_list, action_type, message=None, context=None):
     """
@@ -79,7 +102,7 @@ def action_logging(user, object_list, action_type, message=None, context=None):
       A message to be included at the actionlog. If no message is passed
       it will try do render a message using the notice.html from the
       notification application.
-    contex:
+    context:
       To render the message using the notification files, sometimes it is 
       necessary to pass some vars by using a context.
 

@@ -1,0 +1,70 @@
+{% extends "projects/project_menu.html" %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load sorting_tags %}
+{% load txcommontags %}
+
+{% block extra_head %}
+{#  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_submission_feed param=project.slug %}" /> #}
+
+<link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Action log" %}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {% trans "Action log" %}{% endblock %}
+
+{% block content_main %}
+  <div class="obj_bigdetails">
+  <h2 class="name">{{ project.name }} &raquo; {% trans "Action log" %}</h2>
+
+{% autosort actionlog %}
+{% autopaginate actionlog 30 %}
+
+<fieldset style="margin: inherit auto; width: 50%;" class="compact">
+  <legend><span class="i16 filter">{% trans "Filter results" %}</span></legend>
+        <form action="" method="get">
+          <table class="definition">
+            {{ f.form.as_table }}
+          <tr><td></td><td><input type="submit" class="i16 submit" value="{% trans "Go" %}"/></td></tr>
+          </table>
+        </form>
+</fieldset>
+
+{% if not actionlog %}
+<p>{% trans 'None available' %}</p>
+{% else %}
+
+  <div class="pagination">{% paginate %}</div>
+  
+  <table class="tablesorter compact withair">
+   <thead>
+    <tr>
+      <th><span class="i16 action">{% anchor action_type Action %}</span></th>
+      <th><span class="i16 user">{% anchor user User %}</span></th>
+      <th><span class="i16 clock">{% anchor action_time "Time" %}</span></th>
+      <th><span class="i16 text">{% trans "Description" %}</span></th>
+    </tr>
+   </thead>
+   <tbody>
+{% for entry in actionlog %}
+     <tr>
+       <td><span class="i16 {{ entry.action_type_short }}">{{ entry.action_type_short }}</span></td>
+       <td>{{ entry.user }}</td>
+       <td>{{ entry.action_time|timesince }}</td>
+       <td>{{ entry.message|safe }}</td>
+     </tr>
+{% endfor %}
+   </tbody>
+  </table>
+  
+  <div class="pagination">{% paginate %}</div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block content_footer %}{% endblock %}

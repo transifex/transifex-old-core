@@ -112,16 +112,22 @@
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object project %}
 {% if not action_log %}
+
 <p>{% trans 'None available' %}</p>
+
 {% else %}
+
 <ul class="actionlist simple">
 {% for entry in action_log %}
 <li class="i16 actionlog">
     {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
 </li>
 {% endfor %}
-
 </ul>
+{% if perms.projects.change_project or is_maintainer %}
+  <p><span class="i16 date"><a href="{% url project_log slug=project.slug %}">{% trans "View complete action log" %}</a></span></p>
+{% endif %}
+
 {% endif %}
 
 {% endblock %}

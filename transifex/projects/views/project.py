@@ -6,9 +6,11 @@ from django.template import RequestContext
 from django.dispatch import Signal
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.views.generic import list_detail
 from django.contrib.auth.decorators import login_required
 
-from actionlog.models import action_logging
+from actionlog.models import action_logging, LogEntry
+from actionlog.filters import LogEntryFilter
 from notification import models as notification
 from projects.models import Project
 from projects.forms import ProjectAccessSubForm, ProjectForm
@@ -102,6 +104,25 @@ def project_create(request):
     (Project, 'slug__exact', 'project_slug'))
 def project_update(request, project_slug):
         return _project_create_update(request, project_slug)
+
+@login_required
+@one_perm_required_or_403(pr_project_view_log, 
+    (Project, 'slug__exact', 'project_slug'))
+def project_log(request, *args, **kwargs):
+    """
+    Present a log of the latest actions on the project.
+    
+    The view limits the results and uses filters to allow the user to even
+    further refine the set.
+    """
+    project = get_object_or_404(Project, slug=kwargs['slug'])
+    log_entries = LogEntry.objects.by_object(project)
+    f = LogEntryFilter(request.GET, queryset=log_entries)
+    # The template needs both these variables. The first is used in filtering,
+    # the second is used for pagination and sorting.
+    kwargs.setdefault('extra_context', {}).update({'f': f,
+                                                   'actionlog': f.qs})
+    return list_detail.object_detail(request, *args, **kwargs)
 
 @login_required
 @one_perm_required_or_403(pr_project_delete, 

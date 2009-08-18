@@ -55,6 +55,14 @@ $(document).ready(
        </a>
     </li>
 
+    {% if request.user.is_authenticated %}
+    <li class="ui-state-default ui-corner-top {% if project_log %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-3" href="{% url project_log slug=project.slug %}">
+         <span>{% trans "Timeline" %}</span>
+       </a>
+    </li>
+    {% endif %}
+
   </ul>
 </div>
 {% endif %}
