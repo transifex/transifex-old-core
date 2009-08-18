@@ -22,7 +22,7 @@
     </script>
   {% endifequal %}
 {% else %}
-  {% if perms.translations.add_pofilelock or is_maintainer %}
+  {% if perms.translations.add_pofilelock or can_submit_file or is_maintainer %}
    <form action="{{ toggle_lock_url }}" method="POST" class="microform">
         <input title="{% trans "Lock this file to notify others you're working with it." %}" class="i16 lock_none nodecoration_icon image_submit_type" value="" type="image">
     </form>
