@@ -1,13 +1,10 @@
 from django.conf.urls.defaults import *
-from django.contrib import admin
 from django.conf import settings
 from tagging.views import tagged_object_list
 
 from projects.models import Project
 from projects.views import * 
 from feeds import (LatestProjects, ProjectFeed)
-
-admin.autodiscover()
 
 project_list = {
     'queryset': Project.objects.all(),

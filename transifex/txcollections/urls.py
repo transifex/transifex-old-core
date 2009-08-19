@@ -1,13 +1,10 @@
 from django.conf.urls.defaults import *
-from django.contrib import admin
 from tagging.views import tagged_object_list
 
 from txcollections.views import * 
 from txcollections.feeds import (LatestCollections, CollectionFeed,
                                  ReleaseLanguagesFeed)
 from txcollections.models import Collection
-
-admin.autodiscover()
 
 collection_list = {
     'queryset': Collection.objects.all(),

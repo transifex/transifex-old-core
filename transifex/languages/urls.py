@@ -1,13 +1,10 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-from django.contrib import admin
 from languages.models import Language
 from languages.feeds import AllLanguages, LanguageReleaseFeed
 from languages.views import (language_detail, slug_feed,
                    language_release, language_release_feed,
                    language_release_download)
-
-admin.autodiscover()
 
 feeds = {
     'all': AllLanguages,
