@@ -41,42 +41,42 @@ urlpatterns += patterns('',
         view = project_create,
         name = 'project_create'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/edit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/edit/$',
         view = project_update,
         name = 'project_edit',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/delete/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/delete/$',
         view = project_delete,
         name = 'project_delete',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/access/permission/add/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/access/pm/add/$',
         view = project_add_permission,
         name = 'project_add_permission'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/access/permission/(?P<permission_pk>\d+)/delete/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/access/pm/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
         name = 'project_delete_permission'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/access/request/add/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
         view = project_add_permission_request,
         name = 'project_add_permission_request'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/access/request/(?P<permission_pk>\d+)/delete/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission_request,
         name = 'project_delete_permission_request'),
         
-    url(regex = '^(?P<project_slug>[-\w]+)/access/request/(?P<permission_pk>\d+)/approve/$',
+    url(regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/approve/$',
         view = project_approve_permission_request,
         name = "project_approve_permission_request"),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/toggle_watch/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,
         name = 'project_toggle_watch',),
 )
 
 urlpatterns += patterns('django.views.generic',
     url(
-        regex = '^(?P<slug>[-\w]+)/$',
+        regex = '^p/(?P<slug>[-\w]+)/$',
         view = 'list_detail.object_detail',
         name = 'project_detail',
         kwargs = project_list,),
@@ -97,62 +97,62 @@ urlpatterns += patterns('django.views.generic',
 # Components
 urlpatterns += patterns('',
     url(
-        regex = '^(?P<project_slug>[-\w]+)/add-component/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/add-component/$',
         view = component_create_update,
         name = 'component_create',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/edit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/edit/$',
         view = component_create_update,
         name = 'component_edit',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/delete/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/delete/$',
         view = component_delete,
         name = 'component_delete',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/clear_cache/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/clear_cache/$',
         view = component_clear_cache,
         name = 'component_clear_cache',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/set_stats/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/set_stats/$',
         view = component_set_stats,
         name = 'component_set_stats',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/raw/(?P<filename>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/raw/(?P<filename>(.*))$',
         view = component_file,
         name = 'component_raw_file',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/view/(?P<filename>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/view/(?P<filename>(.*))$',
         view = component_file,
         name = 'component_view_file',
         kwargs = {'view': True },),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/toggle_lock/(?P<filename>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/toggle_lock/(?P<filename>(.*))$',
         view = component_toggle_lock_file,
         name = 'component_toggle_lock_file',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/submit/(?P<filename>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/(?P<filename>(.*))$',
         view = component_submit_file,
         name = 'component_submit_file',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/toggle_watch/pofile/(?P<filename>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/toggle_watch/pofile/(?P<filename>(.*))$',
         view = component_toggle_watch,
         name = 'component_toggle_watch',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/submit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/$',
         view = component_submit_file,
         name = 'component_submit_new_file',),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/l/(?P<language_code>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/l/(?P<language_code>(.*))$',
         view = component_language_detail,
         name = 'component_language_detail',),
     url (
-        regex = '^(?P<slug>[-\w]+)/component-added/$',
+        regex = '^p/(?P<slug>[-\w]+)/component-added/$',
         view = 'django.views.generic.list_detail.object_detail',
         kwargs = {'object_list': project_list,
                   'message': 'Component added.' },
         name = 'component_created'),
     url(
-        regex = '^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/$',
         view = component_detail,
         name = 'component_detail'),
 )
@@ -161,7 +161,7 @@ urlpatterns += patterns('',
 if getattr(settings, 'ENABLE_WEBTRANS', True):
     urlpatterns += patterns('',
         url(
-            regex = ('^(?P<project_slug>[-\w]+)/(?P<component_slug>[-\w]+)/'
+            regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
                     'edit/(?P<filename>(.*))$'),
             view = component_file_edit,
             name = 'component_edit_file',),

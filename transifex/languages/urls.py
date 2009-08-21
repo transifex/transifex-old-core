@@ -21,7 +21,7 @@ urlpatterns = patterns('',
         kwargs = {'feed_dict': feeds,
                   'slug': 'all'}),
     url(
-        regex = '^(?P<language_slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/feed/$',
+        regex = '^l/(?P<language_slug>[-_@\w]+)/collection/c/(?P<collection_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/feed/$',
         view = language_release_feed,
         name = 'language_release_feed',
         kwargs = {'feed_dict': feeds,
@@ -39,7 +39,7 @@ urlpatterns += patterns('django.views.generic',
     ),
     url(
         name = 'language_detail',
-        regex = '^(?P<slug>[-_@\w]+)/$',
+        regex = '^l/(?P<slug>[-_@\w]+)/$',
         view = language_detail,
         kwargs = {'slug_field': 'code',
                   "template_object_name" : "language",
@@ -47,7 +47,7 @@ urlpatterns += patterns('django.views.generic',
     ),
     url(
         name = 'language_release',
-        regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/$',
+        regex = '^l/(?P<slug>[-_@\w]+)/collection/c/(?P<collection_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/$',
         view = language_release,
     ),
 )
@@ -57,7 +57,7 @@ if getattr(settings, 'ENABLE_COMPRESSED_DOWNLOAD', True):
     urlpatterns += patterns('',
         url(
             name = 'language_release_download',
-            regex = '^(?P<slug>[-_@\w]+)/collection/(?P<collection_slug>[-\w]+)/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
+            regex = '^l/(?P<slug>[-_@\w]+)/collection/c/(?P<collection_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
             view = language_release_download,
         ),
 )
