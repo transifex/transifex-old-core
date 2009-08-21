@@ -24,7 +24,6 @@ class POTHandler:
             filepath = browser.filepath
         else:
             filepath = None
-        logger.debug('File path: %s' % filepath)
         self.tm = POTManager(component.get_files(),
                              browser.path, 
                              component.source_lang,
