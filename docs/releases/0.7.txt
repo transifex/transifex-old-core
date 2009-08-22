@@ -439,51 +439,6 @@ The following translations of Transifex were added or updated in this release:
 - Spanish (elsupergomez)
 
 
-Upgrading to 0.7
-----------------
-
-To upgrade the code, update your package distribution as usual.
-
-
-Dependencies
-::::::::::::
-
-The following dependencies were *added* in this version:
-
-- Imaging (Python Imaging Library, PIL)
-- polib
-- django-authority
-- South
-- django-piston
-- django-profile (named 'userprofile')
-- mercurial >= 1.3
-
-The following dependencies were *removed* in this version:
-
-- python-openid
-- django-evolution
-
-For instructions on how to install them, refer to the
-:ref:`Installation docs <intro-install>`. You'll need to complete this step
-before actually doing the database upgrade.
-
-
-Database migration
-::::::::::::::::::
-
-Transifex includes a script which will automatically migrate your database to
-the new schema from the previous version. All you need to do, from a clean
-0.6 schema, is run the following::
-
-    ./manage.py syncdb
-    ./manage.py migrate 0001_initial --all --fake
-    ./manage.py migrate
-
-To upgrade from a 0.5 schema to 0.7 you first need to upgrade your schema to
-0.6 and from there to 0.7. Instructions for the first step can be found in the
-relevant section of the :ref:`Transifex 0.6 release notes <upgrading-to-0-6>`.
-
-
 Getting Transifex 0.7
 ---------------------
 
@@ -540,6 +495,51 @@ Stable and development images:
  http://www.rpath.org/web/project/transifex/releases
 
 
+Upgrading to 0.7
+----------------
+
+To upgrade the code, update your package distribution as usual.
+
+
+Dependencies
+::::::::::::
+
+The following dependencies were *added* in this version:
+
+- Imaging (Python Imaging Library, PIL)
+- polib
+- django-authority
+- South
+- django-piston
+- django-profile (named 'userprofile')
+- mercurial >= 1.3
+
+The following dependencies were *removed* in this version:
+
+- python-openid
+- django-evolution
+
+For instructions on how to install them, refer to the
+:ref:`Installation docs <intro-install>`. You'll need to complete this step
+before actually doing the database upgrade.
+
+
+Database migration
+::::::::::::::::::
+
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. All you need to do, from a clean
+0.6 schema, is run the following::
+
+    ./manage.py syncdb
+    ./manage.py migrate 0001_initial --all --fake
+    ./manage.py migrate
+
+To upgrade from a 0.5 schema to 0.7 you first need to upgrade your schema to
+0.6 and from there to 0.7. Instructions for the first step can be found in the
+relevant section of the :ref:`Transifex 0.6 release notes <upgrading-to-0-6>`.
+
+
 Contributors
 ------------
 
@@ -559,6 +559,18 @@ The following people have contributed to this release, with one way or another:
 
 For a list of our awesome translators, refer to the `Translations`_ section.
 
+
+Transifex 0.7 Release Candidates
+================================
+
+Two release candidates were shipped for 0.7, RC1 and RC2, on August 7 and
+August 14 respectively.
+
+Please refer to the full `Transifex 0.7 changelog`_ for more information on
+what has changed between these releases and the final 0.7 release.
+
+
 .. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
 .. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
 .. _Google Translate API: http://code.google.com/apis/ajaxlanguage/documentation/#SupportedPairs
+.. _Transifex 0.7 changelog: http://code.transifex.org/index.cgi/tx-0.7.x/shortlog
