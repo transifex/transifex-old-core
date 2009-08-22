@@ -1,4 +1,4 @@
-version_info = (0, 7, 0, 'RC2', 0)
+version_info = (0, 7, 0, 'final', 0)
 
 _verpart = ''
 if version_info[3] != 'final':
