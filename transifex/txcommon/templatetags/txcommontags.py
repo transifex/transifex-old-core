@@ -182,8 +182,10 @@ def in_list(value, arg):
 @register.filter
 def get_next(request):
     """Return the next path from the request."""
-    if getattr(request, 'GET', None):
+    try:
         next = request.GET.get('next', '')
         if not next:
             next = request.path
         return next
+    except AttributeError:
+        return ''
