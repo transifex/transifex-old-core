@@ -1,17 +1,20 @@
 .. _intro-running:
 
-Running Transifex
-=================
+===================
+ Running Transifex
+===================
 
 At this point you probably have Transifex up and running, probably with some
 initial data. This section will help you with some common tasks around how to
 run and customize Transifex.
 
+
 Customizing your Transifex instance
------------------------------------
+===================================
+
 
 Administrator accounts
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Admin users are able to login to Transifex's admin panel, at ``/admin/`` and
 have full control over the whole website content. If you haven't created one
@@ -24,8 +27,52 @@ in the steps above, you can do so as follows::
     Password (again): 
     Superuser created successfully.
 
+
+Site Domain and Name
+--------------------
+
+Transifex leverages the power of Django's Sites_ framework to make it easy
+to have instances of Transifex on differnet domains using the same models
+and database.
+
+If you have imported the sample data, a single website is created in the
+database called 'example.com'. If you haven't, you'll need to create it.
+
+This value is used in a number of places, including emails sent by the system.
+You can edit or create your default website in two ways:
+
+* Using the `Django admin panel`_: By default Transifex comes with a handy
+  admin panel. This is mounted by default at ``/admin/`` (this value can be
+  changed from your settings file).
+  
+  Login to the admin panel using the credentials you created during the
+  database creation step, and navigate to the ``Sites`` model. There, you can
+  either edit the default site or create your own.
+
+* Alternatively, you may use the command line:
+
+  .. code-block:: pycon
+
+    $ cd transifex
+    $ python manage.py shell
+    >>> from django.contrib.sites.models import Site
+
+    >>> # To edit the existing one:
+    >>> current_site = Site.objects.get_current()
+    >>> current_site.domain = 'mydomain.com'
+    >>> current_site.name = 'Transifex'
+    >>> current_site.save()
+
+    >>> # To create your own:
+    >>> s = Site(domain='mydomain.com', name='Transifex')
+    >>> s.save()
+
+You can now proceed to the next section to import some data, or read about
+managing your instance right away.
+
+
 User Interface
-~~~~~~~~~~~~~~
+--------------
 
 The default Transifex interface lives in the ``templates`` directory and can
 be customized at will.
@@ -39,8 +86,28 @@ simply copy particular files you'd like to override and define the
 ``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
 to be searched (first entry takes preference over second, etc).
 
-Submissions
------------
+
+Automating statistics generation
+--------------------------------
+
+As mentioned before, the command ``./manage.py txstatsrefresh`` is responsible
+for updating all the statistics of your instance. It pulls new changesets from
+VCS-type projects, msgmerge the PO files with the POT, and calculates
+translation compeletion statistics.
+
+This command is usually used in a cronjob to refresh Transifex's cache and
+translation statistics every once in a while for translators. Here's a sample
+cronjob for your pleasure::
+
+    $ crontab -l
+    SHELL=/bin/bash
+    MAILTO=admin
+    0 3,15 * * * python <TxPath>>/transifex/manage.py txstatsrefresh --skip > \
+    /var/log/transifex/"txstatsrefresh.out.$(date +\%F_\%k).log"
+
+
+Setting up Submissions
+======================
 
 Now you should be able to add your own projects and present
 translation completion statistics for them. This applies if you have added your
@@ -68,8 +135,9 @@ environment variables setup (basically, it's the ``SSH_AUTH_SOCK``. In a
 production environment, all you need is to run Transifex with the necessary
 environment variable set, and ssh should work.
 
+
 Testing submissions
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 First of all, test the access of the SSH key: Ride your agent by setting up
 ``SSH_AUTH_SOCK`` and try a connection to the remote SSH machine (the following
@@ -90,3 +158,6 @@ To test an SSH submission through Transifex, create a project and component
 which uses ssh as the protocol. Enable submissions on the *Edit Component* page,
 *Submissions* tab. Then click on *Refresh Stats*. It should take some time and
 then present some nice charts on the page.
+
+.. _`Django admin panel`: http://www.djangobook.com/en/1.0/chapter06/
+.. _Sites: http://docs.djangoproject.com/en/dev/ref/contrib/sites
