@@ -9,6 +9,10 @@ Before you can use Transifex, you'll need to get it installed. This guide
 will guide you to a simple, minimal installation that'll work while you 
 walk through the introduction.
 
+To avoid spending too much time talking about packaging systems, this guide
+is based on yum and Fedora. You can substitute those commands with your own
+distribution's packaging system commands.
+
 
 First things first
 ==================
@@ -58,6 +62,21 @@ no specialized Transifex client you can install.
 
 Now that we've made clear who we're talking with, let's proceed in explaining
 how a private installation of Transifex can be set  up.
+
+
+I'm ultra hardcore. Give me just the gist!
+==========================================
+
+The following is what a set of super-fast installation instructions would look
+like (run as root or under ``sudo``)::
+
+    yum install python python-setuptools python-imaging
+    yum install cvs subversion pysvn mercurial git bzr bzrtools python-urlgrabber
+    easy_install transifex
+    
+
+Please note that the above might eventually end up missing something compared
+to the full instructions below.
 
 
 Installing Basic Dependencies
@@ -129,9 +148,9 @@ its own tools to install them. On Fedora you can run the following command::
 
     yum install cvs subversion pysvn mercurial git bzr bzrtools 
 
-If you're enabling the tarball support, you also need urlgrabber::
+If you're enabling the tarball support, you also need 'urlgrabber'::
 
-    yum install python-urlgrabber 
+    yum install python-urlgrabber
 
 
 Installing Transifex
@@ -153,12 +172,26 @@ packaging tools. Since Tx is registered on the Python Packaging Index and
 has defined its own Python dependencies, using this method to install all the
 required software is quite easy.
 
+First off, you'll need the following packages installed::
+
+    yum install python-setuptools python-imaging
+
+.. note::
+
+    If ``python-imaging`` isn't available in your packaging system, just install
+    ``gcc`` and the following command will pull and auto-compile this package for
+    you. 
+
 By default, ``easy_install`` installs the software in your system's standard
 Python packages directory (eg. ``/usr/lib/python2.5/site-packages/transifex``).
-If you want to do this, you'll need sudo or root access, and something like
-the following will do the trick::
+If you want to do this, running the following as root or with sudo, should
+do the trick::
 
-    sudo easy_install transifex
+    easy_install transifex
+
+
+Using a virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Alternatively, you can setup a virtual environment using ``virtualenv``, and
 isolate your Transifex installation in its own "shell". This is particularly
@@ -176,11 +209,10 @@ in the current directory and install Transifex in there::
 For more information on this way of installing Tx, please refer to the
 documentation of virtualenv itself.
 
-.. note::
-
-    Since this method only takes care of Python dependencies, you should make
-    sure you've also installed non-Python dependencies (like some of the
-    versioning systems you might use) with the previously mentioned methods.
+If you've already installed the non-Python dependencies (like some of the
+versioning systems you might use) mentioned in the previous sections, you could
+jump to the `Initial configuration`_ section to proceed in configuring your
+setup.
 
 
 Install using your distribution's tools
@@ -256,8 +288,8 @@ To grab a branched development version of Transifex, you can navigate to
 http://code.transifex.org/ to see the active branches. 
 
 
-Installing dependencies
-~~~~~~~~~~~~~~~~~~~~~~~
+Install dependencies
+~~~~~~~~~~~~~~~~~~~~
 
 Django
 ::::::
@@ -267,9 +299,7 @@ recommend installing the latest version of Django, but anything above 1.0
 should do. You can get more information about how to install Django on
 your system from the official Django documentation.
 
-Usually you can use the package your distribution provides you, or you can
-even use ``easy_install`` to setup the package. On Fedora you can just
-run::
+Usually you can use the package your distribution provides you::
 
     yum install Django
 
