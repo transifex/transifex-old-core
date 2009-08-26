@@ -3,11 +3,15 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from projects.models import Project, Component
 from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
+    maintainers = forms.ModelMultipleChoiceField(
+        queryset=User.objects.order_by('username'))
+
     class Meta:
         model = Project
         exclude = ('anyone_submit',)
