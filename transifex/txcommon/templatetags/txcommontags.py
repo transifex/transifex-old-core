@@ -136,7 +136,7 @@ def notice_type_user_filter(noticetype_list):
     It is necessary by now until the upstream project have a model change to be 
     able to do this filtering from the database.
     """
-    from txcommon.management import NOTICE_TYPES
+    from txcommon.notifications import NOTICE_TYPES
     new_list=[]
     for nt in noticetype_list:
         for n in NOTICE_TYPES:
