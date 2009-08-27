@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 
 from translations.models import POFile
 from txcollections.models import (Collection, CollectionRelease as Release)
-from txcommon.templatetags.txcommontags import key_sort
+from txcommon.utils import key_sort
 
 current_site = Site.objects.get_current()
 

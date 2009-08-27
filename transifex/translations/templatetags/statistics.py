@@ -4,7 +4,7 @@ import os
 from django import template
 
 from translations.models import Language
-from txcommon.templatetags.txcommontags import key_sort
+from txcommon.utils import key_sort
 
 register = template.Library()
 

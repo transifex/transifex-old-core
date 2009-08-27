@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 from txcollections.models import Collection, CollectionRelease as Release
 from translations.models import POFile
 from models import Language
-from txcommon.templatetags.txcommontags import key_sort
+from txcommon.utils import key_sort
 current_site = Site.objects.get_current()
 
 class AllLanguages(Feed):
