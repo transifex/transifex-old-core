@@ -13,6 +13,7 @@ from txcommon.log import logger
 REPO_PATH = settings.REPO_PATHS['svn']
 
 def need_repo(fn):
+    #This is different than in other vcs systems!
     def repo_fn(self, *args, **kw):
         try:
             self.client.status(self.path)
@@ -81,8 +82,11 @@ class SvnBrowser(VCSBrowserMixin):
         Commands used:
         svn co <remote_path> <self.path>
         """
+        #FIXME: This function isn't called by anyone!
         #FIXME: This doesn't look 100% right, but it works and seems to
         # follow pysvn's instructions.
+        # Basically we need to call exactly the same commands as the ones
+        # we're calling in the following method (client.checkout).
         self.init_repo()
 
 
