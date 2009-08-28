@@ -31,7 +31,7 @@ def cached_property(func):
     """
     Cached property.
 
-    This function is able to verify if an instance of a property fieald
+    This function is able to verify if an instance of a property field
     was already created before and, if not, it creates the new one.
     When needed it also is able to delete the cached property field from
     the memory.
