@@ -376,8 +376,11 @@ Once you're done configuring, run inside the project directory::
     ./manage.py txcreatenoticetypes # Create a standard set of notice types
     ./manage.py runserver 8088      # Start the development server
 
-The first command will create the necessary directories on the disk. ``syncdb``
-will create the database tables, and ask you to create an admin user
+The first command will create the necessary directories on the disk. Note that
+the user you're running the software as, needs to have write access to these
+directories (check out your configuration files to see what these are).
+
+``syncdb`` will create the database tables, and ask you to create an admin user
 (superuser), who will have access to the admin panel. The latter is by default
 accessible through ``/admin/``, something you can customize by modifying the
 file ``transifex/urls.py``.
@@ -389,10 +392,9 @@ coffee and lean back.
 Import some data
 ----------------
 
-Transifex uses the fixtures feature of Django to load some initial datas
-in the database. The following commands require you having run
-``./manage.py syncdb`` at least once before in order for the database tables
-to exist.
+Transifex uses the fixtures feature of Django to load some initial data in the
+database. The following commands require you having run ``./manage.py syncdb``
+at least once before in order for the database tables to exist.
 
 The following commands loads a bunch of sample data to play around with.
 
