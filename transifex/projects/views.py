@@ -285,7 +285,7 @@ def project_toggle_watch(request, project_slug):
         return json_error(_('Must use POST to activate'))
 
     if not settings.ENABLE_NOTICES:
-        return json_error(_('Notifation is not enabled'))
+        return json_error(_('Notification is not enabled'))
 
     project = get_object_or_404(Project, slug=project_slug)
     url = reverse('project_toggle_watch', args=(project_slug,))
@@ -850,7 +850,7 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
         return json_error(_('Must use POST to activate'))
 
     if not settings.ENABLE_NOTICES:
-        return json_error(_('Notifation is not enabled'))
+        return json_error(_('Notification is not enabled'))
 
     component = get_object_or_404(Component, slug=component_slug,
                                 project__slug=project_slug)
