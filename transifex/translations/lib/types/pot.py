@@ -21,6 +21,11 @@ class FileFilterError(Exception):
         return "The file filter should allows the POTFILES.in file" \
                " for intltool POT-based projects."
 
+class MsgfmtCheckError(Exception):
+
+    def __str__(self):
+        return "Msgfmt -c check failed for the file."
+
 class POTManager(TransManagerMixin):
     """A browser class for POT files."""
 
@@ -423,8 +428,6 @@ class POTManager(TransManagerMixin):
         try:
             p = run_command('msgfmt -o /dev/null -c -', _input=po_contents)
         except CommandError:
-            # TODO: Figure out why gettext is not working here
-            raise ValueError, "Your file does not" \
-                            " pass by the check for correctness" \
-                            " (msgfmt -c). Please run this command" \
-                            " on your system to see the errors."
+            raise MsgfmtCheckError, "Your file does not pass by the check " \
+                "for correctness (msgfmt -c). Please run this command on " \
+                "your system to see the errors."

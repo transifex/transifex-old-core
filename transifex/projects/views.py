@@ -25,7 +25,7 @@ from projects.permissions import ProjectPermission
 from tarball.forms import TarballSubForm
 from txcommon.log import logger
 from actionlog.models import action_logging
-from translations.lib.types.pot import FileFilterError
+from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
 from translations.lib.types.publican import PotDirError
 from translations.models import (POFile, POFileLock)
 from languages.models import Language
@@ -773,7 +773,7 @@ def component_submit_file(request, project_slug, component_slug,
                 txnotification.send_observation_notices_for(component.project,
                        signal=nt, extra_context=context)
 
-        except ValueError: # msgfmt_check
+        except MsgfmtCheckError:
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
             request.user.message_set.create(message=_("Your file does not" \
                                     " pass correctness checks" \
