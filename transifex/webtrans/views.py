@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 from actionlog.models import action_logging
 from projects.models import Component
 from projects.views import component_submit_file
+from translations.lib.types.pot import MsgfmtCheckError
 from translations.models import POFile
 from txcommon.models import get_profile_or_user
 from txcommon.views import json_result
@@ -127,7 +128,7 @@ def transfile_edit(request, pofile_id):
             request.user.message_set.create(message=_("File submitted " 
                             "successfully: %s" % filename))
 
-        except ValueError: # msgfmt_check
+        except MsgfmtCheckError:
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
             request.user.message_set.create(message=_("Your file does not" \
                                     " pass by the check for correctness" \
