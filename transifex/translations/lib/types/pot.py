@@ -423,10 +423,14 @@ class POTManager(TransManagerMixin):
     def msgfmt_check(self, po_contents):
         """
         Run a `msgfmt -c` on a file (file object).
-        Raises a ValueError in case the file has errors.
+        Raises a MsgfmtCheckError in case the file has errors or warnings.
         """
         try:
-            p = run_command('msgfmt -o /dev/null -c -', _input=po_contents)
+            command = 'msgfmt -o /dev/null -c -'
+            status, stdout, stderr = run_command(command, _input=po_contents, 
+                                                 with_extended_output=True)
+            if 'warning:' in stderr:
+                raise CommandError(command, status, stderr)
         except CommandError:
             raise MsgfmtCheckError, "Your file does not pass by the check " \
                 "for correctness (msgfmt -c). Please run this command on " \
