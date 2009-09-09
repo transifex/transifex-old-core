@@ -743,7 +743,7 @@ def component_submit_file(request, project_slug, component_slug,
 
             logger.debug("Calculating %s stats for component %s" % 
                          (filename, component.full_name))
-            if filename.endswith('.po'):
+            if filename.endswith('.po') and component.submission_type!='email':
                 # TODO: Find out a better way to handle it. We might wand to merge
                 # the file with the POT before commmit, but it just must happen when
                 # the POT is not broken for intltool based projects.
