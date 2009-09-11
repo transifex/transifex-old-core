@@ -2,7 +2,7 @@
 import os
 import traceback
 
-from mercurial import hg, commands
+from mercurial import hg, commands, encoding
 from vcs.lib.support.hg import ui
 try:
     from mercurial.repo import RepoError # mercurial-1.1.x
@@ -14,6 +14,8 @@ from vcs.lib.types import (VCSBrowserMixin, BrowserError, need_repo)
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['hg']
+
+encoding.encoding = 'utf-8'
 
 class HgBrowser(VCSBrowserMixin):
 
