@@ -125,8 +125,8 @@ class VcsUnit(Unit):
             logger.debug("Tearing down repo for vcsunit '%s'" % self.name)
             self.browser.teardown_repo()
         except:
-           logger.error("Could not teardown repo for vcsunit '%s'" % self.name)
-           pass
+            logger.error("Could not teardown repo for vcsunit '%s'" % self.name)
+            pass
 
     @need_browser
     def _rename_repo(self, new_name):
