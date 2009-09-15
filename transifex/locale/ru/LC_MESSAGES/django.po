@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: russian\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-07 17:40+0000\n"
-"PO-Revision-Date: 2009-09-12 11:21+0500\n"
+"PO-Revision-Date: 2009-09-15 23:16+0500\n"
 "Last-Translator: Azamat H. Hackimov <azamat.hackimov@gmail.com>\n"
 "Language-Team: russian team <fedora-trans-ru@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -682,7 +682,7 @@ msgstr "Коллекции"
 
 #: projects/models.py:112
 msgid "Maintainers"
-msgstr ""
+msgstr "Координаторы"
 
 #: projects/models.py:116
 #: projects/models.py:228
@@ -735,18 +735,16 @@ msgid "File filter"
 msgstr "Фильтр файлов"
 
 #: projects/models.py:210
-#, fuzzy
 msgid "Allows submission"
-msgstr "Подтвердить"
+msgstr "Разрешить отправку"
 
 #: projects/models.py:212
 msgid "Does this module repository allow write access?"
 msgstr "Есть ли в хранилище доступ по записи?"
 
 #: projects/models.py:222
-#, fuzzy
 msgid "Calculate statistics?"
-msgstr "Статистика перевода"
+msgstr "Подсчитать статистику?"
 
 #: projects/models.py:223
 msgid "Should statistics be calculated for this component?"
@@ -809,24 +807,20 @@ msgid "The file filter of this intltool POT-based component does not  seem to al
 msgstr ""
 
 #: projects/views.py:450
-#, fuzzy
 msgid "This component does  not allow write access."
-msgstr "Есть ли в хранилище доступ по записи?"
+msgstr "В данный компонент запись не разрешена."
 
 #: projects/views.py:458
-#, fuzzy
 msgid "Please select a file from your system to be uploaded."
-msgstr "Выберите файл для загрузки."
+msgstr "Выберите файл в локальной системе для загрузки."
 
 #: projects/views.py:467
-#, fuzzy
 msgid "Please enter a target to upload the file."
-msgstr "Выберите файл для загрузки."
+msgstr "Укажите цель для загружаемого файла."
 
 #: projects/views.py:473
-#, fuzzy
 msgid "Please enter only ONE target to upload the file."
-msgstr "Указывайте только ОДИН файл для загрузки."
+msgstr "Указывайте только ОДНУ цель для загружаемого файла."
 
 #: projects/views.py:484
 msgid "The target file does not match with the component file filter"
@@ -838,23 +832,22 @@ msgstr ""
 
 #: projects/views.py:550
 #: webtrans/views.py:120
-#, fuzzy, python-format
+#, python-format
 msgid "File submitted successfully: %s"
-msgstr "Ваши изменения успешно размещены."
+msgstr "Файл успешно отправлен: %s"
 
 #: projects/views.py:565
-#, fuzzy
 msgid "Your file does not pass correctness checks (msgfmt -c). Please run this command on your system to see the errors."
-msgstr "Ваш файл не прошел проверку на корректность (msgfmt -c). Пожалуйста выполните эту команду в своей системе для просмотра ошибок."
+msgstr "Ваш файл не прошел проверку на корректность (msgfmt -c). Пожалуйста, выполните эту команду в своей системе для просмотра ошибок."
 
 #: projects/views.py:574
 msgid "Sorry, your file could not be sent because of an error."
-msgstr ""
+msgstr "Ваш файл не был отправлен из-за возникшей ошибки."
 
 #: projects/views.py:578
 #: projects/views.py:608
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "Вам необходимо использовать POST-запрос."
 
 #: projects/views.py:597
 msgid "Lock removed."
@@ -883,7 +876,7 @@ msgstr "Дата релиза"
 
 #: releases/models.py:32
 msgid "When this release will be available."
-msgstr ""
+msgstr "Когда этот релиз будет доступен."
 
 #: releases/models.py:33
 msgid "String freeze date"
@@ -891,7 +884,7 @@ msgstr "Дата заморозки строк"
 
 #: releases/models.py:34
 msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
-msgstr ""
+msgstr "Дата заморозки переводимых строк (строки, затрагивающие перевод, не могут быть добавлены/изменены)."
 
 #: releases/models.py:36
 msgid "Devel freeze date"
@@ -917,7 +910,7 @@ msgstr "Следить"
 
 #: repowatch/__init__.py:75
 msgid "Stop watching it"
-msgstr ""
+msgstr "Не следить"
 
 #: repowatch/models.py:24
 #, python-format
@@ -963,7 +956,6 @@ msgid "Forbidden access"
 msgstr "Доступ запрещен"
 
 #: templates/403.html:12
-#, fuzzy
 msgid "Looks like you do not have the necessary permissions for the required action."
 msgstr "Похоже, у вас нет достаточных прав для запрашиваемого действия."
 
@@ -1266,6 +1258,9 @@ msgid ""
 "\t<p>Your OpenID can now be associated with a new or existing membership. You can change the association later in your preferences.</p>\n"
 "\t"
 msgstr ""
+"\n"
+"\t<p>Ваш OpenID может быть присвоен к новой либо существующей учетной записи. Позднее вы сможете изменить привязку в настройках.</p>\n"
+"\t"
 
 #: templates/authopenid/complete.html:18
 msgid "Associate your OpenID"
@@ -1277,6 +1272,9 @@ msgid ""
 "\t<p>If you're joining for the first time, associate your OpenID with a new account. If you're already a member, associate with your existing account.</p>\n"
 "\t"
 msgstr ""
+"\n"
+"\t<p>Если вы присоединились впервые, свяжите свой OpenID с новой учетной записью. Если вы уже зарегистрированы, то свяжите его с существующей учетной записью.</p>\n"
+"\t"
 
 #: templates/authopenid/complete.html:49
 msgid "A new account"
@@ -1310,7 +1308,6 @@ msgid "Note: After deleting your account, anyone will be able to register this u
 msgstr "Примечание: после удаления учетной записи любой сможет зарегистрировать это имя."
 
 #: templates/authopenid/delete.html:14
-#, fuzzy
 msgid "Check the confirm box, if you really want to delete your account."
 msgstr "Подтвердите, если вы хотите удалить свою учетную запись."
 
@@ -1345,7 +1342,7 @@ msgstr "Имя пользователя:"
 #: templates/authopenid/login_box.html:14
 #: templates/authopenid/signin.html:39
 msgid "Or, with your OpenID:"
-msgstr ""
+msgstr "Или с помощью OpenID:"
 
 #: templates/authopenid/login_box.html:20
 #: templates/authopenid/signin.html:42
@@ -1400,7 +1397,7 @@ msgstr ""
 
 #: templates/authopenid/settings.html:37
 msgid "Add or update the email address associated with your account."
-msgstr ""
+msgstr "Добавить или обновить адрес email, связанный с вашей учетной записью."
 
 #: templates/authopenid/settings.html:39
 msgid "Change openid url"
@@ -1408,22 +1405,22 @@ msgstr "Изменить OpenID URL"
 
 #: templates/authopenid/settings.html:40
 msgid "Change openid associated to your account"
-msgstr ""
+msgstr "Изменить OpenID, связанный с вашей учетной записью"
 
 #: templates/authopenid/settings.html:44
 #: templates/simpleauth/settings.html:23
 #: templates/userprofile/profile/overview.html:106
 msgid "Change notifications"
-msgstr ""
+msgstr "Изменить извещения"
 
 #: templates/authopenid/settings.html:45
 #: templates/simpleauth/settings.html:24
 msgid "Change notifications associated to your account"
-msgstr ""
+msgstr "Изменить извещения, связанные с вашей учетной записью"
 
 #: templates/authopenid/settings.html:48
 msgid "Erase your username and all your data from website"
-msgstr ""
+msgstr "Удалить свои имя пользователя и все данные с сайта"
 
 #: templates/authopenid/signin.html:5
 #: templates/simpleauth/logout.html:5
@@ -1437,11 +1434,13 @@ msgid ""
 "\n"
 "<p>Please login in with your email or screen name, or using your OpenID URL.<br />\n"
 msgstr ""
+"\n"
+"<p>Войдите с помощью своего email, имени пользователя или OpenID URL.<br />\n"
 
 #: templates/authopenid/signup.html:4
 #: templates/authopenid/signup.html.py:5
 msgid "Join us"
-msgstr ""
+msgstr "Присоединиться"
 
 #: templates/authopenid/signup.html:6
 msgid "Create your account"
@@ -1453,6 +1452,9 @@ msgid ""
 "<p>There are two ways to join: with an email and screen name or with an OpenID.</p>\n"
 "<p>Enter information only for the type of sign up you wish to do.</p>\n"
 msgstr ""
+"\n"
+"<p>Есть два способа присоединиться: с помощью email и имени пользователя или с помощью OpenID.</p>\n"
+"<p>Введите лишь ту информацию, необходимую для используемого входа.</p>\n"
 
 #: templates/authopenid/signup.html:15
 msgid "Regular Signup"
@@ -1460,7 +1462,7 @@ msgstr "Обычныйвход"
 
 #: templates/authopenid/signup.html:31
 msgid "Choose a Screen Name:"
-msgstr ""
+msgstr "Укажите учетную запись:"
 
 #: templates/authopenid/signup.html:33
 msgid "Enter Your Email Address:"
@@ -1468,7 +1470,7 @@ msgstr "Введите свой Email адрес:"
 
 #: templates/authopenid/signup.html:34
 msgid "Choose a Password:"
-msgstr ""
+msgstr "Укажите пароль:"
 
 #: templates/authopenid/signup.html:35
 msgid "Confirm Your Password:"
@@ -1484,7 +1486,7 @@ msgstr "Вход по OpenID"
 
 #: templates/authopenid/signup.html:44
 msgid "Sign in with OPENID"
-msgstr ""
+msgstr "Войти с помощью OpenID"
 
 #: templates/contact_form/contact_form.html:5
 #: templates/contact_form/contact_form.html:6
@@ -1501,11 +1503,11 @@ msgstr ""
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
-msgstr ""
+msgstr "Отправить запрос"
 
 #: templates/contact_form/contact_form_sent.html:4
 msgid "Thanks for the feedback!"
-msgstr ""
+msgstr "Спасибо за запрос!"
 
 #: templates/contact_form/contact_form_sent.html:7
 msgid "Thanks!"
@@ -1513,7 +1515,7 @@ msgstr "Спасибо!"
 
 #: templates/contact_form/contact_form_sent.html:11
 msgid "Thank you for your feedback."
-msgstr ""
+msgstr "Спасибо за ваш запрос."
 
 #: templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:68
@@ -1525,13 +1527,13 @@ msgstr "Релизы %(collection)s"
 #: templates/txcollections/collection_detail.html:74
 #, python-format
 msgid "The %(collection)s collection includes the following groups of shipped components:"
-msgstr ""
+msgstr "В коллекцию %(collection)s включены следующие группы компонентов:"
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
 #, python-format
 msgid "No releases are registered for this collection yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
+msgstr "В этой коллекции пока не зарегистрировано ни одного релиза. Почему бы его <a href=\"%(release_create)s\">не добавить</a>?"
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1579,19 +1581,19 @@ msgstr "Настройки оповещения"
 
 #: templates/notification/notices.html:16
 msgid "Notices"
-msgstr ""
+msgstr "Извещения"
 
 #: templates/notification/notices.html:21
 msgid "Mark all unseen notices seen"
-msgstr ""
+msgstr "Пометить все извещения прочитанными"
 
 #: templates/notification/notices.html:45
 msgid "No notices."
-msgstr ""
+msgstr "Извещений нет."
 
 #: templates/notification/notices.html:54
 msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list below and choose which events you would like to be notified by email."
-msgstr ""
+msgstr "Вы можете получать извещения при любом возникающем событии в Transifex. Просмотрите список доступных извещений и выберите те события, на которые хотите получать извещения по email."
 
 #: templates/notification/notices.html:55
 msgid "Primary email"
@@ -1609,11 +1611,11 @@ msgstr "Учетная запись"
 #: templates/notification/notices.html:58
 #: templates/projects/component_detail.html:115
 msgid "Note"
-msgstr ""
+msgstr "Заметка"
 
 #: templates/notification/notices.html:59
 msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
-msgstr ""
+msgstr "У вас нет подтвержденного адреса email, на который будут высылаться извещения. Вы можете добавить его, проследовав"
 
 #: templates/notification/notices.html:67
 msgid "Notification Type"
@@ -1628,7 +1630,7 @@ msgstr "Изменить"
 #: templates/notification/single.html:5
 #: templates/notification/single.html:8
 msgid "Notice"
-msgstr ""
+msgstr "Извещение"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
@@ -1672,7 +1674,7 @@ msgstr "Файл «%(filename)s»"
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
 msgid "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "был отправлен в <a href=\"%(component_url)s\">%(component_name)s</a> из проекта <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
@@ -1708,15 +1710,15 @@ msgstr "Да, все правильно!"
 
 #: templates/projects/component_detail.html:23
 msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
-msgstr ""
+msgstr "Этот компонент поддерживает локальное сохранение отправленных файлов, также файлы отправляются на email координатора."
 
 #: templates/projects/component_detail.html:25
 msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
-msgstr ""
+msgstr "Этот компонент не поддерживает локальное сохранение отправленных файлов. Все файлы будут направлены на email-адреса координаторов. Статистика будет обновлена при коммите разработчиком."
 
 #: templates/projects/component_detail.html:29
 msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
-msgstr ""
+msgstr "Этот компонент поддерживает локальное сохранение отправленных файлов, также файлы файлы отправляются прямиком в репозиторий разработчика."
 
 #: templates/projects/component_detail.html:73
 #: templates/projects/project_detail.html:34
@@ -1755,9 +1757,8 @@ msgstr[1] "Выпуски:"
 msgstr[2] "Выпуски:"
 
 #: templates/projects/component_detail.html:111
-#, fuzzy
 msgid "Allows submissions:"
-msgstr "Подтвердить"
+msgstr "Разрешить отправку:"
 
 #: templates/projects/component_detail.html:125
 msgid "Translation files"
@@ -1780,7 +1781,6 @@ msgid "Component not yet pulled from source repository."
 msgstr "Компонент еще не был извлечен из исходного хранилища."
 
 #: templates/projects/component_detail.html:143
-#, fuzzy
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Обновить и пересчитать статистику. Это может занять некоторое время."
 
@@ -1790,7 +1790,7 @@ msgstr "Обновить кэш"
 
 #: templates/projects/component_detail.html:148
 msgid "Reset Transifex's local data for a clean pull"
-msgstr ""
+msgstr "Сбросить локальные данные Transifex чистой копией"
 
 #: templates/projects/component_detail.html:148
 msgid "Clear cache"
@@ -1840,9 +1840,8 @@ msgid "Checkout"
 msgstr ""
 
 #: templates/projects/component_form.html:99
-#, fuzzy
 msgid "Submission"
-msgstr "Подтвердить"
+msgstr "Отправка"
 
 #: templates/projects/component_form.html:112
 #: templates/projects/component_form.html:122
@@ -1875,7 +1874,7 @@ msgstr "удалить"
 
 #: templates/projects/component_list.html:44
 msgid "No components are registered for this project yet."
-msgstr ""
+msgstr "В этом проекте пока не зарегистрировано ни одного компонента."
 
 #: templates/projects/component_list.html:45
 #, fuzzy
@@ -1892,7 +1891,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
-msgstr ""
+msgstr "Отправить новый перевод для этого компонента."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
@@ -1908,11 +1907,11 @@ msgstr "Локальный файл:"
 
 #: templates/projects/component_submit_new_file.html:15
 msgid "The new language translation file to be uploaded."
-msgstr ""
+msgstr "Новый файл перевода для загрузки."
 
 #: templates/projects/component_submit_new_file.html:18
 msgid "Select the target file:"
-msgstr ""
+msgstr "Выберите целевой файл:"
 
 #: templates/projects/component_submit_new_file.html:27
 msgid "The target file is the name of the new file language. It must matches with the component file filter."
@@ -1975,9 +1974,8 @@ msgid "Details"
 msgstr "Детали"
 
 #: templates/projects/project_detail.html:47
-#, fuzzy
 msgid "Watch:"
-msgstr "Ветки"
+msgstr "Следить:"
 
 #: templates/projects/project_detail.html:55
 #: templates/txcollections/collection_detail.html:42
@@ -2016,8 +2014,9 @@ msgstr[2] "Коллекции:"
 #: templates/projects/project_detail.html:86
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Координатор:"
+msgstr[1] "Координаторы:"
+msgstr[2] "Координаторы:"
 
 #: templates/projects/project_detail.html:100
 msgid "External links:"
@@ -2273,7 +2272,7 @@ msgstr "Статистика перевода"
 
 #: templates/txcollections/release_detail.html:75
 msgid "No translations added for this release. :-("
-msgstr ""
+msgstr "В этот релиз не было добавлено ни одного перевода :-(."
 
 #: templates/txcollections/release_detail.html:86
 msgid "Delete release"
@@ -2440,7 +2439,7 @@ msgstr "Вход пользователя"
 
 #: templates/userprofile/account/login.html:42
 msgid "Utilities"
-msgstr ""
+msgstr "Инструменты"
 
 #: templates/userprofile/account/login.html:46
 #: templates/userprofile/profile/overview.html:95
@@ -2504,7 +2503,7 @@ msgstr "Ключ для пароля истек"
 
 #: templates/userprofile/account/password_expired.html:9
 msgid "The password key you're trying to use is expired. Please, request a new one"
-msgstr ""
+msgstr "Срок действия ключевой комбинации истек. Пожалуйста, запросите новую."
 
 #: templates/userprofile/account/password_reset.html:21
 msgid "E-mail address"
@@ -2770,9 +2769,9 @@ msgstr "Перевести «%(filename)s»"
 
 #: templates/webtrans/transfile_edit.html:38
 #: templates/webtrans/transfile_edit.html:43
-#, fuzzy, python-format
+#, python-format
 msgid "Translate '<code>%(filename)s</code>'"
-msgstr "Удалить <em>%(release_name)s</em>"
+msgstr "Удалить «<code>%(filename)s</code>»"
 
 #: templates/webtrans/transfile_edit.html:96
 msgid "#"
@@ -2803,9 +2802,8 @@ msgid "Fuzzy?"
 msgstr "Неточно?"
 
 #: templates/webtrans/transfile_edit.html:110
-#, fuzzy
 msgid "Submit translations"
-msgstr "Переводы"
+msgstr "Отправить переводы"
 
 #: templates/webtrans/transfile_form.html:15
 #, fuzzy
@@ -2896,7 +2894,7 @@ msgstr "Нет зарегистрированного языка, связанн
 
 #: translations/templates/comp_stats_table.html:35
 msgid "(not calculated)"
-msgstr ""
+msgstr "(не подсчитано)"
 
 #: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:35
@@ -2904,9 +2902,9 @@ msgid "Click here to see the multiple files for"
 msgstr ""
 
 #: translations/templates/component_submit.html:5
-#, fuzzy, python-format
+#, python-format
 msgid "Submit a translation for %(pofile_filename)s"
-msgstr "Отправить перевод для этого языка."
+msgstr "Отправить перевод %(pofile_filename)s"
 
 #: translations/templates/component_submit.html:9
 msgid "Submit file"
@@ -2922,7 +2920,7 @@ msgstr "Перейти на страницу этого проекта"
 
 #: translations/templates/lang_stats_table.html:21
 msgid "Go to this component page"
-msgstr ""
+msgstr "Перейти на страницу компонента"
 
 #: translations/templates/pofile_lock.html:8
 msgid "Unlock this file when you're finished working with it."
@@ -3011,12 +3009,11 @@ msgstr "Файл LINGUAS нельзя открыть: %s"
 
 #: txcommon/models.py:12
 msgid "Female"
-msgstr ""
+msgstr "Женский"
 
 #: txcommon/models.py:12
-#, fuzzy
 msgid "Male"
-msgstr "Мальтийский"
+msgstr "Мужской"
 
 #: txcommon/models.py:18
 msgid "First name"
@@ -3115,13 +3112,12 @@ msgid "when a component of a project is deleted"
 msgstr "при удалении компонента проекта"
 
 #: txcommon/management/__init__.py:51
-#, fuzzy
 msgid "File Submitted"
-msgstr "Фильтр файла"
+msgstr "Файл отправлен"
 
 #: txcommon/management/__init__.py:52
 msgid "when a component file of a project is submitted"
-msgstr ""
+msgstr "при отправке файла из компонента проекта"
 
 #: txcommon/management/__init__.py:59
 msgid "Translation File Changed"
@@ -3137,7 +3133,7 @@ msgstr "В шаблоне перевода (POT) есть проблемы"
 
 #: txcommon/management/__init__.py:68
 msgid "when the source file (POT) of a component that you are a maintainer has a problem"
-msgstr "пр"
+msgstr "при возникновении проблемы с исходным каталогом (POT) компонента, координатором которого вы являетесь"
 
 #: txcommon/management/__init__.py:76
 msgid "New Collection Added"
@@ -3216,7 +3212,6 @@ msgid "Release Deleted from a Collection"
 msgstr "Удален релиз из коллекции"
 
 #: txcommon/management/__init__.py:138
-#, fuzzy
 msgid "when a release is deleted from a collection"
 msgstr "при удалении релиза из коллекции"
 
