@@ -1,4 +1,5 @@
 from exceptions import Exception
+import sys
 import logging
 import os
 import traceback
@@ -114,7 +115,6 @@ class Command(LabelCommand):
             try:
                 comp.trans.set_stats()
             except Exception, e:
-                import sys
                 raise CommandError("Error in setting stats for %s." % comp.full_name)
                 sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
                 sys.exit(1)
