@@ -113,7 +113,8 @@ class Command(LabelCommand):
             # Calculate statistics
             try:
                 comp.trans.set_stats()
-            except:
+            except Exception, e:
+                import sys
                 raise CommandError("Error in setting stats for %s." % comp.full_name)
                 sys.stderr.write(self.style.ERROR(str('Error: %s\n' % e)))
                 sys.exit(1)
