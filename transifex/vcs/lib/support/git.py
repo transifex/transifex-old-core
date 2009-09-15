@@ -1,4 +1,5 @@
 import os
+from django.conf import settings
 from vcs.lib import (_Repo, RepoError)
 from vcs.lib.support.commands import run_command
 
@@ -6,6 +7,8 @@ from vcs.lib.support.commands import run_command
 Handle low-level bits required by git.
 """
 
+GIT_COMMAND_ENV = {'GIT_COMMITTER_NAME': settings.COMMITTER_NAME,
+                   'GIT_COMMITTER_EMAIL': settings.COMMITTER_EMAIL,}
 
 def repository(path=''):
     """Return a repository object for the specified path."""
@@ -23,9 +26,17 @@ def clone(source, dest, **kw):
     return GitRepo(dest)
 
 
-def _git_factory(cmd):
-    """Create instance wrapper functions for git command <cmd>."""
+def _git_factory(cmd, with_env_vars=None):
+    """
+    Create instance wrapper functions for git command <cmd>.
+
+    The parameter `with_env_vars` can be set to True in order to add some
+    environment variables while running the command, when necessary.
+
+    """
     def myfunc(self, *args, **kwargs):
+        if with_env_vars:
+            kwargs['env'] = GIT_COMMAND_ENV
         return self.git(cmd, *args, **kwargs)
     return myfunc
 
@@ -54,7 +65,7 @@ class GitRepo(_Repo):
     checkout = _git_factory('checkout')
     reset = _git_factory('reset')
     status = _git_factory('status')
-    commit = _git_factory('commit')
+    commit = _git_factory('commit', with_env_vars=True)
     log = _git_factory('log')
     init = _git_factory('init')
     fetch = _git_factory('fetch')

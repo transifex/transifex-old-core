@@ -69,6 +69,9 @@ def run_command(command, *args, **kw):
     ``convert_args``
         Converts python arguments to command line arguments.
 
+    ``env``
+        A dictionary mapping environment variables to be used with the command.
+
     Returns
         str(output)                     # extended_output = False (Default)
         tuple(int(status), str(stdout), str(stderr)) # extended_output = True
@@ -79,6 +82,7 @@ def run_command(command, *args, **kw):
     with_extended_output = kw.pop('with_extended_output', False)
     with_exceptions = kw.pop('with_exceptions', True)
     with_raw_output = kw.pop('with_raw_output', False)
+    env = kw.pop('env', {})
 
     # if command is a string split to a list
     if isinstance(command, basestring):
@@ -104,7 +108,8 @@ def run_command(command, *args, **kw):
                             cwd=cwd,
                             stdin=stdin,
                             stderr=subprocess.PIPE,
-                            stdout=subprocess.PIPE,)
+                            stdout=subprocess.PIPE,
+                            env=env,)
 
     # Write the contents to the pipe
     if _input:
