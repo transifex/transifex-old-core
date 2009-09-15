@@ -409,7 +409,7 @@ class Component(models.Model):
                 self.unit.last_checkout = None
                 self.unit.save()
         except:
-             logger.error("Clearing cache failed for %s." % (self.full_name))
+            logger.error("Clearing cache failed for %s." % (self.full_name))
 
     def get_rev(self, path=None):
         """Get revision of a path from the underlying Unit"""
