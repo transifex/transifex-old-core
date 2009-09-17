@@ -2,10 +2,8 @@ import os
 import subprocess
 from txcommon.log import logger
 
-##########
-## Support the direct execution of commands on the system
-
-
+from django.core.files.uploadedfile import UploadedFile
+from txcommon.log import logger
 
 def python_to_args(**kwargs):
     """
@@ -89,9 +87,10 @@ def run_command(command, *args, **kw):
         command = command.split()
 
     # if more kwargs are given, convert them to command line args
-    kwarglist = []
     if kw:
         kwarglist = python_to_args(**kw)
+    else:
+        kwarglist = []
     command += kwarglist + list(args)
 
     # If stdin is a string, create a pipe so we can write the contents
@@ -113,7 +112,12 @@ def run_command(command, *args, **kw):
 
     # Write the contents to the pipe
     if _input:
-        proc.stdin.write(_input)
+        if isinstance(_input, basestring):
+            proc.stdin.write(_input)
+        elif isinstance(_input, (file, UploadedFile)):
+            _input.seek(0)
+            for content in _input:
+                proc.stdin.write(content)
 
     # Wait for the process to return
     stdout_value, stderr_value = proc.communicate()
@@ -124,21 +128,8 @@ def run_command(command, *args, **kw):
         stdout_value = stdout_value.rstrip()
         stderr_value = stderr_value.rstrip()
 
-    lin = 0
-    if _input:
-        lin = len(_input)
-    logger.debug("  Status: %(stat)s. "
-                 "std bytes: stdin %(in)s, stdout %(out)s, err %(err)s"
-                 % {'stat': status,
-                    'in': lin,
-                    'out': len(stdout_value),
-                    'err': len(stderr_value)})
-    if stderr_value:
-        # Something didn't go well (or this command abuses stderr)
-        logger.info("  Error: " + stderr_value)
-        logger.info("  Output: " + stdout_value)
-
     if with_exceptions and status != 0:
+        logger.error(stderr_value)
         raise CommandError(command, status, stderr_value)
 
     # Allow access to the command's status code

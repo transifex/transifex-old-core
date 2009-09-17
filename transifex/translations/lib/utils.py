@@ -1,22 +1,19 @@
-# -*- coding: utf-8 -*-
 import os
 import subprocess
-import traceback
+from txcommon.log import logger
 
 from django.core.files.uploadedfile import UploadedFile
 from txcommon.log import logger
 
 def python_to_args(**kwargs):
     """
-    Converts python function arguments to command line arguments for
-    use with subprocess module.
+    Convert function arguments to command line ones.
+    
+    Designed for use with the subprocess module.
 
-    python_to_args(baz=value, bar=True, q=True, f='foo')
+    >>> python_to_args(baz=value, bar=True, v=True, f='foo')
+    ['-v', '--bar', '--baz=foo', '-f', 'bar']
 
-    Returns:
-        [   "-q", "-ffoo",
-            "--bar", "--baz=value",
-            "bar","buzz" ]
     """
     kwarglist = []
     for k,v in kwargs.iteritems():
@@ -34,7 +31,8 @@ def python_to_args(**kwargs):
                 kwarglist.append(str(v))
     return kwarglist
 
-class CommandError(Exception):
+
+class CommandError(StandardError):
     def __init__(self, command, status, stderr=None):
         self.stderr = stderr
         self.status = status
@@ -44,10 +42,12 @@ class CommandError(Exception):
         return repr("%s returned exit status %d" %
                     (str(self.command), self.status))
 
+
 def run_command(command, *args, **kw):
     """
-    Handles executing the command on the shell and consumes and returns
-    the returned information (stdout)
+    Handle shell command execution.
+    
+    Consume and return the returned information (stdout).
 
     ``command``
         The command argument list to execute
@@ -67,6 +67,9 @@ def run_command(command, *args, **kw):
     ``convert_args``
         Converts python arguments to command line arguments.
 
+    ``env``
+        A dictionary mapping environment variables to be used with the command.
+
     Returns
         str(output)                     # extended_output = False (Default)
         tuple(int(status), str(stdout), str(stderr)) # extended_output = True
@@ -77,6 +80,7 @@ def run_command(command, *args, **kw):
     with_extended_output = kw.pop('with_extended_output', False)
     with_exceptions = kw.pop('with_exceptions', True)
     with_raw_output = kw.pop('with_raw_output', False)
+    env = kw.pop('env', {})
 
     # if command is a string split to a list
     if isinstance(command, basestring):
@@ -95,13 +99,16 @@ def run_command(command, *args, **kw):
     else:
         stdin = None
 
+    logger.debug("Running low-level command '%s'" % ' '.join(command))
+    logger.debug("  CWD: '%s'" % cwd) 
+
     # Start the process
     proc = subprocess.Popen(command,
                             cwd=cwd,
                             stdin=stdin,
                             stderr=subprocess.PIPE,
                             stdout=subprocess.PIPE,
-                            )
+                            env=env,)
 
     # Write the contents to the pipe
     if _input:
