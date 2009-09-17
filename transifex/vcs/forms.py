@@ -15,18 +15,18 @@ class VcsUnitSubForm(forms.ModelForm):
     type = forms.CharField(widget=forms.HiddenInput, required=False)
     
     def __init__(self, *args, **kwargs):
-        codebase_type = None
+
         instance = kwargs.get('instance', None)
+
         # If editing an existent codebase
         if instance:
             codebase_type = instance.type
-        else:
-            # If a request for saving a new codebase
-            try:
-                codebase_type = args[0]['unit-type']
-            except TypeError:
-                pass
+        else: 
+            # Or a request for saving a new codebase
+            codebase_type = getattr(args[0], 'unit-type', None)
+
         super(VcsUnitSubForm, self).__init__(*args, **kwargs)
+
         # Check it the codebase_type has branch support
         if codebase_type and codebase_type in settings.BRANCH_SUPPORT \
             and not settings.BRANCH_SUPPORT[codebase_type]:
