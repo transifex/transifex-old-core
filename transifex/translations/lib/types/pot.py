@@ -32,17 +32,81 @@ class SourceFileError(Exception):
         return repr("No POT file found.")
 
 class POTManager(TransManagerMixin):
-    """A browser class for POT files."""
+    """
+    A browser class for Managing POT files.
+
+    Parameter:
+    full_name: Name used for identifying set of msgmerged files related to POT/PO
+               files found in `path`.
+    path: Diretiry base where the POT/PO files can be found.
+    source_language: The code of the source language. Usually it's English (en).
+    file_filter: Regex for find the POT/PO under `path`.
+
+    """
 
     def __init__(self, full_name, path, source_lang, file_filter):
         self.full_name = full_name
         self.path = path
         self.source_lang = source_lang
         self.file_filter = file_filter
+        # Static directory
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, full_name)
 
+    def guess_language(self, filename):
+        """Guess a language from the filename."""
+        if 'LC_MESSAGES' in filename:
+            fp = filename.split('LC_MESSAGES')
+            return os.path.basename(fp[0][:-1:])
+        else:
+            return os.path.basename(filename[:-3:])
+
+    def guess_po_dir(self):
+        """Guess the po/ diretory to run intltool."""
+        for filename in self.get_files(self.file_filter):
+            # FIXME: It seems intltool-based projects can survive without a
+            # POTFILES.in file. It must identify it in another way.
+            if 'POTFILES.in' in filename:
+                if self.file_filter:
+                    if re.compile(self.file_filter).match(filename):
+                        return os.path.join(self.path, 
+                                      os.path.dirname(filename))
+        raise FileFilterError, "File filter does not allow 'POTFILES.in' file" \
+                               " or it does not exist in the file system."
+
+    def get_po_files(self):
+        """Return a list of PO filenames."""
+        po_files = []
+        for filename in self.get_files(self.file_filter):
+            if filename.endswith('.po'):
+                po_files.append(filename)
+        po_files.sort()
+        return po_files
+
+    def get_lang_files(self, lang):
+        """Return a list with the PO filenames for a specificy language."""
+        files=[]
+        for filename in self.get_po_files():
+            if self.guess_language(filename) == lang:
+                files.append(filename)
+        return files
+
+    def get_langs(self):
+        """Return all langs tha have a po file for a object."""
+        langs = []
+        for filename in self.get_po_files():
+            lang_code = self.guess_language(filename)
+            if lang_code not in langs:
+                langs.append(lang_code)
+        langs.sort()
+        return langs
+
     def get_file_path(self, filename, is_msgmerged=False):
-        """Return the full path of the filename."""
+        """
+        Return the full path of the filename.
+
+        If `is_msgmerged` is set to True the path of the merged file is returned.
+
+        """
         if is_msgmerged:
             file_path = os.path.join(self.msgmerge_path, filename)
         else:
@@ -54,7 +118,8 @@ class POTManager(TransManagerMixin):
         return file_path
 
     def get_file_contents(self, filename, is_msgmerged=False, decode=None):
-        """Return the file contents of the requested file.
+        """
+        Return the file contents of the requested file.
 
         If `is_msgmerged` is set to True the merged file stored is opened.
         If `decode` is specified the contents are decoded with the
@@ -77,45 +142,65 @@ class POTManager(TransManagerMixin):
         file_path = self.get_file_path(filename, True)
         return polib.pofile(file_path)
 
-    def get_po_files(self):
-        """Return a list of PO filenames."""
 
-        po_files = []
+    def get_source_files(self):
+        """
+        Return a list with the source files (pot) paths 
+
+        Try to find it in the file_set passed to the PO file instace. 
+        If it still fails, try to find the POT file in the filesystem.
+        """
+        pofiles=[]
         for filename in self.get_files(self.file_filter):
-            if filename.endswith('.po'):
-                po_files.append(filename)
-        po_files.sort()
-        return po_files
+            if filename.endswith('.pot'):
+                pofiles.append(filename)
 
-    def get_langfiles(self, lang):
-        """Return a list with the PO filenames for a specificy language."""
+        # If there is no POT in the default path, try to find it in msgmerged one
+        if not pofiles:
+            for filename in self.get_files(self.file_filter, self.msgmerge_path):
+                if filename.endswith('.pot'):
+                    pofiles.append(filename)
+        return pofiles
 
-        files=[]
-        for filepath in self.get_po_files():
-            if self.guess_language(filepath) == lang:
-                files.append(filepath)
-        return files
 
-    def guess_language(self, filepath):
-        """Guess a language from a filepath."""
+    def get_source_file_for_pofile(self, filename):
+        """
+        Find the related source file (POT) for a pofile when it has multiple
+        source files.
 
-        if 'LC_MESSAGES' in filepath:
-            fp = filepath.split('LC_MESSAGES')
-            return os.path.basename(fp[0][:-1:])
+        This method gets a filename as parameter and tries to discover the 
+        related POT file using two methods:
+        
+        1. Trying to find a POT file with the same base path that the pofile.
+           Example: /foo/bar.pot and /foo/baz.po match on this method.
+
+        2. Trying to find a POT file with the same domain that the pofile in any
+           directory.
+        
+           Example: /foo/bar.pot and /foo/baz/bar.po match on this method.
+           The domain in this case is 'bar'.
+
+        If no POT is found the method returns None.
+        
+        """
+        # For filename='/foo/bar.po'
+        fb = os.path.basename(filename) # 'bar.po'
+        fp = filename.split(fb)[0]        # '/foo/'
+
+        source_files = self.get_source_files()
+
+        # Find the POT with the same domain or path that the filename,
+        # if the component has more that one POT file
+        if len(source_files) > 1:
+            for source in source_files:
+                sb = os.path.basename(source)[:-1] # *.po instead *.pot
+                pb = source.split(sb)[0]
+                if pb==fp or sb==fb:
+                    return source
+        elif len(source_files) == 1:
+            return source_files[0]
         else:
-            return os.path.basename(filepath[:-3:])
-
-    def get_langs(self):
-        """Return all langs tha have a po file for a object."""
-
-        langs = []
-        for filepath in self.get_po_files():
-            lang_code = self.guess_language(filepath)
-            if lang_code not in langs:
-                langs.append(lang_code)
-        langs.sort()
-        return langs
-
+            return None
 
     def po_file_stats(self, pofile):
         """Calculate stats for a POT/PO file."""
@@ -151,10 +236,12 @@ class POTManager(TransManagerMixin):
 
     def calculate_file_stats(self, filename, try_to_merge):
         """
-        Return the statistics of a specificy file for an object after
-        merging the file with the source translation file (POT), if possible.
+        Return the stats of a specificy file copying it to the static directory.
+
+        If `try_to_merge` is set to True, the stats are calculated after merging
+        the PO file with the related POT.
+
         """
-        # We might want to skip the msgmerge setting try_to_merge as False
         if try_to_merge:
             source_file = self.get_source_file_for_pofile(filename)
             if not source_file:
@@ -164,7 +251,7 @@ class POTManager(TransManagerMixin):
         else:
             is_msgmerged=False
             file_path = os.path.join(self.path, filename)
-        
+
         #Copy the current file (non-msgmerged) to the static dir
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
@@ -182,7 +269,7 @@ class POTManager(TransManagerMixin):
     def create_lang_stats(self, lang, object, try_to_merge=True):
         """Set the statistics of a specificy language for an object."""
 
-        for filename in self.get_langfiles(lang):
+        for filename in self.get_lang_files(lang):
             self.create_file_stats(filename, object, try_to_merge)
 
     # TODO: Move it outside of TransManager to the TransHandler
@@ -297,151 +384,6 @@ class POTManager(TransManagerMixin):
         except POFile.DoesNotExist:
             return None
 
-    def get_source_files(self):
-        """
-        Return a list with the source files (pot) paths 
-
-        Try to find it in the file_set passed to the PO file instace. 
-        If it still fails, try to find the POT file in the filesystem.
-        """
-        pofiles=[]
-        for filename in self.get_files(self.file_filter):
-            if filename.endswith('.pot'):
-                pofiles.append(filename)
-
-        # If there is no POT in the file_set, try to find it in
-        # the file system
-        if not pofiles:
-            filename = self.get_intltool_source_file(self.msgmerge_path)
-            if filename:
-                pofiles.append(filename)
-
-        return pofiles
-
-    def get_intltool_source_file(self, po_dir):
-        """Return the POT file that might be created by intltool"""
-        for root, dirs, files in os.walk(po_dir):
-            for filename in files:
-                if filename.endswith('.pot'):
-                    # Get the relative path
-                    rel_path = root.split(os.path.basename(self.path))[1]
-                    # Return the relative path of the POT file without 
-                    # the / in the start of the POT file path
-                    return os.path.join(rel_path, filename)[1:]
-
-    def get_source_file_for_pofile(self, filename):
-        """
-        Find the related source file (POT) for a pofile when it has multiple
-        source files.
-
-        This method gets a filename as parameter and tries to discover the 
-        related POT file using two methods:
-        
-        1. Trying to find a POT file with the same base path that the pofile.
-           Example: /foo/bar.pot and /foo/baz.po match on this method.
-
-        2. Trying to find a POT file with the same domain that the pofile in any
-           directory.
-        
-           Example: /foo/bar.pot and /foo/baz/bar.po match on this method.
-           The domain in this case is 'bar'.
-
-        If no POT is found the method returns None.
-        """
-
-        # For filename='/foo/bar.po'
-        fb = os.path.basename(filename) # 'bar.po'
-        fp = filename.split(fb)[0]        # '/foo/'
-
-        source_files = self.get_source_files()
-
-        # Find the POT with the same domain or path that the filename,
-        # if the component has more that one POT file
-        if len(source_files) > 1:
-            for source in source_files:
-                sb = os.path.basename(source)[:-1] # *.po instead *.pot
-                pb = source.split(sb)[0]
-                if pb==fp or sb==fb:
-                    return source
-        elif len(source_files) == 1:
-            return source_files[0]
-        else:
-            return None
-
-    def copy_file_to_static_dir(self, filename):
-        """Copy a file to the destination"""
-        import shutil
-
-        dest = os.path.join(self.msgmerge_path, filename)
-
-        if not os.path.exists(os.path.dirname(dest)):
-            os.makedirs(os.path.dirname(dest))
-
-        shutil.copyfile(os.path.join(self.path, filename), dest)
-
-    def delete_file_from_static_dir(self, filename):
-        """Delete a file from the static cache dir"""
-        dest = os.path.join(self.msgmerge_path, filename)
-        try:
-            os.remove(dest)
-        except OSError:
-            pass
-
-    def msgmerge(self, pofile, potfile):
-        """
-        Merge two files and save the output at the settings.MSGMERGE_DIR.
-        In case that error, copy the source file (pofile) to the 
-        destination without merging.
-        """
-        is_msgmerged = True
-        outpo = os.path.join(self.msgmerge_path, pofile)
-
-        try:
-            # TODO: Find a library to avoid call msgmerge by command
-            command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
-                      'outpo': outpo,
-                      'pofile': os.path.join(self.path, pofile),
-                      'potfile': os.path.join(self.msgmerge_path, potfile),}
-            stdout = run_command(command)
-        except CommandError:
-            is_msgmerged = False
-
-        return (is_msgmerged, outpo)
-
-    def guess_po_dir(self):
-        """Guess the po/ diretory to run intltool."""
-        for filename in self.get_files(self.file_filter):
-            if 'POTFILES.in' in filename:
-                if self.file_filter:
-                    if re.compile(self.file_filter).match(filename):
-                        return os.path.join(self.path, 
-                                      os.path.dirname(filename))
-        raise FileFilterError
-
-    def intltool_update(self):
-        """
-        Create a new POT file using "intltool-update -p" from the 
-        source files. Return False if it fails.
-        """
-        po_dir = self.guess_po_dir()
-        error = False
-        try:
-            stdout = run_command("rm -f missing notexist", cwd=po_dir)
-            stdout = run_command("intltool-update -p", cwd=po_dir)
-        except CommandError:
-            error = True
-
-        # Copy the potfile if it exist to the merged files directory
-        potfile = self.get_intltool_source_file(po_dir)
-        if potfile:
-            self.copy_file_to_static_dir(potfile)
-
-        if error:
-            # TODO: Log this. output var can be used.
-            return False
-
-        return True
-
     def msgfmt_check(self, po_contents):
         """
         Run a `msgfmt -c` on a file (file object).
@@ -458,3 +400,68 @@ class POTManager(TransManagerMixin):
             raise MsgfmtCheckError, "Your file does not pass by the check " \
                 "for correctness (msgfmt -c). Please run this command on " \
                 "your system to see the errors."
+
+    def msgmerge(self, pofile, potfile):
+        """
+        Merge two files and save the output at the static diretory.
+
+        In case of error, copy the file (pofile) to the destination without 
+        merging it.
+
+        """
+        is_msgmerged = True
+        outpo = os.path.join(self.msgmerge_path, pofile)
+
+        try:
+            # TODO: Find a library to avoid call msgmerge by command
+            command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
+                      'outpo': outpo,
+                      'pofile': os.path.join(self.path, pofile),
+                      'potfile': os.path.join(self.msgmerge_path, potfile),}
+            stdout = run_command(command)
+        except CommandError:
+            is_msgmerged = False
+
+        return (is_msgmerged, outpo)
+
+    def intltool_update(self):
+        """
+        Create a new POT file using "intltool-update -p" from the 
+        source files. Return False if it fails.
+        """
+        po_dir = self.guess_po_dir()
+        error = False
+        try:
+            stdout = run_command("rm -f missing notexist", cwd=po_dir)
+            stdout = run_command("intltool-update -p", cwd=po_dir)
+        except CommandError:
+            error = True
+
+        # Copy the potfile if it exist to the merged files directory
+        potfiles = self.get_source_files()
+        for potfile in potfiles:
+            self.copy_file_to_static_dir(potfile)
+
+        if error:
+            # TODO: Log this. output var can be used.
+            return False
+
+        return True
+
+    def copy_file_to_static_dir(self, filename):
+        """Copy a file to the statc msgmerge directory."""
+        import shutil
+        dest = os.path.join(self.msgmerge_path, filename)
+
+        if not os.path.exists(os.path.dirname(dest)):
+            os.makedirs(os.path.dirname(dest))
+
+        shutil.copyfile(os.path.join(self.path, filename), dest)
+
+    def delete_file_from_static_dir(self, filename):
+        """Delete a file from the static cache dir"""
+        dest = os.path.join(self.msgmerge_path, filename)
+        try:
+            os.remove(dest)
+        except OSError:
+            pass
