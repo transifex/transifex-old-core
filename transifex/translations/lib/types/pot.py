@@ -42,6 +42,7 @@ class POTManager(TransManagerMixin):
         self.file_filter = file_filter
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, full_name)
 
+    # TODO: Check the filename against the self.file_filter for verifying it
     def get_file_path(self, filename, is_msgmerged=False):
         # All the files should be in the file_set, except the intltool
         # POT file that is created by the system
@@ -174,12 +175,16 @@ class POTManager(TransManagerMixin):
                 'error': postats['error'],
                 'is_msgmerged': is_msgmerged}
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def create_lang_stats(self, lang, object, try_to_merge=True):
         """Set the statistics of a specificy language for an object."""
 
         for filename in self.get_langfiles(lang):
             self.create_file_stats(filename, object, try_to_merge)
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def create_file_stats(self, filename, object, try_to_merge=True):
         """Set the statistics of a specificy file for an object."""
         lang_code = self.guess_language(filename)
@@ -223,6 +228,8 @@ class POTManager(TransManagerMixin):
                 s.rev = rev
         return s.save()
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def stats_for_lang_object(self, lang, object):
         """Return statistics for an object in a specific language."""
         try:
@@ -232,15 +239,21 @@ class POTManager(TransManagerMixin):
         except IndexError:
             return None
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def get_stats(self, object):
         """Return a list of statistics of languages for an object."""
         return POFile.objects.by_object_total(object)
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def delete_stats_for_object(self, object):
         """Delete all lang statistics of an object."""
         ctype = ContentType.objects.get_for_model(object)
         POFile.objects.filter(object_id=object.id, content_type=ctype).delete()
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def delete_stats_for_file_object(self, filename, object):
         """Delete a specific pofile of an object"""
         ctype = ContentType.objects.get_for_model(object)
@@ -248,6 +261,8 @@ class POTManager(TransManagerMixin):
             content_type=ctype).delete()
         self.delete_file_from_static_dir(filename)
 
+    # TODO: Move part of it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def set_source_stats(self, object, is_msgmerged):
         """Set the source file (pot) in the database"""
 
@@ -267,6 +282,8 @@ class POTManager(TransManagerMixin):
 
             p.save()
 
+    # TODO: Move it outside of TransManager to the TransHandler
+    # This lib must deal only with real files
     def get_source_stats(self, object):
         """
         Return a list of the source file (pot) statistics from the database
