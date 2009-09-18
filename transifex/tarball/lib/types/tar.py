@@ -154,7 +154,7 @@ class TarballBrowser(BrowserMixin):
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)
 
-        user = u'%s <%s>' % (user.username, user.email)
+        user = self._get_user(user)
 
         commands.commit(self.codebase.ui, self.codebase, 
                         message=msg.encode('utf-8'),
