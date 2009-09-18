@@ -91,7 +91,7 @@ class VcsUnit(Unit):
         The initialization will raise an exception if the VCS type
         is not specified in the model.
         """  
-        from vcs.lib import get_browser_object
+        from codebases import get_browser_object
         browser = get_browser_object(self.type)
         self.browser = browser(root=self.root,
                                name=self.name,
