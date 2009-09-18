@@ -66,8 +66,7 @@ class POTManager(TransManagerMixin):
         return file_content
 
     def get_po_entries(self, filename):
-        """Return a Django form field for the component."""
-        from django import forms
+        """Return a polib.POFile object with the entries from filename or None."""
         if filename in self.file_set:
             file_path = os.path.join(self.msgmerge_path, filename)
             try:
