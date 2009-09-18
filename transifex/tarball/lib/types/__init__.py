@@ -79,8 +79,6 @@ class BrowserMixin:
                 for chunk in contents:
                     if encode:
                         chunk = chunk.encode(encode)
-                    logger.debug("Saving %s bytes in file %s" %
-                                 (len(contents), fullpath))
                     fp.write(chunk)
             else:
                 raise ValueError("Given content to save to %s that I don't "
