@@ -34,9 +34,8 @@ class SourceFileError(Exception):
 class POTManager(TransManagerMixin):
     """A browser class for POT files."""
 
-    def __init__(self, full_name, file_set, path, source_lang, file_filter):
+    def __init__(self, full_name, path, source_lang, file_filter):
         self.full_name = full_name
-        self.file_set = file_set
         self.path = path
         self.source_lang = source_lang
         self.file_filter = file_filter
@@ -46,7 +45,7 @@ class POTManager(TransManagerMixin):
     def get_file_path(self, filename, is_msgmerged=False):
         # All the files should be in the file_set, except the intltool
         # POT file that is created by the system
-        if filename in self.file_set or \
+        if filename in self.get_files(self.file_filter) or \
            filename.endswith('.pot') and is_msgmerged:
             if is_msgmerged:
                 file_path = os.path.join(self.msgmerge_path, filename)
@@ -65,7 +64,7 @@ class POTManager(TransManagerMixin):
 
     def get_po_entries(self, filename):
         """Return a polib.POFile object with the entries from filename or None."""
-        if filename in self.file_set:
+        if filename in self.get_files(self.file_filter):
             file_path = os.path.join(self.msgmerge_path, filename)
             try:
                 po = polib.pofile(file_path)
@@ -79,7 +78,7 @@ class POTManager(TransManagerMixin):
         """Return a list of PO filenames."""
 
         po_files = []
-        for filename in self.file_set:
+        for filename in self.get_files(self.file_filter):
             if filename.endswith('.po'):
                 po_files.append(filename)
         po_files.sort()
@@ -303,7 +302,7 @@ class POTManager(TransManagerMixin):
         If it still fails, try to find the POT file in the filesystem.
         """
         pofiles=[]
-        for filename in self.file_set:
+        for filename in self.get_files(self.file_filter):
             if filename.endswith('.pot'):
                 pofiles.append(filename)
 
@@ -408,7 +407,7 @@ class POTManager(TransManagerMixin):
 
     def guess_po_dir(self):
         """Guess the po/ diretory to run intltool."""
-        for filename in self.file_set:
+        for filename in self.get_files(self.file_filter):
             if 'POTFILES.in' in filename:
                 if self.file_filter:
                     if re.compile(self.file_filter).match(filename):

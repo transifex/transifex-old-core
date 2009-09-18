@@ -20,8 +20,8 @@ class POTHandler:
         # TODO: Make Unit init the browser on its own 
         component.unit._init_browser()
         browser = component.unit.browser
-        self.tm = POTManager(component.full_name, component.get_files(),
-            browser.path, component.source_lang, component.file_filter)
+        self.tm = POTManager(component.full_name, browser.path, 
+            component.source_lang, component.file_filter)
 
     def get_manager(self):
         return self.tm

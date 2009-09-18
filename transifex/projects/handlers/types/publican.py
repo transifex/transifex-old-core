@@ -17,8 +17,8 @@ class PublicanHandler(pot.POTHandler):
         # TODO: Make Unit init the browser on its own 
         component.unit._init_browser()
         browser = component.unit.browser
-        self.tm = PublicanManager(component.full_name, component.get_files(),
-            browser.path, component.source_lang, component.file_filter)
+        self.tm = PublicanManager(component.full_name, browser.path, 
+            component.source_lang, component.file_filter)
 
     def set_stats(self):
         """Calculate stats for all translations of the component."""

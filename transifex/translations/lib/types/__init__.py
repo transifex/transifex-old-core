@@ -1,9 +1,9 @@
-import os
+from codebases.lib import BrowserMixinBase
 
 class TransManagerError(Exception):
     pass
 
-class TransManagerMixin:
+class TransManagerMixin(BrowserMixinBase):
     
     """
     Implement TransManager-type-agnostic browser functionality.
