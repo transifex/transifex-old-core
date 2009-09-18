@@ -21,20 +21,20 @@ class BrowserMixinBase:
 
     """
 
-    def get_file(self, filename):
+    def get_file(self, filename, path=None):
         """Return a file pointer of the requested file."""
-        fullpath = os.path.join(self.path, filename)
+        fullpath = os.path.join(path or self.path, filename)
         fp = open(fullpath, 'r')
         return fp
 
-    def get_file_contents(self, filename, decode=None):
+    def get_file_contents(self, filename, decode=None, path=None):
         """Return the file contents of the requested file.
 
         If decode is specified the contents are decoded with the
         <decode> encoding.
 
         """
-        fp = self.get_file(filename)
+        fp = self.get_file(filename, path)
         try:
             content = fp.read()
         finally:
@@ -44,7 +44,7 @@ class BrowserMixinBase:
             content = content.decode(decode)
         return content
 
-    def save_file_contents(self, filename, contents, encode=None):
+    def save_file_contents(self, filename, contents, encode=None, path=None):
         """
         Save contents as <filename>.
 
@@ -52,17 +52,17 @@ class BrowserMixinBase:
         the <encode> encoding.
 
         """
-        fullpath = os.path.join(self.path, filename)
+        fullpath = os.path.join(path or self.path, filename)
         dirpath = os.path.dirname(fullpath)
         if not os.access(dirpath, os.F_OK):
             os.makedirs(dirpath)
 
         fp = open(fullpath, 'w')
         try:
+            logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
             if isinstance(contents, basestring):
                 if encode:
                     contents = contents.encode(encode)
-                logger.debug("Saving %s bytes in file %s" % (len(contents), fullpath))
                 fp.write(contents)
             elif isinstance(contents, (file, UploadedFile)):
                 contents.seek(0)
@@ -77,10 +77,10 @@ class BrowserMixinBase:
         finally:
             fp.close()
 
-    def diff(self, filename, content):
+    def diff(self, filename, content, path=None):
         """Diff the contents with the filename contents."""
         try:
-            contents = self.get_file_contents(filename, decode='utf-8')
+            contents = self.get_file_contents(filename, decode='utf-8', path=path)
         except IOError:
             contents = ''
         lines = contents.splitlines(1)
@@ -102,7 +102,7 @@ class BrowserMixinBase:
         return not re.compile(settings.IGNORE_WILDCARD_LIST).match(
             '/%s' % filename) and filter_check
 
-    def walk(self):
+    def walk(self, path=None):
         """
         Wrapper around os.walk() function.
 
@@ -110,14 +110,14 @@ class BrowserMixinBase:
         to the sresource path.
 
         """
-        for root, dirs, files in os.walk(self.path):
+        for root, dirs, files in os.walk(path or self.path):
             # remove sresource path to create relative path
-            relative_root = root.split(self.path, 1)[1]
+            relative_root = root.split(path or self.path, 1)[1]
             # the first characher is '/' we need to remove it
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
 
-    def get_files(self, filefilter=None):
+    def get_files(self, filefilter=None, path=None):
         """
         Yield files for the filesystem
 
@@ -125,7 +125,7 @@ class BrowserMixinBase:
         output result to avoid to get all files
 
         """
-        for rel_root, dirs, files in self.walk():
+        for rel_root, dirs, files in self.walk(path):
             for filename in files:
                 filename = os.path.join(rel_root, filename)
 
