@@ -3,13 +3,14 @@ import traceback
 
 from django.conf import settings
 from vcs.lib import RepoError
-from vcs.lib.types import (VCSBrowserMixin, BrowserError, need_repo)
+from codebases.lib import (BrowserMixin, BrowserError)
+from vcs.lib.types import need_repo
 from vcs.lib.support.git import repository, clone
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['git']
 
-class GitBrowser(VCSBrowserMixin):
+class GitBrowser(BrowserMixin):
 
     """
     A browser class for Git repositories.

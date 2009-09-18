@@ -10,14 +10,15 @@ except:
     from mercurial.error import RepoError # mercurial-1.2.x
 
 from django.conf import settings
-from vcs.lib.types import (VCSBrowserMixin, BrowserError, need_repo)
+from codebases.lib import (BrowserMixin, BrowserError)
+from vcs.lib.types import need_repo
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['hg']
 
 encoding.encoding = 'utf-8'
 
-class HgBrowser(VCSBrowserMixin):
+class HgBrowser(BrowserMixin):
 
     """
     A browser class for Mercurial repositories.

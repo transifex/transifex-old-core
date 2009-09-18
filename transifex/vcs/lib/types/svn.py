@@ -7,7 +7,7 @@ import pysvn
 
 from django.conf import settings
 from vcs.lib import RepoError
-from vcs.lib.types import (VCSBrowserMixin, BrowserError)
+from codebases.lib import (BrowserMixin, BrowserError)
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['svn']
@@ -22,7 +22,7 @@ def need_repo(fn):
         return fn(self, *args, **kw)
     return repo_fn
 
-class SvnBrowser(VCSBrowserMixin):
+class SvnBrowser(BrowserMixin):
     
     """
     A browser class for Subversion repositories.

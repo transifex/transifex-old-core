@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from projects import signals
 from txcommon.log import logger
 from translations.models import POFile
-from vcs.lib.types import BrowserError
+from codebases.lib import BrowserError
 from notification import models as notification
 # Temporary
 from txcommon import notifications as txnotification

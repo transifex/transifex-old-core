@@ -6,13 +6,14 @@ import os.path
 
 from django.conf import settings
 from vcs.lib import RepoError
-from vcs.lib.types import (VCSBrowserMixin, BrowserError, need_repo)
+from codebases.lib import (BrowserMixin, BrowserError)
+from vcs.lib.types import need_repo
 from vcs.lib.support.cvs import repository, checkout
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['cvs']
 
-class CvsBrowser(VCSBrowserMixin):
+class CvsBrowser(BrowserMixin):
     
     """
     A browser class for CVS repositories.

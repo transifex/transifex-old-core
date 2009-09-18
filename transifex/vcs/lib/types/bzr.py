@@ -12,12 +12,13 @@ except ImportError:
 from bzrlib.errors import NotBranchError
 
 from django.conf import settings
-from vcs.lib.types import (VCSBrowserMixin, BrowserError, need_repo)
+from codebases.lib import (BrowserMixin, BrowserError)
+from vcs.lib.types import need_repo
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['bzr']
 
-class BzrBrowser(VCSBrowserMixin):
+class BzrBrowser(BrowserMixin):
 
     """
     A browser class for Bazaar repositories.
