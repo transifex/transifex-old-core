@@ -21,7 +21,7 @@ class PublicanManager(POTManager):
 
         # Get the first pot file that it can find
         pot_file = None
-        for f in self.file_set:
+        for f in self.get_files(self.file_filter):
             f = '/%s' % f
             if '/pot/' in f and f.endswith('.pot'):
                 pot_file = f
@@ -48,7 +48,7 @@ class PublicanManager(POTManager):
 
             OTHER_LANGS = as-IN bn-IN da de-DE el es-ES
         """
-        for filename in self.file_set:
+        for filename in self.get_files(self.file_filter):
             if 'Makefile' in filename:
                 try:
                     makefile = codecs.open(os.path.join(self.path, filename), 'r')
