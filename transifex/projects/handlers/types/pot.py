@@ -43,20 +43,21 @@ class POTHandler:
         logger.debug("Setting stats for %s" % self.component)
 
         # Copying the source file to the static dir
-        try:
-            potfiles = self.tm.get_source_files()
+        potfiles = self.tm.get_source_files()
+        if potfiles:
+            try_msgmerge=True
             for potfile in potfiles:
                 self.tm.copy_file_to_static_dir(potfile)
-        except (AttributeError, IOError):
+        else:
             # TODO: There is no source file (POT)
             # It looks like an intltool POT-based, what should we do?
-            pass
+            try_msgmerge=False
 
         # Set the source file (pot) to the database
         self.tm.set_source_stats(self.component, is_msgmerged=False)
 
         for lang in self.tm.get_langs():
-            self.set_stats_for_lang(lang)
+            self.set_stats_for_lang(lang, try_msgmerge)
 
         self.clear_old_stats()
 

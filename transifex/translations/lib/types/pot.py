@@ -26,6 +26,11 @@ class MsgfmtCheckError(Exception):
     def __str__(self):
         return "Msgfmt -c check failed for the file."
 
+class SourceFileError(Exception):
+
+    def __str__(self):
+        return repr("No POT file found.")
+
 class POTManager(TransManagerMixin):
     """A browser class for POT files."""
 
@@ -149,11 +154,14 @@ class POTManager(TransManagerMixin):
         # We might want to skip the msgmerge setting try_to_merge as False
         if try_to_merge:
             source_file = self.get_source_file_for_pofile(filename)
+            if not source_file:
+                raise SourceFileError, "No POT file found. It is requited to " \
+                                       "msgmerge."
             (is_msgmerged, file_path) = self.msgmerge(filename, source_file)
         else:
             is_msgmerged=False
             file_path = os.path.join(self.path, filename)
-
+        
         #Copy the current file (non-msgmerged) to the static dir
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
@@ -369,6 +377,7 @@ class POTManager(TransManagerMixin):
         is_msgmerged = True
         outpo = os.path.join(self.msgmerge_path, pofile)
 
+        error = False
         try:
         # TODO: Find a library to avoid call msgmerge by command
             command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
