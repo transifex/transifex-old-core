@@ -576,7 +576,7 @@ def component_file(request, project_slug, component_slug, filename,
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     try:
-        content = component.trans.get_file_content(filename, is_msgmerged)
+        content = component.trans.get_file_contents(filename, is_msgmerged)
     except (TypeError, IOError):
         raise Http404
     fname = "%s.%s" % (component.full_name, os.path.basename(filename))

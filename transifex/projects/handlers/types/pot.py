@@ -81,9 +81,9 @@ class POTHandler:
         """Return stats for the component."""
         return self.tm.get_stats(self.component)
 
-    def get_file_content(self, filename, is_msgmerged):
+    def get_file_contents(self, filename, is_msgmerged):
         """Return stats for the component."""
-        return self.tm.get_file_content(filename, is_msgmerged)
+        return self.tm.get_file_contents(filename, is_msgmerged)
 
     def get_po_entries(self, filename):
         """Return a Django form field for the component"""

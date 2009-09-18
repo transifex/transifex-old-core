@@ -53,12 +53,24 @@ class POTManager(TransManagerMixin):
  
         return file_path
 
-    def get_file_content(self, filename, is_msgmerged=False):
+    def get_file_contents(self, filename, is_msgmerged=False, decode=None):
+        """Return the file contents of the requested file.
+
+        If `is_msgmerged` is set to True the merged file stored is opened.
+        If `decode` is specified the contents are decoded with the
+        `decode` encoding.
+
+        """
         file_path = self.get_file_path(filename, is_msgmerged)
-        filef = file(file_path, 'rb')
-        file_content = filef.read()
-        filef.close()
-        return file_content
+        try:
+            fp = file(file_path, 'rb')
+            content = fp.read()
+        finally:
+            fp.close()
+
+        if decode:
+            content = content.decode(decode)
+        return content
 
     def get_po_entries(self, filename):
         """Return a polib.POFile object with the entries from filename."""
