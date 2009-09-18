@@ -1,4 +1,4 @@
-import os, commands, re
+import os, re
 import polib
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
@@ -120,16 +120,20 @@ class POTManager(TransManagerMixin):
 
     def po_file_stats(self, pofile):
         """Calculate stats for a POT/PO file."""
-        error = False
         pofile = os.path.join(self.msgmerge_path, pofile)
 
-        command = "LC_ALL=C LANG=C LANGUAGE=C msgfmt --statistics" \
-                  " -o /dev/null %s" % pofile
-        (error, output) = commands.getstatusoutput(command)
-
-        if error:
+        error = False
+        try:
+            # These env vars are needed to ensure the command output be in English
+            env = {'LC_ALL':'C', 'LANG':'C', 'LANGUAGE':'C'}
+            command = "msgfmt --statistics -o /dev/null %s" % pofile
+            status, stdout, stderr = run_command(command, env=env,
+                                                 with_extended_output=True)
+            # Not sure why msgfmt sends its output to stderr instead of stdout
+            output = stderr
+        except CommandError:
             error = True
-    
+
         r_tr = re.search(r"([0-9]+) translated", output)
         r_un = re.search(r"([0-9]+) untranslated", output)
         r_fz = re.search(r"([0-9]+) fuzzy", output)
@@ -377,20 +381,14 @@ class POTManager(TransManagerMixin):
         is_msgmerged = True
         outpo = os.path.join(self.msgmerge_path, pofile)
 
-        error = False
         try:
-        # TODO: Find a library to avoid call msgmerge by command
+            # TODO: Find a library to avoid call msgmerge by command
             command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
-                    'outpo' : outpo,
-                    'pofile' : os.path.join(self.path, pofile),
-                    'potfile' : os.path.join(self.msgmerge_path, potfile),}
-            
-            (error, output) = commands.getstatusoutput(command)
-        except:
-            error = True
-
-        if error:
-            # TODO: Log this. output var can be used.
+                      'outpo': outpo,
+                      'pofile': os.path.join(self.path, pofile),
+                      'potfile': os.path.join(self.msgmerge_path, potfile),}
+            stdout = run_command(command)
+        except CommandError:
             is_msgmerged = False
 
         return (is_msgmerged, outpo)
@@ -411,11 +409,11 @@ class POTManager(TransManagerMixin):
         source files. Return False if it fails.
         """
         po_dir = self.guess_po_dir()
+        error = False
         try:
-            command = "cd \"%(dir)s\" && rm -f missing notexist && " \
-                      "intltool-update -p" % { "dir" : po_dir, }
-            (error, output) = commands.getstatusoutput(command)
-        except:
+            stdout = run_command("rm -f missing notexist", cwd=po_dir)
+            stdout = run_command("intltool-update -p", cwd=po_dir)
+        except CommandError:
             error = True
 
         # Copy the potfile if it exist to the merged files directory
@@ -438,6 +436,7 @@ class POTManager(TransManagerMixin):
             command = 'msgfmt -o /dev/null -c -'
             status, stdout, stderr = run_command(command, _input=po_contents, 
                                                  with_extended_output=True)
+            # Not sure why msgfmt sends its output to stderr instead of stdout
             if 'warning:' in stderr:
                 raise CommandError(command, status, stderr)
         except CommandError:
