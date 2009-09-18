@@ -41,18 +41,16 @@ class POTManager(TransManagerMixin):
         self.file_filter = file_filter
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, full_name)
 
-    # TODO: Check the filename against the self.file_filter for verifying it
     def get_file_path(self, filename, is_msgmerged=False):
-        # All the files should be in the file_set, except the intltool
-        # POT file that is created by the system
-        if filename in self.get_files(self.file_filter) or \
-           filename.endswith('.pot') and is_msgmerged:
-            if is_msgmerged:
-                file_path = os.path.join(self.msgmerge_path, filename)
-            else:
-                file_path = os.path.join(self.path, filename)
+        """Return the full path of the filename."""
+        if is_msgmerged:
+            file_path = os.path.join(self.msgmerge_path, filename)
         else:
-            raise IOError("File not found.")
+            file_path = os.path.join(self.path, filename)
+
+        if not os.path.exists(file_path):
+            raise IOError, "File '%s' does not exist." % file_path
+ 
         return file_path
 
     def get_file_content(self, filename, is_msgmerged=False):
@@ -63,16 +61,9 @@ class POTManager(TransManagerMixin):
         return file_content
 
     def get_po_entries(self, filename):
-        """Return a polib.POFile object with the entries from filename or None."""
-        if filename in self.get_files(self.file_filter):
-            file_path = os.path.join(self.msgmerge_path, filename)
-            try:
-                po = polib.pofile(file_path)
-            except IOError:
-                pass
-            else:
-                return po
-        return None
+        """Return a polib.POFile object with the entries from filename."""
+        file_path = self.get_file_path(filename, True)
+        return polib.pofile(file_path)
 
     def get_po_files(self):
         """Return a list of PO filenames."""
