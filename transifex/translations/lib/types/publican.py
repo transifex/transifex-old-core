@@ -9,18 +9,6 @@ class PotDirError(StandardError):
 class PublicanManager(POTManager):
     """A browser class for PO files on Publican like structure."""
 
-    def __init__(self, file_set, path, source_lang, file_filter,
-        filepath=None):
-        self.file_set = file_set
-        if filepath is None:
-            filepath = path
-        self.path = filepath
-        self.source_lang = source_lang
-        self.file_filter = file_filter
-        self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, 
-                                     os.path.basename(path))
-
-
     def pot_dir_position(self):
         """
         Return the index position of the 'pot' dir in the file_set.

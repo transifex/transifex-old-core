@@ -38,15 +38,17 @@ class TarballBrowser(BrowserMixin):
         self.root = root
         self.branch = 'default'
         
-        self.path = os.path.normpath(os.path.join(
+        self.base_path = os.path.normpath(os.path.join(
             codebase_path, name))
-        self.path = os.path.abspath(self.path)
-        self.path = str(self.path)
+        self.base_path = os.path.abspath(self.base_path)
+        self.base_path = str(self.base_path)
         #Test for possible directory traversal
         assert os.path.commonprefix(
-            [self.path, codebase_path]) == codebase_path, (
+            [self.base_path, codebase_path]) == codebase_path, (
             "Unit checkout path outside of nominal repo checkout path.")
-        self.filepath = os.path.join(self.path, 'extract')
+
+        #The self.path must be where the files from the VCS can actually be found
+        self.path = os.path.join(self.base_path, 'extract')
 
     def _download(self, url, filename):
         try:
@@ -92,9 +94,9 @@ class TarballBrowser(BrowserMixin):
                 logger.error(traceback.format_exc())
                 raise BrowserError(e)
 
-        download = os.path.join(self.path, 'download')
+        download = os.path.join(self.base_path, 'download')
         filename = os.path.join(download, self.name)
-        extract = os.path.join(self.path, 'extract')
+        extract = self.path
 
         clean_mkdir(download)
         clean_mkdir(extract)
@@ -120,10 +122,9 @@ class TarballBrowser(BrowserMixin):
         '''
         Set the codebase attribute if the codebase has been setup
         Otherwise, set it up
-        '''
-        extract = os.path.join(self.path, 'extract')
+        ''' 
         try:
-            self.codebase = hg.repository(ui, extract)
+            self.codebase = hg.repository(ui, self.path)
         except RepoError:
             self.codebase = self.setup_codebase()
 
@@ -165,10 +166,7 @@ class TarballBrowser(BrowserMixin):
     @need_codebase
     def update(self):
         try:
-            if hasattr(self, 'filepath'):
-                hg.repository(ui, self.filepath)
-            else:
-                raise RepoError()
+            hg.repository(ui, self.path)
         except RepoError:
             logger.error(traceback.format_exc())
             self.init_codebase()
