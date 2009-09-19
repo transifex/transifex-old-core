@@ -9,6 +9,8 @@ class PotDirError(StandardError):
 class PublicanManager(POTManager):
     """A browser class for PO files on Publican like structure."""
 
+    pot_dir_index = None
+
     def pot_dir_position(self):
         """
         Return the index position of the 'pot' dir in the file_set.
@@ -17,7 +19,11 @@ class PublicanManager(POTManager):
                  It retuns 0 as the index position.
 
         Have a 'pot' dir name in the file_set is mandatory.
+
         """
+        # If it was already found, return it
+        if self.pot_dir_index:
+            return self.pot_dir_index
 
         # Get the first pot file that it can find
         pot_file = None
@@ -32,6 +38,7 @@ class PublicanManager(POTManager):
             # Find the index of 'pot' dir name in that pot file path
             for d in dirs:
                 if d == 'pot':
+                    self.pot_dir_index = index
                     return index
                 index = index+1
         except AttributeError:
@@ -62,7 +69,7 @@ class PublicanManager(POTManager):
         return []
 
 
-    def guess_language(self, filepath, pot_dir_index=None):
+    def guess_language(self, filepath):
         """
         Guess a language code from a filepath by finding the 'pot' dir position
 
@@ -82,10 +89,8 @@ class PublicanManager(POTManager):
                  /foo/pot/file.pot (index 1)
                  /foo/bar/file.po -> bar
         """
-        if not pot_dir_index:
-            pot_dir_index = self.pot_dir_position()
         filepath = '/%s' % filepath
-        return os.path.basename(filepath.split('/')[pot_dir_index])
+        return os.path.basename(filepath.split('/')[self.pot_dir_position()])
 
 
     def get_langs(self):
@@ -97,9 +102,8 @@ class PublicanManager(POTManager):
         if langs:
             return langs
         else:
-            pot_dir_index = self.pot_dir_position()
             for filepath in self.get_po_files():
-                lang_code = self.guess_language(filepath, pot_dir_index)
+                lang_code = self.guess_language(filepath)
                 if lang_code not in langs:
                     langs.append(lang_code)
             langs.sort()
