@@ -400,7 +400,7 @@ class Component(models.Model):
         """
         logger.debug("Clearing local cache for %s" % self.full_name)
         try:
-            self.trans.clear_stats()
+            self.trans.clean_stats()
             self.delete_static_dir()
             self.unit.teardown()
             del(self.trans)

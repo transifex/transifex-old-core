@@ -101,7 +101,7 @@ def transfile_edit(request, pofile_id):
             # TODO: Find out a better way to handle it. We might wand to merge
             # the file with the POT before commiting, but it just must happen when
             # the POT is not broken for intltool based projects.
-            component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
+            component.trans.set_lang_stats(lang_code, try_to_merge=False)
 
             # Getting the new PO file stats after submit it
             pofile = POFile.objects.get(filename=filename,

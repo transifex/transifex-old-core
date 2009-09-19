@@ -1,9 +1,7 @@
 import os, re
 import polib
-from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
-from translations.models import POFile, Language
 from translations.lib.utils import (run_command, CommandError)
 
 class POTStatsError(Exception):
@@ -75,20 +73,15 @@ class POTManager(TransManagerMixin):
 
     def get_po_files(self):
         """Return a list of PO filenames."""
-        po_files = []
         for filename in self.get_files(self.file_filter):
             if filename.endswith('.po'):
-                po_files.append(filename)
-        po_files.sort()
-        return po_files
+                yield filename
 
     def get_lang_files(self, lang):
         """Return a list with the PO filenames for a specificy language."""
-        files=[]
         for filename in self.get_po_files():
             if self.guess_language(filename) == lang:
-                files.append(filename)
-        return files
+                yield filename
 
     def get_langs(self):
         """Return all langs tha have a po file for a object."""
@@ -96,9 +89,10 @@ class POTManager(TransManagerMixin):
         for filename in self.get_po_files():
             lang_code = self.guess_language(filename)
             if lang_code not in langs:
+                print lang_code
                 langs.append(lang_code)
-        langs.sort()
-        return langs
+                yield lang_code
+        assert False
 
     def get_file_path(self, filename, is_msgmerged=False):
         """
@@ -263,126 +257,6 @@ class POTManager(TransManagerMixin):
                 'untrans': postats['untranslated'],
                 'error': postats['error'],
                 'is_msgmerged': is_msgmerged}
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def create_lang_stats(self, lang, object, try_to_merge=True):
-        """Set the statistics of a specificy language for an object."""
-
-        for filename in self.get_lang_files(lang):
-            self.create_file_stats(filename, object, try_to_merge)
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def create_file_stats(self, filename, object, try_to_merge=True):
-        """Set the statistics of a specificy file for an object."""
-        lang_code = self.guess_language(filename)
-        try:
-            ctype = ContentType.objects.get_for_model(object)
-            s, created = POFile.objects.get_or_create(object_id=object.id,
-                content_type=ctype, filename=filename)
-
-            if not s.language:
-                try:
-                    l = Language.objects.by_code_or_alias(code=lang_code)
-                    s.language=l
-                except Language.DoesNotExist:
-                    pass
-            s.language_code = lang_code
-
-            calcstats = True
-            rev = None
-            if hasattr(object, 'get_rev'):
-                rev = object.get_rev(filename)
-                if rev == s.rev:
-                    calcstats = False
-
-            # For intltool components that the pot file has changes, it's
-            # necessary to recalc the stats even if the 'rev' is the same
-            if object.i18n_type=='INTLTOOL' and try_to_merge:
-                calcstats = True
-
-            if calcstats:
-                stats = self.calculate_file_stats(filename, try_to_merge)
-        except POTStatsError:
-            # TODO: It should probably be raised when a checkout of a 
-            # module has a problem. Needs to decide what to do when it
-            # happens
-            calcstats = False
-        if calcstats:
-            s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
-                untrans=stats['untrans'], error=stats['error'])
-            s.is_msgmerged = stats['is_msgmerged']
-            if rev:
-                s.rev = rev
-        return s.save()
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def stats_for_lang_object(self, lang, object):
-        """Return statistics for an object in a specific language."""
-        try:
-            ctype = ContentType.objects.get_for_model(object)
-            return POFile.objects.filter(language=lang, content_type=ctype, 
-                                         object_id=object.id)[0]
-        except IndexError:
-            return None
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def get_stats(self, object):
-        """Return a list of statistics of languages for an object."""
-        return POFile.objects.by_object_total(object)
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def delete_stats_for_object(self, object):
-        """Delete all lang statistics of an object."""
-        ctype = ContentType.objects.get_for_model(object)
-        POFile.objects.filter(object_id=object.id, content_type=ctype).delete()
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def delete_stats_for_file_object(self, filename, object):
-        """Delete a specific pofile of an object"""
-        ctype = ContentType.objects.get_for_model(object)
-        POFile.objects.filter(filename=filename, object_id=object.id, 
-            content_type=ctype).delete()
-        self.delete_file_from_static_dir(filename)
-
-    # TODO: Move part of it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def set_source_stats(self, object, is_msgmerged):
-        """Set the source file (pot) in the database"""
-
-        ctype = ContentType.objects.get_for_model(object)
-        potfiles=self.get_source_files()
-        for potfile in potfiles:
-            p, created = POFile.objects.get_or_create(filename=potfile,
-                                                      is_pot=True,
-                                                      content_type=ctype,
-                                                      object_id=object.id,
-                                                      is_msgmerged=is_msgmerged)
-            stats = self.po_file_stats(potfile)
-            p.set_stats(trans=stats['translated'], 
-                        fuzzy=stats['fuzzy'], 
-                        untrans=stats['untranslated'], 
-                        error=stats['error'])
-
-            p.save()
-
-    # TODO: Move it outside of TransManager to the TransHandler
-    # This lib must deal only with real files
-    def get_source_stats(self, object):
-        """
-        Return a list of the source file (pot) statistics from the database
-        """
-        try:
-            ctype = ContentType.objects.get_for_model(object)
-            return POFile.objects.filter(object_id=object.id, 
-                content_type=ctype, is_pot=True).order_by('filename')
-        except POFile.DoesNotExist:
-            return None
 
     def msgfmt_check(self, po_contents):
         """

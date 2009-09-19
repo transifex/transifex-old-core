@@ -403,7 +403,7 @@ def component_create_update(request, project_slug, component_slug=None):
 
                 # If i18n type changed, clean the POfile objects for this comp.
                 if old_i18n_type != component.i18n_type:
-                    component.trans.clear_stats()
+                    component.trans.clean_stats()
 
                 # Compare with the old root url and, if it has changed, clear cache
                 if old_root and old_root != unit.root:
@@ -748,7 +748,7 @@ def component_submit_file(request, project_slug, component_slug,
                 # TODO: Find out a better way to handle it. We might wand to merge
                 # the file with the POT before commmit, but it just must happen when
                 # the POT is not broken for intltool based projects.
-                component.trans.set_stats_for_lang(lang_code, try_to_merge=False)
+                component.trans.set_lang_stats(lang_code, try_to_merge=False)
 
                 # Getting the new PO file stats after submit it
                 postats = POFile.objects.get(filename=filename,

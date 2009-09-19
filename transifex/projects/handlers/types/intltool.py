@@ -36,13 +36,8 @@ class IntltoolHandler(pot.POTHandler):
         else:
             is_msgmerged=True
 
-        # Set the source file (pot) to the database
-        self.tm.set_source_stats(self.component, is_msgmerged)
-
-        for lang in self.tm.get_langs():
-            self.set_stats_for_lang(lang, is_msgmerged)
-
+        self.set_source_stats(is_msgmerged=False)
+        self.set_po_stats(is_msgmerged)
         # Cleaning the repository after running intltool-update
         self.component.unit.browser._clean_dir()
-
-        self.clear_old_stats()
+        self.clean_old_stats()
