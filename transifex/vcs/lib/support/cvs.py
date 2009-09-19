@@ -1,6 +1,6 @@
 import os
 from vcs.lib import (_Repo, RepoError)
-from vcs.lib.support.commands import run_command
+from txcommon.commands import run_command
 
 def repository(path):
     """

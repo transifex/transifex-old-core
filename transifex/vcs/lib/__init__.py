@@ -1,5 +1,5 @@
 import os
-from vcs.lib.support.commands import run_command
+from txcommon.commands import run_command
 
 class RepoError(Exception):
     pass

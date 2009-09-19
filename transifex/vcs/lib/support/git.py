@@ -1,7 +1,7 @@
 import os
 from django.conf import settings
 from vcs.lib import (_Repo, RepoError)
-from vcs.lib.support.commands import run_command
+from txcommon.commands import run_command
 
 """
 Handle low-level bits required by git.

@@ -2,7 +2,7 @@ import os, re
 import polib
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
-from translations.lib.utils import (run_command, CommandError)
+from txcommon.commands import (run_command, CommandError)
 
 class POTStatsError(Exception):
 
