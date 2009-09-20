@@ -98,7 +98,7 @@ if __name__ == "__main__":
         help="Use mailmap file")
     parser.add_option('-n', '--no-mailmap', action='store_false', dest='mailmap',
         help="Don't use mailmap")
-    (options, args) = parser.parse_args()
+    options, args = parser.parse_args()
 
     if options.mailmap:
         options.mailmap = read_mailmap(options.mailmap)
