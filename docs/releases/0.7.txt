@@ -314,7 +314,7 @@ corresponding configuration options. Make sure the directory is created by
 running the command ``./manage.py txcreatedirs``.
 
 Here is a sample output of the file, with the logging level set to ``DEBUG``::
-    
+ 
     2009-08-21 18:29:05,812 DEBUG Requested stats calc for component usermode.tip
     2009-08-21 18:29:05,813 DEBUG Updating local repo for usermode.tip
     2009-08-21 18:29:05,816 DEBUG Preparing repo for vcsunit usermode.tip
@@ -576,7 +576,7 @@ Released:
   August 30 2009
 
 Diffstat:
-    12 files changed, 394 insertions(+), 170 deletions(-)
+  12 files changed, 394 insertions(+), 170 deletions(-)
 
 Bugfixes
 --------  
@@ -588,6 +588,29 @@ Bugfixes
 * bugfix: Hidden request perm. button when global submit perm. is granted (#328)
 * docs: Some clarifications and ultra-fast install instructions.
 * docs: Updated Installation and Running docs.
+
+
+Transifex 0.7.2 (Basilisk)
+==========================
+
+Transifex 0.7.2 release, codenamed Basilisk_ is a maintenance release, which
+fixes a few issues.
+
+
+Released:
+  September 21, 2009
+
+Diffstat:
+  20 files changed, 70 insertions(+), 39 deletions(-)
+
+Bugfixes
+--------  
+
+* Also check for 'warnings' when running 'msgfmt -c' (#326)
+* Added committer info from settings for VCSs that support it
+* Make mercurial use utf-8 encoding
+* Indent error in vcs/models.py
+* Add missing import and exception ref.
 
 
 Transifex 0.7 Release Candidates
@@ -602,6 +625,7 @@ what has changed between these releases and the final 0.7 release.
 
 .. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
 .. _Frenzy: http://en.wikipedia.org/wiki/Joanna_Cargill
+.. _Basilisk: http://en.wikipedia.org/wiki/Basilisk_(Mutant)
 .. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
 .. _Google Translate API: http://code.google.com/apis/ajaxlanguage/documentation/#SupportedPairs
 .. _Transifex 0.7 changelog: http://code.transifex.org/index.cgi/tx-0.7.x/shortlog
