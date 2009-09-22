@@ -12,6 +12,7 @@ from django.views.generic import create_update, list_detail
 from django.utils.translation import ugettext as _
 from django.utils.datastructures import MultiValueDictKeyError
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.syndication.views import feed
@@ -202,6 +203,24 @@ def project_add_permission(request, project_slug):
     apply granular permission on it using a decorator. 
     """
     project = get_object_or_404(Project, slug=project_slug)
+
+    # When adding a permission it's necessary to query the user object in 
+    # order to be able to pass the extra_context for the notification/actionlog
+    try:
+        username = request.POST['user']
+        sendto = User.objects.get(username=username)
+    except (MultiValueDictKeyError, User.DoesNotExist):
+        sendto=None
+
+    notice = {
+            'type': 'project_submit_access_granted',
+            'object': project,
+            'sendto': [sendto],
+            'extra_context': {'project': project,
+                              'user_request': sendto,
+                              'user_action': request.user,
+            },
+        }
     return add_permission_or_request(request, project, 
         view_name='project_add_permission',
         approved=True,
@@ -209,6 +228,7 @@ def project_add_permission(request, project_slug):
             'project_permission': True,
             'project': project,
             'project_form': ProjectAccessSubForm(instance=project),
+            'notice': notice,
         },
         template_name='projects/project_form_base.html')
 
@@ -221,6 +241,14 @@ def project_add_permission_request(request, project_slug):
     This view is an abstraction of a txpermissions.views method. 
     """
     project = get_object_or_404(Project, slug=project_slug)
+    notice = {
+            'type': 'project_submit_access_requested',
+            'object': project,
+            'sendto': project.maintainers.all(),
+            'extra_context': {'project': project,
+                              'user_request': request.user
+            },
+        }
     return add_permission_or_request(request, project,
         view_name='project_add_permission_request',
         approved=False,
@@ -228,9 +256,9 @@ def project_add_permission_request(request, project_slug):
             'project_permission': True,
             'project': project, 
             'project_form': ProjectAccessSubForm(instance=project),
+            'notice': notice
         },
         template_name='projects/project_form_base.html')
-
 
 pr_project_approve_perm = (
     ('granular', 'project_perm.maintain'),
@@ -241,7 +269,17 @@ pr_project_approve_perm = (
     (Project, 'slug__exact', 'project_slug'))
 def project_approve_permission_request(request, project_slug, permission_pk):
     project, permission=_get_project_and_permission(project_slug, permission_pk)
-    return approve_permission_request(request, permission)
+    notice = {
+            'type': 'project_submit_access_granted',
+            'object': project,
+            'sendto': [permission.user],
+            'extra_context': {'project': project,
+                              'user_request': permission.user,
+                              'user_action': request.user,
+            },
+        }
+    return approve_permission_request(request, permission,
+                                      extra_context={ 'notice': notice })
 
 
 pr_project_delete_perm = (
@@ -259,7 +297,17 @@ def project_delete_permission(request, project_slug, permission_pk):
     apply granular permission on it using a decorator. 
     """
     project, permission=_get_project_and_permission(project_slug, permission_pk)
-    return delete_permission_or_request(request, permission, True)
+    notice = {
+            'type': 'project_submit_access_revoked',
+            'object': project,
+            'sendto': [permission.user],
+            'extra_context': {'project': project,
+                              'user_request': permission.user,
+                              'user_action': request.user,
+            },
+        }
+    return delete_permission_or_request(request, permission, True,
+                                        extra_context={ 'notice': notice })
 
 
 @login_required
@@ -270,6 +318,33 @@ def project_delete_permission_request(request, project_slug, permission_pk):
     This view is an abstraction of a txpermissions.views method. 
     """
     project, permission=_get_project_and_permission(project_slug, permission_pk)
+
+    # It's necessary to distinguinsh between maintainer and normal users that
+    # did the request
+    if request.user.id==permission.user.id:
+        notice_type = 'project_submit_access_request_withdrawn'
+        sendto = project.maintainers.all()
+    else:
+        notice_type = 'project_submit_access_request_denied'
+        sendto = [permission.user]
+
+    notice = {
+            'type': notice_type,
+            'object': project,
+            'sendto': sendto,
+            'extra_context': {'project': project,
+                              'user_request': permission.user,
+                              'user_action': request.user,
+            },
+        }
+
+    check = ProjectPermission(request.user)
+    if check.maintain(project) or \
+        request.user.has_perm('authority.delete_permission') or \
+        request.user.pk == permission.creator.pk:
+        return delete_permission_or_request(request, permission, False,
+                                            extra_context={ 'notice': notice },)
+
 
     check = ProjectPermission(request.user)
     if check.maintain(project) or \

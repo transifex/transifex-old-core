@@ -1,18 +1,48 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.conf import settings
 from django.db.models.loading import get_model
 from django.utils.translation import ugettext as _
 from django.template.context import RequestContext
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 
+from actionlog.models import action_logging
 from authority.models import Permission
 from authority.forms import UserPermissionForm
 from authority.views import get_next
+from notification import models as notification
 from txpermissions.templatetags.txpermissions import (txadd_url_for_obj,
                                                       txrequest_url_for_obj,
                                                       txurl_for_obj)
+
+def _send_notice_save_action(request, notice):
+    """ 
+    Handler for manipulating notifications and save action logs
+    
+    The argument notice must have the following dictionary structure:
+    
+    notice = {
+        'type': '<notice_type_label>',
+        'object': <object>,
+        'sendto': [<list_of_users_to_send_to>],
+        'extra_context': {'var_needed_in_template': var_needed_in_template},
+    }
+
+    Explanation:
+        `type`: It is the notice label related to the action
+        `object`: It is the object that is suffering the action
+        `sendto`: List of Users to sent the notification to
+        `extra_context`: Any extra var used in the message templates
+    """
+    action_logging(request.user, [notice['object']], notice['type'], 
+                context=notice['extra_context'])
+    if settings.ENABLE_NOTICES:
+        notification.send(notice['sendto'],
+            notice['type'], extra_context=notice['extra_context'])
+
+
 
 def add_permission_or_request(request, obj, view_name, approved=False,
                    template_name = 'authority/permission_form.html',
@@ -25,6 +55,19 @@ def add_permission_or_request(request, obj, view_name, approved=False,
     
     Following the upstrem django-authority app, all the entries are considered 
     requests until the field approved be set to True.
+    
+    For the extra_context, this view expect a key called 'notice' that MUST 
+    have a determinate dictionary structure to be able to send notifications 
+    and save action logs. See the `_send_notice_save_action` function docstring 
+    for more information.
+    
+    Example of `extra_context` with `notice` key:
+        # See `_send_notice_save_action` docstring for the `notice` var below
+        notice = {}
+        extra_context.update({'notice': notice})
+
+    If the key 'notice' is not found in the extra_context parameter, nothing is
+    executed about notification and action log.
     """
     codename = request.POST.get('codename', None)
     next = get_next(request, obj)
@@ -41,6 +84,11 @@ def add_permission_or_request(request, obj, view_name, approved=False,
             form.data['user'] = request.user
         if form.is_valid():
             permission = form.save(request)
+
+            if extra_context.has_key('notice'):
+                # ActionLog & Notification
+                _send_notice_save_action(request, extra_context['notice'])
+
             request.user.message_set.create(
                 message=_('You added a permission request.'))
             return HttpResponseRedirect(next)
@@ -54,12 +102,13 @@ def add_permission_or_request(request, obj, view_name, approved=False,
         'perm': codename,
         'approved': approved,
     }
+    extra_context.update({'notice':None})
     context.update(extra_context)
     return render_to_response(template_name, context,
                               context_instance=RequestContext(request))
 
 
-def approve_permission_request(request, requested_permission):
+def approve_permission_request(request, requested_permission, extra_context={}):
     """
     View for approving or not a permission request for an user.
     
@@ -70,13 +119,18 @@ def approve_permission_request(request, requested_permission):
     requests until the field approved be set to True.
     """
     requested_permission.approve(request.user)
+    
+    if extra_context.has_key('notice'):
+        # ActionLog & Notification
+        _send_notice_save_action(request, extra_context['notice'])
+
     request.user.message_set.create(
         message=_('You approved the permission request.'))
     next = get_next(request, requested_permission)
     return HttpResponseRedirect(next)
 
 
-def delete_permission_or_request(request, permission, approved):
+def delete_permission_or_request(request, permission, approved, extra_context={}):
     """
     View for deleting either a permission or a permission request for an user.
     
@@ -94,6 +148,10 @@ def delete_permission_or_request(request, permission, approved):
         msg = _('You removed the permission request.')
 
     permission.delete()
+
+    if extra_context.has_key('notice'):
+        # ActionLog & Notification
+        _send_notice_save_action(request, extra_context['notice'])
 
     request.user.message_set.create(message=msg)
     return HttpResponseRedirect(next)

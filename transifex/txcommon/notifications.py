@@ -29,6 +29,46 @@ NOTICE_TYPES = [
                 "show_to_user": True,
             },
             {
+                "label": "project_submit_access_requested",
+                "display": _("Submit access to project requested"), 
+                "description": _("when an user request access to submit files " \
+                                 "to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_submit_access_request_denied",
+                "display": _("Submit access request to project denied"), 
+                "description": _("when a maintainer denies access to an user " \
+                                 "to submit files to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_submit_access_request_withdrawn",
+                "display": _("Submit access request to project withdrawn"), 
+                "description": _("when an user withdraws the access request" \
+                                 "to submit files to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_submit_access_granted",
+                "display": _("Submit access to project granted"), 
+                "description": _("when a maintainer grants access to an user " \
+                                 "to submit files to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_submit_access_revoked",
+                "display": _("Submit access to project revoked"), 
+                "description": _("when a maintainer revokes the access of an " \
+                                 "user to submit files to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
                 "label": "project_component_added",
                 "display": _("New Component Added"), 
                 "description": _("when a new component is added to a project"), 
