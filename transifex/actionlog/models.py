@@ -7,8 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_unicode
 from django.shortcuts import get_object_or_404
-from django.template import (loader, Context, TemplateDoesNotExist)
-from django.utils.translation import (get_language, activate)
+from django.template import loader, Context, TemplateDoesNotExist
+from django.utils.translation import get_language, activate
 from notification.models import NoticeType
 
 def _get_formatted_message(label, context):

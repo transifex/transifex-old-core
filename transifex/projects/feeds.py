@@ -1,9 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.syndication.feeds import (Feed, FeedDoesNotExist)
+from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
 from django.contrib.sites.models import Site
-from projects.models import (Project, Component)
+from projects.models import Project, Component
 
 current_site = Site.objects.get_current()
 

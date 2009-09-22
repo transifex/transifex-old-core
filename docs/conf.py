@@ -13,11 +13,11 @@
 
 import sys
 import os
+from txcommon import version as txversion, version_info
 
 # If your extensions are in another directory, add it here.
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../transifex')))
 
-from txcommon import (version as txversion, version_info)
 
 # General configuration
 # ---------------------

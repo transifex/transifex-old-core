@@ -14,7 +14,7 @@ except ImportError:
 import settings
 from txcommon import version
 from txcommon.log import logger
-from codebases.lib import (BrowserMixin, BrowserError)
+from codebases.lib import BrowserMixin, BrowserError
 from tarball.lib.types import need_codebase
 from vcs.lib.support.hg import ui
 

@@ -5,8 +5,8 @@ import os
 import traceback
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.management.base import (LabelCommand, CommandError)
-from projects.models import (Project, Component)
+from django.core.management.base import LabelCommand, CommandError
+from projects.models import Project, Component
 
 _HELP_TEXT = """Refresh translation statistics of registered components.
 

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.contrib.admin import widgets    
 
-from txcollections.models import (CollectionRelease as Release, Collection)
+from txcollections.models import CollectionRelease as Release, Collection
 
 #TODO: Abstract this to re-use across applications
 class ReleaseForm(forms.ModelForm):

@@ -4,7 +4,7 @@ from tagging.views import tagged_object_list
 
 from projects.models import Project
 from projects.views import * 
-from feeds import (LatestProjects, ProjectFeed)
+from feeds import LatestProjects, ProjectFeed
 
 project_list = {
     'queryset': Project.objects.all(),

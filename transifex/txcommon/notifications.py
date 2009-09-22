@@ -2,7 +2,7 @@
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_noop as _
-from notification.models import (ObservedItem, is_observing, send)
+from notification.models import ObservedItem, is_observing, send
 
 
 # This is temporary

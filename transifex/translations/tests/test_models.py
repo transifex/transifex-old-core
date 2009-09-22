@@ -1,5 +1,5 @@
 import unittest
-from translations.models import (Language, POFile)
+from translations.models import Language, POFile
 
 class TranslationModelsTestCase(unittest.TestCase):
     """

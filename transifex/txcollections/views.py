@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.syndication.views import feed
 
 from translations.models import POFile
-from txcollections.models import (Collection, CollectionRelease as Release)
+from txcollections.models import Collection, CollectionRelease as Release
 from txcollections.forms import *
 from txcommon.decorators import perm_required_with_403
 

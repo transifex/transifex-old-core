@@ -12,7 +12,7 @@ except ImportError:
 from bzrlib.errors import NotBranchError
 
 from django.conf import settings
-from codebases.lib import (BrowserMixin, BrowserError)
+from codebases.lib import BrowserMixin, BrowserError
 from vcs.lib.types import need_repo
 from txcommon.log import logger
 

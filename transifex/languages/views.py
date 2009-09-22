@@ -9,7 +9,7 @@ from django.template import RequestContext
 
 from translations.models import POFile
 from models import Language
-from txcollections.models import (Collection, CollectionRelease as Release)
+from txcollections.models import Collection, CollectionRelease as Release
 from projects.models import Component
 
 def slug_feed(request, slug=None, param='', feed_dict=None):

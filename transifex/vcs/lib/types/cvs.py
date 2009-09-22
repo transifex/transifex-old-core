@@ -6,7 +6,7 @@ import os.path
 
 from django.conf import settings
 from vcs.lib import RepoError
-from codebases.lib import (BrowserMixin, BrowserError)
+from codebases.lib import BrowserMixin, BrowserError
 from vcs.lib.types import need_repo
 from vcs.lib.support.cvs import repository, checkout
 from txcommon.log import logger

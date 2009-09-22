@@ -22,7 +22,7 @@ from vcs.models import VcsUnit
 from tarball.models import Tarball
 from txcollections.models import Collection, CollectionRelease
 from translations.models import POFile
-from txcommon.log import (logger, log_model)
+from txcommon.log import logger, log_model
 from txcommon.notifications import is_watched_by_user_signal
 from projects.handlers import get_trans_handler
 from projects import signals

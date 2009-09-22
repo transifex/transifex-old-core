@@ -1,6 +1,6 @@
 import os
 from django.conf import settings
-from vcs.lib import (_Repo, RepoError)
+from vcs.lib import _Repo, RepoError
 from txcommon.commands import run_command
 
 """
