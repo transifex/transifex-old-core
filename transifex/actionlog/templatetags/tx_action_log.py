@@ -79,8 +79,8 @@ class DoGetLog:
                 return LogNode(limit=tokens[1], varname=tokens[3],
                                object=(len(tokens) > 5 and tokens[5] or None))
             else:
-                raise template.TemplateSyntaxError, \
-                    "Fourth argument in '%s' must be either 'user' or " \
-                    "'object'" % self.tag_name
+                raise template.TemplateSyntaxError, (
+                    "Fourth argument in '%s' must be either 'user' or "
+                    "'object'" % self.tag_name)
 
 register.tag('get_log', DoGetLog('get_log'))

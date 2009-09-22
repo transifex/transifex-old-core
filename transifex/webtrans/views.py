@@ -130,9 +130,9 @@ def transfile_edit(request, pofile_id):
 
         except MsgfmtCheckError:
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
-            request.user.message_set.create(message=_("Your file does not" \
-                                    " pass by the check for correctness" \
-                                    " (msgfmt -c). Please run this command" \
+            request.user.message_set.create(message=_("Your file does not"
+                                    " pass by the check for correctness"
+                                    " (msgfmt -c). Please run this command"
                                     " on your system to see the errors."))
         except StandardError, e:
             logger.debug("Error submiting translation file %s"

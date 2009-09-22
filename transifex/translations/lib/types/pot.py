@@ -10,14 +10,14 @@ class POTStatsError(Exception):
         self.language = language
 
     def __str__(self):
-        return "Could not calculate the statistics using the '%s' " \
-               "language." % (self.language)
+        return ("Could not calculate the statistics using the '%s' "
+               "language." % (self.language))
 
 class FileFilterError(Exception):
 
     def __str__(self):
-        return "The file filter should allows the POTFILES.in file" \
-               " for intltool POT-based projects."
+        return ("The file filter should allows the POTFILES.in file"
+               " for intltool POT-based projects.")
 
 class MsgfmtCheckError(Exception):
 
@@ -68,8 +68,8 @@ class POTManager(TransManagerMixin):
                     if re.compile(self.file_filter).match(filename):
                         return os.path.join(self.path, 
                                       os.path.dirname(filename))
-        raise FileFilterError, "File filter does not allow 'POTFILES.in' file" \
-                               " or it does not exist in the file system."
+        raise FileFilterError, ("File filter does not allow 'POTFILES.in' file"
+                                " or it does not exist in the file system.")
 
     def get_po_files(self):
         """Return a list of PO filenames."""
@@ -239,8 +239,8 @@ class POTManager(TransManagerMixin):
         if try_to_merge:
             source_file = self.get_source_file_for_pofile(filename)
             if not source_file:
-                raise SourceFileError, "No POT file found. It is requited to " \
-                                       "msgmerge."
+                raise SourceFileError, ("No POT file found. It is requited to "
+                                        "msgmerge.")
             (is_msgmerged, file_path) = self.msgmerge(filename, source_file)
         else:
             is_msgmerged=False
@@ -271,9 +271,9 @@ class POTManager(TransManagerMixin):
             if 'warning:' in stderr:
                 raise CommandError(command, status, stderr)
         except CommandError:
-            raise MsgfmtCheckError, "Your file does not pass by the check " \
-                "for correctness (msgfmt -c). Please run this command on " \
-                "your system to see the errors."
+            raise MsgfmtCheckError, ("Your file does not pass by the check "
+                "for correctness (msgfmt -c). Please run this command on "
+                "your system to see the errors.")
 
     def msgmerge(self, pofile, potfile):
         """

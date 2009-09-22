@@ -776,9 +776,9 @@ def component_submit_file(request, project_slug, component_slug,
 
         except MsgfmtCheckError:
             logger.debug("Msgfmt -c check failed for the %s file." % filename)
-            request.user.message_set.create(message=_("Your file does not" \
-                                    " pass correctness checks" \
-                                    " (msgfmt -c). Please run this command" \
+            request.user.message_set.create(message=_("Your file does not"
+                                    " pass correctness checks"
+                                    " (msgfmt -c). Please run this command"
                                     " on your system to see the errors."))
         except StandardError, e:
             logger.debug("Error submiting translation file %s"
