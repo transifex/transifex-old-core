@@ -160,7 +160,7 @@ class SvnBrowser(BrowserMixin):
                 uploadedfile)
 
         # We have to calculate absolute filenames because of pysvn usage
-        absolute_filenames = [os.path.join(self.path, uploadedfile.targetfile) \
+        absolute_filenames = [os.path.join(self.path, uploadedfile.targetfile)
             for uploadedfile in files.values()]
 
         # `svn add` untracked files

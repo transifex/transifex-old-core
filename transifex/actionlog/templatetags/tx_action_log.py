@@ -63,14 +63,14 @@ class DoGetLog:
     def __call__(self, parser, token):
         tokens = token.contents.split()
         if len(tokens) < 4:
-            raise template.TemplateSyntaxError, \
-                "'%s' statements requires two arguments" % self.tag_name
+            raise template.TemplateSyntaxError, (
+                "'%s' statements requires two arguments" % self.tag_name)
         if not tokens[1].isdigit():
-            raise template.TemplateSyntaxError, \
-                "First argument in '%s' must be an integer" % self.tag_name
+            raise template.TemplateSyntaxError, (
+                "First argument in '%s' must be an integer" % self.tag_name)
         if tokens[2] != 'as':
-            raise template.TemplateSyntaxError, \
-                "Second argument in '%s' must be 'as'" % self.tag_name
+            raise template.TemplateSyntaxError, (
+                "Second argument in '%s' must be 'as'" % self.tag_name)
         if len(tokens) > 4:
             if tokens[4] == 'for_user':
                 return LogNode(limit=tokens[1], varname=tokens[3],

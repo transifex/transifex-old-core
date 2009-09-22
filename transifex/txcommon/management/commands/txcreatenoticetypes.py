@@ -9,8 +9,8 @@ def create_notice_types():
                                             n["description"], n["default"])
 
 class Command(NoArgsCommand):
-    help = 'Create or Update the notice types used in the ActionLog and ' \
-           'Notification apps'
+    help = ('Create or Update the notice types used in the ActionLog and '
+           'Notification apps')
 
     requires_model_validation = False
     can_import_settings = False

@@ -30,8 +30,8 @@ class DoGetLatestProjects:
     def __call__(self, parser, token):
         tokens = token.contents.split()
         if not tokens[1].isdigit():
-            raise template.TemplateSyntaxError, \
-                "The argument for '%s' must be an integer" % tokens[0]
+            raise template.TemplateSyntaxError, (
+                "The argument for '%s' must be an integer" % tokens[0])
         return LatestProjects(tokens[1])
 
 register.tag('get_latest_projects', DoGetLatestProjects())
@@ -140,8 +140,8 @@ def notice_type_user_filter(noticetype_list):
     new_list=[]
     for nt in noticetype_list:
         for n in NOTICE_TYPES:
-            if nt['notice_type'].label == n["label"] \
-               and n["show_to_user"] == True:
+            if nt['notice_type'].label == n["label"] and \
+               n["show_to_user"] == True:
                 new_list.append(nt)
     return new_list
 

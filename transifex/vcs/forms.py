@@ -28,8 +28,8 @@ class VcsUnitSubForm(forms.ModelForm):
         super(VcsUnitSubForm, self).__init__(*args, **kwargs)
 
         # Check it the codebase_type has branch support
-        if codebase_type and codebase_type in settings.BRANCH_SUPPORT \
-            and not settings.BRANCH_SUPPORT[codebase_type]:
+        if codebase_type and codebase_type in settings.BRANCH_SUPPORT and not\
+            settings.BRANCH_SUPPORT[codebase_type]:
             self.fields['branch'].required = False
         # Set the attr id of the branch field
         self.fields['branch'].widget.attrs['id']='branch' 
@@ -47,8 +47,8 @@ class VcsUnitSubForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
         branch = cleaned_data.get("branch")
         codebase_type = cleaned_data.get("type")
-        if branch and not self.fields['branch'].required \
-            and not settings.BRANCH_SUPPORT[codebase_type]:
+        if branch and not self.fields['branch'].required and not \
+            settings.BRANCH_SUPPORT[codebase_type]:
             msg = _(u"This type of repository does not accept branch")
             raise forms.ValidationError(msg)
         return cleaned_data

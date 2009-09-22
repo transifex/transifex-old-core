@@ -128,7 +128,7 @@ class PermissionFormNode(ResolverNode):
         obj = self.resolve(self.obj, context)
         perm = self.resolve(self.perm, context)
         if self.template_name:
-            template_name = [self.resolve(obj, context) \
+            template_name = [self.resolve(obj, context)
                              for obj in self.template_name.split(',')]
         else:
             template_name = 'txpermissions/permission_form.html'

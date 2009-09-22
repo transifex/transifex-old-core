@@ -272,8 +272,9 @@ def project_delete_permission_request(request, project_slug, permission_pk):
     project, permission=_get_project_and_permission(project_slug, permission_pk)
 
     check = ProjectPermission(request.user)
-    if check.maintain(project) or request.user.has_perm('authority.delete_permission') \
-        or request.user.pk == permission.creator.pk:
+    if check.maintain(project) or \
+            request.user.has_perm('authority.delete_permission') or \
+            request.user.pk == permission.creator.pk:
         return delete_permission_or_request(request, permission, False)
 
     return permission_denied(request)
@@ -741,8 +742,8 @@ def component_submit_file(request, project_slug, component_slug,
                             (filename, component.full_name))
                 submit_by_email(component, request.FILES, request.user)
 
-            if filename.endswith('.po') and component.submission_type!='email' \
-                or component.unit.type=='tar':
+            if filename.endswith('.po') and component.submission_type!='email' or \
+                component.unit.type=='tar':
                 logger.debug("Calculating %s stats for component %s" % 
                             (filename, component.full_name))
                 # TODO: Find out a better way to handle it. We might wand to merge

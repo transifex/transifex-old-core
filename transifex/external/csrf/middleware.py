@@ -47,8 +47,9 @@ from django.utils.safestring import mark_safe
 
 _ERROR_MSG = mark_safe('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><body><h1>403 Forbidden</h1><p>Cross Site Request Forgery detected. Request aborted.</p></body></html>')
 
-_POST_FORM_RE = \
-    re.compile(r'(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)', re.IGNORECASE)
+_POST_FORM_RE = re.compile(
+    r'(<form\W[^>]*\bmethod=(\'|"|)POST(\'|"|)\b[^>]*>)',
+    re.IGNORECASE)
 
 _HTML_TYPES = ('text/html', 'application/xhtml+xml')
 
@@ -123,9 +124,9 @@ class CsrfResponseMiddleware(object):
                                             itertools.repeat(''))
             def add_csrf_field(match):
                 """Returns the matched <form> tag plus the added <input> element"""
-                return mark_safe(match.group() + "<div style='display:none;'>" + \
-                "<input type='hidden' " + idattributes.next() + \
-                " name='csrfmiddlewaretoken' value='" + csrf_token + \
+                return mark_safe(match.group() + "<div style='display:none;'>" +
+                "<input type='hidden' " + idattributes.next() +
+                " name='csrfmiddlewaretoken' value='" + csrf_token +
                 "' /></div>")
 
             # Modify any POST forms

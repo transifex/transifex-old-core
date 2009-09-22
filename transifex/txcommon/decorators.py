@@ -62,8 +62,8 @@ def _model_lookups_handler(model_lookups, *args, **kwargs):
         if model_class is None:
             raise ValueError(
                 "The given argument '%s' is not a valid model." % model)
-        if inspect.isclass(model_class) and \
-                not issubclass(model_class, Model):
+        if inspect.isclass(model_class) and not \
+                issubclass(model_class, Model):
             raise ValueError(
                 'The argument %s needs to be a model.' % model)
         lookup_list.append((model_class, lookup, value))
