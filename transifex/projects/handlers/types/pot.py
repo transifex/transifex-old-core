@@ -29,7 +29,7 @@ class POTHandler:
     def get_manager(self):
         return self.tm
 
-    def create_file_stats(self, filename, is_msgmerged=True, is_pot=False):
+    def set_file_stats(self, filename, is_msgmerged=True, is_pot=False):
         """Set the statistics of a specificy file for an object."""
         lang_code = self.guess_language(filename)
 
@@ -81,7 +81,7 @@ class POTHandler:
         else:
             files = self.tm.get_po_files()
         for filename in files:
-            self.create_file_stats(filename, is_msgmerged, is_pot)
+            self.set_file_stats(filename, is_msgmerged, is_pot)
 
     def set_source_stats(self, is_msgmerged):
         """Set the stats for source files (pot) in the database."""
@@ -96,7 +96,7 @@ class POTHandler:
     def set_lang_stats(self, lang_code, is_msgmerged=True):
         """Set stats for a specificy language."""
         for filename in self.tm.get_lang_files(lang_code):
-            self.create_file_stats(filename, is_msgmerged, False)
+            self.set_file_stats(filename, is_msgmerged, False)
 
     def set_stats(self):
         """Calculate stats for all translations of the component."""
