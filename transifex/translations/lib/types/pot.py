@@ -196,8 +196,15 @@ class POTManager(TransManagerMixin):
         else:
             return None
 
-    def po_file_stats(self, pofile):
-        """Calculate stats for a POT/PO file."""
+    def get_po_stats(self, pofile):
+        """
+        Return a dictionary with the stats for a POT/PO file.
+
+        Case the stats for the ``pofile`` can not be calculated, the dictionary
+        will be returned with stats equals zero and with the ``error`` attribute
+        set as True.
+
+        """
         pofile = os.path.join(self.msgmerge_path, pofile)
 
         error = False
@@ -250,7 +257,7 @@ class POTManager(TransManagerMixin):
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
 
-        postats = self.po_file_stats(file_path)
+        postats = self.get_po_stats(file_path)
 
         return {'trans': postats['translated'],
                 'fuzzy': postats['fuzzy'],
