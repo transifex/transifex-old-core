@@ -145,13 +145,10 @@ class BzrBrowser(BrowserMixin):
     @need_repo
     def submit(self, files, msg, user):
         """
-        update to upstream
         bzr add <filename>
         bzr commit -m <msg>
         # Lightweight checkout so no push is needed
         """
-        self.update()
-
         for fieldname, uploadedfile in files.iteritems():
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)

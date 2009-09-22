@@ -151,12 +151,9 @@ class HgBrowser(BrowserMixin):
     @need_repo
     def submit(self, files, msg, user):
         """
-        update to upstream
         hg commit -m <msg> --addremove
         hg push
         """
-        self.update()
-
         for fieldname, uploadedfile in files.iteritems():
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)

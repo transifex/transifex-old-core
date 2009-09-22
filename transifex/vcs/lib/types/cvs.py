@@ -154,8 +154,6 @@ class CvsBrowser(BrowserMixin):
     @need_repo
     def submit(self, files, msg, user):
 
-        self.update()
-
         # Save contents
         for fieldname, uploadedfile in files.iteritems():
             self.save_file_contents(uploadedfile.targetfile,

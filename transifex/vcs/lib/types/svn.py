@@ -152,8 +152,6 @@ class SvnBrowser(BrowserMixin):
         svn add <filename>
         svn ci
         """
-        self.update()
-
         # Save contents
         for fieldname, uploadedfile in files.iteritems():
             self.save_file_contents(uploadedfile.targetfile,
