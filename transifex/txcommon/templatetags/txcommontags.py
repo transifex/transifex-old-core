@@ -140,8 +140,7 @@ def notice_type_user_filter(noticetype_list):
     new_list=[]
     for nt in noticetype_list:
         for n in NOTICE_TYPES:
-            if nt['notice_type'].label == n["label"] and \
-               n["show_to_user"] == True:
+            if nt['notice_type'].label == n["label"] and n["show_to_user"]:
                 new_list.append(nt)
     return new_list
 
