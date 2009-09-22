@@ -675,20 +675,18 @@ def component_submit_file(request, project_slug, component_slug,
 
         # For a new file
         if not filename:
-            if request.POST['targetfile'] == '' and \
-               request.POST['newtargetfile'] == '':
+            if not request.POST['targetfile'] and not request.POST['newtargetfile']:
                 request.user.message_set.create(message=_("Please enter" 
                                        " a target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
-            elif not request.POST['targetfile'] == '' and \
-                 not request.POST['newtargetfile'] == '':
+            elif request.POST['targetfile'] and request.POST['newtargetfile']:
                 request.user.message_set.create(message=_("Please enter" 
                                        " only ONE target to upload the file."))
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
             else:
-                if request.POST['targetfile'] != '':
+                if request.POST['targetfile']:
                     filename = request.POST['targetfile']
                 else:
                     filename = request.POST['newtargetfile']
