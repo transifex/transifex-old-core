@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: russian\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-07 17:40+0000\n"
-"PO-Revision-Date: 2009-09-15 23:16+0500\n"
+"PO-Revision-Date: 2009-09-23 14:57+0500\n"
 "Last-Translator: Azamat H. Hackimov <azamat.hackimov@gmail.com>\n"
 "Language-Team: russian team <fedora-trans-ru@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,6 @@ msgid "Name"
 msgstr "Имя"
 
 #: codebases/models.py:35
-#, fuzzy
 msgid "Root"
 msgstr "Root"
 
@@ -131,7 +130,7 @@ msgstr "Специальные символы"
 
 #: languages/models.py:37
 msgid "Enter any special characters that users might find difficult to type"
-msgstr ""
+msgstr "Введите особые символы, которые пользователи могут вводить с трудом"
 
 #: languages/models.py:40
 msgid "Number of Plurals"
@@ -653,7 +652,7 @@ msgstr "Скрытый"
 #: releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
-msgstr ""
+msgstr "Скрывать этот объект из списка?"
 
 #: projects/models.py:100
 #: projects/models.py:218
@@ -667,7 +666,7 @@ msgstr "Доступен"
 #: releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
-msgstr ""
+msgstr "Разрешить или запретить использование этого объекта?"
 
 #: projects/models.py:105
 msgid "Tags"
@@ -748,7 +747,7 @@ msgstr "Подсчитать статистику?"
 
 #: projects/models.py:223
 msgid "Should statistics be calculated for this component?"
-msgstr ""
+msgstr "Подсчитывать статистику для этого компонента?"
 
 #: projects/models.py:233
 msgid "Project"
@@ -892,7 +891,7 @@ msgstr "Дата заморозки разработки"
 
 #: releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
-msgstr ""
+msgstr "Дата релиза пакета разработчиками. После этой даты переводы не будут включены в выпущенную версию."
 
 #: releases/models.py:54
 msgid "release"
@@ -919,11 +918,11 @@ msgstr ""
 
 #: repowatch/models.py:88
 msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
+msgstr "Введите 0 или более целых чисел в скобках, разделенных запятыми."
 
 #: repowatch/models.py:90
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "Вы должны ввести хотя бы одну пару скобок с пустым значением."
 
 #: repowatch/models.py:141
 msgid "watch"
@@ -1389,11 +1388,11 @@ msgstr "Ваш профиль, %(user)s"
 
 #: templates/authopenid/settings.html:28
 msgid "This is where you can make changes to your account."
-msgstr ""
+msgstr "Здесь вы можете изменить свою учетную запись."
 
 #: templates/authopenid/settings.html:35
 msgid "Give your  account a new password."
-msgstr ""
+msgstr "Установить новый пароль."
 
 #: templates/authopenid/settings.html:37
 msgid "Add or update the email address associated with your account."
@@ -1495,11 +1494,11 @@ msgstr "Связь с нами"
 
 #: templates/contact_form/contact_form.html:7
 msgid "Let us know what you think!"
-msgstr ""
+msgstr "Сообщите нам о своем мнении!"
 
 #: templates/contact_form/contact_form.html:10
 msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
-msgstr ""
+msgstr "Мы хотим сделать этот веб-сервис самым удобным для наших пользователей. Если у вас есть запрос, как это сделать, отправьте его нам!"
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
@@ -1554,7 +1553,7 @@ msgstr "Статистика проекта/компонента"
 
 #: templates/languages/language_release.html:52
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
-msgstr ""
+msgstr "Transifex произвел поиск среди проектов, содержащих файлы перевода для данного языка и релиза, но ничего не нашел. Попробуйте отправить подобный файл и проверьте снова."
 
 #: templates/languages/language_release.html:53
 #, python-format
@@ -1568,7 +1567,7 @@ msgstr "Непереведенные компоненты"
 #: templates/languages/language_release.html:59
 #, python-format
 msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
-msgstr ""
+msgstr "Следующие компоненты будут включены в %(release_name)s, однако для %(language_name)s пока не был прислан ни один перевод."
 
 #: templates/notification/notices.html:6
 #: templates/notification/notices.html:7
@@ -1877,9 +1876,8 @@ msgid "No components are registered for this project yet."
 msgstr "В этом проекте пока не зарегистрировано ни одного компонента."
 
 #: templates/projects/component_list.html:45
-#, fuzzy
 msgid "Add one!"
-msgstr "Все модули"
+msgstr "Добавить!"
 
 #: templates/projects/component_list.html:49
 msgid ""
@@ -2414,7 +2412,7 @@ msgstr "Заново отправить подтверждение"
 
 #: templates/userprofile/account/email_validation_reset.html:37
 msgid "If you haven't validated your e-mail address yet you will not be able to login. Insert your registered e-mail address to receive the validation e-mail again"
-msgstr ""
+msgstr "Пока вы не проверите свой адрес e-mail, вы не сможете войти. Чтобы получить проверочное письмо еще раз, введите зарегистрированный адрес e-mail."
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -2422,7 +2420,7 @@ msgstr "Проверочное письмо отправлено"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Your user account was already active"
-msgstr ""
+msgstr "Ваша учетная запись уже активна"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "We've e-mailed you the e-mail validation link"
@@ -2606,7 +2604,7 @@ msgstr "Готово"
 
 #: templates/userprofile/avatar/choose.html:47
 msgid "Select an image from a remote URL. Put the URL on the input below and we'll retrieve the image for you"
-msgstr ""
+msgstr "Выберите изображение на удаленном URL. Поместите URL сюда, и мы скачаем изображение для вас"
 
 #: templates/userprofile/avatar/choose.html:54
 msgid "Search on Picasa Web"
@@ -2620,12 +2618,12 @@ msgstr "Страница выбора аватары"
 #: templates/userprofile/avatar/choose.html:80
 #: templates/userprofile/avatar/crop.html:42
 msgid "You have several options to select the image you want as avatar on your profile"
-msgstr ""
+msgstr "Есть несколько способов выбора изображения для аватара в вашем профиле"
 
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
 msgid "Crop &amp; resize the area you want"
-msgstr ""
+msgstr "Обрежьте и измените размер желаемой зоны"
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
@@ -2675,9 +2673,8 @@ msgid "Location:"
 msgstr "Расположение:"
 
 #: templates/userprofile/profile/location.html:27
-#, fuzzy
 msgid "Position"
-msgstr "Описание"
+msgstr "Позиция"
 
 #: templates/userprofile/profile/location.html:35
 #: templates/userprofile/profile/personal.html:30
@@ -2690,7 +2687,7 @@ msgstr "Информация расположения"
 
 #: templates/userprofile/profile/location.html:41
 msgid "Define your location information"
-msgstr ""
+msgstr "Укажите информацию о вашем местонахождении"
 
 #: templates/userprofile/profile/overview.html:4
 #: templates/userprofile/profile/overview.html:32
@@ -2711,11 +2708,11 @@ msgstr "E-mail:"
 
 #: templates/userprofile/profile/overview.html:44
 msgid "Not set yet"
-msgstr ""
+msgstr "Пока не указано"
 
 #: templates/userprofile/profile/overview.html:46
 msgid " (Not validated)"
-msgstr ""
+msgstr "(Не проверено)"
 
 #: templates/userprofile/profile/overview.html:55
 #: templates/userprofile/profile/overview.html:64
@@ -2806,9 +2803,8 @@ msgid "Submit translations"
 msgstr "Отправить переводы"
 
 #: templates/webtrans/transfile_form.html:15
-#, fuzzy
 msgid "Auto-suggest translation"
-msgstr "Добавить новый перевод"
+msgstr "Автоматический перевод"
 
 #: translations/models.py:225
 msgid "PO file"
@@ -2948,7 +2944,7 @@ msgstr "Нет зарегистрированного языка, связанн
 
 #: translations/templates/source_files.html:5
 msgid "Click here to show or hide the source files"
-msgstr ""
+msgstr "Нажмите здесь, чтобы показать или скрыть файлы источника"
 
 #: translations/templates/source_files.html:5
 #, python-format
@@ -3242,17 +3238,15 @@ msgstr "URL веб-интерфейса проекта"
 #: vcs/models.py:58
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr ""
+msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
 #: vcs/models.py:61
-#, fuzzy
 msgid "vcsunit"
-msgstr "Подтвердить"
+msgstr "vcsunit"
 
 #: vcs/models.py:62
-#, fuzzy
 msgid "vcsunits"
-msgstr "Подтвердить"
+msgstr "vcsunits"
 
 #: webtrans/views.py:125
 msgid "Your file does not pass by the check for correctness (msgfmt -c). Please run this command on your system to see the errors."
@@ -3260,7 +3254,7 @@ msgstr "Ваш файл не прошел проверку на корректн
 
 #: webtrans/views.py:134
 msgid "Sorry, an error is causing troubles to send your file."
-msgstr ""
+msgstr "Просим прощения, при передаче файла возникли проблемы."
 
 #~ msgid "Homepage for %(release_name)s"
 #~ msgstr "Домашняя страница для %(release_name)s"
