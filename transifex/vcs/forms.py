@@ -1,5 +1,6 @@
 from django.conf import settings
 from django import forms
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext_lazy as _
 from django.forms.util import ErrorList
 
@@ -23,7 +24,10 @@ class VcsUnitSubForm(forms.ModelForm):
             codebase_type = instance.type
         else: 
             # Or a request for saving a new codebase
-            codebase_type = getattr(args[0], 'unit-type', None)
+            try:
+                codebase_type = args[0]['unit-type']
+            except (TypeError, MultiValueDictKeyError):
+                codebase_type = None
 
         super(VcsUnitSubForm, self).__init__(*args, **kwargs)
 
