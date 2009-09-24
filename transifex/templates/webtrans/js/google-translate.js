@@ -12,7 +12,7 @@ google.setOnLoadCallback(function() {
 	        var a=$(this), str=a.html();
             a.removeClass("action");
             a.addClass("action_go");
-	        orig=$('.msg', a.parents('tr')).html();
+	        orig=$('.msg', a.parents('tr')).find('p:first').html();
 	        trans=$('textarea', a.parents('tr'));
 	        orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
 	        google.language.translate(orig, "en", "{{ pofile.language_code }}", function(result) {

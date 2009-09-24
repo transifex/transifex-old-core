@@ -4,8 +4,8 @@ function toggle_entries(entries_status){
     Toggle entries of the online translation form filtering the rows by the
     status of each entry.
     */
-    $("textarea[name*='msgstr_field_'][class='"+entries_status+"']").each(function(){
-        nkey = $(this).attr('name').split('msgstr_field_')[1];
+    $("textarea[name*='msgstr_field_']."+entries_status).each(function(){
+        nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
         if($("input[name='only_"+entries_status+"']").is(':checked')){
             $("tr[id='msgstr_field_"+nkey+"']")
                 .attr('style', '')
@@ -29,7 +29,7 @@ function toggle_entries(entries_status){
 function fuzzy(nkey){
     $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', true);
-    $("textarea[name='msgstr_field_"+nkey+"']")
+    $("textarea.msgstr_field_"+nkey)
         .addClass('fuzzy')
         .removeClass('translated')
         .removeClass('untranslated');
@@ -38,7 +38,7 @@ function fuzzy(nkey){
 function unfuzzy(nkey){
     $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', false);
-    $node = $("textarea[name='msgstr_field_"+nkey+"']")
+    $node = $("textarea.msgstr_field_"+nkey)
     $node.removeClass('fuzzy');
     if($node.val() == ''){
         $node.addClass('untranslated');
@@ -52,10 +52,13 @@ function unfuzzy(nkey){
 // FIXME: This should be global or something, not calculated every time.
 // These should be called once when the page loads. They make sure that the
 // total sum shown reflects the actual table.
-function get_total_sum() { return $("textarea").length; }
+function get_total_sum() { return $("tr[id*='msgstr_field_'] textarea:first-child").length; }
 function update_total_sum() {  $("#total_sum").text(get_total_sum()); }
 
-function get_total(w) { return $("textarea." + w).length; }
+function get_total(w) { return $("tr[id*='msgstr_field_'] textarea:first-child." + w).length; }
+
+
+
 function get_total_perc(w) {
     // Return the percentage of the count
     if (w != 'untrans') {
@@ -102,18 +105,18 @@ $(function(){
 
       // Actions for when the Translation field changes
     $("textarea[name*='msgstr_field_']").keyup(function () {
-        nkey = $(this).attr('name').split('msgstr_field_')[1];
+        nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
 
         $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
 
         if($(this).val() == ''){
-            $("textarea[name='msgstr_field_"+nkey+"']")
+            $("textarea.msgstr_field_"+nkey)
                 .addClass('untranslated')
                 .removeClass('fuzzy')
                 .removeClass('translated');
             $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', 'disabled');
         }else{
-            $("textarea[name='msgstr_field_"+nkey+"']")
+            $("textarea.msgstr_field_"+nkey)
                 .addClass('translated')
                 .removeClass('fuzzy')
                 .removeClass('untranslated');
@@ -125,7 +128,7 @@ $(function(){
 
     // Disabling the Fuzzy checkbox for untranslated entries
     $("textarea[name*='msgstr_field_'][value='']").each(function(){
-        nkey = $(this).attr('name').split('msgstr_field_')[1];
+        nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
         $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', 'disabled');
     });
 

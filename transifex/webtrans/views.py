@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.conf import settings
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext as _
 
 from actionlog.models import action_logging
@@ -50,9 +51,21 @@ def transfile_edit(request, pofile_id):
                     #TODO: Find out why it's needed to remove it first
                     po_entries.remove(entry)
 
-                    string = request.POST['msgstr_field_%s' % nkey]
-                    entry.msgstr = unescape(string);
-
+                    try:
+                        string = request.POST['msgstr_field_%s' % nkey]
+                        entry.msgstr = unescape(string);
+                    except MultiValueDictKeyError:
+                        has_plurals = True
+                        index=0
+                        while has_plurals:
+                            plural_field = 'msgstr_field_%s_%s' % (nkey, index)
+                            string = request.POST.get(plural_field, None)
+                            if string is not None:
+                                entry.msgstr_plural['%s' % index]=unescape(string)
+                            else:
+                                has_plurals = False
+                            index = index+1
+                    print entry.msgstr_plural
                     # Taking care of fuzzies flags
                     if request.POST.get('fuzzy_field_%s' % nkey, None):
                         if 'fuzzy' not in entry.flags:
