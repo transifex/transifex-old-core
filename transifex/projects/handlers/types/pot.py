@@ -53,9 +53,9 @@ class POTHandler:
                 rev = self.component.get_rev(filename)
             except BrowserError:
                 pass
-            finally:
-                if rev != None and rev == s.rev:
-                    calcstats = False
+
+            if rev and rev == s.rev:
+                calcstats = False
 
         # For intltool components that the pot file has changes, it's
         # necessary to recalc the stats even if the 'rev' is the same
@@ -65,8 +65,6 @@ class POTHandler:
 
         if calcstats:
             stats = self.tm.calculate_file_stats(filename, is_msgmerged)
-
-        if calcstats:
             s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
                 untrans=stats['untrans'], error=stats['error'])
             s.is_msgmerged = stats['is_msgmerged']
