@@ -43,7 +43,8 @@ class TranslationForm(forms.Form):
                         help_text=self.help_text(entry),
                         label=_get_label([polib.escape(entry.msgid),
                             polib.escape(entry.msgid_plural)]),
-                        attrs=attrs
+                        attrs=attrs,
+                        required=False,
                     )
                 else:
                     msgstr_field = MessageField(
@@ -51,7 +52,8 @@ class TranslationForm(forms.Form):
                         initial=polib.escape(entry.msgstr),
                         help_text=self.help_text(entry),
                         attrs=attrs,
-                        label=_get_label([polib.escape(entry.msgid)])
+                        label=_get_label([polib.escape(entry.msgid)]),
+                        required=False,
                         )
 
                 msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,

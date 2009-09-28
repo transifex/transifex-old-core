@@ -1,6 +1,7 @@
 import polib
 from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext as _
 
 def _calculate_rows(entry):
     """Return the estimated number of rows for a textarea based on string size."""
@@ -43,6 +44,17 @@ class PluralMessageField(forms.MultiValueField):
         if data_list:
             return "#|#".join(unicode(data) for data in data_list)
         return None
+
+    def clean(self, value):
+        """Plural fields should either be all filled or all leaved as blank."""
+        number=0
+        for v in value:
+            if v=='':
+                number = number+1
+        if number != 0 and number != len(value):
+            raise forms.ValidationError(_('The %s fields should be filled.') % 
+                                          len(value))
+        return value
 
 
 class MessageField(forms.CharField):
