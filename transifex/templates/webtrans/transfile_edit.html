@@ -1,6 +1,7 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
 {% load txcommontags %}
+{% load txpagination %}
 
 {% block extra_head %}
 <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
@@ -46,14 +47,16 @@
 {% block content %}
 
 {% if pofile.total %}
-  <h3>Current status</h3>
+  <form action='' method='post' class='webtrans'>
+  <h3>Current status for this page</h3>
 
 <fieldset class="floatright">
   <legend>Settings</legend>
   <table class="definition">
   <tr>
     <th>Show occurences:</th>
-    <td><input id="toggle_occurences" type="checkbox" checked="checked" name="toggle_occurences" /></td>
+    <td><input id="toggle_occurrences" type="checkbox" {% if toggle_occurrences %}checked="checked"{% endif %} name="toggle_occurrences" /></td>
+   
   </tr>
   </table>
 </fieldset>
@@ -63,19 +66,19 @@
     <th class="translated">Translated</th>
       <td id="total_translated">{{ pofile.trans }}</td>
       <td id="total_translated_perc">{{ pofile.trans_perc }}%</td>
-      <td><input id="only_translated" type="checkbox" checked="checked" name="only_translated"/></td>
+      <td><input id="only_translated" type="checkbox" {% if only_translated %}checked="checked"{% endif %} name="only_translated"/></td>
   </tr>
   <tr>
     <th class="fuzzy">Fuzzy</th>
       <td id="total_fuzzy">{{ pofile.fuzzy }}</td>
       <td id="total_fuzzy_perc">{{ pofile.fuzzy_perc }}%</td>
-      <td><input id="only_fuzzy" type="checkbox" checked="checked" name="only_fuzzy"/></td>
+      <td><input id="only_fuzzy" type="checkbox" {% if only_fuzzy %}checked="checked"{% endif %} name="only_fuzzy"/></td>
   </tr>
   <tr>
     <th class="untranslated">Untranslated</th>
       <td id="total_untranslated">{{ pofile.untrans }}</td>
       <td id="total_untranslated_perc">{{ pofile.untrans_perc }}%</td>
-      <td><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/></td>
+      <td><input id="only_untranslated" type="checkbox" {% if only_untranslated %}checked="checked"{% endif %} name="only_untranslated"/></td>
   </tr>
   <tr class="last">
     <th>Total</th>
@@ -89,24 +92,37 @@
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
-  <form action='' method='post'>
+
+  <span>Page {{ step }} of {{ step_count }}</span>
+
+  <div class="generic_form" >
   <table id="trans_web_edit" class="trans_web_edit stats_comp tablesorter">
    <thead>
     <tr>
       <th>{% trans "#" %}</th>
       <th>{% trans "Source String" %}</th>
       <th>{% trans "Translation" %}</th>
-{% if WEBTRANS_SUGGESTIONS %}      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>{% endif %}
-      <th class="occurences">{% trans "Occurrences" %}</th>
+    {% if WEBTRANS_SUGGESTIONS %}      
+      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
+    {% endif %}
+      <th class="occurrences">{% trans "Occurrences" %}</th>
       <th>{% trans "Fuzzy?" %}</th>
     </tr>
    </thead>
    <tbody>
-    {% with pofile_form as form %} 
     {% include "webtrans/transfile_form.html" %}
-    {% endwith %}
    </tbody>
   </table>
-  <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Submit translations" %}" /></p>
+  </div>
+
+  {% txpaginate '' po_entries step ENTRIES_PER_PAGE 6 paginated_po_entries %}
+  {% include 'pagination.html' %}
+
+  <p class="submit">
+  <input type="submit" name="submit" class="i16 submit" value="{% trans "Submit translations" %}" />
+  </p>
+
   </form>
 {% endblock %}
+
+

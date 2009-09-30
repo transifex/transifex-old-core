@@ -159,11 +159,12 @@ urlpatterns += patterns('',
 
 #TODO: Make this setting work throughout the applications
 if getattr(settings, 'ENABLE_WEBTRANS', True):
+    from webtrans.wizards import TransFormWizard
     urlpatterns += patterns('',
         url(
             regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
                     'edit/(?P<filename>(.*))$'),
-            view = component_file_edit,
+            view = TransFormWizard(key=None, form_list=[]),
             name = 'component_edit_file',),
         )
 

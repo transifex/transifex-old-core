@@ -17,17 +17,21 @@ function toggle_entries(entries_status){
         }
     });
 
-    // Repaginate table
-    $('table.trans_web_edit').trigger('setupPagination');
-
     // Update zebra rows in the table
     $("#trans_web_edit")
         .trigger("update")
         .trigger("appendCache");
 }
 
+function toggle_occurrences(){
+        if($("input[name='toggle_occurrences']").is(":checked")){
+            $(".occurrences").show()
+        }else{
+            $(".occurrences").hide();
+        }
+    }
+
 function fuzzy(nkey){
-    $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', true);
     $("textarea.msgstr_field_"+nkey)
         .addClass('fuzzy')
@@ -36,7 +40,6 @@ function fuzzy(nkey){
 }
 
 function unfuzzy(nkey){
-    $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', false);
     $node = $("textarea.msgstr_field_"+nkey)
     $node.removeClass('fuzzy');
@@ -84,13 +87,11 @@ function update_totals() {
 }
 
 
-/* The juice */
-
 $(function(){
     // Run a first update on the totals, just to be sure they are accurate.
     update_total_sum();
     update_totals();
-    
+
     // Actions for when the Fuzzy checkbox changes
     $("input[name*='fuzzy_field_']").change(function () {
 
@@ -103,11 +104,9 @@ $(function(){
         update_totals();
     })
 
-      // Actions for when the Translation field changes
+    // Actions for when the Translation field changes
     $("textarea[name*='msgstr_field_']").keyup(function () {
         nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
-
-        $("input[name='changed_field_"+nkey+"']").attr('value', 'True');
 
         if($(this).val() == ''){
             $("textarea.msgstr_field_"+nkey)
@@ -127,9 +126,11 @@ $(function(){
     })
 
     // Disabling the Fuzzy checkbox for untranslated entries
-    $("textarea[name*='msgstr_field_'][value='']").each(function(){
-        nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
-        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', 'disabled');
+    $("textarea[name*='msgstr_field_']").each(function(){
+        if($(this).text() == ''){
+            nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
+            $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', 'disabled');
+        }
     });
 
     // Actions for show/hide translated entries
@@ -138,8 +139,8 @@ $(function(){
     })
 
     // Making translated entries hidden by default
-    $("input[name='only_translated']").attr('checked', false);
-    toggle_entries('translated')
+    //$("input[name='only_translated']").attr('checked', false);
+    //    toggle_entries('translated')
 
     // Actions for show/hide fuzzy entries
     $("input[name='only_fuzzy']").change(function () {
@@ -151,17 +152,13 @@ $(function(){
          toggle_entries('untranslated')
     })
 
-    table_pagination('table.trans_web_edit')
-    
-    // Other options
-    
+    // Hide check fields for show/hide translated/fuzzy/untranslated fields
+    $("input[name*='only_']").hide()
+
     // Actions for show/hide occurrence column in the table
-    $("input[name='toggle_occurences']").change(function(){
-        if($(this).is(":checked")){
-            $(".occurences").attr("style", "");
-        }else{
-            $(".occurences").attr("style", "display: none");
-        }
+    $("input[name='toggle_occurrences']").change(function(){
+        toggle_occurrences()
     })
+    toggle_occurrences()
 
 });

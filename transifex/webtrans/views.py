@@ -11,6 +11,7 @@ from django.conf import settings
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import ugettext as _
 
+from authority.views import permission_denied
 from actionlog.models import action_logging
 from projects.models import Component
 from projects.views import component_submit_file
@@ -20,10 +21,8 @@ from txcommon.models import get_profile_or_user
 from txcommon.views import json_result
 from txcommon.log import logger
 from submissions import submit_by_email
-
-from forms import TranslationForm
+from webtrans.forms import TranslationForm
 from webtrans.templatetags.webeditortags import webtrans_is_under_max
-from authority.views import permission_denied
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -31,7 +30,9 @@ from txcommon import notifications as txnotification
 # Enable Google translation suggestions
 WEBTRANS_SUGGESTIONS = getattr(settings, 'WEBTRANS_SUGGESTIONS', True)
 
-def transfile_edit(request, pofile_id):
+def transfile_edit(request, pofile_id, form_list):
+    # TODO: Move it or part of it to a better place, probably the 'done' method
+    # of the wizard
     pofile = get_object_or_404(POFile, pk=pofile_id)
     po_entries = pofile.object.trans.get_po_entries(pofile.filename)
     filename = pofile.filename
@@ -41,40 +42,41 @@ def transfile_edit(request, pofile_id):
     if not webtrans_is_under_max(pofile.total):
         return permission_denied(request)
 
-    if request.method == "POST":
-        for fieldname, value in request.POST.items():
-            if 'msgid_field_' in fieldname:
-                nkey = fieldname.split('msgid_field_')[1]
-                if request.POST.get('changed_field_%s' % nkey, None) == 'True':
-                    entry = po_entries.find(unescape(value))
+    # Forms will be actually added to the form_list by the SessionWizard only 
+    # if they have changed
+    if form_list:
+        for form in form_list:
+            for fieldname in form.fields.keys():
+                if 'msgid_field_' in fieldname:
+                    nkey = fieldname.split('msgid_field_')[1]
+                    msgstr_field = 'msgstr_field_%s' % nkey
+                    fuzzy_field = 'fuzzy_field_%s' % nkey
 
-                    #TODO: Find out why it's needed to remove it first
-                    po_entries.remove(entry)
+                    if msgstr_field in form.changed_data or \
+                        fuzzy_field in form.changed_data:
 
-                    try:
-                        string = request.POST['msgstr_field_%s' % nkey]
-                        entry.msgstr = unescape(string);
-                    except MultiValueDictKeyError:
-                        has_plurals = True
-                        index=0
-                        while has_plurals:
-                            plural_field = 'msgstr_field_%s_%s' % (nkey, index)
-                            string = request.POST.get(plural_field, None)
-                            if string is not None:
-                                entry.msgstr_plural['%s' % index]=unescape(string)
-                            else:
-                                has_plurals = False
-                            index = index+1
-                    print entry.msgstr_plural
-                    # Taking care of fuzzies flags
-                    if request.POST.get('fuzzy_field_%s' % nkey, None):
-                        if 'fuzzy' not in entry.flags:
-                            entry.flags.append('fuzzy')
-                    else:
-                        if 'fuzzy' in entry.flags:
-                            entry.flags.remove('fuzzy')
+                        msgid_value = form.cleaned_data['msgid_field_%s' % nkey]
+                        entry = po_entries.find(unescape(msgid_value))
 
-                    po_entries.append(entry)
+                        #TODO: Find out why it's needed to remove it first
+                        po_entries.remove(entry)
+
+                        msgstr_value = form.cleaned_data['msgstr_field_%s' % nkey]
+                        try:
+                            entry.msgstr = unescape(msgstr_value);
+                        except AttributeError:
+                            for i, value in enumerate(msgstr_value):
+                                entry.msgstr_plural['%s' % i]=unescape(value)
+
+                        # Taking care of fuzzies flags
+                        if form.cleaned_data.get('fuzzy_field_%s' % nkey, None):
+                            if 'fuzzy' not in entry.flags:
+                                entry.flags.append('fuzzy')
+                        else:
+                            if 'fuzzy' in entry.flags:
+                                entry.flags.remove('fuzzy')
+
+                        po_entries.append(entry)
 
         po_contents = po_entries.__str__().encode('utf-8')
         edited_file = SimpleUploadedFile(filename, po_contents)
@@ -101,7 +103,7 @@ def transfile_edit(request, pofile_id):
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
                 component.submit(submitted_file, msg, 
-                                 get_profile_or_user(request.user))
+                                    get_profile_or_user(request.user))
 
             if component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 
@@ -154,13 +156,10 @@ def transfile_edit(request, pofile_id):
             request.user.message_set.create(message = _(
                 "Sorry, an error is causing troubles to send your file."))
 
-        return HttpResponseRedirect(reverse('projects.views.component_detail', 
-                                    args=(component.project.slug, component.slug,)))
     else:
-        form = TranslationForm(po_entries)
+        request.user.message_set.create(message = _(
+            "The file wasn't sent because you haven't changed anything."))
 
-    return render_to_response('webtrans/transfile_edit.html', {
-        'pofile': pofile,
-        'pofile_form': form,
-        'WEBTRANS_SUGGESTIONS': WEBTRANS_SUGGESTIONS,
-    }, context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                                args=(component.project.slug, component.slug,)))
+

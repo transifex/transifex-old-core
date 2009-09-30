@@ -8,6 +8,27 @@ import txcommon
 
 register = template.Library()
 
+class ResolverNode(template.Node):
+    """
+    A small wrapper that adds a convenient resolve method.
+    """
+    def resolve(self, var, context):
+        """Resolves a variable out of context if it's not in quotes"""
+        if var is None:
+            return var
+        if var[0] in ('"', "'") and var[-1] == var[0]:
+            return var[1:-1]
+        else:
+            return template.Variable(var).resolve(context)
+
+    @classmethod
+    def next_bit_for(cls, bits, key, if_none=None):
+        try:
+            return bits[bits.index(key)+1]
+        except (ValueError, IndexError):
+            return if_none
+
+
 class LatestProjects(template.Node):
 
     def __init__(self, number=5):
@@ -61,20 +82,48 @@ def txversion():
     return txcommon.version
 
 
-class CounterNode(template.Node):
+class CounterNode(ResolverNode):
     """A template node to count how many times it was called."""
-    def __init__(self):
+    
+    @classmethod
+    def handle_token(cls, parser, token):
+        bits = token.contents.split()
+        tag_name = bits[0]
+        kwargs = {
+            'initial': cls.next_bit_for(bits, tag_name, 0),
+        }
+        return cls(**kwargs)
+
+    def __init__(self, initial):
         self.count = 0
+        self.initial = initial
 
     def render(self, context):
-        self.count += 1
+        if self.count == 0 and self.initial != 0:
+            try:
+                initial = int(self.initial)
+            except ValueError:
+                initial = int(template.resolve_variable(self.initial, context))
+        else:
+            initial = 0
+
+        self.count += 1 + initial
         return self.count
 
 @register.tag
 def counter(parser, token):
-    return CounterNode()
+    """
+    Return a number increasing its counting each time it's called.
+    An ``initial`` value can be passed to identify from which number it should 
+    start counting.
+ 
+    Syntax::
 
+        {% counter %}
+        {% counter 20 %}
 
+    """
+    return CounterNode.handle_token(parser, token)
 
 
 # Forms

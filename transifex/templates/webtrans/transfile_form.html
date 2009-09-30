@@ -3,21 +3,26 @@
 {% load webeditortags %}
 {% if form %}
 <input type="hidden" id="message" name="message" value="Updates to {{pofile.lang_or_code}} translation">
+<input type="hidden" name="wizard_step" value="{{ step0 }}" />
 {% for field in form %}
   {% if field.is_hidden %}
     {{ field }}
   {% else %}
-  {% if "msgstr_field"|in_list:field.name %} 
+  {% if "msgstr_field_"|in_list:field.name %}
   <tr id="{{field.name}}" >
-    <td class="num">{% counter %}</td>
+    <td class="num">{% counter initial_entries_count %}</td>
     <td class="msg">{{ field.label }}</td>
     <td class="trans">
-      {{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}</td>
-{% if WEBTRANS_SUGGESTIONS %}    <td class="notes suggest_container"><a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a></td>{% endif %}
-    <td class="occurences notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
-    <td class="notes"><span class="helptext">{{ field|fuzzy_field:form|safe }}</span></td>
-  </tr>
+     {{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
+    </td>
+   {% if WEBTRANS_SUGGESTIONS %}    
+    <td class="notes suggest_container"><a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a></td>
+   {% endif %}
+     <td class="occurrences notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
+     <td class="notes"><span class="helptext">{{ field|fuzzy_field:form|safe }}</span></td>
+   </tr>
   {% endif %}
   {% endif %}
 {% endfor %}
 {% endif %}
+

@@ -1,0 +1,54 @@
+{% load i18n %}
+{% if pagination.pages %}
+<div class="pagination">
+ <ul>
+  {% if pagination.previous %}
+   <li>
+     <input type="submit" name="previous" class="i16 previous" value="{% trans "Previous" %}" />
+   </li>
+  {% endif %}
+
+  {% for page in pagination.left %}
+   <li>
+    {% ifequal page pagination.page %}
+     <span class="pagination_current" >{{page}}</span>
+    {% else %}
+     <input type="submit" name="current_page" class="page" value="{{ page }}" />
+    {% endifequal %}
+   </li>
+  {% endfor %}
+
+  {% if pagination.middle %}
+   <li>...</li>
+   {% for page in pagination.middle %}
+    <li>
+     {% ifequal page pagination.page %}
+      <span class="pagination_current" >{{page}}</span>
+     {% else %}
+      <input type="submit" name="current_page" class="page" value="{{ page }}" />
+     {% endifequal %}
+    </li>
+   {% endfor %}
+  {% endif %}
+
+  {% if pagination.right %}
+   <li>...</li>
+   {% for page in pagination.right %}
+    <li>
+     {% ifequal page pagination.page %}
+      <span class="pagination_current" >{{page}}</span>
+     {% else %}
+      <input type="submit" name="current_page" class="page" value="{{ page }}" />
+     {% endifequal %}
+    </li>
+   {% endfor %}
+  {% endif %}
+
+  {% if pagination.next %}
+   <li>
+    <input type="submit" name="next" class="i16 next" value="{% trans "Next" %}" />
+   </li>
+  {% endif %}
+ </ul>
+</div>
+{% endif %}
