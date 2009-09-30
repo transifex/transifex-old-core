@@ -726,7 +726,7 @@ def component_file_edit(request, project_slug, component_slug, filename,
 @one_perm_required_or_403(pr_component_submit_file, 
     (Project, 'slug__exact', 'project_slug'))
 def component_submit_file(request, project_slug, component_slug, 
-                          filename=None):
+                          filename=None, submitted_file=None):
 
     component = get_object_or_404(Component, slug=component_slug,
                                     project__slug=project_slug)
@@ -742,7 +742,7 @@ def component_submit_file(request, project_slug, component_slug,
 
     if request.method == 'POST':
 
-        if not request.FILES.has_key('submited_file'):
+        if not request.FILES.has_key('submitted_file') and not submitted_file:
             request.user.message_set.create(message=_("Please select a " 
                                "file from your system to be uploaded."))
             return HttpResponseRedirect(reverse('projects.views.component_detail', 
@@ -779,9 +779,16 @@ def component_submit_file(request, project_slug, component_slug,
                 return HttpResponseRedirect(reverse('projects.views.component_detail', 
                                 args=(project_slug, component_slug,)))
 
-        # Adding extra field to the instance
-        request.FILES['submited_file'].targetfile = filename
-
+        if not submitted_file:
+            # Adding extra attr to the instance
+            request.FILES['submitted_file'].targetfile = filename
+            
+            file_dict = {'submitted_file':request.FILES['submitted_file']}
+            submitted_file = request.FILES['submitted_file']
+        else:
+            submitted_file.targetfile = filename
+            file_dict = {'submitted_file':submitted_file}
+            
         try:
             postats = POFile.objects.get(filename=filename,
                                          object_id=component.id)
@@ -798,7 +805,7 @@ def component_submit_file(request, project_slug, component_slug,
             if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
-                component.trans.msgfmt_check(request.FILES['submited_file'])
+                component.trans.msgfmt_check(submitted_file)
 
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare()
@@ -807,13 +814,13 @@ def component_submit_file(request, project_slug, component_slug,
                          (filename, component.full_name))
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
-                component.submit(request.FILES, msg, 
+                component.submit(file_dict, msg, 
                                  get_profile_or_user(request.user))
 
             if component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 
                             (filename, component.full_name))
-                submit_by_email(component, request.FILES, request.user)
+                submit_by_email(component, file_dict, request.user)
 
             if filename.endswith('.po') and component.submission_type!='email' or \
                 component.unit.type=='tar':

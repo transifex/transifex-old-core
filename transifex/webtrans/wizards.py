@@ -1,8 +1,12 @@
+from polib import unescape
 from django.conf import settings
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from django.utils.hashcompat import md5_constructor
+from django.utils.translation import ugettext as _
 
 from projects.models import Component
 from translations.models import POFile
@@ -38,29 +42,28 @@ class TransFormWizard(SessionWizard):
         component_slug = kwargs['component_slug']
         filename = kwargs['filename']
 
-        # Quering the respective database objects
         component = get_object_or_404(Component, slug=component_slug,
                                       project__slug=project_slug)
-        pofile = POFile.objects.get(filename=filename, component=component)
-        po_entries = component.trans.get_po_entries(filename)
 
         # Initializing TranslationForm vars
-        self.po_id = pofile.pk
+        self.pofile = POFile.objects.get(filename=filename, component=component)
+        self.po_entries = component.trans.get_po_entries(filename)
+        
         # Drop obsolete entries from the list
-        obsoletes = len(po_entries.obsolete_entries())
+        obsoletes = len(self.po_entries.obsolete_entries())
         if obsoletes > 0:
-            self.po_entries = po_entries[:-obsoletes]
+            self.po_entries_list = self.po_entries[:-obsoletes]
         else:
-            self.po_entries = po_entries
+            self.po_entries_list = self.po_entries
 
         # Initializing TransFormWizard vars
         self.key =  md5_constructor('%s%s%s' % 
-            (request.user.pk, component.pk, pofile.pk)).hexdigest()
-        self.form_list = [TranslationForm for c in chunks(self.po_entries, 
+            (request.user.pk, component.pk, self.pofile.pk)).hexdigest()
+        self.form_list = [TranslationForm for c in chunks(self.po_entries_list, 
             self.ENTRIES_PER_PAGE)]
 
-        self.extra_context.update({'pofile': pofile, 
-            'po_entries': self.po_entries, 
+        self.extra_context.update({'pofile': self.pofile, 
+            'po_entries': self.po_entries_list, 
             'ENTRIES_PER_PAGE': self.ENTRIES_PER_PAGE,
             'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
             'toggle_occurrences': request.POST.get('toggle_occurrences', None),
@@ -117,7 +120,7 @@ class TransFormWizard(SessionWizard):
         initial = self.initial[step] if step in self.initial else None
         
         # Get po entries for the chuck in a specific possition (step)
-        po_entries = specific_chunk(self.po_entries, step, self.ENTRIES_PER_PAGE)
+        po_entries = specific_chunk(self.po_entries_list, step, self.ENTRIES_PER_PAGE)
 
         # Return the form instance initialized with the data populated from the,
         # case the form for this step was already displayed
@@ -142,7 +145,56 @@ class TransFormWizard(SessionWizard):
         Method responsible for handling the final list of validated forms, that
         actually have changed, after submitting the wizard.
         """
-        from webtrans.views import transfile_edit
-        webtrans_view = transfile_edit(request, self.po_id, form_list)
+        from projects.views import component_submit_file
+
+        project_slug = self.pofile.object.project.slug
+        component_slug = self.pofile.object.slug
+        filename = self.pofile.filename
+
+        for form in form_list:
+            for fieldname in form.fields.keys():
+                if 'msgid_field_' in fieldname:
+                    nkey = fieldname.split('msgid_field_')[1]
+                    msgstr_field = 'msgstr_field_%s' % nkey
+                    fuzzy_field = 'fuzzy_field_%s' % nkey
+
+                    if msgstr_field in form.changed_data or \
+                        fuzzy_field in form.changed_data:
+
+                        msgid_value = form.cleaned_data['msgid_field_%s' % nkey]
+                        entry = self.po_entries.find(unescape(msgid_value))
+
+                        #TODO: Find out why it's needed to remove it first
+                        self.po_entries.remove(entry)
+
+                        msgstr_value = form.cleaned_data['msgstr_field_%s' % nkey]
+                        try:
+                            entry.msgstr = unescape(msgstr_value);
+                        except AttributeError:
+                            for i, value in enumerate(msgstr_value):
+                                entry.msgstr_plural['%s' % i]=unescape(value)
+
+                        # Taking care of fuzzies flags
+                        if form.cleaned_data.get('fuzzy_field_%s' % nkey, None):
+                            if 'fuzzy' not in entry.flags:
+                                entry.flags.append('fuzzy')
+                        else:
+                            if 'fuzzy' in entry.flags:
+                                entry.flags.remove('fuzzy')
+
+                        self.po_entries.append(entry)
+
+        if form_list:
+            po_contents = self.po_entries.__str__().encode('utf-8')
+            edited_file = SimpleUploadedFile(filename, po_contents)
+            result_view = component_submit_file(request, project_slug, 
+                component_slug, filename, edited_file)
+        else:
+            request.user.message_set.create(message = _(
+                "Nothing was sent because you haven't changed anything in the "
+                "translation form."))
+            return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                args=(project_slug, component_slug)))
+
         self.clear_storage(request)
-        return webtrans_view
+        return result_view

@@ -7,7 +7,7 @@
 <form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
-  <input type="file" name="submited_file">
+  <input type="file" name="submitted_file">
   <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
   <input type="hidden" id="message" name="message" value="Updates to {{pofile.lang_or_code}} translation">
   {% with pofile.locks.get.owner as owner %}
