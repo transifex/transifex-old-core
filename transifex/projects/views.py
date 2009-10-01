@@ -699,29 +699,11 @@ def component_file(request, project_slug, component_slug, filename,
     return response
 
 
-# for the next two views
 pr_component_submit_file = (
     ('granular', 'project_perm.maintain'),
     ('granular', 'project_perm.submit_file'),
     ('general',  'projects.submit_file'),
 )
-@login_required
-@one_perm_required_or_403(pr_component_submit_file, 
-    (Project, 'slug__exact', 'project_slug'))
-def component_file_edit(request, project_slug, component_slug, filename, 
-                        is_msgmerged=True):
-    from webtrans.views import transfile_edit
-    component = get_object_or_404(Component, slug=component_slug,
-                                  project__slug=project_slug)
-    #FIXME: This approach hits the database twice!
-    # See also: http://transifex.org/ticket/210
-    ctype = ContentType.objects.get_for_model(Component)
-    pofile = get_object_or_404(POFile, object_id=component.pk,
-                               content_type=ctype, filename=filename)
-
-    return transfile_edit(request, pofile.id)
-
-
 @login_required
 @one_perm_required_or_403(pr_component_submit_file, 
     (Project, 'slug__exact', 'project_slug'))

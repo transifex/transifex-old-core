@@ -28,6 +28,9 @@ class TransFormWizard(SessionWizard):
 
     ENTRIES_PER_PAGE = settings.WEBTRANS_ENTRIES_PER_PAGE
 
+    def __name__(self, request):
+        return "TransFormWizard"
+
     def init(self, request, *args, **kwargs):
         """
         Method used for initialize things.

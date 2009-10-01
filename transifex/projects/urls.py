@@ -1,10 +1,13 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
+from projects.feeds import LatestProjects, ProjectFeed
 from projects.models import Project
-from projects.views import * 
-from feeds import LatestProjects, ProjectFeed
+from projects.views import *
+from txcommon.decorators import one_perm_required_or_403
+from webtrans.wizards import TransFormWizard
 
 project_list = {
     'queryset': Project.objects.all(),
@@ -159,12 +162,16 @@ urlpatterns += patterns('',
 
 #TODO: Make this setting work throughout the applications
 if getattr(settings, 'ENABLE_WEBTRANS', True):
-    from webtrans.wizards import TransFormWizard
     urlpatterns += patterns('',
         url(
             regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
                     'edit/(?P<filename>(.*))$'),
-            view = TransFormWizard(key=None, form_list=[]),
+            # It needs to pass through both 'login_required' and 
+            # 'one_perm_required_or_403' decorators
+            view = login_required(one_perm_required_or_403(
+                pr_component_submit_file, # from projects.views
+                (Project, 'slug__exact', 'project_slug')
+                )(TransFormWizard(key=None, form_list=[]))),
             name = 'component_edit_file',),
         )
 
