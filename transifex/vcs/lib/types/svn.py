@@ -1,7 +1,7 @@
 import os
 import time
-import os.path
 import traceback
+import urlparse
 
 import pysvn
 
@@ -11,6 +11,7 @@ from codebases.lib import BrowserMixin, BrowserError
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['svn']
+SVN_CREDENTIALS = settings.SVN_CREDENTIALS
 
 def need_repo(fn):
     #This is different than in other vcs systems!
@@ -21,6 +22,28 @@ def need_repo(fn):
             self.init_repo()
         return fn(self, *args, **kw)
     return repo_fn
+
+def need_auth(fn):
+    """Decorator for methods needing SVN authentication."""
+    def repo_fn(self, *args, **kw):
+        if self.root.startswith('https'):
+            self._authenticate()
+        return fn(self, *args, **kw)
+    return repo_fn
+
+
+def domain_from_hostname(hostname):
+    """
+    Return the 2nd-level domain from a full hostname.
+    
+    >>> domain_from_hostname('http://foo.bar.com/')
+    'bar.com'
+    >>> domain_from_hostname('http://localhost:8000/foo/bar/')
+    'localhost'
+    """
+    urlparser = urlparse.urlsplit(hostname)
+    return '.'.join(urlparser.hostname.split('.')[-2:])
+
 
 class SvnBrowser(BrowserMixin):
     
@@ -53,14 +76,25 @@ class SvnBrowser(BrowserMixin):
         self.branch = branch
         
         self.path = os.path.normpath(os.path.join(REPO_PATH, name))
-        self.path = os.path.abspath(self.path)        
+        self.path = os.path.abspath(self.path)
         #Test for possible directory traversal
         assert os.path.commonprefix(
             [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
-
         self.client = pysvn.Client()
 
+    def _authenticate(self):
+        """
+        Authentication for SVN repositories.
+        
+        Used primarly for https:// repos, which require a username and password
+        for write
+        operations, taken from the configuration settings.
+        """
+        domain = domain_from_hostname(self.root)
+        credentials = SVN_CREDENTIALS[domain]
+        self.client.set_default_username(credentials[0])
+        self.client.set_default_password(credentials[1])     
 
     @property
     def remote_path(self):
@@ -93,12 +127,31 @@ class SvnBrowser(BrowserMixin):
     def init_repo(self):
         """Initialize the ``client`` variable on the browser."""
         try:
+            #FIXME: This is simply wrong. Every time we need a browser, we
+            # issue a checkout, which is very expensive! This should be done
+            # only in setup_repo().
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
-        except Exception, e:
-            logger.error(traceback.format_exc())
-            raise RepoError("Checkout from remote repository failed.")
-
+        except pysvn.ClientError, e:
+            stre = str(e)
+            if 'File not found' in stre or 'path not found' in stre:
+                msg = "File not found in repo!"
+                logger.error(msg)
+                raise RepoError(msg)
+            elif 'callback_ssl_server_trust_prompt required' in stre:
+                home = os.path.expanduser('~')
+                msg = ('HTTPS certificate not accepted.  Please ensure that '
+                    'the proper certificate exists in %s/.subversion/auth '
+                    'for the user that reviewboard is running as.' % home)
+                logger.error(msg)
+                raise RepoError(msg)
+            elif 'callback_get_login required' in stre:
+                msg = 'Login to the SCM server failed.'
+                logger.error(msg)
+                raise RepoError(msg)
+            else:
+                logger.error(traceback.format_exc())
+                raise RepoError(e)
 
     def _clean_dir(self):
         """
@@ -146,6 +199,7 @@ class SvnBrowser(BrowserMixin):
             raise BrowserError()
 
     @need_repo
+    @need_auth
     def submit(self, files, msg, user):
         """
         update
