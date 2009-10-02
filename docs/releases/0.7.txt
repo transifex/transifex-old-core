@@ -612,6 +612,7 @@ Bugfixes
 * Indent error in vcs/models.py
 * Add missing import and exception ref.
 
+
 Transifex 0.7.3 (Quicksilver)
 =============================
 
@@ -629,17 +630,9 @@ Diffstat:
 Bugfixes
 --------  
 
-* Make mercurial use utf-8 encoding.
-* Also check for 'warnings' when running 'msgfmt -c' (#326)
+* bugfix: Reverted changes from rev 892 (made some additions not working)
 * Also calculate stats for files sent to tarball components
-* Added committer info from settings for VCSs that support it
-* Fixed indent error in vcs/models.py
-* Add missing import and exception ref.
-* bugfix: Fixed MultiValueDictKeyError exception in the unit form
-* bugfix: Correct use of firstof tag in various feeds.
-* bugfix: Do not calculate stats for new files submitted by email (#335)
-* minor: Spec and RPM build fixes
-* minor: Fixed an indentation issue
+* Tarball units also need an _get_user method
 
 
 Transifex 0.7 Release Candidates
