@@ -11,7 +11,7 @@ from codebases.lib import BrowserMixin, BrowserError
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['svn']
-SVN_CREDENTIALS = settings.SVN_CREDENTIALS
+SVN_CREDENTIALS = getattr(settings, 'SVN_CREDENTIALS', {})
 
 def need_repo(fn):
     #This is different than in other vcs systems!
@@ -92,9 +92,16 @@ class SvnBrowser(BrowserMixin):
         operations, taken from the configuration settings.
         """
         domain = domain_from_hostname(self.root)
-        credentials = SVN_CREDENTIALS[domain]
+        credentials = SVN_CREDENTIALS.get(domain, None)
+        
+        if not credentials:
+            msg = "Credentials not found for the domain: %s" % domain
+            logger.error(msg)
+            raise RepoError(msg)
+
+        self.client.set_auth_cache(False)
         self.client.set_default_username(credentials[0])
-        self.client.set_default_password(credentials[1])     
+        self.client.set_default_password(credentials[1])
 
     @property
     def remote_path(self):
@@ -132,26 +139,10 @@ class SvnBrowser(BrowserMixin):
             # only in setup_repo().
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
-        except pysvn.ClientError, e:
-            stre = str(e)
-            if 'File not found' in stre or 'path not found' in stre:
-                msg = "File not found in repo!"
-                logger.error(msg)
-                raise RepoError(msg)
-            elif 'callback_ssl_server_trust_prompt required' in stre:
-                home = os.path.expanduser('~')
-                msg = ('HTTPS certificate not accepted.  Please ensure that '
-                    'the proper certificate exists in %s/.subversion/auth '
-                    'for the user that reviewboard is running as.' % home)
-                logger.error(msg)
-                raise RepoError(msg)
-            elif 'callback_get_login required' in stre:
-                msg = 'Login to the SCM server failed.'
-                logger.error(msg)
-                raise RepoError(msg)
-            else:
-                logger.error(traceback.format_exc())
-                raise RepoError(e)
+        except Exception, e:
+            logger.error(traceback.format_exc())
+            raise RepoError("Checkout from remote repository failed.")
+
 
     def _clean_dir(self):
         """
@@ -220,7 +211,30 @@ class SvnBrowser(BrowserMixin):
             if not self.client.status(filename)[0]['is_versioned']:
                 self.client.add(filename)
         
-        # svn ci files
-        self.client.checkin(absolute_filenames, msg.encode('utf-8'))
-        self.update()
-
+        try:
+            # svn ci files
+            self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+            self.update()
+        except pysvn.ClientError, e:
+            # If it's necessary to handle the following pysvn exceptions in 
+            # another place as well, it probably worth to move the following 
+            # code into a function
+            stre = str(e)
+            if 'File not found' in stre or 'path not found' in stre:
+                msg = "File not found in repo!"
+                logger.error(msg)
+                raise RepoError(msg)
+            elif 'callback_ssl_server_trust_prompt required' in stre:
+                home = os.path.expanduser('~')
+                msg = ('HTTPS certificate not accepted.  Please ensure that '
+                    'the proper certificate exists in %s/.subversion/auth '
+                    'for the user that Transifex is running as.' % home)
+                logger.error(msg)
+                raise RepoError(msg)
+            elif 'callback_get_login required' in stre:
+                msg = 'Login to the SCM server failed.'
+                logger.error(msg)
+                raise RepoError(msg)
+            else:
+                logger.error(traceback.format_exc())
+                raise RepoError(stre)
