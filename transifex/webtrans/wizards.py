@@ -47,6 +47,7 @@ class TransFormWizard(SessionWizard):
 
         component = get_object_or_404(Component, slug=component_slug,
                                       project__slug=project_slug)
+        step = int(request.POST.get(self.step_field_name, 0))
 
         # Initializing TranslationForm vars
         self.pofile = POFile.objects.get(filename=filename, component=component)
@@ -73,7 +74,8 @@ class TransFormWizard(SessionWizard):
             #'only_translated': request.POST.get('only_translated', None),
             #'only_fuzzy': request.POST.get('only_fuzzy', None),
             #'only_untranslated': request.POST.get('only_untranslated', None),
-            'initial_entries_count':(self.next_step(request) * self.ENTRIES_PER_PAGE),
+            'initial_entries_count':(self.next_step(request, step) * 
+                                     self.ENTRIES_PER_PAGE),
             })
 
         super(TransFormWizard, self).init(request)
@@ -106,7 +108,7 @@ class TransFormWizard(SessionWizard):
     def get_template(self, step):
         return 'webtrans/transfile_edit.html'
 
-    def next_step(self, request, step=0):
+    def next_step(self, request, step):
         """Given the request and the current step, calculate the next step."""
         if 'next' in request.POST:
             return step + 1
