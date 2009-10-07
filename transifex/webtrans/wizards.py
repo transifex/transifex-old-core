@@ -122,7 +122,10 @@ class TransFormWizard(SessionWizard):
     def make_form(self, step, data=None, files=None):
         """Create the default form for step."""
         prefix = self.get_prefix(step)
-        initial = self.initial[step] if step in self.initial else None
+        if step in self.initial:
+            initial = self.initial[step]
+        else:
+            initial = None
         
         # Get po entries for the chuck in a specific possition (step)
         po_entries = specific_chunk(self.po_entries_list, step, self.ENTRIES_PER_PAGE)

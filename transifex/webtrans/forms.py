@@ -58,6 +58,11 @@ class TranslationForm(forms.Form):
             attrs = {'class':'%s msgstr_field_%s' % (status, k),
                      'title':'%s' % polib.escape(entry.comment)}
 
+            if 'fuzzy' in entry.flags:
+                fuzzy=True
+            else:
+                fuzzy=False
+
             if entry.msgid_plural:
                 message_keys = entry.msgstr_plural.keys()
                 message_keys.sort()
@@ -83,8 +88,7 @@ class TranslationForm(forms.Form):
 
             msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,
                 initial=polib.escape(entry.msgid))
-            fuzzy_field = forms.BooleanField(required=False, 
-                initial=True if 'fuzzy' in entry.flags else False)
+            fuzzy_field = forms.BooleanField(required=False, initial=fuzzy)
 
             self.fields['msgid_field_%s' % k] = msgid_field
             self.fields['fuzzy_field_%s' % k] = fuzzy_field

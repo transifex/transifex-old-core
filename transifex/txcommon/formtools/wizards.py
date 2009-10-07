@@ -132,13 +132,19 @@ class SessionWizard(object):
         Get the data out of storage and return a form for it, or, if no
         data is in storage for this step, create the default form.
         """
-        (data, files) = self._storage[step] if step in self._storage else (None, None)
+        if step in self._storage:
+            data, files = self._storage[step]
+        else: 
+            data, files = (None, None)
         return self.make_form(step, data, files)
 
     def make_form(self, step, data=None, files=None):
         """ Create the default form for step.  """
         prefix = self.get_prefix(step)
-        initial = self.initial[step] if step in self.initial else None
+        if step in self.initial:
+            initial = self.initial[step]
+        else:
+            initial = None
         return self.form_list[step](data, files, prefix=prefix, initial=initial)
 
     def finish(self, request):
