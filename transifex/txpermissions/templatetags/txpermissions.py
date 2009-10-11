@@ -6,10 +6,11 @@ from django.core.urlresolvers import reverse
 
 from authority import permissions, get_check
 from authority.models import Permission
-from authority.forms import UserPermissionForm
 from authority.templatetags.permissions import ResolverNode, url_for_obj
 
 from projects.permissions import ProjectPermission
+#FIXME: the module forms cannot be located else
+from transifex.txpermissions.forms import UserAjaxPermissionForm
 
 register = template.Library()
 
@@ -143,7 +144,7 @@ class PermissionFormNode(ResolverNode):
                         'form_url': txadd_url_for_obj(obj),
                         'next': request.build_absolute_uri(),
                         'approved': self.approved,
-                        'form': UserPermissionForm(perm, obj, 
+                        'form': UserAjaxPermissionForm(perm, obj, 
                             approved=self.approved, initial=dict(codename=perm)),
                     }
         else:
@@ -152,7 +153,7 @@ class PermissionFormNode(ResolverNode):
                     'form_url': txrequest_url_for_obj(obj),
                     'next': request.build_absolute_uri(),
                     'approved': self.approved,
-                    'form': UserPermissionForm(perm, obj,
+                    'form': UserAjaxPermissionForm(perm, obj,
                         approved=self.approved, initial=dict(
                         codename=perm, user=request.user.username)),
                 }

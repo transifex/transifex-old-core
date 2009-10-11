@@ -1,6 +1,5 @@
 from django import forms
 from django.db import models
-from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.conf import settings
@@ -15,37 +14,9 @@ class ProjectForm(forms.ModelForm):
     # declare a field and specify the named channel that it uses
     maintainers = AutoCompleteSelectMultipleField('users', required=False)
 
-
     class Meta:
         model = Project
         exclude = ('anyone_submit',)
-
-class UsersLookup(object):
-
-    def get_query(self,q,request):
-        """ Return a query set. 
-        
-        You also have access to request.user if needed.
-        """
-        return User.objects.filter(Q(username__istartswith=q) |
-                                   Q(first_name__istartswith=q) |
-                                   Q(last_name__istartswith=q) |
-                                   Q(email__icontains=q))
-
-    def format_item(self,user):
-        """Simple display of an object when displayed in the list of objects """
-        return unicode(user)
-
-    def format_result(self,user):
-        """A more verbose display, used in the search results display.
-        
-        It may contain html and multi-lines.
-        """
-        return u"%s" % (user.username)
-
-    def get_objects(self,ids):
-        """Given a list of ids, return the objects ordered."""
-        return User.objects.filter(pk__in=ids).order_by('username','last_name')
 
 
 class ProjectAccessSubForm(forms.ModelForm):

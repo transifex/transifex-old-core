@@ -10,12 +10,12 @@ from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
 from authority.models import Permission
-from authority.forms import UserPermissionForm
 from authority.views import get_next
 from notification import models as notification
 from txpermissions.templatetags.txpermissions import (txadd_url_for_obj,
                                                       txrequest_url_for_obj,
                                                       txurl_for_obj)
+from txpermissions.forms import UserAjaxPermissionForm
 
 def _send_notice_save_action(request, notice):
     """ 
@@ -76,7 +76,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
         # POST method requires a permission codename
         if codename is None:
             return HttpResponseForbidden(next)
-        form = UserPermissionForm(data=request.POST, obj=obj,
+        form = UserAjaxPermissionForm(data=request.POST, obj=obj,
                                   approved=approved, perm=codename,
                                   initial=dict(codename=codename))
         if not approved:
