@@ -2,9 +2,11 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 class UsersLookup(object):
+    """A lookup class, used by django-ajax-select app to search model data."""
 
     def get_query(self,q,request):
-        """ Return a query set. 
+        """
+        Return a query set.
         
         You also have access to request.user if needed.
         """
@@ -15,7 +17,8 @@ class UsersLookup(object):
         return unicode(user)
 
     def format_result(self,user):
-        """A more verbose display, used in the search results display.
+        """
+        A more verbose display, used in the search results display.
         
         It may contain html and multi-lines.
         """

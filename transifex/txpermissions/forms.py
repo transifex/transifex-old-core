@@ -7,16 +7,23 @@ from django.utils.safestring import mark_safe
 
 from ajax_select.fields import AutoCompleteField
 
-from authority.forms import BasePermissionForm
 from authority import permissions
 from authority.models import Permission
 
 
 class UserAjaxPermissionForm(forms.ModelForm):
+    """
+    A class for building a permission form using an ajax autocomplete field.
+    
+    This class mimics the functionality of UserPermissionForm in django 
+    authority application, but instead of a Charfield for user field, uses
+    an AutoCompleteField as specified by ajax_select application. Usernames
+    are retrieved asynchronously with ajax calls and filling of the input field
+    occurs with an automatic way.
+    """
     codename = forms.CharField(label=_('Permission'))
     # declare a field and specify the named channel that it uses
     user = AutoCompleteField('users', required=True)
-    #user = forms.CharField(label=_('User'))
 
     class Meta:
         model = Permission
