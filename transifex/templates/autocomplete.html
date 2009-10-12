@@ -1,7 +1,5 @@
 {% load i18n %}
-<input type="text" name="{{ name }}" id="{{ html_id }}" value="{{ current_name }}" size="40" />
-{% block help_text %}<p class="helptext">{% if help_text %}{{ help_text }}{% else %}{% trans 'Enter a user.' %}{% endif %}</p>{% endblock %}
-
+<input type="text" name="{{ name }}" id="{{ html_id }}" value="{{ current_name }}" />
 <script type="text/javascript">
 jQuery(document).ready(function($){
         function formatItem_{{ html_id|cut:"-" }}(row) {
@@ -14,7 +12,8 @@ jQuery(document).ready(function($){
                 width: 320,
                 formatItem: formatItem_{{ html_id|cut:"-" }},
                 formatResult: formatResult_{{ html_id|cut:"-" }},
-                dataType: "text"
+                dataType: "text",
+                highlight: false
         })
         $('#{{ html_id }}').result(function(event, data, formatted) {
                 $('#{{ html_id }}').val(data[1])

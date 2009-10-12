@@ -11,8 +11,8 @@ from projects.models import Project, Component
 from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
-    # declare a field and specify the named channel that it uses
-    maintainers = AutoCompleteSelectMultipleField('users', required=False)
+    maintainers = AutoCompleteSelectMultipleField('users', required=True,
+        help_text=_('Search for an username'))
 
     class Meta:
         model = Project

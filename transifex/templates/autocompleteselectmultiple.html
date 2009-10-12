@@ -1,8 +1,5 @@
 {% load i18n %}
-<input type="text" name="{{name}}_text" id="{{html_id}}_text" value="{{current_name}}" size="40" />
-{% block help %}
-<p class="helptext">{% trans "Enter the username of users you want to add." %}</p>
-{% endblock %}
+<input type="text" name="{{name}}_text" id="{{html_id}}_text" value="{{current_name}}" />
 <p id="{{html_id}}_on_deck" class="results_on_deck"></p>
 <input type="hidden" name="{{name}}" id="{{html_id}}" value="{{current_ids}}" />
 <script type="text/javascript">
@@ -21,7 +18,8 @@ jQuery(document).ready(function($){
                 scrollHeight:  300,
                 formatItem: formatItem_{{html_id|cut:"-"}},
                 formatResult: formatResult_{{html_id|cut:"-"}},
-                dataType: "text"
+                dataType: "text",
+                highlight: false
         });
         $("#{{html_id}}_text").result(function(event, data, formatted) {
                 id = data[0];
