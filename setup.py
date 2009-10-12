@@ -73,6 +73,7 @@ setup(
         "django-authority",
         "django-piston",
         "South >= 0.6-rc1",
+        "django-ajax-selects",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
