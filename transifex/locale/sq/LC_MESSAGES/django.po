@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-07 16:12+0000\n"
+"POT-Creation-Date: 2009-10-13 15:00+0000\n"
 "PO-Revision-Date: 2009-10-11 10:56+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <besnik@programeshqip.org>\n"
@@ -27,7 +27,7 @@ msgstr "zëra regjistrimi"
 msgid "Date/time"
 msgstr "Datë/kohë"
 
-#: actionlog/templates/object_action_list.html:7
+#: actionlog/templates/object_action_list.html:7 txpermissions/forms.py:18
 msgid "User"
 msgstr "Përdorues"
 
@@ -43,23 +43,17 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Ende pa regjistrim historiku."
 
-#: codebases/models.py:36
-#: codebases/migrations/0001_initial.py:12
-#: languages/models.py:27
-#: languages/migrations/0001_initial.py:19
-#: projects/models.py:86
-#: projects/models.py:198
-#: projects/migrations/0001_initial.py:26
-#: projects/migrations/0001_initial.py:48
-#: releases/models.py:23
-#: txcollections/models.py:26
-#: txcollections/migrations/0001_initial.py:26
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
+#: projects/migrations/0001_initial.py:31
+#: projects/migrations/0001_initial.py:53 releases/models.py:23
+#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Emër"
 
-#: codebases/models.py:37
-#: codebases/migrations/0001_initial.py:15
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Rrënjë"
 
@@ -67,8 +61,7 @@ msgstr "Rrënjë"
 msgid "The URL of the codebase"
 msgstr "URL-ja e kodit bazë"
 
-#: codebases/models.py:39
-#: codebases/migrations/0001_initial.py:17
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Lloj"
 
@@ -107,47 +100,41 @@ msgstr "%(site_name)s: %(language)s :: qarkullimi %(release)s"
 #: languages/feeds.py:42
 #, python-format
 msgid "Latest translations for %(language)s language in %(release)s release."
-msgstr "Përkthimet më të fundit për gjuhën %(language)s te qarkullimi %(release)s."
+msgstr ""
+"Përkthimet më të fundit për gjuhën %(language)s te qarkullimi %(release)s."
 
-#: languages/models.py:29
-#: languages/migrations/0001_initial.py:14
-#: projects/models.py:88
-#: projects/models.py:200
-#: projects/migrations/0001_initial.py:15
-#: projects/migrations/0001_initial.py:34
-#: releases/models.py:25
-#: txcollections/models.py:28
-#: txcollections/migrations/0001_initial.py:13
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
+#: projects/migrations/0001_initial.py:20
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
 msgstr "Përshkrim"
 
-#: languages/models.py:30
-#: languages/migrations/0001_initial.py:13
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kod"
 
-#: languages/models.py:33
-#: languages/migrations/0001_initial.py:12
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "Aliase kodi"
 
-#: languages/models.py:36
-#: languages/migrations/0001_initial.py:17
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Shenja Speciale"
 
 #: languages/models.py:37
 msgid "Enter any special characters that users might find difficult to type"
-msgstr "Jepni çfarëdo shenje speciale të cilat përdoruesit mund t'i kishin të vështira për shtypje"
+msgstr ""
+"Jepni çfarëdo shenje speciale të cilat përdoruesit mund t'i kishin të "
+"vështira për shtypje"
 
-#: languages/models.py:40
-#: languages/migrations/0001_initial.py:16
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Numër Shumësi"
 
-#: languages/models.py:42
-#: languages/migrations/0001_initial.py:15
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Ekuacion Shumësi"
 
@@ -155,36 +142,31 @@ msgstr "Ekuacion Shumësi"
 msgid "language"
 msgstr "gjuhë"
 
-#: languages/models.py:54
-#: templates/languages/language_list.html:15
+#: languages/models.py:54 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "gjuhë"
 
-#: languages/management/commands/txcreatelanguages.py:26
+#: languages/management/commands/txcreatelanguages.py:27
 msgid "Afrikaans"
 msgstr "Afrikaans"
 
-#: languages/management/commands/txcreatelanguages.py:40
+#: languages/management/commands/txcreatelanguages.py:42
 msgid "Amharic"
 msgstr "Amharike"
 
-#: languages/management/commands/txcreatelanguages.py:45
+#: languages/management/commands/txcreatelanguages.py:48
 msgid "Arabic"
 msgstr "Arabe"
 
-#: languages/management/commands/txcreatelanguages.py:52
-msgid "Spanish (Argentinian)"
-msgstr "Spanjisht (Argjentinase)"
-
-#: languages/management/commands/txcreatelanguages.py:59
+#: languages/management/commands/txcreatelanguages.py:56
 msgid "Assamese"
 msgstr "Asameze"
 
-#: languages/management/commands/txcreatelanguages.py:66
+#: languages/management/commands/txcreatelanguages.py:64
 msgid "Asturian"
 msgstr "Asturiane"
 
-#: languages/management/commands/txcreatelanguages.py:74
+#: languages/management/commands/txcreatelanguages.py:73
 msgid "Azerbaijani"
 msgstr "Azerbaixhan"
 
@@ -192,379 +174,389 @@ msgstr "Azerbaixhan"
 msgid "Balochi"
 msgstr "Baloki"
 
-#: languages/management/commands/txcreatelanguages.py:87
+#: languages/management/commands/txcreatelanguages.py:88
 msgid "Belarusian"
 msgstr "Bjelloruse"
 
-#: languages/management/commands/txcreatelanguages.py:95
+#: languages/management/commands/txcreatelanguages.py:97
 msgid "Bulgarian"
 msgstr "Bulgare"
 
-#: languages/management/commands/txcreatelanguages.py:103
+#: languages/management/commands/txcreatelanguages.py:106
 msgid "Bengali"
 msgstr "Bengali"
 
-#: languages/management/commands/txcreatelanguages.py:111
+#: languages/management/commands/txcreatelanguages.py:114
 msgid "Bengali (India)"
 msgstr "Bengali (India)"
 
-#: languages/management/commands/txcreatelanguages.py:118
+#: languages/management/commands/txcreatelanguages.py:122
 msgid "Tibetan"
 msgstr "Tibetane"
 
-#: languages/management/commands/txcreatelanguages.py:126
+#: languages/management/commands/txcreatelanguages.py:131
 msgid "Bosnian"
 msgstr "Boshnjake"
 
-#: languages/management/commands/txcreatelanguages.py:134
+#: languages/management/commands/txcreatelanguages.py:140
 msgid "Catalan (Valencian)"
 msgstr "Katalane (Valenciane)"
 
-#: languages/management/commands/txcreatelanguages.py:142
+#: languages/management/commands/txcreatelanguages.py:149
 msgid "Czech"
 msgstr "Çeke"
 
-#: languages/management/commands/txcreatelanguages.py:150
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Welsh"
 msgstr "Uellsiane"
 
-#: languages/management/commands/txcreatelanguages.py:158
+#: languages/management/commands/txcreatelanguages.py:167
 msgid "Danish"
 msgstr "Daneze"
 
-#: languages/management/commands/txcreatelanguages.py:166
+#: languages/management/commands/txcreatelanguages.py:176
 msgid "German"
 msgstr "Gjermane"
 
-#: languages/management/commands/txcreatelanguages.py:174
+#: languages/management/commands/txcreatelanguages.py:184
 msgid "Swiss German"
 msgstr "Gjermanishte Zvicerane"
 
-#: languages/management/commands/txcreatelanguages.py:182
+#: languages/management/commands/txcreatelanguages.py:193
 msgid "Dzongkha"
 msgstr "Xonga"
 
-#: languages/management/commands/txcreatelanguages.py:190
+#: languages/management/commands/txcreatelanguages.py:202
 msgid "Greek"
 msgstr "Greke"
 
-#: languages/management/commands/txcreatelanguages.py:197
+#: languages/management/commands/txcreatelanguages.py:209
 msgid "English"
 msgstr "Angleze"
 
-#: languages/management/commands/txcreatelanguages.py:205
+#: languages/management/commands/txcreatelanguages.py:217
 msgid "English (United Kingdom)"
 msgstr "Anglisht (Mbretëria e Bashkuar)"
 
-#: languages/management/commands/txcreatelanguages.py:213
+#: languages/management/commands/txcreatelanguages.py:225
+#, fuzzy
+msgid "English (United States)"
+msgstr "Anglisht (Mbretëria e Bashkuar)"
+
+#: languages/management/commands/txcreatelanguages.py:233
 msgid "English (South Africa)"
 msgstr "Angleze (Afrika e Jugut)"
 
-#: languages/management/commands/txcreatelanguages.py:220
+#: languages/management/commands/txcreatelanguages.py:240
 msgid "Esperanto"
 msgstr "Esperanto"
 
-#: languages/management/commands/txcreatelanguages.py:228
+#: languages/management/commands/txcreatelanguages.py:249
 msgid "Spanish (Castilian)"
 msgstr "Spanjisht (Kastiliane)"
 
-#: languages/management/commands/txcreatelanguages.py:236
+#: languages/management/commands/txcreatelanguages.py:257
+msgid "Spanish (Argentinian)"
+msgstr "Spanjisht (Argjentinase)"
+
+#: languages/management/commands/txcreatelanguages.py:266
 msgid "Estonian"
 msgstr "Estoneze"
 
-#: languages/management/commands/txcreatelanguages.py:244
+#: languages/management/commands/txcreatelanguages.py:275
 msgid "Basque"
 msgstr "Baske"
 
-#: languages/management/commands/txcreatelanguages.py:251
+#: languages/management/commands/txcreatelanguages.py:283
 msgid "Persian"
 msgstr "Persiane"
 
-#: languages/management/commands/txcreatelanguages.py:259
+#: languages/management/commands/txcreatelanguages.py:292
 msgid "Finnish"
 msgstr "Finlandeze"
 
-#: languages/management/commands/txcreatelanguages.py:273
+#: languages/management/commands/txcreatelanguages.py:307
 msgid "French"
 msgstr "Frënge"
 
-#: languages/management/commands/txcreatelanguages.py:281
+#: languages/management/commands/txcreatelanguages.py:316
 msgid "Friulian"
 msgstr "Friuliane"
 
-#: languages/management/commands/txcreatelanguages.py:289
+#: languages/management/commands/txcreatelanguages.py:325
 msgid "Western Frisian"
 msgstr "Frisiane Perëndimore"
 
-#: languages/management/commands/txcreatelanguages.py:297
+#: languages/management/commands/txcreatelanguages.py:334
 msgid "Irish"
 msgstr "Irlandeze"
 
-#: languages/management/commands/txcreatelanguages.py:305
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Galician"
 msgstr "Galike"
 
-#: languages/management/commands/txcreatelanguages.py:313
+#: languages/management/commands/txcreatelanguages.py:352
 msgid "Gujarati"
 msgstr "Gujarati"
 
-#: languages/management/commands/txcreatelanguages.py:320
+#: languages/management/commands/txcreatelanguages.py:360
 msgid "Hebrew"
 msgstr "Hebraishte"
 
-#: languages/management/commands/txcreatelanguages.py:328
+#: languages/management/commands/txcreatelanguages.py:369
 msgid "Hindi"
 msgstr "Indiane"
 
-#: languages/management/commands/txcreatelanguages.py:336
+#: languages/management/commands/txcreatelanguages.py:378
 msgid "Croatian"
 msgstr "Kroate"
 
-#: languages/management/commands/txcreatelanguages.py:343
+#: languages/management/commands/txcreatelanguages.py:386
 msgid "Haitian (Haitian Creole)"
 msgstr "Haitiane (Kreole Haitiane)"
 
-#: languages/management/commands/txcreatelanguages.py:351
+#: languages/management/commands/txcreatelanguages.py:395
 msgid "Hungarian"
 msgstr "Hungareze"
 
-#: languages/management/commands/txcreatelanguages.py:358
+#: languages/management/commands/txcreatelanguages.py:403
 msgid "Armenian"
 msgstr "Armene"
 
-#: languages/management/commands/txcreatelanguages.py:364
+#: languages/management/commands/txcreatelanguages.py:410
 msgid "Indonesian"
 msgstr "Indoneziane"
 
-#: languages/management/commands/txcreatelanguages.py:371
+#: languages/management/commands/txcreatelanguages.py:418
 msgid "Iloko"
 msgstr "Iloko"
 
-#: languages/management/commands/txcreatelanguages.py:376
+#: languages/management/commands/txcreatelanguages.py:424
 msgid "Icelandic"
 msgstr "Islandisht"
 
-#: languages/management/commands/txcreatelanguages.py:384
+#: languages/management/commands/txcreatelanguages.py:433
 msgid "Italian"
 msgstr "Italisht"
 
-#: languages/management/commands/txcreatelanguages.py:392
+#: languages/management/commands/txcreatelanguages.py:442
 msgid "Japanese"
 msgstr "Japoneze"
 
-#: languages/management/commands/txcreatelanguages.py:400
+#: languages/management/commands/txcreatelanguages.py:451
 msgid "Georgian"
 msgstr "Gjeorgjiane"
 
-#: languages/management/commands/txcreatelanguages.py:413
+#: languages/management/commands/txcreatelanguages.py:465
 msgid "Kannada"
 msgstr "Kannada"
 
-#: languages/management/commands/txcreatelanguages.py:419
+#: languages/management/commands/txcreatelanguages.py:472
 msgid "Korean"
 msgstr "Koreane"
 
-#: languages/management/commands/txcreatelanguages.py:426
+#: languages/management/commands/txcreatelanguages.py:480
 msgid "Kashmiri"
 msgstr "Kashmire"
 
-#: languages/management/commands/txcreatelanguages.py:434
+#: languages/management/commands/txcreatelanguages.py:489
 msgid "Kurdish"
 msgstr "Kurde"
 
-#: languages/management/commands/txcreatelanguages.py:441
+#: languages/management/commands/txcreatelanguages.py:496
 msgid "Kirgyz"
 msgstr "Kirgyze"
 
-#: languages/management/commands/txcreatelanguages.py:448
+#: languages/management/commands/txcreatelanguages.py:503
 msgid "Latin"
 msgstr "Latine"
 
-#: languages/management/commands/txcreatelanguages.py:461
+#: languages/management/commands/txcreatelanguages.py:517
 msgid "Lao"
 msgstr "Lao"
 
-#: languages/management/commands/txcreatelanguages.py:467
+#: languages/management/commands/txcreatelanguages.py:524
 msgid "Lithuanian"
 msgstr "Lituaneze"
 
-#: languages/management/commands/txcreatelanguages.py:475
+#: languages/management/commands/txcreatelanguages.py:533
 msgid "Latvian"
 msgstr "Letoneze"
 
-#: languages/management/commands/txcreatelanguages.py:482
+#: languages/management/commands/txcreatelanguages.py:541
 msgid "Maithili"
 msgstr "Maithili"
 
-#: languages/management/commands/txcreatelanguages.py:487
+#: languages/management/commands/txcreatelanguages.py:547
 msgid "Macedonian"
 msgstr ""
 
-#: languages/management/commands/txcreatelanguages.py:492
+#: languages/management/commands/txcreatelanguages.py:553
 msgid "Malayalam"
 msgstr "Malajalame"
 
-#: languages/management/commands/txcreatelanguages.py:505
+#: languages/management/commands/txcreatelanguages.py:567
 msgid "Mongolian"
 msgstr "Mongoliane"
 
-#: languages/management/commands/txcreatelanguages.py:512
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Marathi"
 msgstr "Marati"
 
-#: languages/management/commands/txcreatelanguages.py:519
+#: languages/management/commands/txcreatelanguages.py:583
 msgid "Malay"
 msgstr "Malaje"
 
-#: languages/management/commands/txcreatelanguages.py:527
+#: languages/management/commands/txcreatelanguages.py:592
 msgid "Maltese"
 msgstr "Maltë"
 
-#: languages/management/commands/txcreatelanguages.py:534
+#: languages/management/commands/txcreatelanguages.py:600
 msgid "Burmese"
 msgstr "Burmeze"
 
-#: languages/management/commands/txcreatelanguages.py:545
+#: languages/management/commands/txcreatelanguages.py:612
 msgid "Norwegian Bokmål"
 msgstr "Norvegjeze Bokmal"
 
-#: languages/management/commands/txcreatelanguages.py:552
+#: languages/management/commands/txcreatelanguages.py:620
 msgid "Nepali"
 msgstr "Nepaleze"
 
-#: languages/management/commands/txcreatelanguages.py:560
+#: languages/management/commands/txcreatelanguages.py:629
 msgid "Dutch (Flemish)"
 msgstr "Hollandishte (Flamande)"
 
-#: languages/management/commands/txcreatelanguages.py:568
+#: languages/management/commands/txcreatelanguages.py:638
 msgid "Norwegian Nynorsk"
 msgstr "Norvegjeze Nynorsk"
 
-#: languages/management/commands/txcreatelanguages.py:575
+#: languages/management/commands/txcreatelanguages.py:646
 msgid "Norwegian"
 msgstr "Norvegjeze"
 
-#: languages/management/commands/txcreatelanguages.py:581
+#: languages/management/commands/txcreatelanguages.py:653
 msgid "Northern Sotho"
 msgstr "Soto Veriore"
 
-#: languages/management/commands/txcreatelanguages.py:589
+#: languages/management/commands/txcreatelanguages.py:662
 msgid "Oriya"
 msgstr "Orija"
 
-#: languages/management/commands/txcreatelanguages.py:596
+#: languages/management/commands/txcreatelanguages.py:670
 msgid "Panjabi (Punjabi)"
 msgstr "Panxhabe (Punxhabi)"
 
-#: languages/management/commands/txcreatelanguages.py:609
+#: languages/management/commands/txcreatelanguages.py:684
 msgid "Polish"
 msgstr "Polake"
 
-#: languages/management/commands/txcreatelanguages.py:625
+#: languages/management/commands/txcreatelanguages.py:701
 msgid "Portuguese"
 msgstr "Portugeze"
 
-#: languages/management/commands/txcreatelanguages.py:634
-msgid "Brazilian Portuguese"
-msgstr "Braziliane Portugeze"
+#: languages/management/commands/txcreatelanguages.py:710
+#, fuzzy
+msgid "Portuguese (Brazilian)"
+msgstr "Portugeze"
 
-#: languages/management/commands/txcreatelanguages.py:642
+#: languages/management/commands/txcreatelanguages.py:719
 msgid "Romanian"
 msgstr "Rumune"
 
-#: languages/management/commands/txcreatelanguages.py:650
+#: languages/management/commands/txcreatelanguages.py:728
 msgid "Russian"
 msgstr "Ruse"
 
-#: languages/management/commands/txcreatelanguages.py:657
+#: languages/management/commands/txcreatelanguages.py:736
 msgid "Sinhala"
 msgstr "Sinhala"
 
-#: languages/management/commands/txcreatelanguages.py:663
+#: languages/management/commands/txcreatelanguages.py:743
 msgid "Slovak"
 msgstr "Slovake"
 
-#: languages/management/commands/txcreatelanguages.py:671
+#: languages/management/commands/txcreatelanguages.py:752
 msgid "Slovenian"
 msgstr "Slovene"
 
-#: languages/management/commands/txcreatelanguages.py:679
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Albanian"
 msgstr "Shqip"
 
-#: languages/management/commands/txcreatelanguages.py:687
+#: languages/management/commands/txcreatelanguages.py:770
 msgid "Serbian"
 msgstr "Serbe"
 
-#: languages/management/commands/txcreatelanguages.py:695
+#: languages/management/commands/txcreatelanguages.py:778
 msgid "Serbian (Latin)"
 msgstr "Serbe (Latine)"
 
-#: languages/management/commands/txcreatelanguages.py:704
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Sotho, Southern"
 msgstr "Soto, Jugore"
 
-#: languages/management/commands/txcreatelanguages.py:712
+#: languages/management/commands/txcreatelanguages.py:797
 msgid "Swedish"
 msgstr "Suedeze"
 
-#: languages/management/commands/txcreatelanguages.py:720
+#: languages/management/commands/txcreatelanguages.py:806
 msgid "Tamil"
 msgstr "Tamileze"
 
-#: languages/management/commands/txcreatelanguages.py:727
+#: languages/management/commands/txcreatelanguages.py:814
 msgid "Telugu"
 msgstr "Telugu"
 
-#: languages/management/commands/txcreatelanguages.py:732
+#: languages/management/commands/txcreatelanguages.py:820
 msgid "Tajik"
 msgstr "Taxhike"
 
-#: languages/management/commands/txcreatelanguages.py:737
+#: languages/management/commands/txcreatelanguages.py:826
 msgid "Thai"
 msgstr "Tailandeze"
 
-#: languages/management/commands/txcreatelanguages.py:742
+#: languages/management/commands/txcreatelanguages.py:832
 msgid "Tagalog"
 msgstr "Tagaloge"
 
-#: languages/management/commands/txcreatelanguages.py:754
+#: languages/management/commands/txcreatelanguages.py:845
 msgid "Turkish"
 msgstr "Turke"
 
-#: languages/management/commands/txcreatelanguages.py:761
+#: languages/management/commands/txcreatelanguages.py:853
 msgid "Urdu"
 msgstr "Urdu"
 
-#: languages/management/commands/txcreatelanguages.py:767
+#: languages/management/commands/txcreatelanguages.py:860
 msgid "Ukrainian"
 msgstr "Ukrainase"
 
-#: languages/management/commands/txcreatelanguages.py:781
+#: languages/management/commands/txcreatelanguages.py:875
 msgid "Vietnamese"
 msgstr "Vietnameze"
 
-#: languages/management/commands/txcreatelanguages.py:788
+#: languages/management/commands/txcreatelanguages.py:883
 msgid "Wolof"
 msgstr ""
 
-#: languages/management/commands/txcreatelanguages.py:801
+#: languages/management/commands/txcreatelanguages.py:896
 msgid "Xhosa"
 msgstr "Xhosa"
 
-#: languages/management/commands/txcreatelanguages.py:810
+#: languages/management/commands/txcreatelanguages.py:905
 msgid "Chinese (China)"
 msgstr "Kineze (Kinë)"
 
-#: languages/management/commands/txcreatelanguages.py:820
+#: languages/management/commands/txcreatelanguages.py:915
 msgid "Chinese (Hong Kong)"
 msgstr "Kineze (Hong Kong)"
 
-#: languages/management/commands/txcreatelanguages.py:830
+#: languages/management/commands/txcreatelanguages.py:925
 msgid "Chinese (Taiwan)"
 msgstr "Kineze (Taivan)"
 
-#: languages/management/commands/txcreatelanguages.py:838
+#: languages/management/commands/txcreatelanguages.py:934
 msgid "Zulu"
 msgstr "Zulu"
 
@@ -574,7 +566,7 @@ msgstr "E përkthyer:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -608,79 +600,74 @@ msgstr "%(site_name)s: Përbërës në %(project)s"
 msgid "Latest components in project %s."
 msgstr "Përbërësit më të fundit te projekti %s."
 
-#: projects/forms.py:29
-#: projects/models.py:213
+#: projects/forms.py:15 txpermissions/forms.py:19
+#, fuzzy
+msgid "Search for an username"
+msgstr "Kërkoni në Picasa Web"
+
+#: projects/forms.py:35 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Një \"regex\" për filtrim të kartelave të paraqitura. Psh: 'po/.*'"
 
-#: projects/forms.py:52
-#: projects/models.py:218
+#: projects/forms.py:58 projects/models.py:218
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Parashtro te"
 
-#: projects/forms.py:53
-msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
-msgstr "Zgjidhni se si duhet t'i trajtojë kjo përbërëse parashtrimet e kartelave.Mundësitë e këtushme janë të passhme mbi bazën e llojit të përbërëses"
+#: projects/forms.py:59
+msgid ""
+"Choose how this component should handle submissions of files.The options "
+"here are available based on the component type"
+msgstr ""
+"Zgjidhni se si duhet t'i trajtojë kjo përbërëse parashtrimet e kartelave."
+"Mundësitë e këtushme janë të passhme mbi bazën e llojit të përbërëses"
 
-#: projects/models.py:83
-#: projects/models.py:195
-#: projects/migrations/0001_initial.py:14
-#: projects/migrations/0001_initial.py:33
-#: releases/models.py:20
-#: txcollections/models.py:23
-#: txcollections/migrations/0001_initial.py:12
+#: projects/models.py:83 projects/models.py:195
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:38 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
 #: txcollections/migrations/0001_initial.py:32
 #: txcollections/migrations/0002_release_06_07.py:11
 #: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:84
-#: projects/models.py:196
-#: releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
-msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
-msgstr "Një etiketë e vockël për përdorim te URL-ja, vetëm me shkronja, numra, nënvija ose vija ndarëse."
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores or hyphens."
+msgstr ""
+"Një etiketë e vockël për përdorim te URL-ja, vetëm me shkronja, numra, "
+"nënvija ose vija ndarëse."
 
-#: projects/models.py:87
-#: projects/models.py:199
-#: releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
 msgid "A string like a name or very short description."
 msgstr "Varg si punë emri ose përshkimi shumë i shkurtër."
 
-#: projects/models.py:89
-#: projects/models.py:201
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr "Një a dy fraza që përshkruajnë objektin (opsionale)."
 
-#: projects/models.py:90
-#: projects/models.py:202
-#: projects/migrations/0001_initial.py:25
-#: projects/migrations/0001_initial.py:40
-#: releases/models.py:27
-#: txcollections/models.py:30
-#: txcollections/migrations/0001_initial.py:24
+#: projects/models.py:90 projects/models.py:202
+#: projects/migrations/0001_initial.py:30
+#: projects/migrations/0001_initial.py:45 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
 #: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Përshkrim i gjatë"
 
-#: projects/models.py:92
-#: projects/models.py:204
-#: txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Përshkrim më i gjatë (opsional). Përdorni sintaksë Markdown."
 
-#: projects/models.py:93
-#: projects/migrations/0001_initial.py:24
-#: txcollections/models.py:32
-#: txcollections/migrations/0001_initial.py:41
+#: projects/models.py:93 projects/migrations/0001_initial.py:29
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Faqe Hyrëse"
 
-#: projects/models.py:94
-#: projects/migrations/0001_initial.py:13
+#: projects/models.py:94 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "Prurje"
 
@@ -688,14 +675,16 @@ msgstr "Prurje"
 msgid "An RSS feed with updates on the project."
 msgstr "Një prurje RSS me përditësime mbi projektin."
 
-#: projects/models.py:96
-#: projects/migrations/0001_initial.py:22
+#: projects/models.py:96 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "Gjurmes të metash"
 
 #: projects/models.py:97
-msgid "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
-msgstr "URL-ja e \"site\"-it web ku ndiqen të meta dhe problemet (Bugzilla, Trac, etj.)"
+msgid ""
+"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+msgstr ""
+"URL-ja e \"site\"-it web ku ndiqen të meta dhe problemet (Bugzilla, Trac, "
+"etj.)"
 
 #: projects/models.py:99
 #: projects/migrations/0003_add_anyone_submit_field.py:12
@@ -703,52 +692,41 @@ msgid "Anyone can submit"
 msgstr "Mund të parashtrojë kushdo"
 
 #: projects/models.py:101
-msgid "Does anyone can submit translations to this project?"
-msgstr "Mundet cilido të parashtrojë përkthime te ky projekt?"
+#, fuzzy
+msgid "Can anyone submit files to this project?"
+msgstr "I lejohet të parashtrojë kartelë te ky projekt"
 
-#: projects/models.py:103
-#: projects/models.py:221
-#: projects/migrations/0001_initial.py:23
-#: projects/migrations/0001_initial.py:45
-#: releases/models.py:41
-#: txcollections/models.py:33
-#: txcollections/migrations/0001_initial.py:22
+#: projects/models.py:103 projects/models.py:221
+#: projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr "Padukshëm"
 
-#: projects/models.py:104
-#: projects/models.py:222
-#: releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr "Të fshihet ky objek prej shfaqjes si listë?"
 
-#: projects/models.py:105
-#: projects/models.py:223
-#: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:36
-#: releases/models.py:43
-#: txcollections/models.py:35
-#: txcollections/migrations/0001_initial.py:16
+#: projects/models.py:105 projects/models.py:223
+#: projects/migrations/0001_initial.py:24
+#: projects/migrations/0001_initial.py:41 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
 #: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Veprues"
 
-#: projects/models.py:106
-#: projects/models.py:224
-#: releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr "Të aktivizohet ky objekt apo të çaktivizohet përdorimi i tij?"
 
-#: projects/models.py:110
-#: projects/migrations/0001_initial.py:18
+#: projects/models.py:110 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Etiketa"
 
-#: projects/models.py:115
-#: templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
@@ -758,20 +736,15 @@ msgstr "Koleksione"
 msgid "Maintainers"
 msgstr "Mirëmbajtësa"
 
-#: projects/models.py:121
-#: projects/models.py:233
-#: projects/migrations/0001_initial.py:17
-#: projects/migrations/0001_initial.py:42
-#: releases/models.py:49
-#: txcollections/models.py:43
-#: txcollections/migrations/0001_initial.py:21
+#: projects/models.py:121 projects/models.py:233
+#: projects/migrations/0001_initial.py:22
+#: projects/migrations/0001_initial.py:47 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
 #: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
 msgstr "Përshkrim HTML"
 
-#: projects/models.py:123
-#: projects/models.py:235
-#: releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Përshkrim në HTML."
@@ -785,14 +758,12 @@ msgstr "<Projekt: %s>"
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:133
-#: templates/projects/project_list.html:18
+#: projects/models.py:133 templates/projects/project_list.html:18
 #: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr "projekte"
 
-#: projects/models.py:205
-#: projects/migrations/0001_initial.py:47
+#: projects/models.py:205 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Gjuhë burimi"
 
@@ -800,8 +771,7 @@ msgstr "Gjuhë burimi"
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Gjuha burim për këtë përbërëse, p.sh. 'en', 'pt_BR', 'el'."
 
-#: projects/models.py:208
-#: projects/migrations/0001_initial.py:37
+#: projects/models.py:208 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "lloj I18n"
 
@@ -810,13 +780,11 @@ msgstr "lloj I18n"
 msgid "The code's type of i18n support (%s)"
 msgstr "Lloji i kodit për asistencën i18n (%s)"
 
-#: projects/models.py:212
-#: projects/migrations/0001_initial.py:38
+#: projects/models.py:212 projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "Filtër kartele"
 
-#: projects/models.py:215
-#: projects/migrations/0001_initial.py:46
+#: projects/models.py:215 projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "Lejo parashtrime"
 
@@ -824,8 +792,7 @@ msgstr "Lejo parashtrime"
 msgid "Does this module repository allow write access?"
 msgstr "A lejon kjo depo moduli hyrje për shkrim?"
 
-#: projects/models.py:227
-#: projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "Të llogariten statistikat?"
 
@@ -833,13 +800,11 @@ msgstr "Të llogariten statistikat?"
 msgid "Should statistics be calculated for this component?"
 msgstr "A duhen llogaritur statistikat për këtë përbërëse?"
 
-#: projects/models.py:238
-#: projects/migrations/0001_initial.py:41
+#: projects/models.py:238 projects/migrations/0001_initial.py:46
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:239
-#: projects/migrations/0001_initial.py:32
+#: projects/models.py:239 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Njësi"
 
@@ -856,8 +821,7 @@ msgstr "<Përbërës: %s>"
 msgid "component"
 msgstr "përbërës"
 
-#: projects/models.py:268
-#: templates/projects/component_list.html:17
+#: projects/models.py:268 templates/projects/component_list.html:17
 msgid "components"
 msgstr "përbërës"
 
@@ -869,96 +833,107 @@ msgstr "Lejohet ta mirëmbajë këtë projekt"
 msgid "Is allowed to submit file to this project"
 msgstr "I lejohet të parashtrojë kartelë te ky projekt"
 
-#: projects/views.py:176
-#: projects/views.py:500
-#: txcollections/views.py:121
+#: projects/views.py:177 projects/views.py:576 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s u fshi."
 
-#: projects/views.py:286
-#: projects/views.py:841
+#: projects/views.py:361 projects/views.py:914
 msgid "Must use POST to activate"
 msgstr "Duhet përdorur POST për aktivizimin"
 
-#: projects/views.py:289
-#: projects/views.py:844
-msgid "Notifation is not enabled"
+#: projects/views.py:364 projects/views.py:917
+#, fuzzy
+msgid "Notification is not enabled"
 msgstr "Njoftimet nuk janë vepruese"
 
-#: projects/views.py:302
+#: projects/views.py:377
 msgid "Watch this project"
 msgstr "Ndiqe këtë projekt"
 
-#: projects/views.py:315
+#: projects/views.py:390
 msgid "Stop wathing this project"
 msgstr "Resht së ndjekuri këtë projekt"
 
-#: projects/views.py:537
-msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
-msgstr "Filtri i kartelave i kësaj përbërëse intltool me bazë POT nuk duket se lejon kartelë POTFILES.in. Ju lutem ndreqeni."
+#: projects/views.py:614
+msgid ""
+"The file filter of this intltool POT-based component does not  seem to allow "
+"the POTFILES.in file. Please fix it."
+msgstr ""
+"Filtri i kartelave i kësaj përbërëse intltool me bazë POT nuk duket se lejon "
+"kartelë POTFILES.in. Ju lutem ndreqeni."
 
-#: projects/views.py:544
-msgid "There is no 'pot' directory named in the set of files of this Publian like component. Maybe its file filter is not allowing access to it."
-msgstr "Nuk ka drejtori 'pot' të emërtuar në këtë grup kartelash të kësaj përbërëse tip Publian. Ndoshta filtri i saj i kartelave nuk po lejon hyrje në të."
+#: projects/views.py:621
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publian like "
+"component. Maybe its file filter is not allowing access to it."
+msgstr ""
+"Nuk ka drejtori 'pot' të emërtuar në këtë grup kartelash të kësaj përbërëse "
+"tip Publian. Ndoshta filtri i saj i kartelave nuk po lejon hyrje në të."
 
-#: projects/views.py:655
+#: projects/views.py:629
+msgid "This component is not configured for statistics calculation."
+msgstr ""
+
+#: projects/views.py:720
 msgid "This component does  not allow write access."
 msgstr "Kjo përbërëse nuk lejon hyrje për shkrim."
 
-#: projects/views.py:663
+#: projects/views.py:728
 msgid "Please select a file from your system to be uploaded."
 msgstr "Ju lutem përzgjidhni prej sistemit tuaj një kartelë për ta ngarkuar.  "
 
-#: projects/views.py:672
+#: projects/views.py:736
 msgid "Please enter a target to upload the file."
 msgstr "Ju lutem përzgjidhni një objektiv ku të ngarkohet kartela."
 
-#: projects/views.py:678
+#: projects/views.py:741
 msgid "Please enter only ONE target to upload the file."
 msgstr "Ju lutem përzgjidhni vetëm NJË objektiv ku të ngarkohet kartela."
 
-#: projects/views.py:689
+#: projects/views.py:752
 msgid "The target file does not match with the component file filter"
 msgstr "Kartela objektiv nuk përputhet me filtrin e kartelave të përbërëses"
 
-#: projects/views.py:697
+#: projects/views.py:760
 msgid "Enter a commit message"
 msgstr "Jepni një mesazh parashtrimi"
 
-#: projects/views.py:755
-#: webtrans/views.py:124
+#: projects/views.py:827
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Kartela u parashtrua me sukses: %s"
 
-#: projects/views.py:770
-msgid "Your file does not pass correctness checks (msgfmt -c). Please run this command on your system to see the errors."
-msgstr "Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, xhirojeni këtë urdhër në sistemin tuaj që të shihni gabimet."
+#: projects/views.py:842
+msgid ""
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
+msgstr ""
+"Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, xhirojeni "
+"këtë urdhër në sistemin tuaj që të shihni gabimet."
 
-#: projects/views.py:779
+#: projects/views.py:851
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Na ndjeni, kartela juaj nuk u dërgua dot për shkak të një gabimi."
 
-#: projects/views.py:783
-#: projects/views.py:821
+#: projects/views.py:855 projects/views.py:894
 msgid "Sorry, but you need to send a POST request."
 msgstr "Na ndjeni, por lypset të dërgoni një kërkesë POST."
 
-#: projects/views.py:810
+#: projects/views.py:883
 msgid "Lock removed."
 msgstr "Kyçja iu hoq"
 
-#: projects/views.py:813
+#: projects/views.py:886
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Gabim: Vetëm i zoti i një dryni mund ta heqë atë."
 
-#: projects/views.py:817
+#: projects/views.py:890
 msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr "Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
+msgstr ""
+"Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
 
-#: releases/models.py:26
-#: txcollections/models.py:29
+#: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
 msgstr "Një a dy togfjalësha përshkrimi për objektin."
 
@@ -966,8 +941,7 @@ msgstr "Një a dy togfjalësha përshkrimi për objektin."
 msgid "Use Markdown syntax."
 msgstr "Përdor sintaksë Markdown"
 
-#: releases/models.py:31
-#: txcollections/migrations/0001_initial.py:15
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 msgid "Release date"
 msgstr "Datë qarkullimi"
 
@@ -980,24 +954,32 @@ msgid "String freeze date"
 msgstr "Datë ngrirje e vargjeve"
 
 #: releases/models.py:34
-msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
-msgstr "Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më vargje që prekin përkthimin."
+msgid ""
+"When the translatable strings will be frozen (no strings can be added/"
+"modified which affect translations."
+msgstr ""
+"Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
+"vargje që prekin përkthimin."
 
-#: releases/models.py:36
-#: txcollections/migrations/0001_initial.py:25
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr "Datë ngrirjeje zhvillimi"
 
 #: releases/models.py:37
-msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
-msgstr "Paketat e datës së fundit prej këtij qarkullimi mund të montohen nga zhvilluesit. Përkthimet e dërguara pas kësaj date nuk do të përfshihen në versionin e qarkulluar."
+msgid ""
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
+msgstr ""
+"Paketat e datës së fundit prej këtij qarkullimi mund të montohen nga "
+"zhvilluesit. Përkthimet e dërguara pas kësaj date nuk do të përfshihen në "
+"versionin e qarkulluar."
 
 #: releases/models.py:54
 msgid "release"
 msgstr "qarkullim"
 
-#: releases/models.py:55
-#: templates/languages/language_detail.html:19
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "qarkullime"
@@ -1010,16 +992,16 @@ msgstr "Ndiqe!"
 msgid "Stop watching it"
 msgstr "Resht së ndjekuri"
 
-#: repowatch/models.py:25
+#: repowatch/models.py:28
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr "I pazoti të shtojë mbikqyrje për shtegun %r"
 
-#: repowatch/models.py:94
+#: repowatch/models.py:97
 msgid "watch"
 msgstr "mbikqyrje"
 
-#: repowatch/models.py:95
+#: repowatch/models.py:98
 msgid "watches"
 msgstr "mbikqyrje"
 
@@ -1039,32 +1021,37 @@ msgstr "\"tarball\""
 msgid "tarballs"
 msgstr "\"tarballs\""
 
-#: templates/403.html:4
-#: templates/403.html.py:7
+#: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Hyrje e ndaluar"
 
 #: templates/403.html:12
-msgid "Looks like you do not have the necessary permissions for the required action."
+msgid ""
+"Looks like you do not have the necessary permissions for the required action."
 msgstr "Duket sikur nuk keni lejet e nevojshme për veprimin e kërkuar."
 
-#: templates/403.html:15
-#: templates/404.html:15
+#: templates/403.html:15 templates/404.html:15
 #, python-format
-msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
-msgstr "Ja një lidhje për te <a href=\"%(home)s\">faqja hyrëse</a>. E keni parasysh, thjesht po u desh."
+msgid ""
+"Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
+"case."
+msgstr ""
+"Ja një lidhje për te <a href=\"%(home)s\">faqja hyrëse</a>. E keni parasysh, "
+"thjesht po u desh."
 
-#: templates/404.html:4
-#: templates/404.html.py:7
+#: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
 msgstr "Nuk u gjet faqe"
 
 #: templates/404.html:12
-msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
-msgstr "Duket se ndoqët një lidhje të gabuar. Nëse mendoni se është faji ynë, ju lutem <a href='http://transifex.org/newticket'>na e njoftoni</a>."
+msgid ""
+"Looks like you followed a bad link. If you think it's our fault, please <a "
+"href='http://transifex.org/newticket'>let us know</a>."
+msgstr ""
+"Duket se ndoqët një lidhje të gabuar. Nëse mendoni se është faji ynë, ju "
+"lutem <a href='http://transifex.org/newticket'>na e njoftoni</a>."
 
-#: templates/500.html:4
-#: templates/500.html.py:7
+#: templates/500.html:4 templates/500.html.py:7
 msgid "Page unavailable"
 msgstr "Faqe jo e passhme"
 
@@ -1073,26 +1060,26 @@ msgid "We're sorry, but the requested page is currently unavailable."
 msgstr "Na vjen keq, por faqja e kërkuar hëpëhrë nuk është e passhme."
 
 #: templates/500.html:14
-msgid "We're messing around with things internally, and the server had a bit of a hiccup."
-msgstr "Po bëjmë ca rrëmujë nga brenda me gjërat, dhe shërbyesin e ngau ca lemza."
+msgid ""
+"We're messing around with things internally, and the server had a bit of a "
+"hiccup."
+msgstr ""
+"Po bëjmë ca rrëmujë nga brenda me gjërat, dhe shërbyesin e ngau ca lemza."
 
 #: templates/500.html:16
 msgid "Please try again later."
 msgstr "Ju lutem riprovoni më vonë."
 
-#: templates/about.html:9
-#: templates/index.html:9
+#: templates/about.html:9 templates/index.html:9
 msgid "Welcome to Transifex"
 msgstr "Mirë se vini te Transifex"
 
-#: templates/base-sample.html:8
-#: templates/admin/base_site.html:4
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34
-#: txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
 msgstr "Shko te faqja kryesore"
 
@@ -1104,8 +1091,7 @@ msgstr "Logoja e Transifex-it"
 msgid "The projects being served"
 msgstr "Projektet që shërbehen"
 
-#: templates/base-sample.html:39
-#: templates/projects/base.html:6
+#: templates/base-sample.html:39 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "Projekte"
@@ -1118,8 +1104,7 @@ msgstr "Koleksione projektesh"
 msgid "The languages our service serves"
 msgstr "Gjuhët në të cilat punon shërbimi ynë"
 
-#: templates/base-sample.html:41
-#: templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
@@ -1127,8 +1112,12 @@ msgstr "Gjuhë"
 
 #: templates/base-sample.html:47
 #, python-format
-msgid "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
-msgstr "Mirë se vini <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
+msgid ""
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
+msgstr ""
+"Mirë se vini <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
 
 #: templates/base-sample.html:48
 msgid "Sign out from the website"
@@ -1138,19 +1127,13 @@ msgstr "Dilni prej \"site\"-it web"
 msgid "Sign out"
 msgstr "Çnënshkruani"
 
-#: templates/base-sample.html:50
-#: templates/authopenid/login_box.html:5
-#: templates/authopenid/login_box.html:12
-#: templates/authopenid/signin.html:4
-#: templates/authopenid/signin.html.py:6
-#: templates/authopenid/signin.html:31
-#: templates/authopenid/signin.html:37
-#: templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17
-#: templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:6
-#: templates/simpleauth/signin.html:4
-#: templates/simpleauth/signin.html.py:6
+#: templates/base-sample.html:50 templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
+#: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
+#: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
+#: templates/simpleauth/signin.html:6
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Sign in"
 msgstr "Nënshkruani"
 
@@ -1171,19 +1154,24 @@ msgstr "Lidhuni me ne"
 msgid "Feedback"
 msgstr "Përshtypje"
 
+#: templates/index.html:23
+msgid ""
+"Transifex is a service aimed at helping translators keep track of their "
+"favourite translation projects."
+msgstr ""
+"Transifex është një shërbim që synon të ndihmojë përkthyesit të ndjekin "
+"projektet e tyre të parapëlqyer të përkthimeve."
+
 #: templates/index.html:27
-msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
-msgstr "Transifex është një shërbim që synon të ndihmojë përkthyesit të ndjekin projektet e tyre të parapëlqyer të përkthimeve."
-
-#: templates/index.html:31
 #, python-format
-msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
-msgstr "Mundeni po ashtu të shfletoni nëpër <a href=\"%(project_list)s\">tërë projektet</a>."
+msgid ""
+"You could also browse through <a href=\"%(project_list)s\">all projects</a>."
+msgstr ""
+"Mundeni po ashtu të shfletoni nëpër <a href=\"%(project_list)s\">tërë "
+"projektet</a>."
 
-#: templates/search.html:7
-#: templates/search.html.py:9
-#: templates/search_form.html:6
-#: templates/search_form_plain.html:5
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6 templates/search_form_plain.html:5
 #: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Kërko"
@@ -1207,8 +1195,11 @@ msgstr "Përfundime Kërkimi (%(result_count)s)"
 
 #: templates/search.html:51
 #, python-format
-msgid "No projects found for \"%(q)s\". You might want to change your query a bit."
-msgstr "Nuk u gjetën projekte për \"%(q)s\". Mund t'ju duhet ta ndryshoni pakëz kërkesën."
+msgid ""
+"No projects found for \"%(q)s\". You might want to change your query a bit."
+msgstr ""
+"Nuk u gjetën projekte për \"%(q)s\". Mund t'ju duhet ta ndryshoni pakëz "
+"kërkesën."
 
 #: templates/search.html:62
 msgid "Couldn't find your project? Why don't you go ahead and "
@@ -1226,357 +1217,6 @@ msgstr "Gjeni projekte sipas emrash, përshkrimi, etj"
 msgid "Transifex administration"
 msgstr "Administrim Transifex-i"
 
-#: templates/authopenid/base_profile.html:4
-#: templates/authopenid/base_profile.html:7
-#: templates/authopenid/settings.html:18
-#: templates/simpleauth/base_profile.html:4
-#: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5
-#: templates/userprofile/base_2col.html:3
-msgid "Profile"
-msgstr "Profil"
-
-#: templates/authopenid/base_profile.html:10
-#: templates/simpleauth/base_profile.html:10
-msgid "Profile settings"
-msgstr "Rregullime Profili"
-
-#: templates/authopenid/changeemail.html:4
-#: templates/authopenid/changeemail.html:6
-msgid "Change my email"
-msgstr "Ndrysho email-in tim"
-
-#: templates/authopenid/changeemail.html:5
-msgid "Change email address"
-msgstr "Ndrysho vendndodhjen email"
-
-#: templates/authopenid/changeemail.html:10
-msgid ""
-"This is where you can change the email address associated with your account.\n"
-"Please keep this email address up to date so we can send you a password-reset email if you request one."
-msgstr ""
-"Këtu mund të ndryshoni vendndodhjen tuaj email përshoqëruar llogarisë suaj.\n"
-"Ju lutem mbajeni të përditësuar këtë zë, që të mund t'ju dërgojmë email ricaktimi fjalëkalimi në e kërkofshi një gjë të tillë."
-
-#: templates/authopenid/changeemail.html:15
-#: templates/authopenid/changeopenid.html:12
-#: templates/authopenid/changepw.html:12
-#: templates/authopenid/complete.html:25
-#: templates/authopenid/complete.html:35
-#: templates/authopenid/delete.html:12
-#: templates/authopenid/delete.html:23
-#: templates/authopenid/sendpw.html:12
-#: templates/authopenid/signin.html:19
-#: templates/authopenid/signup.html:17
-msgid "Please correct errors below:"
-msgstr "Ju lutem ndreqni gabimet më poshtë:"
-
-#: templates/authopenid/changeemail.html:32
-#: templates/authopenid/complete.html:51
-msgid "Email"
-msgstr "Email"
-
-#: templates/authopenid/changeemail.html:33
-#: templates/authopenid/complete.html:67
-msgid "Password"
-msgstr "Fjalëkalim"
-
-#: templates/authopenid/changeemail.html:35
-#: templates/authopenid/settings.html:36
-msgid "Change email"
-msgstr "Ndryshoni email-in"
-
-#: templates/authopenid/changeopenid.html:4
-#: templates/authopenid/changeopenid.html:5
-#: templates/authopenid/changeopenid.html:27
-msgid "Change OpenID"
-msgstr "Ndryshoni OpenID-në"
-
-#: templates/authopenid/changeopenid.html:6
-msgid "Change my OpenID"
-msgstr "Ndrysho OpenID-në time"
-
-#: templates/authopenid/changeopenid.html:10
-msgid "This is where you can change the OpenID URL associated with your account."
-msgstr "Këtu mund të ndryshoni URL-në e OpenID-së përshoqëruar me llogarinë tuaj."
-
-#: templates/authopenid/changeopenid.html:26
-msgid "OpenID URL:"
-msgstr "URL OpenID:"
-
-#: templates/authopenid/changepw.html:4
-#: templates/authopenid/changepw.html:6
-msgid "Change my password"
-msgstr "Ndrysho fjalëkalimin tim"
-
-#: templates/authopenid/changepw.html:5
-#: templates/authopenid/changepw.html:23
-#: templates/authopenid/settings.html:34
-#: templates/userprofile/account/password_reset_confirm.html:31
-#: templates/userprofile/profile/overview.html:88
-msgid "Change password"
-msgstr "Ndrysho fjalëkalimin"
-
-#: templates/authopenid/changepw.html:9
-msgid "You can use the following form to change your password."
-msgstr "Mund të përdorni formularin vijues për të ndryshuar fjalëkalimin tuaj."
-
-#: templates/authopenid/changepw.html:20
-msgid "Current password"
-msgstr "Fjalëkalimi i tanishëm"
-
-#: templates/authopenid/changepw.html:21
-msgid "New password"
-msgstr "Fjalëkalim i ri"
-
-#: templates/authopenid/changepw.html:22
-msgid "New password again"
-msgstr "Fjalëkalimi i ri sërish"
-
-#: templates/authopenid/complete.html:4
-#: templates/authopenid/complete.html:5
-#: templates/authopenid/complete.html:6
-msgid "OpenID verification"
-msgstr "Verifikim OpenID-je"
-
-#: templates/authopenid/complete.html:13
-msgid "Your OpenID is verified! "
-msgstr "OpenID-ja juaj u verifikua! "
-
-#: templates/authopenid/complete.html:14
-msgid ""
-"\n"
-"\t<p>Your OpenID can now be associated with a new or existing membership. You can change the association later in your preferences.</p>\n"
-"\t"
-msgstr ""
-"\n"
-"\t<p>OpenID-ja juaj mund t'i përshoqërohet tani një anëtarësie të re ose ekzistuese. Përshoqërimin mund ta ndryshoni më vonë te parapëlqimet tuaja.</p>\n"
-"\t"
-
-#: templates/authopenid/complete.html:18
-msgid "Associate your OpenID"
-msgstr "Përshoqërojeni OpenID-në tuaj"
-
-#: templates/authopenid/complete.html:19
-msgid ""
-"\n"
-"\t<p>If you're joining for the first time, associate your OpenID with a new account. If you're already a member, associate with your existing account.</p>\n"
-"\t"
-msgstr ""
-"\n"
-"\t<p>Nëse po regjistroheni për herë të parë, përshoqërojani OpenID-në tuaj një llogarie të re. Po qe se jeni tashmë anëtar, përshoqërojani llogarisë suaj ekzistuese.</p>\n"
-"\t"
-
-#: templates/authopenid/complete.html:49
-msgid "A new account"
-msgstr "Llogari e re"
-
-#: templates/authopenid/complete.html:50
-#: templates/authopenid/complete.html:66
-#: templates/authopenid/sendpw.html:25
-#: templates/userprofile/profile/public.html:33
-msgid "Username"
-msgstr "Emër përdoruesi"
-
-#: templates/authopenid/complete.html:65
-msgid "An exisiting account"
-msgstr "Një llogari ekzistuese"
-
-#: templates/authopenid/delete.html:4
-#: templates/authopenid/delete.html.py:6
-msgid "Delete my account"
-msgstr "Fshije llogarinë time"
-
-#: templates/authopenid/delete.html:5
-#: templates/authopenid/settings.html:47
-msgid "Delete account"
-msgstr "Fshije llogarinë"
-
-#: templates/authopenid/delete.html:9
-msgid "Note: After deleting your account, anyone will be able to register this username."
-msgstr "Shënim: Pas fshirjes së llogarisë suaj, kushdo do të jetë në gjendje të regjistrohet me këtë emër përdoruesi."
-
-#: templates/authopenid/delete.html:14
-msgid "Check the confirm box, if you really want to delete your account."
-msgstr "I vini shenjë kutizës së ripohimeve, nëse vërtet doni të fshihet llogaria juaj."
-
-#: templates/authopenid/delete.html:17
-#: templates/authopenid/login_box.html:11
-#: templates/authopenid/signin.html:36
-msgid "Password:"
-msgstr "Fjalëkalim:"
-
-#: templates/authopenid/delete.html:31
-msgid "I am sure I want to delete my account."
-msgstr "Jam i sigurt që dua të fshij llogarinë time."
-
-#: templates/authopenid/delete.html:32
-msgid "Password or OpenID URL"
-msgstr "Fjalëkalim ose URL OpenID-je"
-
-#: templates/authopenid/delete.html:32
-msgid "(required for your security)"
-msgstr "(i domosdoshëm për sigurinë tuaj)"
-
-#: templates/authopenid/delete.html:34
-msgid "Delete account permanently"
-msgstr "Fshije llogarinë përgjithmonë"
-
-#: templates/authopenid/login_box.html:10
-#: templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:39
-msgid "Username:"
-msgstr "Emër përdoruesi:"
-
-#: templates/authopenid/login_box.html:14
-#: templates/authopenid/signin.html:39
-msgid "Or, with your OpenID:"
-msgstr "ose, me OpenID-në tuaj"
-
-#: templates/authopenid/login_box.html:20
-#: templates/authopenid/signin.html:42
-msgid "Sign in with OpenID"
-msgstr "Nënshkruani me OpenID"
-
-#: templates/authopenid/login_box.html:22
-#: templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:38
-msgid "Lost your password?"
-msgstr "Humbët fjalëkalimin tuaj?"
-
-#: templates/authopenid/sendpw.html:4
-#: templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:5
-#: templates/userprofile/account/password_reset_complete.html:12
-#: templates/userprofile/account/password_reset_confirm.html:22
-msgid "Password reset"
-msgstr "Ricaktim fjalëkalimi"
-
-#: templates/authopenid/sendpw.html:6
-msgid "I lost my password!"
-msgstr "Humba fjalëkalimin tim!"
-
-#: templates/authopenid/sendpw.html:10
-msgid "No worries! Here you can ask to reset your password by entering the username you use. You will then get a confirmation email with your new password. The new password will be activated only after you have clicked on the link in the email."
-msgstr "Mos u shqetësoni! Duke dhënë emrin e përdoruesit që përdorni, këtu mund të kërkoni ricaktim fjalëkalimi. Mandej do t'ju vijë një email ripohimi me fjalëkalimin tuaj të ri. Fjalëkalimi juaj i ri do të aktivizohet vetëm pasi të keni klikuar mbi lidhjen te email-i."
-
-#: templates/authopenid/sendpw.html:27
-msgid "Send new password"
-msgstr "Dërgo fjalëkalim të ri"
-
-#: templates/authopenid/settings.html:17
-#: templates/simpleauth/settings.html:4
-msgid "Your Profile"
-msgstr "Profili Juaj"
-
-#: templates/authopenid/settings.html:22
-#: templates/simpleauth/settings.html:9
-#, python-format
-msgid "Your profile, %(user)s"
-msgstr "Profili juaj,  %(user)s"
-
-#: templates/authopenid/settings.html:28
-msgid "This is where you can make changes to your account."
-msgstr "Këtu mund të bëni ndryshime te llogaria juaj."
-
-#: templates/authopenid/settings.html:35
-msgid "Give your  account a new password."
-msgstr "Jepini llogarisë suaj një fjalëkalim të ri"
-
-#: templates/authopenid/settings.html:37
-msgid "Add or update the email address associated with your account."
-msgstr "Shtoni ose përditësoni vendndodhjen email përshoqëruar llogarisë suaj."
-
-#: templates/authopenid/settings.html:39
-msgid "Change openid url"
-msgstr "Ndrysho url openid-je"
-
-#: templates/authopenid/settings.html:40
-msgid "Change openid associated to your account"
-msgstr "Ndryshoni OpenID-në e përshoqëruar llogarisë suaj"
-
-#: templates/authopenid/settings.html:44
-#: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:102
-msgid "Change notifications"
-msgstr "Ndrysho njoftimet"
-
-#: templates/authopenid/settings.html:45
-#: templates/simpleauth/settings.html:24
-msgid "Change notifications associated to your account"
-msgstr "Ndryshoni njoftimet e përshoqëruar llogarisë suaj"
-
-#: templates/authopenid/settings.html:48
-msgid "Erase your username and all your data from website"
-msgstr "Fshini emrin tuaj të përdoruesit dhe tërë të dhënat tuaja prej \"site\"-it web"
-
-#: templates/authopenid/signin.html:5
-#: templates/simpleauth/logout.html:5
-#: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:18
-#: templates/userprofile/account/login.html:27
-msgid "Login"
-msgstr "Hyrje"
-
-#: templates/authopenid/signin.html:10
-msgid ""
-"\n"
-"<p>Please login in with your email or screen name, or using your OpenID URL.<br />\n"
-msgstr ""
-"\n"
-"<p>Ju lutem, hyni me email-in ose emrin tuaj të ekranit, ose duke përdorur URL-në tuaj për OpenID.<br />\n"
-
-#: templates/authopenid/signup.html:4
-#: templates/authopenid/signup.html.py:5
-msgid "Join us"
-msgstr "Bashkohuni me ne"
-
-#: templates/authopenid/signup.html:6
-msgid "Create your account"
-msgstr "Krijoni llogarinë tuaj"
-
-#: templates/authopenid/signup.html:10
-msgid ""
-"\n"
-"<p>There are two ways to join: with an email and screen name or with an OpenID.</p>\n"
-"<p>Enter information only for the type of sign up you wish to do.</p>\n"
-msgstr ""
-"\n"
-"<p>Ka dy rrugë për të marrë pjesë: me një email dhe një emër ekrani ose me një OpenID.</p>\n"
-"<p>Jepni të dhëna vetëm për llojin e nënshkrimit që doni të kryeni.</p>\n"
-
-#: templates/authopenid/signup.html:15
-msgid "Regular Signup"
-msgstr "Nënshkrim i Rregullt"
-
-#: templates/authopenid/signup.html:31
-msgid "Choose a Screen Name:"
-msgstr "Zgjidhni Emër Ekrani:"
-
-#: templates/authopenid/signup.html:33
-msgid "Enter Your Email Address:"
-msgstr "Jepni Vendndodhjen Tuaj Email:"
-
-#: templates/authopenid/signup.html:34
-msgid "Choose a Password:"
-msgstr "Zgjidhni një Fjalëkalim"
-
-#: templates/authopenid/signup.html:35
-msgid "Confirm Your Password:"
-msgstr "Ripohoni Fjalëkalimin Tuaj:"
-
-#: templates/authopenid/signup.html:37
-msgid "JOIN FREE"
-msgstr "BASHKOJUNI FALAS"
-
-#: templates/authopenid/signup.html:41
-msgid "OpenID Signup"
-msgstr "Nënshkrim me OpenID"
-
-#: templates/authopenid/signup.html:44
-msgid "Sign in with OPENID"
-msgstr "Nënshkruani me OPENID"
-
 #: templates/contact_form/contact_form.html:5
 #: templates/contact_form/contact_form.html:6
 msgid "Contact us"
@@ -1587,8 +1227,13 @@ msgid "Let us know what you think!"
 msgstr "Na tregoni se ç'menndoni!"
 
 #: templates/contact_form/contact_form.html:10
-msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
-msgstr "Do të donim ta bënim këtë shërbim web sa më të dobishëm të jetë e mundur për përdoruesit tanë. Nëse keni ndonjë mendim për të dhënë, ju lutem mos ngurroni!"
+msgid ""
+"We'd like to make this web service as useful as possible for our users. If "
+"you have any feedback to provide, please do so!"
+msgstr ""
+"Do të donim ta bënim këtë shërbim web sa më të dobishëm të jetë e mundur për "
+"përdoruesit tanë. Nëse keni ndonjë mendim për të dhënë, ju lutem mos "
+"ngurroni!"
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
@@ -1615,14 +1260,22 @@ msgstr "Qarkullime të %(collection)s"
 #: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
-msgid "The %(collection)s collection includes the following groups of shipped components:"
-msgstr "Koleksioni %(collection)s përfshin grupet vijues të përbërësve të hedhur në qarkullim:"
+msgid ""
+"The %(collection)s collection includes the following groups of shipped "
+"components:"
+msgstr ""
+"Koleksioni %(collection)s përfshin grupet vijues të përbërësve të hedhur në "
+"qarkullim:"
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
 #, python-format
-msgid "No releases are registered for this collection yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr "Ende nuk ka të regjistruar qarkullim për këtë koleksion. Pse nuk  <a href=\"%(release_create)s\">shtoni një të tillë</a>?"
+msgid ""
+"No releases are registered for this collection yet. Why don't you <a href=\"%"
+"(release_create)s\">add one</a>?"
+msgstr ""
+"Ende nuk ka të regjistruar qarkullim për këtë koleksion. Pse nuk  <a href=\"%"
+"(release_create)s\">shtoni një të tillë</a>?"
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1633,33 +1286,49 @@ msgid "No languages registered yet. :-("
 msgstr "Ende pa gjuhë të regjistruara. :-("
 
 #: templates/languages/language_list.html:35
-msgid "Couldn't find your language? Please use the feedback form and let us know!"
-msgstr "S'e gjetët gjuhën tuaj? Ju lutem, përdorni formularin e përshtypjeve dhe na e njoftoni!"
+msgid ""
+"Couldn't find your language? Please use the feedback form and let us know!"
+msgstr ""
+"S'e gjetët gjuhën tuaj? Ju lutem, përdorni formularin e përshtypjeve dhe na "
+"e njoftoni!"
 
-#: templates/languages/language_release.html:33
+#: templates/languages/language_release.html:39
 msgid "Project/Component statistics"
 msgstr "Statistika projekti/përbërëseje"
 
-#: templates/languages/language_release.html:52
-msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
-msgstr "Transifex-i kërkoi për projekte që përmbajnë kartela përkthimi për këtë gjuhë dhe version, por nuk gjeti gjë. Provoni të parashtroni kartelë të tillë dhe kontrolloni sërish."
+#: templates/languages/language_release.html:60
+msgid ""
+"Transifex searched for projects containing translation files for this "
+"language and release, but couldn't find any. Try submitting such a file and "
+"check again."
+msgstr ""
+"Transifex-i kërkoi për projekte që përmbajnë kartela përkthimi për këtë "
+"gjuhë dhe version, por nuk gjeti gjë. Provoni të parashtroni kartelë të "
+"tillë dhe kontrolloni sërish."
 
-#: templates/languages/language_release.html:53
+#: templates/languages/language_release.html:61
 #, python-format
-msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
-msgstr "Nëse mendoni se kjo nuk do të duhej të kish ndodhur, ju lutem <a href=\"%(contact_form)s\">na e njoftoni</a>."
+msgid ""
+"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
+"us know</a>."
+msgstr ""
+"Nëse mendoni se kjo nuk do të duhej të kish ndodhur, ju lutem <a href=\"%"
+"(contact_form)s\">na e njoftoni</a>."
 
-#: templates/languages/language_release.html:57
+#: templates/languages/language_release.html:65
 msgid "Untranslated Components"
 msgstr "Përbërësa të Papërkthyer"
 
-#: templates/languages/language_release.html:59
+#: templates/languages/language_release.html:67
 #, python-format
-msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
-msgstr "Përbërësit vijues do të përfshihen te %(release_name)s, por nuk ka ende përkthime të dërguara për %(language_name)s."
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
+msgstr ""
+"Përbërësit vijues do të përfshihen te %(release_name)s, por nuk ka ende "
+"përkthime të dërguara për %(language_name)s."
 
-#: templates/notification/notices.html:6
-#: templates/notification/notices.html:7
+#: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
 msgstr "Njoftime"
 
@@ -1680,8 +1349,14 @@ msgid "No notices."
 msgstr "Pa lajmërime."
 
 #: templates/notification/notices.html:54
-msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list below and choose which events you would like to be notified by email."
-msgstr "Mund të merrni njoftime kurdo që ndodh diçka te Transifex-i. Shihni te lista më poshtë njoftimet që mund të keni dhe zgjidhni për cilat ngjarje do të donit të njoftoheshit me email."
+msgid ""
+"You can receive notifications whenever an event occurs in Transifex. Check "
+"the notifications available for you on the list below and choose which "
+"events you would like to be notified by email."
+msgstr ""
+"Mund të merrni njoftime kurdo që ndodh diçka te Transifex-i. Shihni te lista "
+"më poshtë njoftimet që mund të keni dhe zgjidhni për cilat ngjarje do të "
+"donit të njoftoheshit me email."
 
 #: templates/notification/notices.html:55
 msgid "Primary email"
@@ -1697,13 +1372,17 @@ msgid "Account"
 msgstr "Llogari"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:122
 msgid "Note"
 msgstr "Shënim"
 
 #: templates/notification/notices.html:59
-msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
-msgstr "Nuk keni një vendndodhje email të verifikuar te e cila të dërgohen njoftimet. Mund të shtoni një të tillë duke shkuar te"
+msgid ""
+"You do not have a verified email address to which notices can be sent. You "
+"can add one by going to"
+msgstr ""
+"Nuk keni një vendndodhje email të verifikuar te e cila të dërgohen "
+"njoftimet. Mund të shtoni një të tillë duke shkuar te"
 
 #: templates/notification/notices.html:67
 msgid "Notification Type"
@@ -1715,44 +1394,69 @@ msgstr "Lloj njoftimi"
 msgid "Change"
 msgstr "Ndryshoje"
 
-#: templates/notification/single.html:5
-#: templates/notification/single.html:8
+#: templates/notification/single.html:5 templates/notification/single.html:8
 msgid "Notice"
 msgstr "Njofto"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
-msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr "Është shtuar një projekt i ri <a href=\"%(project_url)s\">%(project)s</a>"
+msgid ""
+"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
+msgstr ""
+"Është shtuar një projekt i ri <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
-msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
+msgid ""
+"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
 msgstr "Është ndryshuar projekti <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
-msgid "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Është shtuar një përbërëse e re <a href=\"%(component_url)s\">%(component_name)s</a> te projekti <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgid ""
+"A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
+"been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">%"
+"(component_name)s</a> te projekti <a href=\"%(project_url)s\">%(project_name)"
+"s</a>"
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
-msgid "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
-msgstr "Përbërësi <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a href=\"%(project_url)s\">%(project_name)s</a> ka ndryshuar"
+msgid ""
+"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"Përbërësi <a href=\"%(component_url)s\">%(component_name)s</a> i projektit "
+"<a href=\"%(project_url)s\">%(project_name)s</a> ka ndryshuar"
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
-msgid "The component '%(component_name)s' has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Përbërësi '%(component_name)s' është fshirë prej projektit <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgid ""
+"The component '%(component_name)s' has been deleted from the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Përbërësi '%(component_name)s' është fshirë prej projektit <a href=\"%"
+"(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
-msgid "The following files in the <a href=\"%(component_url)s\">%(component_name)s</a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project have been updated:"
-msgstr "Janë përditësuar kartelat vijuese te përbërësi <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a href=\"%(project_url)s\">%(project_name)s</a>:"
+msgid ""
+"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
+"have been updated:"
+msgstr ""
+"Janë përditësuar kartelat vijuese te përbërësi <a href=\"%(component_url)s\">"
+"%(component_name)s</a> i projektit <a href=\"%(project_url)s\">%"
+"(project_name)s</a>:"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
-msgstr "Është parashtruar kartelë për <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
+msgstr ""
+"Është parashtruar kartelë për <a href=\"%(lang_url)s\" title=\"%(filename)s"
+"\">%(lang_name)s</a> (%(trans_perc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1761,13 +1465,71 @@ msgstr "Një kartelë e quajtur '%(filename)s'"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
-msgid "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "te <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgid ""
+"has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"te <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a href="
+"\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
-msgid "The source file (POT) has some problems and can not be created/updated to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Kartela burim (POT) te <a href=\"%(component_url)s\">%(component_name)s</a> e projektit<a href=\"%(project_url)s\">%(project_name)s</a> ka ca probleme dhe nuk mund të krijohet/përditësohet "
+msgid ""
+"The source file (POT) has some problems and can not be created/updated to "
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Kartela burim (POT) te <a href=\"%(component_url)s\">%(component_name)s</a> "
+"e projektit<a href=\"%(project_url)s\">%(project_name)s</a> ka ca probleme "
+"dhe nuk mund të krijohet/përditësohet "
+
+#: templates/notification/project_submit_access_granted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
+"files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
+msgstr ""
+"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">%"
+"(component_name)s</a> te projekti <a href=\"%(project_url)s\">%(project_name)"
+"s</a>"
+
+#: templates/notification/project_submit_access_request_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
+"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
+"s</a> denied"
+msgstr ""
+"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">%"
+"(component_name)s</a> te projekti <a href=\"%(project_url)s\">%(project_name)"
+"s</a>"
+
+#: templates/notification/project_submit_access_request_withdrawn/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Withdrawn own request of access to submit files to the project <a href=\"%"
+"(project_url)s\">%(project)s</a>"
+msgstr ""
+"Është shtuar një projekt i ri <a href=\"%(project_url)s\">%(project)s</a>"
+
+#: templates/notification/project_submit_access_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
+"(project)s</a>"
+msgstr ""
+"Është shtuar një projekt i ri <a href=\"%(project_url)s\">%(project)s</a>"
+
+#: templates/notification/project_submit_access_revoked/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
+"submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
+"revoked"
+msgstr ""
+"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">%"
+"(component_name)s</a> te projekti <a href=\"%(project_url)s\">%(project_name)"
+"s</a>"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1784,10 +1546,12 @@ msgstr "T'i thuhet mirupafshim <em>%(component_name)s</em>?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
+"  Are you sure you want to permanently delete the component '%"
+"(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Jeni i sigurt se doni të fshihet përgjithmonë përbërësja '%(component_name)s' që i përket %(project_name)s?\n"
+"  Jeni i sigurt se doni të fshihet përgjithmonë përbërësja '%(component_name)"
+"s' që i përket %(project_name)s?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -1796,121 +1560,138 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Po, jam i sigurt!"
 
-#: templates/projects/component_detail.html:25
-msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
-msgstr "Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i dërgon gjithashtu kartelat te email-i i mirëmbajtësit."
+#: templates/projects/component_detail.html:30
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files to the maintainers\\' email."
+msgstr ""
+"Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i "
+"dërgon gjithashtu kartelat te email-i i mirëmbajtësit."
 
-#: templates/projects/component_detail.html:27
-msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
-msgstr "Ky përbërës nuk e mbulon depozitimin vendor të kartelave të parashtruara. Kartelat e parashtruara do të dërgohen te email-et e mirëmbajtësve dhe statistikat do ta pasqyrojnë ndryshimin sapo kartelat të jenë parashtruar në projekt."
+#: templates/projects/component_detail.html:32
+msgid ""
+"This component does not support local storing of submitted files. The "
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
+msgstr ""
+"Ky përbërës nuk e mbulon depozitimin vendor të kartelave të parashtruara. "
+"Kartelat e parashtruara do të dërgohen te email-et e mirëmbajtësve dhe "
+"statistikat do ta pasqyrojnë ndryshimin sapo kartelat të jenë parashtruar në "
+"projekt."
 
-#: templates/projects/component_detail.html:31
-msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
-msgstr "Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i dërgon gjithashtu kartelat drejt e te depoja kryesore."
+#: templates/projects/component_detail.html:36
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files direct to the upstream repository."
+msgstr ""
+"Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i "
+"dërgon gjithashtu kartelat drejt e te depoja kryesore."
 
-#: templates/projects/component_detail.html:76
+#: templates/projects/component_detail.html:80
 #: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
-#: templates/txcollections/release_detail.html:39
+#: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "Përpunoni"
 
-#: templates/projects/component_detail.html:85
+#: templates/projects/component_detail.html:89
 msgid "Repository:"
 msgstr "Depo:"
 
-#: templates/projects/component_detail.html:88
-#: templates/projects/component_detail.html:90
+#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:94
 #, fuzzy
 msgid "Link to a web front-end to the source"
 msgstr "Lidhje te një \"web front-end\" për burimin"
 
-#: templates/projects/component_detail.html:88
-#: templates/projects/component_detail.html:90
+#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:94
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:95
+#: templates/projects/component_detail.html:99
 msgid "Branch:"
 msgstr "Degë:"
 
-#: templates/projects/component_detail.html:100
+#: templates/projects/component_detail.html:104
 msgid "File filter:"
 msgstr "Filtër kartele:"
 
-#: templates/projects/component_detail.html:106
+#: templates/projects/component_detail.html:110
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Qarkullim:"
 msgstr[1] "Qarkullime:"
 
-#: templates/projects/component_detail.html:114
+#: templates/projects/component_detail.html:118
 msgid "Allows submissions:"
 msgstr "Lejo parashtrime:"
 
-#: templates/projects/component_detail.html:128
+#: templates/projects/component_detail.html:132
 msgid "Translation files"
 msgstr "Kartela përkthimi"
 
-#: templates/projects/component_detail.html:133
+#: templates/projects/component_detail.html:137
 msgid "Source file:"
 msgstr "Kartelë burim:"
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:144
 msgid "Statistics last updated:"
 msgstr "Statistika të përditësuara së fundi më:"
 
-#: templates/projects/component_detail.html:142
+#: templates/projects/component_detail.html:146
 msgid "ago"
 msgstr "më parë"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:147
 msgid "Component not yet pulled from source repository."
 msgstr "Përbërëse ende e patërhequr prej depos burim."
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Rifreskoje dhe rillogarit statistikat. Ky veprim mund të hajë ca kohë."
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Refresh cache"
 msgstr "Rifresko fshehtinën"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:155
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Ricakto të dhënat vendore të Transifex-it për një tërheqje të pastër"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:155
 msgid "Clear cache"
 msgstr "Pastro fshehtinën"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Any locally modified data will be overwritten with fresh copies."
-msgstr "Çfarëdo të dhënash të ndryshuara lokalisht do të mbishkruhen me kopje të freskëta."
+msgstr ""
+"Çfarëdo të dhënash të ndryshuara lokalisht do të mbishkruhen me kopje të "
+"freskëta."
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "warning"
 msgstr "sinjalizim"
 
-#: templates/projects/component_detail.html:163
+#: templates/projects/component_detail.html:167
 msgid "Become a translator:"
 msgstr "Bëhuni përkthyes:"
 
-#: templates/projects/component_detail.html:167
+#: templates/projects/component_detail.html:171
 msgid "Your request is pending for approval."
 msgstr "Kërkesa juaj është në pritje të miratimit."
 
-#: templates/projects/component_detail.html:190
+#: templates/projects/component_detail.html:197
 #: templates/projects/project_detail.html:116
 msgid "History"
 msgstr "Historik"
 
-#: templates/projects/component_detail.html:194
+#: templates/projects/component_detail.html:201
 #: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr "Asnjë i passhëm"
 
-#: templates/projects/component_detail.html:211
+#: templates/projects/component_detail.html:218
 msgid "Delete component"
 msgstr "Fshije përbërësin"
 
@@ -1921,26 +1702,26 @@ msgstr "Shtoni një përbërës"
 
 #: templates/projects/component_form.html:7
 #: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:86
+#: templates/projects/component_form.html:100
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "Përpunoni %(component_name)s"
 
-#: templates/projects/component_form.html:84
+#: templates/projects/component_form.html:98
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Përbërës i ri për %(project_name)s"
 
-#: templates/projects/component_form.html:98
+#: templates/projects/component_form.html:112
 msgid "Checkout"
 msgstr "Marrje"
 
-#: templates/projects/component_form.html:99
+#: templates/projects/component_form.html:113
 msgid "Submission"
 msgstr "Parashtrim"
 
-#: templates/projects/component_form.html:112
-#: templates/projects/component_form.html:122
+#: templates/projects/component_form.html:126
+#: templates/projects/component_form.html:136
 msgid "Save component"
 msgstr "Ruaje përbërësin"
 
@@ -1977,11 +1758,15 @@ msgstr "Shtoni një!"
 
 #: templates/projects/component_list.html:54
 msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
+"<em>Components</em> are smaller, self-contained parts of a larger project "
+"which consist of actual files.\n"
+"    Examples of components of a software project could be \"UI\" and \"Docs"
+"\" or development branches like <code>HEAD</code>."
 msgstr ""
-"<em>Përbërësit</em> janë pjesë më të vogla, të mëvetëshme, të një projekti më të madh, që përmbajnë kartelat reale.\n"
-"    Shembuj përbërësish të një projekti \"software\" mund të ishin \"UI\" dhe \"Docs\" ose degë zhvillimi si <code>HEAD</code>."
+"<em>Përbërësit</em> janë pjesë më të vogla, të mëvetëshme, të një projekti "
+"më të madh, që përmbajnë kartelat reale.\n"
+"    Shembuj përbërësish të një projekti \"software\" mund të ishin \"UI\" "
+"dhe \"Docs\" ose degë zhvillimi si <code>HEAD</code>."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
@@ -2008,8 +1793,12 @@ msgid "Select the target file:"
 msgstr "Përzgjidhni kartelën objektiv:"
 
 #: templates/projects/component_submit_new_file.html:27
-msgid "The target file is the name of the new file language. It must matches with the component file filter."
-msgstr "Kartela objektiv është emri i kartelës së re gjuhësore. Duhet të përputhet me filtrin e kartelave të përbërëses."
+msgid ""
+"The target file is the name of the new file language. It must matches with "
+"the component file filter."
+msgstr ""
+"Kartela objektiv është emri i kartelës së re gjuhësore. Duhet të përputhet "
+"me filtrin e kartelave të përbërëses."
 
 #: templates/projects/component_submit_new_file.html:30
 msgid "or enter it here:"
@@ -2056,15 +1845,17 @@ msgstr "T'i thuhet mirupafshim <em>%(project_name)s</em>?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
+"  Are you sure you want to permanently delete the registered project '%"
+"(project_name)s'?\n"
 msgstr ""
 "\n"
-"  Jeni i sigurt që doni të fshihet përgjithmonë projekti i regjistruar '%(project_name)s'?\n"
+"  Jeni i sigurt që doni të fshihet përgjithmonë projekti i regjistruar '%"
+"(project_name)s'?\n"
 
 #: templates/projects/project_detail.html:42
-#: templates/projects/project_form_base.html:87
+#: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
-#: templates/txcollections/release_detail.html:46
+#: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Hollësi"
 
@@ -2074,7 +1865,7 @@ msgstr "Ndiq:"
 
 #: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
-#: templates/txcollections/release_detail.html:50
+#: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Faqe Hyrëse:"
 
@@ -2129,7 +1920,7 @@ msgstr "Ruaje projektin"
 
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
-#: templates/projects/project_form_base.html:71
+#: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "Shtoni një projekt"
 
@@ -2143,16 +1934,16 @@ msgstr "Përpunoni %(project_name)s"
 msgid "Edit <em>%(project_name)s</em>"
 msgstr "Përpunoni <em>%(project_name)s</em>"
 
-#: templates/projects/project_form_base.html:27
+#: templates/projects/project_form_base.html:29
 msgid "Access control will be enabled once the project is created"
 msgstr "Kontrolli i hyrjeve do të aktivizohet sapo të krijohet projekti"
 
-#: templates/projects/project_form_base.html:74
+#: templates/projects/project_form_base.html:76
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Po përpunohet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form_base.html:88
+#: templates/projects/project_form_base.html:90
 msgid "Access Control"
 msgstr "Kontroll Hyrjesh"
 
@@ -2205,24 +1996,65 @@ msgstr "Pse nuk <a href=\"%(project_create)s\">shtoni një të tillë</a>?"
 
 #: templates/projects/project_list.html:67
 #, python-format
-msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
-msgstr "S'e gjetët projektin tuaj? Ecni më tej dhe <a href=\"%(project_create)s\">shtojeni vetë</a>!"
+msgid ""
+"Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
+"it</a>!"
+msgstr ""
+"S'e gjetët projektin tuaj? Ecni më tej dhe <a href=\"%(project_create)s"
+"\">shtojeni vetë</a>!"
+
+#: templates/simpleauth/base_profile.html:4
+#: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/simpleauth/base_profile.html:10
+msgid "Profile settings"
+msgstr "Rregullime Profili"
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Keni dalë që këtej."
 
+#: templates/simpleauth/settings.html:4
+msgid "Your Profile"
+msgstr "Profili Juaj"
+
+#: templates/simpleauth/settings.html:9
+#, python-format
+msgid "Your profile, %(user)s"
+msgstr "Profili juaj,  %(user)s"
+
 #: templates/simpleauth/settings.html:15
-msgid "Any settings associated with your account are presented and may be modified here."
-msgstr "Çfarëdo rregullimi i përshoqëruar llogarisë suaj tregohen dhe mund të ndryshohen prej këtu."
+msgid ""
+"Any settings associated with your account are presented and may be modified "
+"here."
+msgstr ""
+"Çfarëdo rregullimi i përshoqëruar llogarisë suaj tregohen dhe mund të "
+"ndryshohen prej këtu."
+
+#: templates/simpleauth/settings.html:23
+#: templates/userprofile/profile/overview.html:103
+msgid "Change notifications"
+msgstr "Ndrysho njoftimet"
+
+#: templates/simpleauth/settings.html:24
+msgid "Change notifications associated to your account"
+msgstr "Ndryshoni njoftimet e përshoqëruar llogarisë suaj"
 
 #: templates/simpleauth/signin.html:10
+#, fuzzy
 msgid ""
 "\n"
-"<p>Please login in with your email or screen name.<br />\n"
+"<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
 "<p>Ju lutem, hyni me email-in ose emrin tuaj të ekranit.<br />\n"
+
+#: templates/translations/stats_table_filter_box.html:7
+msgid "Show completed"
+msgstr ""
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -2243,10 +2075,12 @@ msgstr "T'i thuhet mirupafshim <em>%(collection_name)s</em>?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered collection '%(collection_name)s'?\n"
+"  Are you sure you want to permanently delete the registered collection '%"
+"(collection_name)s'?\n"
 msgstr ""
 "\n"
-"  Jeni i sigurt se doni të fshihet përgjithmonë koleksioni i regjistruar '%(collection_name)s'?\n"
+"  Jeni i sigurt se doni të fshihet përgjithmonë koleksioni i regjistruar '%"
+"(collection_name)s'?\n"
 
 #: templates/txcollections/collection_detail.html:43
 #, python-format
@@ -2264,8 +2098,12 @@ msgstr "Projekte të regjistruar hëpërhë si pjesë e këtij koleksioni:"
 
 #: templates/txcollections/collection_detail.html:108
 #, python-format
-msgid "No projects are registered for this collection yet. <a href=\"%(project_list)s\">Find projects</a> and add them to this collection."
-msgstr "Ende nuk ka projekte të regjistruar për këtë koleksion. <a href=\"%(project_list)s\">Gjeni projekte</a> dhe shtojini ata te ky koleksion."
+msgid ""
+"No projects are registered for this collection yet. <a href=\"%(project_list)"
+"s\">Find projects</a> and add them to this collection."
+msgstr ""
+"Ende nuk ka projekte të regjistruar për këtë koleksion. <a href=\"%"
+"(project_list)s\">Gjeni projekte</a> dhe shtojini ata te ky koleksion."
 
 #: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
@@ -2309,8 +2147,7 @@ msgstr "Koleksione me etiketën '%(tag)s'"
 msgid "Collections on Transifex"
 msgstr "Koleksione në Transifex"
 
-#: templates/txcollections/collection_list.html:19
-#: txcollections/models.py:57
+#: templates/txcollections/collection_list.html:19 txcollections/models.py:57
 msgid "collections"
 msgstr "koleksione"
 
@@ -2343,8 +2180,12 @@ msgstr "Pse nuk <a href=\"%(collection_create)s\">shtoni një</a>?"
 
 #: templates/txcollections/collection_list.html:66
 #, python-format
-msgid "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s\">add it</a>!"
-msgstr "S'e gjetët koleksionin tuaj? Ecni më tej dhe <a href=\"%(collection_create)s\">shtojeni vetë</a>!"
+msgid ""
+"Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
+"\">add it</a>!"
+msgstr ""
+"S'e gjetët koleksionin tuaj? Ecni më tej dhe <a href=\"%(collection_create)s"
+"\">shtojeni vetë</a>!"
 
 #: templates/txcollections/release_confirm_delete.html:4
 #, python-format
@@ -2365,32 +2206,34 @@ msgstr "T'i thuhet mirupafshim <em>%(release_name)s</em>?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered release '%(release_name)s'?\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
 msgstr ""
 "\n"
-"  Jeni i sigurt se doni të fshihet përgjithmonë qarkullimi i regjistruar '%(release_name)s'?\n"
+"  Jeni i sigurt se doni të fshihet përgjithmonë qarkullimi i regjistruar '%"
+"(release_name)s'?\n"
 
-#: templates/txcollections/release_detail.html:55
+#: templates/txcollections/release_detail.html:61
 msgid "Release date:"
 msgstr "Datë qarkullimi:"
 
-#: templates/txcollections/release_detail.html:59
+#: templates/txcollections/release_detail.html:65
 msgid "String freeze:"
 msgstr "Ngrirje vargjesh:"
 
-#: templates/txcollections/release_detail.html:63
+#: templates/txcollections/release_detail.html:69
 msgid "Devel freeze:"
 msgstr "Ngrirje zhvillimi:"
 
-#: templates/txcollections/release_detail.html:71
+#: templates/txcollections/release_detail.html:77
 msgid "Translation statistics"
 msgstr "Statistika përkthimi"
 
-#: templates/txcollections/release_detail.html:75
+#: templates/txcollections/release_detail.html:84
 msgid "No translations added for this release. :-("
 msgstr "Pa përkthime të shtuara për këtë qarkullim. :-("
 
-#: templates/txcollections/release_detail.html:86
+#: templates/txcollections/release_detail.html:95
 msgid "Delete release"
 msgstr "Fshije qarkullimin"
 
@@ -2465,13 +2308,7 @@ msgstr "Të dhëna personale"
 msgid "Avatar"
 msgstr "Avatar"
 
-#: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "Vendndodhje"
-
-#: templates/userprofile/menu.html:9
+#: templates/userprofile/menu.html:10
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Hiqe profilin"
@@ -2491,8 +2328,12 @@ msgstr "Shtoni një vendndodhje të re poste"
 
 #: templates/userprofile/account/email_validation.html:23
 #: templates/userprofile/account/email_validation_processed.html:13
-msgid "Insert the new e-mail address. An e-mail will be send to it for testing and confirmation."
-msgstr "Jepni vendndodhjen e re e-mail. Do t'ju dërgohet një e-mail te ajo, për provën dhe për ripohimin e saj."
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
+msgstr ""
+"Jepni vendndodhjen e re e-mail. Do t'ju dërgohet një e-mail te ajo, për "
+"provën dhe për ripohimin e saj."
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
@@ -2509,16 +2350,24 @@ msgstr "Pocesi i vleftësimit të e-mail-it"
 
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
-msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\"overview page</a>."
-msgstr "Procesin e vleftësimit të e-mail-eve mund ta administroni prej  <a href=\"%(profile_overview)s\"faqes përmbledhëse</a>."
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
+msgstr ""
+"Procesin e vleftësimit të e-mail-eve mund ta administroni prej  <a href=\"%"
+"(profile_overview)s\"faqes përmbledhëse</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
 msgstr "Vendndodhja e-mail u vleftësua me sukses."
 
 #: templates/userprofile/account/email_validation_done.html:19
-msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
-msgstr "Kyçi që ju erdhi me e-mail nuk është më i vlefshëm. Ju lutem, riprovoni procesin e vleftësimit të e-mail-it."
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
+msgstr ""
+"Kyçi që ju erdhi me e-mail nuk është më i vlefshëm. Ju lutem, riprovoni "
+"procesin e vleftësimit të e-mail-it."
 
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:16
@@ -2526,8 +2375,14 @@ msgid "E-mail change processed"
 msgstr "Ndryshimi i e-mail-it u krye."
 
 #: templates/userprofile/account/email_validation_processed.html:17
-msgid "An e-mail has been sent to the new e-mail address to verify and activate it. Please access to your e-mail and complete this process following the instructions specified in the e-mail body."
-msgstr "për ta verifikuar dhe aktivizuar atë, ju është dërguar një e-mail te vendndodhja e re e-mail. Ju lutem hapeni e-mail-in tuaj dhe plotësojeni këtë process duke ndjekur udhëzimet që jepen te përmbajtja e e-mail-it."
+msgid ""
+"An e-mail has been sent to the new e-mail address to verify and activate it. "
+"Please access to your e-mail and complete this process following the "
+"instructions specified in the e-mail body."
+msgstr ""
+"për ta verifikuar dhe aktivizuar atë, ju është dërguar një e-mail te "
+"vendndodhja e re e-mail. Ju lutem hapeni e-mail-in tuaj dhe plotësojeni këtë "
+"process duke ndjekur udhëzimet që jepen te përmbajtja e e-mail-it."
 
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
@@ -2535,8 +2390,15 @@ msgid "Resend e-mail validation"
 msgstr "Ridërgo vleftësim me e-mail"
 
 #: templates/userprofile/account/email_validation_reset.html:19
-msgid "If you haven't validated your e-mail address yet you will not be able to login. Insert your registered e-mail address to receive the validation e-mail again."
-msgstr "Po qe se nuk e keni vleftësuar ende vendndodhjen tuaj e-mail, nuk do të jeni në gjendje të bëni hyrje. Jepni vendndodhjen tuaj të regjistruar e-mail për ta marrëë sërish e-mail-in për vleftësimin."
+#, fuzzy
+msgid ""
+"If you haven't validated your e-mail address yet you will not be able to "
+"sign in. Insert your registered e-mail address to receive the validation e-"
+"mail again."
+msgstr ""
+"Po qe se nuk e keni vleftësuar ende vendndodhjen tuaj e-mail, nuk do të jeni "
+"në gjendje të bëni hyrje. Jepni vendndodhjen tuaj të regjistruar e-mail për "
+"ta marrëë sërish e-mail-in për vleftësimin."
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
@@ -2567,16 +2429,22 @@ msgid "Your e-mail was already validated"
 msgstr "E-mail-i juaj qe vleftësuar një herë"
 
 #: templates/userprofile/account/login.html:5
-msgid "User login"
+#, fuzzy
+msgid "User sign in"
 msgstr "Hyrje përdoruesi"
 
 #: templates/userprofile/account/login.html:19
-msgid "Enter your username and password to login."
+#, fuzzy
+msgid "Enter your username and password to sign in."
 msgstr "Jepni emrin tuaj të përdoruesit dhe fjalëkalimin për hyrje."
 
 #: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr "Të dobishme"
+
+#: templates/userprofile/account/login.html:38
+msgid "Lost your password?"
+msgstr "Humbët fjalëkalimin tuaj?"
 
 #: templates/userprofile/account/login.html:40
 #: templates/userprofile/profile/overview.html:91
@@ -2601,7 +2469,7 @@ msgid "Log in again"
 msgstr "Hyni sërish"
 
 #: templates/userprofile/account/password_change.html:5
-#: templates/userprofile/account/password_reset_confirm.html:4
+#: templates/userprofile/account/password_reset_confirm.html:5
 msgid "Password change for"
 msgstr "Ndryshim fjalëkalimi për"
 
@@ -2611,8 +2479,12 @@ msgid "Password change"
 msgstr "Ndryshim fjalëkalimi"
 
 #: templates/userprofile/account/password_change.html:23
-msgid "You can change your password from here. Please enter your new password twice so we can verify you typed it in correctly."
-msgstr "Prej këtej mund të ndryshoni fjalëkalimin tuaj. Ju lutem jepeni fjalëkalimin e ri dy herë që të mund të bindemi se e shtypët saktë."
+msgid ""
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
+msgstr ""
+"Prej këtej mund të ndryshoni fjalëkalimin tuaj. Ju lutem jepeni fjalëkalimin "
+"e ri dy herë që të mund të bindemi se e shtypët saktë."
 
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
@@ -2628,8 +2500,17 @@ msgid "Password key expired"
 msgstr "Skadoi kyçi i fjalëkalimit"
 
 #: templates/userprofile/account/password_expired.html:9
-msgid "The password key you're trying to use is expired. Please, request a new one."
-msgstr "Kyçi i fjalëkalimit që po përpiqeni të përdorni ka skaduar. Ju lutem, kërkoni një të ri."
+msgid ""
+"The password key you're trying to use is expired. Please, request a new one."
+msgstr ""
+"Kyçi i fjalëkalimit që po përpiqeni të përdorni ka skaduar. Ju lutem, "
+"kërkoni një të ri."
+
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:23
+msgid "Password reset"
+msgstr "Ricaktim fjalëkalimi"
 
 #: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
@@ -2638,8 +2519,12 @@ msgstr "Formular ricaktimi fjalëkalimi"
 
 #: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
-msgid "Forgotten your password? Enter your e-mail address, and we'll reset your password and e-mail the new one to you."
-msgstr "Harruat fjalëkalimin? Jepni vendndodhjen tuaj e-mail, dhe do ta ricaktojmë dhe do t'jua dërgojmë me e-mail fjalëkalimin e ri."
+msgid ""
+"Forgotten your password? Enter your e-mail address, and we'll reset your "
+"password and e-mail the new one to you."
+msgstr ""
+"Harruat fjalëkalimin? Jepni vendndodhjen tuaj e-mail, dhe do ta ricaktojmë "
+"dhe do t'jua dërgojmë me e-mail fjalëkalimin e ri."
 
 #: templates/userprofile/account/password_reset.html:27
 msgid "Reset my password"
@@ -2647,15 +2532,25 @@ msgstr "Ndrysho fjalëkalimin tim"
 
 #: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr "Fjalëkalimi juaj u caktua. Mund të vazhdoni më tej dhe të kryeni hyrjen tani."
+msgstr ""
+"Fjalëkalimi juaj u caktua. Mund të vazhdoni më tej dhe të kryeni hyrjen tani."
 
-#: templates/userprofile/account/password_reset_confirm.html:37
+#: templates/userprofile/account/password_reset_confirm.html:32
+#: templates/userprofile/profile/overview.html:88
+msgid "Change password"
+msgstr "Ndrysho fjalëkalimin"
+
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid "Password reset unsuccessful"
 msgstr "Nryshim i pasuksesshëm fjalëkalimi"
 
-#: templates/userprofile/account/password_reset_confirm.html:38
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
-msgstr "Lidhja për ricaktimin e fjalëkalimit qe e pavlefshme, ndoshta ngaqë është përdorur një herë.  Ju lutem, kërkoni një ricaktim të ri të fjalëkalimit."
+#: templates/userprofile/account/password_reset_confirm.html:39
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"Lidhja për ricaktimin e fjalëkalimit qe e pavlefshme, ndoshta ngaqë është "
+"përdorur një herë.  Ju lutem, kërkoni një ricaktim të ri të fjalëkalimit."
 
 #: templates/userprofile/account/password_reset_done.html:4
 #: templates/userprofile/account/password_reset_done.html:9
@@ -2663,8 +2558,12 @@ msgid "Password reset successful"
 msgstr "Ndryshim i sukseshëm fjalëkalimi"
 
 #: templates/userprofile/account/password_reset_done.html:10
-msgid "We've e-mailed you the instructions to obtain a new password. You should be receiving it shortly."
-msgstr "Ju keni dërguar me e-mail udhëzimet se si të merrni një fjalëkalim të ri. Duhet t'ju vijë shpejt."
+msgid ""
+"We've e-mailed you the instructions to obtain a new password. You should be "
+"receiving it shortly."
+msgstr ""
+"Ju keni dërguar me e-mail udhëzimet se si të merrni një fjalëkalim të ri. "
+"Duhet t'ju vijë shpejt."
 
 #: templates/userprofile/account/registration.html:4
 msgid "User registration"
@@ -2675,8 +2574,11 @@ msgid "Register for a Transifex account"
 msgstr "Regjistrohuni për një llogari Transifex"
 
 #: templates/userprofile/account/registration.html:18
-msgid "Joining the Transifex is quick and easy. Just fill in the following form."
-msgstr "Pjesëmarrja te Transifex-i është e lehtë dhe bëhet shpejt. Thjesht plotësoni formularin vijues."
+msgid ""
+"Joining the Transifex is quick and easy. Just fill in the following form."
+msgstr ""
+"Pjesëmarrja te Transifex-i është e lehtë dhe bëhet shpejt. Thjesht plotësoni "
+"formularin vijues."
 
 #: templates/userprofile/account/registration_done.html:4
 msgid "Registration complete"
@@ -2687,13 +2589,24 @@ msgid "Register a new account"
 msgstr "Regjistroni llogari të re"
 
 #: templates/userprofile/account/registration_done.html:12
-msgid "You have successfully registered a new account, and an account activation url has been sent to your e-mail address. You must access this message on your e-mail account to finish the registration process."
-msgstr "Keni regjistruar me sukses një llogari të re, dhe ju është dërguar te email-i juaj një url aktivizimi llogarie. Duhet ta hapni këtë mesazh te llogaria juaj e-mail, që të përfundoni procesin e regjistrimit."
+msgid ""
+"You have successfully registered a new account, and an account activation "
+"url has been sent to your e-mail address. You must access this message on "
+"your e-mail account to finish the registration process."
+msgstr ""
+"Keni regjistruar me sukses një llogari të re, dhe ju është dërguar te email-"
+"i juaj një url aktivizimi llogarie. Duhet ta hapni këtë mesazh te llogaria "
+"juaj e-mail, që të përfundoni procesin e regjistrimit."
 
 #: templates/userprofile/account/registration_done.html:15
-#, python-format
-msgid "You have successfully registered a new account. Go to the <a href=\"%(overview_url)s\">login page</a> to authenticate and start using this site."
-msgstr "Keni regjistruar me sukses një llogari të re. Kaloni te <a href=\"%(overview_url)s\">faqja për hyrje</a> për të bërë mirëfilltësimin dhe për të filluar përdorimin e këtij \"site\"-i."
+#, fuzzy, python-format
+msgid ""
+"You have successfully registered a new account. Go to the <a href=\"%"
+"(overview_url)s\">sign in page</a> to authenticate and start using this site."
+msgstr ""
+"Keni regjistruar me sukses një llogari të re. Kaloni te <a href=\"%"
+"(overview_url)s\">faqja për hyrje</a> për të bërë mirëfilltësimin dhe për të "
+"filluar përdorimin e këtij \"site\"-i."
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -2707,8 +2620,12 @@ msgstr "Faqe përzgjedhjeje avatari"
 
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
-msgid "You have several options to select the image you want as avatar on your profile."
-msgstr "Keni disa rrugë për zgjedhjen e pamjes që dëshironi si avatar te profili juaj."
+msgid ""
+"You have several options to select the image you want as avatar on your "
+"profile."
+msgstr ""
+"Keni disa rrugë për zgjedhjen e pamjes që dëshironi si avatar te profili "
+"juaj."
 
 #: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
@@ -2721,8 +2638,12 @@ msgid "Done"
 msgstr "U bë"
 
 #: templates/userprofile/avatar/choose.html:56
-msgid "Select an image from a remote URL. Put the URL on the input below and we'll retrieve the image for you"
-msgstr "Përzgjidhni një pamje prej një URL-je të largët. Vendoseni URL-në te zona më poshtë dhe do ta marrim ne pamjen për ju"
+msgid ""
+"Select an image from a remote URL. Put the URL on the input below and we'll "
+"retrieve the image for you"
+msgstr ""
+"Përzgjidhni një pamje prej një URL-je të largët. Vendoseni URL-në te zona më "
+"poshtë dhe do ta marrim ne pamjen për ju"
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -2738,8 +2659,12 @@ msgid "Delete personal information"
 msgstr "Fshiji të dhënat personale"
 
 #: templates/userprofile/profile/delete.html:13
-msgid "Erase all your private data except your username. You can refill the information later if you want to."
-msgstr "Fshini tërë të dhënat tuaja vetjake hiq emrin tuaj të përdoruesit. Mund t'i rijepni të dhënat më vonë, po deshët."
+msgid ""
+"Erase all your private data except your username. You can refill the "
+"information later if you want to."
+msgstr ""
+"Fshini tërë të dhënat tuaja vetjake hiq emrin tuaj të përdoruesit. Mund t'i "
+"rijepni të dhënat më vonë, po deshët."
 
 #: templates/userprofile/profile/delete.html:17
 msgid "Are you sure?"
@@ -2806,6 +2731,10 @@ msgstr "Ndërroni avatar"
 msgid "Add avatar"
 msgstr "Shtoni avatar"
 
+#: templates/userprofile/profile/overview.html:39
+msgid "Username:"
+msgstr "Emër përdoruesi:"
+
 #: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "E-mail:"
@@ -2824,6 +2753,11 @@ msgstr "(E pavleftësuar)"
 msgid "Not set"
 msgstr "E parregulluar"
 
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:38
+msgid "Location"
+msgstr "Vendndodhje"
+
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Administrim:"
@@ -2835,14 +2769,6 @@ msgstr "Ndryshoni vendndodhjen tuaj email"
 #: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
 msgstr "Shtoni vendndodhjen tuaj email"
-
-#: templates/userprofile/profile/overview.html:95
-msgid "Add location"
-msgstr "Shtoni vend"
-
-#: templates/userprofile/profile/overview.html:97
-msgid "Change location"
-msgstr "Ndryshoni vendin"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -2858,55 +2784,59 @@ msgstr "Jepni ndoca të dhëna rreth jush."
 msgid "Public profile of %(user)s"
 msgstr "Profil publik i %(user)s"
 
-#: templates/webtrans/transfile_edit.html:28
+#: templates/userprofile/profile/public.html:33
+msgid "Username"
+msgstr "Emër përdoruesi"
+
+#: templates/webtrans/transfile_edit.html:29
 #, python-format
 msgid "%(component_name)s"
 msgstr "%(component_name)s"
 
-#: templates/webtrans/transfile_edit.html:29
+#: templates/webtrans/transfile_edit.html:30
 #, python-format
 msgid "Translate '%(filename)s'"
 msgstr "Përktheni '%(filename)s'"
 
-#: templates/webtrans/transfile_edit.html:38
-#: templates/webtrans/transfile_edit.html:43
+#: templates/webtrans/transfile_edit.html:39
+#: templates/webtrans/transfile_edit.html:44
 #, python-format
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "Përktheni '<code>%(filename)s</code>'"
 
-#: templates/webtrans/transfile_edit.html:96
+#: templates/webtrans/transfile_edit.html:102
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:97
+#: templates/webtrans/transfile_edit.html:103
 msgid "Source String"
 msgstr "Varg Burim"
 
-#: templates/webtrans/transfile_edit.html:98
+#: templates/webtrans/transfile_edit.html:104
 msgid "Translation"
 msgstr "Përkthim"
 
-#: templates/webtrans/transfile_edit.html:99
+#: templates/webtrans/transfile_edit.html:106
 msgid "Auto-translate"
 msgstr "Vetëpërktheje"
 
-#: templates/webtrans/transfile_edit.html:99
+#: templates/webtrans/transfile_edit.html:106
 msgid "AT"
 msgstr ""
 
-#: templates/webtrans/transfile_edit.html:100
+#: templates/webtrans/transfile_edit.html:108
 msgid "Occurrences"
 msgstr "Hasje"
 
-#: templates/webtrans/transfile_edit.html:101
+#: templates/webtrans/transfile_edit.html:109
 msgid "Fuzzy?"
 msgstr "I turbullt?"
 
-#: templates/webtrans/transfile_edit.html:110
+#: templates/webtrans/transfile_edit.html:122
 msgid "Submit translations"
 msgstr "Parashtroni përkthime"
 
-#: templates/webtrans/transfile_form.html:15
+#: templates/webtrans/transfile_form.html:19
 msgid "Auto-suggest translation"
 msgstr "Përkthim me vetëkëshillim"
 
@@ -2943,7 +2873,7 @@ msgid "Could not generate statistics for this file"
 msgstr "Nuk prodhoi dot statistika për këtë kartelë"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2951,7 +2881,7 @@ msgid "Trans:"
 msgstr "Përkth:"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2959,21 +2889,21 @@ msgid "Untrans:"
 msgstr "Papërkth:"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:52
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Shiheni"
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
+#: translations/templates/comp_stats_table.html:49
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Shkarkojeni"
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:63
+#: translations/templates/comp_stats_table.html:59
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Përpunojeni"
@@ -2992,11 +2922,7 @@ msgstr "Shihni statistikat për këtë gjuhë"
 msgid "There is no language registered that matches with this code"
 msgstr "Nuk ka gjuhë të regjistruar që përputhet me këtë kod"
 
-#: translations/templates/comp_stats_table.html:40
-msgid "(not calculated)"
-msgstr "(e pallogaritur)"
-
-#: translations/templates/comp_stats_table.html:47
+#: translations/templates/comp_stats_table.html:43
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "Klikoni këtu për të parë kartela shumëfishe të"
@@ -3022,21 +2948,26 @@ msgstr "Shko te faqja e këtij projekti"
 msgid "Go to this component page"
 msgstr "Shko te faqja e këtij përbërësi"
 
-#: translations/templates/pofile_lock.html:10
-msgid "Unlock this file when you're finished working with it."
+#: translations/templates/pofile_lock.html:15
+#, fuzzy
+msgid "Unlock this file when you are finished working with it."
 msgstr "Çkyçeni këtë kartelë kur të keni mbaruar së punuari me të."
 
-#: translations/templates/pofile_lock.html:14
-msgid "This file is locked, indicating someone is working with it."
+#: translations/templates/pofile_lock.html:21
+#, fuzzy, python-format
+msgid "User '%(owner)s' has locked this file indicating he's working on it."
 msgstr "Kjo kartelë është e kyçur, çka do të thotë që dikush po merret me të."
 
-#: translations/templates/pofile_lock.html:20
+#: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
 msgstr "Kyçeni këtë kartelë, që të njoftoni të tjerët se po merreni me të."
 
-#: translations/templates/pofile_lock.html:23
-msgid "This file is unlocked. Most likely noone is working with it right now."
-msgstr "Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të hëpërhë."
+#: translations/templates/pofile_lock.html:30
+#, fuzzy
+msgid "This file is unlocked. Most likely no one is working with it right now."
+msgstr ""
+"Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të "
+"hëpërhë."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -3119,49 +3050,239 @@ msgstr "Femër"
 msgid "Male"
 msgstr "Mashkull"
 
-#: txcommon/models.py:18
-#: txcommon/migrations/0002_release_06_07.py:17
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Emër"
 
-#: txcommon/models.py:19
-#: txcommon/migrations/0002_release_06_07.py:16
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Mbiemër"
 
-#: txcommon/models.py:22
-#: txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Gjuha Mëmë"
 
-#: txcommon/models.py:23
-#: txcommon/migrations/0002_release_06_07.py:23
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:24
-#: txcommon/migrations/0002_release_06_07.py:26
+#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25
-#: txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26
-#: txcommon/migrations/0002_release_06_07.py:15
+#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Rreth vetes suaj"
 
-#: txcommon/models.py:27
+#: txcommon/models.py:39
 msgid "Short description of yourself (140 chars)."
 msgstr "Përshkrim i shkurtër i vetvetes (140 shenja)."
 
-#: txcommon/models.py:28
-#: txcommon/migrations/0002_release_06_07.py:14
+#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Kërkoni punë?"
+
+#: txcommon/notifications.py:12
+msgid "New Project Added"
+msgstr "U shtua Projekt i Ri"
+
+#: txcommon/notifications.py:13
+msgid "when a new project is added"
+msgstr "kur shtohet një projekt i ri"
+
+#: txcommon/notifications.py:19
+msgid "Project Changed"
+msgstr "Projekti u Ndryshua"
+
+#: txcommon/notifications.py:20
+msgid "when a project is changed"
+msgstr "kur ndryshohet një projekt"
+
+#: txcommon/notifications.py:26
+msgid "Project Deleted"
+msgstr "Projekti u Fshi"
+
+#: txcommon/notifications.py:27
+msgid "when a project is deleted"
+msgstr "kur fshihet një projekt"
+
+#: txcommon/notifications.py:33
+msgid "Submit access to project requested"
+msgstr ""
+
+#: txcommon/notifications.py:34
+#, fuzzy
+msgid "when an user request access to submit files to a project"
+msgstr "I lejohet të parashtrojë kartelë te ky projekt"
+
+#: txcommon/notifications.py:41
+msgid "Submit access request to project denied"
+msgstr ""
+
+#: txcommon/notifications.py:42
+msgid "when a maintainer denies access to an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:49
+msgid "Submit access request to project withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:50
+#, fuzzy
+msgid "when an user withdraws the access requestto submit files to a project"
+msgstr "Përdoruesa me hyrje të garantuar për parashtrim kartelash:"
+
+#: txcommon/notifications.py:57
+msgid "Submit access to project granted"
+msgstr ""
+
+#: txcommon/notifications.py:58
+msgid "when a maintainer grants access to an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:65
+msgid "Submit access to project revoked"
+msgstr ""
+
+#: txcommon/notifications.py:66
+msgid ""
+"when a maintainer revokes the access of an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:73
+msgid "New Component Added"
+msgstr "U shtua Përbërës i Ri"
+
+#: txcommon/notifications.py:74
+msgid "when a new component is added to a project"
+msgstr "kur te një projekt shtohet përbërës i ri"
+
+#: txcommon/notifications.py:80
+msgid "Component Changed"
+msgstr "Përbërësi Ndryshoi"
+
+#: txcommon/notifications.py:81
+msgid "when a component of a project is changed"
+msgstr "kur ndryshohet një përbërës projekti"
+
+#: txcommon/notifications.py:87
+msgid "Component Deleted"
+msgstr "Përbërësi u Fshi"
+
+#: txcommon/notifications.py:88
+msgid "when a component of a project is deleted"
+msgstr "kur fshihet një përbërës projekti"
+
+#: txcommon/notifications.py:94
+msgid "File Submitted"
+msgstr "Kartela u Parashtrua"
+
+#: txcommon/notifications.py:95
+msgid "when a component file of a project is submitted"
+msgstr "kur parashtrohet një kartelë përbërësi projekti"
+
+#: txcommon/notifications.py:102
+msgid "Translation File Changed"
+msgstr "Kartela e Përkthimit Ndryshoi"
+
+#: txcommon/notifications.py:103
+msgid "when a component translation file of a project is changed"
+msgstr "kur ndryshohet përkthimi i një kartele përbërësi projekti"
+
+#: txcommon/notifications.py:110
+msgid "Translation Source File (POT) has a Problem"
+msgstr "Kartela Burim e Përkthimit (POT) ka një Problem"
+
+#: txcommon/notifications.py:111
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
+msgstr ""
+"kur ka problem kartela burim (POT) e një përbërësi të cilin e mirëmbani ju"
+
+#: txcommon/notifications.py:119
+msgid "New Collection Added"
+msgstr "U shtua Koleksion i Ri"
+
+#: txcommon/notifications.py:120
+msgid "when a new collection is added"
+msgstr "kur shtohet një koleksion i ri"
+
+#: txcommon/notifications.py:126
+msgid "Collection Changed"
+msgstr "Koleksioni Ndryshoi"
+
+#: txcommon/notifications.py:127
+msgid "when a collection is changed"
+msgstr "kur ndryshohet një koleksion"
+
+#: txcommon/notifications.py:133
+msgid "Collection Deleted"
+msgstr "Koleksioni u Fshi"
+
+#: txcommon/notifications.py:134
+msgid "when a collection is deleted"
+msgstr "kur fshihet një koleksion"
+
+#: txcommon/notifications.py:140
+msgid "Project Added to a Collection"
+msgstr "U shtua Projekt te një Koleksion"
+
+#: txcommon/notifications.py:141
+msgid "when a new project is added to a collection"
+msgstr "kur shtohet projekt i ri te një koleksion"
+
+#: txcommon/notifications.py:147
+msgid "Project Deleted from a Collection"
+msgstr "U fshi Projekt te një Koleksion"
+
+#: txcommon/notifications.py:148
+msgid "when a project is deleted from a collection"
+msgstr "kur fshihet një projekt prej një koleksioni"
+
+#: txcommon/notifications.py:154
+msgid "New Release Added for a Watched Collection"
+msgstr "U shtua Qarkullim i Ri te një Koleksion i Mbikëqyrur"
+
+#: txcommon/notifications.py:155
+msgid "when a new release is added to a collection"
+msgstr "kur shtohet qarkullim i ri te një koleksion"
+
+#: txcommon/notifications.py:162
+msgid "Release Changed"
+msgstr "Qarkullimi Ndryshoi"
+
+#: txcommon/notifications.py:163
+msgid "when a release of a collection is changed"
+msgstr "kur qarkullimi i një koleksioni ndryshohet"
+
+#: txcommon/notifications.py:168
+msgid "Release Deleted"
+msgstr "Qarkullimi u Fshi"
+
+#: txcommon/notifications.py:169
+msgid "when a release of a collection is deleted"
+msgstr "kur qarkullimi i një koleksioni fshihet"
+
+#: txcommon/notifications.py:174
+msgid "Release Added to a Collection"
+msgstr "Qarkullimi u Shtua te një Koleksion"
+
+#: txcommon/notifications.py:175
+msgid "when a release is added to a collection"
+msgstr "kur një qarkullim shtohet te një koleksion"
+
+#: txcommon/notifications.py:180
+msgid "Release Deleted from a Collection"
+msgstr "Qarkullimi u Hoq prej një Koleksioni"
+
+#: txcommon/notifications.py:181
+msgid "when a release is deleted from a collection"
+msgstr "kur një qarkullim fshihet nga një koleksion"
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3183,180 +3304,29 @@ msgstr "Jepni në kllapa 0 ose më tepër numra të plotë të ndarë me presje.
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Duhet të jepni e pakta një çift kllapash që nuk përmbajnë gjë."
 
-#: txcommon/management/__init__.py:10
-msgid "New Project Added"
-msgstr "U shtua Projekt i Ri"
-
-#: txcommon/management/__init__.py:11
-msgid "when a new project is added"
-msgstr "kur shtohet një projekt i ri"
-
-#: txcommon/management/__init__.py:17
-msgid "Project Changed"
-msgstr "Projekti u Ndryshua"
-
-#: txcommon/management/__init__.py:18
-msgid "when a project is changed"
-msgstr "kur ndryshohet një projekt"
-
-#: txcommon/management/__init__.py:24
-msgid "Project Deleted"
-msgstr "Projekti u Fshi"
-
-#: txcommon/management/__init__.py:25
-msgid "when a project is deleted"
-msgstr "kur fshihet një projekt"
-
-#: txcommon/management/__init__.py:31
-msgid "New Component Added"
-msgstr "U shtua Përbërës i Ri"
-
-#: txcommon/management/__init__.py:32
-msgid "when a new component is added to a project"
-msgstr "kur te një projekt shtohet përbërës i ri"
-
-#: txcommon/management/__init__.py:38
-msgid "Component Changed"
-msgstr "Përbërësi Ndryshoi"
-
-#: txcommon/management/__init__.py:39
-msgid "when a component of a project is changed"
-msgstr "kur ndryshohet një përbërës projekti"
-
-#: txcommon/management/__init__.py:45
-msgid "Component Deleted"
-msgstr "Përbërësi u Fshi"
-
-#: txcommon/management/__init__.py:46
-msgid "when a component of a project is deleted"
-msgstr "kur fshihet një përbërës projekti"
-
-#: txcommon/management/__init__.py:52
-msgid "File Submitted"
-msgstr "Kartela u Parashtrua"
-
-#: txcommon/management/__init__.py:53
-msgid "when a component file of a project is submitted"
-msgstr "kur parashtrohet një kartelë përbërësi projekti"
-
-#: txcommon/management/__init__.py:60
-msgid "Translation File Changed"
-msgstr "Kartela e Përkthimit Ndryshoi"
-
-#: txcommon/management/__init__.py:61
-msgid "when a component translation file of a project is changed"
-msgstr "kur ndryshohet përkthimi i një kartele përbërësi projekti"
-
-#: txcommon/management/__init__.py:68
-msgid "Translation Source File (POT) has a Problem"
-msgstr "Kartela Burim e Përkthimit (POT) ka një Problem"
-
-#: txcommon/management/__init__.py:69
-msgid "when the source file (POT) of a component that you are a maintainer has a problem"
-msgstr "kur ka problem kartela burim (POT) e një përbërësi të cilin e mirëmbani ju"
-
-#: txcommon/management/__init__.py:77
-msgid "New Collection Added"
-msgstr "U shtua Koleksion i Ri"
-
-#: txcommon/management/__init__.py:78
-msgid "when a new collection is added"
-msgstr "kur shtohet një koleksion i ri"
-
-#: txcommon/management/__init__.py:84
-msgid "Collection Changed"
-msgstr "Koleksioni Ndryshoi"
-
-#: txcommon/management/__init__.py:85
-msgid "when a collection is changed"
-msgstr "kur ndryshohet një koleksion"
-
-#: txcommon/management/__init__.py:91
-msgid "Collection Deleted"
-msgstr "Koleksioni u Fshi"
-
-#: txcommon/management/__init__.py:92
-msgid "when a collection is deleted"
-msgstr "kur fshihet një koleksion"
-
-#: txcommon/management/__init__.py:98
-msgid "Project Added to a Collection"
-msgstr "U shtua Projekt te një Koleksion"
-
-#: txcommon/management/__init__.py:99
-msgid "when a new project is added to a collection"
-msgstr "kur shtohet projekt i ri te një koleksion"
-
-#: txcommon/management/__init__.py:105
-msgid "Project Deleted from a Collection"
-msgstr "U fshi Projekt te një Koleksion"
-
-#: txcommon/management/__init__.py:106
-msgid "when a project is deleted from a collection"
-msgstr "kur fshihet një projekt prej një koleksioni"
-
-#: txcommon/management/__init__.py:112
-msgid "New Release Added for a Watched Collection"
-msgstr "U shtua Qarkullim i Ri te një Koleksion i Mbikëqyrur"
-
-#: txcommon/management/__init__.py:113
-msgid "when a new release is added to a collection"
-msgstr "kur shtohet qarkullim i ri te një koleksion"
-
-#: txcommon/management/__init__.py:120
-msgid "Release Changed"
-msgstr "Qarkullimi Ndryshoi"
-
-#: txcommon/management/__init__.py:121
-msgid "when a release of a collection is changed"
-msgstr "kur qarkullimi i një koleksioni ndryshohet"
-
-#: txcommon/management/__init__.py:126
-msgid "Release Deleted"
-msgstr "Qarkullimi u Fshi"
-
-#: txcommon/management/__init__.py:127
-msgid "when a release of a collection is deleted"
-msgstr "kur qarkullimi i një koleksioni fshihet"
-
-#: txcommon/management/__init__.py:132
-msgid "Release Added to a Collection"
-msgstr "Qarkullimi u Shtua te një Koleksion"
-
-#: txcommon/management/__init__.py:133
-msgid "when a release is added to a collection"
-msgstr "kur një qarkullim shtohet te një koleksion"
-
-#: txcommon/management/__init__.py:138
-msgid "Release Deleted from a Collection"
-msgstr "Qarkullimi u Hoq prej një Koleksioni"
-
-#: txcommon/management/__init__.py:139
-msgid "when a release is deleted from a collection"
-msgstr "kur një qarkullim fshihet nga një koleksion"
-
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Hyrje"
 
-#: txpermissions/views.py:45
+#: txpermissions/views.py:93
 msgid "You added a permission request."
 msgstr "Shtuat një kërkesë lejeje."
 
-#: txpermissions/views.py:74
+#: txpermissions/views.py:128
 msgid "You approved the permission request."
 msgstr "Miratuat kërkesën për leje."
 
-#: txpermissions/views.py:92
+#: txpermissions/views.py:146
 msgid "You removed the permission."
 msgstr "E hoqët lejen"
 
-#: txpermissions/views.py:94
+#: txpermissions/views.py:148
 msgid "You removed the permission request."
 msgstr "E hoqët kërkesën për leje."
 
-#: vcs/forms.py:29
-msgid "This type of repository needs a branch"
+#: vcs/forms.py:56
+#, fuzzy
+msgid "This type of repository does not accept branch"
 msgstr "Kjo lloj depoje lyp një degë"
 
 #: vcs/models.py:48
@@ -3388,13 +3358,278 @@ msgstr "njësi vcs"
 msgid "vcsunits"
 msgstr "njësi vcs"
 
-#: webtrans/views.py:129
-msgid "Your file does not pass by the check for correctness (msgfmt -c). Please run this command on your system to see the errors."
-msgstr "Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, xhirojeni këtë urdhër në sistemin tuaj që të shihni gabimet."
+#: webtrans/fields.py:55
+#, fuzzy, python-format
+msgid "The %s fields should be filled."
+msgstr "%s u fshi."
 
-#: webtrans/views.py:138
-msgid "Sorry, an error is causing troubles to send your file."
-msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
+#: webtrans/wizards.py:202
+msgid ""
+"Nothing was sent because you haven't changed anything in the translation "
+"form."
+msgstr ""
+
+#: webtrans/templates/pagination.html:7
+msgid "Previous"
+msgstr ""
+
+#: webtrans/templates/pagination.html:49
+msgid "Next"
+msgstr ""
+
+#~ msgid "Brazilian Portuguese"
+#~ msgstr "Braziliane Portugeze"
+
+#~ msgid "Does anyone can submit translations to this project?"
+#~ msgstr "Mundet cilido të parashtrojë përkthime te ky projekt?"
+
+#~ msgid "Change my email"
+#~ msgstr "Ndrysho email-in tim"
+
+#~ msgid "Change email address"
+#~ msgstr "Ndrysho vendndodhjen email"
+
+#~ msgid ""
+#~ "This is where you can change the email address associated with your "
+#~ "account.\n"
+#~ "Please keep this email address up to date so we can send you a password-"
+#~ "reset email if you request one."
+#~ msgstr ""
+#~ "Këtu mund të ndryshoni vendndodhjen tuaj email përshoqëruar llogarisë "
+#~ "suaj.\n"
+#~ "Ju lutem mbajeni të përditësuar këtë zë, që të mund t'ju dërgojmë email "
+#~ "ricaktimi fjalëkalimi në e kërkofshi një gjë të tillë."
+
+#~ msgid "Please correct errors below:"
+#~ msgstr "Ju lutem ndreqni gabimet më poshtë:"
+
+#~ msgid "Email"
+#~ msgstr "Email"
+
+#~ msgid "Password"
+#~ msgstr "Fjalëkalim"
+
+#~ msgid "Change email"
+#~ msgstr "Ndryshoni email-in"
+
+#~ msgid "Change OpenID"
+#~ msgstr "Ndryshoni OpenID-në"
+
+#~ msgid "Change my OpenID"
+#~ msgstr "Ndrysho OpenID-në time"
+
+#~ msgid ""
+#~ "This is where you can change the OpenID URL associated with your account."
+#~ msgstr ""
+#~ "Këtu mund të ndryshoni URL-në e OpenID-së përshoqëruar me llogarinë tuaj."
+
+#~ msgid "OpenID URL:"
+#~ msgstr "URL OpenID:"
+
+#~ msgid "Change my password"
+#~ msgstr "Ndrysho fjalëkalimin tim"
+
+#~ msgid "You can use the following form to change your password."
+#~ msgstr ""
+#~ "Mund të përdorni formularin vijues për të ndryshuar fjalëkalimin tuaj."
+
+#~ msgid "Current password"
+#~ msgstr "Fjalëkalimi i tanishëm"
+
+#~ msgid "New password"
+#~ msgstr "Fjalëkalim i ri"
+
+#~ msgid "New password again"
+#~ msgstr "Fjalëkalimi i ri sërish"
+
+#~ msgid "OpenID verification"
+#~ msgstr "Verifikim OpenID-je"
+
+#~ msgid "Your OpenID is verified! "
+#~ msgstr "OpenID-ja juaj u verifikua! "
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<p>Your OpenID can now be associated with a new or existing membership. "
+#~ "You can change the association later in your preferences.</p>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<p>OpenID-ja juaj mund t'i përshoqërohet tani një anëtarësie të re ose "
+#~ "ekzistuese. Përshoqërimin mund ta ndryshoni më vonë te parapëlqimet tuaja."
+#~ "</p>\n"
+#~ "\t"
+
+#~ msgid "Associate your OpenID"
+#~ msgstr "Përshoqërojeni OpenID-në tuaj"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<p>If you're joining for the first time, associate your OpenID with a "
+#~ "new account. If you're already a member, associate with your existing "
+#~ "account.</p>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<p>Nëse po regjistroheni për herë të parë, përshoqërojani OpenID-në "
+#~ "tuaj një llogarie të re. Po qe se jeni tashmë anëtar, përshoqërojani "
+#~ "llogarisë suaj ekzistuese.</p>\n"
+#~ "\t"
+
+#~ msgid "A new account"
+#~ msgstr "Llogari e re"
+
+#~ msgid "An exisiting account"
+#~ msgstr "Një llogari ekzistuese"
+
+#~ msgid "Delete my account"
+#~ msgstr "Fshije llogarinë time"
+
+#~ msgid "Delete account"
+#~ msgstr "Fshije llogarinë"
+
+#~ msgid ""
+#~ "Note: After deleting your account, anyone will be able to register this "
+#~ "username."
+#~ msgstr ""
+#~ "Shënim: Pas fshirjes së llogarisë suaj, kushdo do të jetë në gjendje të "
+#~ "regjistrohet me këtë emër përdoruesi."
+
+#~ msgid "Check the confirm box, if you really want to delete your account."
+#~ msgstr ""
+#~ "I vini shenjë kutizës së ripohimeve, nëse vërtet doni të fshihet llogaria "
+#~ "juaj."
+
+#~ msgid "Password:"
+#~ msgstr "Fjalëkalim:"
+
+#~ msgid "I am sure I want to delete my account."
+#~ msgstr "Jam i sigurt që dua të fshij llogarinë time."
+
+#~ msgid "Password or OpenID URL"
+#~ msgstr "Fjalëkalim ose URL OpenID-je"
+
+#~ msgid "(required for your security)"
+#~ msgstr "(i domosdoshëm për sigurinë tuaj)"
+
+#~ msgid "Delete account permanently"
+#~ msgstr "Fshije llogarinë përgjithmonë"
+
+#~ msgid "Or, with your OpenID:"
+#~ msgstr "ose, me OpenID-në tuaj"
+
+#~ msgid "Sign in with OpenID"
+#~ msgstr "Nënshkruani me OpenID"
+
+#~ msgid "I lost my password!"
+#~ msgstr "Humba fjalëkalimin tim!"
+
+#~ msgid ""
+#~ "No worries! Here you can ask to reset your password by entering the "
+#~ "username you use. You will then get a confirmation email with your new "
+#~ "password. The new password will be activated only after you have clicked "
+#~ "on the link in the email."
+#~ msgstr ""
+#~ "Mos u shqetësoni! Duke dhënë emrin e përdoruesit që përdorni, këtu mund "
+#~ "të kërkoni ricaktim fjalëkalimi. Mandej do t'ju vijë një email ripohimi "
+#~ "me fjalëkalimin tuaj të ri. Fjalëkalimi juaj i ri do të aktivizohet vetëm "
+#~ "pasi të keni klikuar mbi lidhjen te email-i."
+
+#~ msgid "Send new password"
+#~ msgstr "Dërgo fjalëkalim të ri"
+
+#~ msgid "This is where you can make changes to your account."
+#~ msgstr "Këtu mund të bëni ndryshime te llogaria juaj."
+
+#~ msgid "Give your  account a new password."
+#~ msgstr "Jepini llogarisë suaj një fjalëkalim të ri"
+
+#~ msgid "Add or update the email address associated with your account."
+#~ msgstr ""
+#~ "Shtoni ose përditësoni vendndodhjen email përshoqëruar llogarisë suaj."
+
+#~ msgid "Change openid url"
+#~ msgstr "Ndrysho url openid-je"
+
+#~ msgid "Change openid associated to your account"
+#~ msgstr "Ndryshoni OpenID-në e përshoqëruar llogarisë suaj"
+
+#~ msgid "Erase your username and all your data from website"
+#~ msgstr ""
+#~ "Fshini emrin tuaj të përdoruesit dhe tërë të dhënat tuaja prej \"site\"-"
+#~ "it web"
+
+#~ msgid "Login"
+#~ msgstr "Hyrje"
+
+#~ msgid ""
+#~ "\n"
+#~ "<p>Please login in with your email or screen name, or using your OpenID "
+#~ "URL.<br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Ju lutem, hyni me email-in ose emrin tuaj të ekranit, ose duke "
+#~ "përdorur URL-në tuaj për OpenID.<br />\n"
+
+#~ msgid "Join us"
+#~ msgstr "Bashkohuni me ne"
+
+#~ msgid "Create your account"
+#~ msgstr "Krijoni llogarinë tuaj"
+
+#~ msgid ""
+#~ "\n"
+#~ "<p>There are two ways to join: with an email and screen name or with an "
+#~ "OpenID.</p>\n"
+#~ "<p>Enter information only for the type of sign up you wish to do.</p>\n"
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Ka dy rrugë për të marrë pjesë: me një email dhe një emër ekrani ose "
+#~ "me një OpenID.</p>\n"
+#~ "<p>Jepni të dhëna vetëm për llojin e nënshkrimit që doni të kryeni.</p>\n"
+
+#~ msgid "Regular Signup"
+#~ msgstr "Nënshkrim i Rregullt"
+
+#~ msgid "Choose a Screen Name:"
+#~ msgstr "Zgjidhni Emër Ekrani:"
+
+#~ msgid "Enter Your Email Address:"
+#~ msgstr "Jepni Vendndodhjen Tuaj Email:"
+
+#~ msgid "Choose a Password:"
+#~ msgstr "Zgjidhni një Fjalëkalim"
+
+#~ msgid "Confirm Your Password:"
+#~ msgstr "Ripohoni Fjalëkalimin Tuaj:"
+
+#~ msgid "JOIN FREE"
+#~ msgstr "BASHKOJUNI FALAS"
+
+#~ msgid "OpenID Signup"
+#~ msgstr "Nënshkrim me OpenID"
+
+#~ msgid "Sign in with OPENID"
+#~ msgstr "Nënshkruani me OPENID"
+
+#~ msgid "Add location"
+#~ msgstr "Shtoni vend"
+
+#~ msgid "Change location"
+#~ msgstr "Ndryshoni vendin"
+
+#~ msgid "(not calculated)"
+#~ msgstr "(e pallogaritur)"
+
+#~ msgid ""
+#~ "Your file does not pass by the check for correctness (msgfmt -c). Please "
+#~ "run this command on your system to see the errors."
+#~ msgstr ""
+#~ "Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, "
+#~ "xhirojeni këtë urdhër në sistemin tuaj që të shihni gabimet."
+
+#~ msgid "Sorry, an error is causing troubles to send your file."
+#~ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 
 #, fuzzy
 #~ msgid "Send confirmation"
@@ -3529,30 +3764,43 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Select the module"
 #~ msgstr "Përzgjidhni Modem"
+
 #~ msgid "Control and monitor network devices"
 #~ msgstr "Kontrolloni dhe mbikqyrni pajisje rrjeti"
+
 #~ msgid "Network Device Control"
 #~ msgstr "Kontroll Pajisjeje Rrjeti"
+
 #~ msgid "Configure network devices and connections"
 #~ msgstr "Formësoni lidhje dhe pajisje rrjeti"
+
 #~ msgid "Network"
 #~ msgstr "Rrjet"
+
 #~ msgid "Network Configuration"
 #~ msgstr "Formësim Rrjeti "
+
 #~ msgid "ERROR: Unable to initialize graphical environment. "
 #~ msgstr "GABIM: I pazoti të gatisë mjedisin grafik."
+
 #~ msgid "Copyright (c) 2001-2005 Red Hat, Inc."
 #~ msgstr "Të drejta Kopjimi (c) 2001-2005 Red Hat, Inc."
+
 #~ msgid "Cannot configure network device %s"
 #~ msgstr "Nuk formësohet dot pajisja e rrjetit %s"
+
 #~ msgid "Switching Profiles"
 #~ msgstr "Këmbim Profilesh"
+
 #~ msgid "Failed to switch to profile %s"
 #~ msgstr "Dështoi kalimi te profili %s"
+
 #~ msgid "To be rewritten!"
 #~ msgstr "Do rishkruajtur!"
+
 #~ msgid " (active)"
 #~ msgstr " (aktiv)"
+
 #~ msgid "Loading Device Configuration"
 #~ msgstr "Po ngarkohet Formësimi i Pajisjes"
 
@@ -3567,18 +3815,25 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Displaying main screen"
 #~ msgstr "Emër ekran i dërguar"
+
 #~ msgid "What do you want to configure?"
 #~ msgstr "Çfarë doni të formësoni?"
+
 #~ msgid "Configure"
 #~ msgstr "Formësoni"
+
 #~ msgid "Exit"
 #~ msgstr "Dil"
+
 #~ msgid "<New Device>"
 #~ msgstr "<Pajisje e Re>"
+
 #~ msgid "Select A Device"
 #~ msgstr "Përzgjidhni Pajisje"
+
 #~ msgid "Cancel"
 #~ msgstr "Anuloje"
+
 #~ msgid ""
 #~ "system-config-network - network configuration tool\n"
 #~ "\n"
@@ -3587,12 +3842,16 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "system-config-network - mjet formësimi rrjeti\n"
 #~ "\n"
 #~ "Përdorimi: system-config-network -v --verbose -d --debug"
+
 #~ msgid "Error: %s, %s!"
 #~ msgstr "Gabim: %s, %s!"
+
 #~ msgid "Starting text version"
 #~ msgstr "Po niset versioni tekst"
+
 #~ msgid "Loading Network Configuration..."
 #~ msgstr "Po ngarkohet Formësim Rrjeti..."
+
 #~ msgid ""
 #~ "system-config-network - network configuration tool\n"
 #~ "\n"
@@ -3601,24 +3860,28 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "system-config-network - mjet formësimi rrjeti\n"
 #~ "\n"
 #~ "Përdorimi: system-config-network -v --verbose"
+
 #~ msgid "Please start system-config-network with root permissions!\n"
 #~ msgstr "Ju lutem niseni system-config-network me leje rrënje!\n"
 
 #, fuzzy
 #~ msgid "%s - network configuration commandline tool"
 #~ msgstr "Dështova"
+
 #~ msgid "Usage: %s"
 #~ msgstr "Përdorim: %s"
 
 #, fuzzy
 #~ msgid "switch / activate profile"
 #~ msgstr "Administro profil përdoruesi."
+
 #~ msgid "export / import hardware list"
 #~ msgstr "eksporto / importo listë \"hardware\"-i"
 
 #, fuzzy
 #~ msgid "export / import IPsec list"
 #~ msgstr "S'munda të eksportoj listë shokësh"
+
 #~ msgid "export / import device list (default)"
 #~ msgstr "eksporto / importo listë pajisjesh (parazgjedhje)"
 
@@ -3633,28 +3896,38 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "export list (default)"
 #~ msgstr "Eksporto Listë Sametime..."
+
 #~ msgid "clear existing list prior of importing"
 #~ msgstr "përpara importimit, pastro listën ekzistuese"
 
 #, fuzzy
 #~ msgid "import from file"
 #~ msgstr "Krijo prej kartele"
+
 #~ msgid "Unknown option %s\n"
 #~ msgstr "Mundësi e panjohur %s\n"
+
 #~ msgid "Unknown List %s\n"
 #~ msgstr "Listë e Panjohur %s\n"
+
 #~ msgid "Error parsing line: %s"
 #~ msgstr "Gabim përtypjeje rreshti: %s"
+
 #~ msgid "xDSL connection"
 #~ msgstr "Lidhje xDSL"
+
 #~ msgid "Ethernet device:"
 #~ msgstr "Pajisje Ethernet:"
+
 #~ msgid "CIPE (VPN) connection"
 #~ msgstr "Lidhje CIPE (VPN)"
+
 #~ msgid "Device:"
 #~ msgstr "Pajisje:"
+
 #~ msgid "Tunnel through device:"
 #~ msgstr "Tunel përmes pajisjeje:"
+
 #~ msgid "Local port:"
 #~ msgstr "Portë vendore:"
 
@@ -3669,40 +3942,54 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Remote virtual address:"
 #~ msgstr "Shto vendndodhje të re"
+
 #~ msgid "None - Server Mode"
 #~ msgstr "Asnjë - Mënyrë Shërbimi"
+
 #~ msgid " (dynamic)"
 #~ msgstr "(dinamike)"
+
 #~ msgid "Server Mode"
 #~ msgstr "Mënyrë Shërbimi"
+
 #~ msgid "(own choice)"
 #~ msgstr "(zgjedhje e vet)"
 
 #, fuzzy
 #~ msgid "IP address of tunnel device:"
 #~ msgstr "mungon vendndodhje ndërfaqeje IP\n"
+
 #~ msgid "Secret key:"
 #~ msgstr "Kyç i Fshehtë"
+
 #~ msgid "You must enter a secret key or generate one"
 #~ msgstr "Duhet të jepni një kyç sekret ose të prodhoni një të tillë"
+
 #~ msgid "Hardware:"
 #~ msgstr "\"Hardware\":"
+
 #~ msgid "Phone number:"
 #~ msgstr "Numër telefoni:"
+
 #~ msgid "Unknown"
 #~ msgstr "E panjohur"
+
 #~ msgid "Create a new ethernet connection."
 #~ msgstr "Krijoni lidhje ethernet të re."
+
 #~ msgid "Other Ethernet Card"
 #~ msgstr "Tjetër Kartë Ethernet"
+
 #~ msgid "Address:"
 #~ msgstr "Vendndodhje:"
+
 #~ msgid "Subnet mask:"
 #~ msgstr "Maskë nënrrjeti:"
 
 #, fuzzy
 #~ msgid "Default gateway address:"
 #~ msgstr "Shto vendndodhje të re"
+
 #~ msgid ""
 #~ "Could not find file '%s'.\n"
 #~ "Please check your installation!\n"
@@ -3711,6 +3998,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "Nuk gjeti dot kartelën '%s'.\n"
 #~ "Ju lutem kontrolloni instalimin tuaj!\n"
 #~ "Xhironi: 'rpm -V system-config-network'\n"
+
 #~ msgid ""
 #~ "Could not load the file '%s'.\n"
 #~ "Please check your installation!\n"
@@ -3719,32 +4007,40 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "Nuk ngarkoi dot kartelën '%s'.\n"
 #~ "Ju lutem kontrolloni instalimin tuaj!\n"
 #~ "Xhironi: 'rpm -V system-config-network'\n"
+
 #~ msgid ""
 #~ "Failed to run:\n"
 #~ "%s"
 #~ msgstr ""
 #~ "Dështoi xhirimi:\n"
 #~ "%s"
+
 #~ msgid "ISDN connection"
 #~ msgstr "Lidhje ISDN"
 
 #, fuzzy
 #~ msgid "Modem probing..."
 #~ msgstr "Klasë Modemi:"
+
 #~ msgid "Generic Modem"
 #~ msgstr "Modem i Rëndomtë:"
+
 #~ msgid "Off"
 #~ msgstr "Off"
+
 #~ msgid "Medium"
 #~ msgstr "E mesme"
+
 #~ msgid "High"
 #~ msgstr "E lartë"
+
 #~ msgid "Very High"
 #~ msgstr "Shumë e Lartë"
 
 #, fuzzy
 #~ msgid "Ad-Hoc"
 #~ msgstr "Mundësi të Mët&ejshme..."
+
 #~ msgid "Wireless connection"
 #~ msgstr "Lidhje pa fill"
 
@@ -3759,6 +4055,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "ESSID (network ID):"
 #~ msgstr "ID Jabber i pavlefshëm"
+
 #~ msgid "Key: "
 #~ msgstr "Kyç:"
 
@@ -3777,8 +4074,10 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Other Tokenring Card"
 #~ msgstr "_Veprim Heqjeje Karte"
+
 #~ msgid "IP address of tunnel device: "
 #~ msgstr "Vendndodhje IP e pajisjes tunel:"
+
 #~ msgid "Local port: "
 #~ msgstr "Portë vendore:"
 
@@ -3793,8 +4092,10 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Local virtual address: "
 #~ msgstr "Nuk arrij të kem vendndodhje \"socket\"-i vendor: %s\n"
+
 #~ msgid "Secret key: "
 #~ msgstr "Kyç sekret:"
+
 #~ msgid "CTC Device"
 #~ msgstr "Pajisje CTC"
 
@@ -3813,10 +4114,13 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "sync PPP"
 #~ msgstr "Njëkohëso rrëshqitësa"
+
 #~ msgid "pap"
 #~ msgstr "pap"
+
 #~ msgid "chap"
 #~ msgstr "chap"
+
 #~ msgid "chap+pap"
 #~ msgstr "chap+pap"
 
@@ -3847,10 +4151,13 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Testing configuration set..."
 #~ msgstr "Caktoni"
+
 #~ msgid "Active profile: %s (modified)"
 #~ msgstr "Profil aktiv: %s (i ndryshuar)"
+
 #~ msgid "Active profile: %s"
 #~ msgstr "Profil aktiv: %s"
+
 #~ msgid ""
 #~ "Error saving configuration!\n"
 #~ "%s"
@@ -3873,34 +4180,47 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Saving IPsec configuration..."
 #~ msgstr "Gabim gjatë ruajtjes së të dhënave formësimi të përdoruesit."
+
 #~ msgid "Updating devices..."
 #~ msgstr "Po përditësohen pajisjet..."
 
 #, fuzzy
 #~ msgid "Updating hardware..."
 #~ msgstr "Vendndodhje \"hardware\":"
+
 #~ msgid "Updating profiles..."
 #~ msgstr "Po përditësohen profilet..."
+
 #~ msgid "Do you want to save your changes?"
 #~ msgstr "Doni të ruani ndryshimet tuaj?"
+
 #~ msgid "Edit device..."
 #~ msgstr "Përpunoni pajisje:"
+
 #~ msgid "Do you really want to delete device \"%s\"?"
 #~ msgstr "Vërtet doni të fshihet pajisja \"%s\"?"
+
 #~ msgid "Do you want to continue?"
 #~ msgstr "Doni të vazhdohet?"
+
 #~ msgid "The name may only contain letters and digits!"
 #~ msgstr "Emri mund të përmbajë vetëm gërma dhe shifra!"
+
 #~ msgid "The \"%s\" profile can't be renamed!"
 #~ msgstr "Profili \"%s\" s'mund të riemërtohet!"
+
 #~ msgid "The \"%s\" Profile can not be deleted!"
 #~ msgstr "Profili \"%s\" nuk mund të fshihet!"
+
 #~ msgid "Do you really want to delete profile \"%s\"?"
 #~ msgstr "Vërtet doni të fshihet profili \"%s\"?"
+
 #~ msgid "Do you really want to delete \"%s\"?"
 #~ msgstr "Vërtet doni të fshihet \"%s\"?"
+
 #~ msgid "Command failed: "
 #~ msgstr "Urdhri dështoi:"
+
 #~ msgid ""
 #~ "Command failed: %s\n"
 #~ "\n"
@@ -3911,90 +4231,133 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "\n"
 #~ "Të dhëna:\n"
 #~ "%s\n"
+
 #~ msgid "Create a new CTC connection."
 #~ msgstr "Krijo lidhje CTC të re."
+
 #~ msgid "IUCV Device"
 #~ msgstr "Pajisje IUCV"
+
 #~ msgid "IUCV connection"
 #~ msgstr "Lidhje IUCV"
+
 #~ msgid "Create a new IUCV connection."
 #~ msgstr "Krijo lidhje IUCV të re."
+
 #~ msgid "Point to Point (IP):"
 #~ msgstr "Pikë më Pikë (IP):"
+
 #~ msgid "Inactive"
 #~ msgstr "Joveprues"
+
 #~ msgid "auto"
 #~ msgstr "auto"
+
 #~ msgid "manual"
 #~ msgstr "dorazi"
+
 #~ msgid "Afghanistan"
 #~ msgstr "Afganistan"
+
 #~ msgid "Algeria"
 #~ msgstr "Algjeri"
+
 #~ msgid "American Samoa"
 #~ msgstr "Samoa Amerikane"
+
 #~ msgid "Andorra"
 #~ msgstr "Andorra"
+
 #~ msgid "Australia"
 #~ msgstr "Australi"
+
 #~ msgid "Bosnia and Hercegovina"
 #~ msgstr "Bosnjë dhe Hercegovinë"
+
 #~ msgid "Brazil"
 #~ msgstr "Brazil"
+
 #~ msgid "British Virgin Islands"
 #~ msgstr "Ishujt British Virgin"
+
 #~ msgid "Central African Republic"
 #~ msgstr "Republika e Afrikës Qendrore"
+
 #~ msgid "Chile"
 #~ msgstr "Kili"
+
 #~ msgid "China"
 #~ msgstr "Kinë"
+
 #~ msgid "Colombia"
 #~ msgstr "Kolumbi"
+
 #~ msgid "Cuba"
 #~ msgstr "Kubë"
+
 #~ msgid "Cyprus"
 #~ msgstr "Qipro"
+
 #~ msgid "Czech Republic"
 #~ msgstr "Republika Çeke"
+
 #~ msgid "Denmark"
 #~ msgstr "Danimarkë"
+
 #~ msgid "Israel"
 #~ msgstr "Izrael"
+
 #~ msgid "Kazakhstan"
 #~ msgstr "Kazakistan"
+
 #~ msgid "Korea North"
 #~ msgstr "Kore e Veriut"
+
 #~ msgid "Korea Republic"
 #~ msgstr "Republika e Koresë"
+
 #~ msgid "Liechtenstein"
 #~ msgstr "Lihtenshtein"
+
 #~ msgid "Luxembourg"
 #~ msgstr "Luksemburg"
+
 #~ msgid "Mexico"
 #~ msgstr "Meksikë"
+
 #~ msgid "Moldova"
 #~ msgstr "Moldavi"
+
 #~ msgid "Monaco"
 #~ msgstr "Monako"
+
 #~ msgid "Netherlands"
 #~ msgstr "Holandë"
+
 #~ msgid "New Zealand"
 #~ msgstr "Zelandë e Re"
+
 #~ msgid "Poland"
 #~ msgstr "Poloni"
+
 #~ msgid "Singapore"
 #~ msgstr "Singapor"
+
 #~ msgid "Spain"
 #~ msgstr "Spanjë"
+
 #~ msgid "Switzerland"
 #~ msgstr "Zvicër"
+
 #~ msgid "United States of America"
 #~ msgstr "Shtetet e Bashkuar të Amerikës"
+
 #~ msgid "Hardware (CRTSCTS)"
 #~ msgstr "\"Hardware\" (CRTSCTS)"
+
 #~ msgid "Software (XON/XOFF)"
 #~ msgstr "\"Software\" (XON/XOFF)"
+
 #~ msgid ""
 #~ "Error removing\n"
 #~ "%s:\n"
@@ -4003,6 +4366,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "Gabim në heqjen e\n"
 #~ "%s:\n"
 #~ "%s!"
+
 #~ msgid ""
 #~ "Error copying \n"
 #~ "%s\n"
@@ -4013,6 +4377,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "%s\n"
 #~ "te %s:\n"
 #~ "%s!"
+
 #~ msgid ""
 #~ "Error linking \n"
 #~ "%s\n"
@@ -4023,6 +4388,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "%s\n"
 #~ "te %s:\n"
 #~ "%s!"
+
 #~ msgid ""
 #~ "Error renaming \n"
 #~ "%s\n"
@@ -4033,14 +4399,17 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #~ "%s\n"
 #~ "si %s:\n"
 #~ "%s!"
+
 #~ msgid ""
 #~ "Error creating directory!\n"
 #~ "%s"
 #~ msgstr ""
 #~ "Gabim në krijim drejtorie!\n"
 #~ "%s"
+
 #~ msgid "inactive"
 #~ msgstr "joveprues"
+
 #~ msgid "system"
 #~ msgstr "sistem"
 
@@ -4079,34 +4448,45 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Associated T-Online _number:"
 #~ msgstr "Numër më i madh ngjyrash:"
+
 #~ msgid "Configure DSL connection"
 #~ msgstr "Formësoni lidhje DSL"
+
 #~ msgid "Ethernet _device:"
 #~ msgstr "_Pajisje Ethernet:"
+
 #~ msgid "Normal"
 #~ msgstr "Normale"
+
 #~ msgid ""
 #~ "Normal\n"
 #~ "T-Online"
 #~ msgstr ""
 #~ "Normale\n"
 #~ "T-Online"
+
 #~ msgid "T-Online"
 #~ msgstr "T-Online"
+
 #~ msgid "_Adapter identifier:"
 #~ msgstr "Identifikues _përshtatësi:"
 
 #, fuzzy
 #~ msgid "_Concurrent user number/suffix:"
 #~ msgstr "Kufi përdoruesish duhet të jetë një numër!\n"
+
 #~ msgid "_Login name:"
 #~ msgstr "Emër _hyrjeje:"
+
 #~ msgid "_Provider name:"
 #~ msgstr "Emër _mundësuesi:"
+
 #~ msgid "Configure Tunnel"
 #~ msgstr "Formësoni Tunelin"
+
 #~ msgid "Create Cipe Connection"
 #~ msgstr "Krijo Lidhje Cipe"
+
 #~ msgid "New Interface"
 #~ msgstr "Ndërfaqe e Re"
 
@@ -4117,26 +4497,33 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Remote peer p_ort:"
 #~ msgstr "Verifiko Ortak SSL"
+
 #~ msgid "_Device:"
 #~ msgstr "_Paisje:"
+
 #~ msgid "_Generate"
 #~ msgstr "_Prodho"
+
 #~ msgid "_Local port:"
 #~ msgstr "Portë _vendore:"
 
 #, fuzzy
 #~ msgid "_Remote peer address:"
 #~ msgstr "Shto vendndodhje të re"
+
 #~ msgid "_Secret key:"
 #~ msgstr "Kyç i _Fshehtë:"
 
 #, fuzzy
 #~ msgid "_Tunnel through device:"
 #~ msgstr "Ruaj gjendje pajisjeje"
+
 #~ msgid "_auto"
 #~ msgstr "_auto"
+
 #~ msgid "<b>Phone number</b>"
 #~ msgstr "<b>Numër telefoni</b>"
+
 #~ msgid "A_rea code:"
 #~ msgstr "Kod _zone:"
 
@@ -4151,58 +4538,77 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Encapsulation mode:"
 #~ msgstr "Sinjal"
+
 #~ msgid "Internet Provider"
 #~ msgstr "Mundësues Interneti"
 
 #, fuzzy
 #~ msgid "Manual IP Address Settings"
 #~ msgstr "mungon vendndodhje ndërfaqeje IP\n"
+
 #~ msgid "PPP Settings"
 #~ msgstr "Rregullime për PPP-në"
+
 #~ msgid "Provider _name:"
 #~ msgstr "_Emër mundësuesi:"
+
 #~ msgid "Select Provider"
 #~ msgstr "Përzgjidhni Mundësues"
 
 #, fuzzy
 #~ msgid "Statically set IP addresses:"
 #~ msgstr "Po, vendndodhjet IP të tyre përputhen\n"
+
 #~ msgid "_Address:"
 #~ msgstr "_Vendndodhje:"
+
 #~ msgid "_Phone number:"
 #~ msgstr "Numër _telefoni:"
+
 #~ msgid "_Subnet mask:"
 #~ msgstr "Maskë _nënrrjeti:"
+
 #~ msgid "_T-Online Account Setup"
 #~ msgstr "Rregullim Llogarie _T-Online"
+
 #~ msgid "DMA0:"
 #~ msgstr "DMA0:"
+
 #~ msgid "DMA1:"
 #~ msgstr "DMA1:"
+
 #~ msgid "IO_1:"
 #~ msgstr "IO_1:"
+
 #~ msgid "IO_2:"
 #~ msgstr "IO_2:"
+
 #~ msgid "IR_Q:"
 #~ msgstr "IR_Q:"
+
 #~ msgid "Select Ethernet Adapter"
 #~ msgstr "Përzgjidhni Përshtatës Etherneti"
+
 #~ msgid "Configure Network Settings"
 #~ msgstr "Formësoni Rregullime Rrjeti"
+
 #~ msgid "Create Ethernet Device"
 #~ msgstr "Krijo Pajisje Ethernet"
+
 #~ msgid "Ethernet card"
 #~ msgstr "Kartë Etherneti"
 
 #, fuzzy
 #~ msgid "<b>D-channel protocol</b>"
 #~ msgstr "  Protokoll është %s"
+
 #~ msgid "<b>Resources</b>"
 #~ msgstr "<b>Burime</b>"
 
 #, fuzzy
 #~ msgid "Select ISDN Adapter"
 #~ msgstr "Përzgjidhni Ngjyrë Teksti"
+
 #~ msgid "<b>Modem properties</b>"
 #~ msgstr "<b>Veti modemi</b>"
 
@@ -4213,10 +4619,13 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "_Flow control:"
 #~ msgstr "Kontroll nga Larg"
+
 #~ msgid "_Modem device:"
 #~ msgstr "Pajisje _modem:"
+
 #~ msgid "Device Type"
 #~ msgstr "Lloj Pajisjeje"
+
 #~ msgid "Select Device Type"
 #~ msgstr "Pwrzgjidhni Lloj Pajisjeje"
 
@@ -4231,40 +4640,58 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Token ring card"
 #~ msgstr "_Veprim Heqjeje Karte"
+
 #~ msgid "<b>T-Online account</b>"
 #~ msgstr "<b>Llogari T-Online</b>"
+
 #~ msgid "CIPE Configuration"
 #~ msgstr "Formësim CIPE-je"
+
 #~ msgid "_General"
 #~ msgstr "_Të përgjithshme"
+
 #~ msgid "_Nickname:"
 #~ msgstr "_Nofkë:"
+
 #~ msgid "_Tunnel Settings"
 #~ msgstr "Rregullime _Tunel"
+
 #~ msgid "cipcb0"
 #~ msgstr "cipcb0"
+
 #~ msgid "cipcb1"
 #~ msgstr "cipcb1"
+
 #~ msgid "cipcb2"
 #~ msgstr "cipcb2"
+
 #~ msgid "cipcb3"
 #~ msgstr "cipcb3"
+
 #~ msgid "cipcb4"
 #~ msgstr "cipcb4"
+
 #~ msgid "eth0"
 #~ msgstr "eth0"
+
 #~ msgid "eth1"
 #~ msgstr "eth1"
+
 #~ msgid "eth2"
 #~ msgstr "eth2"
+
 #~ msgid "eth3"
 #~ msgstr "eth3"
+
 #~ msgid "eth4"
 #~ msgstr "eth4"
+
 #~ msgid "Choose Hardware Device Type"
 #~ msgstr "Zgjidhni Lloj Pajisjeje \"Hardware\""
+
 #~ msgid "_Device type:"
 #~ msgstr "Lloj _pajisjeje:"
+
 #~ msgid "A_rea Code"
 #~ msgstr "Kod _Zone"
 
@@ -4303,16 +4730,20 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "MSN/EA_Z:"
 #~ msgstr "Gabim MSN: %s\n"
+
 #~ msgid "Modem p_ort:"
 #~ msgstr "_Portë modemi:"
 
 #, fuzzy
 #~ msgid "PPP Option List"
 #~ msgstr "Listo fakse të _marrë"
+
 #~ msgid "Phone Number"
 #~ msgstr "Numër Telefoni"
+
 #~ msgid "Restart if _connection dies"
 #~ msgstr "Rinise, po qe se _lidhja vdes"
+
 #~ msgid "Select the authentication protocol used by your ISP."
 #~ msgstr ""
 #~ "Përzgjidhni protokollin e mirëfilltësimit të përdorur nga MSHI-ja juaj."
@@ -4320,10 +4751,13 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Use _Channel Bundling"
 #~ msgstr "S'ka kanal të tillë"
+
 #~ msgid "_Advanced"
 #~ msgstr "_Të mëtejshme"
+
 #~ msgid "_Choose Provider..."
 #~ msgstr "_Zgjidhni Mundësues..."
+
 #~ msgid "_Compression"
 #~ msgstr "_Ngjeshje"
 
@@ -4338,8 +4772,10 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "_Hangup timeout:"
 #~ msgstr "Skadim Lidhjeje"
+
 #~ msgid "_PPP option:"
 #~ msgstr "Mundësi për _PPP-në:"
+
 #~ msgid "_Phone Number"
 #~ msgstr "Numër _Telefoni"
 
@@ -4350,46 +4786,61 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Demand setting"
 #~ msgstr "rregullim vendor"
+
 #~ msgid "Enable synchronous PPP for the connection"
 #~ msgstr "Aktivizo për lidhjen PPP të njëkohshme"
 
 #, fuzzy
 #~ msgid "_AC-name:"
 #~ msgstr "Emër:"
+
 #~ msgid "_Hardware Device"
 #~ msgstr "Pajisje _\"Hardware\""
+
 #~ msgid "_Maximum idle time:"
 #~ msgstr "_Maksimum kohe plogështie:"
 
 #, fuzzy
 #~ msgid "_Service-name:"
 #~ msgstr "Po përdor emër shërbimi [%s]\n"
+
 #~ msgid "_Use synchronous PPP"
 #~ msgstr "_Përdor PPP të njëkohshme"
+
 #~ msgid "xDSL Configuration"
 #~ msgstr "Formësim xDSL-je"
+
 #~ msgid "Add / Edit IP Address"
 #~ msgstr "Shtoni / Përpunoni Vendndodhje IP"
+
 #~ msgid "Domain name:"
 #~ msgstr "Emër përkatësie:"
+
 #~ msgid "Edit Domain Name"
 #~ msgstr "Përpunoni Emër Përkatësie"
 
 #, fuzzy
 #~ msgid "Add / Edit Hosts entry"
 #~ msgstr "Përpunoni Zë Ngjyre Palete"
+
 #~ msgid "Ethernet Device"
 #~ msgstr "Pajisje Ethernet"
+
 #~ msgid "Network Adapters Configuration"
 #~ msgstr "Formësim Përshtatësash Rrjeti"
+
 #~ msgid "Choose Hardware Type"
 #~ msgstr "Zgjidhni Lloj \"Hardware\"-i"
+
 #~ msgid "Ethernet"
 #~ msgstr "Ethernet"
+
 #~ msgid "Hardware type:"
 #~ msgstr "Lloj \"hardware\":"
+
 #~ msgid "ISDN"
 #~ msgstr "ISDN"
+
 #~ msgid "Please select the hardware device type you want to create"
 #~ msgstr ""
 #~ "Ju lutem përzgjidhni llojin e pajisjes \"hardware\" që doni të krijohet"
@@ -4401,26 +4852,37 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "<b>D channel protocol</b>"
 #~ msgstr "  Protokoll është %s"
+
 #~ msgid "ISDN Adapters Configuration"
 #~ msgstr "Formësim Përshtatësash ISDN"
+
 #~ msgid "Waiting to connect to"
 #~ msgstr "Në pritje për t'u lidhur te"
+
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
+
 #~ msgid "click the right mouse button for properties"
 #~ msgstr "për vetitë, klikoni butonin e djathtë të miut"
+
 #~ msgid "Connect to"
 #~ msgstr "Lidhu te"
+
 #~ msgid "Disconnect from"
 #~ msgstr "Shkëputu prej"
+
 #~ msgid "_Configure..."
 #~ msgstr "_Formësojeni..."
+
 #~ msgid "$"
 #~ msgstr "$"
+
 #~ msgid "0.00"
 #~ msgstr "0.00"
+
 #~ msgid "1"
 #~ msgstr "1"
+
 #~ msgid "1.00"
 #~ msgstr "1.00"
 
@@ -4439,26 +4901,33 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "M_inimum number of seconds charged:"
 #~ msgstr "Numri i sekondave për pritje ndërmjet riprovimesh"
+
 #~ msgid "_Basic"
 #~ msgstr "_Bazë"
+
 #~ msgid "_Cost"
 #~ msgstr "_Kosto"
 
 #, fuzzy
 #~ msgid "_Debug mode"
 #~ msgstr "Sinjal"
+
 #~ msgid "_Terminate connection when session closes"
 #~ msgstr "_Përfundoje lidhjen kur mbyllet sesioni"
+
 #~ msgid "_Time"
 #~ msgstr "_Kohë"
+
 #~ msgid "redhat network control - Properties"
 #~ msgstr "kontroll redhat për rrjetin - Veti"
+
 #~ msgid "A_ddress:"
 #~ msgstr "_Vendndodhje:"
 
 #, fuzzy
 #~ msgid "Bind to _MAC address:"
 #~ msgstr "Shto te Libër Vendndodhjesh"
+
 #~ msgid "DHCP Settings"
 #~ msgstr "Rregullime për DHCP-në"
 
@@ -4469,30 +4938,39 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Device _alias number:"
 #~ msgstr "Numër më i madh ngjyrash:"
+
 #~ msgid "Difficulty level:"
 #~ msgstr "Shkallë vështirësie:"
 
 #, fuzzy
 #~ msgid "H_ostname (optional):"
 #~ msgstr "Të dhëna të mundshme:"
+
 #~ msgid "Hardware device:"
 #~ msgstr "Pajisje \"hardware\":"
 
 #, fuzzy
 #~ msgid "IPsec Tunnel Settings"
 #~ msgstr "Jepni rregullime për"
+
 #~ msgid "Prefix (Netmask)"
 #~ msgstr "Parashtesë (Netmaskë)"
+
 #~ msgid "Professional"
 #~ msgstr "Profesional"
+
 #~ msgid "Remote Host / GW"
 #~ msgstr "Strehë e Largët  / GW"
+
 #~ msgid "Remote Network"
 #~ msgstr "Rrjet i Largët"
+
 #~ msgid "Security Level"
 #~ msgstr "Nivel Sigurie"
+
 #~ msgid "Select the services you want to provide through this device"
 #~ msgstr "Përzgjidhni shërbimet që doni të furnizoni përmes kësaj pajisje"
+
 #~ msgid "Service Description"
 #~ msgstr "Përshkrim Shërbimi"
 
@@ -4503,14 +4981,19 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Static Network Routes"
 #~ msgstr "Rregullime Të ndryshëm Rrjeti"
+
 #~ msgid "_Delete..."
 #~ msgstr "_Fshije..."
+
 #~ msgid "_Edit..."
 #~ msgstr "_Përpunoje..."
+
 #~ msgid "_Hardware Address"
 #~ msgstr "Vendndodhje \"_Hardware\""
+
 #~ msgid "_Hardware:"
 #~ msgstr "\"_Hardware\":"
+
 #~ msgid "_High Security (Internet)"
 #~ msgstr "Siguri e _Lartë (Internet)"
 
@@ -4521,32 +5004,42 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "_Probe for Address..."
 #~ msgstr "Vendndodhja email për %s është %s"
+
 #~ msgid "_Secure Device (LAN)"
 #~ msgstr "Pajisje e _Sigurt (LAN)"
+
 #~ msgid "dhcp"
 #~ msgstr "dhcp"
+
 #~ msgid "11M"
 #~ msgstr "11M"
+
 #~ msgid "1M"
 #~ msgstr "1M"
+
 #~ msgid "2M"
 #~ msgstr "2M"
+
 #~ msgid "5.5M"
 #~ msgstr "5.5M"
+
 #~ msgid "Network name (SSID):"
 #~ msgstr "Emër rrjeti (SSID):"
 
 #, fuzzy
 #~ msgid "Wireless Device Configuration"
 #~ msgstr "Formësim Shtylle Ikonash"
+
 #~ msgid "_Auto"
 #~ msgstr "_Auto"
+
 #~ msgid "_Channel:"
 #~ msgstr "_Kanal:"
 
 #, fuzzy
 #~ msgid "_Hardware device"
 #~ msgstr "Pajisje Seriale:"
+
 #~ msgid "_Mode:"
 #~ msgstr "_Mënyrë:"
 
@@ -4561,116 +5054,162 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "_Wireless Settings"
 #~ msgstr "Rregullime Për Pa Tel"
+
 #~ msgid "00:00:00:00:00:00"
 #~ msgstr "00:00:00:00:00:00"
 
 #, fuzzy
 #~ msgid "Enable _Device Alias support"
 #~ msgstr "Aktivizoni Mbulim _Kartash të Mençur"
+
 #~ msgid "Ha_rdware address:"
 #~ msgstr "Vendndodhje _\"hardware\":"
 
 #, fuzzy
 #~ msgid "Token Ring Device"
 #~ msgstr "Ruaj gjendje pajisjeje"
+
 #~ msgid "_Alias:"
 #~ msgstr "_Alias:"
+
 #~ msgid "_Hardware device:"
 #~ msgstr "Pajisje _hardware:"
 
 #, fuzzy
 #~ msgid "_Probe for Address"
 #~ msgstr "Vendndodhja email për %s është %s"
+
 #~ msgid "_Use Hardware Address"
 #~ msgstr "_Përdor Vendndodhje \"Hardware\""
+
 #~ msgid "tr0"
 #~ msgstr "tr0"
+
 #~ msgid "tr1"
 #~ msgstr "tr1"
+
 #~ msgid "tr2"
 #~ msgstr "tr2"
+
 #~ msgid "tr3"
 #~ msgstr "tr3"
+
 #~ msgid "tr4"
 #~ msgstr "tr4"
+
 #~ msgid "tr5"
 #~ msgstr "tr5"
+
 #~ msgid "DNS search path:"
 #~ msgstr "Shteg kërkimi DNS-je:"
+
 #~ msgid "D_NS"
 #~ msgstr "_DNS"
+
 #~ msgid "Dev_ices"
 #~ msgstr "_Pajisje"
+
 #~ msgid "Device"
 #~ msgstr "Pajisje"
+
 #~ msgid "Do_main:"
 #~ msgstr "_Përkatësi:"
+
 #~ msgid "Hard_ware"
 #~ msgstr "_\"Hardware\""
+
 #~ msgid "IP"
 #~ msgstr "IP"
 
 #, fuzzy
 #~ msgid "IP_sec"
 #~ msgstr "Interval (sek):"
+
 #~ msgid "List of devices which are currently configurable on your system."
 #~ msgstr "Listë e pajisjeve që tani janë të formësueshme  në sistemin tuaj."
+
 #~ msgid "Monitor the selected device."
 #~ msgstr "Mbikqyre pajisjen e përzgjedhur."
+
 #~ msgid "Nickname"
 #~ msgstr "Nofkë"
+
 #~ msgid ""
 #~ "Please enter the name for the profile. The name may only contain letters "
 #~ "and digits."
 #~ msgstr ""
 #~ "Ju lutem jepni emrin për profilin. Emri mund të përmbajë vetëm gërma dhe "
 #~ "shifra."
+
 #~ msgid "Status"
 #~ msgstr "Gjendje"
+
 #~ msgid "_Activate"
 #~ msgstr "_Aktivizoje"
+
 #~ msgid "_Deactivate"
 #~ msgstr "_Çaktivizoje"
+
 #~ msgid "_Monitor"
 #~ msgstr "_Monitor"
+
 #~ msgid "_New..."
 #~ msgstr "_I ri..."
+
 #~ msgid "_Profile"
 #~ msgstr "_Profil"
+
 #~ msgid "_Secondary DNS:"
 #~ msgstr "DNS _Dytësore:"
+
 #~ msgid "_Tertiary DNS:"
 #~ msgstr "DNS _Tritësore:"
+
 #~ msgid "Configure Wireless Connection"
 #~ msgstr "Formësoni Lidhje Pa Fill"
+
 #~ msgid "Create Wireless Device"
 #~ msgstr "Krijoni Pajisje Pa Fill"
+
 #~ msgid "Select the wireless card you want to configure:"
 #~ msgstr "Përzgjidhni kartën pa fill që doni të formësoni:"
+
 #~ msgid "Wireless card"
 #~ msgstr "Kartë pa fill"
+
 #~ msgid "*"
 #~ msgstr "*"
+
 #~ msgid "A_uthentication key:"
 #~ msgstr "Kyç _mirëfilltësimi:"
+
 #~ msgid "Ge_nerate"
 #~ msgstr "_Prodho"
+
 #~ msgid "Host to Host encryption"
 #~ msgstr "Kodim nga Streha në Strehë"
+
 #~ msgid "IPsec"
 #~ msgstr "IPsec"
+
 #~ msgid "IPsec - Connection Type"
 #~ msgstr "IPsec - Lloj Lidhjeje"
+
 #~ msgid "IPsec - Encryption Mode"
 #~ msgstr "IPsec - Mënyrë Kodimi"
+
 #~ msgid "IPsec - Keys"
 #~ msgstr "IPsec - Kyça"
+
 #~ msgid "IPsec - Local Network"
 #~ msgstr "IPsec - Rrjet Vendor"
+
 #~ msgid "IPsec - Nickname"
 #~ msgstr "IPsec - Nofkë"
+
 #~ msgid "IPsec - Remote Network"
 #~ msgstr "IPsec - Rrjet i Largët"
+
 #~ msgid "IPsec Settings"
 #~ msgstr "Rregullime për IPsec"
 
@@ -4689,10 +5228,13 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Network to Network encryption (VPN)"
 #~ msgstr "  Nënkuptohet kodim cep-më-cep.\n"
+
 #~ msgid "Please enter a nickname for the connection:"
 #~ msgstr "Ju lutem jepni një nofkë për lidhjen:"
+
 #~ msgid "Please select the type of connection:"
 #~ msgstr "Ju lutem përzgjidhni llojin e lidhjes:"
+
 #~ msgid "Please select the type of encryption:"
 #~ msgstr "Ju lutem përzgjidhni llojin e kodimit:"
 
@@ -4711,6 +5253,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Remote subnet _mask:"
 #~ msgstr "Zbato _Maskë Shtrese "
+
 #~ msgid "_Encryption key:"
 #~ msgstr "Kyç _kodimi:"
 
@@ -4721,6 +5264,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "unique SPI for ESP (256 - 4294967295), like a TCP/IP port number"
 #~ msgstr "SPI unike për ESP (256 - 4294967295), si numër porte TCP/IP"
+
 #~ msgid "<b>Active profile</b>"
 #~ msgstr "<b>Profil aktiv</b>"
 
@@ -4747,6 +5291,7 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Click to get infos"
 #~ msgstr "Dështova"
+
 #~ msgid "Click to have the system automatically select and activate a profile"
 #~ msgstr "Klikoni që sistemi të përzgjedhë vetvetiu dhe aktivizojë një profil"
 
@@ -4757,19 +5302,25 @@ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 #, fuzzy
 #~ msgid "Click to shutdown the interface"
 #~ msgstr "Klikoni \"pasues\" për të vazhduar"
+
 #~ msgid ""
 #~ "The following network interfaces are configured in the active profile."
 #~ msgstr "Në profilin aktiv janë të formësuara ndërfaqet vijuese për rrjet."
+
 #~ msgid "_Info"
 #~ msgstr "_Të dhëna"
+
 #~ msgid "Card"
 #~ msgstr "Kartë"
+
 #~ msgid "Create Device"
 #~ msgstr "Krijo Pajisje"
+
 #~ msgid "Select Device"
 #~ msgstr "Përzgjidhni Pajisje"
+
 #~ msgid "Select the card you want to configure:"
 #~ msgstr "Ju lutem përzgjidhni kartën që doni të formësoni:"
+
 #~ msgid "_Point to Point (IP):"
 #~ msgstr "_Pikë më Pikë (IP)"
-

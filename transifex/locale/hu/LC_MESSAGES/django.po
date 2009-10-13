@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-07 16:12+0000\n"
+"POT-Creation-Date: 2009-10-13 15:00+0000\n"
 "PO-Revision-Date: 2009-08-08 06:56+0200\n"
 "Last-Translator: Sulyok Péter <peti@fedoraproject.org>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
@@ -27,7 +27,7 @@ msgstr "napló bejegyzések"
 msgid "Date/time"
 msgstr "Dátum/idő"
 
-#: actionlog/templates/object_action_list.html:7
+#: actionlog/templates/object_action_list.html:7 txpermissions/forms.py:18
 msgid "User"
 msgstr "Használó"
 
@@ -46,8 +46,8 @@ msgstr "Még nincs történet."
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:27 languages/migrations/0001_initial.py:19
 #: projects/models.py:86 projects/models.py:198
-#: projects/migrations/0001_initial.py:26
-#: projects/migrations/0001_initial.py:48 releases/models.py:23
+#: projects/migrations/0001_initial.py:31
+#: projects/migrations/0001_initial.py:53 releases/models.py:23
 #: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
@@ -104,8 +104,8 @@ msgstr "Legújabb fordítások %(language)s nyelvre %(release)s kiadásban."
 
 #: languages/models.py:29 languages/migrations/0001_initial.py:14
 #: projects/models.py:88 projects/models.py:200
-#: projects/migrations/0001_initial.py:15
-#: projects/migrations/0001_initial.py:34 releases/models.py:25
+#: projects/migrations/0001_initial.py:20
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
 #: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
@@ -143,31 +143,27 @@ msgstr "nyelv"
 msgid "languages"
 msgstr "nyelvek"
 
-#: languages/management/commands/txcreatelanguages.py:26
+#: languages/management/commands/txcreatelanguages.py:27
 msgid "Afrikaans"
 msgstr "afrikán (Dél-Afrika-i holland)"
 
-#: languages/management/commands/txcreatelanguages.py:40
+#: languages/management/commands/txcreatelanguages.py:42
 msgid "Amharic"
 msgstr "amhari (Etiópia)"
 
-#: languages/management/commands/txcreatelanguages.py:45
+#: languages/management/commands/txcreatelanguages.py:48
 msgid "Arabic"
 msgstr "arab"
 
-#: languages/management/commands/txcreatelanguages.py:52
-msgid "Spanish (Argentinian)"
-msgstr "spanyol (Argentína)"
-
-#: languages/management/commands/txcreatelanguages.py:59
+#: languages/management/commands/txcreatelanguages.py:56
 msgid "Assamese"
 msgstr "asszám (India)"
 
-#: languages/management/commands/txcreatelanguages.py:66
+#: languages/management/commands/txcreatelanguages.py:64
 msgid "Asturian"
 msgstr "asztúriai"
 
-#: languages/management/commands/txcreatelanguages.py:74
+#: languages/management/commands/txcreatelanguages.py:73
 msgid "Azerbaijani"
 msgstr "azeri"
 
@@ -175,379 +171,389 @@ msgstr "azeri"
 msgid "Balochi"
 msgstr "balocsi (Irán)"
 
-#: languages/management/commands/txcreatelanguages.py:87
+#: languages/management/commands/txcreatelanguages.py:88
 msgid "Belarusian"
 msgstr "fehérorosz"
 
-#: languages/management/commands/txcreatelanguages.py:95
+#: languages/management/commands/txcreatelanguages.py:97
 msgid "Bulgarian"
 msgstr "bolgár"
 
-#: languages/management/commands/txcreatelanguages.py:103
+#: languages/management/commands/txcreatelanguages.py:106
 msgid "Bengali"
 msgstr "bengáli"
 
-#: languages/management/commands/txcreatelanguages.py:111
+#: languages/management/commands/txcreatelanguages.py:114
 msgid "Bengali (India)"
 msgstr "bengáli (India)"
 
-#: languages/management/commands/txcreatelanguages.py:118
+#: languages/management/commands/txcreatelanguages.py:122
 msgid "Tibetan"
 msgstr "tibeti"
 
-#: languages/management/commands/txcreatelanguages.py:126
+#: languages/management/commands/txcreatelanguages.py:131
 msgid "Bosnian"
 msgstr "bosnyák"
 
-#: languages/management/commands/txcreatelanguages.py:134
+#: languages/management/commands/txcreatelanguages.py:140
 msgid "Catalan (Valencian)"
 msgstr "katalán (valenciai)"
 
-#: languages/management/commands/txcreatelanguages.py:142
+#: languages/management/commands/txcreatelanguages.py:149
 msgid "Czech"
 msgstr "cseh"
 
-#: languages/management/commands/txcreatelanguages.py:150
+#: languages/management/commands/txcreatelanguages.py:158
 msgid "Welsh"
 msgstr "velszi"
 
-#: languages/management/commands/txcreatelanguages.py:158
+#: languages/management/commands/txcreatelanguages.py:167
 msgid "Danish"
 msgstr "dán"
 
-#: languages/management/commands/txcreatelanguages.py:166
+#: languages/management/commands/txcreatelanguages.py:176
 msgid "German"
 msgstr "német"
 
-#: languages/management/commands/txcreatelanguages.py:174
+#: languages/management/commands/txcreatelanguages.py:184
 msgid "Swiss German"
 msgstr "svájci német"
 
-#: languages/management/commands/txcreatelanguages.py:182
+#: languages/management/commands/txcreatelanguages.py:193
 msgid "Dzongkha"
 msgstr "dzsongka (Bután)"
 
-#: languages/management/commands/txcreatelanguages.py:190
+#: languages/management/commands/txcreatelanguages.py:202
 msgid "Greek"
 msgstr "görög"
 
-#: languages/management/commands/txcreatelanguages.py:197
+#: languages/management/commands/txcreatelanguages.py:209
 msgid "English"
 msgstr "angol"
 
-#: languages/management/commands/txcreatelanguages.py:205
+#: languages/management/commands/txcreatelanguages.py:217
 msgid "English (United Kingdom)"
 msgstr "angol (Egyesült Királyság)"
 
-#: languages/management/commands/txcreatelanguages.py:213
+#: languages/management/commands/txcreatelanguages.py:225
+#, fuzzy
+msgid "English (United States)"
+msgstr "angol (Egyesült Királyság)"
+
+#: languages/management/commands/txcreatelanguages.py:233
 msgid "English (South Africa)"
 msgstr "angol (Dél-Afrika)"
 
-#: languages/management/commands/txcreatelanguages.py:220
+#: languages/management/commands/txcreatelanguages.py:240
 msgid "Esperanto"
 msgstr "eszperantó"
 
-#: languages/management/commands/txcreatelanguages.py:228
+#: languages/management/commands/txcreatelanguages.py:249
 msgid "Spanish (Castilian)"
 msgstr "spanyol (kasztíliai)"
 
-#: languages/management/commands/txcreatelanguages.py:236
+#: languages/management/commands/txcreatelanguages.py:257
+msgid "Spanish (Argentinian)"
+msgstr "spanyol (Argentína)"
+
+#: languages/management/commands/txcreatelanguages.py:266
 msgid "Estonian"
 msgstr "észt"
 
-#: languages/management/commands/txcreatelanguages.py:244
+#: languages/management/commands/txcreatelanguages.py:275
 msgid "Basque"
 msgstr "baszk"
 
-#: languages/management/commands/txcreatelanguages.py:251
+#: languages/management/commands/txcreatelanguages.py:283
 msgid "Persian"
 msgstr "perzsa"
 
-#: languages/management/commands/txcreatelanguages.py:259
+#: languages/management/commands/txcreatelanguages.py:292
 msgid "Finnish"
 msgstr "finn"
 
-#: languages/management/commands/txcreatelanguages.py:273
+#: languages/management/commands/txcreatelanguages.py:307
 msgid "French"
 msgstr "francia"
 
-#: languages/management/commands/txcreatelanguages.py:281
+#: languages/management/commands/txcreatelanguages.py:316
 msgid "Friulian"
 msgstr "friuli (Olaszo.)"
 
-#: languages/management/commands/txcreatelanguages.py:289
+#: languages/management/commands/txcreatelanguages.py:325
 msgid "Western Frisian"
 msgstr "nyugat-fríz"
 
-#: languages/management/commands/txcreatelanguages.py:297
+#: languages/management/commands/txcreatelanguages.py:334
 msgid "Irish"
 msgstr "ír"
 
-#: languages/management/commands/txcreatelanguages.py:305
+#: languages/management/commands/txcreatelanguages.py:343
 msgid "Galician"
 msgstr "galíciai (Spanyolo.)"
 
-#: languages/management/commands/txcreatelanguages.py:313
+#: languages/management/commands/txcreatelanguages.py:352
 msgid "Gujarati"
 msgstr "gudzsarati (India)"
 
-#: languages/management/commands/txcreatelanguages.py:320
+#: languages/management/commands/txcreatelanguages.py:360
 msgid "Hebrew"
 msgstr "héber"
 
-#: languages/management/commands/txcreatelanguages.py:328
+#: languages/management/commands/txcreatelanguages.py:369
 msgid "Hindi"
 msgstr "hindi (India)"
 
-#: languages/management/commands/txcreatelanguages.py:336
+#: languages/management/commands/txcreatelanguages.py:378
 msgid "Croatian"
 msgstr "horvát"
 
-#: languages/management/commands/txcreatelanguages.py:343
+#: languages/management/commands/txcreatelanguages.py:386
 msgid "Haitian (Haitian Creole)"
 msgstr "haiti (haiti kreol)"
 
-#: languages/management/commands/txcreatelanguages.py:351
+#: languages/management/commands/txcreatelanguages.py:395
 msgid "Hungarian"
 msgstr "magyar"
 
-#: languages/management/commands/txcreatelanguages.py:358
+#: languages/management/commands/txcreatelanguages.py:403
 msgid "Armenian"
 msgstr "örmény"
 
-#: languages/management/commands/txcreatelanguages.py:364
+#: languages/management/commands/txcreatelanguages.py:410
 msgid "Indonesian"
 msgstr "indonéz"
 
-#: languages/management/commands/txcreatelanguages.py:371
+#: languages/management/commands/txcreatelanguages.py:418
 msgid "Iloko"
 msgstr "Iloko (Fülöp-szk.)"
 
-#: languages/management/commands/txcreatelanguages.py:376
+#: languages/management/commands/txcreatelanguages.py:424
 msgid "Icelandic"
 msgstr "izlandi"
 
-#: languages/management/commands/txcreatelanguages.py:384
+#: languages/management/commands/txcreatelanguages.py:433
 msgid "Italian"
 msgstr "olasz"
 
-#: languages/management/commands/txcreatelanguages.py:392
+#: languages/management/commands/txcreatelanguages.py:442
 msgid "Japanese"
 msgstr "japán"
 
-#: languages/management/commands/txcreatelanguages.py:400
+#: languages/management/commands/txcreatelanguages.py:451
 msgid "Georgian"
 msgstr "grúz"
 
-#: languages/management/commands/txcreatelanguages.py:413
+#: languages/management/commands/txcreatelanguages.py:465
 msgid "Kannada"
 msgstr "kanada (India)"
 
-#: languages/management/commands/txcreatelanguages.py:419
+#: languages/management/commands/txcreatelanguages.py:472
 msgid "Korean"
 msgstr "kóreai"
 
-#: languages/management/commands/txcreatelanguages.py:426
+#: languages/management/commands/txcreatelanguages.py:480
 msgid "Kashmiri"
 msgstr "kasmíri"
 
-#: languages/management/commands/txcreatelanguages.py:434
+#: languages/management/commands/txcreatelanguages.py:489
 msgid "Kurdish"
 msgstr "kurd"
 
-#: languages/management/commands/txcreatelanguages.py:441
+#: languages/management/commands/txcreatelanguages.py:496
 msgid "Kirgyz"
 msgstr "kirgiz"
 
-#: languages/management/commands/txcreatelanguages.py:448
+#: languages/management/commands/txcreatelanguages.py:503
 msgid "Latin"
 msgstr "latin"
 
-#: languages/management/commands/txcreatelanguages.py:461
+#: languages/management/commands/txcreatelanguages.py:517
 msgid "Lao"
 msgstr "lao (Laosz)"
 
-#: languages/management/commands/txcreatelanguages.py:467
+#: languages/management/commands/txcreatelanguages.py:524
 msgid "Lithuanian"
 msgstr "litván"
 
-#: languages/management/commands/txcreatelanguages.py:475
+#: languages/management/commands/txcreatelanguages.py:533
 msgid "Latvian"
 msgstr "lett"
 
-#: languages/management/commands/txcreatelanguages.py:482
+#: languages/management/commands/txcreatelanguages.py:541
 msgid "Maithili"
 msgstr "majtili (India/Nepál)"
 
-#: languages/management/commands/txcreatelanguages.py:487
+#: languages/management/commands/txcreatelanguages.py:547
 msgid "Macedonian"
 msgstr "macedón"
 
-#: languages/management/commands/txcreatelanguages.py:492
+#: languages/management/commands/txcreatelanguages.py:553
 msgid "Malayalam"
 msgstr "malajalam (India)"
 
-#: languages/management/commands/txcreatelanguages.py:505
+#: languages/management/commands/txcreatelanguages.py:567
 msgid "Mongolian"
 msgstr "mongol"
 
-#: languages/management/commands/txcreatelanguages.py:512
+#: languages/management/commands/txcreatelanguages.py:575
 msgid "Marathi"
 msgstr "marati (India)"
 
-#: languages/management/commands/txcreatelanguages.py:519
+#: languages/management/commands/txcreatelanguages.py:583
 msgid "Malay"
 msgstr "maláj"
 
-#: languages/management/commands/txcreatelanguages.py:527
+#: languages/management/commands/txcreatelanguages.py:592
 msgid "Maltese"
 msgstr "máltai"
 
-#: languages/management/commands/txcreatelanguages.py:534
+#: languages/management/commands/txcreatelanguages.py:600
 msgid "Burmese"
 msgstr "burmai (Myanmar)"
 
-#: languages/management/commands/txcreatelanguages.py:545
+#: languages/management/commands/txcreatelanguages.py:612
 msgid "Norwegian Bokmål"
 msgstr "ónorvég"
 
-#: languages/management/commands/txcreatelanguages.py:552
+#: languages/management/commands/txcreatelanguages.py:620
 msgid "Nepali"
 msgstr "nepáli"
 
-#: languages/management/commands/txcreatelanguages.py:560
+#: languages/management/commands/txcreatelanguages.py:629
 msgid "Dutch (Flemish)"
 msgstr "holland (flamand)"
 
-#: languages/management/commands/txcreatelanguages.py:568
+#: languages/management/commands/txcreatelanguages.py:638
 msgid "Norwegian Nynorsk"
 msgstr "újnorvég"
 
-#: languages/management/commands/txcreatelanguages.py:575
+#: languages/management/commands/txcreatelanguages.py:646
 msgid "Norwegian"
 msgstr "norvég"
 
-#: languages/management/commands/txcreatelanguages.py:581
+#: languages/management/commands/txcreatelanguages.py:653
 msgid "Northern Sotho"
 msgstr "északszoto (Dél-Afrika)"
 
-#: languages/management/commands/txcreatelanguages.py:589
+#: languages/management/commands/txcreatelanguages.py:662
 msgid "Oriya"
 msgstr "orija (India)"
 
-#: languages/management/commands/txcreatelanguages.py:596
+#: languages/management/commands/txcreatelanguages.py:670
 msgid "Panjabi (Punjabi)"
 msgstr "pandzsab (India/Pakisztán)"
 
-#: languages/management/commands/txcreatelanguages.py:609
+#: languages/management/commands/txcreatelanguages.py:684
 msgid "Polish"
 msgstr "lengyel"
 
-#: languages/management/commands/txcreatelanguages.py:625
+#: languages/management/commands/txcreatelanguages.py:701
 msgid "Portuguese"
 msgstr "portugál"
 
-#: languages/management/commands/txcreatelanguages.py:634
-msgid "Brazilian Portuguese"
-msgstr "brazíliai portugál"
+#: languages/management/commands/txcreatelanguages.py:710
+#, fuzzy
+msgid "Portuguese (Brazilian)"
+msgstr "portugál"
 
-#: languages/management/commands/txcreatelanguages.py:642
+#: languages/management/commands/txcreatelanguages.py:719
 msgid "Romanian"
 msgstr "román"
 
-#: languages/management/commands/txcreatelanguages.py:650
+#: languages/management/commands/txcreatelanguages.py:728
 msgid "Russian"
 msgstr "orosz"
 
-#: languages/management/commands/txcreatelanguages.py:657
+#: languages/management/commands/txcreatelanguages.py:736
 msgid "Sinhala"
 msgstr "szinala (Sri Lanka)"
 
-#: languages/management/commands/txcreatelanguages.py:663
+#: languages/management/commands/txcreatelanguages.py:743
 msgid "Slovak"
 msgstr "szlovák"
 
-#: languages/management/commands/txcreatelanguages.py:671
+#: languages/management/commands/txcreatelanguages.py:752
 msgid "Slovenian"
 msgstr "szlovén"
 
-#: languages/management/commands/txcreatelanguages.py:679
+#: languages/management/commands/txcreatelanguages.py:761
 msgid "Albanian"
 msgstr "albán"
 
-#: languages/management/commands/txcreatelanguages.py:687
+#: languages/management/commands/txcreatelanguages.py:770
 msgid "Serbian"
 msgstr "szerb"
 
-#: languages/management/commands/txcreatelanguages.py:695
+#: languages/management/commands/txcreatelanguages.py:778
 msgid "Serbian (Latin)"
 msgstr "szerb (latin)"
 
-#: languages/management/commands/txcreatelanguages.py:704
+#: languages/management/commands/txcreatelanguages.py:788
 msgid "Sotho, Southern"
 msgstr "délszoto (Dél-Afrika)"
 
-#: languages/management/commands/txcreatelanguages.py:712
+#: languages/management/commands/txcreatelanguages.py:797
 msgid "Swedish"
 msgstr "svéd"
 
-#: languages/management/commands/txcreatelanguages.py:720
+#: languages/management/commands/txcreatelanguages.py:806
 msgid "Tamil"
 msgstr "tamil (India/Sri Lanka)"
 
-#: languages/management/commands/txcreatelanguages.py:727
+#: languages/management/commands/txcreatelanguages.py:814
 msgid "Telugu"
 msgstr "telugu (India)"
 
-#: languages/management/commands/txcreatelanguages.py:732
+#: languages/management/commands/txcreatelanguages.py:820
 msgid "Tajik"
 msgstr "tadzsik"
 
-#: languages/management/commands/txcreatelanguages.py:737
+#: languages/management/commands/txcreatelanguages.py:826
 msgid "Thai"
 msgstr "táj"
 
-#: languages/management/commands/txcreatelanguages.py:742
+#: languages/management/commands/txcreatelanguages.py:832
 msgid "Tagalog"
 msgstr "tagalog (Fülöp-szk.)"
 
-#: languages/management/commands/txcreatelanguages.py:754
+#: languages/management/commands/txcreatelanguages.py:845
 msgid "Turkish"
 msgstr "török"
 
-#: languages/management/commands/txcreatelanguages.py:761
+#: languages/management/commands/txcreatelanguages.py:853
 msgid "Urdu"
 msgstr "urdu (Pakisztán/India)"
 
-#: languages/management/commands/txcreatelanguages.py:767
+#: languages/management/commands/txcreatelanguages.py:860
 msgid "Ukrainian"
 msgstr "ukrán"
 
-#: languages/management/commands/txcreatelanguages.py:781
+#: languages/management/commands/txcreatelanguages.py:875
 msgid "Vietnamese"
 msgstr "vietnámi"
 
-#: languages/management/commands/txcreatelanguages.py:788
+#: languages/management/commands/txcreatelanguages.py:883
 msgid "Wolof"
 msgstr "volof (Szenegál)"
 
-#: languages/management/commands/txcreatelanguages.py:801
+#: languages/management/commands/txcreatelanguages.py:896
 msgid "Xhosa"
 msgstr "kosza (bantu)"
 
-#: languages/management/commands/txcreatelanguages.py:810
+#: languages/management/commands/txcreatelanguages.py:905
 msgid "Chinese (China)"
 msgstr "kínai (Kína)"
 
-#: languages/management/commands/txcreatelanguages.py:820
+#: languages/management/commands/txcreatelanguages.py:915
 msgid "Chinese (Hong Kong)"
 msgstr "kínai (Hong Kong)"
 
-#: languages/management/commands/txcreatelanguages.py:830
+#: languages/management/commands/txcreatelanguages.py:925
 msgid "Chinese (Taiwan)"
 msgstr "kínai (Tajvan)"
 
-#: languages/management/commands/txcreatelanguages.py:838
+#: languages/management/commands/txcreatelanguages.py:934
 msgid "Zulu"
 msgstr "zulu (Dél-Afrika)"
 
@@ -557,7 +563,7 @@ msgstr "Lefordítva:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -591,16 +597,21 @@ msgstr "%(site_name)s: %(project)s összetevői"
 msgid "Latest components in project %s."
 msgstr "Legújabb összetevők %s tervben"
 
-#: projects/forms.py:29 projects/models.py:213
+#: projects/forms.py:15 txpermissions/forms.py:19
+#, fuzzy
+msgid "Search for an username"
+msgstr "Keresés Picasa Weben"
+
+#: projects/forms.py:35 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
 msgstr "Regkif. a megjelenő fájlok szűrésére. Pl: „po/.*”"
 
-#: projects/forms.py:52 projects/models.py:218
+#: projects/forms.py:58 projects/models.py:218
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Beküldés"
 
-#: projects/forms.py:53
+#: projects/forms.py:59
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
@@ -609,8 +620,8 @@ msgstr ""
 "lehetőségek itt elérhetők az összetevő típusa alapján"
 
 #: projects/models.py:83 projects/models.py:195
-#: projects/migrations/0001_initial.py:14
-#: projects/migrations/0001_initial.py:33 releases/models.py:20
+#: projects/migrations/0001_initial.py:19
+#: projects/migrations/0001_initial.py:38 releases/models.py:20
 #: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
 #: txcollections/migrations/0001_initial.py:32
 #: txcollections/migrations/0002_release_06_07.py:11
@@ -637,8 +648,8 @@ msgid "A sentence or two describing the object (optional)."
 msgstr "Egy-két mondat jellemzés a tárgyról (nem kötelező)."
 
 #: projects/models.py:90 projects/models.py:202
-#: projects/migrations/0001_initial.py:25
-#: projects/migrations/0001_initial.py:40 releases/models.py:27
+#: projects/migrations/0001_initial.py:30
+#: projects/migrations/0001_initial.py:45 releases/models.py:27
 #: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
 #: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
@@ -648,12 +659,12 @@ msgstr "Hosszú jellemzés"
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Hosszabb jellemzés (nem kötelező) Markdown jelölés használatával."
 
-#: projects/models.py:93 projects/migrations/0001_initial.py:24
+#: projects/models.py:93 projects/migrations/0001_initial.py:29
 #: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Honlap"
 
-#: projects/models.py:94 projects/migrations/0001_initial.py:13
+#: projects/models.py:94 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "Hírek"
 
@@ -661,7 +672,7 @@ msgstr "Hírek"
 msgid "An RSS feed with updates on the project."
 msgstr "RSS adás a tervről szóló hírekkel."
 
-#: projects/models.py:96 projects/migrations/0001_initial.py:22
+#: projects/models.py:96 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "Hiba követő"
 
@@ -676,12 +687,13 @@ msgid "Anyone can submit"
 msgstr "Bárki beadhat"
 
 #: projects/models.py:101
-msgid "Does anyone can submit translations to this project?"
-msgstr "Bárki beadhat fordítást e tervbe?"
+#, fuzzy
+msgid "Can anyone submit files to this project?"
+msgstr "Betehet-e fájlt e tervbe"
 
 #: projects/models.py:103 projects/models.py:221
-#: projects/migrations/0001_initial.py:23
-#: projects/migrations/0001_initial.py:45 releases/models.py:41
+#: projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
 #: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
@@ -693,8 +705,8 @@ msgid "Hide this object from the list view?"
 msgstr "Elrejtsük e tárgyat a lista nézetből."
 
 #: projects/models.py:105 projects/models.py:223
-#: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:36 releases/models.py:43
+#: projects/migrations/0001_initial.py:24
+#: projects/migrations/0001_initial.py:41 releases/models.py:43
 #: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
 #: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
@@ -705,7 +717,7 @@ msgstr "Engedélyezve"
 msgid "Enable this object or disable its use?"
 msgstr "Engedélyezi vagy tiltja e tárgy használatát?"
 
-#: projects/models.py:110 projects/migrations/0001_initial.py:18
+#: projects/models.py:110 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Címkék"
 
@@ -720,8 +732,8 @@ msgid "Maintainers"
 msgstr "Karbantartók"
 
 #: projects/models.py:121 projects/models.py:233
-#: projects/migrations/0001_initial.py:17
-#: projects/migrations/0001_initial.py:42 releases/models.py:49
+#: projects/migrations/0001_initial.py:22
+#: projects/migrations/0001_initial.py:47 releases/models.py:49
 #: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
 #: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
@@ -746,7 +758,7 @@ msgstr "terv"
 msgid "projects"
 msgstr "tervek"
 
-#: projects/models.py:205 projects/migrations/0001_initial.py:47
+#: projects/models.py:205 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Forrás nyelv"
 
@@ -754,7 +766,7 @@ msgstr "Forrás nyelv"
 msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
 msgstr "Ez összetevő forrás nyelve, pl. „en”, „pt_BR”, „el”, „hu”."
 
-#: projects/models.py:208 projects/migrations/0001_initial.py:37
+#: projects/models.py:208 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "I18n típus"
 
@@ -763,11 +775,11 @@ msgstr "I18n típus"
 msgid "The code's type of i18n support (%s)"
 msgstr "A kód i18n támogatásának típusa (%s)"
 
-#: projects/models.py:212 projects/migrations/0001_initial.py:38
+#: projects/models.py:212 projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "Fájl szűrő"
 
-#: projects/models.py:215 projects/migrations/0001_initial.py:46
+#: projects/models.py:215 projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "Beküldhető"
 
@@ -783,11 +795,11 @@ msgstr "Számít statisztikát?"
 msgid "Should statistics be calculated for this component?"
 msgstr "Számítson statisztikákat erre az összetevőre?"
 
-#: projects/models.py:238 projects/migrations/0001_initial.py:41
+#: projects/models.py:238 projects/migrations/0001_initial.py:46
 msgid "Project"
 msgstr "Terv"
 
-#: projects/models.py:239 projects/migrations/0001_initial.py:32
+#: projects/models.py:239 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Egység"
 
@@ -816,28 +828,29 @@ msgstr "Karbantarthatja e tervet"
 msgid "Is allowed to submit file to this project"
 msgstr "Betehet-e fájlt e tervbe"
 
-#: projects/views.py:176 projects/views.py:500 txcollections/views.py:121
+#: projects/views.py:177 projects/views.py:576 txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s törölve."
 
-#: projects/views.py:286 projects/views.py:841
+#: projects/views.py:361 projects/views.py:914
 msgid "Must use POST to activate"
 msgstr "POST kell az aktiváláshoz"
 
-#: projects/views.py:289 projects/views.py:844
-msgid "Notifation is not enabled"
+#: projects/views.py:364 projects/views.py:917
+#, fuzzy
+msgid "Notification is not enabled"
 msgstr "Értesítés tiltott"
 
-#: projects/views.py:302
+#: projects/views.py:377
 msgid "Watch this project"
 msgstr "Figyelje e tervet"
 
-#: projects/views.py:315
+#: projects/views.py:390
 msgid "Stop wathing this project"
 msgstr "Ne figyelje tovább e tervet"
 
-#: projects/views.py:537
+#: projects/views.py:614
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -845,7 +858,7 @@ msgstr ""
 "A fájl szűrő e intltool POT alapú összetevőhöz látszólag nem engedi meg a "
 "POTFILES.in fájlt. Kérem javítsa."
 
-#: projects/views.py:544
+#: projects/views.py:621
 msgid ""
 "There is no 'pot' directory named in the set of files of this Publian like "
 "component. Maybe its file filter is not allowing access to it."
@@ -853,36 +866,40 @@ msgstr ""
 "Nincs „pot” mappa megnevezve e publicanszerű fájl halmazban. Talán a fájl "
 "szűrője nem engedi hozzáférni."
 
-#: projects/views.py:655
+#: projects/views.py:629
+msgid "This component is not configured for statistics calculation."
+msgstr ""
+
+#: projects/views.py:720
 msgid "This component does  not allow write access."
 msgstr "Az összetevő nem enged meg író hozzáférést."
 
-#: projects/views.py:663
+#: projects/views.py:728
 msgid "Please select a file from your system to be uploaded."
 msgstr "Válasszon feltöltendő fájlt a saját gépéről."
 
-#: projects/views.py:672
+#: projects/views.py:736
 msgid "Please enter a target to upload the file."
 msgstr "Kérem válasszon célt a feltöltéshez."
 
-#: projects/views.py:678
+#: projects/views.py:741
 msgid "Please enter only ONE target to upload the file."
 msgstr "Kérem csak EGY célt adjon meg fájl feltöltéshez."
 
-#: projects/views.py:689
+#: projects/views.py:752
 msgid "The target file does not match with the component file filter"
 msgstr "A cél fájl nem illeszkedik az összetevő fájl szűrőre"
 
-#: projects/views.py:697
+#: projects/views.py:760
 msgid "Enter a commit message"
 msgstr "Adjon meg kísérő szöveget:"
 
-#: projects/views.py:755 webtrans/views.py:124
+#: projects/views.py:827
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "%s fájlt sikerült beküldeni."
 
-#: projects/views.py:770
+#: projects/views.py:842
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -890,23 +907,23 @@ msgstr ""
 "A fájl nem felelt meg a helyesség vizsgálaton (msgfmt -c). Kérem futtassa rá "
 "ezt a parancsot, hogy lássa a hibákat."
 
-#: projects/views.py:779
+#: projects/views.py:851
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Sajnos a fájlt egy hiba miatt nem sikerült beküldeni."
 
-#: projects/views.py:783 projects/views.py:821
+#: projects/views.py:855 projects/views.py:894
 msgid "Sorry, but you need to send a POST request."
 msgstr "Sajnálom, de POST kérelmet kell küldeni."
 
-#: projects/views.py:810
+#: projects/views.py:883
 msgid "Lock removed."
 msgstr "Lakat leszedve."
 
-#: projects/views.py:813
+#: projects/views.py:886
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Hiba: Csak a lakat tulajdonosa szedheti le azt."
 
-#: projects/views.py:817
+#: projects/views.py:890
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 
@@ -968,16 +985,16 @@ msgstr "figyelés"
 msgid "Stop watching it"
 msgstr "Ne figyelje tovább"
 
-#: repowatch/models.py:25
+#: repowatch/models.py:28
 #, python-format
 msgid "Unable to add watch for path %r"
 msgstr "Nem lehet %r ösvényhez figyelőt rendelni"
 
-#: repowatch/models.py:94
+#: repowatch/models.py:97
 msgid "watch"
 msgstr "figyelő"
 
-#: repowatch/models.py:95
+#: repowatch/models.py:98
 msgid "watches"
 msgstr "figyelők"
 
@@ -1100,13 +1117,13 @@ msgstr "Kijelentkezés a webhelyről"
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
-#: templates/base-sample.html:50 templates/authopenid/login_box.html:5
-#: templates/authopenid/login_box.html:12 templates/authopenid/signin.html:4
-#: templates/authopenid/signin.html.py:6 templates/authopenid/signin.html:31
-#: templates/authopenid/signin.html:37 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:50 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:6 templates/simpleauth/signin.html:4
-#: templates/simpleauth/signin.html.py:6
+#: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
+#: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
+#: templates/simpleauth/signin.html:6
+#: templates/userprofile/account/login.html:18
+#: templates/userprofile/account/login.html:27
 msgid "Sign in"
 msgstr "Bejelentkezés"
 
@@ -1127,7 +1144,7 @@ msgstr "Lépjen kapcsolatba velünk"
 msgid "Feedback"
 msgstr "Visszajelzés"
 
-#: templates/index.html:27
+#: templates/index.html:23
 msgid ""
 "Transifex is a service aimed at helping translators keep track of their "
 "favourite translation projects."
@@ -1135,7 +1152,7 @@ msgstr ""
 "Transifex szolgáltatás törekszik fordítókat segíteni, hogy nyomon kövessék a "
 "kedvenc honosításaikat."
 
-#: templates/index.html:31
+#: templates/index.html:27
 #, python-format
 msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
@@ -1186,355 +1203,6 @@ msgstr "Terv keresése név, leírás, stb. szerint."
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
 msgstr "Transifex igazgatás"
-
-#: templates/authopenid/base_profile.html:4
-#: templates/authopenid/base_profile.html:7
-#: templates/authopenid/settings.html:18
-#: templates/simpleauth/base_profile.html:4
-#: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
-msgid "Profile"
-msgstr "Profil"
-
-#: templates/authopenid/base_profile.html:10
-#: templates/simpleauth/base_profile.html:10
-msgid "Profile settings"
-msgstr "Profil beállítás"
-
-#: templates/authopenid/changeemail.html:4
-#: templates/authopenid/changeemail.html:6
-msgid "Change my email"
-msgstr "Saját levél megváltoztatása"
-
-#: templates/authopenid/changeemail.html:5
-msgid "Change email address"
-msgstr "E-mail cím változtatás"
-
-#: templates/authopenid/changeemail.html:10
-msgid ""
-"This is where you can change the email address associated with your "
-"account.\n"
-"Please keep this email address up to date so we can send you a password-"
-"reset email if you request one."
-msgstr ""
-"Ez az ahol a számlájához tartozó levél címet változtathatja.\n"
-"Kérem tartsa e levél címet frissen, hogy jelszó törlés leveleket "
-"küldhessünk, ha ilyet kérne."
-
-#: templates/authopenid/changeemail.html:15
-#: templates/authopenid/changeopenid.html:12
-#: templates/authopenid/changepw.html:12 templates/authopenid/complete.html:25
-#: templates/authopenid/complete.html:35 templates/authopenid/delete.html:12
-#: templates/authopenid/delete.html:23 templates/authopenid/sendpw.html:12
-#: templates/authopenid/signin.html:19 templates/authopenid/signup.html:17
-msgid "Please correct errors below:"
-msgstr "Kérem javítsa az alábbi hibákat:"
-
-#: templates/authopenid/changeemail.html:32
-#: templates/authopenid/complete.html:51
-msgid "Email"
-msgstr "Levél"
-
-#: templates/authopenid/changeemail.html:33
-#: templates/authopenid/complete.html:67
-msgid "Password"
-msgstr "Jelszó"
-
-#: templates/authopenid/changeemail.html:35
-#: templates/authopenid/settings.html:36
-msgid "Change email"
-msgstr "Email változtatás"
-
-#: templates/authopenid/changeopenid.html:4
-#: templates/authopenid/changeopenid.html:5
-#: templates/authopenid/changeopenid.html:27
-msgid "Change OpenID"
-msgstr "OpenID változtatás"
-
-#: templates/authopenid/changeopenid.html:6
-msgid "Change my OpenID"
-msgstr "Saját OpenID megváltoztatása"
-
-#: templates/authopenid/changeopenid.html:10
-msgid ""
-"This is where you can change the OpenID URL associated with your account."
-msgstr "Ez az ahol a számlájához tartozó OpenID URL-t változtathatja."
-
-#: templates/authopenid/changeopenid.html:26
-msgid "OpenID URL:"
-msgstr "OpenID URL:"
-
-#: templates/authopenid/changepw.html:4 templates/authopenid/changepw.html:6
-msgid "Change my password"
-msgstr "Saját jelszó megváltoztatása"
-
-#: templates/authopenid/changepw.html:5 templates/authopenid/changepw.html:23
-#: templates/authopenid/settings.html:34
-#: templates/userprofile/account/password_reset_confirm.html:31
-#: templates/userprofile/profile/overview.html:88
-msgid "Change password"
-msgstr "Jelszó változtatás"
-
-#: templates/authopenid/changepw.html:9
-msgid "You can use the following form to change your password."
-msgstr "A következő űrlapot használhatja jelszó változtatásra."
-
-#: templates/authopenid/changepw.html:20
-msgid "Current password"
-msgstr "Jelenlegi jelszó"
-
-#: templates/authopenid/changepw.html:21
-msgid "New password"
-msgstr "Új jelszó"
-
-#: templates/authopenid/changepw.html:22
-msgid "New password again"
-msgstr "Új jelszó ismét"
-
-#: templates/authopenid/complete.html:4 templates/authopenid/complete.html:5
-#: templates/authopenid/complete.html:6
-msgid "OpenID verification"
-msgstr "OpenID ellenőrzés"
-
-#: templates/authopenid/complete.html:13
-msgid "Your OpenID is verified! "
-msgstr "OpenID ellenőrizve!"
-
-#: templates/authopenid/complete.html:14
-msgid ""
-"\n"
-"\t<p>Your OpenID can now be associated with a new or existing membership. "
-"You can change the association later in your preferences.</p>\n"
-"\t"
-msgstr ""
-"\n"
-"\t<p>Az ön·OpenID-ja most már társítható új vagy meglévő tagsághoz.·Később a "
-"társítást megváltoztathatja a saját beállításában.</p>\n"
-"\t"
-
-#: templates/authopenid/complete.html:18
-msgid "Associate your OpenID"
-msgstr "Társítsa OpenID-ját"
-
-#: templates/authopenid/complete.html:19
-msgid ""
-"\n"
-"\t<p>If you're joining for the first time, associate your OpenID with a new "
-"account. If you're already a member, associate with your existing account.</"
-"p>\n"
-"\t"
-msgstr ""
-"\n"
-"\t<p>Ha először áll be, társítsa az OpenID-ját egy új számlához.·Ha ön már "
-"tag,·társítsa a meglévő számlájához.</p>\n"
-"\t"
-
-#: templates/authopenid/complete.html:49
-msgid "A new account"
-msgstr "Új számla"
-
-#: templates/authopenid/complete.html:50 templates/authopenid/complete.html:66
-#: templates/authopenid/sendpw.html:25
-#: templates/userprofile/profile/public.html:33
-msgid "Username"
-msgstr "Név"
-
-#: templates/authopenid/complete.html:65
-msgid "An exisiting account"
-msgstr "Meglévő számla"
-
-#: templates/authopenid/delete.html:4 templates/authopenid/delete.html.py:6
-msgid "Delete my account"
-msgstr "Töröljék a számlám"
-
-#: templates/authopenid/delete.html:5 templates/authopenid/settings.html:47
-msgid "Delete account"
-msgstr "Töröljék a számlát"
-
-#: templates/authopenid/delete.html:9
-msgid ""
-"Note: After deleting your account, anyone will be able to register this "
-"username."
-msgstr "Megjegyzés: A számlája törlése után bárki beiratkozhat e néven."
-
-#: templates/authopenid/delete.html:14
-msgid "Check the confirm box, if you really want to delete your account."
-msgstr "Pipálja be a megerősítő dobozt, ha tényleg törölni akarja a számláját."
-
-#: templates/authopenid/delete.html:17 templates/authopenid/login_box.html:11
-#: templates/authopenid/signin.html:36
-msgid "Password:"
-msgstr "Jelszó:"
-
-#: templates/authopenid/delete.html:31
-msgid "I am sure I want to delete my account."
-msgstr "Biztos vagyok benne. Törölni akarom a számlám."
-
-#: templates/authopenid/delete.html:32
-msgid "Password or OpenID URL"
-msgstr "Jelszó vagy OpenID URL"
-
-#: templates/authopenid/delete.html:32
-msgid "(required for your security)"
-msgstr "(szükséges az ön biztonsága miatt)"
-
-#: templates/authopenid/delete.html:34
-msgid "Delete account permanently"
-msgstr "Törölje végleg a számlát"
-
-#: templates/authopenid/login_box.html:10 templates/authopenid/signin.html:35
-#: templates/userprofile/profile/overview.html:39
-msgid "Username:"
-msgstr "Név:"
-
-#: templates/authopenid/login_box.html:14 templates/authopenid/signin.html:39
-msgid "Or, with your OpenID:"
-msgstr "Vagy OpenID-val:"
-
-#: templates/authopenid/login_box.html:20 templates/authopenid/signin.html:42
-msgid "Sign in with OpenID"
-msgstr "Aláírás OpenID-val"
-
-#: templates/authopenid/login_box.html:22 templates/authopenid/signin.html:44
-#: templates/userprofile/account/login.html:38
-msgid "Lost your password?"
-msgstr "Elfelejtett jelszó?"
-
-#: templates/authopenid/sendpw.html:4 templates/authopenid/sendpw.html.py:5
-#: templates/userprofile/account/password_reset.html:5
-#: templates/userprofile/account/password_reset_complete.html:12
-#: templates/userprofile/account/password_reset_confirm.html:22
-msgid "Password reset"
-msgstr "Jelszó törlés"
-
-#: templates/authopenid/sendpw.html:6
-msgid "I lost my password!"
-msgstr "Elfelejtettem a jelszavam!"
-
-#: templates/authopenid/sendpw.html:10
-msgid ""
-"No worries! Here you can ask to reset your password by entering the username "
-"you use. You will then get a confirmation email with your new password. The "
-"new password will be activated only after you have clicked on the link in "
-"the email."
-msgstr ""
-"Semmi pánik! Itt kérheti a jelszava törlését a használó neve megadásával. "
-"Majd kap egy megerősítő levelet az új jelszavával. Az új jelszó csak azután "
-"lesz érvényes, hogy a levélben kapott hivatkozásra kattintott."
-
-#: templates/authopenid/sendpw.html:27
-msgid "Send new password"
-msgstr "Küldjenek új jelszót"
-
-#: templates/authopenid/settings.html:17 templates/simpleauth/settings.html:4
-msgid "Your Profile"
-msgstr "Saját adatok"
-
-#: templates/authopenid/settings.html:22 templates/simpleauth/settings.html:9
-#, python-format
-msgid "Your profile, %(user)s"
-msgstr "Saját adatok, %(user)s"
-
-#: templates/authopenid/settings.html:28
-msgid "This is where you can make changes to your account."
-msgstr "Itt változtathat a számláján."
-
-#: templates/authopenid/settings.html:35
-msgid "Give your  account a new password."
-msgstr "Adjon új jelszót a számlájához."
-
-#: templates/authopenid/settings.html:37
-msgid "Add or update the email address associated with your account."
-msgstr "Adja hozzá vagy változtassa meg a számlájához tartozó levélcímét."
-
-#: templates/authopenid/settings.html:39
-msgid "Change openid url"
-msgstr "Openid URL megváltoztatása"
-
-#: templates/authopenid/settings.html:40
-msgid "Change openid associated to your account"
-msgstr "A számlájához tartozó OpenID megváltoztatása"
-
-#: templates/authopenid/settings.html:44 templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:102
-msgid "Change notifications"
-msgstr "Változás értesítések"
-
-#: templates/authopenid/settings.html:45 templates/simpleauth/settings.html:24
-msgid "Change notifications associated to your account"
-msgstr "A számlájához tartozó változás értesítések"
-
-#: templates/authopenid/settings.html:48
-msgid "Erase your username and all your data from website"
-msgstr "Használó név és minden saját adat törlése a webhelyről"
-
-#: templates/authopenid/signin.html:5 templates/simpleauth/logout.html:5
-#: templates/simpleauth/signin.html:5
-#: templates/userprofile/account/login.html:18
-#: templates/userprofile/account/login.html:27
-msgid "Login"
-msgstr "Bejelentkezés"
-
-#: templates/authopenid/signin.html:10
-msgid ""
-"\n"
-"<p>Please login in with your email or screen name, or using your OpenID URL."
-"<br />\n"
-msgstr ""
-"\n"
-"<p>Kérem jelentkezzen be levélcímet, nevet vagy OpenID URL-t használva.<br /"
-">\n"
-
-#: templates/authopenid/signup.html:4 templates/authopenid/signup.html.py:5
-msgid "Join us"
-msgstr "Álljon be"
-
-#: templates/authopenid/signup.html:6
-msgid "Create your account"
-msgstr "Csináljon magának számlát"
-
-#: templates/authopenid/signup.html:10
-msgid ""
-"\n"
-"<p>There are two ways to join: with an email and screen name or with an "
-"OpenID.</p>\n"
-"<p>Enter information only for the type of sign up you wish to do.</p>\n"
-msgstr ""
-"\n"
-"<p>Két módon állhat be: levélcímmel és névvel vagy OpenID-val.</p>\n"
-"<p>Csak a használni kívánt hitelesítéshez szükséges adatokat adja meg.</p>\n"
-
-#: templates/authopenid/signup.html:15
-msgid "Regular Signup"
-msgstr "Szabályos beiratkozás"
-
-#: templates/authopenid/signup.html:31
-msgid "Choose a Screen Name:"
-msgstr "Válasszon nevet:"
-
-#: templates/authopenid/signup.html:33
-msgid "Enter Your Email Address:"
-msgstr "Adja meg az email címét:"
-
-#: templates/authopenid/signup.html:34
-msgid "Choose a Password:"
-msgstr "Jelszó:"
-
-#: templates/authopenid/signup.html:35
-msgid "Confirm Your Password:"
-msgstr "Jelszót megerősít:"
-
-#: templates/authopenid/signup.html:37
-msgid "JOIN FREE"
-msgstr "SZABAD BEÁLLNI"
-
-#: templates/authopenid/signup.html:41
-msgid "OpenID Signup"
-msgstr "OpenID beiratkozás"
-
-#: templates/authopenid/signup.html:44
-msgid "Sign in with OPENID"
-msgstr "Jelentkezzen be OpenID-val"
 
 #: templates/contact_form/contact_form.html:5
 #: templates/contact_form/contact_form.html:6
@@ -1609,11 +1277,11 @@ msgstr ""
 "Nem találja a saját nyelvét? Kérjük használja a visszajelző űrlapot, és "
 "tudassa velünk!"
 
-#: templates/languages/language_release.html:33
+#: templates/languages/language_release.html:39
 msgid "Project/Component statistics"
 msgstr "Terv/összetevő statisztikák"
 
-#: templates/languages/language_release.html:52
+#: templates/languages/language_release.html:60
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
@@ -1623,7 +1291,7 @@ msgstr ""
 "tervet, de nem talált. Próbáljon meg beküldeni egy ilyen fájlt, és nézze meg "
 "újra."
 
-#: templates/languages/language_release.html:53
+#: templates/languages/language_release.html:61
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
@@ -1632,11 +1300,11 @@ msgstr ""
 "Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href=\"%"
 "(contact_form)s\">tudassa velünk</a>."
 
-#: templates/languages/language_release.html:57
+#: templates/languages/language_release.html:65
 msgid "Untranslated Components"
 msgstr "Fordítatlan összetevők"
 
-#: templates/languages/language_release.html:59
+#: templates/languages/language_release.html:67
 #, python-format
 msgid ""
 "The following components will be included in %(release_name)s, but there are "
@@ -1689,7 +1357,7 @@ msgid "Account"
 msgstr "Számla"
 
 #: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:122
 msgid "Note"
 msgstr "Megjegyzés"
 
@@ -1798,6 +1466,49 @@ msgstr ""
 "<a·href=\"%(project_url)s\">%(project_name)s</a> terv <a·href=\"%"
 "(component_url)s\">%(component_name)s</a> összetevőjéhez."
 
+#: templates/notification/project_submit_access_granted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
+"files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
+msgstr ""
+"<a href=\"%(component_url)s\">%(component_name)s</a> összetevő hozzáadva <a "
+"href=\"%(project_url)s\">%(project_name)s</a> tervhez."
+
+#: templates/notification/project_submit_access_request_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
+"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
+"s</a> denied"
+msgstr ""
+"<a href=\"%(component_url)s\">%(component_name)s</a> összetevő hozzáadva <a "
+"href=\"%(project_url)s\">%(project_name)s</a> tervhez."
+
+#: templates/notification/project_submit_access_request_withdrawn/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Withdrawn own request of access to submit files to the project <a href=\"%"
+"(project_url)s\">%(project)s</a>"
+msgstr "Új terv hozzáadva: <a href=\"%(project_url)s\">%(project)s</a>."
+
+#: templates/notification/project_submit_access_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
+"(project)s</a>"
+msgstr "Új terv hozzáadva: <a href=\"%(project_url)s\">%(project)s</a>."
+
+#: templates/notification/project_submit_access_revoked/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
+"submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
+"revoked"
+msgstr ""
+"<a href=\"%(component_url)s\">%(component_name)s</a> összetevő hozzáadva <a "
+"href=\"%(project_url)s\">%(project_name)s</a> tervhez."
+
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
 #, python-format
@@ -1827,7 +1538,7 @@ msgstr ""
 msgid "Yes, I'm sure!"
 msgstr "Igen, biztos vagyok benne!"
 
-#: templates/projects/component_detail.html:25
+#: templates/projects/component_detail.html:30
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files to the maintainers\\' email."
@@ -1835,7 +1546,7 @@ msgstr ""
 "Ez az összetevő támogatja a beküldött fájlok helyi tárolását és a "
 "karbantartók levél címére küldi azokat."
 
-#: templates/projects/component_detail.html:27
+#: templates/projects/component_detail.html:32
 msgid ""
 "This component does not support local storing of submitted files. The "
 "submitted files will be sent to the maintainers\\' emails and the statistics "
@@ -1845,7 +1556,7 @@ msgstr ""
 "beküldött fájlokat a karbantartók levél címére küldi, és a statisztikák "
 "tükrözik a változást, amint a fájlokat továbbították felfelé."
 
-#: templates/projects/component_detail.html:31
+#: templates/projects/component_detail.html:36
 msgid ""
 "This component supports local storing of submitted files and also sends the "
 "files direct to the upstream repository."
@@ -1853,108 +1564,108 @@ msgstr ""
 "Ez az összetevő támogatja a beküldött fájlok helyi tárolását, és felfelé "
 "továbbítja őket közvetlenül a saját tárolójukba."
 
-#: templates/projects/component_detail.html:76
+#: templates/projects/component_detail.html:80
 #: templates/projects/project_detail.html:36
 #: templates/txcollections/collection_detail.html:24
-#: templates/txcollections/release_detail.html:39
+#: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "Szerkeszt"
 
-#: templates/projects/component_detail.html:85
+#: templates/projects/component_detail.html:89
 msgid "Repository:"
 msgstr "Tároló:"
 
-#: templates/projects/component_detail.html:88
-#: templates/projects/component_detail.html:90
+#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:94
 msgid "Link to a web front-end to the source"
 msgstr "A forrás honlapjára mutató hivatkozás"
 
-#: templates/projects/component_detail.html:88
-#: templates/projects/component_detail.html:90
+#: templates/projects/component_detail.html:92
+#: templates/projects/component_detail.html:94
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:95
+#: templates/projects/component_detail.html:99
 msgid "Branch:"
 msgstr "Ág:"
 
-#: templates/projects/component_detail.html:100
+#: templates/projects/component_detail.html:104
 msgid "File filter:"
 msgstr "Fájl szűrő:"
 
-#: templates/projects/component_detail.html:106
+#: templates/projects/component_detail.html:110
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Kiadás:"
 msgstr[1] "Kiadások:"
 
-#: templates/projects/component_detail.html:114
+#: templates/projects/component_detail.html:118
 msgid "Allows submissions:"
 msgstr "Beküldhető:"
 
-#: templates/projects/component_detail.html:128
+#: templates/projects/component_detail.html:132
 msgid "Translation files"
 msgstr "Fordítás fájlok"
 
-#: templates/projects/component_detail.html:133
+#: templates/projects/component_detail.html:137
 msgid "Source file:"
 msgstr "Forrás fájl:"
 
-#: templates/projects/component_detail.html:140
+#: templates/projects/component_detail.html:144
 msgid "Statistics last updated:"
 msgstr "Statisztikák utoljára frissítve:"
 
-#: templates/projects/component_detail.html:142
+#: templates/projects/component_detail.html:146
 msgid "ago"
 msgstr "előtt"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:147
 msgid "Component not yet pulled from source repository."
 msgstr "Még nem húzták be az összetevőt a forrás tárolóból."
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Statisztikákat frissít és újraszámít. E tevékenység némi időbe telhet."
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Refresh cache"
 msgstr "Gyorstárat frissít"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:155
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Transifex helyi adatai törlése tiszta lehúzáshoz"
 
-#: templates/projects/component_detail.html:151
+#: templates/projects/component_detail.html:155
 msgid "Clear cache"
 msgstr "Gyorstárat töröl"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Minden helyben változtatott adatot felülír friss másolatokkal."
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "warning"
 msgstr "figyelmeztetés"
 
-#: templates/projects/component_detail.html:163
+#: templates/projects/component_detail.html:167
 msgid "Become a translator:"
 msgstr "Legyen fordító:"
 
-#: templates/projects/component_detail.html:167
+#: templates/projects/component_detail.html:171
 msgid "Your request is pending for approval."
 msgstr "Az ön kérelme jóváhagyásra vár."
 
-#: templates/projects/component_detail.html:190
+#: templates/projects/component_detail.html:197
 #: templates/projects/project_detail.html:116
 msgid "History"
 msgstr "Történet"
 
-#: templates/projects/component_detail.html:194
+#: templates/projects/component_detail.html:201
 #: templates/projects/project_detail.html:120
 msgid "None available"
 msgstr "Nincs rendelkezésre álló"
 
-#: templates/projects/component_detail.html:211
+#: templates/projects/component_detail.html:218
 msgid "Delete component"
 msgstr "Összetevő törlése"
 
@@ -1965,26 +1676,26 @@ msgstr "Összetevő hozzáadása"
 
 #: templates/projects/component_form.html:7
 #: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:86
+#: templates/projects/component_form.html:100
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "%(component_name)s szerkesztése"
 
-#: templates/projects/component_form.html:84
+#: templates/projects/component_form.html:98
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Új komponens %(project_name)s tervhez"
 
-#: templates/projects/component_form.html:98
+#: templates/projects/component_form.html:112
 msgid "Checkout"
 msgstr "Kivesz"
 
-#: templates/projects/component_form.html:99
+#: templates/projects/component_form.html:113
 msgid "Submission"
 msgstr "Bead"
 
-#: templates/projects/component_form.html:112
-#: templates/projects/component_form.html:122
+#: templates/projects/component_form.html:126
+#: templates/projects/component_form.html:136
 msgid "Save component"
 msgstr "Összetevőt ment"
 
@@ -2114,9 +1825,9 @@ msgstr ""
 "  Biztos, hogy véglegesen törölni akarja „%(project_name)s” tervet?\n"
 
 #: templates/projects/project_detail.html:42
-#: templates/projects/project_form_base.html:87
+#: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
-#: templates/txcollections/release_detail.html:46
+#: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Részletek"
 
@@ -2126,7 +1837,7 @@ msgstr "Figyelés:"
 
 #: templates/projects/project_detail.html:57
 #: templates/txcollections/collection_detail.html:42
-#: templates/txcollections/release_detail.html:50
+#: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Honlap:"
 
@@ -2181,7 +1892,7 @@ msgstr "Tervet ment"
 
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
-#: templates/projects/project_form_base.html:71
+#: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "Tervet ad hozzá"
 
@@ -2195,16 +1906,16 @@ msgstr "%(project_name)s szerkesztése"
 msgid "Edit <em>%(project_name)s</em>"
 msgstr "<em>%(project_name)s</em> szerkesztése"
 
-#: templates/projects/project_form_base.html:27
+#: templates/projects/project_form_base.html:29
 msgid "Access control will be enabled once the project is created"
 msgstr "Hozzáférés ellenőrzést engedélyezünk, amint a terv elkészül"
 
-#: templates/projects/project_form_base.html:74
+#: templates/projects/project_form_base.html:76
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "<a·href=\"%(project_url)s\">%(project_name)s</a> szerkesztése"
 
-#: templates/projects/project_form_base.html:88
+#: templates/projects/project_form_base.html:90
 msgid "Access Control"
 msgstr "Hozzáférés ellenőrzés"
 
@@ -2263,9 +1974,28 @@ msgid ""
 "it</a>!"
 msgstr "Nem találja a tervét? <a·href=\"%(project_create)s\">Adja hozzá</a>!"
 
+#: templates/simpleauth/base_profile.html:4
+#: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/simpleauth/base_profile.html:10
+msgid "Profile settings"
+msgstr "Profil beállítás"
+
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Kijelentkezett."
+
+#: templates/simpleauth/settings.html:4
+msgid "Your Profile"
+msgstr "Saját adatok"
+
+#: templates/simpleauth/settings.html:9
+#, python-format
+msgid "Your profile, %(user)s"
+msgstr "Saját adatok, %(user)s"
 
 #: templates/simpleauth/settings.html:15
 msgid ""
@@ -2274,13 +2004,27 @@ msgid ""
 msgstr ""
 "Itt minden a saját számlához tartozó beállítás megjelenik és változtatható."
 
+#: templates/simpleauth/settings.html:23
+#: templates/userprofile/profile/overview.html:103
+msgid "Change notifications"
+msgstr "Változás értesítések"
+
+#: templates/simpleauth/settings.html:24
+msgid "Change notifications associated to your account"
+msgstr "A számlájához tartozó változás értesítések"
+
 #: templates/simpleauth/signin.html:10
+#, fuzzy
 msgid ""
 "\n"
-"<p>Please login in with your email or screen name.<br />\n"
+"<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
 "<p>Jelentkezzék be kérem a levél címével vagy nevével.<br />\n"
+
+#: templates/translations/stats_table_filter_box.html:7
+msgid "Show completed"
+msgstr ""
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -2436,27 +2180,27 @@ msgstr ""
 "\n"
 "  Biztos, hogy véglegesen törölni akarja „%(release_name)s” kiadást?\n"
 
-#: templates/txcollections/release_detail.html:55
+#: templates/txcollections/release_detail.html:61
 msgid "Release date:"
 msgstr "Kiadás dátum:"
 
-#: templates/txcollections/release_detail.html:59
+#: templates/txcollections/release_detail.html:65
 msgid "String freeze:"
 msgstr "Szöveg befagyasztás:"
 
-#: templates/txcollections/release_detail.html:63
+#: templates/txcollections/release_detail.html:69
 msgid "Devel freeze:"
 msgstr "Fejlesztés befagyasztás:"
 
-#: templates/txcollections/release_detail.html:71
+#: templates/txcollections/release_detail.html:77
 msgid "Translation statistics"
 msgstr "Fordítás statisztikák"
 
-#: templates/txcollections/release_detail.html:75
+#: templates/txcollections/release_detail.html:84
 msgid "No translations added for this release. :-("
 msgstr "Nincs fordítás e kiadáshoz. :-("
 
-#: templates/txcollections/release_detail.html:86
+#: templates/txcollections/release_detail.html:95
 msgid "Delete release"
 msgstr "Kiadást töröl"
 
@@ -2531,13 +2275,7 @@ msgstr "Személyes adatok"
 msgid "Avatar"
 msgstr "Kép"
 
-#: templates/userprofile/menu.html:8
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "Hely"
-
-#: templates/userprofile/menu.html:9
+#: templates/userprofile/menu.html:10
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Törölje a saját adatokat"
@@ -2619,9 +2357,10 @@ msgid "Resend e-mail validation"
 msgstr "Levél érvényesítés újraküldése"
 
 #: templates/userprofile/account/email_validation_reset.html:19
+#, fuzzy
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
-"login. Insert your registered e-mail address to receive the validation e-"
+"sign in. Insert your registered e-mail address to receive the validation e-"
 "mail again."
 msgstr ""
 "Ha még nem érvényesítette levél címét, akkor még nem léphet be. Adja meg a "
@@ -2657,16 +2396,22 @@ msgid "Your e-mail was already validated"
 msgstr "Az ön levelét már érvényesítették"
 
 #: templates/userprofile/account/login.html:5
-msgid "User login"
+#, fuzzy
+msgid "User sign in"
 msgstr "Használó belépés"
 
 #: templates/userprofile/account/login.html:19
-msgid "Enter your username and password to login."
+#, fuzzy
+msgid "Enter your username and password to sign in."
 msgstr "Adja meg az azonosítóját és jelszavát a belépéshez."
 
 #: templates/userprofile/account/login.html:36
 msgid "Utilities"
 msgstr "Eszközök"
+
+#: templates/userprofile/account/login.html:38
+msgid "Lost your password?"
+msgstr "Elfelejtett jelszó?"
 
 #: templates/userprofile/account/login.html:40
 #: templates/userprofile/profile/overview.html:91
@@ -2691,7 +2436,7 @@ msgid "Log in again"
 msgstr "Jelentkezzék be ismét"
 
 #: templates/userprofile/account/password_change.html:5
-#: templates/userprofile/account/password_reset_confirm.html:4
+#: templates/userprofile/account/password_reset_confirm.html:5
 msgid "Password change for"
 msgstr "Jelszó változtatás"
 
@@ -2726,6 +2471,12 @@ msgid ""
 "The password key you're trying to use is expired. Please, request a new one."
 msgstr "A jelszó, amivel próbálkozik már lejárt. Kérem igényeljen egy újat."
 
+#: templates/userprofile/account/password_reset.html:5
+#: templates/userprofile/account/password_reset_complete.html:12
+#: templates/userprofile/account/password_reset_confirm.html:23
+msgid "Password reset"
+msgstr "Jelszó törlés"
+
 #: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
 msgid "Password reset form"
@@ -2748,11 +2499,16 @@ msgstr "Töröljék a jelszavam"
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr "A jelszavát beállítottam.  Most már bejelentkezhet."
 
-#: templates/userprofile/account/password_reset_confirm.html:37
+#: templates/userprofile/account/password_reset_confirm.html:32
+#: templates/userprofile/profile/overview.html:88
+msgid "Change password"
+msgstr "Jelszó változtatás"
+
+#: templates/userprofile/account/password_reset_confirm.html:38
 msgid "Password reset unsuccessful"
 msgstr "Jelszó törlés sikertelen"
 
-#: templates/userprofile/account/password_reset_confirm.html:38
+#: templates/userprofile/account/password_reset_confirm.html:39
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -2807,10 +2563,10 @@ msgstr ""
 "beiratkozás folyamatát."
 
 #: templates/userprofile/account/registration_done.html:15
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
-"(overview_url)s\">login page</a> to authenticate and start using this site."
+"(overview_url)s\">sign in page</a> to authenticate and start using this site."
 msgstr ""
 "Sikerült beiratkoznia egy új számlára. Menjen a <a·href=\"%(overview_url)s"
 "\">bejelentkezés lapra</a>, hogy hitelesítse magát, és elkezdje használni "
@@ -2937,6 +2693,10 @@ msgstr "Kép változtatás"
 msgid "Add avatar"
 msgstr "Kép hozzáadás"
 
+#: templates/userprofile/profile/overview.html:39
+msgid "Username:"
+msgstr "Név:"
+
 #: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
 msgstr "Levél:"
@@ -2955,6 +2715,11 @@ msgstr " (Nincs érvényesítve)"
 msgid "Not set"
 msgstr "Nincs beállítva"
 
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:38
+msgid "Location"
+msgstr "Hely"
+
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Igazgatás:"
@@ -2966,14 +2731,6 @@ msgstr "Levél cím változtatás"
 #: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
 msgstr "Adja meg a levél címét"
-
-#: templates/userprofile/profile/overview.html:95
-msgid "Add location"
-msgstr "Helyet ad hozzá"
-
-#: templates/userprofile/profile/overview.html:97
-msgid "Change location"
-msgstr "Helyet változtat"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -2989,55 +2746,59 @@ msgstr "Adjon meg néhány adatot magáról."
 msgid "Public profile of %(user)s"
 msgstr "%(user)s nyilvános adatai"
 
-#: templates/webtrans/transfile_edit.html:28
+#: templates/userprofile/profile/public.html:33
+msgid "Username"
+msgstr "Név"
+
+#: templates/webtrans/transfile_edit.html:29
 #, python-format
 msgid "%(component_name)s"
 msgstr "%(component_name)s"
 
-#: templates/webtrans/transfile_edit.html:29
+#: templates/webtrans/transfile_edit.html:30
 #, python-format
 msgid "Translate '%(filename)s'"
 msgstr "„%(filename)s” fájlt fordítja"
 
-#: templates/webtrans/transfile_edit.html:38
-#: templates/webtrans/transfile_edit.html:43
+#: templates/webtrans/transfile_edit.html:39
+#: templates/webtrans/transfile_edit.html:44
 #, python-format
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "„<code>%(filename)s</code>” fájlt fordítja"
 
-#: templates/webtrans/transfile_edit.html:96
+#: templates/webtrans/transfile_edit.html:102
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:97
+#: templates/webtrans/transfile_edit.html:103
 msgid "Source String"
 msgstr "Forrás szöveg"
 
-#: templates/webtrans/transfile_edit.html:98
+#: templates/webtrans/transfile_edit.html:104
 msgid "Translation"
 msgstr "Fordítás"
 
-#: templates/webtrans/transfile_edit.html:99
+#: templates/webtrans/transfile_edit.html:106
 msgid "Auto-translate"
 msgstr "Önműködő fordítás"
 
-#: templates/webtrans/transfile_edit.html:99
+#: templates/webtrans/transfile_edit.html:106
 msgid "AT"
 msgstr "AT"
 
-#: templates/webtrans/transfile_edit.html:100
+#: templates/webtrans/transfile_edit.html:108
 msgid "Occurrences"
 msgstr "Előfordulások"
 
-#: templates/webtrans/transfile_edit.html:101
+#: templates/webtrans/transfile_edit.html:109
 msgid "Fuzzy?"
 msgstr "Ellenőrizendő?"
 
-#: templates/webtrans/transfile_edit.html:110
+#: templates/webtrans/transfile_edit.html:122
 msgid "Submit translations"
 msgstr "Fordításokat beküld"
 
-#: templates/webtrans/transfile_form.html:15
+#: templates/webtrans/transfile_form.html:19
 msgid "Auto-suggest translation"
 msgstr "Önműködően javasol fordítást"
 
@@ -3074,7 +2835,7 @@ msgid "Could not generate statistics for this file"
 msgstr "Nem sikerült statisztikát készíteni e fájlhoz"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -3082,7 +2843,7 @@ msgid "Trans:"
 msgstr "Kész:"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:36
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -3090,21 +2851,21 @@ msgid "Untrans:"
 msgstr "Még:"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:52
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Megnéz"
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:53
+#: translations/templates/comp_stats_table.html:49
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Letölt"
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:63
+#: translations/templates/comp_stats_table.html:59
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Szerkeszt"
@@ -3123,11 +2884,7 @@ msgstr "Statisztikák e nyelvhez"
 msgid "There is no language registered that matches with this code"
 msgstr "Nincs e kódhoz illeszkedő nyelv"
 
-#: translations/templates/comp_stats_table.html:40
-msgid "(not calculated)"
-msgstr "(nem számítják)"
-
-#: translations/templates/comp_stats_table.html:47
+#: translations/templates/comp_stats_table.html:43
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "Kattintson ide, és több fájlt lát"
@@ -3153,20 +2910,23 @@ msgstr "A terv oldalára ugrás"
 msgid "Go to this component page"
 msgstr "Az összetevő oldalára ugrás"
 
-#: translations/templates/pofile_lock.html:10
-msgid "Unlock this file when you're finished working with it."
+#: translations/templates/pofile_lock.html:15
+#, fuzzy
+msgid "Unlock this file when you are finished working with it."
 msgstr "Vegye le a lakatot, miután befejezte a munkát a fájlon."
 
-#: translations/templates/pofile_lock.html:14
-msgid "This file is locked, indicating someone is working with it."
+#: translations/templates/pofile_lock.html:21
+#, fuzzy, python-format
+msgid "User '%(owner)s' has locked this file indicating he's working on it."
 msgstr "E fájlt lelakatolták, ami azt jelzi, hogy valaki dolgozik rajta."
 
-#: translations/templates/pofile_lock.html:20
+#: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
 msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: dolgozik rajta."
 
-#: translations/templates/pofile_lock.html:23
-msgid "This file is unlocked. Most likely noone is working with it right now."
+#: translations/templates/pofile_lock.html:30
+#, fuzzy
+msgid "This file is unlocked. Most likely no one is working with it right now."
 msgstr "A fájl nincs lelakatolva. Valószínű, hogy most nem dolgoznak rajta."
 
 #: translations/templates/release_stats_table.html:16
@@ -3250,41 +3010,238 @@ msgstr "Nő"
 msgid "Male"
 msgstr "Férfi"
 
-#: txcommon/models.py:18 txcommon/migrations/0002_release_06_07.py:17
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Utónév"
 
-#: txcommon/models.py:19 txcommon/migrations/0002_release_06_07.py:16
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Vezetéknév"
 
-#: txcommon/models.py:22 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Anyanyelv"
 
-#: txcommon/models.py:23 txcommon/migrations/0002_release_06_07.py:23
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:24 txcommon/migrations/0002_release_06_07.py:26
+#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: txcommon/models.py:25 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: txcommon/models.py:26 txcommon/migrations/0002_release_06_07.py:15
+#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Bemutatkozás"
 
-#: txcommon/models.py:27
+#: txcommon/models.py:39
 msgid "Short description of yourself (140 chars)."
 msgstr "Rövid jellemzés (140 betű) magáról."
 
-#: txcommon/models.py:28 txcommon/migrations/0002_release_06_07.py:14
+#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Munkát keres?"
+
+#: txcommon/notifications.py:12
+msgid "New Project Added"
+msgstr "Új terv hozzáadva"
+
+#: txcommon/notifications.py:13
+msgid "when a new project is added"
+msgstr "amikor új tervet adtak hozzá"
+
+#: txcommon/notifications.py:19
+msgid "Project Changed"
+msgstr "Terv változott"
+
+#: txcommon/notifications.py:20
+msgid "when a project is changed"
+msgstr "amikor új terv változik"
+
+#: txcommon/notifications.py:26
+msgid "Project Deleted"
+msgstr "Terv törölve"
+
+#: txcommon/notifications.py:27
+msgid "when a project is deleted"
+msgstr "amikor tervet törölnek"
+
+#: txcommon/notifications.py:33
+msgid "Submit access to project requested"
+msgstr ""
+
+#: txcommon/notifications.py:34
+#, fuzzy
+msgid "when an user request access to submit files to a project"
+msgstr "Betehet-e fájlt e tervbe"
+
+#: txcommon/notifications.py:41
+msgid "Submit access request to project denied"
+msgstr ""
+
+#: txcommon/notifications.py:42
+msgid "when a maintainer denies access to an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:49
+msgid "Submit access request to project withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:50
+#, fuzzy
+msgid "when an user withdraws the access requestto submit files to a project"
+msgstr "Garantált beadás hozzáféréssel rendelkező használók:"
+
+#: txcommon/notifications.py:57
+msgid "Submit access to project granted"
+msgstr ""
+
+#: txcommon/notifications.py:58
+msgid "when a maintainer grants access to an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:65
+msgid "Submit access to project revoked"
+msgstr ""
+
+#: txcommon/notifications.py:66
+msgid ""
+"when a maintainer revokes the access of an user to submit files to a project"
+msgstr ""
+
+#: txcommon/notifications.py:73
+msgid "New Component Added"
+msgstr "Új összetevő hozzáadva"
+
+#: txcommon/notifications.py:74
+msgid "when a new component is added to a project"
+msgstr "amikor összetevőt tervhez adnak"
+
+#: txcommon/notifications.py:80
+msgid "Component Changed"
+msgstr "Összetevő változott"
+
+#: txcommon/notifications.py:81
+msgid "when a component of a project is changed"
+msgstr "amikor összetevő változik"
+
+#: txcommon/notifications.py:87
+msgid "Component Deleted"
+msgstr "Összetevő törölve"
+
+#: txcommon/notifications.py:88
+msgid "when a component of a project is deleted"
+msgstr "amikor összetevőt törölnek"
+
+#: txcommon/notifications.py:94
+msgid "File Submitted"
+msgstr "Fájl beküldve"
+
+#: txcommon/notifications.py:95
+msgid "when a component file of a project is submitted"
+msgstr "amikor terv összetevő fájlt küldenek be"
+
+#: txcommon/notifications.py:102
+msgid "Translation File Changed"
+msgstr "Fordítás fájl változott"
+
+#: txcommon/notifications.py:103
+msgid "when a component translation file of a project is changed"
+msgstr "amikor terv összetevő fordítás fájl változik"
+
+#: txcommon/notifications.py:110
+msgid "Translation Source File (POT) has a Problem"
+msgstr "A forrás fordítás fájlnak (POT) baja van"
+
+#: txcommon/notifications.py:111
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
+msgstr "amikor ön által karbantartott összetevő forrás fájlnak (POT) baja van"
+
+#: txcommon/notifications.py:119
+msgid "New Collection Added"
+msgstr "Új gyűjtemény hozzáadva"
+
+#: txcommon/notifications.py:120
+msgid "when a new collection is added"
+msgstr "amikor új gyűjteményt adnak hozzá"
+
+#: txcommon/notifications.py:126
+msgid "Collection Changed"
+msgstr "Gyűjtemény változott"
+
+#: txcommon/notifications.py:127
+msgid "when a collection is changed"
+msgstr "amikor gyűjtemény változik"
+
+#: txcommon/notifications.py:133
+msgid "Collection Deleted"
+msgstr "Gyűjtemény törölve"
+
+#: txcommon/notifications.py:134
+msgid "when a collection is deleted"
+msgstr "amikor gyűjteményt törölnek"
+
+#: txcommon/notifications.py:140
+msgid "Project Added to a Collection"
+msgstr "Terv gyűjteményhez adása"
+
+#: txcommon/notifications.py:141
+msgid "when a new project is added to a collection"
+msgstr "amikor tervet gyűjteményhez adnak"
+
+#: txcommon/notifications.py:147
+msgid "Project Deleted from a Collection"
+msgstr "Terv gyűjteményből törölve"
+
+#: txcommon/notifications.py:148
+msgid "when a project is deleted from a collection"
+msgstr "amikor tervet gyűjteményből törölnek"
+
+#: txcommon/notifications.py:154
+msgid "New Release Added for a Watched Collection"
+msgstr "Új kiadás hozzáadva figyelt gyűjteményhez"
+
+#: txcommon/notifications.py:155
+msgid "when a new release is added to a collection"
+msgstr "amikor új kiadást adnak gyűjteményhez"
+
+#: txcommon/notifications.py:162
+msgid "Release Changed"
+msgstr "Kiadás változott"
+
+#: txcommon/notifications.py:163
+msgid "when a release of a collection is changed"
+msgstr "amikor összetevő kiadása változik"
+
+#: txcommon/notifications.py:168
+msgid "Release Deleted"
+msgstr "Kiadás törölve"
+
+#: txcommon/notifications.py:169
+msgid "when a release of a collection is deleted"
+msgstr "amikor összetevő kiadását törlik"
+
+#: txcommon/notifications.py:174
+msgid "Release Added to a Collection"
+msgstr "Kiadás hozzáadása gyűjteményhez"
+
+#: txcommon/notifications.py:175
+msgid "when a release is added to a collection"
+msgstr "amikor kiadást gyűjteményhez adnak"
+
+#: txcommon/notifications.py:180
+msgid "Release Deleted from a Collection"
+msgstr "Kiadás törlése gyűjteményből"
+
+#: txcommon/notifications.py:181
+msgid "when a release is deleted from a collection"
+msgstr "amikor kiadást törölnek gyűjteményből"
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3306,182 +3263,29 @@ msgstr "0 vagy több vesszővel elválasztott egész megadása zárójelek közt
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Legalább egy pár üres zárójelet meg kell adni."
 
-#: txcommon/management/__init__.py:10
-msgid "New Project Added"
-msgstr "Új terv hozzáadva"
-
-#: txcommon/management/__init__.py:11
-msgid "when a new project is added"
-msgstr "amikor új tervet adtak hozzá"
-
-#: txcommon/management/__init__.py:17
-msgid "Project Changed"
-msgstr "Terv változott"
-
-#: txcommon/management/__init__.py:18
-msgid "when a project is changed"
-msgstr "amikor új terv változik"
-
-#: txcommon/management/__init__.py:24
-msgid "Project Deleted"
-msgstr "Terv törölve"
-
-#: txcommon/management/__init__.py:25
-msgid "when a project is deleted"
-msgstr "amikor tervet törölnek"
-
-#: txcommon/management/__init__.py:31
-msgid "New Component Added"
-msgstr "Új összetevő hozzáadva"
-
-#: txcommon/management/__init__.py:32
-msgid "when a new component is added to a project"
-msgstr "amikor összetevőt tervhez adnak"
-
-#: txcommon/management/__init__.py:38
-msgid "Component Changed"
-msgstr "Összetevő változott"
-
-#: txcommon/management/__init__.py:39
-msgid "when a component of a project is changed"
-msgstr "amikor összetevő változik"
-
-#: txcommon/management/__init__.py:45
-msgid "Component Deleted"
-msgstr "Összetevő törölve"
-
-#: txcommon/management/__init__.py:46
-msgid "when a component of a project is deleted"
-msgstr "amikor összetevőt törölnek"
-
-#: txcommon/management/__init__.py:52
-msgid "File Submitted"
-msgstr "Fájl beküldve"
-
-#: txcommon/management/__init__.py:53
-msgid "when a component file of a project is submitted"
-msgstr "amikor terv összetevő fájlt küldenek be"
-
-#: txcommon/management/__init__.py:60
-msgid "Translation File Changed"
-msgstr "Fordítás fájl változott"
-
-#: txcommon/management/__init__.py:61
-msgid "when a component translation file of a project is changed"
-msgstr "amikor terv összetevő fordítás fájl változik"
-
-#: txcommon/management/__init__.py:68
-msgid "Translation Source File (POT) has a Problem"
-msgstr "A forrás fordítás fájlnak (POT) baja van"
-
-#: txcommon/management/__init__.py:69
-msgid ""
-"when the source file (POT) of a component that you are a maintainer has a "
-"problem"
-msgstr "amikor ön által karbantartott összetevő forrás fájlnak (POT) baja van"
-
-#: txcommon/management/__init__.py:77
-msgid "New Collection Added"
-msgstr "Új gyűjtemény hozzáadva"
-
-#: txcommon/management/__init__.py:78
-msgid "when a new collection is added"
-msgstr "amikor új gyűjteményt adnak hozzá"
-
-#: txcommon/management/__init__.py:84
-msgid "Collection Changed"
-msgstr "Gyűjtemény változott"
-
-#: txcommon/management/__init__.py:85
-msgid "when a collection is changed"
-msgstr "amikor gyűjtemény változik"
-
-#: txcommon/management/__init__.py:91
-msgid "Collection Deleted"
-msgstr "Gyűjtemény törölve"
-
-#: txcommon/management/__init__.py:92
-msgid "when a collection is deleted"
-msgstr "amikor gyűjteményt törölnek"
-
-#: txcommon/management/__init__.py:98
-msgid "Project Added to a Collection"
-msgstr "Terv gyűjteményhez adása"
-
-#: txcommon/management/__init__.py:99
-msgid "when a new project is added to a collection"
-msgstr "amikor tervet gyűjteményhez adnak"
-
-#: txcommon/management/__init__.py:105
-msgid "Project Deleted from a Collection"
-msgstr "Terv gyűjteményből törölve"
-
-#: txcommon/management/__init__.py:106
-msgid "when a project is deleted from a collection"
-msgstr "amikor tervet gyűjteményből törölnek"
-
-#: txcommon/management/__init__.py:112
-msgid "New Release Added for a Watched Collection"
-msgstr "Új kiadás hozzáadva figyelt gyűjteményhez"
-
-#: txcommon/management/__init__.py:113
-msgid "when a new release is added to a collection"
-msgstr "amikor új kiadást adnak gyűjteményhez"
-
-#: txcommon/management/__init__.py:120
-msgid "Release Changed"
-msgstr "Kiadás változott"
-
-#: txcommon/management/__init__.py:121
-msgid "when a release of a collection is changed"
-msgstr "amikor összetevő kiadása változik"
-
-#: txcommon/management/__init__.py:126
-msgid "Release Deleted"
-msgstr "Kiadás törölve"
-
-#: txcommon/management/__init__.py:127
-msgid "when a release of a collection is deleted"
-msgstr "amikor összetevő kiadását törlik"
-
-#: txcommon/management/__init__.py:132
-msgid "Release Added to a Collection"
-msgstr "Kiadás hozzáadása gyűjteményhez"
-
-#: txcommon/management/__init__.py:133
-msgid "when a release is added to a collection"
-msgstr "amikor kiadást gyűjteményhez adnak"
-
-#: txcommon/management/__init__.py:138
-msgid "Release Deleted from a Collection"
-msgstr "Kiadás törlése gyűjteményből"
-
-#: txcommon/management/__init__.py:139
-msgid "when a release is deleted from a collection"
-msgstr "amikor kiadást törölnek gyűjteményből"
-
 #: txcommon/templates/common_homelink.html:2
 msgid "Home"
 msgstr "Honlap"
 
-#: txpermissions/views.py:45
+#: txpermissions/views.py:93
 msgid "You added a permission request."
 msgstr "Ön engedélyt kérelmezett."
 
-#: txpermissions/views.py:74
+#: txpermissions/views.py:128
 msgid "You approved the permission request."
 msgstr "Ön jóváhagyta az engedély kérelmet."
 
-#: txpermissions/views.py:92
+#: txpermissions/views.py:146
 msgid "You removed the permission."
 msgstr "Ön törölte az engedélyt."
 
-#: txpermissions/views.py:94
+#: txpermissions/views.py:148
 msgid "You removed the permission request."
 msgstr "Ön törölte az engedély kérelmet."
 
-#: vcs/forms.py:29
-msgid "This type of repository needs a branch"
+#: vcs/forms.py:56
+#, fuzzy
+msgid "This type of repository does not accept branch"
 msgstr "E tároló típusnak kell egy ág"
 
 #: vcs/models.py:48
@@ -3513,17 +3317,266 @@ msgstr "vcsunit"
 msgid "vcsunits"
 msgstr "vcsunits"
 
-#: webtrans/views.py:129
-msgid ""
-"Your file does not pass by the check for correctness (msgfmt -c). Please run "
-"this command on your system to see the errors."
-msgstr ""
-"Hiba: A beküldött PO fájl helytelen. Kérem futtassa rá az „msgfmt -c” "
-"parancsot, és javítsa a hibákat beküldés előtt!"
+#: webtrans/fields.py:55
+#, fuzzy, python-format
+msgid "The %s fields should be filled."
+msgstr "%s törölve."
 
-#: webtrans/views.py:138
-msgid "Sorry, an error is causing troubles to send your file."
-msgstr "Sajnálom, hiba akadályozza a fájl elküldését."
+#: webtrans/wizards.py:202
+msgid ""
+"Nothing was sent because you haven't changed anything in the translation "
+"form."
+msgstr ""
+
+#: webtrans/templates/pagination.html:7
+msgid "Previous"
+msgstr ""
+
+#: webtrans/templates/pagination.html:49
+msgid "Next"
+msgstr ""
+
+#~ msgid "Brazilian Portuguese"
+#~ msgstr "brazíliai portugál"
+
+#~ msgid "Does anyone can submit translations to this project?"
+#~ msgstr "Bárki beadhat fordítást e tervbe?"
+
+#~ msgid "Change my email"
+#~ msgstr "Saját levél megváltoztatása"
+
+#~ msgid "Change email address"
+#~ msgstr "E-mail cím változtatás"
+
+#~ msgid ""
+#~ "This is where you can change the email address associated with your "
+#~ "account.\n"
+#~ "Please keep this email address up to date so we can send you a password-"
+#~ "reset email if you request one."
+#~ msgstr ""
+#~ "Ez az ahol a számlájához tartozó levél címet változtathatja.\n"
+#~ "Kérem tartsa e levél címet frissen, hogy jelszó törlés leveleket "
+#~ "küldhessünk, ha ilyet kérne."
+
+#~ msgid "Please correct errors below:"
+#~ msgstr "Kérem javítsa az alábbi hibákat:"
+
+#~ msgid "Email"
+#~ msgstr "Levél"
+
+#~ msgid "Password"
+#~ msgstr "Jelszó"
+
+#~ msgid "Change email"
+#~ msgstr "Email változtatás"
+
+#~ msgid "Change OpenID"
+#~ msgstr "OpenID változtatás"
+
+#~ msgid "Change my OpenID"
+#~ msgstr "Saját OpenID megváltoztatása"
+
+#~ msgid ""
+#~ "This is where you can change the OpenID URL associated with your account."
+#~ msgstr "Ez az ahol a számlájához tartozó OpenID URL-t változtathatja."
+
+#~ msgid "OpenID URL:"
+#~ msgstr "OpenID URL:"
+
+#~ msgid "Change my password"
+#~ msgstr "Saját jelszó megváltoztatása"
+
+#~ msgid "You can use the following form to change your password."
+#~ msgstr "A következő űrlapot használhatja jelszó változtatásra."
+
+#~ msgid "Current password"
+#~ msgstr "Jelenlegi jelszó"
+
+#~ msgid "New password"
+#~ msgstr "Új jelszó"
+
+#~ msgid "New password again"
+#~ msgstr "Új jelszó ismét"
+
+#~ msgid "OpenID verification"
+#~ msgstr "OpenID ellenőrzés"
+
+#~ msgid "Your OpenID is verified! "
+#~ msgstr "OpenID ellenőrizve!"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<p>Your OpenID can now be associated with a new or existing membership. "
+#~ "You can change the association later in your preferences.</p>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<p>Az ön·OpenID-ja most már társítható új vagy meglévő tagsághoz."
+#~ "·Később a társítást megváltoztathatja a saját beállításában.</p>\n"
+#~ "\t"
+
+#~ msgid "Associate your OpenID"
+#~ msgstr "Társítsa OpenID-ját"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<p>If you're joining for the first time, associate your OpenID with a "
+#~ "new account. If you're already a member, associate with your existing "
+#~ "account.</p>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<p>Ha először áll be, társítsa az OpenID-ját egy új számlához.·Ha ön "
+#~ "már tag,·társítsa a meglévő számlájához.</p>\n"
+#~ "\t"
+
+#~ msgid "A new account"
+#~ msgstr "Új számla"
+
+#~ msgid "An exisiting account"
+#~ msgstr "Meglévő számla"
+
+#~ msgid "Delete my account"
+#~ msgstr "Töröljék a számlám"
+
+#~ msgid "Delete account"
+#~ msgstr "Töröljék a számlát"
+
+#~ msgid ""
+#~ "Note: After deleting your account, anyone will be able to register this "
+#~ "username."
+#~ msgstr "Megjegyzés: A számlája törlése után bárki beiratkozhat e néven."
+
+#~ msgid "Check the confirm box, if you really want to delete your account."
+#~ msgstr ""
+#~ "Pipálja be a megerősítő dobozt, ha tényleg törölni akarja a számláját."
+
+#~ msgid "Password:"
+#~ msgstr "Jelszó:"
+
+#~ msgid "I am sure I want to delete my account."
+#~ msgstr "Biztos vagyok benne. Törölni akarom a számlám."
+
+#~ msgid "Password or OpenID URL"
+#~ msgstr "Jelszó vagy OpenID URL"
+
+#~ msgid "(required for your security)"
+#~ msgstr "(szükséges az ön biztonsága miatt)"
+
+#~ msgid "Delete account permanently"
+#~ msgstr "Törölje végleg a számlát"
+
+#~ msgid "Or, with your OpenID:"
+#~ msgstr "Vagy OpenID-val:"
+
+#~ msgid "Sign in with OpenID"
+#~ msgstr "Aláírás OpenID-val"
+
+#~ msgid "I lost my password!"
+#~ msgstr "Elfelejtettem a jelszavam!"
+
+#~ msgid ""
+#~ "No worries! Here you can ask to reset your password by entering the "
+#~ "username you use. You will then get a confirmation email with your new "
+#~ "password. The new password will be activated only after you have clicked "
+#~ "on the link in the email."
+#~ msgstr ""
+#~ "Semmi pánik! Itt kérheti a jelszava törlését a használó neve megadásával. "
+#~ "Majd kap egy megerősítő levelet az új jelszavával. Az új jelszó csak "
+#~ "azután lesz érvényes, hogy a levélben kapott hivatkozásra kattintott."
+
+#~ msgid "Send new password"
+#~ msgstr "Küldjenek új jelszót"
+
+#~ msgid "This is where you can make changes to your account."
+#~ msgstr "Itt változtathat a számláján."
+
+#~ msgid "Give your  account a new password."
+#~ msgstr "Adjon új jelszót a számlájához."
+
+#~ msgid "Add or update the email address associated with your account."
+#~ msgstr "Adja hozzá vagy változtassa meg a számlájához tartozó levélcímét."
+
+#~ msgid "Change openid url"
+#~ msgstr "Openid URL megváltoztatása"
+
+#~ msgid "Change openid associated to your account"
+#~ msgstr "A számlájához tartozó OpenID megváltoztatása"
+
+#~ msgid "Erase your username and all your data from website"
+#~ msgstr "Használó név és minden saját adat törlése a webhelyről"
+
+#~ msgid "Login"
+#~ msgstr "Bejelentkezés"
+
+#~ msgid ""
+#~ "\n"
+#~ "<p>Please login in with your email or screen name, or using your OpenID "
+#~ "URL.<br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Kérem jelentkezzen be levélcímet, nevet vagy OpenID URL-t használva."
+#~ "<br />\n"
+
+#~ msgid "Join us"
+#~ msgstr "Álljon be"
+
+#~ msgid "Create your account"
+#~ msgstr "Csináljon magának számlát"
+
+#~ msgid ""
+#~ "\n"
+#~ "<p>There are two ways to join: with an email and screen name or with an "
+#~ "OpenID.</p>\n"
+#~ "<p>Enter information only for the type of sign up you wish to do.</p>\n"
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Két módon állhat be: levélcímmel és névvel vagy OpenID-val.</p>\n"
+#~ "<p>Csak a használni kívánt hitelesítéshez szükséges adatokat adja meg.</"
+#~ "p>\n"
+
+#~ msgid "Regular Signup"
+#~ msgstr "Szabályos beiratkozás"
+
+#~ msgid "Choose a Screen Name:"
+#~ msgstr "Válasszon nevet:"
+
+#~ msgid "Enter Your Email Address:"
+#~ msgstr "Adja meg az email címét:"
+
+#~ msgid "Choose a Password:"
+#~ msgstr "Jelszó:"
+
+#~ msgid "Confirm Your Password:"
+#~ msgstr "Jelszót megerősít:"
+
+#~ msgid "JOIN FREE"
+#~ msgstr "SZABAD BEÁLLNI"
+
+#~ msgid "OpenID Signup"
+#~ msgstr "OpenID beiratkozás"
+
+#~ msgid "Sign in with OPENID"
+#~ msgstr "Jelentkezzen be OpenID-val"
+
+#~ msgid "Add location"
+#~ msgstr "Helyet ad hozzá"
+
+#~ msgid "Change location"
+#~ msgstr "Helyet változtat"
+
+#~ msgid "(not calculated)"
+#~ msgstr "(nem számítják)"
+
+#~ msgid ""
+#~ "Your file does not pass by the check for correctness (msgfmt -c). Please "
+#~ "run this command on your system to see the errors."
+#~ msgstr ""
+#~ "Hiba: A beküldött PO fájl helytelen. Kérem futtassa rá az „msgfmt -c” "
+#~ "parancsot, és javítsa a hibákat beküldés előtt!"
+
+#~ msgid "Sorry, an error is causing troubles to send your file."
+#~ msgstr "Sajnálom, hiba akadályozza a fájl elküldését."
 
 #~ msgid "Send confirmation"
 #~ msgstr "Küldjön megerősítést"
