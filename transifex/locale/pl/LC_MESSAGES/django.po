@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-13 15:00+0000\n"
-"PO-Revision-Date: 2009-09-30 22:49+0200\n"
+"PO-Revision-Date: 2009-10-13 23:06+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <fedora-trans-pl@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -238,9 +238,8 @@ msgid "English (United Kingdom)"
 msgstr "angielski (Zjednoczone Królestwo)"
 
 #: languages/management/commands/txcreatelanguages.py:225
-#, fuzzy
 msgid "English (United States)"
-msgstr "angielski (Zjednoczone Królestwo)"
+msgstr "angielski (Stany Zjednoczone)"
 
 #: languages/management/commands/txcreatelanguages.py:233
 msgid "English (South Africa)"
@@ -455,9 +454,8 @@ msgid "Portuguese"
 msgstr "portugalski"
 
 #: languages/management/commands/txcreatelanguages.py:710
-#, fuzzy
 msgid "Portuguese (Brazilian)"
-msgstr "portugalski"
+msgstr "portugalski (brazylijski)"
 
 #: languages/management/commands/txcreatelanguages.py:719
 msgid "Romanian"
@@ -600,9 +598,8 @@ msgid "Latest components in project %s."
 msgstr "Najnowsze składniki w projekcie %s."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
-#, fuzzy
 msgid "Search for an username"
-msgstr "Wyszukanie na Picasa Web"
+msgstr "Wyszukiwanie nazwy użytkownika"
 
 #: projects/forms.py:35 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
@@ -690,9 +687,8 @@ msgid "Anyone can submit"
 msgstr "Każdy może wysyłać"
 
 #: projects/models.py:101
-#, fuzzy
 msgid "Can anyone submit files to this project?"
-msgstr "Może wysyłać pliki do tego projektu"
+msgstr "Czy każdy może wysyłać pliki do tego projektu?"
 
 #: projects/models.py:103 projects/models.py:221
 #: projects/migrations/0001_initial.py:28
@@ -841,9 +837,8 @@ msgid "Must use POST to activate"
 msgstr "Należy użyć POST, aby aktywować"
 
 #: projects/views.py:364 projects/views.py:917
-#, fuzzy
 msgid "Notification is not enabled"
-msgstr "Powiadomienia nie są włączone"
+msgstr "Powiadomienie nie jest włączone"
 
 #: projects/views.py:377
 msgid "Watch this project"
@@ -871,7 +866,7 @@ msgstr ""
 
 #: projects/views.py:629
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "Ten składnik nie jest skonfigurowany do obliczania statystyk."
 
 #: projects/views.py:720
 msgid "This component does  not allow write access."
@@ -1475,47 +1470,52 @@ msgstr ""
 "s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
 "files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
-"Nowy składnik <a href=\"%(component_url)s\">%(component_name)s</a> został "
-"dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Użytkownik <a href=\"%(user_url)s\">%(user_request)s</a> uzyskał dostęp do "
+"wysyłania do projektu <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
 "access to submit files to the project <a href=\"%(project_url)s\">%(project)"
 "s</a> denied"
 msgstr ""
-"Nowy składnik <a href=\"%(component_url)s\">%(component_name)s</a> został "
-"dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Żądanie użytkownika <a href=\"%(user_url)s\">%(user_request)s</a> dostępu do "
+"wysyłania plików do projektu <a href=\"%(project_url)s\">%(project)s</a> "
+"zostało odmówione"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Withdrawn own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
-msgstr "Nowy projekt <a href=\"%(project_url)s\">%(project)s</a> został dodany"
+msgstr ""
+"Wycofano własne żądanie dostępu do wysyłania plików do projektu <a href=\"%"
+"(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Requested access to submit files to the project <a href=\"%(project_url)s\">%"
 "(project)s</a>"
-msgstr "Nowy projekt <a href=\"%(project_url)s\">%(project)s</a> został dodany"
+msgstr "Żądany dostęp do wysyłania plików do projektu <a href=\"%"
+"(project_url)s\">%(project)s</a><a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
 "submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
 "revoked"
 msgstr ""
-"Nowy składnik <a href=\"%(component_url)s\">%(component_name)s</a> został "
-"dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Żądanie użytkownika <a href=\"%(user_url)s\">%(user_request)s</a> do dostępu "
+"do wysyłania plików do projektu <a href=\"%(project_url)s\">%(project)s</a> "
+"zostało unieważnione"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -2032,18 +2032,17 @@ msgid "Change notifications associated to your account"
 msgstr "Zmień powiadomienia powiązane z kontem"
 
 #: templates/simpleauth/signin.html:10
-#, fuzzy
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
-"<p>Proszę się zalogować za pomocą adresu e-mail lub nazwy użytkownika.<br /"
-">\n"
+"<p>Proszę się zalogować za pomocą adresu e-mail lub nazwy użytkownika.<br "
+"/>\n"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
-msgstr ""
+msgstr "Wyświetlenie ukończonych"
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -2379,7 +2378,6 @@ msgid "Resend e-mail validation"
 msgstr "Ponownie wyślij sprawdzenie adresu e-mail"
 
 #: templates/userprofile/account/email_validation_reset.html:19
-#, fuzzy
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "sign in. Insert your registered e-mail address to receive the validation e-"
@@ -2418,12 +2416,10 @@ msgid "Your e-mail was already validated"
 msgstr "Adres e-mail został już sprawdzony"
 
 #: templates/userprofile/account/login.html:5
-#, fuzzy
 msgid "User sign in"
-msgstr "Login użytkownika"
+msgstr "Zalogowanie użytkownika"
 
 #: templates/userprofile/account/login.html:19
-#, fuzzy
 msgid "Enter your username and password to sign in."
 msgstr "Proszę podać nazwę użytkownika i hasło, aby się zalogować."
 
@@ -2585,7 +2581,7 @@ msgstr ""
 "ukończyć proces rejestracji."
 
 #: templates/userprofile/account/registration_done.html:15
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">sign in page</a> to authenticate and start using this site."
@@ -2935,14 +2931,14 @@ msgid "Go to this component page"
 msgstr "Przejdź do strony tego składnika"
 
 #: translations/templates/pofile_lock.html:15
-#, fuzzy
 msgid "Unlock this file when you are finished working with it."
-msgstr "Należy odblokować ten plik po skończeniu nad nim pracy."
+msgstr "Należy odblokować ten plik po ukończeniu nad nim pracy."
 
 #: translations/templates/pofile_lock.html:21
-#, fuzzy, python-format
+#, python-format
 msgid "User '%(owner)s' has locked this file indicating he's working on it."
-msgstr "Ten plik jest zablokowany, co wskazuje że ktoś nad nim pracuje."
+msgstr ""
+"Użytkownik \"%(owner)s\" zablokował ten plik, wskazując że nad nim pracuje."
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
@@ -2950,7 +2946,6 @@ msgstr ""
 "Można zablokować ten plik, aby powiadomić innych, że nad nim pracujesz."
 
 #: translations/templates/pofile_lock.html:30
-#, fuzzy
 msgid "This file is unlocked. Most likely no one is working with it right now."
 msgstr ""
 "Ten plik jest odblokowany. Najprawdopodobniej nikt teraz nad nim nie pracuje."
@@ -3098,46 +3093,48 @@ msgstr "kiedy projekt został usunięty"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
-msgstr ""
+msgstr "Zażądano dostępu do wysyłania do projektu"
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when an user request access to submit files to a project"
-msgstr "Może wysyłać pliki do tego projektu"
+msgstr "kiedy użytkownik żąda dostępu do wysyłania plików do projektu"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
-msgstr ""
+msgstr "Odmówiono dostępu do wysyłania do projektu"
 
 #: txcommon/notifications.py:42
 msgid "when a maintainer denies access to an user to submit files to a project"
 msgstr ""
+"kiedy opiekun odmawia dostępu użytkownikowi do wysyłania plików do projektu"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
-msgstr ""
+msgstr "Wycofano żądanie dostępu do projektu"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr "Użytkownicy z zagwarantowanym dostępem do wysyłania plików:"
+msgstr ""
+"kiedy użytkownik wycofuje żądanie dostępu do wysyłania plików do projektu"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr ""
+msgstr "Nadano dostęp do wysyłania do projektu"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants access to an user to submit files to a project"
 msgstr ""
+"kiedy opiekun nadaje dostęp użytkownikowi do wysyłania plików do projektu"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr ""
+msgstr "Unieważniono dostęp do wysyłania do projektu"
 
 #: txcommon/notifications.py:66
 msgid ""
 "when a maintainer revokes the access of an user to submit files to a project"
 msgstr ""
+"kiedy opiekun unieważnia dostęp użytkownikowi do wysyłania plików do projektu"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3314,9 +3311,8 @@ msgid "You removed the permission request."
 msgstr "Usunięto żądanie pozwolenia."
 
 #: vcs/forms.py:56
-#, fuzzy
 msgid "This type of repository does not accept branch"
-msgstr "Ten typ repozytorium wymaga gałęzi"
+msgstr "Ten typ repozytorium nie akceptuje gałęzi"
 
 #: vcs/models.py:48
 msgid "Branch"
@@ -3348,267 +3344,20 @@ msgid "vcsunits"
 msgstr "jednostki VCS"
 
 #: webtrans/fields.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "The %s fields should be filled."
-msgstr "%s zostało usunięte."
+msgstr "Pola %s powinny zostało wypełnione."
 
 #: webtrans/wizards.py:202
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
-msgstr ""
+msgstr "Nic nie wysłano, ponieważ nie zmieniono nic w formie tłumaczenia."
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
-msgstr ""
+msgstr "Wstecz"
 
 #: webtrans/templates/pagination.html:49
 msgid "Next"
-msgstr ""
-
-#~ msgid "Brazilian Portuguese"
-#~ msgstr "portugalski brazylijski"
-
-#~ msgid "Does anyone can submit translations to this project?"
-#~ msgstr "Czy każdy może wysyłać tłumaczenie do tego projektu?"
-
-#~ msgid "Change my email"
-#~ msgstr "Zmień adres e-mail"
-
-#~ msgid "Change email address"
-#~ msgstr "Zmień adres e-mail"
-
-#~ msgid ""
-#~ "This is where you can change the email address associated with your "
-#~ "account.\n"
-#~ "Please keep this email address up to date so we can send you a password-"
-#~ "reset email if you request one."
-#~ msgstr ""
-#~ "Tutaj można zmienić adres e-mail powiązany z kontem.\n"
-#~ "Proszę utrzymywać aktualny adres e-mail, aby można było wysyłać wiadomość "
-#~ "e-mail przywracania hasła, jeśli zostanie zażądany."
-
-#~ msgid "Please correct errors below:"
-#~ msgstr "Proszę poprawić poniższe błędy:"
-
-#~ msgid "Email"
-#~ msgstr "Adres e-mail"
-
-#~ msgid "Password"
-#~ msgstr "Hasło"
-
-#~ msgid "Change email"
-#~ msgstr "Zmień adres e-mail"
-
-#~ msgid "Change OpenID"
-#~ msgstr "Zmień OpenID"
-
-#~ msgid "Change my OpenID"
-#~ msgstr "Zmień OpenID"
-
-#~ msgid ""
-#~ "This is where you can change the OpenID URL associated with your account."
-#~ msgstr "Tutaj można zmienić adres URL OpenID powiązany z kontem."
-
-#~ msgid "OpenID URL:"
-#~ msgstr "Adres URL OpenID:"
-
-#~ msgid "Change my password"
-#~ msgstr "Zmień hasło"
-
-#~ msgid "You can use the following form to change your password."
-#~ msgstr "Można użyć poniższego formularza, aby zmienić hasło."
-
-#~ msgid "Current password"
-#~ msgstr "Bieżące hasło"
-
-#~ msgid "New password"
-#~ msgstr "Nowe hasło"
-
-#~ msgid "New password again"
-#~ msgstr "Ponownie nowe hasło"
-
-#~ msgid "OpenID verification"
-#~ msgstr "Sprawdzanie OpenID"
-
-#~ msgid "Your OpenID is verified! "
-#~ msgstr "OpenID zostało sprawdzone. "
-
-#~ msgid ""
-#~ "\n"
-#~ "\t<p>Your OpenID can now be associated with a new or existing membership. "
-#~ "You can change the association later in your preferences.</p>\n"
-#~ "\t"
-#~ msgstr ""
-#~ "\n"
-#~ "\t<p>OpenID może teraz zostać powiązane z nowym lub istniejącym "
-#~ "członkostwem. Można później zmienić powiązanie w preferencjach.</p>\n"
-#~ "\t"
-
-#~ msgid "Associate your OpenID"
-#~ msgstr "Powiąż OpenID"
-
-#~ msgid ""
-#~ "\n"
-#~ "\t<p>If you're joining for the first time, associate your OpenID with a "
-#~ "new account. If you're already a member, associate with your existing "
-#~ "account.</p>\n"
-#~ "\t"
-#~ msgstr ""
-#~ "\n"
-#~ "\t<p>Jeśli użytkownik dołącza po raz pierwszy, powinien powiązać OpenID z "
-#~ "nowym kontem. Jeśli jest już członkiem, powinien powiązać z istniejącym "
-#~ "kontem.</p>\n"
-#~ "\t"
-
-#~ msgid "A new account"
-#~ msgstr "Nowe konto"
-
-#~ msgid "An exisiting account"
-#~ msgstr "Istniejące konto"
-
-#~ msgid "Delete my account"
-#~ msgstr "Usuń konto"
-
-#~ msgid "Delete account"
-#~ msgstr "Usuń konto"
-
-#~ msgid ""
-#~ "Note: After deleting your account, anyone will be able to register this "
-#~ "username."
-#~ msgstr ""
-#~ "Uwaga: po usunięciu konta, każdy będzie mógł się zarejestrować za pomocą "
-#~ "tej nazwy użytkownika."
-
-#~ msgid "Check the confirm box, if you really want to delete your account."
-#~ msgstr ""
-#~ "Proszę sprawdzić pole potwierdzenia, jeśli konto na pewno ma zostać "
-#~ "usunięte."
-
-#~ msgid "Password:"
-#~ msgstr "Hasło:"
-
-#~ msgid "I am sure I want to delete my account."
-#~ msgstr "Jestem pewny, że chcę usunąć konto."
-
-#~ msgid "Password or OpenID URL"
-#~ msgstr "Hasło lub adres URL OpenID"
-
-#~ msgid "(required for your security)"
-#~ msgstr "(wymagane dla bezpieczeństwa)"
-
-#~ msgid "Delete account permanently"
-#~ msgstr "Trwale usuń konto"
-
-#~ msgid "Or, with your OpenID:"
-#~ msgstr "Lub za pomocą OpenID:"
-
-#~ msgid "Sign in with OpenID"
-#~ msgstr "Zaloguj się za pomocą OpenID"
-
-#~ msgid "I lost my password!"
-#~ msgstr "Zgubiłem hasło."
-
-#~ msgid ""
-#~ "No worries! Here you can ask to reset your password by entering the "
-#~ "username you use. You will then get a confirmation email with your new "
-#~ "password. The new password will be activated only after you have clicked "
-#~ "on the link in the email."
-#~ msgstr ""
-#~ "Bez obaw! Tutaj można poprosić o przywrócenie hasła przez podanie "
-#~ "używanej nazwy użytkownika. Użytkownik otrzyma wiadomość e-mail z "
-#~ "potwierdzeniem i nowym hasłem. Nowe hasło zostanie aktywowane tylko, "
-#~ "jeśli odnośnik w tej wiadomości e-mail zostanie naciśnięty."
-
-#~ msgid "Send new password"
-#~ msgstr "Wyślij nowe hasło"
-
-#~ msgid "This is where you can make changes to your account."
-#~ msgstr "Tutaj można wprowadzać zmiany w koncie."
-
-#~ msgid "Give your  account a new password."
-#~ msgstr "Załóż nowe hasło konta."
-
-#~ msgid "Add or update the email address associated with your account."
-#~ msgstr "Dodaj lub zaktualizuj adres e-mail powiązany z kontem."
-
-#~ msgid "Change openid url"
-#~ msgstr "Zmień adres URL OpenID"
-
-#~ msgid "Change openid associated to your account"
-#~ msgstr "Zmień OpenID powiązane z kontem"
-
-#~ msgid "Erase your username and all your data from website"
-#~ msgstr "Usuń nazwę użytkownika i wszystkie dane ze strony WWW"
-
-#~ msgid "Login"
-#~ msgstr "Zaloguj się"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>Please login in with your email or screen name, or using your OpenID "
-#~ "URL.<br />\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>Proszę zalogować się za pomocą adresu e-mail lub nazwy użytkownika, "
-#~ "albo za pomocą adresu URL OpenID.<br />\n"
-
-#~ msgid "Join us"
-#~ msgstr "Dołącz do nas"
-
-#~ msgid "Create your account"
-#~ msgstr "Utwórz konto"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>There are two ways to join: with an email and screen name or with an "
-#~ "OpenID.</p>\n"
-#~ "<p>Enter information only for the type of sign up you wish to do.</p>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>Są dwa sposoby dołączenia: za pomocą adresu e-mail i nazwy "
-#~ "użytkownika, albo za pomocą OpenID.</p>\n"
-#~ "<p>Proszę podać informacje tylko dla jednego typu rejestracji.</p>\n"
-
-#~ msgid "Regular Signup"
-#~ msgstr "Zwykła rejestracja"
-
-#~ msgid "Choose a Screen Name:"
-#~ msgstr "Proszę wybrać nazwę użytkownika:"
-
-#~ msgid "Enter Your Email Address:"
-#~ msgstr "Proszę podać adres e-mail:"
-
-#~ msgid "Choose a Password:"
-#~ msgstr "Proszę wybrać hasło:"
-
-#~ msgid "Confirm Your Password:"
-#~ msgstr "Potwierdzenie hasła:"
-
-#~ msgid "JOIN FREE"
-#~ msgstr "DOŁĄCZ ZA DARMO"
-
-#~ msgid "OpenID Signup"
-#~ msgstr "Rejestracja OpenID"
-
-#~ msgid "Sign in with OPENID"
-#~ msgstr "Zarejestruj się za pomocą OpenID"
-
-#~ msgid "Add location"
-#~ msgstr "Dodaj położenie"
-
-#~ msgid "Change location"
-#~ msgstr "Zmień położenie"
-
-#~ msgid "(not calculated)"
-#~ msgstr "(nie obliczono)"
-
-#~ msgid ""
-#~ "Your file does not pass by the check for correctness (msgfmt -c). Please "
-#~ "run this command on your system to see the errors."
-#~ msgstr ""
-#~ "Plik nie przechodzi sprawdzenia poprawności (msgfmt -c). Proszę wykonać "
-#~ "te polecenie w systemie, aby zobaczyć błędy."
-
-#~ msgid "Sorry, an error is causing troubles to send your file."
-#~ msgstr "Błąd powoduje problemy podczas wysyłania pliku."
+msgstr "Dalej"
