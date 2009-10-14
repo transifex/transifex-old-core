@@ -140,16 +140,22 @@ class GitBrowser(BrowserMixin):
 
     @need_repo
     def submit(self, files, msg, user):
-
+        """
+        git add <filename>
+        git commit -m <msg> --author=<user> <filename>
+        """
+        filenames = []
         for fieldname, uploadedfile in files.iteritems():
+            filenames.append(uploadedfile.targetfile)
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)
 
             self.repo.add(uploadedfile.targetfile)
         
-        user = self._get_user(user)
+        user = self._get_user(user).encode('utf-8')
+        files = ' '.join(filenames).encode('utf-8')
 
-        self.repo.commit(m=msg.encode('utf-8'), 
-                         author=user.encode('utf-8'))
+        self.repo.commit(files, m=msg.encode('utf-8'), author=user)
+
         self.repo.push('origin', self.branch)
 

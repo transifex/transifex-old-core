@@ -153,9 +153,15 @@ class CvsBrowser(BrowserMixin):
 
     @need_repo
     def submit(self, files, msg, user):
-
+        """
+        cvs add <filename>
+        cvs commit -m <msg> <filename>
+        cvs cvs up -PdC
+        """
         # Save contents
+        filenames = []
         for fieldname, uploadedfile in files.iteritems():
+            filenames.append(uploadedfile.targetfile)
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)
 
@@ -164,7 +170,9 @@ class CvsBrowser(BrowserMixin):
             file_status = self.repo.status(uploadedfile.targetfile)
             if file_status.find('Unknown') >= 1:
                 self.repo.add(uploadedfile.targetfile)
-        
+
+        files = ' '.join(filenames).encode('utf-8')
+
         # cvs ci files
-        self.repo.commit(m=msg.encode('utf-8'))
+        self.repo.commit(files, m=msg.encode('utf-8'))
         self.update()

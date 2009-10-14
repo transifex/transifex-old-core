@@ -2,7 +2,7 @@
 import os
 import traceback
 
-from mercurial import hg, commands, encoding
+from mercurial import hg, commands, encoding, cmdutil
 from vcs.lib.support.hg import ui
 try:
     from mercurial.repo import RepoError # mercurial-1.1.x
@@ -71,17 +71,14 @@ class HgBrowser(BrowserMixin):
         """
 
         try:
-            remote_repo, repo = hg.clone(ui, self.remote_path,
-                                         self.path)
+            remote_repo, repo = hg.clone(ui, self.remote_path, self.path)
             commands.update(repo.ui, repo, self.branch)
-            #TODO: Why is the following needed, since it's defined above?
-            repo = hg.repository(ui, self.path)
         except RepoError, e:
             # Remote repo error
             logger.error(traceback.format_exc())
             raise BrowserError, e
 
-        return repo
+        return (remote_repo, repo)
 
 
     def init_repo(self):
@@ -93,8 +90,9 @@ class HgBrowser(BrowserMixin):
         
         try:
             self.repo = hg.repository(ui, self.path)
+            self.remote_repo = hg.repository(ui, self.remote_path)
         except RepoError:
-            self.repo = self.setup_repo()
+            self.remote_repo, self.repo = self.setup_repo()
 
     def _clean_dir(self):
         """
@@ -125,7 +123,7 @@ class HgBrowser(BrowserMixin):
         """
         try:
             self._clean_dir()
-            commands.pull(self.repo.ui, self.repo, rev=None, force=False, update=True)
+            self.repo.pull(self.remote_repo)
             commands.update(self.repo.ui, self.repo, self.branch)
         except RepoError, e:
             logger.error(traceback.format_exc())
@@ -151,18 +149,23 @@ class HgBrowser(BrowserMixin):
     @need_repo
     def submit(self, files, msg, user):
         """
-        hg commit -m <msg> --addremove
+        hg commit --addremove -m <msg> --user=<user> <filename>
         hg push
         """
+        filenames = []
         for fieldname, uploadedfile in files.iteritems():
+            filenames.append(uploadedfile.targetfile)
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)
 
-        user = self._get_user(user)
+        user = self._get_user(user).encode('utf-8')
 
-        commands.commit(self.repo.ui, self.repo, 
-                        message=msg.encode('utf-8'),
-                        addremove=True, logfile=None, 
-                        user=user.encode('utf-8'),
-                        date=None)
-        commands.push(self.repo.ui, self.repo, force=False, rev=None)
+        self.repo.add(filenames)
+
+        # Ensure of committing only the right files
+        match = cmdutil.match(self.repo, filenames, default=self.path)
+        
+        self.repo.commit(msg.encode('utf-8'), user=user, match=match)
+
+        self.repo.push(self.remote_repo)
+

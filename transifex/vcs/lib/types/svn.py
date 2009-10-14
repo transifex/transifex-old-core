@@ -193,9 +193,9 @@ class SvnBrowser(BrowserMixin):
     @need_auth
     def submit(self, files, msg, user):
         """
-        update
         svn add <filename>
-        svn ci
+        svn ci -m <msg> <filename>
+        svn update
         """
         # Save contents
         for fieldname, uploadedfile in files.iteritems():

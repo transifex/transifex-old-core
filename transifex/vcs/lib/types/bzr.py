@@ -149,15 +149,17 @@ class BzrBrowser(BrowserMixin):
         bzr commit -m <msg>
         # Lightweight checkout so no push is needed
         """
+        filenames = []
         for fieldname, uploadedfile in files.iteritems():
+            filenames.append(uploadedfile.targetfile)
             self.save_file_contents(uploadedfile.targetfile,
                 uploadedfile)
 
-        # smart_add recursively checks all files in the tree
-        self.work_tree.smart_add([self.path])
+        self.work_tree.add(filenames)
         user = self._get_user(user)
         committer = '%s <%s>' % (settings.COMMITTER_NAME,
                                  settings.COMMITTER_EMAIL)
 
         self.work_tree.commit(message=msg, committer=committer,
+                              specific_files=filenames,
                               revprops={'author': user})
