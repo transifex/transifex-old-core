@@ -1,6 +1,10 @@
 import os
+from django.conf import settings
 from vcs.lib import _Repo, RepoError
 from txcommon.commands import run_command
+
+CVS_COMMAND_ENV = {'CVS_RSH': settings.CVS_RSH}
+
 
 def repository(path):
     """
@@ -23,11 +27,13 @@ def checkout(root, module, dest, branch=None, **kw):
         run_command(cmd, module, branch, d=cvs_dir, cwd=top_dir, **kw)
     return CvsRepo(dest)
 
-def _cvs_factory(cmd):
+def _cvs_factory(cmd, with_env_vars=None):
     """
     Creates instance wrapper functions for cvs command <cmd>.
     """
     def myfunc(self, *args, **kwargs):
+        if with_env_vars:
+            kwargs['env'] = CVS_COMMAND_ENV
         return self.cvs(cmd, *args, **kwargs)
     return myfunc
 
@@ -45,7 +51,7 @@ class CvsRepo(_Repo):
         return self.run(cmd, *args[1:], **kwargs)
 
     add = _cvs_factory('add')
-    commit = _cvs_factory('commit')
+    commit = _cvs_factory('commit', with_env_vars=True)
     status = _cvs_factory('status')
     up = _cvs_factory('up')
 
