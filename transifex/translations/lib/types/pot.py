@@ -208,6 +208,7 @@ class POTManager(TransManagerMixin):
         pofile = os.path.join(self.msgmerge_path, pofile)
 
         error = False
+        output = ''
         try:
             # These env vars are needed to ensure the command output be in English
             env = {'LC_ALL':'C', 'LANG':'C', 'LANGUAGE':'C'}
