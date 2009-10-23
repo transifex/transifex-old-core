@@ -42,6 +42,8 @@ def domain_from_hostname(hostname):
     'localhost'
     """
     urlparser = urlparse.urlsplit(hostname)
+    if isinstance(urlparser, tuple):
+        return '.'.join(urlparser[1].split('.')[-2:])
     return '.'.join(urlparser.hostname.split('.')[-2:])
 
 
