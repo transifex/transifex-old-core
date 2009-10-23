@@ -195,8 +195,9 @@ class TransFormWizard(SessionWizard):
         if form_list:
             po_contents = self.po_entries.__str__().encode('utf-8')
             edited_file = SimpleUploadedFile(filename, po_contents)
-            result_view = component_submit_file(request, project_slug, 
-                component_slug, filename, edited_file)
+            result_view = component_submit_file(request=request, 
+                project_slug=project_slug, component_slug=component_slug, 
+                filename=filename, submitted_file=edited_file)
         else:
             request.user.message_set.create(message = _(
                 "Nothing was sent because you haven't changed anything in the "
