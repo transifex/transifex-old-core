@@ -47,6 +47,37 @@ def domain_from_hostname(hostname):
     return '.'.join(urlparser.hostname.split('.')[-2:])
 
 
+def _exception_handler(e, default_message=None):
+    """
+    Take an exception output, usually from the pysvn client, and split it into 
+    some more detailed exceptions, if possible.
+    
+    Parameters:
+    ``e`` is a exception object
+    ``default_message`` is the message to be displayed case the handler can not
+    split the exception into something more specific. If no message is passed
+    the exception output will be used.
+    """
+    stre = str(e)
+    if 'File not found' in stre or 'path not found' in stre:
+        msg = "File not found in repo!"
+        logger.error(msg)
+        raise RepoError(msg)
+    elif 'callback_ssl_server_trust_prompt required' in stre:
+        home = os.path.expanduser('~')
+        msg = ('HTTPS certificate not accepted. Please ensure that '
+            'the proper certificate exists in %s/.subversion/auth '
+            'for the user that Transifex is running as.' % home)
+        logger.error(msg)
+        raise RepoError('HTTPS certificate not accepted.')
+    elif 'callback_get_login required' in stre:
+        msg = 'Login to the SCM server failed.'
+        logger.error(msg)
+        raise RepoError(msg)
+    else:
+        logger.error(traceback.format_exc())
+        raise RepoError(default_message or stre)
+
 class SvnBrowser(BrowserMixin):
     
     """
@@ -142,8 +173,7 @@ class SvnBrowser(BrowserMixin):
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
         except Exception, e:
-            logger.error(traceback.format_exc())
-            raise RepoError("Checkout from remote repository failed.")
+            _exception_handler(e, "Checkout from remote repository failed.")
 
 
     def _clean_dir(self):
@@ -218,25 +248,4 @@ class SvnBrowser(BrowserMixin):
             self.client.checkin(absolute_filenames, msg.encode('utf-8'))
             self.update()
         except pysvn.ClientError, e:
-            # If it's necessary to handle the following pysvn exceptions in 
-            # another place as well, it probably worth to move the following 
-            # code into a function
-            stre = str(e)
-            if 'File not found' in stre or 'path not found' in stre:
-                msg = "File not found in repo!"
-                logger.error(msg)
-                raise RepoError(msg)
-            elif 'callback_ssl_server_trust_prompt required' in stre:
-                home = os.path.expanduser('~')
-                msg = ('HTTPS certificate not accepted.  Please ensure that '
-                    'the proper certificate exists in %s/.subversion/auth '
-                    'for the user that Transifex is running as.' % home)
-                logger.error(msg)
-                raise RepoError(msg)
-            elif 'callback_get_login required' in stre:
-                msg = 'Login to the SCM server failed.'
-                logger.error(msg)
-                raise RepoError(msg)
-            else:
-                logger.error(traceback.format_exc())
-                raise RepoError(stre)
+            _exception_handler(e)
