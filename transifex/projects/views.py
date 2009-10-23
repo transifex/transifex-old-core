@@ -845,8 +845,8 @@ def component_submit_file(request, project_slug, component_slug,
                                     " on your system to see the errors."))
         except StandardError, e:
             logger.debug("Error submiting translation file %s"
-                         " for %s component: %r" % (filename,
-                         component.full_name, e))
+                         " for %s component: %s" % (filename,
+                         component.full_name, str(e)))
             request.user.message_set.create(message = _(
                 "Sorry, your file could not be sent because of an error."))
 
