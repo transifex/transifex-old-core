@@ -11,9 +11,6 @@ class Command(BaseCommand):
             help='Creates or updates the message files only for the given locale (e.g. pt_BR).'),
         make_option('--domain', '-d', default='django', dest='domain',
             help='The domain of the message files (default: "django").'),
-        make_option('--verbosity', '-v', action='store', dest='verbosity',
-            default='1', type='choice', choices=['0', '1', '2'],
-            help='Verbosity level; 0=minimal output, 1=normal output, 2=all output'),
         make_option('--all', '-a', action='store_true', dest='all',
             default=False, help='Reexamines all source code and templates for new translation strings and updates all message files for all available languages.'),
         make_option('--extension', '-e', dest='extensions',
@@ -59,3 +56,13 @@ class Command(BaseCommand):
                 make_messages(locale, domain, verbosity, False, extensions)
         else:
             make_messages(locale, domain, verbosity, process_all, extensions)
+
+# Backwards compatibility
+# http://code.djangoproject.com/changeset/9110
+if not [opt for opt in Command.option_list if opt.dest=='verbosity']:
+    Command.option_list += (
+        make_option('--verbosity', '-v', action="store", dest="verbosity",
+            default='1', type='choice', choices=['0', '1', '2'],
+            help="Verbosity level; 0=minimal output, 1=normal output, 2=all output"),
+
+    )
