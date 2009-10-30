@@ -1,413 +1,42 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-import codecs
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
-from django.dispatch import Signal
-from django.views.generic import create_update, list_detail
+from django.views.generic import list_detail
 from django.utils.translation import ugettext as _
-from django.utils.datastructures import MultiValueDictKeyError
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.syndication.views import feed
 
-from codebases.forms import UnitForm
-from projects.models import Project, Component
-from projects.forms import (ProjectAccessSubForm, ProjectForm, ComponentForm, 
-                            ComponentAllowSubForm)
-from projects import signals
-from projects.permissions import ProjectPermission
-from tarball.forms import TarballSubForm
-from txcommon.log import logger
 from actionlog.models import action_logging
-from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
-from translations.lib.types.publican import PotDirError
-from translations.models import (POFile, POFileLock)
+from codebases.forms import UnitForm
 from languages.models import Language
-from txcommon.decorators import perm_required_with_403, one_perm_required_or_403
-from txcommon.forms import unit_sub_forms
-from txcommon.models import exclusive_fields, get_profile_or_user
-from txcommon.views import (json_result, json_error)
+from notification import models as notification
+from projects.models import Project, Component
+from projects.forms import ComponentForm, ComponentAllowSubForm
+from projects.permissions import *
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
-from notification import models as notification
-from vcs.forms import VcsUnitSubForm
 from submissions import submit_by_email
-from authority.models import Permission
-from authority.views import permission_denied
-from txpermissions.views import (add_permission_or_request,
-                                 approve_permission_request,
-                                 delete_permission_or_request)
+from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
+from translations.lib.types.publican import PotDirError
+from translations.models import POFile, POFileLock
+
 # Temporary
 from txcommon import notifications as txnotification
 
-def _get_project_and_permission(project_slug, permission_pk):
-    """
-    Handler to return a project and a permission instance or a 404 error, based 
-    on the slugs passed by parameter.
-    """
-    project = get_object_or_404(Project, slug=project_slug)
-    ctype = ContentType.objects.get_for_model(Project)
-    permission = get_object_or_404(Permission, object_id=project.pk, 
-                                   content_type=ctype, id=permission_pk)
-    return project, permission
-
-# Feeds
-
-def slug_feed(request, slug=None, param='', feed_dict=None):
-    """
-    Override default feed, using custom (including inexistent) slug.
-    
-    Provides the functionality needed to decouple the Feed's slug from
-    the urlconf, so a feed mounted at "^/feed" can exist.
-    
-    See also http://code.djangoproject.com/ticket/6969.
-    """
-    if slug:
-        url = "%s/%s" % (slug, param)
-    else:
-        url = param
-    return feed(request, url, feed_dict)
-
-
-# Projects
-
-
-pr_project_add = (
-    ('general',  'projects.add_project'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_add)
-def project_create(request):
-    return _project_create_update(request)
-
-
-pr_project_add_change = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.change_project'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_add_change, 
-    (Project, 'slug__exact', 'project_slug'))
-def project_update(request, project_slug):
-        return _project_create_update(request, project_slug)
-
-
-def _project_create_update(request, project_slug=None):
-
-    if project_slug:
-        project = get_object_or_404(Project, slug=project_slug)
-    else:
-        project = None
-
-    if request.method == 'POST':
-        # Access Control tab
-        if request.POST.has_key('access_control_form'):
-            anyone_subform = ProjectAccessSubForm(request.POST, instance=project)
-            if anyone_subform.is_valid():
-                anyone_subform.save()
-                # TODO: Add an ActionLog and Notification here for this action
-                return HttpResponseRedirect(request.POST['next'])
-
-        # Details tab
-        else:
-            project_form = ProjectForm(request.POST, instance=project, 
-                                    prefix='project') 
-            if project_form.is_valid(): 
-                project = project_form.save(commit=False)
-                project_id = project.id
-                project.save()
-                project_form.save_m2m()
-
-                # TODO: Not sure if here is the best place to put it
-                Signal.send(signals.post_proj_save_m2m, sender=Project, 
-                            instance=project)
-
-                # ActionLog & Notification
-                context = {'project': project}
-                if not project_id:
-                    nt = 'project_added'
-                    action_logging(request.user, [project], nt, context=context)
-                else:
-                    nt = 'project_changed'
-                    action_logging(request.user, [project], nt, context=context)
-                    if settings.ENABLE_NOTICES:
-                        txnotification.send_observation_notices_for(project, 
-                                            signal=nt, extra_context=context)
-
-                return HttpResponseRedirect(reverse('project_detail',
-                                            args=[project.slug]),)
-    else:
-        # Make the current user the maintainer when adding a project
-        if project:
-            initial_data = {}
-        else:
-            initial_data = {"maintainers": [request.user.pk]}
-
-        project_form = ProjectForm(instance=project, prefix='project',
-                                   initial=initial_data)
-
-    return render_to_response('projects/project_form_base.html', {
-        'project_form': project_form,
-        'project': project,
-    }, context_instance=RequestContext(request))
-
-
-pr_project_delete = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.delete_project'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_delete, 
-    (Project, 'slug__exact', 'project_slug'))
-def project_delete(request, project_slug):
-    project = get_object_or_404(Project, slug=project_slug)
-    if request.method == 'POST':
-        import copy
-        project_ = copy.copy(project)
-        project.delete()
-
-        request.user.message_set.create(
-            message=_("The %s was deleted.") % project.name)
-
-        # ActionLog & Notification
-        nt = 'project_deleted'
-        context={'project': project_}
-        action_logging(request.user, [project_], nt, context=context)
-
-        return HttpResponseRedirect(reverse('project_list'))
-    else:
-        return render_to_response(
-            'projects/project_confirm_delete.html', {'project': project,},
-            context_instance=RequestContext(request))
-
-
-pr_project_add_perm = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'authority.add_permission'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_add_perm, 
-    (Project, 'slug__exact', 'project_slug'))
-def project_add_permission(request, project_slug):
-    """
-    Return a view with a form for adding a permission for an user.
-    
-    This view is an abstraction of a txpermissions.views method to be able to
-    apply granular permission on it using a decorator. 
-    """
-    project = get_object_or_404(Project, slug=project_slug)
-
-    # When adding a permission it's necessary to query the user object in 
-    # order to be able to pass the extra_context for the notification/actionlog
-    try:
-        username = request.POST['user']
-        sendto = User.objects.get(username=username)
-    except (MultiValueDictKeyError, User.DoesNotExist):
-        sendto=None
-
-    notice = {
-            'type': 'project_submit_access_granted',
-            'object': project,
-            'sendto': [sendto],
-            'extra_context': {'project': project,
-                              'user_request': sendto,
-                              'user_action': request.user,
-            },
-        }
-    return add_permission_or_request(request, project, 
-        view_name='project_add_permission',
-        approved=True,
-        extra_context={
-            'project_permission': True,
-            'project': project,
-            'project_form': ProjectAccessSubForm(instance=project),
-            'notice': notice,
-        },
-        template_name='projects/project_form_base.html')
-
-
-@login_required
-def project_add_permission_request(request, project_slug):
-    """
-    Return a view with a form for adding a request of permission for an user.
-
-    This view is an abstraction of a txpermissions.views method. 
-    """
-    project = get_object_or_404(Project, slug=project_slug)
-    notice = {
-            'type': 'project_submit_access_requested',
-            'object': project,
-            'sendto': project.maintainers.all(),
-            'extra_context': {'project': project,
-                              'user_request': request.user
-            },
-        }
-    return add_permission_or_request(request, project,
-        view_name='project_add_permission_request',
-        approved=False,
-        extra_context={
-            'project_permission': True,
-            'project': project, 
-            'project_form': ProjectAccessSubForm(instance=project),
-            'notice': notice
-        },
-        template_name='projects/project_form_base.html')
-
-pr_project_approve_perm = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'authority.approve_permission_requests'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_approve_perm, 
-    (Project, 'slug__exact', 'project_slug'))
-def project_approve_permission_request(request, project_slug, permission_pk):
-    project, permission=_get_project_and_permission(project_slug, permission_pk)
-    notice = {
-            'type': 'project_submit_access_granted',
-            'object': project,
-            'sendto': [permission.user],
-            'extra_context': {'project': project,
-                              'user_request': permission.user,
-                              'user_action': request.user,
-            },
-        }
-    return approve_permission_request(request, permission,
-                                      extra_context={ 'notice': notice })
-
-
-pr_project_delete_perm = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'authority.delete_permission'),
-)
-@login_required
-@one_perm_required_or_403(pr_project_delete_perm, 
-    (Project, 'slug__exact', 'project_slug'))
-def project_delete_permission(request, project_slug, permission_pk):
-    """
-    View for deleting a permission of an user.
-
-    This view is an abstraction of a txpermissions.views method to be able to
-    apply granular permission on it using a decorator. 
-    """
-    project, permission=_get_project_and_permission(project_slug, permission_pk)
-    notice = {
-            'type': 'project_submit_access_revoked',
-            'object': project,
-            'sendto': [permission.user],
-            'extra_context': {'project': project,
-                              'user_request': permission.user,
-                              'user_action': request.user,
-            },
-        }
-    return delete_permission_or_request(request, permission, True,
-                                        extra_context={ 'notice': notice })
-
-
-@login_required
-def project_delete_permission_request(request, project_slug, permission_pk):
-    """
-    View for deleting a request of permission of an user.
-
-    This view is an abstraction of a txpermissions.views method. 
-    """
-    project, permission=_get_project_and_permission(project_slug, permission_pk)
-
-    # It's necessary to distinguinsh between maintainer and normal users that
-    # did the request
-    if request.user.id==permission.user.id:
-        notice_type = 'project_submit_access_request_withdrawn'
-        sendto = project.maintainers.all()
-    else:
-        notice_type = 'project_submit_access_request_denied'
-        sendto = [permission.user]
-
-    notice = {
-            'type': notice_type,
-            'object': project,
-            'sendto': sendto,
-            'extra_context': {'project': project,
-                              'user_request': permission.user,
-                              'user_action': request.user,
-            },
-        }
-
-    check = ProjectPermission(request.user)
-    if check.maintain(project) or \
-        request.user.has_perm('authority.delete_permission') or \
-        request.user.pk == permission.creator.pk:
-        return delete_permission_or_request(request, permission, False,
-                                            extra_context={ 'notice': notice },)
-
-
-    check = ProjectPermission(request.user)
-    if check.maintain(project) or \
-            request.user.has_perm('authority.delete_permission') or \
-            request.user.pk == permission.creator.pk:
-        return delete_permission_or_request(request, permission, False)
-
-    return permission_denied(request)
-
-@login_required
-def project_toggle_watch(request, project_slug):
-    """Add/Remove watches on a project for a specific user."""
-    if request.method != 'POST':
-        return json_error(_('Must use POST to activate'))
-
-    if not settings.ENABLE_NOTICES:
-        return json_error(_('Notification is not enabled'))
-
-    project = get_object_or_404(Project, slug=project_slug)
-    url = reverse('project_toggle_watch', args=(project_slug,))
-
-    project_signals = ['project_changed',
-                       'project_deleted',
-                       'project_component_added',
-                       'project_component_changed',
-                       'project_component_deleted']
-    try:
-        result = {
-            'style': 'watch_add',
-            'title': _('Watch this project'),
-            'project': True,
-            'url': url,
-            'error': None,
-        }
-
-        for signal in project_signals:
-            notification.stop_observing(project, request.user, signal)
-
-    except notification.ObservedItem.DoesNotExist:
-        try:
-            result = {
-                'style': 'watch_remove',
-                'title': _('Stop wathing this project'),
-                'project': True,
-                'url': url,
-                'error': None,
-            }
-
-            for signal in project_signals:
-                notification.observe(project, request.user, signal, signal)
-
-        except WatchException, e:
-            return json_error(e.message, result)
-    return json_result(result)
+from txcommon.decorators import one_perm_required_or_403
+from txcommon.forms import unit_sub_forms
+from txcommon.log import logger
+from txcommon.models import exclusive_fields, get_profile_or_user
+from txcommon.views import json_result, json_error
 
 
 # Components
-
-pr_component_add_change = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.add_component'),
-    ('general',  'projects.change_component'),
-)
 @login_required
 @one_perm_required_or_403(pr_component_add_change, 
     (Project, 'slug__exact', 'project_slug'))
@@ -558,10 +187,6 @@ def component_language_detail(request, project_slug, component_slug,
         )
 
 
-pr_component_delete = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.delete_component'),
-)
 @login_required
 @one_perm_required_or_403(pr_component_delete, 
     (Project, 'slug__exact', 'project_slug'))
@@ -590,10 +215,7 @@ def component_delete(request, project_slug, component_slug):
                                   {'component': component,},
                                   context_instance=RequestContext(request))
 
-pr_component_set_stats = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.refresh_stats'),
-)
+
 @login_required
 @one_perm_required_or_403(pr_component_set_stats, 
     (Project, 'slug__exact', 'project_slug'))
@@ -628,14 +250,11 @@ def component_set_stats(request, project_slug, component_slug):
         request.user.message_set.create(message = _(
             "This component is not configured for statistics calculation."))
 
-    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+    return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
 
-pr_component_clear_cache = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.clear_cache'),
-)
+
 @login_required
 @one_perm_required_or_403(pr_component_clear_cache, 
     (Project, 'slug__exact', 'project_slug'))
@@ -643,7 +262,7 @@ def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     component.clear_cache()
-    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+    return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
 
@@ -659,6 +278,7 @@ def component_file(request, project_slug, component_slug, filename,
     logger.debug("Requested raw file %s" % filename)
     if view:
         try:
+            import codecs
             import pygments
             import pygments.lexers
             import pygments.formatters
@@ -699,11 +319,6 @@ def component_file(request, project_slug, component_slug, filename,
     return response
 
 
-pr_component_submit_file = (
-    ('granular', 'project_perm.maintain'),
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'projects.submit_file'),
-)
 @login_required
 @one_perm_required_or_403(pr_component_submit_file, 
     (Project, 'slug__exact', 'project_slug'))
@@ -719,7 +334,7 @@ def component_submit_file(request, project_slug, component_slug,
     if not component.allows_submission:
         request.user.message_set.create(message=_("This component does " 
                             " not allow write access."))
-        return HttpResponseRedirect(reverse('projects.views.component_detail', 
+        return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                             args=(project_slug, component_slug,)))
 
     if request.method == 'POST':
@@ -727,7 +342,7 @@ def component_submit_file(request, project_slug, component_slug,
         if not request.FILES.has_key('submitted_file') and not submitted_file:
             request.user.message_set.create(message=_("Please select a " 
                                "file from your system to be uploaded."))
-            return HttpResponseRedirect(reverse('projects.views.component_detail', 
+            return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
         # For a new file
@@ -735,12 +350,12 @@ def component_submit_file(request, project_slug, component_slug,
             if not request.POST['targetfile'] and not request.POST['newtargetfile']:
                 request.user.message_set.create(message=_("Please enter" 
                                        " a target to upload the file."))
-                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
             elif request.POST['targetfile'] and request.POST['newtargetfile']:
                 request.user.message_set.create(message=_("Please enter" 
                                        " only ONE target to upload the file."))
-                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
             else:
                 if request.POST['targetfile']:
@@ -752,13 +367,13 @@ def component_submit_file(request, project_slug, component_slug,
                 request.user.message_set.create(message=_("The target " 
                                        "file does not match with the "
                                        "component file filter"))
-                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
             if not request.POST['message']:
                 request.user.message_set.create(message=
                     _("Enter a commit message"))
-                return HttpResponseRedirect(reverse('projects.views.component_detail', 
+                return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
         if not submitted_file:
@@ -853,16 +468,10 @@ def component_submit_file(request, project_slug, component_slug,
     else:
         request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
-    return HttpResponseRedirect(reverse('projects.views.component_detail', 
+    return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
 
-pr_component_lock_file = (
-    ('granular', 'project_perm.maintain'),
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'translations.add_pofilelock'),
-    ('general',  'translations.delete_pofilelock'),
-)
 @login_required
 @one_perm_required_or_403(pr_component_lock_file, 
     (Project, 'slug__exact', 'project_slug'))
@@ -895,15 +504,10 @@ def component_toggle_lock_file(request, project_slug, component_slug,
     try:
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     except:
-        return HttpResponseRedirect(reverse('projects.views.component_detail',
+        return HttpResponseRedirect(reverse('projects.views.component.component_detail',
                                         args=(project_slug, component_slug,)))
 
 
-pr_component_watch_file = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'repowatch.add_watch'),
-    ('general',  'repowatch.delete_watch'),
-)
 @login_required
 @one_perm_required_or_403(pr_component_watch_file, 
     (Project, 'slug__exact', 'project_slug'))

@@ -5,7 +5,11 @@ from tagging.views import tagged_object_list
 
 from projects.feeds import LatestProjects, ProjectFeed
 from projects.models import Project
-from projects.views import *
+from projects.permissions import pr_component_submit_file
+from projects.views.project import *
+from projects.views.component import *
+from projects.views.permission import *
+
 from txcommon.decorators import one_perm_required_or_403
 from webtrans.wizards import TransFormWizard
 
@@ -169,7 +173,7 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
             # It needs to pass through both 'login_required' and 
             # 'one_perm_required_or_403' decorators
             view = login_required(one_perm_required_or_403(
-                pr_component_submit_file, # from projects.views
+                pr_component_submit_file, # from projects.permissions
                 (Project, 'slug__exact', 'project_slug')
                 )(TransFormWizard(key=None, form_list=[]))),
             name = 'component_edit_file',),

@@ -153,7 +153,7 @@ class TransFormWizard(SessionWizard):
         Method responsible for handling the final list of validated forms, that
         actually have changed, after submitting the wizard.
         """
-        from projects.views import component_submit_file
+        from projects.views.component import component_submit_file
 
         project_slug = self.pofile.object.project.slug
         component_slug = self.pofile.object.slug
