@@ -19,7 +19,7 @@
   <p>{% trans "If you haven't validated your e-mail address yet you will not be able to sign in. Insert your registered e-mail address to receive the validation e-mail again." %}</p>
 
   <div class="generic_form">
-    <form action="" method="post" accept-charset="utf-8">
+    <form action="{% url email_validation_reset %}" method="post" accept-charset="utf-8">
     <table><tbody>
       {% form_as_table_rows form %}
     </tbody></table>
