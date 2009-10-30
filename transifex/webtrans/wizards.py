@@ -172,9 +172,6 @@ class TransFormWizard(SessionWizard):
                         msgid_value = form.cleaned_data['msgid_field_%s' % nkey]
                         entry = self.po_entries.find(unescape(msgid_value))
 
-                        #TODO: Find out why it's needed to remove it first
-                        self.po_entries.remove(entry)
-
                         msgstr_value = form.cleaned_data['msgstr_field_%s' % nkey]
                         try:
                             entry.msgstr = unescape(msgstr_value);
@@ -189,8 +186,6 @@ class TransFormWizard(SessionWizard):
                         else:
                             if 'fuzzy' in entry.flags:
                                 entry.flags.remove('fuzzy')
-
-                        self.po_entries.append(entry)
 
         if form_list:
             po_contents = self.po_entries.__str__().encode('utf-8')
