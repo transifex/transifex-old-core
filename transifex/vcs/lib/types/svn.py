@@ -125,16 +125,11 @@ class SvnBrowser(BrowserMixin):
         operations, taken from the configuration settings.
         """
         domain = domain_from_hostname(self.root)
-        credentials = SVN_CREDENTIALS.get(domain, None)
-        
-        if not credentials:
-            msg = "Credentials not found for the domain: %s" % domain
-            logger.error(msg)
-            raise RepoError(msg)
+        username, passwd = SVN_CREDENTIALS.get(domain, (None, None))
 
         self.client.set_auth_cache(False)
-        self.client.set_default_username(credentials[0])
-        self.client.set_default_password(credentials[1])
+        self.client.set_default_username(username)
+        self.client.set_default_password(passwd)
 
     @property
     def remote_path(self):
@@ -163,7 +158,7 @@ class SvnBrowser(BrowserMixin):
         # we're calling in the following method (client.checkout).
         self.init_repo()
 
-
+    @need_auth
     def init_repo(self):
         """Initialize the ``client`` variable on the browser."""
         try:
