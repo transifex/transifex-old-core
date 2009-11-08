@@ -109,7 +109,7 @@
     <tr>
       <th class="i16 release">{% blocktrans count releases|length as counter %}Release:{% plural %}Releases:{% endblocktrans %}</th>
       <td class="compact">
-        {% for release in releases|slice:"0:6" %}<a class="release" href="{% url collection_release_detail slug=release.collection.slug release_slug=release.slug %}">{{ release }}</a> {% endfor %}
+        {% for release in releases|slice:"0:6" %}<a class="release" href="{% url release_detail slug=release.project.slug release_slug=release.slug %}">{{ release }}</a> {% endfor %}
       </td>
     </tr>
     {% endif %}

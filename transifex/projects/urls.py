@@ -9,6 +9,7 @@ from projects.permissions import pr_component_submit_file
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
+from projects.views.release import *
 
 from txcommon.decorators import one_perm_required_or_403
 from webtrans.wizards import TransFormWizard
@@ -80,6 +81,7 @@ urlpatterns += patterns('',
         view = project_toggle_watch,
         name = 'project_toggle_watch',),
 )
+      
 
 urlpatterns += patterns('django.views.generic',
     url(
@@ -99,6 +101,7 @@ urlpatterns += patterns('django.views.generic',
              template_object_name='project'),
         name='project_tag_list'),
 )
+      
 
 
 # Components
@@ -163,6 +166,28 @@ urlpatterns += patterns('',
         view = component_detail,
         name = 'component_detail'),
 )
+      
+
+# Releases
+urlpatterns += patterns('',
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/$',
+        view = release_detail,
+        name = 'release_detail'),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/add-release/$',
+        view = release_create_update,
+        name = 'release_create',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<release_slug>[-\w]+)/edit/$',
+        view = release_create_update,
+        name = 'release_edit',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/delete/$',
+        view = release_delete,
+        name = 'release_delete',),
+)
+      
 
 #TODO: Make this setting work throughout the applications
 if getattr(settings, 'ENABLE_WEBTRANS', True):

@@ -70,3 +70,17 @@ pr_component_watch_file = (
     ('general',  'repowatch.add_watch'),
     ('general',  'repowatch.delete_watch'),
 )
+
+
+# Release permissions required
+
+pr_release_add_change = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.add_release'),
+    ('general',  'projects.change_release'),
+)
+
+pr_release_delete = (
+    ('granular', 'project_perm.maintain'),
+    ('general',  'projects.delete_release'),
+)

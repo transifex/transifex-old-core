@@ -118,6 +118,16 @@ def release_stats_table(stats, collection, release):
             'collection': collection,
             'release': release}
 
+@register.inclusion_tag("release_stats_table.html")
+def release_stats_table(stats, project, release):
+    """
+    Create a HTML table to presents the statistics of all languages 
+    for a specific release.
+    """
+    return {'stats': key_sort(stats, 'language.name', '-trans_perc'),
+            'project': project,
+            'release': release}
+
 @register.inclusion_tag("comp_lang_stats_table.html", takes_context=True)
 def comp_lang_stats_table(context, stats):
     """
