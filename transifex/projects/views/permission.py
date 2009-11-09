@@ -70,10 +70,10 @@ def project_add_permission(request, project_slug):
         extra_context={
             'project_permission': True,
             'project': project,
-            'project_form': ProjectAccessSubForm(instance=project),
+            'project_permission_form': ProjectAccessSubForm(instance=project),
             'notice': notice,
         },
-        template_name='projects/project_form_base.html')
+        template_name='projects/project_form_permissions.html')
 
 
 @login_required
@@ -98,10 +98,10 @@ def project_add_permission_request(request, project_slug):
         extra_context={
             'project_permission': True,
             'project': project, 
-            'project_form': ProjectAccessSubForm(instance=project),
+            'project_permission_form': ProjectAccessSubForm(instance=project),
             'notice': notice
         },
-        template_name='projects/project_form_base.html')
+        template_name='projects/project_form_permissions.html')
 
 
 @login_required

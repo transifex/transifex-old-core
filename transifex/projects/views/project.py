@@ -84,7 +84,7 @@ def _project_create_update(request, project_slug=None):
         project_form = ProjectForm(instance=project, prefix='project',
                                    initial=initial_data)
 
-    return render_to_response('projects/project_form_base.html', {
+    return render_to_response('projects/project_form.html', {
         'project_form': project_form,
         'project': project,
     }, context_instance=RequestContext(request))

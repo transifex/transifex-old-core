@@ -1,0 +1,58 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+
+{% block extra_head %}
+  <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/ui.tabs.outside.css" />
+  <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.autocomplete.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
+  {% if project %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
+  {% endif %}
+  
+<script type="text/javascript">
+$(document).ready(
+    function ()
+    {
+        $("#id_anyone_submit").change(function(){
+            $(this).parents("form").submit();
+            })
+    }
+);
+</script>
+{% endblock %}
+
+{% block content_title %}
+{% if project %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+<div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+  <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+
+    <li class="ui-state-default ui-corner-top {% if project_overview %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-1" href="{% url project_detail slug=project.slug %}">
+         <span>{% trans "Overview" %}</span>
+       </a>
+    </li>
+
+    {% if request.user.is_authenticated %}
+    <li class="ui-state-default ui-corner-top {% if project_permission_form %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-3" href="{% if is_maintainer %}{% txadd_url_for_obj project %}{% else %}{% txrequest_url_for_obj project %}{% endif %}">
+         <span>{% trans "Access Control" %}</span>
+       </a>
+    </li>
+    {% endif %}
+
+  </ul>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content_main %}
+
+{% endblock %}

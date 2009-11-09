@@ -18,6 +18,12 @@ project_list = {
     'template_object_name': 'project',
 }
 
+project_detail = {
+    'extra_context': {'project_overview': True},
+}
+project_detail.update(project_list)
+
+
 feeds = {
     'latest': LatestProjects,
     'project': ProjectFeed,
@@ -86,7 +92,7 @@ urlpatterns += patterns('django.views.generic',
         regex = '^p/(?P<slug>[-\w]+)/$',
         view = 'list_detail.object_detail',
         name = 'project_detail',
-        kwargs = project_list,),
+        kwargs = project_detail),
     url (
         regex = '^$',
         view = 'list_detail.object_list',

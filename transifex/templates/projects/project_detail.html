@@ -1,4 +1,4 @@
-{% extends "projects/base.html" %}
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load markup %}
 {% load txcommontags %}
@@ -9,11 +9,6 @@
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
-
-{% block extra_head %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
-{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
@@ -31,11 +26,10 @@
   {% endif %}
   {% endwith %}
 
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   {% if perms.projects.change_project or is_maintainer %}
   <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
-  
+
   <div class="details separate">
 
   {% if project.homepage or project.tags or project.collections.all %}
@@ -133,7 +127,6 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
     {% if perms.projects.delete_project or is_maintainer %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>

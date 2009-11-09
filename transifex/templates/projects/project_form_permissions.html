@@ -1,10 +1,14 @@
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
 
-<div id="tab-1"></div>
-<div id="tab-2">
+{% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+
+{% block content_main %}
 
 {% if approved %}
   <h3>{% trans "Give access to a translator to send translations to your project" %}</h3>
@@ -15,13 +19,15 @@
 {% get_permission "project_perm.submit_file" for request.user and project as "can_submit_file" %}
 {% get_permission_request "project_perm.submit_file" for request.user and project as "can_submit_file_request" %}
 
+<div class="project_create generic_form">
+
 {% if is_maintainer %}
 <div class="separate">
     <form name="anyone_submit_form" action='{% url project_edit project.slug %}' method='post' class="microform">
     <input type="hidden" name="next" value="{{ request.path }}"/>
     <table>
         <tbody>
-        {% form_as_table_rows project_form %}
+        {% form_as_table_rows project_permission_form %}
         </tbody>
     </table>
     </form>
@@ -70,5 +76,7 @@
 {% endif %}
 
 {% endif %}
+
 </div>
+{% endblock %}
 
