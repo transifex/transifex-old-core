@@ -89,8 +89,13 @@ def add_permission_or_request(request, obj, view_name, approved=False,
                 # ActionLog & Notification
                 _send_notice_save_action(request, extra_context['notice'])
 
-            request.user.message_set.create(
-                message=_('You added a permission request.'))
+            if approved:
+                msg = _('You added a permission.')
+            else:
+                msg = _('You added a permission request.')
+
+            request.user.message_set.create(message=msg)
+
             return HttpResponseRedirect(next)
     else:
         form = None
