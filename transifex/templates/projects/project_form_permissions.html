@@ -1,5 +1,6 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
+{% load pagination_tags %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
@@ -53,11 +54,18 @@
 
 {% get_permission_requests project as "all_permission_requests" %}
 {% if all_permission_requests %}
-<div class="separate">
+<div class="permission_list separate ">
 <h4>{% trans "Pending requests:" %}</h4>
 <ul>
-{% for perm in all_permission_requests %}
-    <li>{{ perm.user }} {% txpermission_request_approve_form project perm %} {% txpermission_request_delete_form project perm %}</li>
+{% for perm in all_permission_requests|dictsort:"user.username" %}
+    <li>
+        <a href="{% url profile_public perm.user.username %}">{{ perm.user }}</a>
+        {% if can_submit_file %}
+          <span>- {{perm.user.email|mungify}}</span>
+        {% endif %}
+        {% txpermission_request_approve_form project perm %} 
+        {% txpermission_request_delete_form project perm %}
+    </li>
 {% endfor %}
 </ul>
 </div>
@@ -65,13 +73,21 @@
 
 {% get_permissions project as "all_permissions" %}
 {% if all_permissions %}
-<div class="separate">
+{% autopaginate all_permissions 20 %}
+<div class="permission_list separate">
 <h4>{% trans "Users with guaranteed access to submit files:" %}</h4>
 <ul>
-{% for perm in all_permissions %}
-    <li>{{ perm.user }} {% txpermission_delete_form project perm %}</li>
+{% for perm in all_permissions|dictsort:"user.username" %}
+    <li>
+        <a href="{% url profile_public perm.user.username %}">{{ perm.user }}</a> 
+        {% if can_submit_file %}
+          <span>- {{perm.user.email|mungify}}</span>
+        {% endif %}
+        {% txpermission_delete_form project perm %}
+    </li>
 {% endfor %}
 </ul>
+<div class="pagination bottom">{% paginate %}</div>
 </div>
 {% endif %}
 
