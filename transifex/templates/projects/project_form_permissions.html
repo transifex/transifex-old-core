@@ -18,6 +18,7 @@
 {% endif %}
 
 {% get_permission "project_perm.submit_file" for request.user and project as "can_submit_file" %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 {% get_permission_request "project_perm.submit_file" for request.user and project as "can_submit_file_request" %}
 
 <div class="project_create generic_form">
