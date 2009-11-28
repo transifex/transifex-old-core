@@ -21,7 +21,7 @@
    <tbody>
    {% for stat in stats %} 
       <tr class="{% number_range stat.trans_perc %}">
-        <td class="left name" id="{{stat.language_code}}" name="{{stat.language_code}}">
+        <td class="left name" id="{{stat.language_code}}">
           {% if stat.language %}
               <a href="{{stat.language.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
           {% else %}
@@ -33,7 +33,7 @@
         </td>
         {% with 140 as barwidth %}
         <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
-          <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}% <span class='trans_detail'>({{stat.trans}}/{{stat.fuzzy}}/{{stat.untrans}})<span></div> 
+          <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}% <span class='trans_detail'>({{stat.trans}}/{{stat.fuzzy}}/{{stat.untrans}})</span></div> 
           {% stats_bar_full stat barwidth %}
         </td>
         {% endwith %}
