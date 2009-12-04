@@ -109,6 +109,10 @@ class SvnBrowser(BrowserMixin):
         if not name:
             name = root.split('/')[-1]
 
+        # Handle SSL warnings
+        def _ssl_server_trust_prompt(trust_data):
+            return True, trust_data['failures'], True
+
         self.root = root
         self.name = name
         self.branch = branch
@@ -120,7 +124,8 @@ class SvnBrowser(BrowserMixin):
             [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
         self.client = pysvn.Client()
-
+        self.client.callback_ssl_server_trust_prompt = _ssl_server_trust_prompt
+        
     def _authenticate(self):
         """
         Authentication for SVN repositories.
