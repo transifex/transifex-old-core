@@ -1,0 +1,130 @@
+{% extends "projects/project_detail_childs.html" %}
+{% load i18n %}
+{% load txcommontags %}
+
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript">
+  $(document).ready(function() { 
+      $(".tablesorter").tablesorter(); 
+  }); 
+  </script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }} | {% trans "Reviews" %}{% endwith %}{% endblock %}
+
+{% block breadcrumb %}{% with component.project as project %}{{ block.super }} &raquo; <a href="{% url component_detail component.project.slug component.slug %}">{{ component.name }}</a> &raquo; {% trans "Reviews" %}{% endwith %}{% endblock %}
+
+
+{% block content_title %}
+<h2 class="pagetitle">{% trans "Requests" %}</h2>
+{% endblock %}
+
+{% block content %}
+  <h2>{% trans "Open Requests" %}</h2>
+
+{% for review in component.reviews.open_reviews.all %}
+{% with review.id as review_id %}
+{% url review_modify review_id as modify_url %}
+
+<h3>{% blocktrans %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
+ <table class="definition">
+  <tbody>
+    <tr>
+      <th class="i16 filter">{% trans "Description" %}</th>
+      <td>{{ review.description }}</td>
+    </tr>
+    <tr>
+      <th class="i16 action">{% trans "Who and when" %}</th>
+      <td>{% blocktrans with review.author as author and review.created_on|timesince as time_since %}{{ author }}, {{ time_since }} ago{% endblocktrans %}</td>
+    </tr>
+    <tr>
+      <th class="i16 submit_file">{% trans "File" %}</th>
+      <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
+    </tr>
+    <tr>
+      <th class="i16 status">{% trans "Status" %}</th>
+      <td>
+        {{ review.get_status_display }}
+        {% ifnotequal review.resolution 'N' %}({{ review.get_resolution_display }}){% endifnotequal %}
+        {% if request.user.is_authenticated and perms.reviews.change_review %}
+{% endif %}
+      </td>
+    </tr>
+{% if request.user.is_authenticated and perms.reviews.change_review and review.is_open %}
+    <tr>
+      <th class="i16 reviews">{% trans "Close Review" %}</th>
+      <td>
+        <form action="{{ modify_url }}" class="microform" method='post'>
+          <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit" name="accept">
+          <input class="i16 reject" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit" name="reject">
+        </form>
+      </td>
+    </tr>
+{% endif %}
+  </tbody>
+</table>
+
+{% endwith %}
+{% endfor %}
+
+{% if not component.reviews.open_reviews %}
+  <p>{% trans "No open requests!" %}</p>
+{% endif %}
+
+
+<h2>{% trans "Closed Requests" %}</h2>
+
+{% if component.reviews.closed_reviews.all %}
+<table class="tablesorter">
+  <thead>
+    <tr>
+      <th>{% trans "ID" %}</th>
+      <th>{% trans "Author" %}</th>
+      <th>{% trans "File" %}</th>
+      <th>{% trans "Resolution" %}</th>
+      <th>{% trans "Action" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for review in component.reviews.closed_reviews.all %}
+{% with review.id as review_id %}
+{% url review_modify review_id as modify_url %}
+  <tr>
+    <td>{{ review_id }}</td>
+    <td>{{ review.author }}</td>
+    <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
+    <td>{{ review.get_resolution_display }}</td>
+    <td><form class="microform" action="{{ modify_url }}" method='post'>
+      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">
+    </form>
+    </td>
+  </tr>
+{% endwith %}
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+
+{% if not component.reviews.closed_reviews.all %}
+  <p>{% trans "No closed requests!" %}</p>
+{% endif %}
+
+
+<h2>{% trans "Request a new translation review" %}</h2>
+
+<p class="i16 tip compact clear">
+  Use the following form to upload a file and request a review
+  from another translator. He may login and review your work and provide
+  any feedback needed, or simply submit your file to the upstream project.
+</p>
+
+<div class="generic_form">
+  {% include 'reviews/review_form.html' %}
+</div>
+
+{% endblock %}
