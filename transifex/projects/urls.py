@@ -111,7 +111,8 @@ urlpatterns += patterns('django.views.generic',
         name = 'project_log',
         kwargs = {'queryset': Project.objects.all(),
                   'template_object_name': 'project',
-                  'template_name': 'projects/project_log.html'},),
+                  'template_name': 'projects/project_log.html',
+                  'extra_context': {'project_log': True},},),
 )
 
 
