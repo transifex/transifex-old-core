@@ -66,7 +66,7 @@ pr_component_lock_file = (
 )
 
 pr_component_watch_file = (
-    ('granular', 'project_perm.maintain'),
+    ('granular', 'project_perm.submit_file'),
     ('general',  'repowatch.add_watch'),
     ('general',  'repowatch.delete_watch'),
 )
