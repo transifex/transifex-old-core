@@ -14,7 +14,7 @@
 </script>
 {% endblock %}
 
-{% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Translation Teams" %}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
@@ -23,7 +23,7 @@
 
 <div class="obj_bigdetails">
 
-<h2 class="name">{% blocktrans with project.name as project_name %}{{ project_name }} Translation Teams{% endblocktrans %}</h2>
+<h2 class="name">{% trans "Translation Teams" %}</h2>
 
 {% if perms.projects.change_team or is_maintainer %}
 <div class="addteam editlinks">

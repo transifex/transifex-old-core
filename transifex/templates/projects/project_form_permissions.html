@@ -5,11 +5,14 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access Control" %}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
 {% block content_main %}
+
+<div class="obj_bigdetails">
+<h2 class="name">{% trans "Access Control" %}</h2>
 
 {% if approved %}
   <h3>{% trans "Give access to a translator to send translations to your project" %}</h3>
