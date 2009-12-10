@@ -4,6 +4,8 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
+from django.utils.translation import ugettext_lazy as _
+
 from projects.models import Project
 import txcommon
 
@@ -73,7 +75,7 @@ def render_metacount(list, countable):
                 'countable': countable}
 
 @register.inclusion_tag("common_homelink.html")
-def homelink(text="Home"):
+def homelink(text=_("Home")):
     """Return a link to the homepage."""
     return {'text': text}
 

@@ -114,7 +114,7 @@
     <p class="main-footer center">
       {% block footerlinks %}{% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Get in contact with us" %}">{% trans "Feedback" %}</a>{% endblock %}
     </p>
-    {% block powered %}<p class="powered">Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform</p>{% endblock %}
+    {% block powered %}<p class="powered">{% blocktrans %}Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform{% endblocktrans %}</p>{% endblock %}
     {% block txversionblock %}<p class="version">v{% txversion %}</p>{% endblock %}
     {% block extrafooter %}{% endblock %}
   {% endblock %}</div>
