@@ -1,6 +1,13 @@
-To build the docs, I usually do something like:
+To build the docs, you will need to have a working Transifex
+system (dependencies there, 'python manage.py shell' working).
+If you're using a virtualenv, make sure you enable it.
+
+To build/publish the docs, I usually do something like:
 
 workon current
 make clean && make html
+firefox html/index.html
+
+# Publish:
 cd html
 scpresume * txo:webapps/txo_docs/
