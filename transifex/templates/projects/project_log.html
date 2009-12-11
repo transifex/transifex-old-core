@@ -39,10 +39,10 @@
 
   <div class="pagination">{% paginate %}</div>
   
-  <table class="tablesorter compact withair">
+  <table class="tablesorter compact withair timeline">
    <thead>
     <tr>
-      <th><span class="i16 action">{% anchor action_type Action %}</span></th>
+      <th><span>{% anchor action_type # %}</span></th>
       <th><span class="i16 user">{% anchor user User %}</span></th>
       <th><span class="i16 clock">{% anchor action_time "Time" %}</span></th>
       <th><span class="i16 text">{% trans "Description" %}</span></th>
@@ -51,8 +51,8 @@
    <tbody>
 {% for entry in actionlog %}
      <tr>
-       <td><span class="i16 {{ entry.action_type_short }}">{{ entry.action_type_short }}</span></td>
-       <td>{{ entry.user }}</td>
+       <td><span class="i16 {{ entry.action_type_short }}" title="{{ entry.action_type }}"></span></td>
+       <td><a href="{% url profile_public entry.user.username %}">{{ entry.user }}</td>
        <td>{{ entry.action_time|timesince }}</td>
        <td>{{ entry.message|safe }}</td>
      </tr>
