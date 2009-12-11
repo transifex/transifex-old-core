@@ -106,7 +106,7 @@ urlpatterns += patterns('django.views.generic',
              template_object_name='project'),
         name='project_tag_list'),
     url(
-        regex = '^(?P<slug>[-\w]+)/log/$',
+        regex = '^p/(?P<slug>[-\w]+)/log/$',
         view = project_log,
         name = 'project_log',
         kwargs = {'queryset': Project.objects.all(),
