@@ -257,15 +257,15 @@ def team_join_approve(request, project_slug, language_code, username):
         if user in team.members.all() or \
             user in team.coordinators.all():
             request.user.message_set.create(message=_(
-                "User '%s' is in the '%s' team already."
-                ) % (user, team.language.name))
+                "User '%(user)s' is in the '%(team)s' team already."
+                ) % {'user':user, 'team':team.language.name})
             access_request.delete()
         try:
             team.members.add(user)
             team.save()
             request.user.message_set.create(message=_(
-                "You have added '%s' into the '%s' team."
-                ) % (user, team.language.name))
+                "You have added '%(user)s' into the '%(team)s' team."
+                ) % {'user':user, 'team':team.language.name})
             access_request.delete()
 
             # ActionLog & Notification
@@ -311,9 +311,9 @@ def team_join_deny(request, project_slug, language_code, username):
         try:
             access_request.delete()
             request.user.message_set.create(message=_(
-                "You have denied the request of the user '%s' to join the "
-                "'%s' team."
-                ) % (user, team.language.name))
+                "You have denied the request of the user '%(user)s' to join the "
+                "'%(team)s' team."
+                ) % {'user':user, 'team':team.language.name})
 
             # ActionLog & Notification
             # TODO: Use signals
@@ -509,8 +509,8 @@ def team_request_approve(request, project_slug, language_code):
             team.save()
             team_request.delete()
             request.user.message_set.create(message=_(
-                "You have approved the '%s' team requested by '%s'."
-                ) % (team_request.language.name, team_request.user))
+                "You have approved the '%(team)s' team requested by '%(user)s'."
+                ) % {'team':team.language.name, 'user':user})
             
             # ActionLog & Notification
             # TODO: Use signals
@@ -551,8 +551,8 @@ def team_request_deny(request, project_slug, language_code):
         try:
             team_request.delete()
             request.user.message_set.create(message=_(
-                "You have denied the '%s' team requested by '%s'."
-                ) % (team_request.language.name, team_request.user))
+                "You have denied the '%(team)s' team requested by '%(user)s'."
+                ) % {'team':team.language.name, 'user':user})
             
             # ActionLog & Notification
             # TODO: Use signals

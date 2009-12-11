@@ -49,7 +49,7 @@ class Team(models.Model):
         return u'%s.%s team' % (self.project.name, self.language.code)
 
     def __repr__(self):
-        return _('<Team: %s.%s>') % (self.project.slug, self.language.code)
+        return '<Team: %s.%s>' % (self.project.slug, self.language.code)
 
     class Meta:
         unique_together = ("project", "language")
@@ -81,7 +81,7 @@ class TeamRequest(models.Model):
             self.language.code)
 
     def __repr__(self):
-        return _('<TeamCreationRequest: %s.%s>') % (self.project.slug,
+        return '<TeamCreationRequest: %s.%s>' % (self.project.slug,
             self.language.code)
 
     class Meta:
@@ -118,7 +118,7 @@ class TeamAccessRequest(models.Model):
         return u'%s.%s request' % (self.team, self.user)
 
     def __repr__(self):
-        return _('<TeamAccessRequest: %s.%s>') % (self.team, self.user)
+        return '<TeamAccessRequest: %s.%s>' % (self.team, self.user)
 
     class Meta:
         unique_together = ("team", "user")
