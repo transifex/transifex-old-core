@@ -125,7 +125,7 @@
 {% endfor %}
 </ul>
 {% if perms.projects.change_project or is_maintainer %}
-  <p><span class="i16 date"><a href="{% url project_log slug=project.slug %}">{% trans "View complete action log" %}</a></span></p>
+  <p><span class="i16 date"><a href="{% url project_timeline slug=project.slug %}">{% trans "View complete action log" %}</a></span></p>
 {% endif %}
 
 {% endif %}

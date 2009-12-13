@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -7,6 +8,10 @@ from projects.models import Project
 from languages.models import Language
 from txcommon.log import logger
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from actionlog.models import LogEntry
+from txcommon.filters import LogEntryFilter
+from django.views.generic import list_detail
 
 def search(request):
     query_string = request.GET.get('q', "")
@@ -37,6 +42,23 @@ def index(request):
          'num_languages': num_languages,
          },
           context_instance = RequestContext(request))
+
+
+@login_required
+def user_timeline(request, *args, **kwargs):
+    """
+    Present a log of the latest actions of a user.
+    
+    The view limits the results and uses filters to allow the user to even
+    further refine the set.
+    """
+    log_entries = LogEntry.objects.by_user(request.user)
+    f = LogEntryFilter(request.GET, queryset=log_entries)
+
+    return render_to_response("txcommon/user_timeline.html",
+        {'f': f,
+         'actionlog': f.qs},
+        context_instance = RequestContext(request))
 
 # Ajax response
 

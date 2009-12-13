@@ -108,7 +108,7 @@ def project_update(request, project_slug):
 @login_required
 @one_perm_required_or_403(pr_project_view_log, 
     (Project, 'slug__exact', 'slug'))
-def project_log(request, *args, **kwargs):
+def project_timeline(request, *args, **kwargs):
     """
     Present a log of the latest actions on the project.
     

@@ -106,13 +106,13 @@ urlpatterns += patterns('django.views.generic',
              template_object_name='project'),
         name='project_tag_list'),
     url(
-        regex = '^p/(?P<slug>[-\w]+)/log/$',
-        view = project_log,
-        name = 'project_log',
+        regex = '^p/(?P<slug>[-\w]+)/timeline/$',
+        view = project_timeline,
+        name = 'project_timeline',
         kwargs = {'queryset': Project.objects.all(),
                   'template_object_name': 'project',
-                  'template_name': 'projects/project_log.html',
-                  'extra_context': {'project_log': True},},),
+                  'template_name': 'projects/project_timeline.html',
+                  'extra_context': {'project_timeline': True},},),
 )
 
 
