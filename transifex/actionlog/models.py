@@ -78,7 +78,13 @@ class LogEntry(models.Model):
         if self.action_time is None:
            self.action_time = datetime.datetime.now()
         super(LogEntry, self).save(*args, **kwargs)
-    
+
+    def message_safe(self):
+        """Return the message as HTML"""
+        return self.message
+    message_safe.allow_tags = True
+    message_safe.admin_order_field = 'message'
+
     @property
     def action_type_short(self):
         """
