@@ -39,8 +39,8 @@ class LogEntryManager(models.Manager):
         ctype = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
 
-    def by_user(self, user):
-        """Return LogEntries for a related user."""
+    def for_projects_by_user(self, user):
+        """Return project LogEntries for a related user."""
         ctype = ContentType.objects.get(model='project')
         return self.filter(user__pk__exact=user.pk, content_type__pk=ctype.pk)
 

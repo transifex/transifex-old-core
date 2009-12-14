@@ -52,7 +52,7 @@ def user_timeline(request, *args, **kwargs):
     The view limits the results and uses filters to allow the user to even
     further refine the set.
     """
-    log_entries = LogEntry.objects.by_user(request.user)
+    log_entries = LogEntry.objects.for_projects_by_user(request.user)
     f = LogEntryFilter(request.GET, queryset=log_entries)
 
     return render_to_response("txcommon/user_timeline.html",
