@@ -46,7 +46,7 @@ class Team(models.Model):
     objects = TeamManager()
 
     def __unicode__(self):
-        return u'%s.%s team' % (self.project.name, self.language.code)
+        return u'%s.%s' % (self.project.slug, self.language.code)
 
     def __repr__(self):
         return '<Team: %s.%s>' % (self.project.slug, self.language.code)
@@ -77,11 +77,11 @@ class TeamRequest(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u'%s.%s creation request' % (self.project.slug, 
+        return u'%s.%s' % (self.project.slug, 
             self.language.code)
 
     def __repr__(self):
-        return '<TeamCreationRequest: %s.%s>' % (self.project.slug,
+        return '<TeamRequest: %s.%s>' % (self.project.slug,
             self.language.code)
 
     class Meta:
@@ -115,7 +115,7 @@ class TeamAccessRequest(models.Model):
     objects = TeamAccessRequestManager()
 
     def __unicode__(self):
-        return u'%s.%s request' % (self.team, self.user)
+        return u'%s.%s' % (self.team, self.user)
 
     def __repr__(self):
         return '<TeamAccessRequest: %s.%s>' % (self.team, self.user)
