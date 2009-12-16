@@ -11,9 +11,11 @@ from django.utils.translation import ugettext as _
 from django.views.generic import create_update
 from django.contrib.auth.decorators import login_required
 
+from threadedcomments.forms import FreeThreadedCommentForm
+
 from projects.models import Component
 from reviews.models import POReviewRequest
-from reviews.forms import POFileSubmissionForm
+from reviews.forms import (POFileSubmissionForm, AuthenticatedCommentForm)
 from translations.models import POFile
 from txcommon.lib.storage import save_file
 
@@ -22,9 +24,14 @@ def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)      
     form = POFileSubmissionForm()
+    if request.user.is_authenticated():
+        comment_form = AuthenticatedCommentForm(request.user)
+    else:
+        comment_form = FreeThreadedCommentForm()
     return render_to_response('reviews/review_list.html', {
         'component': component,
         'form': form,
+        'comment_form': comment_form,
     }, context_instance=RequestContext(request))
 
 

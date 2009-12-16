@@ -1,6 +1,7 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
 {% load txcommontags %}
+{% load threadedcommentstags %}
 
 {% block extra_head %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
@@ -13,6 +14,38 @@
   </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+  
+  <script type="text/javascript">
+function show_reply_form(comment_id, url, person_name) {
+    var comment_reply = $('#' + comment_id);
+    var to_add = $( new Array(
+    '<div class="response"><p>Reply to ' + person_name + ':</p>',
+    '<form method="POST" action="' + url + '">',
+    '<ul>',  '{{ form.as_ul|oneline }}',
+    '<li><input type="submit" value="Submit Comment" /></li>',
+    '</ul>', '</form>', '</div>').join(''));
+    to_add.css("display", "none");
+    comment_reply.after(to_add);
+    to_add.slideDown(function() {
+        comment_reply.replaceWith(new Array('<a id="',
+        comment_id,'" href="javascript:hide_reply_form(\'',
+        comment_id, '\',\'', url, '\',\'', person_name,
+        '\')">Stop Replying</a>').join(''));
+    });
+}
+function hide_reply_form(comment_id, url, person_name) {
+    var comment_reply = $('#' + comment_id);
+    comment_reply.next().slideUp(function (){
+        comment_reply.next('.response').remove();
+        comment_reply.replaceWith(new Array('<a id="',
+        comment_id,'" href="javascript:show_reply_form(\'',
+        comment_id, '\',\'', url, '\',\'', person_name,
+        '\')">Reply</a>').join(''));
+    });
+}
+</script>
+
+
 {% endblock %}
 
 {% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }} | {% trans "Reviews" %}{% endwith %}{% endblock %}
@@ -69,6 +102,36 @@
   </tbody>
 </table>
 
+{% get_free_threaded_comment_tree for review as comment_tree %}
+{% if comment_tree %}
+<h3>Comments</h3>
+<ol class="comments">
+{% for comment in comment_tree %}
+        <li id="c{{ comment.id }}" style="margin-left: {{ comment.depth }}em;">
+                <p class="title">
+                        <a class="jump" href="#c{{ comment.id }}">#{{ forloop.counter }}</a> ~
+                        <span class="author">By {{ comment.name }}</span>
+                        ~ {{ comment.date_submitted|timesince }}
+                </p>
+                {% auto_transform_markup comment %}
+        </li>
+{% endfor %}
+</ol>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<h4 style="margin-bottom: 0;">Add your comment</h4>
+
+<fieldset class="shinyform">
+<form method="POST" action="{% get_free_comment_url review %}">
+    <ol>
+        {{ comment_form.as_ul }}
+        <li><input class="i16 comment" type="submit" value="Say it!" /></li>
+    </ol>
+</form>
+</fieldset>
+{% endif %}
+
 {% endwith %}
 {% endfor %}
 
@@ -85,9 +148,11 @@
     <tr>
       <th>{% trans "ID" %}</th>
       <th>{% trans "Author" %}</th>
-      <th>{% trans "File" %}</th>
       <th>{% trans "Resolution" %}</th>
-      <th>{% trans "Action" %}</th>
+      <th>{% trans "Attachment" %}</th>
+      {% if request.user.is_authenticated and perms.reviews.change_review %}
+        <th>{% trans "Actions" %}</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -95,12 +160,13 @@
 {% with review.id as review_id %}
 {% url review_modify review_id as modify_url %}
   <tr>
-    <td>{{ review_id }}</td>
+    <td{% if review.is_closed %} style="text-decoration: line-through;"{% endif %}>{{ review_id }}</td>
     <td>{{ review.author }}</td>
-    <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td>{{ review.get_resolution_display }}</td>
+    <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td><form class="microform" action="{{ modify_url }}" method='post'>
-      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">
+      {% if request.user.is_authenticated and perms.reviews.change_review %}
+      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">{% endif %}
     </form>
     </td>
   </tr>
@@ -114,7 +180,7 @@
   <p>{% trans "No closed requests!" %}</p>
 {% endif %}
 
-
+{% if request.user.is_authenticated and perms.reviews.add_review %}
 <h2>{% trans "Request a new translation review" %}</h2>
 
 <p class="i16 tip compact clear">
@@ -126,5 +192,6 @@
 <div class="generic_form">
   {% include 'reviews/review_form.html' %}
 </div>
+{% endif %}
 
 {% endblock %}

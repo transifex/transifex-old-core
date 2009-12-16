@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^languages/', include('languages.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ajax/', include('ajax_select.urls')),
+    url(r'^threadedcomments/', include('threadedcomments.urls')),
 )
 
 if settings.ENABLE_SIMPLEAUTH:
