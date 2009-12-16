@@ -7,6 +7,7 @@ from translations.lib.types.pot import POTManager
 from translations.models import POFile
 from languages.models import Language
 from txcommon.log import logger
+from txcommon import rst
 
 class POTHandler:
     """
@@ -119,6 +120,16 @@ class POTHandler:
     def get_stats(self):
         """Return stats for the component from the database."""
         return POFile.objects.by_object_total(self.component)
+
+    def get_rest_stats(self):
+        """Return stats for the component as a restructured text table."""
+        pofiles = self.get_stats()
+        stats = [[po.lang_or_code, po.trans_perc] for po in pofiles]
+        # Sorting the list of lists according to the second column, the completion
+        stats.sort(lambda x,y:cmp(x[1],y[1]), reverse=True)
+        #Add % simboly to the completion column after sorting it
+        stats = [[x, '%d%%' % y] for x, y in stats]
+        return rst.toTable([['Language', 'Completion']] + stats)
 
     def get_lang_stats(self, lang_code):
         """Return stats of the component in a specific language from the database."""
