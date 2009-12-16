@@ -129,7 +129,7 @@ class POTHandler:
         stats.sort(lambda x,y:cmp(x[1],y[1]), reverse=True)
         #Add % simboly to the completion column after sorting it
         stats = [[x, '%d%%' % y] for x, y in stats]
-        return rst.toTable([['Language', 'Completion']] + stats)
+        return rst.as_table([['Language', 'Completion']] + stats)
 
     def get_lang_stats(self, lang_code):
         """Return stats of the component in a specific language from the database."""
