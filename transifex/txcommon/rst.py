@@ -58,5 +58,5 @@ def strip_tags(text):
     Remove any HTML/XML-like tag from the input text.
     """
     HTMLtag = re.compile('<.*?>')  # Matches HTML tags
-    return HTMLtag.sub('', text)
+    return HTMLtag.sub('', text.replace('\n',''))
     
