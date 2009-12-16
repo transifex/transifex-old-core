@@ -8,7 +8,9 @@ from django.template.context import RequestContext
 from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext as _
 
+from authority.views import permission_denied
 from projects.models import Component
+from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 from txcommon.formtools.wizards import SessionWizard
 from webtrans.forms import TranslationForm
@@ -47,10 +49,12 @@ class TransFormWizard(SessionWizard):
 
         component = get_object_or_404(Component, slug=component_slug,
                                       project__slug=project_slug)
+        pofile = get_object_or_404(POFile, filename=filename, component=component)
+        
         step = int(request.POST.get(self.step_field_name, 0))
 
         # Initializing TranslationForm vars
-        self.pofile = POFile.objects.get(filename=filename, component=component)
+        self.pofile = pofile
         self.po_entries = component.trans.get_po_entries(filename)
         
         # Drop obsolete entries from the list
@@ -91,6 +95,13 @@ class TransFormWizard(SessionWizard):
         
         """
         self.init(request, *args, **kwargs)
+
+        # Checking permission to submit file to the related team
+        # FIXME: It's kinda redundancy, only a decorator should be enough
+        check = ProjectPermission(request.user)
+        if not check.submit_file(self.pofile):
+            return permission_denied(request)
+            
         step = self.current_step(request)
         if request.method == 'POST':
             self.store(step, request.POST, request.FILES)

@@ -11,6 +11,7 @@ from projects.permissions import pr_component_submit_file
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
+from projects.views.team import *
 
 from txcommon.decorators import one_perm_required_or_403
 from webtrans.wizards import TransFormWizard
@@ -71,18 +72,18 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/access/pm/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
         name = 'project_delete_permission'),
-    url(
-        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
-        view = project_add_permission_request,
-        name = 'project_add_permission_request'),
-    url(
-        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
-        view = project_delete_permission_request,
-        name = 'project_delete_permission_request'),
+    #url(
+        #regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
+        #view = project_add_permission_request,
+        #name = 'project_add_permission_request'),
+    #url(
+        #regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
+        #view = project_delete_permission_request,
+        #name = 'project_delete_permission_request'),
         
-    url(regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/approve/$',
-        view = project_approve_permission_request,
-        name = "project_approve_permission_request"),
+    #url(regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/approve/$',
+        #view = project_approve_permission_request,
+        #name = "project_approve_permission_request"),
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,
@@ -172,18 +173,71 @@ urlpatterns += patterns('',
         name = 'component_detail'),
 )
 
+
+# Teams
+urlpatterns += patterns('',
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/add-team/$',
+        view = team_create,
+        name = 'team_create',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/edit/$',
+        view = team_update,
+        name = 'team_update',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/$',
+        view = team_list,
+        name = 'team_list',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/$',
+        view = team_detail,
+        name = 'team_detail',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/delete/$',
+        view = team_delete,
+        name = 'team_delete',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/request/$',
+        view = team_join_request,
+        name = 'team_join_request',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/approve/(?P<username>[-\w]+)/$',
+        view = team_join_approve,
+        name = 'team_join_approve',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/deny/(?P<username>[-\w]+)/$',
+        view = team_join_deny,
+        name = 'team_join_deny',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/withdraw/$',
+        view = team_join_withdraw,
+        name = 'team_join_withdraw',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/leave/$',
+        view = team_leave,
+        name = 'team_leave',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/request-team/$',
+        view = team_request,
+        name = 'team_request',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/approve/$',
+        view = team_request_approve,
+        name = 'team_request_approve',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/deny/$',
+        view = team_request_deny,
+        name = 'team_request_deny',),
+)
+
 #TODO: Make this setting work throughout the applications
 if getattr(settings, 'ENABLE_WEBTRANS', True):
     urlpatterns += patterns('',
         url(
             regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
                     'edit/(?P<filename>(.*))$'),
-            # It needs to pass through both 'login_required' and 
-            # 'one_perm_required_or_403' decorators
-            view = login_required(one_perm_required_or_403(
-                pr_component_submit_file, # from projects.permissions
-                (Project, 'slug__exact', 'project_slug')
-                )(TransFormWizard(key=None, form_list=[]))),
+            # It needs to pass through both 'login_required'
+            view = login_required(TransFormWizard(key=None, form_list=[])),
             name = 'component_edit_file',),
         )
 

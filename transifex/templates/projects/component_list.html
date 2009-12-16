@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
-{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div id="components" class="components">
 
@@ -31,7 +30,7 @@
        {% endif %}
       </sup>
       </p>
-      <p class="description">{{ comp.description|truncatewords:"10" }}</p></li>
+      <p class="description">{{ comp.description|truncatewords:"10" }}</p>
     </div>
     {% endfor %}
   </div>
@@ -52,6 +51,6 @@
   {% endwith %}
   <p class="i16 tip compact clear">
     {% blocktrans %}<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.
-    Examples of components of a software project could be "UI" and "Docs" or development branches like <code>HEAD</code>.{% endblocktrans %}</em>
+    Examples of components of a software project could be "UI" and "Docs" or development branches like <code>HEAD</code>.{% endblocktrans %}
   </p>
 </div>

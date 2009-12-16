@@ -17,7 +17,7 @@
       {% for name, stat in comp.items %}
         {% with 140 as barwidth %}
         <td class="stats" style="width: {{ barwidth|add:"2" }}px;">
-          <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}% <span class='trans_detail'>({{stat.trans}}/{{stat.fuzzy}}/{{stat.untrans}})<span></div> 
+          <div class="stats_string_comp" title="{% trans "Trans:" %}{{stat.trans}} {% trans "Fuzzy:" %}{{stat.fuzzy}} {% trans "Untrans:" %}{{stat.untrans}}" >{{stat.trans_perc}}% <span class='trans_detail'>({{stat.trans}}/{{stat.fuzzy}}/{{stat.untrans}})</span></div> 
           {% stats_bar_trans stat barwidth %}
         </td>
         {% endwith %}

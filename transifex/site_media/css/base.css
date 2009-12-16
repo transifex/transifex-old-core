@@ -379,6 +379,9 @@ body.projects.project_detail .components p.more {
 
 
 /* Search */
+div.searchform {
+  margin-bottom: 0.5em;
+}
 
 div.searchform label {
   font-size: 90%;
@@ -745,38 +748,74 @@ span.note {
   border: 1px solid #ccc;
 }
 
+.results_on_deck {
+  margin: 0px;
+  padding: 0px;
+}
 
-/*Permission list*/
-div.permission_list ul {
+/*List*/
+div.list ul {
   list-style-image: none;
   list-style-position: outside;
   list-style-type: none;
   padding-left: 10px;
 }
 
-div.permission_list li{
+div.list li{
   border-bottom: 1px solid #ddd;
   padding: 8px;
 }
 
-div.permission_list ul li a{
-  font-weight: bold;
+div.list ul li.i16{
+ padding-left: 23px;
 }
 
-div.permission_list ul li form{
+div.list ul li .name{
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+div.list ul li span.name{
+  color: #666;
+}
+
+div.list ul li .notice{
+  color: #FF4646;
+}
+
+div.list ul li span.notice{
+  color: #FF4646;
+}
+
+div.list ul li form{
   float: right;
   margin-left: 8px;
 }
 
-div.permission_list ul li span a{
+div.list ul li span.details{
   font-size: 0.85em;
   color: #666;
   font-weight: normal;
 }
 
-div.permission_list .pagination.bottom {
+div.list .pagination.bottom {
   margin-top: 2px;
 }
+
+div.notice {
+  text-align: center;
+  -moz-border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.5em;
+  background-color: #ffffe0;
+  border-color: #e6db55;
+  margin: 5px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+}
+
+
 
 
 /* Comments */

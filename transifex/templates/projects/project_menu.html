@@ -4,7 +4,7 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% block extra_head %}
+{% block extrajs %}
   <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/ui.tabs.outside.css" />
   <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
   <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
@@ -12,6 +12,7 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.autocomplete.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   {% if project %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
   {% endif %}
@@ -40,19 +41,25 @@ $(document).ready(
        </a>
     </li>
 
-    {% if request.user.is_authenticated %}
+    {% if is_maintainer %}
     <li class="ui-state-default ui-corner-top {% if project_permission_form %}ui-tabs-selected ui-state-active{% endif %}">
-       <a id="tab-link-3" href="{% if is_maintainer %}{% txadd_url_for_obj project %}{% else %}{% txrequest_url_for_obj project %}{% endif %}">
+       <a id="tab-link-2" href="{% txadd_url_for_obj project %}">
          <span>{% trans "Access Control" %}</span>
        </a>
     </li>
     {% endif %}
+
+    <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-3" href="{% url team_list project.slug %}">
+         <span>{% trans "Translation Teams" %}</span>
+       </a>
+    </li>
 
   </ul>
 </div>
 {% endif %}
 {% endblock %}
 
-{% block content_main %}
+{% block content_main %}{% endblock %}
 
-{% endblock %}
+{% block content_footer %}{% endblock %}

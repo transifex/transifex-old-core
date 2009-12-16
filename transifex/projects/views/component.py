@@ -13,15 +13,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 
 from actionlog.models import action_logging
+from authority.views import permission_denied
 from codebases.forms import UnitForm
 from languages.models import Language
 from notification import models as notification
 from projects.models import Project, Component
 from projects.forms import ComponentForm, ComponentAllowSubForm
 from projects.permissions import *
+from projects.permissions.project import ProjectPermission
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from submissions import submit_by_email
+from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
 from translations.lib.types.publican import PotDirError
 from translations.models import POFile, POFileLock
@@ -320,8 +323,8 @@ def component_file(request, project_slug, component_slug, filename,
 
 
 @login_required
-@one_perm_required_or_403(pr_component_submit_file, 
-    (Project, 'slug__exact', 'project_slug'))
+#@one_perm_required_or_403(pr_component_submit_file, 
+#    (Project, 'slug__exact', 'project_slug'))
 def component_submit_file(request, project_slug, component_slug, 
                           filename=None, submitted_file=None):
 
@@ -391,8 +394,23 @@ def component_submit_file(request, project_slug, component_slug,
                                          object_id=component.id)
             lang_code = postats.language.code
         except (POFile.DoesNotExist, AttributeError):
-            postats = None
             lang_code = component.trans.guess_language(filename)
+            postats = None
+
+        team = Team.objects.get_or_none(component.project, lang_code)
+        if team:
+            object_list.append(team)
+
+        # Checking permission to submit file to the related team
+        # FIXME: It's kinda redundancy, only a decorator should be enough
+        check = ProjectPermission(request.user)
+        if not check.submit_file(team or component.project):
+            request.user.message_set.create(message=
+                _("You need to be in the '%s' team of this project for "
+                    "being able to send translations to that file target.")
+                    % postats.language.name)
+            return HttpResponseRedirect(reverse('component_detail', 
+                            args=(project_slug, component_slug,)))
 
         msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
                                           'domain' : request.get_host()}
@@ -509,8 +527,8 @@ def component_toggle_lock_file(request, project_slug, component_slug,
 
 
 @login_required
-@one_perm_required_or_403(pr_component_watch_file, 
-    (Project, 'slug__exact', 'project_slug'))
+#@one_perm_required_or_403(pr_component_watch_file, 
+#    (Project, 'slug__exact', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
     """Add/Remove a watch for a path on a component for a specific user."""
 
@@ -526,6 +544,12 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
 
     pofile = get_object_or_404(POFile, object_id=component.pk, 
                                content_type=ctype, filename=filename)
+
+    # FIXME: It's kinda redundancy, only a decorator should be enough
+    # Also it's only accepting granular permissions
+    check = ProjectPermission(request.user)
+    if not check.submit_file(pofile):
+        return permission_denied
 
     url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
                                                   filename))

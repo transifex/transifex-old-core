@@ -62,6 +62,8 @@
 
 
 {% block content_main %}
+  {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
+
   <div class="obj_bigdetails">
   <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
@@ -75,14 +77,13 @@
   {% endif %}
   {% endwith %}
 
-  {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
   {% if perms.projects.add_component or is_maintainer %}
     <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url component_edit project_slug=component.project.slug component_slug=component.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
 
 {% if component.unit %}
 <div id="vcs_details">
-  <h3>Source details</h3>
+  <h3>{% trans "Source details" %}</h3>
 
   <table class="definition">
     <tr>
@@ -161,21 +162,13 @@
     </tr>
 
 {% if component.allows_submission %}
-  {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
-    {% if request.user.is_authenticated and not perms.projects.submit_file and not can_submit_file and not is_maintainer%}
     <tr>
-      <th class="i16 user">{% trans "Become a translator:" %}</th>
+      <th class="i16 team">{% trans "Teams:" %}</th>
       <td>
-      {% get_permission_request "project_perm.submit_file" for request.user and component.project,component as "can_submit_file_request" %}
-      {% if can_submit_file_request %}
-         <a href="{% url project_add_permission_request component.project.slug %}">{% trans "Your request is pending for approval." %}<a/>
-      {% else %}
-          {% txpermission_request_form for component.project using "project_perm.submit_file" %}
-      {% endif %}
+         <a href="{% url team_list component.project.slug %}">{% trans "See the translation teams." %}<a/>
       </td>
-    </tr>    
-  {% endif %}
-{% endif %} 
+    </tr>
+{% endif %}
 
 </table>
 
@@ -185,8 +178,8 @@
 {% comp_stats_table stats %}
 
 {% if component.allows_submission %}
- {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
- {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
+ {% get_permission "project_perm.submit_file" for request.user and component.project,1 as "can_submit_file" %}
+ {% if perms.projects.submit_file or can_submit_file %}
     {% if stats %}
         {% include "projects/component_submit_new_file.html" %}
     {% endif %}

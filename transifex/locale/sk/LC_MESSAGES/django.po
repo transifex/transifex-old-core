@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-13 15:00+0000\n"
-"PO-Revision-Date: 2009-08-07 22:54+0200\n"
+"PO-Revision-Date: 2009-12-04 11:38+0100\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -240,9 +240,8 @@ msgid "English (United Kingdom)"
 msgstr "anglický (Veľká Británia)"
 
 #: languages/management/commands/txcreatelanguages.py:225
-#, fuzzy
 msgid "English (United States)"
-msgstr "anglický (Veľká Británia)"
+msgstr "anglický (Spojené Štáty)"
 
 #: languages/management/commands/txcreatelanguages.py:233
 msgid "English (South Africa)"
@@ -457,9 +456,8 @@ msgid "Portuguese"
 msgstr "portugalský"
 
 #: languages/management/commands/txcreatelanguages.py:710
-#, fuzzy
 msgid "Portuguese (Brazilian)"
-msgstr "portugalský"
+msgstr "portugalský (Brazília)"
 
 #: languages/management/commands/txcreatelanguages.py:719
 msgid "Romanian"
@@ -602,9 +600,8 @@ msgid "Latest components in project %s."
 msgstr "Najnovšie súčasti v projekte %s."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
-#, fuzzy
 msgid "Search for an username"
-msgstr "Vyhľadať na Picasa Web"
+msgstr "Vyhľadať používateľské meno"
 
 #: projects/forms.py:35 projects/models.py:213
 msgid "A regex to filter the exposed files. Eg: 'po/.*'"
@@ -692,9 +689,8 @@ msgid "Anyone can submit"
 msgstr "Ktokoľvek môže prispieť"
 
 #: projects/models.py:101
-#, fuzzy
 msgid "Can anyone submit files to this project?"
-msgstr "Môže prispieť súborom do tohto projektu"
+msgstr "Môže prispieť súborom do tohto projektu každý?"
 
 #: projects/models.py:103 projects/models.py:221
 #: projects/migrations/0001_initial.py:28
@@ -843,9 +839,8 @@ msgid "Must use POST to activate"
 msgstr "Na aktivovanie treba použiť POST"
 
 #: projects/views.py:364 projects/views.py:917
-#, fuzzy
 msgid "Notification is not enabled"
-msgstr "Oznamovania nie sú povolené"
+msgstr "Oznamovanie nie je povolené"
 
 #: projects/views.py:377
 msgid "Watch this project"
@@ -860,7 +855,7 @@ msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
-"Nezdá sa, že by súborový filter tohto na POT založeného komponentu povoľoval "
+"Nezdá sa, že by súborový filter tejto na POT založenej súčasti povoľoval "
 "súbor POTFILES.in. Opravte ho, prosím."
 
 #: projects/views.py:621
@@ -873,7 +868,7 @@ msgstr ""
 
 #: projects/views.py:629
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "Táto súčasť nie je nastavení na prepočítavanie štatistík."
 
 #: projects/views.py:720
 msgid "This component does  not allow write access."
@@ -1474,47 +1469,52 @@ msgstr ""
 "href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
 "files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
-"Nová súčasť <a href=\"%(component_url)s\">%(component_name)s</a> bola "
-"pridaná do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol schválený "
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
 "access to submit files to the project <a href=\"%(project_url)s\">%(project)"
 "s</a> denied"
 msgstr ""
-"Nová súčasť <a href=\"%(component_url)s\">%(component_name)s</a> bola "
-"pridaná do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zamietnutý "
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Withdrawn own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
-msgstr "Bol pridaný nový projekt <a href=\"%(project_url)s\"%(project)s</a>"
+msgstr "Vlastná požiadavka na prístup k odosielanie súborov do projektu <a "
+"href=\"%(project_url)s\"%(project)s</a> bola stiahnutá"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Requested access to submit files to the project <a href=\"%(project_url)s\">%"
 "(project)s</a>"
-msgstr "Bol pridaný nový projekt <a href=\"%(project_url)s\"%(project)s</a>"
+msgstr "Bol vyžiadaný prístup na odosielanie súborov do projektu <a "
+"href=\"%(project_url)s\"%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
 "submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
 "revoked"
 msgstr ""
-"Nová súčasť <a href=\"%(component_url)s\">%(component_name)s</a> bola "
-"pridaná do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zrušený "
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -2028,7 +2028,6 @@ msgid "Change notifications associated to your account"
 msgstr "Oznámenia o zmenách spojených s vašim účtom"
 
 #: templates/simpleauth/signin.html:10
-#, fuzzy
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
@@ -2039,7 +2038,7 @@ msgstr ""
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
-msgstr ""
+msgstr "Zobraziť dokončené"
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -2377,7 +2376,6 @@ msgid "Resend e-mail validation"
 msgstr "Znova odoslať overenie e-mailovej adresy"
 
 #: templates/userprofile/account/email_validation_reset.html:19
-#, fuzzy
 msgid ""
 "If you haven't validated your e-mail address yet you will not be able to "
 "sign in. Insert your registered e-mail address to receive the validation e-"
@@ -2416,12 +2414,10 @@ msgid "Your e-mail was already validated"
 msgstr "Vaša e-mailová adresa už bola overená"
 
 #: templates/userprofile/account/login.html:5
-#, fuzzy
 msgid "User sign in"
 msgstr "Prihlásenie používateľa"
 
 #: templates/userprofile/account/login.html:19
-#, fuzzy
 msgid "Enter your username and password to sign in."
 msgstr "Na prihlásenie zadajte svoje používateľskú meno a heslo."
 
@@ -2584,14 +2580,14 @@ msgstr ""
 "správu z vášho e-mailového účtu prečítať."
 
 #: templates/userprofile/account/registration_done.html:15
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">sign in page</a> to authenticate and start using this site."
 msgstr ""
 "Úspešne ste zaregistrovali nový účet. Navštívte <a href=\"%(overview_url)s"
-"\">prihlasovaciu stránku</a> pre overenie totožnosti a začatie používania "
-"týchto stránok."
+"\">prihlasovaciu stránku</a> na overenie totožnosti, aby ste mohli začať "
+" používať tieto stránky."
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -2934,21 +2930,20 @@ msgid "Go to this component page"
 msgstr "Na stránku tejto súčasti"
 
 #: translations/templates/pofile_lock.html:15
-#, fuzzy
 msgid "Unlock this file when you are finished working with it."
 msgstr "Odomknite tento súbor, keď skončíte s prácou na ňom."
 
 #: translations/templates/pofile_lock.html:21
-#, fuzzy, python-format
+#, python-format
 msgid "User '%(owner)s' has locked this file indicating he's working on it."
-msgstr "Tento súbor je uzamknutý, čo znamená, že niekto na ňom pracuje."
+msgstr "Tento súbor je uzamknutý používateľom '%(owner)s', čo znamená, že na "
+"ňom pracuje."
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
 msgstr "Uzamknúť tento súbor, aby ostatní vedeli, že na ňom pracujete."
 
 #: translations/templates/pofile_lock.html:30
-#, fuzzy
 msgid "This file is unlocked. Most likely no one is working with it right now."
 msgstr ""
 "Tento súbor nie je uzamknutý. Pravdepodobne na ňom teraz nikto nepracuje."
@@ -3096,46 +3091,48 @@ msgstr "keď je projekt odstránený"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
-msgstr ""
+msgstr "Vyžiadaný prístup do projektu"
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when an user request access to submit files to a project"
-msgstr "Môže prispieť súborom do tohto projektu"
+msgstr "keď používateľ požiada o prístup na odosielanie súborov do projektu"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
-msgstr ""
+msgstr "Prístup na odosielanie do projektu zamietnutý"
 
 #: txcommon/notifications.py:42
 msgid "when a maintainer denies access to an user to submit files to a project"
 msgstr ""
+"keď správca zakáže používateľovi prístup na odosielanie súborov do projektu"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
-msgstr ""
+msgstr "Požiadavka na prístup na odosielanie do projektu stiahnutá"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr "Používatelia s garantovaným prístupom na odosielanie súborov:"
+msgstr ""
+"keď používateľ stiahne požiadavku na prístup na odosielanie súborov do projektu"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr ""
+msgstr "Prístup na odosielanie do projektu povolený"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants access to an user to submit files to a project"
 msgstr ""
+"keď správca povolí používateľovi prístup na odosielanie súborov do projektu"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr ""
+msgstr "Prístup na odosielanie do projektu zrušený"
 
 #: txcommon/notifications.py:66
 msgid ""
 "when a maintainer revokes the access of an user to submit files to a project"
 msgstr ""
+"keď správca zruší používateľovi prístup na odosielanie súborov do projektu"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3310,9 +3307,8 @@ msgid "You removed the permission request."
 msgstr "Odstránili ste požiadavku o povolenie."
 
 #: vcs/forms.py:56
-#, fuzzy
 msgid "This type of repository does not accept branch"
-msgstr "Tento typ repozitára si vyžaduje určenie vetvy"
+msgstr "Tento typ repozitára neprijíma vetvy"
 
 #: vcs/models.py:48
 msgid "Branch"
@@ -3344,23 +3340,24 @@ msgid "vcsunits"
 msgstr "vcsjednotky"
 
 #: webtrans/fields.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "The %s fields should be filled."
-msgstr "%s bol zmazaný."
+msgstr "Polia %s by mali byť vyplnené."
 
 #: webtrans/wizards.py:202
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
 msgstr ""
+"Odoslané nebolo nič, lebo ste nič v prekladateľskom formulári nezmenili."
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
-msgstr ""
+msgstr "Predchádzajúca"
 
 #: webtrans/templates/pagination.html:49
 msgid "Next"
-msgstr ""
+msgstr "Nasledujúca"
 
 #~ msgid "Brazilian Portuguese"
 #~ msgstr "portugalský (Brazília)"

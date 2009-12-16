@@ -59,7 +59,7 @@
 {% if request.user.is_authenticated and perms.projects.add_project %}
   <div id="content_footer_center">
    <span class="i16 tip">
-       {% trans "Couldn't find your project? Why don't you go ahead and " %}<a href="{% url project_create %}">{% trans "add it"%}</a>?
+       {% blocktrans %}Couldn't find your project? Why don't you go ahead and <a href="{{ url project_create }}">add it</a>?{% endblocktrans %}
    </span>   
   </div>
 {% endif %}

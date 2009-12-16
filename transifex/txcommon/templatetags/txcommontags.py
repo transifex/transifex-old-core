@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 import re
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
+from django.utils.translation import ugettext as _
+
 from projects.models import Project
 import txcommon
 
@@ -72,7 +75,7 @@ def render_metacount(list, countable):
                 'countable': countable}
 
 @register.inclusion_tag("common_homelink.html")
-def homelink(text="Home"):
+def homelink(text=_("Home")):
     """Return a link to the homepage."""
     return {'text': text}
 
@@ -155,13 +158,13 @@ def mungify(email, text=None, autoescape=None):
     for c in email: emailArrayContent += r(c)
     for c in text: textArrayContent += r(c)
 
-    result = """<script>
+    result = """<script type=\"text/javascript\">
                 var _tyjsdf = [%s], _qplmks = [%s];
                 document.write('<a href="&#x6d;&#97;&#105;&#x6c;&#000116;&#111;&#x3a;');
                 for(_i=0;_i<_tyjsdf.length;_i++){document.write('&#'+_tyjsdf[_i]+';');}
                 document.write('">');
                 for(_i=0;_i<_qplmks.length;_i++){document.write('&#'+_qplmks[_i]+';');}
-                document.write('</a>');
+                document.write('<\/a>');
                 </script>""" % (re.sub(r',$', '', emailArrayContent),
                                 re.sub(r',$', '', textArrayContent))
     

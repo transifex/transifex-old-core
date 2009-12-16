@@ -52,6 +52,9 @@ class LogEntry(models.Model):
         verbose_name_plural = _('log entries')
         ordering = ('-action_time',)
 
+    def __unicode__(self):
+        return u'%s.%s.%s' % (self.action_type, self.object_name, self.user)
+
     def __repr__(self):
         return smart_unicode(self.action_time)
 

@@ -2,13 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # lauri, 2009.
+# Lauri Võsandi <lauri.vosandi@gmail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 15:00+0000\n"
-"PO-Revision-Date: 2009-11-22 22:53+0200\n"
-"Last-Translator: lauri\n"
+"POT-Creation-Date: 2009-12-02 17:06+0000\n"
+"PO-Revision-Date: 2009-12-02 21:09+0200\n"
+"Last-Translator: Lauri Võsandi <lauri.vosandi@gmail.com>\n"
 "Language-Team: Eesti <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +45,7 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Ajalugu pole salvestatud veel."
 
-#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:12
 #: languages/models.py:27 languages/migrations/0001_initial.py:19
 #: projects/models.py:86 projects/models.py:198
 #: projects/migrations/0001_initial.py:31
@@ -54,32 +55,31 @@ msgstr "Ajalugu pole salvestatud veel."
 msgid "Name"
 msgstr "Nimi"
 
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
+#: codebases/models.py:38 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Juur"
 
-#: codebases/models.py:38
+#: codebases/models.py:39
 msgid "The URL of the codebase"
 msgstr "Koodibaasi URL"
 
-#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
+#: codebases/models.py:40 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Tüüp"
 
-#: codebases/models.py:41
-#, python-format
-msgid "The codebase type (%s)"
-msgstr "Koodibaasi tüüp (%s)"
+#: codebases/models.py:42
+msgid "The codebase type"
+msgstr "Koodibaasi tüüp"
 
-#: codebases/models.py:44
+#: codebases/models.py:45
 msgid "The last time this unit was updated"
 msgstr "Viimane kord kui seda ühikut uuendati"
 
-#: codebases/models.py:53
+#: codebases/models.py:54
 msgid "unit"
 msgstr "ühik"
 
-#: codebases/models.py:54
+#: codebases/models.py:55
 msgid "units"
 msgstr "ühikud"
 
@@ -162,7 +162,7 @@ msgstr "assami"
 
 #: languages/management/commands/txcreatelanguages.py:64
 msgid "Asturian"
-msgstr ""
+msgstr "astüüria"
 
 #: languages/management/commands/txcreatelanguages.py:73
 msgid "Azerbaijani"
@@ -170,7 +170,7 @@ msgstr "aserbaidžaani"
 
 #: languages/management/commands/txcreatelanguages.py:81
 msgid "Balochi"
-msgstr ""
+msgstr "balohi"
 
 #: languages/management/commands/txcreatelanguages.py:88
 msgid "Belarusian"
@@ -278,7 +278,7 @@ msgstr "prantsuse"
 
 #: languages/management/commands/txcreatelanguages.py:316
 msgid "Friulian"
-msgstr ""
+msgstr "friuuli"
 
 #: languages/management/commands/txcreatelanguages.py:325
 msgid "Western Frisian"
@@ -326,7 +326,7 @@ msgstr "indoneesia"
 
 #: languages/management/commands/txcreatelanguages.py:418
 msgid "Iloko"
-msgstr ""
+msgstr "iloko"
 
 #: languages/management/commands/txcreatelanguages.py:424
 msgid "Icelandic"
@@ -490,7 +490,7 @@ msgstr "serbia-ladina"
 
 #: languages/management/commands/txcreatelanguages.py:788
 msgid "Sotho, Southern"
-msgstr "lõunasotho"
+msgstr "lõuna-sotho"
 
 #: languages/management/commands/txcreatelanguages.py:797
 msgid "Swedish"
@@ -726,7 +726,7 @@ msgstr "Kogumikud"
 
 #: projects/models.py:117
 msgid "Maintainers"
-msgstr "Hooldajad"
+msgstr "Hooldaja:"
 
 #: projects/models.py:121 projects/models.py:233
 #: projects/migrations/0001_initial.py:22
@@ -768,9 +768,8 @@ msgid "I18n type"
 msgstr "l18n tüüp"
 
 #: projects/models.py:210
-#, python-format
-msgid "The code's type of i18n support (%s)"
-msgstr "i18n koodi tüüp (%s)"
+msgid "The code's type of i18n support"
+msgstr "Lähtekoodi i18n toe tüüp"
 
 #: projects/models.py:212 projects/migrations/0001_initial.py:43
 msgid "File filter"
@@ -817,81 +816,70 @@ msgstr "komponent"
 msgid "components"
 msgstr "komponendid"
 
-#: projects/permissions.py:17
+#: projects/permissions/project.py:17
 msgid "Is allowed to maintain this project"
 msgstr "On lubatud hooldama seda projekti"
 
-#: projects/permissions.py:26
+#: projects/permissions/project.py:26
 msgid "Is allowed to submit file to this project"
 msgstr "On lubatud saatma faile sellele projektile"
 
-#: projects/views.py:177 projects/views.py:576 txcollections/views.py:121
+#: projects/views/component.py:201 projects/views/project.py:117
+#: txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s kustutati."
 
-#: projects/views.py:361 projects/views.py:914
-msgid "Must use POST to activate"
-msgstr "Pead kasutama POST'i et aktiveerida"
-
-#: projects/views.py:364 projects/views.py:917
-msgid "Notification is not enabled"
-msgstr "Märguanded ei ole lubatud"
-
-#: projects/views.py:377
-msgid "Watch this project"
-msgstr "Jälgi seda projekti"
-
-#: projects/views.py:390
-msgid "Stop wathing this project"
-msgstr "Lõpeta projekti jälgimine"
-
-#: projects/views.py:614
+#: projects/views/component.py:236
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
+"Failifilter sellele POT-põhisele komponendile ei luba POTFILES.in faili. "
+"Palun seadista failifilter korrektselt."
 
-#: projects/views.py:621
+#: projects/views/component.py:243
 msgid ""
 "There is no 'pot' directory named in the set of files of this Publian like "
 "component. Maybe its file filter is not allowing access to it."
 msgstr ""
+"Kataloog 'pot' puudub Publian-tüüpi komponendis. Võibolla failifilter keelab "
+"ligipääsu sellele?"
 
-#: projects/views.py:629
+#: projects/views/component.py:251
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "Komponent ei ole seadistatud statistika arvutamiseks."
 
-#: projects/views.py:720
+#: projects/views/component.py:335
 msgid "This component does  not allow write access."
 msgstr "Komponent ei luba ligipääsu kirjutamiseks"
 
-#: projects/views.py:728
+#: projects/views/component.py:343
 msgid "Please select a file from your system to be uploaded."
 msgstr "Vali fail üleslaadimiseks oma arvutist."
 
-#: projects/views.py:736
+#: projects/views/component.py:351
 msgid "Please enter a target to upload the file."
 msgstr "Palun sisesta sihtkoht faili üleslaadimiseks."
 
-#: projects/views.py:741
+#: projects/views/component.py:356
 msgid "Please enter only ONE target to upload the file."
 msgstr "Palun sisesta ainult ÜKS sihtkoht faili üleslaadimiseks."
 
-#: projects/views.py:752
+#: projects/views/component.py:367
 msgid "The target file does not match with the component file filter"
 msgstr "Sihtfail ei vasta komponendi failifiltrile"
 
-#: projects/views.py:760
+#: projects/views/component.py:375
 msgid "Enter a commit message"
 msgstr "Sisesta sissekirjutise teade:"
 
-#: projects/views.py:827
+#: projects/views/component.py:442
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Fail saadeti edukalt: %s"
 
-#: projects/views.py:842
+#: projects/views/component.py:457
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -899,25 +887,41 @@ msgstr ""
 "Sinu fail ei läbi korrektsuse testi (msgfmt -c). Palun käita seda oma "
 "süsteemil et näha veateateid."
 
-#: projects/views.py:851
+#: projects/views/component.py:466
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Vabandust, faili saatmine ebaõnnestus vea tõttu."
 
-#: projects/views.py:855 projects/views.py:894
+#: projects/views/component.py:470 projects/views/component.py:503
 msgid "Sorry, but you need to send a POST request."
 msgstr "Vabandust, kuid pead saatma POST päringu."
 
-#: projects/views.py:883
+#: projects/views/component.py:492
 msgid "Lock removed."
 msgstr "Lukk eemaldatud."
 
-#: projects/views.py:886
+#: projects/views/component.py:495
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Viga: Luku võib eemaldada vaid selle omanik."
 
-#: projects/views.py:890
+#: projects/views/component.py:499
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lukk loodud. Ära unusta seda eemaldada kui oled valmis."
+
+#: projects/views/component.py:518 projects/views/project.py:135
+msgid "Must use POST to activate"
+msgstr "Pead kasutama POST'i et aktiveerida"
+
+#: projects/views/component.py:521 projects/views/project.py:138
+msgid "Notification is not enabled"
+msgstr "Märguanded ei ole lubatud"
+
+#: projects/views/project.py:151
+msgid "Watch this project"
+msgstr "Jälgi seda projekti"
+
+#: projects/views/project.py:164
+msgid "Stop wathing this project"
+msgstr "Lõpeta projekti jälgimine"
 
 #: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
@@ -978,15 +982,15 @@ msgstr "Lõpeta jälgimine"
 #: repowatch/models.py:28
 #, python-format
 msgid "Unable to add watch for path %r"
-msgstr ""
+msgstr "Jälgija lisamine failiteele %r ebaõnnestus"
 
 #: repowatch/models.py:97
 msgid "watch"
-msgstr ""
+msgstr "jälgija"
 
 #: repowatch/models.py:98
 msgid "watches"
-msgstr ""
+msgstr "jälgijad"
 
 #: simplelock/models.py:39
 msgid "Lock"
@@ -1060,13 +1064,10 @@ msgstr "Teretulemast Transifex'i"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34 templates/base-sample.html.py:35
+#: txcommon/templates/common_homelink.html:2
 msgid "Go to start page"
 msgstr "Mine esilehele"
-
-#: templates/base-sample.html:35
-msgid "Transifex logo"
-msgstr "Transifex'i logo"
 
 #: templates/base-sample.html:39
 msgid "The projects being served"
@@ -1097,8 +1098,8 @@ msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr ""
-"Tere <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Tere <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)"
+"s</a>!"
 
 #: templates/base-sample.html:48
 msgid "Sign out from the website"
@@ -1108,8 +1109,8 @@ msgstr "Logi välja veebilehelt"
 msgid "Sign out"
 msgstr "Logi välja"
 
-#: templates/base-sample.html:50 templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
+#: templates/base-sample.html:50 templates/simpleauth/login_box.html:8
+#: templates/simpleauth/login_box.html:18 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
 #: templates/simpleauth/signin.html:6
@@ -1123,15 +1124,15 @@ msgstr "Logi sisse"
 msgid "Register"
 msgstr "Registreeri"
 
-#: templates/base-sample.html:115
+#: templates/base-sample.html:114
 msgid "About"
 msgstr "Info"
 
-#: templates/base-sample.html:115
+#: templates/base-sample.html:114
 msgid "Get in contact with us"
 msgstr "Kontakteeru meiega"
 
-#: templates/base-sample.html:115
+#: templates/base-sample.html:114
 msgid "Feedback"
 msgstr "Tagasiside"
 
@@ -1181,13 +1182,13 @@ msgstr ""
 "Ei leidnud ühtegi projekti otsingutekstile \"%(q)s\". Võiksid proovida muuta "
 "päringut veidi."
 
-#: templates/search.html:62
-msgid "Couldn't find your project? Why don't you go ahead and "
-msgstr "Ei leidnud oma projekti? Ole nii hea ja "
-
-#: templates/search.html:62
-msgid "add it"
-msgstr "lisa see"
+#: templates/search.html:62, python-format
+msgid ""
+"Couldn't find your project? Why don't you go ahead and <a href=\"%(url "
+"project_create)s\">add it</a>?"
+msgstr ""
+"Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see<"
+"/a>!"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -1253,8 +1254,7 @@ msgid ""
 "(release_create)s\">add one</a>?"
 msgstr ""
 "Ühtegi väljalased pole selle kogumiku jaoks registreeritud. Miks mitte <a "
-"href=\"%"
-"(release_create)s\">lisada üks</a>?"
+"href=\"%(release_create)s\">lisada üks</a>?"
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1290,8 +1290,8 @@ msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"Kui sa arvad, et see ei oleks pidanud juhtuma siis <a "
-"href=\"%(contact_form)s\">anna meile teada</a>."
+"Kui sa arvad, et see ei oleks pidanud juhtuma siis <a href=\"%(contact_form)s"
+"\">anna meile teada</a>."
 
 #: templates/languages/language_release.html:65
 msgid "Untranslated Components"
@@ -1303,8 +1303,8 @@ msgid ""
 "The following components will be included in %(release_name)s, but there are "
 "no translations sent for %(language_name)s yet."
 msgstr ""
-"Järgnevad komponendid kaasatakse väljalaskesse %(release_name)s, kuid "
-"%(language_name)s keele jaoks pole tõlkeid veel saadetud."
+"Järgnevad komponendid kaasatakse väljalaskesse %(release_name)s, kuid %"
+"(language_name)s keele jaoks pole tõlkeid veel saadetud."
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 msgid "Notifications"
@@ -1402,8 +1402,8 @@ msgid ""
 "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
 msgstr ""
-"Projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponenti <a "
-"href=\"%(component_url)s\">%(component_name)s</a> uuendati"
+"Projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponenti <a href="
+"\"%(component_url)s\">%(component_name)s</a> uuendati"
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
@@ -1411,8 +1411,8 @@ msgid ""
 "The component '%(component_name)s' has been deleted from the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"Komponent '%(component_name)s' kustutati projekti <a href=\"%"
-"(project_url)s\">%(project_name)s</a> koosseisust"
+"Komponent '%(component_name)s' kustutati projekti <a href=\"%(project_url)s"
+"\">%(project_name)s</a> koosseisust"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1422,8 +1422,8 @@ msgid ""
 "have been updated:"
 msgstr ""
 "Järgnevad projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
-"komponendi <a href=\"%(component_url)s\">%(component_name)s</"
-"a> failid uuendati:"
+"komponendi <a href=\"%(component_url)s\">%(component_name)s</a> failid "
+"uuendati:"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid ""
@@ -1431,8 +1431,7 @@ msgid ""
 "(%(trans_perc)s%)"
 msgstr ""
 "Fail <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a>  "
-"keelele"
-"(%(trans_perc)s%)"
+"keelele(%(trans_perc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1446,8 +1445,7 @@ msgid ""
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "saadeti projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
-"komponendile <a href=\"%(component_url)s\">%(component_name)s</"
-"a>"
+"komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
@@ -1457,8 +1455,7 @@ msgid ""
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Lähtefail (POT) on probleemne ning seda ei ole võimalik luua/uuendada "
-"projekti <a href=\"%"
-"(project_url)s\">%(project_name)s</a> komponendis <a "
+"projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponendis <a "
 "href=\"%(component_url)s\">%(component_name)s</a>"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
@@ -1467,8 +1464,8 @@ msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
 "files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
-"Kasutajal <a href=\"%(user_url)s\">%(user_request)s</a> oli projekti <a "
-"href=\"%(project_url)s\">%(project)s</a> failide saatmiseks ligipääs olemas."
+"Kasutajal <a href=\"%(user_url)s\">%(user_request)s</a> oli projekti <a href="
+"\"%(project_url)s\">%(project)s</a> failide saatmiseks ligipääs olemas."
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
@@ -1477,9 +1474,8 @@ msgid ""
 "access to submit files to the project <a href=\"%(project_url)s\">%(project)"
 "s</a> denied"
 msgstr ""
-"Kasutajal <a href=\"%(user_url)s\">%(user_request)s</a> oli projekti <a "
-"href=\"%(project_url)s\">%(project)s</a> failide saatmiseks ligipääs "
-"keelatud."
+"Kasutajal <a href=\"%(user_url)s\">%(user_request)s</a> oli projekti <a href="
+"\"%(project_url)s\">%(project)s</a> failide saatmiseks ligipääs keelatud."
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
@@ -1487,8 +1483,8 @@ msgid ""
 "Withdrawn own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
 msgstr ""
-"Annuleeris taotluse faile saata projektile <a href=\"%(project_url)s\">"
-"%(project)s</a>"
+"Annuleeris taotluse faile saata projektile <a href=\"%(project_url)s\">%"
+"(project)s</a>"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
@@ -1506,6 +1502,8 @@ msgid ""
 "submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
 "revoked"
 msgstr ""
+"Kasutaja <a href=\"%(user_url)s\">%(user_request)s</a> õigused faile "
+"saataprojektile <a href=\"%(project_url)s\">%(project)s</a> lükati tagasi"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1526,8 +1524,8 @@ msgid ""
 "(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Oled kindel et soovid jäädavalt kustutada komponendi '%"
-"(component_name)s' mis kuulub projekti %(project_name)s?\n"
+"  Oled kindel et soovid jäädavalt kustutada komponendi '%(component_name)s' "
+"mis kuulub projekti %(project_name)s?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -1563,7 +1561,7 @@ msgstr ""
 "ka otse arendajate tarkvarahoidlasse"
 
 #: templates/projects/component_detail.html:80
-#: templates/projects/project_detail.html:36
+#: templates/projects/project_detail.html:30
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:45
 msgid "Edit"
@@ -1595,7 +1593,7 @@ msgstr "Failifilter:"
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Väljalase:"
-msgstr[1] ""
+msgstr[1] "Väljalasked:"
 
 #: templates/projects/component_detail.html:118
 msgid "Allows submissions:"
@@ -1654,17 +1652,17 @@ msgstr "Hakka tõlkijaks:"
 msgid "Your request is pending for approval."
 msgstr "Sinu taotlus on ootel"
 
-#: templates/projects/component_detail.html:197
-#: templates/projects/project_detail.html:116
+#: templates/projects/component_detail.html:199
+#: templates/projects/project_detail.html:110
 msgid "History"
 msgstr "Ajalugu"
 
-#: templates/projects/component_detail.html:201
-#: templates/projects/project_detail.html:120
+#: templates/projects/component_detail.html:203
+#: templates/projects/project_detail.html:114
 msgid "None available"
 msgstr "Ühtki pole saadaval"
 
-#: templates/projects/component_detail.html:218
+#: templates/projects/component_detail.html:220
 msgid "Delete component"
 msgstr "Kustuta komponent"
 
@@ -1691,7 +1689,7 @@ msgstr "Väljavõte"
 
 #: templates/projects/component_form.html:113
 msgid "Submission"
-msgstr "Saadmine"
+msgstr "Saatmine"
 
 #: templates/projects/component_form.html:126
 #: templates/projects/component_form.html:136
@@ -1711,7 +1709,7 @@ msgstr "Lisa"
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Projekti komponent"
-msgstr[1] ""
+msgstr[1] "Projekti komponendid"
 
 #: templates/projects/component_list.html:27
 msgid "edit"
@@ -1736,14 +1734,14 @@ msgid ""
 "    Examples of components of a software project could be \"UI\" and \"Docs"
 "\" or development branches like <code>HEAD</code>."
 msgstr ""
-"<em>Komponendid</em> on väiksemad, iseseisvad osad suuremast projektist, "
-"mis sisaldavad faile.\n"
-"    Tarkvara projekti komponendid on näiteks \"UI\" ja \"Docs\" "
-"või arendusharud nagu <code>HEAD</code>."
+"<em>Komponendid</em> on väiksemad, iseseisvad osad suuremast projektist, mis "
+"sisaldavad faile.\n"
+"    Tarkvara projekti komponendid on näiteks \"UI\" ja \"Docs\" või "
+"arendusharud nagu <code>HEAD</code>."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
-msgstr ""
+msgstr "Saada uus tõlge sellele komponendile."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
@@ -1755,42 +1753,43 @@ msgstr "Lisa tõlkefail"
 
 #: templates/projects/component_submit_new_file.html:13
 msgid "Local file:"
-msgstr ""
+msgstr "Kohalik fail:"
 
 #: templates/projects/component_submit_new_file.html:15
 msgid "The new language translation file to be uploaded."
-msgstr ""
+msgstr "Uus tõlkefail üleslaadimiseks."
 
 #: templates/projects/component_submit_new_file.html:18
 msgid "Select the target file:"
-msgstr ""
+msgstr "Vali fail:"
 
 #: templates/projects/component_submit_new_file.html:27
 msgid ""
 "The target file is the name of the new file language. It must matches with "
 "the component file filter."
 msgstr ""
+"Sihtfail on uue tõlkefaili nimi. See peab ühilduma komponendi failifiltriga.."
 
 #: templates/projects/component_submit_new_file.html:30
 msgid "or enter it here:"
-msgstr ""
+msgstr "või sisesta siia:"
 
 #: templates/projects/component_submit_new_file.html:32
 msgid "Example: "
-msgstr ""
+msgstr "Näide:"
 
 #: templates/projects/component_submit_new_file.html:35
 msgid "Commit message:"
-msgstr "Sissekande teade:"
+msgstr "Sissekande märge:"
 
 #: templates/projects/component_submit_new_file.html:37
 msgid "Example: Updates to Brazilian Portuguese translation"
-msgstr ""
+msgstr "Näide: Uuendused Eesti keele tõlkele"
 
 #: templates/projects/component_submit_new_file.html:41
 #: translations/templates/component_submit.html:11
 msgid "Send"
-msgstr ""
+msgstr "Saada"
 
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
@@ -1810,7 +1809,7 @@ msgstr "Kustuta"
 #: templates/projects/project_confirm_delete.html:11
 #, python-format
 msgid "Say goodbye to <em>%(project_name)s</em>?"
-msgstr ""
+msgstr "Ütle head aega projektile <em>%(project_name)s</em>?"
 
 #: templates/projects/project_confirm_delete.html:16
 #, python-format
@@ -1823,82 +1822,98 @@ msgstr ""
 "  Oled kindel et soovid jäädavalt kustutada registreeritud projekti '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:42
+#: templates/projects/project_detail.html:36
 #: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Detailid"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:43
 msgid "Watch:"
-msgstr ""
+msgstr "Jälgija:"
 
-#: templates/projects/project_detail.html:57
+#: templates/projects/project_detail.html:51
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Koduleht:"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:52
 #, python-format
 msgid "Homepage for %(project_name)s"
-msgstr ""
+msgstr "Projekti %(project_name)s koduleht"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:57
 msgid "Bug tracker:"
 msgstr "Veahaldur:"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:58
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s veahaldur"
 
-#: templates/projects/project_detail.html:69
+#: templates/projects/project_detail.html:63
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
-msgstr ""
+msgstr "Sildid:"
 
-#: templates/projects/project_detail.html:78
+#: templates/projects/project_detail.html:72
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Kogumik:"
 msgstr[1] "Kogumikud:"
 
-#: templates/projects/project_detail.html:88
+#: templates/projects/project_detail.html:82
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Hooldaja:"
-msgstr[1] ""
+msgstr[1] "Hooldajad:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:96
 msgid "External links:"
-msgstr ""
+msgstr "Välised lingid:"
 
-#: templates/projects/project_detail.html:104
+#: templates/projects/project_detail.html:98
 msgid "Screenshots"
-msgstr ""
+msgstr "Kuvatõmmised"
 
-#: templates/projects/project_detail.html:139
+#: templates/projects/project_detail.html:132
 msgid "Delete project"
 msgstr "Kustuta projekt"
 
-#: templates/projects/project_form.html:13
-msgid "Save project"
-msgstr "Salvesta projekt"
-
+#: templates/projects/project_form.html:9
+#: templates/projects/project_form.html:17
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
 #: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "Lisa projekt"
 
+#: templates/projects/project_form.html:20
+#: templates/projects/project_form.html:29
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Redigeeri %(project_name)s"
+
+#: templates/projects/project_form.html:27
+msgid "New project"
+msgstr "Uus projekt"
+
+#: templates/projects/project_form.html:37
+msgid "Add the details of your project"
+msgstr "Lisa detaile projekti kohta"
+
+#: templates/projects/project_form.html:39
+msgid "Edit the details of your project"
+msgstr "Muuda projekti detaile"
+
+#: templates/projects/project_form.html:50
+msgid "Save project"
+msgstr "Salvesta projekt"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -1907,7 +1922,7 @@ msgstr "Redigeeri <em>%(project_name)s</em>"
 
 #: templates/projects/project_form_base.html:29
 msgid "Access control will be enabled once the project is created"
-msgstr ""
+msgstr "Ligipääsu kontroll lubatakse siis kui projekt luuakse"
 
 #: templates/projects/project_form_base.html:76
 #, python-format
@@ -1915,23 +1930,24 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Redigeerin <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_base.html:90
+#: templates/projects/project_menu.html:46
 msgid "Access Control"
 msgstr "Ligipääs"
 
-#: templates/projects/project_form_permissions.html:10
+#: templates/projects/project_form_permissions.html:15
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr "Anna tõlkijale ligipääs, et faile saata käesolevale projektile"
 
-#: templates/projects/project_form_permissions.html:12
+#: templates/projects/project_form_permissions.html:17
 msgid "Requests for access to submit files"
-msgstr ""
+msgstr "Ligipääsu taotlused failide üleslaadmiseks"
 
-#: templates/projects/project_form_permissions.html:51
+#: templates/projects/project_form_permissions.html:59
 msgid "Pending requests:"
 msgstr "Ootel olevad taotlused:"
 
-#: templates/projects/project_form_permissions.html:63
+#: templates/projects/project_form_permissions.html:79
 msgid "Users with guaranteed access to submit files:"
 msgstr "Kasutajad kellele on garanteeritud luba faile saata:"
 
@@ -1941,7 +1957,7 @@ msgstr "Hiljutised projektid"
 
 #: templates/projects/project_list.html:8
 msgid "Project list"
-msgstr "Projektide nimekiri"
+msgstr "Projektid"
 
 #: templates/projects/project_list.html:17
 #, python-format
@@ -1971,8 +1987,12 @@ msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
 "it</a>!"
 msgstr ""
-"Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see<"
-"/a>!"
+"Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see</"
+"a>!"
+
+#: templates/projects/project_menu.html:39 templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "Ülevaade"
 
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
@@ -1990,18 +2010,19 @@ msgstr "<p>Teid logiti välja."
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
-msgstr ""
+msgstr "Sinu profiil"
 
 #: templates/simpleauth/settings.html:9
 #, python-format
 msgid "Your profile, %(user)s"
-msgstr ""
+msgstr "Sinu profiil, %(user)s"
 
 #: templates/simpleauth/settings.html:15
 msgid ""
 "Any settings associated with your account are presented and may be modified "
 "here."
 msgstr ""
+"Sinu konto seaded on kuvatud käesoleval lehel ning võid neid siin muuta."
 
 #: templates/simpleauth/settings.html:23
 #: templates/userprofile/profile/overview.html:103
@@ -2022,7 +2043,7 @@ msgstr ""
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
-msgstr ""
+msgstr "Näita lõpetatuid"
 
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
@@ -2058,11 +2079,11 @@ msgstr "Koduleht kogumikule %(collection_name)s"
 #: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
-msgstr ""
+msgstr "Projektid kogumikus %(collection)s"
 
 #: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered to belong in this collection:"
-msgstr ""
+msgstr "Sellesse kogumikku kuuluvad projektid:"
 
 #: templates/txcollections/collection_detail.html:108
 #, python-format
@@ -2070,6 +2091,9 @@ msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
+"Sellesse kogumikku pole ühtegi projekti veel registreeritud. <a "
+"href=\"%(project_list)"
+"s\">Otsi projekte</a> ja lisa need kogumikku."
 
 #: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
@@ -2098,11 +2122,11 @@ msgstr "Redigeerin <a href=\"%(collection_url)s\">%(collection_name)s</a>"
 
 #: templates/txcollections/collection_form.html:36
 msgid "Save collection"
-msgstr ""
+msgstr "Salvesta kogumik"
 
 #: templates/txcollections/collection_list.html:8
 msgid "Collection list"
-msgstr "Kogumike list"
+msgstr "Kogumikud"
 
 #: templates/txcollections/collection_list.html:17
 #, python-format
@@ -2150,6 +2174,8 @@ msgid ""
 "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
 "\">add it</a>!"
 msgstr ""
+"Ei leidnud oma kogumikku? Ole hea ja <a href=\"%(collection_create)s\">lisa "
+"see</a>!"
 
 #: templates/txcollections/release_confirm_delete.html:4
 #, python-format
@@ -2183,19 +2209,19 @@ msgstr "Väljalaske kuupäev:"
 
 #: templates/txcollections/release_detail.html:65
 msgid "String freeze:"
-msgstr ""
+msgstr "Sõnede külmutamine:"
 
 #: templates/txcollections/release_detail.html:69
 msgid "Devel freeze:"
-msgstr ""
+msgstr "Arenduse külmutamine:"
 
 #: templates/txcollections/release_detail.html:77
 msgid "Translation statistics"
-msgstr ""
+msgstr "Tõlke statistika"
 
 #: templates/txcollections/release_detail.html:84
 msgid "No translations added for this release. :-("
-msgstr ""
+msgstr "Ühtegi tõlget pole lisatud sellele väljalaskele. :-("
 
 #: templates/txcollections/release_detail.html:95
 msgid "Delete release"
@@ -2225,21 +2251,21 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"        Redigeerin väljalaset <a href=\"%(release_url)s\">%(release_name)s<"
-"/a>\n"
+"        Redigeerin väljalaset <a href=\"%(release_url)s\">%(release_name)s</"
+"a>\n"
 "      "
 
 #: templates/txcollections/release_form.html:44
 msgid "Save release"
-msgstr ""
+msgstr "Salvesta väljalase"
 
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with guarantied access to submit files:"
-msgstr ""
+msgstr "Kasutajad failide saatmise loaga:"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
-msgstr ""
+msgstr "Tühista luba"
 
 #: templates/txpermissions/permission_form.html:13
 msgid "Grant permission"
@@ -2247,7 +2273,7 @@ msgstr "Anna õigus"
 
 #: templates/txpermissions/permission_form.html:15
 msgid "Request permission"
-msgstr ""
+msgstr "Taotle luba"
 
 #: templates/txpermissions/permission_request_approve_form.html:5
 msgid "Approve request"
@@ -2255,19 +2281,15 @@ msgstr "Kiida taotlus heaks"
 
 #: templates/txpermissions/permission_request_delete_form.html:6
 msgid "Withdraw request"
-msgstr ""
+msgstr "Tühista loa taotlus"
 
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
 msgstr "Keela taotlus"
 
-#: templates/userprofile/menu.html:5
-msgid "Overview"
-msgstr "Ülevaade"
-
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
-msgstr ""
+msgstr "Isiklik informatsioon"
 
 #: templates/userprofile/menu.html:7
 msgid "Avatar"
@@ -2276,7 +2298,7 @@ msgstr "Avatar"
 #: templates/userprofile/menu.html:10
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
-msgstr ""
+msgstr "Eemalda profiil"
 
 #: templates/userprofile/account/email_validation.html:5
 msgid "E-mail change"
@@ -2297,6 +2319,8 @@ msgid ""
 "Insert the new e-mail address. An e-mail will be send to it for testing and "
 "confirmation."
 msgstr ""
+"Sisesta uue e-posti aadress. E-kiri saadetakse testimiseks ning "
+"kinnitamiseks."
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
@@ -2317,6 +2341,8 @@ msgid ""
 "You can manage the e-mail validation process from the <a href=\"%"
 "(profile_overview)s\"overview page</a>."
 msgstr ""
+"Võid hallata e-posti valideerimise protessi <a href=\"%(profile_overview)s"
+"\"ülevaate lehelt</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -2327,6 +2353,8 @@ msgid ""
 "The key you received via e-mail is no longer valid. Please try the e-mail "
 "validation process again."
 msgstr ""
+"Võti mille said e-kirjaga ei ole enam kehtiv. Palun proovi valideerida e-"
+"post uuesti."
 
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:16
@@ -2339,11 +2367,13 @@ msgid ""
 "Please access to your e-mail and complete this process following the "
 "instructions specified in the e-mail body."
 msgstr ""
+"E-kiri saadeti su uuele e-posti aadressile kinnitamiseks ja aktiveerimiseks. "
+"Palun järgi juhiseid sinule saadetud e-kirjas."
 
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
-msgstr ""
+msgstr "Valideeri uuest e-posti "
 
 #: templates/userprofile/account/email_validation_reset.html:19
 msgid ""
@@ -2351,38 +2381,41 @@ msgid ""
 "sign in. Insert your registered e-mail address to receive the validation e-"
 "mail again."
 msgstr ""
+"Kui sa ei ole valideerinud oma e-posti aadressi siis sul ei ole võimalik "
+"sisse logida. Sisesta oma e-posti aadress selleks, et saata uuesti "
+"valideerimise e-kiri."
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
-msgstr ""
+msgstr "Saada kinnitus uuesti"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
-msgstr ""
+msgstr "Valideerimise e-kiri saadetud"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Your user account was already active"
-msgstr ""
+msgstr "Sinu kasutajakonto oli juba aktiivne"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "You can manage the e-mail validation process from the"
-msgstr ""
+msgstr "Võid hallata e-posti valideerimise protsessi"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "overview page"
-msgstr ""
+msgstr "ülevaate leht"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
 msgid "We've e-mailed you the e-mail validation link."
-msgstr ""
+msgstr "Saatsime sulle e-kirja valideerimise lingiga."
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
-msgstr ""
+msgstr "Sinu e-posti aadress juba valideeriti"
 
 #: templates/userprofile/account/login.html:5
 msgid "User sign in"
-msgstr ""
+msgstr "Kasutaja sisselogimine"
 
 #: templates/userprofile/account/login.html:19
 msgid "Enter your username and password to sign in."
@@ -2390,7 +2423,7 @@ msgstr "Sisesta kastuajanimi ja salasõna sisselogimiseks."
 
 #: templates/userprofile/account/login.html:36
 msgid "Utilities"
-msgstr ""
+msgstr "Abivahendid"
 
 #: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
@@ -2433,8 +2466,8 @@ msgid ""
 "You can change your password from here. Please enter your new password twice "
 "so we can verify you typed it in correctly."
 msgstr ""
-"Võid oma salasõna muuta siin. Palun sisesta uus salasõna kaks korda selleks "
-"et olla kindel, et olla kindel et sisestasid selle korrektselt."
+"Võid oma salasõna muuta siin. Palun sisesta uus salasõna kaks korda selleks,"
+"et olla kindel et sisestasid selle korrektselt."
 
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
@@ -2540,8 +2573,8 @@ msgid ""
 "url has been sent to your e-mail address. You must access this message on "
 "your e-mail account to finish the registration process."
 msgstr ""
-"Oled edukalt registreerinud uue konto ning aktiveerimise URL saadeti sinu "
-"e-posti aadressile. Pead avama selle e-kirja, et lõpetada "
+"Oled edukalt registreerinud uue konto ning aktiveerimise URL saadeti sinu e-"
+"posti aadressile. Pead avama selle e-kirja, et lõpetada "
 "registreerimisprotsess."
 
 #: templates/userprofile/account/registration_done.html:15
@@ -2550,9 +2583,9 @@ msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">sign in page</a> to authenticate and start using this site."
 msgstr ""
-"Oled edukalt registreerinud uue konto. Mine <a href=\"%"
-"(overview_url)s\">sisselogimislehele</a> selleks, et end autentida ning "
-"hakata kasutama käesolevat veebisaiti."
+"Oled edukalt registreerinud uue konto. Mine <a href=\"%(overview_url)s"
+"\">sisselogimislehele</a> selleks, et end autentida ning hakata kasutama "
+"käesolevat veebisaiti."
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -2573,7 +2606,7 @@ msgstr "Sul on järgnevad valikud profiilis oleva avatari pildi valimiseks"
 
 #: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
-msgstr "Vali pilt kettalt"
+msgstr "Vali pilt oma arvutist"
 
 #: templates/userprofile/avatar/choose.html:52
 #: templates/userprofile/avatar/choose.html:58
@@ -2635,7 +2668,7 @@ msgstr "Automaatne asukoha avastamine"
 #: templates/userprofile/profile/overview.html:49
 #: templates/userprofile/profile/public.html:35
 msgid "Country"
-msgstr "Riik:"
+msgstr "Riik"
 
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
@@ -2728,7 +2761,8 @@ msgstr "Sisesta midagi enda kohta."
 msgid "Public profile of %(user)s"
 msgstr "Kasutaja %(user)s avalik profiil"
 
-#: templates/userprofile/profile/public.html:33
+#: templates/userprofile/profile/public.html:33 txcommon/admin.py:20
+#: txcommon/admin.py:27
 msgid "Username"
 msgstr "Kasutajanimi"
 
@@ -2748,39 +2782,80 @@ msgstr "Tõlgi '%(filename)s'"
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "Tõlgi '<code>%(filename)s</code>'"
 
-#: templates/webtrans/transfile_edit.html:102
+#: templates/webtrans/transfile_edit.html:51
+msgid "Current status for this page"
+msgstr "Praeguse lehe tõlgete olek"
+
+#: templates/webtrans/transfile_edit.html:54
+msgid "Settings"
+msgstr "Seaded"
+
+#: templates/webtrans/transfile_edit.html:57
+msgid "Show occurences:"
+msgstr "Näita märkmeid:"
+
+#: templates/webtrans/transfile_edit.html:66
+msgid "Translated"
+msgstr "Tõlgitud"
+
+#: templates/webtrans/transfile_edit.html:72
+msgid "Fuzzy"
+msgstr "Hägune"
+
+#: templates/webtrans/transfile_edit.html:78
+msgid "Untranslated"
+msgstr "Tõlkimata"
+
+#: templates/webtrans/transfile_edit.html:84
+msgid "Total"
+msgstr "Kokku"
+
+#: templates/webtrans/transfile_edit.html:90
+msgid "Live translation"
+msgstr "<i>Live</i> tõlkimine"
+
+#: templates/webtrans/transfile_edit.html:96
+#, python-format
+msgid "Page %(step)s of %(step_count)s"
+msgstr "Leht %(step)s/%(step_count)s"
+
+#: templates/webtrans/transfile_edit.html:103
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:103
+#: templates/webtrans/transfile_edit.html:104
 msgid "Source String"
 msgstr "Lähtesõne"
 
-#: templates/webtrans/transfile_edit.html:104
+#: templates/webtrans/transfile_edit.html:106
 msgid "Translation"
 msgstr "Tõlge"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:108
 msgid "Auto-translate"
 msgstr "Tõlgi automaatselt"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:108
 msgid "AT"
 msgstr "AT"
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:110
 msgid "Occurrences"
 msgstr "Esinemisi"
 
-#: templates/webtrans/transfile_edit.html:109
+#: templates/webtrans/transfile_edit.html:111
 msgid "Fuzzy?"
 msgstr "Hägune?"
 
-#: templates/webtrans/transfile_edit.html:122
+#: templates/webtrans/transfile_edit.html:124
 msgid "Submit translations"
 msgstr "Saada tõlked"
 
-#: templates/webtrans/transfile_form.html:19
+#: templates/webtrans/transfile_form.html:15
+msgid "Copy source string"
+msgstr "Kopeeri lähtesõne"
+
+#: templates/webtrans/transfile_form.html:20
 msgid "Auto-suggest translation"
 msgstr "Automaatne tõlke soovitus"
 
@@ -2892,25 +2967,29 @@ msgstr "Mine projekti lehele"
 msgid "Go to this component page"
 msgstr "Mine komponendi lehele"
 
-#: translations/templates/pofile_lock.html:15
-msgid "Unlock this file when you are finished working with it."
-msgstr "Tee see fail lukust lahti kui oled lõpetanud sellega töötamise."
+#: translations/templates/pofile_lock.html:11
+msgid "Unlock this file when you are finished working with it. Date locked:"
+msgstr ""
+"Tee see fail lukust lahti kui oled lõpetanud sellega töötamise. Lukustamise "
+"kuupäev:"
 
-#: translations/templates/pofile_lock.html:21
+#: translations/templates/pofile_lock.html:15
 #, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working on it."
+msgid ""
+"User '%(owner)s' has locked this file indicating he's working on it. Date "
+"locked:"
 msgstr ""
 "Kasutaja '%(owner)s' on lukustanud selle faili, see tähendab et ta teeb "
-"selle tööd."
+"sellega tööd. Lukustamise kuupäev:"
 
-#: translations/templates/pofile_lock.html:27
+#: translations/templates/pofile_lock.html:20
 msgid "Lock this file to notify others you're working with it."
 msgstr ""
 "Lukusta see fail teavitamaks teisi kasutajaid, et sina tegeled sellega."
 
-#: translations/templates/pofile_lock.html:30
+#: translations/templates/pofile_lock.html:24
 msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr "Fail on lukustatud. Tõenäoliselt keegi töötab sellega hetkel."
+msgstr "Fail on lukustamata. Tõenäoliselt keegi ei tööta sellega hetkel."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -2950,7 +3029,7 @@ msgstr "%(site_name)s: %(collection)s kogumik"
 #: txcollections/feeds.py:39
 #, python-format
 msgid "Latest releases in the %s collection."
-msgstr ""
+msgstr "Hiljutised väljalasked kogumikus %s."
 
 #: txcollections/feeds.py:66
 #, python-format
@@ -2980,6 +3059,20 @@ msgstr "<Väljalase: %(rel)s (Kogumik %(col)s)>"
 msgid "String freese date"
 msgstr "Sõnede külmutamise kuupäev"
 
+#: txcommon/admin.py:10
+msgid ""
+"Required. 30 characters or fewer. Unicode alphanumeric characters only "
+"(letters, digits and underscores)."
+msgstr ""
+"Vajalik. 30 või vähem tähemärki. Unicode numbri- ja tähemärgid ainult "
+"(tähed, numbrid ja alakriips)."
+
+#: txcommon/admin.py:13
+msgid "This value must contain only unicode letters, numbers and underscores."
+msgstr ""
+"Lühike silt mida kasutatakse URL jaoks, sisaldab ainult tähti, numbreid, "
+"alakriipse ja sidekriipse."
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
@@ -3007,7 +3100,7 @@ msgstr "Emakeel"
 
 #: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
-msgstr "Blog"
+msgstr "Veebipäevik"
 
 #: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
@@ -3055,44 +3148,44 @@ msgstr "kui projekt on kustutatud"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
-msgstr ""
+msgstr "Saatmise luba taotletud projektile"
 
 #: txcommon/notifications.py:34
 msgid "when an user request access to submit files to a project"
-msgstr ""
+msgstr "kui kasutaja taotleb ligipääsu failide saatmiseks projekti"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
-msgstr ""
+msgstr "Saatmise loa taotlus projektile lükati tagasi"
 
 #: txcommon/notifications.py:42
 msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr ""
+msgstr "kui hooldaja keelab ligipääsu failide saatmiseks projektile"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
-msgstr ""
+msgstr "Saatmise loa taotlus võeti tagasi"
 
 #: txcommon/notifications.py:50
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr ""
+msgstr "kui kasutaja võtab failide saatmise taotluse tagasi"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr ""
+msgstr "Failide saatmise loa taotlus võeti vastu"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr ""
+msgstr "kui hooldaja lubab kasutajale failide saatmise projektile"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr ""
+msgstr "Projektile saatmise luba tühistatud"
 
 #: txcommon/notifications.py:66
 msgid ""
 "when a maintainer revokes the access of an user to submit files to a project"
-msgstr ""
+msgstr "kui hooldaja tühistab kasutaja ligipääsu failide saatmiseks projektile"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3249,18 +3342,22 @@ msgid "Home"
 msgstr "Kodu"
 
 #: txpermissions/views.py:93
+msgid "You added a permission."
+msgstr "Lisasid õiguse"
+
+#: txpermissions/views.py:95
 msgid "You added a permission request."
 msgstr "Lisasid õiguse taotluse"
 
-#: txpermissions/views.py:128
+#: txpermissions/views.py:133
 msgid "You approved the permission request."
 msgstr "Kiitsid heaks õiguse taotluse"
 
-#: txpermissions/views.py:146
+#: txpermissions/views.py:151
 msgid "You removed the permission."
 msgstr "Eemaldasid õiguse."
 
-#: txpermissions/views.py:148
+#: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Eemaldasid õiguse taotluse."
 
@@ -3302,7 +3399,12 @@ msgstr "vcsunits"
 msgid "The %s fields should be filled."
 msgstr "Väljad %s peaks olema täidetud"
 
-#: webtrans/wizards.py:202
+#: webtrans/forms.py:75 webtrans/forms.py:87
+#, python-format
+msgid "Context: %s"
+msgstr "Kontekst: %s"
+
+#: webtrans/wizards.py:198
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -3315,5 +3417,4 @@ msgstr "Eelmine"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Järgmine"
-
 

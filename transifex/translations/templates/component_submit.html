@@ -9,7 +9,7 @@
   <legend>{% trans "Submit file" %}</legend>
   <input type="file" name="submitted_file">
   <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
-  <input type="hidden" id="message" name="message" value="Updates to {{pofile.lang_or_code}} translation">
+  <input type="hidden" name="message" value="Updates to {{pofile.lang_or_code}} translation">
   {% with pofile.locks.get.owner as owner %}
     {% if pofile.locked %}
       {% ifnotequal request.user.username owner.username %}

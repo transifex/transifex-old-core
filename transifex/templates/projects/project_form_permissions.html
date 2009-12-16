@@ -55,12 +55,12 @@
 
 {% get_permission_requests project as "all_permission_requests" %}
 {% if all_permission_requests %}
-<div class="permission_list separate ">
+<div class="list separate ">
 <h4>{% trans "Pending requests:" %}</h4>
 <ul>
 {% for perm in all_permission_requests|dictsort:"user.username" %}
-    <li>
-        <a href="{% url profile_public perm.user.username %}">{{ perm.user }}</a>
+    <li class="i16 user">
+        <a class="name" href="{% url profile_public perm.user.username %}">{{ perm.user }}</a>
         {% if can_submit_file %}
           <span>- {{perm.user.email|mungify}}</span>
         {% endif %}
@@ -75,12 +75,12 @@
 {% get_permissions project as "all_permissions" %}
 {% if all_permissions %}
 {% autopaginate all_permissions 20 %}
-<div class="permission_list separate">
+<div class="list separate">
 <h4>{% trans "Users with guaranteed access to submit files:" %}</h4>
 <ul>
 {% for perm in all_permissions|dictsort:"user.username" %}
     <li>
-        <a href="{% url profile_public perm.user.username %}">{{ perm.user }}</a> 
+        <a class="name" href="{% url profile_public perm.user.username %}">{{ perm.user }}</a> 
         {% if can_submit_file %}
           <span>- {{perm.user.email|mungify}}</span>
         {% endif %}
