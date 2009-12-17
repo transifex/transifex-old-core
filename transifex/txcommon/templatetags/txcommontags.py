@@ -211,3 +211,17 @@ def get_next(request):
         return next
     except AttributeError:
         return ''
+
+@register.filter
+def strip_tags(value):
+    """Return the value with HTML tags striped."""
+    return txcommon.rst.strip_tags(value)
+
+@register.filter
+def as_rest_title(value, border=None):
+    """
+    Return a value as a restructured text header.
+
+    border - Character to be used in the header bottom-border
+    """
+    return txcommon.rst.as_title(value, border)
