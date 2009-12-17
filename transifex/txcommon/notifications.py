@@ -197,8 +197,15 @@ NOTICE_TYPES = [
                 "show_to_user": True,
             },
 
-
-
+            # Reports
+            {
+                "label": "project_report_weekly_maintainers",
+                "display": _("Weekly project report for maintainers"), 
+                "description": _("when you receive the weekly report of "
+                                 "projects that you maintain."), 
+                "default": 2,
+                "show_to_user": True,
+            },
 
             {
                 "label": "collection_added",

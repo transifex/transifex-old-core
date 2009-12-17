@@ -1,0 +1,19 @@
+{% load i18n %}{% load txcommontags %}{% url project_detail project.slug as project_url %}{% with project.name as project_name %}
+{% blocktrans %}I am bringing you the weekly translation statistics for your '{{ project_name }}' project.{% endblocktrans %}
+
+{% blocktrans %}Transifex weekly report
+======================={% endblocktrans %}
+{% for component in project.component_set.all %}
+{{ project.name }} » {{ component.name }}
+
+- Repository: {{ component.unit.root }}
+{% if component.unit.branch %}- Branch: {{ component.unit.branch }}{% endif %}
+- Last updated: {{ component.unit.last_checkout }}
+
+{{ component.trans.get_rest_stats }}{% endfor %}
+{% blocktrans %}Activity report from past week:{% endblocktrans %}
+
+{% for actionlog in actionlogs %}- {{ actionlog.message|strip_tags }} by {{actionlog.user}} on {{actionlog.action_time|date:"D M j, G:i"}}.
+{% endfor %}
+{% blocktrans %}For a full report, visit your project's translation page at{% endblocktrans %} http://{{current_site}}{{ project_url }}
+{% endwith %}
