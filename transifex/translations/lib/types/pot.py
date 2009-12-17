@@ -235,6 +235,39 @@ class POTManager(TransManagerMixin):
                 'untranslated' : int(untranslated),
                 'error' : error,}
 
+    @classmethod
+    def get_stats_completion(self, stats):
+        """
+        Get a dictionary with the translation stats of a pofile and returns the 
+        completion of it.
+
+        The ``stats`` parameter must receive a dictionary like the following:
+        stats = {'translated': 50, 'fuzzy': 20, 'untranslated': 30}
+        """
+        try:
+            total = (stats.get('translated') + stats.get('fuzzy') + stats.get('untranslated'))
+            return (stats.get('translated') * 100 / total)
+        except ZeroDivisionError:
+            pass
+        return None
+
+    @classmethod
+    def get_stats_status(self, stats):
+        """
+        Get a dictionary with the translation stats of a pofile and returns a 
+        string with the status in the following format:
+        '10 messages complete with 1 fuzzy and 12 untranslated'
+
+        The ``stats`` parameter must receive a dictionary like the following:
+        stats = {'translated': 50, 'fuzzy': 20, 'untranslated': 30}
+        """
+        from django.template.defaultfilters import pluralize
+        status = "%s message%s complete with %s fuzz%s and %s untranslated" \
+            % (stats['translated'], pluralize(stats['translated']),
+               stats['fuzzy'], pluralize(stats['fuzzy'], 'y,ies'),
+               stats['untranslated'])
+        return status
+
     def calculate_file_stats(self, filename, try_to_merge):
         """
         Return the stats of a specificy file copying it to the static directory.
