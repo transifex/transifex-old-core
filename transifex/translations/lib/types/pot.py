@@ -196,25 +196,24 @@ class POTManager(TransManagerMixin):
         else:
             return None
 
-    def get_po_stats(self, pofile):
+    @classmethod
+    def get_po_stats(self, po_contents):
         """
-        Return a dictionary with the stats for a POT/PO file.
+        Return a dictionary with the stats for a POT/PO file content.
 
         Case the stats for the ``pofile`` can not be calculated, the dictionary
         will be returned with stats equals zero and with the ``error`` attribute
         set as True.
 
         """
-        pofile = os.path.join(self.msgmerge_path, pofile)
-
         error = False
         output = ''
         try:
             # These env vars are needed to ensure the command output be in English
             env = {'LC_ALL':'C', 'LANG':'C', 'LANGUAGE':'C'}
-            command = "msgfmt --statistics -o /dev/null %s" % pofile
-            status, stdout, stderr = run_command(command, env=env,
-                                                 with_extended_output=True)
+            command = "msgfmt --statistics -o /dev/null -"
+            status, stdout, stderr = run_command(command, env=env, 
+                _input=po_contents, with_extended_output=True)
             # Not sure why msgfmt sends its output to stderr instead of stdout
             output = stderr
         except CommandError:
@@ -258,7 +257,8 @@ class POTManager(TransManagerMixin):
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
 
-        postats = self.get_po_stats(file_path)
+        po_contents = self.get_file_contents(file_path, is_msgmerged)
+        postats = self.get_po_stats(po_contents)
 
         return {'trans': postats['translated'],
                 'fuzzy': postats['fuzzy'],
