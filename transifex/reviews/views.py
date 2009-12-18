@@ -35,24 +35,39 @@ def review_list(request, project_slug, component_slug):
     }, context_instance=RequestContext(request))
 
 
+def review_add_common(request, component, files_key, form=None):
+    """ Common functionality wrapper."""
+    if not request.FILES.has_key(files_key):
+        request.user.message_set.create(message=_("Please select a " 
+                            "file from your system to be uploaded."))
+    else:
+        description = ""
+        if form:
+            description = form.cleaned_data['description'] 
+        file = request.FILES[files_key]
+        r = POReviewRequest(author=request.user,
+                            description=description,
+                            file_name=os.path.basename(file.name),
+                            component=component)
+        r.save()
+        target = os.path.join(settings.REVIEWS_ROOT, r.full_review_filename)
+        save_file(target, file)
+        request.user.message_set.create(message=_("Your file has been "
+            "successfully placed for reviewing."))
+    return HttpResponseRedirect(
+        reverse('review_list', args=[component.project.slug,
+                                        component.slug]))
+
 def review_add(request, component_id):
     MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', '')
 
     component = get_object_or_404(Component, pk=component_id)
     if request.method == 'POST': # If the form has been submitted...
+
         form = POFileSubmissionForm(request.POST, request.FILES)
+
         if form.is_valid() and 'review_file' in request.FILES:
-            file = request.FILES['review_file']
-            r = POReviewRequest(author=request.user,
-                                description=form.cleaned_data['description'],
-                                file_name=os.path.basename(file.name),
-                                component=component)
-            r.save()
-            target = os.path.join(settings.REVIEWS_ROOT, r.full_review_filename)
-            save_file(target, file)
-            return HttpResponseRedirect(
-                reverse('review_list', args=[component.project.slug,
-                                             component.slug]))
+            return review_add_common(request, component, 'review_file', form)
         else:
             return render_to_response('reviews/review_list.html', {
                 'component': component,
@@ -60,7 +75,6 @@ def review_add(request, component_id):
             }, context_instance=RequestContext(request))
     else:
         form = POFileSubmissionForm()
-        
     return HttpResponseRedirect(
         reverse('review_list', args=[component.project.slug, component.slug]))
 

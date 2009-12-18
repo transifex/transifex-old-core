@@ -23,6 +23,7 @@ from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
+from reviews.views import review_add_common
 from submissions import submit_by_email
 from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
@@ -37,7 +38,6 @@ from txcommon.forms import unit_sub_forms
 from txcommon.log import logger
 from txcommon.models import exclusive_fields, get_profile_or_user
 from txcommon.views import json_result, json_error
-
 
 # Components
 @login_required
@@ -340,7 +340,7 @@ def component_submit_file(request, project_slug, component_slug,
         return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                             args=(project_slug, component_slug,)))
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get("submit", None):
 
         if not request.FILES.has_key('submitted_file') and not submitted_file:
             request.user.message_set.create(message=_("Please select a " 
@@ -482,7 +482,9 @@ def component_submit_file(request, project_slug, component_slug,
                          component.full_name, str(e)))
             request.user.message_set.create(message = _(
                 "Sorry, your file could not be sent because of an error."))
-
+    # Send the file for review instead of immediately submit it
+    elif request.method == 'POST' and request.POST.get("submit_for_review", None):
+        return review_add_common(request, component, 'submitted_file')
     else:
         request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
