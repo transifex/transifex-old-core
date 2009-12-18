@@ -143,6 +143,21 @@ class POTHandler:
         except POFile.DoesNotExist:
             return None
 
+    def get_po_stats(self, po_contents):
+        """
+        Abstraction for getting a dictionary with the stats for a POT/PO 
+        file content.
+        """
+        return self.tm.get_po_stats(po_contents)
+
+    def get_stats_completion(self, stats):
+        """Abstraction for getting the completion of a po file stats disctionaty."""
+        return self.tm.get_stats_completion(stats)
+
+    def get_stats_status(self, stats):
+        """Abstraction for getting the status of the stats completion."""
+        return self.tm.get_stats_status(stats)
+
     def get_file_contents(self, filename, is_msgmerged):
         """Abstraction for getting the contents of a filename."""
         return self.tm.get_file_contents(filename, is_msgmerged)

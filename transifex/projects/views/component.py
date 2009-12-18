@@ -377,7 +377,7 @@ def component_submit_file(request, project_slug, component_slug,
                 return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
-            if not request.POST['message']:
+            if not request.POST.get('message', None):
                 request.user.message_set.create(message=
                     _("Enter a commit message"))
                 return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
@@ -396,10 +396,11 @@ def component_submit_file(request, project_slug, component_slug,
         try:
             postats = POFile.objects.get(filename=filename,
                                          object_id=component.id)
+            language = postats.language
             lang_code = postats.language.code
         except (POFile.DoesNotExist, AttributeError):
+            language, postats = None, None
             lang_code = component.trans.guess_language(filename)
-            postats = None
 
         team = Team.objects.get_or_none(component.project, lang_code)
         if team:
@@ -416,11 +417,7 @@ def component_submit_file(request, project_slug, component_slug,
             return HttpResponseRedirect(reverse('component_detail', 
                             args=(project_slug, component_slug,)))
 
-        msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
-                                          'domain' : current_site.domain }
-
         try:
-
             if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
@@ -433,10 +430,24 @@ def component_submit_file(request, project_slug, component_slug,
                          (filename, component.full_name))
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
+
+                # Rendering the commit message
+                new_stats = component.trans.get_po_stats(submitted_file)
+                completion = component.trans.get_stats_completion(new_stats)
+                status = component.trans.get_stats_status(new_stats)
+                message = request.POST.get('message', None)
+                if not message:
+                    message = "Updated %s translation to %s%%" % (
+                        (language or lang_code), completion)
+
+                msg = settings.DVCS_SUBMIT_MSG % {'message': message,
+                                                  'status': status,
+                                                  'domain' : current_site.domain }
+
                 component.submit(file_dict, msg, 
                                  get_profile_or_user(request.user))
 
-            if component.submission_type=='email':
+            elif component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 
                             (filename, component.full_name))
                 submit_by_email(component, file_dict, request.user)

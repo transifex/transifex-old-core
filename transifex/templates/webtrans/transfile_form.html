@@ -2,7 +2,6 @@
 {% load txcommontags %}
 {% load webeditortags %}
 {% if form %}
-<input type="hidden" id="message" name="message" value="Updates to {{pofile.lang_or_code}} translation">
 <input type="hidden" name="wizard_step" value="{{ step0 }}" />
 {% for field in form %}
   {% if field.is_hidden %}
