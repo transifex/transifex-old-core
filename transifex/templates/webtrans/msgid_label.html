@@ -1,3 +1,4 @@
+{% load i18n %}
 {% for label in msgid_list %}
     {% if forloop.first %}
     <p class="msgid">{{ label }}</p>
@@ -6,5 +7,5 @@
     {% endif %}
 {% endfor %}
 {% if msgctxt %}
-<p class="contexts">{{ msgctxt }}</p>
+<p class="contexts" title="{% trans 'String Context' %}">{{ msgctxt }}</p>
 {% endif %}
