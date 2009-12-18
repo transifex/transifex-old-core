@@ -32,20 +32,21 @@ class POTHandler:
 
     def set_file_stats(self, filename, is_msgmerged=True, is_pot=False):
         """Set the statistics of a specificy file for an object."""
-        lang_code = self.guess_language(filename)
 
         ctype = ContentType.objects.get_for_model(self.component)
         s, created = POFile.objects.get_or_create(object_id=self.component.id,
             content_type=ctype, filename=filename, is_pot=is_pot)
 
-        if not s.language:
-            try:
-                l = Language.objects.by_code_or_alias(code=lang_code)
-                s.language=l
-            except Language.DoesNotExist:
-                pass
+        if not is_pot:
+            lang_code = self.guess_language(filename)
+            if not s.language:
+                try:
+                    l = Language.objects.by_code_or_alias(code=lang_code)
+                    s.language=l
+                except Language.DoesNotExist:
+                    pass
 
-        s.language_code = lang_code
+            s.language_code = lang_code
         calcstats = True
 
         rev = None
