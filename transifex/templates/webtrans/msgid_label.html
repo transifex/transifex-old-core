@@ -1,7 +1,10 @@
 {% for label in msgid_list %}
     {% if forloop.first %}
-    <p id='msgid'>{{ label }}</p>
+    <p class="msgid">{{ label }}</p>
     {% else %}
-    <p id='msgid_plural'>{{ label }}</p>
+    <p class="msgid_plural">{{ label }}</p>
     {% endif %}
 {% endfor %}
+{% if msgctxt %}
+<p class="contexts">{{ msgctxt }}</p>
+{% endif %}

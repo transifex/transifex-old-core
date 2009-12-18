@@ -31,6 +31,15 @@ function toggle_occurrences(){
         }
     }
 
+function toggle_contexts(){
+        if($("input[name='toggle_contexts']").is(":checked")){
+            $(".contexts").show();
+
+        }else{
+            $(".contexts").hide();
+        }
+    }
+
 function fuzzy(nkey){
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', true);
     $("textarea.msgstr_field_"+nkey)
@@ -161,4 +170,10 @@ $(function(){
     })
     toggle_occurrences()
 
+    $("input[name='toggle_contexts']").change(function(){
+        toggle_contexts()
+    })
+    toggle_contexts()
+
 });
+

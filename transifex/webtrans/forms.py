@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import polib
 from django import forms
 from django.template.loader import render_to_string
@@ -38,10 +39,10 @@ def _guess_entry_status(entry, key, data):
         elif not entry.translated() and not entry.obsolete:
             return 'untranslated'
 
-def _get_label(msgid_list):
+def _get_label(msgid_list, msgctxt):
     """Return the label for a plural field."""
     return render_to_string('webtrans/msgid_label.html',
-                            { 'msgid_list': msgid_list})
+                            { 'msgid_list': msgid_list, 'msgctxt': msgctxt})
 
 
 class TranslationForm(forms.Form):
@@ -72,7 +73,7 @@ class TranslationForm(forms.Form):
                     initial=messages,
                     help_text=self.help_text(entry),
                     label=_get_label([polib.escape(entry.msgid),
-                        polib.escape(entry.msgid_plural)]),
+                        polib.escape(entry.msgid_plural)], entry.msgctxt ),
                     attrs=attrs,
                     required=False,
                 )
@@ -82,10 +83,9 @@ class TranslationForm(forms.Form):
                     initial=polib.escape(entry.msgstr),
                     help_text=self.help_text(entry),
                     attrs=attrs,
-                    label=_get_label([polib.escape(entry.msgid)]),
+                    label=_get_label( [polib.escape(entry.msgid)], entry.msgctxt ),
                     required=False,
                     )
-
             msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,
                 initial=polib.escape(entry.msgid))
             fuzzy_field = forms.BooleanField(required=False, initial=fuzzy)
