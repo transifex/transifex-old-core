@@ -74,14 +74,14 @@ urlpatterns += patterns('',
         #regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
         #view = project_add_permission_request,
         #name = 'project_add_permission_request'),
-    #url(
-        #regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
-        #view = project_delete_permission_request,
-        #name = 'project_delete_permission_request'),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
+        view = project_delete_permission_request,
+        name = 'project_delete_permission_request'),
         
-    #url(regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/approve/$',
-        #view = project_approve_permission_request,
-        #name = "project_approve_permission_request"),
+    url(regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/approve/$',
+        view = project_approve_permission_request,
+        name = "project_approve_permission_request"),
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,

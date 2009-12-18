@@ -104,22 +104,22 @@ def project_add_permission(request, project_slug):
         #template_name='projects/project_form_permissions.html')
 
 
-#@login_required
-#@one_perm_required_or_403(pr_project_approve_perm, 
-    #(Project, 'slug__exact', 'project_slug'))
-#def project_approve_permission_request(request, project_slug, permission_pk):
-    #project, permission=_get_project_and_permission(project_slug, permission_pk)
-    #notice = {
-            #'type': 'project_submit_access_granted',
-            #'object': project,
-            #'sendto': [permission.user],
-            #'extra_context': {'project': project,
-                              #'user_request': permission.user,
-                              #'user_action': request.user,
-            #},
-        #}
-    #return approve_permission_request(request, permission,
-                                      #extra_context={ 'notice': notice })
+@login_required
+@one_perm_required_or_403(pr_project_approve_perm, 
+    (Project, 'slug__exact', 'project_slug'))
+def project_approve_permission_request(request, project_slug, permission_pk):
+    project, permission=_get_project_and_permission(project_slug, permission_pk)
+    notice = {
+            'type': 'project_submit_access_granted',
+            'object': project,
+            'sendto': [permission.user],
+            'extra_context': {'project': project,
+                              'user_request': permission.user,
+                              'user_action': request.user,
+            },
+        }
+    return approve_permission_request(request, permission,
+                                      extra_context={ 'notice': notice })
 
 
 @login_required
@@ -146,47 +146,47 @@ def project_delete_permission(request, project_slug, permission_pk):
                                         extra_context={ 'notice': notice })
 
 
-#@login_required
-#def project_delete_permission_request(request, project_slug, permission_pk):
-    #"""
-    #View for deleting a request of permission of an user.
+@login_required
+def project_delete_permission_request(request, project_slug, permission_pk):
+    """
+    View for deleting a request of permission of an user.
 
-    #This view is an abstraction of a txpermissions.views method. 
-    #"""
-    #project, permission=_get_project_and_permission(project_slug, permission_pk)
+    This view is an abstraction of a txpermissions.views method. 
+    """
+    project, permission=_get_project_and_permission(project_slug, permission_pk)
 
-    ## It's necessary to distinguinsh between maintainer and normal users that
-    ## did the request
-    #if request.user.id==permission.user.id:
-        #notice_type = 'project_submit_access_request_withdrawn'
-        #sendto = project.maintainers.all()
-    #else:
-        #notice_type = 'project_submit_access_request_denied'
-        #sendto = [permission.user]
+    # It's necessary to distinguinsh between maintainer and normal users that
+    # did the request
+    if request.user.id==permission.user.id:
+        notice_type = 'project_submit_access_request_withdrawn'
+        sendto = project.maintainers.all()
+    else:
+        notice_type = 'project_submit_access_request_denied'
+        sendto = [permission.user]
 
-    #notice = {
-            #'type': notice_type,
-            #'object': project,
-            #'sendto': sendto,
-            #'extra_context': {'project': project,
-                              #'user_request': permission.user,
-                              #'user_action': request.user,
-            #},
-        #}
+    notice = {
+            'type': notice_type,
+            'object': project,
+            'sendto': sendto,
+            'extra_context': {'project': project,
+                              'user_request': permission.user,
+                              'user_action': request.user,
+            },
+        }
 
-    #check = ProjectPermission(request.user)
-    #if check.maintain(project) or \
-        #request.user.has_perm('authority.delete_permission') or \
-        #request.user.pk == permission.creator.pk:
-        #return delete_permission_or_request(request, permission, False,
-                                            #extra_context={ 'notice': notice },)
+    check = ProjectPermission(request.user)
+    if check.maintain(project) or \
+        request.user.has_perm('authority.delete_permission') or \
+        request.user.pk == permission.creator.pk:
+        return delete_permission_or_request(request, permission, False,
+                                            extra_context={ 'notice': notice },)
 
 
-    #check = ProjectPermission(request.user)
-    #if check.maintain(project) or \
-            #request.user.has_perm('authority.delete_permission') or \
-            #request.user.pk == permission.creator.pk:
-        #return delete_permission_or_request(request, permission, False)
+    check = ProjectPermission(request.user)
+    if check.maintain(project) or \
+            request.user.has_perm('authority.delete_permission') or \
+            request.user.pk == permission.creator.pk:
+        return delete_permission_or_request(request, permission, False)
 
-    #return permission_denied(request)
+    return permission_denied(request)
 
