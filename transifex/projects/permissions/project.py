@@ -56,7 +56,7 @@ class ProjectPermission(BasePermission):
                 project = team.project
             elif isinstance(obj, POFile):
                 project = obj.object.project
-                team = Team.objects.get_or_none(project, obj.language.code)
+                team = Team.objects.get_or_none(project, obj.language_code)
             if project:
                 if project.anyone_submit:
                     return True
