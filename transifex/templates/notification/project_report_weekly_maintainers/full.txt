@@ -5,7 +5,7 @@
 
 - Repository: {{ component.unit.root }}
 {% if component.unit.branch %}- Branch: {{ component.unit.branch }}{% endif %}
-- Last updated: {{ component.unit.last_checkout }}
+- Last updated: {{ component.unit.last_checkout|date:"G:i Y-n-d" }}
 
 {{ component.trans.get_rest_stats }}{% endfor %}
 {% blocktrans %}Activity report from past week (last 30 actions):{% endblocktrans %}
