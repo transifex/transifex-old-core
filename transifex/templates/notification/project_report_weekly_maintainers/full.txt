@@ -12,5 +12,5 @@
 
 {% for actionlog in actionlogs %}- {{ actionlog.message|strip_tags }} by {{actionlog.user}} on {{actionlog.action_time|date:"D M j, G:i"}}.
 {% endfor %}
-{% blocktrans %}For a full report, visit your project's translation page at{% endblocktrans %} http://{{current_site}}{{ project_timeline_url }}
+{% blocktrans %}For a full report, visit your project's timeline page at{% endblocktrans %} http://{{current_site}}{{ project_timeline_url }}
 {% endwith %}
