@@ -3,6 +3,7 @@
 {% load sorting_tags %}
 {% load txcommontags %}
 {% autosort actionlog %}
+{% with actionlog.count as actionlog_total %}
 {% autopaginate actionlog 30 %}
 
 <fieldset style="margin: inherit auto; width: 50%;" class="compact">
@@ -18,6 +19,14 @@
 {% if not actionlog %}
 <p>{% trans 'None available' %}</p>
 {% else %}
+
+<h3>
+{% blocktrans count actionlog_total as counter %}
+  The query returned {{ counter }} result
+{% plural %}
+  The query returned {{ counter }} results
+{% endblocktrans %}
+</h3>
 
   <div class="pagination">{% paginate %}</div>
   
@@ -46,3 +55,4 @@
 
 {% endif %}
 </div>
+{% endwith %}
