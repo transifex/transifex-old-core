@@ -121,8 +121,8 @@ class POTManager(TransManagerMixin):
 
         """
         file_path = self.get_file_path(filename, is_msgmerged)
+        fp = file(file_path, 'rb')
         try:
-            fp = file(file_path, 'rb')
             content = fp.read()
         finally:
             fp.close()
