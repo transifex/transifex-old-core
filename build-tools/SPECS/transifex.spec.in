@@ -72,6 +72,7 @@ find -mindepth 1 -maxdepth 1 -type d \( \( -name .hg -o \
     -name build-tools -o -name docs -o -name settings \) -prune -o \
     -print \) | xargs cp -a -t $RPM_BUILD_ROOT/%{_datadir}/%{name}
 cp -a *.py $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -a *.db.sqlite $RPM_BUILD_ROOT%{_datadir}/%{name}
 find $RPM_BUILD_ROOT%{_datadir}/%{name}/locale -name \*.po -exec rm {} +
 
 for vcs in cvs svn bzr hg git tar
@@ -132,6 +133,7 @@ fi
 %{_datadir}/%{name}/settings.py[co]
 %{_datadir}/%{name}/urls.py
 %{_datadir}/%{name}/urls.py[co]
+%{_datadir}/%{name}/transifex.db.sqlite
 %{_datadir}/%{name}/actionlog
 %{_datadir}/%{name}/codebases
 %{_datadir}/%{name}/external
