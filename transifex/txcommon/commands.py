@@ -80,7 +80,7 @@ def run_command(command, *args, **kw):
     with_extended_output = kw.pop('with_extended_output', False)
     with_exceptions = kw.pop('with_exceptions', True)
     with_raw_output = kw.pop('with_raw_output', False)
-    env = kw.pop('env', {})
+    env = kw.pop('env', None)
 
     # if command is a string split to a list
     if isinstance(command, basestring):
