@@ -11,6 +11,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 
 from actionlog.models import action_logging
 from authority.views import permission_denied
@@ -37,6 +38,9 @@ from txcommon.forms import unit_sub_forms
 from txcommon.log import logger
 from txcommon.models import exclusive_fields, get_profile_or_user
 from txcommon.views import json_result, json_error
+
+# Cache the current site
+current_site = Site.objects.get_current()
 
 
 # Components
@@ -413,7 +417,7 @@ def component_submit_file(request, project_slug, component_slug,
                             args=(project_slug, component_slug,)))
 
         msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
-                                          'domain' : request.get_host()}
+                                          'domain' : current_site.domain }
 
         try:
 
