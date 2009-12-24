@@ -91,11 +91,10 @@
 		{% if not validated and email %}<br /><a href="{% url email_validation_reset %}">{% trans "Resend validation e-mail" %}</a>
 		{% endif %}
 		<br />
-{# FIXME: Re-enable Location (#305) #}
 		{% if not user.get_profile.location %}
-			{# <a href="{% url profile_edit_location %}">{% trans "Add location" %}</a> #}
+		     <a href="{% url profile_edit_location %}">{% trans "Add location" %}</a>
 		{% else %}
-			{# <a href="{% url profile_edit_location %}">{% trans "Change location" %}</a> #}
+		     <a href="{% url profile_edit_location %}">{% trans "Change location" %}</a>
 		{% endif %}
                 {% url notification.views.notices as notices_url %}
                 {% if notices_url %}
