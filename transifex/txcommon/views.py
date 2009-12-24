@@ -1,17 +1,24 @@
+import datetime
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
-from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
-from projects.models import Project
-from languages.models import Language
-from txcommon.log import logger
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from actionlog.models import LogEntry
-from txcommon.filters import LogEntryFilter
+from django.utils.translation import ugettext as _
 from django.views.generic import list_detail
+
+from notification import models as notification
+
+from actionlog.models import LogEntry, action_logging
+from languages.models import Language
+from projects.models import Project
+from txcommon.filters import LogEntryFilter
+from txcommon.log import logger
 
 def search(request):
     query_string = request.GET.get('q', "")
@@ -59,6 +66,35 @@ def user_timeline(request, *args, **kwargs):
         {'f': f,
          'actionlog': f.qs},
         context_instance = RequestContext(request))
+
+
+@login_required
+def user_nudge(request, username):
+    """View for nudging an user"""
+    user = get_object_or_404(User, username=username)
+    ctype = ContentType.objects.get_for_model(user)
+
+    #It's just allowed to re-nudge the same person after 15 minutes
+    last_minutes = datetime.datetime.today() - datetime.timedelta(minutes=15)
+    
+    log_entries = LogEntry.objects.filter(user=request.user, 
+        object_id=user.pk, content_type=ctype, action_time__gt=last_minutes)
+
+    if log_entries:
+        request.user.message_set.create(message = _(
+                "You can't re-nudge the same user in a short amount of time."))
+    elif user.pk == request.user.pk:
+        request.user.message_set.create(message = _(
+                "You can't nudge yourself."))
+    else:
+        context={'performer': request.user}
+        nt= 'user_nudge'
+        action_logging(request.user, [user], nt, context=context)
+        notification.send([user], nt, context)
+        request.user.message_set.create(message = _(
+                "You have nugded '%s'.") % user)
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 # Ajax response
 

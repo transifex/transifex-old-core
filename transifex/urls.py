@@ -39,4 +39,5 @@ if settings.STATIC_SERVE:
 if settings.ENABLE_NOTICES:
     urlpatterns += patterns('',
         (r'^notices/', include('notification.urls')),
+        url(r'^accounts/nudge/(?P<username>.+)/$', 'txcommon.views.user_nudge', name='user_nudge'),
     )

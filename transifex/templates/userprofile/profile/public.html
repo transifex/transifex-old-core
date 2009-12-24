@@ -43,6 +43,14 @@
             {% if profile.about %}
                 <span>{{ profile.about }}</span>
             {% endif %}
+            {% url user_nudge profile.user as user_nudge_url %}
+            {% if user_nudge_url %}
+            {% ifnotequal profile.user request.user %}
+            <form action="{{ user_nudge_url }}" class="microform">
+                <input class="i16 nudge" value="{% blocktrans with profile.user as user %}Nudge {{ user }} {% endblocktrans %}" type="submit">
+            </form>
+            {% endifnotequal %}
+            {% endif %}
         </div>
         <div class="{{ css_classes.public_vcard_content }} details separate">
 

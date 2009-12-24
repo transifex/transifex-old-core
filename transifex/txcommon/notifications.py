@@ -275,6 +275,12 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": False,
             },
+            {   "label": "user_nudge",
+                "display": _("User Nudge"), 
+                "description": _("when an user nudges you"), 
+                "default": 2,
+                "show_to_user": True,
+            },
     ]
 
 
