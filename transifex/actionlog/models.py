@@ -42,9 +42,15 @@ def _user_counting(query):
     [{'user__username': u'editor', 'number': 5}, 
     {'user__username': u'guest', 'number': 1}]
     """
-    return query.values('user__username').annotate(
+    query_result = query.values('user__username').annotate(
         number=models.Count('user')).order_by('-number')
 
+    # Rename key from 'user__username' to 'username'
+    result=[]
+    for entry in query_result:
+        result.append({'username': entry['user__username'], 
+                       'number': entry['number']})
+    return result
 
 class LogEntryManager(models.Manager):
     def by_object(self, obj):
