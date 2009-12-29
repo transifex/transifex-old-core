@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext as _
 
+from actionlog.models import LogEntry
 from projects.models import Project
 import txcommon
 
@@ -59,6 +60,29 @@ class DoGetLatestProjects:
         return LatestProjects(tokens[1])
 
 register.tag('get_latest_projects', DoGetLatestProjects())
+
+
+class TopTranslators(template.Node):
+    def __init__(self, number=5):
+        self.number = int(number)
+
+    def render(self, context):
+        top_translators = LogEntry.objects.top_submitters_by_project_content_type(self.number)
+        context['top_translators'] = top_translators
+        return ''
+
+class DoGetTopTranslators:
+    def __init__(self):
+        pass
+
+    def __call__(self, parser, token):
+        tokens = token.contents.split()
+        if not tokens[1].isdigit():
+            raise template.TemplateSyntaxError, (
+                "The argument for '%s' must be an integer" % tokens[0])
+        return TopTranslators(tokens[1])
+
+register.tag('get_top_translators', DoGetTopTranslators())
 
 
 @register.inclusion_tag("common_render_metacount.html")
