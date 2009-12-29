@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load txcommontags %}
+{% get_top_translators 5 %}
+{% if top_translators %}
+<div id="top_translators">
+<h3>{% trans "Top Translators"%}</h3>
+<ul class="simple ">
+  {% for user in top_translators %}
+    <li class="i16 user"><strong><a href="{% url profile_public user.username %}">{{ user.username }}</a></strong> - <span class="description">{% blocktrans count user.number as counter with user.number as number %}{{ number }} submission{% plural %}{{ number }} submissions{% endblocktrans %}</span></li>
+  {% endfor %}
+</ul>
+</div>
+{% endif %}

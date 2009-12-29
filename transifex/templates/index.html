@@ -26,7 +26,9 @@
     {% url project_list as project_list %} 
     {% blocktrans %}You could also browse through <a href="{{ project_list }}">all projects</a>.{% endblocktrans %}
   </div>
-<div id="top_lists">{% include "projects/project_latests.html" %}</div> 
+<div id="top_lists">{% include "projects/project_latests.html" %}
+{% include "projects/project_top_translators.html" %}
+</div> 
 </div>
 <div id="clear"></div>
 {% endblock %}
