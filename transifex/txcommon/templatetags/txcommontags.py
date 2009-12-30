@@ -63,24 +63,45 @@ register.tag('get_latest_projects', DoGetLatestProjects())
 
 
 class TopTranslators(template.Node):
-    def __init__(self, number=5):
+    def __init__(self, number=None, obj=None):
         self.number = int(number)
+        self.obj = obj
 
     def render(self, context):
-        top_translators = LogEntry.objects.top_submitters_by_project_content_type(self.number)
+        if self.obj:
+            top_translators = LogEntry.objects.top_submitters_by_object(self.obj, self.number)
+        else:
+            top_translators = LogEntry.objects.top_submitters_by_project_content_type(self.number)
         context['top_translators'] = top_translators
         return ''
 
 class DoGetTopTranslators:
+    """
+    Return a dictionary with the top translators of the system or for a object,
+    when it's passed by parameter.
+
+    Usage::
+    get_top_translators <number_of_top_translators>
+    get_top_translators 10
+
+    or
+
+    get_top_translators <number_of_top_translators> <obj>
+    get_top_translators 10 project_foo
+    """
+
     def __init__(self):
         pass
 
     def __call__(self, parser, token):
         tokens = token.contents.split()
+        obj = None
         if not tokens[1].isdigit():
             raise template.TemplateSyntaxError, (
-                "The argument for '%s' must be an integer" % tokens[0])
-        return TopTranslators(tokens[1])
+                "The first argument for '%s' must be an integer" % tokens[0])
+        if len(tokens) == 3:
+            obj=tokens[2]
+        return TopTranslators(tokens[1], obj)
 
 register.tag('get_top_translators', DoGetTopTranslators())
 
