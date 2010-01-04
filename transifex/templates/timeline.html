@@ -6,15 +6,19 @@
 {% with actionlog.count as actionlog_total %}
 {% autopaginate actionlog 30 %}
 
-<fieldset style="margin: inherit auto; width: 50%;" class="compact">
+<div class="generic_form">
+<fieldset style="margin: inherit auto;" class="compact">
   <legend><span class="i16 filter">{% trans "Filter results" %}</span></legend>
         <form action="" method="get">
           <table class="definition">
-            {{ f.form.as_table }}
-          <tr><td></td><td><input type="submit" class="i16 submit" value="{% trans "Go" %}"/></td></tr>
+            {% form_as_table_rows f.form %}
+          <tr>
+            <td></td>
+            <td><input type="submit" class="i16 submit" value="{% trans "Go" %}"/></td></tr>
           </table>
         </form>
 </fieldset>
+</div>
 
 {% if not actionlog %}
 <p>{% trans 'None available' %}</p>
