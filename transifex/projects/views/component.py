@@ -22,6 +22,7 @@ from projects.models import Project, Component
 from projects.forms import ComponentForm, ComponentAllowSubForm
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
+from projects.signals import submission_error
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from submissions import submit_by_email
@@ -281,8 +282,9 @@ def component_file(request, project_slug, component_slug, filename,
         content = component.trans.get_file_contents(filename, is_msgmerged)
     except (TypeError, IOError):
         raise Http404
-    fname = "%s.%s" % (component.full_name, os.path.basename(filename))
-    logger.debug("Requested raw file %s" % filename)
+    base_filename = os.path.basename(filename)
+    full_filename = "%s.%s" % (component.full_name, base_filename)
+    logger.debug("Requested raw file %s" % full_filename)
     if view:
         try:
             import codecs
@@ -301,20 +303,18 @@ def component_file(request, project_slug, component_slug, filename,
                     encoding = m.group(1)
                 except LookupError:
                     pass
-            try:
-                # Try to convert to UTF and present it as it should look like
-                content = content.decode(encoding)
-            except UnicodeDecodeError:
-                # Oh well, let's just show it as it is.
-                pass
+            content = content.decode(encoding)
             context = Context({'body': pygments.highlight(content, lexer, formatter),
                                'style': formatter.get_style_defs(),
                                'title': "%s: %s" % (component.full_name,
-                                                    os.path.basename(filename))})
+                                                    base_filename)})
             content = loader.get_template('poview.html').render(context)
             mimetype = 'text/html'
-        except ImportError:
-            # Oh well, no pygments available
+        except (UnicodeDecodeError, ImportError) as e:
+            # Oh well, pygments is unavailable for one reason or another.
+            # Display as plaintext
+            submission_error.send(sender=component, filename=base_filename,
+                                  message=e)
             mimetype = 'text/plain'
         response = HttpResponse(content,
             mimetype='%s; charset=UTF-8' % (mimetype,))
@@ -322,7 +322,7 @@ def component_file(request, project_slug, component_slug, filename,
     else:
         response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
         attach = "attachment;"
-    response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
+    response['Content-Disposition'] = '%s filename=%s' % (attach, full_filename)
     return response
 
 
