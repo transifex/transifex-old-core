@@ -72,7 +72,7 @@ class HgBrowser(BrowserMixin):
 
         try:
             remote_repo, repo = hg.clone(ui, self.remote_path, self.path)
-            commands.update(repo.ui, repo, self.branch)
+            hg.clean(repo, self.branch, show_stats=False)
         except RepoError, e:
             # Remote repo error
             logger.error(traceback.format_exc())
@@ -99,13 +99,10 @@ class HgBrowser(BrowserMixin):
         Clean the local working directory.
          
         Commands used:
-        hg revert --all --no-backup
         hg update -C
         
         """
         try:
-            commands.revert(self.repo.ui, self.repo, date=None, rev=None, 
-                            all=True, no_backup=True)
             hg.clean(self.repo, self.branch, show_stats=False)
         except:
             pass
@@ -116,15 +113,13 @@ class HgBrowser(BrowserMixin):
         Fully update the local repository.
         
         Commands used:
-        clean dir
         hg pull -u
-        hg update <branch_name>
+        hg update -C <branch_name>
         
         """
         try:
-            self._clean_dir()
-            self.repo.pull(self.remote_repo)
-            commands.update(self.repo.ui, self.repo, self.branch)
+            commands.pull(self.repo.ui, self.repo, rev=None, force=False, update=True)
+            hg.clean(self.repo, self.branch, show_stats=False)
         except RepoError, e:
             logger.error(traceback.format_exc())
             raise BrowserError, e
@@ -137,12 +132,10 @@ class HgBrowser(BrowserMixin):
         """
         try:
             if not obj:
-                return (int(self.repo.changectx(self.branch).node().encode('hex'),
-                    16),)
+                return (int(self.repo[self.branch].node().encode('hex'), 16),)
             else:
-                f = self.repo.changectx(self.branch).filectx(obj)
-                return (int(f.filectx(f.filerev()).node().encode('hex'),
-                    16),)
+                f = self.repo[self.branch][obj]
+                return (int(f.node().encode('hex'), 16),)
         except LookupError, e:
             raise BrowserError(e)
 
