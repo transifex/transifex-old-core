@@ -54,7 +54,7 @@ function hide_reply_form(comment_id, url, person_name) {
 
 
 {% block content_title %}
-<h2 class="pagetitle">{% trans "Requests" %}</h2>
+<h2 class="pagetitle">{% trans "Review Requests" %}</h2>
 {% endblock %}
 
 {% block content %}
@@ -72,8 +72,18 @@ function hide_reply_form(comment_id, url, person_name) {
       <td>{{ review.description }}</td>
     </tr>
     <tr>
-      <th class="i16 action">{% trans "Who and when" %}</th>
+      <th class="i16 release">{% trans "Who and when" %}</th>
       <td>{% blocktrans with review.author as author and review.created_on|timesince as time_since %}{{ author }}, {{ time_since }} ago{% endblocktrans %}</td>
+    </tr>
+    <tr>
+      <th class="i16 team">{% trans "Translation Language" %}</th>
+      <td>
+        {% if review.language %}
+            {{ review.language }}
+        {% else %}
+            {{ review.lang_code }}
+        {% endif %}
+      </td>
     </tr>
     <tr>
       <th class="i16 submit_file">{% trans "File" %}</th>
@@ -93,8 +103,9 @@ function hide_reply_form(comment_id, url, person_name) {
       <th class="i16 reviews">{% trans "Close Review" %}</th>
       <td>
         <form action="{{ modify_url }}" class="microform" method='post'>
+          <input type="hidden" name="message" value="Updates to {% if review.language %} {{ review.language }}{% else %}{{ review.lang_code }} {% endif %} translation">
           <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit" name="accept">
-          <input class="i16 reject" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit" name="reject">
+          <input class="i16 delete" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit" name="reject">
         </form>
       </td>
     </tr>
@@ -120,7 +131,7 @@ function hide_reply_form(comment_id, url, person_name) {
 {% endif %}
 
 {% if request.user.is_authenticated %}
-<h4 style="margin-bottom: 0;">Add your comment</h4>
+<h4 style="margin-bottom: 0;">Add your comment as <em>{{ request.user }}</em></h4>
 
 <fieldset class="shinyform">
 <form method="POST" action="{% get_free_comment_url review %}">
@@ -148,6 +159,8 @@ function hide_reply_form(comment_id, url, person_name) {
     <tr>
       <th>{% trans "ID" %}</th>
       <th>{% trans "Author" %}</th>
+      <th>{% trans "Language" %}</th>
+      <th>{% trans "Time Since" %}</th>
       <th>{% trans "Resolution" %}</th>
       <th>{% trans "Attachment" %}</th>
       {% if request.user.is_authenticated and perms.reviews.change_review %}
@@ -162,7 +175,15 @@ function hide_reply_form(comment_id, url, person_name) {
   <tr>
     <td{% if review.is_closed %} style="text-decoration: line-through;"{% endif %}>{{ review_id }}</td>
     <td>{{ review.author }}</td>
-    <td>{{ review.get_resolution_display }}</td>
+    <td> &nbsp;
+        {% if review.language %}
+            {{ review.language }}
+        {% else %}
+            {{ review.lang_code }}
+        {% endif %} &nbsp;
+    </td>
+    <td>&nbsp; {{ review.created_on|timesince }} &nbsp;&nbsp;</td>
+    <td> {{ review.get_resolution_display }} </td>
     <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td><form class="microform" action="{{ modify_url }}" method='post'>
       {% if request.user.is_authenticated and perms.reviews.change_review %}
@@ -178,20 +199,6 @@ function hide_reply_form(comment_id, url, person_name) {
 
 {% if not component.reviews.closed_reviews.all %}
   <p>{% trans "No closed requests!" %}</p>
-{% endif %}
-
-{% if request.user.is_authenticated and perms.reviews.add_review %}
-<h2>{% trans "Request a new translation review" %}</h2>
-
-<p class="i16 tip compact clear">
-  Use the following form to upload a file and request a review
-  from another translator. He may login and review your work and provide
-  any feedback needed, or simply submit your file to the upstream project.
-</p>
-
-<div class="generic_form">
-  {% include 'reviews/review_form.html' %}
-</div>
 {% endif %}
 
 {% endblock %}

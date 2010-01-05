@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from projects.models import Component
 from transifex.translations.models import POFile 
+from translations.models import Language
 
 class POReviewRequestManager(models.Manager):
 
@@ -59,6 +60,9 @@ class POReviewRequest(models.Model):
 
     file_name = models.CharField(max_length=200, editable=False,
         help_text=_("The review file name"), )
+    target_filename = models.CharField(null=False, max_length=255, editable=False,
+        help_text=_("The path of the target file which will be used on submission"), )
+    lang_code = models.CharField(null=False, max_length=200)
 
     # Relations
     component = models.ForeignKey(Component, verbose_name=_('Component'),
@@ -66,6 +70,8 @@ class POReviewRequest(models.Model):
 #    pofile = models.ForeignKey(POFile, verbose_name=_('PO File'),
 #                               related_name='reviews',)
     author = models.ForeignKey(User)
+    scorers = models.ManyToManyField(User, through='ReviewLike',
+        related_name='scored_reviews')
 
     # Managers
     objects = POReviewRequestManager()
@@ -99,4 +105,39 @@ class POReviewRequest(models.Model):
     def file_url(self):
         return settings.REVIEWS_URL + self.full_review_filename
 
+    @property
+    def file_path(self):
+        return settings.REVIEWS_ROOT + self.full_review_filename
     
+    @property
+    def language(self):
+        try:
+            lang = Language.objects.by_code_or_alias(self.lang_code)
+        except Language.DoesNotExist:
+            return ""
+        return lang
+
+    @property
+    def score(self):
+        return ReviewLike.objects.review_score(self)
+
+
+class ReviewLikeManager(models.Manager):
+    def review_score(self, review):
+        sum = 0
+        for r in ReviewLike.objects.filter(reviewrequest=review):
+            if r.like:
+                sum += 1
+            else:
+                sum -= 1
+        return sum
+
+class ReviewLike(models.Model):
+    """Mark a review as like or dislike for a specific user."""
+
+    like = models.NullBooleanField(default=None)
+    reviewrequest = models.ForeignKey(POReviewRequest)
+    user = models.ForeignKey(User)
+    
+    objects = ReviewLikeManager()
+

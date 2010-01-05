@@ -340,7 +340,7 @@ def component_submit_file(request, project_slug, component_slug,
         return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                             args=(project_slug, component_slug,)))
 
-    if request.method == 'POST' and request.POST.get("submit", None):
+    if request.method == 'POST':
 
         if not request.FILES.has_key('submitted_file') and not submitted_file:
             request.user.message_set.create(message=_("Please select a " 
@@ -397,6 +397,11 @@ def component_submit_file(request, project_slug, component_slug,
             lang_code = component.trans.guess_language(filename)
             postats = None
 
+        # Send the file for review instead of immediately submit it
+        if request.POST.get("submit_for_review", None):
+            return review_add_common(request, component, submitted_file, 
+                filename=filename, lang_code=lang_code)
+
         team = Team.objects.get_or_none(component.project, lang_code)
         if team:
             object_list.append(team)
@@ -416,12 +421,10 @@ def component_submit_file(request, project_slug, component_slug,
                                           'domain' : request.get_host()}
 
         try:
-
             if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
                 component.trans.msgfmt_check(submitted_file)
-
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare()
 
@@ -482,9 +485,6 @@ def component_submit_file(request, project_slug, component_slug,
                          component.full_name, str(e)))
             request.user.message_set.create(message = _(
                 "Sorry, your file could not be sent because of an error."))
-    # Send the file for review instead of immediately submit it
-    elif request.method == 'POST' and request.POST.get("submit_for_review", None):
-        return review_add_common(request, component, 'submitted_file')
     else:
         request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
