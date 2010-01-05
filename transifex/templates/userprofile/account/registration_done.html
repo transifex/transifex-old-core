@@ -9,7 +9,7 @@
 
 	<div class="success">
 		{% if email_validation_required %}
-		<p>{% blocktrans %}You have successfully registered a new account, and an account activation url has been sent to your e-mail address. You must access this message on your e-mail account to finish the registration process.{% endblocktrans %}</p>
+		<p>{% blocktrans %}You have successfully registered a new account and an account activation url has been sent to your e-mail address. Please access this url to finish the registration process.{% endblocktrans %}</p>
 		{% else %}
 		{% url profile_overview as overview_url %}
 		<p>{% blocktrans %}You have successfully registered a new account. Go to the <a href="{{ overview_url }}">sign in page</a> to authenticate and start using this site.{% endblocktrans %}</p>
