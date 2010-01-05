@@ -183,55 +183,55 @@ urlpatterns += patterns('',
 # Teams
 urlpatterns += patterns('',
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/add-team/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/add/$',
         view = team_create,
         name = 'team_create',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/edit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/edit/$',
         view = team_update,
         name = 'team_update',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/$',
         view = team_list,
         name = 'team_list',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/$',
         view = team_detail,
         name = 'team_detail',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/delete/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/delete/$',
         view = team_delete,
         name = 'team_delete',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/request/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/request/$',
         view = team_join_request,
         name = 'team_join_request',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/approve/(?P<username>[-\w]+)/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/approve/(?P<username>[-\w]+)/$',
         view = team_join_approve,
         name = 'team_join_approve',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/deny/(?P<username>[-\w]+)/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/deny/(?P<username>[-\w]+)/$',
         view = team_join_deny,
         name = 'team_join_deny',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/withdraw/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/withdraw/$',
         view = team_join_withdraw,
         name = 'team_join_withdraw',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/leave/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/leave/$',
         view = team_leave,
         name = 'team_leave',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/request-team/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/request/$',
         view = team_request,
         name = 'team_request',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/approve/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/approve/$',
         view = team_request_approve,
         name = 'team_request_approve',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/t/(?P<language_code>[-\w]+)/deny/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-\w]+)/deny/$',
         view = team_request_deny,
         name = 'team_request_deny',),
 )
