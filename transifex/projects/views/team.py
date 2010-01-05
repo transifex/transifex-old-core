@@ -510,7 +510,7 @@ def team_request_approve(request, project_slug, language_code):
             team_request.delete()
             request.user.message_set.create(message=_(
                 "You have approved the '%(team)s' team requested by '%(user)s'."
-                ) % {'team':team.language.name, 'user':user})
+                ) % {'team':team.language.name, 'user':team_request.user})
             
             # ActionLog & Notification
             # TODO: Use signals
@@ -552,7 +552,7 @@ def team_request_deny(request, project_slug, language_code):
             team_request.delete()
             request.user.message_set.create(message=_(
                 "You have denied the '%(team)s' team requested by '%(user)s'."
-                ) % {'team':team.language.name, 'user':user})
+                ) % {'team':team.language.name, 'user':team_request.user})
             
             # ActionLog & Notification
             # TODO: Use signals
