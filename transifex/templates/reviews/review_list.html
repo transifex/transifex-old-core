@@ -87,7 +87,21 @@ function hide_reply_form(comment_id, url, person_name) {
     </tr>
     <tr>
       <th class="i16 submit_file">{% trans "File" %}</th>
-      <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
+      <td><a href="{{ review.file_url }}">{{ review.file_name }}</a></td>
+    </tr>
+    <tr>
+      <th class="i16 star">{% trans "Score" %}</th>
+      <td>
+        <span>{{ review.score }}</span>
+        {% if request.user.is_authenticated %}
+        <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
+            <input type="image" src="{{ MEDIA_URL }}images/icons/thumb_down.png" name="dislike" value="dislike" style="border:0">
+        </form>
+        <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
+            <input type="image" src="{{ MEDIA_URL }}images/icons/thumb_up.png" name="like" value="like" style="border:0">
+        </form>
+        {% endif %}
+      </td>
     </tr>
     <tr>
       <th class="i16 status">{% trans "Status" %}</th>

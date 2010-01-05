@@ -21,6 +21,22 @@ from translations.models import POFile
 from txcommon.lib.storage import save_file
 
 
+@login_required
+def review_like(request, id, *args, **kwargs):
+    review_request = get_object_or_404(POReviewRequest, pk=id)
+    if request.method == 'POST': # If the form has been submitted...
+            r, created = ReviewLike.objects.get_or_create(reviewrequest=review_request, user=request.user)
+            if request.POST.has_key("like") and request.POST["like"]=="like":
+                r.like=True
+                r.save()
+            elif request.POST.has_key("dislike") and request.POST["dislike"]=="dislike":
+                r.like=False
+                r.save()
+    return HttpResponseRedirect(reverse('review_list',
+        args=[review_request.component.project.slug,
+              review_request.component.slug]))
+
+
 def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)      

@@ -24,7 +24,7 @@ class AuthenticatedCommentForm(FreeThreadedCommentForm):
             attrs={'autocomplete': 'off',
                    'value' : user.email}
             )
-        self.fields['name'].widget = forms.HiddenInput(
-            attrs={'value' : user.get_full_name()})
+        self.fields['name'].widget = forms.HiddenInput()
+        self.fields['name'].initial = user
         self.fields['website'].widget = forms.HiddenInput()
 
