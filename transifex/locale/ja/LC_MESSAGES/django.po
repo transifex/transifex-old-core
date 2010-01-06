@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 15:00+0000\n"
+"POT-Creation-Date: 2010-01-06 14:18+0000\n"
 "PO-Revision-Date: 2009-10-07 09:22+1000\n"
 "Last-Translator: Noriko Mizumoto <noriko@fedoraproject.org>\n"
 "Language-Team: Japanese <fedora-trans-ja@redhat.com>\n"
@@ -17,11 +17,16 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=1; plural=0;\n"
 
-#: actionlog/models.py:51
+#: actionlog/filters.py:12
+#, fuzzy
+msgid "Search for an username or leave it blank"
+msgstr "Picasa Web で検索"
+
+#: actionlog/models.py:152
 msgid "log entry"
 msgstr "ログエントリ"
 
-#: actionlog/models.py:52
+#: actionlog/models.py:153
 msgid "log entries"
 msgstr "ログのエントリ"
 
@@ -29,7 +34,8 @@ msgstr "ログのエントリ"
 msgid "Date/time"
 msgstr "日付／時刻"
 
-#: actionlog/templates/object_action_list.html:7 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:74
+#: teams/models.py:110 txpermissions/forms.py:18
 msgid "User"
 msgstr "ユーザー"
 
@@ -50,7 +56,8 @@ msgstr "履歴の記録はまだありません。"
 #: projects/models.py:86 projects/models.py:198
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
-#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: templates/userprofile/profile/public.html:60 txcollections/models.py:26
+#: txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "名前"
@@ -108,6 +115,7 @@ msgstr "%(release)s リリースでの %(language)s 言語の最新の翻訳"
 #: projects/models.py:88 projects/models.py:200
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
 #: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
@@ -565,7 +573,7 @@ msgstr "翻訳済み:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -601,11 +609,12 @@ msgstr "プロジェクト %s の最新コンポーネントです。"
 
 #: projects/forms.py:15 txpermissions/forms.py:19
 #, fuzzy
-msgid "Search for an username"
+msgid "Search for a username"
 msgstr "Picasa Web で検索"
 
 #: projects/forms.py:35 projects/models.py:213
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+#, fuzzy
+msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "公開ファイルをフィルタする正規表現です。 例、 「po/.*」"
 
 #: projects/forms.py:58 projects/models.py:218
@@ -642,7 +651,8 @@ msgstr ""
 
 #: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
-msgid "A string like a name or very short description."
+#, fuzzy
+msgid "A short name or very short description."
 msgstr "名前またはごく短い説明となる文字列です。"
 
 #: projects/models.py:89 projects/models.py:201
@@ -671,7 +681,8 @@ msgid "Feed"
 msgstr "フィード"
 
 #: projects/models.py:95
-msgid "An RSS feed with updates on the project."
+#, fuzzy
+msgid "An RSS feed with updates to the project."
 msgstr "プロジェクトに関する更新の RSS フィードです。"
 
 #: projects/models.py:96 projects/migrations/0001_initial.py:27
@@ -679,8 +690,8 @@ msgid "Bug tracker"
 msgstr "バグトラッカー"
 
 #: projects/models.py:97
-msgid ""
-"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+#, fuzzy
+msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "ウェブサイト追跡バグとチケットの URL です (Bugzilla、 Trac など)。"
 
 #: projects/models.py:99
@@ -765,7 +776,8 @@ msgid "Source language"
 msgstr "ソース言語"
 
 #: projects/models.py:206
-msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
+#, fuzzy
+msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "このコンポーネントのソース言語です。 例、 「en」「pt_BR」「el」など。"
 
 #: projects/models.py:208 projects/migrations/0001_initial.py:42
@@ -773,8 +785,8 @@ msgid "I18n type"
 msgstr "I18n タイプ"
 
 #: projects/models.py:210
-#, python-format
-msgid "The code's type of i18n support (%s)"
+#, fuzzy, python-format
+msgid "The type of i18n support for the source code (%s)"
 msgstr "国際化サポートのコードタイプ (%s)"
 
 #: projects/models.py:212 projects/migrations/0001_initial.py:43
@@ -798,6 +810,7 @@ msgid "Should statistics be calculated for this component?"
 msgstr "このコンポーネントの統計データを計算しますか?"
 
 #: projects/models.py:238 projects/migrations/0001_initial.py:46
+#: teams/models.py:25 teams/models.py:67
 msgid "Project"
 msgstr "プロジェクト"
 
@@ -818,41 +831,30 @@ msgstr "<Component: %s>"
 msgid "component"
 msgstr "コンポーネント"
 
-#: projects/models.py:268 templates/projects/component_list.html:17
+#: projects/models.py:268 templates/projects/component_list.html:16
 msgid "components"
 msgstr "コンポーネント"
 
-#: projects/permissions.py:17
+#: projects/permissions/project.py:21
 msgid "Is allowed to maintain this project"
 msgstr "このプロジェクトの管理を許可"
 
-#: projects/permissions.py:26
+#: projects/permissions/project.py:35
+#, fuzzy
+msgid "Is allowed to coordinate a team project"
+msgstr "このプロジェクトの管理を許可"
+
+#: projects/permissions/project.py:81
 msgid "Is allowed to submit file to this project"
 msgstr "このプロジェクトへのファイルのサブミットを許可"
 
-#: projects/views.py:177 projects/views.py:576 txcollections/views.py:121
+#: projects/views/component.py:208 projects/views/project.py:138
+#: txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s は削除されました。"
 
-#: projects/views.py:361 projects/views.py:914
-msgid "Must use POST to activate"
-msgstr "POST を使ってアクティブにしてください"
-
-#: projects/views.py:364 projects/views.py:917
-#, fuzzy
-msgid "Notification is not enabled"
-msgstr "通知が有効になっていません"
-
-#: projects/views.py:377
-msgid "Watch this project"
-msgstr "このプロジェクトを監視する"
-
-#: projects/views.py:390
-msgid "Stop wathing this project"
-msgstr "このプロジェクトの監視を止める"
-
-#: projects/views.py:614
+#: projects/views/component.py:243
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -860,47 +862,55 @@ msgstr ""
 "この intltool POT ベースのコンポーネントのファイルフィルタは POTFILES.in ファ"
 "イルを許可していないようです。 修正してください。"
 
-#: projects/views.py:621
+#: projects/views/component.py:250
 #, fuzzy
 msgid ""
-"There is no 'pot' directory named in the set of files of this Publian like "
+"There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
 msgstr "この Publican 系コンポーネントのファイルセットに??"
 
-#: projects/views.py:629
+#: projects/views/component.py:258
 msgid "This component is not configured for statistics calculation."
 msgstr ""
 
-#: projects/views.py:720
+#: projects/views/component.py:342
 msgid "This component does  not allow write access."
 msgstr "このコンポーネントは書き込みアクセスを許可しません。"
 
-#: projects/views.py:728
+#: projects/views/component.py:350
 msgid "Please select a file from your system to be uploaded."
 msgstr "システムからアップロードするファイルを選択してください。"
 
-#: projects/views.py:736
+#: projects/views/component.py:358
 msgid "Please enter a target to upload the file."
 msgstr "ファイルをアップロードするターゲットを入力してください。"
 
-#: projects/views.py:741
+#: projects/views/component.py:363
 msgid "Please enter only ONE target to upload the file."
 msgstr "ファイルをアップロードするターゲットは 1 つだけ入力してください。"
 
-#: projects/views.py:752
-msgid "The target file does not match with the component file filter"
+#: projects/views/component.py:374
+#, fuzzy
+msgid "The target file does not match the component file filter"
 msgstr "ターゲットファイルがコンポーネントのファイルフィルタと一致しません"
 
-#: projects/views.py:760
+#: projects/views/component.py:382
 msgid "Enter a commit message"
 msgstr "コミットのメッセージを入力"
 
-#: projects/views.py:827
+#: projects/views/component.py:414
+#, python-format
+msgid ""
+"You need to be in the '%s' team of this project for being able to send "
+"translations to that file target."
+msgstr ""
+
+#: projects/views/component.py:475
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "ファイルを正常にサブミットしました: %s"
 
-#: projects/views.py:842
+#: projects/views/component.py:490
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -908,26 +918,126 @@ msgstr ""
 "ファイルが整合性チェックにパスしません (msgfmt -c)。 このコマンドをシステムで"
 "実行してエラーを確認してください。"
 
-#: projects/views.py:851
+#: projects/views/component.py:499
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "残念ながらエラーが原因でファイルを送信できませんでした。"
 
-#: projects/views.py:855 projects/views.py:894
+#: projects/views/component.py:503 projects/views/component.py:536
 msgid "Sorry, but you need to send a POST request."
 msgstr "残念ながら POST 要求を送信する必要があります。"
 
-#: projects/views.py:883
+#: projects/views/component.py:525
 msgid "Lock removed."
 msgstr "ロックが解除されました。"
 
-#: projects/views.py:886
+#: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "エラー: ロックの所有者しかロック解除できません。"
 
-#: projects/views.py:890
+#: projects/views/component.py:532
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 "ロックしました。 作業が完了したらロックの解除を忘れずに行ってください。"
+
+#: projects/views/component.py:551 projects/views/project.py:156
+msgid "Must use POST to activate"
+msgstr "POST を使ってアクティブにしてください"
+
+#: projects/views/component.py:554 projects/views/project.py:159
+#, fuzzy
+msgid "Notification is not enabled"
+msgstr "通知が有効になっていません"
+
+#: projects/views/project.py:172
+msgid "Watch this project"
+msgstr "このプロジェクトを監視する"
+
+#: projects/views/project.py:185
+#, fuzzy
+msgid "Stop watching this project"
+msgstr "このプロジェクトの監視を止める"
+
+#: projects/views/team.py:168
+#, fuzzy, python-format
+msgid "The '%s' team was deleted."
+msgstr "%s は削除されました。"
+
+#: projects/views/team.py:205
+#, python-format
+msgid "You are in the '%s' team already."
+msgstr ""
+
+#: projects/views/team.py:210
+#, python-format
+msgid "You have added a request for joining the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:233
+#, python-format
+msgid "You already have a pending request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:260
+#, python-format
+msgid "User '%(user)s' is in the '%(team)s' team already."
+msgstr ""
+
+#: projects/views/team.py:267
+#, python-format
+msgid "You have added '%(user)s' into the '%(team)s' team."
+msgstr ""
+
+#: projects/views/team.py:314
+#, python-format
+msgid ""
+"You have denied the request of the user '%(user)s' to join the '%(team)s' "
+"team."
+msgstr ""
+
+#: projects/views/team.py:357
+#, python-format
+msgid "You have withdrawn your own request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:398
+#, python-format
+msgid "You have left the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:419
+#, python-format
+msgid "You are not in the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:440
+#, fuzzy
+msgid "Please, select a language before submit the form."
+msgstr "システムからアップロードするファイルを選択してください。"
+
+#: projects/views/team.py:453
+#, python-format
+msgid "'%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:459
+#, python-format
+msgid "A request for creating the '%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:467
+#, python-format
+msgid "You have requested the '%s' team creation."
+msgstr ""
+
+#: projects/views/team.py:512
+#, python-format
+msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+msgstr ""
+
+#: projects/views/team.py:554
+#, python-format
+msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+msgstr ""
 
 #: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
@@ -950,9 +1060,10 @@ msgid "String freeze date"
 msgstr "ストリングフリーズ日"
 
 #: releases/models.py:34
+#, fuzzy
 msgid ""
-"When the translatable strings will be frozen (no strings can be added/"
-"modified which affect translations."
+"When the translatable strings will be frozen (no strings which affect "
+"translations can be added/modified)."
 msgstr ""
 "翻訳可能な文字列が凍結される日です (翻訳に影響を与える文字列の追加や修正が行"
 "えなくなります)。"
@@ -1016,6 +1127,94 @@ msgstr "tarball"
 msgid "tarballs"
 msgstr "tarball"
 
+#: teams/forms.py:12
+msgid ""
+"Coordinators are people that can manage the members of the team, for "
+"example. Search for usernames."
+msgstr ""
+
+#: teams/forms.py:16
+msgid ""
+"Members are actually people that can submit translations. Search for "
+"usernames."
+msgstr ""
+
+#: teams/forms.py:45
+#, python-format
+msgid ""
+"You have the user '%s' in both coordinators and members lists. Please drop "
+"him/her from one of those lists."
+msgstr ""
+
+#: teams/models.py:27 teams/models.py:69
+msgid "The project which this team belongs to."
+msgstr ""
+
+#: teams/models.py:28 teams/models.py:70
+#: translations/templates/comp_stats_table.html:14
+#: translations/templates/project_stats_table.html:7
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "言語"
+
+#: teams/models.py:30 teams/models.py:72
+msgid ""
+"People in this team will only be able to submit translations files related "
+"to the specific language."
+msgstr ""
+
+#: teams/models.py:32
+msgid "Coordinators"
+msgstr ""
+
+#: teams/models.py:34
+msgid "Members"
+msgstr ""
+
+#: teams/models.py:37
+#, fuzzy
+msgid "Mainlist"
+msgstr "メンテナー"
+
+#: teams/models.py:38
+msgid "The main mailing list of the team."
+msgstr ""
+
+#: teams/models.py:40
+msgid "creator"
+msgstr ""
+
+#: teams/models.py:56
+msgid "team"
+msgstr ""
+
+#: teams/models.py:57
+msgid "teams"
+msgstr ""
+
+#: teams/models.py:89
+#, fuzzy
+msgid "team creation request"
+msgstr "リクエストを拒否する"
+
+#: teams/models.py:90
+#, fuzzy
+msgid "team creation requests"
+msgstr "保留中の要求:"
+
+#: teams/models.py:108
+#, fuzzy
+msgid "Team"
+msgstr "タミール語"
+
+#: teams/models.py:125
+msgid "team access request"
+msgstr ""
+
+#: teams/models.py:126
+msgid "team access requests"
+msgstr ""
+
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "禁止されているアクセス"
@@ -1071,12 +1270,13 @@ msgid "Transifex"
 msgstr "Transifex"
 
 #: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
-msgid "Go to start page"
+#, fuzzy
+msgid "Go to the start page"
 msgstr "スタートページに行く"
 
 #: templates/base-sample.html:35
-msgid "Transifex logo"
-msgstr "Transifex のロゴ"
+msgid "Go to start page"
+msgstr "スタートページに行く"
 
 #: templates/base-sample.html:39
 msgid "The projects being served"
@@ -1138,12 +1338,18 @@ msgid "About"
 msgstr "情報"
 
 #: templates/base-sample.html:115
-msgid "Get in contact with us"
-msgstr "連絡先"
+msgid "Drops us a line"
+msgstr ""
 
 #: templates/base-sample.html:115
 msgid "Feedback"
 msgstr "フィードバック"
+
+#: templates/base-sample.html:117
+msgid ""
+"Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
+"\">Transifex</a>, the Open Translation Platform"
+msgstr ""
 
 #: templates/index.html:23
 msgid ""
@@ -1185,24 +1391,51 @@ msgid "Search Results (%(result_count)s)"
 msgstr "結果の検索 (%(result_count)s)"
 
 #: templates/search.html:51
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"No projects found for \"%(q)s\". You might want to change your query a bit."
+"No projects were found for \"%(q)s\". You may want to change your query a "
+"bit."
 msgstr ""
 "\"%(q)s\" のプロジェクトは見つかりませんでした。 問い合わせを若干変えてみてく"
 "ださい。"
 
 #: templates/search.html:62
-msgid "Couldn't find your project? Why don't you go ahead and "
-msgstr "プロジェクトが見つからない場合は、"
-
-#: templates/search.html:62
-msgid "add it"
-msgstr "追加します!"
+#, fuzzy, python-format
+msgid ""
+"Couldn't find your project? Why don't you go ahead and <a href=\"%(url "
+"project_create)s\">add it</a>?"
+msgstr ""
+"プロジェクトが見つかりませんでしたか? ぜひ <a href=\"%(project_create)s\">追"
+"加</a> してください。"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "名前、 解説などでプロジェクトを検索します。"
+
+#: templates/timeline.html:11
+#, fuzzy
+msgid "Filter results"
+msgstr "結果の検索"
+
+#: templates/timeline.html:17
+msgid "Go"
+msgstr ""
+
+#: templates/timeline.html:24 templates/projects/component_detail.html:196
+#: templates/projects/project_detail.html:116
+#: templates/teams/team_detail.html:129
+msgid "None available"
+msgstr "利用できるものはありません"
+
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1287,10 +1520,11 @@ msgid "Project/Component statistics"
 msgstr "プロジェクト／コンポーネントの統計"
 
 #: templates/languages/language_release.html:60
+#, fuzzy
 msgid ""
 "Transifex searched for projects containing translation files for this "
-"language and release, but couldn't find any. Try submitting such a file and "
-"check again."
+"language and release, but couldn't find any. Can we interest you in sending "
+"in your work instead?"
 msgstr ""
 "Transifex はこの言語とリリースの翻訳ファイルを含むプロジェクトを検索しました"
 "が見つかりませんでした。 ファイルをサブミットしてから確認しなおしてください。"
@@ -1316,54 +1550,67 @@ msgstr ""
 "(language_name)s の翻訳がまだありません。"
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr "通知"
 
-#: templates/notification/notices.html:8
-msgid "Notification settings"
-msgstr "通知の設定"
+#: templates/notification/notices.html:32
+#, fuzzy
+msgid "Received Notifications"
+msgstr "通知"
 
-#: templates/notification/notices.html:16
-msgid "Notices"
-msgstr "おしらせ"
+#: templates/notification/notices.html:43
+msgid "Time"
+msgstr ""
 
-#: templates/notification/notices.html:21
+#: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
 msgstr "未読のおしらせをすべて既読にする"
 
-#: templates/notification/notices.html:45
+#: templates/notification/notices.html:79
 msgid "No notices."
 msgstr "おしらせはありません。"
 
-#: templates/notification/notices.html:54
+#: templates/notification/notices.html:83
+#: templates/notification/notices.html:85
+#, fuzzy
+msgid "Change your notification settings"
+msgstr "通知の変更"
+
+#: templates/notification/notices.html:83
+msgid "Notification settings"
+msgstr "通知の設定"
+
+#: templates/notification/notices.html:88
+#, fuzzy
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list below and choose which "
+"the notifications available for you in the list below and choose which "
 "events you would like to be notified by email."
 msgstr ""
 "Transifex でイベントがある場合、 常に通知を受けとることができます。 以下の一"
 "覧で利用可能な通知を確認し、 Email による通知の送信を希望するイベントを選択し"
 "ます。"
 
-#: templates/notification/notices.html:55
+#: templates/notification/notices.html:89
 msgid "Primary email"
 msgstr "プライマリ Email"
 
-#: templates/notification/notices.html:56
+#: templates/notification/notices.html:92
 msgid "change under"
 msgstr ""
 
-#: templates/notification/notices.html:56
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:92
+#: templates/notification/notices.html:96
 msgid "Account"
 msgstr "アカウント"
 
-#: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:122
+#: templates/notification/notices.html:95
+#: templates/projects/component_detail.html:123
 msgid "Note"
 msgstr "注記"
 
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:96
 msgid ""
 "You do not have a verified email address to which notices can be sent. You "
 "can add one by going to"
@@ -1371,11 +1618,11 @@ msgstr ""
 "おしらせを送信できる確認済 Email がありません。 次に進み Email を追加すること"
 "ができます。"
 
-#: templates/notification/notices.html:67
+#: templates/notification/notices.html:104
 msgid "Notification Type"
 msgstr "通知の種類"
 
-#: templates/notification/notices.html:85
+#: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
 #: templates/userprofile/account/password_change.html:29
 msgid "Change"
@@ -1461,15 +1708,23 @@ msgstr ""
 "(component_url)s\">%(component_name)s</a> にサブミットされました"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The source file (POT) has some problems and can not be created/updated to "
+"The source file (POT) has some problems and can not be created/updated for "
 "the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "ソースファイル (POT) に何らかの問題があるため <a href=\"%(project_url)s\">%"
 "(project_name)s</a> プロジェクトの <a href=\"%(component_url)s\">%"
 "(component_name)s</a> に対してソースファイルの作成または更新が行えません。"
+
+#: templates/notification/project_report_weekly_maintainers/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was generated"
+msgstr ""
+"プロジェクト <a href=\"%(project_url)s\">%(project)s</a> が変更されました"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, fuzzy, python-format
@@ -1493,7 +1748,7 @@ msgstr ""
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"Withdrawn own request of access to submit files to the project <a href=\"%"
+"Withdrew own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
 msgstr ""
 "新しいプロジェクト <a href=\"%(project_url)s\">%(project)s</a> が追加されまし"
@@ -1517,6 +1772,107 @@ msgid ""
 msgstr ""
 "新しいコンポーネント <a href=\"%(component_url)s\">%(component_name)s</a> が "
 "<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトに追加されました"
+
+#: templates/notification/project_team_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"新しいコンポーネント <a href=\"%(component_url)s\">%(component_name)s</a> が "
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトに追加されました"
+
+#: templates/notification/project_team_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトのコンポーネン"
+"ト <a href=\"%(component_url)s\">%(component_name)s</a> が変更されました"
+
+#: templates/notification/project_team_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"新しいコンポーネント <a href=\"%(component_url)s\">%(component_name)s</a> が "
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトに追加されました"
+
+#: templates/notification/project_team_join_approved/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a "
+"member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of "
+"the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"新しいコンポーネント <a href=\"%(component_url)s\">%(component_name)s</a> が "
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトに追加されました"
+
+#: templates/notification/project_team_join_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for joining "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team </a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトのコンポーネン"
+"ト <a href=\"%(component_url)s\">%(component_name)s</a> が変更されました"
+
+#: templates/notification/project_team_join_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
+"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトの <a href=\"%"
+"(component_url)s\">%(component_name)s</a> にサブミットされました"
+
+#: templates/notification/project_team_join_withdrawn/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
+"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトの <a href=\"%"
+"(component_url)s\">%(component_name)s</a> にサブミットされました"
+
+#: templates/notification/project_team_left/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"User has left the <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> "
+"of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトの <a href=\"%"
+"(component_url)s\">%(component_name)s</a> にサブミットされました"
+
+#: templates/notification/project_team_request_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request for creating a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> on the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project has been denied"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトのコンポーネン"
+"ト <a href=\"%(component_url)s\">%(component_name)s</a> が変更されました"
+
+#: templates/notification/project_team_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The translation team for <a href=\"%(language_url)s\">%(language_name)s</a> "
+"has been required to the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project"
+msgstr ""
+"新しいコンポーネント <a href=\"%(component_url)s\">%(component_name)s</a> が "
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトに追加されました"
+
+#: templates/notification/user_nudge/notice.html:2
+#, fuzzy, python-format
+msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
+msgstr ""
+"プロジェクト <a href=\"%(project_url)s\">%(project)s</a> が変更されました"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1542,6 +1898,7 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
+#: templates/teams/team_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1573,111 +1930,115 @@ msgstr ""
 "このコンポーネントはサブミットされたファイルのローカル格納機能をサポートする"
 "ためファイルをアップストリームのリポジトリにも直接送信します。"
 
-#: templates/projects/component_detail.html:80
-#: templates/projects/project_detail.html:36
+#: templates/projects/component_detail.html:81
+#: templates/projects/project_detail.html:31
+#: templates/teams/team_detail.html:25
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "編集"
 
-#: templates/projects/component_detail.html:89
+#: templates/projects/component_detail.html:86
+#, fuzzy
+msgid "Source details"
+msgstr "ソースファイル:"
+
+#: templates/projects/component_detail.html:90
 msgid "Repository:"
 msgstr "リポジトリ:"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 #, fuzzy
-msgid "Link to a web front-end to the source"
+msgid "Link to a web front-end for the source code"
 msgstr "ソースへの Web フロントエンドへのリンク"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 msgid "web"
 msgstr "Web"
 
-#: templates/projects/component_detail.html:99
+#: templates/projects/component_detail.html:100
 msgid "Branch:"
 msgstr "ブランチ:"
 
-#: templates/projects/component_detail.html:104
+#: templates/projects/component_detail.html:105
 msgid "File filter:"
 msgstr "ファイルフィルタ:"
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:111
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:119
 msgid "Allows submissions:"
 msgstr "サブミッションを許可:"
 
-#: templates/projects/component_detail.html:132
+#: templates/projects/component_detail.html:133
 msgid "Translation files"
 msgstr "翻訳ファイル"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:138
 msgid "Source file:"
 msgstr "ソースファイル:"
 
-#: templates/projects/component_detail.html:144
+#: templates/projects/component_detail.html:145
 msgid "Statistics last updated:"
 msgstr "最後に更新された統計:"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:147
 msgid "ago"
 msgstr "前"
 
-#: templates/projects/component_detail.html:147
+#: templates/projects/component_detail.html:148
 msgid "Component not yet pulled from source repository."
 msgstr "コンポーネントはまだソースリポジトリからプルされていません。"
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 "リフレッシュしてから統計値を再計算します。 この動作は時間がかかる場合がありま"
 "す。"
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh cache"
 msgstr "キャッシュのリフレッシュ"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "正常にプルするため Transifex のローカルデータをリセット"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Clear cache"
 msgstr "キャッシュの消去"
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "ローカルに修正されたデータはすべて新たなコピーで上書きされます。"
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "warning"
 msgstr "警告"
 
-#: templates/projects/component_detail.html:167
-msgid "Become a translator:"
-msgstr "翻訳になる:"
+#: templates/projects/component_detail.html:166
+#, fuzzy
+msgid "Teams:"
+msgstr "タグ:"
 
-#: templates/projects/component_detail.html:171
-msgid "Your request is pending for approval."
-msgstr "リクエストは承認待ちです。"
+#: templates/projects/component_detail.html:168
+#, fuzzy
+msgid "See the translation teams."
+msgstr "翻訳のサブミット"
 
-#: templates/projects/component_detail.html:197
-#: templates/projects/project_detail.html:116
+#: templates/projects/component_detail.html:192
+#: templates/projects/project_detail.html:111
+#: templates/teams/team_detail.html:125
 msgid "History"
 msgstr "履歴"
 
-#: templates/projects/component_detail.html:201
-#: templates/projects/project_detail.html:120
-msgid "None available"
-msgstr "利用できるものはありません"
-
-#: templates/projects/component_detail.html:218
+#: templates/projects/component_detail.html:213
 msgid "Delete component"
 msgstr "コンポーネントの削除"
 
@@ -1715,34 +2076,34 @@ msgstr "コンポーネントの保存"
 msgid "translation files"
 msgstr "翻訳ファイル"
 
-#: templates/projects/component_list.html:11
+#: templates/projects/component_list.html:10
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "追加"
 
-#: templates/projects/component_list.html:16
+#: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/component_list.html:27
+#: templates/projects/component_list.html:26
 msgid "edit"
 msgstr "編集"
 
-#: templates/projects/component_list.html:30
+#: templates/projects/component_list.html:29
 msgid "del"
 msgstr "削除"
 
-#: templates/projects/component_list.html:46
+#: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
 msgstr "このプロジェクトに対して登録されたコンポーネントはまだありません。"
 
-#: templates/projects/component_list.html:48
+#: templates/projects/component_list.html:47
 msgid "Add one!"
 msgstr "追加する!"
 
-#: templates/projects/component_list.html:54
+#: templates/projects/component_list.html:53
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -1771,7 +2132,8 @@ msgid "Local file:"
 msgstr "ローカルファイル:"
 
 #: templates/projects/component_submit_new_file.html:15
-msgid "The new language translation file to be uploaded."
+#, fuzzy
+msgid "The translation file to be uploaded for the new language."
 msgstr "アップロードする新しい言語の翻訳ファイルです。"
 
 #: templates/projects/component_submit_new_file.html:18
@@ -1779,9 +2141,10 @@ msgid "Select the target file:"
 msgstr "ターゲットファイルを選択する:"
 
 #: templates/projects/component_submit_new_file.html:27
+#, fuzzy
 msgid ""
-"The target file is the name of the new file language. It must matches with "
-"the component file filter."
+"The target file is the name of the new file language. It must match the "
+"component file filter."
 msgstr ""
 "ターゲットファイルとは新しいファイル言語の名前です。 コンポーネントのファイル"
 "フィルタと一致しなければなりません。"
@@ -1837,82 +2200,103 @@ msgstr ""
 "\n"
 "  登録されているプロジェクト '%(project_name)s' を本当に永久削除しますか?\n"
 
-#: templates/projects/project_detail.html:42
+#: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "詳細"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:44
 msgid "Watch:"
 msgstr "監視:"
 
-#: templates/projects/project_detail.html:57
+#: templates/projects/project_detail.html:52
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "ホームページ:"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:53
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "%(project_name)s のホームページ"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:58
 msgid "Bug tracker:"
 msgstr "バグトラッカー:"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:59
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s のバグトラッカー"
 
-#: templates/projects/project_detail.html:69
+#: templates/projects/project_detail.html:64
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "タグ:"
 
-#: templates/projects/project_detail.html:78
+#: templates/projects/project_detail.html:73
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:88
+#: templates/projects/project_detail.html:83
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:97
 msgid "External links:"
 msgstr "外部リンク:"
 
-#: templates/projects/project_detail.html:104
+#: templates/projects/project_detail.html:99
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/projects/project_detail.html:139
+#: templates/projects/project_detail.html:128
+msgid "View complete action log"
+msgstr ""
+
+#: templates/projects/project_detail.html:140
 msgid "Delete project"
 msgstr "プロジェクトの削除"
 
-#: templates/projects/project_form.html:13
-msgid "Save project"
-msgstr "プロジェクトの保存"
-
+#: templates/projects/project_form.html:9
+#: templates/projects/project_form.html:17
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
 #: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "プロジェクトの追加"
 
+#: templates/projects/project_form.html:20
+#: templates/projects/project_form.html:29
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "%(project_name)s の編集"
+
+#: templates/projects/project_form.html:27
+#, fuzzy
+msgid "New project"
+msgstr "プロジェクトの保存"
+
+#: templates/projects/project_form.html:37
+msgid "Add the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:39
+msgid "Edit the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:50
+msgid "Save project"
+msgstr "プロジェクトの保存"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -1929,24 +2313,29 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> の編集中"
 
 #: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:47
 msgid "Access Control"
 msgstr "アクセス制御"
 
-#: templates/projects/project_form_permissions.html:10
+#: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr "プロジェクトへの翻訳を送信するため翻訳者にアクセス権を与えます"
 
-#: templates/projects/project_form_permissions.html:12
+#: templates/projects/project_form_permissions.html:20
 msgid "Requests for access to submit files"
 msgstr "ファイルをサブミットするためのアクセス要求"
 
-#: templates/projects/project_form_permissions.html:51
+#: templates/projects/project_form_permissions.html:62
 msgid "Pending requests:"
 msgstr "保留中の要求:"
 
-#: templates/projects/project_form_permissions.html:63
-msgid "Users with guaranteed access to submit files:"
+#: templates/projects/project_form_permissions.html:82
+#: templates/txpermissions/base_permission_form.html:18
+#, fuzzy
+msgid "Users with access to submit files:"
 msgstr "ファイルをサブミットするためのアクセス権を保証されているユーザー:"
 
 #: templates/projects/project_latests.html:6
@@ -1988,9 +2377,50 @@ msgstr ""
 "プロジェクトが見つかりませんでしたか? ぜひ <a href=\"%(project_create)s\">追"
 "加</a> してください。"
 
+#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "概要"
+
+#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/teams/team_list.html.py:26
+#, fuzzy
+msgid "Translation Teams"
+msgstr "翻訳"
+
+#: templates/projects/project_menu.html:61
+#: templates/projects/project_timeline.html:12
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr ""
+
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, fuzzy, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr "%(project_name)s の編集"
+
+#: templates/projects/project_top_translators.html:6
+#, fuzzy
+msgid "Top Translators"
+msgstr "翻訳"
+
+#: templates/projects/project_top_translators.html:9
+#, fuzzy, python-format
+msgid "%(number)s submission"
+msgid_plural "%(number)s submissions"
+msgstr[0] "サブミッションを許可する"
+
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
 msgid "Profile"
 msgstr "プロフィール"
 
@@ -1998,9 +2428,25 @@ msgstr "プロフィール"
 msgid "Profile settings"
 msgstr "プロフィールの設定"
 
+#: templates/simpleauth/login_box.html:8
+msgid ""
+"Sign in to add or modify projects, work on translations, and other stuff."
+msgstr ""
+
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>ログアウトしています。"
+
+#: templates/simpleauth/public_profile.html:8
+#: templates/userprofile/profile/public.html:31
+#, python-format
+msgid "Public profile of %(user)s"
+msgstr "%(user)s の公開プロフィール"
+
+#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: txcommon/admin.py:27
+msgid "Username"
+msgstr "ユーザー名"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -2020,7 +2466,7 @@ msgstr ""
 "す。"
 
 #: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:103
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr "通知の変更"
 
@@ -2036,6 +2482,140 @@ msgid ""
 msgstr ""
 "\n"
 "<p>Email またはスクリーン名でログインしてください。<br />\n"
+
+#: templates/teams/team_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(lang_name)s</em> team?"
+msgstr "<em>%(release_name)s</em> を削除してもよいですか?"
+
+#: templates/teams/team_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?\n"
+msgstr ""
+"\n"
+"  %(project_name)s? に属している '%(component_name)s' コンポーネントを本当に"
+"永久削除しますか?\n"
+
+#: templates/teams/team_detail.html:19
+#, python-format
+msgid ""
+"\n"
+"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
+"(language_code)s</sup>\n"
+msgstr ""
+
+#: templates/teams/team_detail.html:33
+#, fuzzy
+msgid "Mainlist:"
+msgstr "メンテナー"
+
+#: templates/teams/team_detail.html:34
+msgid "Main mailing list"
+msgstr ""
+
+#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+msgid "Coordinator:"
+msgid_plural "Coordinators:"
+msgstr[0] ""
+
+#: templates/teams/team_detail.html:56
+msgid "Become a translator:"
+msgstr "翻訳になる:"
+
+#: templates/teams/team_detail.html:59
+msgid "Join this Team"
+msgstr ""
+
+#: templates/teams/team_detail.html:70
+msgid "People waiting for team membership approving:"
+msgstr ""
+
+#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#, fuzzy
+msgid "Approve"
+msgstr "リクエストを承認する"
+
+#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+msgid "Deny"
+msgstr ""
+
+#: templates/teams/team_detail.html:91
+#, fuzzy
+msgid "Withdraw"
+msgstr "リクエストを取り消す"
+
+#: templates/teams/team_detail.html:104
+msgid "Team Members:"
+msgstr ""
+
+#: templates/teams/team_detail.html:114
+#, fuzzy
+msgid "Leave"
+msgstr "保存"
+
+#: templates/teams/team_detail.html:147
+#, fuzzy
+msgid "Delete team"
+msgstr "リリースの削除"
+
+#: templates/teams/team_form.html:19
+#, python-format
+msgid "%(project_name)s Translation Teams"
+msgstr ""
+
+#: templates/teams/team_form.html:27
+#, fuzzy
+msgid "Translation team details"
+msgstr "翻訳統計値"
+
+#: templates/teams/team_form.html:29
+msgid ""
+"\n"
+"    Be aware that notification are not sent when coordinators or members are "
+"added or removed using this module.\n"
+"    "
+msgstr ""
+
+#: templates/teams/team_form.html:41
+#, fuzzy
+msgid "Save team"
+msgstr "リリースの保存"
+
+#: templates/teams/team_list.html:30
+#, fuzzy
+msgid "Add a new team"
+msgstr "新規プロジェクトの追加"
+
+#: templates/teams/team_list.html:41
+msgid "List of team requests:"
+msgstr ""
+
+#: templates/teams/team_list.html:71
+msgid "List of available teams:"
+msgstr ""
+
+#: templates/teams/team_list.html:87
+#, fuzzy
+msgid "No translation team created yet. :("
+msgstr "このリリースに追加された翻訳はありません。 :-("
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new translation team for this project"
+msgstr "このコンポーネントの新しい翻訳を送信します。"
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new team"
+msgstr "新規のアカウントを登録"
+
+#: templates/teams/team_list.html:102
+#, fuzzy
+msgid "Request team"
+msgstr "パーミッションをリクエストする"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -2078,7 +2658,8 @@ msgid "Projects in %(collection)s"
 msgstr "%(collection)s のプロジェクト"
 
 #: templates/txcollections/collection_detail.html:98
-msgid "Projects currently registered to belong in this collection:"
+#, fuzzy
+msgid "Projects currently registered and associated to this collection:"
 msgstr "このコレクションに属す登録済みプロジェクト:"
 
 #: templates/txcollections/collection_detail.html:108
@@ -2253,10 +2834,6 @@ msgstr ""
 msgid "Save release"
 msgstr "リリースの保存"
 
-#: templates/txpermissions/base_permission_form.html:18
-msgid "Users with guarantied access to submit files:"
-msgstr "ファイルをサブミットするためのアクセスを保証されているユーザー:"
-
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
 msgstr "パーミッションを取り消す"
@@ -2281,10 +2858,6 @@ msgstr "リクエストを取り消す"
 msgid "Deny request"
 msgstr "リクエストを拒否する"
 
-#: templates/userprofile/menu.html:5
-msgid "Overview"
-msgstr "概要"
-
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
 msgstr "個人情報"
@@ -2293,14 +2866,21 @@ msgstr "個人情報"
 msgid "Avatar"
 msgstr "アバター"
 
-#: templates/userprofile/menu.html:10
+#: templates/userprofile/menu.html:8
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:90
+msgid "Location"
+msgstr "場所"
+
+#: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "プロフィールの削除"
 
 #: templates/userprofile/account/email_validation.html:5
-msgid "E-mail change"
-msgstr "Email 変更"
+#, fuzzy
+msgid "Change e-mail"
+msgstr "Email の変更"
 
 #: templates/userprofile/account/email_validation.html:5
 #: templates/userprofile/account/email_validation_processed.html:12
@@ -2312,9 +2892,9 @@ msgid "Add a new e-mail address"
 msgstr "新規の Email アドレスを追加する"
 
 #: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation_processed.html:13
+#, fuzzy
 msgid ""
-"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"Enter the new e-mail address. An e-mail will be sent to it for testing and "
 "confirmation."
 msgstr ""
 "新規の Email アドレスを挿入します。 このアドレスにテストおよび確認の目的で "
@@ -2359,10 +2939,19 @@ msgstr ""
 msgid "E-mail change processed"
 msgstr "Email 変更が処理されました"
 
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
+msgstr ""
+"新規の Email アドレスを挿入します。 このアドレスにテストおよび確認の目的で "
+"Email が送信されます。"
+
 #: templates/userprofile/account/email_validation_processed.html:17
+#, fuzzy
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
-"Please access to your e-mail and complete this process following the "
+"Please access your e-mail and complete this process by following the "
 "instructions specified in the e-mail body."
 msgstr ""
 "新規の Email アドレスを確認してアクティブにするための Email が送信されまし"
@@ -2377,8 +2966,8 @@ msgstr "Email 認証の再送信"
 #: templates/userprofile/account/email_validation_reset.html:19
 #, fuzzy
 msgid ""
-"If you haven't validated your e-mail address yet you will not be able to "
-"sign in. Insert your registered e-mail address to receive the validation e-"
+"You will not be able to sign in until you have validated your e-mail "
+"address. Enter your registered e-mail address to receive the validation e-"
 "mail again."
 msgstr ""
 "Email アドレスの認証をまだ行っていない場合はログインすることはできません。 認"
@@ -2393,7 +2982,8 @@ msgid "Validation e-mail sent"
 msgstr "認証 Email が送信されました"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
-msgid "Your user account was already active"
+#, fuzzy
+msgid "Your user account was already activated"
 msgstr "使用しているユーザーアカウントはすでにアクティブでした"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
@@ -2405,7 +2995,8 @@ msgid "overview page"
 msgstr " "
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
-msgid "We've e-mailed you the e-mail validation link."
+#, fuzzy
+msgid "We've sent you the e-mail validation link."
 msgstr "Email 認証用リンクを Email にて送信しています。"
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
@@ -2558,12 +3149,13 @@ msgid "Register for a Transifex account"
 msgstr "Transifex アカウントの登録"
 
 #: templates/userprofile/account/registration.html:18
-msgid ""
-"Joining the Transifex is quick and easy. Just fill in the following form."
+#, fuzzy
+msgid "Joining Transifex is quick and easy. Just fill in the following form."
 msgstr "Transifex への参加は簡単です。 次のフォームを入力するだけです。"
 
 #: templates/userprofile/account/registration_done.html:4
-msgid "Registration complete"
+#, fuzzy
+msgid "Registration completed"
 msgstr "登録の完了"
 
 #: templates/userprofile/account/registration_done.html:8
@@ -2571,10 +3163,11 @@ msgid "Register a new account"
 msgstr "新規のアカウントを登録"
 
 #: templates/userprofile/account/registration_done.html:12
+#, fuzzy
 msgid ""
-"You have successfully registered a new account, and an account activation "
-"url has been sent to your e-mail address. You must access this message on "
-"your e-mail account to finish the registration process."
+"You have successfully registered a new account and an account activation url "
+"has been sent to your e-mail address. Please access this url to finish the "
+"registration process."
 msgstr ""
 "新規のアカウントの登録に成功したのでアカウントアクティベーション用の URL があ"
 "なたの Email アドレスに送信されました。 Email アカウントに届くこのメッセージ"
@@ -2601,9 +3194,10 @@ msgstr "アバター選択ページ"
 
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
+#, fuzzy
 msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile."
+"You have several options to select the image you want to use as avatar on "
+"your profile."
 msgstr "プロフィール上のアバターのイメージ選択には複数の選択肢があります。"
 
 #: templates/userprofile/avatar/choose.html:50
@@ -2617,9 +3211,10 @@ msgid "Done"
 msgstr "完了"
 
 #: templates/userprofile/avatar/choose.html:56
+#, fuzzy
 msgid ""
-"Select an image from a remote URL. Put the URL on the input below and we'll "
-"retrieve the image for you"
+"Select an image from a remote URL. Enter the URL in the field below and "
+"we'll retrieve the image for you"
 msgstr ""
 "リモート URL からイメージを選択します。 URL を以下に置くとそのイメージが読み"
 "込まれます。"
@@ -2638,9 +3233,10 @@ msgid "Delete personal information"
 msgstr "個人情報の削除"
 
 #: templates/userprofile/profile/delete.html:13
+#, fuzzy
 msgid ""
-"Erase all your private data except your username. You can refill the "
-"information later if you want to."
+"Erase all your private data except your username. You can fill in the "
+"information again later if you want to."
 msgstr ""
 "ユーザー名以外のプライベートデータを消去します。 後日、 情報を再入力すること"
 "が可能です。"
@@ -2668,7 +3264,6 @@ msgstr "自動検出のロケーション"
 
 #: templates/userprofile/profile/location.html:22
 #: templates/userprofile/profile/overview.html:49
-#: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "国"
 
@@ -2732,11 +3327,6 @@ msgstr " (確認されていません)"
 msgid "Not set"
 msgstr "セットされていません"
 
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "場所"
-
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "管理:"
@@ -2749,6 +3339,18 @@ msgstr "Email アドレスの変更"
 msgid "Add your e-mail address"
 msgstr "Email アドレスの追加"
 
+#: templates/userprofile/profile/overview.html:95
+msgid "Add location"
+msgstr "ロケーションの追加"
+
+#: templates/userprofile/profile/overview.html:97
+msgid "Change location"
+msgstr "ロケーションの変更"
+
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr ""
+
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -2758,14 +3360,69 @@ msgstr "個人情報の編集"
 msgid "Insert some information about you."
 msgstr "自分に関する情報を挿入します。"
 
-#: templates/userprofile/profile/public.html:27
+#: templates/userprofile/profile/public.html:50
 #, python-format
-msgid "Public profile of %(user)s"
-msgstr "%(user)s の公開プロフィール"
+msgid "Nudge %(user)s "
+msgstr ""
 
-#: templates/userprofile/profile/public.html:33
-msgid "Username"
-msgstr "ユーザー名"
+#: templates/userprofile/profile/public.html:66
+#, fuzzy
+msgid "Native language"
+msgstr "母国語"
+
+#: templates/userprofile/profile/public.html:72
+#, fuzzy
+msgid "Blog/Site"
+msgstr "ブログ"
+
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: txcommon/migrations/0002_release_06_07.py:23
+msgid "Twitter"
+msgstr "Twitter"
+
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: txcommon/migrations/0002_release_06_07.py:30
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: templates/userprofile/profile/public.html:104
+msgid ""
+"\n"
+"            Coordinator of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Coordinator of the following teams:\n"
+"        "
+msgstr[0] ""
+
+#: templates/userprofile/profile/public.html:115
+#: templates/userprofile/profile/public.html:142
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
+"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
+"project\n"
+"                "
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> プロジェクトの <a href=\"%"
+"(component_url)s\">%(component_name)s</a> にサブミットされました"
+
+#: templates/userprofile/profile/public.html:131
+msgid ""
+"\n"
+"            Member of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Members of the following teams:\n"
+"        "
+msgstr[0] ""
+
+#: templates/webtrans/msgid_label.html:10
+msgid "String Context"
+msgstr ""
 
 #: templates/webtrans/transfile_edit.html:29
 #, python-format
@@ -2783,39 +3440,87 @@ msgstr "'%(filename)s' を翻訳する"
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "'<code>%(filename)s</code>' を翻訳する"
 
-#: templates/webtrans/transfile_edit.html:102
+#: templates/webtrans/transfile_edit.html:51
+#, fuzzy
+msgid "Current status for this page"
+msgstr "この言語の統計を表示"
+
+#: templates/webtrans/transfile_edit.html:54
+msgid "Settings"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:57
+#, fuzzy
+msgid "Show occurrences:"
+msgstr "発生"
+
+#: templates/webtrans/transfile_edit.html:61
+msgid "Show context:"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:69
+#, fuzzy
+msgid "Translated"
+msgstr "翻訳済み:"
+
+#: templates/webtrans/transfile_edit.html:75
+#, fuzzy
+msgid "Fuzzy"
+msgstr "ファジー:"
+
+#: templates/webtrans/transfile_edit.html:81
+#, fuzzy
+msgid "Untranslated"
+msgstr "未翻訳:"
+
+#: templates/webtrans/transfile_edit.html:87
+#, fuzzy
+msgid "Total"
+msgstr "合計:"
+
+#: templates/webtrans/transfile_edit.html:93
+#, fuzzy
+msgid "Live translation"
+msgstr "翻訳のサブミット"
+
+#: templates/webtrans/transfile_edit.html:99
+#, python-format
+msgid "Page %(step)s of %(step_count)s"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:105
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:103
+#: templates/webtrans/transfile_edit.html:106
 msgid "Source String"
 msgstr "ソースの文字列"
 
-#: templates/webtrans/transfile_edit.html:104
+#: templates/webtrans/transfile_edit.html:107
 msgid "Translation"
 msgstr "翻訳"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 msgid "Auto-translate"
 msgstr "自動翻訳"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 msgid "AT"
 msgstr "AT"
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:111
 msgid "Occurrences"
 msgstr "発生"
 
-#: templates/webtrans/transfile_edit.html:109
+#: templates/webtrans/transfile_edit.html:112
 msgid "Fuzzy?"
 msgstr "ファジー?"
 
-#: templates/webtrans/transfile_edit.html:122
+#: templates/webtrans/transfile_edit.html:125
 msgid "Submit translations"
 msgstr "翻訳のサブミット"
 
-#: templates/webtrans/transfile_form.html:19
+#: templates/webtrans/transfile_form.html:18
 msgid "Auto-suggest translation"
 msgstr "自動提案の翻訳"
 
@@ -2832,27 +3537,27 @@ msgid "Files"
 msgstr "ファイル"
 
 #: translations/templates/comp_lang_stats_table.html:17
-#: translations/templates/comp_stats_table.html:17
+#: translations/templates/comp_stats_table.html:15
 #: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "翻訳"
 
 #: translations/templates/comp_lang_stats_table.html:18
-#: translations/templates/comp_stats_table.html:18
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "オプション"
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "このファイルの統計を生成できませんでした"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2861,7 +3566,7 @@ msgid "Trans:"
 msgstr "翻訳済み:"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2870,40 +3575,35 @@ msgid "Untrans:"
 msgstr "未翻訳:"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:48
+#: translations/templates/comp_stats_table.html:47
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "表示"
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "ダウンロード"
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:59
+#: translations/templates/comp_stats_table.html:58
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "編集"
 
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "言語"
-
-#: translations/templates/comp_stats_table.html:26
+#: translations/templates/comp_stats_table.html:25
 msgid "See statistics for this language"
 msgstr "この言語の統計を表示"
 
-#: translations/templates/comp_stats_table.html:28
-msgid "There is no language registered that matches with this code"
+#: translations/templates/comp_stats_table.html:27
+#, fuzzy
+msgid "There are no languages registered matching this code"
 msgstr "このコードに一致する登録言語はありません"
 
-#: translations/templates/comp_stats_table.html:43
+#: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "ここをクリックすると複数のファイルを表示します"
@@ -2936,7 +3636,7 @@ msgstr "ファイルの作業を終了したらファイルのロックを解除
 
 #: translations/templates/pofile_lock.html:21
 #, fuzzy, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working on it."
+msgid "User '%(owner)s' has locked this file indicating he's working with it."
 msgstr "このファイルはロックされていて誰かが作業中であることを示しています。"
 
 #: translations/templates/pofile_lock.html:27
@@ -2957,7 +3657,8 @@ msgid "See the detailed statistics for this language"
 msgstr "この言語の詳細な統計を表示する"
 
 #: translations/templates/release_stats_table.html:18
-msgid "There is no language registered that matches with this file"
+#, fuzzy
+msgid "There are no languages registered matching this file"
 msgstr "このファイルに一致する登録言語はありません"
 
 #: translations/templates/source_files.html:5
@@ -3020,52 +3721,57 @@ msgstr "<Release: %(rel)s (Collection %(col)s)>"
 msgid "String freese date"
 msgstr "ストリングフリーズ日"
 
+#: txcommon/admin.py:10
+msgid ""
+"Required. 30 characters or fewer. Unicode alphanumeric characters only "
+"(letters, digits and underscores)."
+msgstr ""
+
+#: txcommon/admin.py:13
+#, fuzzy
+msgid "This value must contain only unicode letters, numbers and underscores."
+msgstr ""
+"URL で使用される短縮ラベルです。 文字、 数字、 下線およびハイフンのみを含みま"
+"す。"
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "LINGUS ファイルを開けませんでした: %s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Female"
 msgstr "女"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Male"
 msgstr "男"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "ファーストネーム"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "ラストネーム"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "母国語"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "ブログ"
 
-#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:23
-msgid "Twitter"
-msgstr "Twitter"
-
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "自分について"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
 msgstr "自分に関して簡単に説明します (140 文字)。"
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "仕事を探していますか?"
 
@@ -3094,47 +3800,50 @@ msgid "when a project is deleted"
 msgstr "プロジェクトが削除される場合"
 
 #: txcommon/notifications.py:33
-msgid "Submit access to project requested"
+msgid "Submit access for project requested"
 msgstr ""
 
 #: txcommon/notifications.py:34
 #, fuzzy
-msgid "when an user request access to submit files to a project"
+msgid "when a user requests access to submit files to a project"
 msgstr "このプロジェクトへのファイルのサブミットを許可"
 
 #: txcommon/notifications.py:41
-msgid "Submit access request to project denied"
+msgid "Submit access request for project denied"
 msgstr ""
 
 #: txcommon/notifications.py:42
-msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr ""
+#, fuzzy
+msgid "when a maintainer denies access to a user to submit files to a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
 
 #: txcommon/notifications.py:49
-msgid "Submit access request to project withdrawn"
+msgid "Submit access request for project withdrawn"
 msgstr ""
 
 #: txcommon/notifications.py:50
 #, fuzzy
-msgid "when an user withdraws the access requestto submit files to a project"
+msgid "when a user withdraws the access requestto submit files to a project"
 msgstr "ファイルをサブミットするためのアクセス権を保証されているユーザー:"
 
 #: txcommon/notifications.py:57
-msgid "Submit access to project granted"
+msgid "Submit access for project granted"
 msgstr ""
 
 #: txcommon/notifications.py:58
-msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr ""
+#, fuzzy
+msgid "when a maintainer grants access to a user to submit files to a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
 
 #: txcommon/notifications.py:65
-msgid "Submit access to project revoked"
+msgid "Submit access for project revoked"
 msgstr ""
 
 #: txcommon/notifications.py:66
+#, fuzzy
 msgid ""
-"when a maintainer revokes the access of an user to submit files to a project"
-msgstr ""
+"when a maintainer revokes the access of a user to submit files to a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3187,85 +3896,196 @@ msgid ""
 msgstr ""
 "自分がメンテナーとなるコンポーネントのソースファイル (POT) に問題がある場合"
 
-#: txcommon/notifications.py:119
+#: txcommon/notifications.py:121
+#, fuzzy
+msgid "New Team Added"
+msgstr "新しいプロジェクトが追加されました。"
+
+#: txcommon/notifications.py:122
+#, fuzzy
+msgid "when a new translation team is added to a project"
+msgstr "新しいコンポーネントがプロジェクトに追加される場合"
+
+#: txcommon/notifications.py:129
+#, fuzzy
+msgid "Team Changed"
+msgstr "リリースが変更されました"
+
+#: txcommon/notifications.py:130
+#, fuzzy
+msgid "when a translation team of a project is changed"
+msgstr "プロジェクトのコンポーネントの翻訳ファイルが変更される場合"
+
+#: txcommon/notifications.py:137
+#, fuzzy
+msgid "Team Deleted"
+msgstr "リリースが削除されました"
+
+#: txcommon/notifications.py:138
+#, fuzzy
+msgid "when a translation team of a project is deleted"
+msgstr "プロジェクトのコンポーネントが削除される場合"
+
+#: txcommon/notifications.py:145
+msgid "Team Creation Requested"
+msgstr ""
+
+#: txcommon/notifications.py:146
+#, fuzzy
+msgid "when a translation team creation is requestedfor a project"
+msgstr "新しいコンポーネントがプロジェクトに追加される場合"
+
+#: txcommon/notifications.py:153
+msgid "Team Creation Request Denied"
+msgstr ""
+
+#: txcommon/notifications.py:154
+msgid ""
+"when a translation team creation requestfor a project is denied by a "
+"maintainer"
+msgstr ""
+
+#: txcommon/notifications.py:161
+msgid "Team User Joining Requested"
+msgstr ""
+
+#: txcommon/notifications.py:162
+#, fuzzy
+msgid "when an user requests for joining to a translation team of a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
+
+#: txcommon/notifications.py:169
+msgid "Team User Joining Approved"
+msgstr ""
+
+#: txcommon/notifications.py:170
+msgid "when an user is approved as a member of a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:177
+msgid "Team User Joining Denied"
+msgstr ""
+
+#: txcommon/notifications.py:178
+#, fuzzy
+msgid "when an user is denied as a member of a translation team of a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
+
+#: txcommon/notifications.py:185
+msgid "Team User Joining Withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:186
+#, fuzzy
+msgid ""
+"when an user withdrawn its own request for joining a translation team of a "
+"project"
+msgstr "ファイルをサブミットするためのアクセス権を保証されているユーザー:"
+
+#: txcommon/notifications.py:193
+msgid "Team User Left"
+msgstr ""
+
+#: txcommon/notifications.py:194
+#, fuzzy
+msgid "when an user leaves a translation team of a project"
+msgstr "このプロジェクトへのファイルのサブミットを許可"
+
+#: txcommon/notifications.py:203
+msgid "Weekly project report for maintainers"
+msgstr ""
+
+#: txcommon/notifications.py:204
+msgid "when you receive the weekly report of projects that you maintain."
+msgstr ""
+
+#: txcommon/notifications.py:212
 msgid "New Collection Added"
 msgstr "新しいコレクションが追加されました"
 
-#: txcommon/notifications.py:120
+#: txcommon/notifications.py:213
 msgid "when a new collection is added"
 msgstr "新しいコレクションが追加される場合"
 
-#: txcommon/notifications.py:126
+#: txcommon/notifications.py:219
 msgid "Collection Changed"
 msgstr "コレクションが追加されました"
 
-#: txcommon/notifications.py:127
+#: txcommon/notifications.py:220
 msgid "when a collection is changed"
 msgstr "コレクションが変更される場合"
 
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:226
 msgid "Collection Deleted"
 msgstr "コレクションが削除されました"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:227
 msgid "when a collection is deleted"
 msgstr "コレクションが削除される場合"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:233
 msgid "Project Added to a Collection"
 msgstr "プロジェクトがコレクションに追加されました"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:234
 msgid "when a new project is added to a collection"
 msgstr "新規のプロジェクトがコレクションに追加される場合"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:240
 msgid "Project Deleted from a Collection"
 msgstr "コレクションからプロジェクトが削除されました"
 
-#: txcommon/notifications.py:148
+#: txcommon/notifications.py:241
 msgid "when a project is deleted from a collection"
 msgstr "コレクションからプロジェクトが削除される場合"
 
-#: txcommon/notifications.py:154
+#: txcommon/notifications.py:247
 msgid "New Release Added for a Watched Collection"
 msgstr "監視コレクションに新しいリリースが追加されました"
 
-#: txcommon/notifications.py:155
+#: txcommon/notifications.py:248
 msgid "when a new release is added to a collection"
 msgstr "コレクションに新規のリリースが追加される場合"
 
-#: txcommon/notifications.py:162
+#: txcommon/notifications.py:255
 msgid "Release Changed"
 msgstr "リリースが変更されました"
 
-#: txcommon/notifications.py:163
+#: txcommon/notifications.py:256
 msgid "when a release of a collection is changed"
 msgstr "コレクションのリリースが変更される場合"
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:261
 msgid "Release Deleted"
 msgstr "リリースが削除されました"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:262
 msgid "when a release of a collection is deleted"
 msgstr "コレクションのリリースが削除される場合"
 
-#: txcommon/notifications.py:174
+#: txcommon/notifications.py:267
 msgid "Release Added to a Collection"
 msgstr "コレクションにリリースが追加されました"
 
-#: txcommon/notifications.py:175
+#: txcommon/notifications.py:268
 msgid "when a release is added to a collection"
 msgstr "コレクションにリリースが追加される場合"
 
-#: txcommon/notifications.py:180
+#: txcommon/notifications.py:273
 msgid "Release Deleted from a Collection"
 msgstr "コレクションからリリースが削除されました"
 
-#: txcommon/notifications.py:181
+#: txcommon/notifications.py:274
 msgid "when a release is deleted from a collection"
 msgstr "コレクションからリリースが削除される場合"
+
+#: txcommon/notifications.py:279
+msgid "User Nudge"
+msgstr ""
+
+#: txcommon/notifications.py:280
+msgid "when an user nudges you"
+msgstr ""
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3279,6 +4099,20 @@ msgstr "ルートの URL は .tar や .gz、 .tgz のファイルをポイント
 msgid "The root url must start with http:// or ftp://"
 msgstr "ルート URL は http:// または ftp:// で開始してください"
 
+#: txcommon/views.py:85
+msgid "You can't re-nudge the same user in a short amount of time."
+msgstr ""
+
+#: txcommon/views.py:88
+#, fuzzy
+msgid "You can't nudge yourself."
+msgstr "自分について"
+
+#: txcommon/views.py:95
+#, fuzzy, python-format
+msgid "You have nugded '%s'."
+msgstr "<p>ログアウトしています。"
+
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "括弧内に 0 またはコンマで区切られた複数の整数を入力してください。"
@@ -3287,29 +4121,34 @@ msgstr "括弧内に 0 またはコンマで区切られた複数の整数を入
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "少なくとも何も含まない括弧を 1 組入力する必要があります。"
 
-#: txcommon/templates/common_homelink.html:2
+#: txcommon/templatetags/txcommontags.py:123
 msgid "Home"
 msgstr "ホーム"
 
 #: txpermissions/views.py:93
+#, fuzzy
+msgid "You added a permission."
+msgstr "パーミッションリクエストを追加しました。"
+
+#: txpermissions/views.py:95
 msgid "You added a permission request."
 msgstr "パーミッションリクエストを追加しました。"
 
-#: txpermissions/views.py:128
+#: txpermissions/views.py:133
 msgid "You approved the permission request."
 msgstr "パーミッションリクエストを承認しました。"
 
-#: txpermissions/views.py:146
+#: txpermissions/views.py:151
 msgid "You removed the permission."
 msgstr "パーミッションを削除しました。"
 
-#: txpermissions/views.py:148
+#: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "パーミッションリクエストを削除しました。"
 
 #: vcs/forms.py:56
 #, fuzzy
-msgid "This type of repository does not accept branch"
+msgid "This type of repository does not accept branches"
 msgstr "この種類のリポジトリにはブランチが必要です"
 
 #: vcs/models.py:48
@@ -3346,7 +4185,7 @@ msgstr "vcsunits"
 msgid "The %s fields should be filled."
 msgstr "%s は削除されました。"
 
-#: webtrans/wizards.py:202
+#: webtrans/wizards.py:210
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -3359,6 +4198,30 @@ msgstr ""
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr ""
+
+#~ msgid "Transifex logo"
+#~ msgstr "Transifex のロゴ"
+
+#~ msgid "Get in contact with us"
+#~ msgstr "連絡先"
+
+#~ msgid "Couldn't find your project? Why don't you go ahead and "
+#~ msgstr "プロジェクトが見つからない場合は、"
+
+#~ msgid "add it"
+#~ msgstr "追加します!"
+
+#~ msgid "Notices"
+#~ msgstr "おしらせ"
+
+#~ msgid "Your request is pending for approval."
+#~ msgstr "リクエストは承認待ちです。"
+
+#~ msgid "Users with guarantied access to submit files:"
+#~ msgstr "ファイルをサブミットするためのアクセスを保証されているユーザー:"
+
+#~ msgid "E-mail change"
+#~ msgstr "Email 変更"
 
 #~ msgid "Brazilian Portuguese"
 #~ msgstr "ブラジル系ポルトガル語"
@@ -3392,9 +4255,6 @@ msgstr ""
 
 #~ msgid "Password"
 #~ msgstr "パスワード"
-
-#~ msgid "Change email"
-#~ msgstr "Email の変更"
 
 #~ msgid "Change OpenID"
 #~ msgstr "OpenID の変更"
@@ -3590,12 +4450,6 @@ msgstr ""
 
 #~ msgid "Sign in with OPENID"
 #~ msgstr "OPENID でサインインする"
-
-#~ msgid "Add location"
-#~ msgstr "ロケーションの追加"
-
-#~ msgid "Change location"
-#~ msgstr "ロケーションの変更"
 
 #~ msgid "(not calculated)"
 #~ msgstr "(計算されていません)"

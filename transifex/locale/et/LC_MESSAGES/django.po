@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-02 17:06+0000\n"
+"POT-Creation-Date: 2010-01-06 14:19+0000\n"
 "PO-Revision-Date: 2009-12-02 21:09+0200\n"
 "Last-Translator: Lauri Võsandi <lauri.vosandi@gmail.com>\n"
 "Language-Team: Eesti <kde-i18n-doc@kde.org>\n"
@@ -17,11 +17,16 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: actionlog/models.py:51
+#: actionlog/filters.py:12
+#, fuzzy
+msgid "Search for an username or leave it blank"
+msgstr "Otsi kasutajanime"
+
+#: actionlog/models.py:152
 msgid "log entry"
 msgstr "Logikirje"
 
-#: actionlog/models.py:52
+#: actionlog/models.py:153
 msgid "log entries"
 msgstr "Logikirjed"
 
@@ -29,7 +34,8 @@ msgstr "Logikirjed"
 msgid "Date/time"
 msgstr "Kuupäev/kellaaeg"
 
-#: actionlog/templates/object_action_list.html:7 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:74
+#: teams/models.py:110 txpermissions/forms.py:18
 msgid "User"
 msgstr "Kasutaja"
 
@@ -45,41 +51,43 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Ajalugu pole salvestatud veel."
 
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:12
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:27 languages/migrations/0001_initial.py:19
 #: projects/models.py:86 projects/models.py:198
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
-#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: templates/userprofile/profile/public.html:60 txcollections/models.py:26
+#: txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Nimi"
 
-#: codebases/models.py:38 codebases/migrations/0001_initial.py:15
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Juur"
 
-#: codebases/models.py:39
+#: codebases/models.py:38
 msgid "The URL of the codebase"
 msgstr "Koodibaasi URL"
 
-#: codebases/models.py:40 codebases/migrations/0001_initial.py:17
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Tüüp"
 
-#: codebases/models.py:42
-msgid "The codebase type"
+#: codebases/models.py:41
+#, fuzzy, python-format
+msgid "The codebase type (%s)"
 msgstr "Koodibaasi tüüp"
 
-#: codebases/models.py:45
+#: codebases/models.py:44
 msgid "The last time this unit was updated"
 msgstr "Viimane kord kui seda ühikut uuendati"
 
-#: codebases/models.py:54
+#: codebases/models.py:53
 msgid "unit"
 msgstr "ühik"
 
-#: codebases/models.py:55
+#: codebases/models.py:54
 msgid "units"
 msgstr "ühikud"
 
@@ -107,6 +115,7 @@ msgstr "Hiljutised tõlked keeles %(language)s väljalaskele %(release)s."
 #: projects/models.py:88 projects/models.py:200
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
 #: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
@@ -562,7 +571,7 @@ msgstr "Tõlgitud:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -597,11 +606,13 @@ msgid "Latest components in project %s."
 msgstr "Projekt %s hiljuti lisatud komponendid."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
-msgid "Search for an username"
+#, fuzzy
+msgid "Search for a username"
 msgstr "Otsi kasutajanime"
 
 #: projects/forms.py:35 projects/models.py:213
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+#, fuzzy
+msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "Regulaaravaldise filter kättesaadavatele failidele. Näiteks: 'po/.*'"
 
 #: projects/forms.py:58 projects/models.py:218
@@ -638,7 +649,8 @@ msgstr ""
 
 #: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
-msgid "A string like a name or very short description."
+#, fuzzy
+msgid "A short name or very short description."
 msgstr "Sõne nagu nimi või lühike kirjeldus"
 
 #: projects/models.py:89 projects/models.py:201
@@ -667,7 +679,8 @@ msgid "Feed"
 msgstr "Voog"
 
 #: projects/models.py:95
-msgid "An RSS feed with updates on the project."
+#, fuzzy
+msgid "An RSS feed with updates to the project."
 msgstr "RSS voog projekti uuenduste kohta."
 
 #: projects/models.py:96 projects/migrations/0001_initial.py:27
@@ -675,8 +688,8 @@ msgid "Bug tracker"
 msgstr "Veahaldur"
 
 #: projects/models.py:97
-msgid ""
-"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+#, fuzzy
+msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "URL veahalduri veebilehele (Bugzilla, Trac jms)"
 
 #: projects/models.py:99
@@ -760,7 +773,8 @@ msgid "Source language"
 msgstr "Lähtekeel"
 
 #: projects/models.py:206
-msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
+#, fuzzy
+msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "Lähtekeel sellele komponendile, näiteks 'en', 'pt_BR' või 'el'."
 
 #: projects/models.py:208 projects/migrations/0001_initial.py:42
@@ -768,7 +782,8 @@ msgid "I18n type"
 msgstr "l18n tüüp"
 
 #: projects/models.py:210
-msgid "The code's type of i18n support"
+#, fuzzy, python-format
+msgid "The type of i18n support for the source code (%s)"
 msgstr "Lähtekoodi i18n toe tüüp"
 
 #: projects/models.py:212 projects/migrations/0001_initial.py:43
@@ -792,6 +807,7 @@ msgid "Should statistics be calculated for this component?"
 msgstr "Leia statistika selle komponendi kohta?"
 
 #: projects/models.py:238 projects/migrations/0001_initial.py:46
+#: teams/models.py:25 teams/models.py:67
 msgid "Project"
 msgstr "Projekt"
 
@@ -812,25 +828,30 @@ msgstr "<Komponent: %s>"
 msgid "component"
 msgstr "komponent"
 
-#: projects/models.py:268 templates/projects/component_list.html:17
+#: projects/models.py:268 templates/projects/component_list.html:16
 msgid "components"
 msgstr "komponendid"
 
-#: projects/permissions/project.py:17
+#: projects/permissions/project.py:21
 msgid "Is allowed to maintain this project"
 msgstr "On lubatud hooldama seda projekti"
 
-#: projects/permissions/project.py:26
+#: projects/permissions/project.py:35
+#, fuzzy
+msgid "Is allowed to coordinate a team project"
+msgstr "On lubatud hooldama seda projekti"
+
+#: projects/permissions/project.py:81
 msgid "Is allowed to submit file to this project"
 msgstr "On lubatud saatma faile sellele projektile"
 
-#: projects/views/component.py:201 projects/views/project.py:117
+#: projects/views/component.py:208 projects/views/project.py:138
 #: txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s kustutati."
 
-#: projects/views/component.py:236
+#: projects/views/component.py:243
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -838,48 +859,57 @@ msgstr ""
 "Failifilter sellele POT-põhisele komponendile ei luba POTFILES.in faili. "
 "Palun seadista failifilter korrektselt."
 
-#: projects/views/component.py:243
+#: projects/views/component.py:250
+#, fuzzy
 msgid ""
-"There is no 'pot' directory named in the set of files of this Publian like "
+"There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
 msgstr ""
 "Kataloog 'pot' puudub Publian-tüüpi komponendis. Võibolla failifilter keelab "
 "ligipääsu sellele?"
 
-#: projects/views/component.py:251
+#: projects/views/component.py:258
 msgid "This component is not configured for statistics calculation."
 msgstr "Komponent ei ole seadistatud statistika arvutamiseks."
 
-#: projects/views/component.py:335
+#: projects/views/component.py:342
 msgid "This component does  not allow write access."
 msgstr "Komponent ei luba ligipääsu kirjutamiseks"
 
-#: projects/views/component.py:343
+#: projects/views/component.py:350
 msgid "Please select a file from your system to be uploaded."
 msgstr "Vali fail üleslaadimiseks oma arvutist."
 
-#: projects/views/component.py:351
+#: projects/views/component.py:358
 msgid "Please enter a target to upload the file."
 msgstr "Palun sisesta sihtkoht faili üleslaadimiseks."
 
-#: projects/views/component.py:356
+#: projects/views/component.py:363
 msgid "Please enter only ONE target to upload the file."
 msgstr "Palun sisesta ainult ÜKS sihtkoht faili üleslaadimiseks."
 
-#: projects/views/component.py:367
-msgid "The target file does not match with the component file filter"
+#: projects/views/component.py:374
+#, fuzzy
+msgid "The target file does not match the component file filter"
 msgstr "Sihtfail ei vasta komponendi failifiltrile"
 
-#: projects/views/component.py:375
+#: projects/views/component.py:382
 msgid "Enter a commit message"
 msgstr "Sisesta sissekirjutise teade:"
 
-#: projects/views/component.py:442
+#: projects/views/component.py:414
+#, python-format
+msgid ""
+"You need to be in the '%s' team of this project for being able to send "
+"translations to that file target."
+msgstr ""
+
+#: projects/views/component.py:475
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Fail saadeti edukalt: %s"
 
-#: projects/views/component.py:457
+#: projects/views/component.py:490
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -887,41 +917,124 @@ msgstr ""
 "Sinu fail ei läbi korrektsuse testi (msgfmt -c). Palun käita seda oma "
 "süsteemil et näha veateateid."
 
-#: projects/views/component.py:466
+#: projects/views/component.py:499
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Vabandust, faili saatmine ebaõnnestus vea tõttu."
 
-#: projects/views/component.py:470 projects/views/component.py:503
+#: projects/views/component.py:503 projects/views/component.py:536
 msgid "Sorry, but you need to send a POST request."
 msgstr "Vabandust, kuid pead saatma POST päringu."
 
-#: projects/views/component.py:492
+#: projects/views/component.py:525
 msgid "Lock removed."
 msgstr "Lukk eemaldatud."
 
-#: projects/views/component.py:495
+#: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Viga: Luku võib eemaldada vaid selle omanik."
 
-#: projects/views/component.py:499
+#: projects/views/component.py:532
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lukk loodud. Ära unusta seda eemaldada kui oled valmis."
 
-#: projects/views/component.py:518 projects/views/project.py:135
+#: projects/views/component.py:551 projects/views/project.py:156
 msgid "Must use POST to activate"
 msgstr "Pead kasutama POST'i et aktiveerida"
 
-#: projects/views/component.py:521 projects/views/project.py:138
+#: projects/views/component.py:554 projects/views/project.py:159
 msgid "Notification is not enabled"
 msgstr "Märguanded ei ole lubatud"
 
-#: projects/views/project.py:151
+#: projects/views/project.py:172
 msgid "Watch this project"
 msgstr "Jälgi seda projekti"
 
-#: projects/views/project.py:164
-msgid "Stop wathing this project"
+#: projects/views/project.py:185
+#, fuzzy
+msgid "Stop watching this project"
 msgstr "Lõpeta projekti jälgimine"
+
+#: projects/views/team.py:168
+#, fuzzy, python-format
+msgid "The '%s' team was deleted."
+msgstr "%s kustutati."
+
+#: projects/views/team.py:205
+#, python-format
+msgid "You are in the '%s' team already."
+msgstr ""
+
+#: projects/views/team.py:210
+#, python-format
+msgid "You have added a request for joining the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:233
+#, python-format
+msgid "You already have a pending request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:260
+#, python-format
+msgid "User '%(user)s' is in the '%(team)s' team already."
+msgstr ""
+
+#: projects/views/team.py:267
+#, python-format
+msgid "You have added '%(user)s' into the '%(team)s' team."
+msgstr ""
+
+#: projects/views/team.py:314
+#, python-format
+msgid ""
+"You have denied the request of the user '%(user)s' to join the '%(team)s' "
+"team."
+msgstr ""
+
+#: projects/views/team.py:357
+#, python-format
+msgid "You have withdrawn your own request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:398
+#, python-format
+msgid "You have left the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:419
+#, python-format
+msgid "You are not in the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:440
+#, fuzzy
+msgid "Please, select a language before submit the form."
+msgstr "Vali fail üleslaadimiseks oma arvutist."
+
+#: projects/views/team.py:453
+#, python-format
+msgid "'%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:459
+#, python-format
+msgid "A request for creating the '%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:467
+#, python-format
+msgid "You have requested the '%s' team creation."
+msgstr ""
+
+#: projects/views/team.py:512
+#, python-format
+msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+msgstr ""
+
+#: projects/views/team.py:554
+#, python-format
+msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+msgstr ""
 
 #: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
@@ -944,9 +1057,10 @@ msgid "String freeze date"
 msgstr "Sõnede külmutamise kuupäev"
 
 #: releases/models.py:34
+#, fuzzy
 msgid ""
-"When the translatable strings will be frozen (no strings can be added/"
-"modified which affect translations."
+"When the translatable strings will be frozen (no strings which affect "
+"translations can be added/modified)."
 msgstr "Kui tõlgitavad sõned külmutatakse (sõnesid ei saa lisada/muuta)"
 
 #: releases/models.py:36 txcollections/migrations/0001_initial.py:25
@@ -1008,6 +1122,95 @@ msgstr "tõrvapall"
 msgid "tarballs"
 msgstr "tõrvapallid"
 
+#: teams/forms.py:12
+msgid ""
+"Coordinators are people that can manage the members of the team, for "
+"example. Search for usernames."
+msgstr ""
+
+#: teams/forms.py:16
+msgid ""
+"Members are actually people that can submit translations. Search for "
+"usernames."
+msgstr ""
+
+#: teams/forms.py:45
+#, python-format
+msgid ""
+"You have the user '%s' in both coordinators and members lists. Please drop "
+"him/her from one of those lists."
+msgstr ""
+
+#: teams/models.py:27 teams/models.py:69
+msgid "The project which this team belongs to."
+msgstr ""
+
+#: teams/models.py:28 teams/models.py:70
+#: translations/templates/comp_stats_table.html:14
+#: translations/templates/project_stats_table.html:7
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "Keel"
+
+#: teams/models.py:30 teams/models.py:72
+msgid ""
+"People in this team will only be able to submit translations files related "
+"to the specific language."
+msgstr ""
+
+#: teams/models.py:32
+msgid "Coordinators"
+msgstr ""
+
+#: teams/models.py:34
+msgid "Members"
+msgstr ""
+
+#: teams/models.py:37
+#, fuzzy
+msgid "Mainlist"
+msgstr "Hooldaja:"
+
+#: teams/models.py:38
+msgid "The main mailing list of the team."
+msgstr ""
+
+#: teams/models.py:40
+msgid "creator"
+msgstr ""
+
+#: teams/models.py:56
+msgid "team"
+msgstr ""
+
+#: teams/models.py:57
+msgid "teams"
+msgstr ""
+
+#: teams/models.py:89
+#, fuzzy
+msgid "team creation request"
+msgstr "Keela taotlus"
+
+#: teams/models.py:90
+#, fuzzy
+msgid "team creation requests"
+msgstr "Ootel olevad taotlused:"
+
+#: teams/models.py:108
+#, fuzzy
+msgid "Team"
+msgstr "tamili"
+
+#: teams/models.py:125
+#, fuzzy
+msgid "team access request"
+msgstr "Saatmise luba taotletud projektile"
+
+#: teams/models.py:126
+msgid "team access requests"
+msgstr ""
+
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Ligipääs keelatud"
@@ -1064,8 +1267,12 @@ msgstr "Teretulemast Transifex'i"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34 templates/base-sample.html.py:35
-#: txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#, fuzzy
+msgid "Go to the start page"
+msgstr "Mine esilehele"
+
+#: templates/base-sample.html:35
 msgid "Go to start page"
 msgstr "Mine esilehele"
 
@@ -1109,8 +1316,8 @@ msgstr "Logi välja veebilehelt"
 msgid "Sign out"
 msgstr "Logi välja"
 
-#: templates/base-sample.html:50 templates/simpleauth/login_box.html:8
-#: templates/simpleauth/login_box.html:18 templates/simpleauth/logout.html:4
+#: templates/base-sample.html:50 templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
 #: templates/simpleauth/signin.html:6
@@ -1124,17 +1331,23 @@ msgstr "Logi sisse"
 msgid "Register"
 msgstr "Registreeri"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:115
 msgid "About"
 msgstr "Info"
 
-#: templates/base-sample.html:114
-msgid "Get in contact with us"
-msgstr "Kontakteeru meiega"
+#: templates/base-sample.html:115
+msgid "Drops us a line"
+msgstr ""
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:115
 msgid "Feedback"
 msgstr "Tagasiside"
+
+#: templates/base-sample.html:117
+msgid ""
+"Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
+"\">Transifex</a>, the Open Translation Platform"
+msgstr ""
 
 #: templates/index.html:23
 msgid ""
@@ -1175,24 +1388,52 @@ msgid "Search Results (%(result_count)s)"
 msgstr "Otsingu tulemused (%(result_count)s)"
 
 #: templates/search.html:51
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"No projects found for \"%(q)s\". You might want to change your query a bit."
+"No projects were found for \"%(q)s\". You may want to change your query a "
+"bit."
 msgstr ""
 "Ei leidnud ühtegi projekti otsingutekstile \"%(q)s\". Võiksid proovida muuta "
 "päringut veidi."
 
-#: templates/search.html:62, python-format
+#: templates/search.html:62
+#, fuzzy, python-format
 msgid ""
 "Couldn't find your project? Why don't you go ahead and <a href=\"%(url "
 "project_create)s\">add it</a>?"
 msgstr ""
-"Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see<"
-"/a>!"
+"Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see</"
+"a>!"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Otsi projekti nime või kirjelduse järgi."
+
+#: templates/timeline.html:11
+#, fuzzy
+msgid "Filter results"
+msgstr "Otsingu tulemused"
+
+#: templates/timeline.html:17
+msgid "Go"
+msgstr ""
+
+#: templates/timeline.html:24 templates/projects/component_detail.html:196
+#: templates/projects/project_detail.html:116
+#: templates/teams/team_detail.html:129
+msgid "None available"
+msgstr "Ühtki pole saadaval"
+
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1275,10 +1516,11 @@ msgid "Project/Component statistics"
 msgstr "Projekti/komponendi statistika"
 
 #: templates/languages/language_release.html:60
+#, fuzzy
 msgid ""
 "Transifex searched for projects containing translation files for this "
-"language and release, but couldn't find any. Try submitting such a file and "
-"check again."
+"language and release, but couldn't find any. Can we interest you in sending "
+"in your work instead?"
 msgstr ""
 "Transifex otsis projekte, mis sisaldaks tõlkefaile sellele keelele ja "
 "väljalaskele kuid ei leidnud ühtegi. Proovi saata selline fail ja proovi "
@@ -1307,53 +1549,66 @@ msgstr ""
 "(language_name)s keele jaoks pole tõlkeid veel saadetud."
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr "Märguanded"
 
-#: templates/notification/notices.html:8
-msgid "Notification settings"
-msgstr "Märguannete seaded"
+#: templates/notification/notices.html:32
+#, fuzzy
+msgid "Received Notifications"
+msgstr "Märguanded"
 
-#: templates/notification/notices.html:16
-msgid "Notices"
-msgstr "Teated"
+#: templates/notification/notices.html:43
+msgid "Time"
+msgstr ""
 
-#: templates/notification/notices.html:21
+#: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
 msgstr "Märgi kõik lugemata teated loetuks"
 
-#: templates/notification/notices.html:45
+#: templates/notification/notices.html:79
 msgid "No notices."
 msgstr "Teated puuduvad."
 
-#: templates/notification/notices.html:54
+#: templates/notification/notices.html:83
+#: templates/notification/notices.html:85
+#, fuzzy
+msgid "Change your notification settings"
+msgstr "Muuda märguandeid"
+
+#: templates/notification/notices.html:83
+msgid "Notification settings"
+msgstr "Märguannete seaded"
+
+#: templates/notification/notices.html:88
+#, fuzzy
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list below and choose which "
+"the notifications available for you in the list below and choose which "
 "events you would like to be notified by email."
 msgstr ""
 "Transifex võib sulle saata märguandeid kindlate sündmuste juhtumisel. Vali "
 "järgnevast nimekirjast milliste sündmuste kohta märguandeid soovid saada."
 
-#: templates/notification/notices.html:55
+#: templates/notification/notices.html:89
 msgid "Primary email"
 msgstr "Primaarne e-posti aadress"
 
-#: templates/notification/notices.html:56
+#: templates/notification/notices.html:92
 msgid "change under"
 msgstr "muuta all"
 
-#: templates/notification/notices.html:56
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:92
+#: templates/notification/notices.html:96
 msgid "Account"
 msgstr "Konto"
 
-#: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:122
+#: templates/notification/notices.html:95
+#: templates/projects/component_detail.html:123
 msgid "Note"
 msgstr "Märge"
 
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:96
 msgid ""
 "You do not have a verified email address to which notices can be sent. You "
 "can add one by going to"
@@ -1361,11 +1616,11 @@ msgstr ""
 "Sul ei ole kontrollitud e-posti aadressi kuhu teateid võib saata. Võid "
 "lisada selle minnes"
 
-#: templates/notification/notices.html:67
+#: templates/notification/notices.html:104
 msgid "Notification Type"
 msgstr "Märguande tüüp"
 
-#: templates/notification/notices.html:85
+#: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
 #: templates/userprofile/account/password_change.html:29
 msgid "Change"
@@ -1448,15 +1703,22 @@ msgstr ""
 "komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The source file (POT) has some problems and can not be created/updated to "
+"The source file (POT) has some problems and can not be created/updated for "
 "the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Lähtefail (POT) on probleemne ning seda ei ole võimalik luua/uuendada "
 "projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponendis <a "
 "href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_report_weekly_maintainers/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was generated"
+msgstr "Projekti <a href=\"%(project_url)s\">%(project)s</a> muudeti"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1478,9 +1740,9 @@ msgstr ""
 "\"%(project_url)s\">%(project)s</a> failide saatmiseks ligipääs keelatud."
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"Withdrawn own request of access to submit files to the project <a href=\"%"
+"Withdrew own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
 msgstr ""
 "Annuleeris taotluse faile saata projektile <a href=\"%(project_url)s\">%"
@@ -1504,6 +1766,106 @@ msgid ""
 msgstr ""
 "Kasutaja <a href=\"%(user_url)s\">%(user_request)s</a> õigused faile "
 "saataprojektile <a href=\"%(project_url)s\">%(project)s</a> lükati tagasi"
+
+#: templates/notification/project_team_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Komponent <a href=\"%(component_url)s\">%(component_name)s</a> lisati "
+"projekti <a href=\"%(project_url)s\">%(project_name)s</a> koosseisu"
+
+#: templates/notification/project_team_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"Projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponenti <a href="
+"\"%(component_url)s\">%(component_name)s</a> uuendati"
+
+#: templates/notification/project_team_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Komponent <a href=\"%(component_url)s\">%(component_name)s</a> lisati "
+"projekti <a href=\"%(project_url)s\">%(project_name)s</a> koosseisu"
+
+#: templates/notification/project_team_join_approved/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a "
+"member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of "
+"the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Kasutaja <a href=\"%(user_url)s\">%(user_request)s</a> õigused faile "
+"saataprojektile <a href=\"%(project_url)s\">%(project)s</a> lükati tagasi"
+
+#: templates/notification/project_team_join_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for joining "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team </a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
+msgstr ""
+"Projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponenti <a href="
+"\"%(component_url)s\">%(component_name)s</a> uuendati"
+
+#: templates/notification/project_team_join_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
+"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"saadeti projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
+"komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_join_withdrawn/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
+"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project"
+msgstr ""
+"saadeti projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
+"komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_left/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"User has left the <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> "
+"of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"saadeti projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
+"komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_request_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request for creating a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> on the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project has been denied"
+msgstr ""
+"Projekti <a href=\"%(project_url)s\">%(project_name)s</a> komponenti <a href="
+"\"%(component_url)s\">%(component_name)s</a> uuendati"
+
+#: templates/notification/project_team_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The translation team for <a href=\"%(language_url)s\">%(language_name)s</a> "
+"has been required to the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project"
+msgstr ""
+"Komponent <a href=\"%(component_url)s\">%(component_name)s</a> lisati "
+"projekti <a href=\"%(project_url)s\">%(project_name)s</a> koosseisu"
+
+#: templates/notification/user_nudge/notice.html:2
+#, fuzzy, python-format
+msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
+msgstr "Projekti <a href=\"%(project_url)s\">%(project)s</a> muudeti"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1529,6 +1891,7 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
+#: templates/teams/team_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1560,109 +1923,114 @@ msgstr ""
 "Komponent toetab saadetud failide kohalikku hoiustamist ning saadab failid "
 "ka otse arendajate tarkvarahoidlasse"
 
-#: templates/projects/component_detail.html:80
-#: templates/projects/project_detail.html:30
+#: templates/projects/component_detail.html:81
+#: templates/projects/project_detail.html:31
+#: templates/teams/team_detail.html:25
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "Redigeeri"
 
-#: templates/projects/component_detail.html:89
+#: templates/projects/component_detail.html:86
+#, fuzzy
+msgid "Source details"
+msgstr "Lähtefail:"
+
+#: templates/projects/component_detail.html:90
 msgid "Repository:"
 msgstr "Repositoorium:"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
-msgid "Link to a web front-end to the source"
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
+#, fuzzy
+msgid "Link to a web front-end for the source code"
 msgstr "Link lähtekoodi veebiliidesele"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 msgid "web"
 msgstr "veeb"
 
-#: templates/projects/component_detail.html:99
+#: templates/projects/component_detail.html:100
 msgid "Branch:"
 msgstr "Haru:"
 
-#: templates/projects/component_detail.html:104
+#: templates/projects/component_detail.html:105
 msgid "File filter:"
 msgstr "Failifilter:"
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:111
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Väljalase:"
 msgstr[1] "Väljalasked:"
 
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:119
 msgid "Allows submissions:"
 msgstr "Lubab sisestamisi:"
 
-#: templates/projects/component_detail.html:132
+#: templates/projects/component_detail.html:133
 msgid "Translation files"
 msgstr "Tõlkefailid"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:138
 msgid "Source file:"
 msgstr "Lähtefail:"
 
-#: templates/projects/component_detail.html:144
+#: templates/projects/component_detail.html:145
 msgid "Statistics last updated:"
 msgstr "Statistika viimati uuendatud:"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:147
 msgid "ago"
 msgstr "tagasi"
 
-#: templates/projects/component_detail.html:147
+#: templates/projects/component_detail.html:148
 msgid "Component not yet pulled from source repository."
 msgstr "Komponent ei ole veel alla laetud lähtekoodi hoidlast"
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Värskenda ning uuenda statistikat. See võib võtta natuke aega."
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh cache"
 msgstr "Värskenda vahemälu"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Tühjenda Transifex'i kohalikud vahemälu puhaste väljavõtete jaoks"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Clear cache"
 msgstr "Tühjenda vahemälu"
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 "Kohalikult modifitseeritud failid kirjutatakse üle värskete koopiatega."
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "warning"
 msgstr "hoiatus"
 
-#: templates/projects/component_detail.html:167
-msgid "Become a translator:"
-msgstr "Hakka tõlkijaks:"
+#: templates/projects/component_detail.html:166
+#, fuzzy
+msgid "Teams:"
+msgstr "Sildid:"
 
-#: templates/projects/component_detail.html:171
-msgid "Your request is pending for approval."
-msgstr "Sinu taotlus on ootel"
+#: templates/projects/component_detail.html:168
+#, fuzzy
+msgid "See the translation teams."
+msgstr "Saada tõlked"
 
-#: templates/projects/component_detail.html:199
-#: templates/projects/project_detail.html:110
+#: templates/projects/component_detail.html:192
+#: templates/projects/project_detail.html:111
+#: templates/teams/team_detail.html:125
 msgid "History"
 msgstr "Ajalugu"
 
-#: templates/projects/component_detail.html:203
-#: templates/projects/project_detail.html:114
-msgid "None available"
-msgstr "Ühtki pole saadaval"
-
-#: templates/projects/component_detail.html:220
+#: templates/projects/component_detail.html:213
 msgid "Delete component"
 msgstr "Kustuta komponent"
 
@@ -1700,34 +2068,34 @@ msgstr "Salvesta komponent"
 msgid "translation files"
 msgstr "tõlkefailid"
 
-#: templates/projects/component_list.html:11
+#: templates/projects/component_list.html:10
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Lisa"
 
-#: templates/projects/component_list.html:16
+#: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Projekti komponent"
 msgstr[1] "Projekti komponendid"
 
-#: templates/projects/component_list.html:27
+#: templates/projects/component_list.html:26
 msgid "edit"
 msgstr "muuda"
 
-#: templates/projects/component_list.html:30
+#: templates/projects/component_list.html:29
 msgid "del"
 msgstr "kustuta"
 
-#: templates/projects/component_list.html:46
+#: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
 msgstr "Projekti jaoks ei ole ühtegi komponenti registreeritud veel."
 
-#: templates/projects/component_list.html:48
+#: templates/projects/component_list.html:47
 msgid "Add one!"
 msgstr "Lisa üks!"
 
-#: templates/projects/component_list.html:54
+#: templates/projects/component_list.html:53
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -1756,7 +2124,8 @@ msgid "Local file:"
 msgstr "Kohalik fail:"
 
 #: templates/projects/component_submit_new_file.html:15
-msgid "The new language translation file to be uploaded."
+#, fuzzy
+msgid "The translation file to be uploaded for the new language."
 msgstr "Uus tõlkefail üleslaadimiseks."
 
 #: templates/projects/component_submit_new_file.html:18
@@ -1764,9 +2133,10 @@ msgid "Select the target file:"
 msgstr "Vali fail:"
 
 #: templates/projects/component_submit_new_file.html:27
+#, fuzzy
 msgid ""
-"The target file is the name of the new file language. It must matches with "
-"the component file filter."
+"The target file is the name of the new file language. It must match the "
+"component file filter."
 msgstr ""
 "Sihtfail on uue tõlkefaili nimi. See peab ühilduma komponendi failifiltriga.."
 
@@ -1822,65 +2192,69 @@ msgstr ""
 "  Oled kindel et soovid jäädavalt kustutada registreeritud projekti '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:36
+#: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Detailid"
 
-#: templates/projects/project_detail.html:43
+#: templates/projects/project_detail.html:44
 msgid "Watch:"
 msgstr "Jälgija:"
 
-#: templates/projects/project_detail.html:51
+#: templates/projects/project_detail.html:52
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Koduleht:"
 
-#: templates/projects/project_detail.html:52
+#: templates/projects/project_detail.html:53
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Projekti %(project_name)s koduleht"
 
-#: templates/projects/project_detail.html:57
+#: templates/projects/project_detail.html:58
 msgid "Bug tracker:"
 msgstr "Veahaldur:"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:59
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s veahaldur"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:64
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Sildid:"
 
-#: templates/projects/project_detail.html:72
+#: templates/projects/project_detail.html:73
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Kogumik:"
 msgstr[1] "Kogumikud:"
 
-#: templates/projects/project_detail.html:82
+#: templates/projects/project_detail.html:83
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Hooldaja:"
 msgstr[1] "Hooldajad:"
 
-#: templates/projects/project_detail.html:96
+#: templates/projects/project_detail.html:97
 msgid "External links:"
 msgstr "Välised lingid:"
 
-#: templates/projects/project_detail.html:98
+#: templates/projects/project_detail.html:99
 msgid "Screenshots"
 msgstr "Kuvatõmmised"
 
-#: templates/projects/project_detail.html:132
+#: templates/projects/project_detail.html:128
+msgid "View complete action log"
+msgstr ""
+
+#: templates/projects/project_detail.html:140
 msgid "Delete project"
 msgstr "Kustuta projekt"
 
@@ -1930,25 +2304,29 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Redigeerin <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_base.html:90
-#: templates/projects/project_menu.html:46
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:47
 msgid "Access Control"
 msgstr "Ligipääs"
 
-#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr "Anna tõlkijale ligipääs, et faile saata käesolevale projektile"
 
-#: templates/projects/project_form_permissions.html:17
+#: templates/projects/project_form_permissions.html:20
 msgid "Requests for access to submit files"
 msgstr "Ligipääsu taotlused failide üleslaadmiseks"
 
-#: templates/projects/project_form_permissions.html:59
+#: templates/projects/project_form_permissions.html:62
 msgid "Pending requests:"
 msgstr "Ootel olevad taotlused:"
 
-#: templates/projects/project_form_permissions.html:79
-msgid "Users with guaranteed access to submit files:"
+#: templates/projects/project_form_permissions.html:82
+#: templates/txpermissions/base_permission_form.html:18
+#, fuzzy
+msgid "Users with access to submit files:"
 msgstr "Kasutajad kellele on garanteeritud luba faile saata:"
 
 #: templates/projects/project_latests.html:6
@@ -1990,13 +2368,51 @@ msgstr ""
 "Ei leidnud oma projekti? Ole hea ja <a href=\"%(project_create)s\">lisa see</"
 "a>!"
 
-#: templates/projects/project_menu.html:39 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Ülevaade"
 
+#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/teams/team_list.html.py:26
+#, fuzzy
+msgid "Translation Teams"
+msgstr "Tõlked"
+
+#: templates/projects/project_menu.html:61
+#: templates/projects/project_timeline.html:12
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr ""
+
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, fuzzy, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr "Redigeeri %(project_name)s"
+
+#: templates/projects/project_top_translators.html:6
+#, fuzzy
+msgid "Top Translators"
+msgstr "Tõlked"
+
+#: templates/projects/project_top_translators.html:9
+#, fuzzy, python-format
+msgid "%(number)s submission"
+msgid_plural "%(number)s submissions"
+msgstr[0] "Lubab sisestamist"
+msgstr[1] "Lubab sisestamist"
+
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
 msgid "Profile"
 msgstr "Profiil"
 
@@ -2004,9 +2420,25 @@ msgstr "Profiil"
 msgid "Profile settings"
 msgstr "Profiili seaded"
 
+#: templates/simpleauth/login_box.html:8
+msgid ""
+"Sign in to add or modify projects, work on translations, and other stuff."
+msgstr ""
+
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Teid logiti välja."
+
+#: templates/simpleauth/public_profile.html:8
+#: templates/userprofile/profile/public.html:31
+#, python-format
+msgid "Public profile of %(user)s"
+msgstr "Kasutaja %(user)s avalik profiil"
+
+#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: txcommon/admin.py:27
+msgid "Username"
+msgstr "Kasutajanimi"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -2025,7 +2457,7 @@ msgstr ""
 "Sinu konto seaded on kuvatud käesoleval lehel ning võid neid siin muuta."
 
 #: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:103
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr "Muuda märguandeid"
 
@@ -2040,6 +2472,141 @@ msgid ""
 msgstr ""
 "\n"
 "<p>Palun logi sisse oma e-posti aadressiga.<br />\n"
+
+#: templates/teams/team_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(lang_name)s</em> team?"
+msgstr "Ütle head aega väljalaskele <em>%(release_name)s</em>?"
+
+#: templates/teams/team_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?\n"
+msgstr ""
+"\n"
+"  Oled kindel et soovid jäädavalt kustutada komponendi '%(component_name)s' "
+"mis kuulub projekti %(project_name)s?\n"
+
+#: templates/teams/team_detail.html:19
+#, python-format
+msgid ""
+"\n"
+"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
+"(language_code)s</sup>\n"
+msgstr ""
+
+#: templates/teams/team_detail.html:33
+#, fuzzy
+msgid "Mainlist:"
+msgstr "Hooldaja:"
+
+#: templates/teams/team_detail.html:34
+msgid "Main mailing list"
+msgstr ""
+
+#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+msgid "Coordinator:"
+msgid_plural "Coordinators:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/teams/team_detail.html:56
+msgid "Become a translator:"
+msgstr "Hakka tõlkijaks:"
+
+#: templates/teams/team_detail.html:59
+msgid "Join this Team"
+msgstr ""
+
+#: templates/teams/team_detail.html:70
+msgid "People waiting for team membership approving:"
+msgstr ""
+
+#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#, fuzzy
+msgid "Approve"
+msgstr "Kiida taotlus heaks"
+
+#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+msgid "Deny"
+msgstr ""
+
+#: templates/teams/team_detail.html:91
+#, fuzzy
+msgid "Withdraw"
+msgstr "Tühista loa taotlus"
+
+#: templates/teams/team_detail.html:104
+msgid "Team Members:"
+msgstr ""
+
+#: templates/teams/team_detail.html:114
+#, fuzzy
+msgid "Leave"
+msgstr "Salvesta"
+
+#: templates/teams/team_detail.html:147
+#, fuzzy
+msgid "Delete team"
+msgstr "Kustuta väljalase"
+
+#: templates/teams/team_form.html:19
+#, python-format
+msgid "%(project_name)s Translation Teams"
+msgstr ""
+
+#: templates/teams/team_form.html:27
+#, fuzzy
+msgid "Translation team details"
+msgstr "Tõlke statistika"
+
+#: templates/teams/team_form.html:29
+msgid ""
+"\n"
+"    Be aware that notification are not sent when coordinators or members are "
+"added or removed using this module.\n"
+"    "
+msgstr ""
+
+#: templates/teams/team_form.html:41
+#, fuzzy
+msgid "Save team"
+msgstr "Salvesta väljalase"
+
+#: templates/teams/team_list.html:30
+#, fuzzy
+msgid "Add a new team"
+msgstr "Lisa uus projekt"
+
+#: templates/teams/team_list.html:41
+msgid "List of team requests:"
+msgstr ""
+
+#: templates/teams/team_list.html:71
+msgid "List of available teams:"
+msgstr ""
+
+#: templates/teams/team_list.html:87
+#, fuzzy
+msgid "No translation team created yet. :("
+msgstr "Ühtegi tõlget pole lisatud sellele väljalaskele. :-("
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new translation team for this project"
+msgstr "Saada uus tõlge sellele komponendile."
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new team"
+msgstr "Registreeri uus konto"
+
+#: templates/teams/team_list.html:102
+#, fuzzy
+msgid "Request team"
+msgstr "Taotle luba"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -2082,7 +2649,8 @@ msgid "Projects in %(collection)s"
 msgstr "Projektid kogumikus %(collection)s"
 
 #: templates/txcollections/collection_detail.html:98
-msgid "Projects currently registered to belong in this collection:"
+#, fuzzy
+msgid "Projects currently registered and associated to this collection:"
 msgstr "Sellesse kogumikku kuuluvad projektid:"
 
 #: templates/txcollections/collection_detail.html:108
@@ -2091,9 +2659,8 @@ msgid ""
 "No projects are registered for this collection yet. <a href=\"%(project_list)"
 "s\">Find projects</a> and add them to this collection."
 msgstr ""
-"Sellesse kogumikku pole ühtegi projekti veel registreeritud. <a "
-"href=\"%(project_list)"
-"s\">Otsi projekte</a> ja lisa need kogumikku."
+"Sellesse kogumikku pole ühtegi projekti veel registreeritud. <a href=\"%"
+"(project_list)s\">Otsi projekte</a> ja lisa need kogumikku."
 
 #: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
@@ -2259,10 +2826,6 @@ msgstr ""
 msgid "Save release"
 msgstr "Salvesta väljalase"
 
-#: templates/txpermissions/base_permission_form.html:18
-msgid "Users with guarantied access to submit files:"
-msgstr "Kasutajad failide saatmise loaga:"
-
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
 msgstr "Tühista luba"
@@ -2295,14 +2858,21 @@ msgstr "Isiklik informatsioon"
 msgid "Avatar"
 msgstr "Avatar"
 
-#: templates/userprofile/menu.html:10
+#: templates/userprofile/menu.html:8
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:90
+msgid "Location"
+msgstr "Asukoht"
+
+#: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Eemalda profiil"
 
 #: templates/userprofile/account/email_validation.html:5
-msgid "E-mail change"
-msgstr "E-posti muudatus"
+#, fuzzy
+msgid "Change e-mail"
+msgstr "Muuda e-posti aadressi"
 
 #: templates/userprofile/account/email_validation.html:5
 #: templates/userprofile/account/email_validation_processed.html:12
@@ -2314,9 +2884,9 @@ msgid "Add a new e-mail address"
 msgstr "Lisa uus e-posti aadress"
 
 #: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation_processed.html:13
+#, fuzzy
 msgid ""
-"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"Enter the new e-mail address. An e-mail will be sent to it for testing and "
 "confirmation."
 msgstr ""
 "Sisesta uue e-posti aadress. E-kiri saadetakse testimiseks ning "
@@ -2361,10 +2931,19 @@ msgstr ""
 msgid "E-mail change processed"
 msgstr "E-posti muudatus õnnestus"
 
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
+msgstr ""
+"Sisesta uue e-posti aadress. E-kiri saadetakse testimiseks ning "
+"kinnitamiseks."
+
 #: templates/userprofile/account/email_validation_processed.html:17
+#, fuzzy
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
-"Please access to your e-mail and complete this process following the "
+"Please access your e-mail and complete this process by following the "
 "instructions specified in the e-mail body."
 msgstr ""
 "E-kiri saadeti su uuele e-posti aadressile kinnitamiseks ja aktiveerimiseks. "
@@ -2376,9 +2955,10 @@ msgid "Resend e-mail validation"
 msgstr "Valideeri uuest e-posti "
 
 #: templates/userprofile/account/email_validation_reset.html:19
+#, fuzzy
 msgid ""
-"If you haven't validated your e-mail address yet you will not be able to "
-"sign in. Insert your registered e-mail address to receive the validation e-"
+"You will not be able to sign in until you have validated your e-mail "
+"address. Enter your registered e-mail address to receive the validation e-"
 "mail again."
 msgstr ""
 "Kui sa ei ole valideerinud oma e-posti aadressi siis sul ei ole võimalik "
@@ -2394,7 +2974,8 @@ msgid "Validation e-mail sent"
 msgstr "Valideerimise e-kiri saadetud"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
-msgid "Your user account was already active"
+#, fuzzy
+msgid "Your user account was already activated"
 msgstr "Sinu kasutajakonto oli juba aktiivne"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
@@ -2406,7 +2987,8 @@ msgid "overview page"
 msgstr "ülevaate leht"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
-msgid "We've e-mailed you the e-mail validation link."
+#, fuzzy
+msgid "We've sent you the e-mail validation link."
 msgstr "Saatsime sulle e-kirja valideerimise lingiga."
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
@@ -2554,13 +3136,14 @@ msgid "Register for a Transifex account"
 msgstr "Registreeri Transifex'i konto"
 
 #: templates/userprofile/account/registration.html:18
-msgid ""
-"Joining the Transifex is quick and easy. Just fill in the following form."
+#, fuzzy
+msgid "Joining Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 "Transifex'iga liitumine on kiire ja lihtne. Lihtsalt täida järgnev vorm."
 
 #: templates/userprofile/account/registration_done.html:4
-msgid "Registration complete"
+#, fuzzy
+msgid "Registration completed"
 msgstr "Registreerimine lõpetatud"
 
 #: templates/userprofile/account/registration_done.html:8
@@ -2568,10 +3151,11 @@ msgid "Register a new account"
 msgstr "Registreeri uus konto"
 
 #: templates/userprofile/account/registration_done.html:12
+#, fuzzy
 msgid ""
-"You have successfully registered a new account, and an account activation "
-"url has been sent to your e-mail address. You must access this message on "
-"your e-mail account to finish the registration process."
+"You have successfully registered a new account and an account activation url "
+"has been sent to your e-mail address. Please access this url to finish the "
+"registration process."
 msgstr ""
 "Oled edukalt registreerinud uue konto ning aktiveerimise URL saadeti sinu e-"
 "posti aadressile. Pead avama selle e-kirja, et lõpetada "
@@ -2599,9 +3183,10 @@ msgstr "Avatari valiku leht"
 
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
+#, fuzzy
 msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile."
+"You have several options to select the image you want to use as avatar on "
+"your profile."
 msgstr "Sul on järgnevad valikud profiilis oleva avatari pildi valimiseks"
 
 #: templates/userprofile/avatar/choose.html:50
@@ -2615,9 +3200,10 @@ msgid "Done"
 msgstr "Tehtud"
 
 #: templates/userprofile/avatar/choose.html:56
+#, fuzzy
 msgid ""
-"Select an image from a remote URL. Put the URL on the input below and we'll "
-"retrieve the image for you"
+"Select an image from a remote URL. Enter the URL in the field below and "
+"we'll retrieve the image for you"
 msgstr ""
 "Vali pilt kaugmasina URL'ilt. Sisesta URL järgnevasse lahtrisse ning me "
 "tõmbame selle sinu jaoks"
@@ -2636,9 +3222,10 @@ msgid "Delete personal information"
 msgstr "Kustuta isiklik informatsioon"
 
 #: templates/userprofile/profile/delete.html:13
+#, fuzzy
 msgid ""
-"Erase all your private data except your username. You can refill the "
-"information later if you want to."
+"Erase all your private data except your username. You can fill in the "
+"information again later if you want to."
 msgstr ""
 "Kustuta kõik privaatne info peale kasutajanime. Neid välju saad uuesti täita "
 "kui soovid."
@@ -2666,7 +3253,6 @@ msgstr "Automaatne asukoha avastamine"
 
 #: templates/userprofile/profile/location.html:22
 #: templates/userprofile/profile/overview.html:49
-#: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Riik"
 
@@ -2730,11 +3316,6 @@ msgstr "(Valideerimata)"
 msgid "Not set"
 msgstr "Määramata"
 
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "Asukoht"
-
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Haldus:"
@@ -2747,6 +3328,20 @@ msgstr "Muuda e-posti aadressi"
 msgid "Add your e-mail address"
 msgstr "Lisa oma e-posti aadress"
 
+#: templates/userprofile/profile/overview.html:95
+#, fuzzy
+msgid "Add location"
+msgstr "Lisa kogumik"
+
+#: templates/userprofile/profile/overview.html:97
+#, fuzzy
+msgid "Change location"
+msgstr "Muuda märguandeid"
+
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr ""
+
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -2756,15 +3351,71 @@ msgstr "Redigeeri oma isiklikku informatsiooni"
 msgid "Insert some information about you."
 msgstr "Sisesta midagi enda kohta."
 
-#: templates/userprofile/profile/public.html:27
+#: templates/userprofile/profile/public.html:50
 #, python-format
-msgid "Public profile of %(user)s"
-msgstr "Kasutaja %(user)s avalik profiil"
+msgid "Nudge %(user)s "
+msgstr ""
 
-#: templates/userprofile/profile/public.html:33 txcommon/admin.py:20
-#: txcommon/admin.py:27
-msgid "Username"
-msgstr "Kasutajanimi"
+#: templates/userprofile/profile/public.html:66
+#, fuzzy
+msgid "Native language"
+msgstr "Emakeel"
+
+#: templates/userprofile/profile/public.html:72
+#, fuzzy
+msgid "Blog/Site"
+msgstr "Veebipäevik"
+
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: txcommon/migrations/0002_release_06_07.py:23
+msgid "Twitter"
+msgstr "Twitter"
+
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: txcommon/migrations/0002_release_06_07.py:30
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: templates/userprofile/profile/public.html:104
+msgid ""
+"\n"
+"            Coordinator of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Coordinator of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/userprofile/profile/public.html:115
+#: templates/userprofile/profile/public.html:142
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
+"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
+"project\n"
+"                "
+msgstr ""
+"saadeti projekti <a href=\"%(project_url)s\">%(project_name)s</a> "
+"komponendile <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/userprofile/profile/public.html:131
+msgid ""
+"\n"
+"            Member of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Members of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/webtrans/msgid_label.html:10
+msgid "String Context"
+msgstr ""
 
 #: templates/webtrans/transfile_edit.html:29
 #, python-format
@@ -2791,71 +3442,73 @@ msgid "Settings"
 msgstr "Seaded"
 
 #: templates/webtrans/transfile_edit.html:57
-msgid "Show occurences:"
+#, fuzzy
+msgid "Show occurrences:"
 msgstr "Näita märkmeid:"
 
-#: templates/webtrans/transfile_edit.html:66
+#: templates/webtrans/transfile_edit.html:61
+#, fuzzy
+msgid "Show context:"
+msgstr "Näita lõpetatuid"
+
+#: templates/webtrans/transfile_edit.html:69
 msgid "Translated"
 msgstr "Tõlgitud"
 
-#: templates/webtrans/transfile_edit.html:72
+#: templates/webtrans/transfile_edit.html:75
 msgid "Fuzzy"
 msgstr "Hägune"
 
-#: templates/webtrans/transfile_edit.html:78
+#: templates/webtrans/transfile_edit.html:81
 msgid "Untranslated"
 msgstr "Tõlkimata"
 
-#: templates/webtrans/transfile_edit.html:84
+#: templates/webtrans/transfile_edit.html:87
 msgid "Total"
 msgstr "Kokku"
 
-#: templates/webtrans/transfile_edit.html:90
+#: templates/webtrans/transfile_edit.html:93
 msgid "Live translation"
 msgstr "<i>Live</i> tõlkimine"
 
-#: templates/webtrans/transfile_edit.html:96
+#: templates/webtrans/transfile_edit.html:99
 #, python-format
 msgid "Page %(step)s of %(step_count)s"
 msgstr "Leht %(step)s/%(step_count)s"
 
-#: templates/webtrans/transfile_edit.html:103
+#: templates/webtrans/transfile_edit.html:105
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:104
+#: templates/webtrans/transfile_edit.html:106
 msgid "Source String"
 msgstr "Lähtesõne"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:107
 msgid "Translation"
 msgstr "Tõlge"
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:109
 msgid "Auto-translate"
 msgstr "Tõlgi automaatselt"
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:109
 msgid "AT"
 msgstr "AT"
 
-#: templates/webtrans/transfile_edit.html:110
+#: templates/webtrans/transfile_edit.html:111
 msgid "Occurrences"
 msgstr "Esinemisi"
 
-#: templates/webtrans/transfile_edit.html:111
+#: templates/webtrans/transfile_edit.html:112
 msgid "Fuzzy?"
 msgstr "Hägune?"
 
-#: templates/webtrans/transfile_edit.html:124
+#: templates/webtrans/transfile_edit.html:125
 msgid "Submit translations"
 msgstr "Saada tõlked"
 
-#: templates/webtrans/transfile_form.html:15
-msgid "Copy source string"
-msgstr "Kopeeri lähtesõne"
-
-#: templates/webtrans/transfile_form.html:20
+#: templates/webtrans/transfile_form.html:18
 msgid "Auto-suggest translation"
 msgstr "Automaatne tõlke soovitus"
 
@@ -2872,27 +3525,27 @@ msgid "Files"
 msgstr "Failid"
 
 #: translations/templates/comp_lang_stats_table.html:17
-#: translations/templates/comp_stats_table.html:17
+#: translations/templates/comp_stats_table.html:15
 #: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Tõlked"
 
 #: translations/templates/comp_lang_stats_table.html:18
-#: translations/templates/comp_stats_table.html:18
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Seaded"
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Ei suutnud genereerida statistikat selle keele kohta"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2900,7 +3553,7 @@ msgid "Trans:"
 msgstr "Tõlgitud:"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2908,40 +3561,35 @@ msgid "Untrans:"
 msgstr "Tõlkimata:"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:48
+#: translations/templates/comp_stats_table.html:47
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Vaade"
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Laadi alla"
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:59
+#: translations/templates/comp_stats_table.html:58
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Redigeeri"
 
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "Keel"
-
-#: translations/templates/comp_stats_table.html:26
+#: translations/templates/comp_stats_table.html:25
 msgid "See statistics for this language"
 msgstr "Vaata statistikat selle keele kohta"
 
-#: translations/templates/comp_stats_table.html:28
-msgid "There is no language registered that matches with this code"
+#: translations/templates/comp_stats_table.html:27
+#, fuzzy
+msgid "There are no languages registered matching this code"
 msgstr "Sellise koodiga keelt pole registreeritud"
 
-#: translations/templates/comp_stats_table.html:43
+#: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr "Klõpsa siia selleks, et näha faile "
@@ -2967,27 +3615,26 @@ msgstr "Mine projekti lehele"
 msgid "Go to this component page"
 msgstr "Mine komponendi lehele"
 
-#: translations/templates/pofile_lock.html:11
-msgid "Unlock this file when you are finished working with it. Date locked:"
+#: translations/templates/pofile_lock.html:15
+#, fuzzy
+msgid "Unlock this file when you are finished working with it."
 msgstr ""
 "Tee see fail lukust lahti kui oled lõpetanud sellega töötamise. Lukustamise "
 "kuupäev:"
 
-#: translations/templates/pofile_lock.html:15
-#, python-format
-msgid ""
-"User '%(owner)s' has locked this file indicating he's working on it. Date "
-"locked:"
+#: translations/templates/pofile_lock.html:21
+#, fuzzy, python-format
+msgid "User '%(owner)s' has locked this file indicating he's working with it."
 msgstr ""
 "Kasutaja '%(owner)s' on lukustanud selle faili, see tähendab et ta teeb "
 "sellega tööd. Lukustamise kuupäev:"
 
-#: translations/templates/pofile_lock.html:20
+#: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
 msgstr ""
 "Lukusta see fail teavitamaks teisi kasutajaid, et sina tegeled sellega."
 
-#: translations/templates/pofile_lock.html:24
+#: translations/templates/pofile_lock.html:30
 msgid "This file is unlocked. Most likely no one is working with it right now."
 msgstr "Fail on lukustamata. Tõenäoliselt keegi ei tööta sellega hetkel."
 
@@ -2996,7 +3643,8 @@ msgid "See the detailed statistics for this language"
 msgstr "Näita detailset statistikat selle keele kohta"
 
 #: translations/templates/release_stats_table.html:18
-msgid "There is no language registered that matches with this file"
+#, fuzzy
+msgid "There are no languages registered matching this file"
 msgstr "Failile vastavat keelt ei ole registreeritud"
 
 #: translations/templates/source_files.html:5
@@ -3078,47 +3726,39 @@ msgstr ""
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "Ei suutnud avada LINGUAS faili: %s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Female"
 msgstr "Naine"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Male"
 msgstr "Mees"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Eesnimi"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Perekonnanimi"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Emakeel"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Veebipäevik"
 
-#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:23
-msgid "Twitter"
-msgstr "Twitter"
-
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Sinu kohta"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
 msgstr "Lühike kirjeldus sinu kohta (140 tähemärki)."
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Otsid tööd?"
 
@@ -3147,44 +3787,54 @@ msgid "when a project is deleted"
 msgstr "kui projekt on kustutatud"
 
 #: txcommon/notifications.py:33
-msgid "Submit access to project requested"
+#, fuzzy
+msgid "Submit access for project requested"
 msgstr "Saatmise luba taotletud projektile"
 
 #: txcommon/notifications.py:34
-msgid "when an user request access to submit files to a project"
+#, fuzzy
+msgid "when a user requests access to submit files to a project"
 msgstr "kui kasutaja taotleb ligipääsu failide saatmiseks projekti"
 
 #: txcommon/notifications.py:41
-msgid "Submit access request to project denied"
+#, fuzzy
+msgid "Submit access request for project denied"
 msgstr "Saatmise loa taotlus projektile lükati tagasi"
 
 #: txcommon/notifications.py:42
-msgid "when a maintainer denies access to an user to submit files to a project"
+#, fuzzy
+msgid "when a maintainer denies access to a user to submit files to a project"
 msgstr "kui hooldaja keelab ligipääsu failide saatmiseks projektile"
 
 #: txcommon/notifications.py:49
-msgid "Submit access request to project withdrawn"
+#, fuzzy
+msgid "Submit access request for project withdrawn"
 msgstr "Saatmise loa taotlus võeti tagasi"
 
 #: txcommon/notifications.py:50
-msgid "when an user withdraws the access requestto submit files to a project"
+#, fuzzy
+msgid "when a user withdraws the access requestto submit files to a project"
 msgstr "kui kasutaja võtab failide saatmise taotluse tagasi"
 
 #: txcommon/notifications.py:57
-msgid "Submit access to project granted"
+#, fuzzy
+msgid "Submit access for project granted"
 msgstr "Failide saatmise loa taotlus võeti vastu"
 
 #: txcommon/notifications.py:58
-msgid "when a maintainer grants access to an user to submit files to a project"
+#, fuzzy
+msgid "when a maintainer grants access to a user to submit files to a project"
 msgstr "kui hooldaja lubab kasutajale failide saatmise projektile"
 
 #: txcommon/notifications.py:65
-msgid "Submit access to project revoked"
+#, fuzzy
+msgid "Submit access for project revoked"
 msgstr "Projektile saatmise luba tühistatud"
 
 #: txcommon/notifications.py:66
+#, fuzzy
 msgid ""
-"when a maintainer revokes the access of an user to submit files to a project"
+"when a maintainer revokes the access of a user to submit files to a project"
 msgstr "kui hooldaja tühistab kasutaja ligipääsu failide saatmiseks projektile"
 
 #: txcommon/notifications.py:73
@@ -3237,85 +3887,196 @@ msgid ""
 "problem"
 msgstr "kui sinu hallatava komponendi lähtefailil (POT) on probleem"
 
-#: txcommon/notifications.py:119
+#: txcommon/notifications.py:121
+#, fuzzy
+msgid "New Team Added"
+msgstr "Uus projekt lisatud"
+
+#: txcommon/notifications.py:122
+#, fuzzy
+msgid "when a new translation team is added to a project"
+msgstr "kui uus komponent lisatakse projekti"
+
+#: txcommon/notifications.py:129
+#, fuzzy
+msgid "Team Changed"
+msgstr "Väljalase muudetud"
+
+#: txcommon/notifications.py:130
+#, fuzzy
+msgid "when a translation team of a project is changed"
+msgstr "kui komponendi tõlkefaili muudetakse"
+
+#: txcommon/notifications.py:137
+#, fuzzy
+msgid "Team Deleted"
+msgstr "Väljalase kustutatud"
+
+#: txcommon/notifications.py:138
+#, fuzzy
+msgid "when a translation team of a project is deleted"
+msgstr "kui projekti komponent kustutatakse"
+
+#: txcommon/notifications.py:145
+msgid "Team Creation Requested"
+msgstr ""
+
+#: txcommon/notifications.py:146
+#, fuzzy
+msgid "when a translation team creation is requestedfor a project"
+msgstr "kui uus komponent lisatakse projekti"
+
+#: txcommon/notifications.py:153
+msgid "Team Creation Request Denied"
+msgstr ""
+
+#: txcommon/notifications.py:154
+msgid ""
+"when a translation team creation requestfor a project is denied by a "
+"maintainer"
+msgstr ""
+
+#: txcommon/notifications.py:161
+msgid "Team User Joining Requested"
+msgstr ""
+
+#: txcommon/notifications.py:162
+#, fuzzy
+msgid "when an user requests for joining to a translation team of a project"
+msgstr "kui kasutaja taotleb ligipääsu failide saatmiseks projekti"
+
+#: txcommon/notifications.py:169
+msgid "Team User Joining Approved"
+msgstr ""
+
+#: txcommon/notifications.py:170
+msgid "when an user is approved as a member of a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:177
+msgid "Team User Joining Denied"
+msgstr ""
+
+#: txcommon/notifications.py:178
+#, fuzzy
+msgid "when an user is denied as a member of a translation team of a project"
+msgstr "kui kasutaja taotleb ligipääsu failide saatmiseks projekti"
+
+#: txcommon/notifications.py:185
+msgid "Team User Joining Withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:186
+#, fuzzy
+msgid ""
+"when an user withdrawn its own request for joining a translation team of a "
+"project"
+msgstr "kui kasutaja võtab failide saatmise taotluse tagasi"
+
+#: txcommon/notifications.py:193
+msgid "Team User Left"
+msgstr ""
+
+#: txcommon/notifications.py:194
+#, fuzzy
+msgid "when an user leaves a translation team of a project"
+msgstr "kui kasutaja taotleb ligipääsu failide saatmiseks projekti"
+
+#: txcommon/notifications.py:203
+msgid "Weekly project report for maintainers"
+msgstr ""
+
+#: txcommon/notifications.py:204
+msgid "when you receive the weekly report of projects that you maintain."
+msgstr ""
+
+#: txcommon/notifications.py:212
 msgid "New Collection Added"
 msgstr "Uus kogumik lisatud"
 
-#: txcommon/notifications.py:120
+#: txcommon/notifications.py:213
 msgid "when a new collection is added"
 msgstr "kui kogumik lisatakse"
 
-#: txcommon/notifications.py:126
+#: txcommon/notifications.py:219
 msgid "Collection Changed"
 msgstr "Muudetud kogumik"
 
-#: txcommon/notifications.py:127
+#: txcommon/notifications.py:220
 msgid "when a collection is changed"
 msgstr "kui kogumikku muudetakse"
 
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:226
 msgid "Collection Deleted"
 msgstr "Kogumik kustutatud"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:227
 msgid "when a collection is deleted"
 msgstr "kui kogumik kustutatakse"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:233
 msgid "Project Added to a Collection"
 msgstr "Projekt lisati kogumikku"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:234
 msgid "when a new project is added to a collection"
 msgstr "kui uus projekt lisatakse kogumikku"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:240
 msgid "Project Deleted from a Collection"
 msgstr "Projekt kustutati kogumikust"
 
-#: txcommon/notifications.py:148
+#: txcommon/notifications.py:241
 msgid "when a project is deleted from a collection"
 msgstr "kui projekt kustutakse kogumikust"
 
-#: txcommon/notifications.py:154
+#: txcommon/notifications.py:247
 msgid "New Release Added for a Watched Collection"
 msgstr "Uus väljalase lisatakse jälgitavasse kogumikku"
 
-#: txcommon/notifications.py:155
+#: txcommon/notifications.py:248
 msgid "when a new release is added to a collection"
 msgstr "kui uus väljalase lisatakse kogumikku"
 
-#: txcommon/notifications.py:162
+#: txcommon/notifications.py:255
 msgid "Release Changed"
 msgstr "Väljalase muudetud"
 
-#: txcommon/notifications.py:163
+#: txcommon/notifications.py:256
 msgid "when a release of a collection is changed"
 msgstr "kui kogumiku väljalase muudetakse"
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:261
 msgid "Release Deleted"
 msgstr "Väljalase kustutatud"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:262
 msgid "when a release of a collection is deleted"
 msgstr "kui kogumiku väljalase kustutatakse"
 
-#: txcommon/notifications.py:174
+#: txcommon/notifications.py:267
 msgid "Release Added to a Collection"
 msgstr "Väljalase lisati kogumikku"
 
-#: txcommon/notifications.py:175
+#: txcommon/notifications.py:268
 msgid "when a release is added to a collection"
 msgstr "kui väljalase lisati kogumikku"
 
-#: txcommon/notifications.py:180
+#: txcommon/notifications.py:273
 msgid "Release Deleted from a Collection"
 msgstr "Väljalase kustutati kogumikust"
 
-#: txcommon/notifications.py:181
+#: txcommon/notifications.py:274
 msgid "when a release is deleted from a collection"
 msgstr "kui väljalase kustutatakse kogumikust"
+
+#: txcommon/notifications.py:279
+msgid "User Nudge"
+msgstr ""
+
+#: txcommon/notifications.py:280
+msgid "when an user nudges you"
+msgstr ""
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3329,6 +4090,20 @@ msgstr "Juure URL ei viita tõrvapallile (.tag.gz või .tgz)"
 msgid "The root url must start with http:// or ftp://"
 msgstr "Juure URL peab prefix peab olema http:// või ftp://"
 
+#: txcommon/views.py:85
+msgid "You can't re-nudge the same user in a short amount of time."
+msgstr ""
+
+#: txcommon/views.py:88
+#, fuzzy
+msgid "You can't nudge yourself."
+msgstr "Sinu kohta"
+
+#: txcommon/views.py:95
+#, fuzzy, python-format
+msgid "You have nugded '%s'."
+msgstr "<p>Teid logiti välja."
+
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Sisesta 0 või rohkem komaga eraldatud täisarvu ümarsulgudes"
@@ -3337,7 +4112,7 @@ msgstr "Sisesta 0 või rohkem komaga eraldatud täisarvu ümarsulgudes"
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Pead sisestama vähemalt ümarsulud mis ei sisalda midagi."
 
-#: txcommon/templates/common_homelink.html:2
+#: txcommon/templatetags/txcommontags.py:123
 msgid "Home"
 msgstr "Kodu"
 
@@ -3362,7 +4137,8 @@ msgid "You removed the permission request."
 msgstr "Eemaldasid õiguse taotluse."
 
 #: vcs/forms.py:56
-msgid "This type of repository does not accept branch"
+#, fuzzy
+msgid "This type of repository does not accept branches"
 msgstr "Seda tüüpi repositoorium ei luba luua harusid"
 
 #: vcs/models.py:48
@@ -3399,12 +4175,7 @@ msgstr "vcsunits"
 msgid "The %s fields should be filled."
 msgstr "Väljad %s peaks olema täidetud"
 
-#: webtrans/forms.py:75 webtrans/forms.py:87
-#, python-format
-msgid "Context: %s"
-msgstr "Kontekst: %s"
-
-#: webtrans/wizards.py:198
+#: webtrans/wizards.py:210
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -3418,3 +4189,23 @@ msgstr "Eelmine"
 msgid "Next"
 msgstr "Järgmine"
 
+#~ msgid "Get in contact with us"
+#~ msgstr "Kontakteeru meiega"
+
+#~ msgid "Notices"
+#~ msgstr "Teated"
+
+#~ msgid "Your request is pending for approval."
+#~ msgstr "Sinu taotlus on ootel"
+
+#~ msgid "Users with guarantied access to submit files:"
+#~ msgstr "Kasutajad failide saatmise loaga:"
+
+#~ msgid "E-mail change"
+#~ msgstr "E-posti muudatus"
+
+#~ msgid "Copy source string"
+#~ msgstr "Kopeeri lähtesõne"
+
+#~ msgid "Context: %s"
+#~ msgstr "Kontekst: %s"

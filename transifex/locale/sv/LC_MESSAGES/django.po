@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 15:00+0000\n"
+"POT-Creation-Date: 2010-01-06 14:18+0000\n"
 "PO-Revision-Date: 2009-12-19 08:57+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -17,11 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: actionlog/models.py:51
+#: actionlog/filters.py:12
+#, fuzzy
+msgid "Search for an username or leave it blank"
+msgstr "Sök efter ett användarnamn"
+
+#: actionlog/models.py:152
 msgid "log entry"
 msgstr ""
 
-#: actionlog/models.py:52
+#: actionlog/models.py:153
 msgid "log entries"
 msgstr ""
 
@@ -29,8 +34,8 @@ msgstr ""
 msgid "Date/time"
 msgstr "Datum/tid"
 
-#: actionlog/templates/object_action_list.html:7
-#: txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:74
+#: teams/models.py:110 txpermissions/forms.py:18
 msgid "User"
 msgstr "Användare"
 
@@ -47,23 +52,18 @@ msgstr ""
 msgid "No history recorded yet."
 msgstr "Ingenting här ännu."
 
-#: codebases/models.py:36
-#: codebases/migrations/0001_initial.py:12
-#: languages/models.py:27
-#: languages/migrations/0001_initial.py:19
-#: projects/models.py:86
-#: projects/models.py:198
+#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
+#: languages/models.py:27 languages/migrations/0001_initial.py:19
+#: projects/models.py:86 projects/models.py:198
 #: projects/migrations/0001_initial.py:31
-#: projects/migrations/0001_initial.py:53
-#: releases/models.py:23
-#: txcollections/models.py:26
+#: projects/migrations/0001_initial.py:53 releases/models.py:23
+#: templates/userprofile/profile/public.html:60 txcollections/models.py:26
 #: txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Namn"
 
-#: codebases/models.py:37
-#: codebases/migrations/0001_initial.py:15
+#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Rot"
 
@@ -71,8 +71,7 @@ msgstr "Rot"
 msgid "The URL of the codebase"
 msgstr ""
 
-#: codebases/models.py:39
-#: codebases/migrations/0001_initial.py:17
+#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Typ"
 
@@ -112,33 +111,28 @@ msgstr ""
 #: languages/feeds.py:42
 #, python-format
 msgid "Latest translations for %(language)s language in %(release)s release."
-msgstr "Senaste översättningarna för språket %(language)s i utgåvan %(release)s."
+msgstr ""
+"Senaste översättningarna för språket %(language)s i utgåvan %(release)s."
 
-#: languages/models.py:29
-#: languages/migrations/0001_initial.py:14
-#: projects/models.py:88
-#: projects/models.py:200
+#: languages/models.py:29 languages/migrations/0001_initial.py:14
+#: projects/models.py:88 projects/models.py:200
 #: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39
-#: releases/models.py:25
-#: txcollections/models.py:28
-#: txcollections/migrations/0001_initial.py:13
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
+#: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
 msgstr "Beskrivning"
 
-#: languages/models.py:30
-#: languages/migrations/0001_initial.py:13
+#: languages/models.py:30 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kod"
 
-#: languages/models.py:33
-#: languages/migrations/0001_initial.py:12
+#: languages/models.py:33 languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "Kodalias"
 
-#: languages/models.py:36
-#: languages/migrations/0001_initial.py:17
+#: languages/models.py:36 languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Specialtecken"
 
@@ -146,13 +140,11 @@ msgstr "Specialtecken"
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 
-#: languages/models.py:40
-#: languages/migrations/0001_initial.py:16
+#: languages/models.py:40 languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Antal pluralformer"
 
-#: languages/models.py:42
-#: languages/migrations/0001_initial.py:15
+#: languages/models.py:42 languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Pluralekvation"
 
@@ -160,8 +152,7 @@ msgstr "Pluralekvation"
 msgid "language"
 msgstr "språk"
 
-#: languages/models.py:54
-#: templates/languages/language_list.html:15
+#: languages/models.py:54 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "språk"
 
@@ -583,7 +574,7 @@ msgstr "Översatta:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -617,98 +608,83 @@ msgstr "%(site_name)s: Komponenter i %(project)s"
 msgid "Latest components in project %s."
 msgstr ""
 
-#: projects/forms.py:15
-#: txpermissions/forms.py:19
-msgid "Search for an username"
+#: projects/forms.py:15 txpermissions/forms.py:19
+#, fuzzy
+msgid "Search for a username"
 msgstr "Sök efter ett användarnamn"
 
-#: projects/forms.py:35
-#: projects/models.py:213
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+#: projects/forms.py:35 projects/models.py:213
+msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 
-#: projects/forms.py:58
-#: projects/models.py:218
+#: projects/forms.py:58 projects/models.py:218
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Skicka in till"
 
 #: projects/forms.py:59
-msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
+msgid ""
+"Choose how this component should handle submissions of files.The options "
+"here are available based on the component type"
 msgstr ""
 
-#: projects/models.py:83
-#: projects/models.py:195
+#: projects/models.py:83 projects/models.py:195
 #: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:38
-#: releases/models.py:20
-#: txcollections/models.py:23
-#: txcollections/migrations/0001_initial.py:12
+#: projects/migrations/0001_initial.py:38 releases/models.py:20
+#: txcollections/models.py:23 txcollections/migrations/0001_initial.py:12
 #: txcollections/migrations/0001_initial.py:32
 #: txcollections/migrations/0002_release_06_07.py:11
 #: txcollections/migrations/0002_release_06_07.py:17
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:84
-#: projects/models.py:196
-#: releases/models.py:21
+#: projects/models.py:84 projects/models.py:196 releases/models.py:21
 #: txcollections/models.py:24
-msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:87
-#: projects/models.py:199
-#: releases/models.py:24
+#: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
-msgid "A string like a name or very short description."
+msgid "A short name or very short description."
 msgstr ""
 
-#: projects/models.py:89
-#: projects/models.py:201
+#: projects/models.py:89 projects/models.py:201
 msgid "A sentence or two describing the object (optional)."
 msgstr ""
 
-#: projects/models.py:90
-#: projects/models.py:202
+#: projects/models.py:90 projects/models.py:202
 #: projects/migrations/0001_initial.py:30
-#: projects/migrations/0001_initial.py:45
-#: releases/models.py:27
-#: txcollections/models.py:30
-#: txcollections/migrations/0001_initial.py:24
+#: projects/migrations/0001_initial.py:45 releases/models.py:27
+#: txcollections/models.py:30 txcollections/migrations/0001_initial.py:24
 #: txcollections/migrations/0001_initial.py:42
 msgid "Long description"
 msgstr "Lång beskrivning"
 
-#: projects/models.py:92
-#: projects/models.py:204
-#: txcollections/models.py:31
+#: projects/models.py:92 projects/models.py:204 txcollections/models.py:31
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr ""
 
-#: projects/models.py:93
-#: projects/migrations/0001_initial.py:29
-#: txcollections/models.py:32
-#: txcollections/migrations/0001_initial.py:41
+#: projects/models.py:93 projects/migrations/0001_initial.py:29
+#: txcollections/models.py:32 txcollections/migrations/0001_initial.py:41
 msgid "Homepage"
 msgstr "Webbplats"
 
-#: projects/models.py:94
-#: projects/migrations/0001_initial.py:18
+#: projects/models.py:94 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr ""
 
 #: projects/models.py:95
-msgid "An RSS feed with updates on the project."
+msgid "An RSS feed with updates to the project."
 msgstr ""
 
-#: projects/models.py:96
-#: projects/migrations/0001_initial.py:27
+#: projects/models.py:96 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr ""
 
 #: projects/models.py:97
-msgid "The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 
 #: projects/models.py:99
@@ -723,49 +699,37 @@ msgstr ""
 "Översättare kan använda webbsystemet för att överlämna översättningar\n"
 "  till de registrerade projekten."
 
-#: projects/models.py:103
-#: projects/models.py:221
+#: projects/models.py:103 projects/models.py:221
 #: projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50
-#: releases/models.py:41
-#: txcollections/models.py:33
-#: txcollections/migrations/0001_initial.py:22
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: txcollections/models.py:33 txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:40
 msgid "Hidden"
 msgstr ""
 
-#: projects/models.py:104
-#: projects/models.py:222
-#: releases/models.py:42
+#: projects/models.py:104 projects/models.py:222 releases/models.py:42
 #: txcollections/models.py:34
 msgid "Hide this object from the list view?"
 msgstr ""
 
-#: projects/models.py:105
-#: projects/models.py:223
+#: projects/models.py:105 projects/models.py:223
 #: projects/migrations/0001_initial.py:24
-#: projects/migrations/0001_initial.py:41
-#: releases/models.py:43
-#: txcollections/models.py:35
-#: txcollections/migrations/0001_initial.py:16
+#: projects/migrations/0001_initial.py:41 releases/models.py:43
+#: txcollections/models.py:35 txcollections/migrations/0001_initial.py:16
 #: txcollections/migrations/0001_initial.py:37
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: projects/models.py:106
-#: projects/models.py:224
-#: releases/models.py:44
+#: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
 msgstr ""
 
-#: projects/models.py:110
-#: projects/migrations/0001_initial.py:23
+#: projects/models.py:110 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Taggar"
 
-#: projects/models.py:115
-#: templates/base-sample.html:40
+#: projects/models.py:115 templates/base-sample.html:40
 #: templates/txcollections/base.html:6
 #: templates/txcollections/collection_list.html:14
 msgid "Collections"
@@ -775,20 +739,15 @@ msgstr "Samlingar"
 msgid "Maintainers"
 msgstr "Projektansvariga"
 
-#: projects/models.py:121
-#: projects/models.py:233
+#: projects/models.py:121 projects/models.py:233
 #: projects/migrations/0001_initial.py:22
-#: projects/migrations/0001_initial.py:47
-#: releases/models.py:49
-#: txcollections/models.py:43
-#: txcollections/migrations/0001_initial.py:21
+#: projects/migrations/0001_initial.py:47 releases/models.py:49
+#: txcollections/models.py:43 txcollections/migrations/0001_initial.py:21
 #: txcollections/migrations/0001_initial.py:35
 msgid "HTML Description"
 msgstr "HTML-beskrivning"
 
-#: projects/models.py:123
-#: projects/models.py:235
-#: releases/models.py:50
+#: projects/models.py:123 projects/models.py:235 releases/models.py:50
 #: txcollections/models.py:44
 msgid "Description in HTML."
 msgstr "Beskrivning i HTML."
@@ -802,39 +761,34 @@ msgstr "<Projekt: %s>"
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:133
-#: templates/projects/project_list.html:18
+#: projects/models.py:133 templates/projects/project_list.html:18
 #: templates/txcollections/collection_detail.html:94
 msgid "projects"
 msgstr "projekt"
 
-#: projects/models.py:205
-#: projects/migrations/0001_initial.py:52
+#: projects/models.py:205 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Källspråk"
 
 #: projects/models.py:206
-msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
+msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr ""
 
-#: projects/models.py:208
-#: projects/migrations/0001_initial.py:42
+#: projects/models.py:208 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr ""
 
 #: projects/models.py:210
 #, python-format
-msgid "The code's type of i18n support (%s)"
+msgid "The type of i18n support for the source code (%s)"
 msgstr ""
 
-#: projects/models.py:212
-#: projects/migrations/0001_initial.py:43
+#: projects/models.py:212 projects/migrations/0001_initial.py:43
 #, fuzzy
 msgid "File filter"
 msgstr "Filfilter:"
 
-#: projects/models.py:215
-#: projects/migrations/0001_initial.py:51
+#: projects/models.py:215 projects/migrations/0001_initial.py:51
 #, fuzzy
 msgid "Allows submission"
 msgstr ":: Förhandsvisa insändning"
@@ -843,8 +797,7 @@ msgstr ":: Förhandsvisa insändning"
 msgid "Does this module repository allow write access?"
 msgstr ""
 
-#: projects/models.py:227
-#: projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:227 projects/migrations/0002_release_06_07.py:12
 #, fuzzy
 msgid "Calculate statistics?"
 msgstr "Översättningsstatistik"
@@ -853,13 +806,12 @@ msgstr "Översättningsstatistik"
 msgid "Should statistics be calculated for this component?"
 msgstr ""
 
-#: projects/models.py:238
-#: projects/migrations/0001_initial.py:46
+#: projects/models.py:238 projects/migrations/0001_initial.py:46
+#: teams/models.py:25 teams/models.py:67
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:239
-#: projects/migrations/0001_initial.py:37
+#: projects/models.py:239 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Enhet"
 
@@ -876,117 +828,213 @@ msgstr "<Komponent: %s>"
 msgid "component"
 msgstr "komponent"
 
-#: projects/models.py:268
-#: templates/projects/component_list.html:17
+#: projects/models.py:268 templates/projects/component_list.html:16
 msgid "components"
 msgstr "komponenter"
 
-#: projects/permissions.py:17
+#: projects/permissions/project.py:21
 msgid "Is allowed to maintain this project"
 msgstr ""
 
-#: projects/permissions.py:26
+#: projects/permissions/project.py:35
+msgid "Is allowed to coordinate a team project"
+msgstr ""
+
+#: projects/permissions/project.py:81
 msgid "Is allowed to submit file to this project"
 msgstr ""
 
-#: projects/views.py:177
-#: projects/views.py:576
+#: projects/views/component.py:208 projects/views/project.py:138
 #: txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr ""
 
-#: projects/views.py:361
-#: projects/views.py:914
-msgid "Must use POST to activate"
+#: projects/views/component.py:243
+msgid ""
+"The file filter of this intltool POT-based component does not  seem to allow "
+"the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:364
-#: projects/views.py:917
-msgid "Notification is not enabled"
+#: projects/views/component.py:250
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publican like "
+"component. Maybe its file filter is not allowing access to it."
 msgstr ""
 
-#: projects/views.py:377
-msgid "Watch this project"
-msgstr "Bevaka detta projekt"
-
-#: projects/views.py:390
-msgid "Stop wathing this project"
-msgstr ""
-
-#: projects/views.py:614
-msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
-msgstr ""
-
-#: projects/views.py:621
-msgid "There is no 'pot' directory named in the set of files of this Publian like component. Maybe its file filter is not allowing access to it."
-msgstr ""
-
-#: projects/views.py:629
+#: projects/views/component.py:258
 msgid "This component is not configured for statistics calculation."
 msgstr ""
 
-#: projects/views.py:720
+#: projects/views/component.py:342
 msgid "This component does  not allow write access."
 msgstr ""
 
-#: projects/views.py:728
+#: projects/views/component.py:350
 #, fuzzy
 msgid "Please select a file from your system to be uploaded."
 msgstr "Välj en fil från din arbetsstation att skicka."
 
-#: projects/views.py:736
+#: projects/views/component.py:358
 #, fuzzy
 msgid "Please enter a target to upload the file."
 msgstr "Välj en fil att skicka."
 
-#: projects/views.py:741
+#: projects/views/component.py:363
 #, fuzzy
 msgid "Please enter only ONE target to upload the file."
 msgstr "Välj en fil att skicka."
 
-#: projects/views.py:752
-msgid "The target file does not match with the component file filter"
+#: projects/views/component.py:374
+msgid "The target file does not match the component file filter"
 msgstr ""
 
-#: projects/views.py:760
+#: projects/views/component.py:382
 #, fuzzy
 msgid "Enter a commit message"
 msgstr "Överlämningsmeddelande"
 
-#: projects/views.py:827
+#: projects/views/component.py:414
+#, python-format
+msgid ""
+"You need to be in the '%s' team of this project for being able to send "
+"translations to that file target."
+msgstr ""
+
+#: projects/views/component.py:475
 #, fuzzy, python-format
 msgid "File submitted successfully: %s"
 msgstr "Din överlämning lyckades."
 
-#: projects/views.py:842
+#: projects/views/component.py:490
 #, fuzzy
-msgid "Your file does not pass correctness checks (msgfmt -c). Please run this command on your system to see the errors."
-msgstr "Varning: PO-filen som du lämnade över klarade inte korrekthets-kontrollerna. Kör `msgfmt -c` på den och rätta felen innan du lämnar över filen."
+msgid ""
+"Your file does not pass correctness checks (msgfmt -c). Please run this "
+"command on your system to see the errors."
+msgstr ""
+"Varning: PO-filen som du lämnade över klarade inte korrekthets-kontrollerna. "
+"Kör `msgfmt -c` på den och rätta felen innan du lämnar över filen."
 
-#: projects/views.py:851
+#: projects/views/component.py:499
 msgid "Sorry, your file could not be sent because of an error."
 msgstr ""
 
-#: projects/views.py:855
-#: projects/views.py:894
+#: projects/views/component.py:503 projects/views/component.py:536
 msgid "Sorry, but you need to send a POST request."
 msgstr ""
 
-#: projects/views.py:883
+#: projects/views/component.py:525
 msgid "Lock removed."
 msgstr "Lås borttaget."
 
-#: projects/views.py:886
+#: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
 msgstr ""
 
-#: projects/views.py:890
+#: projects/views/component.py:532
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr ""
 
-#: releases/models.py:26
-#: txcollections/models.py:29
+#: projects/views/component.py:551 projects/views/project.py:156
+msgid "Must use POST to activate"
+msgstr ""
+
+#: projects/views/component.py:554 projects/views/project.py:159
+msgid "Notification is not enabled"
+msgstr ""
+
+#: projects/views/project.py:172
+msgid "Watch this project"
+msgstr "Bevaka detta projekt"
+
+#: projects/views/project.py:185
+#, fuzzy
+msgid "Stop watching this project"
+msgstr "Bevaka detta projekt"
+
+#: projects/views/team.py:168
+#, python-format
+msgid "The '%s' team was deleted."
+msgstr ""
+
+#: projects/views/team.py:205
+#, python-format
+msgid "You are in the '%s' team already."
+msgstr ""
+
+#: projects/views/team.py:210
+#, python-format
+msgid "You have added a request for joining the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:233
+#, python-format
+msgid "You already have a pending request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:260
+#, python-format
+msgid "User '%(user)s' is in the '%(team)s' team already."
+msgstr ""
+
+#: projects/views/team.py:267
+#, python-format
+msgid "You have added '%(user)s' into the '%(team)s' team."
+msgstr ""
+
+#: projects/views/team.py:314
+#, python-format
+msgid ""
+"You have denied the request of the user '%(user)s' to join the '%(team)s' "
+"team."
+msgstr ""
+
+#: projects/views/team.py:357
+#, python-format
+msgid "You have withdrawn your own request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:398
+#, python-format
+msgid "You have left the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:419
+#, fuzzy, python-format
+msgid "You are not in the '%s' team."
+msgstr "Du kan inte ändra namnet på datalagret."
+
+#: projects/views/team.py:440
+#, fuzzy
+msgid "Please, select a language before submit the form."
+msgstr "Välj en fil från din arbetsstation att skicka."
+
+#: projects/views/team.py:453
+#, python-format
+msgid "'%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:459
+#, fuzzy, python-format
+msgid "A request for creating the '%s' team already exist."
+msgstr "Fel: Ett förråd med detta namn finns redan."
+
+#: projects/views/team.py:467
+#, python-format
+msgid "You have requested the '%s' team creation."
+msgstr ""
+
+#: projects/views/team.py:512
+#, python-format
+msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+msgstr ""
+
+#: projects/views/team.py:554
+#, python-format
+msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+msgstr ""
+
+#: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
 msgstr ""
 
@@ -994,8 +1042,7 @@ msgstr ""
 msgid "Use Markdown syntax."
 msgstr ""
 
-#: releases/models.py:31
-#: txcollections/migrations/0001_initial.py:15
+#: releases/models.py:31 txcollections/migrations/0001_initial.py:15
 #, fuzzy
 msgid "Release date"
 msgstr "Modullista"
@@ -1009,24 +1056,27 @@ msgid "String freeze date"
 msgstr ""
 
 #: releases/models.py:34
-msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
+msgid ""
+"When the translatable strings will be frozen (no strings which affect "
+"translations can be added/modified)."
 msgstr ""
 
-#: releases/models.py:36
-#: txcollections/migrations/0001_initial.py:25
+#: releases/models.py:36 txcollections/migrations/0001_initial.py:25
 msgid "Devel freeze date"
 msgstr ""
 
 #: releases/models.py:37
-msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
+msgid ""
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 
 #: releases/models.py:54
 msgid "release"
 msgstr "utgåva"
 
-#: releases/models.py:55
-#: templates/languages/language_detail.html:19
+#: releases/models.py:55 templates/languages/language_detail.html:19
 #: templates/txcollections/collection_detail.html:69
 msgid "releases"
 msgstr "utgåvor"
@@ -1069,32 +1119,122 @@ msgstr ""
 msgid "tarballs"
 msgstr ""
 
-#: templates/403.html:4
-#: templates/403.html.py:7
+#: teams/forms.py:12
+msgid ""
+"Coordinators are people that can manage the members of the team, for "
+"example. Search for usernames."
+msgstr ""
+
+#: teams/forms.py:16
+msgid ""
+"Members are actually people that can submit translations. Search for "
+"usernames."
+msgstr ""
+
+#: teams/forms.py:45
+#, python-format
+msgid ""
+"You have the user '%s' in both coordinators and members lists. Please drop "
+"him/her from one of those lists."
+msgstr ""
+
+#: teams/models.py:27 teams/models.py:69
+msgid "The project which this team belongs to."
+msgstr ""
+
+#: teams/models.py:28 teams/models.py:70
+#: translations/templates/comp_stats_table.html:14
+#: translations/templates/project_stats_table.html:7
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "Språk"
+
+#: teams/models.py:30 teams/models.py:72
+msgid ""
+"People in this team will only be able to submit translations files related "
+"to the specific language."
+msgstr ""
+
+#: teams/models.py:32
+#, fuzzy
+msgid "Coordinators"
+msgstr "Administratörer"
+
+#: teams/models.py:34
+msgid "Members"
+msgstr ""
+
+#: teams/models.py:37
+#, fuzzy
+msgid "Mainlist"
+msgstr "Projektansvariga"
+
+#: teams/models.py:38
+msgid "The main mailing list of the team."
+msgstr ""
+
+#: teams/models.py:40
+msgid "creator"
+msgstr ""
+
+#: teams/models.py:56
+msgid "team"
+msgstr ""
+
+#: teams/models.py:57
+#, fuzzy
+msgid "teams"
+msgstr "år"
+
+#: teams/models.py:89
+#, fuzzy
+msgid "team creation request"
+msgstr "Neka begäran"
+
+#: teams/models.py:90
+msgid "team creation requests"
+msgstr ""
+
+#: teams/models.py:108
+#, fuzzy
+msgid "Team"
+msgstr "Tamil"
+
+#: teams/models.py:125
+msgid "team access request"
+msgstr ""
+
+#: teams/models.py:126
+msgid "team access requests"
+msgstr ""
+
+#: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Förbjuden åtkomst"
 
 #: templates/403.html:12
-msgid "Looks like you do not have the necessary permissions for the required action."
+msgid ""
+"Looks like you do not have the necessary permissions for the required action."
 msgstr ""
 
-#: templates/403.html:15
-#: templates/404.html:15
+#: templates/403.html:15 templates/404.html:15
 #, python-format
-msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
+msgid ""
+"Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
+"case."
 msgstr ""
 
-#: templates/404.html:4
-#: templates/404.html.py:7
+#: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
 msgstr "Sidan hittades inte"
 
 #: templates/404.html:12
-msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
+msgid ""
+"Looks like you followed a bad link. If you think it's our fault, please <a "
+"href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
 
-#: templates/500.html:4
-#: templates/500.html.py:7
+#: templates/500.html:4 templates/500.html.py:7
 msgid "Page unavailable"
 msgstr "Sidan är inte tillgänglig"
 
@@ -1103,39 +1243,38 @@ msgid "We're sorry, but the requested page is currently unavailable."
 msgstr ""
 
 #: templates/500.html:14
-msgid "We're messing around with things internally, and the server had a bit of a hiccup."
+msgid ""
+"We're messing around with things internally, and the server had a bit of a "
+"hiccup."
 msgstr ""
 
 #: templates/500.html:16
 msgid "Please try again later."
 msgstr "Försök igen senare."
 
-#: templates/about.html:9
-#: templates/index.html:9
+#: templates/about.html:9 templates/index.html:9
 msgid "Welcome to Transifex"
 msgstr "Välkommen till Transifex"
 
-#: templates/base-sample.html:8
-#: templates/admin/base_site.html:4
+#: templates/base-sample.html:8 templates/admin/base_site.html:4
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34
-#: txcommon/templates/common_homelink.html:2
-msgid "Go to start page"
+#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#, fuzzy
+msgid "Go to the start page"
 msgstr "Gå till startsidan"
 
 #: templates/base-sample.html:35
-msgid "Transifex logo"
-msgstr "Transifex-logotyp"
+msgid "Go to start page"
+msgstr "Gå till startsidan"
 
 #: templates/base-sample.html:39
 msgid "The projects being served"
 msgstr ""
 
-#: templates/base-sample.html:39
-#: templates/projects/base.html:6
+#: templates/base-sample.html:39 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "Projekt"
@@ -1148,8 +1287,7 @@ msgstr ""
 msgid "The languages our service serves"
 msgstr ""
 
-#: templates/base-sample.html:41
-#: templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
@@ -1157,8 +1295,12 @@ msgstr "Språk"
 
 #: templates/base-sample.html:47
 #, python-format
-msgid "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
-msgstr "Välkommen <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
+msgid ""
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
+msgstr ""
+"Välkommen <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
 
 #: templates/base-sample.html:48
 #, fuzzy
@@ -1169,14 +1311,10 @@ msgstr "på vår webbplats."
 msgid "Sign out"
 msgstr "Logga ut"
 
-#: templates/base-sample.html:50
-#: templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17
-#: templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:5
-#: templates/simpleauth/logout.html:6
-#: templates/simpleauth/signin.html:4
-#: templates/simpleauth/signin.html.py:5
+#: templates/base-sample.html:50 templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
+#: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
+#: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
 #: templates/simpleauth/signin.html:6
 #: templates/userprofile/account/login.html:18
 #: templates/userprofile/account/login.html:27
@@ -1193,26 +1331,33 @@ msgid "About"
 msgstr "Om"
 
 #: templates/base-sample.html:115
-msgid "Get in contact with us"
+msgid "Drops us a line"
 msgstr ""
 
 #: templates/base-sample.html:115
 msgid "Feedback"
 msgstr ""
 
+#: templates/base-sample.html:117
+msgid ""
+"Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
+"\">Transifex</a>, the Open Translation Platform"
+msgstr ""
+
 #: templates/index.html:23
-msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
+msgid ""
+"Transifex is a service aimed at helping translators keep track of their "
+"favourite translation projects."
 msgstr ""
 
 #: templates/index.html:27
 #, python-format
-msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
+msgid ""
+"You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 
-#: templates/search.html:7
-#: templates/search.html.py:9
-#: templates/search_form.html:6
-#: templates/search_form_plain.html:5
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6 templates/search_form_plain.html:5
 #: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Sök"
@@ -1236,21 +1381,47 @@ msgstr "Sökresultat (%(result_count)s)"
 
 #: templates/search.html:51
 #, python-format
-msgid "No projects found for \"%(q)s\". You might want to change your query a bit."
+msgid ""
+"No projects were found for \"%(q)s\". You may want to change your query a "
+"bit."
 msgstr ""
 
 #: templates/search.html:62
-msgid "Couldn't find your project? Why don't you go ahead and "
+#, python-format
+msgid ""
+"Couldn't find your project? Why don't you go ahead and <a href=\"%(url "
+"project_create)s\">add it</a>?"
 msgstr ""
-
-#: templates/search.html:62
-#, fuzzy
-msgid "add it"
-msgstr "Redigera"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr ""
+
+#: templates/timeline.html:11
+#, fuzzy
+msgid "Filter results"
+msgstr "Sökresultat"
+
+#: templates/timeline.html:17
+msgid "Go"
+msgstr ""
+
+#: templates/timeline.html:24 templates/projects/component_detail.html:196
+#: templates/projects/project_detail.html:116
+#: templates/teams/team_detail.html:129
+msgid "None available"
+msgstr ""
+
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/admin/base_site.html:9
 #, fuzzy
@@ -1267,7 +1438,9 @@ msgid "Let us know what you think!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:10
-msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
+msgid ""
+"We'd like to make this web service as useful as possible for our users. If "
+"you have any feedback to provide, please do so!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:22
@@ -1295,13 +1468,17 @@ msgstr ""
 #: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
 #, python-format
-msgid "The %(collection)s collection includes the following groups of shipped components:"
+msgid ""
+"The %(collection)s collection includes the following groups of shipped "
+"components:"
 msgstr ""
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
 #, python-format
-msgid "No releases are registered for this collection yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
+msgid ""
+"No releases are registered for this collection yet. Why don't you <a href=\"%"
+"(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/languages/language_list.html:15
@@ -1313,7 +1490,8 @@ msgid "No languages registered yet. :-("
 msgstr ""
 
 #: templates/languages/language_list.html:35
-msgid "Couldn't find your language? Please use the feedback form and let us know!"
+msgid ""
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 
 #: templates/languages/language_release.html:39
@@ -1322,12 +1500,17 @@ msgid "Project/Component statistics"
 msgstr "Översättningsstatistik"
 
 #: templates/languages/language_release.html:60
-msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
+msgid ""
+"Transifex searched for projects containing translation files for this "
+"language and release, but couldn't find any. Can we interest you in sending "
+"in your work instead?"
 msgstr ""
 
 #: templates/languages/language_release.html:61
 #, python-format
-msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
+msgid ""
+"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
+"us know</a>."
 msgstr ""
 
 #: templates/languages/language_release.html:65
@@ -1337,107 +1520,134 @@ msgstr "Oöversätta"
 
 #: templates/languages/language_release.html:67
 #, python-format
-msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
 msgstr ""
 
-#: templates/notification/notices.html:6
-#: templates/notification/notices.html:7
+#: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr ""
 
-#: templates/notification/notices.html:8
-msgid "Notification settings"
+#: templates/notification/notices.html:32
+msgid "Received Notifications"
 msgstr ""
 
-#: templates/notification/notices.html:16
-#, fuzzy
-msgid "Notices"
-msgstr "ärende"
+#: templates/notification/notices.html:43
+msgid "Time"
+msgstr ""
 
-#: templates/notification/notices.html:21
+#: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
 msgstr ""
 
-#: templates/notification/notices.html:45
+#: templates/notification/notices.html:79
 #, fuzzy
 msgid "No notices."
 msgstr "ärende"
 
-#: templates/notification/notices.html:54
-msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you on the list below and choose which events you would like to be notified by email."
+#: templates/notification/notices.html:83
+#: templates/notification/notices.html:85
+msgid "Change your notification settings"
 msgstr ""
 
-#: templates/notification/notices.html:55
+#: templates/notification/notices.html:83
+msgid "Notification settings"
+msgstr ""
+
+#: templates/notification/notices.html:88
+msgid ""
+"You can receive notifications whenever an event occurs in Transifex. Check "
+"the notifications available for you in the list below and choose which "
+"events you would like to be notified by email."
+msgstr ""
+
+#: templates/notification/notices.html:89
 msgid "Primary email"
 msgstr "Primär e-post"
 
-#: templates/notification/notices.html:56
+#: templates/notification/notices.html:92
 msgid "change under"
 msgstr ""
 
-#: templates/notification/notices.html:56
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:92
+#: templates/notification/notices.html:96
 msgid "Account"
 msgstr "Konto"
 
-#: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:122
+#: templates/notification/notices.html:95
+#: templates/projects/component_detail.html:123
 msgid "Note"
 msgstr ""
 
-#: templates/notification/notices.html:59
-msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
+#: templates/notification/notices.html:96
+msgid ""
+"You do not have a verified email address to which notices can be sent. You "
+"can add one by going to"
 msgstr ""
 
-#: templates/notification/notices.html:67
+#: templates/notification/notices.html:104
 msgid "Notification Type"
 msgstr ""
 
-#: templates/notification/notices.html:85
+#: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
 #: templates/userprofile/account/password_change.html:29
 #, fuzzy
 msgid "Change"
 msgstr "Ändringslogg"
 
-#: templates/notification/single.html:5
-#: templates/notification/single.html:8
+#: templates/notification/single.html:5 templates/notification/single.html:8
 #, fuzzy
 msgid "Notice"
 msgstr "ärende"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
-msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
+msgid ""
+"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
 msgstr ""
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
-msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
+msgid ""
+"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
 msgstr ""
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
-msgid "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
+"been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
-msgid "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgid ""
+"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
 msgstr ""
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
-msgid "The component '%(component_name)s' has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"The component '%(component_name)s' has been deleted from the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
-msgid "The following files in the <a href=\"%(component_url)s\">%(component_name)s</a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project have been updated:"
+msgid ""
+"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
+"have been updated:"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
@@ -1447,37 +1657,141 @@ msgstr "En fil kallad \"%(filename)s\""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
-msgid "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
-msgid "The source file (POT) has some problems and can not be created/updated to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"The source file (POT) has some problems and can not be created/updated for "
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_report_weekly_maintainers/notice.html:2
+#, python-format
+msgid ""
+"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was generated"
 msgstr ""
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
+"files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> denied"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
+"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
+"s</a> denied"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
-msgid "Withdrawn own request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
+msgid ""
+"Withdrew own request of access to submit files to the project <a href=\"%"
+"(project_url)s\">%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
-msgid "Requested access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
+msgid ""
+"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
+"(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> revoked"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
+"submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
+"revoked"
+msgstr ""
+
+#: templates/notification/project_team_added/notice.html:2
+#, python-format
+msgid ""
+"A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_changed/notice.html:2
+#, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+
+#: templates/notification/project_team_deleted/notice.html:2
+#, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_join_approved/notice.html:2
+#, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a "
+"member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of "
+"the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_join_denied/notice.html:2
+#, python-format
+msgid ""
+"The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for joining "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team </a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
+msgstr ""
+
+#: templates/notification/project_team_join_requested/notice.html:2
+#, python-format
+msgid ""
+"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
+"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_join_withdrawn/notice.html:2
+#, python-format
+msgid ""
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
+"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_left/notice.html:2
+#, python-format
+msgid ""
+"User has left the <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> "
+"of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+
+#: templates/notification/project_team_request_denied/notice.html:2
+#, python-format
+msgid ""
+"The request for creating a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> on the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project has been denied"
+msgstr ""
+
+#: templates/notification/project_team_requested/notice.html:2
+#, python-format
+msgid ""
+"The translation team for <a href=\"%(language_url)s\">%(language_name)s</a> "
+"has been required to the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project"
+msgstr ""
+
+#: templates/notification/user_nudge/notice.html:2
+#, python-format
+msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:6
@@ -1495,128 +1809,147 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
+"  Are you sure you want to permanently delete the component '%"
+"(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
+#: templates/teams/team_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
 msgstr "Ja, jag är säker!"
 
 #: templates/projects/component_detail.html:30
-msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files to the maintainers\\' email."
 msgstr ""
 
 #: templates/projects/component_detail.html:32
-msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
+msgid ""
+"This component does not support local storing of submitted files. The "
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 
 #: templates/projects/component_detail.html:36
-msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files direct to the upstream repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:80
-#: templates/projects/project_detail.html:36
+#: templates/projects/component_detail.html:81
+#: templates/projects/project_detail.html:31
+#: templates/teams/team_detail.html:25
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "Redigera"
 
-#: templates/projects/component_detail.html:89
+#: templates/projects/component_detail.html:86
+#, fuzzy
+msgid "Source details"
+msgstr "Lokal fil"
+
+#: templates/projects/component_detail.html:90
 msgid "Repository:"
 msgstr "Förråd:"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 #, fuzzy
-msgid "Link to a web front-end to the source"
+msgid "Link to a web front-end for the source code"
 msgstr "En URL som länkar till en webbframsida till modulens VCS."
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 msgid "web"
 msgstr "webb"
 
-#: templates/projects/component_detail.html:99
+#: templates/projects/component_detail.html:100
 msgid "Branch:"
 msgstr "Gren:"
 
-#: templates/projects/component_detail.html:104
+#: templates/projects/component_detail.html:105
 msgid "File filter:"
 msgstr "Filfilter:"
 
-#: templates/projects/component_detail.html:110
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:111
+#, fuzzy
+msgid "Release:"
+msgid_plural "Releases:"
+msgstr[0] "Utgåvor"
+msgstr[1] "Utgåvor"
+
+#: templates/projects/component_detail.html:119
 #, fuzzy
 msgid "Allows submissions:"
 msgstr ":: Förhandsvisa insändning"
 
-#: templates/projects/component_detail.html:132
+#: templates/projects/component_detail.html:133
 msgid "Translation files"
 msgstr "Översättningsfiler"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:138
 #, fuzzy
 msgid "Source file:"
 msgstr "Lokal fil"
 
-#: templates/projects/component_detail.html:144
+#: templates/projects/component_detail.html:145
 msgid "Statistics last updated:"
 msgstr ""
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:147
 msgid "ago"
 msgstr "sedan"
 
-#: templates/projects/component_detail.html:147
+#: templates/projects/component_detail.html:148
 msgid "Component not yet pulled from source repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh cache"
 msgstr "Uppdatera cache"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Clear cache"
 msgstr "Töm cache"
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "warning"
 msgstr "varning"
 
-#: templates/projects/component_detail.html:167
-msgid "Become a translator:"
-msgstr "Bli en översättare:"
+#: templates/projects/component_detail.html:166
+#, fuzzy
+msgid "Teams:"
+msgstr "Taggar:"
 
-#: templates/projects/component_detail.html:171
-msgid "Your request is pending for approval."
-msgstr ""
+#: templates/projects/component_detail.html:168
+#, fuzzy
+msgid "See the translation teams."
+msgstr "Skicka in översättningar"
 
-#: templates/projects/component_detail.html:197
-#: templates/projects/project_detail.html:116
+#: templates/projects/component_detail.html:192
+#: templates/projects/project_detail.html:111
+#: templates/teams/team_detail.html:125
 msgid "History"
 msgstr "Historik"
 
-#: templates/projects/component_detail.html:201
-#: templates/projects/project_detail.html:120
-msgid "None available"
-msgstr ""
-
-#: templates/projects/component_detail.html:218
+#: templates/projects/component_detail.html:213
 msgid "Delete component"
 msgstr "Ta bort komponent"
 
@@ -1655,37 +1988,39 @@ msgstr "Spara komponent"
 msgid "translation files"
 msgstr "översättningsfiler"
 
-#: templates/projects/component_list.html:11
+#: templates/projects/component_list.html:10
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Lägg till"
 
-#: templates/projects/component_list.html:16
+#: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Projektkomponent"
 msgstr[1] "Projektkomponenter"
 
-#: templates/projects/component_list.html:27
+#: templates/projects/component_list.html:26
 msgid "edit"
 msgstr "redigera"
 
-#: templates/projects/component_list.html:30
+#: templates/projects/component_list.html:29
 msgid "del"
 msgstr ""
 
-#: templates/projects/component_list.html:46
+#: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
 msgstr ""
 
-#: templates/projects/component_list.html:48
+#: templates/projects/component_list.html:47
 msgid "Add one!"
 msgstr "Lägg till en!"
 
-#: templates/projects/component_list.html:54
+#: templates/projects/component_list.html:53
 msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
+"<em>Components</em> are smaller, self-contained parts of a larger project "
+"which consist of actual files.\n"
+"    Examples of components of a software project could be \"UI\" and \"Docs"
+"\" or development branches like <code>HEAD</code>."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
@@ -1706,7 +2041,7 @@ msgid "Local file:"
 msgstr "Lokal fil"
 
 #: templates/projects/component_submit_new_file.html:15
-msgid "The new language translation file to be uploaded."
+msgid "The translation file to be uploaded for the new language."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:18
@@ -1714,7 +2049,9 @@ msgid "Select the target file:"
 msgstr "Välj målfilen:"
 
 #: templates/projects/component_submit_new_file.html:27
-msgid "The target file is the name of the new file language. It must matches with the component file filter."
+msgid ""
+"The target file is the name of the new file language. It must match the "
+"component file filter."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:30
@@ -1762,75 +2099,109 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
+"  Are you sure you want to permanently delete the registered project '%"
+"(project_name)s'?\n"
 msgstr ""
 
-#: templates/projects/project_detail.html:42
+#: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Detaljer"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:44
 msgid "Watch:"
 msgstr "Bevaka:"
 
-#: templates/projects/project_detail.html:57
+#: templates/projects/project_detail.html:52
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Webbplats:"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:53
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Webbplats för %(project_name)s"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:58
 msgid "Bug tracker:"
 msgstr "Felhanteringssystem:"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:59
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Felhanteringssystem för %(project_name)s"
 
-#: templates/projects/project_detail.html:69
+#: templates/projects/project_detail.html:64
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Taggar:"
 
-#: templates/projects/project_detail.html:78
-#: templates/projects/project_detail.html:88
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:73
+#, fuzzy
+msgid "Collection:"
+msgid_plural "Collections:"
+msgstr[0] "Samlingar"
+msgstr[1] "Samlingar"
+
+#: templates/projects/project_detail.html:83
+#, fuzzy
+msgid "Maintainer:"
+msgid_plural "Maintainers:"
+msgstr[0] "Projektansvariga"
+msgstr[1] "Projektansvariga"
+
+#: templates/projects/project_detail.html:97
 msgid "External links:"
 msgstr "Externa länkar:"
 
-#: templates/projects/project_detail.html:104
+#: templates/projects/project_detail.html:99
 msgid "Screenshots"
 msgstr "Skärmbilder"
 
-#: templates/projects/project_detail.html:139
+#: templates/projects/project_detail.html:128
+msgid "View complete action log"
+msgstr ""
+
+#: templates/projects/project_detail.html:140
 msgid "Delete project"
 msgstr "Ta bort projekt"
 
-#: templates/projects/project_form.html:13
-msgid "Save project"
-msgstr "Spara projekt"
-
+#: templates/projects/project_form.html:9
+#: templates/projects/project_form.html:17
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
 #: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "Lägg till ett projekt"
 
+#: templates/projects/project_form.html:20
+#: templates/projects/project_form.html:29
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Redigera %(project_name)s"
+
+#: templates/projects/project_form.html:27
+#, fuzzy
+msgid "New project"
+msgstr "Spara projekt"
+
+#: templates/projects/project_form.html:37
+msgid "Add the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:39
+msgid "Edit the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:50
+msgid "Save project"
+msgstr "Spara projekt"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -1847,24 +2218,28 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr ""
 
 #: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:47
 msgid "Access Control"
 msgstr "Åtkomstkontroll"
 
-#: templates/projects/project_form_permissions.html:10
+#: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:12
+#: templates/projects/project_form_permissions.html:20
 msgid "Requests for access to submit files"
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:51
+#: templates/projects/project_form_permissions.html:62
 msgid "Pending requests:"
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:63
-msgid "Users with guaranteed access to submit files:"
+#: templates/projects/project_form_permissions.html:82
+#: templates/txpermissions/base_permission_form.html:18
+msgid "Users with access to submit files:"
 msgstr ""
 
 #: templates/projects/project_latests.html:6
@@ -1899,13 +2274,56 @@ msgstr ""
 
 #: templates/projects/project_list.html:67
 #, python-format
-msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
+msgid ""
+"Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
+"it</a>!"
 msgstr ""
+
+#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "Översikt"
+
+#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/teams/team_list.html.py:26
+#, fuzzy
+msgid "Translation Teams"
+msgstr "Översättningar"
+
+#: templates/projects/project_menu.html:61
+#: templates/projects/project_timeline.html:12
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr ""
+
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, fuzzy, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr "Redigera %(project_name)s"
+
+#: templates/projects/project_top_translators.html:6
+#, fuzzy
+msgid "Top Translators"
+msgstr "Översättningar"
+
+#: templates/projects/project_top_translators.html:9
+#, fuzzy, python-format
+msgid "%(number)s submission"
+msgid_plural "%(number)s submissions"
+msgstr[0] ":: Förhandsvisa insändning"
+msgstr[1] ":: Förhandsvisa insändning"
 
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
 #: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
 #: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
 msgid "Profile"
 msgstr "Profil"
 
@@ -1913,9 +2331,25 @@ msgstr "Profil"
 msgid "Profile settings"
 msgstr "Profilinställningar"
 
+#: templates/simpleauth/login_box.html:8
+msgid ""
+"Sign in to add or modify projects, work on translations, and other stuff."
+msgstr ""
+
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Du har loggats ut."
+
+#: templates/simpleauth/public_profile.html:8
+#: templates/userprofile/profile/public.html:31
+#, python-format
+msgid "Public profile of %(user)s"
+msgstr ""
+
+#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: txcommon/admin.py:27
+msgid "Username"
+msgstr "Användarnamn"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -1927,11 +2361,13 @@ msgid "Your profile, %(user)s"
 msgstr "Din profil, %(user)s"
 
 #: templates/simpleauth/settings.html:15
-msgid "Any settings associated with your account are presented and may be modified here."
+msgid ""
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 
 #: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:103
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr ""
 
@@ -1944,6 +2380,136 @@ msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
+
+#: templates/teams/team_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(lang_name)s</em> team?"
+msgstr "Redigera <em>%(collection_name)s</em>"
+
+#: templates/teams/team_confirm_delete.html:14
+#, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?\n"
+msgstr ""
+
+#: templates/teams/team_detail.html:19
+#, python-format
+msgid ""
+"\n"
+"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
+"(language_code)s</sup>\n"
+msgstr ""
+
+#: templates/teams/team_detail.html:33
+#, fuzzy
+msgid "Mainlist:"
+msgstr "Projektansvariga"
+
+#: templates/teams/team_detail.html:34
+msgid "Main mailing list"
+msgstr ""
+
+#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+msgid "Coordinator:"
+msgid_plural "Coordinators:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/teams/team_detail.html:56
+msgid "Become a translator:"
+msgstr "Bli en översättare:"
+
+#: templates/teams/team_detail.html:59
+msgid "Join this Team"
+msgstr ""
+
+#: templates/teams/team_detail.html:70
+msgid "People waiting for team membership approving:"
+msgstr ""
+
+#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#, fuzzy
+msgid "Approve"
+msgstr "Godkänn begäran"
+
+#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+msgid "Deny"
+msgstr ""
+
+#: templates/teams/team_detail.html:91
+#, fuzzy
+msgid "Withdraw"
+msgstr "Dra tillbaka begäran"
+
+#: templates/teams/team_detail.html:104
+msgid "Team Members:"
+msgstr ""
+
+#: templates/teams/team_detail.html:114
+#, fuzzy
+msgid "Leave"
+msgstr "Spara"
+
+#: templates/teams/team_detail.html:147
+#, fuzzy
+msgid "Delete team"
+msgstr "Ta bort mitt data"
+
+#: templates/teams/team_form.html:19
+#, python-format
+msgid "%(project_name)s Translation Teams"
+msgstr ""
+
+#: templates/teams/team_form.html:27
+#, fuzzy
+msgid "Translation team details"
+msgstr "Översättningsstatistik"
+
+#: templates/teams/team_form.html:29
+msgid ""
+"\n"
+"    Be aware that notification are not sent when coordinators or members are "
+"added or removed using this module.\n"
+"    "
+msgstr ""
+
+#: templates/teams/team_form.html:41
+#, fuzzy
+msgid "Save team"
+msgstr "Spara utgåva"
+
+#: templates/teams/team_list.html:30
+#, fuzzy
+msgid "Add a new team"
+msgstr "Lägg till ett nytt förråd"
+
+#: templates/teams/team_list.html:41
+msgid "List of team requests:"
+msgstr ""
+
+#: templates/teams/team_list.html:71
+msgid "List of available teams:"
+msgstr ""
+
+#: templates/teams/team_list.html:87
+msgid "No translation team created yet. :("
+msgstr ""
+
+#: templates/teams/team_list.html:92
+msgid "Request a new translation team for this project"
+msgstr ""
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new team"
+msgstr "Registrera ett nytt konto"
+
+#: templates/teams/team_list.html:102
+#, fuzzy
+msgid "Request team"
+msgstr "Begär åtkomst"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -1968,7 +2534,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered collection '%(collection_name)s'?\n"
+"  Are you sure you want to permanently delete the registered collection '%"
+"(collection_name)s'?\n"
 msgstr ""
 
 #: templates/txcollections/collection_detail.html:43
@@ -1982,12 +2549,14 @@ msgid "Projects in %(collection)s"
 msgstr "Projekt i %(collection)s"
 
 #: templates/txcollections/collection_detail.html:98
-msgid "Projects currently registered to belong in this collection:"
+msgid "Projects currently registered and associated to this collection:"
 msgstr ""
 
 #: templates/txcollections/collection_detail.html:108
 #, python-format
-msgid "No projects are registered for this collection yet. <a href=\"%(project_list)s\">Find projects</a> and add them to this collection."
+msgid ""
+"No projects are registered for this collection yet. <a href=\"%(project_list)"
+"s\">Find projects</a> and add them to this collection."
 msgstr ""
 
 #: templates/txcollections/collection_detail.html:120
@@ -2032,8 +2601,7 @@ msgstr "Samlingar taggade med \"%(tag)s\""
 msgid "Collections on Transifex"
 msgstr "Samlingar på Transifex"
 
-#: templates/txcollections/collection_list.html:19
-#: txcollections/models.py:57
+#: templates/txcollections/collection_list.html:19 txcollections/models.py:57
 msgid "collections"
 msgstr "samlingar"
 
@@ -2042,9 +2610,20 @@ msgid "Add a new collection"
 msgstr "Lägg till en ny samling"
 
 #: templates/txcollections/collection_list.html:44
+#, fuzzy, python-format
+msgid "1 release"
+msgid_plural "%(counter)s releases"
+msgstr[0] "utgåva"
+msgstr[1] "utgåva"
+
 #: templates/txcollections/collection_list.html:45
+#, fuzzy, python-format
+msgid "1 project"
+msgid_plural "%(counter)s projects"
+msgstr[0] "projekt"
+msgstr[1] "projekt"
+
 #: templates/txcollections/collection_list.html:53
-#, python-format
 msgid "No collections registered yet. :-("
 msgstr ""
 
@@ -2055,7 +2634,9 @@ msgstr ""
 
 #: templates/txcollections/collection_list.html:66
 #, python-format
-msgid "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s\">add it</a>!"
+msgid ""
+"Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s"
+"\">add it</a>!"
 msgstr ""
 
 #: templates/txcollections/release_confirm_delete.html:4
@@ -2077,7 +2658,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered release '%(release_name)s'?\n"
+"  Are you sure you want to permanently delete the registered release '%"
+"(release_name)s'?\n"
 msgstr ""
 
 #: templates/txcollections/release_detail.html:61
@@ -2132,10 +2714,6 @@ msgstr ""
 msgid "Save release"
 msgstr "Spara utgåva"
 
-#: templates/txpermissions/base_permission_form.html:18
-msgid "Users with guarantied access to submit files:"
-msgstr ""
-
 #: templates/txpermissions/permission_delete_form.html:5
 #, fuzzy
 msgid "Revoke permission"
@@ -2162,10 +2740,6 @@ msgstr "Dra tillbaka begäran"
 msgid "Deny request"
 msgstr "Neka begäran"
 
-#: templates/userprofile/menu.html:5
-msgid "Overview"
-msgstr "Översikt"
-
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
 msgstr "Personlig information"
@@ -2174,15 +2748,21 @@ msgstr "Personlig information"
 msgid "Avatar"
 msgstr "Avatar"
 
-#: templates/userprofile/menu.html:10
+#: templates/userprofile/menu.html:8
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:90
+msgid "Location"
+msgstr "Plats"
+
+#: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Ta bort profil"
 
 #: templates/userprofile/account/email_validation.html:5
 #, fuzzy
-msgid "E-mail change"
-msgstr "Filer ändrade:"
+msgid "Change e-mail"
+msgstr "Ändringslogg"
 
 #: templates/userprofile/account/email_validation.html:5
 #: templates/userprofile/account/email_validation_processed.html:12
@@ -2194,8 +2774,9 @@ msgid "Add a new e-mail address"
 msgstr "Lägg till en ny e-postadress"
 
 #: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation_processed.html:13
-msgid "Insert the new e-mail address. An e-mail will be send to it for testing and confirmation."
+msgid ""
+"Enter the new e-mail address. An e-mail will be sent to it for testing and "
+"confirmation."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:4
@@ -2213,7 +2794,9 @@ msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
-msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\"overview page</a>."
+msgid ""
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\"overview page</a>."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
@@ -2222,7 +2805,9 @@ msgid "E-mail address validated successfully."
 msgstr "Din överlämning lyckades."
 
 #: templates/userprofile/account/email_validation_done.html:19
-msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_processed.html:4
@@ -2230,8 +2815,17 @@ msgstr ""
 msgid "E-mail change processed"
 msgstr ""
 
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
+msgstr ""
+
 #: templates/userprofile/account/email_validation_processed.html:17
-msgid "An e-mail has been sent to the new e-mail address to verify and activate it. Please access to your e-mail and complete this process following the instructions specified in the e-mail body."
+msgid ""
+"An e-mail has been sent to the new e-mail address to verify and activate it. "
+"Please access your e-mail and complete this process by following the "
+"instructions specified in the e-mail body."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:5
@@ -2240,7 +2834,10 @@ msgid "Resend e-mail validation"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:19
-msgid "If you haven't validated your e-mail address yet you will not be able to sign in. Insert your registered e-mail address to receive the validation e-mail again."
+msgid ""
+"You will not be able to sign in until you have validated your e-mail "
+"address. Enter your registered e-mail address to receive the validation e-"
+"mail again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:26
@@ -2252,7 +2849,7 @@ msgid "Validation e-mail sent"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
-msgid "Your user account was already active"
+msgid "Your user account was already activated"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
@@ -2264,7 +2861,7 @@ msgid "overview page"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
-msgid "We've e-mailed you the e-mail validation link."
+msgid "We've sent you the e-mail validation link."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
@@ -2322,7 +2919,9 @@ msgid "Password change"
 msgstr "Lösenord:"
 
 #: templates/userprofile/account/password_change.html:23
-msgid "You can change your password from here. Please enter your new password twice so we can verify you typed it in correctly."
+msgid ""
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/userprofile/account/password_change_done.html:4
@@ -2342,7 +2941,8 @@ msgid "Password key expired"
 msgstr "Lösenord:"
 
 #: templates/userprofile/account/password_expired.html:9
-msgid "The password key you're trying to use is expired. Please, request a new one."
+msgid ""
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 
 #: templates/userprofile/account/password_reset.html:5
@@ -2360,7 +2960,9 @@ msgstr "Lösenord:"
 
 #: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
-msgid "Forgotten your password? Enter your e-mail address, and we'll reset your password and e-mail the new one to you."
+msgid ""
+"Forgotten your password? Enter your e-mail address, and we'll reset your "
+"password and e-mail the new one to you."
 msgstr ""
 
 #: templates/userprofile/account/password_reset.html:27
@@ -2382,7 +2984,9 @@ msgid "Password reset unsuccessful"
 msgstr "Lösenord:"
 
 #: templates/userprofile/account/password_reset_confirm.html:39
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
 msgstr ""
 
 #: templates/userprofile/account/password_reset_done.html:4
@@ -2392,7 +2996,9 @@ msgid "Password reset successful"
 msgstr "Lösenord:"
 
 #: templates/userprofile/account/password_reset_done.html:10
-msgid "We've e-mailed you the instructions to obtain a new password. You should be receiving it shortly."
+msgid ""
+"We've e-mailed you the instructions to obtain a new password. You should be "
+"receiving it shortly."
 msgstr ""
 
 #: templates/userprofile/account/registration.html:4
@@ -2405,11 +3011,11 @@ msgid "Register for a Transifex account"
 msgstr "Transifex"
 
 #: templates/userprofile/account/registration.html:18
-msgid "Joining the Transifex is quick and easy. Just fill in the following form."
+msgid "Joining Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:4
-msgid "Registration complete"
+msgid "Registration completed"
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:8
@@ -2417,12 +3023,17 @@ msgid "Register a new account"
 msgstr "Registrera ett nytt konto"
 
 #: templates/userprofile/account/registration_done.html:12
-msgid "You have successfully registered a new account, and an account activation url has been sent to your e-mail address. You must access this message on your e-mail account to finish the registration process."
+msgid ""
+"You have successfully registered a new account and an account activation url "
+"has been sent to your e-mail address. Please access this url to finish the "
+"registration process."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:15
 #, python-format
-msgid "You have successfully registered a new account. Go to the <a href=\"%(overview_url)s\">sign in page</a> to authenticate and start using this site."
+msgid ""
+"You have successfully registered a new account. Go to the <a href=\"%"
+"(overview_url)s\">sign in page</a> to authenticate and start using this site."
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:4
@@ -2437,7 +3048,9 @@ msgstr ""
 
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
-msgid "You have several options to select the image you want as avatar on your profile."
+msgid ""
+"You have several options to select the image you want to use as avatar on "
+"your profile."
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:50
@@ -2451,7 +3064,9 @@ msgid "Done"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:56
-msgid "Select an image from a remote URL. Put the URL on the input below and we'll retrieve the image for you"
+msgid ""
+"Select an image from a remote URL. Enter the URL in the field below and "
+"we'll retrieve the image for you"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:63
@@ -2469,7 +3084,9 @@ msgid "Delete personal information"
 msgstr "Modulinformation"
 
 #: templates/userprofile/profile/delete.html:13
-msgid "Erase all your private data except your username. You can refill the information later if you want to."
+msgid ""
+"Erase all your private data except your username. You can fill in the "
+"information again later if you want to."
 msgstr ""
 
 #: templates/userprofile/profile/delete.html:17
@@ -2495,7 +3112,6 @@ msgstr ""
 
 #: templates/userprofile/profile/location.html:22
 #: templates/userprofile/profile/overview.html:49
-#: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Land"
 
@@ -2563,11 +3179,6 @@ msgstr ""
 msgid "Not set"
 msgstr "ärende"
 
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "Plats"
-
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr ""
@@ -2580,6 +3191,20 @@ msgstr "Ändra din e-postadress"
 msgid "Add your e-mail address"
 msgstr "Lägg till din e-postadress"
 
+#: templates/userprofile/profile/overview.html:95
+#, fuzzy
+msgid "Add location"
+msgstr "Agera"
+
+#: templates/userprofile/profile/overview.html:97
+#, fuzzy
+msgid "Change location"
+msgstr "Ändringslogg"
+
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr ""
+
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -2589,14 +3214,69 @@ msgstr "Redigera din personliga information"
 msgid "Insert some information about you."
 msgstr ""
 
-#: templates/userprofile/profile/public.html:27
+#: templates/userprofile/profile/public.html:50
 #, python-format
-msgid "Public profile of %(user)s"
+msgid "Nudge %(user)s "
 msgstr ""
 
-#: templates/userprofile/profile/public.html:33
-msgid "Username"
-msgstr "Användarnamn"
+#: templates/userprofile/profile/public.html:66
+#, fuzzy
+msgid "Native language"
+msgstr "Språk:"
+
+#: templates/userprofile/profile/public.html:72
+#, fuzzy
+msgid "Blog/Site"
+msgstr "Blogg"
+
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: txcommon/migrations/0002_release_06_07.py:23
+msgid "Twitter"
+msgstr "Twitter"
+
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: txcommon/migrations/0002_release_06_07.py:30
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: templates/userprofile/profile/public.html:104
+msgid ""
+"\n"
+"            Coordinator of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Coordinator of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/userprofile/profile/public.html:115
+#: templates/userprofile/profile/public.html:142
+#, python-format
+msgid ""
+"\n"
+"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
+"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
+"project\n"
+"                "
+msgstr ""
+
+#: templates/userprofile/profile/public.html:131
+msgid ""
+"\n"
+"            Member of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Members of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/webtrans/msgid_label.html:10
+msgid "String Context"
+msgstr ""
 
 #: templates/webtrans/transfile_edit.html:29
 #, python-format
@@ -2614,41 +3294,89 @@ msgstr "Översätt \"%(filename)s\""
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "Översätt \"<code>%(filename)s</code>\""
 
-#: templates/webtrans/transfile_edit.html:102
+#: templates/webtrans/transfile_edit.html:51
+#, fuzzy
+msgid "Current status for this page"
+msgstr "Se statistik för detta språk"
+
+#: templates/webtrans/transfile_edit.html:54
+msgid "Settings"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:57
+#, fuzzy
+msgid "Show occurrences:"
+msgstr "Förekomster"
+
+#: templates/webtrans/transfile_edit.html:61
+msgid "Show context:"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:69
+#, fuzzy
+msgid "Translated"
+msgstr "Översatta:"
+
+#: templates/webtrans/transfile_edit.html:75
+#, fuzzy
+msgid "Fuzzy"
+msgstr "Luddiga:"
+
+#: templates/webtrans/transfile_edit.html:81
+#, fuzzy
+msgid "Untranslated"
+msgstr "Ej översätta:"
+
+#: templates/webtrans/transfile_edit.html:87
+#, fuzzy
+msgid "Total"
+msgstr "Totalt:"
+
+#: templates/webtrans/transfile_edit.html:93
+#, fuzzy
+msgid "Live translation"
+msgstr "Skicka in översättningar"
+
+#: templates/webtrans/transfile_edit.html:99
+#, python-format
+msgid "Page %(step)s of %(step_count)s"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:105
 msgid "#"
 msgstr ""
 
-#: templates/webtrans/transfile_edit.html:103
+#: templates/webtrans/transfile_edit.html:106
 #, fuzzy
 msgid "Source String"
 msgstr "Språk:"
 
-#: templates/webtrans/transfile_edit.html:104
+#: templates/webtrans/transfile_edit.html:107
 msgid "Translation"
 msgstr "Översättning"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 #, fuzzy
 msgid "Auto-translate"
 msgstr "Oöversätta"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 msgid "AT"
 msgstr ""
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:111
 msgid "Occurrences"
 msgstr "Förekomster"
 
-#: templates/webtrans/transfile_edit.html:109
+#: templates/webtrans/transfile_edit.html:112
 msgid "Fuzzy?"
 msgstr "Luddig?"
 
-#: templates/webtrans/transfile_edit.html:122
+#: templates/webtrans/transfile_edit.html:125
 msgid "Submit translations"
 msgstr "Skicka in översättningar"
 
-#: templates/webtrans/transfile_form.html:19
+#: templates/webtrans/transfile_form.html:18
 #, fuzzy
 msgid "Auto-suggest translation"
 msgstr "Lägg till ett nytt förråd"
@@ -2666,20 +3394,20 @@ msgid "Files"
 msgstr "Filer"
 
 #: translations/templates/comp_lang_stats_table.html:17
-#: translations/templates/comp_stats_table.html:17
+#: translations/templates/comp_stats_table.html:15
 #: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Översättningar"
 
 #: translations/templates/comp_lang_stats_table.html:18
-#: translations/templates/comp_stats_table.html:18
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Alternativ"
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 #, fuzzy
@@ -2687,7 +3415,7 @@ msgid "Could not generate statistics for this file"
 msgstr "Översättningsstatistik för denna modul"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2696,7 +3424,7 @@ msgid "Trans:"
 msgstr "Transifex"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2705,41 +3433,35 @@ msgid "Untrans:"
 msgstr "Oöversätta"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:48
+#: translations/templates/comp_stats_table.html:47
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Visa "
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Hämta "
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:59
+#: translations/templates/comp_stats_table.html:58
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Redigera "
 
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "Språk"
-
-#: translations/templates/comp_stats_table.html:26
+#: translations/templates/comp_stats_table.html:25
 msgid "See statistics for this language"
 msgstr "Se statistik för detta språk"
 
-#: translations/templates/comp_stats_table.html:28
+#: translations/templates/comp_stats_table.html:27
 #, fuzzy
-msgid "There is no language registered that matches with this code"
+msgid "There are no languages registered matching this code"
 msgstr "Det finns ingen aktiv sökväg med detta namn."
 
-#: translations/templates/comp_stats_table.html:43
+#: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr ""
@@ -2771,7 +3493,7 @@ msgstr ""
 
 #: translations/templates/pofile_lock.html:21
 #, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working on it."
+msgid "User '%(owner)s' has locked this file indicating he's working with it."
 msgstr ""
 
 #: translations/templates/pofile_lock.html:27
@@ -2789,7 +3511,7 @@ msgstr "Översättningsstatistik för denna modul"
 
 #: translations/templates/release_stats_table.html:18
 #, fuzzy
-msgid "There is no language registered that matches with this file"
+msgid "There are no languages registered matching this file"
 msgstr "Det finns ingen aktiv sökväg med detta namn."
 
 #: translations/templates/source_files.html:5
@@ -2853,61 +3575,55 @@ msgstr ""
 msgid "String freese date"
 msgstr "Modullista"
 
+#: txcommon/admin.py:10
+msgid ""
+"Required. 30 characters or fewer. Unicode alphanumeric characters only "
+"(letters, digits and underscores)."
+msgstr ""
+
+#: txcommon/admin.py:13
+msgid "This value must contain only unicode letters, numbers and underscores."
+msgstr ""
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "Filen LINGUAS kunde inte öppnas: %s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Female"
 msgstr "Kvinna"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Male"
 msgstr "Man"
 
-#: txcommon/models.py:30
-#: txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Förnamn"
 
-#: txcommon/models.py:31
-#: txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Efternamn"
 
-#: txcommon/models.py:34
-#: txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
 #, fuzzy
 msgid "Native Language"
 msgstr "Språk:"
 
-#: txcommon/models.py:35
-#: txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blogg"
 
-#: txcommon/models.py:36
-#: txcommon/migrations/0002_release_06_07.py:30
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: txcommon/models.py:37
-#: txcommon/migrations/0002_release_06_07.py:23
-msgid "Twitter"
-msgstr "Twitter"
-
-#: txcommon/models.py:38
-#: txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Om dig själv"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
 msgstr ""
 
-#: txcommon/models.py:40
-#: txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr ""
 
@@ -2938,43 +3654,47 @@ msgid "when a project is deleted"
 msgstr "när ett projekt tas bort"
 
 #: txcommon/notifications.py:33
-msgid "Submit access to project requested"
+msgid "Submit access for project requested"
 msgstr ""
 
 #: txcommon/notifications.py:34
-msgid "when an user request access to submit files to a project"
+#, fuzzy
+msgid "when a user requests access to submit files to a project"
 msgstr ""
+"Översättare kan använda webbsystemet för att överlämna översättningar\n"
+"  till de registrerade projekten."
 
 #: txcommon/notifications.py:41
-msgid "Submit access request to project denied"
+msgid "Submit access request for project denied"
 msgstr ""
 
 #: txcommon/notifications.py:42
-msgid "when a maintainer denies access to an user to submit files to a project"
+msgid "when a maintainer denies access to a user to submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:49
-msgid "Submit access request to project withdrawn"
+msgid "Submit access request for project withdrawn"
 msgstr ""
 
 #: txcommon/notifications.py:50
-msgid "when an user withdraws the access requestto submit files to a project"
+msgid "when a user withdraws the access requestto submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:57
-msgid "Submit access to project granted"
+msgid "Submit access for project granted"
 msgstr ""
 
 #: txcommon/notifications.py:58
-msgid "when a maintainer grants access to an user to submit files to a project"
+msgid "when a maintainer grants access to a user to submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:65
-msgid "Submit access to project revoked"
+msgid "Submit access for project revoked"
 msgstr ""
 
 #: txcommon/notifications.py:66
-msgid "when a maintainer revokes the access of an user to submit files to a project"
+msgid ""
+"when a maintainer revokes the access of a user to submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:73
@@ -3024,99 +3744,206 @@ msgid "Translation Source File (POT) has a Problem"
 msgstr ""
 
 #: txcommon/notifications.py:111
-msgid "when the source file (POT) of a component that you are a maintainer has a problem"
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
 msgstr ""
 
-#: txcommon/notifications.py:119
+#: txcommon/notifications.py:121
+#, fuzzy
+msgid "New Team Added"
+msgstr "Lägg till en ny modul"
+
+#: txcommon/notifications.py:122
+#, fuzzy
+msgid "when a new translation team is added to a project"
+msgstr "Lägg till en ny modul"
+
+#: txcommon/notifications.py:129
+#, fuzzy
+msgid "Team Changed"
+msgstr "Modullista"
+
+#: txcommon/notifications.py:130
+msgid "when a translation team of a project is changed"
+msgstr ""
+
+#: txcommon/notifications.py:137
+#, fuzzy
+msgid "Team Deleted"
+msgstr "Modullista"
+
+#: txcommon/notifications.py:138
+#, fuzzy
+msgid "when a translation team of a project is deleted"
+msgstr "när ett projekt tas bort"
+
+#: txcommon/notifications.py:145
+msgid "Team Creation Requested"
+msgstr ""
+
+#: txcommon/notifications.py:146
+msgid "when a translation team creation is requestedfor a project"
+msgstr ""
+
+#: txcommon/notifications.py:153
+msgid "Team Creation Request Denied"
+msgstr ""
+
+#: txcommon/notifications.py:154
+msgid ""
+"when a translation team creation requestfor a project is denied by a "
+"maintainer"
+msgstr ""
+
+#: txcommon/notifications.py:161
+msgid "Team User Joining Requested"
+msgstr ""
+
+#: txcommon/notifications.py:162
+msgid "when an user requests for joining to a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:169
+msgid "Team User Joining Approved"
+msgstr ""
+
+#: txcommon/notifications.py:170
+msgid "when an user is approved as a member of a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:177
+msgid "Team User Joining Denied"
+msgstr ""
+
+#: txcommon/notifications.py:178
+msgid "when an user is denied as a member of a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:185
+msgid "Team User Joining Withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:186
+msgid ""
+"when an user withdrawn its own request for joining a translation team of a "
+"project"
+msgstr ""
+
+#: txcommon/notifications.py:193
+msgid "Team User Left"
+msgstr ""
+
+#: txcommon/notifications.py:194
+msgid "when an user leaves a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:203
+msgid "Weekly project report for maintainers"
+msgstr ""
+
+#: txcommon/notifications.py:204
+msgid "when you receive the weekly report of projects that you maintain."
+msgstr ""
+
+#: txcommon/notifications.py:212
 #, fuzzy
 msgid "New Collection Added"
 msgstr "Lägg till en ny modul"
 
-#: txcommon/notifications.py:120
+#: txcommon/notifications.py:213
 #, fuzzy
 msgid "when a new collection is added"
 msgstr "Lägg till en ny modul"
 
-#: txcommon/notifications.py:126
+#: txcommon/notifications.py:219
 #, fuzzy
 msgid "Collection Changed"
 msgstr "Modullista"
 
-#: txcommon/notifications.py:127
+#: txcommon/notifications.py:220
 msgid "when a collection is changed"
 msgstr ""
 
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:226
 #, fuzzy
 msgid "Collection Deleted"
 msgstr "Modullista"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:227
 #, fuzzy
 msgid "when a collection is deleted"
 msgstr "Modullista"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:233
 #, fuzzy
 msgid "Project Added to a Collection"
 msgstr "Projektansvariga"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:234
 msgid "when a new project is added to a collection"
 msgstr ""
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:240
 #, fuzzy
 msgid "Project Deleted from a Collection"
 msgstr "Projektansvariga"
 
-#: txcommon/notifications.py:148
+#: txcommon/notifications.py:241
 msgid "when a project is deleted from a collection"
 msgstr ""
 
-#: txcommon/notifications.py:154
+#: txcommon/notifications.py:247
 msgid "New Release Added for a Watched Collection"
 msgstr ""
 
-#: txcommon/notifications.py:155
+#: txcommon/notifications.py:248
 msgid "when a new release is added to a collection"
 msgstr ""
 
-#: txcommon/notifications.py:162
+#: txcommon/notifications.py:255
 #, fuzzy
 msgid "Release Changed"
 msgstr "Modullista"
 
-#: txcommon/notifications.py:163
+#: txcommon/notifications.py:256
 msgid "when a release of a collection is changed"
 msgstr ""
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:261
 #, fuzzy
 msgid "Release Deleted"
 msgstr "Modullista"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:262
 msgid "when a release of a collection is deleted"
 msgstr ""
 
-#: txcommon/notifications.py:174
+#: txcommon/notifications.py:267
 #, fuzzy
 msgid "Release Added to a Collection"
 msgstr "Lägg till en ny modul"
 
-#: txcommon/notifications.py:175
+#: txcommon/notifications.py:268
 msgid "when a release is added to a collection"
 msgstr ""
 
-#: txcommon/notifications.py:180
+#: txcommon/notifications.py:273
 msgid "Release Deleted from a Collection"
 msgstr ""
 
-#: txcommon/notifications.py:181
+#: txcommon/notifications.py:274
 #, fuzzy
 msgid "when a release is deleted from a collection"
 msgstr "Projektansvariga"
+
+#: txcommon/notifications.py:279
+msgid "User Nudge"
+msgstr ""
+
+#: txcommon/notifications.py:280
+msgid "when an user nudges you"
+msgstr ""
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3130,6 +3957,20 @@ msgstr ""
 msgid "The root url must start with http:// or ftp://"
 msgstr ""
 
+#: txcommon/views.py:85
+msgid "You can't re-nudge the same user in a short amount of time."
+msgstr ""
+
+#: txcommon/views.py:88
+#, fuzzy
+msgid "You can't nudge yourself."
+msgstr "Om dig själv"
+
+#: txcommon/views.py:95
+#, fuzzy, python-format
+msgid "You have nugded '%s'."
+msgstr "<p>Du har loggats ut."
+
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr ""
@@ -3138,28 +3979,33 @@ msgstr ""
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr ""
 
-#: txcommon/templates/common_homelink.html:2
+#: txcommon/templatetags/txcommontags.py:123
 msgid "Home"
 msgstr "Hem"
 
 #: txpermissions/views.py:93
+#, fuzzy
+msgid "You added a permission."
+msgstr "Förhandsvisa insändning"
+
+#: txpermissions/views.py:95
 msgid "You added a permission request."
 msgstr ""
 
-#: txpermissions/views.py:128
+#: txpermissions/views.py:133
 msgid "You approved the permission request."
 msgstr ""
 
-#: txpermissions/views.py:146
+#: txpermissions/views.py:151
 msgid "You removed the permission."
 msgstr ""
 
-#: txpermissions/views.py:148
+#: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr ""
 
 #: vcs/forms.py:56
-msgid "This type of repository does not accept branch"
+msgid "This type of repository does not accept branches"
 msgstr ""
 
 #: vcs/models.py:48
@@ -3198,8 +4044,10 @@ msgstr "Skicka in"
 msgid "The %s fields should be filled."
 msgstr ""
 
-#: webtrans/wizards.py:202
-msgid "Nothing was sent because you haven't changed anything in the translation form."
+#: webtrans/wizards.py:210
+msgid ""
+"Nothing was sent because you haven't changed anything in the translation "
+"form."
 msgstr ""
 
 #: webtrans/templates/pagination.html:7
@@ -3210,6 +4058,21 @@ msgstr "Föregående"
 msgid "Next"
 msgstr "Nästa"
 
+#~ msgid "Transifex logo"
+#~ msgstr "Transifex-logotyp"
+
+#, fuzzy
+#~ msgid "add it"
+#~ msgstr "Redigera"
+
+#, fuzzy
+#~ msgid "Notices"
+#~ msgstr "ärende"
+
+#, fuzzy
+#~ msgid "E-mail change"
+#~ msgstr "Filer ändrade:"
+
 #, fuzzy
 #~ msgid "Change email address"
 #~ msgstr "E-postadress"
@@ -3219,14 +4082,12 @@ msgstr "Nästa"
 #~ msgstr "Lösenord:"
 
 #, fuzzy
-#~ msgid "Change email"
-#~ msgstr "Ändringslogg"
-
-#, fuzzy
 #~ msgid "New password"
 #~ msgstr "Lösenord:"
+
 #~ msgid "Password:"
 #~ msgstr "Lösenord:"
+
 #~ msgid "Login"
 #~ msgstr "Logga in"
 
@@ -3237,14 +4098,6 @@ msgstr "Nästa"
 #, fuzzy
 #~ msgid "Choose a Password:"
 #~ msgstr "Lösenord:"
-
-#, fuzzy
-#~ msgid "Add location"
-#~ msgstr "Agera"
-
-#, fuzzy
-#~ msgid "Change location"
-#~ msgstr "Ändringslogg"
 
 #, fuzzy
 #~ msgid ""
@@ -3298,10 +4151,6 @@ msgstr "Nästa"
 #~ msgstr "Modullista"
 
 #, fuzzy
-#~ msgid "Add a new release"
-#~ msgstr "Lägg till ett nytt förråd"
-
-#, fuzzy
 #~ msgid "Deletion"
 #~ msgstr "Beskrivning"
 
@@ -3316,101 +4165,132 @@ msgstr "Nästa"
 #, fuzzy
 #~ msgid "Allows file submissions:"
 #~ msgstr ":: Förhandsvisa insändning"
+
 #~ msgid "The path %s cannot be found"
 #~ msgstr "Sökvägen %s kan inte hittas"
+
 #~ msgid ""
 #~ "The credentials you supplied were not correct or did not grant access to "
 #~ "this resource."
 #~ msgstr ""
 #~ "De inloggningsuppgifter du angav var inte korrekt eller gav dig inte "
 #~ "rättighet till denna resurs."
+
 #~ msgid "You must provide your credentials before accessing this resource."
 #~ msgstr ""
 #~ "Du måste ange dina inloggningsuppgifter innan du kan komma åt denna "
 #~ "resurs."
+
 #~ msgid "The language '%s' is not available"
 #~ msgstr "Språket \"%s\" är inte tillgängligt"
+
 #~ msgid "Something fishy is happening here..."
 #~ msgstr "Någonting skumt händer här..."
+
 #~ msgid ""
 #~ "There is a technical error with the module '%s' (no branches are "
 #~ "registered for it)."
 #~ msgstr ""
 #~ "Det är något tekniskt fel med modulen '%s' (no branches are registered "
 #~ "for it)."
+
 #~ msgid "There is a technical error with the module '%s'"
 #~ msgstr "Det är ett tekniskt fel med modulen \"%s\""
+
 #~ msgid "You should provide a destination file."
 #~ msgstr "Du borde ange en målfil."
+
 #~ msgid ""
 #~ "You should either choose an existing file to substitute or provide a name "
 #~ "for a new one (and not both)."
 #~ msgstr ""
 #~ "Du måste antingen ange en existerande fil att ersätta eller ge ett namn "
 #~ "för en ny fil (men inte både och)."
+
 #~ msgid "Please enter a log message for your submission."
 #~ msgstr "Ange ett loggmeddelande för din insändning."
+
 #~ msgid "Overwrite an existing file:"
 #~ msgstr "Skriv över en befintlig fil:"
+
 #~ msgid "Either select the file your submission will replace..."
 #~ msgstr "Antingen välj den fil som din inskickade ska ersätta..."
+
 #~ msgid "or, type the name for a new one:"
 #~ msgstr "eller ange namnet på en ny:"
+
 #~ msgid "For example: 'po/pt.po'."
 #~ msgstr "Till exempel: \"po/sv.po\"."
+
 #~ msgid ""
 #~ "A commit message is a log or record of the changes made by a commit. For "
 #~ "example: \"Updated X translation\""
 #~ msgstr ""
 #~ "Ett överlämningsmeddelande är en logg eller journal över de ändringar som "
 #~ "gjorts av en överlämning.Till exempel: \"Uppdaterade översättningen av X\""
+
 #~ msgid "Skip diff preview"
 #~ msgstr "Hoppa över förhandsgranskning av skillnader"
+
 #~ msgid "Do not preview diffs in next screen. Useful for slow connections."
 #~ msgstr ""
 #~ "Förhandsgranska inte skillnader på nästa skärm. Användbart för långsamma "
 #~ "anslutningar."
+
 #~ msgid "Summary"
 #~ msgstr "Sammandrag"
+
 #~ msgid "Webpage"
 #~ msgstr "Webbplats"
+
 #~ msgid "Repository"
 #~ msgstr "Förråd"
+
 #~ msgid "Scmmodule"
 #~ msgstr "Scmmodul"
+
 #~ msgid "Filefilter"
 #~ msgstr "Filfilter"
+
 #~ msgid "Disabled"
 #~ msgstr "Inaktiverad"
+
 #~ msgid ""
 #~ "There is one or more problems with the form validation. Please correct it."
 #~ msgstr ""
 #~ "Det finns ett eller flera problem med valideringen av formulär. Rätta "
 #~ "till det."
+
 #~ msgid "Invalid module."
 #~ msgstr "Ogiltig modul."
+
 #~ msgid "Invalid branch."
 #~ msgstr "Ogiltig gren."
+
 #~ msgid "Something went wrong with your submission. Path: %s"
 #~ msgstr "Någonting gick fel med din överlämning. Sökväg: %s"
+
 #~ msgid ""
 #~ "Please choose only one of the two overwrite options: Either substitute an "
 #~ "existing file or provide a name for a new one."
 #~ msgstr ""
 #~ "Välj ett av två överskrivningsalternativ: Antingen ersätt en befintlig "
 #~ "fil eller ange namnet på en ny fil."
+
 #~ msgid ""
 #~ "The filename you chose isn't allowed to be used. Please use a filename "
 #~ "similar to the ones present in the list of existing files."
 #~ msgstr ""
 #~ "Filnamnet du valde är inte tillåtet att använda. Använd ett filnamn "
 #~ "liknande de som redan finns i listan över befintliga filer."
+
 #~ msgid ""
 #~ "There is a technical error with this module's Changelog file. Please "
 #~ "notify the administrators."
 #~ msgstr ""
 #~ "Det är ett tekniskt fel med denna moduls Changelog-fil. Meddela "
 #~ "administratörerna."
+
 #~ msgid ""
 #~ "The encoding of the uploaded file doesn't seem like UTF-8. Since diff "
 #~ "previewing is not yet supported for non-UTF-8 files, it will not be "
@@ -3419,6 +4299,7 @@ msgstr "Nästa"
 #~ "Kodningen av den skickade filen verkar inte vara UTF-8. Eftersom "
 #~ "förhandsgranskning av skillnader bara stöder filer UTF-8-format, så "
 #~ "kommer den inte inte vara tillgänglig för denna överlämning."
+
 #~ msgid ""
 #~ "The encoding of the target file doesn't seem like UTF-8. Since diff "
 #~ "previewing is not yet supported for non-UTF-8 files, it will not be "
@@ -3427,14 +4308,17 @@ msgstr "Nästa"
 #~ "Kodningen för för målfilen verkar inte vara UTF-8. Eftersom "
 #~ "förhandsgranskning av skillnader bara stöder filer UTF-8-format, så "
 #~ "kommer den inte inte vara tillgänglig för denna överlämning."
+
 #~ msgid ""
 #~ "The file you submitted is identical to the target on our server (empty "
 #~ "diffset). Try refreshing the module's cache and retry submitting."
 #~ msgstr ""
 #~ "Filen du överlämnade är identisk med målfilen på servern (inga "
 #~ "skillnader). Prova uppdatera modulen cache och försök skicka den igen."
+
 #~ msgid "Something went wrong with your session. Please re-submit the page."
 #~ msgstr "Någonting gick fel med din session. Skicka om sidan."
+
 #~ msgid ""
 #~ "There was a technical error with the commit/push of your submission, most "
 #~ "likely because of a misconfiguration of the system. Try refreshing the "
@@ -3443,120 +4327,155 @@ msgstr "Nästa"
 #~ "Det uppstod ett tekniskt fel med din överlämning, troligen på grund av en "
 #~ "felkonfigurering av systemet. Prova att uppdatera modulens cache och "
 #~ "försök lämna över den igen."
+
 #~ msgid ""
 #~ "The administrators will look into the log files and try to find out what "
 #~ "went wrong."
 #~ msgstr ""
 #~ "Administratörerna kommer titta på loggfilerna och försöka lista vad som "
 #~ "gick fel."
+
 #~ msgid "There was an error with your form."
 #~ msgstr "Det var ett fel med ditt formulär."
+
 #~ msgid "Something went wrong with your submission."
 #~ msgstr "Någonting gick fel med din överlämning."
+
 #~ msgid "Error: A module with this name already exists."
 #~ msgstr "Fel: En modul med detta namn finns redan."
+
 #~ msgid ""
 #~ "Module '%s' added. If you haven't done so already, don't forget to "
 #~ "configure the SSH keys for it."
 #~ msgstr ""
 #~ "Modulen \"%s\" har lagts till. Om du inte redan gjort det, gIöm inte "
 #~ "uppdatera SSH-nycklen för den."
+
 #~ msgid "Invalid module/branch."
 #~ msgstr "Ogiltig modul/gren."
+
 #~ msgid "No such person"
 #~ msgstr "Ingen sådan person"
+
 #~ msgid "Add repository"
 #~ msgstr "Lägg till förråd"
+
 #~ msgid "Update a repository"
 #~ msgstr "Uppdatera ett förråd"
+
 #~ msgid "Update repository"
 #~ msgstr "Uppdatera förråd"
+
 #~ msgid "Invalid repository."
 #~ msgstr "Ogiltigt förråd."
+
 #~ msgid "Add a new repository"
 #~ msgstr "Lägg till ett nytt förråd"
-#~ msgid "You can not change the repository name."
-#~ msgstr "Du kan inte ändra namnet på datalagret."
-#~ msgid "Error: A repository with this name already exists."
-#~ msgstr "Fel: Ett förråd med detta namn finns redan."
+
 #~ msgid "Error: There was an error to add the data into the database"
 #~ msgstr "Fel: Det uppstod ett fel vid tillägg av data i databasen"
+
 #~ msgid "Repository '%(repo)s' has been %(action)s."
 #~ msgstr "Datalagret \"%(repo)s\" har %(action)s."
+
 #~ msgid "updated"
 #~ msgstr "uppdaterats"
+
 #~ msgid "added"
 #~ msgstr "lagts till"
+
 #~ msgid "Error: Could not delete the repository. %s"
 #~ msgstr "Fel: Kunde inte radera datalagret. %s"
-#~ msgid "years"
-#~ msgstr "år"
+
 #~ msgid "month"
 #~ msgstr "månad"
+
 #~ msgid "weeks"
 #~ msgstr "veckor"
+
 #~ msgid "day"
 #~ msgstr "dygn"
+
 #~ msgid "days"
 #~ msgstr "dygn"
+
 #~ msgid "hour"
 #~ msgstr "timme"
+
 #~ msgid "minute"
 #~ msgstr "minut"
+
 #~ msgid "minutes"
 #~ msgstr "minuter"
+
 #~ msgid "%(number)d %(type)s"
 #~ msgstr "%(number)d %(type)s"
+
 #~ msgid "%s :: Submission Log"
 #~ msgstr "%s :: Överlämningslogg"
+
 #~ msgid "Log of recent submits"
 #~ msgstr "Logg över nya överlämningar"
+
 #~ msgid "%s :: Home"
 #~ msgstr "%s :: Hem"
+
 #~ msgid ", a web system for distributed translation submissions."
 #~ msgstr ", ett webbsystem för distribuerade insändningar av översättningar."
+
 #~ msgid ""
 #~ "Submit translations to upstream projects without the need to learn\n"
 #~ "    the tricks of different version control systems."
 #~ msgstr ""
 #~ "Överlämna översättningar till projekt uppströms utan att behöva lära dig\n"
 #~ "    de olika tricken för de olika versionshanteringssystemen."
+
 #~ msgid "Read more to submit translations"
 #~ msgstr "Läs mer om hur man skickar in översättningar"
+
 #~ msgid "Jump to the modules!"
 #~ msgstr "Hoppa till modulerna!"
+
 #~ msgid ""
 #~ "Receive translations directly to your project's repository, without the "
 #~ "management overhead of loads of accounts and big access control lists."
 #~ msgstr ""
 #~ "Hämta översättningar direkt från ditt projekts förråd, utan onödig "
 #~ "administration av en massa konton och en stora åtkomstlistor."
+
 #~ msgid "Read more to register a module"
 #~ msgstr "Läs mer om hur du registrerar en modul"
-#~ msgid "Administrators"
-#~ msgstr "Administratörer"
+
 #~ msgid "Submission Log"
 #~ msgstr "Överlämningslogg"
+
 #~ msgid "Translated by: %(trans)s."
 #~ msgstr "Översatt av: %(trans)s."
+
 #~ msgid "translator-credits"
 #~ msgstr ""
 #~ "Daniel Nylander <po@danielnylander.se>Magnus Larsson <fedoratrans@gmail."
 #~ "com>"
+
 #~ msgid "%s :: Authenticate"
 #~ msgstr "%s :: Autentisera"
+
 #~ msgid "Authenticate"
 #~ msgstr "Autentisera"
+
 #~ msgid ""
 #~ "You may authenticate using your existing credentials in the account "
 #~ "system of"
 #~ msgstr ""
 #~ "Du kan autentisera genom använda din befintliga inloggningsuppgifter i "
 #~ "kontosystemet för "
+
 #~ msgid ":: Information for maintainers"
 #~ msgstr ":: Information för ansvariga"
+
 #~ msgid "Information for maintainers"
 #~ msgstr "Information för ansvariga"
+
 #~ msgid ""
 #~ "If you are a project maintainer, you can have Transifex's\n"
 #~ "  community contribute translations to your project easily. The basic "
@@ -3566,10 +4485,13 @@ msgstr "Nästa"
 #~ "Om du är projektansvarig, kan du enkelt låta gemenskapen \n"
 #~ "  för Transifex bidraga med översättningar till ditt projekt. Grundiden\n"
 #~ "  är att du skapar en special-användare för ditt"
+
 #~ msgid "Version Control   System"
 #~ msgstr "Versionshanterings   System"
+
 #~ msgid "VCS"
 #~ msgstr "VCS"
+
 #~ msgid ""
 #~ "and we use that user to commit translations for all\n"
 #~ "  Fedora translators."
@@ -3577,10 +4499,13 @@ msgstr "Nästa"
 #~ "och vi använder den användaren för att lämna över översättningar för "
 #~ "alla\n"
 #~ "  översättare i Fedora."
+
 #~ msgid "Here's what you need to do to get it going:"
 #~ msgstr "Här är vad du behöver göra för att få igång det:"
+
 #~ msgid "1. Let us know"
 #~ msgstr "1. Berätta för oss"
+
 #~ msgid ""
 #~ "Tell us about your module by contacting your project's administrator\n"
 #~ "    (eg. by opening a bug report or ticket), attaching the following "
@@ -3590,34 +4515,46 @@ msgstr "Nästa"
 #~ "administratör\n"
 #~ "    (Tex. genom öppna en felrapport eller ett ärende), bifoga följande "
 #~ "information:"
+
 #~ msgid "Module name"
 #~ msgstr "Modulnamn"
+
 #~ msgid "VCS root, Module, Branch"
 #~ msgstr "VCS rot, Modul, Gren"
+
 #~ msgid "Web front-end to VCS"
 #~ msgstr "Webbframsida för VCS"
+
 #~ msgid "File filter (eg. '"
 #~ msgstr "Filfilter (t.ex. '"
+
 #~ msgid ".*/po/.*"
 #~ msgstr ".*/po/.*"
+
 #~ msgid "Translations' changelog file (if applicable)"
 #~ msgstr "Översättningens changelog fil (om aktuellt) "
+
 #~ msgid "Contact point (name, email, role in project)"
 #~ msgstr "Kontaktinformation (namn, epost, roll i projektet)"
+
 #~ msgid "2. Repository access"
 #~ msgstr "2. Åtkomst av förråd"
+
 #~ msgid ""
 #~ "repositories\n"
 #~ "    we are serving"
 #~ msgstr ""
 #~ "förråd\n"
 #~ "    vi hanterar"
+
 #~ msgid "and see if your project's repo is there."
 #~ msgstr "och se om ditt projekts förråd är där."
+
 #~ msgid "If it is, then we have already setup a user that accesses your repo."
 #~ msgstr ""
 #~ "Om det är det, har vi redan satt upp en använda som kan komma åt ditt "
 #~ "förråd."
+
 #~ msgid ""
 #~ "If your repo isn't listed, then we'll need to register it. An admin\n"
 #~ "        will send you the public part of an SSH key in order for you to "
@@ -3628,26 +4565,33 @@ msgstr "Nästa"
 #~ "        kommer skicka dig den offentliga delen av en SSH-nyckel så att du "
 #~ "kan skapa\n"
 #~ "        en SSH-användare (tex. 'transifex') med åtkomst till din VCS."
+
 #~ msgid ""
 #~ "Alternatively, if you're on a decentralized VCS, you may use a\n"
 #~ "        public service like"
 #~ msgstr ""
 #~ "Alternativt, om du använder en decentraliserad VCS,kan du använda en\n"
 #~ "        offentlig tjänst som"
+
 #~ msgid "Gitorious"
 #~ msgstr "Gitorious"
+
 #~ msgid "or"
 #~ msgstr "eller"
+
 #~ msgid "freeHg"
 #~ msgstr "freeHg"
+
 #~ msgid ""
 #~ ",\n"
 #~ "        where Transifex will have access to."
 #~ msgstr ""
 #~ ",\n"
 #~ "        var Transifex kommer ha åtkomst till."
+
 #~ msgid "3. Enabling the module"
 #~ msgstr "3. Aktivera modulen"
+
 #~ msgid ""
 #~ "We'll add your module to our Transifex instance, test the write access\n"
 #~ "    and report back."
@@ -3655,32 +4599,44 @@ msgstr "Nästa"
 #~ "Vi lägger till din modul till vår Transifex-instans, prova "
 #~ "skrivrättigheterna\n"
 #~ "    och rapportera tillbaka."
+
 #~ msgid "4. FIN"
 #~ msgstr "4. Slut"
+
 #~ msgid ""
 #~ "That's it! After this point, our translation community can contribute\n"
 #~ "    to your project without any other effort from your part."
 #~ msgstr ""
 #~ "Det är allt! Efter detta kan vår översättningsgemenskap bidraga\n"
 #~ "    till ditt projekt utan någon jobb från vår sida."
+
 #~ msgid "Transifex home"
 #~ msgstr "Transifex hemsida"
+
 #~ msgid "Modules accepting translations through Transifex"
 #~ msgstr "Moduler som accepterar översättning genom Transifex"
+
 #~ msgid "Modules"
 #~ msgstr "Moduler"
+
 #~ msgid "Repositories configured"
 #~ msgstr "Konfigurerade förråd"
+
 #~ msgid "Repos"
 #~ msgstr "Förråd"
+
 #~ msgid "Welcome %s!"
 #~ msgstr "Välkommen %s!"
+
 #~ msgid "Powered by"
 #~ msgstr "Drivs av"
+
 #~ msgid "Please send any comments or corrections by opening a"
 #~ msgstr "Skicka dina kommentarer och ändringar genom att öppna ett "
+
 #~ msgid ":: Add a new module"
 #~ msgstr ":: Lägg till en ny modul"
+
 #~ msgid ""
 #~ "Here are some explanations about the fields above. Required fields are\n"
 #~ "marked with a '*'."
@@ -3688,25 +4644,33 @@ msgstr "Nästa"
 #~ "Här är en del förklaringar om fälten ovan. Obligatoriska fält är "
 #~ "markerade\n"
 #~ "med en \"*\"."
+
 #~ msgid "Name*:"
 #~ msgstr "Namn*:"
+
 #~ msgid ""
 #~ "An ID for the module. Shown on the URL, usually only the description is "
 #~ "shown."
 #~ msgstr ""
 #~ "Ett ID för modulen. Visas på URL:en, oftast visas endast beskrivningen."
+
 #~ msgid "The name of the module as it will appear on the pages"
 #~ msgstr "Namnet på modulen som det kommer visas på sidorna"
+
 #~ msgid "Summary:"
 #~ msgstr "Sammandrag:"
+
 #~ msgid "One or two sentences"
 #~ msgstr "En eller två meningar"
+
 #~ msgid ""
 #~ "The homepage for the module, where people can find more information about "
 #~ "it"
 #~ msgstr "Webbsidan för modulen, där folk kan hitta mer information om den"
+
 #~ msgid "Repository*:"
 #~ msgstr "Förråd*:"
+
 #~ msgid ""
 #~ "A repository root, in centralized-VCS terms. That is, a domain/URL that "
 #~ "hosts\n"
@@ -3714,8 +4678,10 @@ msgstr "Nästa"
 #~ msgstr ""
 #~ "En förrådsrot, i centraliserad-VCS termer. Dvs en domän/URL som är värd\n"
 #~ "  för många VCS-moduler. T.ex:"
+
 #~ msgid "git.foo.com"
 #~ msgstr "git.foo.se"
+
 #~ msgid ""
 #~ ". Each repository is accessed by\n"
 #~ "  transifex using a different SSH key, chosen from the domain of the repo."
@@ -3723,34 +4689,45 @@ msgstr "Nästa"
 #~ ". Varje förråd som används av \n"
 #~ "  transifex använder en annan SSH-nyckel, som valts från domänen för "
 #~ "datalagret."
+
 #~ msgid "VCS module*:"
 #~ msgstr "VCS-modul*:"
+
 #~ msgid "The module directory (usually a subdirectory of the repo root)"
 #~ msgstr "Modulkatalogen (oftast en underkatalog till förrådsroten)"
+
 #~ msgid "Directory:"
 #~ msgstr "Katalog:"
+
 #~ msgid ""
 #~ "A directory inside scmmodule one wants to expose to transifex. For "
 #~ "example in"
 #~ msgstr ""
 #~ "En katalog inuti scmmodule som ska visas för transifex. Till exempel i"
+
 #~ msgid "/vcs-root/module-name/{client,server}/po/"
 #~ msgstr "/vcs-rot/modul-namn/{klient,server}/po/"
+
 #~ msgid ""
 #~ ", the directory would be 'client'.\n"
 #~ "  Everything in transifex will be shown relative to that directory."
 #~ msgstr ""
 #~ ", katalogen blir \"klient\".\n"
 #~ "  Allt i transifex visas relativt till den katalogen."
+
 #~ msgid "Branch*:"
 #~ msgstr "Gren*:"
+
 #~ msgid "A branch name. If it doesn't exist in our DB, we'll add it."
 #~ msgstr "Ett gren-namn. Om det inte finns i vår DB, så lägger vi till det."
+
 #~ msgid "Only files matching this regex will be shown/allowed. Eg: '.*/po/.*'"
 #~ msgstr ""
 #~ "Bara filer som matchar denna regex kommer visas/tillåtas. T.ex: '.*/po/.*'"
+
 #~ msgid "Changelog:"
 #~ msgstr "Ändringslogg:"
+
 #~ msgid ""
 #~ "A changelog file to be updated automatically with each submit. Should be\n"
 #~ "  relative to 'directory'."
@@ -3758,36 +4735,50 @@ msgstr "Nästa"
 #~ "En changelog-fil som uppdateras automatiskt vid varje överlämning. Ska "
 #~ "vara\n"
 #~ "  relativ till \"katalog\"."
+
 #~ msgid "Front-end:"
 #~ msgstr "Framsida:"
+
 #~ msgid "Back to modules"
 #~ msgstr "Tillbaka till modulerna"
+
 #~ msgid "Web front-end for the versioning system"
 #~ msgstr "Webbframsida för versionshanteringsystemet"
+
 #~ msgid "VCS web front-end"
 #~ msgstr "VCS webbframsida"
+
 #~ msgid "info"
 #~ msgstr "info"
+
 #~ msgid "Root:"
 #~ msgstr "Rot:"
+
 #~ msgid "Module in"
 #~ msgstr "Modul i"
+
 #~ msgid "Version Control System"
 #~ msgstr "Versionshanteringssystem"
+
 #~ msgid "show all"
 #~ msgstr "visa alla"
+
 #~ msgid "Branches (%(num)s):"
 #~ msgstr "Grenar (%(num)s):"
+
 #~ msgid ""
 #~ "This module is configured to receive translations through this web system."
 #~ msgstr ""
 #~ "Denna modul är inställd att ta emot översättningar genom detta webbsystem."
+
 #~ msgid "Authenticated users are presented with a file submission form."
 #~ msgstr "Autentiserade användare visas ett formulär för filöverlämning."
+
 #~ msgid "The local, checked-out copy of this module was last updated %s ago."
 #~ msgstr ""
 #~ "Den lokala, uthämtade kopian av denna modul var senast uppdaterad för %s "
 #~ "sedan."
+
 #~ msgid ""
 #~ "To update the local version of the module and pull fresh changes from "
 #~ "the\n"
@@ -3800,12 +4791,15 @@ msgstr "Nästa"
 #~ "  datalagret (det inträffar ändå innan den slutgiltiga överlämningen), "
 #~ "klicka\n"
 #~ "  \"Uppdatera\"-knappen. Beroende på modulen kan det ta ett tag."
+
 #~ msgid ""
 #~ "You may submit files to this module by filling out the following form."
 #~ msgstr ""
 #~ "Du kan skicka filer till denna modul genom att fylla i följande formulär."
+
 #~ msgid "Target branch"
 #~ msgstr "Målgren"
+
 #~ msgid ""
 #~ "This module has serveral branches (versions)\n"
 #~ "    registered. Usually submissions happen on the main branch "
@@ -3817,32 +4811,44 @@ msgstr "Nästa"
 #~ "    registrerade. Oftast händer överlämningar på huvudgrenen (markerad\n"
 #~ "    i listan), men en del moduler kräver att översättningar skickas\n"
 #~ "    som en annan patch för en viss utgåva."
+
 #~ msgid ":: Module list"
 #~ msgstr ":: Modullista"
+
 #~ msgid "Modules and repositories"
 #~ msgstr "Moduler och förråd"
+
 #~ msgid ""
 #~ "Here's a list of all the modules that are currently accepting "
 #~ "contributions."
 #~ msgstr "Här är en lista över alla moduler som accepterar översättningar."
+
 #~ msgid "Please preview the submission before hitting the \"Submit!\" button."
 #~ msgstr ""
 #~ "Förhandsgranska din överlämning innan du trycker på \"Överlämna!\"-"
 #~ "knappen."
+
 #~ msgid "Repository root:"
 #~ msgstr "Förrådsrot:"
+
 #~ msgid "Module in VCS:"
 #~ msgstr "Modul i VCS:"
+
 #~ msgid "(web front-end)"
 #~ msgstr "(webbframsida)"
+
 #~ msgid "Differences"
 #~ msgstr "Skillnader"
+
 #~ msgid "Here are the changes about to be submitted."
 #~ msgstr "Här är de ändringar som är på väg att lämnas över."
+
 #~ msgid "The module's changelog file will be updated as follows."
 #~ msgstr "Modulens changelog-fil kommer uppdateras enligt följande."
+
 #~ msgid "(%s lines)"
 #~ msgstr "(%s rader)"
+
 #~ msgid ""
 #~ "Note: Diffsets are not being previewed. Please make sure you are\n"
 #~ "  committing the right file/content before continuing. You might also "
@@ -3854,57 +4860,75 @@ msgstr "Nästa"
 #~ "  överlämnar rätt fil/innehåll innan du fortsätter. Du borde också \n"
 #~ "  kontrollera skillnaderna för modulens källkod och webbframsida direkt "
 #~ "efter överlämningen."
+
 #~ msgid "The following message will be used for submitting the file to the"
 #~ msgstr "Följande meddelande kommer användas när filen överlämnas till "
+
 #~ msgid ":: People"
 #~ msgstr ":: Personer"
+
 #~ msgid "The system has information on the following people:"
 #~ msgstr "Systemet har information om följande personer:"
+
 #~ msgid ":: Person ::"
 #~ msgstr ":: Person ::"
+
 #~ msgid ":: Repositories"
 #~ msgstr ":: Förråd"
+
 #~ msgid ""
 #~ "Here's a list of the repositories we are currently serving translations "
 #~ "to."
 #~ msgstr "Här är en lista på de förråd som vi hanterar översättningar för."
+
 #~ msgid ""
 #~ "An ID for the repository. Shown on the URL, usually only the description "
 #~ "is shown."
 #~ msgstr ""
 #~ "Ett ID för datalagret. Visas på URL:en, oftast visas endast beskrivningen."
+
 #~ msgid "The name of the repository as it will appear on the pages"
 #~ msgstr "Namnet på det förråd som det kommer visas på sidorna"
+
 #~ msgid "Root*:"
 #~ msgstr "Rot*:"
+
 #~ msgid ""
 #~ "The URI/location of the repository. Could be anything acceptable for the\n"
 #~ "  particular VCS, for example a local directory ("
 #~ msgstr ""
 #~ "URI/plats för datalagret. Kan vara vadsomhelst som accepteras för \n"
 #~ "  en viss VCS, till exempel en lokal katalog ("
+
 #~ msgid "/foo/bar"
 #~ msgstr "/foo/bar"
+
 #~ msgid ""
 #~ "), a URI\n"
 #~ "  (eg."
 #~ msgstr ""
 #~ "), en URI\n"
 #~ "  (t.ex."
+
 #~ msgid "ssh://"
 #~ msgstr "ssh://"
+
 #~ msgid "http://"
 #~ msgstr "http://"
+
 #~ msgid "...), etc."
 #~ msgstr "...), etc."
+
 #~ msgid ""
 #~ "The homepage for the repository/project, where people can find more "
 #~ "information about it"
 #~ msgstr ""
 #~ "Hemsidan för datalagret/projektet, där folk kan hitta mer information om "
 #~ "det"
+
 #~ msgid "Destination file"
 #~ msgstr "Destinationsfil"
+
 #~ msgid ""
 #~ "A commit message is a log or record of the changes made by a commit.\n"
 #~ "  For example:"
@@ -3912,28 +4936,36 @@ msgstr "Nästa"
 #~ "Ett överlämningsmeddelande är en logg eller journal över de ändringar som "
 #~ "gjorts av en överlämning.\n"
 #~ "  Till exempel:"
+
 #~ msgid "Note: This module keeps a track of contributions in a"
 #~ msgstr "Notis: Denna modul håller reda på uppdateringar för en"
+
 #~ msgid ""
 #~ "file. Your submission will trigger an automatic\n"
 #~ "  update of the file"
 #~ msgstr ""
 #~ "fil. Din uppdatering kommer starta en automatisk\n"
 #~ "  uppdatering av filen"
+
 #~ msgid ""
 #~ "in this module's\n"
 #~ "  repository."
 #~ msgstr ""
 #~ "i denna modulens\n"
 #~ "  förråd."
+
 #~ msgid ":: Information for submitting translations"
 #~ msgstr ":: Information om hur du skickar in översättningar"
+
 #~ msgid "Information for translators"
 #~ msgstr "Information för översättare"
+
 #~ msgid "Here's what you need to do:"
 #~ msgstr "Här är vad du behöver göra:"
+
 #~ msgid "1. Obtain a PO file"
 #~ msgstr "1. Hämta en PO-fil"
+
 #~ msgid ""
 #~ "You can checkout the module from the\n"
 #~ "    repository it is hosted, anonymously or not. Alternatively, if your "
@@ -3951,8 +4983,10 @@ msgstr "Nästa"
 #~ "    till PO-filer för projekt, kan du använda det. Eller så kan du ha "
 #~ "fått en PO-fil via epost.\n"
 #~ "    Så länge du har en PO-fil att översätta och överlämna!"
+
 #~ msgid "2. Translate"
 #~ msgstr "2. Översätt"
+
 #~ msgid ""
 #~ "Translate the file, make corrections, etc. Be aware that some projects "
 #~ "might\n"
@@ -3964,20 +4998,26 @@ msgstr "Nästa"
 #~ "    auto-förena POT-filen med PO-filerna, så du kanske måste hämta POT-"
 #~ "filen också\n"
 #~ "    och förena dem med"
+
 #~ msgid "msgmerge lang.old.po potfile.pot > lang.po"
 #~ msgstr "msgmerge språk.gammal.po pot-fil.pot > språk.po"
+
 #~ msgid "3. Validate"
 #~ msgstr "3. Validera"
+
 #~ msgid ""
 #~ "Check your file for validity, correctness, and completeness with a "
 #~ "command like"
 #~ msgstr ""
 #~ "Kontrollera att din fil är giltig, korrekt och komplett med ett kommando "
 #~ "som"
+
 #~ msgid "msgfmt -c --statistics"
 #~ msgstr "msgfmt -c --statistics"
+
 #~ msgid "4. Login"
 #~ msgstr "4. Logga in"
+
 #~ msgid ""
 #~ "with your username and password. You may need to be a member\n"
 #~ "    of a particular user group to be able to submit translations. If you "
@@ -3988,8 +5028,10 @@ msgstr "Nästa"
 #~ "    av en viss användargrupp för att kunna överlämna översättningar. Om "
 #~ "du inte redan är medlem av översättargruppen,\n"
 #~ "    titta på ditt projekts FAQ om hur du blir medlem."
+
 #~ msgid "5. Upload"
 #~ msgstr "5. Skicka"
+
 #~ msgid ""
 #~ "you want your file to be submitted\n"
 #~ "    to. Select the file from your system, choose a destination, write a "
@@ -4000,6 +5042,7 @@ msgstr "Nästa"
 #~ "    till. Välj filen från ditt system, välj en destination, skriv en "
 #~ "changelog-notis och klicka\n"
 #~ "    'Förhandsgranska'."
+
 #~ msgid ""
 #~ "Preview the diff between the original and new file, and the commit "
 #~ "message.\n"
@@ -4008,8 +5051,9 @@ msgstr "Nästa"
 #~ "Förhandsvisa skillnaderna mellan originalet och den ny filen samt visa "
 #~ "överlämningsmeddelandet.\n"
 #~ "    Om allt ser ok ut, klicka \"Överlämna\" så är du klar."
+
 #~ msgid "Jump to modules"
 #~ msgstr "Hoppa till modulerna"
+
 #~ msgid "show more"
 #~ msgstr "visa mer"
-
