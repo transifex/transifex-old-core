@@ -71,8 +71,8 @@ class HgBrowser(BrowserMixin):
         """
 
         try:
-            remote_repo, repo = hg.clone(ui, self.remote_path, self.path)
-            hg.clean(repo, self.branch, show_stats=False)
+            remote_repo, repo = hg.clone(ui, self.remote_path, self.path,
+                                         update=True)
         except RepoError, e:
             # Remote repo error
             logger.error(traceback.format_exc())
@@ -118,8 +118,8 @@ class HgBrowser(BrowserMixin):
         
         """
         try:
-            commands.pull(self.repo.ui, self.repo, rev=None, force=False, update=True)
-            hg.clean(self.repo, self.branch, show_stats=False)
+            commands.pull(self.repo.ui, self.repo, rev=None, force=False)
+            self._clean_dir()
         except RepoError, e:
             logger.error(traceback.format_exc())
             raise BrowserError, e
@@ -131,11 +131,10 @@ class HgBrowser(BrowserMixin):
         object.
         """
         try:
-            if not obj:
-                return (int(self.repo[self.branch].node().encode('hex'), 16),)
-            else:
-                f = self.repo[self.branch][obj]
-                return (int(f.node().encode('hex'), 16),)
+            ctx = self.repo[self.branch]
+            if obj:
+                ctx = ctx[obj]
+            return (int(ctx.node().encode('hex'), 16),)
         except LookupError, e:
             raise BrowserError(e)
 
