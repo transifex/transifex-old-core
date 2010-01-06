@@ -16,4 +16,4 @@ class UserAjaxPermissionForm(UserPermissionForm):
     """
 
     user = AutoCompleteField('users', required=True, label=_('User'),
-        help_text=_('Search for an username'))
+        help_text=_('Search for a username'))

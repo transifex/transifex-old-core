@@ -30,40 +30,40 @@ NOTICE_TYPES = [
             },
             {
                 "label": "project_submit_access_requested",
-                "display": _("Submit access to project requested"), 
-                "description": _("when an user request access to submit files " \
+                "display": _("Submit access for project requested"), 
+                "description": _("when a user requests access to submit files " \
                                  "to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_request_denied",
-                "display": _("Submit access request to project denied"), 
-                "description": _("when a maintainer denies access to an user " \
+                "display": _("Submit access request for project denied"), 
+                "description": _("when a maintainer denies access to a user " \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_request_withdrawn",
-                "display": _("Submit access request to project withdrawn"), 
-                "description": _("when an user withdraws the access request" \
+                "display": _("Submit access request for project withdrawn"), 
+                "description": _("when a user withdraws the access request" \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_granted",
-                "display": _("Submit access to project granted"), 
-                "description": _("when a maintainer grants access to an user " \
+                "display": _("Submit access for project granted"), 
+                "description": _("when a maintainer grants access to a user " \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_revoked",
-                "display": _("Submit access to project revoked"), 
-                "description": _("when a maintainer revokes the access of an " \
+                "display": _("Submit access for project revoked"), 
+                "description": _("when a maintainer revokes the access of a " \
                                  "user to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,

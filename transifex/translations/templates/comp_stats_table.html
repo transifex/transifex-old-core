@@ -24,7 +24,7 @@
           {% if stat.language %}
               <a href="{{stat.language.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
           {% else %}
-              <span class="stat_message" title="{% trans "There is no language registered that matches with this code" %}" >{{ stat.language_code }}</span>
+              <span class="stat_message" title="{% trans "There are no languages registered matching this code" %}" >{{ stat.language_code }}</span>
           {% endif %}
           {% if stat.error %}
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>

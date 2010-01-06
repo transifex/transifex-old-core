@@ -31,7 +31,7 @@
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-      <a class="simlink" href="{% url transifex.home %}" title="{% trans "Go to start page" %}">
+      <a class="simlink" href="{% url transifex.home %}" title="{% trans "Go to the start page" %}">
         {% block logo %}<img border="0" src="/site_media/images/tx-logo.png"  alt="{% trans "Go to start page" %}" />{% endblock %}
       </a>
     </div>
@@ -112,7 +112,7 @@
 
   <div id="footer">{% block footer %}
     <p class="main-footer center">
-      {% block footerlinks %}{% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Get in contact with us" %}">{% trans "Feedback" %}</a>{% endblock %}
+      {% block footerlinks %}{% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Drops us a line" %}">{% trans "Feedback" %}</a>{% endblock %}
     </p>
     {% block powered %}<p class="powered">{% blocktrans %}Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform{% endblocktrans %}</p>{% endblock %}
     {% block txversionblock %}<p class="version">v{% txversion %}</p>{% endblock %}

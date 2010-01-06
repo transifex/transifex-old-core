@@ -53,6 +53,6 @@ class VcsUnitSubForm(forms.ModelForm):
         codebase_type = cleaned_data.get("type")
         if branch and not self.fields['branch'].required and not \
             settings.BRANCH_SUPPORT[codebase_type]:
-            msg = _(u"This type of repository does not accept branch")
+            msg = _(u"This type of repository does not accept branches")
             raise forms.ValidationError(msg)
         return cleaned_data

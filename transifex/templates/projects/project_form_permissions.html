@@ -79,7 +79,7 @@
 {% if all_permissions %}
 {% autopaginate all_permissions 20 %}
 <div class="list separate">
-<h4>{% trans "Users with guaranteed access to submit files:" %}</h4>
+<h4>{% trans "Users with access to submit files:" %}</h4>
 <ul>
 {% for perm in all_permissions|dictsort:"user.username" %}
     <li>

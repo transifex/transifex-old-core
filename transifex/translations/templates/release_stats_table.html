@@ -15,7 +15,7 @@
           {% if stat.language %}
               <a href="{% url language_release stat.language.code collection.slug release.slug %}" title="{% trans "See the detailed statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
           {% else %}
-              <span class="stat_message" title="{% trans "There is no language registered that matches with this file" %}" >{{stat.filename}}</span>
+              <span class="stat_message" title="{% trans "There are no languages registered matching this file" %}" >{{stat.filename}}</span>
           {% endif %}
           {% if stat.error %}
               <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>

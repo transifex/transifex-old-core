@@ -34,7 +34,7 @@
 
 {% block userprofile_content %}
   <h2>{% trans "Avatar selection page" %}</h2>
-  <p>{% trans "You have several options to select the image you want as avatar on your profile." %}</p>
+  <p>{% trans "You have several options to select the image you want to use as avatar on your profile." %}</p>
 
   {% load avatars %}
   <div class="center">
@@ -53,7 +53,7 @@
 				</p>
 			</li>
 			<li>
-				<label for="id_url">{% trans "Select an image from a remote URL. Put the URL on the input below and we'll retrieve the image for you" %}:</label>
+				<label for="id_url">{% trans "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you" %}:</label>
 				<p>{{ form.url }}
 				<input type="submit" value="{% trans 'Done' %}" />
 				</p>

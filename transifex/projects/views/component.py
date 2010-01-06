@@ -245,10 +245,10 @@ def component_set_stats(request, project_slug, component_slug):
 
         except PotDirError:
             logger.debug("There is no 'pot' directory in the set of files. %s does "
-                        "not seem to be a Publian like project."
+                        "not seem to be a Publican like project."
                         % component.full_name)
             request.user.message_set.create(message = _("There is no 'pot' "
-                "directory named in the set of files of this Publian like "
+                "directory named in the set of files of this Publican like "
                 "component. Maybe its file filter is not allowing access to it."))
 
     else:
@@ -372,7 +372,7 @@ def component_submit_file(request, project_slug, component_slug,
 
             if not re.compile(component.file_filter).match(filename):
                 request.user.message_set.create(message=_("The target " 
-                                       "file does not match with the "
+                                       "file does not match the "
                                        "component file filter"))
                 return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))

@@ -15,7 +15,7 @@
 
 {% get_permissions project as "all_permissions" %}
 {% if all_permissions %}
-<h4>{% trans "Users with guarantied access to submit files:" %}</h4>
+<h4>{% trans "Users with access to submit files:" %}</h4>
 <ul>
 {% for perm in all_permissions %}
     <li>{{ perm.user }} - {% txpermission_delete_form project perm %}</li>

@@ -230,7 +230,7 @@ def team_join_request(request, project_slug, language_code):
         except IntegrityError:
             transaction.rollback()
             request.user.message_set.create(message=_(
-                "You already have a pending request for joining the '%s' team."
+                "You already have a pending request to join the '%s' team."
                 ) % team.language.name)
 
     return HttpResponseRedirect(reverse("team_detail", 

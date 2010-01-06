@@ -182,7 +182,7 @@ def project_toggle_watch(request, project_slug):
         try:
             result = {
                 'style': 'watch_remove',
-                'title': _('Stop wathing this project'),
+                'title': _('Stop watching this project'),
                 'project': True,
                 'url': url,
                 'error': None,

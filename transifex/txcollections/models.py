@@ -24,7 +24,7 @@ class Collection(models.Model):
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
-        help_text=_('A string like a name or very short description.'))
+        help_text=_('A short name or very short description.'))
     description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object.'))
     long_description = models.TextField(_('Long description'), blank=True, max_length=1000,
