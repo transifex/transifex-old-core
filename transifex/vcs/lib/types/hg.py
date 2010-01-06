@@ -133,8 +133,10 @@ class HgBrowser(BrowserMixin):
         try:
             ctx = self.repo[self.branch]
             if obj:
-                ctx = ctx[obj]
-            return (int(ctx.node().encode('hex'), 16),)
+                node = ctx[obj].filenode()
+            else:
+                node = ctx.node()
+            return (int(node.encode('hex'), 16),)
         except LookupError, e:
             raise BrowserError(e)
 
