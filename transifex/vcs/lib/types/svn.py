@@ -247,10 +247,22 @@ class SvnBrowser(BrowserMixin):
         for filename in absolute_filenames:
             if not self.client.status(filename)[0]['is_versioned']:
                 self.client.add(filename)
-        
+
+        # Get username from User or Profile, depending on the type of instance 
+        # that the parameter 'user' is.
+        username = getattr(user, 'username', user.user.username)
+
         try:
             # svn ci files
-            self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+            r = self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+
+            try:
+                # Set the author property for the revision
+                self.client.revpropset("svn:author", username, self.root, r)
+            except pysvn.ClientError, e:
+                logger.info("Could not set author property for a svn commit:\n"
+                    "%s" % str(e))
+
             self.update()
         except pysvn.ClientError, e:
             _exception_handler(e)
