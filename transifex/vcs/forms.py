@@ -37,7 +37,8 @@ class VcsUnitSubForm(forms.ModelForm):
             self.fields['branch'].required = False
         # Set the attr id of the branch field
         self.fields['branch'].widget.attrs['id']='branch' 
-
+        self.fields['root'].help_text = _(
+            "The URL of the versioning system repository/branch.")
 
     class Meta:
         model = VcsUnit
