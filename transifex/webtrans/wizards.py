@@ -112,7 +112,7 @@ class TransFormWizard(SessionWizard):
             if not form.is_valid():
                 return self.render(request, step, form)
             # Submit whenever the 'submit' button is pressed
-            if 'submit' in request.POST:
+            if 'submit' in request.POST or 'submit_for_review' in request.POST:
                 return self.finish(request)
             return self.render(request, self.next_step(request, step))
         return self.render(request, step)

@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
+from reviews.views import review_list
+
 from projects.feeds import LatestProjects, ProjectFeed
 from projects.models import Project
 from projects.permissions import pr_component_submit_file
@@ -247,3 +249,11 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
             name = 'component_edit_file',),
         )
 
+#TODO: Make this setting work throughout the applications
+if getattr(settings, 'ENABLE_REVIEWS', True):
+    urlpatterns += patterns('',
+        url(
+            regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
+                     'reviews/$'),
+            view = review_list,
+            name = 'review_list',),)
