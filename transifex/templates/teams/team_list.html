@@ -34,13 +34,13 @@
 <div class="project_create generic_form">
 
 
-{% with project.teamrequest_set.all as teamrequests %}
+{% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
 {% if teamrequests %}
 {% autopaginate teamrequests 20 %}
 <div class="list">
 <h4>{% trans "List of team requests:" %}</h4>
 <ul>
-{% for teamrequest in teamrequests|dictsort:"language.name" %}
+{% for teamrequest in teamrequests %}
     <li class="i16 team_request">
         <span class="name notice">{{ teamrequest.language.name }}</span> 
         <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
@@ -64,13 +64,13 @@
 {% endwith %}
 
 
-{% with project.team_set.all as teams %}
+{% with project.team_set.all|dictsort:"language.name" as teams %}
 {% if teams %}
 {% autopaginate teams 20 %}
 <div class="list">
 <h4>{% trans "List of available teams:" %}</h4>
 <ul>
-{% for team in teams|dictsort:"language.name" %}
+{% for team in teams %}
     <li class="i16 team">
         <a class="name" href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a> 
           <span class="details">- {% blocktrans count team.coordinators.all|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %} 
