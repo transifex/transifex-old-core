@@ -31,7 +31,7 @@
     {% if team.mainlist %}
     <tr>
       <th class="i16 email">{% trans "Mainlist:" %}</th>
-      <td><a title="{% trans "Main mailing list" %}" href="{{ team.mainlist }}" target="_blank" >{{ team.mainlist }}</a></td>
+      <td>{{ team.mainlist|mungify:team.mainlist }} </a></td>
     </tr>
     {% endif %}
     
