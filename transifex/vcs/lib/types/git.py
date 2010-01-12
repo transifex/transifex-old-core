@@ -135,7 +135,7 @@ class GitBrowser(BrowserMixin):
             if rev:
                 return (int(rev, 16),)
             else:
-                return (int(0, 16),)
+                return (0,)
         # TODO: Make it more specific
         except:
             logger.error(traceback.format_exc())
