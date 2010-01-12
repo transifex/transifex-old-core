@@ -33,7 +33,10 @@ class IntegerTupleField(models.CharField):
         return super(IntegerTupleField, self).formfield(**defaults)
     
     def to_python(self, value):
-        if value.startswith('(') and value.endswith(')'):
+        if type(value) == tuple:
+            return value
+        if type(value) == unicode and value.startswith('(') and \
+            value.endswith(')'):
             return eval(value)
         if value == '':
             return ()
