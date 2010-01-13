@@ -6,8 +6,11 @@ google.setOnLoadCallback(function() {
     });
 
 {% if WEBTRANS_SUGGESTIONS %}    
-    is_supported_lang = google.language.isTranslatable('{{ pofile.language_code }}');
-    if (is_supported_lang) {
+    source_lang = '{{ pofile.object.source_lang }}';
+    file_lang = '{{ pofile.language_code }}';
+    is_supported_lang = google.language.isTranslatable(file_lang);
+    is_supported_source_lang = google.language.isTranslatable(source_lang);
+    if (is_supported_lang && is_supported_source_lang) {
 	    $('a.suggest').click(function() {
 	        var a=$(this), str=a.html();
             a.removeClass("action");
@@ -15,7 +18,7 @@ google.setOnLoadCallback(function() {
 	        orig=$('.msg', a.parents('tr')).find('p:first').html();
 	        trans=$('textarea', a.parents('tr'));
 	        orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
-	        google.language.translate(orig, "en", "{{ pofile.language_code }}", function(result) {
+	        google.language.translate(orig, source_lang, file_lang, function(result) {
 	            if (!result.error) {
 	                trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
                         nkey = trans.attr('name').split('msgstr_field_')[1];
