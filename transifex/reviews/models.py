@@ -112,10 +112,9 @@ class POReviewRequest(models.Model):
     @property
     def language(self):
         try:
-            lang = Language.objects.by_code_or_alias(self.lang_code)
+            return Language.objects.by_code_or_alias(self.lang_code)
         except Language.DoesNotExist:
-            return ""
-        return lang
+            pass
 
     @property
     def score(self):
@@ -124,13 +123,13 @@ class POReviewRequest(models.Model):
 
 class ReviewLikeManager(models.Manager):
     def review_score(self, review):
-        sum = 0
+        sum_ = 0
         for r in ReviewLike.objects.filter(reviewrequest=review):
             if r.like:
-                sum += 1
+                sum_ += 1
             else:
-                sum -= 1
-        return sum
+                sum_ -= 1
+        return sum_
 
 class ReviewLike(models.Model):
     """Mark a review as like or dislike for a specific user."""
