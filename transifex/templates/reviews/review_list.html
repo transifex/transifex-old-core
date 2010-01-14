@@ -14,37 +14,6 @@
   </script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
-  
-  <script type="text/javascript">
-function show_reply_form(comment_id, url, person_name) {
-    var comment_reply = $('#' + comment_id);
-    var to_add = $( new Array(
-    '<div class="response"><p>Reply to ' + person_name + ':</p>',
-    '<form method="POST" action="' + url + '">',
-    '<ul>',  '{{ form.as_ul|oneline }}',
-    '<li><input type="submit" value="Submit Comment" /></li>',
-    '</ul>', '</form>', '</div>').join(''));
-    to_add.css("display", "none");
-    comment_reply.after(to_add);
-    to_add.slideDown(function() {
-        comment_reply.replaceWith(new Array('<a id="',
-        comment_id,'" href="javascript:hide_reply_form(\'',
-        comment_id, '\',\'', url, '\',\'', person_name,
-        '\')">Stop Replying</a>').join(''));
-    });
-}
-function hide_reply_form(comment_id, url, person_name) {
-    var comment_reply = $('#' + comment_id);
-    comment_reply.next().slideUp(function (){
-        comment_reply.next('.response').remove();
-        comment_reply.replaceWith(new Array('<a id="',
-        comment_id,'" href="javascript:show_reply_form(\'',
-        comment_id, '\',\'', url, '\',\'', person_name,
-        '\')">Reply</a>').join(''));
-    });
-}
-</script>
-
 
 {% endblock %}
 
@@ -54,13 +23,14 @@ function hide_reply_form(comment_id, url, person_name) {
 
 
 {% block content_title %}
-<h2 class="pagetitle">{% trans "Review Requests" %}</h2>
+<h2 class="pagetitle">{% trans "Translation Review Requests" %}</h2>
 {% endblock %}
 
 {% block content %}
   <h2>{% trans "Open Requests" %}</h2>
 
 {% for review in component.reviews.open_reviews.all %}
+<div id="review-{{review.id}}" class="separate">
 {% with review.id as review_id %}
 {% url review_modify review_id as modify_url %}
 
@@ -73,21 +43,26 @@ function hide_reply_form(comment_id, url, person_name) {
     </tr>
     <tr>
       <th class="i16 release">{% trans "Who and when" %}</th>
-      <td>{% blocktrans with review.author as author and review.created_on|timesince as time_since %}{{ author }}, {{ time_since }} ago{% endblocktrans %}</td>
+      <td>
+      <a href="{% url profile_public review.author %}" title="{% trans "See profile" %}">{{ review.author }}</a>,
+      {% blocktrans with review.created_on|timesince as time_since %}
+        {{ time_since }} ago
+      {% endblocktrans %}
+      </td>
     </tr>
     <tr>
       <th class="i16 team">{% trans "Translation Language" %}</th>
       <td>
         {% if review.language %}
-            {{ review.language }}
+            <a href="{% url language_detail review.language.code %}" title="{% trans "Go to language page" %}" >{{ review.language }}</a>
         {% else %}
             {{ review.lang_code }}
         {% endif %}
       </td>
     </tr>
     <tr>
-      <th class="i16 submit_file">{% trans "File" %}</th>
-      <td><a href="{{ review.file_url }}">{{ review.file_name }}</a></td>
+      <th class="i16 submit_file">{% trans "File target" %}</th>
+      <td><a href="{{ review.file_url }}" title="{% trans "Download the version sent for review" %}" >{{ review.target_filename }}</a></td>
     </tr>
     <tr>
       <th class="i16 star">{% trans "Score" %}</th>
@@ -117,7 +92,6 @@ function hide_reply_form(comment_id, url, person_name) {
       <th class="i16 reviews">{% trans "Close Review" %}</th>
       <td>
         <form action="{{ modify_url }}" class="microform" method='post'>
-          <input type="hidden" name="message" value="Updates to {% if review.language %} {{ review.language }}{% else %}{{ review.lang_code }} {% endif %} translation">
           <input class="i16 tick" title="{% trans "Accept and submit translation" %}"  value="{% trans "Accept" %}" type="submit" name="accept">
           <input class="i16 delete" title="{% trans "Reject translation" %}"  value="{% trans "Reject" %}" type="submit" name="reject">
         </form>
@@ -135,7 +109,7 @@ function hide_reply_form(comment_id, url, person_name) {
         <li id="c{{ comment.id }}" style="margin-left: {{ comment.depth }}em;">
                 <p class="title">
                         <a class="jump" href="#c{{ comment.id }}">#{{ forloop.counter }}</a> ~
-                        <span class="author">By {{ comment.name }}</span>
+                        <span class="author">{% trans "By" %} <a href="{% url profile_public comment.name %}" title="{% trans "See profile" %}">{{ comment.name }}</a></span>
                         ~ {{ comment.date_submitted|timesince }}
                 </p>
                 {% auto_transform_markup comment %}
@@ -145,19 +119,20 @@ function hide_reply_form(comment_id, url, person_name) {
 {% endif %}
 
 {% if request.user.is_authenticated %}
-<h4 style="margin-bottom: 0;">Add your comment as <em>{{ request.user }}</em></h4>
+<h4 style="margin-bottom: 0;">{% trans "Add your comment as" %} <em>{{ request.user }}</em></h4>
 
 <fieldset class="shinyform">
 <form method="POST" action="{% get_free_comment_url review %}">
     <ol>
         {{ comment_form.as_ul }}
-        <li><input class="i16 comment" type="submit" value="Say it!" /></li>
+        <li><input class="i16 comment" type="submit" value="{% trans "Say it!" %}" /></li>
     </ol>
 </form>
 </fieldset>
 {% endif %}
 
 {% endwith %}
+</div>
 {% endfor %}
 
 {% if not component.reviews.open_reviews %}
