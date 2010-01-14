@@ -595,7 +595,7 @@ msgstr "Últimos proyectos en %(site_name)s"
 
 #: projects/feeds.py:14
 msgid "Updates on changes and additions to registered projects."
-msgstr "Actualizaciones sobre los cambios y adiciones a los proyectos registrados."
+msgstr "Actualizaciones de los cambios y adiciones a los proyectos registrados."
 
 #: projects/feeds.py:30
 #, python-format
@@ -605,7 +605,7 @@ msgstr "%(site_name)s: Componentes en %(project)s"
 #: projects/feeds.py:35
 #, python-format
 msgid "Latest components in project %s."
-msgstr "Últimos componentes en proyecto %s."
+msgstr "Últimos componentes en el proyecto %s."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
 #, fuzzy
@@ -720,7 +720,7 @@ msgstr "Habilitado"
 #: projects/models.py:106 projects/models.py:224 releases/models.py:44
 #: txcollections/models.py:36
 msgid "Enable this object or disable its use?"
-msgstr "¿Activar o desactivar el uso del objeto?"
+msgstr "¿Activar o desactivar el uso de este objeto?"
 
 #: projects/models.py:110 projects/migrations/0001_initial.py:23
 msgid "Tags"
@@ -908,7 +908,7 @@ msgstr "Lo sentimos, pero usted tendrá que enviar una solicitud POST."
 
 #: projects/views/component.py:525
 msgid "Lock removed."
-msgstr "Bloqueo removido."
+msgstr "Candado removido."
 
 #: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
@@ -936,54 +936,54 @@ msgid "Stop watching this project"
 msgstr "Dejar de ver este proyecto"
 
 #: projects/views/team.py:168
-#, fuzzy, python-format
+#, python-format
 msgid "The '%s' team was deleted."
-msgstr "El %s fue eliminado."
+msgstr "El equipo %s fue eliminado."
 
 #: projects/views/team.py:205
 #, python-format
 msgid "You are in the '%s' team already."
-msgstr ""
+msgstr "Ya estás en el equipo '%s'."
 
 #: projects/views/team.py:210
 #, python-format
 msgid "You have added a request for joining the '%s' team."
-msgstr ""
+msgstr "Has añadido una solicitud para unirte al equipo '%s'."
 
 #: projects/views/team.py:233
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
-msgstr ""
+msgstr "Tienes una solicitud pendiente para unirte al equipo '%s'."
 
 #: projects/views/team.py:260
-#, python-format
+#, python-format, fuzzy
 msgid "User '%(user)s' is in the '%(team)s' team already."
-msgstr ""
+msgstr "El usuario '%(user)s' ya está en el equipo '%(team)'s."
 
 #: projects/views/team.py:267
-#, python-format
+#, python-format, fuzzy
 msgid "You have added '%(user)s' into the '%(team)s' team."
-msgstr ""
+msgstr "Has añadido a '&(user)s' al equipo '%(team)s'."
 
 #: projects/views/team.py:314
-#, python-format
+#, python-format, fuzzy
 msgid "You have denied the request of the user '%(user)s' to join the '%(team)s' team."
-msgstr ""
+msgstr "Has denegado la solicitud del usuario '%(user)s' para unirse al equipo '%(team)s'"
 
 #: projects/views/team.py:357
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
-msgstr ""
+msgstr "Has retirado tu solicitud para unirte al equipo '%s'."
 
 #: projects/views/team.py:398
 #, python-format
 msgid "You have left the '%s' team."
-msgstr ""
+msgstr "Has dejado el equipo '%s'."
 
 #: projects/views/team.py:419
 #, python-format
 msgid "You are not in the '%s' team."
-msgstr ""
+msgstr "No estás en el equipo '%s'."
 
 #: projects/views/team.py:440
 #, fuzzy
@@ -993,27 +993,27 @@ msgstr "Por favor, seleccione un archivo de su sistema para ser cargado."
 #: projects/views/team.py:453
 #, python-format
 msgid "'%s' team already exist."
-msgstr ""
+msgstr "El equipo '%s' ya existe."
 
 #: projects/views/team.py:459
 #, python-format
 msgid "A request for creating the '%s' team already exist."
-msgstr ""
+msgstr "Ya existe una solicitud para crear el equipo '%s'."
 
 #: projects/views/team.py:467
 #, python-format
 msgid "You have requested the '%s' team creation."
-msgstr ""
+msgstr "Has solicitado la creación del equipo '%s'."
 
 #: projects/views/team.py:512
-#, python-format
+#, python-format, fuzzy
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "Has aprobado la solicitud de creación del equipo '%(team)s' hecha por '%(user)s'."
 
 #: projects/views/team.py:554
-#, python-format
+#, python-format, fuzzy
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "Has rechazado la solicitud de creación del equipo '%(team)s' hecha por '%(user)s'."
 
 #: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
@@ -1029,24 +1029,25 @@ msgstr "Fecha de lanzamiento"
 
 #: releases/models.py:32
 msgid "When this release will be available."
-msgstr "Cuando esta versión este disponible."
+msgstr "Cuándo esta versión estará disponible."
 
 #: releases/models.py:33
+#, fuzzy
 msgid "String freeze date"
 msgstr "Fecha de congelamiento de cadena"
 
 #: releases/models.py:34
-#, fuzzy
 msgid "When the translatable strings will be frozen (no strings which affect translations can be added/modified)."
-msgstr "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o modificar cadenas que afecten las  traducciones."
+msgstr "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o modificar cadenas que afecten las  traducciones)."
 
 #: releases/models.py:36 txcollections/migrations/0001_initial.py:25
+#, fuzzy
 msgid "Devel freeze date"
-msgstr "Fecha de congelamiento de desarrollo"
+msgstr "Fecha de congelamiento del desarrollo"
 
 #: releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
-msgstr "La última fecha que los paquetes de este lanzamiento se pueden crear desde los desarrolladores. Las traducciones enviadas después de esta fecha no serán incluidas en esta versión."
+msgstr "La última fecha en que los paquetes de este lanzamiento se pueden crear desde los desarrolladores. Las traducciones enviadas después de esta fecha no serán incluidas en esta versión."
 
 #: releases/models.py:54
 msgid "release"
@@ -1066,9 +1067,9 @@ msgid "Stop watching it"
 msgstr "Dejar de ver esto"
 
 #: repowatch/models.py:28
-#, python-format
+#, python-format, fuzzy
 msgid "Unable to add watch for path %r"
-msgstr "No se puede agregar mirar para ruta %r"
+msgstr "No se puede agregar la función mirar para la ruta %r"
 
 #: repowatch/models.py:97
 msgid "watch"
@@ -1076,7 +1077,7 @@ msgstr "mirar"
 
 #: repowatch/models.py:98
 msgid "watches"
-msgstr "Vistas"
+msgstr "vistas"
 
 #: simplelock/models.py:39
 msgid "Lock"
@@ -1096,20 +1097,20 @@ msgstr "tarballs"
 
 #: teams/forms.py:12
 msgid "Coordinators are people that can manage the members of the team, for example. Search for usernames."
-msgstr ""
+msgstr "Los coordinadores son personas que pueden, por ejemplo, administrar los miembros del equipo. Buscar nombres de usuario."
 
 #: teams/forms.py:16
 msgid "Members are actually people that can submit translations. Search for usernames."
-msgstr ""
+msgstr "Lo miembros son quienes envían las traducciones. Buscar nombres de usuario."
 
 #: teams/forms.py:45
 #, python-format
 msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
-msgstr ""
+msgstr "Tienes al usuario '%s' en la lista de coordinadores y de miembros. Por favor, quítalo de alguna."
 
 #: teams/models.py:27 teams/models.py:69
 msgid "The project which this team belongs to."
-msgstr ""
+msgstr "El proyecto al que pertenece este equipo."
 
 #: teams/models.py:28 teams/models.py:70
 #: translations/templates/comp_stats_table.html:14
@@ -1119,52 +1120,49 @@ msgid "Language"
 msgstr "Idioma"
 
 #: teams/models.py:30 teams/models.py:72
+#, fuzzy
 msgid "People in this team will only be able to submit translations files related to the specific language."
-msgstr ""
+msgstr "Los integrantes de este equipo sólo podrán enviar archivos de traducción relacionados al idioma en específico."
 
 #: teams/models.py:32
 msgid "Coordinators"
-msgstr ""
+msgstr "Coordinadores"
 
 #: teams/models.py:34
 msgid "Members"
-msgstr ""
+msgstr "Miembros"
 
 #: teams/models.py:37
-#, fuzzy
 msgid "Mainlist"
-msgstr "Encargados del proyecto"
+msgstr "Lista principal"
 
 #: teams/models.py:38
 msgid "The main mailing list of the team."
-msgstr ""
+msgstr "La lista principal del equipo"
 
 #: teams/models.py:40
 msgid "creator"
-msgstr ""
+msgstr "creador"
 
 #: teams/models.py:56
 msgid "team"
-msgstr ""
+msgstr "equipo"
 
 #: teams/models.py:57
 msgid "teams"
-msgstr ""
+msgstr "equipos"
 
 #: teams/models.py:89
-#, fuzzy
 msgid "team creation request"
-msgstr "Solicitud denegada"
+msgstr "solicitud de creación de equipo"
 
 #: teams/models.py:90
-#, fuzzy
 msgid "team creation requests"
-msgstr "Solicitudes pendientes:"
+msgstr "solicitudes de creación de equipo"
 
 #: teams/models.py:108
-#, fuzzy
 msgid "Team"
-msgstr "Tamil"
+msgstr "Equipo"
 
 #: teams/models.py:125
 #, fuzzy
