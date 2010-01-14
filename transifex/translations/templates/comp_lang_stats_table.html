@@ -7,7 +7,6 @@
 {% load webeditortags %}
 
 {% if stats %}
-{% get_permission "project_perm.submit_file" for request.user and stat as "can_submit_file" %}
 {% url notification.views.notices as notices_url %}
 <table id="stats_comp_lang" class="stats_comp tablesorter">
    <thead>
@@ -19,6 +18,7 @@
    </thead>
    <tbody>
    {% for stat in stats %} 
+      {% get_permission "project_perm.submit_file" for request.user and stat as "can_submit_file" %}
       <tr class="{% number_range stat.trans_perc %}">
         <td class="left name" id="{{stat.filename}}">
               <span class="stat_message">{{stat.filename}}</span>
