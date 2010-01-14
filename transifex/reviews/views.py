@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from threadedcomments.forms import FreeThreadedCommentForm
 
+from languages.models import Language
 from projects.models import Component
 from reviews.models import POReviewRequest, ReviewLike
 from reviews.forms import (POFileSubmissionForm, AuthenticatedCommentForm)
@@ -55,6 +56,9 @@ def review_add_common(request, component, submitted_file, form=None, filename=No
     if not submitted_file:
         request.user.message_set.create(message=_("Please select a " 
                             "file from your system to be uploaded."))
+    elif not Language.objects.by_code_or_alias_or_none(lang_code):
+        request.user.message_set.create(message=_("You only can upload a file " 
+            "for reviewing, if it's related to an existing language."))
     else:
         if form:
             description = form.cleaned_data['description'] 
@@ -74,9 +78,11 @@ def review_add_common(request, component, submitted_file, form=None, filename=No
         save_file(target, submitted_file)
         request.user.message_set.create(message=_("Your file has been "
             "successfully placed for reviewing."))
-    return HttpResponseRedirect(
-        reverse('review_list', args=[component.project.slug,
+        return HttpResponseRedirect(
+            reverse('review_list', args=[component.project.slug,
                                         component.slug]))
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def review_add(request, component_id):
     """This method will be used to provide a separate form for review uploading."""
