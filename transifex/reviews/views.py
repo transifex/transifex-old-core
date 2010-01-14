@@ -56,9 +56,13 @@ def review_add_common(request, component, submitted_file, form=None, filename=No
         request.user.message_set.create(message=_("Please select a " 
                             "file from your system to be uploaded."))
     else:
-        description = ""
         if form:
             description = form.cleaned_data['description'] 
+        elif request.POST.get('message', None):
+            description = request.POST.get('message')
+        else: # FIXME: Default review description. Tied as hell.
+            description = 'Translation review request for \'%s\' of the ' \
+                          '\'%s\' component' % (filename, component)
         r = POReviewRequest(author=request.user,
                             description=description,
                             file_name=os.path.basename(submitted_file.name),
