@@ -39,7 +39,9 @@
    </tbody>
    </table>
    <p class="submit">
+     {% if perms.projects.submit_file or can_submit_file %}
      <input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}">
+     {% endif %}
      <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
    </p>
  </fieldset>

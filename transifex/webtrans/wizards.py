@@ -97,12 +97,6 @@ class TransFormWizard(SessionWizard):
         """
         self.init(request, *args, **kwargs)
 
-        # Checking permission to submit file to the related team
-        # FIXME: It's kinda redundancy, only a decorator should be enough
-        check = ProjectPermission(request.user)
-        if not check.submit_file(self.pofile):
-            return permission_denied(request)
-            
         step = self.current_step(request)
         if request.method == 'POST':
             self.store(step, request.POST, request.FILES)
