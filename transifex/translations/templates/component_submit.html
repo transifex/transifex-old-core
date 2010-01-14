@@ -7,15 +7,11 @@
 <form class="submit_form compact houdini" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
-  <table>
-    <tr style="padding:1em">
-      <td colspan="2" style="padding:1em"><input type="file" name="submitted_file"></td>
-    </tr>
-    <tr>
-      <td style="padding:1em"><input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}"></td>
-      <td style="padding:1em"><input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}"></td>
-    </tr>
-  </table>
+    <input type="file" name="submitted_file">
+    <p>
+    <input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}">
+    <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
+    </p>
   {% with pofile.locks.get.owner as owner %}
     {% if pofile.locked %}
       {% ifnotequal request.user.username owner.username %}
