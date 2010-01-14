@@ -17,6 +17,16 @@ class LanguageManager(models.Manager):
             models.Q(code=code) |
             models.Q(code_aliases__contains=' %s ' % code))
 
+    def by_code_or_alias_or_none(self, code):
+        """
+        Return a language that matches either with the code or something
+        inside the code_aliases field. If no match is found return None.
+        """
+        try:
+            return self.by_code_or_alias(code)
+        except Language.DoesNotExist:
+            return None
+
 class Language(models.Model):
 
     """
