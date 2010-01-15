@@ -1,0 +1,3 @@
+{% load i18n %}{% url component_detail component.project.slug component.slug as component_url %}{% url project_detail component.project.slug as project_url %}{% url language_detail pofile.language.code as lang_url %}{% with component.name as component_name %}{% with component.project.name as project_name %}{% with language.name as lang_name %}
+{% blocktrans %}A file for <a href="{{ lang_url }}" title="{{ filename }}">{{ lang_name }}</a> has been submitted for review to the <a href="{{ component_url }}">{{ component_name }}</a> of the <a href="{{ project_url }}">{{ project_name }}</a> project{% endblocktrans %}
+{% endwith %}{% endwith %}{% endwith %}

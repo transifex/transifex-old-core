@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import itertools
 from polib import unescape
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -12,12 +13,15 @@ from django.utils.translation import ugettext as _
 from django.views.generic import create_update
 from django.contrib.auth.decorators import login_required
 
+from actionlog.models import action_logging
+from notification import models as notification
 from threadedcomments.forms import FreeThreadedCommentForm
 
 from languages.models import Language
 from projects.models import Component
 from reviews.models import POReviewRequest, ReviewLike
 from reviews.forms import (POFileSubmissionForm, AuthenticatedCommentForm)
+from teams.models import Team
 from translations.models import POFile
 from txcommon.lib.storage import save_file
 
@@ -53,10 +57,13 @@ def review_list(request, project_slug, component_slug):
 
 def review_add_common(request, component, submitted_file, form=None, filename=None, lang_code=None):
     """ Common functionality wrapper."""
+    
+    language = Language.objects.by_code_or_alias_or_none(lang_code)
+    
     if not submitted_file:
         request.user.message_set.create(message=_("Please select a " 
                             "file from your system to be uploaded."))
-    elif not Language.objects.by_code_or_alias_or_none(lang_code):
+    elif not language:
         request.user.message_set.create(message=_("You only can upload a file " 
             "for reviewing, if it's related to an existing language."))
     else:
@@ -78,6 +85,26 @@ def review_add_common(request, component, submitted_file, form=None, filename=No
         save_file(target, submitted_file)
         request.user.message_set.create(message=_("Your file has been "
             "successfully placed for reviewing."))
+
+        # ActionLog & Notification
+        # TODO: Use signals
+        object_list = [component.project, component, language]
+        team = Team.objects.get_or_none(component.project, lang_code)
+        if team:
+            object_list.append(team)
+            send_notification_to = itertools.chain(team.members.all(),
+                team.coordinators.all())
+        else:
+            send_notification_to = component.project.maintainers.all()
+
+        nt = 'project_component_file_review_submitted'
+        context = {'component': component,
+                   'filename': filename,
+                   'language': language}
+        action_logging(request.user, object_list, nt, context=context)
+        if settings.ENABLE_NOTICES:
+            notification.send(send_notification_to, nt, context)
+
         return HttpResponseRedirect(
             reverse('review_list', args=[component.project.slug,
                                         component.slug]))
