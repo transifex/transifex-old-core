@@ -89,10 +89,8 @@ class POTManager(TransManagerMixin):
         for filename in self.get_po_files():
             lang_code = self.guess_language(filename)
             if lang_code not in langs:
-                print lang_code
                 langs.append(lang_code)
                 yield lang_code
-        assert False
 
     def get_file_path(self, filename, is_msgmerged=False):
         """

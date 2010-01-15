@@ -310,7 +310,7 @@ def component_file(request, project_slug, component_slug, filename,
                                                     base_filename)})
             content = loader.get_template('poview.html').render(context)
             mimetype = 'text/html'
-        except (UnicodeDecodeError, ImportError) as e:
+        except (UnicodeDecodeError, ImportError), e:
             # Oh well, pygments is unavailable for one reason or another.
             # Display as plaintext
             submission_error.send(sender=component, filename=base_filename,

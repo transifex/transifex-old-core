@@ -34,7 +34,7 @@ class Team(models.Model):
     members = models.ManyToManyField(User, verbose_name=_('Members'),
         related_name='team_members', blank=True, null=True)
 
-    mainlist = models.CharField(_('Mainlist'), max_length=50, blank=True, 
+    mainlist = models.EmailField(_('Mainlist'), max_length=50, blank=True, 
         null=True, help_text=_("The main mailing list of the team."))
 
     creator = models.ForeignKey(User, verbose_name=_('creator'), blank=False, 

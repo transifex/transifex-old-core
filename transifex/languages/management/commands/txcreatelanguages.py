@@ -259,6 +259,14 @@ def process_lang():
     es_ar.pluralequation = '(n != 1)'
     es_ar.save()
 
+#   Mexican Spanish
+    es_MX, created = Language.objects.get_or_create(code='es_MX')
+    es_MX.code_aliases='es-mx es-MX'
+    es_MX.name = _(u'Spanish (Mexican)')
+    es_MX.nplurals = '2'
+    es_MX.pluralequation = '(n != 1)'
+    es_MX.save()
+
 #   Eesti
 #   Estonian
     et, created = Language.objects.get_or_create(code='et')

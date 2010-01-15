@@ -203,9 +203,8 @@ class TransFormWizard(SessionWizard):
             request.user.message_set.create(message = _(
                 "Nothing was sent because you haven't changed anything in the "
                 "translation form."))
-            return HttpResponseRedirect(reverse(
-                'projects.views.component.component_detail',
-                args=(project_slug, component_slug)))
+            return HttpResponseRedirect(reverse('component_detail',
+                args=(project_slug, component_slug,)))
 
         self.clear_storage(request)
         return result_view
