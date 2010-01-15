@@ -30,12 +30,11 @@
 {% if language %}
   {% comp_lang_stats_table stats %}
  
-{% if component.allows_submission %}
- {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
- {% get_permission "project_perm.submit_file" for request.user and component.project as "can_submit_file" %}
- {% if perms.projects.submit_file or can_submit_file or is_maintainer %}
-   {% include "projects/component_submit_new_file.html" %}
- {% endif %}
+{% if request.user.is_authenticated and component.allows_submission %}
+ {% get_permission "project_perm.submit_file" for request.user and component.project,1 as "can_submit_file" %}
+    {% if component.unit.last_checkout %}
+        {% include "projects/component_submit_new_file.html" %}
+    {% endif %}
 {% endif %}
 
 {% endif %}
