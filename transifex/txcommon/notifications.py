@@ -98,6 +98,14 @@ NOTICE_TYPES = [
                 "show_to_user": False,
             },
             {
+                "label": "project_component_file_review_submitted",
+                "display": _("File Review Submitted"), 
+                "description": _("when a file of a component is submitted"
+                                 " for review"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
                 "label": "project_component_file_changed",
                 "display": _("Translation File Changed"),
                 "description": _("when a component translation file of a"
