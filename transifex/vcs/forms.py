@@ -6,6 +6,7 @@ from django.forms.util import ErrorList
 
 from vcs.models import VcsUnit
 from txcommon.models import inclusive_fields
+from txcommon.validators import ValidRootUri
 
 class VcsUnitForm(forms.ModelForm):
     class Meta:
@@ -14,7 +15,9 @@ class VcsUnitForm(forms.ModelForm):
 
 class VcsUnitSubForm(forms.ModelForm):
     type = forms.CharField(widget=forms.HiddenInput, required=False)
-    
+    root =  ValidRootUri(initial='', label=_("Repo URL root"), help_text = _
+        ("The URL of the versioning system repository/branch."), max_length=255)
+        
     def __init__(self, *args, **kwargs):
 
         instance = kwargs.get('instance', None)
@@ -28,7 +31,6 @@ class VcsUnitSubForm(forms.ModelForm):
                 codebase_type = args[0]['unit-type']
             except (TypeError, MultiValueDictKeyError):
                 codebase_type = None
-
         super(VcsUnitSubForm, self).__init__(*args, **kwargs)
 
         # Check it the codebase_type has branch support
@@ -40,6 +42,8 @@ class VcsUnitSubForm(forms.ModelForm):
         self.fields['root'].help_text = _(
             "The URL of the versioning system repository/branch.")
 
+        self.fields['root'].set_repo_type(codebase_type)
+        
     class Meta:
         model = VcsUnit
         exclude = tuple(
