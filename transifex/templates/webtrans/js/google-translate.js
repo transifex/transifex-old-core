@@ -9,6 +9,21 @@ google.setOnLoadCallback(function() {
     source_lang = '{{ pofile.object.source_lang }}';
     file_lang = '{{ pofile.language_code }}';
     is_supported_lang = google.language.isTranslatable(file_lang);
+    // If the main language code is not supported, try to find one from the code aliases
+    if (!(is_supported_lang)){
+        // Get aliases
+        code_aliases = '{{ pofile.language.code_aliases }}';
+        if(code_aliases){
+            // Drop spaces in the beginning/end of the string and split it
+            list = code_aliases.replace(/^ /,'').replace(/ $/,'').split(' ');
+            for (i=0; i<list.length; i++){
+                is_supported_lang = google.language.isTranslatable(list[i]);
+                if (is_supported_lang){
+                    i=list.length;
+                }
+            }
+        }
+    }
     is_supported_source_lang = google.language.isTranslatable(source_lang);
     if (is_supported_lang && is_supported_source_lang) {
 	    $('a.suggest').click(function() {
