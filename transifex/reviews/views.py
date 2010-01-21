@@ -104,33 +104,11 @@ def review_add_common(request, component, submitted_file, form=None, filename=No
         action_logging(request.user, object_list, nt, context=context)
         if settings.ENABLE_NOTICES:
             notification.send(send_notification_to, nt, context)
-
         return HttpResponseRedirect(
             reverse('review_list', args=[component.project.slug,
                                         component.slug]))
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
-def review_add(request, component_id):
-    """This method will be used to provide a separate form for review uploading."""
-
-    MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', '')
-    component = get_object_or_404(Component, pk=component_id)
-    if request.method == 'POST': # If the form has been submitted...
-
-        form = POFileSubmissionForm(request.POST, request.FILES)
-
-        if form.is_valid() and 'review_file' in request.FILES:
-            return review_add_common(request, component, request.FILES['review_file'], form)
-        else:
-            return render_to_response('reviews/review_list.html', {
-                'component': component,
-                'form': form,
-            }, context_instance=RequestContext(request))
-    else:
-        form = POFileSubmissionForm()
-    return HttpResponseRedirect(
-        reverse('review_list', args=[component.project.slug, component.slug]))
 
 
 @login_required
