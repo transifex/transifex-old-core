@@ -236,6 +236,10 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/deny/$',
         view = team_request_deny,
         name = 'team_request_deny',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/reviews/$',
+        view = review_list,
+        name = 'review_list',),
 )
 
 #TODO: Make this setting work throughout the applications
@@ -248,12 +252,3 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
             view = login_required(TransFormWizard(key=None, form_list=[])),
             name = 'component_edit_file',),
         )
-
-#TODO: Make this setting work throughout the applications
-if getattr(settings, 'ENABLE_REVIEWS', True):
-    urlpatterns += patterns('',
-        url(
-            regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
-                     'reviews/$'),
-            view = review_list,
-            name = 'review_list',),)
