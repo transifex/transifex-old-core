@@ -398,9 +398,10 @@ def component_submit_file(request, project_slug, component_slug,
                                          object_id=component.id)
             language = postats.language
             lang_code = postats.language.code
+            team_name = language.name
         except (POFile.DoesNotExist, AttributeError):
             language, postats = None, None
-            lang_code = component.trans.guess_language(filename)
+            team_name = lang_code = component.trans.guess_language(filename)
 
         # Send the file for review instead of immediately submit it
         if request.POST.get("submit_for_review", None):
@@ -417,8 +418,8 @@ def component_submit_file(request, project_slug, component_slug,
         if not check.submit_file(team or component.project):
             request.user.message_set.create(message=
                 _("You need to be in the '%s' team of this project for "
-                    "being able to send translations to that file target.")
-                    % postats.language.name)
+                  "being able to send translations to that file "
+                  "target.") % team_name)
             return HttpResponseRedirect(reverse('component_detail', 
                             args=(project_slug, component_slug,)))
 
