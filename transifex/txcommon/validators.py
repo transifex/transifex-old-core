@@ -1,9 +1,11 @@
 import re
 
 from django.conf import settings
+from django.db.models import Count
 from django.forms import CharField, ValidationError
 from django.utils.translation import ugettext_lazy as _
 from codebases.models import Unit
+from projects.models import Component
 
 ALLOWED_REPOSITORY_PREFIXES = getattr(settings, 'ALLOWED_REPOSITORY_PREFIXES',
     None)
@@ -47,33 +49,49 @@ class ValidRootUri(CharField):
     """
     def __init__(self, max_length=None, min_length=None, *args, **kwargs):
         self.type = None
+        self.blacklist_qs = None
         super(ValidRootUri, self).__init__(max_length, min_length, *args,
             **kwargs)
 
     def clean(self, value):
         value = super(ValidRootUri, self).clean(value)
-        self.starting = None
+
+        self.prefix = None
+        numofobj = {'name__count' : 0,}
+
+        
         if ALLOWED_REPOSITORY_PREFIXES:
             for key in ALLOWED_REPOSITORY_PREFIXES.keys():
                 for option in ALLOWED_REPOSITORY_PREFIXES[key]:
                     if value.startswith(option):
-                        self.starting = option
-                        ret = value
-            if self.starting == None:
+                        self.prefix = option
+            if self.prefix == None:
                 raise ValidationError(_("This is not a valid root URL for this "
                     "repository type. Valid choices are: %s" %
                     str(self.get_allowed_prefixes())))
-            cleanedupstring = value[len(self.starting):]
-            print cleanedupstring
-            try:
-                numofobj = Unit.objects.filter(root__icontains = cleanedupstring)
-            except:
-                pass
+            cleanedupstring = value[len(self.prefix):]
 
-            if len(numofobj) > 0:
-                raise ValidationError(_("This repo already exists on the "
-                    "server"))
-        return value
+            if self.blacklist_qs == None:
+                units = (Unit.objects.select_related().filter(root__endswith =
+                cleanedupstring))
+                numofobj = units.aggregate(Count('name'))
+            else:
+                leftobjects = self.blacklist_qs.filter(root__endswith =
+                    cleanedupstring)
+                numofobj = leftobjects.aggregate(Count('name'))
+
+            if numofobj['name__count'] > 0:
+                #TODO here we could show a nice message using leftobjects
+                raise ValidationError(_(
+                    "This repository already belongs to another project. "
+                    "Please choose a different one."))
+            else:
+                return value
+
+    def set_blacklist_qs(self, blacklist_qs):
+        """Set the project variable with actual project object."""
+
+        self.blacklist_qs = blacklist_qs
 
     def set_repo_type(self, type):
         """

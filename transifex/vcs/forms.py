@@ -61,3 +61,6 @@ class VcsUnitSubForm(forms.ModelForm):
             msg = _(u"This type of repository does not accept branches")
             raise forms.ValidationError(msg)
         return cleaned_data
+
+    def set_blacklist_root_field(self, blacklist_qs):
+          self.fields['root'].set_blacklist_qs(blacklist_qs)

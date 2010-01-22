@@ -66,8 +66,8 @@ def component_create_update(request, project_slug, component_slug=None):
                                        instance=component, prefix='component')
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
         allow_subform = ComponentAllowSubForm(request.POST, instance=component)
-        unit_subforms = unit_sub_forms(unit, request.POST)
-
+        unit_subforms = unit_sub_forms(unit, request.POST,
+            project.blacklist_vcsunits)
         old_i18n_type = None
         old_root = None
 
@@ -146,7 +146,9 @@ def component_create_update(request, project_slug, component_slug=None):
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
         allow_subform = ComponentAllowSubForm(instance=component)
-        unit_subforms = unit_sub_forms(unit)
+        unit_subforms = unit_sub_forms(unit, None,
+            project.blacklist_vcsunits)
+
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
         'unit_form': unit_form,
