@@ -3,6 +3,7 @@ import re
 from django.conf import settings
 from django.forms import CharField, ValidationError
 from django.utils.translation import ugettext_lazy as _
+from codebases.models import Unit
 
 ALLOWED_REPOSITORY_PREFIXES = getattr(settings, 'ALLOWED_REPOSITORY_PREFIXES',
     None)
@@ -51,14 +52,27 @@ class ValidRootUri(CharField):
 
     def clean(self, value):
         value = super(ValidRootUri, self).clean(value)
+        self.starting = None
         if ALLOWED_REPOSITORY_PREFIXES:
             for key in ALLOWED_REPOSITORY_PREFIXES.keys():
                 for option in ALLOWED_REPOSITORY_PREFIXES[key]:
                     if value.startswith(option):
-                        return value
-            raise ValidationError(_("This is not a valid root URL for this "
-                "repository type. Valid choices are: %s" %
-                str(self.get_allowed_prefixes())))
+                        self.starting = option
+                        ret = value
+            if self.starting == None:
+                raise ValidationError(_("This is not a valid root URL for this "
+                    "repository type. Valid choices are: %s" %
+                    str(self.get_allowed_prefixes())))
+            cleanedupstring = value[len(self.starting):]
+            print cleanedupstring
+            try:
+                numofobj = Unit.objects.filter(root__icontains = cleanedupstring)
+            except:
+                pass
+
+            if len(numofobj) > 0:
+                raise ValidationError(_("This repo already exists on the "
+                    "server"))
         return value
 
     def set_repo_type(self, type):
