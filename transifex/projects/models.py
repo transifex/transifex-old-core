@@ -234,9 +234,6 @@ class Component(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('Project'))
     _unit = models.OneToOneField(Unit, verbose_name=_('Unit'),
         blank=True, null=True, editable=False, db_column='unit_id')
-    releases = models.ManyToManyField('Release',
-        verbose_name=_('Releases'), related_name='components',
-        blank=True, null=True)
     pofiles = generic.GenericRelation(POFile)
 
     # Managers
@@ -486,6 +483,8 @@ class Release(models.Model):
 
     # Relations
     project = models.ForeignKey(Project, verbose_name=_('Project'), related_name='releases')
+    components = models.ManyToManyField(Component, verbose_name=_('Components'),
+        related_name='components_shipped', blank=False, null=True)
 
     def __unicode__(self):
         return self.name
