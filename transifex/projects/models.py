@@ -484,7 +484,7 @@ class Release(models.Model):
     # Relations
     project = models.ForeignKey(Project, verbose_name=_('Project'), related_name='releases')
     components = models.ManyToManyField(Component, verbose_name=_('Components'),
-        related_name='components_shipped', blank=False, null=True)
+        related_name='releases', blank=False, null=True)
 
     def __unicode__(self):
         return self.name

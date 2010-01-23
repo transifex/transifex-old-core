@@ -56,6 +56,16 @@
       <th class="freeze i16">{% trans "Devel freeze:" %}</th>
       <td>{{ release.develfreeze_date|date:"D d M Y" }}</td>
     </tr>
+    <tr class="separator"></tr>
+    <tr>
+      <th class="component i16">{% trans "Components:" %}</th>
+      <td><ul class="simple links">{% for comp in release.components.all %}<li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>{% endfor %}</ul></td>
+    </tr>
+
+        <span class="i16 component compact">
+          
+        </span>
+
   </table>
 </div>
 
