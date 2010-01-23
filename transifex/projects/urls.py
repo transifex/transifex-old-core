@@ -179,7 +179,7 @@ urlpatterns += patterns('',
         view = release_create_update,
         name = 'release_create',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<release_slug>[-\w]+)/edit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/edit/$',
         view = release_create_update,
         name = 'release_edit',),
     url(

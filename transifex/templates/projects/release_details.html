@@ -26,13 +26,12 @@
   {% endif %}
   {% endwith %}
 
-{% comment %}
-  {% if request.user.is_authenticated and perms.projects.change_release %}
+  {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
+  {% if perms.projects.add_release or is_maintainer %}
     <div class="editlinks">
-      <p><a class="i16 edit buttonized" href="{% url project_release_edit slug=release.project.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p>
+      <p><a class="i16 edit buttonized" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p>
     </div>
   {% endif %}
-{% endcomment %}
 
   <div class="details">
 
