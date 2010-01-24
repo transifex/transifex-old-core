@@ -9,17 +9,19 @@
 {% block extra_head %}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  {% include "translations/stats_table_filter_header.html" %}
 {% endblock %}
 
 {% block body_class %}{{ block.super }} release_detail{% endblock %}
 
-{% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
+{% block title %}{{ block.super }} | Release '{{ release.name }}'{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; Release '{{ release.name }}'{% endblock %}
 
 {% block content_main %}
   <div class="obj_bigdetails">
-  <h2 class="name">{{ release.project.name }} &raquo; {{ release }}</h2>
+  <h2 class="pagetitle">{{ release.project.name }}</h2>
+  <h3 class="pagesubtitle">Release '{{ release }}'</h3>
   
   {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
 

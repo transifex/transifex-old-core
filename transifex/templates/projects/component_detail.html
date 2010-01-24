@@ -55,15 +55,17 @@
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
-{% block title %}{% with component.project as project %}{{ block.super }} | {{ component.name }}{% endwith %}{% endblock %}
+{% block title %}{% with component.project as project %}{{ block.super }} | Component '{{ component.name }}'{% endwith %}{% endblock %}
 
 {% block breadcrumb %}{% with component.project as project %}{{ block.super }}
-&raquo; {{ component.name }}{% endwith %}{% endblock %}
-
+&raquo; Component '{{ component.name }}'{% endwith %}{% endblock %}
 
 {% block content_main %}
   <div class="obj_bigdetails">
-  <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
+
+  <h2 class="pagetitle">{{ component.project.name }}</h2>
+
+  <h3 class="pagesubtitle">Component '{{ component.name }}'</h3>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 
