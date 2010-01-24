@@ -6,6 +6,11 @@
 {% load permissions %}
 {% load txpermissions %}
 
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block body_class %}{{ block.super }} release_detail{% endblock %}
 
 {% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
@@ -61,11 +66,6 @@
       <th class="component i16">{% trans "Components:" %}</th>
       <td><ul class="simple links">{% for comp in release.components.all %}<li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>{% endfor %}</ul></td>
     </tr>
-
-        <span class="i16 component compact">
-          
-        </span>
-
   </table>
 </div>
 
@@ -74,6 +74,8 @@
 <h3>{% trans "Translation statistics" %}</h3>
 
 {% include "translations/stats_table_filter_box.html" %}
+
+{% release_stats_table pofile_list project release %}
 
 {% if not pofile_list %}
 <p>{% trans "No translations added for this release. :-(" %}</p>

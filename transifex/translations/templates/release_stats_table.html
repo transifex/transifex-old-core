@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load statistics %}
 {% if stats %}
-<table id="stats_release" class="stats_comp tablesorter">
+<table id="stats_comp" class="stats_comp tablesorter">
    <thead>
     <tr>
       <th>{% trans "Language" %}</th>
@@ -13,7 +13,8 @@
       <tr class="{% number_range stat.trans_perc %}">
         <td class="left name" id="{{stat.language.code}}">
           {% if stat.language %}
-              <a href="{% url language_release stat.language.code collection.slug release.slug %}" title="{% trans "See the detailed statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
+{# <a href="{% url language_release stat.language.code collection.slug release.slug %}" title="{% trans "See the detailed statistics for this language" %}"> #}
+              {{stat.language.name}} <span class="stat_message" >({{stat.language.code}})</span>
           {% else %}
               <span class="stat_message" title="{% trans "There is no language registered that matches with this file" %}" >{{stat.filename}}</span>
           {% endif %}

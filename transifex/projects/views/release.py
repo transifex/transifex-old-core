@@ -11,6 +11,7 @@ from actionlog.models import action_logging
 from projects.models import Project, Release
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
+from translations.models import POFile
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -24,9 +25,11 @@ from txcommon.log import logger
 def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
                                 project__slug=project_slug)
+    pofile_list = POFile.objects.by_release_total(release)
     return render_to_response('projects/release_details.html', {
         'release': release,
         'project': release.project,
+        'pofile_list': pofile_list,
     }, context_instance=RequestContext(request))
 
 
