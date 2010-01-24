@@ -12,12 +12,7 @@
     form.submit_form { display: none; }
     form.submit_form fieldset { border: 2px dotted #ddd; }
   </style>
-
-  <script type="text/javascript">
-  $(function(){
-    {% include "translations/stats_table_filter_header.html" %}
-  });
-  </script>
+  {% include "translations/stats_table_filter_header.html" %}
 {% endblock %}
 
 {% block body_class %}{{ block.super }} language_release{% endblock %}
