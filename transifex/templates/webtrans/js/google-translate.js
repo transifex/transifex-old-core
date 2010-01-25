@@ -19,7 +19,8 @@ google.setOnLoadCallback(function() {
             for (i=0; i<list.length; i++){
                 is_supported_lang = google.language.isTranslatable(list[i]);
                 if (is_supported_lang){
-                    i=list.length;
+                    file_lang = list[i];
+                    break;
                 }
             }
         }
