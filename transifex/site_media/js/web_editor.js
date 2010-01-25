@@ -175,5 +175,20 @@ $(function(){
     })
     toggle_contexts()
 
+    // Copy source string button 
+    $('span.copy_source').click(function() { 
+        var a=$(this), str=a.html(); 
+        orig=$('.msg', a.parents('tr')).find('p:first').html(); 
+        trans=$('textarea', a.parents('tr')); 
+        orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<'); 
+        trans.val(orig) 
+        nkey = trans.attr('name').split('msgstr_field_')[1]; 
+        // from web_editor.js: 
+        fuzzy(nkey); 
+        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', ''); 
+        update_totals(); 
+        return false; 
+    }) 
+
 });
 

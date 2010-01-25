@@ -11,6 +11,7 @@
   <tr id="{{field.name}}" >
     <td class="num">{% counter initial_entries_count %}</td>
     <td class="msg">{{ field.label }}</td>
+    <td class="notes"><span class="i16 nodecoration_icon buttonized_simple copy_source" href="#" title="{% trans "Copy source string" %}"></span></td>  
     <td class="trans">
      {{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
     </td>
