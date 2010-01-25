@@ -55,14 +55,14 @@ We've all been waiting for this one, so we're proud to announce support for
 .. image:: ../_static/screenshots/0.8/teams-req.png
    :class: shot2 alcenter
 
-With Transifex 0.7, translators could subscribe to projects requesting access
-to the project files, for example to submit updates to them etc. This happened
-on a per-project level. Transifex 0.8 brings more collaboration and security,
-allowing access control to a more fine-grained level.
+Starting with Transifex 0.7, translators could subscribe to projects and request
+permission to edit and submit updates, etc. This happened on a per-project level.
+Transifex 0.8 brings more collaboration and security, allowing for a more
+fine-grained level access control.
 
-With Transifex 0.8, translators can create, join and lead a language
-team for a particular project. Project maintainers can delegate management of
-a team to a language coordinator, who can be responsible for file submissions
+With Transifex 0.8, translators can now create, join and lead a language
+team for a particular project. Project maintainers can then delegate management
+of a team to a language coordinator, who can be responsible for file submissions
 and other language-specific bits.
 
 Transifex retains the global access controls which had in version 0.7.
@@ -92,7 +92,7 @@ Here's a breakdown of the new feature set:
 - Users can request the creation of a new team with the click of a button. The
   maintainer can approve or deny that request.
 
-- The Team page sports a timeline of events for this team. In the future it will
+- The Team page sports a timeline of events. In the future it will
   also show more and more team-related information such as statistics, watches,
   etc.
 
@@ -103,7 +103,7 @@ Here's a breakdown of the new feature set:
 Translation Reviews
 :::::::::::::::::::
 
-Another big and exciting feature is translation reviews. Users are can now
+Another big and exciting feature is translation reviews. Users can now
 upload a file and put it under 'review'. The file is kept on the Transifex
 server until it is reviewed and either accepted for submission by an authorized
 member (committer, team member) or rejected.
@@ -120,7 +120,7 @@ Here are some more specific features:
 
 - Review requests can be opened by non-members for any project.
 - Team members can choose to submit a file for submission or for a
-  review, if they feel like it.
+  review, if they want to get feedback before committing it.
 - In any place where a normal file submission can take place, there is now an
   option to open a review request (translate file, add a new file, web
   editor).
@@ -149,10 +149,10 @@ pagination, filtering and sorting of the results is shipped out-of-the-box.
   everything which has happened to his project (under ``<project_url>/log/``).
   This page is currently limited only to project maintainers.
 - Team members can keep up with the work of their teammates
-- Users are notified for everything that might interest them on their profile
+- Users are notified of anything that might interest them on their profile
   page.
-- Transifex administrators have a special Admin page panel to overview their
-  whole system.
+- Transifex administrators have a special Admin page panel to get an overview 
+  for the whole system.
 - Now it's possible to get the top translators for a specific object, such as
   a Project or Team, and also top translators across all registered projects.
 - Timeline can be filtered using time intervals such as 'today', 'last week',
@@ -165,8 +165,8 @@ pagination, filtering and sorting of the results is shipped out-of-the-box.
 Subversion over secure HTTP (https)
 :::::::::::::::::::::::::::::::::::
 
-So far Tx included commit support only for repositories over SSH.
-This patch adds support for https repos, by allowing the admin to
+Up until now Transifex included commit support only for repositories over SSH.
+This patch adds support for https repos, by allowing the adminastror to
 define the username and password for each 2nd-level domain he'd like
 to serve. For example, we group together authentication for
 ``*.example.com``.
@@ -204,9 +204,9 @@ More details:
 Weekly Maintainer Reports
 :::::::::::::::::::::::::
 
-Maintainers can now receive weekly notifications with that statistics and
+Maintainers can now receive weekly notifications with statistics and
 activity report for their projects. The frequency of the report delivery can
-be configured by tweaking the respective croj job.
+be configured by tweaking the respective cron job.
 
 Here's a snippet of how this report looks like:
 
@@ -237,7 +237,7 @@ Here's a snippet of how this report looks like:
     - ...
 
 The notifications are sent by running the ``txreport`` management command by
-using a cronjob once per week (or more often, as needed).
+using a cronjob once a week (or more often, as needed).
 
 
 User Nudging
@@ -260,43 +260,43 @@ Lotte Improvements
 - Added server-side pagination when editing a PO file.
 
   - The translation form now uses a session wizard, which allows
-    the user to navigate among the several pages of a form, without
+    the user to navigate through the several pages of a form, without
     losing data and being able to commit the file at any time.
-  - Several improvements have been made around the code as well, specially at the part we create the file
-    to be submitted. Now it's using validated data from the forms and
-    the file is committed only if something really has changed in the
+  - Several improvements have been made around the code as well, specially
+    where we create the file to be submitted. Now it's using validated data from
+    the forms and the file is committed only if something really has changed in the
     translation form.
 
 - Added support for **PO plural fields** in Lotte, and validation of their
   content.
 - Support for **PO msgctxt comments**, giving context to the translator in order to
   better understand what is required to be translated.
-- Added support for source langs in automatic suggestions (#460), enabling
+- Added support for source languages in automatic suggestions (#460), enabling
   hundreds of different language combinations (eg. german to english machine
   translation suggestion). Since the original language is set for each
   component, that language code is now being used as the source language for
   translation suggestion.
-- Add support to **copy source string** to translation, both for normal
+- Added support to **copy source string** to translation, both for normal
   strings as well as plural ones.
-- Textarea auto-resizable in the TranslationForm
-- Added min-width to the textarea in TranslationForm 
+- Textarea are now auto-resizable in the TranslationForm
+- Added minimum width to the textarea in TranslationForm 
 
 
 UI Improvements
 :::::::::::::::
 
-- Replacement of ugly MultipleChoiceField with an ajax multiple select.
+- Replacement of MultipleChoiceField with an ajax multiple select.
 - Project Access Control menu now lies outside of the Edit form, making it more
   visible and accessible.
 - Also provide a link to the user's profile page instead of just the email
   address on the Access Control page.
-- Better navigation (tabs, breadcrumbs) for Project log page.
+- Better navigation (tabs, breadcrumbs, etc) for Project log page.
 - Permission access actions related to a project now trigger a notification to
-  the interested by email and the addition of actionlog entries. For example,
-  when an user requests access to submit to a project, the maintainers are
+  the interested parties by email and the addition of actionlog entries. For example,
+  when a user requests access to submit to a project, the maintainers are
   notified and the user will receive a notification if he was granted access.
-- Improved VCS commit message: Now it includes the completion and the new status
-  of the po file too.
+- Improved VCS commit message: Now it includes the percentage completion and the new status
+  of the po file as well.
 - Improved public profile page.
 
 
