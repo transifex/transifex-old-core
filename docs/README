@@ -11,3 +11,12 @@ firefox html/index.html
 # Publish:
 cd html
 scpresume * txo:webapps/txo_docs/
+
+To get translators:
+
+hg log -r 0.7:tip --template "{desc|firstline} -- {author|person}\n" | \
+grep 'l10n' | sort | uniq
+
+To get the new deps:
+
+hg diff -r 0.7:tip setup.py
