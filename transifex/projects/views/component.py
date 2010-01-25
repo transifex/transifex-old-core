@@ -545,8 +545,6 @@ def component_toggle_lock_file(request, project_slug, component_slug,
 
 
 @login_required
-#@one_perm_required_or_403(pr_component_watch_file, 
-#    (Project, 'slug__exact', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
     """Add/Remove a watch for a path on a component for a specific user."""
 
@@ -566,8 +564,10 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
     # FIXME: It's kinda redundancy, only a decorator should be enough
     # Also it's only accepting granular permissions
     check = ProjectPermission(request.user)
-    if not check.submit_file(pofile):
-        return permission_denied
+    if not check.submit_file(pofile) and not \
+        request.user.has_perm('repowatch.add_watch') and not \
+        request.user.has_perm('repowatch.delete_watch'):
+        return permission_denied(request)
 
     url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
                                                   filename))
