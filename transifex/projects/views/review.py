@@ -38,7 +38,7 @@ def review_modify(request, project_slug, component_slug, id):
 
     # Check permissions
     check = ProjectPermission(request.user)
-    if not check.submit_file(review_request.team or project) or \
+    if not check.submit_file(review_request.team or project) and not \
         request.user.has_perm('reviews.change_review'):
         return permission_denied(request)
 
