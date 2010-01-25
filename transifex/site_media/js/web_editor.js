@@ -176,19 +176,29 @@ $(function(){
     toggle_contexts()
 
     // Copy source string button 
-    $('span.copy_source').click(function() { 
-        var a=$(this), str=a.html(); 
-        orig=$('.msg', a.parents('tr')).find('p:first').html(); 
-        trans=$('textarea', a.parents('tr')); 
-        orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<'); 
-        trans.val(orig) 
-        nkey = trans.attr('name').split('msgstr_field_')[1]; 
+    $('span.copy_source').click(function(){
+        var first = null;
+        tr = $(this).parents('tr')
+        msgid=$('.msg', tr).find('p.msgid').text();
+        msgid_plural=$('.msg', tr).find('p.msgid_plural').text();
+        nkey = tr.attr('id').split('msgstr_field_')[1];
+
+        // For each textarea of this entry
+        $('.trans', tr).find("textarea[name*='msgstr_field_"+nkey+"']").each(function(){
+            if(!first){
+                first=$(this);
+                $(this).val(msgid);
+            }else{
+                $(this).val(msgid_plural);
+            }
+        });
+
         // from web_editor.js: 
         fuzzy(nkey); 
         $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', ''); 
         update_totals(); 
         return false; 
-    }) 
+    });
 
 });
 
