@@ -1,5 +1,6 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
+{% load permissions %}
 {% load txcommontags %}
 {% load threadedcommentstags %}
 
@@ -32,7 +33,6 @@
 {% for review in component.reviews.open_reviews.all %}
 <div id="review-{{review.id}}" class="separate">
 {% with review.id as review_id %}
-{% url review_modify review_id as modify_url %}
 
 <h3>{% blocktrans %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
  <table class="definition">
@@ -83,11 +83,12 @@
       <td>
         {{ review.get_status_display }}
         {% ifnotequal review.resolution 'N' %}({{ review.get_resolution_display }}){% endifnotequal %}
-        {% if request.user.is_authenticated and perms.reviews.change_review %}
-{% endif %}
       </td>
     </tr>
-{% if request.user.is_authenticated and perms.reviews.change_review and review.is_open %}
+{% if review.is_open %}
+ {% get_permission "project_perm.submit_file" for request.user and review.team as "can_submit_file" %}
+ {% if perms.reviews.change_review or can_submit_file %}
+    {% url review_modify review.component.project.slug review.component.slug review.id as modify_url %}
     <tr>
       <th class="i16 reviews">{% trans "Close Review" %}</th>
       <td>
@@ -97,6 +98,7 @@
         </form>
       </td>
     </tr>
+ {% endif %}
 {% endif %}
   </tbody>
 </table>
@@ -152,15 +154,12 @@
       <th>{% trans "Time Since" %}</th>
       <th>{% trans "Resolution" %}</th>
       <th>{% trans "Attachment" %}</th>
-      {% if request.user.is_authenticated and perms.reviews.change_review %}
-        <th>{% trans "Actions" %}</th>
-      {% endif %}
+      <th>{% trans "Actions" %}</th>
     </tr>
   </thead>
   <tbody>
 {% for review in component.reviews.closed_reviews.all %}
 {% with review.id as review_id %}
-{% url review_modify review_id as modify_url %}
   <tr>
     <td{% if review.is_closed %} style="text-decoration: line-through;"{% endif %}>{{ review_id }}</td>
     <td>{{ review.author }}</td>
@@ -174,10 +173,14 @@
     <td>&nbsp; {{ review.created_on|timesince }} &nbsp;&nbsp;</td>
     <td> {{ review.get_resolution_display }} </td>
     <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
-    <td><form class="microform" action="{{ modify_url }}" method='post'>
-      {% if request.user.is_authenticated and perms.reviews.change_review %}
-      <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">{% endif %}
-    </form>
+    <td>
+     {% get_permission "project_perm.submit_file" for request.user and review.team as "can_submit_file" %}
+     {% if perms.reviews.change_review or can_submit_file %}
+      {% url review_modify review.component.project.slug review.component.slug review.id as modify_url %}
+      <form class="microform" action="{{ modify_url }}" method='post'>
+       <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">
+      </form>
+     {% endif %}
     </td>
   </tr>
 {% endwith %}

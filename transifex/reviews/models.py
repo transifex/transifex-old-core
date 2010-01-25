@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from projects.models import Component
 from transifex.translations.models import POFile 
+from teams.models import Team
 from translations.models import Language
 
 class POReviewRequestManager(models.Manager):
@@ -114,6 +115,14 @@ class POReviewRequest(models.Model):
         try:
             return Language.objects.by_code_or_alias(self.lang_code)
         except Language.DoesNotExist:
+            pass
+
+    @property
+    def team(self):
+        try:
+            return Team.objects.get(project__pk= self.component.project.pk,
+                language__code=self.lang_code)
+        except Team.DoesNotExist:
             pass
 
     @property

@@ -25,8 +25,8 @@ from projects.permissions.project import ProjectPermission
 from projects.signals import submission_error
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
-from reviews.views import review_add_common
 from submissions import submit_by_email
+from reviews.views import review_add
 from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
 from translations.lib.types.publican import PotDirError
@@ -405,8 +405,7 @@ def component_submit_file(request, project_slug, component_slug,
 
         # Send the file for review instead of immediately submit it
         if request.POST.get("submit_for_review", None):
-            return review_add_common(request, component, submitted_file, 
-                filename=filename, lang_code=lang_code)
+            return review_add(request, component, submitted_file, language)
 
         team = Team.objects.get_or_none(component.project, lang_code)
         if team:

@@ -3,14 +3,13 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
-from reviews.views import review_list
-
 from projects.feeds import LatestProjects, ProjectFeed
 from projects.models import Project
 from projects.permissions import pr_component_submit_file
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
+from projects.views.review import *
 from projects.views.team import *
 
 from txcommon.decorators import one_perm_required_or_403
@@ -236,10 +235,18 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/deny/$',
         view = team_request_deny,
         name = 'team_request_deny',),
+)
+
+# Reviews
+urlpatterns += patterns('',
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/reviews/$',
         view = review_list,
         name = 'review_list',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/reviews/(?P<id>\d+)/modify/$',
+        view = review_modify,
+        name = 'review_modify',),
 )
 
 #TODO: Make this setting work throughout the applications
