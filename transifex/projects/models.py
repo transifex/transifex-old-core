@@ -153,17 +153,11 @@ class Project(models.Model):
     def is_watched_by(self, user, signal=None):
         return is_watched_by_user_signal(self, user, signal)
 
-    #FIXME: Rename this to vcsunits and make it return only the units
-    # which belong to this project.
     @property
     def blacklist_vcsunits(self):
         """Return all the vcsunits that arent allowed to be used."""
-        qset = VcsUnit.objects.select_related().all()
-        comp_qset = self.component_set.all()
-        for comp in comp_qset:
-            qset = qset.exclude(component=comp)
-        #TODO: Analyze the performance of the query produced here.
-        return qset
+        return VcsUnit.objects.exclude(
+            component__id__in=self.component_set.all().values('id'))
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
