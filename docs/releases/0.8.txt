@@ -166,7 +166,7 @@ Subversion over secure HTTP (https)
 :::::::::::::::::::::::::::::::::::
 
 Up until now Transifex included commit support only for repositories over SSH.
-This patch adds support for https repos, by allowing the adminastror to
+This patch adds support for https repos, by allowing the administrator to
 define the username and password for each 2nd-level domain he'd like
 to serve. For example, we group together authentication for
 ``*.example.com``.
@@ -249,6 +249,15 @@ or respond to a recent action.
 This functionality requires the notification system to be enabled in the
 settings, otherwise it is disabled automatically.
 
+.. code-block:: rest
+
+    Hello john, this is Transifex at http://www.transifex.net/.
+ 
+    The user 'guest' has nugded you.
+     
+    Please, visit Transifex at http://www.transifex.net/accounts/profile/guest/
+    in order to see the guest's profile page.
+
 
 Various improvements and bugfixes
 ---------------------------------
@@ -300,8 +309,8 @@ UI Improvements
   when a user requests access to submit to a project, the maintainers are
   notified and the user will receive a notification if he was granted access.
 - Improved public profile page.
-- Improved VCS commit message: Now it includes the percentage completion and the new status
-  of the po file as well.
+- Improved VCS commit message: Now it includes the percentage completion and
+  the new status of the po file as well::
 
     l10n: Updated Czech (cs) translation to 100%
 
@@ -356,25 +365,8 @@ Efficiency Improvements
   default.
 
 
-Cleanups
-::::::::
-
-- Eliminated duplicated code from vcs and tarball apps. Tarball units now use
-  the same signature with the VCS unit.
-- Moved get_browser_object func from vcs and tarball to codebases
-- Splitted BrowserMixin class to BrowserMixinBase and BrowserMixin and put
-  at a central place in the codebases app.
-- Added alternative path support for BrowserMixinBase methods
-- Unified ``run_command`` handlers into ``txcommon.commands``.
-- Remove too verbose debug msg when saving a file.
-- Slightly reduced verbosity in ``DEBUG`` mode for less clutter in the log
-  files.
-- Changed ``DEFAULT_FROM_EMAIL`` to ``noreply@SITE_DOMAIN``.
-- Avoid a warning if git returns an empty revision hash.
-
-
 Bugfixes
---------
+::::::::
 
 - Return an empty string for 'next=' in case of an exception (needed for '500'
   errors.
@@ -423,6 +415,23 @@ Bugfixes
 - Changed HttpResponseRedirect args on Lotte
 - Register admin URLs with the Django 1.1 way.
 - Define the necessary ``MIDDLEWARE_CLASSES`` for caching.
+
+
+Cleanups
+::::::::
+
+- Eliminated duplicated code from vcs and tarball apps. Tarball units now use
+  the same signature with the VCS unit.
+- Moved get_browser_object func from vcs and tarball to codebases
+- Splitted BrowserMixin class to BrowserMixinBase and BrowserMixin and put
+  at a central place in the codebases app.
+- Added alternative path support for BrowserMixinBase methods
+- Unified ``run_command`` handlers into ``txcommon.commands``.
+- Remove too verbose debug msg when saving a file.
+- Slightly reduced verbosity in ``DEBUG`` mode for less clutter in the log
+  files.
+- Changed ``DEFAULT_FROM_EMAIL`` to ``noreply@SITE_DOMAIN``.
+- Avoid a warning if git returns an empty revision hash.
 
 
 Translations
@@ -557,6 +566,7 @@ The following people have contributed to this release, with one way or another:
 - Jannis Leidel
 - Andreas Loupasakis
 - Nikos Korkakakis
+- Seraphim Mellos
 - Og Maciel
 - Zhu Yanhai
 - Og Maciel
