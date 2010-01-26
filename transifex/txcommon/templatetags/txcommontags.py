@@ -63,19 +63,45 @@ register.tag('get_latest_projects', DoGetLatestProjects())
 
 
 class TopTranslators(template.Node):
+
+    @classmethod
+    def handle_token(cls, parser, token):
+        """Class method to parse get_top_translators."""
+        tokens = token.contents.split()
+        obj = None
+        if not tokens[1].isdigit():
+            raise template.TemplateSyntaxError, (
+                "The first argument for '%s' must be an integer" % tokens[0])
+        # {% get_top_translators <number_of_top_translators> %}
+        if len(tokens) == 2:
+            return cls(
+                number = int(tokens[1]),
+            )
+        # {% get_top_translators <number_of_top_translators> <obj> %}
+        if len(tokens) == 3:
+            return cls(
+                number = int(tokens[1]),
+                obj = parser.compile_filter(tokens[2]),
+            )
+        else:
+            raise template.TemplateSyntaxError("%r tag requires 1 or 2 arguments" % tokens[0])
+
+
     def __init__(self, number=None, obj=None):
         self.number = int(number)
         self.obj = obj
 
     def render(self, context):
         if self.obj:
-            top_translators = LogEntry.objects.top_submitters_by_object(self.obj, self.number)
+            obj = self.obj.resolve(context)
+            top_translators = LogEntry.objects.top_submitters_by_object(obj, self.number)
         else:
             top_translators = LogEntry.objects.top_submitters_by_project_content_type(self.number)
         context['top_translators'] = top_translators
         return ''
 
-class DoGetTopTranslators:
+@register.tag
+def get_top_translators(parser, token):
     """
     Return a dictionary with the top translators of the system or for a object,
     when it's passed by parameter.
@@ -89,21 +115,8 @@ class DoGetTopTranslators:
     get_top_translators <number_of_top_translators> <obj>
     get_top_translators 10 project_foo
     """
+    return TopTranslators.handle_token(parser, token)
 
-    def __init__(self):
-        pass
-
-    def __call__(self, parser, token):
-        tokens = token.contents.split()
-        obj = None
-        if not tokens[1].isdigit():
-            raise template.TemplateSyntaxError, (
-                "The first argument for '%s' must be an integer" % tokens[0])
-        if len(tokens) == 3:
-            obj=tokens[2]
-        return TopTranslators(tokens[1], obj)
-
-register.tag('get_top_translators', DoGetTopTranslators())
 
 
 @register.inclusion_tag("common_render_metacount.html")
