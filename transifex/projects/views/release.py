@@ -26,7 +26,7 @@ def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
                                 project__slug=project_slug)
     pofile_list = POFile.objects.by_release_total(release)
-    return render_to_response('projects/release_details.html', {
+    return render_to_response('projects/release_detail.html', {
         'release': release,
         'project': release.project,
         'pofile_list': pofile_list,

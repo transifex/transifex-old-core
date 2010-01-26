@@ -27,35 +27,53 @@ class Migration:
         ))
         db.send_create_signal('projects', ['Release'])
         
-        # Adding ManyToManyField 'Component.releases'
-        db.create_table('projects_component_releases', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('component', models.ForeignKey(orm.Component, null=False)),
-            ('release', models.ForeignKey(orm.Release, null=False))
-        ))
+        # Dropping ManyToManyField 'Project.collections'
+        db.delete_table('projects_project_collections')
+        
+        # Dropping ManyToManyField 'Component.releases'
+        db.delete_table('projects_component_releases')
         
         # Creating unique_together for [slug, project] on Release.
         db.create_unique('projects_release', ['slug', 'project_id'])
-        
+
+        # Adding ManyToManyField 'Release.components'
+        db.create_table('projects_release_components', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('release', models.ForeignKey(orm.Release, null=False)),
+            ('component', models.ForeignKey(orm.Component, null=False))
+        ))
     
     
     def backwards(self, orm):
-        
+
+        # Dropping ManyToManyField 'Release.components'
+        db.delete_table('projects_release_components')
+                
         # Deleting unique_together for [slug, project] on Release.
         db.delete_unique('projects_release', ['slug', 'project_id'])
         
         # Deleting model 'Release'
         db.delete_table('projects_release')
         
-        # Dropping ManyToManyField 'Component.releases'
-        db.delete_table('projects_component_releases')
+        # Adding ManyToManyField 'Project.collections'
+        db.create_table('projects_project_collections', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('project', models.ForeignKey(orm.Project, null=False)),
+            ('collection', models.ForeignKey(orm['txcollections.collection'], null=False))
+        ))
         
+        # Adding ManyToManyField 'Component.releases'
+        db.create_table('projects_component_releases', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('component', models.ForeignKey(orm.Component, null=False)),
+            ('collectionrelease', models.ForeignKey(orm['txcollections.collectionrelease'], null=False))
+        ))
     
     
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'blank': 'True'})
         },
         'auth.permission': {
@@ -78,14 +96,14 @@ class Migration:
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True'})
+            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         'codebases.unit': {
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_checkout': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
             'root': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '10'})
         },
@@ -98,11 +116,11 @@ class Migration:
         },
         'languages.language': {
             'Meta': {'db_table': "'translations_language'"},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'}),
+            'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
             'code_aliases': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '100', 'null': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
             'nplurals': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'pluralequation': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'specialchars': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'})
@@ -125,7 +143,6 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'pofiles': ('django.contrib.contenttypes.generic.GenericRelation', [], {'to': "orm['translations.POFile']"}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']"}),
-            'releases': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['projects.Release']", 'null': 'True', 'blank': 'True'}),
             'should_calculate': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '30', 'db_index': 'True'}),
             'source_lang': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
@@ -146,8 +163,8 @@ class Migration:
             'maintainers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '30', 'unique': 'True', 'db_index': 'True'}),
-            'tags': ('TagField', [], {})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '30', 'db_index': 'True'}),
+            'tags': ('tagging.fields.TagField', [], {})
         },
         'projects.release': {
             'Meta': {'unique_together': "(('slug', 'project'),)"},
@@ -160,7 +177,7 @@ class Migration:
             'long_description_html': ('django.db.models.fields.TextField', [], {'max_length': '1000', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'releases'", 'to': "orm['projects.Project']"}),
             'release_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '30', 'db_index': 'True'}),
             'stringfreeze_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})

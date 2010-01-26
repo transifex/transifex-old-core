@@ -25,7 +25,6 @@ from txcommon.log import logger, log_model
 from txcommon.notifications import is_watched_by_user_signal
 from projects.handlers import get_trans_handler
 from projects import signals
-from releases.models import Release
 
 def cached_property(func):
     """
@@ -483,8 +482,9 @@ class Release(models.Model):
 
     # Relations
     project = models.ForeignKey(Project, verbose_name=_('Project'), related_name='releases')
-    components = models.ManyToManyField(Component, verbose_name=_('Components'),
-        related_name='releases', blank=False, null=True)
+    components = models.ManyToManyField(Component,
+        verbose_name=_('Components'), related_name='releases',
+        blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -497,6 +497,14 @@ class Release(models.Model):
     @property
     def full_name(self):
         return "%s (%s)" % (self.name, self.project.name)
+
+    @property
+    def pofiles(self):
+        return POFile.objects.by_release_total(self)
+
+    @property
+    def pofiles_for_language(self, language):
+        return POFile.objects.by_release_and_language_total(self, language)
 
     class Meta:
         unique_together = ("slug", "project")

@@ -186,6 +186,11 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/delete/$',
         view = release_delete,
         name = 'release_delete',),
+#    url(
+#        name = 'release_language',
+#        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/l/(?P<language_slug>[-_@\w]+)/$',
+#        view = release_language_detail,
+#    ),
 )
       
 

@@ -91,6 +91,12 @@ class POFileManager(models.Manager):
         comp_query = release.components.values('pk').query
         return self.filter(content_type=ctype, object_id__in=comp_query)
 
+    def by_release_and_language(self, release, language):
+        """
+        Return a list of stats object for a release and language.
+        """
+        return self.by_release(release).filter(language=language)
+
     def by_language_and_release(self, language, release):
         """
         Return a list of stats object for a language and release.
@@ -162,6 +168,9 @@ class POFileManager(models.Manager):
             is_pot=False).order_by('object_id')
 
         return _group_pofiles(postats, 'object_id', pot_total)
+
+    def by_release_and_language_total(self, release, language):
+        return self.by_language_and_release_total(language, release)
 
 class POFile(models.Model):
     """
