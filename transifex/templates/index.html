@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load txcommontags %}
 
 {% block body_class %}index{% endblock %}
 
@@ -27,7 +28,10 @@
     {% blocktrans %}You could also browse through <a href="{{ project_list }}">all projects</a>.{% endblocktrans %}
   </div>
 <div id="top_lists">{% include "projects/project_latests.html" %}
+
+{% get_top_translators 5 %}
 {% include "projects/project_top_translators.html" %}
+
 </div> 
 </div>
 <div id="clear"></div>
