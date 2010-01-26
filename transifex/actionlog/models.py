@@ -33,6 +33,104 @@ def _get_formatted_message(label, context):
 
     return msg
 
+def _user_counting(query):
+    """
+    Get a LogEntry queryset and return a list of dictionaries with the
+    counting of times that the users appeared on the queryset.
+    
+    Example of the resultant dictionary:
+    [{'user__username': u'editor', 'number': 5}, 
+    {'user__username': u'guest', 'number': 1}]
+    """
+    query_result = query.values('user__username').annotate(
+        number=models.Count('user')).order_by('-number')
+
+    # Rename key from 'user__username' to 'username'
+    result=[]
+    for entry in query_result:
+        result.append({'username': entry['user__username'], 
+                       'number': entry['number']})
+    return result
+
+class LogEntryManager(models.Manager):
+    def by_object(self, obj):
+        """Return LogEntries for a related object."""
+        ctype = ContentType.objects.get_for_model(obj)
+        return self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
+
+    def by_object_last_week(self, obj):
+        """Return LogEntries of the related object for the last week."""
+        last_week_date = datetime.datetime.today() - datetime.timedelta(days=7)
+        ctype = ContentType.objects.get_for_model(obj)
+        return self.filter(content_type__pk=ctype.pk, object_id=obj.pk,
+            action_time__gt=last_week_date)
+
+
+    def for_projects_by_user(self, user):
+        """Return project LogEntries for a related user."""
+        ctype = ContentType.objects.get(model='project')
+        return self.filter(user__pk__exact=user.pk, content_type__pk=ctype.pk)
+
+    def all_submissions(self):
+        """Return a queryset with all the submissions entries."""
+        return self.filter(action_type__label='project_component_file_submitted')
+
+    def top_submitters_by_object(self, obj, number=10):
+        """
+        Return a list of dicts with the ordered top submitters for an object.
+
+        The ``obj`` parameter usually receive a Project, Component, Language 
+        or a Team object.
+        The ``number`` parameter can be used to set the top number. The default
+        value is 10.
+        """
+        ctype = ContentType.objects.get_for_model(obj)
+        query = self.all_submissions().filter(content_type__pk=ctype.pk, 
+                                              object_id=obj.pk)
+
+        return _user_counting(query)[:number]
+
+    def top_submitters_by_content_type(self, obj, number=10):
+        """
+        Return a list of dicts with the ordered top submitters for the
+        entries of the ``obj`` content type.
+
+        The ``obj`` parameter usually receive a Project, Component, Language or
+        a Team object, which is used to extract the content type. However, it 
+        can also receive a string with 'app_label.model' format.
+        The ``number`` parameter can be used to set the top number. The default
+        value is 10.
+        """
+        if isinstance(obj, basestring):
+            app_label, model =  obj.split('.')
+            ctype = ContentType.objects.get(app_label=app_label, model=model)
+        else:
+            ctype = ContentType.objects.get_for_model(obj)
+        query = self.all_submissions().filter(content_type__pk=ctype.pk)
+
+        return _user_counting(query)[:number]
+
+    def top_submitters_by_project_content_type(self, number=10):
+        """
+        Return a list of dicts with the ordered top submitters for the
+        entries of the 'project' content type.
+        """
+        return self.top_submitters_by_content_type('projects.project', number)
+
+    def top_submitters_by_team_content_type(self, number=10):
+        """
+        Return a list of dicts with the ordered top submitters for the
+        entries of the 'team' content type.
+        """
+        return self.top_submitters_by_content_type('teams.team', number)
+
+    def top_submitters_by_language_content_type(self, number=10):
+        """
+        Return a list of dicts with the ordered top submitters for the
+        entries of the 'language' content type.
+        """
+        return self.top_submitters_by_content_type('languages.language', number)
+
 class LogEntry(models.Model):
     """A Entry in an object's log."""
     user = models.ForeignKey(User, blank=True, null=True, 
@@ -47,20 +145,46 @@ class LogEntry(models.Model):
     object_name = models.CharField(blank=True, max_length=200)
     message = models.TextField(blank=True, null=True)
 
+    # Managers
+    objects = LogEntryManager()
+    
     class Meta:
         verbose_name = _('log entry')
         verbose_name_plural = _('log entries')
         ordering = ('-action_time',)
 
-    def __repr__(self):
-        return smart_unicode(self.action_time)
+    def __unicode__(self):
+        return u'%s.%s.%s' % (self.action_type, self.object_name, self.user)
 
+    def __repr__(self):
+        return smart_unicode("<LogEntry %d (%s)>" % (self.id,
+                                                     self.action_type.label))
 
     def save(self, *args, **kwargs):
         """Save the object in the database."""
         if self.action_time is None:
            self.action_time = datetime.datetime.now()
         super(LogEntry, self).save(*args, **kwargs)
+
+    def message_safe(self):
+        """Return the message as HTML"""
+        return self.message
+    message_safe.allow_tags = True
+    message_safe.admin_order_field = 'message'
+
+    @property
+    def action_type_short(self):
+        """
+        Return a shortened, generalized version of an action type.
+        
+        Useful for presenting an image signifying an action type. Example::
+        
+        >>> print l.action_type
+        <NoticeType: project_component_added>
+        >>> print l.action_type_short
+        u'added'
+        """
+        return self.action_type.label.split('_')[-1]
 
 def action_logging(user, object_list, action_type, message=None, context=None):
     """
@@ -76,7 +200,7 @@ def action_logging(user, object_list, action_type, message=None, context=None):
       A message to be included at the actionlog. If no message is passed
       it will try do render a message using the notice.html from the
       notification application.
-    contex:
+    context:
       To render the message using the notification files, sometimes it is 
       necessary to pass some vars by using a context.
 

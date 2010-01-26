@@ -12,13 +12,16 @@ urlpatterns = patterns('',
     url(r'^$', 'txcommon.views.index', name='transifex.home'),
     url(r'^projects/', include('projects.urls')),
     url(r'^collections/', include('txcollections.urls')),
+    url(r'^reviews/', include('reviews.urls')),
     url(r'^search/$', 'txcommon.views.search', name='search'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/(.*)', admin.site.root),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^languages/', include('languages.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ajax/', include('ajax_select.urls')),
+    url(r'^accounts/timeline/$', 'txcommon.views.user_timeline', name='user_timeline'),
+    url(r'^threadedcomments/', include('threadedcomments.urls')),
 )
 
 if settings.ENABLE_SIMPLEAUTH:
@@ -38,4 +41,5 @@ if settings.STATIC_SERVE:
 if settings.ENABLE_NOTICES:
     urlpatterns += patterns('',
         (r'^notices/', include('notification.urls')),
+        url(r'^accounts/nudge/(?P<username>.+)/$', 'txcommon.views.user_nudge', name='user_nudge'),
     )

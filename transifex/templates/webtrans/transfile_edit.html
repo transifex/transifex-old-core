@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load txpagination %}
+{% load permissions %}
 
 {% block extra_head %}
 <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
@@ -46,54 +47,59 @@
 
 {% block content %}
 
+{% get_permission "project_perm.submit_file" for request.user and pofile as "can_submit_file" %}
+
 {% if pofile.total %}
   <form action='' method='post' class='webtrans'>
-  <h3>Current status for this page</h3>
+  <h3>{% trans "Current status for this page" %}</h3>
 
 <fieldset class="floatright">
-  <legend>Settings</legend>
+  <legend>{% trans "Settings" %}</legend>
   <table class="definition">
   <tr>
-    <th>Show occurences:</th>
+    <th>{% trans "Show occurrences:" %}</th>
     <td><input id="toggle_occurrences" type="checkbox" {% if toggle_occurrences %}checked="checked"{% endif %} name="toggle_occurrences" /></td>
-   
+  </tr>
+  <tr>
+    <th>{% trans "Show context:" %}</th>
+    <td><input id="toggle_contexts" type="checkbox" {% if toggle_contexts %}checked="checked"{% endif %} name="toggle_contexts" /></td>
   </tr>
   </table>
 </fieldset>
 
   <table class="definition stats_totals">
   <tr>
-    <th class="translated">Translated</th>
+    <th class="translated">{% trans "Translated" %}</th>
       <td id="total_translated">{{ pofile.trans }}</td>
       <td id="total_translated_perc">{{ pofile.trans_perc }}%</td>
       <td><input id="only_translated" type="checkbox" {% if only_translated %}checked="checked"{% endif %} name="only_translated"/></td>
   </tr>
   <tr>
-    <th class="fuzzy">Fuzzy</th>
+    <th class="fuzzy">{% trans "Fuzzy" %}</th>
       <td id="total_fuzzy">{{ pofile.fuzzy }}</td>
       <td id="total_fuzzy_perc">{{ pofile.fuzzy_perc }}%</td>
       <td><input id="only_fuzzy" type="checkbox" {% if only_fuzzy %}checked="checked"{% endif %} name="only_fuzzy"/></td>
   </tr>
   <tr>
-    <th class="untranslated">Untranslated</th>
+    <th class="untranslated">{% trans "Untranslated" %}</th>
       <td id="total_untranslated">{{ pofile.untrans }}</td>
       <td id="total_untranslated_perc">{{ pofile.untrans_perc }}%</td>
       <td><input id="only_untranslated" type="checkbox" {% if only_untranslated %}checked="checked"{% endif %} name="only_untranslated"/></td>
   </tr>
   <tr class="last">
-    <th>Total</th>
+    <th>{% trans "Total" %}</th>
       <td id="total_sum">{{ pofile.total }}</td>
   </tr>
   </table>
 {% endif %}
 
-  <h3>Live translation</h3>
+  <h3>{% trans "Live translation" %}</h3>
 
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
 
-  <span>Page {{ step }} of {{ step_count }}</span>
+  <span>{% blocktrans %}Page {{step}} of {{step_count}}{% endblocktrans %}</span>
 
   <div class="generic_form" >
   <table id="trans_web_edit" class="trans_web_edit stats_comp tablesorter">
@@ -101,6 +107,7 @@
     <tr>
       <th>{% trans "#" %}</th>
       <th>{% trans "Source String" %}</th>
+      <th>&nbsp;</th> 
       <th>{% trans "Translation" %}</th>
     {% if WEBTRANS_SUGGESTIONS %}      
       <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
@@ -119,7 +126,10 @@
   {% include 'pagination.html' %}
 
   <p class="submit">
-  <input type="submit" name="submit" class="i16 submit" value="{% trans "Submit translations" %}" />
+  {% if perms.projects.submit_file or can_submit_file %}
+  <input type="submit" class="i16 submit" name="submit" value="{% trans "Submit translations" %}" />
+  {% endif %}
+  <input type="submit" class="i16 send_file" name="submit_for_review" value="{% trans "Send for Review" %}">
   </p>
 
   </form>

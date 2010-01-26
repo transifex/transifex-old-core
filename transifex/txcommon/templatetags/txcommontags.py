@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
 import re
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
+from django.utils.translation import ugettext as _
+
+from actionlog.models import LogEntry
 from projects.models import Project
 import txcommon
 
@@ -58,6 +62,63 @@ class DoGetLatestProjects:
 register.tag('get_latest_projects', DoGetLatestProjects())
 
 
+class TopTranslators(template.Node):
+
+    @classmethod
+    def handle_token(cls, parser, token):
+        """Class method to parse get_top_translators."""
+        tokens = token.contents.split()
+        obj = None
+        if not tokens[1].isdigit():
+            raise template.TemplateSyntaxError, (
+                "The first argument for '%s' must be an integer" % tokens[0])
+        # {% get_top_translators <number_of_top_translators> %}
+        if len(tokens) == 2:
+            return cls(
+                number = int(tokens[1]),
+            )
+        # {% get_top_translators <number_of_top_translators> <obj> %}
+        if len(tokens) == 3:
+            return cls(
+                number = int(tokens[1]),
+                obj = parser.compile_filter(tokens[2]),
+            )
+        else:
+            raise template.TemplateSyntaxError("%r tag requires 1 or 2 arguments" % tokens[0])
+
+
+    def __init__(self, number=None, obj=None):
+        self.number = int(number)
+        self.obj = obj
+
+    def render(self, context):
+        if self.obj:
+            obj = self.obj.resolve(context)
+            top_translators = LogEntry.objects.top_submitters_by_object(obj, self.number)
+        else:
+            top_translators = LogEntry.objects.top_submitters_by_project_content_type(self.number)
+        context['top_translators'] = top_translators
+        return ''
+
+@register.tag
+def get_top_translators(parser, token):
+    """
+    Return a dictionary with the top translators of the system or for a object,
+    when it's passed by parameter.
+
+    Usage::
+    get_top_translators <number_of_top_translators>
+    get_top_translators 10
+
+    or
+
+    get_top_translators <number_of_top_translators> <obj>
+    get_top_translators 10 project_foo
+    """
+    return TopTranslators.handle_token(parser, token)
+
+
+
 @register.inclusion_tag("common_render_metacount.html")
 def render_metacount(list, countable):
     """
@@ -72,7 +133,7 @@ def render_metacount(list, countable):
                 'countable': countable}
 
 @register.inclusion_tag("common_homelink.html")
-def homelink(text="Home"):
+def homelink(text=_("Home")):
     """Return a link to the homepage."""
     return {'text': text}
 
@@ -155,13 +216,13 @@ def mungify(email, text=None, autoescape=None):
     for c in email: emailArrayContent += r(c)
     for c in text: textArrayContent += r(c)
 
-    result = """<script>
+    result = """<script type=\"text/javascript\">
                 var _tyjsdf = [%s], _qplmks = [%s];
                 document.write('<a href="&#x6d;&#97;&#105;&#x6c;&#000116;&#111;&#x3a;');
                 for(_i=0;_i<_tyjsdf.length;_i++){document.write('&#'+_tyjsdf[_i]+';');}
                 document.write('">');
                 for(_i=0;_i<_qplmks.length;_i++){document.write('&#'+_qplmks[_i]+';');}
-                document.write('</a>');
+                document.write('<\/a>');
                 </script>""" % (re.sub(r',$', '', emailArrayContent),
                                 re.sub(r',$', '', textArrayContent))
     
@@ -208,3 +269,17 @@ def get_next(request):
         return next
     except AttributeError:
         return ''
+
+@register.filter
+def strip_tags(value):
+    """Return the value with HTML tags striped."""
+    return txcommon.rst.strip_tags(value)
+
+@register.filter
+def as_rest_title(value, border=None):
+    """
+    Return a value as a restructured text header.
+
+    border - Character to be used in the header bottom-border
+    """
+    return txcommon.rst.as_title(value, border)

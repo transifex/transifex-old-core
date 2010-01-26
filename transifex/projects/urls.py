@@ -9,6 +9,8 @@ from projects.permissions import pr_component_submit_file
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
+from projects.views.review import *
+from projects.views.team import *
 from projects.views.release import *
 
 from txcommon.decorators import one_perm_required_or_403
@@ -18,6 +20,11 @@ project_list = {
     'queryset': Project.objects.all(),
     'template_object_name': 'project',
 }
+
+project_detail = {
+    'extra_context': {'project_overview': True},
+}
+project_detail.update(project_list)
 
 feeds = {
     'latest': LatestProjects,
@@ -34,7 +41,7 @@ urlpatterns = patterns('',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
     url(
-        regex = r'^(?P<param>[-\w]+)/components/feed/$',
+        regex = '^p/(?P<param>[-\w]+)/components/feed/$',
         view = SLUG_FEED,
         name = 'project_feed',
         kwargs = {'feed_dict': feeds,
@@ -64,10 +71,10 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/access/pm/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
         name = 'project_delete_permission'),
-    url(
-        regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
-        view = project_add_permission_request,
-        name = 'project_add_permission_request'),
+    #url(
+        #regex = '^p/(?P<project_slug>[-\w]+)/access/rq/add/$',
+        #view = project_add_permission_request,
+        #name = 'project_add_permission_request'),
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/access/rq/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission_request,
@@ -88,7 +95,7 @@ urlpatterns += patterns('django.views.generic',
         regex = '^p/(?P<slug>[-\w]+)/$',
         view = 'list_detail.object_detail',
         name = 'project_detail',
-        kwargs = project_list,),
+        kwargs = project_detail),
     url (
         regex = '^$',
         view = 'list_detail.object_list',
@@ -100,6 +107,14 @@ urlpatterns += patterns('django.views.generic',
         dict(queryset_or_model=Project, allow_empty=True,
              template_object_name='project'),
         name='project_tag_list'),
+    url(
+        regex = '^p/(?P<slug>[-\w]+)/timeline/$',
+        view = project_timeline,
+        name = 'project_timeline',
+        kwargs = {'queryset': Project.objects.all(),
+                  'template_object_name': 'project',
+                  'template_name': 'projects/project_timeline.html',
+                  'extra_context': {'project_timeline': True},},),
 )
       
 
@@ -166,9 +181,10 @@ urlpatterns += patterns('',
         view = component_detail,
         name = 'component_detail'),
 )
-      
+
 
 # Releases
+
 urlpatterns += patterns('',
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/$',
@@ -192,7 +208,75 @@ urlpatterns += patterns('',
 #        view = release_language_detail,
 #    ),
 )
-      
+
+
+# Teams
+urlpatterns += patterns('',
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/add/$',
+        view = team_create,
+        name = 'team_create',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/edit/$',
+        view = team_update,
+        name = 'team_update',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/$',
+        view = team_list,
+        name = 'team_list',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/$',
+        view = team_detail,
+        name = 'team_detail',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/delete/$',
+        view = team_delete,
+        name = 'team_delete',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/request/$',
+        view = team_join_request,
+        name = 'team_join_request',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/approve/(?P<username>[-\w]+)/$',
+        view = team_join_approve,
+        name = 'team_join_approve',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/deny/(?P<username>[-\w]+)/$',
+        view = team_join_deny,
+        name = 'team_join_deny',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/withdraw/$',
+        view = team_join_withdraw,
+        name = 'team_join_withdraw',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/leave/$',
+        view = team_leave,
+        name = 'team_leave',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/teams/request/$',
+        view = team_request,
+        name = 'team_request',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/approve/$',
+        view = team_request_approve,
+        name = 'team_request_approve',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/team/(?P<language_code>[-_@\w]+)/deny/$',
+        view = team_request_deny,
+        name = 'team_request_deny',),
+)
+
+# Reviews
+urlpatterns += patterns('',
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/reviews/$',
+        view = review_list,
+        name = 'review_list',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/reviews/(?P<id>\d+)/modify/$',
+        view = review_modify,
+        name = 'review_modify',),
+)
 
 #TODO: Make this setting work throughout the applications
 if getattr(settings, 'ENABLE_WEBTRANS', True):
@@ -200,12 +284,7 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
         url(
             regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
                     'edit/(?P<filename>(.*))$'),
-            # It needs to pass through both 'login_required' and 
-            # 'one_perm_required_or_403' decorators
-            view = login_required(one_perm_required_or_403(
-                pr_component_submit_file, # from projects.permissions
-                (Project, 'slug__exact', 'project_slug')
-                )(TransFormWizard(key=None, form_list=[]))),
+            # It needs to pass through both 'login_required'
+            view = login_required(TransFormWizard(key=None, form_list=[])),
             name = 'component_edit_file',),
         )
-

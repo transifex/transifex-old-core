@@ -1,6 +1,7 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (logout as auth_logout,
@@ -34,3 +35,11 @@ def account_settings(request, template_name='simpleauth/settings.html'):
     return render_to_response(template_name,
                   {'msg': msg,},
                   context_instance=RequestContext(request))
+
+def profile_public(request, username, template_name='simpleauth/profile_public.html'):
+    """Public profile page."""
+    user = get_object_or_404(User, username=username)
+    return render_to_response(template_name,
+                  {'user': user,},
+                  context_instance=RequestContext(request))
+

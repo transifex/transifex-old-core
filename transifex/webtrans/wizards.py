@@ -8,7 +8,9 @@ from django.template.context import RequestContext
 from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext as _
 
+from authority.views import permission_denied
 from projects.models import Component
+from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 from txcommon.formtools.wizards import SessionWizard
 from webtrans.forms import TranslationForm
@@ -47,10 +49,12 @@ class TransFormWizard(SessionWizard):
 
         component = get_object_or_404(Component, slug=component_slug,
                                       project__slug=project_slug)
+        pofile = get_object_or_404(POFile, filename=filename, component=component)
+        
         step = int(request.POST.get(self.step_field_name, 0))
 
         # Initializing TranslationForm vars
-        self.pofile = POFile.objects.get(filename=filename, component=component)
+        self.pofile = pofile
         self.po_entries = component.trans.get_po_entries(filename)
         
         # Drop obsolete entries from the list
@@ -71,6 +75,7 @@ class TransFormWizard(SessionWizard):
             'ENTRIES_PER_PAGE': self.ENTRIES_PER_PAGE,
             'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
             'toggle_occurrences': request.POST.get('toggle_occurrences', None),
+            'toggle_contexts': request.POST.get('toggle_contexts', None),
             #'only_translated': request.POST.get('only_translated', None),
             #'only_fuzzy': request.POST.get('only_fuzzy', None),
             #'only_untranslated': request.POST.get('only_untranslated', None),
@@ -91,6 +96,7 @@ class TransFormWizard(SessionWizard):
         
         """
         self.init(request, *args, **kwargs)
+
         step = self.current_step(request)
         if request.method == 'POST':
             self.store(step, request.POST, request.FILES)
@@ -100,7 +106,7 @@ class TransFormWizard(SessionWizard):
             if not form.is_valid():
                 return self.render(request, step, form)
             # Submit whenever the 'submit' button is pressed
-            if 'submit' in request.POST:
+            if 'submit' in request.POST or 'submit_for_review' in request.POST:
                 return self.finish(request)
             return self.render(request, self.next_step(request, step))
         return self.render(request, step)
@@ -197,8 +203,8 @@ class TransFormWizard(SessionWizard):
             request.user.message_set.create(message = _(
                 "Nothing was sent because you haven't changed anything in the "
                 "translation form."))
-            return HttpResponseRedirect(reverse('projects.views.component_detail', 
-                args=(project_slug, component_slug)))
+            return HttpResponseRedirect(reverse('component_detail',
+                args=(project_slug, component_slug,)))
 
         self.clear_storage(request)
         return result_view

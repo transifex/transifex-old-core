@@ -132,7 +132,10 @@ class GitBrowser(BrowserMixin):
                 rev = self.repo.show_ref(refspec).split()[0]
             else:
                 rev = self.repo.log('-1', '--pretty=format:%H', obj)
-            return (int(rev, 16),)
+            if rev:
+                return (int(rev, 16),)
+            else:
+                return (0,)
         # TODO: Make it more specific
         except:
             logger.error(traceback.format_exc())

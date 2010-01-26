@@ -461,6 +461,13 @@ available in the `Fedora EPEL`_ yum repository.
 Information about installing Transifex can be found in the
 :ref:`Installation documentation <intro-install>`.
 
+.. note::
+
+    If you are interested in reading the Installation documentation exactly how
+    it looked like when 0.7 was released, please refer to our archived
+    `Install Docs for 0.7`_. 
+    
+
 
 The Transifex Appliance
 :::::::::::::::::::::::
@@ -635,6 +642,49 @@ Bugfixes
 * Tarball units also need an _get_user method
 
 
+Transifex 0.7.4 (Xorn)
+======================
+
+Transifex 0.7.4 release, codenamed Xorn_, is a security release which
+fixes one issue when users are allowed to administrate their own projects.
+
+Released:
+  January 22, 2010
+
+Diffstat:
+  6 files changed, 116 insertions(+), 17 deletions(-)
+
+Affected releases:
+  This security issue affects instances running the 0.7.x branch only. The
+  previous versions only allowed administrators to modify projects.
+
+
+Details
+-------
+
+Prior to this release, a project maintainer could define a special URL which
+Transifex has access to, but resides on the filesystem. This
+way users could gain unauthorized access to local versioned repositories on the
+Transifex server. This applied to distributed VCSs and can be accomplished by
+defining the correct local path as the repository URL
+(eg. ``/transifex/local_repos/git/...``).
+
+The allowed repository root URLs are now limited to specific prefixes, such as
+``ssh://`` and ``http://``, via a validator which verifies that the URL has a
+correct prefix. The list of allowed prefixes is a white list and is defined in
+the vcs-related config files, ``settings/60-vcs.conf`` and
+``settings/80-vcs-extras.conf``.
+
+Additionally, a new basic validation has been added, which does not allow the
+use of repositories which have been registered to other projects.
+
+Transifex instances which are affected are those allowing users to add their
+own projects (``project_add`` permission open) or are using project
+maintainers instead of site-wide admins only.
+
+This release adds a new configuration option: ``ALLOWED_REPOSITORY_PREFIXES``.
+
+
 Transifex 0.7 Release Candidates
 ================================
 
@@ -648,8 +698,9 @@ what has changed between these releases and the final 0.7 release.
 .. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
 .. _Frenzy: http://en.wikipedia.org/wiki/Joanna_Cargill
 .. _Quicksilver: http://en.wikipedia.org/wiki/Quicksilver_(comics)
+.. _Xorn: http://en.wikipedia.org/wiki/Xorn
 .. _Basilisk: http://en.wikipedia.org/wiki/Basilisk_(Mutant)
 .. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
 .. _Google Translate API: http://code.google.com/apis/ajaxlanguage/documentation/#SupportedPairs
-.. _Transifex 0.7 changelog: http://code.transifex.org/index.cgi/tx-0.7.x/shortlog
+.. _Transifex 0.7 changelog: http://code.transifex.org/tx-0.7.x/shortlog
 .. _Greek Open Source Company: http://www.eellak.gr/

@@ -83,7 +83,7 @@ class Project(models.Model):
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
-        help_text=_('A string like a name or very short description.'))
+        help_text=_('A short name or very short description.'))
     description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
     long_description = models.TextField(_('Long description'), blank=True, 
@@ -91,9 +91,9 @@ class Project(models.Model):
         help_text=_('A longer description (optional). Use Markdown syntax.'))
     homepage = models.URLField(_('Homepage'), blank=True, verify_exists=False)
     feed = models.CharField(_('Feed'), blank=True, max_length=255,
-        help_text=_('An RSS feed with updates on the project.'))
+        help_text=_('An RSS feed with updates to the project.'))
     bug_tracker = models.URLField(_('Bug tracker'), blank=True,
-        help_text=_('The URL for the webiste tracking bugs and tickets '
+        help_text=_('The URL for the bug and tickets tracking system '
                     '(Bugzilla, Trac, etc.)'))
     anyone_submit = models.BooleanField(_('Anyone can submit'), 
         default=False, blank=False,
@@ -148,6 +148,12 @@ class Project(models.Model):
     def is_watched_by(self, user, signal=None):
         return is_watched_by_user_signal(self, user, signal)
 
+    @property
+    def blacklist_vcsunits(self):
+        """Return all the vcsunits that arent allowed to be used."""
+        return VcsUnit.objects.exclude(
+            component__id__in=self.component_set.all().values('id'))
+
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
 
@@ -191,21 +197,21 @@ class Component(models.Model):
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
-        help_text=_('A string like a name or very short description.'))
+        help_text=_('A short name or very short description.'))
     description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
     long_description = models.TextField(_('Long description'), blank=True, 
         max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
     source_lang = models.CharField(_('Source language'), max_length=50,
-        help_text=_("The source language for this component, "
-                    "eg. 'en', 'pt_BR', 'el'."))
+        help_text=_("The source language for this component "
+                    "(e.g., 'en', 'pt_BR', 'el')."))
     i18n_type = models.CharField(_('I18n type'), max_length=20,
         choices=settings.TRANS_CHOICES.items(),
-        help_text=_("The code's type of i18n support (%s)" %
+        help_text=_("The type of i18n support for the source code (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
     file_filter = models.CharField(_('File filter'), max_length=50,
-        help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
+        help_text=_("A regular expression to filter the exposed files. Eg: 'po/.*'"))
 
     allows_submission = models.BooleanField(_('Allows submission'), 
         default=False,

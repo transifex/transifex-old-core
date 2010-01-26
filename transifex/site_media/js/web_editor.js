@@ -31,6 +31,15 @@ function toggle_occurrences(){
         }
     }
 
+function toggle_contexts(){
+        if($("input[name='toggle_contexts']").is(":checked")){
+            $(".contexts").show();
+
+        }else{
+            $(".contexts").hide();
+        }
+    }
+
 function fuzzy(nkey){
     $("input[name='fuzzy_field_"+nkey+"']").attr('checked', true);
     $("textarea.msgstr_field_"+nkey)
@@ -161,4 +170,35 @@ $(function(){
     })
     toggle_occurrences()
 
+    $("input[name='toggle_contexts']").change(function(){
+        toggle_contexts()
+    })
+    toggle_contexts()
+
+    // Copy source string button 
+    $('span.copy_source').click(function(){
+        var first = null;
+        tr = $(this).parents('tr')
+        msgid=$('.msg', tr).find('p.msgid').text();
+        msgid_plural=$('.msg', tr).find('p.msgid_plural').text();
+        nkey = tr.attr('id').split('msgstr_field_')[1];
+
+        // For each textarea of this entry
+        $('.trans', tr).find("textarea[name*='msgstr_field_"+nkey+"']").each(function(){
+            if(!first){
+                first=$(this);
+                $(this).val(msgid);
+            }else{
+                $(this).val(msgid_plural);
+            }
+        });
+
+        // from web_editor.js: 
+        fuzzy(nkey); 
+        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', ''); 
+        update_totals(); 
+        return false; 
+    });
+
 });
+

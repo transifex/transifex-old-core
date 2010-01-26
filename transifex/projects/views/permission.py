@@ -70,38 +70,38 @@ def project_add_permission(request, project_slug):
         extra_context={
             'project_permission': True,
             'project': project,
-            'project_form': ProjectAccessSubForm(instance=project),
+            'project_permission_form': ProjectAccessSubForm(instance=project),
             'notice': notice,
         },
-        template_name='projects/project_form_base.html')
+        template_name='projects/project_form_permissions.html')
 
 
-@login_required
-def project_add_permission_request(request, project_slug):
-    """
-    Return a view with a form for adding a request of permission for an user.
+#@login_required
+#def project_add_permission_request(request, project_slug):
+    #"""
+    #Return a view with a form for adding a request of permission for an user.
 
-    This view is an abstraction of a txpermissions.views method. 
-    """
-    project = get_object_or_404(Project, slug=project_slug)
-    notice = {
-            'type': 'project_submit_access_requested',
-            'object': project,
-            'sendto': project.maintainers.all(),
-            'extra_context': {'project': project,
-                              'user_request': request.user
-            },
-        }
-    return add_permission_or_request(request, project,
-        view_name='project_add_permission_request',
-        approved=False,
-        extra_context={
-            'project_permission': True,
-            'project': project, 
-            'project_form': ProjectAccessSubForm(instance=project),
-            'notice': notice
-        },
-        template_name='projects/project_form_base.html')
+    #This view is an abstraction of a txpermissions.views method. 
+    #"""
+    #project = get_object_or_404(Project, slug=project_slug)
+    #notice = {
+            #'type': 'project_submit_access_requested',
+            #'object': project,
+            #'sendto': project.maintainers.all(),
+            #'extra_context': {'project': project,
+                              #'user_request': request.user
+            #},
+        #}
+    #return add_permission_or_request(request, project,
+        #view_name='project_add_permission_request',
+        #approved=False,
+        #extra_context={
+            #'project_permission': True,
+            #'project': project, 
+            #'project_permission_form': ProjectAccessSubForm(instance=project),
+            #'notice': notice
+        #},
+        #template_name='projects/project_form_permissions.html')
 
 
 @login_required

@@ -2,14 +2,18 @@
 {% load submissions %}
 {% url component_submit_file pofile.object.project.slug pofile.object.slug pofile.filename as file_submit_url %}
 {% with pofile.filename as pofile_filename %}
-  <span class="i16 nodecoration_icon send_file submit_button buttonized_simple" title="{% blocktrans %}Submit a translation for {{ pofile_filename }}{% endblocktrans %}"></span>
+  <span class="i16 nodecoration_icon send_file submit_button buttonized_simple houdini_toggler" title="{% blocktrans %}Submit a translation for {{ pofile_filename }}{% endblocktrans %}"></span>
 {% endwith %}
-<form class="submit_form microform compact" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
+<form class="submit_form compact houdini" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
 <fieldset>
   <legend>{% trans "Submit file" %}</legend>
-  <input type="file" name="submitted_file">
-  <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
-  <input type="hidden" id="message" name="message" value="Updates to {{pofile.lang_or_code}} translation">
+    <input type="file" name="submitted_file">
+    <p>
+    {% if perms.projects.submit_file or can_submit_file %}
+    <input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}">
+    {% endif %}
+    <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
+    </p>
   {% with pofile.locks.get.owner as owner %}
     {% if pofile.locked %}
       {% ifnotequal request.user.username owner.username %}

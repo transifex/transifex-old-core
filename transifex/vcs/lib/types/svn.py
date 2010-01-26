@@ -19,7 +19,7 @@ def need_repo(fn):
         try:
             self.client.status(self.path)
         except pysvn.ClientError:
-            self.init_repo()
+            self.setup_repo()
         return fn(self, *args, **kw)
     return repo_fn
 
@@ -82,6 +82,11 @@ class SvnBrowser(BrowserMixin):
     
     """
     A browser class for Subversion repositories.
+    
+    Note, that compared to the other Browsers, this one is stateless: It
+    doesn't require a self.repo object or something, since each command
+    can execute without any preparation. For this reason, init_repo is
+    not doing much.
    
     Subversion homepage: http://subversion.tigris.org/
 
@@ -104,6 +109,10 @@ class SvnBrowser(BrowserMixin):
         if not name:
             name = root.split('/')[-1]
 
+        # Handle SSL warnings
+        def _ssl_server_trust_prompt(trust_data):
+            return True, trust_data['failures'], True
+
         self.root = root
         self.name = name
         self.branch = branch
@@ -115,7 +124,8 @@ class SvnBrowser(BrowserMixin):
             [self.path, REPO_PATH]) == REPO_PATH, (
             "Unit checkout path outside of nominal repo checkout path.")
         self.client = pysvn.Client()
-
+        self.client.callback_ssl_server_trust_prompt = _ssl_server_trust_prompt
+        
     def _authenticate(self):
         """
         Authentication for SVN repositories.
@@ -144,6 +154,7 @@ class SvnBrowser(BrowserMixin):
             return self.root
 
 
+    @need_auth
     def setup_repo(self):
         """
         Initialize repository for the first time.
@@ -151,24 +162,23 @@ class SvnBrowser(BrowserMixin):
         Commands used:
         svn co <remote_path> <self.path>
         """
-        #FIXME: This function isn't called by anyone!
-        #FIXME: This doesn't look 100% right, but it works and seems to
-        # follow pysvn's instructions.
-        # Basically we need to call exactly the same commands as the ones
-        # we're calling in the following method (client.checkout).
-        self.init_repo()
-
-    @need_auth
-    def init_repo(self):
-        """Initialize the ``client`` variable on the browser."""
         try:
-            #FIXME: This is simply wrong. Every time we need a browser, we
-            # issue a checkout, which is very expensive! This should be done
-            # only in setup_repo().
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
         except Exception, e:
             _exception_handler(e, "Checkout from remote repository failed.")
+
+
+    @need_auth
+    def init_repo(self):
+        """
+        A browser repo initialization method, for compatibility reasons.
+        
+        pysvn runs commands in a stateless fashion, so we don't require an
+        initialization phase. The local repo existence check is handled by
+        the ``need_repo`` decorator.
+        """
+        pass
 
 
     def _clean_dir(self):
@@ -237,10 +247,22 @@ class SvnBrowser(BrowserMixin):
         for filename in absolute_filenames:
             if not self.client.status(filename)[0]['is_versioned']:
                 self.client.add(filename)
-        
+
+        # Get username from User or Profile, depending on the type of instance 
+        # that the parameter 'user' is.
+        username = getattr(user, 'username', user.user.username)
+
         try:
             # svn ci files
-            self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+            r = self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+
+            try:
+                # Set the author property for the revision
+                self.client.revpropset("svn:author", username, self.root, r)
+            except pysvn.ClientError, e:
+                logger.info("Could not set author property for a svn commit:\n"
+                    "%s" % str(e))
+
             self.update()
         except pysvn.ClientError, e:
             _exception_handler(e)

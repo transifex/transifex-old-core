@@ -110,13 +110,14 @@ div#body {
   margin: 1em;
   min-height: 5em;
   padding: 0.5em 3em 3em 3em;
+  border:1px solid #C5DBEC;
 }
 
 div#body h2 {
   font-weight: normal;
   font-size: 1.8em;
   margin-left: 0;
-  margin-top: 1.5em;
+  margin-top: 0.8em;
   color: #666;
 }
 
@@ -385,6 +386,9 @@ body.projects.project_detail .components p.more {
 
 
 /* Search */
+div.searchform {
+  margin-bottom: 0.5em;
+}
 
 div.searchform label {
   font-size: 90%;
@@ -587,6 +591,10 @@ div.generic_form table td select {
   padding: 0.2em 0.3em;
 }
 
+div.generic_form table td input[type="submit"]{
+  padding-left: 24px;
+}
+
 div.generic_form table p.fieldp {
   margin: 0;
 }
@@ -757,4 +765,227 @@ span.note {
 .buttonized:hover {
   background-color: #fafafa;
   border: 1px solid #ccc;
+}
+
+.results_on_deck {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*List*/
+div.list ul {
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+div.list li{
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+
+div.list ul li.i16{
+ padding-left: 23px;
+}
+
+div.list ul li .name{
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+div.list ul li span.name{
+  color: #666;
+}
+
+div.list ul li .notice{
+  color: #FF4646;
+}
+
+div.list ul li span.notice{
+  color: #FF4646;
+}
+
+div.list ul li form{
+  float: right;
+  margin-left: 8px;
+}
+
+div.list ul li span.details{
+  font-size: 0.85em;
+  color: #666;
+  font-weight: normal;
+}
+
+div.list .pagination.bottom {
+  margin-top: 2px;
+}
+
+div.notice {
+  text-align: center;
+  -moz-border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.5em;
+  background-color: #ffffe0;
+  border-color: #e6db55;
+  margin: 5px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+}
+
+
+
+/* Comments */
+
+ol.comments{
+        margin: 15px 0;
+        padding: 0;
+        list-style: none !important;
+        font-size: 0.82em;
+        line-height: 1.6em;
+}
+
+ol.comments li{
+        background-color: #F1FFE8;
+        padding: 10px !important;
+        margin: 0 0 10px 0 !important;
+        font-size: 0.9em;
+        line-height: 1.5em;
+}
+
+ol.comments li p{
+        font-size: 1em;
+        line-height: 1.5em;
+}
+
+ol.comments a.jump{
+        text-decoration: none;
+}
+
+ol.comments p{
+        margin: 0 0 10px 0;
+}
+
+ol.comments p.title{
+        border-bottom: 1px dotted #CECECE;
+        padding-bottom: 4px;
+}
+table.timeline span {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border: 0px;
+}
+
+table.timeline td {
+  max-width: 700px;
+}
+
+div.notification span {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border: 0px;
+}
+
+div.notification table{
+  width:100%;
+}
+div.notification td {
+  padding-right: 10px !important;
+  padding-left: 3px !important;
+  max-width: 855px;
+}
+
+div.notification td.unseen {
+  background-color: #FFF4C1 !important;
+}
+
+div.notification td h3 {
+  margin: 0px !important;
+  padding: 0px !important;
+  text-align: center;
+}
+
+div.notification td.notice_date{
+  background-color: #FAFAFA !important;
+ }
+
+ol.comments p.title span.author{
+        margin: 0;
+        font-weight: bold;
+        color: Black;
+}
+
+/* shinyform */
+
+fieldset.shinyform{
+        border: none;
+        margin: 0;
+        padding: 0;
+}
+
+fieldset.shinyform legend{
+}
+
+fieldset.shinyform ol{
+        margin: 0 !important;
+div.notification div.editlinks{
+  margin-top: 15px !important;
+ }
+
+div.notification div.notice_settings table{
+  width: 100%;
+ }
+div.notification div.notice_settings td{
+  font-weight: bold;
+  color: #0D4C8C;
+ }
+
+div.notification div.notice_settings span{
+  font-size: 0.9em;
+  color: #777;
+  font-weight: normal;
+ }
+
+
+        padding: 0 !important;
+        list-style: none !important;
+}
+
+
+fieldset.shinyform ol li{
+        padding: 5px 0 !important;
+        margin: 5px 0 !important;
+}
+
+fieldset.shinyform label{
+        font-weight: bold;
+        font-size: 0.8em;
+        color: #333;
+        display: block;
+}
+
+fieldset.shinyform input[type=text]{
+        width: 350px;
+}
+
+fieldset.shinyform span.help{
+        font-size: 0.8em;
+        display: block;
+        color: #999;
+        line-height: 1.2em;
+        padding-top: 3px;
+        max-width: 80%;
+}
+
+ul.errorlist,
+ul.errorlist li{
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none;
+        float: right;
+        font-weight: bold;
+        font-size: 0.9em;
+        color: #c00;
+        line-height: 1.1em;
 }

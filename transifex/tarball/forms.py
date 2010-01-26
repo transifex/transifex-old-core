@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from tarball.models import Tarball
 from txcommon.models import inclusive_fields
@@ -11,7 +12,9 @@ class TarballForm(forms.ModelForm):
 
 class TarballSubForm(forms.ModelForm):
 
-    root = ValidTarBallUrl()
+    root = ValidTarBallUrl(
+        label=_("Tarball URL"),
+        help_text=_("A URL from which the tarball is accessible."))
 
     class Meta:
         model = Tarball

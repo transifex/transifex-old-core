@@ -1,4 +1,4 @@
-{% extends "projects/base.html" %}
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load markup %}
 {% load txcommontags %}
@@ -10,14 +10,10 @@
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
-{% block extra_head %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
-{% endblock %}
-
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
 {% block content_main %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   <div class="obj_bigdetails">
   <h2 class="pagetitle">{{ project.name }}</h2>
 
@@ -31,11 +27,10 @@
   {% endif %}
   {% endwith %}
 
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   {% if perms.projects.change_project or is_maintainer %}
   <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
-  
+
   <div class="details separate">
 
   {% if project.homepage or project.tags %}
@@ -109,23 +104,29 @@
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object project %}
 {% if not action_log %}
+
 <p>{% trans 'None available' %}</p>
+
 {% else %}
+
 <ul class="actionlist simple">
 {% for entry in action_log %}
 <li class="i16 actionlog">
     {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
 </li>
 {% endfor %}
-
 </ul>
+{% if perms.projects.change_project or is_maintainer %}
+  <p><span class="i16 date"><a href="{% url project_timeline slug=project.slug %}">{% trans "View complete action log" %}</a></span></p>
+{% endif %}
+
 {% endif %}
 
 {% endblock %}
 
 {% block content_footer %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   <div id="content_footer_center">
-    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
     {% if perms.projects.delete_project or is_maintainer %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>

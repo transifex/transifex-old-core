@@ -11,17 +11,23 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 
 from actionlog.models import action_logging
+from authority.views import permission_denied
 from codebases.forms import UnitForm
 from languages.models import Language
 from notification import models as notification
 from projects.models import Project, Component
 from projects.forms import ComponentForm, ComponentAllowSubForm
 from projects.permissions import *
+from projects.permissions.project import ProjectPermission
+from projects.signals import submission_error
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from submissions import submit_by_email
+from reviews.views import review_add
+from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
 from translations.lib.types.publican import PotDirError
 from translations.models import POFile, POFileLock
@@ -35,6 +41,8 @@ from txcommon.log import logger
 from txcommon.models import exclusive_fields, get_profile_or_user
 from txcommon.views import json_result, json_error
 
+# Cache the current site
+current_site = Site.objects.get_current()
 
 # Components
 @login_required
@@ -58,8 +66,8 @@ def component_create_update(request, project_slug, component_slug=None):
                                        instance=component, prefix='component')
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
         allow_subform = ComponentAllowSubForm(request.POST, instance=component)
-        unit_subforms = unit_sub_forms(unit, request.POST)
-
+        unit_subforms = unit_sub_forms(unit, request.POST,
+            project.blacklist_vcsunits)
         old_i18n_type = None
         old_root = None
 
@@ -138,7 +146,9 @@ def component_create_update(request, project_slug, component_slug=None):
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
         allow_subform = ComponentAllowSubForm(instance=component)
-        unit_subforms = unit_sub_forms(unit)
+        unit_subforms = unit_sub_forms(unit, None,
+            project.blacklist_vcsunits)
+
     return render_to_response('projects/component_form.html', {
         'component_form': component_form,
         'unit_form': unit_form,
@@ -238,10 +248,10 @@ def component_set_stats(request, project_slug, component_slug):
 
         except PotDirError:
             logger.debug("There is no 'pot' directory in the set of files. %s does "
-                        "not seem to be a Publian like project."
+                        "not seem to be a Publican like project."
                         % component.full_name)
             request.user.message_set.create(message = _("There is no 'pot' "
-                "directory named in the set of files of this Publian like "
+                "directory named in the set of files of this Publican like "
                 "component. Maybe its file filter is not allowing access to it."))
 
     else:
@@ -274,8 +284,9 @@ def component_file(request, project_slug, component_slug, filename,
         content = component.trans.get_file_contents(filename, is_msgmerged)
     except (TypeError, IOError):
         raise Http404
-    fname = "%s.%s" % (component.full_name, os.path.basename(filename))
-    logger.debug("Requested raw file %s" % filename)
+    base_filename = os.path.basename(filename)
+    full_filename = "%s.%s" % (component.full_name, base_filename)
+    logger.debug("Requested raw file %s" % full_filename)
     if view:
         try:
             import codecs
@@ -294,20 +305,18 @@ def component_file(request, project_slug, component_slug, filename,
                     encoding = m.group(1)
                 except LookupError:
                     pass
-            try:
-                # Try to convert to UTF and present it as it should look like
-                content = content.decode(encoding)
-            except UnicodeDecodeError:
-                # Oh well, let's just show it as it is.
-                pass
+            content = content.decode(encoding)
             context = Context({'body': pygments.highlight(content, lexer, formatter),
                                'style': formatter.get_style_defs(),
                                'title': "%s: %s" % (component.full_name,
-                                                    os.path.basename(filename))})
+                                                    base_filename)})
             content = loader.get_template('poview.html').render(context)
             mimetype = 'text/html'
-        except ImportError:
-            # Oh well, no pygments available
+        except (UnicodeDecodeError, ImportError), e:
+            # Oh well, pygments is unavailable for one reason or another.
+            # Display as plaintext
+            submission_error.send(sender=component, filename=base_filename,
+                                  message=e)
             mimetype = 'text/plain'
         response = HttpResponse(content,
             mimetype='%s; charset=UTF-8' % (mimetype,))
@@ -315,13 +324,13 @@ def component_file(request, project_slug, component_slug, filename,
     else:
         response = HttpResponse(content, mimetype='text/plain; charset=UTF-8')
         attach = "attachment;"
-    response['Content-Disposition'] = '%s filename=%s' % (attach, fname)
+    response['Content-Disposition'] = '%s filename=%s' % (attach, full_filename)
     return response
 
 
 @login_required
-@one_perm_required_or_403(pr_component_submit_file, 
-    (Project, 'slug__exact', 'project_slug'))
+#@one_perm_required_or_403(pr_component_submit_file, 
+#    (Project, 'slug__exact', 'project_slug'))
 def component_submit_file(request, project_slug, component_slug, 
                           filename=None, submitted_file=None):
 
@@ -365,12 +374,12 @@ def component_submit_file(request, project_slug, component_slug,
 
             if not re.compile(component.file_filter).match(filename):
                 request.user.message_set.create(message=_("The target " 
-                                       "file does not match with the "
+                                       "file does not match the "
                                        "component file filter"))
                 return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
-            if not request.POST['message']:
+            if not request.POST.get('message', None):
                 request.user.message_set.create(message=
                     _("Enter a commit message"))
                 return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
@@ -389,21 +398,37 @@ def component_submit_file(request, project_slug, component_slug,
         try:
             postats = POFile.objects.get(filename=filename,
                                          object_id=component.id)
+            language = postats.language
             lang_code = postats.language.code
+            team_name = language.name
         except (POFile.DoesNotExist, AttributeError):
-            postats = None
-            lang_code = component.trans.guess_language(filename)
+            language, postats = None, None
+            team_name = lang_code = component.trans.guess_language(filename)
 
-        msg = settings.DVCS_SUBMIT_MSG % {'message': request.POST['message'],
-                                          'domain' : request.get_host()}
+        # Send the file for review instead of immediately submit it
+        if request.POST.get("submit_for_review", None):
+            return review_add(request, component, submitted_file, language)
+
+        team = Team.objects.get_or_none(component.project, lang_code)
+        if team:
+            object_list.append(team)
+
+        # Checking permission to submit file to the related team
+        # FIXME: It's kinda redundancy, only a decorator should be enough
+        check = ProjectPermission(request.user)
+        if not check.submit_file(team or component.project):
+            request.user.message_set.create(message=
+                _("You need to be in the '%s' team of this project for "
+                  "being able to send translations to that file "
+                  "target.") % team_name)
+            return HttpResponseRedirect(reverse('component_detail', 
+                            args=(project_slug, component_slug,)))
 
         try:
-
             if settings.MSGFMT_CHECK and filename.endswith('.po'):
                 logger.debug("Checking %s with msgfmt -c for component %s" % 
                             (filename, component.full_name))
                 component.trans.msgfmt_check(submitted_file)
-
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare()
 
@@ -411,10 +436,24 @@ def component_submit_file(request, project_slug, component_slug,
                          (filename, component.full_name))
 
             if component.submission_type=='ssh' or component.unit.type=='tar':
+
+                # Rendering the commit message
+                new_stats = component.trans.get_po_stats(submitted_file)
+                completion = component.trans.get_stats_completion(new_stats)
+                status = component.trans.get_stats_status(new_stats)
+                message = request.POST.get('message', None)
+                if not message:
+                    message = "Updated %s translation to %s%%" % (
+                        (language or lang_code), completion)
+
+                msg = settings.DVCS_SUBMIT_MSG % {'message': message,
+                                                  'status': status,
+                                                  'domain' : current_site.domain }
+
                 component.submit(file_dict, msg, 
                                  get_profile_or_user(request.user))
 
-            if component.submission_type=='email':
+            elif component.submission_type=='email':
                 logger.debug("Sending %s for component %s by email" % 
                             (filename, component.full_name))
                 submit_by_email(component, file_dict, request.user)
@@ -464,7 +503,6 @@ def component_submit_file(request, project_slug, component_slug,
                          component.full_name, str(e)))
             request.user.message_set.create(message = _(
                 "Sorry, your file could not be sent because of an error."))
-
     else:
         request.user.message_set.create(message = _(
                 "Sorry, but you need to send a POST request."))
@@ -509,8 +547,6 @@ def component_toggle_lock_file(request, project_slug, component_slug,
 
 
 @login_required
-@one_perm_required_or_403(pr_component_watch_file, 
-    (Project, 'slug__exact', 'project_slug'))
 def component_toggle_watch(request, project_slug, component_slug, filename):
     """Add/Remove a watch for a path on a component for a specific user."""
 
@@ -526,6 +562,14 @@ def component_toggle_watch(request, project_slug, component_slug, filename):
 
     pofile = get_object_or_404(POFile, object_id=component.pk, 
                                content_type=ctype, filename=filename)
+
+    # FIXME: It's kinda redundancy, only a decorator should be enough
+    # Also it's only accepting granular permissions
+    check = ProjectPermission(request.user)
+    if not check.submit_file(pofile) and not \
+        request.user.has_perm('repowatch.add_watch') and not \
+        request.user.has_perm('repowatch.delete_watch'):
+        return permission_denied(request)
 
     url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
                                                   filename))

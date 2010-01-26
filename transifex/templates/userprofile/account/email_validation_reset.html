@@ -16,7 +16,7 @@
 
 {% block userprofile_content %}
   <h2>{% trans "Resend e-mail validation" %}</h2>
-  <p>{% trans "If you haven't validated your e-mail address yet you will not be able to sign in. Insert your registered e-mail address to receive the validation e-mail again." %}</p>
+  <p>{% trans "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again." %}</p>
 
   <div class="generic_form">
     <form action="{% url email_validation_reset %}" method="post" accept-charset="utf-8">

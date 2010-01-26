@@ -3,8 +3,8 @@
 {% load truncate %}
 <div class="generic_form">
 {% url component_submit_new_file component.project.slug component.slug as file_submit_url %}
-<span class="i16 add submit_button buttonized" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new translation" %}</span>
-<form class="submit_form microform" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
+<span class="i16 add submit_button buttonized houdini_toggler" title="{% trans "Send a new translation for this component." %}">{% trans "Add a new translation" %}</span>
+<form class="submit_form microform houdini" method="POST" action="{{ file_submit_url }}" enctype="multipart/form-data">
  <fieldset style="margin-top: 1em;">
   <legend>{% trans "Add a translation file" %}</legend>
    <table>
@@ -12,7 +12,7 @@
     <tr>
     <th>{% trans "Local file:" %} <span class="required">*</span></th>
     <td><p class="fieldp"><input type="file" name="submitted_file"></p></td>
-    <td><p class="helptext">{% trans "The new language translation file to be uploaded." %}</p></td>
+    <td><p class="helptext">{% trans "The translation file to be uploaded for the new language." %}</p></td>
     </tr>
     <tr>
     <th>{% trans "Select the target file:" %}</th>
@@ -24,7 +24,7 @@
             {% endfor %}
         </select>
     </p></td>
-    <td><p class="helptext">{% trans "The target file is the name of the new file language. It must matches with the component file filter." %}</p></td>
+    <td><p class="helptext">{% trans "The target file is the name of the new file language. It must match the component file filter." %}</p></td>
     </tr>
     <tr>
     <th>{% trans "or enter it here:" %}</th>
@@ -38,7 +38,12 @@
     </tr>
    </tbody>
    </table>
-   <p class="submit">  <input type="submit" class="i16 send_file" class="submit" size="10" value="{% trans "Send" %}"></p>
+   <p class="submit">
+     {% if perms.projects.submit_file or can_submit_file %}
+     <input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}">
+     {% endif %}
+     <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
+   </p>
  </fieldset>
 </form>
 </div>

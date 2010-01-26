@@ -6,7 +6,15 @@ def _updatecomponents(project):
     Look through the components for a specific project and update them based 
     on the project changes
     """
-    pass
+    from projects.models import Component
+
+    collection_query = project.collections.values('pk').query
+    for c in Component.objects.filter(project__id=project.id):
+        releases = c.releases.exclude(collection__id__in=collection_query)
+        for release in releases:
+            logger.debug("Release '%s' removed from '%s'" % (release, c))
+            c.releases.remove(release)
+        c.save()
 
 def _projectpostm2mhandler(sender, **kwargs):
     if 'instance' in kwargs:

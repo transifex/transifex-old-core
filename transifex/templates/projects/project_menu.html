@@ -1,0 +1,73 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+
+{% block extrajs %}
+  <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/ui.tabs.outside.css" />
+  <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/jquery.autocomplete.css" />
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.autocomplete.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
+  {% if project %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
+  {% endif %}
+  
+<script type="text/javascript">
+$(document).ready(
+    function ()
+    {
+        $("#id_anyone_submit").change(function(){
+            $(this).parents("form").submit();
+            })
+    }
+);
+</script>
+{% endblock %}
+
+{% block content_title %}
+{% if project %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+<div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+  <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+
+    <li class="ui-state-default ui-corner-top {% if project_overview %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-1" href="{% url project_detail slug=project.slug %}">
+         <span>{% trans "Overview" %}</span>
+       </a>
+    </li>
+
+    {% if is_maintainer %}
+    <li class="ui-state-default ui-corner-top {% if project_permission_form %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-2" href="{% txadd_url_for_obj project %}">
+         <span>{% trans "Access Control" %}</span>
+       </a>
+    </li>
+    {% endif %}
+
+    <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-3" href="{% url team_list project.slug %}">
+         <span>{% trans "Translation Teams" %}</span>
+       </a>
+    </li>
+
+    {% if is_maintainer %}
+    <li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-3" href="{% url project_timeline slug=project.slug %}">
+         <span>{% trans "Timeline" %}</span>
+       </a>
+    </li>
+    {% endif %}
+
+  </ul>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block content_main %}{% endblock %}
+
+{% block content_footer %}{% endblock %}

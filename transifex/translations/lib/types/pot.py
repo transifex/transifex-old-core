@@ -89,10 +89,8 @@ class POTManager(TransManagerMixin):
         for filename in self.get_po_files():
             lang_code = self.guess_language(filename)
             if lang_code not in langs:
-                print lang_code
                 langs.append(lang_code)
                 yield lang_code
-        assert False
 
     def get_file_path(self, filename, is_msgmerged=False):
         """
@@ -121,8 +119,8 @@ class POTManager(TransManagerMixin):
 
         """
         file_path = self.get_file_path(filename, is_msgmerged)
+        fp = file(file_path, 'rb')
         try:
-            fp = file(file_path, 'rb')
             content = fp.read()
         finally:
             fp.close()
@@ -196,25 +194,24 @@ class POTManager(TransManagerMixin):
         else:
             return None
 
-    def get_po_stats(self, pofile):
+    @classmethod
+    def get_po_stats(self, po_contents):
         """
-        Return a dictionary with the stats for a POT/PO file.
+        Return a dictionary with the stats for a POT/PO file content.
 
         Case the stats for the ``pofile`` can not be calculated, the dictionary
         will be returned with stats equals zero and with the ``error`` attribute
         set as True.
 
         """
-        pofile = os.path.join(self.msgmerge_path, pofile)
-
         error = False
         output = ''
         try:
             # These env vars are needed to ensure the command output be in English
             env = {'LC_ALL':'C', 'LANG':'C', 'LANGUAGE':'C'}
-            command = "msgfmt --statistics -o /dev/null %s" % pofile
-            status, stdout, stderr = run_command(command, env=env,
-                                                 with_extended_output=True)
+            command = "msgfmt --statistics -o /dev/null -"
+            status, stdout, stderr = run_command(command, env=env, 
+                _input=po_contents, with_extended_output=True)
             # Not sure why msgfmt sends its output to stderr instead of stdout
             output = stderr
         except CommandError:
@@ -235,6 +232,39 @@ class POTManager(TransManagerMixin):
                 'fuzzy' : int(fuzzy),
                 'untranslated' : int(untranslated),
                 'error' : error,}
+
+    @classmethod
+    def get_stats_completion(self, stats):
+        """
+        Get a dictionary with the translation stats of a pofile and returns the 
+        completion of it.
+
+        The ``stats`` parameter must receive a dictionary like the following:
+        stats = {'translated': 50, 'fuzzy': 20, 'untranslated': 30}
+        """
+        try:
+            total = (stats.get('translated') + stats.get('fuzzy') + stats.get('untranslated'))
+            return (stats.get('translated') * 100 / total)
+        except ZeroDivisionError:
+            pass
+        return None
+
+    @classmethod
+    def get_stats_status(self, stats):
+        """
+        Get a dictionary with the translation stats of a pofile and returns a 
+        string with the status in the following format:
+        '10 messages complete with 1 fuzzy and 12 untranslated'
+
+        The ``stats`` parameter must receive a dictionary like the following:
+        stats = {'translated': 50, 'fuzzy': 20, 'untranslated': 30}
+        """
+        from django.template.defaultfilters import pluralize
+        status = "%s message%s complete with %s fuzz%s and %s untranslated" \
+            % (stats['translated'], pluralize(stats['translated']),
+               stats['fuzzy'], pluralize(stats['fuzzy'], 'y,ies'),
+               stats['untranslated'])
+        return status
 
     def calculate_file_stats(self, filename, try_to_merge):
         """
@@ -258,7 +288,8 @@ class POTManager(TransManagerMixin):
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
 
-        postats = self.get_po_stats(file_path)
+        po_contents = self.get_file_contents(file_path, is_msgmerged)
+        postats = self.get_po_stats(po_contents)
 
         return {'trans': postats['translated'],
                 'fuzzy': postats['fuzzy'],

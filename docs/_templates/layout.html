@@ -16,8 +16,25 @@
   {%- endif %}
 {%- endmacro %}
 
+{%- macro bodynav() %}
+  {%- if prev %}
+    &laquo; <a href="{{ prev.link|e }}" title="{{ prev.title|e }}">{{
+    prev.title|e }}</a> 
+    {{ reldelim2 }}
+  {%- endif %}
+  {%- if parents %}
+    <a href="{{ parents.0.link|e }}" title="{{ parents.0.title|e }}" accesskey="U">up</a> 
+  {%- else %}
+    <a title="{{ docstitle }}" href="{{ pathto('index') }}" accesskey="U">up</a> 
+  {%- endif %}
+  {%- if next %}
+  {{ reldelim2 }}
+    <a href="{{ next.link|e }}" title="{{ next.title|e }}">{{ next.title|e }}</a> &raquo;
+  {%- endif %}
+{%- endmacro %}
+
 {% block document %}
-  <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' if pagename != 'index' else '' }}{% endblock %}">
+  <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' }}{% endblock %}">
     <div id="hd">
       <h1><a href="{{ pathto('index') }}">{{ docstitle }}</a></h1>
       <div id="global-nav">
@@ -34,11 +51,11 @@
         <div class="yui-b">
           <div class="yui-g" id="{{ pagename|replace('/', '-') }}">
             {% block body %}{% endblock %}
+      <div class="nav">{{ bodynav() }}</div>
           </div>         
         </div>
       </div>
       {% block sidebarwrapper %}
-        {% if pagename != 'index' %}
           <div class="yui-b" id="sidebar">
             {{ sidebar() }}
             {%- if last_updated %}
@@ -46,7 +63,6 @@
               <p class="topless">{{ last_updated }}</p>
             {%- endif %}
           </div> 
-        {% endif %}
       {% endblock %}
     </div>
     

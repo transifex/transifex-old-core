@@ -12,7 +12,7 @@ from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
-        help_text=_('Search for an username'))
+        help_text=_('Search for a username'))
 
     class Meta:
         model = Project
@@ -32,7 +32,7 @@ class ProjectAccessSubForm(forms.ModelForm):
 class ComponentForm(forms.ModelForm):
     # TODO: Figure out how to keep this synced to Component.file_filter
     file_filter = ValidRegexField(initial='po/.*', max_length=50,
-        help_text=_("A regex to filter the exposed files. Eg: 'po/.*'"))
+        help_text=_("A regular expression to filter the exposed files. Eg: 'po/.*'"))
 
     class Meta:
         model = Component

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 15:00+0000\n"
+"POT-Creation-Date: 2010-01-06 14:18+0000\n"
 "PO-Revision-Date: 2009-10-05 15:35+0300\n"
 "Last-Translator: Maxim V. Dziumanenko <dziumanenko@gmail.com>\n"
 "Language-Team: Ukrainian <translate@linux.org.ua>\n"
@@ -17,11 +17,16 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: actionlog/models.py:51
+#: actionlog/filters.py:12
+#, fuzzy
+msgid "Search for an username or leave it blank"
+msgstr "Шукати у Picasa Web"
+
+#: actionlog/models.py:152
 msgid "log entry"
 msgstr "запис журналу"
 
-#: actionlog/models.py:52
+#: actionlog/models.py:153
 msgid "log entries"
 msgstr "записи журналу"
 
@@ -29,7 +34,8 @@ msgstr "записи журналу"
 msgid "Date/time"
 msgstr "Дата/час"
 
-#: actionlog/templates/object_action_list.html:7 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:74
+#: teams/models.py:110 txpermissions/forms.py:18
 msgid "User"
 msgstr "Користувач"
 
@@ -50,7 +56,8 @@ msgstr "Ще немає записів у історії."
 #: projects/models.py:86 projects/models.py:198
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
-#: txcollections/models.py:26 txcollections/migrations/0001_initial.py:26
+#: templates/userprofile/profile/public.html:60 txcollections/models.py:26
+#: txcollections/migrations/0001_initial.py:26
 #: txcollections/migrations/0001_initial.py:43
 msgid "Name"
 msgstr "Назва"
@@ -108,6 +115,7 @@ msgstr "Останні переклади для мови %(language)s у вип
 #: projects/models.py:88 projects/models.py:200
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
 #: txcollections/models.py:28 txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 msgid "Description"
@@ -566,7 +574,7 @@ msgstr "Перекладено:"
 
 #: languages/templates/feeds/language_release_description.html:5
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -602,11 +610,12 @@ msgstr "Останні компоненти у проекті %s."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
 #, fuzzy
-msgid "Search for an username"
+msgid "Search for a username"
 msgstr "Шукати у Picasa Web"
 
 #: projects/forms.py:35 projects/models.py:213
-msgid "A regex to filter the exposed files. Eg: 'po/.*'"
+#, fuzzy
+msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "Регулярний вираз для виділення файлів, наприклад, «po/.*»."
 
 #: projects/forms.py:58 projects/models.py:218
@@ -641,7 +650,8 @@ msgstr ""
 
 #: projects/models.py:87 projects/models.py:199 releases/models.py:24
 #: txcollections/models.py:27
-msgid "A string like a name or very short description."
+#, fuzzy
+msgid "A short name or very short description."
 msgstr "Рядок, що містить дуже короткий опис."
 
 #: projects/models.py:89 projects/models.py:201
@@ -670,7 +680,8 @@ msgid "Feed"
 msgstr "Стрічка новин"
 
 #: projects/models.py:95
-msgid "An RSS feed with updates on the project."
+#, fuzzy
+msgid "An RSS feed with updates to the project."
 msgstr "RSS-стрічка з оновленнями проекту."
 
 #: projects/models.py:96 projects/migrations/0001_initial.py:27
@@ -678,8 +689,8 @@ msgid "Bug tracker"
 msgstr "Система стеження за помилками"
 
 #: projects/models.py:97
-msgid ""
-"The URL for the webiste tracking bugs and tickets (Bugzilla, Trac, etc.)"
+#, fuzzy
+msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "URL сайту, що стежить за помилками (Bugzilla, Trac та ін.)"
 
 #: projects/models.py:99
@@ -764,7 +775,8 @@ msgid "Source language"
 msgstr "Первинна мова"
 
 #: projects/models.py:206
-msgid "The source language for this component, eg. 'en', 'pt_BR', 'el'."
+#, fuzzy
+msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr ""
 "Первинний компонент цього компоненту, наприклад «en», «pt_BR», «el» та ін."
 
@@ -773,8 +785,8 @@ msgid "I18n type"
 msgstr "i18n тип"
 
 #: projects/models.py:210
-#, python-format
-msgid "The code's type of i18n support (%s)"
+#, fuzzy, python-format
+msgid "The type of i18n support for the source code (%s)"
 msgstr "Тип коду підтримки i18n  (%s)"
 
 #: projects/models.py:212 projects/migrations/0001_initial.py:43
@@ -798,6 +810,7 @@ msgid "Should statistics be calculated for this component?"
 msgstr "Чи обчислювати статистику для цього компоненту?"
 
 #: projects/models.py:238 projects/migrations/0001_initial.py:46
+#: teams/models.py:25 teams/models.py:67
 msgid "Project"
 msgstr "Проект"
 
@@ -818,86 +831,83 @@ msgstr "<Компонент: %s>"
 msgid "component"
 msgstr "компонент"
 
-#: projects/models.py:268 templates/projects/component_list.html:17
+#: projects/models.py:268 templates/projects/component_list.html:16
 msgid "components"
 msgstr "компоненти"
 
-#: projects/permissions.py:17
+#: projects/permissions/project.py:21
 msgid "Is allowed to maintain this project"
 msgstr "Чи дозволено координувати цей проект"
 
-#: projects/permissions.py:26
+#: projects/permissions/project.py:35
+#, fuzzy
+msgid "Is allowed to coordinate a team project"
+msgstr "Чи дозволено координувати цей проект"
+
+#: projects/permissions/project.py:81
 msgid "Is allowed to submit file to this project"
 msgstr "Дозволяється надсилати файли до цього проекту"
 
-#: projects/views.py:177 projects/views.py:576 txcollections/views.py:121
+#: projects/views/component.py:208 projects/views/project.py:138
+#: txcollections/views.py:121
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s було видалено."
 
-#: projects/views.py:361 projects/views.py:914
-msgid "Must use POST to activate"
-msgstr "Для активації потрібно використовувати POST-запит"
-
-#: projects/views.py:364 projects/views.py:917
-#, fuzzy
-msgid "Notification is not enabled"
-msgstr "Сповіщення вимкнені"
-
-#: projects/views.py:377
-msgid "Watch this project"
-msgstr "Стежити за проектом"
-
-#: projects/views.py:390
-msgid "Stop wathing this project"
-msgstr "Не стежити за цим проектом"
-
-#: projects/views.py:614
+#: projects/views/component.py:243
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views.py:621
+#: projects/views/component.py:250
 msgid ""
-"There is no 'pot' directory named in the set of files of this Publian like "
+"There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
 msgstr ""
 
-#: projects/views.py:629
+#: projects/views/component.py:258
 msgid "This component is not configured for statistics calculation."
 msgstr ""
 
-#: projects/views.py:720
+#: projects/views/component.py:342
 msgid "This component does  not allow write access."
 msgstr "У цей компонент запис не дозволено."
 
-#: projects/views.py:728
+#: projects/views/component.py:350
 msgid "Please select a file from your system to be uploaded."
 msgstr "Виберіть файл у локальній системі для завантаження."
 
-#: projects/views.py:736
+#: projects/views/component.py:358
 msgid "Please enter a target to upload the file."
 msgstr "Вкажіть ціль для файлу, що завантажується."
 
-#: projects/views.py:741
+#: projects/views/component.py:363
 msgid "Please enter only ONE target to upload the file."
 msgstr "Вказуйте лише ОДНУ ціль для файлу, що завантажується."
 
-#: projects/views.py:752
-msgid "The target file does not match with the component file filter"
+#: projects/views/component.py:374
+#, fuzzy
+msgid "The target file does not match the component file filter"
 msgstr "Цільовий файл не відповідає фільтру файлів для компоненту"
 
-#: projects/views.py:760
+#: projects/views/component.py:382
 msgid "Enter a commit message"
 msgstr "Введіть повідомлення для запису змін"
 
-#: projects/views.py:827
+#: projects/views/component.py:414
+#, python-format
+msgid ""
+"You need to be in the '%s' team of this project for being able to send "
+"translations to that file target."
+msgstr ""
+
+#: projects/views/component.py:475
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Файл успішно надіслано: %s"
 
-#: projects/views.py:842
+#: projects/views/component.py:490
 msgid ""
 "Your file does not pass correctness checks (msgfmt -c). Please run this "
 "command on your system to see the errors."
@@ -905,25 +915,125 @@ msgstr ""
 "Ваш файл не пройшов перевірку на коректність (msgfmt -c). Будь ласка, "
 "виконайте цю команду в своїй системі для перегляду помилок."
 
-#: projects/views.py:851
+#: projects/views/component.py:499
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Ваш файл не було надіслано через помилку."
 
-#: projects/views.py:855 projects/views.py:894
+#: projects/views/component.py:503 projects/views/component.py:536
 msgid "Sorry, but you need to send a POST request."
 msgstr "Потрібно використовувати POST-запит."
 
-#: projects/views.py:883
+#: projects/views/component.py:525
 msgid "Lock removed."
 msgstr "Блокування видалено."
 
-#: projects/views.py:886
+#: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
 msgstr "Помилка: видаляти блокування може лише його власник."
 
-#: projects/views.py:890
+#: projects/views/component.py:532
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Блокування створено. Не забудьте видалити його після завершення."
+
+#: projects/views/component.py:551 projects/views/project.py:156
+msgid "Must use POST to activate"
+msgstr "Для активації потрібно використовувати POST-запит"
+
+#: projects/views/component.py:554 projects/views/project.py:159
+#, fuzzy
+msgid "Notification is not enabled"
+msgstr "Сповіщення вимкнені"
+
+#: projects/views/project.py:172
+msgid "Watch this project"
+msgstr "Стежити за проектом"
+
+#: projects/views/project.py:185
+#, fuzzy
+msgid "Stop watching this project"
+msgstr "Не стежити за цим проектом"
+
+#: projects/views/team.py:168
+#, fuzzy, python-format
+msgid "The '%s' team was deleted."
+msgstr "%s було видалено."
+
+#: projects/views/team.py:205
+#, python-format
+msgid "You are in the '%s' team already."
+msgstr ""
+
+#: projects/views/team.py:210
+#, python-format
+msgid "You have added a request for joining the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:233
+#, python-format
+msgid "You already have a pending request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:260
+#, python-format
+msgid "User '%(user)s' is in the '%(team)s' team already."
+msgstr ""
+
+#: projects/views/team.py:267
+#, python-format
+msgid "You have added '%(user)s' into the '%(team)s' team."
+msgstr ""
+
+#: projects/views/team.py:314
+#, python-format
+msgid ""
+"You have denied the request of the user '%(user)s' to join the '%(team)s' "
+"team."
+msgstr ""
+
+#: projects/views/team.py:357
+#, python-format
+msgid "You have withdrawn your own request to join the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:398
+#, python-format
+msgid "You have left the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:419
+#, python-format
+msgid "You are not in the '%s' team."
+msgstr ""
+
+#: projects/views/team.py:440
+#, fuzzy
+msgid "Please, select a language before submit the form."
+msgstr "Виберіть файл у локальній системі для завантаження."
+
+#: projects/views/team.py:453
+#, python-format
+msgid "'%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:459
+#, python-format
+msgid "A request for creating the '%s' team already exist."
+msgstr ""
+
+#: projects/views/team.py:467
+#, python-format
+msgid "You have requested the '%s' team creation."
+msgstr ""
+
+#: projects/views/team.py:512
+#, python-format
+msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+msgstr ""
+
+#: projects/views/team.py:554
+#, python-format
+msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+msgstr ""
 
 #: releases/models.py:26 txcollections/models.py:29
 msgid "A sentence or two describing the object."
@@ -946,9 +1056,10 @@ msgid "String freeze date"
 msgstr "Дата заморозки рядків"
 
 #: releases/models.py:34
+#, fuzzy
 msgid ""
-"When the translatable strings will be frozen (no strings can be added/"
-"modified which affect translations."
+"When the translatable strings will be frozen (no strings which affect "
+"translations can be added/modified)."
 msgstr ""
 "Дата заморозки рядків для перекладу (рядки, які впливають на переклад, не "
 "можуть бути додані/змінені)."
@@ -1012,6 +1123,94 @@ msgstr "архів"
 msgid "tarballs"
 msgstr "архіви"
 
+#: teams/forms.py:12
+msgid ""
+"Coordinators are people that can manage the members of the team, for "
+"example. Search for usernames."
+msgstr ""
+
+#: teams/forms.py:16
+msgid ""
+"Members are actually people that can submit translations. Search for "
+"usernames."
+msgstr ""
+
+#: teams/forms.py:45
+#, python-format
+msgid ""
+"You have the user '%s' in both coordinators and members lists. Please drop "
+"him/her from one of those lists."
+msgstr ""
+
+#: teams/models.py:27 teams/models.py:69
+msgid "The project which this team belongs to."
+msgstr ""
+
+#: teams/models.py:28 teams/models.py:70
+#: translations/templates/comp_stats_table.html:14
+#: translations/templates/project_stats_table.html:7
+#: translations/templates/release_stats_table.html:7
+msgid "Language"
+msgstr "Мова"
+
+#: teams/models.py:30 teams/models.py:72
+msgid ""
+"People in this team will only be able to submit translations files related "
+"to the specific language."
+msgstr ""
+
+#: teams/models.py:32
+msgid "Coordinators"
+msgstr ""
+
+#: teams/models.py:34
+msgid "Members"
+msgstr ""
+
+#: teams/models.py:37
+#, fuzzy
+msgid "Mainlist"
+msgstr "Відповідальні"
+
+#: teams/models.py:38
+msgid "The main mailing list of the team."
+msgstr ""
+
+#: teams/models.py:40
+msgid "creator"
+msgstr ""
+
+#: teams/models.py:56
+msgid "team"
+msgstr ""
+
+#: teams/models.py:57
+msgid "teams"
+msgstr ""
+
+#: teams/models.py:89
+#, fuzzy
+msgid "team creation request"
+msgstr "Заборонити запит"
+
+#: teams/models.py:90
+#, fuzzy
+msgid "team creation requests"
+msgstr "Запити, що очікують:"
+
+#: teams/models.py:108
+#, fuzzy
+msgid "Team"
+msgstr "Тамільська"
+
+#: teams/models.py:125
+msgid "team access request"
+msgstr ""
+
+#: teams/models.py:126
+msgid "team access requests"
+msgstr ""
+
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Доступ заборонено"
@@ -1072,12 +1271,13 @@ msgid "Transifex"
 msgstr "Transifex"
 
 #: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
-msgid "Go to start page"
+#, fuzzy
+msgid "Go to the start page"
 msgstr "Перейти на початкову сторінку"
 
 #: templates/base-sample.html:35
-msgid "Transifex logo"
-msgstr "Емблема Transifex"
+msgid "Go to start page"
+msgstr "Перейти на початкову сторінку"
 
 #: templates/base-sample.html:39
 msgid "The projects being served"
@@ -1139,12 +1339,18 @@ msgid "About"
 msgstr "Про нас"
 
 #: templates/base-sample.html:115
-msgid "Get in contact with us"
-msgstr "Зв'язатися з нами"
+msgid "Drops us a line"
+msgstr ""
 
 #: templates/base-sample.html:115
 msgid "Feedback"
 msgstr "Зворотній зв'язок"
+
+#: templates/base-sample.html:117
+msgid ""
+"Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
+"\">Transifex</a>, the Open Translation Platform"
+msgstr ""
 
 #: templates/index.html:23
 msgid ""
@@ -1185,22 +1391,50 @@ msgid "Search Results (%(result_count)s)"
 msgstr "Результати пошуку (%(result_count)s)"
 
 #: templates/search.html:51
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"No projects found for \"%(q)s\". You might want to change your query a bit."
+"No projects were found for \"%(q)s\". You may want to change your query a "
+"bit."
 msgstr "Для «%(q)s» не знайдено жодного проекту. Трохи змініть запит."
 
 #: templates/search.html:62
-msgid "Couldn't find your project? Why don't you go ahead and "
-msgstr "Не можете знайти свій проект? Можете його "
-
-#: templates/search.html:62
-msgid "add it"
-msgstr "додати"
+#, fuzzy, python-format
+msgid ""
+"Couldn't find your project? Why don't you go ahead and <a href=\"%(url "
+"project_create)s\">add it</a>?"
+msgstr ""
+"Не можете знайти свій проект? <a href=\"%(project_create)s\">Додайте его</a>!"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Пошук проектів за назвою, описом та таке інше."
+
+#: templates/timeline.html:11
+#, fuzzy
+msgid "Filter results"
+msgstr "Результати пошуку"
+
+#: templates/timeline.html:17
+msgid "Go"
+msgstr ""
+
+#: templates/timeline.html:24 templates/projects/component_detail.html:196
+#: templates/projects/project_detail.html:116
+#: templates/teams/team_detail.html:129
+msgid "None available"
+msgstr "Немає доступних"
+
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1283,10 +1517,11 @@ msgid "Project/Component statistics"
 msgstr "Статистика проекту/компоненту"
 
 #: templates/languages/language_release.html:60
+#, fuzzy
 msgid ""
 "Transifex searched for projects containing translation files for this "
-"language and release, but couldn't find any. Try submitting such a file and "
-"check again."
+"language and release, but couldn't find any. Can we interest you in sending "
+"in your work instead?"
 msgstr ""
 "Transifex виконав пошук серед проектів, що містять файли перекладу для цієї "
 "мови та випуску, але нічого не було знайдено. Спробуйте надіслати подібний "
@@ -1315,54 +1550,67 @@ msgstr ""
 "(language_name)s поки не було надіслано жодного перекладу."
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr "Сповіщення"
 
-#: templates/notification/notices.html:8
-msgid "Notification settings"
-msgstr "Параметри повідомлення"
-
-#: templates/notification/notices.html:16
-msgid "Notices"
+#: templates/notification/notices.html:32
+#, fuzzy
+msgid "Received Notifications"
 msgstr "Сповіщення"
 
-#: templates/notification/notices.html:21
+#: templates/notification/notices.html:43
+msgid "Time"
+msgstr ""
+
+#: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
 msgstr "Позначити всі сповіщення прочитаними"
 
-#: templates/notification/notices.html:45
+#: templates/notification/notices.html:79
 msgid "No notices."
 msgstr "Немає сповіщень."
 
-#: templates/notification/notices.html:54
+#: templates/notification/notices.html:83
+#: templates/notification/notices.html:85
+#, fuzzy
+msgid "Change your notification settings"
+msgstr "Змінити сповіщення"
+
+#: templates/notification/notices.html:83
+msgid "Notification settings"
+msgstr "Параметри повідомлення"
+
+#: templates/notification/notices.html:88
+#, fuzzy
 msgid ""
 "You can receive notifications whenever an event occurs in Transifex. Check "
-"the notifications available for you on the list below and choose which "
+"the notifications available for you in the list below and choose which "
 "events you would like to be notified by email."
 msgstr ""
 "Ви можете отримувати сповіщення при будь-яку подію у Transifex. Перегляньте "
 "список доступних сповіщень та виберіть ті події, на які хочете отримувати "
 "сповіщення по email."
 
-#: templates/notification/notices.html:55
+#: templates/notification/notices.html:89
 msgid "Primary email"
 msgstr "Основний email"
 
-#: templates/notification/notices.html:56
+#: templates/notification/notices.html:92
 msgid "change under"
 msgstr "змінити під"
 
-#: templates/notification/notices.html:56
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:92
+#: templates/notification/notices.html:96
 msgid "Account"
 msgstr "Обліковий запис"
 
-#: templates/notification/notices.html:58
-#: templates/projects/component_detail.html:122
+#: templates/notification/notices.html:95
+#: templates/projects/component_detail.html:123
 msgid "Note"
 msgstr "Примітка"
 
-#: templates/notification/notices.html:59
+#: templates/notification/notices.html:96
 msgid ""
 "You do not have a verified email address to which notices can be sent. You "
 "can add one by going to"
@@ -1370,11 +1618,11 @@ msgstr ""
 "У вас немає підтвердженої адреси email, на яку надсилатимуться сповіщення. "
 "Можете додати її, якщо перейдете до"
 
-#: templates/notification/notices.html:67
+#: templates/notification/notices.html:104
 msgid "Notification Type"
 msgstr "Тип сповіщення"
 
-#: templates/notification/notices.html:85
+#: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
 #: templates/userprofile/account/password_change.html:29
 msgid "Change"
@@ -1457,15 +1705,22 @@ msgstr ""
 "проекту <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The source file (POT) has some problems and can not be created/updated to "
+"The source file (POT) has some problems and can not be created/updated for "
 "the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "У первинному файлі (POT) <a href=\"%(component_url)s\">%(component_name)s</"
 "a> з проекту <a href=\"%(project_url)s\">%(project_name)s</a> виявлено "
 "проблеми, та його неможливо створити/оновити"
+
+#: templates/notification/project_report_weekly_maintainers/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was generated"
+msgstr "Проект <a href=\"%(project_url)s\">%(project)s</a> було змінено"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, fuzzy, python-format
@@ -1489,7 +1744,7 @@ msgstr ""
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"Withdrawn own request of access to submit files to the project <a href=\"%"
+"Withdrew own request of access to submit files to the project <a href=\"%"
 "(project_url)s\">%(project)s</a>"
 msgstr "Додано новий проект: <a href=\"%(project_url)s\">%(project)s</a>"
 
@@ -1509,6 +1764,106 @@ msgid ""
 msgstr ""
 "До проекту <a href=\"%(project_url)s\">%(project_name)s</a> додано новий "
 "компонент <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"До проекту <a href=\"%(project_url)s\">%(project_name)s</a> додано новий "
+"компонент <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"Компонент <a href=\"%(component_url)s\">%(component_name)s</a> з проекту <a "
+"href=\"%(project_url)s\">%(project_name)s</a> було змінено"
+
+#: templates/notification/project_team_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been "
+"deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"До проекту <a href=\"%(project_url)s\">%(project_name)s</a> додано новий "
+"компонент <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_join_approved/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a "
+"member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of "
+"the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"До проекту <a href=\"%(project_url)s\">%(project_name)s</a> додано новий "
+"компонент <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/project_team_join_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for joining "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team </a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
+msgstr ""
+"Компонент <a href=\"%(component_url)s\">%(component_name)s</a> з проекту <a "
+"href=\"%(project_url)s\">%(project_name)s</a> було змінено"
+
+#: templates/notification/project_team_join_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
+"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"було надіслано до <a href=\"%(component_url)s\">%(component_name)s</a> з "
+"проекту <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_team_join_withdrawn/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
+"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project"
+msgstr ""
+"було надіслано до <a href=\"%(component_url)s\">%(component_name)s</a> з "
+"проекту <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_team_left/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"User has left the <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> "
+"of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"було надіслано до <a href=\"%(component_url)s\">%(component_name)s</a> з "
+"проекту <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_team_request_denied/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The request for creating a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> on the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project has been denied"
+msgstr ""
+"Компонент <a href=\"%(component_url)s\">%(component_name)s</a> з проекту <a "
+"href=\"%(project_url)s\">%(project_name)s</a> було змінено"
+
+#: templates/notification/project_team_requested/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The translation team for <a href=\"%(language_url)s\">%(language_name)s</a> "
+"has been required to the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project"
+msgstr ""
+"До проекту <a href=\"%(project_url)s\">%(project_name)s</a> додано новий "
+"компонент <a href=\"%(component_url)s\">%(component_name)s</a>"
+
+#: templates/notification/user_nudge/notice.html:2
+#, fuzzy, python-format
+msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
+msgstr "Проект <a href=\"%(project_url)s\">%(project)s</a> було змінено"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1534,6 +1889,7 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
+#: templates/teams/team_confirm_delete.html:19
 #: templates/txcollections/collection_confirm_delete.html:19
 #: templates/txcollections/release_confirm_delete.html:19
 msgid "Yes, I'm sure!"
@@ -1565,109 +1921,114 @@ msgstr ""
 "Цей компонент підтримує локальне збереження надісланих файлів, також файли "
 "надсилаються безпосередньо до репозиторію розробника."
 
-#: templates/projects/component_detail.html:80
-#: templates/projects/project_detail.html:36
+#: templates/projects/component_detail.html:81
+#: templates/projects/project_detail.html:31
+#: templates/teams/team_detail.html:25
 #: templates/txcollections/collection_detail.html:24
 #: templates/txcollections/release_detail.html:45
 msgid "Edit"
 msgstr "Правка"
 
-#: templates/projects/component_detail.html:89
+#: templates/projects/component_detail.html:86
+#, fuzzy
+msgid "Source details"
+msgstr "Первинний файл:"
+
+#: templates/projects/component_detail.html:90
 msgid "Repository:"
 msgstr "Репозиторій:"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
-msgid "Link to a web front-end to the source"
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
+#, fuzzy
+msgid "Link to a web front-end for the source code"
 msgstr "Посилання на веб-інтерфейс до первинних файлів"
 
-#: templates/projects/component_detail.html:92
-#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:95
 msgid "web"
 msgstr "Веб"
 
-#: templates/projects/component_detail.html:99
+#: templates/projects/component_detail.html:100
 msgid "Branch:"
 msgstr "Гілка:"
 
-#: templates/projects/component_detail.html:104
+#: templates/projects/component_detail.html:105
 msgid "File filter:"
 msgstr "Фільтр файлів:"
 
-#: templates/projects/component_detail.html:110
+#: templates/projects/component_detail.html:111
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Впуск:"
 msgstr[1] "Випуски:"
 msgstr[2] "Випуски:"
 
-#: templates/projects/component_detail.html:118
+#: templates/projects/component_detail.html:119
 msgid "Allows submissions:"
 msgstr "Дозволити надсилання:"
 
-#: templates/projects/component_detail.html:132
+#: templates/projects/component_detail.html:133
 msgid "Translation files"
 msgstr "Файли перекладів"
 
-#: templates/projects/component_detail.html:137
+#: templates/projects/component_detail.html:138
 msgid "Source file:"
 msgstr "Первинний файл:"
 
-#: templates/projects/component_detail.html:144
+#: templates/projects/component_detail.html:145
 msgid "Statistics last updated:"
 msgstr "Останнє оновлення статистики:"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:147
 msgid "ago"
 msgstr "тому"
 
-#: templates/projects/component_detail.html:147
+#: templates/projects/component_detail.html:148
 msgid "Component not yet pulled from source repository."
 msgstr "Компонент ще не був отриманий з репозиторію."
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Оновити та перерахувати статистику. Це може зайняти деякий час."
 
-#: templates/projects/component_detail.html:150
+#: templates/projects/component_detail.html:151
 msgid "Refresh cache"
 msgstr "Оновити кеш"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Скинути локальні дані Transifex до чистої копії"
 
-#: templates/projects/component_detail.html:155
+#: templates/projects/component_detail.html:156
 msgid "Clear cache"
 msgstr "Очистити кеш"
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Всі локально змінені дані будуть перезаписані новими копіями."
 
-#: templates/projects/component_detail.html:158
+#: templates/projects/component_detail.html:159
 msgid "warning"
 msgstr "попередження"
 
-#: templates/projects/component_detail.html:167
-msgid "Become a translator:"
-msgstr "Стати перекладачем:"
+#: templates/projects/component_detail.html:166
+#, fuzzy
+msgid "Teams:"
+msgstr "Теги:"
 
-#: templates/projects/component_detail.html:171
-msgid "Your request is pending for approval."
-msgstr "Ваш запит очікує схвалення."
+#: templates/projects/component_detail.html:168
+#, fuzzy
+msgid "See the translation teams."
+msgstr "Надіслати переклади"
 
-#: templates/projects/component_detail.html:197
-#: templates/projects/project_detail.html:116
+#: templates/projects/component_detail.html:192
+#: templates/projects/project_detail.html:111
+#: templates/teams/team_detail.html:125
 msgid "History"
 msgstr "Історія"
 
-#: templates/projects/component_detail.html:201
-#: templates/projects/project_detail.html:120
-msgid "None available"
-msgstr "Немає доступних"
-
-#: templates/projects/component_detail.html:218
+#: templates/projects/component_detail.html:213
 msgid "Delete component"
 msgstr "Видалити компонент"
 
@@ -1705,35 +2066,35 @@ msgstr "Зберегти компонент"
 msgid "translation files"
 msgstr "файли перекладу"
 
-#: templates/projects/component_list.html:11
+#: templates/projects/component_list.html:10
 #: templates/txcollections/collection_detail.html:62
 msgid "Add"
 msgstr "Додати"
 
-#: templates/projects/component_list.html:16
+#: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
 msgstr[0] "Компонент проекту"
 msgstr[1] "Компоненти проекту"
 msgstr[2] "Компоненти проекту"
 
-#: templates/projects/component_list.html:27
+#: templates/projects/component_list.html:26
 msgid "edit"
 msgstr "змінити"
 
-#: templates/projects/component_list.html:30
+#: templates/projects/component_list.html:29
 msgid "del"
 msgstr "видалити"
 
-#: templates/projects/component_list.html:46
+#: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
 msgstr "У цьому проекті поки не зареєстровано жодного компоненту."
 
-#: templates/projects/component_list.html:48
+#: templates/projects/component_list.html:47
 msgid "Add one!"
 msgstr "Додати!"
 
-#: templates/projects/component_list.html:54
+#: templates/projects/component_list.html:53
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
 "which consist of actual files.\n"
@@ -1762,7 +2123,8 @@ msgid "Local file:"
 msgstr "Локальний файл:"
 
 #: templates/projects/component_submit_new_file.html:15
-msgid "The new language translation file to be uploaded."
+#, fuzzy
+msgid "The translation file to be uploaded for the new language."
 msgstr "Новий файл перекладу для завантаження."
 
 #: templates/projects/component_submit_new_file.html:18
@@ -1770,9 +2132,10 @@ msgid "Select the target file:"
 msgstr "Виберіть цільовий файл:"
 
 #: templates/projects/component_submit_new_file.html:27
+#, fuzzy
 msgid ""
-"The target file is the name of the new file language. It must matches with "
-"the component file filter."
+"The target file is the name of the new file language. It must match the "
+"component file filter."
 msgstr ""
 "Цільовий файл є назвою нової мови. Ця назва повинна відповідати файловому "
 "фільтру компонента."
@@ -1829,84 +2192,105 @@ msgstr ""
 "  Ви дійсно хочете остаточно видалити зареєстрований проект «%(project_name)"
 "s»?\n"
 
-#: templates/projects/project_detail.html:42
+#: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
 #: templates/txcollections/collection_detail.html:38
 #: templates/txcollections/release_detail.html:52
 msgid "Details"
 msgstr "Подробиці"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:44
 msgid "Watch:"
 msgstr "Стежити:"
 
-#: templates/projects/project_detail.html:57
+#: templates/projects/project_detail.html:52
 #: templates/txcollections/collection_detail.html:42
 #: templates/txcollections/release_detail.html:56
 msgid "Homepage:"
 msgstr "Домашня сторінка"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:53
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Домашня сторінка %(project_name)s"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:58
 msgid "Bug tracker:"
 msgstr "Система стеження за помилками:"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:59
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Система стеження за помилдками %(project_name)s"
 
-#: templates/projects/project_detail.html:69
+#: templates/projects/project_detail.html:64
 #: templates/projects/project_list.html:46
 #: templates/txcollections/collection_detail.html:48
 #: templates/txcollections/collection_list.html:47
 msgid "Tags:"
 msgstr "Теги:"
 
-#: templates/projects/project_detail.html:78
+#: templates/projects/project_detail.html:73
 msgid "Collection:"
 msgid_plural "Collections:"
 msgstr[0] "Колекція:"
 msgstr[1] "Колекції:"
 msgstr[2] "Колекції:"
 
-#: templates/projects/project_detail.html:88
+#: templates/projects/project_detail.html:83
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Координатор:"
 msgstr[1] "Координатори:"
 msgstr[2] "Координатори:"
 
-#: templates/projects/project_detail.html:102
+#: templates/projects/project_detail.html:97
 msgid "External links:"
 msgstr "Зовнішні посилання:"
 
-#: templates/projects/project_detail.html:104
+#: templates/projects/project_detail.html:99
 msgid "Screenshots"
 msgstr "Знімки екрану"
 
-#: templates/projects/project_detail.html:139
+#: templates/projects/project_detail.html:128
+msgid "View complete action log"
+msgstr ""
+
+#: templates/projects/project_detail.html:140
 msgid "Delete project"
 msgstr "Видалити проект"
 
-#: templates/projects/project_form.html:13
-msgid "Save project"
-msgstr "Зберегти проект"
-
+#: templates/projects/project_form.html:9
+#: templates/projects/project_form.html:17
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
 #: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "Додати проект"
 
+#: templates/projects/project_form.html:20
+#: templates/projects/project_form.html:29
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "Змінити %(project_name)s"
+
+#: templates/projects/project_form.html:27
+#, fuzzy
+msgid "New project"
+msgstr "%(counter)s проект"
+
+#: templates/projects/project_form.html:37
+msgid "Add the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:39
+msgid "Edit the details of your project"
+msgstr ""
+
+#: templates/projects/project_form.html:50
+msgid "Save project"
+msgstr "Зберегти проект"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -1923,25 +2307,30 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Редагування <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:47
 msgid "Access Control"
 msgstr "Контроль доступу"
 
-#: templates/projects/project_form_permissions.html:10
+#: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:12
+#: templates/projects/project_form_permissions.html:20
 msgid "Requests for access to submit files"
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:51
+#: templates/projects/project_form_permissions.html:62
 msgid "Pending requests:"
 msgstr "Запити, що очікують:"
 
-#: templates/projects/project_form_permissions.html:63
-msgid "Users with guaranteed access to submit files:"
-msgstr ""
+#: templates/projects/project_form_permissions.html:82
+#: templates/txpermissions/base_permission_form.html:18
+#, fuzzy
+msgid "Users with access to submit files:"
+msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -1981,9 +2370,52 @@ msgid ""
 msgstr ""
 "Не можете знайти свій проект? <a href=\"%(project_create)s\">Додайте его</a>!"
 
+#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "Огляд"
+
+#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/teams/team_list.html.py:26
+#, fuzzy
+msgid "Translation Teams"
+msgstr "Переклади"
+
+#: templates/projects/project_menu.html:61
+#: templates/projects/project_timeline.html:12
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr ""
+
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, fuzzy, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr "Змінити %(project_name)s"
+
+#: templates/projects/project_top_translators.html:6
+#, fuzzy
+msgid "Top Translators"
+msgstr "Переклади"
+
+#: templates/projects/project_top_translators.html:9
+#, fuzzy, python-format
+msgid "%(number)s submission"
+msgid_plural "%(number)s submissions"
+msgstr[0] "Дозволити надсилання"
+msgstr[1] "Дозволити надсилання"
+msgstr[2] "Дозволити надсилання"
+
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/settings.html:5 templates/userprofile/base_2col.html:3
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
 msgid "Profile"
 msgstr "Профіль"
 
@@ -1991,9 +2423,25 @@ msgstr "Профіль"
 msgid "Profile settings"
 msgstr "Параметри профілю"
 
+#: templates/simpleauth/login_box.html:8
+msgid ""
+"Sign in to add or modify projects, work on translations, and other stuff."
+msgstr ""
+
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
 msgstr "<p>Вы вийшли."
+
+#: templates/simpleauth/public_profile.html:8
+#: templates/userprofile/profile/public.html:31
+#, python-format
+msgid "Public profile of %(user)s"
+msgstr "Відкритий профіль %(user)s"
+
+#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: txcommon/admin.py:27
+msgid "Username"
+msgstr "Ім'я користувача"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -2011,7 +2459,7 @@ msgid ""
 msgstr ""
 
 #: templates/simpleauth/settings.html:23
-#: templates/userprofile/profile/overview.html:103
+#: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
 msgstr "Змінити сповіщення"
 
@@ -2027,6 +2475,142 @@ msgid ""
 msgstr ""
 "\n"
 "<p>Зайдіть під своїм обліковим записом або e-mail.<br />\n"
+
+#: templates/teams/team_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(lang_name)s</em> team?"
+msgstr "Попрощатися з <em>%(release_name)s</em>?"
+
+#: templates/teams/team_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?\n"
+msgstr ""
+"\n"
+"  Ви впевнені, що хочете назавжди видалити компонент «%(component_name)s», що "
+"належить проекту %(project_name)s?\n"
+
+#: templates/teams/team_detail.html:19
+#, python-format
+msgid ""
+"\n"
+"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
+"(language_code)s</sup>\n"
+msgstr ""
+
+#: templates/teams/team_detail.html:33
+#, fuzzy
+msgid "Mainlist:"
+msgstr "Відповідальні"
+
+#: templates/teams/team_detail.html:34
+msgid "Main mailing list"
+msgstr ""
+
+#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+msgid "Coordinator:"
+msgid_plural "Coordinators:"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/teams/team_detail.html:56
+msgid "Become a translator:"
+msgstr "Стати перекладачем:"
+
+#: templates/teams/team_detail.html:59
+msgid "Join this Team"
+msgstr ""
+
+#: templates/teams/team_detail.html:70
+msgid "People waiting for team membership approving:"
+msgstr ""
+
+#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#, fuzzy
+msgid "Approve"
+msgstr "Схвалити право доступу"
+
+#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+msgid "Deny"
+msgstr ""
+
+#: templates/teams/team_detail.html:91
+#, fuzzy
+msgid "Withdraw"
+msgstr "Відібрати право доступу"
+
+#: templates/teams/team_detail.html:104
+msgid "Team Members:"
+msgstr ""
+
+#: templates/teams/team_detail.html:114
+#, fuzzy
+msgid "Leave"
+msgstr "Зберегти"
+
+#: templates/teams/team_detail.html:147
+#, fuzzy
+msgid "Delete team"
+msgstr "Видалити випуск"
+
+#: templates/teams/team_form.html:19
+#, python-format
+msgid "%(project_name)s Translation Teams"
+msgstr ""
+
+#: templates/teams/team_form.html:27
+#, fuzzy
+msgid "Translation team details"
+msgstr "Статистика перекладу"
+
+#: templates/teams/team_form.html:29
+msgid ""
+"\n"
+"    Be aware that notification are not sent when coordinators or members are "
+"added or removed using this module.\n"
+"    "
+msgstr ""
+
+#: templates/teams/team_form.html:41
+#, fuzzy
+msgid "Save team"
+msgstr "Зберегти випуск"
+
+#: templates/teams/team_list.html:30
+#, fuzzy
+msgid "Add a new team"
+msgstr "Додати новий проект"
+
+#: templates/teams/team_list.html:41
+msgid "List of team requests:"
+msgstr ""
+
+#: templates/teams/team_list.html:71
+msgid "List of available teams:"
+msgstr ""
+
+#: templates/teams/team_list.html:87
+#, fuzzy
+msgid "No translation team created yet. :("
+msgstr "До цього випуску не було додано жодного перекладу :-(."
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new translation team for this project"
+msgstr "Надіслати новий переклад для цього компоненту."
+
+#: templates/teams/team_list.html:92
+#, fuzzy
+msgid "Request a new team"
+msgstr "Зареєструвати новий обліковий запис"
+
+#: templates/teams/team_list.html:102
+#, fuzzy
+msgid "Request team"
+msgstr "Запитати право доступу"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -2068,7 +2652,8 @@ msgid "Projects in %(collection)s"
 msgstr "Проекти у %(collection)s"
 
 #: templates/txcollections/collection_detail.html:98
-msgid "Projects currently registered to belong in this collection:"
+#, fuzzy
+msgid "Projects currently registered and associated to this collection:"
 msgstr "Проекти, зареєстровані у цій колекції:"
 
 #: templates/txcollections/collection_detail.html:108
@@ -2245,10 +2830,6 @@ msgstr ""
 msgid "Save release"
 msgstr "Зберегти випуск"
 
-#: templates/txpermissions/base_permission_form.html:18
-msgid "Users with guarantied access to submit files:"
-msgstr ""
-
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
 msgstr "Відкликати право доступу"
@@ -2273,10 +2854,6 @@ msgstr "Відібрати право доступу"
 msgid "Deny request"
 msgstr "Заборонити запит"
 
-#: templates/userprofile/menu.html:5
-msgid "Overview"
-msgstr "Огляд"
-
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
 msgstr "Особиста інформація"
@@ -2285,14 +2862,21 @@ msgstr "Особиста інформація"
 msgid "Avatar"
 msgstr "Аватар"
 
-#: templates/userprofile/menu.html:10
+#: templates/userprofile/menu.html:8
+#: templates/userprofile/profile/overview.html:58
+#: templates/userprofile/profile/public.html:90
+msgid "Location"
+msgstr "Розташування"
+
+#: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
 msgstr "Видалити профіль"
 
 #: templates/userprofile/account/email_validation.html:5
-msgid "E-mail change"
-msgstr "Зміна e-mail"
+#, fuzzy
+msgid "Change e-mail"
+msgstr "Змінити email"
 
 #: templates/userprofile/account/email_validation.html:5
 #: templates/userprofile/account/email_validation_processed.html:12
@@ -2304,9 +2888,8 @@ msgid "Add a new e-mail address"
 msgstr "Додати нову адресу електронної пошти"
 
 #: templates/userprofile/account/email_validation.html:23
-#: templates/userprofile/account/email_validation_processed.html:13
 msgid ""
-"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"Enter the new e-mail address. An e-mail will be sent to it for testing and "
 "confirmation."
 msgstr ""
 
@@ -2345,10 +2928,16 @@ msgstr ""
 msgid "E-mail change processed"
 msgstr "Зміну e-mail оброблено"
 
+#: templates/userprofile/account/email_validation_processed.html:13
+msgid ""
+"Insert the new e-mail address. An e-mail will be send to it for testing and "
+"confirmation."
+msgstr ""
+
 #: templates/userprofile/account/email_validation_processed.html:17
 msgid ""
 "An e-mail has been sent to the new e-mail address to verify and activate it. "
-"Please access to your e-mail and complete this process following the "
+"Please access your e-mail and complete this process by following the "
 "instructions specified in the e-mail body."
 msgstr ""
 
@@ -2359,8 +2948,8 @@ msgstr "Надіслати заново перевірочне повідомл�
 
 #: templates/userprofile/account/email_validation_reset.html:19
 msgid ""
-"If you haven't validated your e-mail address yet you will not be able to "
-"sign in. Insert your registered e-mail address to receive the validation e-"
+"You will not be able to sign in until you have validated your e-mail "
+"address. Enter your registered e-mail address to receive the validation e-"
 "mail again."
 msgstr ""
 
@@ -2373,7 +2962,8 @@ msgid "Validation e-mail sent"
 msgstr "Перевірочне повідомлення надіслано"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
-msgid "Your user account was already active"
+#, fuzzy
+msgid "Your user account was already activated"
 msgstr "Ваш обліковий запис вже активний"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
@@ -2385,8 +2975,9 @@ msgid "overview page"
 msgstr "сторінка огляду"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
-msgid "We've e-mailed you the e-mail validation link."
-msgstr ""
+#, fuzzy
+msgid "We've sent you the e-mail validation link."
+msgstr "Надіслати заново перевірочне повідомлення"
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
@@ -2529,12 +3120,12 @@ msgid "Register for a Transifex account"
 msgstr "Отримати обліковий рахунок Transifex"
 
 #: templates/userprofile/account/registration.html:18
-msgid ""
-"Joining the Transifex is quick and easy. Just fill in the following form."
+msgid "Joining Transifex is quick and easy. Just fill in the following form."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:4
-msgid "Registration complete"
+#, fuzzy
+msgid "Registration completed"
 msgstr "Реєстрацію завершено"
 
 #: templates/userprofile/account/registration_done.html:8
@@ -2542,10 +3133,11 @@ msgid "Register a new account"
 msgstr "Зареєструвати новий обліковий запис"
 
 #: templates/userprofile/account/registration_done.html:12
+#, fuzzy
 msgid ""
-"You have successfully registered a new account, and an account activation "
-"url has been sent to your e-mail address. You must access this message on "
-"your e-mail account to finish the registration process."
+"You have successfully registered a new account and an account activation url "
+"has been sent to your e-mail address. Please access this url to finish the "
+"registration process."
 msgstr ""
 "Ви успішно зареєстрували новий обліковий запис, на вашу електрону скриньку "
 "було надіслано повідомлення із посиланням для активації облікового запису. "
@@ -2575,8 +3167,8 @@ msgstr "Сторінка вибору аватару"
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
 msgid ""
-"You have several options to select the image you want as avatar on your "
-"profile."
+"You have several options to select the image you want to use as avatar on "
+"your profile."
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:50
@@ -2590,9 +3182,10 @@ msgid "Done"
 msgstr "Виконано"
 
 #: templates/userprofile/avatar/choose.html:56
+#, fuzzy
 msgid ""
-"Select an image from a remote URL. Put the URL on the input below and we'll "
-"retrieve the image for you"
+"Select an image from a remote URL. Enter the URL in the field below and "
+"we'll retrieve the image for you"
 msgstr ""
 "Виберіть зображення на віддаленому URL. Вкажіть тут URL, та ми завантажимо "
 "зображення для вас"
@@ -2612,8 +3205,8 @@ msgstr "Видалити особисту інформацію"
 
 #: templates/userprofile/profile/delete.html:13
 msgid ""
-"Erase all your private data except your username. You can refill the "
-"information later if you want to."
+"Erase all your private data except your username. You can fill in the "
+"information again later if you want to."
 msgstr ""
 
 #: templates/userprofile/profile/delete.html:17
@@ -2639,7 +3232,6 @@ msgstr "Автовизначення розташування"
 
 #: templates/userprofile/profile/location.html:22
 #: templates/userprofile/profile/overview.html:49
-#: templates/userprofile/profile/public.html:35
 msgid "Country"
 msgstr "Країна"
 
@@ -2703,11 +3295,6 @@ msgstr " (Не перевірено)"
 msgid "Not set"
 msgstr "Не встановлено"
 
-#: templates/userprofile/profile/overview.html:58
-#: templates/userprofile/profile/public.html:38
-msgid "Location"
-msgstr "Розташування"
-
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
 msgstr "Керування:"
@@ -2720,6 +3307,18 @@ msgstr "Змініть вашу адресу електронної пошти"
 msgid "Add your e-mail address"
 msgstr "Додайте свою адресу ел.пошти"
 
+#: templates/userprofile/profile/overview.html:95
+msgid "Add location"
+msgstr "Додати розташування"
+
+#: templates/userprofile/profile/overview.html:97
+msgid "Change location"
+msgstr "Змінити розташування"
+
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr ""
+
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -2729,14 +3328,73 @@ msgstr "Змінити особисті дані"
 msgid "Insert some information about you."
 msgstr "Вкажіть деякі відомості про вас."
 
-#: templates/userprofile/profile/public.html:27
+#: templates/userprofile/profile/public.html:50
 #, python-format
-msgid "Public profile of %(user)s"
-msgstr "Відкритий профіль %(user)s"
+msgid "Nudge %(user)s "
+msgstr ""
 
-#: templates/userprofile/profile/public.html:33
-msgid "Username"
-msgstr "Ім'я користувача"
+#: templates/userprofile/profile/public.html:66
+#, fuzzy
+msgid "Native language"
+msgstr "Рідна мова:"
+
+#: templates/userprofile/profile/public.html:72
+#, fuzzy
+msgid "Blog/Site"
+msgstr "Блог"
+
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: txcommon/migrations/0002_release_06_07.py:23
+msgid "Twitter"
+msgstr "Twitter"
+
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: txcommon/migrations/0002_release_06_07.py:30
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: templates/userprofile/profile/public.html:104
+msgid ""
+"\n"
+"            Coordinator of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Coordinator of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/userprofile/profile/public.html:115
+#: templates/userprofile/profile/public.html:142
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
+"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
+"project\n"
+"                "
+msgstr ""
+"було надіслано до <a href=\"%(component_url)s\">%(component_name)s</a> з "
+"проекту <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/userprofile/profile/public.html:131
+msgid ""
+"\n"
+"            Member of the following team:\n"
+"        "
+msgid_plural ""
+"\n"
+"            Members of the following teams:\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: templates/webtrans/msgid_label.html:10
+msgid "String Context"
+msgstr ""
 
 #: templates/webtrans/transfile_edit.html:29
 #, python-format
@@ -2754,39 +3412,86 @@ msgstr "Перекласти «%(filename)s»"
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "Перекласти «<code>%(filename)s</code>»"
 
-#: templates/webtrans/transfile_edit.html:102
+#: templates/webtrans/transfile_edit.html:51
+#, fuzzy
+msgid "Current status for this page"
+msgstr "Переглянути статистику для цієї мови"
+
+#: templates/webtrans/transfile_edit.html:54
+msgid "Settings"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:57
+msgid "Show occurrences:"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:61
+msgid "Show context:"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:69
+#, fuzzy
+msgid "Translated"
+msgstr "Перекладено:"
+
+#: templates/webtrans/transfile_edit.html:75
+#, fuzzy
+msgid "Fuzzy"
+msgstr "Неточно:"
+
+#: templates/webtrans/transfile_edit.html:81
+#, fuzzy
+msgid "Untranslated"
+msgstr "Не перекладено:"
+
+#: templates/webtrans/transfile_edit.html:87
+#, fuzzy
+msgid "Total"
+msgstr "Загалом:"
+
+#: templates/webtrans/transfile_edit.html:93
+#, fuzzy
+msgid "Live translation"
+msgstr "Надіслати переклади"
+
+#: templates/webtrans/transfile_edit.html:99
+#, python-format
+msgid "Page %(step)s of %(step_count)s"
+msgstr ""
+
+#: templates/webtrans/transfile_edit.html:105
 msgid "#"
 msgstr "#"
 
-#: templates/webtrans/transfile_edit.html:103
+#: templates/webtrans/transfile_edit.html:106
 msgid "Source String"
 msgstr "Первинний рядок"
 
-#: templates/webtrans/transfile_edit.html:104
+#: templates/webtrans/transfile_edit.html:107
 msgid "Translation"
 msgstr "Переклад"
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 msgid "Auto-translate"
 msgstr "Автозаміна..."
 
-#: templates/webtrans/transfile_edit.html:106
+#: templates/webtrans/transfile_edit.html:109
 msgid "AT"
 msgstr "АП"
 
-#: templates/webtrans/transfile_edit.html:108
+#: templates/webtrans/transfile_edit.html:111
 msgid "Occurrences"
 msgstr ""
 
-#: templates/webtrans/transfile_edit.html:109
+#: templates/webtrans/transfile_edit.html:112
 msgid "Fuzzy?"
 msgstr "Неточно?"
 
-#: templates/webtrans/transfile_edit.html:122
+#: templates/webtrans/transfile_edit.html:125
 msgid "Submit translations"
 msgstr "Надіслати переклади"
 
-#: templates/webtrans/transfile_form.html:19
+#: templates/webtrans/transfile_form.html:18
 msgid "Auto-suggest translation"
 msgstr "Автоматичний переклад"
 
@@ -2803,27 +3508,27 @@ msgid "Files"
 msgstr "Файли"
 
 #: translations/templates/comp_lang_stats_table.html:17
-#: translations/templates/comp_stats_table.html:17
+#: translations/templates/comp_stats_table.html:15
 #: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
 msgstr "Переклади"
 
 #: translations/templates/comp_lang_stats_table.html:18
-#: translations/templates/comp_stats_table.html:18
+#: translations/templates/comp_stats_table.html:16
 #: translations/templates/lang_stats_table.html:16
 msgid "Options"
 msgstr "Параметри"
 
 #: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:31
+#: translations/templates/comp_stats_table.html:30
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
 msgstr "Неможливо створити статистику для цього файла"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2831,7 +3536,7 @@ msgid "Trans:"
 msgstr "Перекладено:"
 
 #: translations/templates/comp_lang_stats_table.html:32
-#: translations/templates/comp_stats_table.html:36
+#: translations/templates/comp_stats_table.html:35
 #: translations/templates/lang_stats_table.html:33
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:26
@@ -2839,40 +3544,35 @@ msgid "Untrans:"
 msgstr "Не перекладено:"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:48
+#: translations/templates/comp_stats_table.html:47
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Перегляд"
 
 #: translations/templates/comp_lang_stats_table.html:41
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:48
 #: translations/templates/lang_stats_table.html:46
 #: translations/templates/source_files.html:19
 msgid "Download "
 msgstr "Завантажити"
 
 #: translations/templates/comp_lang_stats_table.html:51
-#: translations/templates/comp_stats_table.html:59
+#: translations/templates/comp_stats_table.html:58
 #: translations/templates/lang_stats_table.html:56
 msgid "Edit "
 msgstr "Правка"
 
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
-msgid "Language"
-msgstr "Мова"
-
-#: translations/templates/comp_stats_table.html:26
+#: translations/templates/comp_stats_table.html:25
 msgid "See statistics for this language"
 msgstr "Переглянути статистику для цієї мови"
 
-#: translations/templates/comp_stats_table.html:28
-msgid "There is no language registered that matches with this code"
+#: translations/templates/comp_stats_table.html:27
+#, fuzzy
+msgid "There are no languages registered matching this code"
 msgstr "Немає зареєстрованої мови, що пов'язана з цим кодом"
 
-#: translations/templates/comp_stats_table.html:43
+#: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
 msgstr ""
@@ -2905,7 +3605,7 @@ msgstr "Зніміть блокування з цього файлу, коли �
 
 #: translations/templates/pofile_lock.html:21
 #, fuzzy, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working on it."
+msgid "User '%(owner)s' has locked this file indicating he's working with it."
 msgstr "Цей файл заблоковано, хтось вже на д ним працює."
 
 #: translations/templates/pofile_lock.html:27
@@ -2922,7 +3622,8 @@ msgid "See the detailed statistics for this language"
 msgstr "Переглянутий докладну статистику для цієї мови"
 
 #: translations/templates/release_stats_table.html:18
-msgid "There is no language registered that matches with this file"
+#, fuzzy
+msgid "There are no languages registered matching this file"
 msgstr "Немає зареєстрованої мови, що пов'язана з цим файлом"
 
 #: translations/templates/source_files.html:5
@@ -2985,52 +3686,57 @@ msgstr "<Випуск: %(rel)s (Коліекція %(col)s)>"
 msgid "String freese date"
 msgstr "Дата заморожування рядків"
 
+#: txcommon/admin.py:10
+msgid ""
+"Required. 30 characters or fewer. Unicode alphanumeric characters only "
+"(letters, digits and underscores)."
+msgstr ""
+
+#: txcommon/admin.py:13
+#, fuzzy
+msgid "This value must contain only unicode letters, numbers and underscores."
+msgstr ""
+"Короткий псевдонім, який використовуватиметься у URL, може містити лише "
+"букви, цифри, підкреслення та дефіси."
+
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
 msgstr "Не вдається відкрити файл LINGUAS: %s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Female"
 msgstr "Жіночій"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:11
 msgid "Male"
 msgstr "Чоловічий"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Ім'я"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Прізвище"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Рідна мова:"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Блог"
 
-#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:30
-msgid "LinkedIn"
-msgstr "LinkedIn"
-
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:23
-msgid "Twitter"
-msgstr "Twitter"
-
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Про себе"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
 msgstr "Коротко про себе (140 символів)."
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Шукаєте роботу?"
 
@@ -3059,46 +3765,50 @@ msgid "when a project is deleted"
 msgstr "при видаленні проекту"
 
 #: txcommon/notifications.py:33
-msgid "Submit access to project requested"
+msgid "Submit access for project requested"
 msgstr ""
 
 #: txcommon/notifications.py:34
 #, fuzzy
-msgid "when an user request access to submit files to a project"
+msgid "when a user requests access to submit files to a project"
 msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: txcommon/notifications.py:41
-msgid "Submit access request to project denied"
+msgid "Submit access request for project denied"
 msgstr ""
 
 #: txcommon/notifications.py:42
-msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr ""
+#, fuzzy
+msgid "when a maintainer denies access to a user to submit files to a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: txcommon/notifications.py:49
-msgid "Submit access request to project withdrawn"
+msgid "Submit access request for project withdrawn"
 msgstr ""
 
 #: txcommon/notifications.py:50
-msgid "when an user withdraws the access requestto submit files to a project"
-msgstr ""
+#, fuzzy
+msgid "when a user withdraws the access requestto submit files to a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: txcommon/notifications.py:57
-msgid "Submit access to project granted"
+msgid "Submit access for project granted"
 msgstr ""
 
 #: txcommon/notifications.py:58
-msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr ""
+#, fuzzy
+msgid "when a maintainer grants access to a user to submit files to a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: txcommon/notifications.py:65
-msgid "Submit access to project revoked"
+msgid "Submit access for project revoked"
 msgstr ""
 
 #: txcommon/notifications.py:66
+#, fuzzy
 msgid ""
-"when a maintainer revokes the access of an user to submit files to a project"
-msgstr ""
+"when a maintainer revokes the access of a user to submit files to a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3152,85 +3862,195 @@ msgstr ""
 "при виникненні проблем з первинним каталогом (POT) компоненту, координатором "
 "якого є ви"
 
-#: txcommon/notifications.py:119
+#: txcommon/notifications.py:121
+#, fuzzy
+msgid "New Team Added"
+msgstr "Додано новий проект"
+
+#: txcommon/notifications.py:122
+#, fuzzy
+msgid "when a new translation team is added to a project"
+msgstr "при додаванні нового компоненту до проекту"
+
+#: txcommon/notifications.py:129
+#, fuzzy
+msgid "Team Changed"
+msgstr "Змінено випуск"
+
+#: txcommon/notifications.py:130
+#, fuzzy
+msgid "when a translation team of a project is changed"
+msgstr "при зміні файлу перекладу компоненту проекту"
+
+#: txcommon/notifications.py:137
+#, fuzzy
+msgid "Team Deleted"
+msgstr "Видалено випуск"
+
+#: txcommon/notifications.py:138
+#, fuzzy
+msgid "when a translation team of a project is deleted"
+msgstr "при видаленні компоненту з проекту"
+
+#: txcommon/notifications.py:145
+msgid "Team Creation Requested"
+msgstr ""
+
+#: txcommon/notifications.py:146
+#, fuzzy
+msgid "when a translation team creation is requestedfor a project"
+msgstr "при додаванні нового компоненту до проекту"
+
+#: txcommon/notifications.py:153
+msgid "Team Creation Request Denied"
+msgstr ""
+
+#: txcommon/notifications.py:154
+msgid ""
+"when a translation team creation requestfor a project is denied by a "
+"maintainer"
+msgstr ""
+
+#: txcommon/notifications.py:161
+msgid "Team User Joining Requested"
+msgstr ""
+
+#: txcommon/notifications.py:162
+#, fuzzy
+msgid "when an user requests for joining to a translation team of a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
+
+#: txcommon/notifications.py:169
+msgid "Team User Joining Approved"
+msgstr ""
+
+#: txcommon/notifications.py:170
+msgid "when an user is approved as a member of a translation team of a project"
+msgstr ""
+
+#: txcommon/notifications.py:177
+msgid "Team User Joining Denied"
+msgstr ""
+
+#: txcommon/notifications.py:178
+#, fuzzy
+msgid "when an user is denied as a member of a translation team of a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
+
+#: txcommon/notifications.py:185
+msgid "Team User Joining Withdrawn"
+msgstr ""
+
+#: txcommon/notifications.py:186
+msgid ""
+"when an user withdrawn its own request for joining a translation team of a "
+"project"
+msgstr ""
+
+#: txcommon/notifications.py:193
+msgid "Team User Left"
+msgstr ""
+
+#: txcommon/notifications.py:194
+#, fuzzy
+msgid "when an user leaves a translation team of a project"
+msgstr "Дозволяється надсилати файли до цього проекту"
+
+#: txcommon/notifications.py:203
+msgid "Weekly project report for maintainers"
+msgstr ""
+
+#: txcommon/notifications.py:204
+msgid "when you receive the weekly report of projects that you maintain."
+msgstr ""
+
+#: txcommon/notifications.py:212
 msgid "New Collection Added"
 msgstr "Додано нову колекцію"
 
-#: txcommon/notifications.py:120
+#: txcommon/notifications.py:213
 msgid "when a new collection is added"
 msgstr "при додаванні нової колекції"
 
-#: txcommon/notifications.py:126
+#: txcommon/notifications.py:219
 msgid "Collection Changed"
 msgstr "Змінено колекцію"
 
-#: txcommon/notifications.py:127
+#: txcommon/notifications.py:220
 msgid "when a collection is changed"
 msgstr "при зміні колекції"
 
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:226
 msgid "Collection Deleted"
 msgstr "Видалено колекцію"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:227
 msgid "when a collection is deleted"
 msgstr "при видаленні колекції"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:233
 msgid "Project Added to a Collection"
 msgstr "До колекції додано проект"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:234
 msgid "when a new project is added to a collection"
 msgstr "при до нового проекту до колекції"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:240
 msgid "Project Deleted from a Collection"
 msgstr "Проект видалено з колекції"
 
-#: txcommon/notifications.py:148
+#: txcommon/notifications.py:241
 msgid "when a project is deleted from a collection"
 msgstr "при видаленні проекту з колекції"
 
-#: txcommon/notifications.py:154
+#: txcommon/notifications.py:247
 msgid "New Release Added for a Watched Collection"
 msgstr "Додано новий випуск до колекції, що спостерігається"
 
-#: txcommon/notifications.py:155
+#: txcommon/notifications.py:248
 msgid "when a new release is added to a collection"
 msgstr "при додаванні нового випуску до колекції"
 
-#: txcommon/notifications.py:162
+#: txcommon/notifications.py:255
 msgid "Release Changed"
 msgstr "Змінено випуск"
 
-#: txcommon/notifications.py:163
+#: txcommon/notifications.py:256
 msgid "when a release of a collection is changed"
 msgstr "при зміні випуску у колекції"
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:261
 msgid "Release Deleted"
 msgstr "Видалено випуск"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:262
 msgid "when a release of a collection is deleted"
 msgstr "при видаленні випуску у колекції"
 
-#: txcommon/notifications.py:174
+#: txcommon/notifications.py:267
 msgid "Release Added to a Collection"
 msgstr "До колекції додано випуск"
 
-#: txcommon/notifications.py:175
+#: txcommon/notifications.py:268
 msgid "when a release is added to a collection"
 msgstr "при додаванні випуску до колекції"
 
-#: txcommon/notifications.py:180
+#: txcommon/notifications.py:273
 msgid "Release Deleted from a Collection"
 msgstr "Видалено випуск з колекції"
 
-#: txcommon/notifications.py:181
+#: txcommon/notifications.py:274
 msgid "when a release is deleted from a collection"
 msgstr "при видаленні випуску з колекції"
+
+#: txcommon/notifications.py:279
+msgid "User Nudge"
+msgstr ""
+
+#: txcommon/notifications.py:280
+msgid "when an user nudges you"
+msgstr ""
 
 #: txcommon/validators.py:15
 msgid "Enter a valid regular expression."
@@ -3244,6 +4064,20 @@ msgstr "Кореневий URL не вказує на файл .tar.gz чи .tgz
 msgid "The root url must start with http:// or ftp://"
 msgstr "Кореневий URL має починатися з http:// или ftp://"
 
+#: txcommon/views.py:85
+msgid "You can't re-nudge the same user in a short amount of time."
+msgstr ""
+
+#: txcommon/views.py:88
+#, fuzzy
+msgid "You can't nudge yourself."
+msgstr "Про себе"
+
+#: txcommon/views.py:95
+#, fuzzy, python-format
+msgid "You have nugded '%s'."
+msgstr "<p>Вы вийшли."
+
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Введіть 0 або більше цілих чисел у дужках, розділених комами."
@@ -3252,29 +4086,34 @@ msgstr "Введіть 0 або більше цілих чисел у дужка
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Ви маєте ввести принаймні одну пару дужок із порожнім значенням."
 
-#: txcommon/templates/common_homelink.html:2
+#: txcommon/templatetags/txcommontags.py:123
 msgid "Home"
 msgstr "Додому"
 
 #: txpermissions/views.py:93
+#, fuzzy
+msgid "You added a permission."
+msgstr "Відкликати право доступу"
+
+#: txpermissions/views.py:95
 msgid "You added a permission request."
 msgstr ""
 
-#: txpermissions/views.py:128
+#: txpermissions/views.py:133
 msgid "You approved the permission request."
 msgstr ""
 
-#: txpermissions/views.py:146
+#: txpermissions/views.py:151
 msgid "You removed the permission."
 msgstr ""
 
-#: txpermissions/views.py:148
+#: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr ""
 
 #: vcs/forms.py:56
 #, fuzzy
-msgid "This type of repository does not accept branch"
+msgid "This type of repository does not accept branches"
 msgstr "Для цього типу репозиторію треба вказати гілку"
 
 #: vcs/models.py:48
@@ -3311,7 +4150,7 @@ msgstr "vcsunits"
 msgid "The %s fields should be filled."
 msgstr "%s було видалено."
 
-#: webtrans/wizards.py:202
+#: webtrans/wizards.py:210
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -3324,6 +4163,27 @@ msgstr ""
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr ""
+
+#~ msgid "Transifex logo"
+#~ msgstr "Емблема Transifex"
+
+#~ msgid "Get in contact with us"
+#~ msgstr "Зв'язатися з нами"
+
+#~ msgid "Couldn't find your project? Why don't you go ahead and "
+#~ msgstr "Не можете знайти свій проект? Можете його "
+
+#~ msgid "add it"
+#~ msgstr "додати"
+
+#~ msgid "Notices"
+#~ msgstr "Сповіщення"
+
+#~ msgid "Your request is pending for approval."
+#~ msgstr "Ваш запит очікує схвалення."
+
+#~ msgid "E-mail change"
+#~ msgstr "Зміна e-mail"
 
 #~ msgid "Brazilian Portuguese"
 #~ msgstr "Бразильська португальська"
@@ -3356,9 +4216,6 @@ msgstr ""
 
 #~ msgid "Password"
 #~ msgstr "Пароль"
-
-#~ msgid "Change email"
-#~ msgstr "Змінити email"
 
 #~ msgid "Change OpenID"
 #~ msgstr "Змінити OpenID"
@@ -3539,12 +4396,6 @@ msgstr ""
 
 #~ msgid "Sign in with OPENID"
 #~ msgstr "Увійти за допомогою OpenID"
-
-#~ msgid "Add location"
-#~ msgstr "Додати розташування"
-
-#~ msgid "Change location"
-#~ msgstr "Змінити розташування"
 
 #~ msgid "(not calculated)"
 #~ msgstr "(не обчислено)"

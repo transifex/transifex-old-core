@@ -26,7 +26,7 @@ class SmokeTestCase(unittest.TestCase):
                 '/projects/feeds/foob4r/',
                 '/account/foob4r/',]}
 
-    def atestStatusCode(self):
+    def testStatusCode(self):
         from django.test.client import Client
         client = Client()
         for expected_code in self.pages.keys():

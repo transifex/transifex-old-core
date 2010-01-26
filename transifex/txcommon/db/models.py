@@ -35,6 +35,9 @@ class IntegerTupleField(models.CharField):
     def to_python(self, value):
         if type(value) == tuple:
             return value
+        if type(value) == unicode and value.startswith('(') and \
+            value.endswith(')'):
+            return eval(value)
         if value == '':
             return ()
         if value is None:

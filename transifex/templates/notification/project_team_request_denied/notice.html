@@ -1,0 +1,3 @@
+{% load i18n %}{% url language_detail team_request.language.code as language_url %}{% url project_detail team_request.project.slug as project_url %}{% with team_request.language.name as language_name %}{% with team_request.project.name as project_name %}
+{% blocktrans %}The request for creating a translation team for <a href="{{ language_url }}">{{ language_name }}</a> on the <a href="{{ project_url }}">{{ project_name }}</a> project has been denied{% endblocktrans %}
+{% endwith %}{% endwith %}

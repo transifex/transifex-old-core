@@ -1,18 +1,54 @@
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
 
-<div id="tab-1">
-    <form action='' method='post'>
+{% block title %}
+  {% if not project %}
+    {{ block.super }} | {% trans "Add a project" %}
+  {% else %}
+    {{ block.super }} | {{ project.name}}
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+  {% if not project %}
+    {{ block.super }} &raquo; {% trans "Add a project" %}
+  {% else %}
+    {{ block.super }} &raquo;
+    {% blocktrans with project.name as project_name %}Edit {{ project_name }}{% endblocktrans %}
+  {% endif %}
+{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+  {% if not project %}
+    {% trans "New project" %}
+  {% else %}
+    {% blocktrans with project.name as project_name %}Edit {{ project_name }}{% endblocktrans %}
+  {% endif %}
+  </h2>
+{% endblock %}
+
+{% block content_main %}
+<h3>
+{% if not project %}
+    {% trans "Add the details of your project" %}
+{% else %}
+    {% trans "Edit the details of your project" %}
+{% endif %}
+</h3>
+
+<div class="project_create generic_form">
+  <form action='' method='post'>
     <table>
         <tbody>
         {% form_as_table_rows project_form %}
         </tbody>
     </table>
     <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save project" %}" /></p>
-    </form>
-    </div>
-<div id="tab-2"></div>
-
+  </form>
+</div>
+{% endblock %}
 

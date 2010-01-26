@@ -7,6 +7,7 @@ from translations.lib.types.pot import POTManager
 from translations.models import POFile
 from languages.models import Language
 from txcommon.log import logger
+from txcommon import rst
 
 class POTHandler:
     """
@@ -31,20 +32,21 @@ class POTHandler:
 
     def set_file_stats(self, filename, is_msgmerged=True, is_pot=False):
         """Set the statistics of a specificy file for an object."""
-        lang_code = self.guess_language(filename)
 
         ctype = ContentType.objects.get_for_model(self.component)
         s, created = POFile.objects.get_or_create(object_id=self.component.id,
             content_type=ctype, filename=filename, is_pot=is_pot)
 
-        if not s.language:
-            try:
-                l = Language.objects.by_code_or_alias(code=lang_code)
-                s.language=l
-            except Language.DoesNotExist:
-                pass
+        if not is_pot:
+            lang_code = self.guess_language(filename)
+            if not s.language:
+                try:
+                    l = Language.objects.by_code_or_alias(code=lang_code)
+                    s.language=l
+                except Language.DoesNotExist:
+                    pass
 
-        s.language_code = lang_code
+            s.language_code = lang_code
         calcstats = True
 
         rev = None
@@ -120,6 +122,16 @@ class POTHandler:
         """Return stats for the component from the database."""
         return POFile.objects.by_object_total(self.component)
 
+    def get_rest_stats(self):
+        """Return stats for the component as a restructured text table."""
+        pofiles = self.get_stats()
+        stats = [[po.lang_or_code, po.trans_perc] for po in pofiles]
+        # Sorting the list of lists according to the second column, the completion
+        stats.sort(lambda x,y:cmp(x[1],y[1]), reverse=True)
+        #Add % simboly to the completion column after sorting it
+        stats = [[x, '%d%%' % y] for x, y in stats]
+        return rst.as_table([['Language', 'Completion']] + stats)
+
     def get_lang_stats(self, lang_code):
         """Return stats of the component in a specific language from the database."""
         return POFile.objects.by_lang_code_and_object(lang_code, self.component)
@@ -131,6 +143,21 @@ class POTHandler:
                 is_pot=True).order_by('filename')
         except POFile.DoesNotExist:
             return None
+
+    def get_po_stats(self, po_contents):
+        """
+        Abstraction for getting a dictionary with the stats for a POT/PO 
+        file content.
+        """
+        return self.tm.get_po_stats(po_contents)
+
+    def get_stats_completion(self, stats):
+        """Abstraction for getting the completion of a po file stats disctionaty."""
+        return self.tm.get_stats_completion(stats)
+
+    def get_stats_status(self, stats):
+        """Abstraction for getting the status of the stats completion."""
+        return self.tm.get_stats_status(stats)
 
     def get_file_contents(self, filename, is_msgmerged):
         """Abstraction for getting the contents of a filename."""
