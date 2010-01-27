@@ -10,7 +10,7 @@ from django.template import RequestContext
 from translations.models import POFile
 from models import Language
 from txcollections.models import Collection, CollectionRelease as Release
-from projects.models import Component
+from projects.models import Project, Component, Release
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
@@ -41,12 +41,14 @@ def language_release_feed(request,
 
 def language_detail(request, slug, *args, **kwargs):
     language = get_object_or_404(Language, code__iexact=slug)
-    pofile_list = POFile.objects.by_language(language)
+    release_queryset = Release.objects.all().values('id').query
+    project_list = Project.objects.filter(
+        releases__id__in=release_queryset).order_by('name').distinct()
+        
     return list_detail.object_detail(
         request,
         object_id=language.id,
-        extra_context = {'pofile_list': pofile_list,
-                         'collection_list': Collection.objects.all()},
+        extra_context = {'project_list': project_list},
         *args, **kwargs
     )
 

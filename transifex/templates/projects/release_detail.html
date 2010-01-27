@@ -1,29 +1,27 @@
-{% extends "txcollections/base_childs.html" %}
-{% load i18n %}
-{% load txcommontags %}
-{% load markup %}
+{% extends "projects/project_detail_childs.html" %}
 {% load statistics %}
-
-{% block body_class %}{{ block.super }} release_detail{% endblock %}
-
-{% block title %}{{ block.super }} | {{ release.name }}{% endblock %}
+{% load markup %}
+{% load i18n %}
+{% load truncate %}
+{% load permissions %}
+{% load txpermissions %}
 
 {% block extra_head %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_languages_feed collection_slug=release.collection.slug release_slug=release.slug %}" />
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>  
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   {% include "translations/stats_table_filter_header.html" %}
 {% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ release.name }}{% endblock %}
+{% block body_class %}{{ block.super }} release_detail{% endblock %}
 
-{% block content_sec %}
-  <a class="simlink" href="{% url release_languages_feed collection_slug=release.collection.slug release_slug=release.slug %}" title="Feed for languages in {{ release.full_name }} release"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a>
-{% endblock %}
+{% block title %}{{ block.super }} | Release '{{ release.name }}'{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; Release '{{ release.name }}'{% endblock %}
 
 {% block content_main %}
   <div class="obj_bigdetails">
-  <h2 class="name">{{ collection.name }} &raquo; {{ release }}</h2>
+  <h2 class="pagetitle">{{ release.project.name }}</h2>
+  <h3 class="pagesubtitle">Release '{{ release }}'</h3>
   
   {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
 
@@ -35,9 +33,10 @@
   {% endif %}
   {% endwith %}
 
-  {% if request.user.is_authenticated and perms.txcollections.change_collectionrelease %}
+  {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
+  {% if perms.projects.add_release or is_maintainer %}
     <div class="editlinks">
-      <p><a class="i16 edit buttonized" href="{% url collection_release_edit slug=release.collection.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p>
+      <p><a class="i16 edit buttonized" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit" %}</a></p>
     </div>
   {% endif %}
 
@@ -64,6 +63,11 @@
       <th class="freeze i16">{% trans "Devel freeze:" %}</th>
       <td>{{ release.develfreeze_date|date:"D d M Y" }}</td>
     </tr>
+    <tr class="separator"></tr>
+    <tr>
+      <th class="component i16">{% trans "Components:" %}</th>
+      <td><ul class="simple links">{% for comp in release.components.all %}<li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>{% endfor %}</ul></td>
+    </tr>
   </table>
 </div>
 
@@ -73,7 +77,7 @@
 
 {% include "translations/stats_table_filter_box.html" %}
 
-{% release_stats_table pofile_list collection release %}
+{% release_stats_table release %}
 
 {% if not pofile_list %}
 <p>{% trans "No translations added for this release. :-(" %}</p>
@@ -85,9 +89,9 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated and perms.txcollections.delete_collectionrelease %}
+    {% if request.user.is_authenticated and perms.projects.delete_release %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url collection_release_delete collection.slug release.slug %}">{% trans "Delete release" %}</a>
+      <a class="i16 delete buttonized" href="{% url release_delete release.project.slug release.slug %}">{% trans "Delete release" %}</a>
     </div>
     {% endif %}
   </div>

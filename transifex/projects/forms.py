@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from projects.models import Project, Component
+from projects.models import Project, Component, Release
 from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
@@ -45,12 +45,6 @@ class ComponentForm(forms.ModelForm):
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
 
-        # Filtering releases by the collections of the project
-        collection_query = project.collections.values('pk').query
-        releases = self.fields["releases"].queryset.filter(
-                                           collection__id__in=collection_query)
-        self.fields["releases"].queryset = releases
-
 
 class ComponentAllowSubForm(forms.ModelForm):
 
@@ -70,4 +64,16 @@ class ComponentAllowSubForm(forms.ModelForm):
             self.fields["submission_type"].choices = \
                 settings.SUBMISSION_CHOICES[codebase_type].items()
 
+        
+
+class ReleaseForm(forms.ModelForm):
+
+    class Meta:
+        model = Release
+
+    def __init__(self, project, *args, **kwargs):
+        super(ReleaseForm, self).__init__(*args, **kwargs)
+        projects = self.fields["project"].queryset.filter(slug=project.slug)
+        self.fields["project"].queryset = projects
+        self.fields["project"].empty_label = None
 

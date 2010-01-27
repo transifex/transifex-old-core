@@ -3,6 +3,7 @@
 from south.db import db
 from django.db import models
 from projects.models import *
+from txcollections.models import *
 
 class Migration:
 

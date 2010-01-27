@@ -30,40 +30,40 @@ NOTICE_TYPES = [
             },
             {
                 "label": "project_submit_access_requested",
-                "display": _("Submit access for project requested"), 
-                "description": _("when a user requests access to submit files " \
+                "display": _("Submit access to project requested"), 
+                "description": _("when an user request access to submit files " \
                                  "to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_request_denied",
-                "display": _("Submit access request for project denied"), 
-                "description": _("when a maintainer denies access to a user " \
+                "display": _("Submit access request to project denied"), 
+                "description": _("when a maintainer denies access to an user " \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_request_withdrawn",
-                "display": _("Submit access request for project withdrawn"), 
-                "description": _("when a user withdraws the access request" \
+                "display": _("Submit access request to project withdrawn"), 
+                "description": _("when an user withdraws the access request" \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_granted",
-                "display": _("Submit access for project granted"), 
-                "description": _("when a maintainer grants access to a user " \
+                "display": _("Submit access to project granted"), 
+                "description": _("when a maintainer grants access to an user " \
                                  "to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_revoked",
-                "display": _("Submit access for project revoked"), 
-                "description": _("when a maintainer revokes the access of a " \
+                "display": _("Submit access to project revoked"), 
+                "description": _("when a maintainer revokes the access of an " \
                                  "user to submit files to a project"), 
                 "default": 2,
                 "show_to_user": True,
@@ -98,14 +98,6 @@ NOTICE_TYPES = [
                 "show_to_user": False,
             },
             {
-                "label": "project_component_file_review_submitted",
-                "display": _("File Review Submitted"), 
-                "description": _("when a file of a component is submitted"
-                                 " for review"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
                 "label": "project_component_file_changed",
                 "display": _("Translation File Changed"),
                 "description": _("when a component translation file of a"
@@ -122,99 +114,6 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
-
-            # Teams
-            {
-                "label": "project_team_added",
-                "display": _("New Team Added"),
-                "description": _("when a new translation team is added"
-                                 " to a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_changed",
-                "display": _("Team Changed"), 
-                "description": _("when a translation team of a project"
-                                 " is changed"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_deleted",
-                "display": _("Team Deleted"), 
-                "description": _("when a translation team of a project"
-                                 " is deleted"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_requested",
-                "display": _("Team Creation Requested"), 
-                "description": _("when a translation team creation is requested"
-                                 "for a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_request_denied",
-                "display": _("Team Creation Request Denied"), 
-                "description": _("when a translation team creation request"
-                                 "for a project is denied by a maintainer"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_join_requested",
-                "display": _("Team User Joining Requested"), 
-                "description": _("when an user requests for joining to a"
-                                 " translation team of a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_join_approved",
-                "display": _("Team User Joining Approved"), 
-                "description": _("when an user is approved as a member of a"
-                                 " translation team of a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_join_denied",
-                "display": _("Team User Joining Denied"), 
-                "description": _("when an user is denied as a member of a"
-                                 " translation team of a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_join_withdrawn",
-                "display": _("Team User Joining Withdrawn"), 
-                "description": _("when an user withdrawn its own request for"
-                                 " joining a translation team of a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_team_left",
-                "display": _("Team User Left"), 
-                "description": _("when an user leaves a translation"
-                                 " team of a project"), 
-                "default": 2,
-                "show_to_user": True,
-            },
-
-            # Reports
-            {
-                "label": "project_report_weekly_maintainers",
-                "display": _("Weekly project report for maintainers"), 
-                "description": _("when you receive the weekly report of "
-                                 "projects that you maintain."), 
-                "default": 2,
-                "show_to_user": True,
-            },
-
             {
                 "label": "collection_added",
                 "display": _("New Collection Added"), 
@@ -283,11 +182,37 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": False,
             },
-            {   "label": "user_nudge",
-                "display": _("User Nudge"), 
-                "description": _("when an user nudges you"), 
+            {
+                "label": "project_release_added",
+                "display": _("New Release Added for a Watched Project"), 
+                "description": _("when a new release is added to a project"), 
                 "default": 2,
-                "show_to_user": True,
+                "show_to_user": False,
+            },
+            {
+                "label": "project_release_changed",
+                "display": _("Release Changed"), 
+                "description" :_("when a release of a project is changed"), 
+                "default": 1,
+                "show_to_user": False,
+            },
+            {   "label": "project_release_deleted",
+                "display": _("Release Deleted"), 
+                "description": _("when a release of a project is deleted"), 
+                "default": 1,
+                "show_to_user": False,
+            },
+            {   "label": "project_release_added",
+                "display": _("Release Added to a Project"), 
+                "description": _("when a release is added to a project"), 
+                "default": 2,
+                "show_to_user": False,
+            },
+            {   "label": "project_release_deleted",
+                "display": _("Release Deleted from a Project"), 
+                "description": _("when a release is deleted from a project"), 
+                "default": 2,
+                "show_to_user": False,
             },
     ]
 

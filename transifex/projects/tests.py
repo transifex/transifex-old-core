@@ -1,4 +1,5 @@
 import unittest
+from projects.models import (Project, Release)
 
 class SmokeTestCase(unittest.TestCase):
     """Test that all project URLs return correct status code."""
@@ -34,3 +35,29 @@ class SmokeTestCase(unittest.TestCase):
                 self.assertEquals(page.status_code, expected_code,
                     "Status code for page '%s' was %s instead of %s" %
                     (page_url, page.status_code, expected_code))
+
+
+class ReleaseTest(unittest.TestCase):
+#    fixtures = ['test-data.json']
+    
+    def setUp(self):
+        pass
+    
+    def test_release(self):
+        """
+        Test relationships between releases and other elements.
+
+        >>> from django.core.management import call_command
+        >>> call_command('loaddata', 'projects/fixtures/test-data.json')
+        Installing json fixture 'projects/fixtures/test-data' from absolute path.
+        ...
+
+        Test the release -> project relationship
+        >>> p = Project.objects.get(slug='test') 
+        >>> r = p.releases.get(slug='test-release')                
+        
+        Test the release -> project relationship
+        >>> r = Release.objects.get(slug='test-release')
+        >>> r.project
+        <Project: Test Project>
+        """

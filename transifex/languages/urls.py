@@ -45,11 +45,6 @@ urlpatterns += patterns('django.views.generic',
                   "template_object_name" : "language",
                   'queryset': Language.objects.all()}
     ),
-    url(
-        name = 'language_release',
-        regex = '^l/(?P<slug>[-_@\w]+)/collection/c/(?P<collection_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/$',
-        view = language_release,
-    ),
 )
 
 #TODO: Make this setting work throughout the applications

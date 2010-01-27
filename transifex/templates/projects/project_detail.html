@@ -15,7 +15,7 @@
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   <div class="obj_bigdetails">
-  <h2 class="name">{{ project.name }}</h2>
+  <h2 class="pagetitle">{{ project.name }}</h2>
 
   <p class="description">{% firstof project.description project.name %}</p>
 
@@ -33,7 +33,7 @@
 
   <div class="details separate">
 
-  {% if project.homepage or project.tags or project.collections.all %}
+  {% if project.homepage or project.tags %}
     <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
   {% endif %}
   <table class="definition">
@@ -67,16 +67,6 @@
       </td>
     </tr>
     {% endif %}
-    {% with project.collections.all as colls %}
-    {% if colls %}
-    <tr>
-      <th class="i16 collection">{% blocktrans count colls|length as counter %}Collection:{% plural %}Collections:{% endblocktrans %}</th>
-      <td class="compact">
-        {% for coll in colls|slice:"0:6" %}<a class="collection" href="{% url collection_detail slug=coll.slug %}">{{ coll }}</a> {% endfor %}
-      </td>
-    </tr>
-    {% endif %}
-    {% endwith %}
     {% with project.maintainers.all as maintainers %}
     {% if maintainers %}
     <tr>
@@ -105,6 +95,8 @@
 </div>
 
 {% include "projects/component_list.html" %}
+
+{% include "projects/release_list.html" %}
 
 </div>
 

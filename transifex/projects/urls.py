@@ -11,6 +11,7 @@ from projects.views.component import *
 from projects.views.permission import *
 from projects.views.review import *
 from projects.views.team import *
+from projects.views.release import *
 
 from txcommon.decorators import one_perm_required_or_403
 from webtrans.wizards import TransFormWizard
@@ -24,7 +25,6 @@ project_detail = {
     'extra_context': {'project_overview': True},
 }
 project_detail.update(project_list)
-
 
 feeds = {
     'latest': LatestProjects,
@@ -88,6 +88,7 @@ urlpatterns += patterns('',
         view = project_toggle_watch,
         name = 'project_toggle_watch',),
 )
+      
 
 urlpatterns += patterns('django.views.generic',
     url(
@@ -115,6 +116,7 @@ urlpatterns += patterns('django.views.generic',
                   'template_name': 'projects/project_timeline.html',
                   'extra_context': {'project_timeline': True},},),
 )
+      
 
 
 # Components
@@ -178,6 +180,33 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/$',
         view = component_detail,
         name = 'component_detail'),
+)
+
+
+# Releases
+
+urlpatterns += patterns('',
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/$',
+        view = release_detail,
+        name = 'release_detail'),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/add-release/$',
+        view = release_create_update,
+        name = 'release_create',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/edit/$',
+        view = release_create_update,
+        name = 'release_edit',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/delete/$',
+        view = release_delete,
+        name = 'release_delete',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/l/(?P<language_code>[-_@\w]+)/$',
+        view = release_language_detail,
+        name = 'release_language_detail',
+    ),
 )
 
 
