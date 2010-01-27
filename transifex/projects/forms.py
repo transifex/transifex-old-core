@@ -41,8 +41,8 @@ class ComponentForm(forms.ModelForm):
 
     def __init__(self, project, *args, **kwargs):
         super(ComponentForm, self).__init__(*args, **kwargs)
-        projects = self.fields["project"].queryset.filter(slug=project.slug)
-        self.fields["project"].queryset = projects
+        project = self.fields["project"].queryset.filter(slug=project.slug)
+        self.fields["project"].queryset = project
         self.fields["project"].empty_label = None
         self.fields["project"].widget = forms.HiddenInput()
 
