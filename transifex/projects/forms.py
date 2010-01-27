@@ -68,6 +68,9 @@ class ComponentAllowSubForm(forms.ModelForm):
 
 class ReleaseForm(forms.ModelForm):
 
+    components = AutoCompleteSelectMultipleField('components', required=True,
+        help_text=_('Search for a component'))
+
     class Meta:
         model = Release
 

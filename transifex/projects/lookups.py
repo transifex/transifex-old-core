@@ -1,0 +1,32 @@
+from django.db.models import Q
+from projects.models import Component
+
+class ComponentsLookup(object):
+    """A lookup class, used by django-ajax-select app to search model data."""
+
+    def get_query(self, q, request):
+        """
+        Return a query set.
+        
+        You also have access to request.user if needed.
+        """
+        return Component.objects.filter(Q(slug__istartswith=q) |
+                                        Q(name__istartswith=q) |
+                                        Q(project__slug__istartswith=q) |
+                                        Q(project__name__istartswith=q))
+
+    def format_item(self, component):
+        """Simple display of an object when displayed in the list of objects """
+        return unicode(component)
+
+    def format_result(self, component):
+        """
+        A more verbose display, used in the search results display.
+        
+        It may contain html and multi-lines.
+        """
+        return u"%s" % (component)
+
+    def get_objects(self, ids):
+        """Given a list of ids, return the objects ordered."""
+        return Component.objects.filter(pk__in=ids).order_by('name')
