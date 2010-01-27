@@ -7,23 +7,23 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script> 
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+
   <style type="text/css">
     form.submit_form { display: none; }
     form.submit_form fieldset { border: 2px dotted #ddd; }
   </style>
+  {% include "translations/stats_table_filter_header.html" %}
 
-  <script type="text/javascript">
-  $(function(){
-    {% include "translations/stats_table_filter_header.html" %}
-  });
-  </script>
 {% endblock %}
 
 {% block body_class %}{{ block.super }} release_detail{% endblock %}
 
 {% block title %}{{ block.super }} | {{ release.name }} | {{ language.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url release_detail release.project.slug release.slug %}">{{ release.name }}</a> &raquo; {{ language.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url release_detail release.project.slug release.slug %}">{% blocktrans with release.name as release_name %}Release '{{ release_name }}{% endblocktrans %}'</a> &raquo; {{ language.name }}{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{{ release.name }}<sup class="entry_metalink">{{ language.name }}</sup></h2>{% endblock %}
 

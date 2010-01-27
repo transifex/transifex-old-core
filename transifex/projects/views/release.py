@@ -8,7 +8,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
-from projects.models import Project, Release
+from languages.models import Language
+from projects.models import Project, Component, Release
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
 from translations.models import POFile
@@ -21,17 +22,6 @@ from txcommon.log import logger
 
 ##############################################
 # Releases
-
-def release_detail(request, project_slug, release_slug):
-    release = get_object_or_404(Release, slug=release_slug,
-                                project__slug=project_slug)
-    pofile_list = POFile.objects.by_release_total(release)
-    return render_to_response('projects/release_detail.html', {
-        'release': release,
-        'project': release.project,
-        'pofile_list': pofile_list,
-    }, context_instance=RequestContext(request))
-
 
 @login_required
 @one_perm_required_or_403(pr_release_add_change,
@@ -58,6 +48,35 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
         'form': release_form,
         'project': project,
         'release': release,
+    }, context_instance=RequestContext(request))
+
+
+def release_detail(request, project_slug, release_slug):
+    release = get_object_or_404(Release, slug=release_slug,
+                                project__slug=project_slug)
+    pofile_list = POFile.objects.by_release_total(release)
+    return render_to_response('projects/release_detail.html', {
+        'release': release,
+        'project': release.project,
+        'pofile_list': pofile_list,
+    }, context_instance=RequestContext(request))
+
+
+def release_language_detail(request, project_slug, release_slug, language_code):
+
+    language = get_object_or_404(Language, code__iexact=language_code)
+    project = get_object_or_404(Project, slug__exact=project_slug)
+    release = get_object_or_404(Release, slug__exact=release_slug,
+        project__id=project.pk)
+    pofile_list = POFile.objects.by_language_and_release_total(language, release)
+    untrans_comps = Component.objects.untranslated_by_lang_release(language, 
+        release)
+    return render_to_response('projects/release_language_detail.html', {
+        'pofile_list': pofile_list,
+        'project': project,
+        'release': release,
+        'language': language,
+        'untrans_comps': untrans_comps,
     }, context_instance=RequestContext(request))
 
 
