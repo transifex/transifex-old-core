@@ -37,8 +37,8 @@
 
 {% lang_stats_table pofile_list %}
 
-{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="zip" as zip_download_url %}
-{% url language_release_download slug=language.code collection_slug=release.collection.slug release_slug=release.slug filetype="targz" as targz_download_url %}
+{% url release_language_download release.project.slug release.slug language.code "zip" as zip_download_url %}
+{% url release_language_download release.project.slug release.slug language.code "targz" as targz_download_url %}
 
  {% if zip_download_url %}
  <h4>Download</h4>

@@ -46,13 +46,3 @@ urlpatterns += patterns('django.views.generic',
                   'queryset': Language.objects.all()}
     ),
 )
-
-#TODO: Make this setting work throughout the applications
-if getattr(settings, 'ENABLE_COMPRESSED_DOWNLOAD', True):
-    urlpatterns += patterns('',
-        url(
-            name = 'language_release_download',
-            regex = '^l/(?P<slug>[-_@\w]+)/collection/c/(?P<collection_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/download_(?P<filetype>[\w]+)/$',
-            view = language_release_download,
-        ),
-)
