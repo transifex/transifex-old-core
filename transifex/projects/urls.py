@@ -3,9 +3,11 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
-from projects.feeds import LatestProjects, ProjectFeed
+from projects.feeds import LatestProjects, ProjectFeed, ReleaseFeed, \
+    ReleaseLanguageFeed
 from projects.models import Project
 from projects.permissions import pr_component_submit_file
+from projects.views import *
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
@@ -29,6 +31,8 @@ project_detail.update(project_list)
 feeds = {
     'latest': LatestProjects,
     'project': ProjectFeed,
+    'release': ReleaseFeed,
+    'release_language': ReleaseLanguageFeed,
 }
 
 #TODO: Temporary until we import view from a common place
@@ -46,6 +50,18 @@ urlpatterns = patterns('',
         name = 'project_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'project'}),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/feed/$',
+        view = release_feed,
+        name = 'release_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'release'}),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/r/(?P<release_slug>[-\w]+)/l/(?P<language_code>[-_@\w]+)/feed/$',
+        view = release_language_feed,
+        name = 'release_language_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'release_language'}),
 )
 
 

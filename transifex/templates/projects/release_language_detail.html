@@ -3,6 +3,7 @@
 {% load statistics %}
 
 {% block extra_head %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />
   <script type="text/javascript" src="{{ MEDIA_URL }}js/file_submit.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/watch_toggle.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script> 
@@ -24,6 +25,10 @@
 {% block title %}{{ block.super }} | {{ release.name }} | {{ language.name }}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{% url release_detail release.project.slug release.slug %}">{% blocktrans with release.name as release_name %}Release '{{ release_name }}{% endblocktrans %}'</a> &raquo; {{ language.name }}{% endblock %}
+
+{% block content_sec %}
+  <a class="simlink" href="{% url release_language_feed release.project.slug release.slug language.code %}" title="Statistics feed for this language and release"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{{ release.name }}<sup class="entry_metalink">{{ language.name }}</sup></h2>{% endblock %}
 
