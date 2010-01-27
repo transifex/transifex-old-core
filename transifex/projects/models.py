@@ -65,7 +65,7 @@ def cached_property(func):
 class Project(models.Model):
 
     """
-    A project is a collection of translatable resources.
+    A project is a group of translatable resources.
 
     >>> p = Project.objects.create(slug="foo", name="Foo Project")
     >>> p = Project.objects.get(slug='foo')

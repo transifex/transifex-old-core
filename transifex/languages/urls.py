@@ -1,13 +1,11 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from languages.models import Language
-from languages.feeds import AllLanguages, LanguageReleaseFeed
-from languages.views import language_detail, slug_feed, \
-    language_release, language_release_download
+from languages.feeds import AllLanguages
+from languages.views import language_detail, slug_feed
 
 feeds = {
     'all': AllLanguages,
-    'language_release': LanguageReleaseFeed,
 }
 
 #TODO: Temporary until we import view from a common place

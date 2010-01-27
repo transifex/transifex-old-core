@@ -3,13 +3,11 @@
 from south.db import db
 from django.db import models
 from projects.models import *
-from txcollections.models import *
 
 class Migration:
 
     depends_on = (
         ("codebases", "0001_initial"),
-        ("txcollections", "0001_initial"),
     )
     
     def forwards(self, orm):

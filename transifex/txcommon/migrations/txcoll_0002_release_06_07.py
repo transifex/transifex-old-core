@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from txcollections.models import *
+from tagging.fields import TagField
 
 class Migration:
     

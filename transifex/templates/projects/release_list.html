@@ -3,8 +3,8 @@
 {% url release_create project_slug=project.slug as release_create %}
 <div id="releases" class="releases separate">
   <div class="editlinks">
-    {# <p><a class="simlink" href="{% url collection_feed param=collection.slug %}" title="collection feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p> #}
-      {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
+    {# <p><a class="simlink" href="{% url release_feed param=release.slug %}" title="Release feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p> #}
+      {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
         <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
       {% endif %}
     </p>
@@ -25,7 +25,7 @@
   </ul>
   </div>
   {% else %}
-    {% if request.user.is_authenticated and perms.txcollections.add_collectionrelease %}
+    {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
       <p class="i16 tip">{% blocktrans %}No releases are registered for this project yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
     {% endif %}
   {% endif %}

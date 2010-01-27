@@ -8,7 +8,7 @@ from django.contrib.contenttypes import generic
 class Release(models.Model):
 
     """
-    A collection of packages of actual files, shipped together (eg. Fedora 9).
+    A group of packages of actual files, shipped together (eg. Fedora 9).
     
     Represents a packaging and releasing of a software project (big or
     small) on a particular date, for which makes sense to track
