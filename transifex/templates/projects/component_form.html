@@ -9,7 +9,7 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo;
 {% if not component %}{% trans "Add a component" %}
-{% else %}{% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}
+{% else %}{% blocktrans with component.name as component_name %}Edit Component '{{ component_name }}'{% endblocktrans %}
 {% endif %}{% endblock %}
 
 {% block extra_head %}
@@ -97,7 +97,7 @@ $(document).ready(
   {% if not component %}
     <h2 class="pagetitle">{% blocktrans with project.name as project_name %}New component for {{ project_name }}{% endblocktrans %}</h2>
   {% else %}
-    <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Edit {{ component_name }}{% endblocktrans %}</h2>
+    <h2 class="pagetitle">{% blocktrans with component.name as component_name %}Edit Component '{{ component_name }}'{% endblocktrans %}</h2>
   {% endif %}
 {% endblock %}
 
