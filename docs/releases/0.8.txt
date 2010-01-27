@@ -162,6 +162,53 @@ pagination, filtering and sorting of the results is shipped out-of-the-box.
    :class: shot2 alcenter
 
 
+Project Releases and Removal of Collections
+:::::::::::::::::::::::::::::::::::::::::::
+
+Transifex 0.8 introduces two radical changes in some of the core page and
+model structure:
+
+1. Projects can now have releases, like Django 1.1, Mercurial 1.4.1, or
+   Transifex 0.8. These releases are a group of components which belong
+   to either the release's project itself, or even ones attached to other
+   projects.
+   
+2. Since a Project Release duplicates all features of what the Collections
+   Releases offered, we are removing completely the notion of 'Collections' from
+   Transifex.
+
+With Transifex 0.8, the 'big-picture' projects which used to be mounted under
+'collections' will be a top-level Project, enjoying the multitude of features
+existing there, such as teams etc.  This allows Transifex, for example, to ship
+a new version and include translation statistics of its dependencies, such as
+the ``django-profile`` upstream app. In short, Projects get benefited from the
+collections features, and big-picture projects (which used to be named
+collections) benefit from the rich features programmed into Projects.
+
+.. image:: ../_static/screenshots/0.8/release-detail.png
+   :class: shot2 alcenter
+
+The rationale behind this big change is that Transifex used to support two
+notions of "projects": The Project as a  "Software project" and the Collections
+as a "Collection of software projects". While the latter sounds perfectly
+separated from the first, here are some of the benefits from treating all
+projects as Projects:
+
+- You don't have to worry whether your project classifies as a Collection or
+  Project. It's just a Project which ships releases which depend on other
+  Projects too. This way, both Transifex and Moblin are software projects.
+- All projects now enjoy the same features: maintainers, feeds, teams, language
+  coordinators etc.
+- Users can find what they want easier: they just search for their favorite
+  project and start translating it right away.
+
+.. image:: ../_static/screenshots/0.8/release-edit.png
+   :class: shot2 alcenter
+
+The migration of these data from 0.7 → 0.8 is manual, and should only take a few
+minutes for a Transifex administrator.
+
+
 Subversion over secure HTTP (https)
 :::::::::::::::::::::::::::::::::::
 
