@@ -44,7 +44,6 @@ class ComponentForm(forms.ModelForm):
         project = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = project
         self.fields["project"].empty_label = None
-        self.fields["project"].widget = forms.HiddenInput()
 
 
 class ComponentAllowSubForm(forms.ModelForm):
@@ -80,5 +79,4 @@ class ReleaseForm(forms.ModelForm):
         projects = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
-        self.fields["project"].widget = forms.HiddenInput()
 
