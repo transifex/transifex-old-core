@@ -44,7 +44,6 @@ def _get_label(msgid_list, msgctxt):
     return render_to_string('webtrans/msgid_label.html',
                             { 'msgid_list': msgid_list, 'msgctxt': msgctxt})
 
-
 class TranslationForm(forms.Form):
     """
     Return a form created dynamicaly using a list of PO files entries.
@@ -56,8 +55,7 @@ class TranslationForm(forms.Form):
         super(TranslationForm, self).__init__(*args, **kwargs)
         for k, entry in enumerate(po_entries):
             status = _guess_entry_status(entry, k, kwargs.get('data', None))
-            attrs = {'class':'%s msgstr_field_%s' % (status, k),
-                     'title':'%s' % polib.escape(entry.comment)}
+            attrs = {'class': '%s msgstr_field_%s' % (status, k)}
 
             if 'fuzzy' in entry.flags:
                 fuzzy=True
@@ -95,5 +93,9 @@ class TranslationForm(forms.Form):
             self.fields['msgstr_field_%s' % k] = msgstr_field
 
     def help_text(self, entry):
+        """Return the comments of a field."""
         occurrences = ["%s (line %s)" % (file, line) for (file, line) in entry.occurrences]
-        return '<small>%s</small>'% (', '.join(occurrences))
+        return render_to_string('webtrans/comments.html', {
+            'comment': polib.escape(entry.comment),
+            'occurrences': '%s' % ('\n'.join(occurrences)),})
+

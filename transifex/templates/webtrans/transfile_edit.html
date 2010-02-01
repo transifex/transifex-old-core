@@ -57,7 +57,7 @@
   <legend>{% trans "Settings" %}</legend>
   <table class="definition">
   <tr>
-    <th>{% trans "Show occurrences:" %}</th>
+    <th>{% trans "Verbose editing:" %}</th>
     <td><input id="toggle_occurrences" type="checkbox" {% if toggle_occurrences %}checked="checked"{% endif %} name="toggle_occurrences" /></td>
   </tr>
   <tr>
@@ -112,7 +112,6 @@
     {% if WEBTRANS_SUGGESTIONS %}      
       <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
     {% endif %}
-      <th class="occurrences">{% trans "Occurrences" %}</th>
       <th>{% trans "Fuzzy?" %}</th>
     </tr>
    </thead>

@@ -13,12 +13,15 @@
     <td class="msg">{{ field.label }}</td>
     <td class="notes"><span class="i16 nodecoration_icon buttonized_simple copy_source" href="#" title="{% trans "Copy source string" %}"></span></td>  
     <td class="trans">
-     {{ field }} {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
+      <span class="trans_field">{{ field }}</span>
+      <p class="notes">
+        {{ field.help_text|safe }}
+      </p>
+      {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
     </td>
    {% if WEBTRANS_SUGGESTIONS %}    
     <td class="notes suggest_container"><a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a></td>
    {% endif %}
-     <td class="occurrences notes"><span class="helptext">{{ field.help_text|safe }}</span></td>
      <td class="notes"><span class="helptext">{{ field|fuzzy_field:form|safe }}</span></td>
    </tr>
   {% endif %}
