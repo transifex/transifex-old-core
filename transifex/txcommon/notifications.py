@@ -97,6 +97,17 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": False,
             },
+
+            # Reviews
+
+            {
+                "label": "project_component_file_review_submitted",
+                "display": _("File Review Submitted"), 
+                "description": _("when a file of a component is submitted"
+                                 " for review"), 
+                "default": 2,
+                "show_to_user": True,
+            },
             {
                 "label": "project_component_file_changed",
                 "display": _("Translation File Changed"),
@@ -114,6 +125,9 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
+
+            # Project releases
+
             {
                 "label": "project_release_added",
                 "display": _("New Release Added for a Watched Project"), 
@@ -145,6 +159,107 @@ NOTICE_TYPES = [
                 "description": _("when a release is deleted from a project"), 
                 "default": 2,
                 "show_to_user": False,
+            },
+            
+            # Teams
+            
+            {
+                "label": "project_team_added",
+                "display": _("New Team Added"),
+                "description": _("when a new translation team is added"
+                                 " to a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_changed",
+                "display": _("Team Changed"), 
+                "description": _("when a translation team of a project"
+                                 " is changed"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_deleted",
+                "display": _("Team Deleted"), 
+                "description": _("when a translation team of a project"
+                                 " is deleted"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_requested",
+                "display": _("Team Creation Requested"), 
+                "description": _("when a translation team creation is requested"
+                                 "for a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_request_denied",
+                "display": _("Team Creation Request Denied"), 
+                "description": _("when a translation team creation request"
+                                 "for a project is denied by a maintainer"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_join_requested",
+                "display": _("Team User Joining Requested"), 
+                "description": _("when an user requests for joining to a"
+                                 " translation team of a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_join_approved",
+                "display": _("Team User Joining Approved"), 
+                "description": _("when an user is approved as a member of a"
+                                 " translation team of a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_join_denied",
+                "display": _("Team User Joining Denied"), 
+                "description": _("when an user is denied as a member of a"
+                                 " translation team of a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_join_withdrawn",
+                "display": _("Team User Joining Withdrawn"), 
+                "description": _("when an user withdrawn its own request for"
+                                 " joining a translation team of a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_team_left",
+                "display": _("Team User Left"), 
+                "description": _("when an user leaves a translation"
+                                 " team of a project"), 
+                "default": 2,
+                "show_to_user": True,
+            },
+
+            # Reports
+            
+            {
+                "label": "project_report_weekly_maintainers",
+                "display": _("Weekly project report for maintainers"), 
+                "description": _("when you receive the weekly report of "
+                                 "projects that you maintain."), 
+                "default": 2,
+                "show_to_user": True,
+            },
+
+            {   "label": "user_nudge",
+                "display": _("User Nudge"), 
+                "description": _("when an user nudges you"), 
+                "default": 2,
+                "show_to_user": True,
             },
     ]
 
