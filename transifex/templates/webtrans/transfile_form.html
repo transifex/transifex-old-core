@@ -14,7 +14,7 @@
     <td class="notes"><span class="i16 nodecoration_icon buttonized_simple copy_source" href="#" title="{% trans "Copy source string" %}"></span></td>  
     <td class="trans">
       <span class="trans_field">{{ field }}</span>
-      <p class="notes">
+      <p class="notes" style="display: none;">
         {{ field.help_text|safe }}
       </p>
       {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}

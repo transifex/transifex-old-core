@@ -23,14 +23,6 @@ function toggle_entries(entries_status){
         .trigger("appendCache");
 }
 
-function toggle_occurrences(){
-        if($("input[name='toggle_occurrences']").is(":checked")){
-            $(".occurrences").show()
-        }else{
-            $(".occurrences").hide();
-        }
-    }
-
 function toggle_contexts(){
         if($("input[name='toggle_contexts']").is(":checked")){
             $(".contexts").show();
@@ -164,12 +156,7 @@ $(function(){
     // Hide check fields for show/hide translated/fuzzy/untranslated fields
     $("input[name*='only_']").hide()
 
-    // Actions for show/hide occurrence column in the table
-    $("input[name='toggle_occurrences']").change(function(){
-        toggle_occurrences()
-    })
-    toggle_occurrences()
-
+    // Actions for show/hide contexts
     $("input[name='toggle_contexts']").change(function(){
         toggle_contexts()
     })

@@ -39,10 +39,10 @@ def _guess_entry_status(entry, key, data):
         elif not entry.translated() and not entry.obsolete:
             return 'untranslated'
 
-def _get_label(msgid_list, msgctxt):
-    """Return the label for a plural field."""
+def _get_label(msgid_list):
+    """Return the label for a field."""
     return render_to_string('webtrans/msgid_label.html',
-                            { 'msgid_list': msgid_list, 'msgctxt': msgctxt})
+                            { 'msgid_list': msgid_list })
 
 class TranslationForm(forms.Form):
     """
@@ -71,7 +71,7 @@ class TranslationForm(forms.Form):
                     initial=messages,
                     help_text=self.help_text(entry),
                     label=_get_label([polib.escape(entry.msgid),
-                        polib.escape(entry.msgid_plural)], entry.msgctxt ),
+                        polib.escape(entry.msgid_plural)]),
                     attrs=attrs,
                     required=False,
                 )
@@ -81,7 +81,7 @@ class TranslationForm(forms.Form):
                     initial=polib.escape(entry.msgstr),
                     help_text=self.help_text(entry),
                     attrs=attrs,
-                    label=_get_label( [polib.escape(entry.msgid)], entry.msgctxt ),
+                    label=_get_label([polib.escape(entry.msgid)]),
                     required=False,
                     )
             msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,
@@ -97,5 +97,6 @@ class TranslationForm(forms.Form):
         occurrences = ["%s (line %s)" % (file, line) for (file, line) in entry.occurrences]
         return render_to_string('webtrans/comments.html', {
             'comment': polib.escape(entry.comment),
+            'msgctxt': entry.msgctxt,
             'occurrences': '%s' % ('\n'.join(occurrences)),})
 

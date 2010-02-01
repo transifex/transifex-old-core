@@ -74,7 +74,6 @@ class TransFormWizard(SessionWizard):
             'po_entries': self.po_entries_list, 
             'ENTRIES_PER_PAGE': self.ENTRIES_PER_PAGE,
             'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
-            'toggle_occurrences': request.POST.get('toggle_occurrences', None),
             'toggle_contexts': request.POST.get('toggle_contexts', None),
             #'only_translated': request.POST.get('only_translated', None),
             #'only_fuzzy': request.POST.get('only_fuzzy', None),

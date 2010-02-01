@@ -1,6 +1,6 @@
 {% load i18n %}
-{% if occurrences %}<span class="occurrences i16 file_search">{{ occurrences }}</span>{% endif %}
-<br/>
-{% if comment %}<span class="occurrences i16 comment_user">{{ comment }}</span>{% endif %}
-
-
+<ul class="simple contexts">
+{% if msgctxt %}<li class="i16 flag_green" title="{% trans "Context" %}">{{ msgctxt }}</li>{% endif %}
+{% if comment %}<li class="i16 comment_user" title="{% trans "Developer comments" %}">{{ comment }}</li>{% endif %}
+{% if occurrences %}<li class="i16 file_search" title="{% trans "Occurences" %}">{{ occurrences }}</li>{% endif %}
+</ul>
