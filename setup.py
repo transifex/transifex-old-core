@@ -53,7 +53,7 @@ setup(
         "http://pypi.python.org/simple",
     ],
     setup_requires = [
-        "Django >= 1.0",
+        "Django >= 1.1",
         "Pygments >= 0.9",
         "Sphinx >= 0.4.2",
     ],
