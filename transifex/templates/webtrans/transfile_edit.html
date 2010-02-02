@@ -96,6 +96,8 @@
   {% endif %}
 
   <span>{% blocktrans %}Page {{step}} of {{step_count}}{% endblocktrans %}</span>
+  {% txpaginate '' po_entries step ENTRIES_PER_PAGE 6 paginated_po_entries %}
+  {% include 'pagination.html' %}
 
   <div class="generic_form" >
   <table id="trans_web_edit" class="trans_web_edit stats_comp tablesorter">
@@ -117,7 +119,6 @@
   </table>
   </div>
 
-  {% txpaginate '' po_entries step ENTRIES_PER_PAGE 6 paginated_po_entries %}
   {% include 'pagination.html' %}
 
   <p class="submit">
