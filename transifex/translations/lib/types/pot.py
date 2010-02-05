@@ -279,16 +279,15 @@ class POTManager(TransManagerMixin):
             if not source_file:
                 raise SourceFileError, ("No POT file found. It is requited to "
                                         "msgmerge.")
-            (is_msgmerged, file_path) = self.msgmerge(filename, source_file)
+            is_msgmerged = self.msgmerge(filename, source_file)
         else:
-            is_msgmerged=False
-            file_path = os.path.join(self.path, filename)
+            is_msgmerged = False
 
         #Copy the current file (non-msgmerged) to the static dir
         if not is_msgmerged:
             self.copy_file_to_static_dir(filename)
 
-        po_contents = self.get_file_contents(file_path, is_msgmerged)
+        po_contents = self.get_file_contents(filename, is_msgmerged)
         postats = self.get_po_stats(po_contents)
 
         return {'trans': postats['translated'],
@@ -324,6 +323,11 @@ class POTManager(TransManagerMixin):
         """
         is_msgmerged = True
         outpo = os.path.join(self.msgmerge_path, pofile)
+        
+        #Create dir for the static file
+        msgmerge_dir = os.path.dirname(outpo)
+        if not os.path.exists(msgmerge_dir):
+            os.makedirs(msgmerge_dir)
 
         try:
             # TODO: Find a library to avoid call msgmerge by command
@@ -334,8 +338,7 @@ class POTManager(TransManagerMixin):
             stdout = run_command(command)
         except CommandError:
             is_msgmerged = False
-
-        return (is_msgmerged, outpo)
+        return is_msgmerged
 
     def intltool_update(self):
         """
