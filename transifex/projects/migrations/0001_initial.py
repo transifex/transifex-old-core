@@ -64,14 +64,14 @@ class Migration:
         db.create_table('projects_project_collections', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('project', models.ForeignKey(Project, null=False)),
-            ('collection', models.ForeignKey(Collection, null=False))
+            ('collection', models.ForeignKey(orm['txcollections.collection'], null=False))
         ))
         
         # Adding ManyToManyField 'Component.releases'
         db.create_table('projects_component_releases', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('component', models.ForeignKey(Component, null=False)),
-            ('collectionrelease', models.ForeignKey(CollectionRelease, null=False))
+            ('collectionrelease', models.ForeignKey(orm['txcollections.collectionrelease'], null=False))
         ))
         
         # Creating unique_together for [project, slug] on Component.

@@ -1,7 +1,8 @@
 
 from south.db import db
 from django.db import models
-from tagging.fields import TagField
+from txcollections.models import *
+from tagging.fields import *
 
 class Migration:
     
@@ -20,7 +21,7 @@ class Migration:
     
     models = {
         'txcollections.collectionrelease': {
-            'Meta': {'unique_together': "['slug','collection']", 'db_table': "'collections_release'"},
+            'Meta': {'unique_together': "[['slug'],['collection']]", 'db_table': "'collections_release'"},
             'collection': ('models.ForeignKey', ['Collection'], {'related_name': "'releases'"}),
             'created': ('models.DateTimeField', [], {'auto_now_add': 'True', 'editable': 'False'}),
             'description': ('models.CharField', ["_('Description')"], {'max_length': '255', 'blank': 'True'}),
