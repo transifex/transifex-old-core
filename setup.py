@@ -72,7 +72,7 @@ setup(
         "django-notification >= 0.1.2",
         "django-pagination >= 1.0.5",
         "django-piston",
-        "django-sorting >= 0.1.2",
+        "django-sorting >= 0.1",
         "tagging >= 0.3_pre",
         "South >= 0.6-rc1",
         "django-ajax-selects",
