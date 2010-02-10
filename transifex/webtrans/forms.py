@@ -53,44 +53,45 @@ class TranslationForm(forms.Form):
     """
     def __init__(self, po_entries, *args, **kwargs):
         super(TranslationForm, self).__init__(*args, **kwargs)
-        for k, entry in enumerate(po_entries):
-            status = _guess_entry_status(entry, k, kwargs.get('data', None))
-            attrs = {'class': '%s msgstr_field_%s' % (status, k)}
+        if po_entries:
+            for k, entry in enumerate(po_entries):
+                status = _guess_entry_status(entry, k, kwargs.get('data', None))
+                attrs = {'class': '%s msgstr_field_%s' % (status, k)}
 
-            if 'fuzzy' in entry.flags:
-                fuzzy=True
-            else:
-                fuzzy=False
+                if 'fuzzy' in entry.flags:
+                    fuzzy=True
+                else:
+                    fuzzy=False
 
-            if entry.msgid_plural:
-                message_keys = entry.msgstr_plural.keys()
-                message_keys.sort()
-                messages = [entry.msgstr_plural[key] for key in message_keys]
-                msgstr_field = PluralMessageField(
-                    entry=entry,
-                    initial=messages,
-                    help_text=self.help_text(entry),
-                    label=_get_label([polib.escape(entry.msgid),
-                        polib.escape(entry.msgid_plural)]),
-                    attrs=attrs,
-                    required=False,
-                )
-            else:
-                msgstr_field = MessageField(
-                    entry=entry,
-                    initial=polib.escape(entry.msgstr),
-                    help_text=self.help_text(entry),
-                    attrs=attrs,
-                    label=_get_label([polib.escape(entry.msgid)]),
-                    required=False,
+                if entry.msgid_plural:
+                    message_keys = entry.msgstr_plural.keys()
+                    message_keys.sort()
+                    messages = [entry.msgstr_plural[key] for key in message_keys]
+                    msgstr_field = PluralMessageField(
+                        entry=entry,
+                        initial=messages,
+                        help_text=self.help_text(entry),
+                        label=_get_label([polib.escape(entry.msgid),
+                            polib.escape(entry.msgid_plural)]),
+                        attrs=attrs,
+                        required=False,
                     )
-            msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,
-                initial=polib.escape(entry.msgid))
-            fuzzy_field = forms.BooleanField(required=False, initial=fuzzy)
+                else:
+                    msgstr_field = MessageField(
+                        entry=entry,
+                        initial=polib.escape(entry.msgstr),
+                        help_text=self.help_text(entry),
+                        attrs=attrs,
+                        label=_get_label([polib.escape(entry.msgid)]),
+                        required=False,
+                        )
+                msgid_field = MessageField(entry=entry, widget=forms.HiddenInput,
+                    initial=polib.escape(entry.msgid))
+                fuzzy_field = forms.BooleanField(required=False, initial=fuzzy)
 
-            self.fields['msgid_field_%s' % k] = msgid_field
-            self.fields['fuzzy_field_%s' % k] = fuzzy_field
-            self.fields['msgstr_field_%s' % k] = msgstr_field
+                self.fields['msgid_field_%s' % k] = msgid_field
+                self.fields['fuzzy_field_%s' % k] = fuzzy_field
+                self.fields['msgstr_field_%s' % k] = msgstr_field
 
     def help_text(self, entry):
         """Return the comments of a field."""

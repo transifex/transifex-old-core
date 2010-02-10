@@ -64,6 +64,7 @@
 </fieldset>
 
   <table class="definition stats_totals">
+  <input id="filter_entries" type="hidden" name="filter_entries"/>
   <tr>
     <th class="translated">{% trans "Translated" %}</th>
       <td id="total_translated">{{ pofile.trans }}</td>
@@ -89,13 +90,10 @@
   </table>
 {% endif %}
 
-  <h3>{% trans "Live translation" %}</h3>
-
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
 
-  <span>{% blocktrans %}Page {{step}} of {{step_count}}{% endblocktrans %}</span>
   {% txpaginate '' po_entries step ENTRIES_PER_PAGE 6 paginated_po_entries %}
   {% include 'pagination.html' %}
 
@@ -123,7 +121,7 @@
 
   <p class="submit">
   {% if perms.projects.submit_file or can_submit_file %}
-  <input type="submit" class="i16 submit" name="submit" value="{% trans "Submit translations" %}" />
+  <input type="submit" class="i16 submit" name="submit_file" value="{% trans "Submit translations" %}" />
   {% endif %}
   <input type="submit" class="i16 send_file" name="submit_for_review" value="{% trans "Send for Review" %}">
   </p>

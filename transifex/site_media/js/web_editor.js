@@ -71,7 +71,12 @@ function get_total_perc(w) {
         // Hack to always have a total percentage sum of 100%:
         num = get_total_sum() - get_total("translated") - get_total("fuzzy");
     }
-    return Math.floor(num * 100 / get_total_sum());
+    total_sum = get_total_sum();
+    if ( total_sum == 0 ) {
+        return 0
+    }
+    return Math.floor(num * 100 / total_sum);
+
 }
 
 function update_total(w) {
@@ -136,31 +141,27 @@ $(function(){
 
     // Actions for show/hide translated entries
     $("input[name='only_translated']").change(function(){
-          toggle_entries('translated')
-    })
-
-    // Making translated entries hidden by default
-    //$("input[name='only_translated']").attr('checked', false);
-    //    toggle_entries('translated')
+        $("#filter_entries").attr('value', 'true')
+         $(this).closest("form").submit();
+    });
 
     // Actions for show/hide fuzzy entries
-    $("input[name='only_fuzzy']").change(function () {
-          toggle_entries('fuzzy')
-    })
+    $("input[name='only_fuzzy']").change(function(){
+        $("#filter_entries").attr('value', 'true')
+        $(this).closest("form").submit();
+    });
 
     // Actions for show/hide untranslated entries
-    $("input[name='only_untranslated']").change(function () {
-         toggle_entries('untranslated')
-    })
-
-    // Hide check fields for show/hide translated/fuzzy/untranslated fields
-    $("input[name*='only_']").hide()
+    $("input[name='only_untranslated']").change(function(){
+        $("#filter_entries").attr('value', 'true')
+        $(this).closest("form").submit();
+    });
 
     // Actions for show/hide contexts
     $("input[name='toggle_contexts']").change(function(){
         toggle_contexts()
-    })
-    toggle_contexts()
+    });
+    toggle_contexts();
 
     // Copy source string button 
     $('span.copy_source').click(function(){
