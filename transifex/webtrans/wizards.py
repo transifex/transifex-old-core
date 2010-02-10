@@ -310,8 +310,7 @@ class TransFormWizard(SessionWizard):
                     del self._storage['steps']
 
                 # Getting po_entries based on the filter settings
-                self.po_entries_list = self.filter_po_entries()#self.only_translated, 
-                    #self.only_fuzzy, self.only_untranslated)
+                self.po_entries_list = self.filter_po_entries()
 
                 self.number_steps = len(list(chunks(self.po_entries_list, 
                     self.ENTRIES_PER_PAGE)))
