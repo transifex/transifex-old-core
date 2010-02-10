@@ -141,20 +141,25 @@ $(function(){
 
     // Actions for show/hide translated entries
     $("input[name='only_translated']").change(function(){
-        $("#filter_entries").attr('value', 'true')
+        $("#filter_entries").attr('value', 'true');
          $(this).closest("form").submit();
     });
 
     // Actions for show/hide fuzzy entries
     $("input[name='only_fuzzy']").change(function(){
-        $("#filter_entries").attr('value', 'true')
+        $("#filter_entries").attr('value', 'true');
         $(this).closest("form").submit();
     });
 
     // Actions for show/hide untranslated entries
     $("input[name='only_untranslated']").change(function(){
-        $("#filter_entries").attr('value', 'true')
+        $("#filter_entries").attr('value', 'true');
         $(this).closest("form").submit();
+    });
+
+    // Clean action for button 'clear'
+    $("input[name='clear']").click(function(){
+        $("input[name='string']").attr('value','');
     });
 
     // Actions for show/hide contexts

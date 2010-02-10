@@ -24,6 +24,21 @@ def specific_chunk(clist, cindex, crange):
         if i == cindex:
             return chunk
 
+def has_string(entry, string):
+    """Return True if string is found in any attr of the po entry."""
+    if string in entry.msgid:
+        return True
+    if entry.msgid_plural:
+        if string in entry.msgid_plural:
+            return True
+        for value in entry.msgstr_plural.values():
+            if string in value:
+                return True
+    else:
+        if string in entry.msgstr:
+            return True
+
+
 class TransFormWizard(SessionWizard):
 
     ENTRIES_PER_PAGE = settings.WEBTRANS_ENTRIES_PER_PAGE
@@ -69,15 +84,17 @@ class TransFormWizard(SessionWizard):
 
         # Getting filtering settings
         if f:
-            self.only_translated = f['only_translated']
-            self.only_fuzzy = f['only_fuzzy']
-            self.only_untranslated = f['only_untranslated']
+            self.only_translated = f.get('only_translated', None)
+            self.only_fuzzy = f.get('only_fuzzy', None)
+            self.only_untranslated = f.get('only_untranslated', None)
+            self.string = f.get('string', '')
         else: # Default values
             self.only_translated = False
             self.only_fuzzy = True
             self.only_untranslated = True
+            self.string = ''
             self.store_filters(self.only_translated, self.only_fuzzy, 
-                self.only_untranslated)
+                self.only_untranslated, self.string)
 
         # Getting po_entries based on the filter settings
         self.po_entries_list = self.filter_po_entries()
@@ -185,6 +202,8 @@ class TransFormWizard(SessionWizard):
         # Filtering
         po_entries_list = []
         for entry in entries:
+            if self.string and not has_string(entry, self.string):
+                continue
             if entry.translated():
                 if self.only_translated:
                     po_entries_list.append(entry)
@@ -196,11 +215,12 @@ class TransFormWizard(SessionWizard):
                     po_entries_list.append(entry)
         return po_entries_list
 
-    def store_filters(self, only_translated, only_fuzzy, only_untranslated):
+    def store_filters(self, only_translated, only_fuzzy, only_untranslated, string):
         """Store the filter options in the session."""
         self._storage['filters'] = {'only_translated': only_translated,
                                     'only_fuzzy': only_fuzzy,
-                                    'only_untranslated': only_untranslated}
+                                    'only_untranslated': only_untranslated,
+                                    'string': string,}
 
     def get_stored_filters(self):
         """Get the stored filter options from the session."""
@@ -269,19 +289,22 @@ class TransFormWizard(SessionWizard):
             only_translated = request.POST.get('only_translated', None)
             only_fuzzy = request.POST.get('only_fuzzy', None)
             only_untranslated = request.POST.get('only_untranslated', None)
+            string = request.POST.get('string', None)
 
             # If filter changed
             if only_translated != self.only_translated or \
                 only_fuzzy != self.only_fuzzy or \
-                only_untranslated  != self.only_untranslated:
+                only_untranslated  != self.only_untranslated or \
+                string != self.string:
 
                 self.only_translated = only_translated
                 self.only_fuzzy = only_fuzzy
                 self.only_untranslated = only_untranslated
+                self.string = string
 
                 # Store the current filters
                 self.store_filters(self.only_translated, self.only_fuzzy, 
-                    self.only_untranslated)
+                    self.only_untranslated, self.string)
 
                 if 'steps' in self._storage:
                     del self._storage['steps']
@@ -301,6 +324,7 @@ class TransFormWizard(SessionWizard):
             'only_translated': self.only_translated,
             'only_fuzzy': self.only_fuzzy,
             'only_untranslated': self.only_untranslated,
+            'string': self.string,
             'initial_entries_count':(self.next_step(request, self.step) * 
                                      self.ENTRIES_PER_PAGE),
             })

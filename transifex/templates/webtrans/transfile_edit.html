@@ -10,16 +10,22 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/table_pagination.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/web_editor.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.highlight-3.js"></script>
 
 <!-- Google suggest -->
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>    
 <script type="text/javascript">
-//<!--
+
 {% if WEBTRANS_SUGGESTIONS %}
   google.load("language", "1");
   {% include 'webtrans/js/google-translate.js' %}
 {% endif %}
-//-->
+
+{% if string %}
+$(function(){
+    $("#trans_web_edit tbody p").highlight('{{ string }}');
+});
+{% endif %}
 </script>
 {% endblock %}
 
@@ -53,16 +59,21 @@
   <form action='' method='post' class='webtrans'>
   <h3>{% trans "Current status for this page" %}</h3>
 
-<fieldset class="floatright">
-  <legend>{% trans "Settings" %}</legend>
-  <table class="definition">
-  <tr>
-    <th>{% trans "Verbose editing:" %}</th>
-    <td><input id="toggle_contexts" type="checkbox" {% if toggle_contexts %}checked="checked"{% endif %} name="toggle_contexts" /></td>
-  </tr>
-  </table>
-</fieldset>
+<div class="floatright" >
+    <fieldset>
+    <legend>{% trans "Settings" %}</legend>
+    <table class="definition">
+    <tr>
+        <th>{% trans "Verbose editing:" %}</th>
+        <td><input id="toggle_contexts" type="checkbox" {% if toggle_contexts %}checked="checked"{% endif %} name="toggle_contexts" /></td>
+    </tr>
+    </table>
+    </fieldset>
 
+   <input class="i16 find" type="text" value="{{ string }}" size="15" name="string"/>
+   <input class="i16 filter" type="submit" value="{% trans "Filter" %}"/>
+   <input class="i16 clear" type="submit" name="clear" value="{% trans "Clear" %}"/>
+</div>
   <table class="definition stats_totals">
   <input id="filter_entries" type="hidden" name="filter_entries"/>
   <tr>
