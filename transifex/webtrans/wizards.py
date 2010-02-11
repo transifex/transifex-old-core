@@ -139,11 +139,6 @@ class TransFormWizard(SessionWizard):
                 'submit_for_review' in request.POST:
                 return self.done(request)
 
-            # Make sure the current page is never greater than the total number 
-            # of pages of the wizard
-            if step >= self.num_steps():
-                step = self.num_steps()-1 if self.num_steps()-1 >= 0 else 0
-
             return self.render(request, self.next_step(request, step))
         return self.render(request, step)
 
@@ -312,8 +307,14 @@ class TransFormWizard(SessionWizard):
                 # Getting po_entries based on the filter settings
                 self.po_entries_list = self.filter_po_entries()
 
-                self.number_steps = len(list(chunks(self.po_entries_list, 
-                    self.ENTRIES_PER_PAGE)))
+                # Make sure the current page is never greater than the total 
+                # number of pages of the wizard
+                nsteps = self.num_steps() - 1
+                if step > nsteps:
+                    if nsteps > 0:
+                        step = nsteps
+                    else:
+                        step = 0
 
         self.extra_context.update({'pofile': self.pofile, 
             'po_entries': self.po_entries_list, 
