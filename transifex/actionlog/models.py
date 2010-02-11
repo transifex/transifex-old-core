@@ -58,6 +58,10 @@ class LogEntryManager(models.Manager):
         ctype = ContentType.objects.get_for_model(obj)
         return self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
 
+    def by_user(self, user):
+        """Return LogEntries for a specific user."""
+        return self.filter(user__pk__exact=user.pk)
+
     def by_object_last_week(self, obj):
         """Return LogEntries of the related object for the last week."""
         last_week_date = datetime.datetime.today() - datetime.timedelta(days=7)
