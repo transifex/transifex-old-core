@@ -8,6 +8,7 @@ class Migration:
 
     depends_on = (
         ("codebases", "0001_initial"),
+        ("txcollections", "0001_initial"),
     )
     
     def forwards(self, orm):
