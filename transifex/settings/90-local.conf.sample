@@ -1,0 +1,37 @@
+
+# Override various bits and pieces for this particular host. Used extensively
+# for development.
+#
+# The default settings here are for DEVELOPMENT PURPOSES.
+#
+# Copy this file to ``90-local.conf`` to play around. This file will be ignored
+# by Mercurial.
+
+
+# Email sending
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+EMAIL_PORT = 5870
+# To run your own devel SMTP daemon:
+# ``python -m smtpd -n -c DebuggingServer localhost:5870``
+
+DEBUG = True
+STATIC_SERVE = True
+ENABLE_NOTICES = True
+NOTIFICATION_QUEUE_ALL = False
+SCRATCH_DIR = '/tmp/tx-scratchdir-temp'
+INTERNAL_IPS = ('127.0.0.1',)
+ALLOWED_REPOSITORY_PREFIXES_DEBUG += ['/']
+
+# Django-extensions:
+INSTALLED_APPS += ['django_extensions',]
+
+# Django-debug-toolbar:
+INSTALLED_APPS += ['debug_toolbar',]
+MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'HIDE_DJANGO_SQL': True,
+}
