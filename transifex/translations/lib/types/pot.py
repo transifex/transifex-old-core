@@ -194,8 +194,8 @@ class POTManager(TransManagerMixin):
         else:
             return None
 
-    @classmethod
-    def get_po_stats(self, po_contents):
+    @staticmethod
+    def get_po_stats(po_contents):
         """
         Return a dictionary with the stats for a POT/PO file content.
 
@@ -233,8 +233,8 @@ class POTManager(TransManagerMixin):
                 'untranslated' : int(untranslated),
                 'error' : error,}
 
-    @classmethod
-    def get_stats_completion(self, stats):
+    @staticmethod
+    def get_stats_completion(stats):
         """
         Get a dictionary with the translation stats of a pofile and returns the 
         completion of it.
@@ -249,8 +249,8 @@ class POTManager(TransManagerMixin):
             pass
         return None
 
-    @classmethod
-    def get_stats_status(self, stats):
+    @staticmethod
+    def get_stats_status(stats):
         """
         Get a dictionary with the translation stats of a pofile and returns a 
         string with the status in the following format:
@@ -296,7 +296,8 @@ class POTManager(TransManagerMixin):
                 'error': postats['error'],
                 'is_msgmerged': is_msgmerged}
 
-    def msgfmt_check(self, po_contents):
+    @staticmethod
+    def msgfmt_check(po_contents):
         """
         Run a `msgfmt -c` on a file (file object).
         Raises a MsgfmtCheckError in case the file has errors or warnings.
