@@ -192,7 +192,10 @@ class TransFormWizard(SessionWizard):
 
         # Drop obsolete entries from the list
         ob = len(self.po_entries.obsolete_entries())
-        entries = self.po_entries if ob==0 else self.po_entries[:-ob]
+        if ob == 0:
+            entries = self.po_entries
+        else:
+            entries = self.po_entries[:-ob]
 
         # Filtering
         po_entries_list = []
