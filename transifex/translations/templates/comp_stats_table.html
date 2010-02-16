@@ -5,6 +5,7 @@
 {% load submissions %}
 {% load permissions %}
 {% load webeditortags %}
+{% load team_tags %}
 
 {% if stats %}
 {% url notification.views.notices as notices_url %}
@@ -19,10 +20,16 @@
    <tbody>
    {% for stat in stats %} 
    {% get_permission "project_perm.submit_file" for request.user and stat as "can_submit_file" %}
-      <tr class="{% number_range stat.trans_perc %}">
+      <tr class="{% number_range stat.trans_perc %}"> 
         <td class="left name" id="{{stat.language_code}}">
           {% if stat.language %}
-              <a href="{{stat.language.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{stat.language.name}}</a> <span class="stat_message" >({{stat.language.code}})</span>
+              {% with stat.language as language_obj %}
+              {% if language_obj.code|language_has_team:stat.object.project %}
+                <a href="{% url team_detail stat.object.project.slug language_obj.code %}" title="{% trans "See the team for this language" %}">{{language_obj.name}}</a> <span class="stat_message" >(<a href="{{language_obj.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{language_obj.code}}</a>)</span>
+              {% else %}
+                <span title="{% trans "No team for this language" %}">{{language_obj.name}}</span> <span class="stat_message" >(<a href="{{language_obj.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{language_obj.code}}</a>)</span>
+              {% endif %}
+              {% endwith %}
           {% else %}
               <span class="stat_message" title="{% trans "There are no languages registered matching this code" %}" >{{ stat.language_code }}</span>
           {% endif %}
