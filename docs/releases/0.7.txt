@@ -505,11 +505,11 @@ Stable and development images:
 Upgrading to 0.7
 ----------------
 
-To upgrade the code, update your package distribution as usual.
+To upgrade the code, update your package distribution as usual. Here are some
+additional steps you might need to execute, depending on your environment:
 
-
-Dependencies
-::::::::::::
+1. Install dependencies
+:::::::::::::::::::::::
 
 The following dependencies were *added* in this version:
 
@@ -531,8 +531,8 @@ For instructions on how to install them, refer to the
 before actually doing the database upgrade.
 
 
-Database migration
-::::::::::::::::::
+2. Schema and data migration
+::::::::::::::::::::::::::::
 
 Transifex includes a script which will automatically migrate your database to
 the new schema from the previous version. All you need to do, from a clean
@@ -545,6 +545,29 @@ the new schema from the previous version. All you need to do, from a clean
 To upgrade from a 0.5 schema to 0.7 you first need to upgrade your schema to
 0.6 and from there to 0.7. Instructions for the first step can be found in the
 relevant section of the :ref:`Transifex 0.6 release notes <upgrading-to-0-6>`.
+
+
+3. New generic data
+:::::::::::::::::::
+
+Finally, run the following two commands to add any new objects updated from the
+last release::
+
+    ./manage.py txcreatelanguages
+    ./manage.py txcreatenoticetypes
+
+
+4. Configuration settings
+:::::::::::::::::::::::::
+
+Finally, review the changes which have happened in the configuration settings
+and update yours accordingly. If your config file are stored in a place not
+handled by the upgrade, then you'll need to copy them over or update them.
+
+In general, if you have overridden your settings in a file such as
+``90-local.conf`` you should be OK since the upgrade will just update the other
+files and leave that alone.
+
 
 
 Contributors
