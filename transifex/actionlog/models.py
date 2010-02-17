@@ -6,7 +6,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import smart_unicode
 from django.utils.encoding import force_unicode
-from django.shortcuts import get_object_or_404
 from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
@@ -221,7 +220,7 @@ def action_logging(user, object_list, action_type, message=None, context=None):
     if message is None:
         message = _get_formatted_message(action_type, context)
 
-    action_type_obj = get_object_or_404(NoticeType, label=action_type)
+    action_type_obj = NoticeType.objects.get(label=action_type)
 
     time = datetime.datetime.now()
 
