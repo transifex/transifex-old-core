@@ -34,6 +34,8 @@
 <div id="review-{{review.id}}" class="separate">
 {% with review.id as review_id %}
 
+{% get_permission "project_perm.submit_file" for request.user and review.team as "can_submit_file" %}
+
 <h3>{% blocktrans %}Review Request #{{ review_id }} {% endblocktrans %}</h3>    
  <table class="definition">
   <tbody>
@@ -68,7 +70,7 @@
       <th class="i16 star">{% trans "Score" %}</th>
       <td>
         <span>{{ review.score }}</span>
-        {% if request.user.is_authenticated %}
+        {% if perms.reviews.add_poreviewrequest or perms.reviews.change_poreviewrequest or can_submit_file %}
         <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
             <input type="image" src="{{ MEDIA_URL }}images/icons/thumb_down.png" name="dislike" value="dislike" style="border:0">
         </form>
@@ -86,8 +88,7 @@
       </td>
     </tr>
 {% if review.is_open %}
- {% get_permission "project_perm.submit_file" for request.user and review.team as "can_submit_file" %}
- {% if perms.reviews.change_review or can_submit_file %}
+ {% if perms.reviews.change_poreviewrequest or can_submit_file %}
     {% url review_modify review.component.project.slug review.component.slug review.id as modify_url %}
     <tr>
       <th class="i16 reviews">{% trans "Close Review" %}</th>
@@ -120,7 +121,7 @@
 </ol>
 {% endif %}
 
-{% if request.user.is_authenticated %}
+{% if perms.reviews.add_poreviewrequest or perms.reviews.change_poreviewrequest or can_submit_file %}
 <h4 style="margin-bottom: 0;">{% trans "Add your comment as" %} <em>{{ request.user }}</em></h4>
 
 <fieldset class="shinyform">
@@ -175,7 +176,7 @@
     <td><a href="{{ review.file_url }}">{{ review.full_review_filename }}</a></td>
     <td>
      {% get_permission "project_perm.submit_file" for request.user and review.team as "can_submit_file" %}
-     {% if perms.reviews.change_review or can_submit_file %}
+     {% if perms.reviews.change_poreviewrequest or can_submit_file %}
       {% url review_modify review.component.project.slug review.component.slug review.id as modify_url %}
       <form class="microform" action="{{ modify_url }}" method='post'>
        <input class="i16 redo" title="{% trans "Reopen review request" %}"  value="Reopen" type="submit" name="reopen" type="image">

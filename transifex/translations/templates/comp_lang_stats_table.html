@@ -45,10 +45,12 @@
              {% endif %}
            {% endif %}
            {% if request.user.is_authenticated and stat.object.allows_submission %}
+             {% if perms.reviews.add_poreviewrequest or can_submit_file %}
                {% if file_edit_url and stat.total|webtrans_is_under_max %}
                  <a class="i16 edit_file nodecoration_icon" title="{% trans "Edit " %}{{stat.filename}}" href="{{file_edit_url}}"></a>
                {% endif %}
                {% pofile_submission stat %}
+             {% endif %}
            {% endif %}
         </td>
       </tr>

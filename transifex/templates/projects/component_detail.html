@@ -178,7 +178,9 @@
 {% if request.user.is_authenticated and component.allows_submission %}
  {% get_permission "project_perm.submit_file" for request.user and component.project,1 as "can_submit_file" %}
     {% if component.unit.last_checkout %}
+      {% if perms.reviews.add_poreviewrequest or can_submit_file %}
         {% include "projects/component_submit_new_file.html" %}
+      {% endif %}
     {% endif %}
 {% endif %}
 
