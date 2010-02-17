@@ -25,7 +25,7 @@ from projects.permissions.project import ProjectPermission
 from projects.signals import submission_error
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
-from submissions import submit_by_email
+from submissions import (submit_by_email, msgfmt_error_send_mail)
 from reviews.views import review_add
 from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
@@ -496,11 +496,23 @@ def component_submit_file(request, project_slug, component_slug,
                        signal=nt, extra_context=context)
 
         except MsgfmtCheckError:
-            logger.debug("Msgfmt -c check failed for the %s file." % filename)
-            request.user.message_set.create(message=_("Your file does not"
-                                    " pass correctness checks"
-                                    " (msgfmt -c). Please run this command"
-                                    " on your system to see the errors."))
+            logger.debug("Msgfmt -c check failed for file %s." % filename)
+            if (hasattr(settings, 'EMAIL_HOST') and settings.EMAIL_HOST and
+                request.user.email):
+                msgfmt_error_send_mail(component, request.user, submitted_file,
+                                       file_dict, filename)
+                request.user.message_set.create(message=_(
+                    "Your file does not pass the correctness checks "
+                    "(msgfmt -c). Your file has been e-mailed to you to avoid "
+                    "losing any work."))
+            else:
+                request.user.message_set.create(message=_(
+                    "Your file does not pass the correctness checks "
+                    "(msgfmt -c). Please run this command on your system to "
+                    "see the errors. We couldn't send you an email to preserve "
+                    "your work because you haven't registered an email address. "
+                    "Please do so now to avoid such issues in the future."))
+
         except StandardError, e:
             logger.debug("Error submiting translation file %s"
                          " for %s component: %s" % (filename,

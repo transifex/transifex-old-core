@@ -5,6 +5,20 @@ from translations.lib.types import (TransManagerMixin, TransManagerError)
 from txcommon.commands import (run_command, CommandError)
 from txcommon.log import logger
 
+def run_msgfmt_check(po_contents, with_exceptions=True):
+    """
+    Run a `msgfmt -c` on a file (file object).
+
+    Return the output of the execution of the command.
+    """
+    command = 'msgfmt -o /dev/null -c -'
+    status, stdout, stderr = run_command(command, _input=po_contents,
+        with_extended_output=True, with_exceptions=with_exceptions)
+    # Not sure why msgfmt sends its output to stderr instead of stdout
+    return {'status': status,
+            'stdout': stdout,
+            'stderr' : stderr,}
+
 class POTStatsError(Exception):
 
     def __init__(self, language):
@@ -303,13 +317,15 @@ class POTManager(TransManagerMixin):
     @staticmethod
     def msgfmt_check(po_contents):
         """
-        Run a `msgfmt -c` on a file (file object).
-        Raises a MsgfmtCheckError in case the file has errors or warnings.
+        Call run_msgfmt_check (runs a `msgfmt -c` on a file (file object)).
+
+        Raise a MsgfmtCheckError in case the stderror has errors or warnings or
+        the command execution returns Error.
         """
+        
         try:
             command = 'msgfmt -o /dev/null -c -'
-            status, stdout, stderr = run_command(command, _input=po_contents, 
-                                                 with_extended_output=True)
+            status, stdout, stderr = run_msgfmt_check(po_contents)
             # Not sure why msgfmt sends its output to stderr instead of stdout
             if 'warning:' in stderr:
                 raise CommandError(command, status, stderr)

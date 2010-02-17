@@ -10,10 +10,14 @@ from django.conf import settings
 from django.core.mail import EmailMessage, MIMEBase
 from django.template import loader, Context
 from django.contrib.sites.models import Site
-
-from txcommon.log import logger
+from transifex.txcommon.log import logger
+from transifex.translations.lib.types.pot import run_msgfmt_check
 
 DEFAULT_MIME_TYPE = 'text/plain'
+DEFAULT_FROM_EMAIL = getattr(settings, 'DEFAULT_FROM_EMAIL')
+
+current_site = Site.objects.get_current()
+
 
 class SubmitError(StandardError):
     """
@@ -24,14 +28,47 @@ class SubmitError(StandardError):
     """
     pass
 
+def msgfmt_error_send_mail(component, user, submitted_file, attachments,
+    filename):
+    """
+    Send an e-mail to the user with submitted_file concerning component.
+
+    This funcation handles the case where a file is submitted which
+    does not pass correctness checks. To avoid losing work, the file
+    will be emailed to the user as an attachment.
+
+    This can happen both in the File Upload form, as well as in Lotte.
+    """
+
+    context = Context({
+        'component': component.name,
+        'project': component.project.name,
+        'current_site': 'http://%s' % current_site.domain,
+        'url': 'http://%s%s' % (current_site.domain, component.get_absolute_url()),
+        'user': user,
+        'filename': filename,
+        'error_message': "",
+        })
+
+    res = run_msgfmt_check(submitted_file, with_exceptions=False)
+    context['error_message'] = ("%s\n" % res['stderr'].replace('<stdin>',
+                                                               filename))
+    subject = loader.get_template('subject_error.tmpl').render(context)
+    subject = subject.strip('\n')
+    message = loader.get_template('body_error.tmpl').render(context)
+    mail = EmailMessage(subject, message, DEFAULT_FROM_EMAIL, [user.email])
+    for fieldname, attach in attachments.iteritems():
+        for chunk in attach.chunks():
+            mail.attach(create_attachment(attach.targetfile, chunk))
+    mail.send()
+
 def submit_by_email(component, attachments, sender):
     """Send email with attachement to all maintainers of a project."""
     
-    site = Site.objects.get_current()
     context = Context({'component': component.name,
         'project': component.project.name,
-        'current_site': 'http://%s' % site.domain,
-        'url': 'http://%s%s' % (site.domain, component.get_absolute_url()),
+        'current_site': 'http://%s' % current_site.domain,
+        'url': 'http://%s%s' % (current_site.domain, component.get_absolute_url()),
         'translator': (sender.first_name or sender.username),
         'translator_email': sender.email})
 

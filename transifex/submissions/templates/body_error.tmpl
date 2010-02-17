@@ -1,0 +1,12 @@
+{% load i18n %}{% blocktrans %}Hello {{ user }}, this is Transifex at {{ current_site }}.{% endblocktrans %}
+
+{% blocktrans %}A failed file submission ({{ filename }}) has been detected by our system to {{ project }} | {{ component }}. In order to avoid losing any work of yours, you may find the files in question attached on this e-mail.{% endblocktrans %}
+
+{% blocktrans %}This error was triggered by a failed correctness check (msgfmt -c) on the file. The error was the following:{% endblocktrans %}
+
+{% autoescape off %}{{ error_message }}{% endautoescape %}
+
+{% blocktrans %}Please visit Transifex at {{ url }} in order to upload the corrected version of your file.{% endblocktrans %}
+
+{% blocktrans %}Thank you,{% endblocktrans %}
+Transifex
