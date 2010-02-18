@@ -73,7 +73,7 @@ setup(
         "django-pagination >= 1.0.5",
         "django-piston",
         "django-sorting >= 0.1",
-        "tagging >= 0.3_pre",
+        "tagging >= 0.3",
         "South >= 0.6-rc1",
         "django-ajax-selects",
         "django-threadedcomments",
