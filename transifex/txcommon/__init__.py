@@ -1,4 +1,4 @@
-version_info = (0, 8, 0, 'devel', 0)
+version_info = (0, 8, 0, 'beta', 0)
 
 _verpart = ''
 if version_info[3] != 'final':
