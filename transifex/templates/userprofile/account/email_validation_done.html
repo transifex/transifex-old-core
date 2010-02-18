@@ -10,7 +10,7 @@
 
 {% block userprofile_content %}
     <h2>{% trans "E-mail validation process" %}</h2>
-    <p>{% url profile_overview as profile_overview %}{% blocktrans %}You can manage the e-mail validation process from the <a href="{{ profile_overview }}"overview page</a>.{% endblocktrans %}</p>
+    <p>{% url profile_overview as profile_overview %}{% blocktrans %}You can manage the e-mail validation process from the <a href="{{ profile_overview }}">overview page</a>.{% endblocktrans %}</p>
 
 	<div class="{% if successful %}success{% else %}error{% endif %}">
 	{% if successful %}
