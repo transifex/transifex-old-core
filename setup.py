@@ -76,6 +76,7 @@ setup(
         "tagging >= 0.3_pre",
         "South >= 0.6-rc1",
         "django-ajax-selects",
+        "django-threadedcomments",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
