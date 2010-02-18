@@ -3,6 +3,7 @@ import polib
 from django.conf import settings
 from translations.lib.types import (TransManagerMixin, TransManagerError)
 from txcommon.commands import (run_command, CommandError)
+from txcommon.log import logger
 
 class POTStatsError(Exception):
 
@@ -275,11 +276,14 @@ class POTManager(TransManagerMixin):
 
         """
         if try_to_merge:
+            # Only try to get the POT for a PO when it's really needed.
+            # It might be an expensive operation
             source_file = self.get_source_file_for_pofile(filename)
             if not source_file:
-                raise SourceFileError, ("No POT file found. It is requited to "
-                                        "msgmerge.")
-            is_msgmerged = self.msgmerge(filename, source_file)
+                is_msgmerged = False
+                logger.debug("No POT file found for the '%s' file." % filename)
+            else:
+                is_msgmerged = self.msgmerge(filename, source_file)
         else:
             is_msgmerged = False
 
