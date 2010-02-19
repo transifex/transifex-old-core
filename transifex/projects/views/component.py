@@ -25,7 +25,7 @@ from projects.permissions.project import ProjectPermission
 from projects.signals import submission_error
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
-from submissions import (submit_by_email, msgfmt_error_send_mail)
+from submissions.utils import (submit_by_email, msgfmt_error_send_mail)
 from reviews.views import review_add
 from teams.models import Team
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
