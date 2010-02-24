@@ -118,7 +118,7 @@ class HgBrowser(BrowserMixin):
         
         """
         try:
-            commands.pull(self.repo.ui, self.repo, rev=None, force=False)
+            commands.pull(self.repo.ui, self.repo, rev=self.branch, force=True) 
             self._clean_dir()
         except RepoError, e:
             logger.error(traceback.format_exc())
@@ -161,5 +161,5 @@ class HgBrowser(BrowserMixin):
         
         self.repo.commit(msg.encode('utf-8'), user=user, match=match)
 
-        self.repo.push(self.remote_repo)
+        commands.push(ui, self.repo, self.root, force=False, revs=self.branch)
 
