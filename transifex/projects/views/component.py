@@ -65,87 +65,78 @@ def component_create_update(request, project_slug, component_slug=None):
         component_form = ComponentForm(project, request.POST,
                                        instance=component, prefix='component')
         unit_form = UnitForm(request.POST, instance=unit, prefix='unit')
-        allow_subform = ComponentAllowSubForm(request.POST, instance=component)
         unit_subforms = unit_sub_forms(unit, request.POST,
             project.blacklist_vcsunits)
         old_i18n_type = None
         old_root = None
 
-        # Submission tab
-        if request.POST.has_key('submission_form'):
-            if allow_subform.is_valid() and component is not None:
-                allow_subform.save()
-                # TODO: Add an ActionLog and Notification here for this action
-                return HttpResponseRedirect( reverse('component_detail',
-                    args=[project_slug, component.slug]),)
-
         # Checkout tab
+        # TODO: Too much tied, but how can we do it in a better way?
+        if request.POST['unit-type']=='tar':
+            current_unit_subform = unit_subforms[1]['form']
         else:
-            # TODO: Too much tied, but how can we do it in a better way?
-            if request.POST['unit-type']=='tar':
-                current_unit_subform = unit_subforms[1]['form']
-            else:
-                current_unit_subform = unit_subforms[0]['form']
+            current_unit_subform = unit_subforms[0]['form']
 
-            if component_form.is_valid() and unit_form.is_valid() and \
-                current_unit_subform.is_valid():
+        if component_form.is_valid() and unit_form.is_valid() and \
+            current_unit_subform.is_valid():
 
-                if component: 
-                    old_i18n_type = component.i18n_type
-                component = component_form.save(commit=False)
+            if component: 
+                old_i18n_type = component.i18n_type
+            component = component_form.save(commit=False)
 
-                if unit:
-                    old_root = unit.root
-                unit = unit_form.save(commit=False)
-                unit.name = component.get_full_name()
-                unit.save()
-                unit = unit.promote()
+            if unit:
+                old_root = unit.root
+            unit = unit_form.save(commit=False)
+            unit.name = component.get_full_name()
+            unit.save()
+            unit = unit.promote()
 
-                # Here we overwrite the unit fields with the subforms unit fields
-                # One thing not very nice is the fact we save the unit two times
-                # TODO: Figure out how make it better
-                for field in exclusive_fields(type(unit), except_fields=['root']):
-                    setattr(unit, field.name, 
-                        current_unit_subform.cleaned_data[field.name])
-                unit.save()
+            # Here we overwrite the unit fields with the subforms unit fields
+            # One thing not very nice is the fact we save the unit two times
+            # TODO: Figure out how make it better
+            for field in exclusive_fields(type(unit), except_fields=['root']):
+                setattr(unit, field.name, 
+                    current_unit_subform.cleaned_data[field.name])
+            unit.save()
 
-                component.unit = unit
-                component_id = component.id
+            component.unit = unit
+            component_id = component.id
+            component.save()
+            component_form.save_m2m()
+
+            # If i18n type changed, clean the POfile objects for this comp.
+            if old_i18n_type != component.i18n_type:
+                component.trans.clean_stats()
+
+            # Compare with the old root url and, if it has changed, clear cache
+            if old_root and old_root != unit.root:
+                component.allows_submission = False
                 component.save()
-                component_form.save_m2m()
+                component.clear_cache()
 
-                # If i18n type changed, clean the POfile objects for this comp.
-                if old_i18n_type != component.i18n_type:
-                    component.trans.clean_stats()
+            # ActionLog & Notification
+            context = {'component': component}
+            object_list = [component.project, component]
+            if not component_id:
+                nt = 'project_component_added'
+                action_logging(request.user, object_list, nt, context=context)
+                if settings.ENABLE_NOTICES:
+                    txnotification.send_observation_notices_for(component.project,
+                            signal=nt, extra_context=context)
+            else:
+                nt = 'project_component_changed'
+                action_logging(request.user, object_list, nt, context=context)
+                if settings.ENABLE_NOTICES:
+                    txnotification.send_observation_notices_for(component.project,
+                            signal=nt, extra_context=context)
 
-                # Compare with the old root url and, if it has changed, clear cache
-                if old_root and old_root != unit.root:
-                    component.clear_cache()
-
-                # ActionLog & Notification
-                context = {'component': component}
-                object_list = [component.project, component]
-                if not component_id:
-                    nt = 'project_component_added'
-                    action_logging(request.user, object_list, nt, context=context)
-                    if settings.ENABLE_NOTICES:
-                        txnotification.send_observation_notices_for(component.project,
-                                signal=nt, extra_context=context)
-                else:
-                    nt = 'project_component_changed'
-                    action_logging(request.user, object_list, nt, context=context)
-                    if settings.ENABLE_NOTICES:
-                        txnotification.send_observation_notices_for(component.project,
-                                signal=nt, extra_context=context)
-
-                return HttpResponseRedirect(
-                    reverse('component_detail',
-                        args=[project_slug, component.slug]),)
+            return HttpResponseRedirect(
+                reverse('component_detail',
+                    args=[project_slug, component.slug]),)
     else:
         component_form = ComponentForm(project, instance=component,
                                        prefix='component')
         unit_form = UnitForm(instance=unit, prefix='unit')
-        allow_subform = ComponentAllowSubForm(instance=component)
         unit_subforms = unit_sub_forms(unit, None,
             project.blacklist_vcsunits)
 
@@ -153,11 +144,41 @@ def component_create_update(request, project_slug, component_slug=None):
         'component_form': component_form,
         'unit_form': unit_form,
         'unit_subforms': unit_subforms,
-        'allow_subform': allow_subform,
         'project' : project,
         'component': component,
         'branch_support': settings.BRANCH_SUPPORT,
     }, context_instance=RequestContext(request))
+
+
+@login_required
+@one_perm_required_or_403(pr_component_add_change, 
+    (Project, 'slug__exact', 'project_slug'))
+def component_submission_edit(request, project_slug, component_slug):
+    """
+    Create & update components. Handles associated units
+    """
+    project = get_object_or_404(Project, slug=project_slug)
+    component = get_object_or_404(Component, slug=component_slug,
+        project=project)
+    if request.method == 'POST':
+        allow_submission_form = ComponentAllowSubForm(request.POST, 
+            instance=component)
+        if allow_submission_form.is_valid():
+            allow_submission_form.save()
+            # TODO: Add an ActionLog and Notification here for this action
+            return HttpResponseRedirect( reverse('component_detail',
+                args=[project_slug, component.slug]),)
+
+    else:
+        allow_submission_form = ComponentAllowSubForm(instance=component)
+
+    return render_to_response('projects/component_form.html', {
+        'allow_submission_form': allow_submission_form,
+        'project' : project,
+        'component': component,
+    }, context_instance=RequestContext(request))
+
+
 
 
 def component_detail(request, project_slug, component_slug):

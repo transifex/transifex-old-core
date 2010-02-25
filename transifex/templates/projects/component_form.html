@@ -28,8 +28,7 @@ branch_support = new Object();
 branch_support["{{ entry }}"] = {{value|lower}};
 {% endfor %}
 
-function on_change_type(obj)
-{
+function on_change_type(obj){
     on = triggers[obj.attr("value")];
     for (prefix in prefaces)
     {
@@ -60,36 +59,20 @@ function toggle_submission_status() {
 }
 
 $(document).ready(
-    function ()
-    {
-        // Tabs
-        $("#component-tabs").tabs({ 
-            fx: { opacity: "toggle", duration: "fast"},
-            {% if not component.id %}
-            disabled: [1], // disable submission tab while we don't have the component saved
-            {% endif %}
-        });
-
+    function (){
         // Unit Subforms
-        $("#id_unit-type").bind("change", function ()
-            {
-                on_change_type($("#id_unit-type"));
-            }
-        );
+        $("#id_unit-type").bind("change", function (){
+            on_change_type($("#id_unit-type"));
+        });
         on_change_type($("#id_unit-type"));
 
-
         // Submission forms
-        $("#id_allows_submission").bind("change", function ()
-            {
-                toggle_submission_status();
-            }
-        );
+        $("#id_allows_submission").bind("change", function (){
+            toggle_submission_status();
+        });
         toggle_submission_status();
+    });
 
-
-    }
-);
 </script>
 {% endblock %}
 
@@ -107,12 +90,25 @@ $(document).ready(
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
 
-    <div id="component-tabs">
-        <ul>
-            <li><a href="#tab-1"><span>{% trans "Checkout" %}</span></a></li>
-            <li><a href="#tab-2"><span>{% trans "Submission" %}</span></a></li>
+    {% if not component %}
+        {% url component_add project.slug as component_form_url %}
+    {% else %}
+        {% url component_edit project.slug component.slug as component_form_url %}
+    {% endif %}
+
+    <div id="component-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-state-default ui-corner-top {% if component_form %} ui-tabs-selected {% endif %} ui-state-active">
+                <a href="{{ component_form_url }}"><span>{% trans "Checkout" %}</span></a>
+            </li>
+            {% if component %}
+            <li class="ui-state-default ui-corner-top {% if allow_submission_form %} ui-tabs-selected {% endif %} ui-state-active">
+                <a href="{% url component_submission_edit project.slug component.slug %}"><span>{% trans "Submission" %}</span></a>
+            </li>
+            {% endif %}
         </ul>
-        <div id="tab-1">
+        <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+        {% if component_form %}
             <form action='' method='post'>
                 <table>
                     <tbody>
@@ -125,17 +121,17 @@ $(document).ready(
                 </table>
                 <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
             </form>
-        </div>
-        <div id="tab-2">
+        {% endif %}
+        {% if allow_submission_form %}
             <form action='' method='post'>
                 <table>
                     <tbody>
-                    {% form_as_table_rows allow_subform %}
+                    {% form_as_table_rows allow_submission_form %}
                     </tbody>
                 </table>
                 <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
             </form>
-        </div>
+        {% endif %}
     </div>
 
   

@@ -142,9 +142,13 @@ urlpatterns += patterns('',
         view = component_create_update,
         name = 'component_create',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/edit/$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/edit/checkout/$',
         view = component_create_update,
         name = 'component_edit',),
+    url(
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/edit/submission/$',
+        view = component_submission_edit,
+        name = 'component_submission_edit',),
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/delete/$',
         view = component_delete,
