@@ -57,14 +57,10 @@ class ComponentAllowSubForm(forms.ModelForm):
         model = Component
         fields = ['allows_submission', 'submission_type',]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, submission_types, *args, **kwargs):
         super(ComponentAllowSubForm, self).__init__(*args, **kwargs)
-        if kwargs['instance']:
-            codebase_type = kwargs['instance'].unit.type
-            self.fields["submission_type"].choices = \
-                settings.SUBMISSION_CHOICES[codebase_type].items()
-
-        
+        self.fields["submission_type"].choices = submission_types
+      
 
 class ReleaseForm(forms.ModelForm):
 
@@ -79,4 +75,5 @@ class ReleaseForm(forms.ModelForm):
         projects = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
+
 

@@ -160,9 +160,14 @@ def component_submission_edit(request, project_slug, component_slug):
     project = get_object_or_404(Project, slug=project_slug)
     component = get_object_or_404(Component, slug=component_slug,
         project=project)
+    submission_types = \
+        settings.SUBMISSION_CHOICES[component.unit.type].items()
     if request.method == 'POST':
-        allow_submission_form = ComponentAllowSubForm(request.POST, 
+        allow_submission_form = ComponentAllowSubForm(
+            submission_types=submission_types, 
+            data=request.POST, 
             instance=component)
+
         if allow_submission_form.is_valid():
             allow_submission_form.save()
             # TODO: Add an ActionLog and Notification here for this action
@@ -170,7 +175,9 @@ def component_submission_edit(request, project_slug, component_slug):
                 args=[project_slug, component.slug]),)
 
     else:
-        allow_submission_form = ComponentAllowSubForm(instance=component)
+        allow_submission_form = ComponentAllowSubForm(
+            submission_types=submission_types,
+            instance=component)
 
     return render_to_response('projects/component_form.html', {
         'allow_submission_form': allow_submission_form,
