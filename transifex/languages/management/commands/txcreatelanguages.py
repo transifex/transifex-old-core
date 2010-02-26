@@ -463,9 +463,11 @@ def process_lang():
 
 #   ភាសា
 #   Khmer
-#   km.name = _(u'Khmer')
-#   km.nplurals = '1'
-#   km.pluralequation = '0'
+    km, created = Language.objects.get_or_create(code='km')
+    km.name = _(u'Khmer')
+    km.nplurals = '1'
+    km.pluralequation = '0'
+    km.save() 
 
 #   Kannada
     kn, created = Language.objects.get_or_create(code='kn')
