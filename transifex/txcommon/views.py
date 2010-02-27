@@ -92,7 +92,7 @@ def user_nudge(request, username):
         action_logging(request.user, [user], nt, context=context)
         notification.send([user], nt, context)
         request.user.message_set.create(message = _(
-                "You have nugded '%s'.") % user)
+                "You have nudged '%s'.") % user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
