@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-06 14:20+0000\n"
-"PO-Revision-Date: 2010-02-27 14:58+0800\n"
+"PO-Revision-Date: 2010-02-27 19:42+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: chinese-l10n <chinese-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "名稱"
 #: codebases/models.py:37
 #: codebases/migrations/0001_initial.py:15
 msgid "Root"
-msgstr ""
+msgstr "根"
 
 #: codebases/models.py:38
 msgid "The URL of the codebase"
@@ -108,17 +108,17 @@ msgstr "於 %(site_name)s 上的語言"
 #: languages/feeds.py:18
 #, python-format
 msgid "The languages spoken on %s."
-msgstr ""
+msgstr "於 %s 上所使用的語言。"
 
 #: languages/feeds.py:36
 #, python-format
 msgid "%(site_name)s: %(language)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s: %(language)s :: %(release)s 發行"
 
 #: languages/feeds.py:42
 #, python-format
 msgid "Latest translations for %(language)s language in %(release)s release."
-msgstr ""
+msgstr "%(release)s 發行內 %(language)s 語言的最新翻譯"
 
 #: languages/models.py:29
 #: languages/migrations/0001_initial.py:14
@@ -138,12 +138,12 @@ msgstr "描述"
 #: languages/models.py:30
 #: languages/migrations/0001_initial.py:13
 msgid "Code"
-msgstr ""
+msgstr "代碼"
 
 #: languages/models.py:33
 #: languages/migrations/0001_initial.py:12
 msgid "Code aliases"
-msgstr ""
+msgstr "代碼別名"
 
 #: languages/models.py:36
 #: languages/migrations/0001_initial.py:17
@@ -157,12 +157,12 @@ msgstr "輸入使用者可能會發現難以輸入的任何特殊字元"
 #: languages/models.py:40
 #: languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
-msgstr ""
+msgstr "複數形式數目"
 
 #: languages/models.py:42
 #: languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
-msgstr ""
+msgstr "複數形式方程式"
 
 #: languages/models.py:53
 msgid "language"
@@ -609,7 +609,7 @@ msgstr "總共："
 #: projects/feeds.py:11
 #, python-format
 msgid "Latest projects on %(site_name)s"
-msgstr "於 %(site_name)s 上最近的專案"
+msgstr "於 %(site_name)s 上的最新專案"
 
 #: projects/feeds.py:14
 msgid "Updates on changes and additions to registered projects."
@@ -623,7 +623,7 @@ msgstr "%(site_name)s：%(project)s 內的部件"
 #: projects/feeds.py:35
 #, python-format
 msgid "Latest components in project %s."
-msgstr "專案 %s 內的最近部件。"
+msgstr "專案 %s 內的最新部件。"
 
 #: projects/forms.py:15
 #: txpermissions/forms.py:19
@@ -915,23 +915,23 @@ msgstr ""
 
 #: projects/views/component.py:258
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "此部件沒有設為要算出其統計。"
 
 #: projects/views/component.py:342
 msgid "This component does  not allow write access."
-msgstr ""
+msgstr "此部件不允許寫入存取。"
 
 #: projects/views/component.py:350
 msgid "Please select a file from your system to be uploaded."
-msgstr ""
+msgstr "請從您的系統選取一個要被上傳的檔案。"
 
 #: projects/views/component.py:358
 msgid "Please enter a target to upload the file."
-msgstr ""
+msgstr "請輸入要上傳的檔案目標。"
 
 #: projects/views/component.py:363
 msgid "Please enter only ONE target to upload the file."
-msgstr ""
+msgstr "請輸入僅「一個」要上傳的檔案目標。"
 
 #: projects/views/component.py:374
 msgid "The target file does not match the component file filter"
@@ -944,16 +944,16 @@ msgstr "輸入提交訊息"
 #: projects/views/component.py:414
 #, python-format
 msgid "You need to be in the '%s' team of this project for being able to send translations to that file target."
-msgstr ""
+msgstr "您需要是此專案的「%s」團隊成員，才能送出翻譯給該檔案目標。"
 
 #: projects/views/component.py:475
 #, python-format
 msgid "File submitted successfully: %s"
-msgstr ""
+msgstr "檔案已成功提交：%s"
 
 #: projects/views/component.py:490
 msgid "Your file does not pass correctness checks (msgfmt -c). Please run this command on your system to see the errors."
-msgstr ""
+msgstr "您的檔案沒有通過正確性的檢查 (msgfmt -c)。請在您自己的系統上執行此指令來查看錯誤。"
 
 #: projects/views/component.py:499
 msgid "Sorry, your file could not be sent because of an error."
@@ -966,15 +966,15 @@ msgstr ""
 
 #: projects/views/component.py:525
 msgid "Lock removed."
-msgstr ""
+msgstr "鎖已移除。"
 
 #: projects/views/component.py:528
 msgid "Error: Only the owner of a lock can remove it."
-msgstr ""
+msgstr "錯誤：只有鎖的擁有者能移除它。"
 
 #: projects/views/component.py:532
 msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
+msgstr "鎖已建立。當您完成後，請不要忘記將它移除。"
 
 #: projects/views/component.py:551
 #: projects/views/project.py:156
@@ -984,103 +984,104 @@ msgstr ""
 #: projects/views/component.py:554
 #: projects/views/project.py:159
 msgid "Notification is not enabled"
-msgstr ""
+msgstr "沒有啟用通知"
 
 #: projects/views/project.py:172
 msgid "Watch this project"
-msgstr ""
+msgstr "監看此專案"
 
 #: projects/views/project.py:185
 msgid "Stop watching this project"
-msgstr ""
+msgstr "停止監看此專案"
 
 #: projects/views/team.py:168
 #, python-format
 msgid "The '%s' team was deleted."
-msgstr ""
+msgstr "「%s」團隊已刪除。"
 
 #: projects/views/team.py:205
 #, python-format
 msgid "You are in the '%s' team already."
-msgstr ""
+msgstr "您已經是「%s」團隊成員。"
 
 #: projects/views/team.py:210
 #, python-format
 msgid "You have added a request for joining the '%s' team."
-msgstr ""
+msgstr "您已新增一份加入「%s」團隊的請求。"
 
 #: projects/views/team.py:233
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
-msgstr ""
+msgstr "您已擱置一份加入「%s」團隊的請求。"
 
 #: projects/views/team.py:260
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
-msgstr ""
+msgstr "使用者「%(user)s」已經是「%(team)s」團隊的成員。"
 
 #: projects/views/team.py:267
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
-msgstr ""
+msgstr "您已將「%(user)s」加入「%(team)s」團隊"
 
 #: projects/views/team.py:314
 #, python-format
 msgid "You have denied the request of the user '%(user)s' to join the '%(team)s' team."
-msgstr ""
+msgstr "您已回絕使用者「%(user)s」加入「%(team)s」團隊的請求。"
 
 #: projects/views/team.py:357
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
-msgstr ""
+msgstr "您已撤除您自己要加入「%s」團隊的請求。"
 
 #: projects/views/team.py:398
 #, python-format
 msgid "You have left the '%s' team."
-msgstr ""
+msgstr "您已經退出「%s」團隊。"
 
 #: projects/views/team.py:419
 #, python-format
 msgid "You are not in the '%s' team."
-msgstr ""
+msgstr "您不是「%s」團隊的成員。"
 
 #: projects/views/team.py:440
 msgid "Please, select a language before submit the form."
-msgstr ""
+msgstr "在提交表單前，請先選取語言。"
 
 #: projects/views/team.py:453
 #, python-format
 msgid "'%s' team already exist."
-msgstr ""
+msgstr "「%s」團隊已經存在。"
 
 #: projects/views/team.py:459
 #, python-format
 msgid "A request for creating the '%s' team already exist."
-msgstr ""
+msgstr "請求要成立的「%s」團隊已經存在。"
 
 #: projects/views/team.py:467
 #, python-format
 msgid "You have requested the '%s' team creation."
-msgstr ""
+msgstr "您已請求成立「%s」團隊。"
 
 #: projects/views/team.py:512
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "您已批准「%(user)s」請求的「%(team)s」團隊。"
 
 #: projects/views/team.py:554
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "您已回絕「%(user)s」請求的「%(team)s」團隊。"
 
 #: releases/models.py:26
 #: txcollections/models.py:29
 msgid "A sentence or two describing the object."
-msgstr ""
+msgstr "用一個或兩個句子來描述這個物件。"
 
 #: releases/models.py:28
+#, fuzzy
 msgid "Use Markdown syntax."
-msgstr ""
+msgstr "使用 Markdown syntax。"
 
 #: releases/models.py:31
 #: txcollections/migrations/0001_initial.py:15
@@ -1120,40 +1121,40 @@ msgstr "發行"
 
 #: repowatch/__init__.py:74
 msgid "Watch it"
-msgstr "監視它"
+msgstr "監看它"
 
 #: repowatch/__init__.py:75
 msgid "Stop watching it"
-msgstr "停止監視它"
+msgstr "停止監看它"
 
 #: repowatch/models.py:28
 #, python-format
 msgid "Unable to add watch for path %r"
-msgstr "無法將路徑 %r 加入 監視"
+msgstr "無法將路徑 %r 加入 監看"
 
 #: repowatch/models.py:97
 msgid "watch"
-msgstr "監視"
+msgstr "監看"
 
 #: repowatch/models.py:98
 msgid "watches"
-msgstr "監視"
+msgstr "監看"
 
 #: simplelock/models.py:39
 msgid "Lock"
-msgstr "上鎖"
+msgstr "鎖"
 
 #: simplelock/models.py:40
 msgid "Locks"
-msgstr "上鎖"
+msgstr "鎖"
 
 #: tarball/models.py:33
 msgid "tarball"
-msgstr ""
+msgstr "tarball"
 
 #: tarball/models.py:34
 msgid "tarballs"
-msgstr ""
+msgstr "tarball"
 
 #: teams/forms.py:12
 msgid "Coordinators are people that can manage the members of the team, for example. Search for usernames."
@@ -1241,13 +1242,13 @@ msgstr "禁止存取"
 
 #: templates/403.html:12
 msgid "Looks like you do not have the necessary permissions for the required action."
-msgstr ""
+msgstr "看來您沒有得到要求動作的必須許可。"
 
 #: templates/403.html:15
 #: templates/404.html:15
 #, python-format
 msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
-msgstr ""
+msgstr "這裡有一個<a href=\"%(home)s\">首頁</a>的連結。您知道的，只是用來以防萬一。"
 
 #: templates/404.html:4
 #: templates/404.html.py:7
@@ -1256,7 +1257,7 @@ msgstr "找不到網頁"
 
 #: templates/404.html:12
 msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
-msgstr ""
+msgstr "看來您進入了損壞的連結。如果您認為這是我們的錯，請<a href='http://transifex.org/newticket'>讓我們知道</a>。"
 
 #: templates/500.html:4
 #: templates/500.html.py:7
@@ -1269,7 +1270,7 @@ msgstr "我們非常抱歉，但是索求的網頁目前無法使用。"
 
 #: templates/500.html:14
 msgid "We're messing around with things internally, and the server had a bit of a hiccup."
-msgstr ""
+msgstr "我們不小心把內部的東西弄得一團亂，讓伺服器出了一點小問題。"
 
 #: templates/500.html:16
 msgid "Please try again later."
@@ -1323,7 +1324,7 @@ msgstr "語言"
 #: templates/base-sample.html:47
 #, python-format
 msgid "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
-msgstr ""
+msgstr "歡迎 <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>！"
 
 #: templates/base-sample.html:48
 msgid "Sign out from the website"
@@ -1358,24 +1359,25 @@ msgstr "關於"
 
 #: templates/base-sample.html:115
 msgid "Drops us a line"
-msgstr ""
+msgstr "丟給我們一段文字"
 
 #: templates/base-sample.html:115
 msgid "Feedback"
 msgstr "回饋"
 
 #: templates/base-sample.html:117
+#, fuzzy
 msgid "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community\">Transifex</a>, the Open Translation Platform"
-msgstr ""
+msgstr "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community\">Transifex</a>, the Open Translation Platform"
 
 #: templates/index.html:23
 msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
-msgstr ""
+msgstr "Transifex 是一個以幫助翻譯者追蹤其喜愛的翻譯專案為目標的服務。"
 
 #: templates/index.html:27
 #, python-format
 msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
-msgstr ""
+msgstr "您也可以透過<a href=\"%(project_list)s\">所有專案</a>來瀏覽。"
 
 #: templates/search.html:7
 #: templates/search.html.py:9
@@ -1400,12 +1402,12 @@ msgstr "搜尋結果"
 #: templates/search.html:28
 #, python-format
 msgid "Search Results (%(result_count)s)"
-msgstr ""
+msgstr "搜尋結果 (%(result_count)s)"
 
 #: templates/search.html:51
 #, python-format
 msgid "No projects were found for \"%(q)s\". You may want to change your query a bit."
-msgstr ""
+msgstr "找不到有「%(q)s」的專案。您可能想要稍微修改您的查詢。"
 
 #: templates/search.html:62
 #, python-format
@@ -1414,7 +1416,7 @@ msgstr "找不到您的專案嗎？您何不直接<a href=\"%(url project_create
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
-msgstr ""
+msgstr "依名稱、描述...等來尋找專案"
 
 #: templates/timeline.html:11
 msgid "Filter results"
@@ -1440,7 +1442,11 @@ msgid_plural ""
 "\n"
 "  The query returned %(counter)s results\n"
 msgstr[0] ""
+"\n"
+"  查詢傳回 %(counter)s 個結果\n"
 msgstr[1] ""
+"\n"
+"  查詢傳回 %(counter)s 個結果\n"
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1479,19 +1485,19 @@ msgstr "感謝您的回饋。"
 #: templates/txcollections/collection_detail.html:68
 #, python-format
 msgid "%(collection)s Releases"
-msgstr ""
+msgstr "%(collection)s 發行"
 
 #: templates/languages/language_detail.html:24
 #: templates/txcollections/collection_detail.html:74
-#, python-format
+#, fuzzy, python-format
 msgid "The %(collection)s collection includes the following groups of shipped components:"
-msgstr ""
+msgstr "%(collection)s 集合包含下列輸送的部件群組："
 
 #: templates/languages/language_detail.html:35
 #: templates/txcollections/collection_detail.html:84
 #, python-format
 msgid "No releases are registered for this collection yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
+msgstr "此集合尚未有註冊的發行。您何不考慮就直接<a href=\"%(release_create)s\">加入一份</a>呢？"
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1511,31 +1517,31 @@ msgstr "專案/部件 統計"
 
 #: templates/languages/language_release.html:60
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Can we interest you in sending in your work instead?"
-msgstr ""
+msgstr "Transifex 已搜尋包含此語言與發行的翻譯檔其專案，但是找不到任何結果。我們能藉由上傳您的工作成果來讓您參與其中嗎？"
 
 #: templates/languages/language_release.html:61
 #, python-format
 msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
-msgstr ""
+msgstr "如果您認為這不應該發生，請<a href=\"%(contact_form)s\">讓我們知道</a>。"
 
 #: templates/languages/language_release.html:65
 msgid "Untranslated Components"
-msgstr ""
+msgstr "未翻譯的部件"
 
 #: templates/languages/language_release.html:67
 #, python-format
 msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
-msgstr ""
+msgstr "下列部件會被納入 %(release_name)s 內，但是尚未有 %(language_name)s 的翻譯。"
 
 #: templates/notification/notices.html:6
 #: templates/notification/notices.html:7
 #: templates/notification/notices.html:8
 msgid "Notifications"
-msgstr ""
+msgstr "通知"
 
 #: templates/notification/notices.html:32
 msgid "Received Notifications"
-msgstr ""
+msgstr "收到的通知"
 
 #: templates/notification/notices.html:43
 msgid "Time"
@@ -1543,32 +1549,33 @@ msgstr "時間"
 
 #: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
-msgstr ""
+msgstr "將所有為查看的通知標記為已查看"
 
 #: templates/notification/notices.html:79
 msgid "No notices."
-msgstr ""
+msgstr "沒有通知。"
 
 #: templates/notification/notices.html:83
 #: templates/notification/notices.html:85
 msgid "Change your notification settings"
-msgstr ""
+msgstr "變更您的通知設定"
 
 #: templates/notification/notices.html:83
 msgid "Notification settings"
-msgstr ""
+msgstr "通知設定"
 
 #: templates/notification/notices.html:88
 msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you in the list below and choose which events you would like to be notified by email."
-msgstr ""
+msgstr "您可以接收 Transifex 內發生的無論任何事件的通知。查看下列清單內您的可用通知，並選擇您想要藉由電子郵件來進行通知的事件。"
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
 msgstr "首要電子郵件"
 
 #: templates/notification/notices.html:92
+#, fuzzy
 msgid "change under"
-msgstr ""
+msgstr "變更在此之下"
 
 #: templates/notification/notices.html:92
 #: templates/notification/notices.html:96
@@ -1582,11 +1589,11 @@ msgstr "註記"
 
 #: templates/notification/notices.html:96
 msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
-msgstr ""
+msgstr "您尚未有驗證過的電子郵件位址以供寄送通知。您可以加入一個，藉由前往"
 
 #: templates/notification/notices.html:104
 msgid "Notification Type"
-msgstr ""
+msgstr "通知類型"
 
 #: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
@@ -1602,147 +1609,147 @@ msgstr "注意"
 #: templates/notification/project_added/notice.html:2
 #, python-format
 msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr ""
+msgstr "新專案 <a href=\"%(project_url)s\">%(project)s</a> 已加入"
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
 msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project)s</a> 專案已變更"
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
 msgid "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "新部件 <a href=\"%(component_url)s\">%(component_name)s</a> 已加入<a href=\"%(project_url)s\">%(project_name)s</a> 專案"
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
 msgid "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(component_url)s\">%(component_name)s</a> 部件已經變更"
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
 msgid "The component '%(component_name)s' has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "「%(component_name)s」部件已經從 <a href=\"%(project_url)s\">%(project_name)s</a> 專案中刪除"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
 msgid "The following files in the <a href=\"%(component_url)s\">%(component_name)s</a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project have been updated:"
-msgstr ""
+msgstr "下列 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(component_url)s\">%(component_name)s</a> 部件內的檔案已經更新："
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
-msgstr ""
+msgstr "提供給 <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> 的檔案 (%(trans_perc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
 msgid "A file called '%(filename)s'"
-msgstr ""
+msgstr "稱為「%(filename)s」的檔案"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
 msgid "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "已經被提交到 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的<a href=\"%(component_url)s\">%(component_name)s</a>"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
 msgid "The source file (POT) has some problems and can not be created/updated for the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "來源檔 (POT) 有一些問題，且無法為 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(component_url)s\">%(component_name)s</a> 來建立或更新。"
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> project was generated"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> 專案的每週報告已產生"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
-msgstr ""
+msgstr "使用者 <a href=\"%(user_url)s\">%(user_request)s</a> 提交檔案到 <a href=\"%(project_url)s\">%(project)s</a> 專案的存取權已被授予"
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> denied"
-msgstr ""
+msgstr "使用者 <a href=\"%(user_url)s\">%(user_request)s</a> 提交檔案到 <a href=\"%(project_url)s\">%(project)s</a> 專案的存取權請求已被回絕"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid "Withdrew own request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
-msgstr ""
+msgstr "已撤除自身提交檔案到 <a href=\"%(project_url)s\">%(project)s</a> 專案的存取權請求"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid "Requested access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
-msgstr ""
+msgstr "已請求提交檔案到 <a href=\"%(project_url)s\">%(project)s</a> 專案的存取權"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> revoked"
-msgstr ""
+msgstr "使用者  <a href=\"%(user_url)s\">%(user_request)s</a> 已撤銷其提交檔案到 <a href=\"%(project_url)s\">%(project)s</a> 專案的存取權"
 
 #: templates/notification/project_team_added/notice.html:2
 #, python-format
 msgid "A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> 專案已加入新的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>"
 
 #: templates/notification/project_team_changed/notice.html:2
 #, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>已變更。"
 
 #: templates/notification/project_team_deleted/notice.html:2
 #, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>已刪除"
 
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "使用者 <a href=\"%(user_url)s\">%(user_name)s</a> 已被批准為 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>成員之一。"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
 msgid "The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for joining the <a href=\"%(team_url)s\">%(team_name)s translation team </a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
-msgstr ""
+msgstr "使用者 <a href=\"%(user_url)s\">%(user_name)s</a> 想加入 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>的請求已被回絕"
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
 msgid "Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "已請求加入 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>"
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
 msgid "Withdrawn its own request for joining the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "撤除其自身加入 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>的請求"
 
 #: templates/notification/project_team_left/notice.html:2
 #, python-format
 msgid "User has left the <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "使用者已退出 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(team_url)s\">%(team_name)s 翻譯團隊</a>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
 #, python-format
 msgid "The request for creating a translation team for <a href=\"%(language_url)s\">%(language_name)s</a> on the <a href=\"%(project_url)s\">%(project_name)s</a> project has been denied"
-msgstr ""
+msgstr "於 <a href=\"%(project_url)s\">%(project_name)s</a> 專案上的 <a href=\"%(language_url)s\">%(language_name)s</a> 翻譯團隊成立請求已被回絕"
 
 #: templates/notification/project_team_requested/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid "The translation team for <a href=\"%(language_url)s\">%(language_name)s</a> has been required to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "<a href=\"%(language_url)s\">%(language_name)s</a> 翻譯團隊已被 <a href=\"%(project_url)s\">%(project_name)s</a> 專案需求"
 
 #: templates/notification/user_nudge/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
-msgstr ""
+msgstr "使用者 <a href=\"%(performer_url)s\">%(performer)s</a> 對你發出來電振動"
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
 #, python-format
 msgid "Delete %(component_name)s"
-msgstr ""
+msgstr "刪除 %(component_name)s"
 
 #: templates/projects/component_confirm_delete.html:14
 #, python-format
 msgid "Say goodbye to <em>%(component_name)s</em>?"
-msgstr ""
+msgstr "要對 <em>%(component_name)s</em> 說再見嗎？"
 
 #: templates/projects/component_confirm_delete.html:19
 #, python-format
@@ -1750,6 +1757,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  您確定您想要永久刪除屬於 %(project_name)s 的「%(component_name)s」部件嗎？\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -1761,15 +1770,15 @@ msgstr "是的，我確定！"
 
 #: templates/projects/component_detail.html:30
 msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
-msgstr ""
+msgstr "此部件支援將提交的檔案除存在本機，並且也寄到維護者的電子信箱。"
 
 #: templates/projects/component_detail.html:32
 msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
-msgstr ""
+msgstr "此部件不支援將提交的檔案儲存在本機。提交的檔案會被送到維護者的電子信箱，而一旦檔案提交到上游後統計會反應出其變更。"
 
 #: templates/projects/component_detail.html:36
 msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
-msgstr ""
+msgstr "此部件支援將提交的檔案儲存在本機，並且也將這些檔案直接提交到上游倉儲。"
 
 #: templates/projects/component_detail.html:81
 #: templates/projects/project_detail.html:31
@@ -1790,7 +1799,7 @@ msgstr "倉儲："
 #: templates/projects/component_detail.html:93
 #: templates/projects/component_detail.html:95
 msgid "Link to a web front-end for the source code"
-msgstr ""
+msgstr "連結到源碼的網路前端"
 
 #: templates/projects/component_detail.html:93
 #: templates/projects/component_detail.html:95
@@ -1808,8 +1817,8 @@ msgstr "檔案過濾器："
 #: templates/projects/component_detail.html:111
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "發行："
+msgstr[1] "發行："
 
 #: templates/projects/component_detail.html:119
 msgid "Allows submissions:"
@@ -1825,7 +1834,7 @@ msgstr "來源檔："
 
 #: templates/projects/component_detail.html:145
 msgid "Statistics last updated:"
-msgstr ""
+msgstr "最後更新的統計："
 
 #: templates/projects/component_detail.html:147
 msgid "ago"
@@ -1833,19 +1842,20 @@ msgstr "以前"
 
 #: templates/projects/component_detail.html:148
 msgid "Component not yet pulled from source repository."
-msgstr ""
+msgstr "部件尚未從來源倉儲內拉出。"
 
 #: templates/projects/component_detail.html:151
 msgid "Refresh and re-calculate statistics. This action may take some time."
-msgstr ""
+msgstr "重新整理並重新計算統計。此動作可能會花上一些時間。"
 
 #: templates/projects/component_detail.html:151
 msgid "Refresh cache"
-msgstr ""
+msgstr "重新整理快取"
 
 #: templates/projects/component_detail.html:156
+#, fuzzy
 msgid "Reset Transifex's local data for a clean pull"
-msgstr ""
+msgstr "重設 Transifex 的本機資料以供乾淨地拉出"
 
 #: templates/projects/component_detail.html:156
 msgid "Clear cache"
@@ -1853,7 +1863,7 @@ msgstr "清除快取"
 
 #: templates/projects/component_detail.html:159
 msgid "Any locally modified data will be overwritten with fresh copies."
-msgstr ""
+msgstr "任何本機修改過的資料都將會被較新的副本覆寫。"
 
 #: templates/projects/component_detail.html:159
 msgid "warning"
@@ -1887,12 +1897,12 @@ msgstr "加入部件"
 #: templates/projects/component_form.html:100
 #, python-format
 msgid "Edit %(component_name)s"
-msgstr ""
+msgstr "編輯 %(component_name)s"
 
 #: templates/projects/component_form.html:98
 #, python-format
 msgid "New component for %(project_name)s"
-msgstr ""
+msgstr "提供給 %(project_name)s 的新部件"
 
 #: templates/projects/component_form.html:112
 msgid "Checkout"
@@ -1900,7 +1910,7 @@ msgstr ""
 
 #: templates/projects/component_form.html:113
 msgid "Submission"
-msgstr ""
+msgstr "提交"
 
 #: templates/projects/component_form.html:126
 #: templates/projects/component_form.html:136
@@ -1919,8 +1929,8 @@ msgstr "加入"
 #: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "專案部件"
+msgstr[1] "專案部件"
 
 #: templates/projects/component_list.html:26
 msgid "edit"
@@ -1943,6 +1953,8 @@ msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
 "    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
+"<em>部件</em>是大專案中較小的、自給自足的部份，由實際的檔案組成。\n"
+"    軟體專案的部件範例 could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
@@ -1982,7 +1994,7 @@ msgstr "範例："
 
 #: templates/projects/component_submit_new_file.html:35
 msgid "Commit message:"
-msgstr ""
+msgstr "提交訊息："
 
 #: templates/projects/component_submit_new_file.html:37
 msgid "Example: Updates to Brazilian Portuguese translation"
@@ -1996,22 +2008,22 @@ msgstr "送出"
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
 msgid "Delete %(project_name)s"
-msgstr ""
+msgstr "刪除 %(project_name)s"
 
 #: templates/projects/project_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(project_name)s</em>"
-msgstr ""
+msgstr "刪除 <em>%(project_name)s</em>"
 
 #: templates/projects/project_confirm_delete.html:8
 #: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
-msgstr ""
+msgstr "刪除"
 
 #: templates/projects/project_confirm_delete.html:11
 #, python-format
 msgid "Say goodbye to <em>%(project_name)s</em>?"
-msgstr ""
+msgstr "要對 <em>%(project_name)s</em> 說再見嗎？"
 
 #: templates/projects/project_confirm_delete.html:16
 #, python-format
@@ -2019,6 +2031,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
 msgstr ""
+"\n"
+"  您確定您想要永久地刪除已註冊的「%(project_name)s」專案嗎？\n"
 
 #: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
@@ -2029,7 +2043,7 @@ msgstr "詳細資料"
 
 #: templates/projects/project_detail.html:44
 msgid "Watch:"
-msgstr ""
+msgstr "監看："
 
 #: templates/projects/project_detail.html:52
 #: templates/txcollections/collection_detail.html:42
@@ -2158,7 +2172,7 @@ msgstr "有提交檔案存取權的使用者："
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
-msgstr "最近的專案"
+msgstr "最新專案"
 
 #: templates/projects/project_list.html:8
 msgid "Project list"
@@ -2206,7 +2220,7 @@ msgstr "翻譯團隊"
 #: templates/projects/project_timeline.html:12
 #: templates/txcommon/user_timeline.html:12
 msgid "Timeline"
-msgstr ""
+msgstr "時間軸"
 
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
@@ -2216,6 +2230,9 @@ msgid ""
 " %(project_name)s Timeline\n"
 " "
 msgstr ""
+"\n"
+" %(project_name)s 時間軸\n"
+" "
 
 #: templates/projects/project_top_translators.html:6
 msgid "Top Translators"
@@ -2279,22 +2296,24 @@ msgstr "任何與您的帳號有關的設定會呈現在這裡，或是在這裡
 #: templates/simpleauth/settings.html:23
 #: templates/userprofile/profile/overview.html:102
 msgid "Change notifications"
-msgstr ""
+msgstr "變更通知"
 
 #: templates/simpleauth/settings.html:24
 msgid "Change notifications associated to your account"
-msgstr ""
+msgstr "變更與您帳號相關的通知"
 
 #: templates/simpleauth/signin.html:10
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
+"\n"
+"<p>請使用您的電子郵件或帳號登入。<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
-msgstr ""
+msgstr "要對 <em>%(lang_name)s</em> 團隊說再見嗎？"
 
 #: templates/teams/team_confirm_delete.html:14
 #, python-format
@@ -2302,6 +2321,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  您確定您想要永久地刪除屬於「%(project_name)s」專案的「%(lang_name)s」團隊嗎？\n"
 
 #: templates/teams/team_detail.html:19
 #, python-format
@@ -2309,6 +2330,8 @@ msgid ""
 "\n"
 "  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 msgstr ""
+"\n"
+"  翻譯團隊 - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 
 #: templates/teams/team_detail.html:33
 msgid "Mainlist:"
@@ -2335,7 +2358,7 @@ msgstr "加入此團隊"
 
 #: templates/teams/team_detail.html:70
 msgid "People waiting for team membership approving:"
-msgstr ""
+msgstr "等待團隊成員身份批准的人："
 
 #: templates/teams/team_detail.html:81
 #: templates/teams/team_list.html:50
@@ -2345,11 +2368,11 @@ msgstr "批准"
 #: templates/teams/team_detail.html:85
 #: templates/teams/team_list.html:54
 msgid "Deny"
-msgstr "拒絕"
+msgstr "回絕"
 
 #: templates/teams/team_detail.html:91
 msgid "Withdraw"
-msgstr ""
+msgstr "撤除"
 
 #: templates/teams/team_detail.html:104
 msgid "Team Members:"
@@ -2366,11 +2389,11 @@ msgstr "刪除團隊"
 #: templates/teams/team_form.html:19
 #, python-format
 msgid "%(project_name)s Translation Teams"
-msgstr ""
+msgstr "%(project_name)s 翻譯團隊"
 
 #: templates/teams/team_form.html:27
 msgid "Translation team details"
-msgstr ""
+msgstr "翻譯團隊詳細資料"
 
 #: templates/teams/team_form.html:29
 msgid ""
@@ -2378,6 +2401,9 @@ msgid ""
 "    Be aware that notification are not sent when coordinators or members are added or removed using this module.\n"
 "    "
 msgstr ""
+"\n"
+"    請小心當使用此模組而協調者或成員被加入或移除時，\n"
+"    "
 
 #: templates/teams/team_form.html:41
 msgid "Save team"
@@ -2418,17 +2444,17 @@ msgstr "顯示已完成"
 #: templates/txcollections/collection_confirm_delete.html:4
 #, python-format
 msgid "Delete %(collection_name)s"
-msgstr ""
+msgstr "刪除 %(collection_name)s"
 
 #: templates/txcollections/collection_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(collection_name)s</em>"
-msgstr ""
+msgstr "刪除 <em>%(collection_name)s</em>"
 
 #: templates/txcollections/collection_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(collection_name)s</em>?"
-msgstr ""
+msgstr "要對 <em>%(collection_name)s</em> 說再見嗎？"
 
 #: templates/txcollections/collection_confirm_delete.html:14
 #, python-format
@@ -2436,25 +2462,27 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the registered collection '%(collection_name)s'?\n"
 msgstr ""
+"\n"
+"  您確定您想要永久刪除已註冊的「%(collection_name)s」部件嗎？\n"
 
 #: templates/txcollections/collection_detail.html:43
 #, python-format
 msgid "Homepage for %(collection_name)s"
-msgstr ""
+msgstr "%(collection_name)s 的首頁"
 
 #: templates/txcollections/collection_detail.html:93
 #, python-format
 msgid "Projects in %(collection)s"
-msgstr ""
+msgstr "%(collection)s 內的專案"
 
 #: templates/txcollections/collection_detail.html:98
 msgid "Projects currently registered and associated to this collection:"
-msgstr ""
+msgstr "目前註冊的以及與此集合相關的專案："
 
 #: templates/txcollections/collection_detail.html:108
 #, python-format
 msgid "No projects are registered for this collection yet. <a href=\"%(project_list)s\">Find projects</a> and add them to this collection."
-msgstr ""
+msgstr "此集合尚未有註冊的專案。<a href=\"%(project_list)s\">尋找專案</a>並將它們加入此集合。"
 
 #: templates/txcollections/collection_detail.html:120
 msgid "Delete collection"
@@ -2469,17 +2497,17 @@ msgstr "加入集合"
 #: templates/txcollections/collection_form.html:7
 #, python-format
 msgid "Edit %(collection_name)s"
-msgstr ""
+msgstr "編輯 %(collection_name)s"
 
 #: templates/txcollections/collection_form.html:12
 #, python-format
 msgid "Edit <em>%(collection_name)s</em>"
-msgstr ""
+msgstr "編輯 <em>%(collection_name)s</em>"
 
 #: templates/txcollections/collection_form.html:20
 #, python-format
 msgid "Editing <a href=\"%(collection_url)s\">%(collection_name)s</a>"
-msgstr ""
+msgstr "正在編輯 <a href=\"%(collection_url)s\">%(collection_name)s</a>"
 
 #: templates/txcollections/collection_form.html:36
 msgid "Save collection"
@@ -2492,7 +2520,7 @@ msgstr "集合清單"
 #: templates/txcollections/collection_list.html:17
 #, python-format
 msgid "Collections with tag '%(tag)s'"
-msgstr ""
+msgstr "有「%(tag)s」標籤的集合"
 
 #: templates/txcollections/collection_list.html:18
 msgid "Collections on Transifex"
@@ -2505,25 +2533,25 @@ msgstr "集合"
 
 #: templates/txcollections/collection_list.html:25
 msgid "Add a new collection"
-msgstr ""
+msgstr "新增集合"
 
 #: templates/txcollections/collection_list.html:44
 #, python-format
 msgid "1 release"
 msgid_plural "%(counter)s releases"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 次發行"
+msgstr[1] "%(counter)s 次發行"
 
 #: templates/txcollections/collection_list.html:45
 #, python-format
 msgid "1 project"
 msgid_plural "%(counter)s projects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 個專案"
+msgstr[1] "%(counter)s 個專案"
 
 #: templates/txcollections/collection_list.html:53
 msgid "No collections registered yet. :-("
-msgstr ""
+msgstr "尚未有註冊的集合。:-("
 
 #: templates/txcollections/collection_list.html:56
 #, python-format
@@ -2533,22 +2561,22 @@ msgstr "你何不考慮就<a href=\"%(collection_create)s\">加入一份</a>呢�
 #: templates/txcollections/collection_list.html:66
 #, python-format
 msgid "Couldn't find your collection? Go ahead and <a href=\"%(collection_create)s\">add it</a>!"
-msgstr ""
+msgstr "找不到您的集合？直接<a href=\"%(collection_create)s\">將他加入</a>吧！"
 
 #: templates/txcollections/release_confirm_delete.html:4
 #, python-format
 msgid "Delete %(release_name)s"
-msgstr ""
+msgstr "刪除 %(release_name)s"
 
 #: templates/txcollections/release_confirm_delete.html:6
 #, python-format
 msgid "Delete <em>%(release_name)s</em>"
-msgstr ""
+msgstr "刪除 <em>%(release_name)s</em>"
 
 #: templates/txcollections/release_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr ""
+msgstr "要對 <em>%(release_name)s</em> 說再見嗎？"
 
 #: templates/txcollections/release_confirm_delete.html:14
 #, python-format
@@ -2556,6 +2584,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the registered release '%(release_name)s'?\n"
 msgstr ""
+"\n"
+"  您確定您想要永久刪除已註冊的發行「%(release_name)s」？\n"
 
 #: templates/txcollections/release_detail.html:61
 msgid "Release date:"
@@ -2579,23 +2609,23 @@ msgstr "此發行版本沒有加入新語言。:-("
 
 #: templates/txcollections/release_detail.html:95
 msgid "Delete release"
-msgstr ""
+msgstr "刪除發行"
 
 #: templates/txcollections/release_form.html:12
 #: templates/txcollections/release_form.html:17
 #: templates/txcollections/release_form.html:23
 msgid "Add a release"
-msgstr ""
+msgstr "加入發行"
 
 #: templates/txcollections/release_form.html:13
 #, python-format
 msgid "Edit %(release_name)s"
-msgstr ""
+msgstr "編輯 %(release_name)s"
 
 #: templates/txcollections/release_form.html:18
 #, python-format
 msgid "Edit <em>%(release_name)s</em> release"
-msgstr ""
+msgstr "編輯 <em>%(release_name)s</em> 發行"
 
 #: templates/txcollections/release_form.html:26
 #, python-format
@@ -2604,6 +2634,9 @@ msgid ""
 "        Editing <a href=\"%(release_url)s\">%(release_name)s</a>\n"
 "      "
 msgstr ""
+"\n"
+"       正在編輯 <a href=\"%(release_url)s\">%(release_name)s</a>\n"
+"      "
 
 #: templates/txcollections/release_form.html:44
 msgid "Save release"
@@ -2611,7 +2644,7 @@ msgstr "儲存發行"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
-msgstr "褫奪許可"
+msgstr "撤銷許可"
 
 #: templates/txpermissions/permission_form.html:13
 msgid "Grant permission"
@@ -2631,7 +2664,7 @@ msgstr "撤除請求"
 
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
-msgstr "拒絕請求"
+msgstr "回絕請求"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
@@ -3042,7 +3075,6 @@ msgid "Change location"
 msgstr "變更位置"
 
 #: templates/userprofile/profile/overview.html:105
-#, fuzzy
 msgid "My Timeline"
 msgstr "我的時間軸"
 
@@ -3187,7 +3219,7 @@ msgstr "實況翻譯"
 #: templates/webtrans/transfile_edit.html:99
 #, python-format
 msgid "Page %(step)s of %(step_count)s"
-msgstr ""
+msgstr "頁面 %(step_count)s 之 %(step)s"
 
 #: templates/webtrans/transfile_edit.html:105
 msgid "#"
@@ -3255,7 +3287,7 @@ msgstr "選項"
 #: translations/templates/lang_stats_table.html:28
 #: translations/templates/release_stats_table.html:21
 msgid "Could not generate statistics for this file"
-msgstr ""
+msgstr "無法為此檔案產生統計"
 
 #: translations/templates/comp_lang_stats_table.html:32
 #: translations/templates/comp_stats_table.html:35
@@ -3295,16 +3327,16 @@ msgstr "編輯"
 
 #: translations/templates/comp_stats_table.html:25
 msgid "See statistics for this language"
-msgstr ""
+msgstr "查看此語言的統計"
 
 #: translations/templates/comp_stats_table.html:27
 msgid "There are no languages registered matching this code"
-msgstr ""
+msgstr "沒有符合此代碼的已註冊語言"
 
 #: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:40
 msgid "Click here to see the multiple files for"
-msgstr ""
+msgstr "點擊這裡以查看其數個檔案"
 
 #: translations/templates/component_submit.html:5
 #, python-format
@@ -3329,70 +3361,70 @@ msgstr "前往本部件網頁"
 
 #: translations/templates/pofile_lock.html:15
 msgid "Unlock this file when you are finished working with it."
-msgstr ""
+msgstr "當您不再處理此檔案後，請移除它的鎖。"
 
 #: translations/templates/pofile_lock.html:21
 #, python-format
 msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr ""
+msgstr "使用者「%(owner)s」已對此檔案上鎖，這表示他正在處理中。"
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
-msgstr ""
+msgstr "對此檔案上鎖來通知其他人您正在處理它。"
 
 #: translations/templates/pofile_lock.html:30
 msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr ""
+msgstr "此檔案未上鎖。看起來像是現在沒有人在處理它。"
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
-msgstr ""
+msgstr "查看此語言的詳細統計"
 
 #: translations/templates/release_stats_table.html:18
 msgid "There are no languages registered matching this file"
-msgstr ""
+msgstr "沒有符合此檔案的已註冊語言"
 
 #: translations/templates/source_files.html:5
 msgid "Click here to show or hide the source files"
-msgstr ""
+msgstr "點擊這裡來顯示或隱藏來源檔案"
 
 #: translations/templates/source_files.html:5
 #, python-format
 msgid "This component has %(sources_number)s source files"
-msgstr ""
+msgstr "部件有 %(sources_number)s 個來源檔"
 
 #: translations/templates/source_files.html:13
 msgid "entries"
-msgstr ""
+msgstr "條目"
 
 #: txcollections/feeds.py:15
 #, python-format
 msgid "Latest collections on %(site_name)s"
-msgstr ""
+msgstr "於 %(site_name)s 的最新集合"
 
 #: txcollections/feeds.py:18
 msgid "Updates on changes and additions to collections."
-msgstr ""
+msgstr "對於集合變更與新增的更新。"
 
 #: txcollections/feeds.py:34
 #, python-format
 msgid "%(site_name)s: %(collection)s collection"
-msgstr ""
+msgstr "%(site_name)s: %(collection)s 集合"
 
 #: txcollections/feeds.py:39
 #, python-format
 msgid "Latest releases in the %s collection."
-msgstr ""
+msgstr "%s 集合內的最新發行。"
 
 #: txcollections/feeds.py:66
 #, python-format
 msgid "%(site_name)s: %(collection)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s: %(collection)s :: %(release)s 發行"
 
 #: txcollections/feeds.py:72
 #, python-format
 msgid "Translation statistics for all languages against %s release."
-msgstr ""
+msgstr "針對 %s 發行的所有語言翻譯統計。"
 
 #: txcollections/models.py:53
 #, python-format
@@ -3406,24 +3438,24 @@ msgstr "集合"
 #: txcollections/models.py:106
 #, python-format
 msgid "<Release: %(rel)s (Collection %(col)s)>"
-msgstr ""
+msgstr "<發行：%(rel)s (集合 %(col)s)>"
 
 #: txcollections/migrations/0001_initial.py:20
 msgid "String freese date"
-msgstr ""
+msgstr "字串凍結日期"
 
 #: txcommon/admin.py:10
 msgid "Required. 30 characters or fewer. Unicode alphanumeric characters only (letters, digits and underscores)."
-msgstr ""
+msgstr "必要的。30 個字元或更少。只能使用 Unicode 字母與數字字元（字母、數字，以及底線）。"
 
 #: txcommon/admin.py:13
 msgid "This value must contain only unicode letters, numbers and underscores."
-msgstr ""
+msgstr "此值必須只包含任意 unicode 字母、數字以及底線。"
 
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
-msgstr ""
+msgstr "LINGUAS 檔案無法開啟：%s"
 
 #: txcommon/models.py:11
 msgid "Female"
@@ -3460,7 +3492,7 @@ msgstr "關於你"
 
 #: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
-msgstr ""
+msgstr "關於您的簡短描述（140 字元）。"
 
 #: txcommon/models.py:39
 #: txcommon/migrations/0002_release_06_07.py:18
@@ -3469,67 +3501,67 @@ msgstr "正在找工作嗎？"
 
 #: txcommon/notifications.py:12
 msgid "New Project Added"
-msgstr ""
+msgstr "新專案已加入"
 
 #: txcommon/notifications.py:13
 msgid "when a new project is added"
-msgstr ""
+msgstr "當新專案被加入"
 
 #: txcommon/notifications.py:19
 msgid "Project Changed"
-msgstr ""
+msgstr "專案已變更"
 
 #: txcommon/notifications.py:20
 msgid "when a project is changed"
-msgstr ""
+msgstr "當某專案被變更"
 
 #: txcommon/notifications.py:26
 msgid "Project Deleted"
-msgstr ""
+msgstr "專案已刪除"
 
 #: txcommon/notifications.py:27
 msgid "when a project is deleted"
-msgstr ""
+msgstr "當某專案已被刪除"
 
 #: txcommon/notifications.py:33
 msgid "Submit access for project requested"
-msgstr ""
+msgstr "專案的提交存取權已請求"
 
 #: txcommon/notifications.py:34
 msgid "when a user requests access to submit files to a project"
-msgstr ""
+msgstr "當某使用者請求提交檔案到某專案的存取權"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request for project denied"
-msgstr ""
+msgstr "專案的提交存取權已回絕"
 
 #: txcommon/notifications.py:42
 msgid "when a maintainer denies access to a user to submit files to a project"
-msgstr ""
+msgstr "當維護者回絕某使用者提交檔案到某專案的存取權"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request for project withdrawn"
-msgstr ""
+msgstr "專案提交存取請求權已撤除"
 
 #: txcommon/notifications.py:50
 msgid "when a user withdraws the access requestto submit files to a project"
-msgstr ""
+msgstr "當某使用者撤除提交檔案到某專案的存取權請求"
 
 #: txcommon/notifications.py:57
 msgid "Submit access for project granted"
-msgstr ""
+msgstr "專案的提交存取權已授予"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants access to a user to submit files to a project"
-msgstr ""
+msgstr "當維護者授予某使用者提交檔案到某專案的存取權"
 
 #: txcommon/notifications.py:65
 msgid "Submit access for project revoked"
-msgstr ""
+msgstr "已撤銷提交檔案給專案的存取權"
 
 #: txcommon/notifications.py:66
 msgid "when a maintainer revokes the access of a user to submit files to a project"
-msgstr ""
+msgstr "當維護者撤銷使用者提交檔案到專案的存取權"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3541,19 +3573,19 @@ msgstr "當新部件被加入專案時"
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
-msgstr ""
+msgstr "部件已變更"
 
 #: txcommon/notifications.py:81
 msgid "when a component of a project is changed"
-msgstr ""
+msgstr "當某專案的部件被變更"
 
 #: txcommon/notifications.py:87
 msgid "Component Deleted"
-msgstr ""
+msgstr "部件已刪除"
 
 #: txcommon/notifications.py:88
 msgid "when a component of a project is deleted"
-msgstr ""
+msgstr "當某專案的部件被刪除"
 
 #: txcommon/notifications.py:94
 msgid "File Submitted"
@@ -3573,179 +3605,179 @@ msgstr "當專案部件的翻譯檔被變更時"
 
 #: txcommon/notifications.py:110
 msgid "Translation Source File (POT) has a Problem"
-msgstr ""
+msgstr "翻譯來源檔 (POT) 有問題"
 
 #: txcommon/notifications.py:111
 msgid "when the source file (POT) of a component that you are a maintainer has a problem"
-msgstr ""
+msgstr "當某您身為某部件的維護者，而其來源檔 (POT) 有問題"
 
 #: txcommon/notifications.py:121
 msgid "New Team Added"
-msgstr ""
+msgstr "新團隊已加入"
 
 #: txcommon/notifications.py:122
 msgid "when a new translation team is added to a project"
-msgstr ""
+msgstr "當某專案加入新翻譯團隊"
 
 #: txcommon/notifications.py:129
 msgid "Team Changed"
-msgstr ""
+msgstr "團隊已變更"
 
 #: txcommon/notifications.py:130
 msgid "when a translation team of a project is changed"
-msgstr ""
+msgstr "當某專案的翻譯團隊被變更"
 
 #: txcommon/notifications.py:137
 msgid "Team Deleted"
-msgstr ""
+msgstr "團隊已刪除"
 
 #: txcommon/notifications.py:138
 msgid "when a translation team of a project is deleted"
-msgstr ""
+msgstr "當某專案的翻譯團隊被刪除"
 
 #: txcommon/notifications.py:145
 msgid "Team Creation Requested"
-msgstr ""
+msgstr "團隊成立已請求"
 
 #: txcommon/notifications.py:146
 msgid "when a translation team creation is requestedfor a project"
-msgstr ""
+msgstr "當某專案被請求成立某翻譯團隊"
 
 #: txcommon/notifications.py:153
 msgid "Team Creation Request Denied"
-msgstr ""
+msgstr "團隊成立請求已回絕"
 
 #: txcommon/notifications.py:154
 msgid "when a translation team creation requestfor a project is denied by a maintainer"
-msgstr ""
+msgstr "當某專案的翻譯團隊其成立請求被維護者回絕"
 
 #: txcommon/notifications.py:161
 msgid "Team User Joining Requested"
-msgstr ""
+msgstr "團隊使用者加入已請求"
 
 #: txcommon/notifications.py:162
 msgid "when an user requests for joining to a translation team of a project"
-msgstr ""
+msgstr "當某使用者請求加入某專案的翻譯團隊"
 
 #: txcommon/notifications.py:169
 msgid "Team User Joining Approved"
-msgstr ""
+msgstr "團隊使用者加入已批准"
 
 #: txcommon/notifications.py:170
 msgid "when an user is approved as a member of a translation team of a project"
-msgstr ""
+msgstr "當某使用者被批准為某專案翻譯團隊的成員之一"
 
 #: txcommon/notifications.py:177
 msgid "Team User Joining Denied"
-msgstr ""
+msgstr "團隊使用者加入已回絕"
 
 #: txcommon/notifications.py:178
 msgid "when an user is denied as a member of a translation team of a project"
-msgstr ""
+msgstr "當某使用者被回絕成為某專案翻譯團隊的使用者"
 
 #: txcommon/notifications.py:185
 msgid "Team User Joining Withdrawn"
-msgstr ""
+msgstr "團隊使用者加入已撤除"
 
 #: txcommon/notifications.py:186
 msgid "when an user withdrawn its own request for joining a translation team of a project"
-msgstr ""
+msgstr "當某使用者撤除其自身想加入某專案的翻譯團隊請求"
 
 #: txcommon/notifications.py:193
 msgid "Team User Left"
-msgstr ""
+msgstr "團隊使用者已退出"
 
 #: txcommon/notifications.py:194
 msgid "when an user leaves a translation team of a project"
-msgstr ""
+msgstr "當某使用者退出某專案的翻譯團隊"
 
 #: txcommon/notifications.py:203
 msgid "Weekly project report for maintainers"
-msgstr ""
+msgstr "給維護者的每週專案報告"
 
 #: txcommon/notifications.py:204
 msgid "when you receive the weekly report of projects that you maintain."
-msgstr ""
+msgstr "當您收到您維護專案的每週報告。"
 
 #: txcommon/notifications.py:212
 msgid "New Collection Added"
-msgstr ""
+msgstr "新集合已加入"
 
 #: txcommon/notifications.py:213
 msgid "when a new collection is added"
-msgstr ""
+msgstr "當新集合被加入"
 
 #: txcommon/notifications.py:219
 msgid "Collection Changed"
-msgstr ""
+msgstr "集合已變更"
 
 #: txcommon/notifications.py:220
 msgid "when a collection is changed"
-msgstr ""
+msgstr "當某集合被變更"
 
 #: txcommon/notifications.py:226
 msgid "Collection Deleted"
-msgstr ""
+msgstr "集合已刪除"
 
 #: txcommon/notifications.py:227
 msgid "when a collection is deleted"
-msgstr ""
+msgstr "當某集合已刪除"
 
 #: txcommon/notifications.py:233
 msgid "Project Added to a Collection"
-msgstr ""
+msgstr "已加入專案到某集合"
 
 #: txcommon/notifications.py:234
 msgid "when a new project is added to a collection"
-msgstr ""
+msgstr "當新專案被加入某集合"
 
 #: txcommon/notifications.py:240
 msgid "Project Deleted from a Collection"
-msgstr ""
+msgstr "專案已從某集合中刪除"
 
 #: txcommon/notifications.py:241
 msgid "when a project is deleted from a collection"
-msgstr ""
+msgstr "當專案從某集合中被刪除"
 
 #: txcommon/notifications.py:247
 msgid "New Release Added for a Watched Collection"
-msgstr ""
+msgstr "監看的集合已加入新發行"
 
 #: txcommon/notifications.py:248
 msgid "when a new release is added to a collection"
-msgstr ""
+msgstr "當新發行被加入某集合中"
 
 #: txcommon/notifications.py:255
 msgid "Release Changed"
-msgstr ""
+msgstr "發行已變更"
 
 #: txcommon/notifications.py:256
 msgid "when a release of a collection is changed"
-msgstr ""
+msgstr "當某集合的發行被變更"
 
 #: txcommon/notifications.py:261
 msgid "Release Deleted"
-msgstr ""
+msgstr "發行已刪除"
 
 #: txcommon/notifications.py:262
 msgid "when a release of a collection is deleted"
-msgstr ""
+msgstr "當某集合的發行被刪除"
 
 #: txcommon/notifications.py:267
 msgid "Release Added to a Collection"
-msgstr ""
+msgstr "發行已加入某集合中"
 
 #: txcommon/notifications.py:268
 msgid "when a release is added to a collection"
-msgstr ""
+msgstr "當發行被加入某集合中"
 
 #: txcommon/notifications.py:273
 msgid "Release Deleted from a Collection"
-msgstr ""
+msgstr "發行已從某集合中刪除"
 
 #: txcommon/notifications.py:274
 msgid "when a release is deleted from a collection"
-msgstr ""
+msgstr "當發行從集合中被刪除"
 
 #: txcommon/notifications.py:279
 msgid "User Nudge"
@@ -3761,11 +3793,11 @@ msgstr ""
 
 #: txcommon/validators.py:28
 msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr ""
+msgstr "根網址不能指向 .tar.gz 或 .tgz 檔"
 
 #: txcommon/validators.py:31
 msgid "The root url must start with http:// or ftp://"
-msgstr ""
+msgstr "根網址必須以 http:// 或 ftp:// 起頭"
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
@@ -3822,7 +3854,7 @@ msgstr "分枝"
 
 #: vcs/models.py:49
 msgid "A VCS branch this unit is associated with"
-msgstr ""
+msgstr "與此單位相關的 VCS 分枝"
 
 #: vcs/models.py:50
 msgid "Web frontend"
@@ -3835,15 +3867,15 @@ msgstr "專案的網路前端網址"
 #: vcs/models.py:58
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr ""
+msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
 #: vcs/models.py:61
 msgid "vcsunit"
-msgstr ""
+msgstr "vcsunit"
 
 #: vcs/models.py:62
 msgid "vcsunits"
-msgstr ""
+msgstr "vcsunits"
 
 #: webtrans/fields.py:55
 #, python-format
@@ -3852,7 +3884,7 @@ msgstr "%s 欄位應要填寫。"
 
 #: webtrans/wizards.py:210
 msgid "Nothing was sent because you haven't changed anything in the translation form."
-msgstr ""
+msgstr "由於您未變更任何翻譯表單內的東西，所以沒有送出任何變動。"
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
