@@ -25,12 +25,19 @@ class TeamSimpleForm(forms.ModelForm):
         self.fields['project'].widget = forms.HiddenInput()
         self.fields['project'].initial = project.pk
         self.fields['creator'].widget = forms.HiddenInput()
-        
+
         # Lets filter the language field based on the teams already created
         # We don't need to list a language if there is a team for it already
-        used_langs = Team.objects.filter(project__pk=project.pk).exclude(
-            language__code=language_code).values('language__pk').query
-        filtered_langs = self.fields["language"].queryset.exclude(pk__in=used_langs)
+        # Also, when editing a team detail the language must not be changeable
+        instance = kwargs.get('instance', None)
+        if instance:
+            filtered_langs = self.fields["language"].queryset.filter(
+                pk=instance.language.pk)
+            self.fields["language"].empty_label = None
+        else:
+            used_langs = Team.objects.filter(project__pk=project.pk).exclude(
+                language__code=language_code).values('language__pk').query
+            filtered_langs = self.fields["language"].queryset.exclude(pk__in=used_langs)
         self.fields["language"].queryset = filtered_langs
 
     def clean(self):
