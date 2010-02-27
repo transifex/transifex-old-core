@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-26 19:17+0000\n"
-"PO-Revision-Date: 2010-02-27 14:41+0100\n"
+"PO-Revision-Date: 2010-02-27 18:33+0100\n"
 "Last-Translator: Petr Novák <peta.en@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr "Typ zdrojového kódu (%s)"
 
 #: codebases/models.py:44
 msgid "The last time this unit was updated"
-msgstr ""
+msgstr "Čas poslední aktualizace této jednotky"
 
 #: codebases/models.py:53
 msgid "unit"
@@ -148,7 +148,7 @@ msgstr "Speciální znaky"
 
 #: languages/models.py:47
 msgid "Enter any special characters that users might find difficult to type"
-msgstr ""
+msgstr "Vložte speciální znaky, jejichž zápis by mohl být pro uživatele obtížný"
 
 #: languages/models.py:50
 #: languages/migrations/0001_initial.py:16
@@ -592,7 +592,7 @@ msgstr "Zulština"
 #: projects/feeds.py:16
 #, python-format
 msgid "Latest projects on %(site_name)s"
-msgstr ""
+msgstr "Poslední projekty na %(site_name)s"
 
 #: projects/feeds.py:19
 msgid "Updates on changes and additions to registered projects."
@@ -601,17 +601,17 @@ msgstr ""
 #: projects/feeds.py:35
 #, python-format
 msgid "%(site_name)s: Components in %(project)s"
-msgstr ""
+msgstr "%(site_name)s: Součásti v %(project)s"
 
 #: projects/feeds.py:40
 #, python-format
 msgid "Latest components in project %s."
-msgstr ""
+msgstr "Poslední součásti v projektu %s."
 
 #: projects/feeds.py:67
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s: %(project)s :: vydání %(release)s"
 
 #: projects/feeds.py:73
 #, python-format
@@ -621,7 +621,7 @@ msgstr ""
 #: projects/feeds.py:108
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
-msgstr ""
+msgstr "%(site_name)s: %(project)s :: vydání %(release)s :: %(lang)s"
 
 #: projects/feeds.py:115
 #, python-format
@@ -630,8 +630,9 @@ msgstr ""
 
 #: projects/forms.py:15
 #: txpermissions/forms.py:19
+#, fuzzy
 msgid "Search for a username"
-msgstr ""
+msgstr "Vyhledat uživatelské jméno"
 
 #: projects/forms.py:35
 #: projects/models.py:214
@@ -663,7 +664,7 @@ msgstr ""
 #: txcollections/migrations/0002_release_06_07.py:12
 #: txcollections/migrations/0002_release_06_07.py:18
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 #: projects/models.py:83
 #: projects/models.py:197
@@ -676,12 +677,12 @@ msgstr ""
 #: projects/models.py:200
 #: releases/models.py:24
 msgid "A short name or very short description."
-msgstr ""
+msgstr "Krátké jméno nebo velmi krátký popis."
 
 #: projects/models.py:88
 #: projects/models.py:202
 msgid "A sentence or two describing the object (optional)."
-msgstr ""
+msgstr "Věta nebo dvě popisující objekt (volitelné)."
 
 #: projects/models.py:89
 #: projects/models.py:203
@@ -692,7 +693,7 @@ msgstr ""
 #: txcollections/migrations/0001_initial.py:25
 #: txcollections/migrations/0001_initial.py:43
 msgid "Long description"
-msgstr ""
+msgstr "Dlouhý popis"
 
 #: projects/models.py:91
 #: projects/models.py:205
@@ -703,16 +704,18 @@ msgstr ""
 #: projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: projects/models.py:93
 #: projects/migrations/0001_initial.py:18
+#, fuzzy
 msgid "Feed"
-msgstr ""
+msgstr "Kanál"
 
 #: projects/models.py:94
+#, fuzzy
 msgid "An RSS feed with updates to the project."
-msgstr ""
+msgstr "RSS kanál s aktualizacemi k projektu."
 
 #: projects/models.py:95
 #: projects/migrations/0001_initial.py:27
@@ -767,11 +770,11 @@ msgstr ""
 #: projects/models.py:109
 #: projects/migrations/0001_initial.py:23
 msgid "Tags"
-msgstr ""
+msgstr "Štítky"
 
 #: projects/models.py:112
 msgid "Maintainers"
-msgstr ""
+msgstr "Správci"
 
 #: projects/models.py:116
 #: projects/models.py:234
@@ -782,19 +785,19 @@ msgstr ""
 #: txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:36
 msgid "HTML Description"
-msgstr ""
+msgstr "HTML popis"
 
 #: projects/models.py:118
 #: projects/models.py:236
 #: projects/models.py:487
 #: releases/models.py:50
 msgid "Description in HTML."
-msgstr ""
+msgstr "Popis v HTML."
 
 #: projects/models.py:124
 #, python-format
 msgid "<Project: %s>"
-msgstr ""
+msgstr "<Projekt: %s>"
 
 #: projects/models.py:127
 msgid "project"
@@ -808,16 +811,17 @@ msgstr "projekty"
 #: projects/models.py:206
 #: projects/migrations/0001_initial.py:52
 msgid "Source language"
-msgstr ""
+msgstr "Zdrojový jazyk"
 
 #: projects/models.py:207
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
-msgstr ""
+msgstr "Zdrojový jazyk pro tuto součást (např. \"en\", \"pt_BR\", \"cs\")."
 
 #: projects/models.py:209
 #: projects/migrations/0001_initial.py:42
+#, fuzzy
 msgid "I18n type"
-msgstr ""
+msgstr "I18n typ"
 
 #: projects/models.py:211
 #, python-format
@@ -826,8 +830,9 @@ msgstr ""
 
 #: projects/models.py:213
 #: projects/migrations/0001_initial.py:43
+#, fuzzy
 msgid "File filter"
-msgstr ""
+msgstr "Filtr souborů"
 
 #: projects/models.py:216
 #: projects/migrations/0001_initial.py:51
@@ -841,7 +846,7 @@ msgstr ""
 #: projects/models.py:228
 #: projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
-msgstr ""
+msgstr "Spočítat statistiky?"
 
 #: projects/models.py:229
 msgid "Should statistics be calculated for this component?"
@@ -853,35 +858,35 @@ msgstr ""
 #: teams/models.py:25
 #: teams/models.py:67
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #: projects/models.py:240
 #: projects/migrations/0001_initial.py:37
 msgid "Unit"
-msgstr ""
+msgstr "Jednotka"
 
 #: projects/models.py:261
 #, python-format
 msgid "<Component: %s>"
-msgstr ""
+msgstr "<Součást: %s>"
 
 #: projects/models.py:265
 msgid "component"
-msgstr ""
+msgstr "součást"
 
 #: projects/models.py:266
 #: templates/projects/component_list.html:16
 msgid "components"
-msgstr ""
+msgstr "součásti"
 
 #: projects/models.py:459
 msgid "A string like a name or very short description."
-msgstr ""
+msgstr "Řetězec jako třeba název nebo velmi krátký popis."
 
 #: projects/models.py:462
 #: releases/models.py:26
 msgid "A sentence or two describing the object."
-msgstr ""
+msgstr "Věta nebo dvě popisující objekt."
 
 #: projects/models.py:465
 #: releases/models.py:28
@@ -892,7 +897,7 @@ msgstr ""
 #: releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
-msgstr ""
+msgstr "Datum vydání"
 
 #: projects/models.py:470
 #: releases/models.py:32
@@ -921,12 +926,12 @@ msgstr ""
 
 #: projects/models.py:492
 msgid "Components"
-msgstr ""
+msgstr "Součásti"
 
 #: projects/models.py:499
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
-msgstr ""
+msgstr "<Vydání: %(rel)s (projekt %(proj)s)>"
 
 #: projects/models.py:517
 #: releases/models.py:54
@@ -981,7 +986,7 @@ msgstr "Celkem:"
 #: projects/views/project.py:138
 #, python-format
 msgid "The %s was deleted."
-msgstr ""
+msgstr "%s byl smazán."
 
 #: projects/views/component.py:274
 msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
@@ -1052,11 +1057,11 @@ msgstr "Zámek odstraněn."
 
 #: projects/views/component.py:577
 msgid "Error: Only the owner of a lock can remove it."
-msgstr ""
+msgstr "Chyba: Pouze vlastník zámku jej může odstranit."
 
 #: projects/views/component.py:581
 msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
+msgstr "Zámek vytvořen. Nezapomeňte jej prosím po dokončení práce odstranit."
 
 #: projects/views/component.py:598
 #: projects/views/project.py:156
@@ -1079,7 +1084,7 @@ msgstr ""
 #: projects/views/release.py:94
 #, python-format
 msgid "%s was deleted."
-msgstr ""
+msgstr "%s byl smazán."
 
 #: projects/views/review.py:66
 msgid "Request closed as Rejected."
@@ -1092,7 +1097,7 @@ msgstr ""
 #: projects/views/team.py:168
 #, python-format
 msgid "The '%s' team was deleted."
-msgstr ""
+msgstr "Tým \"%s\" byl smazán."
 
 #: projects/views/team.py:205
 #, python-format
@@ -1146,17 +1151,17 @@ msgstr ""
 #: projects/views/team.py:453
 #, python-format
 msgid "'%s' team already exist."
-msgstr ""
+msgstr "Tým \"%s\" již existuje."
 
 #: projects/views/team.py:459
 #, python-format
 msgid "A request for creating the '%s' team already exist."
-msgstr ""
+msgstr "Požadavek na vytvoření týmu \"%s\" již existuje."
 
 #: projects/views/team.py:467
 #, python-format
 msgid "You have requested the '%s' team creation."
-msgstr ""
+msgstr "Požádali jste o vytvoření týmu \"%s\"."
 
 #: projects/views/team.py:512
 #, python-format
@@ -1174,11 +1179,11 @@ msgstr ""
 
 #: repowatch/__init__.py:74
 msgid "Watch it"
-msgstr ""
+msgstr "Sledovat"
 
 #: repowatch/__init__.py:75
 msgid "Stop watching it"
-msgstr ""
+msgstr "Ukončit sledování"
 
 #: repowatch/models.py:28
 #, python-format
@@ -1187,27 +1192,28 @@ msgstr ""
 
 #: repowatch/models.py:97
 msgid "watch"
-msgstr ""
+msgstr "sledování"
 
 #: repowatch/models.py:98
 msgid "watches"
-msgstr ""
+msgstr "sledování"
 
 #: reviews/forms.py:9
 msgid "Write a short blurb for your review request."
 msgstr ""
 
 #: reviews/forms.py:11
+#, fuzzy
 msgid "Select a translation file for review."
-msgstr ""
+msgstr "Vybrat překladatelský soubor ke zhodnocení."
 
 #: reviews/models.py:44
 msgid "Open"
-msgstr ""
+msgstr "Otevřeno"
 
 #: reviews/models.py:45
 msgid "Closed"
-msgstr ""
+msgstr "Zavřeno"
 
 #: reviews/models.py:47
 msgid "Null"
@@ -1215,11 +1221,11 @@ msgstr ""
 
 #: reviews/models.py:48
 msgid "Accepted"
-msgstr ""
+msgstr "Akceptováno"
 
 #: reviews/models.py:49
 msgid "Rejected"
-msgstr ""
+msgstr "Zamítnuto"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
@@ -1231,11 +1237,11 @@ msgstr ""
 
 #: reviews/models.py:58
 msgid "Date and time of creation"
-msgstr ""
+msgstr "Datum a čas vytvoření"
 
 #: reviews/models.py:60
 msgid "Date and time of last update"
-msgstr ""
+msgstr "Datum a čas poslední aktualizace"
 
 #: reviews/models.py:63
 msgid "The review file name"
@@ -1247,23 +1253,25 @@ msgstr ""
 
 #: reviews/models.py:69
 msgid "Component"
-msgstr ""
+msgstr "Součást"
 
 #: reviews/models.py:87
 msgid "Review Request"
-msgstr ""
+msgstr "Požadavek ke zhodnocení"
 
 #: reviews/models.py:88
 msgid "Review Requests"
 msgstr ""
 
 #: reviews/models.py:89
+#, fuzzy
 msgid "-created_on"
-msgstr ""
+msgstr "-created_on"
 
 #: reviews/models.py:90
+#, fuzzy
 msgid "created_on"
-msgstr ""
+msgstr "created_on"
 
 #: reviews/views.py:33
 msgid "You only can upload a file for reviewing, if it's related to an existing language."
@@ -1291,11 +1299,11 @@ msgstr ""
 
 #: tarball/models.py:33
 msgid "tarball"
-msgstr ""
+msgstr "tar archiv"
 
 #: tarball/models.py:34
 msgid "tarballs"
-msgstr ""
+msgstr "tar archivy"
 
 #: teams/forms.py:12
 msgid "Coordinators are people that can manage the members of the team, for example. Search for usernames."
@@ -1331,7 +1339,7 @@ msgstr ""
 
 #: teams/models.py:32
 msgid "Coordinators"
-msgstr ""
+msgstr "Koordinátoři"
 
 #: teams/models.py:34
 msgid "Members"
@@ -1347,7 +1355,7 @@ msgstr ""
 
 #: teams/models.py:40
 msgid "creator"
-msgstr ""
+msgstr "tvůrce"
 
 #: teams/models.py:56
 msgid "team"
@@ -1395,7 +1403,7 @@ msgstr ""
 #: templates/404.html:4
 #: templates/404.html.py:7
 msgid "Page not found"
-msgstr ""
+msgstr "Stránka nenalezena"
 
 #: templates/404.html:12
 msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
@@ -1404,11 +1412,11 @@ msgstr ""
 #: templates/500.html:4
 #: templates/500.html.py:7
 msgid "Page unavailable"
-msgstr ""
+msgstr "Stránka nedostupná"
 
 #: templates/500.html:12
 msgid "We're sorry, but the requested page is currently unavailable."
-msgstr ""
+msgstr "Je nám líto, ale požadovaná stránka není momentálně dostupná."
 
 #: templates/500.html:14
 msgid "We're messing around with things internally, and the server had a bit of a hiccup."
@@ -1416,12 +1424,12 @@ msgstr ""
 
 #: templates/500.html:16
 msgid "Please try again later."
-msgstr ""
+msgstr "Zkuste to prosím později."
 
 #: templates/about.html:9
 #: templates/index.html:10
 msgid "Welcome to Transifex"
-msgstr ""
+msgstr "Vítá vás Transifex"
 
 #: templates/base-sample.html:8
 #: templates/admin/base_site.html:4
@@ -1470,7 +1478,7 @@ msgstr ""
 
 #: templates/base-sample.html:47
 msgid "Sign out"
-msgstr ""
+msgstr "Odhlásit se"
 
 #: templates/base-sample.html:49
 #: templates/simpleauth/login_box.html:7
@@ -1484,12 +1492,12 @@ msgstr ""
 #: templates/userprofile/account/login.html:18
 #: templates/userprofile/account/login.html:27
 msgid "Sign in"
-msgstr ""
+msgstr "Přihlásit se"
 
 #: templates/base-sample.html:52
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
-msgstr ""
+msgstr "Zaregistrovat se"
 
 #: templates/base-sample.html:114
 msgid "About"
@@ -1509,7 +1517,7 @@ msgstr ""
 
 #: templates/index.html:24
 msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
-msgstr ""
+msgstr "Transifex je služba zaměřená na pomoc překladatelům sledovat jejich oblíbené překladatelské projekty."
 
 #: templates/index.html:28
 #, python-format
@@ -1526,7 +1534,7 @@ msgstr ""
 
 #: templates/search.html:9
 msgid "Results"
-msgstr ""
+msgstr "Výsledky"
 
 #: templates/search.html:15
 msgid "Search projects"
@@ -1588,11 +1596,11 @@ msgstr ""
 #: templates/contact_form/contact_form.html:5
 #: templates/contact_form/contact_form.html:6
 msgid "Contact us"
-msgstr ""
+msgstr "Kontaktujte nás"
 
 #: templates/contact_form/contact_form.html:7
 msgid "Let us know what you think!"
-msgstr ""
+msgstr "Dejte nám vědět, co si myslíte!"
 
 #: templates/contact_form/contact_form.html:10
 msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
@@ -1617,7 +1625,7 @@ msgstr ""
 #: templates/languages/language_detail.html:17
 #, python-format
 msgid "%(project)s Releases"
-msgstr ""
+msgstr "Vydání %(project)s"
 
 #: templates/languages/language_detail.html:24
 #, python-format
@@ -1674,7 +1682,7 @@ msgstr ""
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
-msgstr ""
+msgstr "Primární e-mail"
 
 #: templates/notification/notices.html:92
 msgid "change under"
@@ -1688,7 +1696,7 @@ msgstr "Účet"
 #: templates/notification/notices.html:95
 #: templates/projects/component_detail.html:121
 msgid "Note"
-msgstr ""
+msgstr "Poznámka"
 
 #: templates/notification/notices.html:96
 msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
@@ -1852,26 +1860,28 @@ msgstr ""
 #: templates/projects/component_confirm_delete.html:10
 #, python-format
 msgid "Delete %(component_name)s"
-msgstr ""
+msgstr "Smazat %(component_name)s"
 
 #: templates/projects/component_confirm_delete.html:14
 #, python-format
 msgid "Say goodbye to <em>%(component_name)s</em>?"
-msgstr ""
+msgstr "Dát sbohem <em>%(component_name)s</em>?"
 
 #: templates/projects/component_confirm_delete.html:19
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  Jste si opravdu jisti, že chcete navždy smazat součást \"%(component_name)s\", která patří k %(project_name)s?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
 #: templates/projects/release_confirm_delete.html:24
 #: templates/teams/team_confirm_delete.html:19
 msgid "Yes, I'm sure!"
-msgstr ""
+msgstr "Ano, jsem si jist!"
 
 #: templates/projects/component_detail.html:30
 msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
@@ -1921,8 +1931,9 @@ msgstr ""
 #: templates/projects/component_detail.html:109
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vydání:"
+msgstr[1] "Vydání:"
+msgstr[2] "Vydání:"
 
 #: templates/projects/component_detail.html:117
 msgid "Allows submissions:"
@@ -1996,38 +2007,38 @@ msgstr ""
 #: templates/reviews/review_list.html:21
 #: templates/reviews/review_list.html:23
 msgid "Reviews"
-msgstr ""
+msgstr "Zhodnocení"
 
 #: templates/projects/component_detail.html:199
 #: templates/projects/project_detail.html:103
 #: templates/teams/team_detail.html:125
 msgid "History"
-msgstr ""
+msgstr "Historie"
 
 #: templates/projects/component_detail.html:220
 msgid "Delete component"
-msgstr ""
+msgstr "Smazat součást"
 
 #: templates/projects/component_form.html:6
 #: templates/projects/component_form.html:11
 msgid "Add a component"
-msgstr ""
+msgstr "Přidat součást"
 
 #: templates/projects/component_form.html:7
 #, python-format
 msgid "Edit %(component_name)s"
-msgstr ""
+msgstr "Upravit %(component_name)s"
 
 #: templates/projects/component_form.html:12
 #: templates/projects/component_form.html:83
 #, python-format
 msgid "Edit Component '%(component_name)s'"
-msgstr ""
+msgstr "Upravit součást \"%(component_name)s\""
 
 #: templates/projects/component_form.html:81
 #, python-format
 msgid "New component for %(project_name)s"
-msgstr ""
+msgstr "Nová součást pro %(project_name)s"
 
 #: templates/projects/component_form.html:102
 msgid "Checkout"
@@ -2040,7 +2051,7 @@ msgstr ""
 #: templates/projects/component_form.html:122
 #: templates/projects/component_form.html:132
 msgid "Save component"
-msgstr ""
+msgstr "Uložit součást"
 
 #: templates/projects/component_lang_detail.html:29
 msgid "translation files"
@@ -2067,7 +2078,7 @@ msgstr ""
 
 #: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
-msgstr ""
+msgstr "Pro tento projekt nejsou zatím registrovány žádné součásti."
 
 #: templates/projects/component_list.html:47
 msgid "Add one!"
@@ -2094,7 +2105,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:13
 msgid "Local file:"
-msgstr ""
+msgstr "Lokální soubor:"
 
 #: templates/projects/component_submit_new_file.html:15
 msgid "The translation file to be uploaded for the new language."
@@ -2161,6 +2172,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
 msgstr ""
+"\n"
+"  Jste si opravdu jisti, že chcete navždy smazat registrovaný projekt \"%(project_name)s\"?\n"
 
 #: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
@@ -2199,20 +2212,22 @@ msgstr ""
 #: templates/projects/project_detail.html:73
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Správce:"
+msgstr[1] "Správci:"
+msgstr[2] "Správci:"
 
 #: templates/projects/project_detail.html:87
 msgid "External links:"
-msgstr ""
+msgstr "Externí odkazy:"
 
 #: templates/projects/project_detail.html:89
 msgid "Screenshots"
-msgstr ""
+msgstr "Snímky obrazovky"
 
 #: templates/projects/project_detail.html:120
+#, fuzzy
 msgid "View complete action log"
-msgstr ""
+msgstr "Zobrazit úplný záznam akcí"
 
 #: templates/projects/project_detail.html:135
 msgid "Delete project"
@@ -2231,7 +2246,7 @@ msgstr "Přidat projekt"
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
-msgstr ""
+msgstr "Upravit %(project_name)s"
 
 #: templates/projects/project_form.html:27
 msgid "New project"
@@ -2252,11 +2267,12 @@ msgstr "Uložit projekt"
 #: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
-msgstr ""
+msgstr "Upravit <em>%(project_name)s</em>"
 
 #: templates/projects/project_form_base.html:29
+#, fuzzy
 msgid "Access control will be enabled once the project is created"
-msgstr ""
+msgstr "Kontrola přístupu bude aktivována po vytvoření projektu"
 
 #: templates/projects/project_form_base.html:76
 #, python-format
@@ -2268,7 +2284,7 @@ msgstr ""
 #: templates/projects/project_form_permissions.html:15
 #: templates/projects/project_menu.html:47
 msgid "Access Control"
-msgstr ""
+msgstr "Kontrola přístupu"
 
 #: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
@@ -2294,16 +2310,16 @@ msgstr "Poslední projekty"
 
 #: templates/projects/project_list.html:8
 msgid "Project list"
-msgstr ""
+msgstr "Seznam projektů"
 
 #: templates/projects/project_list.html:17
 #, python-format
 msgid "Projects with tag '%(tag)s'"
-msgstr ""
+msgstr "Projekty se štítkem \"%(tag)s\""
 
 #: templates/projects/project_list.html:18
 msgid "Projects on Transifex"
-msgstr ""
+msgstr "Projekty na Transifexu"
 
 #: templates/projects/project_list.html:25
 msgid "Add a new project"
@@ -2311,47 +2327,52 @@ msgstr "Přidat nový projekt"
 
 #: templates/projects/project_list.html:54
 msgid "No projects registered yet. :-("
-msgstr ""
+msgstr "Zatím žádné zaregistrované projekty. :-("
 
 #: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
-msgstr ""
+msgstr "Proč <a href=\"%(project_create)s\">nějaký nepřidáte</a>?"
 
 #: templates/projects/project_list.html:67
 #, python-format
 msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
-msgstr ""
+msgstr "Nenašli jste svůj projekt? Nebojte se a <a href=\"%(project_create)s\">přidejte ho</a>!"
 
 #: templates/projects/project_menu.html:40
 #: templates/userprofile/menu.html:5
+#, fuzzy
 msgid "Overview"
-msgstr ""
+msgstr "Přehled"
 
 #: templates/projects/project_menu.html:54
 #: templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 msgid "Translation Teams"
-msgstr ""
+msgstr "Překladatelské týmy"
 
 #: templates/projects/project_menu.html:61
 #: templates/projects/project_timeline.html:12
 #: templates/txcommon/user_timeline.html:12
+#, fuzzy
 msgid "Timeline"
-msgstr ""
+msgstr "Časová osa"
 
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "\n"
 " %(project_name)s Timeline\n"
 " "
 msgstr ""
+"\n"
+" Časová osa %(project_name)s\n"
+" "
 
 #: templates/projects/project_top_translators.html:4
 msgid "Top Translators"
-msgstr ""
+msgstr "Nejlepší překladatelé"
 
 #: templates/projects/project_top_translators.html:7
 #, python-format
@@ -2364,12 +2385,12 @@ msgstr[1] ""
 #: templates/projects/release_confirm_delete.html:10
 #, python-format
 msgid "Delete %(release_name)s"
-msgstr ""
+msgstr "Smazat %(release_name)s"
 
 #: templates/projects/release_confirm_delete.html:14
 #, python-format
 msgid "Say goodbye to <em>%(release_name)s</em>?"
-msgstr ""
+msgstr "Dát sbohem <em>%(release_name)s</em>?"
 
 #: templates/projects/release_confirm_delete.html:19
 #, python-format
@@ -2377,50 +2398,52 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  Jste si opravdu jisti, že chcete navždy smazat vydání \"%(release_name)s\", které patří k %(project_name)s?\n"
 
 #: templates/projects/release_detail.html:60
 msgid "Release date:"
-msgstr ""
+msgstr "Datum vydání:"
 
 #: templates/projects/release_detail.html:64
 msgid "String freeze:"
-msgstr ""
+msgstr "Zmrazení řetězců:"
 
 #: templates/projects/release_detail.html:68
 msgid "Devel freeze:"
-msgstr ""
+msgstr "Zmrazení vývoje:"
 
 #: templates/projects/release_detail.html:73
 msgid "Components:"
-msgstr ""
+msgstr "Součásti:"
 
 #: templates/projects/release_detail.html:81
 msgid "Translation statistics"
-msgstr ""
+msgstr "Statistiky překladu"
 
 #: templates/projects/release_detail.html:88
 msgid "No translations added for this release. :-("
-msgstr ""
+msgstr "Pro toto vydání nepřidány žádné překlady. :-("
 
 #: templates/projects/release_detail.html:99
 msgid "Delete release"
-msgstr ""
+msgstr "Smazat vydání"
 
 #: templates/projects/release_form.html:14
 #: templates/projects/release_form.html:19
 #: templates/projects/release_form.html:25
 msgid "Add a release"
-msgstr ""
+msgstr "Přidat vydání"
 
 #: templates/projects/release_form.html:15
 #, python-format
 msgid "Edit %(release_name)s"
-msgstr ""
+msgstr "Upravit %(release_name)s"
 
 #: templates/projects/release_form.html:20
 #, python-format
 msgid "Edit <em>%(release_name)s</em> release"
-msgstr ""
+msgstr "Upravit vydání <em>%(release_name)s</em>"
 
 #: templates/projects/release_form.html:28
 #, python-format
@@ -2454,7 +2477,7 @@ msgstr ""
 
 #: templates/projects/release_language_detail.html:65
 msgid "Untranslated Components"
-msgstr ""
+msgstr "Nepřeložené součásti"
 
 #: templates/projects/release_language_detail.html:67
 #, python-format
@@ -2463,7 +2486,7 @@ msgstr ""
 
 #: templates/projects/release_list.html:14
 msgid "Project Releases"
-msgstr ""
+msgstr "Vydání projektu"
 
 #: templates/projects/release_list.html:29
 #, python-format
@@ -2489,7 +2512,7 @@ msgstr ""
 
 #: templates/reviews/review_list.html:47
 msgid "Who and when"
-msgstr ""
+msgstr "Kdo a kdy"
 
 #: templates/reviews/review_list.html:49
 #: templates/reviews/review_list.html:115
@@ -2518,39 +2541,41 @@ msgstr ""
 
 #: templates/reviews/review_list.html:67
 msgid "Download the version sent for review"
-msgstr ""
+msgstr "Stáhnout verzi odeslanou k zhodnocení"
 
 #: templates/reviews/review_list.html:70
+#, fuzzy
 msgid "Score"
-msgstr ""
+msgstr "Skóre"
 
 #: templates/reviews/review_list.html:84
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #: templates/reviews/review_list.html:94
 msgid "Close Review"
-msgstr ""
+msgstr "Uzavřít zhodnocení"
 
 #: templates/reviews/review_list.html:97
+#, fuzzy
 msgid "Accept and submit translation"
-msgstr ""
+msgstr "Přijmout a odevzdat překlad"
 
 #: templates/reviews/review_list.html:97
 msgid "Accept"
-msgstr ""
+msgstr "Přijmout"
 
 #: templates/reviews/review_list.html:98
 msgid "Reject translation"
-msgstr ""
+msgstr "Odmítnout překlad"
 
 #: templates/reviews/review_list.html:98
 msgid "Reject"
-msgstr ""
+msgstr "Odmítnout"
 
 #: templates/reviews/review_list.html:115
 msgid "By"
-msgstr ""
+msgstr "Od"
 
 #: templates/reviews/review_list.html:125
 msgid "Add your comment as"
@@ -2674,6 +2699,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  Jste si opravdu jisti, že chcete navždy smazat tým \"%(lang_name)s\", který patří k %(project_name)s?\n"
 
 #: templates/teams/team_detail.html:19
 #, python-format
@@ -2825,7 +2852,7 @@ msgstr ""
 #: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
-msgstr ""
+msgstr "Odstranit profil"
 
 #: templates/userprofile/account/email_validation.html:5
 msgid "Change e-mail"
@@ -2921,37 +2948,38 @@ msgstr ""
 
 #: templates/userprofile/account/login.html:19
 msgid "Enter your username and password to sign in."
-msgstr ""
+msgstr "Pro přihlášení zadejte své uživatelské jméno a heslo."
 
 #: templates/userprofile/account/login.html:36
+#, fuzzy
 msgid "Utilities"
-msgstr ""
+msgstr "Nástroje"
 
 #: templates/userprofile/account/login.html:38
 msgid "Lost your password?"
-msgstr ""
+msgstr "Zapomněli jste své heslo?"
 
 #: templates/userprofile/account/login.html:40
 #: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
-msgstr ""
+msgstr "Znovu poslat ověřovací e-mail"
 
 #: templates/userprofile/account/login.html:42
 msgid "Sign up!"
-msgstr ""
+msgstr "Zaregistrujte se!"
 
 #: templates/userprofile/account/logout.html:5
 #: templates/userprofile/account/logout.html:10
 msgid "Logged out"
-msgstr ""
+msgstr "Odhlášeno"
 
 #: templates/userprofile/account/logout.html:11
 msgid "You've been logged out."
-msgstr ""
+msgstr "Byli jste odhlášeni."
 
 #: templates/userprofile/account/logout.html:11
 msgid "Log in again"
-msgstr ""
+msgstr "Znovu se přihlásit"
 
 #: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:5
@@ -2970,11 +2998,11 @@ msgstr ""
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
 msgid "Password change successful"
-msgstr ""
+msgstr "Heslo úspěšně změněno"
 
 #: templates/userprofile/account/password_change_done.html:14
 msgid "The password has been changed successfully."
-msgstr ""
+msgstr "Heslo bylo úspěšně změněno."
 
 #: templates/userprofile/account/password_expired.html:4
 msgid "Password key expired"
@@ -3001,8 +3029,9 @@ msgid "Forgotten your password? Enter your e-mail address, and we'll reset your 
 msgstr ""
 
 #: templates/userprofile/account/password_reset.html:27
+#, fuzzy
 msgid "Reset my password"
-msgstr ""
+msgstr "Obnovit mé heslo"
 
 #: templates/userprofile/account/password_reset_complete.html:14
 msgid "Your password has been set.  You may go ahead and log in now."
@@ -3048,7 +3077,7 @@ msgstr ""
 
 #: templates/userprofile/account/registration_done.html:8
 msgid "Register a new account"
-msgstr ""
+msgstr "Registrovat nový účet"
 
 #: templates/userprofile/account/registration_done.html:12
 msgid "You have successfully registered a new account and an account activation url has been sent to your e-mail address. Please access this url to finish the registration process."
@@ -3099,7 +3128,7 @@ msgstr ""
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
-msgstr ""
+msgstr "Smazat osobní informace"
 
 #: templates/userprofile/profile/delete.html:13
 msgid "Erase all your private data except your username. You can fill in the information again later if you want to."
@@ -3107,11 +3136,11 @@ msgstr ""
 
 #: templates/userprofile/profile/delete.html:17
 msgid "Are you sure?"
-msgstr ""
+msgstr "Jste si jist?"
 
 #: templates/userprofile/profile/delete.html:18
 msgid "Delete my data"
-msgstr ""
+msgstr "Smazat mé údaje"
 
 #: templates/userprofile/profile/location.html:4
 #, python-format
@@ -3133,15 +3162,15 @@ msgstr "Země"
 
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
-msgstr ""
+msgstr "Načítání..."
 
 #: templates/userprofile/profile/location.html:26
 msgid "Location:"
-msgstr ""
+msgstr "Umístění:"
 
 #: templates/userprofile/profile/location.html:27
 msgid "Position"
-msgstr ""
+msgstr "Pozice"
 
 #: templates/userprofile/profile/location.html:35
 #: templates/userprofile/profile/personal.html:36
@@ -3173,7 +3202,7 @@ msgstr "Přidat avatar"
 
 #: templates/userprofile/profile/overview.html:39
 msgid "Username:"
-msgstr ""
+msgstr "Uživatelské jméno:"
 
 #: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
@@ -3195,7 +3224,7 @@ msgstr ""
 
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
-msgstr ""
+msgstr "Správa:"
 
 #: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
@@ -3211,11 +3240,11 @@ msgstr ""
 
 #: templates/userprofile/profile/overview.html:97
 msgid "Change location"
-msgstr ""
+msgstr "Změnit umístění"
 
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr ""
+msgstr "Má časová zóna"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -3233,7 +3262,7 @@ msgstr ""
 
 #: templates/userprofile/profile/public.html:66
 msgid "Native language"
-msgstr ""
+msgstr "Rodný jazyk"
 
 #: templates/userprofile/profile/public.html:72
 msgid "Blog/Site"
@@ -3243,13 +3272,13 @@ msgstr ""
 #: txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: templates/userprofile/profile/public.html:84
 #: txcommon/models.py:35
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #: templates/userprofile/profile/public.html:104
 msgid ""
@@ -3261,7 +3290,17 @@ msgid_plural ""
 "            Coordinator of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"            Koordinátor následujícího týmu:\n"
+"        "
 msgstr[1] ""
+"\n"
+"            Koordinátor následujících týmů:\n"
+"        "
+msgstr[2] ""
+"\n"
+"            Koordinátor následujících týmů:\n"
+"        "
 
 #: templates/userprofile/profile/public.html:115
 #: templates/userprofile/profile/public.html:142
@@ -3299,18 +3338,18 @@ msgstr ""
 #: templates/webtrans/transfile_edit.html:36
 #, python-format
 msgid "%(component_name)s"
-msgstr ""
+msgstr "%(component_name)s"
 
 #: templates/webtrans/transfile_edit.html:37
 #, python-format
 msgid "Translate '%(filename)s'"
-msgstr ""
+msgstr "Přeložit \"%(filename)s\""
 
 #: templates/webtrans/transfile_edit.html:46
 #: templates/webtrans/transfile_edit.html:51
 #, python-format
 msgid "Translate '<code>%(filename)s</code>'"
-msgstr ""
+msgstr "Přeložit \"<code>%(filename)s</code>\""
 
 #: templates/webtrans/transfile_edit.html:60
 msgid "Current status for this page"
@@ -3350,39 +3389,39 @@ msgstr ""
 
 #: templates/webtrans/transfile_edit.html:115
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: templates/webtrans/transfile_edit.html:116
 msgid "Source String"
-msgstr ""
+msgstr "Zdrojový text"
 
 #: templates/webtrans/transfile_edit.html:118
 msgid "Translation"
-msgstr ""
+msgstr "Překlad"
 
 #: templates/webtrans/transfile_edit.html:120
 msgid "Auto-translate"
-msgstr ""
+msgstr "Automatický překlad"
 
 #: templates/webtrans/transfile_edit.html:120
 msgid "AT"
-msgstr ""
+msgstr "AP"
 
 #: templates/webtrans/transfile_edit.html:122
 msgid "Fuzzy?"
-msgstr ""
+msgstr "Nepřesný?"
 
 #: templates/webtrans/transfile_edit.html:135
 msgid "Submit translations"
-msgstr ""
+msgstr "Uložit překlady"
 
 #: templates/webtrans/transfile_form.html:14
 msgid "Copy source string"
-msgstr ""
+msgstr "Zkopírovat zdrojový text"
 
 #: templates/webtrans/transfile_form.html:23
 msgid "Auto-suggest translation"
-msgstr ""
+msgstr "Navrhnout překlad"
 
 #: translations/models.py:242
 msgid "PO file"
@@ -3401,20 +3440,20 @@ msgstr "Soubory"
 #: translations/templates/lang_stats_table.html:15
 #: translations/templates/release_stats_table.html:8
 msgid "Translations"
-msgstr ""
+msgstr "Překlady"
 
 #: translations/templates/comp_lang_stats_table.html:16
 #: translations/templates/comp_stats_table.html:17
 #: translations/templates/lang_stats_table.html:16
 msgid "Options"
-msgstr ""
+msgstr "Možnosti"
 
 #: translations/templates/comp_lang_stats_table.html:26
 #: translations/templates/comp_stats_table.html:37
 #: translations/templates/lang_stats_table.html:27
 #: translations/templates/release_stats_table.html:22
 msgid "Could not generate statistics for this file"
-msgstr ""
+msgstr "Pro tento soubor nelze vygenerovat statistiku"
 
 #: translations/templates/comp_lang_stats_table.html:31
 #: translations/templates/comp_stats_table.html:42
@@ -3422,7 +3461,7 @@ msgstr ""
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
 msgid "Trans:"
-msgstr ""
+msgstr "Přeloženo:"
 
 #: translations/templates/comp_lang_stats_table.html:31
 #: translations/templates/comp_stats_table.html:42
@@ -3430,27 +3469,27 @@ msgstr ""
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
 msgid "Untrans:"
-msgstr ""
+msgstr "Nepřeloženo:"
 
 #: translations/templates/comp_lang_stats_table.html:39
 #: translations/templates/comp_stats_table.html:54
 #: translations/templates/lang_stats_table.html:44
 #: translations/templates/source_files.html:18
 msgid "View "
-msgstr ""
+msgstr "Zobrazit "
 
 #: translations/templates/comp_lang_stats_table.html:40
 #: translations/templates/comp_stats_table.html:55
 #: translations/templates/lang_stats_table.html:45
 #: translations/templates/source_files.html:19
 msgid "Download "
-msgstr ""
+msgstr "Stáhnout "
 
 #: translations/templates/comp_lang_stats_table.html:50
 #: translations/templates/comp_stats_table.html:65
 #: translations/templates/lang_stats_table.html:55
 msgid "Edit "
-msgstr ""
+msgstr "Upravit "
 
 #: translations/templates/comp_stats_table.html:28
 msgid "See the team for this language"
@@ -3463,7 +3502,7 @@ msgstr ""
 
 #: translations/templates/comp_stats_table.html:30
 msgid "No team for this language"
-msgstr ""
+msgstr "Žádný tým pro tento jazyk"
 
 #: translations/templates/comp_stats_table.html:34
 msgid "There are no languages registered matching this code"
@@ -3477,11 +3516,11 @@ msgstr ""
 #: translations/templates/component_submit.html:5
 #, python-format
 msgid "Submit a translation for %(pofile_filename)s"
-msgstr ""
+msgstr "Odevzdat překlad pro %(pofile_filename)s"
 
 #: translations/templates/component_submit.html:9
 msgid "Submit file"
-msgstr ""
+msgstr "Nahrát soubor"
 
 #: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
@@ -3543,12 +3582,12 @@ msgstr ""
 
 #: txcommon/admin.py:13
 msgid "This value must contain only unicode letters, numbers and underscores."
-msgstr ""
+msgstr "Tato hodnota smí obsahovat pouze unicode písmena, číslice a podtržítka."
 
 #: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file could not be opened: %s"
-msgstr ""
+msgstr "Soubor LINGUAS nemohl být otevřen: %s"
 
 #: txcommon/models.py:11
 msgid "Female"
@@ -3571,26 +3610,26 @@ msgstr "Příjmení"
 #: txcommon/models.py:33
 #: txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
-msgstr ""
+msgstr "Rodný jazyk"
 
 #: txcommon/models.py:34
 #: txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
-msgstr ""
+msgstr "O sobě"
 
 #: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
-msgstr ""
+msgstr "Pár slov o sobě (140 znaků)."
 
 #: txcommon/models.py:39
 #: txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
-msgstr ""
+msgstr "Hledáte práci?"
 
 #: txcommon/notifications.py:12
 msgid "New Project Added"
@@ -3598,7 +3637,7 @@ msgstr "Nový projekt přidán"
 
 #: txcommon/notifications.py:13
 msgid "when a new project is added"
-msgstr ""
+msgstr "když je projekt přidán"
 
 #: txcommon/notifications.py:19
 msgid "Project Changed"
@@ -3606,7 +3645,7 @@ msgstr "Projekt změněn"
 
 #: txcommon/notifications.py:20
 msgid "when a project is changed"
-msgstr ""
+msgstr "když je projekt změněn"
 
 #: txcommon/notifications.py:26
 msgid "Project Deleted"
@@ -3614,7 +3653,7 @@ msgstr "Projekt smazán"
 
 #: txcommon/notifications.py:27
 msgid "when a project is deleted"
-msgstr ""
+msgstr "když je projekt smazán"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
@@ -3658,27 +3697,27 @@ msgstr ""
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
-msgstr ""
+msgstr "Nová součást přidána"
 
 #: txcommon/notifications.py:74
 msgid "when a new component is added to a project"
-msgstr ""
+msgstr "když je nová součást přidána k projektu"
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
-msgstr ""
+msgstr "Součást změněna"
 
 #: txcommon/notifications.py:81
 msgid "when a component of a project is changed"
-msgstr ""
+msgstr "když je součást projektu změněna"
 
 #: txcommon/notifications.py:87
 msgid "Component Deleted"
-msgstr ""
+msgstr "Součást smazána"
 
 #: txcommon/notifications.py:88
 msgid "when a component of a project is deleted"
-msgstr ""
+msgstr "když je součást projektu smazána"
 
 #: txcommon/notifications.py:94
 msgid "File Submitted"
@@ -3718,7 +3757,7 @@ msgstr ""
 
 #: txcommon/notifications.py:134
 msgid "when a new release is added to a project"
-msgstr ""
+msgstr "když je nové vydání přidáno k projektu"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
@@ -3726,7 +3765,7 @@ msgstr "Vydání změněno"
 
 #: txcommon/notifications.py:141
 msgid "when a release of a project is changed"
-msgstr ""
+msgstr "když je vydání projektu změněno"
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
@@ -3734,23 +3773,23 @@ msgstr "Vydání smazáno"
 
 #: txcommon/notifications.py:147
 msgid "when a release of a project is deleted"
-msgstr ""
+msgstr "když je vydání projektu smazáno"
 
 #: txcommon/notifications.py:152
 msgid "Release Added to a Project"
-msgstr ""
+msgstr "Vydání přidáno k projektu"
 
 #: txcommon/notifications.py:153
 msgid "when a release is added to a project"
-msgstr ""
+msgstr "když je vydání přidáno k projektu"
 
 #: txcommon/notifications.py:158
 msgid "Release Deleted from a Project"
-msgstr ""
+msgstr "Vydání smazáno z projektu"
 
 #: txcommon/notifications.py:159
 msgid "when a release is deleted from a project"
-msgstr ""
+msgstr "když je vydání smazáno z projektu"
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
@@ -3758,7 +3797,7 @@ msgstr "Nový tým přidán"
 
 #: txcommon/notifications.py:169
 msgid "when a new translation team is added to a project"
-msgstr ""
+msgstr "když je nový překladatelský tým přidán k projektu"
 
 #: txcommon/notifications.py:176
 msgid "Team Changed"
@@ -3766,7 +3805,7 @@ msgstr "Tým změněn"
 
 #: txcommon/notifications.py:177
 msgid "when a translation team of a project is changed"
-msgstr ""
+msgstr "když je překladatelský tým projektu změněn"
 
 #: txcommon/notifications.py:184
 msgid "Team Deleted"
@@ -3774,7 +3813,7 @@ msgstr "Tým smazán"
 
 #: txcommon/notifications.py:185
 msgid "when a translation team of a project is deleted"
-msgstr ""
+msgstr "když je překladatelský tým projektu smazán"
 
 #: txcommon/notifications.py:192
 msgid "Team Creation Requested"
