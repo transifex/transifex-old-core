@@ -1,22 +1,17 @@
-To build the docs, you will need to have a working Transifex
-system (dependencies there, 'python manage.py shell' working).
-If you're using a virtualenv, make sure you enable it.
 
-To build/publish the docs, I usually do something like:
+=========================
+ Transifex Documentation
+=========================
 
-workon current
-make clean && make html
-firefox html/index.html
+Welcome to the documentation included with the Transifex source code.
 
-# Publish:
-cd html
-scpresume * txo:webapps/txo_docs/
+The docs are available in the following formats:
 
-To get translators:
+- Plaintext: Suitable for printing, reading from the command-line etc.
 
-hg log -r 0.7:tip --template "{desc|firstline} -- {author|person}\n" | \
-grep 'l10n' | sort | uniq
+- HTML: A rich rendering of the docs is also available in HTML format, with
+  inter-links, nice formatting, searching, automatic indexing etc. Just fire
+  up your browser and point it at the 'html/' directory.
 
-To get the new deps:
-
-hg diff -r 0.7:tip setup.py
+Instructions on how to build the docs can be found in the README file inside
+the '_devel/' directory.
