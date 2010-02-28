@@ -1,9 +1,10 @@
 # Makefile for Sphinx documentation
 #
-
+# Note: If you're using a virtualenv, make sure sphinx is installed in there.
+#
 # You can set these variables from the command line.
 SPHINXOPTS    = -c ../_devel
-SPHINXBUILD   = env PYTHONPATH="../../transifex" DJANGO_SETTINGS_MODULE="settings" sphinx-build
+SPHINXBUILD   = env DJANGO_SETTINGS_MODULE="settings" sphinx-build
 PAPER         =
 OUTDIR        = ../html
 BUILDDIR      = ../_build
