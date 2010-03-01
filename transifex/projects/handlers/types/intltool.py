@@ -17,7 +17,7 @@ class IntltoolHandler(pot.POTHandler):
     def set_stats(self):
         """
         Calculate stats for all translations of the component after 
-        these translations be merged with a new POT file extracted 
+        these translations are merged with a new POT file extracted 
         using intltool-update.    .
         """
 
