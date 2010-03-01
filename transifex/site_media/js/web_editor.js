@@ -111,7 +111,7 @@ $(function(){
     })
 
     // Actions for when the Translation field changes
-    $("textarea[name*='msgstr_field_']").keyup(function () {
+    $("textarea[name*='msgstr_field_']").change(function () {
         nkey = $(this).attr('name').split('msgstr_field_')[1].split('_')[0];
 
         if($(this).val() == ''){
@@ -130,6 +130,11 @@ $(function(){
         $("input[name='fuzzy_field_"+nkey+"']").attr('checked', false);
         update_totals();
     })
+
+    // Actions for when the Translation field changes by hitting a key
+    $("textarea[name*='msgstr_field_']").keyup(function () {
+        $(this).trigger('change');
+    });
 
     // Disabling the Fuzzy checkbox for untranslated entries
     $("textarea[name*='msgstr_field_']").each(function(){

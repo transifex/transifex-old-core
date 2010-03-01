@@ -30,8 +30,8 @@ def review_add(request, component, submitted_file, language=None):
     """ Common functionality wrapper."""
 
     if not language:
-        request.user.message_set.create(message=_("You only can upload a file " 
-            "for reviewing, if it's related to an existing language."))
+        request.user.message_set.create(message=_("You can upload a file " 
+            "for review only if it's related to an existing language."))
     else:
         filename = submitted_file.targetfile
         if request.POST.get('message', None):
