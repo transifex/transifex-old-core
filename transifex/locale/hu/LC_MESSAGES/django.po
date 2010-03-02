@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-27 19:40+0000\n"
-"PO-Revision-Date: 2010-03-02 10:38+0100\n"
+"PO-Revision-Date: 2010-03-02 13:55+0100\n"
 "Last-Translator: Nikolas Slivka <snicore@gmail.com>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -999,7 +999,7 @@ msgstr "Nincs „pot” mappa megnevezve e publicanszerű fájl halmazban. Talá
 
 #: projects/views/component.py:289
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "Ez az összetevő nincs beállítva a statisztikai számításhoz."
 
 #: projects/views/component.py:372
 msgid "This component does  not allow write access."
@@ -1087,23 +1087,22 @@ msgid "Stop watching this project"
 msgstr "Ne figyelje tovább e tervet"
 
 #: projects/views/release.py:94
-#, fuzzy, python-format
+#, python-format
 msgid "%s was deleted."
-msgstr "%s törölve."
+msgstr "%s törölve lett."
 
 #: projects/views/review.py:66
 msgid "Request closed as Rejected."
-msgstr ""
+msgstr "Kérelem lezárva, mint elutasított."
 
 #: projects/views/review.py:72
-#, fuzzy
 msgid "Request reopened."
-msgstr "Engedélyt kér"
+msgstr "Kérelem újra megnyitva."
 
 #: projects/views/team.py:168
-#, fuzzy, python-format
+#, python-format
 msgid "The '%s' team was deleted."
-msgstr "%s törölve."
+msgstr "A(z) '%s' csapat törölve lett."
 
 #: projects/views/team.py:205
 #, python-format
@@ -1123,7 +1122,7 @@ msgstr ""
 #: projects/views/team.py:260
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
-msgstr ""
+msgstr "'%(user)s' felhasználó már a(z) '%(team)s' csapatban van."
 
 #: projects/views/team.py:267
 #, python-format
@@ -1224,8 +1223,9 @@ msgid "Closed"
 msgstr "Lezárt"
 
 #: reviews/models.py:47
+#, fuzzy
 msgid "Null"
-msgstr ""
+msgstr "Üres"
 
 #: reviews/models.py:48
 msgid "Accepted"
@@ -1237,7 +1237,7 @@ msgstr "Elutasítva"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
-msgstr ""
+msgstr "A felülvizsgálat státusza (nyitott, zárt, stb.)"
 
 #: reviews/models.py:56
 msgid "The review's resolution/closing state."
@@ -1245,7 +1245,7 @@ msgstr ""
 
 #: reviews/models.py:58
 msgid "Date and time of creation"
-msgstr ""
+msgstr "Létrehozás ideje és dátuma"
 
 #: reviews/models.py:60
 #, fuzzy
@@ -1254,7 +1254,7 @@ msgstr "Statisztikák utoljára frissítve:"
 
 #: reviews/models.py:63
 msgid "The review file name"
-msgstr ""
+msgstr "Ellenőrzött fájlnév"
 
 #: reviews/models.py:65
 msgid "The path of the target file which will be used on submission"
@@ -1299,9 +1299,8 @@ msgid "Locks"
 msgstr "Lakatok"
 
 #: tarball/forms.py:16
-#, fuzzy
 msgid "Tarball URL"
-msgstr "tar"
+msgstr "Tarball URL"
 
 #: tarball/forms.py:17
 msgid "A URL from which the tarball is accessible."
@@ -1316,12 +1315,13 @@ msgid "tarballs"
 msgstr "tarok"
 
 #: teams/forms.py:12
+#, fuzzy
 msgid "Coordinators are people that can manage the members of the team, for example. Search for usernames."
-msgstr ""
+msgstr "A koordinátorok azok az emberek, akik tudják kezelni a csapat tagjait, például. Keresni a felhasználónevekre."
 
 #: teams/forms.py:16
 msgid "Members are actually people that can submit translations. Search for usernames."
-msgstr ""
+msgstr "Tagok azok az emberek, akik tudnak fordítást beküldeni. Keresés felhasználónévre."
 
 #: teams/forms.py:52
 #, python-format
@@ -1362,11 +1362,11 @@ msgstr "Karbantartók"
 
 #: teams/models.py:38
 msgid "The main mailing list of the team."
-msgstr ""
+msgstr "A csapat fő levelezési listája."
 
 #: teams/models.py:40
 msgid "creator"
-msgstr ""
+msgstr "létrehozó"
 
 #: teams/models.py:56
 msgid "team"
@@ -1374,17 +1374,15 @@ msgstr "csapat"
 
 #: teams/models.py:57
 msgid "teams"
-msgstr ""
+msgstr "csapatok"
 
 #: teams/models.py:89
-#, fuzzy
 msgid "team creation request"
-msgstr "Kérelmet megtagad"
+msgstr "csapatlétrehozási kérelem"
 
 #: teams/models.py:90
-#, fuzzy
 msgid "team creation requests"
-msgstr "Kérelmek függőben:"
+msgstr "csapatlétrehozási kérelmek"
 
 #: teams/models.py:108
 msgid "Team"
@@ -1519,7 +1517,7 @@ msgstr "Névjegy"
 
 #: templates/base-sample.html:114
 msgid "Drops us a line"
-msgstr ""
+msgstr "Dobj nekünk egy sort"
 
 #: templates/base-sample.html:114
 msgid "Feedback"
@@ -1584,7 +1582,7 @@ msgstr "Keresés eredménye"
 
 #: templates/timeline.html:17
 msgid "Go"
-msgstr ""
+msgstr "Menj"
 
 #: templates/timeline.html:24
 #: templates/projects/component_detail.html:203
@@ -1638,9 +1636,9 @@ msgid "Thank you for your feedback."
 msgstr "Köszönjük a visszajelzést."
 
 #: templates/languages/language_detail.html:17
-#, fuzzy, python-format
+#, python-format
 msgid "%(project)s Releases"
-msgstr "%(collection)s·kiadások"
+msgstr "%(project)s kiadások"
 
 #: templates/languages/language_detail.html:24
 #, fuzzy, python-format
@@ -1666,9 +1664,8 @@ msgid "Notifications"
 msgstr "Értesítések"
 
 #: templates/notification/notices.html:32
-#, fuzzy
 msgid "Received Notifications"
-msgstr "Értesítések"
+msgstr "Megkapott értesítések"
 
 #: templates/notification/notices.html:43
 msgid "Time"
@@ -1684,8 +1681,9 @@ msgstr "Nincs megjegyzés."
 
 #: templates/notification/notices.html:83
 #: templates/notification/notices.html:85
+#, fuzzy
 msgid "Change your notification settings"
-msgstr ""
+msgstr "Értesítési beállítások változtatása"
 
 #: templates/notification/notices.html:83
 msgid "Notification settings"
@@ -1919,9 +1917,8 @@ msgid "Edit"
 msgstr "Szerkeszt"
 
 #: templates/projects/component_detail.html:84
-#, fuzzy
 msgid "Source details"
-msgstr "Forrás fájl:"
+msgstr "Forrás részletek"
 
 #: templates/projects/component_detail.html:88
 msgid "Repository:"
@@ -2389,7 +2386,7 @@ msgstr "%(project_name)s szerkesztése"
 #: templates/projects/project_top_translators.html:4
 #, fuzzy
 msgid "Top Translators"
-msgstr "Fordítások"
+msgstr "Top fordítók"
 
 #: templates/projects/project_top_translators.html:7
 #, fuzzy, python-format
@@ -2515,7 +2512,6 @@ msgid "No releases are registered for this project yet. Why don't you <a href=\"
 msgstr "Még nincs e gyűjteményhez rendelt kiadás. Miért nem <a·href=\"%(release_create)s\">ad hozzá egyet</a>?"
 
 #: templates/reviews/review_form.html:10
-#, fuzzy
 msgid "Submit"
 msgstr "Beküldés"
 
@@ -2576,12 +2572,11 @@ msgstr "Állapot"
 
 #: templates/reviews/review_list.html:94
 msgid "Close Review"
-msgstr ""
+msgstr "Felülvizsgálat lezárása"
 
 #: templates/reviews/review_list.html:97
-#, fuzzy
 msgid "Accept and submit translation"
-msgstr "Fordításokat beküld"
+msgstr "Elfogad és beküldi a fordítást"
 
 #: templates/reviews/review_list.html:97
 msgid "Accept"
@@ -2754,9 +2749,8 @@ msgid "Join this Team"
 msgstr "Csatlakozás ehhez a csapathoz"
 
 #: templates/teams/team_detail.html:70
-#, fuzzy
 msgid "People waiting for team membership approving:"
-msgstr "Az emberek várnak csapattagság jóváhagyására:"
+msgstr "Csapattagság jóváhagyásra váró emberek:"
 
 #: templates/teams/team_detail.html:81
 #: templates/teams/team_list.html:50
@@ -2790,9 +2784,8 @@ msgid "%(project_name)s Translation Teams"
 msgstr "%(project_name) fordító csapatok"
 
 #: templates/teams/team_form.html:27
-#, fuzzy
 msgid "Translation team details"
-msgstr "Fordítás statisztikák"
+msgstr "Fordítócsapat részletei"
 
 #: templates/teams/team_form.html:29
 msgid "Please note that notification will not be sent when coordinators or members are added or removed on this page."
@@ -2960,9 +2953,8 @@ msgid "overview page"
 msgstr "áttekintés lap"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
-#, fuzzy
 msgid "We've sent you the e-mail validation link."
-msgstr "Elküldtük önnek a levél érvényesítés hivatkozást."
+msgstr "Elküldtük önnek az e-mail érvényesítő hivatkozást."
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
@@ -3110,9 +3102,9 @@ msgid "You have successfully registered a new account and an account activation 
 msgstr "Sikeresen létrehozott egy felhasználói fiókot. Az aktivációs linket elküldtük az e-mail címére. Kattintson a linkre a regisztráció befejezéséhez."
 
 #: templates/userprofile/account/registration_done.html:15
-#, fuzzy, python-format
+#, python-format
 msgid "You have successfully registered a new account. Go to the <a href=\"%(overview_url)s\">sign in page</a> to authenticate and start using this site."
-msgstr "Sikerült beiratkoznia egy új számlára. Menjen a <a·href=\"%(overview_url)s\">bejelentkezés lapra</a>, hogy hitelesítse magát, és elkezdje használni ezt a szolgáltatást."
+msgstr "Ön sikeresen regisztrált egy új fiókot. Menjen a(z) <a·href=\"%(overview_url)s\">bejelentkezés lapra</a>, hogy hitelesítse magát, és elkezdje használni ezt a szolgáltatást."
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -3368,9 +3360,9 @@ msgid "%(component_name)s"
 msgstr "%(component_name)s"
 
 #: templates/webtrans/transfile_edit.html:37
-#, fuzzy, python-format
+#, python-format
 msgid "Translate '%(filename)s'"
-msgstr "„%(filename)s” fájlt fordítja"
+msgstr "'%(filename)s' fájlt fordítja"
 
 #: templates/webtrans/transfile_edit.html:46
 #: templates/webtrans/transfile_edit.html:51
@@ -3611,12 +3603,11 @@ msgstr "Szöveg befagyasztás dátuma"
 
 #: txcommon/admin.py:10
 msgid "Required. 30 characters or fewer. Unicode alphanumeric characters only (letters, digits and underscores)."
-msgstr ""
+msgstr "30 karakter vagy kevesebb kötelező! Csak unicode alfanumerikus karakter (betűk, számok és aláhúzás)."
 
 #: txcommon/admin.py:13
-#, fuzzy
 msgid "This value must contain only unicode letters, numbers and underscores."
-msgstr "Az URL-ben használt rövid címke. Csak betűt, számot, aláhúzást vagy kötőjelet tartalmazhat."
+msgstr "Ennek az értéknek csak unicode betűket, számokat és aláhúzásjelet szabad tartalmaznia."
 
 #: txcommon/i18n.py:18
 #, python-format
@@ -3694,27 +3685,24 @@ msgid "Submit access to project requested"
 msgstr ""
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when an user request access to submit files to a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor egy felhasználó kérelmezte, hogy fájlokat küldhessen a projecthez"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
 msgstr ""
 
 #: txcommon/notifications.py:42
-#, fuzzy
 msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor egy karbantartó megtagadta a hozzáférést egy felhasználónak, hogy az fájlokat küldhessen be a projecthez"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
 msgstr ""
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr "Garantált beadás hozzáféréssel rendelkező használók:"
+msgstr "amikor egy felhasználó visszavonja az engedélyét, hogy fájlokat küldhessen be a projectbe"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
@@ -3789,9 +3777,8 @@ msgid "when the source file (POT) of a component that you are a maintainer has a
 msgstr "amikor ön által karbantartott összetevő forrás fájlnak (POT) baja van"
 
 #: txcommon/notifications.py:133
-#, fuzzy
 msgid "New Release Added for a Watched Project"
-msgstr "Új kiadás hozzáadva figyelt gyűjteményhez"
+msgstr "Új kiadás hozzáadva a figyelt projecthez"
 
 #: txcommon/notifications.py:134
 msgid "when a new release is added to a project"
@@ -3802,9 +3789,8 @@ msgid "Release Changed"
 msgstr "Kiadás változott"
 
 #: txcommon/notifications.py:141
-#, fuzzy
 msgid "when a release of a project is changed"
-msgstr "amikor összetevő kiadása változik"
+msgstr "amikor egy project kiadása megváltozott"
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
@@ -3998,9 +3984,8 @@ msgstr "Tároló gyökér URL"
 
 #: vcs/forms.py:19
 #: vcs/forms.py:43
-#, fuzzy
 msgid "The URL of the versioning system repository/branch."
-msgstr "A verziókészítő rendszer tároló/ág URL-ja."
+msgstr "A verziókezelő-rendszer tároló/ág URL-ja."
 
 #: vcs/forms.py:61
 msgid "This type of repository does not accept branches"
