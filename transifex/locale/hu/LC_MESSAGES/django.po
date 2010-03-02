@@ -2,22 +2,26 @@
 # This file is distributed under the same license as the transifex package.
 # Copyright (C) 2008-2009 Transifex Community.
 # Sulyok Péter <peti@fedoraproject.org>, 2009.
+# Nikolas Slivka <snicore@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-27 19:40+0000\n"
-"PO-Revision-Date: 2009-08-08 06:56+0200\n"
-"Last-Translator: Sulyok Péter <peti@fedoraproject.org>\n"
+"PO-Revision-Date: 2010-03-02 10:38+0100\n"
+"Last-Translator: Nikolas Slivka <snicore@gmail.com>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: actionlog/filters.py:12
 msgid "Search for an username or leave it blank"
-msgstr "Keresés egy felhasználói név után vagy hagyd üresen"
+msgstr "Keresés egy felhasználónévre, vagy hagyja üresen"
 
 #: actionlog/models.py:155
 msgid "log entry"
@@ -31,12 +35,15 @@ msgstr "napló bejegyzések"
 msgid "Date/time"
 msgstr "Dátum/idő"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:74
-#: teams/models.py:110 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7
+#: teams/models.py:74
+#: teams/models.py:110
+#: txpermissions/forms.py:18
 msgid "User"
-msgstr "Használó"
+msgstr "Felhasználó"
 
 #: actionlog/templates/object_action_list.html:8
+#, fuzzy
 msgid "Action"
 msgstr "Tett"
 
@@ -46,20 +53,26 @@ msgstr "DATETIME_FORMAT"
 
 #: actionlog/templates/object_action_list.html:22
 msgid "No history recorded yet."
-msgstr "Még nincs előzmény."
+msgstr "Még nincs történet."
 
-#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
-#: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:85 projects/models.py:199 projects/models.py:458
+#: codebases/models.py:36
+#: codebases/migrations/0001_initial.py:12
+#: languages/models.py:37
+#: languages/migrations/0001_initial.py:19
+#: projects/models.py:85
+#: projects/models.py:199
+#: projects/models.py:458
 #: projects/migrations/0001_initial.py:31
-#: projects/migrations/0001_initial.py:53 releases/models.py:23
+#: projects/migrations/0001_initial.py:53
+#: releases/models.py:23
 #: templates/userprofile/profile/public.html:60
 #: txcollections/migrations/0001_initial.py:27
 #: txcollections/migrations/0001_initial.py:44
 msgid "Name"
 msgstr "Név"
 
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
+#: codebases/models.py:37
+#: codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "Gyökér"
 
@@ -67,7 +80,8 @@ msgstr "Gyökér"
 msgid "The URL of the codebase"
 msgstr "A kód alap URL-je"
 
-#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
+#: codebases/models.py:39
+#: codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "Típus"
 
@@ -98,26 +112,34 @@ msgstr "%(site_name)s nyelvei"
 msgid "The languages spoken on %s."
 msgstr "%s beszélt nyelvei."
 
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:87 projects/models.py:201 projects/models.py:460
+#: languages/models.py:39
+#: languages/migrations/0001_initial.py:14
+#: projects/models.py:87
+#: projects/models.py:201
+#: projects/models.py:460
 #: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: projects/migrations/0001_initial.py:39
+#: releases/models.py:25
+#: templates/timeline.html:43
+#: templates/notification/notices.html:42
 #: templates/reviews/review_list.html:43
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
 msgid "Description"
 msgstr "Leírás"
 
-#: languages/models.py:40 languages/migrations/0001_initial.py:13
+#: languages/models.py:40
+#: languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kód"
 
-#: languages/models.py:43 languages/migrations/0001_initial.py:12
+#: languages/models.py:43
+#: languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "Kód álnevek"
 
-#: languages/models.py:46 languages/migrations/0001_initial.py:17
+#: languages/models.py:46
+#: languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "Különleges jelek"
 
@@ -125,11 +147,13 @@ msgstr "Különleges jelek"
 msgid "Enter any special characters that users might find difficult to type"
 msgstr "Adjon meg minden különleges jelet, amit nehéz lehet begépelni"
 
-#: languages/models.py:50 languages/migrations/0001_initial.py:16
+#: languages/models.py:50
+#: languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "Többesek száma"
 
-#: languages/models.py:52 languages/migrations/0001_initial.py:15
+#: languages/models.py:52
+#: languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "Többes egyenlet"
 
@@ -137,13 +161,14 @@ msgstr "Többes egyenlet"
 msgid "language"
 msgstr "nyelv"
 
-#: languages/models.py:64 templates/languages/language_list.html:15
+#: languages/models.py:64
+#: templates/languages/language_list.html:15
 msgid "languages"
 msgstr "nyelvek"
 
 #: languages/management/commands/txcreatelanguages.py:27
 msgid "Afrikaans"
-msgstr "afrikán (Dél-Afrika-i holland)"
+msgstr "Afrikán (Dél-Afrika-i holland)"
 
 #: languages/management/commands/txcreatelanguages.py:42
 msgid "Amharic"
@@ -195,137 +220,135 @@ msgstr "Bosnyák"
 
 #: languages/management/commands/txcreatelanguages.py:140
 msgid "Catalan (Valencian)"
-msgstr "katalán (valenciai)"
+msgstr "Katalán (valenciai)"
 
 #: languages/management/commands/txcreatelanguages.py:149
 msgid "Czech"
-msgstr "cseh"
+msgstr "Cseh"
 
 #: languages/management/commands/txcreatelanguages.py:158
 msgid "Welsh"
-msgstr "velszi"
+msgstr "Wales"
 
 #: languages/management/commands/txcreatelanguages.py:167
 msgid "Danish"
-msgstr "dán"
+msgstr "Dán"
 
 #: languages/management/commands/txcreatelanguages.py:176
 msgid "German"
-msgstr "német"
+msgstr "Német"
 
 #: languages/management/commands/txcreatelanguages.py:184
 msgid "Swiss German"
-msgstr "svájci német"
+msgstr "Német (Svájc)"
 
 #: languages/management/commands/txcreatelanguages.py:193
 msgid "Dzongkha"
-msgstr "dzsongka (Bután)"
+msgstr "Dzsongka (Bután)"
 
 #: languages/management/commands/txcreatelanguages.py:202
 msgid "Greek"
-msgstr "görög"
+msgstr "Görög"
 
 #: languages/management/commands/txcreatelanguages.py:209
 msgid "English"
-msgstr "angol"
+msgstr "Angol"
 
 #: languages/management/commands/txcreatelanguages.py:217
 msgid "English (United Kingdom)"
-msgstr "angol (Egyesült Királyság)"
+msgstr "Angol (Egyesült Királyság)"
 
 #: languages/management/commands/txcreatelanguages.py:225
-#, fuzzy
 msgid "English (United States)"
-msgstr "angol (Egyesült Királyság)"
+msgstr "Angol (Amerikai Egyesült Államok)"
 
 #: languages/management/commands/txcreatelanguages.py:233
 msgid "English (South Africa)"
-msgstr "angol (Dél-Afrika)"
+msgstr "Angol (Dél-Afrika)"
 
 #: languages/management/commands/txcreatelanguages.py:240
 msgid "Esperanto"
-msgstr "eszperantó"
+msgstr "Eszperantó"
 
 #: languages/management/commands/txcreatelanguages.py:249
 msgid "Spanish (Castilian)"
-msgstr "spanyol (kasztíliai)"
+msgstr "Spanyol (kasztíliai)"
 
 #: languages/management/commands/txcreatelanguages.py:257
 msgid "Spanish (Argentinian)"
-msgstr "spanyol (Argentína)"
+msgstr "Spanyol (Argentína)"
 
 #: languages/management/commands/txcreatelanguages.py:265
-#, fuzzy
 msgid "Spanish (Mexican)"
-msgstr "spanyol (Argentína)"
+msgstr "Spanyol (Mexikó)"
 
 #: languages/management/commands/txcreatelanguages.py:274
 msgid "Estonian"
-msgstr "észt"
+msgstr "Észt"
 
 #: languages/management/commands/txcreatelanguages.py:283
 msgid "Basque"
-msgstr "baszk"
+msgstr "Baszk"
 
 #: languages/management/commands/txcreatelanguages.py:291
 msgid "Persian"
-msgstr "perzsa"
+msgstr "Perzsa"
 
 #: languages/management/commands/txcreatelanguages.py:300
 msgid "Finnish"
-msgstr "finn"
+msgstr "Finn"
 
 #: languages/management/commands/txcreatelanguages.py:315
 msgid "French"
-msgstr "francia"
+msgstr "Francia"
 
 #: languages/management/commands/txcreatelanguages.py:324
 msgid "Friulian"
-msgstr "friuli (Olaszo.)"
+msgstr "Friuli (Olaszo.)"
 
 #: languages/management/commands/txcreatelanguages.py:333
 msgid "Western Frisian"
-msgstr "nyugat-fríz"
+msgstr "Nyugat-fríz"
 
 #: languages/management/commands/txcreatelanguages.py:342
 msgid "Irish"
-msgstr "ír"
+msgstr "Ír"
 
 #: languages/management/commands/txcreatelanguages.py:351
 msgid "Galician"
-msgstr "galíciai (Spanyolo.)"
+msgstr "Galíciai (Spanyolo.)"
 
 #: languages/management/commands/txcreatelanguages.py:360
 msgid "Gujarati"
-msgstr "gudzsarati (India)"
+msgstr "Gudzsarati (India)"
 
 #: languages/management/commands/txcreatelanguages.py:368
 msgid "Hebrew"
-msgstr "héber"
+msgstr "Héber"
 
 #: languages/management/commands/txcreatelanguages.py:377
 msgid "Hindi"
-msgstr "hindi (India)"
+msgstr "Hindi (India)"
 
 #: languages/management/commands/txcreatelanguages.py:386
 msgid "Croatian"
-msgstr "horvát"
+msgstr "Horvát"
 
 #: languages/management/commands/txcreatelanguages.py:394
 msgid "Haitian (Haitian Creole)"
-msgstr "haiti (haiti kreol)"
+msgstr "Haiti (haiti kreol)"
 
 #: languages/management/commands/txcreatelanguages.py:403
 msgid "Hungarian"
-msgstr "magyar"
+msgstr "Magyar"
 
 #: languages/management/commands/txcreatelanguages.py:411
 msgid "Armenian"
-msgstr "örmény"
+msgstr "Örmény"
 
 #: languages/management/commands/txcreatelanguages.py:418
 msgid "Indonesian"
-msgstr "indonéz"
+msgstr "Indonéz"
 
 #: languages/management/commands/txcreatelanguages.py:426
 msgid "Iloko"
@@ -333,237 +356,235 @@ msgstr "Iloko (Fülöp-szk.)"
 
 #: languages/management/commands/txcreatelanguages.py:432
 msgid "Icelandic"
-msgstr "izlandi"
+msgstr "Izlandi"
 
 #: languages/management/commands/txcreatelanguages.py:441
 msgid "Italian"
-msgstr "olasz"
+msgstr "Olasz"
 
 #: languages/management/commands/txcreatelanguages.py:450
 msgid "Japanese"
-msgstr "japán"
+msgstr "Japán"
 
 #: languages/management/commands/txcreatelanguages.py:459
 msgid "Georgian"
-msgstr "grúz"
+msgstr "Grúz"
 
 #: languages/management/commands/txcreatelanguages.py:467
-#, fuzzy
 msgid "Khmer"
-msgstr "kasmíri"
+msgstr "Khmer (Kambodzsa)"
 
 #: languages/management/commands/txcreatelanguages.py:475
 msgid "Kannada"
-msgstr "kanada (India)"
+msgstr "Kanada (India)"
 
 #: languages/management/commands/txcreatelanguages.py:482
 msgid "Korean"
-msgstr "kóreai"
+msgstr "Kóreai"
 
 #: languages/management/commands/txcreatelanguages.py:490
 msgid "Kashmiri"
-msgstr "kasmíri"
+msgstr "Kasmíri"
 
 #: languages/management/commands/txcreatelanguages.py:499
 msgid "Kurdish"
-msgstr "kurd"
+msgstr "Kurd"
 
 #: languages/management/commands/txcreatelanguages.py:506
 msgid "Kirgyz"
-msgstr "kirgiz"
+msgstr "Kirgíz"
 
 #: languages/management/commands/txcreatelanguages.py:513
 msgid "Latin"
-msgstr "latin"
+msgstr "Latin"
 
 #: languages/management/commands/txcreatelanguages.py:527
 msgid "Lao"
-msgstr "lao (Laosz)"
+msgstr "Lao (Laosz)"
 
 #: languages/management/commands/txcreatelanguages.py:534
 msgid "Lithuanian"
-msgstr "litván"
+msgstr "Litván"
 
 #: languages/management/commands/txcreatelanguages.py:543
 msgid "Latvian"
-msgstr "lett"
+msgstr "Lett"
 
 #: languages/management/commands/txcreatelanguages.py:551
 msgid "Maithili"
-msgstr "majtili (India/Nepál)"
+msgstr "Majtili (India/Nepál)"
 
 #: languages/management/commands/txcreatelanguages.py:557
 msgid "Macedonian"
-msgstr "macedón"
+msgstr "Macedón"
 
 #: languages/management/commands/txcreatelanguages.py:563
 msgid "Malayalam"
-msgstr "malajalam (India)"
+msgstr "Malajalam (India)"
 
 #: languages/management/commands/txcreatelanguages.py:577
 msgid "Mongolian"
-msgstr "mongol"
+msgstr "Mongol"
 
 #: languages/management/commands/txcreatelanguages.py:585
 msgid "Marathi"
-msgstr "marati (India)"
+msgstr "Marati (India)"
 
 #: languages/management/commands/txcreatelanguages.py:593
 msgid "Malay"
-msgstr "maláj"
+msgstr "Maláj"
 
 #: languages/management/commands/txcreatelanguages.py:602
 msgid "Maltese"
-msgstr "máltai"
+msgstr "Máltai"
 
 #: languages/management/commands/txcreatelanguages.py:610
 msgid "Burmese"
-msgstr "burmai (Myanmar)"
+msgstr "Burmai (Myanmar)"
 
 #: languages/management/commands/txcreatelanguages.py:622
 msgid "Norwegian Bokmål"
-msgstr "ónorvég"
+msgstr "Ónorvég"
 
 #: languages/management/commands/txcreatelanguages.py:630
 msgid "Nepali"
-msgstr "nepáli"
+msgstr "Nepáli"
 
 #: languages/management/commands/txcreatelanguages.py:639
 msgid "Dutch (Flemish)"
-msgstr "holland (flamand)"
+msgstr "Holland (flamand)"
 
 #: languages/management/commands/txcreatelanguages.py:648
 msgid "Norwegian Nynorsk"
-msgstr "újnorvég"
+msgstr "Újnorvég"
 
 #: languages/management/commands/txcreatelanguages.py:656
 msgid "Norwegian"
-msgstr "norvég"
+msgstr "Norvég"
 
 #: languages/management/commands/txcreatelanguages.py:663
 msgid "Northern Sotho"
-msgstr "északszoto (Dél-Afrika)"
+msgstr "Északszoto (Dél-Afrika)"
 
 #: languages/management/commands/txcreatelanguages.py:672
 msgid "Oriya"
-msgstr "orija (India)"
+msgstr "Orija (India)"
 
 #: languages/management/commands/txcreatelanguages.py:680
 msgid "Panjabi (Punjabi)"
-msgstr "pandzsab (India/Pakisztán)"
+msgstr "Pandzsab (India/Pakisztán)"
 
 #: languages/management/commands/txcreatelanguages.py:694
 msgid "Polish"
-msgstr "lengyel"
+msgstr "Lengyel"
 
 #: languages/management/commands/txcreatelanguages.py:711
 msgid "Portuguese"
-msgstr "portugál"
+msgstr "Portugál"
 
 #: languages/management/commands/txcreatelanguages.py:720
-#, fuzzy
 msgid "Portuguese (Brazilian)"
-msgstr "portugál"
+msgstr "Portugál (Brazília)"
 
 #: languages/management/commands/txcreatelanguages.py:729
 msgid "Romanian"
-msgstr "román"
+msgstr "Román"
 
 #: languages/management/commands/txcreatelanguages.py:738
 msgid "Russian"
-msgstr "orosz"
+msgstr "Orosz"
 
 #: languages/management/commands/txcreatelanguages.py:746
 msgid "Sinhala"
-msgstr "szinala (Sri Lanka)"
+msgstr "Szinhala (Srí Lanka)"
 
 #: languages/management/commands/txcreatelanguages.py:753
 msgid "Slovak"
-msgstr "szlovák"
+msgstr "Szlovák"
 
 #: languages/management/commands/txcreatelanguages.py:762
 msgid "Slovenian"
-msgstr "szlovén"
+msgstr "Szlovén"
 
 #: languages/management/commands/txcreatelanguages.py:771
 msgid "Albanian"
-msgstr "albán"
+msgstr "Albán"
 
 #: languages/management/commands/txcreatelanguages.py:780
 msgid "Serbian"
-msgstr "szerb"
+msgstr "Szerb"
 
 #: languages/management/commands/txcreatelanguages.py:788
 msgid "Serbian (Latin)"
-msgstr "szerb (latin)"
+msgstr "Szerb (latin)"
 
 #: languages/management/commands/txcreatelanguages.py:798
 msgid "Sotho, Southern"
-msgstr "délszoto (Dél-Afrika)"
+msgstr "Délszoto (Dél-Afrika)"
 
 #: languages/management/commands/txcreatelanguages.py:807
 msgid "Swedish"
-msgstr "svéd"
+msgstr "Svéd"
 
 #: languages/management/commands/txcreatelanguages.py:816
 msgid "Tamil"
-msgstr "tamil (India/Sri Lanka)"
+msgstr "Tamil (India/Srí Lanka)"
 
 #: languages/management/commands/txcreatelanguages.py:824
 msgid "Telugu"
-msgstr "telugu (India)"
+msgstr "Telugu (India)"
 
 #: languages/management/commands/txcreatelanguages.py:830
 msgid "Tajik"
-msgstr "tadzsik"
+msgstr "Tadzsik"
 
 #: languages/management/commands/txcreatelanguages.py:836
 msgid "Thai"
-msgstr "táj"
+msgstr "Thai"
 
 #: languages/management/commands/txcreatelanguages.py:842
 msgid "Tagalog"
-msgstr "tagalog (Fülöp-szk.)"
+msgstr "Tagalog (Fülöp-szk.)"
 
 #: languages/management/commands/txcreatelanguages.py:855
 msgid "Turkish"
-msgstr "török"
+msgstr "Török"
 
 #: languages/management/commands/txcreatelanguages.py:863
 msgid "Urdu"
-msgstr "urdu (Pakisztán/India)"
+msgstr "Urdu (Pakisztán/India)"
 
 #: languages/management/commands/txcreatelanguages.py:870
 msgid "Ukrainian"
-msgstr "ukrán"
+msgstr "Ukrán"
 
 #: languages/management/commands/txcreatelanguages.py:885
 msgid "Vietnamese"
-msgstr "vietnámi"
+msgstr "Vietnámi"
 
 #: languages/management/commands/txcreatelanguages.py:893
 msgid "Wolof"
-msgstr "volof (Szenegál)"
+msgstr "Volof (Szenegál)"
 
 #: languages/management/commands/txcreatelanguages.py:906
 msgid "Xhosa"
-msgstr "kosza (bantu)"
+msgstr "Kosza (bantu)"
 
 #: languages/management/commands/txcreatelanguages.py:915
 msgid "Chinese (China)"
-msgstr "kínai (Kína)"
+msgstr "Kínai (Kína)"
 
 #: languages/management/commands/txcreatelanguages.py:925
 msgid "Chinese (Hong Kong)"
-msgstr "kínai (Hong Kong)"
+msgstr "Kínai (Hong Kong)"
 
 #: languages/management/commands/txcreatelanguages.py:935
 msgid "Chinese (Taiwan)"
-msgstr "kínai (Tajvan)"
+msgstr "Kínai (Tajvan)"
 
 #: languages/management/commands/txcreatelanguages.py:944
 msgid "Zulu"
-msgstr "zulu (Dél-Afrika)"
+msgstr "Zulu (Dél-Afrika)"
 
 #: projects/feeds.py:16
 #, python-format
@@ -604,16 +625,19 @@ msgstr "%(site_name)s:·%(collection)s·::·%(release)s·kiadás"
 msgid "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "Fordítás statisztikák minden nyelvre %s kiadásból."
 
-#: projects/forms.py:15 txpermissions/forms.py:19
+#: projects/forms.py:15
+#: txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "Keresés egy felhasználói név után"
 
-#: projects/forms.py:35 projects/models.py:214
+#: projects/forms.py:35
+#: projects/models.py:214
 #, fuzzy
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "Regkif. a megjelenő fájlok szűrésére. Pl: „po/.*”"
 
-#: projects/forms.py:52 projects/models.py:219
+#: projects/forms.py:52
+#: projects/models.py:219
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Beküldés"
@@ -623,13 +647,15 @@ msgid "Choose how this component should handle submissions of files.The options 
 msgstr "Válassza ki, hogyan kezelje ez az összetevő a fájlok beküldését. A lehetőségek itt elérhetők az összetevő típusa alapján"
 
 #: projects/forms.py:68
-#, fuzzy
 msgid "Search for a component"
-msgstr "Keresés Picasa Weben"
+msgstr "Keresés összetevőre"
 
-#: projects/models.py:82 projects/models.py:196 projects/models.py:455
+#: projects/models.py:82
+#: projects/models.py:196
+#: projects/models.py:455
 #: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:38 releases/models.py:20
+#: projects/migrations/0001_initial.py:38
+#: releases/models.py:20
 #: txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 #: txcollections/migrations/0002_release_06_07.py:12
@@ -637,38 +663,49 @@ msgstr "Keresés Picasa Weben"
 msgid "Slug"
 msgstr "Csonk"
 
-#: projects/models.py:83 projects/models.py:197 projects/models.py:456
+#: projects/models.py:83
+#: projects/models.py:197
+#: projects/models.py:456
 #: releases/models.py:21
 msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
 msgstr "Az URL-ben használt rövid címke. Csak betűt, számot, aláhúzást vagy kötőjelet tartalmazhat."
 
-#: projects/models.py:86 projects/models.py:200 releases/models.py:24
+#: projects/models.py:86
+#: projects/models.py:200
+#: releases/models.py:24
 #, fuzzy
 msgid "A short name or very short description."
 msgstr "Névszerű szöveg vagy nagyon rövid jellemzés."
 
-#: projects/models.py:88 projects/models.py:202
+#: projects/models.py:88
+#: projects/models.py:202
 msgid "A sentence or two describing the object (optional)."
 msgstr "Egy-két mondat jellemzés a tárgyról (nem kötelező)."
 
-#: projects/models.py:89 projects/models.py:203 projects/models.py:463
+#: projects/models.py:89
+#: projects/models.py:203
+#: projects/models.py:463
 #: projects/migrations/0001_initial.py:30
-#: projects/migrations/0001_initial.py:45 releases/models.py:27
+#: projects/migrations/0001_initial.py:45
+#: releases/models.py:27
 #: txcollections/migrations/0001_initial.py:25
 #: txcollections/migrations/0001_initial.py:43
 msgid "Long description"
 msgstr "Hosszú jellemzés"
 
-#: projects/models.py:91 projects/models.py:205
+#: projects/models.py:91
+#: projects/models.py:205
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Hosszabb jellemzés (nem kötelező) Markdown jelölés használatával."
 
-#: projects/models.py:92 projects/migrations/0001_initial.py:29
+#: projects/models.py:92
+#: projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
 msgstr "Honlap"
 
-#: projects/models.py:93 projects/migrations/0001_initial.py:18
+#: projects/models.py:93
+#: projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "Hírek"
 
@@ -677,7 +714,8 @@ msgstr "Hírek"
 msgid "An RSS feed with updates to the project."
 msgstr "RSS adás a tervről szóló hírekkel."
 
-#: projects/models.py:95 projects/migrations/0001_initial.py:27
+#: projects/models.py:95
+#: projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "Hiba követő"
 
@@ -696,31 +734,40 @@ msgstr "Bárki beadhat"
 msgid "Can anyone submit files to this project?"
 msgstr "Betehet-e fájlt e tervbe"
 
-#: projects/models.py:102 projects/models.py:222
+#: projects/models.py:102
+#: projects/models.py:222
 #: projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: projects/migrations/0001_initial.py:50
+#: releases/models.py:41
 #: txcollections/migrations/0001_initial.py:23
 #: txcollections/migrations/0001_initial.py:41
 msgid "Hidden"
 msgstr "Rejtett"
 
-#: projects/models.py:103 projects/models.py:223 releases/models.py:42
+#: projects/models.py:103
+#: projects/models.py:223
+#: releases/models.py:42
 msgid "Hide this object from the list view?"
 msgstr "Elrejtsük e tárgyat a lista nézetből."
 
-#: projects/models.py:104 projects/models.py:224
+#: projects/models.py:104
+#: projects/models.py:224
 #: projects/migrations/0001_initial.py:24
-#: projects/migrations/0001_initial.py:41 releases/models.py:43
+#: projects/migrations/0001_initial.py:41
+#: releases/models.py:43
 #: txcollections/migrations/0001_initial.py:17
 #: txcollections/migrations/0001_initial.py:38
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: projects/models.py:105 projects/models.py:225 releases/models.py:44
+#: projects/models.py:105
+#: projects/models.py:225
+#: releases/models.py:44
 msgid "Enable this object or disable its use?"
 msgstr "Engedélyezi vagy tiltja e tárgy használatát?"
 
-#: projects/models.py:109 projects/migrations/0001_initial.py:23
+#: projects/models.py:109
+#: projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Címkék"
 
@@ -728,15 +775,20 @@ msgstr "Címkék"
 msgid "Maintainers"
 msgstr "Karbantartók"
 
-#: projects/models.py:116 projects/models.py:234 projects/models.py:485
+#: projects/models.py:116
+#: projects/models.py:234
+#: projects/models.py:485
 #: projects/migrations/0001_initial.py:22
-#: projects/migrations/0001_initial.py:47 releases/models.py:49
+#: projects/migrations/0001_initial.py:47
+#: releases/models.py:49
 #: txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:36
 msgid "HTML Description"
 msgstr "HTML leírás"
 
-#: projects/models.py:118 projects/models.py:236 projects/models.py:487
+#: projects/models.py:118
+#: projects/models.py:236
+#: projects/models.py:487
 #: releases/models.py:50
 msgid "Description in HTML."
 msgstr "Leírás HTML-ben."
@@ -750,11 +802,13 @@ msgstr "<Project: %s>"
 msgid "project"
 msgstr "terv"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
+#: projects/models.py:128
+#: templates/projects/project_list.html:18
 msgid "projects"
 msgstr "tervek"
 
-#: projects/models.py:206 projects/migrations/0001_initial.py:52
+#: projects/models.py:206
+#: projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Forrás nyelv"
 
@@ -763,7 +817,8 @@ msgstr "Forrás nyelv"
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "Ez összetevő forrás nyelve, pl. „en”, „pt_BR”, „el”, „hu”."
 
-#: projects/models.py:209 projects/migrations/0001_initial.py:42
+#: projects/models.py:209
+#: projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "I18n típus"
 
@@ -772,11 +827,13 @@ msgstr "I18n típus"
 msgid "The type of i18n support for the source code (%s)"
 msgstr "A kód i18n támogatásának típusa (%s)"
 
-#: projects/models.py:213 projects/migrations/0001_initial.py:43
+#: projects/models.py:213
+#: projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "Fájl szűrő"
 
-#: projects/models.py:216 projects/migrations/0001_initial.py:51
+#: projects/models.py:216
+#: projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "Beküldhető"
 
@@ -784,7 +841,8 @@ msgstr "Beküldhető"
 msgid "Does this module repository allow write access?"
 msgstr "Megengedi e modul tároló az író hozzáférést?"
 
-#: projects/models.py:228 projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:228
+#: projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "Számít statisztikát?"
 
@@ -792,13 +850,16 @@ msgstr "Számít statisztikát?"
 msgid "Should statistics be calculated for this component?"
 msgstr "Számítson statisztikákat erre az összetevőre?"
 
-#: projects/models.py:239 projects/models.py:490
-#: projects/migrations/0001_initial.py:46 teams/models.py:25
+#: projects/models.py:239
+#: projects/models.py:490
+#: projects/migrations/0001_initial.py:46
+#: teams/models.py:25
 #: teams/models.py:67
 msgid "Project"
 msgstr "Terv"
 
-#: projects/models.py:240 projects/migrations/0001_initial.py:37
+#: projects/models.py:240
+#: projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Egység"
 
@@ -811,7 +872,8 @@ msgstr "<Összetevő: %s>"
 msgid "component"
 msgstr "összetevő"
 
-#: projects/models.py:266 templates/projects/component_list.html:16
+#: projects/models.py:266
+#: templates/projects/component_list.html:16
 msgid "components"
 msgstr "összetevők"
 
@@ -819,24 +881,29 @@ msgstr "összetevők"
 msgid "A string like a name or very short description."
 msgstr "Egy szöveg, mint egy név vagy nagyon rövid jellemzés."
 
-#: projects/models.py:462 releases/models.py:26
+#: projects/models.py:462
+#: releases/models.py:26
 msgid "A sentence or two describing the object."
 msgstr "Egy-két mondat a tárgyról."
 
-#: projects/models.py:465 releases/models.py:28
+#: projects/models.py:465
+#: releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "Markdown jelölés használata."
 
-#: projects/models.py:468 releases/models.py:31
+#: projects/models.py:468
+#: releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
 msgstr "Kiadás dátum"
 
-#: projects/models.py:470 releases/models.py:32
+#: projects/models.py:470
+#: releases/models.py:32
 msgid "When this release will be available."
 msgstr "Amint e kiadás elérhető lesz."
 
-#: projects/models.py:471 releases/models.py:33
+#: projects/models.py:471
+#: releases/models.py:33
 msgid "String freeze date"
 msgstr "Szöveg befagyasztás dátuma"
 
@@ -845,30 +912,33 @@ msgstr "Szöveg befagyasztás dátuma"
 msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
 msgstr "Amikor a fordítandó szövegeket befagyasztják (nem lehet szöveget hozzáadni/változtatni, ami befolyásolná a fordítást)."
 
-#: projects/models.py:475 releases/models.py:36
+#: projects/models.py:475
+#: releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
 msgstr "Fejlesztés befagyasztás dátum"
 
-#: projects/models.py:477 releases/models.py:37
+#: projects/models.py:477
+#: releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
 msgstr "Az utolsó dátum, amikor e kiadásból csomagokat építhetnek a fejlesztők. Ez után küldött fordítások nem kerülnek a kiadott változatba."
 
 #: projects/models.py:492
-#, fuzzy
 msgid "Components"
-msgstr "összetevők"
+msgstr "Összetevők"
 
 #: projects/models.py:499
 #, fuzzy, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<Release: %(rel)s (Collection %(col)s)>"
 
-#: projects/models.py:517 releases/models.py:54
+#: projects/models.py:517
+#: releases/models.py:54
 msgid "release"
 msgstr "kiadás"
 
-#: projects/models.py:518 releases/models.py:55
+#: projects/models.py:518
+#: releases/models.py:55
 #: templates/languages/language_detail.html:18
 #: templates/projects/release_list.html:15
 msgid "releases"
@@ -912,7 +982,8 @@ msgstr "Fordítatlan:"
 msgid "Total:"
 msgstr "Összesen:"
 
-#: projects/views/component.py:239 projects/views/project.py:138
+#: projects/views/component.py:239
+#: projects/views/project.py:138
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s törölve."
@@ -978,7 +1049,8 @@ msgstr ""
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Sajnos a fájlt egy hiba miatt nem sikerült beküldeni."
 
-#: projects/views/component.py:552 projects/views/component.py:585
+#: projects/views/component.py:552
+#: projects/views/component.py:585
 msgid "Sorry, but you need to send a POST request."
 msgstr "Sajnálom, de POST kérelmet kell küldeni."
 
@@ -994,11 +1066,13 @@ msgstr "Hiba: Csak a lakat tulajdonosa szedheti le azt."
 msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 
-#: projects/views/component.py:598 projects/views/project.py:156
+#: projects/views/component.py:598
+#: projects/views/project.py:156
 msgid "Must use POST to activate"
 msgstr "POST kell az aktiváláshoz"
 
-#: projects/views/component.py:601 projects/views/project.py:159
+#: projects/views/component.py:601
+#: projects/views/project.py:159
 #, fuzzy
 msgid "Notification is not enabled"
 msgstr "Értesítés tiltott"
@@ -1034,7 +1108,7 @@ msgstr "%s törölve."
 #: projects/views/team.py:205
 #, python-format
 msgid "You are in the '%s' team already."
-msgstr ""
+msgstr "Ön már a(z) '%s' csoport tagja."
 
 #: projects/views/team.py:210
 #, python-format
@@ -1069,12 +1143,12 @@ msgstr ""
 #: projects/views/team.py:398
 #, python-format
 msgid "You have left the '%s' team."
-msgstr ""
+msgstr "Ön elhagyta a(z) '%s' csapatot."
 
 #: projects/views/team.py:419
 #, python-format
 msgid "You are not in the '%s' team."
-msgstr ""
+msgstr "Ön nincs a(z) '%s' csapatban."
 
 #: projects/views/team.py:440
 #, fuzzy
@@ -1084,7 +1158,7 @@ msgstr "Válasszon feltöltendő fájlt a saját gépéről."
 #: projects/views/team.py:453
 #, python-format
 msgid "'%s' team already exist."
-msgstr ""
+msgstr "'%s' csapat már létezik."
 
 #: projects/views/team.py:459
 #, python-format
@@ -1143,12 +1217,11 @@ msgstr "Fordítás fájlt ad hozzá"
 
 #: reviews/models.py:44
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #: reviews/models.py:45
-#, fuzzy
 msgid "Closed"
-msgstr "Kód"
+msgstr "Lezárt"
 
 #: reviews/models.py:47
 msgid "Null"
@@ -1156,11 +1229,11 @@ msgstr ""
 
 #: reviews/models.py:48
 msgid "Accepted"
-msgstr ""
+msgstr "Elfogadva"
 
 #: reviews/models.py:49
 msgid "Rejected"
-msgstr ""
+msgstr "Elutasítva"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
@@ -1188,9 +1261,8 @@ msgid "The path of the target file which will be used on submission"
 msgstr ""
 
 #: reviews/models.py:69
-#, fuzzy
 msgid "Component"
-msgstr "összetevő"
+msgstr "Összetevő"
 
 #: reviews/models.py:87
 #, fuzzy
@@ -1256,11 +1328,13 @@ msgstr ""
 msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
 msgstr ""
 
-#: teams/models.py:27 teams/models.py:69
+#: teams/models.py:27
+#: teams/models.py:69
 msgid "The project which this team belongs to."
 msgstr ""
 
-#: teams/models.py:28 teams/models.py:70
+#: teams/models.py:28
+#: teams/models.py:70
 #: templates/reviews/review_list.html:154
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
@@ -1268,17 +1342,18 @@ msgstr ""
 msgid "Language"
 msgstr "Nyelv"
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:30
+#: teams/models.py:72
 msgid "People in this team will only be able to submit translations files related to the specific language."
 msgstr ""
 
 #: teams/models.py:32
 msgid "Coordinators"
-msgstr ""
+msgstr "Koordinátorok"
 
 #: teams/models.py:34
 msgid "Members"
-msgstr ""
+msgstr "Tagok"
 
 #: teams/models.py:37
 #, fuzzy
@@ -1295,7 +1370,7 @@ msgstr ""
 
 #: teams/models.py:56
 msgid "team"
-msgstr ""
+msgstr "csapat"
 
 #: teams/models.py:57
 msgid "teams"
@@ -1312,9 +1387,8 @@ msgid "team creation requests"
 msgstr "Kérelmek függőben:"
 
 #: teams/models.py:108
-#, fuzzy
 msgid "Team"
-msgstr "tamil (India/Sri Lanka)"
+msgstr "Csapat"
 
 #: teams/models.py:125
 msgid "team access request"
@@ -1324,7 +1398,8 @@ msgstr ""
 msgid "team access requests"
 msgstr ""
 
-#: templates/403.html:4 templates/403.html.py:7
+#: templates/403.html:4
+#: templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "Tiltott hozzáférés"
 
@@ -1332,12 +1407,14 @@ msgstr "Tiltott hozzáférés"
 msgid "Looks like you do not have the necessary permissions for the required action."
 msgstr "Úgy tűnik, önnek nincs meg az igényelt tetthez szükséges engedélye."
 
-#: templates/403.html:15 templates/404.html:15
+#: templates/403.html:15
+#: templates/404.html:15
 #, python-format
 msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
 msgstr "Íme a <a·href=\"%(home)s\">honlap</a> hivatkozás. Minden esetre."
 
-#: templates/404.html:4 templates/404.html.py:7
+#: templates/404.html:4
+#: templates/404.html.py:7
 msgid "Page not found"
 msgstr "Nincs ilyen oldal"
 
@@ -1345,7 +1422,8 @@ msgstr "Nincs ilyen oldal"
 msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
 msgstr "Úgy tűnik, rossz hivatkozást követett. Ha úgy gondolja, hogy ez a mi hibánk, kérem <a·href='http://transifex.org/newticket'>jelezze</a>."
 
-#: templates/500.html:4 templates/500.html.py:7
+#: templates/500.html:4
+#: templates/500.html.py:7
 msgid "Page unavailable"
 msgstr "Oldal elérhetetlen"
 
@@ -1361,16 +1439,19 @@ msgstr "Belső dolgokat kavarunk, és a szolgáló csuklott egyet."
 msgid "Please try again later."
 msgstr "Kérem próbálkozzék később."
 
-#: templates/about.html:9 templates/index.html:10
+#: templates/about.html:9
+#: templates/index.html:10
 msgid "Welcome to Transifex"
 msgstr "Üdvözöli a Transifex"
 
-#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/base-sample.html:8
+#: templates/admin/base_site.html:4
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:34
+#: txcommon/templates/common_homelink.html:2
 #, fuzzy
 msgid "Go to the start page"
 msgstr "Menjen a nyitó oldalra"
@@ -1383,7 +1464,8 @@ msgstr "Menjen a nyitó oldalra"
 msgid "The projects being served"
 msgstr "A kiszolgált tervek"
 
-#: templates/base-sample.html:39 templates/projects/base.html:6
+#: templates/base-sample.html:39
+#: templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "Tervek"
@@ -1392,7 +1474,8 @@ msgstr "Tervek"
 msgid "The languages our service serves"
 msgstr "Kiszolgált nyelvek"
 
-#: templates/base-sample.html:40 templates/languages/base.html:5
+#: templates/base-sample.html:40
+#: templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
@@ -1411,10 +1494,14 @@ msgstr "Kijelentkezés a webhelyről"
 msgid "Sign out"
 msgstr "Kijelentkezés"
 
-#: templates/base-sample.html:49 templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
-#: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
+#: templates/base-sample.html:49
+#: templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17
+#: templates/simpleauth/logout.html:4
+#: templates/simpleauth/logout.html.py:5
+#: templates/simpleauth/logout.html:6
+#: templates/simpleauth/signin.html:4
+#: templates/simpleauth/signin.html.py:5
 #: templates/simpleauth/signin.html:6
 #: templates/userprofile/account/login.html:18
 #: templates/userprofile/account/login.html:27
@@ -1451,8 +1538,10 @@ msgstr "Transifex szolgáltatás törekszik fordítókat segíteni, hogy nyomon 
 msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr "Lehet az <a·href=\"%(project_list)s\">összes tervet</a> is böngészni."
 
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6 templates/search_form_plain.html:5
+#: templates/search.html:7
+#: templates/search.html.py:9
+#: templates/search_form.html:6
+#: templates/search_form_plain.html:5
 #: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "Keres"
@@ -1497,7 +1586,8 @@ msgstr "Keresés eredménye"
 msgid "Go"
 msgstr ""
 
-#: templates/timeline.html:24 templates/projects/component_detail.html:203
+#: templates/timeline.html:24
+#: templates/projects/component_detail.html:203
 #: templates/projects/project_detail.html:108
 #: templates/teams/team_detail.html:129
 msgid "None available"
@@ -1569,7 +1659,8 @@ msgstr "Még nincs hozzárendelt nyelv. :-("
 msgid "Couldn't find your language? Please use the feedback form and let us know!"
 msgstr "Nem találja a saját nyelvét? Kérjük használja a visszajelző űrlapot, és tudassa velünk!"
 
-#: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:6
+#: templates/notification/notices.html:7
 #: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr "Értesítések"
@@ -1581,7 +1672,7 @@ msgstr "Értesítések"
 
 #: templates/notification/notices.html:43
 msgid "Time"
-msgstr ""
+msgstr "Idő"
 
 #: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
@@ -1593,9 +1684,8 @@ msgstr "Nincs megjegyzés."
 
 #: templates/notification/notices.html:83
 #: templates/notification/notices.html:85
-#, fuzzy
 msgid "Change your notification settings"
-msgstr "Változás értesítések"
+msgstr ""
 
 #: templates/notification/notices.html:83
 msgid "Notification settings"
@@ -1638,7 +1728,8 @@ msgstr "Értesítés típus"
 msgid "Change"
 msgstr "Változás"
 
-#: templates/notification/single.html:5 templates/notification/single.html:8
+#: templates/notification/single.html:5
+#: templates/notification/single.html:8
 msgid "Notice"
 msgstr "Megjegyzés"
 
@@ -1910,9 +2001,8 @@ msgid "warning"
 msgstr "figyelmeztetés"
 
 #: templates/projects/component_detail.html:164
-#, fuzzy
 msgid "Teams:"
-msgstr "Címkék:"
+msgstr "Csapatok:"
 
 #: templates/projects/component_detail.html:166
 #, fuzzy
@@ -1932,7 +2022,8 @@ msgid ""
 msgstr ""
 
 #: templates/projects/component_detail.html:197
-#: templates/reviews/review_list.html:21 templates/reviews/review_list.html:23
+#: templates/reviews/review_list.html:21
+#: templates/reviews/review_list.html:23
 #, fuzzy
 msgid "Reviews"
 msgstr "Áttekintés"
@@ -2075,7 +2166,7 @@ msgstr "Küld"
 #: templates/webtrans/transfile_edit.html:137
 #: translations/templates/component_submit.html:15
 msgid "Send for Review"
-msgstr ""
+msgstr "Küldés felülvizsgálatra"
 
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
@@ -2178,17 +2269,16 @@ msgid "Edit %(project_name)s"
 msgstr "%(project_name)s szerkesztése"
 
 #: templates/projects/project_form.html:27
-#, fuzzy
 msgid "New project"
-msgstr "1 terv"
+msgstr "Új project"
 
 #: templates/projects/project_form.html:37
 msgid "Add the details of your project"
-msgstr ""
+msgstr "Project részleteinek hozzáadása"
 
 #: templates/projects/project_form.html:39
 msgid "Edit the details of your project"
-msgstr ""
+msgstr "Project részleteinek szerkesztése"
 
 #: templates/projects/project_form.html:50
 msgid "Save project"
@@ -2269,11 +2359,13 @@ msgstr "Miért nem <a href=\"%(project_create)s\">ad hozzá egyet</a>?"
 msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
 msgstr "Nem találja a tervét? <a·href=\"%(project_create)s\">Adja hozzá</a>!"
 
-#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:40
+#: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Áttekintés"
 
-#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/projects/project_menu.html:54
+#: templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 #, fuzzy
 msgid "Translation Teams"
@@ -2328,7 +2420,7 @@ msgstr ""
 
 #: templates/projects/release_detail.html:60
 msgid "Release date:"
-msgstr "Kiadás dátum:"
+msgstr "Kiadási dátum:"
 
 #: templates/projects/release_detail.html:64
 msgid "String freeze:"
@@ -2339,9 +2431,8 @@ msgid "Devel freeze:"
 msgstr "Fejlesztés befagyasztás:"
 
 #: templates/projects/release_detail.html:73
-#, fuzzy
 msgid "Components:"
-msgstr "összetevők"
+msgstr "Összetevők:"
 
 #: templates/projects/release_detail.html:81
 msgid "Translation statistics"
@@ -2389,7 +2480,7 @@ msgstr "Kiadást ment"
 #: templates/projects/release_language_detail.html:27
 #, fuzzy, python-format
 msgid "Release '%(release_name)s"
-msgstr "%(release_name)s törlése"
+msgstr "'%(release_name)s kiadás"
 
 #: templates/projects/release_language_detail.html:39
 msgid "Project/Component statistics"
@@ -2415,9 +2506,8 @@ msgid "The following components will be included in %(release_name)s, but there 
 msgstr "A következő összetevők kerülnek %(release_name)s kiadásba, de még nem küldtek fordítást %(language_name)s nyelvekre."
 
 #: templates/projects/release_list.html:14
-#, fuzzy
 msgid "Project Releases"
-msgstr "Terv a kiadásban"
+msgstr "Project kiadások"
 
 #: templates/projects/release_list.html:29
 #, fuzzy, python-format
@@ -2430,14 +2520,12 @@ msgid "Submit"
 msgstr "Beküldés"
 
 #: templates/reviews/review_list.html:27
-#, fuzzy
 msgid "Translation Review Requests"
-msgstr "Fordítás fájlok"
+msgstr "Fordítás-ellenőrzési kérelmek"
 
 #: templates/reviews/review_list.html:31
-#, fuzzy
 msgid "Open Requests"
-msgstr "Kérelmet megtagad"
+msgstr "Nyílt kérelmek"
 
 #: templates/reviews/review_list.html:39
 #, python-format
@@ -2446,7 +2534,7 @@ msgstr ""
 
 #: templates/reviews/review_list.html:47
 msgid "Who and when"
-msgstr ""
+msgstr "Ki és mikor"
 
 #: templates/reviews/review_list.html:49
 #: templates/reviews/review_list.html:115
@@ -2463,32 +2551,28 @@ msgid ""
 msgstr ""
 
 #: templates/reviews/review_list.html:56
-#, fuzzy
 msgid "Translation Language"
-msgstr "Fordítás fájl változott"
+msgstr "Fordítás nyelve"
 
 #: templates/reviews/review_list.html:59
-#, fuzzy
 msgid "Go to language page"
-msgstr "Menjen a nyitó oldalra"
+msgstr "Menjen a nyelv oldalára"
 
 #: templates/reviews/review_list.html:66
-#, fuzzy
 msgid "File target"
-msgstr "Keresés eredménye"
+msgstr "Fájl cél"
 
 #: templates/reviews/review_list.html:67
 msgid "Download the version sent for review"
-msgstr ""
+msgstr "Az ellenőrzésre küldött verzió letöltése"
 
 #: templates/reviews/review_list.html:70
 msgid "Score"
-msgstr ""
+msgstr "Pontszám"
 
 #: templates/reviews/review_list.html:84
-#, fuzzy
 msgid "Status"
-msgstr "Keressen meg minket"
+msgstr "Állapot"
 
 #: templates/reviews/review_list.html:94
 msgid "Close Review"
@@ -2500,79 +2584,68 @@ msgid "Accept and submit translation"
 msgstr "Fordításokat beküld"
 
 #: templates/reviews/review_list.html:97
-#, fuzzy
 msgid "Accept"
-msgstr "Számla"
+msgstr "Elfogad"
 
 #: templates/reviews/review_list.html:98
-#, fuzzy
 msgid "Reject translation"
-msgstr "Fordításokat beküld"
+msgstr "Fordítás elutasítása"
 
 #: templates/reviews/review_list.html:98
-#, fuzzy
 msgid "Reject"
-msgstr "terv"
+msgstr "Elutasít"
 
 #: templates/reviews/review_list.html:115
 msgid "By"
 msgstr ""
 
 #: templates/reviews/review_list.html:125
-#, fuzzy
 msgid "Add your comment as"
-msgstr "Összetevő hozzáadása"
+msgstr "Hozzászólás, mint"
 
 #: templates/reviews/review_list.html:131
-#, fuzzy
 msgid "Say it!"
-msgstr "hozzáadás"
+msgstr "Mondja!"
 
 #: templates/reviews/review_list.html:142
-#, fuzzy
 msgid "No open requests!"
-msgstr "Kérelmet megtagad"
+msgstr "Nincs nyitott kérelem!"
 
 #: templates/reviews/review_list.html:146
-#, fuzzy
 msgid "Closed Requests"
-msgstr "Kérelmek függőben:"
+msgstr "Zárt kérelmek"
 
 #: templates/reviews/review_list.html:152
 msgid "ID"
-msgstr ""
+msgstr "Azonosító"
 
 #: templates/reviews/review_list.html:153
 msgid "Author"
-msgstr ""
+msgstr "Szerző"
 
 #: templates/reviews/review_list.html:155
 msgid "Time Since"
 msgstr ""
 
 #: templates/reviews/review_list.html:156
-#, fuzzy
 msgid "Resolution"
-msgstr "gyűjtemény"
+msgstr "Felbontás"
 
 #: templates/reviews/review_list.html:157
 msgid "Attachment"
-msgstr ""
+msgstr "Melléklet"
 
 #: templates/reviews/review_list.html:158
-#, fuzzy
 msgid "Actions"
-msgstr "Tett"
+msgstr "Intézkedések"
 
 #: templates/reviews/review_list.html:182
-#, fuzzy
 msgid "Reopen review request"
-msgstr "Kérelmet jóváhagy"
+msgstr "Felülvizsgálati kérelem újbóli megnyitása "
 
 #: templates/reviews/review_list.html:194
-#, fuzzy
 msgid "No closed requests!"
-msgstr "Kérelmek függőben:"
+msgstr "Nincs zárt kérelmek!"
 
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
@@ -2587,11 +2660,11 @@ msgstr "Profil"
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
-msgstr "Profil beállítás"
+msgstr "Profilbeállítások"
 
 #: templates/simpleauth/login_box.html:8
 msgid "Sign in to add or modify projects, work on translations, and other stuff."
-msgstr ""
+msgstr "Jelentkezzen be project létrehozásához vagy módosításhoz, fordításhoz és egyéb dolgokhoz."
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -2603,10 +2676,11 @@ msgstr "<p>Kijelentkezett."
 msgid "Public profile of %(user)s"
 msgstr "%(user)s nyilvános adatai"
 
-#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: templates/simpleauth/public_profile.html:14
+#: txcommon/admin.py:20
 #: txcommon/admin.py:27
 msgid "Username"
-msgstr "Név"
+msgstr "Felhasználónév"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -2631,18 +2705,17 @@ msgid "Change notifications associated to your account"
 msgstr "A számlájához tartozó változás értesítések"
 
 #: templates/simpleauth/signin.html:10
-#, fuzzy
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
-"<p>Jelentkezzék be kérem a levél címével vagy nevével.<br />\n"
+"<p>Kérem jelentkezzen be az e-mail címével és a felhasználónevével.<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
-msgstr "Búcsút int <em>%(release_name)s</em> kiadásnak?"
+msgstr "Búcsút int a(z) <em>%(lang_name)s</em> csapatnak?"
 
 #: templates/teams/team_confirm_delete.html:14
 #, fuzzy, python-format
@@ -2665,11 +2738,12 @@ msgstr ""
 msgid "Mainlist:"
 msgstr "Karbantartók"
 
-#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:41
+#: templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kordinátor:"
+msgstr[1] "Koordinátorok:"
 
 #: templates/teams/team_detail.html:56
 msgid "Become a translator:"
@@ -2677,44 +2751,43 @@ msgstr "Legyen fordító:"
 
 #: templates/teams/team_detail.html:59
 msgid "Join this Team"
-msgstr ""
+msgstr "Csatlakozás ehhez a csapathoz"
 
 #: templates/teams/team_detail.html:70
-msgid "People waiting for team membership approving:"
-msgstr ""
-
-#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
 #, fuzzy
-msgid "Approve"
-msgstr "Kérelmet jóváhagy"
+msgid "People waiting for team membership approving:"
+msgstr "Az emberek várnak csapattagság jóváhagyására:"
 
-#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:81
+#: templates/teams/team_list.html:50
+msgid "Approve"
+msgstr "Jóváhagy"
+
+#: templates/teams/team_detail.html:85
+#: templates/teams/team_list.html:54
 msgid "Deny"
-msgstr ""
+msgstr "Megtagad"
 
 #: templates/teams/team_detail.html:91
-#, fuzzy
 msgid "Withdraw"
-msgstr "Kérelmet visszavon"
+msgstr "Visszavon"
 
 #: templates/teams/team_detail.html:104
 msgid "Team Members:"
-msgstr ""
+msgstr "Csapattagok:"
 
 #: templates/teams/team_detail.html:114
-#, fuzzy
 msgid "Leave"
-msgstr "Mentés"
+msgstr "Elhagy"
 
 #: templates/teams/team_detail.html:147
-#, fuzzy
 msgid "Delete team"
-msgstr "Kiadást töröl"
+msgstr "Csapat törlése"
 
 #: templates/teams/team_form.html:19
-#, python-format
+#, fuzzy, python-format
 msgid "%(project_name)s Translation Teams"
-msgstr ""
+msgstr "%(project_name) fordító csapatok"
 
 #: templates/teams/team_form.html:27
 #, fuzzy
@@ -2723,17 +2796,15 @@ msgstr "Fordítás statisztikák"
 
 #: templates/teams/team_form.html:29
 msgid "Please note that notification will not be sent when coordinators or members are added or removed on this page."
-msgstr ""
+msgstr "Kérjük, vegye figyelembe, hogy értesítést nem kap, ha a koordinátorok, illetve tagok hozzáadására vagy eltávolítására kerül sor ezen az oldalon."
 
 #: templates/teams/team_form.html:40
-#, fuzzy
 msgid "Save team"
-msgstr "Kiadást ment"
+msgstr "Csapat mentése"
 
 #: templates/teams/team_list.html:30
-#, fuzzy
 msgid "Add a new team"
-msgstr "Új kiadás hozzáadása"
+msgstr "Új csapat hozzáadása"
 
 #: templates/teams/team_list.html:41
 msgid "List of team requests:"
@@ -2741,55 +2812,51 @@ msgstr ""
 
 #: templates/teams/team_list.html:71
 msgid "List of available teams:"
-msgstr ""
+msgstr "Elérhető csapatok listája:"
 
 #: templates/teams/team_list.html:87
-#, fuzzy
 msgid "No translation team created yet. :("
-msgstr "Nincs fordítás e kiadáshoz. :-("
+msgstr "Nincs még fordítói csapat létrehozva. :("
 
 #: templates/teams/team_list.html:92
-#, fuzzy
 msgid "Request a new translation team for this project"
-msgstr "Új fordítás beküldése erre az összetevőre."
+msgstr "Új fordítói csapat igénylése ehhez a projecthez."
 
 #: templates/teams/team_list.html:92
-#, fuzzy
 msgid "Request a new team"
-msgstr "Új számla felvétel"
+msgstr "Új csapat igénylése"
 
 #: templates/teams/team_list.html:102
-#, fuzzy
 msgid "Request team"
-msgstr "Engedélyt kér"
+msgstr "Csapat igénylése"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
-msgstr ""
+msgstr "Készek mutatása"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
-msgstr "Engedélyt visszavon"
+msgstr "Engedély visszavonása"
 
 #: templates/txpermissions/permission_form.html:13
 msgid "Grant permission"
-msgstr "Engedélyt megad"
+msgstr "Engedély megadása"
 
 #: templates/txpermissions/permission_form.html:15
 msgid "Request permission"
-msgstr "Engedélyt kér"
+msgstr "Engedély igénylése"
 
 #: templates/txpermissions/permission_request_approve_form.html:5
 msgid "Approve request"
-msgstr "Kérelmet jóváhagy"
+msgstr "Kérelem jóváhagyása"
 
 #: templates/txpermissions/permission_request_delete_form.html:6
 msgid "Withdraw request"
-msgstr "Kérelmet visszavon"
+msgstr "Kérelem visszavonása"
 
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
-msgstr "Kérelmet megtagad"
+msgstr "Kérelem megtagadása"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
@@ -2808,71 +2875,69 @@ msgstr "Hely"
 #: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
-msgstr "Törölje a saját adatokat"
+msgstr "Profil eltávolítása"
 
 #: templates/userprofile/account/email_validation.html:5
-#, fuzzy
 msgid "Change e-mail"
-msgstr "Email változtatás"
+msgstr "E-mail cím változtatása"
 
 #: templates/userprofile/account/email_validation.html:5
 msgid "Add e-mail"
-msgstr "Levél hozzadás"
+msgstr "E-mail cím hozzáadása"
 
 #: templates/userprofile/account/email_validation.html:22
 msgid "Add a new e-mail address"
-msgstr "Új levél címet hozzáad"
+msgstr "Új e-mail cím hozzáadása"
 
 #: templates/userprofile/account/email_validation.html:23
-#, fuzzy
 msgid "Enter the new e-mail address. An e-mail will be sent to it for testing and confirmation."
-msgstr "Adja meg az új levél címet. Egy levelet küldünk oda, hogy kipróbáljuk, és visszaigazolja."
+msgstr "Adja meg az új e-mail címet. Egy e-mailt fog kapni a megerősítéshez."
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
-msgstr "Levél érvényesítés sikerült"
+msgstr "E-mail érvényesítés sikerült"
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail change unsuccessful"
-msgstr "Levél változás sikertelen"
+msgstr "E-mail változás sikertelen"
 
 #: templates/userprofile/account/email_validation_done.html:12
 #: templates/userprofile/account/email_validation_reset_response.html:13
 msgid "E-mail validation process"
-msgstr "Levél érvényesítés folyamat"
+msgstr "E-mail érvényesítési folyamat"
 
 #: templates/userprofile/account/email_validation_done.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\">overview page</a>."
-msgstr "Igazgathatja a levél érvényesítés folyamatát az <a href=\"%(profile_overview)s\"áttekintés lapon</a>."
+msgstr "Igazgathatja az e-mail érvényesítés folyamatát az <a href=\"%(profile_overview)s\"áttekintési lapon</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
-msgstr "Levél cím érvényesítve."
+msgstr "E-mail cím érvényesítve."
 
 #: templates/userprofile/account/email_validation_done.html:19
 msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
-msgstr "A levélben kapott kulcs már nem érvényes. Kérem próbálja újra a levél érvényesítés folyamatot."
+msgstr "A levélben kapott kulcs már nem érvényes. Kérem próbálja újra a e-mail érvényesítési folyamatot."
 
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:14
 msgid "E-mail change processed"
-msgstr "Levél változás feldolgozva"
+msgstr "E-mail változás feldolgozva"
 
 #: templates/userprofile/account/email_validation_processed.html:15
 #, fuzzy
 msgid "An e-mail has been sent to the new e-mail address for verification purposes. Please check your e-mail and complete this process by following the instructions specified in the e-mail body."
-msgstr "Levelet küldtünk az új levél címre, hogy ellenőrizzük és érvényesítsük. Kérem nézze meg a leveleit, és fejezze be a folyamatot a levélben leírtakat követve."
+msgstr "Egy e-mailt küldtünk az ön új címére ellenőrzés céljából.\r\n"
 
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
-msgstr "Levél érvényesítés újraküldése"
+msgstr "E-mail érvényesítés újraküldése"
 
 #: templates/userprofile/account/email_validation_reset.html:19
 #, fuzzy
 msgid "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again."
-msgstr "Ha még nem érvényesítette levél címét, akkor még nem léphet be. Adja meg a levél címet, amivel beiratkozott, hogy újra küldhessük az érvényesítő levelet."
+msgstr "Még nem érvényesítette az e-mail címét, egyenlőre nem léphet be. Adja meg a levél címet, amivel regisztrált, hogy újra küldhessük az érvényesítő e-mailt."
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
@@ -2883,9 +2948,8 @@ msgid "Validation e-mail sent"
 msgstr "Érvényesítés levél elküldve"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
-#, fuzzy
 msgid "Your user account was already activated"
-msgstr "A használó számlája már aktív"
+msgstr "A felhasználói fiók már aktiválva"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "You can manage the e-mail validation process from the"
@@ -2902,15 +2966,13 @@ msgstr "Elküldtük önnek a levél érvényesítés hivatkozást."
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
-msgstr "Az ön levelét már érvényesítették"
+msgstr "Az ön e-mail címét már érvényesítették"
 
 #: templates/userprofile/account/login.html:5
-#, fuzzy
 msgid "User sign in"
-msgstr "Használó belépés"
+msgstr "Felhasználói bejelentkezés"
 
 #: templates/userprofile/account/login.html:19
-#, fuzzy
 msgid "Enter your username and password to sign in."
 msgstr "Adja meg az azonosítóját és jelszavát a belépéshez."
 
@@ -2925,11 +2987,11 @@ msgstr "Elfelejtett jelszó?"
 #: templates/userprofile/account/login.html:40
 #: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
-msgstr "Érvényesítés levél újraküldés"
+msgstr "Hitelesítő e-mail újraküldése"
 
 #: templates/userprofile/account/login.html:42
 msgid "Sign up!"
-msgstr "Beiratkozás!"
+msgstr "Csatlakozás!"
 
 #: templates/userprofile/account/logout.html:5
 #: templates/userprofile/account/logout.html:10
@@ -2942,7 +3004,7 @@ msgstr "Kijelentkezett."
 
 #: templates/userprofile/account/logout.html:11
 msgid "Log in again"
-msgstr "Jelentkezzék be ismét"
+msgstr "Jelentkezzen be ismét"
 
 #: templates/userprofile/account/password_change.html:5
 #: templates/userprofile/account/password_reset_confirm.html:5
@@ -2961,11 +3023,11 @@ msgstr "Itt megváltoztathatja jelszavát. Kérem adja meg az új jelszavát ké
 #: templates/userprofile/account/password_change_done.html:4
 #: templates/userprofile/account/password_reset_complete.html:4
 msgid "Password change successful"
-msgstr "Jelszó megváltozott"
+msgstr "Sikeresen megváltoztatta a jelszavát"
 
 #: templates/userprofile/account/password_change_done.html:14
 msgid "The password has been changed successfully."
-msgstr "Sikerült jelszót változtatni."
+msgstr "A jelszót sikeresen megváltoztatta."
 
 #: templates/userprofile/account/password_expired.html:4
 msgid "Password key expired"
@@ -2978,11 +3040,13 @@ msgstr "A jelszó, amivel próbálkozik már lejárt. Kérem igényeljen egy új
 #: templates/userprofile/account/password_reset.html:5
 #: templates/userprofile/account/password_reset_complete.html:12
 #: templates/userprofile/account/password_reset_confirm.html:23
+#, fuzzy
 msgid "Password reset"
 msgstr "Jelszó törlés"
 
 #: templates/userprofile/account/password_reset.html:19
 #: templates/userprofile/account/password_reset_done.html:16
+#, fuzzy
 msgid "Password reset form"
 msgstr "Jelszó törlés űrlap"
 
@@ -3030,23 +3094,20 @@ msgid "Register for a Transifex account"
 msgstr "Beiratkozás Transifexbe"
 
 #: templates/userprofile/account/registration.html:18
-#, fuzzy
 msgid "Joining Transifex is quick and easy. Just fill in the following form."
-msgstr "Könnyen és gyorsan Transifex használóvá válhat. Csak töltse ki a következő űrlapot."
+msgstr "A Transifexhez való csatlakozás gyors és egyszerű. Csak töltse ki a következő űrlapot."
 
 #: templates/userprofile/account/registration_done.html:4
-#, fuzzy
 msgid "Registration completed"
-msgstr "Beiratkozás kész"
+msgstr "Regisztráció kész"
 
 #: templates/userprofile/account/registration_done.html:8
 msgid "Register a new account"
-msgstr "Új számla felvétel"
+msgstr "Új fiók létrehozása"
 
 #: templates/userprofile/account/registration_done.html:12
-#, fuzzy
 msgid "You have successfully registered a new account and an account activation url has been sent to your e-mail address. Please access this url to finish the registration process."
-msgstr "Sikerült beiratkoznia egy új számlára, és a számla aktiválás URL-t, levélben elküldtük az ön címére. Nézze meg azt a levelet, hogy befejezze a beiratkozás folyamatát."
+msgstr "Sikeresen létrehozott egy felhasználói fiókot. Az aktivációs linket elküldtük az e-mail címére. Kattintson a linkre a regisztráció befejezéséhez."
 
 #: templates/userprofile/account/registration_done.html:15
 #, fuzzy, python-format
@@ -3080,9 +3141,8 @@ msgid "Done"
 msgstr "Kész"
 
 #: templates/userprofile/avatar/choose.html:56
-#, fuzzy
 msgid "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you"
-msgstr "Válasszon képet egy távoli URL-ről. Tegye az URL-t az alábbi bevitel sorba, és mi lekérjük a képet ön helyett"
+msgstr "Válasszon képet egy távoli címről. Írja a címet az alábbi bevitel sorba, és mi lekérjük a képet önnek"
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -3098,13 +3158,12 @@ msgid "Delete personal information"
 msgstr "Személyes adatok törlése"
 
 #: templates/userprofile/profile/delete.html:13
-#, fuzzy
 msgid "Erase all your private data except your username. You can fill in the information again later if you want to."
 msgstr "Minden saját adatot töröl kivéve az azonosítót. Később újratöltheti adatokkal, ha akarja."
 
 #: templates/userprofile/profile/delete.html:17
 msgid "Are you sure?"
-msgstr "Biztos?"
+msgstr "Biztos benne?"
 
 #: templates/userprofile/profile/delete.html:18
 msgid "Delete my data"
@@ -3172,7 +3231,7 @@ msgstr "Név:"
 
 #: templates/userprofile/profile/overview.html:40
 msgid "E-mail:"
-msgstr "Levél:"
+msgstr "E-Mail:"
 
 #: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
@@ -3194,11 +3253,11 @@ msgstr "Igazgatás:"
 
 #: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
-msgstr "Levél cím változtatás"
+msgstr "E-Mail cím változtatás"
 
 #: templates/userprofile/profile/overview.html:90
 msgid "Add your e-mail address"
-msgstr "Adja meg a levél címét"
+msgstr "Adja meg az email címét"
 
 #: templates/userprofile/profile/overview.html:95
 msgid "Add location"
@@ -3210,7 +3269,7 @@ msgstr "Helyet változtat"
 
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr ""
+msgstr "Saját időzóna"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -3224,24 +3283,24 @@ msgstr "Adjon meg néhány adatot magáról."
 #: templates/userprofile/profile/public.html:50
 #, python-format
 msgid "Nudge %(user)s "
-msgstr ""
+msgstr "%(user)s felhasználó(k) megbökése"
 
 #: templates/userprofile/profile/public.html:66
-#, fuzzy
 msgid "Native language"
 msgstr "Anyanyelv"
 
 #: templates/userprofile/profile/public.html:72
-#, fuzzy
 msgid "Blog/Site"
-msgstr "Blog"
+msgstr "Blog/Weboldal"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:78
+#: txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: templates/userprofile/profile/public.html:84
+#: txcommon/models.py:35
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3256,7 +3315,13 @@ msgid_plural ""
 "            Coordinator of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"           A következő csapat koordinátora:\n"
+"        "
 msgstr[1] ""
+"\n"
+"           A következő csapatok koordinátora:\n"
+"        "
 
 #: templates/userprofile/profile/public.html:115
 #: templates/userprofile/profile/public.html:142
@@ -3277,19 +3342,23 @@ msgid_plural ""
 "            Members of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"            Tagja a következő csapatnak:\n"
+"        "
 msgstr[1] ""
+"\n"
+"            Tagjai a következő csapatoknak:\n"
+"        "
 
 #: templates/webtrans/comments.html:3
 msgid "Context"
-msgstr ""
+msgstr "Összefüggés"
 
 #: templates/webtrans/comments.html:4
-#, fuzzy
 msgid "Developer comments"
-msgstr "Összetevő törlése"
+msgstr "Fejlesztő megjegyzései"
 
 #: templates/webtrans/comments.html:5
-#, fuzzy
 msgid "Occurences"
 msgstr "Előfordulások"
 
@@ -3299,33 +3368,31 @@ msgid "%(component_name)s"
 msgstr "%(component_name)s"
 
 #: templates/webtrans/transfile_edit.html:37
-#, python-format
+#, fuzzy, python-format
 msgid "Translate '%(filename)s'"
 msgstr "„%(filename)s” fájlt fordítja"
 
 #: templates/webtrans/transfile_edit.html:46
 #: templates/webtrans/transfile_edit.html:51
-#, python-format
+#, fuzzy, python-format
 msgid "Translate '<code>%(filename)s</code>'"
 msgstr "„<code>%(filename)s</code>” fájlt fordítja"
 
 #: templates/webtrans/transfile_edit.html:60
-#, fuzzy
 msgid "Current status for this page"
-msgstr "Statisztikák e nyelvhez"
+msgstr "Az oldal jelenlegi állapota"
 
 #: templates/webtrans/transfile_edit.html:64
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: templates/webtrans/transfile_edit.html:67
 msgid "Verbose editing:"
-msgstr ""
+msgstr "Részletes szerkesztés"
 
 #: templates/webtrans/transfile_edit.html:74
-#, fuzzy
 msgid "Filter"
-msgstr "Fájlok"
+msgstr "Szűrő"
 
 #: templates/webtrans/transfile_edit.html:75
 #, fuzzy
@@ -3333,9 +3400,8 @@ msgid "Clear"
 msgstr "Gyorstárat töröl"
 
 #: templates/webtrans/transfile_edit.html:80
-#, fuzzy
 msgid "Translated"
-msgstr "Lefordítva:"
+msgstr "Lefordítva"
 
 #: templates/webtrans/transfile_edit.html:86
 #, fuzzy
@@ -3343,14 +3409,12 @@ msgid "Fuzzy"
 msgstr "Ellenőrizendő:"
 
 #: templates/webtrans/transfile_edit.html:92
-#, fuzzy
 msgid "Untranslated"
-msgstr "Fordítatlan:"
+msgstr "Fordítatlan"
 
 #: templates/webtrans/transfile_edit.html:98
-#, fuzzy
 msgid "Total"
-msgstr "Összesen:"
+msgstr "Összesen"
 
 #: templates/webtrans/transfile_edit.html:115
 msgid "#"
@@ -3381,9 +3445,8 @@ msgid "Submit translations"
 msgstr "Fordításokat beküld"
 
 #: templates/webtrans/transfile_form.html:14
-#, fuzzy
 msgid "Copy source string"
-msgstr "Forrás szöveg"
+msgstr "Eredeti karakterlánc másolása"
 
 #: templates/webtrans/transfile_form.html:23
 msgid "Auto-suggest translation"
@@ -3468,14 +3531,12 @@ msgid "See statistics for this language"
 msgstr "Statisztikák e nyelvhez"
 
 #: translations/templates/comp_stats_table.html:30
-#, fuzzy
 msgid "No team for this language"
-msgstr "Statisztikák e nyelvhez"
+msgstr "Nincs csapat ehhez a nyelvhez"
 
 #: translations/templates/comp_stats_table.html:34
-#, fuzzy
 msgid "There are no languages registered matching this code"
-msgstr "Nincs e kódhoz illeszkedő nyelv"
+msgstr "Nincs ehhez a kódhoz illeszkedő nyelv"
 
 #: translations/templates/comp_stats_table.html:49
 #: translations/templates/lang_stats_table.html:39
@@ -3570,31 +3631,37 @@ msgstr "Nő"
 msgid "Male"
 msgstr "Férfi"
 
-#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:29
+#: txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Utónév"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:30
+#: txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Vezetéknév"
 
-#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:33
+#: txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Anyanyelv"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:34
+#: txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:37
+#: txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Bemutatkozás"
 
 #: txcommon/models.py:38
 msgid "Short description of yourself (140 chars)."
-msgstr "Rövid jellemzés (140 betű) magáról."
+msgstr "Rövid jellemzés (140 karakter) magáról."
 
-#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:39
+#: txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Munkát keres?"
 
@@ -3651,21 +3718,19 @@ msgstr "Garantált beadás hozzáféréssel rendelkező használók:"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr ""
+msgstr "Hozzáférés biztosítva a projecthez"
 
 #: txcommon/notifications.py:58
-#, fuzzy
 msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor a karbantartó hozzáférést adott egy felhasználónak, hogy az fájlokat küldhessen a projectbe"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr ""
+msgstr "Hozzáférés a projecthez visszavonva"
 
 #: txcommon/notifications.py:66
-#, fuzzy
 msgid "when a maintainer revokes the access of an user to submit files to a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor a karbantartó visszavonja az engedélyét egy felhasználónak, hogy az fájlokat küldhessen a projectbe"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3700,14 +3765,12 @@ msgid "when a component file of a project is submitted"
 msgstr "amikor terv összetevő fájlt küldenek be"
 
 #: txcommon/notifications.py:105
-#, fuzzy
 msgid "File Review Submitted"
-msgstr "Fájl beküldve"
+msgstr "Fájl felülvizsgálat benyújtva"
 
 #: txcommon/notifications.py:106
-#, fuzzy
 msgid "when a file of a component is submitted for review"
-msgstr "amikor terv összetevő fájlt küldenek be"
+msgstr "amikor egy összetevő fájlja felülvizsgálatra lett beküldve"
 
 #: txcommon/notifications.py:113
 msgid "Translation File Changed"
@@ -3731,9 +3794,8 @@ msgid "New Release Added for a Watched Project"
 msgstr "Új kiadás hozzáadva figyelt gyűjteményhez"
 
 #: txcommon/notifications.py:134
-#, fuzzy
 msgid "when a new release is added to a project"
-msgstr "amikor új kiadást adnak gyűjteményhez"
+msgstr "amikor az új kiadás hozzálett adva projecthez"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
@@ -3749,136 +3811,120 @@ msgid "Release Deleted"
 msgstr "Kiadás törölve"
 
 #: txcommon/notifications.py:147
-#, fuzzy
 msgid "when a release of a project is deleted"
-msgstr "amikor összetevő kiadását törlik"
+msgstr "amikor a project egy kiadása törölt"
 
 #: txcommon/notifications.py:152
-#, fuzzy
 msgid "Release Added to a Project"
-msgstr "Kiadás hozzáadása gyűjteményhez"
+msgstr "Kiadás hozzáadva a projecthez"
 
 #: txcommon/notifications.py:153
-#, fuzzy
 msgid "when a release is added to a project"
-msgstr "amikor kiadást gyűjteményhez adnak"
+msgstr "amikor egy kiadás hozzá lett adva a projecthez"
 
 #: txcommon/notifications.py:158
-#, fuzzy
 msgid "Release Deleted from a Project"
-msgstr "Kiadás törlése gyűjteményből"
+msgstr "Kiadás törölve a projectből"
 
 #: txcommon/notifications.py:159
-#, fuzzy
 msgid "when a release is deleted from a project"
-msgstr "amikor kiadást törölnek gyűjteményből"
+msgstr "amikor egy kiadás törölve lett a projectből"
 
 #: txcommon/notifications.py:168
-#, fuzzy
 msgid "New Team Added"
-msgstr "Új terv hozzáadva"
+msgstr "Új csapat hozzáadva"
 
 #: txcommon/notifications.py:169
-#, fuzzy
 msgid "when a new translation team is added to a project"
-msgstr "amikor összetevőt tervhez adnak"
+msgstr "amikor egy új fordítói csapat hozzá lett adva a projecthez"
 
 #: txcommon/notifications.py:176
-#, fuzzy
 msgid "Team Changed"
-msgstr "Kiadás változott"
+msgstr "Csapat megváltozott"
 
 #: txcommon/notifications.py:177
-#, fuzzy
 msgid "when a translation team of a project is changed"
-msgstr "amikor terv összetevő fordítás fájl változik"
+msgstr "amikor a project fordítói csapata megváltozott"
 
 #: txcommon/notifications.py:184
-#, fuzzy
 msgid "Team Deleted"
-msgstr "Kiadás törölve"
+msgstr "Csapat törölve"
 
 #: txcommon/notifications.py:185
-#, fuzzy
 msgid "when a translation team of a project is deleted"
-msgstr "amikor összetevőt törölnek"
+msgstr "amikor egy project fordítói csapata törölve lett"
 
 #: txcommon/notifications.py:192
 msgid "Team Creation Requested"
-msgstr ""
+msgstr "Csapat létrehozása kérelmezve"
 
 #: txcommon/notifications.py:193
-#, fuzzy
 msgid "when a translation team creation is requestedfor a project"
-msgstr "amikor összetevőt tervhez adnak"
+msgstr "amikor egy fordítói csapat létrehozásának kérvényezése a projecthez"
 
 #: txcommon/notifications.py:200
 msgid "Team Creation Request Denied"
-msgstr ""
+msgstr "Csapat létrehozásának kérelme elutasítva"
 
 #: txcommon/notifications.py:201
 msgid "when a translation team creation requestfor a project is denied by a maintainer"
-msgstr ""
+msgstr "amikor egy fordítói csapat létrehozásának kérvényét a projecthez megtagadta egy karbantartó"
 
 #: txcommon/notifications.py:208
 msgid "Team User Joining Requested"
 msgstr ""
 
 #: txcommon/notifications.py:209
-#, fuzzy
 msgid "when an user requests for joining to a translation team of a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor egy felhasználó kérelmezni a csatlakozást egy project fordítói csapatába"
 
 #: txcommon/notifications.py:216
 msgid "Team User Joining Approved"
-msgstr ""
+msgstr "Csapatba csatlakozás jóváhagyva"
 
 #: txcommon/notifications.py:217
 msgid "when an user is approved as a member of a translation team of a project"
-msgstr ""
+msgstr "amikor egy felhasználó jóváhagyott, mint tagja egy project fordítói csapatának"
 
 #: txcommon/notifications.py:224
 msgid "Team User Joining Denied"
-msgstr ""
+msgstr "Csapatba csatlakozás megtagadva"
 
 #: txcommon/notifications.py:225
-#, fuzzy
 msgid "when an user is denied as a member of a translation team of a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor egy felhasználó elutasított, mint tagja egy project fordítói csapatának "
 
 #: txcommon/notifications.py:232
 msgid "Team User Joining Withdrawn"
-msgstr ""
+msgstr "Csapatba csatlakozás visszavonva"
 
 #: txcommon/notifications.py:233
-#, fuzzy
 msgid "when an user withdrawn its own request for joining a translation team of a project"
-msgstr "Garantált beadás hozzáféréssel rendelkező használók:"
+msgstr "amikor egy felhasználó visszavonta a saját kérését, hogy csatlakozzon a fordítói csapatba"
 
 #: txcommon/notifications.py:240
 msgid "Team User Left"
-msgstr ""
+msgstr "Csapattag kilépett"
 
 #: txcommon/notifications.py:241
-#, fuzzy
 msgid "when an user leaves a translation team of a project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "amikor a felhasználó elhagyja egy project fordítói csapatát"
 
 #: txcommon/notifications.py:251
 msgid "Weekly project report for maintainers"
-msgstr ""
+msgstr "Heti project-jelentés a karbantartóknak"
 
 #: txcommon/notifications.py:252
 msgid "when you receive the weekly report of projects that you maintain."
-msgstr ""
+msgstr "amikor ön megkapja a heti jelentéseket azokról a projectekről amiket karbantart."
 
 #: txcommon/notifications.py:259
 msgid "User Nudge"
-msgstr ""
+msgstr "Felhasználó meglökése"
 
 #: txcommon/notifications.py:260
 msgid "when an user nudges you"
-msgstr ""
+msgstr "amikor egy felhasználó meglökött"
 
 #: txcommon/validators.py:24
 msgid "Enter a valid regular expression."
@@ -3895,25 +3941,24 @@ msgstr "A gyökér URL http://·vagy·ftp:// kezdetű kell legyen"
 #: txcommon/validators.py:69
 #, python-format
 msgid "This is not a valid root URL for this repository type. Valid choices are: %s"
-msgstr ""
+msgstr "Ez nem érvényes gyökér URL ehhez a tároló-típushoz. Érvényes lehetőségek: %s "
 
 #: txcommon/validators.py:86
 msgid "This repository already belongs to another project. Please choose a different one."
-msgstr ""
+msgstr "Ez a tároló már egy másik projecthez tartozik. Kérem válasszon egy másikat."
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
-msgstr ""
+msgstr "Nem tudja ugyanazt a felhasználót többször megbökni rövid időn belül."
 
 #: txcommon/views.py:88
-#, fuzzy
 msgid "You can't nudge yourself."
-msgstr "Bemutatkozás"
+msgstr "Nem tudja saját magát megbökni."
 
 #: txcommon/views.py:95
-#, fuzzy, python-format
+#, python-format
 msgid "You have nudged '%s'."
-msgstr "<p>Kijelentkezett."
+msgstr "Ön megbökte '%s'."
 
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
@@ -3928,9 +3973,8 @@ msgid "Home"
 msgstr "Honlap"
 
 #: txpermissions/views.py:93
-#, fuzzy
 msgid "You added a permission."
-msgstr "Ön engedélyt kérelmezett."
+msgstr "Hozzáadott engedélyt."
 
 #: txpermissions/views.py:95
 msgid "You added a permission request."
@@ -3950,16 +3994,17 @@ msgstr "Ön törölte az engedély kérelmet."
 
 #: vcs/forms.py:18
 msgid "Repo URL root"
-msgstr ""
+msgstr "Tároló gyökér URL"
 
-#: vcs/forms.py:19 vcs/forms.py:43
+#: vcs/forms.py:19
+#: vcs/forms.py:43
+#, fuzzy
 msgid "The URL of the versioning system repository/branch."
-msgstr ""
+msgstr "A verziókészítő rendszer tároló/ág URL-ja."
 
 #: vcs/forms.py:61
-#, fuzzy
 msgid "This type of repository does not accept branches"
-msgstr "E tároló típusnak kell egy ág"
+msgstr "Ez a fajta tároló nem fogadja el az ágakat"
 
 #: vcs/models.py:48
 msgid "Branch"
@@ -3991,21 +4036,21 @@ msgid "vcsunits"
 msgstr "vcsunits"
 
 #: webtrans/fields.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "The %s fields should be filled."
-msgstr "%s törölve."
+msgstr "A(z) %s mezőket kell kitölteni."
 
 #: webtrans/wizards.py:364
 msgid "Nothing was sent because you haven't changed anything in the translation form."
-msgstr ""
+msgstr "Semmi sincs elküldve, mert még nem változtatott semmit a fordítás formáján."
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
-msgstr ""
+msgstr "Előző"
 
 #: webtrans/templates/pagination.html:49
 msgid "Next"
-msgstr ""
+msgstr "Következő"
 
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: %(release)s kiadás"
@@ -4023,6 +4068,7 @@ msgstr ""
 #~ msgstr "Tervek gyűjteményei"
 
 #~ msgid "Collection:"
+
 #~ msgid_plural "Collections:"
 #~ msgstr[0] "Gyűjtemény:"
 #~ msgstr[1] "Gyűjtemények:"
@@ -4089,11 +4135,13 @@ msgstr ""
 #~ msgstr "Új gyűjteményt ad hozzá"
 
 #~ msgid "1 release"
+
 #~ msgid_plural "%(counter)s releases"
 #~ msgstr[0] "1 kiadás"
 #~ msgstr[1] "%(counter)s kiadás"
 
 #~ msgid "1 project"
+
 #~ msgid_plural "%(counter)s projects"
 #~ msgstr[0] "1 terv"
 #~ msgstr[1] "%(counter)s terv"
