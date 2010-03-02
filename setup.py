@@ -79,7 +79,6 @@ setup(
         "django-threadedcomments",
     ],
     data_files=[
-        ('templates', glob.glob('transifex/templates/*.html')),
     ],
 
     zip_safe=False,
