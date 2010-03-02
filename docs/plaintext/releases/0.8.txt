@@ -41,8 +41,33 @@ Here's a 40K-foot view of the release major features and numbers:
    
    Magneto_ (art by Doug Hamilton-Evans)
 
+
+A note about Transifex.net
+--------------------------
+
+Transifex 0.8 is a release of the open-source, community-powered Transifex
+flavor. It is suitable for very large proejcts with their own existing
+translation community, such as the Fedora Project, the GNOME Desktop etc.
+
+Transifex is also offered as another flavor: Software-as-a-Service, at
+www.transifex.net_, ready to serve your translations with a few clicks.
+Transifex.net is a one-stop, batteries-included hosted service serving
+independent projects and businesses which don't want to worry about deploying
+their own Tx instance.
+
+Tranisfex.net is managed by Indifex_, the company sponsoring the development
+of Transifex itself.
+
+.. figure:: ../../screenshots/transifex.net/frontpage.png
+   :class: alcenter shot2
+   
+   For a hassle-free translation management platform, visit Transifex.net_.
+
+
 What's new in Transifex 0.8
 ---------------------------
+
+On to our new features now!
 
 
 Translation Teams
@@ -266,7 +291,7 @@ Here's a snippet of how this report looks like:
 
 .. code-block:: rest
 
-    Hello john, this is Transifex at http://www.transifex.net/.
+    Hello John, this is Transifex at http://www.transifex.net/.
     
     I am bringing you the weekly translation report for your project 'transifex'.
 
@@ -441,7 +466,8 @@ Efficiency Improvements
   per language.
 - Make local Subversion opearations faster by avoiding running update when not
   needed.
-- Created get_top_translators templatetag. Hooked up get_top_translators templatetag on the index page
+- Created get_top_translators templatetag. Hooked up get_top_translators
+  templatetag on the index page
 - Enabled local memory caching by default. Only cache anonymous requests by
   default.
 
@@ -525,18 +551,27 @@ Cleanups
 Translations
 ------------
 
-- Albanian -- Besnik
-- Danish -- kristho
+- Albanian -- Besnik Bleta
+- Chinese (Taiwan) -- Cheng-Chia Tseng
+- Czech -- Petr Novák
+- Danish -- Kris Thomsen
 - Estonian -- Lauri Võsandi
 - French -- Brice Maron, Olowen Cilyan
-- Japanese -- Noriko Muzimoto
+- Galician -- Leandro Regueiro
+- German -- Jannis Leidel
+- Greek -- Nick Raptis, Nikos Tsirakis
+- Hungarian -- Nikolas Slivka, Zoltan Hoppar
+- Indonesian -- Teguh Dwicaksana
+- Italian -- Guido Grazioli
+- Latvian -- Rihards Priedītis
+- Japanese -- Noriko Muzimoto, Ian Lewis, Shinya Okano, Yosuke Ikeda
 - Persian -- Mostafa Daneshvar
 - Polish -- Piotr Drąg
-- Portuguese (Brazilian) -- Diego Búrigo Zacarão, Jorge Lopes
+- Portuguese (Brazilian) -- Diego Búrigo Zacarão, Jorge Lopes, Tatiana Alchueyr
 - Russian -- Azamat Hackimov
 - Slovak  -- Pavol Šimo
-- Spanish (Castilian) -- Héctor Daniel Cabrera
-- Swedish -- Daniel Nylander
+- Spanish (Castilian) -- Héctor Daniel Cabrera, Michele Balbi
+- Swedish -- Daniel Nylander, Martin Kjellqvist
 - Ukrainian -- Maxim Dziumanenko
 
 
@@ -658,7 +693,6 @@ The following people have contributed to this release, with one way or another:
 - Seraphim Mellos
 - Og Maciel
 - Zhu Yanhai
-- Og Maciel
 - Christos Trochalakis
 - Nick Schermer
 - Benoit Boissinot (#mercurial)
@@ -670,7 +704,7 @@ Special thanks
 ::::::::::::::
 
 We'd like to publicly thank the `Moblin Project`_ for choosing Transifex as
-their translation platform and their ongoing support. Also, the XFCE project
+their translation platform and their ongoing support. Also, the `XFCE Project`_
 has been tremendously helpful in testing and polishing this release.
 
 .. image:: ../../screenshots/0.8/magneto.jpg
@@ -680,16 +714,19 @@ has been tremendously helpful in testing and polishing this release.
 Transifex 0.8 Development Releases
 ==================================
 
-- Alpha: 24 January 2010
+- Alpha: 	24 January 2010
 - Beta: 18 February 2010
-- Release Candidate: n/a
+- Release Candidate: 26 February 2010
 
 Please refer to the full `Transifex 0.8 changelog`_ for more information on
 what has changed between the development releases and final one.
 
-
-.. _Transifex 0.8 changelog: http://code.transifex.org/tx-0.8.x/shortlog
+.. _Transifex.net: http://www.transifex.net/
+.. _www.transifex.net: http://www.transifex.net/
+.. _Indifex: http://www.indifex.com/
+.. _Transifex 0.8 changelog: http://code.transifex.org/0.8.x/shortlog
 .. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
 .. _Moblin Project: http://translate.moblin.org/
+.. _XFCE Project: http://wiki.xfce.org/translations 
 .. _Magneto: http://en.wikipedia.org/wiki/Magneto_(comics)
 
