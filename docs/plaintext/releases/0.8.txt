@@ -5,11 +5,10 @@
 =======================================
  
  
-Transifex 0.8-beta
-===================
+Transifex 0.8 (Magneto)
+=======================
  
-Welcome to the beta release of Transifex, which is what will become
-Transifex 0.8 codenamed Magneto_.
+Welcome to Transifex 0.8, codenamed Magneto_.
  
 Released:
   February 18, 2010
@@ -19,23 +18,23 @@ multitude of collaboration features. It is targeted for new installations of
 Transifex and parties who choose to migrate to a new major version and enjoy
 the new features.
 
-Transifex 0.8-beta is a preview of what's being cooked in 0.8. It's still under
-development and not intended for production use. 
-
 Here's a 40K-foot view of the release major features and numbers:
 
 - Translation Teams
 - Translation Reviews
 - Timeline & history
+- Project Releases and Removal of Collections
 - Weekly notification for maintainers
 - Subversion over secure HTTP (https)
-- Lotte support for plurals and msgctxt
+- Lotte support for plurals, msgctxt, filtering, searching and more!
 - Nudges between users
 - Notifications for permission requests
 
+
 .. code-block:: bash
 
-    352 files changed, 70774 insertions(+), 33218 deletions(-)
+    488 commits
+    436 files changed, 105732 insertions(+), 45963 deletions(-)
 
 .. figure:: ../../screenshots/0.8/magneto2.jpg
    :class: alcenter shot
@@ -321,6 +320,12 @@ Various improvements and bugfixes
 Lotte Improvements
 ::::::::::::::::::
 
+- Filtering results based on the status (transalted, fuzzy, untransalted) is
+  back! w00t!
+
+.. image:: ../../screenshots/0.8/lotte-filtering.png
+   :class: shot2
+  
 - Added server-side pagination when editing a PO file.
 
   - The translation form now uses a session wizard, which allows
@@ -418,6 +423,9 @@ Under-the-hood Improvements
 - New config file holding methods, and -local file for overrides.
 - Don't try to msgmerge if there is no related POT file
 - Renamed setting file ``90-local.conf`` to a ``*.sample``.
+- Splitted component edit form into two views
+- Added support for Khmer language (#497)
+- Docs directory structure overhaul.
 
 
 Efficiency Improvements
@@ -493,6 +501,8 @@ Bugfixes
 - No 404 should be raised when adding an ActionLog
 - Fixed user Timeline querying (#485)
 - Made some POTManager methods static ones
+- Don't try to msgmerge if there is no related POT file
+- Fixed entry status changing for Lotte (#525)
 
 
 Cleanups
