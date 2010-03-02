@@ -446,7 +446,7 @@ def process_lang():
 #   日本語
 #   Japanese
     ja, created = Language.objects.get_or_create(code='ja')
-    ja.code_aliases='ja-JP'
+    ja.code_aliases=' ja-jp ja-JP ja_JP'
     ja.name = _(u'Japanese')
     ja.nplurals = '1'
     ja.pluralequation = '0'
