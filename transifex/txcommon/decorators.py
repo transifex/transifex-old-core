@@ -12,7 +12,34 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from authority import permissions, get_check
-from authority.views import permission_denied
+from txcommon.views import permission_denied
+from projects.models import Project
+
+class access_off(object):
+    """
+    Decorator to check if writers and teams are disabled for a given project.
+
+    It needs to be used in front of views that accept the key argument 
+    'project_slug'.
+
+    Whenever a project has set 'anyone_submit' or the 'outsource' attribute 
+    this decorator will disable the access to the related view.
+
+    The arg 'redirect_view' needs to be passed in order to specify the view 
+    where the user should be redirected.
+    """
+    def __init__(self, redirect_view):
+        self.redirect_view = redirect_view
+
+    def __call__(self, view_func):
+        def _decorate(request, *args, **kwargs):
+            project_slug = kwargs.get('project_slug', None)
+            project = get_object_or_404(Project, slug=project_slug)
+            if project.anyone_submit or project.outsource:
+                return self.redirect_view(request, project=project, *args, **kwargs)
+            return view_func(request, *args, **kwargs)
+        return _decorate
+
 
 def user_passes_test_with_403(test_func, login_url=None):
     """

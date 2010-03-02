@@ -20,6 +20,13 @@ from projects.models import Project
 from txcommon.filters import LogEntryFilter
 from txcommon.log import logger
 
+
+def permission_denied(request, template_name=None, extra_context={}, *args, 
+    **kwargs):
+    """Wrapper to allow non-declarated key arguments."""
+    from authority.views import permission_denied
+    return permission_denied(request, template_name, extra_context)
+
 def search(request):
     query_string = request.GET.get('q', "")
     search_terms = query_string.split()

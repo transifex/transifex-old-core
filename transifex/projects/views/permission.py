@@ -9,7 +9,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from authority.models import Permission
 from authority.views import permission_denied
-from projects.forms import ProjectAccessSubForm
+from projects.forms import ProjectAccessControlForm
 from projects.models import Project
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
@@ -17,8 +17,9 @@ from projects.permissions.project import ProjectPermission
 # Temporary
 from txcommon import notifications as txnotification
 
-from txcommon.decorators import one_perm_required_or_403
+from txcommon.decorators import one_perm_required_or_403, access_off
 from txcommon.log import logger
+from txcommon.views import permission_denied
 from txpermissions.views import (add_permission_or_request,
                                  approve_permission_request,
                                  delete_permission_or_request)
@@ -34,7 +35,7 @@ def _get_project_and_permission(project_slug, permission_pk):
                                    content_type=ctype, id=permission_pk)
     return project, permission
 
-
+@access_off(permission_denied)
 @login_required
 @one_perm_required_or_403(pr_project_add_perm, 
     (Project, 'slug__exact', 'project_slug'))
@@ -70,7 +71,7 @@ def project_add_permission(request, project_slug):
         extra_context={
             'project_permission': True,
             'project': project,
-            'project_permission_form': ProjectAccessSubForm(instance=project),
+            'project_access_control_form': ProjectAccessControlForm(instance=project),
             'notice': notice,
         },
         template_name='projects/project_form_permissions.html')
@@ -98,12 +99,13 @@ def project_add_permission(request, project_slug):
         #extra_context={
             #'project_permission': True,
             #'project': project, 
-            #'project_permission_form': ProjectAccessSubForm(instance=project),
+            #'project_permission_form': ProjectAccessControlForm(instance=project),
             #'notice': notice
         #},
         #template_name='projects/project_form_permissions.html')
 
 
+@access_off(permission_denied)
 @login_required
 @one_perm_required_or_403(pr_project_approve_perm, 
     (Project, 'slug__exact', 'project_slug'))
@@ -122,6 +124,7 @@ def project_approve_permission_request(request, project_slug, permission_pk):
                                       extra_context={ 'notice': notice })
 
 
+@access_off(permission_denied)
 @login_required
 @one_perm_required_or_403(pr_project_delete_perm, 
     (Project, 'slug__exact', 'project_slug'))
@@ -146,6 +149,7 @@ def project_delete_permission(request, project_slug, permission_pk):
                                         extra_context={ 'notice': notice })
 
 
+@access_off(permission_denied)
 @login_required
 def project_delete_permission_request(request, project_slug, permission_pk):
     """

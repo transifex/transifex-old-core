@@ -76,6 +76,10 @@ urlpatterns += patterns('',
         view = project_update,
         name = 'project_edit',),
     url(
+        regex = '^p/(?P<project_slug>[-\w]+)/edit/access/$',
+        view = project_access_control_edit,
+        name = 'project_access_control_edit',),
+    url(
         regex = '^p/(?P<project_slug>[-\w]+)/delete/$',
         view = project_delete,
         name = 'project_delete',),

@@ -8,6 +8,34 @@ from teams.models import Team
 from translations.models import POFile
 from txcommon.log import logger
 
+
+def _check_outsource_project(obj):
+    """
+    Check if the project, which the obj passed by parameter belongs to, has 
+    outsourced the access control to another project.
+
+    The parameter 'obj' can be an Project, Team or POFile instance.
+
+    Return a tuple '(project, team)'. The 'team' might be None.
+    """
+    if isinstance(obj, Project):
+        if obj.outsource:
+            project = obj.outsource
+        else:
+            project = obj
+        team = None
+    elif isinstance(obj, Team):
+        team = obj
+        project = team.project
+    elif isinstance(obj, POFile):
+        if obj.object.project.outsource:
+            project = obj.object.project.outsource
+        else:
+            project = obj.object.project
+        team = Team.objects.get_or_none(project, obj.language_code)
+
+    return (project, team)
+
 class ProjectPermission(BasePermission):
 
     label = 'project_perm'
@@ -49,14 +77,7 @@ class ProjectPermission(BasePermission):
         """
         project, team = None, None
         if obj:
-            if isinstance(obj, Project):
-                project = obj
-            elif isinstance(obj, Team):
-                team = obj
-                project = team.project
-            elif isinstance(obj, POFile):
-                project = obj.object.project
-                team = Team.objects.get_or_none(project, obj.language_code)
+            project, team = _check_outsource_project(obj)
             if project:
                 if project.anyone_submit:
                     return True

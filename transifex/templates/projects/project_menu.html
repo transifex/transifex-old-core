@@ -18,12 +18,29 @@
   {% endif %}
   
 <script type="text/javascript">
+
+function toggle_access_control(){
+    var access_control = $("input[name='access_control']:checked").val();
+    if (access_control != 'outsourced_access'){
+        $("tr#outsource").hide();
+    }else{
+        $("tr#outsource").show();
+    }
+}
+
 $(document).ready(
     function ()
     {
         $("#id_anyone_submit").change(function(){
             $(this).parents("form").submit();
             })
+            
+        $("input[name='access_control']").change(function(){
+            toggle_access_control();
+        });
+        
+        toggle_access_control();
+        
     }
 );
 </script>
@@ -42,8 +59,8 @@ $(document).ready(
     </li>
 
     {% if is_maintainer %}
-    <li class="ui-state-default ui-corner-top {% if project_permission_form %}ui-tabs-selected ui-state-active{% endif %}">
-       <a id="tab-link-2" href="{% txadd_url_for_obj project %}">
+    <li class="ui-state-default ui-corner-top {% if project_access_control_form %}ui-tabs-selected ui-state-active{% endif %}">
+       <a id="tab-link-2" href="{% url project_access_control_edit project.slug %}">
          <span>{% trans "Access Control" %}</span>
        </a>
     </li>

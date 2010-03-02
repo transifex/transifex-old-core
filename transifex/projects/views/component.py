@@ -433,7 +433,12 @@ def component_submit_file(request, project_slug, component_slug,
             language, postats = None, None
             team_name = lang_code = component.trans.guess_language(filename)
 
-        team = Team.objects.get_or_none(component.project, lang_code)
+        if component.project.outsource:
+            project = component.project.outsource
+        else:
+            project = component.project
+
+        team = Team.objects.get_or_none(project, lang_code)
         if team:
             object_list.append(team)
 
@@ -442,13 +447,13 @@ def component_submit_file(request, project_slug, component_slug,
         review_check_denied = False
         # Send the file for review instead of immediately submit it
         if request.POST.get("submit_for_review", None):
-            if check.submit_file(team or component.project) or \
+            if check.submit_file(team or project) or \
                 request.user.has_perm('reviews.add_poreviewrequest'):
                 return review_add(request, component, submitted_file, language)
             else:
                 review_check_denied = True
 
-        if review_check_denied or not check.submit_file(team or component.project):
+        if review_check_denied or not check.submit_file(team or project):
             request.user.message_set.create(message=
                 _("You need to be in the '%s' team of this project for "
                   "being able to send translations to that file "

@@ -112,6 +112,10 @@ class Project(models.Model):
     maintainers = models.ManyToManyField(User, verbose_name=_('Maintainers'),
         related_name='projects_maintaining', blank=False, null=True)
 
+    outsource = models.ForeignKey('Project', blank=True, null=True,
+        verbose_name=_('Outsource project'),
+        help_text=_('Project that owns the access control of this project.'))
+
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'), blank=True, 
         max_length=1000,

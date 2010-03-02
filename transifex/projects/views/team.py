@@ -16,7 +16,6 @@ from django.utils.translation import ugettext as _
 from actionlog.models import action_logging
 from languages.models import Language
 from notification import models as notification
-from projects.forms import ProjectAccessSubForm
 from projects.models import Project
 from projects.permissions import *
 
@@ -25,11 +24,22 @@ from teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
 from txcommon import notifications as txnotification
 
-from txcommon.decorators import one_perm_required_or_403
+from txcommon.decorators import one_perm_required_or_403, access_off
 from txcommon.log import logger
 
+def team_off(request, project, *args, **kwargs):
+    """
+    This view is used by the decorator 'access_off' to redirect a user when
+    a project outsources its teams or allow anyone to submit files.
 
-# Teams
+    Usage: '@access_off(team_off)' in front on any team view.
+    """
+    return render_to_response('teams/team_off.html', {
+        'project_team_page': True,
+        'project': project,
+    }, context_instance=RequestContext(request))
+
+
 def _team_create_update(request, project_slug, language_code=None):
     """
     Handler for creating and updating a team of a project.
@@ -98,6 +108,7 @@ def _team_create_update(request, project_slug, language_code=None):
 
 
 pr_team_add=(("granular", "project_perm.maintain"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_add,
     (Project, "slug__exact", "project_slug"))
@@ -106,6 +117,7 @@ def team_create(request, project_slug):
 
 
 pr_team_update=(("granular", "project_perm.coordinate_team"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_update, 
     (Project, 'slug__exact', 'project_slug'),
@@ -114,6 +126,7 @@ def team_update(request, project_slug, language_code):
         return _team_create_update(request, project_slug, language_code)
 
 
+@access_off(team_off)
 def team_list(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
@@ -125,7 +138,7 @@ def team_list(request, project_slug):
                                "project_team_page": True},
                                context_instance=RequestContext(request))
 
-
+@access_off(team_off)
 def team_detail(request, project_slug, language_code):
 
     project = get_object_or_404(Project, slug=project_slug)
@@ -152,6 +165,7 @@ def team_detail(request, project_slug, language_code):
 
 pr_team_delete=(("granular", "project_perm.maintain"),
                 ("general",  "teams.delete_team"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_delete,
     (Project, "slug__exact", "project_slug"))
@@ -190,6 +204,7 @@ def team_delete(request, project_slug, language_code):
                                   context_instance=RequestContext(request))
 
 
+@access_off(team_off)
 @login_required
 @transaction.commit_on_success
 def team_join_request(request, project_slug, language_code):
@@ -239,6 +254,7 @@ def team_join_request(request, project_slug, language_code):
 
 
 pr_team_add_member_perm=(("granular", "project_perm.coordinate_team"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_add_member_perm, 
     (Project, "slug__exact", "project_slug"),
@@ -293,6 +309,7 @@ def team_join_approve(request, project_slug, language_code, username):
 
 
 pr_team_deny_member_perm=(("granular", "project_perm.coordinate_team"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_deny_member_perm, 
     (Project, "slug__exact", "project_slug"),
@@ -339,7 +356,7 @@ def team_join_deny(request, project_slug, language_code, username):
     return HttpResponseRedirect(reverse("team_detail", 
                                         args=[project_slug, language_code]))
 
-
+@access_off(team_off)
 @login_required
 @transaction.commit_on_success
 def team_join_withdraw(request, project_slug, language_code):
@@ -381,7 +398,7 @@ def team_join_withdraw(request, project_slug, language_code):
     return HttpResponseRedirect(reverse("team_detail", 
                                         args=[project_slug, language_code]))
 
-
+@access_off(team_off)
 @login_required
 @transaction.commit_on_success
 def team_leave(request, project_slug, language_code):
@@ -428,7 +445,7 @@ def team_leave(request, project_slug, language_code):
 
 
 # Team Creation
-
+@access_off(team_off)
 @login_required
 @transaction.commit_on_success
 def team_request(request, project_slug):
@@ -490,6 +507,7 @@ def team_request(request, project_slug):
 
 
 pr_team_request_approve=(("granular", "project_perm.maintain"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_request_approve, 
     (Project, "slug__exact", "project_slug"),)
@@ -537,6 +555,7 @@ def team_request_approve(request, project_slug, language_code):
 
 
 pr_team_request_deny=(("granular", "project_perm.maintain"),)
+@access_off(team_off)
 @login_required
 @one_perm_required_or_403(pr_team_request_deny, 
     (Project, "slug__exact", "project_slug"),)
@@ -578,5 +597,4 @@ def team_request_deny(request, project_slug, language_code):
 
     return HttpResponseRedirect(reverse("team_list", 
                                         args=[project_slug,]))
-
 
