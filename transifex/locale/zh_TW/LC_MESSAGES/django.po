@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-02 17:17+0000\n"
-"PO-Revision-Date: 2010-03-03 12:12+0800\n"
+"PO-Revision-Date: 2010-03-03 19:37+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: chinese-l10n <chinese-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,11 @@ msgstr "搜尋使用者名稱或是留下空白"
 
 #: actionlog/models.py:155
 msgid "log entry"
-msgstr ""
+msgstr "日誌條目"
 
 #: actionlog/models.py:156
 msgid "log entries"
-msgstr ""
+msgstr "日誌條目"
 
 #: actionlog/templates/object_action_list.html:6
 msgid "Date/time"
@@ -604,9 +604,9 @@ msgid "Latest components in project %s."
 msgstr "專案 %s 內的最新部件。"
 
 #: projects/feeds.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release"
-msgstr "%(site_name)s: %(collection)s :: %(release)s 發行"
+msgstr "%(site_name)s: %(project)s :: %(release)s 發行"
 
 #: projects/feeds.py:73
 #, python-format
@@ -614,14 +614,14 @@ msgid "Translation statistics for all languages against %s release."
 msgstr "針對 %s 發行的所有語言翻譯統計。"
 
 #: projects/feeds.py:108
-#, fuzzy, python-format
+#, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
-msgstr "%(site_name)s: %(collection)s :: %(release)s 發行"
+msgstr "%(site_name)s: %(project)s :: %(release)s 發行 :: %(lang)s"
 
 #: projects/feeds.py:115
-#, fuzzy, python-format
+#, python-format
 msgid "Translation statistics for %(lang)s language against %(release)s release."
-msgstr "針對 %s 發行的所有語言翻譯統計。"
+msgstr "針對 %(release)s 發行的 %(lang)s 語言翻譯統計。"
 
 #: projects/forms.py:15
 #: txpermissions/forms.py:19
@@ -900,7 +900,6 @@ msgid "String freeze date"
 msgstr "字串凍結日期"
 
 #: projects/models.py:473
-#, fuzzy
 msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
 msgstr "當可翻譯字串被凍結的時候 (會影響到翻譯的字串不能再被加入或修改)。"
 
@@ -920,9 +919,9 @@ msgid "Components"
 msgstr "部件"
 
 #: projects/models.py:499
-#, fuzzy, python-format
+#, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
-msgstr "<發行：%(rel)s (集合 %(col)s)>"
+msgstr "<發行：%(rel)s (%(proj)s 專案)>"
 
 #: projects/models.py:517
 #: releases/models.py:54
@@ -1026,9 +1025,8 @@ msgid "File submitted successfully: %s"
 msgstr "檔案已成功提交：%s"
 
 #: projects/views/component.py:533
-#, fuzzy
 msgid "Your file does not pass the correctness checks (msgfmt -c). Your file has been e-mailed to you to avoid losing any work."
-msgstr "您的檔案沒有通過正確性的檢查 (msgfmt -c)。請在您自己的系統上執行此指令來查看錯誤。"
+msgstr "您的檔案沒有通過正確性檢查 (msgfmt -c)。您的檔案已經用電子郵件的方式寄送給您，以避免喪失任何成果。"
 
 #: projects/views/component.py:538
 msgid "Your file does not pass the correctness checks (msgfmt -c). Please run this command on your system to see the errors. We couldn't send you an email to preserve your work because you haven't registered an email address. Please do so now to avoid such issues in the future."
@@ -1036,12 +1034,12 @@ msgstr ""
 
 #: projects/views/component.py:549
 msgid "Sorry, your file could not be sent because of an error."
-msgstr ""
+msgstr "抱歉，因為某種錯誤導致您的檔案無法送出。"
 
 #: projects/views/component.py:552
 #: projects/views/component.py:585
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "抱歉，但是您必需送出 POST 請求。"
 
 #: projects/views/component.py:574
 msgid "Lock removed."
@@ -1058,7 +1056,7 @@ msgstr "鎖已建立。當您完成後，請不要忘記將它移除。"
 #: projects/views/component.py:598
 #: projects/views/project.py:156
 msgid "Must use POST to activate"
-msgstr ""
+msgstr "必須使用 POST 來啟動"
 
 #: projects/views/component.py:601
 #: projects/views/project.py:159
@@ -1080,7 +1078,7 @@ msgstr "%s 已刪除。"
 
 #: projects/views/review.py:66
 msgid "Request closed as Rejected."
-msgstr ""
+msgstr "請求依「回絕」方式關閉。"
 
 #: projects/views/review.py:72
 msgid "Request reopened."
@@ -1200,7 +1198,7 @@ msgstr "選取要校閱的翻譯檔。"
 
 #: reviews/models.py:44
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: reviews/models.py:45
 msgid "Closed"
@@ -1208,23 +1206,23 @@ msgstr "已關閉"
 
 #: reviews/models.py:47
 msgid "Null"
-msgstr ""
+msgstr "Null"
 
 #: reviews/models.py:48
 msgid "Accepted"
-msgstr ""
+msgstr "已接受"
 
 #: reviews/models.py:49
 msgid "Rejected"
-msgstr ""
+msgstr "已回絕"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
-msgstr ""
+msgstr "校閱的狀態（開啟、關閉等。）"
 
 #: reviews/models.py:56
 msgid "The review's resolution/closing state."
-msgstr ""
+msgstr "校閱的解決方式或關閉的狀態。"
 
 #: reviews/models.py:58
 msgid "Date and time of creation"
@@ -1240,7 +1238,7 @@ msgstr "校閱檔的名稱"
 
 #: reviews/models.py:65
 msgid "The path of the target file which will be used on submission"
-msgstr ""
+msgstr "要用來提交的目標檔案路徑"
 
 #: reviews/models.py:69
 msgid "Component"
@@ -1263,12 +1261,13 @@ msgid "created_on"
 msgstr "建立於(_O)"
 
 #: reviews/views.py:33
+#, fuzzy
 msgid "You can upload a file for review only if it's related to an existing language."
-msgstr ""
+msgstr "您可以上傳僅供校閱的檔案，如果它和現存的語言相關的話。"
 
 #: reviews/views.py:53
 msgid "Your file has been successfully placed for reviewing."
-msgstr ""
+msgstr "您的檔案已經成功置放以供校閱。"
 
 #: simplelock/models.py:39
 msgid "Lock"
@@ -1545,9 +1544,9 @@ msgid "No projects were found for \"%(q)s\". You may want to change your query a
 msgstr "找不到有「%(q)s」的專案。您可能想要稍微修改您的查詢。"
 
 #: templates/search.html:63
-#, fuzzy, python-format
+#, python-format
 msgid "Couldn't find your project? Why don't you go ahead and <a href=\"%(project_create_url)s\">add it</a>?"
-msgstr "找不到您的專案嗎？您何不直接<a href=\"%(url project_create)s\">將它加入</a>呢？"
+msgstr "找不到您的專案嗎？您何不直接<a href=\"%(project_create_url)s\">將它加入</a>呢？"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -1617,14 +1616,14 @@ msgid "Thank you for your feedback."
 msgstr "感謝您的回饋。"
 
 #: templates/languages/language_detail.html:17
-#, fuzzy, python-format
+#, python-format
 msgid "%(project)s Releases"
-msgstr "%(collection)s 發行"
+msgstr "%(project)s 發行"
 
 #: templates/languages/language_detail.html:24
-#, fuzzy, python-format
+#, python-format
 msgid "The <a href=\"%(project_url)s\">%(project)s</a> project includes the following groups of shipped components:"
-msgstr "%(collection)s 集合包含下列輸送的部件群組："
+msgstr "<a href=\"%(project_url)s\">%(project)s</a> 專案包含下列輸送的部件群組："
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1744,7 +1743,7 @@ msgstr "下列 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a hre
 #: templates/notification/project_component_file_review_submitted/notice.html:2
 #, fuzzy, python-format
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "已經被提交到 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的<a href=\"%(component_url)s\">%(component_name)s</a>"
+msgstr "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
@@ -1995,6 +1994,9 @@ msgid ""
 "  can take a look at his work and provide any feedback needed, or simply submit\n"
 "  the file to the upstream project."
 msgstr ""
+"翻譯者可以對另一個人請求檔案校閱，那個人\n"
+"  可以看看他的成果並提供任何需要的回饋，或直接提交\n"
+"  該檔案到上游專案。"
 
 #: templates/projects/component_detail.html:197
 #: templates/reviews/review_list.html:21
@@ -2382,13 +2384,13 @@ msgid "Say goodbye to <em>%(release_name)s</em>?"
 msgstr "要對 <em>%(release_name)s</em> 說再見嗎？"
 
 #: templates/projects/release_confirm_delete.html:19
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  您確定您想要永久地刪除屬於「%(project_name)s」專案的「%(lang_name)s」團隊嗎？\n"
+"  您確定您想要永久地刪除屬於「%(project_name)s」專案的「%(release_name)s」發行嗎？\n"
 
 #: templates/projects/release_detail.html:60
 msgid "Release date:"
@@ -2435,14 +2437,14 @@ msgid "Edit <em>%(release_name)s</em> release"
 msgstr "編輯 <em>%(release_name)s</em> 發行"
 
 #: templates/projects/release_form.html:28
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
 "      "
 msgstr ""
 "\n"
-"       正在編輯 <a href=\"%(release_url)s\">%(release_name)s</a>\n"
+"       正在編輯發行版「<a href=\"%(release_url)s\">%(release_name)s</a>」\n"
 "      "
 
 #: templates/projects/release_form.html:46
@@ -2482,9 +2484,9 @@ msgid "Project Releases"
 msgstr "專案發行"
 
 #: templates/projects/release_list.html:29
-#, fuzzy, python-format
+#, python-format
 msgid "No releases are registered for this project yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr "此集合尚未有註冊的發行。您何不考慮就直接<a href=\"%(release_create)s\">加入一份</a>呢？"
+msgstr "此專案尚未有註冊的發行。您何不考慮就直接<a href=\"%(release_create)s\">加入一份</a>呢？"
 
 #: templates/reviews/review_form.html:10
 msgid "Submit"
@@ -2496,12 +2498,12 @@ msgstr "翻譯校閱請求"
 
 #: templates/reviews/review_list.html:31
 msgid "Open Requests"
-msgstr "打開的請求"
+msgstr "開啟的請求"
 
 #: templates/reviews/review_list.html:39
 #, python-format
 msgid "Review Request #%(review_id)s "
-msgstr ""
+msgstr "校閱請求 #%(review_id)s "
 
 #: templates/reviews/review_list.html:47
 msgid "Who and when"
@@ -2519,6 +2521,9 @@ msgid ""
 "        %(time_since)s ago\n"
 "      "
 msgstr ""
+"\n"
+"        %(time_since)s 之前\n"
+"      "
 
 #: templates/reviews/review_list.html:56
 msgid "Translation Language"
@@ -2534,7 +2539,7 @@ msgstr "檔案目標"
 
 #: templates/reviews/review_list.html:67
 msgid "Download the version sent for review"
-msgstr ""
+msgstr "下載這個送出的版本以校閱"
 
 #: templates/reviews/review_list.html:70
 msgid "Score"
@@ -2578,7 +2583,7 @@ msgstr ""
 
 #: templates/reviews/review_list.html:142
 msgid "No open requests!"
-msgstr "無打開的請求！"
+msgstr "無開啟的請求！"
 
 #: templates/reviews/review_list.html:146
 msgid "Closed Requests"
@@ -2598,7 +2603,7 @@ msgstr "時間從"
 
 #: templates/reviews/review_list.html:156
 msgid "Resolution"
-msgstr ""
+msgstr "解決方式"
 
 #: templates/reviews/review_list.html:157
 msgid "Attachment"
@@ -3354,7 +3359,7 @@ msgstr "設定值"
 
 #: templates/webtrans/transfile_edit.html:67
 msgid "Verbose editing:"
-msgstr ""
+msgstr "詳細編輯："
 
 #: templates/webtrans/transfile_edit.html:74
 msgid "Filter"
@@ -3677,24 +3682,20 @@ msgid "when an user withdraws the access requestto submit files to a project"
 msgstr "當某使用者撤除提交檔案到某專案的存取權請求"
 
 #: txcommon/notifications.py:57
-#, fuzzy
 msgid "Submit access to project granted"
-msgstr "專案的提交存取權已授予"
+msgstr "已授予專案的提交存取權"
 
 #: txcommon/notifications.py:58
-#, fuzzy
 msgid "when a maintainer grants access to an user to submit files to a project"
 msgstr "當維護者授予某使用者提交檔案到某專案的存取權"
 
 #: txcommon/notifications.py:65
-#, fuzzy
 msgid "Submit access to project revoked"
 msgstr "已撤銷提交檔案給專案的存取權"
 
 #: txcommon/notifications.py:66
-#, fuzzy
 msgid "when a maintainer revokes the access of an user to submit files to a project"
-msgstr "當維護者撤銷使用者提交檔案到專案的存取權"
+msgstr "當維護者撤銷某使用者提交檔案到專案的存取權"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3733,9 +3734,8 @@ msgid "File Review Submitted"
 msgstr "檔案校閱已提交"
 
 #: txcommon/notifications.py:106
-#, fuzzy
 msgid "when a file of a component is submitted for review"
-msgstr "當專案的部件檔被提交時"
+msgstr "當某部件的檔案被提交以供校閱"
 
 #: txcommon/notifications.py:113
 msgid "Translation File Changed"
@@ -3754,32 +3754,28 @@ msgid "when the source file (POT) of a component that you are a maintainer has a
 msgstr "當某您身為某部件的維護者，而其來源檔 (POT) 有問題"
 
 #: txcommon/notifications.py:133
-#, fuzzy
 msgid "New Release Added for a Watched Project"
-msgstr "監看的集合已加入新發行"
+msgstr "新發行已加入監看的專案中"
 
 #: txcommon/notifications.py:134
-#, fuzzy
 msgid "when a new release is added to a project"
-msgstr "當新發行被加入某集合中"
+msgstr "當新發行被加入某專案中"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
 msgstr "發行已變更"
 
 #: txcommon/notifications.py:141
-#, fuzzy
 msgid "when a release of a project is changed"
-msgstr "當某集合的發行被變更"
+msgstr "當某專案的發行被變更"
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
 msgstr "發行已刪除"
 
 #: txcommon/notifications.py:147
-#, fuzzy
 msgid "when a release of a project is deleted"
-msgstr "當某集合的發行被刪除"
+msgstr "當某專案的發行被刪除"
 
 #: txcommon/notifications.py:152
 msgid "Release Added to a Project"
@@ -3790,14 +3786,12 @@ msgid "when a release is added to a project"
 msgstr "當發行被加入某專案中"
 
 #: txcommon/notifications.py:158
-#, fuzzy
 msgid "Release Deleted from a Project"
-msgstr "發行已從某集合中刪除"
+msgstr "發行已從某專案中刪除"
 
 #: txcommon/notifications.py:159
-#, fuzzy
 msgid "when a release is deleted from a project"
-msgstr "當發行從集合中被刪除"
+msgstr "當發行從專案中被刪除"
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
