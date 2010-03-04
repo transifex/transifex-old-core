@@ -7,6 +7,7 @@
 # Xavier Conde Rueda <xavi.conde@gmail.com>, 2008
 # Xavier Queralt <xqueralt@gmail.com>, 2008
 # Judith Pintó Subirada <judithp@gmail.com>, 2009
+# Harald Servat Gelabert <redcrash@gmail.com>, 2010.
 # 
 # This file is translated according to the glossary and style guide of
 # Softcatalà. If you plan to modify this file, please read first the page
@@ -27,7 +28,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-02 17:18+0000\n"
 "PO-Revision-Date: 2009-07-19 20:38+0200\n"
-"Last-Translator: Judith Pintó Subirada <judithp@gmail.com>\n"
+"Last-Translator: Harald Servat <redcrash@gmail.com>\n"
 "Language-Team: Catalan <fedora@softcatala.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3214,7 +3215,7 @@ msgstr "Correu electrònic:"
 
 #: templates/userprofile/profile/overview.html:42
 msgid "Not set yet"
-msgstr ""
+msgstr "No s'ha establert encara"
 
 #: templates/userprofile/profile/overview.html:44
 msgid " (Not validated)"
@@ -3223,13 +3224,12 @@ msgstr "(No validat)"
 #: templates/userprofile/profile/overview.html:53
 #: templates/userprofile/profile/overview.html:62
 #: templates/userprofile/profile/overview.html:71
-#, fuzzy
 msgid "Not set"
-msgstr "Nota"
+msgstr "No s'ha establert"
 
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
-msgstr ""
+msgstr "Gestió:"
 
 #: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
@@ -3249,7 +3249,7 @@ msgstr "Canvieu la localització"
 
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr ""
+msgstr "La meva línia de temps"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -3263,7 +3263,7 @@ msgstr "Inseriu informació sobre vosaltres"
 #: templates/userprofile/profile/public.html:50
 #, python-format
 msgid "Nudge %(user)s "
-msgstr ""
+msgstr "Cridar l'atenció a %(user)s"
 
 #: templates/userprofile/profile/public.html:66
 msgid "Native language"
@@ -3294,23 +3294,24 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 "\n"
-"Coordinador del següent equip:\n"
+"Coordinador del següent equip:\r\n"
 "        "
 msgstr[1] ""
 "\n"
-"Coordinador dels següents equips:\n"
+"Coordinador dels següents equips:\r\n"
 "        "
 
 #: templates/userprofile/profile/public.html:115
 #: templates/userprofile/profile/public.html:142
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project\n"
 "                "
 msgstr ""
 "\n"
-"S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
+" <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> equip del projecte<a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a>\n"
+" "
 
 #: templates/userprofile/profile/public.html:131
 msgid ""
@@ -3322,7 +3323,13 @@ msgid_plural ""
 "            Members of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"Membre del següent equip:\n"
+"        "
 msgstr[1] ""
+"\n"
+"Membres dels següents equips:\n"
+"        "
 
 #: templates/webtrans/comments.html:3
 msgid "Context"
@@ -3337,25 +3344,24 @@ msgid "Occurences"
 msgstr "Ocurrències"
 
 #: templates/webtrans/transfile_edit.html:36
-#, fuzzy, python-format
+#, python-format
 msgid "%(component_name)s"
-msgstr "Editeu %(component_name)s"
+msgstr "%(component_name)s"
 
 #: templates/webtrans/transfile_edit.html:37
-#, fuzzy, python-format
+#, python-format
 msgid "Translate '%(filename)s'"
-msgstr "Fitxers de traducció"
+msgstr "Traducció de '%(filename)s'"
 
 #: templates/webtrans/transfile_edit.html:46
 #: templates/webtrans/transfile_edit.html:51
-#, fuzzy, python-format
+#, python-format
 msgid "Translate '<code>%(filename)s</code>'"
-msgstr "Suprimeix <em>%(release_name)s</em>"
+msgstr "Traducció de '<code>%(filename)s</code>'"
 
 #: templates/webtrans/transfile_edit.html:60
-#, fuzzy
 msgid "Current status for this page"
-msgstr "Veieu les estadístiques per a aquest idioma"
+msgstr "Veieu l'estat per aquesta pàgina"
 
 #: templates/webtrans/transfile_edit.html:64
 msgid "Settings"
@@ -3363,7 +3369,7 @@ msgstr "Preferències"
 
 #: templates/webtrans/transfile_edit.html:67
 msgid "Verbose editing:"
-msgstr ""
+msgstr "Edició detallada:"
 
 #: templates/webtrans/transfile_edit.html:74
 msgid "Filter"
@@ -3407,7 +3413,7 @@ msgstr "Traducció automàtica"
 
 #: templates/webtrans/transfile_edit.html:120
 msgid "AT"
-msgstr ""
+msgstr "AT"
 
 #: templates/webtrans/transfile_edit.html:122
 msgid "Fuzzy?"
@@ -3641,69 +3647,60 @@ msgid "when a new project is added"
 msgstr "quan s'afegeix un projecte nou"
 
 #: txcommon/notifications.py:19
-#, fuzzy
 msgid "Project Changed"
-msgstr "Component del projecte"
+msgstr "Canvi a un projecte"
 
 #: txcommon/notifications.py:20
-#, fuzzy
 msgid "when a project is changed"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan hi ha un canvi en un projecte"
 
 #: txcommon/notifications.py:26
-#, fuzzy
 msgid "Project Deleted"
-msgstr "Llista de projectes"
+msgstr "Supressió d'un projecte"
 
 #: txcommon/notifications.py:27
-#, fuzzy
 msgid "when a project is deleted"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan se suprimeix un projecte"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
-msgstr ""
+msgstr "Petició de permís per a enviar fitxers"
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when an user request access to submit files to a project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "quan un usuari demana permís per a enviar fitxers a un projecte."
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
-msgstr ""
+msgstr "Negació de permís d'enviament de fitxers"
 
 #: txcommon/notifications.py:42
-#, fuzzy
 msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "quan un mantenidor denega l'accés a enviar fitxers a un usuari."
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
-msgstr ""
+msgstr "Retirada la petició de permís per a enviar fitxers"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "quan un usuari retira la petició per a enviar fitxers a un projecte."
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr ""
+msgstr "S'ha donat permís d'enviament al projecte"
 
 #: txcommon/notifications.py:58
-#, fuzzy
 msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "quan un mantenidor dóna permís a un usuari per a enviar fitxers al projecte."
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr ""
+msgstr "S'ha revocat el permís d'enviament al projecte"
 
 #: txcommon/notifications.py:66
-#, fuzzy
 msgid "when a maintainer revokes the access of an user to submit files to a project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "quan un mantenidor elimina el permís a un usuari per a enviar fitxers al projecte"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3714,72 +3711,60 @@ msgid "when a new component is added to a project"
 msgstr "quan s'afegeix un nou component"
 
 #: txcommon/notifications.py:80
-#, fuzzy
 msgid "Component Changed"
-msgstr "Afegit nou component"
+msgstr "Canvi en un component"
 
 #: txcommon/notifications.py:81
-#, fuzzy
 msgid "when a component of a project is changed"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan hi ha un canvi en el component d'un projecte."
 
 #: txcommon/notifications.py:87
-#, fuzzy
 msgid "Component Deleted"
-msgstr "Afegit nou component"
+msgstr "Component suprimit"
 
 #: txcommon/notifications.py:88
-#, fuzzy
 msgid "when a component of a project is deleted"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan es suprimeix el component d'un projecte"
 
 #: txcommon/notifications.py:94
-#, fuzzy
 msgid "File Submitted"
-msgstr "Filtre de fitxers"
+msgstr "Fitxer enviat"
 
 #: txcommon/notifications.py:95
-#, fuzzy
 msgid "when a component file of a project is submitted"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan s'envia el fitxer d'un component a un projecte."
 
 #: txcommon/notifications.py:105
-#, fuzzy
 msgid "File Review Submitted"
-msgstr "Filtre de fitxers"
+msgstr "Fitxer enviat per a revisar"
 
 #: txcommon/notifications.py:106
-#, fuzzy
 msgid "when a file of a component is submitted for review"
-msgstr "quan s'afegeix un projecte nou"
+msgstr "quan s'envia un fitxer d'un component per a revisar"
 
 #: txcommon/notifications.py:113
-#, fuzzy
 msgid "Translation File Changed"
-msgstr "Fitxers de traducció"
+msgstr "Canvi en el fitxer de traducció"
 
 #: txcommon/notifications.py:114
-#, fuzzy
 msgid "when a component translation file of a project is changed"
-msgstr "El nou fitxer de traducció d'idiomes per a carregar."
+msgstr "quan el fitxer de traducció d'un component ha canviat."
 
 #: txcommon/notifications.py:121
 msgid "Translation Source File (POT) has a Problem"
-msgstr ""
+msgstr "Hi ha un error al fitxer font de traducció (POT)"
 
 #: txcommon/notifications.py:122
 msgid "when the source file (POT) of a component that you are a maintainer has a problem"
-msgstr ""
+msgstr "quan al fitxer font de traducció (POT) d'un component que manteniu té un problema."
 
 #: txcommon/notifications.py:133
-#, fuzzy
 msgid "New Release Added for a Watched Project"
-msgstr "Afegiu una col·lecció"
+msgstr "Afegir nova versió a un projecte vigilat"
 
 #: txcommon/notifications.py:134
-#, fuzzy
 msgid "when a new release is added to a project"
-msgstr "Les darreres versions de la col·lecció %s."
+msgstr "quan s'afegeix una nova versió a un projecte."
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
@@ -3879,11 +3864,11 @@ msgstr "quan es denega a un usuari ser membre d'un equip de traducció d'un proj
 
 #: txcommon/notifications.py:232
 msgid "Team User Joining Withdrawn"
-msgstr ""
+msgstr "Petició d'unió d'usuari retirada"
 
 #: txcommon/notifications.py:233
 msgid "when an user withdrawn its own request for joining a translation team of a project"
-msgstr ""
+msgstr "quan un usuari retira la seva pròpia petició per a a unir-se a un equip d'un projecte"
 
 #: txcommon/notifications.py:240
 msgid "Team User Left"
@@ -3895,19 +3880,19 @@ msgstr "quan un usuari abandona l'equip de traducció d'un projecte"
 
 #: txcommon/notifications.py:251
 msgid "Weekly project report for maintainers"
-msgstr ""
+msgstr "Informe del projecte setmanals per als mantenidors"
 
 #: txcommon/notifications.py:252
 msgid "when you receive the weekly report of projects that you maintain."
-msgstr ""
+msgstr "quan rebeu de forma setmanal els informes dels projectes que manteniu."
 
 #: txcommon/notifications.py:259
 msgid "User Nudge"
-msgstr ""
+msgstr "Cridar l'atenció a un usuari"
 
 #: txcommon/notifications.py:260
 msgid "when an user nudges you"
-msgstr ""
+msgstr "quan un usuari et crida l'atenció"
 
 #: txcommon/validators.py:24
 msgid "Enter a valid regular expression."
@@ -3932,16 +3917,16 @@ msgstr "Aquest repositori ja pertany a un altre projecte. Trieu-ne un de diferen
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
-msgstr ""
+msgstr "No podeu cridar l'atenció a un usuari en un lapse de temps tan curt."
 
 #: txcommon/views.py:88
 msgid "You can't nudge yourself."
-msgstr ""
+msgstr "No us podeu cridar l'atenció a vosaltres mateixos."
 
 #: txcommon/views.py:95
-#, fuzzy, python-format
+#, python-format
 msgid "You have nudged '%s'."
-msgstr "<p>S'ha tancat la sesió."
+msgstr "Heu cridat l'atenció a '%s'."
 
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
