@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-02 17:17+0000\n"
-"PO-Revision-Date: 2010-03-03 19:37+0800\n"
+"PO-Revision-Date: 2010-03-07 14:18+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: chinese-l10n <chinese-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -715,8 +715,9 @@ msgid "Bug tracker"
 msgstr "程式錯誤追蹤器"
 
 #: projects/models.py:96
+#, fuzzy
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
-msgstr ""
+msgstr "供軟體錯誤與 ticket 追蹤系統使用的網址 (Bugzilla、Trac...等)"
 
 #: projects/models.py:98
 #: projects/migrations/0003_add_anyone_submit_field.py:12
@@ -1030,7 +1031,7 @@ msgstr "您的檔案沒有通過正確性檢查 (msgfmt -c)。您的檔案已經
 
 #: projects/views/component.py:538
 msgid "Your file does not pass the correctness checks (msgfmt -c). Please run this command on your system to see the errors. We couldn't send you an email to preserve your work because you haven't registered an email address. Please do so now to avoid such issues in the future."
-msgstr ""
+msgstr "您的檔案沒有通過正確性檢查 (msgfmt -c)。請在您的系統上執行此指令以查看錯誤。因為您尚未註冊電子郵件位址，我們無法寄送電子郵件給您來保留您的工作成果。請註冊電子郵件位址來避免將來發生這樣的問題。"
 
 #: projects/views/component.py:549
 msgid "Sorry, your file could not be sent because of an error."
@@ -1261,7 +1262,6 @@ msgid "created_on"
 msgstr "建立於(_O)"
 
 #: reviews/views.py:33
-#, fuzzy
 msgid "You can upload a file for review only if it's related to an existing language."
 msgstr "您可以上傳僅供校閱的檔案，如果它和現存的語言相關的話。"
 
@@ -1282,8 +1282,9 @@ msgid "Tarball URL"
 msgstr "Tarball 網址"
 
 #: tarball/forms.py:17
+#, fuzzy
 msgid "A URL from which the tarball is accessible."
-msgstr ""
+msgstr "從 tarball 可存取的網址。"
 
 #: tarball/models.py:33
 msgid "tarball"
@@ -1741,9 +1742,9 @@ msgid "The following files in the <a href=\"%(component_url)s\">%(component_name
 msgstr "下列 <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(component_url)s\">%(component_name)s</a> 部件內的檔案已經更新："
 
 #: templates/notification/project_component_file_review_submitted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr "一個 <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> 的檔案已經被提交到  <a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(component_url)s\">%(component_name)s</a> 部件以供校閱"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
@@ -1840,9 +1841,9 @@ msgid "The request for creating a translation team for <a href=\"%(language_url)
 msgstr "於 <a href=\"%(project_url)s\">%(project_name)s</a> 專案上的 <a href=\"%(language_url)s\">%(language_name)s</a> 翻譯團隊成立請求已被回絕"
 
 #: templates/notification/project_team_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The creation of a translation team for <a href=\"%(language_url)s\">%(language_name)s</a> was requested for the project <a href=\"%(project_url)s\">%(project_name)s</a>."
-msgstr "<a href=\"%(language_url)s\">%(language_name)s</a> 翻譯團隊已被 <a href=\"%(project_url)s\">%(project_name)s</a> 專案需求"
+msgstr "<a href=\"%(language_url)s\">%(language_name)s</a> 翻譯團隊被 <a href=\"%(project_url)s\">%(project_name)s</a> 專案請求成立"
 
 #: templates/notification/user_nudge/notice.html:2
 #, python-format
@@ -2461,9 +2462,8 @@ msgid "Project/Component statistics"
 msgstr "專案/部件 統計"
 
 #: templates/projects/release_language_detail.html:60
-#, fuzzy
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
-msgstr "Transifex 已搜尋包含此語言與發行的翻譯檔其專案，但是找不到任何結果。我們能藉由上傳您的工作成果來讓您參與其中嗎？"
+msgstr "Transifex 已搜尋包含此語言與發行的翻譯檔其專案，但是找不到任何結果。試著提交這樣的檔案並再次查看。"
 
 #: templates/projects/release_language_detail.html:61
 #, python-format
@@ -2880,9 +2880,9 @@ msgid "E-mail validation process"
 msgstr "電子郵件驗證程序"
 
 #: templates/userprofile/account/email_validation_done.html:13
-#, fuzzy, python-format
+#, python-format
 msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\">overview page</a>."
-msgstr "您可以從<a href=\"%(profile_overview)s\"概覽頁面</a>管理電子郵件驗證程序。"
+msgstr "您可以從<a href=\"%(profile_overview)s\">概覽頁面</a>管理電子郵件驗證程序。"
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -2898,9 +2898,8 @@ msgid "E-mail change processed"
 msgstr "電子郵件變更已處理"
 
 #: templates/userprofile/account/email_validation_processed.html:15
-#, fuzzy
 msgid "An e-mail has been sent to the new e-mail address for verification purposes. Please check your e-mail and complete this process by following the instructions specified in the e-mail body."
-msgstr "一封電子郵件已經寄到新的電子郵件位址供您驗證並啟用它。請存取您的電子郵件，並遵照電子郵件正文內的指示來完成此程序。"
+msgstr "一封電子郵件已經寄到新的電子郵件位址供驗證之用。請查看您的電子郵件，並遵照電子郵件正文內的指示來完成此程序。"
 
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
@@ -3330,8 +3329,9 @@ msgid "Developer comments"
 msgstr "開發者的評論"
 
 #: templates/webtrans/comments.html:5
+#, fuzzy
 msgid "Occurences"
-msgstr ""
+msgstr "發生"
 
 #: templates/webtrans/transfile_edit.html:36
 #, python-format
@@ -3402,8 +3402,9 @@ msgid "Auto-translate"
 msgstr "自動翻譯"
 
 #: templates/webtrans/transfile_edit.html:120
+#, fuzzy
 msgid "AT"
-msgstr ""
+msgstr "於"
 
 #: templates/webtrans/transfile_edit.html:122
 msgid "Fuzzy?"
@@ -3662,24 +3663,20 @@ msgid "when an user request access to submit files to a project"
 msgstr "當某使用者請求提交檔案到某專案的存取權"
 
 #: txcommon/notifications.py:41
-#, fuzzy
 msgid "Submit access request to project denied"
-msgstr "專案的提交存取權已回絕"
+msgstr "專案的提交存取請求已回絕"
 
 #: txcommon/notifications.py:42
-#, fuzzy
 msgid "when a maintainer denies access to an user to submit files to a project"
-msgstr "當維護者回絕某使用者提交檔案到某專案的存取權"
+msgstr "當維護者回絕某使用者提交檔案到專案的存取權"
 
 #: txcommon/notifications.py:49
-#, fuzzy
 msgid "Submit access request to project withdrawn"
-msgstr "專案提交存取請求權已撤除"
+msgstr "專案的提交存取請求已撤除"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr "當某使用者撤除提交檔案到某專案的存取權請求"
+msgstr "當某使用者撤除提交檔案到專案的存取權請求"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
@@ -3891,7 +3888,7 @@ msgstr "當某使用者對您發出來電振動"
 
 #: txcommon/validators.py:24
 msgid "Enter a valid regular expression."
-msgstr ""
+msgstr "輸入有效的正規表示式。"
 
 #: txcommon/validators.py:38
 msgid "The root url does not point to a .tar.gz or .tgz file"
@@ -3904,11 +3901,11 @@ msgstr "根網址必須以 http:// 或 ftp:// 起頭"
 #: txcommon/validators.py:69
 #, python-format
 msgid "This is not a valid root URL for this repository type. Valid choices are: %s"
-msgstr ""
+msgstr "這不是此倉儲類型的有效根網址。有效的選擇為：%s"
 
 #: txcommon/validators.py:86
 msgid "This repository already belongs to another project. Please choose a different one."
-msgstr ""
+msgstr "此倉儲已經屬於另一個專案。請選擇不同的倉儲。"
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
