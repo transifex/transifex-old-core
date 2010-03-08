@@ -11,6 +11,8 @@ class TeamManager(models.Manager):
         """
         Return a Team object or None if it doesn't exist.
         """
+        if project.outsource:
+            project=project.outsource
         try:
             return self.get(project__pk=project.pk, 
                 language__code__exact=language_code)

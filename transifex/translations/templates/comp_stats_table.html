@@ -24,11 +24,13 @@
         <td class="left name" id="{{stat.language_code}}">
           {% if stat.language %}
               {% with stat.language as language_obj %}
-              {% if language_obj.code|language_has_team:stat.object.project %}
-                <a href="{% url team_detail stat.object.project.slug language_obj.code %}" title="{% trans "See the team for this language" %}">{{language_obj.name}}</a> <span class="stat_message" >(<a href="{{language_obj.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{language_obj.code}}</a>)</span>
+              {% with language_obj.code|language_has_team:stat.object.project as team %}
+              {% if team %}
+                <a class="{% if stat.object.project.outsource %}outsource{% endif %}" href="{% url team_detail team.project.slug team.language.code %}" title="{% if stat.object.project.outsource %}{% trans "See the outsource team for this language. You will be redirected to another project team page." %}{% else %}{% trans "See the team for this language" %}{% endif %}">{{language_obj.name}}</a> <span class="stat_message" >(<a href="{{language_obj.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{language_obj.code}}</a>)</span>
               {% else %}
                 <span title="{% trans "No team for this language" %}">{{language_obj.name}}</span> <span class="stat_message" >(<a href="{{language_obj.get_absolute_url}}" title="{% trans "See statistics for this language" %}">{{language_obj.code}}</a>)</span>
               {% endif %}
+              {% endwith %}
               {% endwith %}
           {% else %}
               <span class="stat_message" title="{% trans "There are no languages registered matching this code" %}" >{{ stat.language_code }}</span>
