@@ -118,7 +118,8 @@ class HgBrowser(BrowserMixin):
         
         """
         try:
-            commands.pull(self.repo.ui, self.repo, rev=self.branch, force=True) 
+            commands.pull(self.repo.ui, self.repo, rev=self.branch, 
+                force=True, update=True) 
             self._clean_dir()
         except RepoError, e:
             logger.error(traceback.format_exc())
