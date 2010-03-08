@@ -8,7 +8,10 @@ from django.template.context import RequestContext
 from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext as _
 
+from authority.views import permission_denied
+
 from projects.models import Component
+from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 from txcommon.formtools.wizards import SessionWizard
 from webtrans.forms import TranslationForm
@@ -114,6 +117,11 @@ class TransFormWizard(SessionWizard):
 
         """
         self.init(request, *args, **kwargs)
+
+        check = ProjectPermission(request.user)
+        if not check.submit_file(self.pofile) and \
+            not request.user.has_perm('reviews.add_poreviewrequest'):
+            return permission_denied(request)
 
         step = self.current_step(request)
         if request.method == 'POST':
