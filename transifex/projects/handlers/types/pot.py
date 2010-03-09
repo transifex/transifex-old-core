@@ -6,6 +6,7 @@ from codebases.lib import BrowserError
 from translations.lib.types.pot import POTManager
 from translations.models import POFile
 from languages.models import Language
+from repowatch.models import Watch
 from txcommon.log import logger
 from txcommon import rst
 
@@ -175,6 +176,9 @@ class POTHandler:
         """Clean all stats of translations for the component in the database."""
         logger.debug("Cleaning stats for %s" % self.component)
         POFile.objects.by_object(self.component).delete()
+        # FIXME: This is not really nice to delete the watches here. It needs
+        # to be done in a clever way. This is just a workaround.
+        Watch.objects.filter(component=self.component).delete()
 
     def clean_old_stats(self):
         """
