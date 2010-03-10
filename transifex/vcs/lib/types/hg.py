@@ -35,7 +35,7 @@ class HgBrowser(BrowserMixin):
     """
 
    
-    def __init__(self, root, name=None, branch='tip'):
+    def __init__(self, root, name=None, branch='default'):
         # If name isn't given, let's take the last part of the root
         # Eg. root = 'http://example.com/foo/baz' -> name='baz'
         if not name:
@@ -120,7 +120,6 @@ class HgBrowser(BrowserMixin):
         try:
             commands.pull(self.repo.ui, self.repo, rev=self.branch, 
                 force=True, update=True) 
-            self._clean_dir()
         except RepoError, e:
             logger.error(traceback.format_exc())
             raise BrowserError, e
@@ -162,5 +161,5 @@ class HgBrowser(BrowserMixin):
         
         self.repo.commit(msg.encode('utf-8'), user=user, match=match)
 
-        commands.push(ui, self.repo, self.root, force=False, revs=self.branch)
+        commands.push(ui, self.repo, self.root, force=False, branch=self.branch)
 
