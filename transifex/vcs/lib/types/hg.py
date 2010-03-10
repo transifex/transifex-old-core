@@ -35,7 +35,7 @@ class HgBrowser(BrowserMixin):
     """
 
    
-    def __init__(self, root, name=None, branch='default'):
+    def __init__(self, root, name=None, branch='tip'):
         # If name isn't given, let's take the last part of the root
         # Eg. root = 'http://example.com/foo/baz' -> name='baz'
         if not name:
