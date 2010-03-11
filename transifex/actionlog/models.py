@@ -51,15 +51,55 @@ def _user_counting(query):
                        'number': entry['number']})
     return result
 
+def _distinct_action_time(query):
+    """
+    Distinct rows by the 'action_time' field, keeping in the query only the 
+    entry with the highest 'id' for the related set of entries with equal
+    'action_time'.
+
+    Example:
+
+        For the following query set:
+
+            id |          action_time
+            ----+----------------------------
+            1 | 2010-03-11 10:55:26.32941-03
+            2 | 2010-03-11 10:55:26.32941-03
+            3 | 2010-03-11 13:48:22.202596-09
+            4 | 2010-03-11 13:48:53.505697-03
+            5 | 2010-03-11 13:48:53.505697-03
+            6 | 2010-03-11 13:51:09.013079-05
+            7 | 2010-03-11 13:51:09.013079-05
+            8 | 2010-03-11 13:51:09.013079-05
+
+        After passing through this function the query will be:
+
+            id |          action_time
+            ----+----------------------------
+            2 | 2010-03-11 10:55:26.32941-03
+            3 | 2010-03-11 13:48:22.202596-09
+            5 | 2010-03-11 13:48:53.505697-03
+            8 | 2010-03-11 13:51:09.013079-05
+
+        Rows with the same 'action_time' are eliminated, keeping the one with
+        highest 'id'.
+    """
+    pks = query.values('action_time').annotate(
+        id=models.Max('id')).order_by().values_list('id', flat=True)
+    return LogEntry.objects.filter(pk__in=pks)
+
+
 class LogEntryManager(models.Manager):
     def by_object(self, obj):
         """Return LogEntries for a related object."""
         ctype = ContentType.objects.get_for_model(obj)
-        return self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
+        q = self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
+        return _distinct_action_time(q)
 
     def by_user(self, user):
         """Return LogEntries for a specific user."""
-        return self.filter(user__pk__exact=user.pk)
+        q = self.filter(user__pk__exact=user.pk)
+        return _distinct_action_time(q)
 
     def by_object_last_week(self, obj):
         """Return LogEntries of the related object for the last week."""
