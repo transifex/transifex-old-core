@@ -118,8 +118,7 @@ class HgBrowser(BrowserMixin):
         
         """
         try:
-            commands.pull(self.repo.ui, self.repo, rev=self.branch, 
-                force=True, update=True) 
+            commands.pull(self.repo.ui, self.repo, force=True, update=True) 
         except RepoError, e:
             logger.error(traceback.format_exc())
             raise BrowserError, e
