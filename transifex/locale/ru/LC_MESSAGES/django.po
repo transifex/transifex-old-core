@@ -576,7 +576,7 @@ msgstr "Последние проекты на %(site_name)s"
 
 #: projects/feeds.py:19
 msgid "Updates on changes and additions to registered projects."
-msgstr ""
+msgstr "Обновлять при изменениях или добавлениях в зарегистрированные проекты."
 
 #: projects/feeds.py:35
 #, python-format
@@ -623,7 +623,7 @@ msgstr "Передать файл"
 
 #: projects/forms.py:53
 msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
-msgstr ""
+msgstr "Выберите способ управления фиксации изменений файлов. Доступные настройки зависят от типа компонента"
 
 #: projects/forms.py:68
 msgid "Search for a component"
@@ -767,7 +767,7 @@ msgstr "i18n тип"
 #: projects/models.py:211
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
-msgstr ""
+msgstr "Тип i18n поддержки для исходников (%s)"
 
 #: projects/models.py:213 projects/migrations/0001_initial.py:43
 msgid "File filter"
@@ -814,9 +814,8 @@ msgid "components"
 msgstr "комоненты"
 
 #: projects/models.py:459
-#, fuzzy
 msgid "A string like a name or very short description."
-msgstr "Строка, содержащая очень короткое описание."
+msgstr "Строка подобная названию или содержащая очень короткое описание."
 
 #: projects/models.py:462 releases/models.py:26
 msgid "A sentence or two describing the object."
@@ -874,12 +873,12 @@ msgstr "выпуски"
 #: projects/permissions/project.py:21
 #, fuzzy
 msgid "Is allowed to maintain this project"
-msgstr "Не следить за этим проектом"
+msgstr "разрешена поддержка этого проекта"
 
 #: projects/permissions/project.py:35
 #, fuzzy
 msgid "Is allowed to coordinate a team project"
-msgstr "Не следить за этим проектом"
+msgstr "разрешена командная координация проекта"
 
 #: projects/permissions/project.py:81
 msgid "Is allowed to submit file to this project"
@@ -945,7 +944,7 @@ msgstr "Указывайте только ОДНУ цель для загруж�
 
 #: projects/views/component.py:404
 msgid "The target file does not match the component file filter"
-msgstr ""
+msgstr "Указанный файл не соответствует фильтру данного компонента"
 
 #: projects/views/component.py:412
 msgid "Enter a commit message"
@@ -991,8 +990,9 @@ msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Блокировка создана. Не забудьте ее удалить после завершения."
 
 #: projects/views/component.py:598 projects/views/project.py:156
+#, fuzzy
 msgid "Must use POST to activate"
-msgstr ""
+msgstr "Для активации необходимо использовать POST"
 
 #: projects/views/component.py:601 projects/views/project.py:159
 msgid "Notification is not enabled"
@@ -1003,7 +1003,6 @@ msgid "Watch this project"
 msgstr "Следить за проектом"
 
 #: projects/views/project.py:185
-#, fuzzy
 msgid "Stop watching this project"
 msgstr "Не следить за этим проектом"
 
@@ -1071,9 +1070,8 @@ msgid "You are not in the '%s' team."
 msgstr "Вы не в команде «%s»."
 
 #: projects/views/team.py:440
-#, fuzzy
 msgid "Please, select a language before submit the form."
-msgstr "Выберите файл в локальной системе для загрузки."
+msgstr "Выберите язык прежде чем выполнять фиксацию изменений."
 
 #: projects/views/team.py:453
 #, python-format
@@ -1116,7 +1114,7 @@ msgstr "Не следить"
 #: repowatch/models.py:28
 #, python-format
 msgid "Unable to add watch for path %r"
-msgstr ""
+msgstr "Невозможно выполнять слежение за каталогом %r"
 
 #: repowatch/models.py:97
 msgid "watch"
@@ -1129,25 +1127,23 @@ msgstr "наблюдать"
 
 #: reviews/forms.py:9
 msgid "Write a short blurb for your review request."
-msgstr ""
+msgstr "Создать короткий запрос на вычитывание перевода."
 
 #: reviews/forms.py:11
-#, fuzzy
 msgid "Select a translation file for review."
-msgstr "Добавить файл перевода"
+msgstr "Добавить файл перевода для вычитывания"
 
 #: reviews/models.py:44
 msgid "Open"
-msgstr ""
+msgstr "Открыть"
 
 #: reviews/models.py:45
-#, fuzzy
 msgid "Closed"
-msgstr "Код"
+msgstr "Закрыто"
 
 #: reviews/models.py:47
 msgid "Null"
-msgstr ""
+msgstr "Null"
 
 #: reviews/models.py:48
 msgid "Accepted"
@@ -1207,11 +1203,11 @@ msgstr "создатель"
 
 #: reviews/views.py:33
 msgid "You can upload a file for review only if it's related to an existing language."
-msgstr ""
+msgstr "Вы можете выгрузить файл для вычитывания только если он связан с существующим языком."
 
 #: reviews/views.py:53
 msgid "Your file has been successfully placed for reviewing."
-msgstr ""
+msgstr "Ваш файл был успешно размещен для вычитывания."
 
 #: simplelock/models.py:39
 msgid "Lock"
@@ -1248,7 +1244,7 @@ msgstr "Члены — это обычные люди, которые могут
 #: teams/forms.py:52
 #, python-format
 msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
-msgstr ""
+msgstr "Пользователь '%s' существует и в списке координаторов и в списке членов. Пожалуйста, удалите его/ее из какого-либо списка."
 
 #: teams/models.py:27 teams/models.py:69
 msgid "The project which this team belongs to."
@@ -1264,7 +1260,7 @@ msgstr "Язык"
 
 #: teams/models.py:30 teams/models.py:72
 msgid "People in this team will only be able to submit translations files related to the specific language."
-msgstr ""
+msgstr "Члены данной команды могут фиксировать изменения переводов относящихся к данному языку."
 
 #: teams/models.py:32
 msgid "Coordinators"
@@ -1296,7 +1292,7 @@ msgstr "команды"
 
 #: teams/models.py:89
 msgid "team creation request"
-msgstr ""
+msgstr "запрос на создание команды"
 
 #: teams/models.py:90
 msgid "team creation requests"
@@ -1308,11 +1304,11 @@ msgstr "Команда"
 
 #: teams/models.py:125
 msgid "team access request"
-msgstr "запрос на доступ к команде"
+msgstr "запрос на присоединение к команде"
 
 #: teams/models.py:126
 msgid "team access requests"
-msgstr ""
+msgstr "запросы на присоединение к команде"
 
 #: templates/403.html:4 templates/403.html.py:7
 msgid "Forbidden access"
