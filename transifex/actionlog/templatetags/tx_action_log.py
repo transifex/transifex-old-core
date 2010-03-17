@@ -11,31 +11,15 @@ class LogNode(template.Node):
     def __repr__(self):
         return "<GetLog Node>"
 
-#    def entries_for_object(self, object):
-#        model = object.model
-#        opts = model._meta
-#        app_label = opts.app_label
-#        action_list = LogEntry.objects.filter(
-#            object_id = object.id,
-#            content_type__id__exact = ContentType.objects.get_for_model(model).id
-#        ).select_related().order_by('action_time')
-#        # If no history was found, see whether this object even exists.
-
     def render(self, context):
         if self.user is not None:
-            if not self.user.isdigit():
-                self.user = context[self.user].id
-            context[self.varname] = LogEntry.objects.filter(
-                user__id__exact=self.user).select_related(
-                'content_type', 'user')[:self.limit]
-            return ''
-        if self.object is not None:
-            from django.contrib.contenttypes.models import ContentType
-            obj = context[self.object]
-            obj_id = obj.id
-            ctype = ContentType.objects.get_for_model(obj)
-            context[self.varname] = LogEntry.objects.filter(object_id__exact=obj_id, content_type__pk=ctype.id).select_related('content_type', 'user')[:self.limit]
-            return ''
+            user = template.Variable(self.user).resolve(context)
+            query = LogEntry.objects.by_user(user)
+        elif self.object is not None:
+            obj = template.Variable(self.object).resolve(context)
+            query = LogEntry.objects.by_object(obj)
+
+        context[self.varname] = query[:self.limit]
         return ''
 
 class DoGetLog:
@@ -49,12 +33,7 @@ class DoGetLog:
     Examples::
 
         {% get_log 10 as action_log for_object foo %}
-        {% get_log 10 as action_log for_user 23 %}
         {% get_log 10 as action_log for_user current_user %}
-
-    Note that ``context_var_containing_user_obj`` can be a hard-coded integer
-    (object ID) or the name of a template context variable containing the user
-    object whose ID you want.
     """
 
     def __init__(self, tag_name):
