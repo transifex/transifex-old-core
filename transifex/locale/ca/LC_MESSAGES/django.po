@@ -1426,7 +1426,7 @@ msgstr "Resposta"
 
 #: templates/base-sample.html:116
 msgid "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community\">Transifex</a>, the Open Translation Platform"
-msgstr ""
+msgstr "Potenciat per <a href=\"http://transifex.org/\" title=\"La comunitat Transifex\">Transifex</a>, la Plataforma Oberta de traducció."
 
 #: templates/index.html:24
 msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
@@ -1461,23 +1461,22 @@ msgid "Search Results (%(result_count)s)"
 msgstr "Resultats de la cerca (%(result_count)s)"
 
 #: templates/search.html:51
-#, fuzzy, python-format
+#, python-format
 msgid "No projects were found for \"%(q)s\". You may want to change your query a bit."
 msgstr "No s'ha trobat cap projecte per a \"%(q)s\". Proveu canviant una mica la cerca."
 
 #: templates/search.html:63
-#, fuzzy, python-format
+#, python-format
 msgid "Couldn't find your project? Why don't you go ahead and <a href=\"%(project_create_url)s\">add it</a>?"
-msgstr "No heu pogut trobar el vostre projecte? Continueu i <a href=\"%(project_create)s\">afegiu-lo</a>!"
+msgstr "No heu pogut trobar el vostre projecte? Continueu i <a href=\"%(project_create_url)s\">afegiu-lo</a>!"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "Cerca projectes per nom, descripció. etc."
 
 #: templates/timeline.html:11
-#, fuzzy
 msgid "Filter results"
-msgstr "Resultats de la cerca"
+msgstr "Resultats del filtre"
 
 #: templates/timeline.html:17
 msgid "Go"
@@ -1498,7 +1497,11 @@ msgid_plural ""
 "\n"
 "  The query returned %(counter)s results\n"
 msgstr[0] ""
+"\n"
+"La consulta ha tornat %(counter)s resultat\n"
 msgstr[1] ""
+"\n"
+"La consulta ha tornat %(counter)s resultats\n"
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1845,15 +1848,15 @@ msgstr "Sí, n'estic segur!"
 
 #: templates/projects/component_detail.html:30
 msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
-msgstr ""
+msgstr "Aquest component suporta l'emmagatzematge local de fitxers enviats i a més envia fitxers al correu electrònic dels mantenidors."
 
 #: templates/projects/component_detail.html:32
 msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
-msgstr ""
+msgstr "Aquest component no suporta l'emmagatzematge local de fitxers enviats. Els fitxers enviats seran enviats al correu electrònic dels mantenidors i les estadístiques s'actualitzaran un cop els fitxers s'han confirmat."
 
 #: templates/projects/component_detail.html:36
 msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
-msgstr ""
+msgstr "Aquest component suporta l'emmagatzematge local de fitxers enviats i a més confirma directament els fitxers enviats."
 
 #: templates/projects/component_detail.html:79
 #: templates/projects/project_detail.html:31
@@ -2002,7 +2005,7 @@ msgstr "Component nou per a %(project_name)s"
 
 #: templates/projects/component_form.html:102
 msgid "Checkout"
-msgstr ""
+msgstr "Control"
 
 #: templates/projects/component_form.html:106
 msgid "Submission"
@@ -2077,7 +2080,6 @@ msgid "Select the target file:"
 msgstr "Seleccioneu el fitxer objectiu:"
 
 #: templates/projects/component_submit_new_file.html:27
-#, fuzzy
 msgid "The target file is the name of the new file language. It must match the component file filter."
 msgstr "El fitxer de destinació és el nom de l'idioma del nou fitxer. Ha de coincidir amb el filtre del fitxer de components."
 
@@ -2091,7 +2093,7 @@ msgstr "Exemple:"
 
 #: templates/projects/component_submit_new_file.html:35
 msgid "Commit message:"
-msgstr ""
+msgstr "Missatge de confirmació:"
 
 #: templates/projects/component_submit_new_file.html:37
 msgid "Example: Updates to Brazilian Portuguese translation"
@@ -2347,13 +2349,13 @@ msgid "Say goodbye to <em>%(release_name)s</em>?"
 msgstr "Voleu suprmir <em>%(release_name)s</em>?"
 
 #: templates/projects/release_confirm_delete.html:19
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Segur que voleu suprimir permanentment el component '%(component_name)s' que pertany a %(project_name)s?\n"
+"  Segur que voleu suprimir permanentment el component la versió '%(release_name)s' que pertany a %(project_name)s?\n"
 
 #: templates/projects/release_detail.html:60
 msgid "Release date:"
@@ -2400,14 +2402,14 @@ msgid "Edit <em>%(release_name)s</em> release"
 msgstr "Editeu la versió <em>%(release_name)s</em>"
 
 #: templates/projects/release_form.html:28
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
 "      "
 msgstr ""
 "\n"
-"        S'està editant <a href=\"%(release_url)s\">%(release_name)s</a>\n"
+" S'està editant la versió <a href=\"%(release_url)s\">%(release_name)s</a>\n"
 "      "
 
 #: templates/projects/release_form.html:46
@@ -2486,6 +2488,7 @@ msgstr ""
 "\n"
 " fa %(time_since)s \n"
 "      "
+
 #: templates/reviews/review_list.html:56
 msgid "Translation Language"
 msgstr "Idioma de traducció"
@@ -2532,25 +2535,23 @@ msgstr "Refusar"
 
 #: templates/reviews/review_list.html:115
 msgid "By"
-msgstr ""
+msgstr "Per"
 
 #: templates/reviews/review_list.html:125
-#, fuzzy
 msgid "Add your comment as"
-msgstr "Afegiu un component"
+msgstr "Afegir un comentari com"
 
 #: templates/reviews/review_list.html:131
-#, fuzzy
 msgid "Say it!"
-msgstr "l'afegiu"
+msgstr "Digui-ho!"
 
 #: templates/reviews/review_list.html:142
 msgid "No open requests!"
-msgstr ""
+msgstr "No hi ha peticions obertes"
 
 #: templates/reviews/review_list.html:146
 msgid "Closed Requests"
-msgstr ""
+msgstr "Peticions tancades"
 
 #: templates/reviews/review_list.html:152
 msgid "ID"
@@ -2562,29 +2563,27 @@ msgstr "Autor"
 
 #: templates/reviews/review_list.html:155
 msgid "Time Since"
-msgstr ""
+msgstr "Temps des de"
 
 #: templates/reviews/review_list.html:156
-#, fuzzy
 msgid "Resolution"
-msgstr "col·lecció"
+msgstr "Resolució"
 
 #: templates/reviews/review_list.html:157
 msgid "Attachment"
-msgstr ""
+msgstr "Adjunt"
 
 #: templates/reviews/review_list.html:158
-#, fuzzy
 msgid "Actions"
-msgstr "Acció"
+msgstr "Accions"
 
 #: templates/reviews/review_list.html:182
 msgid "Reopen review request"
-msgstr ""
+msgstr "Reobrir una petició de revisió"
 
 #: templates/reviews/review_list.html:194
 msgid "No closed requests!"
-msgstr ""
+msgstr "No hi ha peticions tancades!"
 
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
@@ -2603,7 +2602,7 @@ msgstr "Configuració del perfil"
 
 #: templates/simpleauth/login_box.html:8
 msgid "Sign in to add or modify projects, work on translations, and other stuff."
-msgstr ""
+msgstr "Registreu-vos per a afegir o modificar projectes, treballar en traduccions i molt més."
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -2611,9 +2610,9 @@ msgstr "<p>S'ha tancat la sesió."
 
 #: templates/simpleauth/public_profile.html:8
 #: templates/userprofile/profile/public.html:31
-#, fuzzy, python-format
+#, python-format
 msgid "Public profile of %(user)s"
-msgstr "El vostre perfil, %(user)s"
+msgstr "Perfil públic de %(user)s"
 
 #: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
 #: txcommon/admin.py:27
@@ -2630,9 +2629,8 @@ msgid "Your profile, %(user)s"
 msgstr "El vostre perfil, %(user)s"
 
 #: templates/simpleauth/settings.html:15
-#, fuzzy
 msgid "Any settings associated with your account are presented and may be modified here."
-msgstr "Qualsevol paràmetre de configuració associat al vostre compte pot ser modificat aquí."
+msgstr "Qualsevol paràmetre de configuració associat al vostre compte es presenta i pot ser modificat aquí."
 
 #: templates/simpleauth/settings.html:23
 #: templates/userprofile/profile/overview.html:102
@@ -2644,7 +2642,6 @@ msgid "Change notifications associated to your account"
 msgstr "Notificacions de canvis associats al vostre compte"
 
 #: templates/simpleauth/signin.html:10
-#, fuzzy
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
@@ -2653,9 +2650,9 @@ msgstr ""
 "<p>Inicieu la sessió amb el vostre correu electrònic o el nom de pantalla.<br/>\n"
 
 #: templates/teams/team_confirm_delete.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
-msgstr "Voleu suprmir <em>%(release_name)s</em>?"
+msgstr "Voleu dir adeu a l'equip <em>%(lang_name)s</em>?"
 
 #: templates/teams/team_confirm_delete.html:14
 #, fuzzy, python-format
@@ -2674,9 +2671,8 @@ msgid ""
 msgstr ""
 
 #: templates/teams/team_detail.html:33
-#, fuzzy
 msgid "Mainlist:"
-msgstr "Mantenidors"
+msgstr "Llista principal:"
 
 #: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
 msgid "Coordinator:"
@@ -2686,7 +2682,7 @@ msgstr[1] "Coordinadors:"
 
 #: templates/teams/team_detail.html:56
 msgid "Become a translator:"
-msgstr ""
+msgstr "Convertir-se en traductor:"
 
 #: templates/teams/team_detail.html:59
 msgid "Join this Team"
@@ -2694,131 +2690,123 @@ msgstr "Unir-se a aquest equip"
 
 #: templates/teams/team_detail.html:70
 msgid "People waiting for team membership approving:"
-msgstr ""
+msgstr "Gent que espera l'aprovació d'inclusió a l'equip:"
 
 #: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
 msgid "Approve"
-msgstr ""
+msgstr "Aprovar"
 
 #: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
 msgid "Deny"
-msgstr ""
+msgstr "Denegar"
 
 #: templates/teams/team_detail.html:91
 msgid "Withdraw"
-msgstr ""
+msgstr "Retirar"
 
 #: templates/teams/team_detail.html:104
 msgid "Team Members:"
-msgstr ""
+msgstr "Membres de l'equip"
 
 #: templates/teams/team_detail.html:114
 msgid "Leave"
-msgstr ""
+msgstr "Abandonar"
 
 #: templates/teams/team_detail.html:147
-#, fuzzy
 msgid "Delete team"
-msgstr "Suprimeix versió"
+msgstr "Suprimir l'equip"
 
 #: templates/teams/team_form.html:19
 #, python-format
 msgid "%(project_name)s Translation Teams"
-msgstr ""
+msgstr "Equips de traducció de %(project_name)s"
 
 #: templates/teams/team_form.html:27
-#, fuzzy
 msgid "Translation team details"
-msgstr "Estadístiques de traducció"
+msgstr "Detalls de l'equip de traducció"
 
 #: templates/teams/team_form.html:29
 msgid "Please note that notification will not be sent when coordinators or members are added or removed on this page."
-msgstr ""
+msgstr "Tingueu present que la notificació no s'enviara quan s'afegeixin o retirin coordinadors o membres en aquesta pàgina."
 
 #: templates/teams/team_form.html:40
-#, fuzzy
 msgid "Save team"
-msgstr "Desa la versió"
+msgstr "Desar equip"
 
 #: templates/teams/team_list.html:30
-#, fuzzy
 msgid "Add a new team"
-msgstr "Afegeix un projecte nou"
+msgstr "Afegir un nou equip"
 
 #: templates/teams/team_list.html:41
 msgid "List of team requests:"
-msgstr ""
+msgstr "Llista de peticions de l'equip:"
 
 #: templates/teams/team_list.html:71
 msgid "List of available teams:"
-msgstr ""
+msgstr "Llista d'equips disponibles:"
 
 #: templates/teams/team_list.html:87
-#, fuzzy
 msgid "No translation team created yet. :("
-msgstr "No s'han afegit traduccions per a aquesta versió. :-("
+msgstr "No s'ha creat un equip de traducció encara. :-("
 
 #: templates/teams/team_list.html:92
-#, fuzzy
 msgid "Request a new translation team for this project"
-msgstr "Envieu una traducció nova d'aquest component."
+msgstr "Demana un nou equip de traducció per a aquest projecte"
 
 #: templates/teams/team_list.html:92
-#, fuzzy
 msgid "Request a new team"
-msgstr "Un nou compte"
+msgstr "Demana un nou equip"
 
 #: templates/teams/team_list.html:102
 msgid "Request team"
-msgstr ""
+msgstr "Demanar equip"
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
-msgstr ""
+msgstr "Mostrar completat"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
-msgstr ""
+msgstr "Revocar permisos"
 
 #: templates/txpermissions/permission_form.html:13
 msgid "Grant permission"
-msgstr ""
+msgstr "Atorgar permisos"
 
 #: templates/txpermissions/permission_form.html:15
 msgid "Request permission"
-msgstr ""
+msgstr "Demanar permisos"
 
 #: templates/txpermissions/permission_request_approve_form.html:5
 msgid "Approve request"
-msgstr ""
+msgstr "Aprovar petició"
 
 #: templates/txpermissions/permission_request_delete_form.html:6
 msgid "Withdraw request"
-msgstr ""
+msgstr "Retirar petició"
 
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
-msgstr ""
+msgstr "Denegar petició"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
-msgstr ""
+msgstr "Informació personal"
 
 #: templates/userprofile/menu.html:7
 msgid "Avatar"
-msgstr ""
+msgstr "Àvatar"
 
 #: templates/userprofile/menu.html:8
 #: templates/userprofile/profile/overview.html:58
 #: templates/userprofile/profile/public.html:90
-#, fuzzy
 msgid "Location"
-msgstr "Acció"
+msgstr "Ubicació"
 
 #: templates/userprofile/menu.html:9
 #: templates/userprofile/profile/delete.html:12
 msgid "Remove profile"
-msgstr "Suprimir perfile"
+msgstr "Suprimir perfil"
 
 #: templates/userprofile/account/email_validation.html:5
 msgid "Change e-mail"
@@ -2834,20 +2822,20 @@ msgstr "Afegir una nova adreça de correu electrònic"
 
 #: templates/userprofile/account/email_validation.html:23
 msgid "Enter the new e-mail address. An e-mail will be sent to it for testing and confirmation."
-msgstr ""
+msgstr "Introduïu una adreça de correu electrònic. Posteriorment enviarem un correu per a confirmar-lo."
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail validation successful"
-msgstr ""
+msgstr "Validació correcta del correu electrònic"
 
 #: templates/userprofile/account/email_validation_done.html:4
 msgid "E-mail change unsuccessful"
-msgstr ""
+msgstr "Validació incorrecta del correu electrònic"
 
 #: templates/userprofile/account/email_validation_done.html:12
 #: templates/userprofile/account/email_validation_reset_response.html:13
 msgid "E-mail validation process"
-msgstr ""
+msgstr "Procés de validació del correu electrònic"
 
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
@@ -2855,9 +2843,8 @@ msgid "You can manage the e-mail validation process from the <a href=\"%(profile
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
-#, fuzzy
 msgid "E-mail address validated successfully."
-msgstr "El fitxer s'ha enviat correctament: %s"
+msgstr "El correu electrònic s'ha validat correctament."
 
 #: templates/userprofile/account/email_validation_done.html:19
 msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
@@ -2866,7 +2853,7 @@ msgstr ""
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:14
 msgid "E-mail change processed"
-msgstr ""
+msgstr "S'ha processat el canvi de correu electrònic"
 
 #: templates/userprofile/account/email_validation_processed.html:15
 msgid "An e-mail has been sent to the new e-mail address for verification purposes. Please check your e-mail and complete this process by following the instructions specified in the e-mail body."
@@ -2875,7 +2862,7 @@ msgstr ""
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
 msgid "Resend e-mail validation"
-msgstr ""
+msgstr "Reenviar validació de correu electrònic"
 
 #: templates/userprofile/account/email_validation_reset.html:19
 msgid "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again."
@@ -2883,23 +2870,23 @@ msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
-msgstr ""
+msgstr "Reenviar confirmació"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
-msgstr ""
+msgstr "El correu de validació s'ha enviat"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Your user account was already activated"
-msgstr ""
+msgstr "La vostra conta d'usuari ja era activa"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "You can manage the e-mail validation process from the"
-msgstr ""
+msgstr "Podeu manegar el procés de validació del correu electrònic des de"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "overview page"
-msgstr ""
+msgstr "Pàgina general"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
 msgid "We've sent you the e-mail validation link."
@@ -3080,7 +3067,7 @@ msgstr "Fet"
 
 #: templates/userprofile/avatar/choose.html:56
 msgid "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you"
-msgstr ""
+msgstr "Seleccioneu una imatge d'una URL remota. Introduïu la URL en el camp que hi ha a sota i intentarem portar la imatge."
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -3110,7 +3097,7 @@ msgstr "Suprimir la meva informació"
 #: templates/userprofile/profile/location.html:4
 #, python-format
 msgid "%(user)s's Dashboard"
-msgstr ""
+msgstr "Panell de control de %(user)s"
 
 #: templates/userprofile/profile/location.html:21
 msgid "Define your location"
@@ -3252,11 +3239,11 @@ msgid_plural ""
 "        "
 msgstr[0] ""
 "\n"
-"Coordinador del següent equip:\r\n"
+"Coordinador del següent equip:\n"
 "        "
 msgstr[1] ""
 "\n"
-"Coordinador dels següents equips:\r\n"
+"Coordinador dels següents equips:\n"
 "        "
 
 #: templates/userprofile/profile/public.html:115
