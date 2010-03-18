@@ -10,7 +10,12 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed release.project.slug release.slug %}" />
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-  {% include "translations/stats_table_filter_header.html" %}
+  <script type="text/javascript">
+    $(function(){
+        {% include "translations/stats_table_filter_header.html" %}
+    });
+  </script>
+
 {% endblock %}
 
 {% block body_class %}{{ block.super }} release_detail{% endblock %}
