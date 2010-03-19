@@ -1,4 +1,7 @@
+from django.dispatch import Signal
 from projects.handlers.types import pot
+from projects.models import Component
+from projects.signals import pre_set_stats, post_set_stats
 from translations.lib.types.publican import PublicanManager
 from txcommon.log import logger
 
@@ -27,6 +30,8 @@ class PublicanHandler(pot.POTHandler):
 
         logger.debug("Setting stats for %s" % self.component)
 
+        Signal.send(pre_set_stats, sender=Component,
+                    instance=self.component)
         # Copying the source file to the static dir
         try:
             logger.debug("Copying source files of %s to static dir" % self.component)
@@ -40,3 +45,5 @@ class PublicanHandler(pot.POTHandler):
         self.set_source_stats(is_msgmerged=False)
         self.set_po_stats(is_msgmerged=False)
         self.clean_old_stats()
+        Signal.send(post_set_stats, sender=Component,
+                    instance=self.component)

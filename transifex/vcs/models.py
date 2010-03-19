@@ -2,9 +2,11 @@ from datetime import datetime
 
 from django.conf import settings
 from django.db import models
+from django.dispatch import Signal
 from django.utils.translation import ugettext_lazy as _
 
 from codebases.models import Unit
+from vcs.signals import pre_prepare_repo, post_prepare_repo
 from txcommon.log import logger
 
 class CheckOutError(Exception):
@@ -100,6 +102,8 @@ class VcsUnit(Unit):
     @need_browser
     def prepare(self):
         """Abstraction for the vcsunit.browser.update."""
+        Signal.send(pre_prepare_repo, sender=VcsUnit,
+            instance=self.component)
         try:
             logger.debug("Preparing repo for vcsunit %s" % self.name)
             self.browser.update()
@@ -112,6 +116,8 @@ class VcsUnit(Unit):
             self.browser.setup_repo()
             #TODO: Do something if this fails.
             self.browser.update()
+        Signal.send(post_prepare_repo, sender=VcsUnit,
+            instance=self.component)
 
     @need_browser
     def get_files(self, file_filter):

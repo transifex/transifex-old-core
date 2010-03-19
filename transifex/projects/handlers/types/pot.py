@@ -2,6 +2,7 @@ import os
 import polib
 import itertools
 from django.contrib.contenttypes.models import ContentType
+from django.dispatch import Signal
 from codebases.lib import BrowserError
 from translations.lib.types.pot import POTManager
 from translations.models import POFile
@@ -9,6 +10,8 @@ from languages.models import Language
 from repowatch.models import Watch
 from txcommon.log import logger
 from txcommon import rst
+from projects.models import Component
+from projects.signals import pre_set_stats, post_set_stats
 
 class POTHandler:
     """
@@ -104,6 +107,8 @@ class POTHandler:
 
         logger.debug("Setting stats for %s" % self.component)
 
+        Signal.send(pre_set_stats, sender=Component,
+                    instance=self.component)
         # Copying the source file to the static dir
         potfiles = self.tm.get_source_files()
         if potfiles:
@@ -118,6 +123,8 @@ class POTHandler:
         self.set_source_stats(is_msgmerged=False)
         self.set_po_stats(is_msgmerged)
         self.clean_old_stats()
+        Signal.send(post_set_stats, sender=Component,
+                    instance=self.component)
 
     def get_stats(self):
         """Return stats for the component from the database."""

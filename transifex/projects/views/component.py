@@ -22,7 +22,10 @@ from projects.models import Project, Component
 from projects.forms import ComponentForm, ComponentAllowSubForm
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
-from projects.signals import submission_error
+from projects.signals import (submission_error,
+    sig_refresh_cache,
+    sig_clear_cache,
+    sig_submit_file)
 from repowatch import WatchException, watch_titles
 from repowatch.models import Watch
 from submissions.utils import (submit_by_email, msgfmt_error_send_mail)
@@ -300,6 +303,7 @@ def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     component.clear_cache()
+    sig_clear_cache.send(sender=None, component=component)
     return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
@@ -502,6 +506,7 @@ def component_submit_file(request, project_slug, component_slug,
                 # Getting the new PO file stats after submit it
                 postats = POFile.objects.get(filename=filename,
                                                  object_id=component.id)
+                sig_submit_file.send(sender=None, component=component)
             else:
                 postats = None
 

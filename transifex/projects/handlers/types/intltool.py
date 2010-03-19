@@ -1,5 +1,8 @@
 from django.conf import settings
+from django.dispatch import Signal
 from projects.handlers.types import pot
+from projects.models import Component
+from projects.signals import pre_set_stats, post_set_stats
 from txcommon.log import logger
 from notification import models as notification
 
@@ -23,6 +26,8 @@ class IntltoolHandler(pot.POTHandler):
 
         logger.debug("Setting stats for %s" % self.component)
 
+        Signal.send(pre_set_stats, sender=Component,
+                    instance=self.component)
         isIntltooled = self.tm.intltool_update()
         if not isIntltooled:
             logger.debug("intltool-update --pot has failed for %s" % 
@@ -41,3 +46,5 @@ class IntltoolHandler(pot.POTHandler):
         # Cleaning the repository after running intltool-update
         self.component.unit.browser._clean_dir()
         self.clean_old_stats()
+        Signal.send(post_set_stats, sender=Component,
+                    instance=self.component)
