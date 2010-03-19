@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from userprofile.models import BaseProfile
 from languages.models import Language
-from txcommon.signals import add_user_to_registered_group
 
 GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 
