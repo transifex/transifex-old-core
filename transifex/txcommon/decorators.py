@@ -132,10 +132,11 @@ def one_perm_required(perms, *model_lookups, **kwargs):
     login_url = kwargs.pop('login_url', settings.LOGIN_URL)
     redirect_field_name = kwargs.pop('redirect_field_name', REDIRECT_FIELD_NAME)
     redirect_to_login = kwargs.pop('redirect_to_login', True)
+    allow_anonymous = kwargs.pop('anonymous_access', False)
     def decorate(view_func):
         def decorated(request, *args, **kwargs):
             objs = []
-            if request.user.is_authenticated():
+            if request.user.is_authenticated() or allow_anonymous:
                 lookup_list = _model_lookups_handler(model_lookups, *args, **kwargs)
                 granted = False
                 for perm_type, perm in perms:
