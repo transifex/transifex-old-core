@@ -166,3 +166,17 @@ def one_perm_required_or_403(perms, *args, **kwargs):
     """
     kwargs['redirect_to_login'] = False
     return one_perm_required(perms, *args, **kwargs)
+
+def admin_required(fn):
+    """
+    admin decorator: check whether the user is an admin
+    """
+    def _check(request, *args, **kwargs):
+        user = request.user
+        if not user.is_superuser:
+            resp = render_to_response('403.html', context_instance =
+                RequestContext(request))
+            resp.status_code = 403
+            return resp
+        return fn(request, args, kwargs)
+    return _check
