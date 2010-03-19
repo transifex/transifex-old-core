@@ -35,7 +35,22 @@ def search(request):
     if search_terms:
         query = Q()
         for term in search_terms:
-            query &= Q(name__icontains=term) | Q(description__icontains=term) | Q(long_description__icontains=term)
+            # AND is a FEATURE not a BUG!
+            #TODO this query heavy pounds the db. Caching is in order.
+            query &= (Q(name__icontains=term) |
+                Q(description__icontains=term) |
+                Q(bug_tracker__icontains=term) |
+                Q(homepage__icontains=term) |
+                Q(slug__icontains = term) |
+                Q(feed__icontains=term) |
+                Q(long_description__icontains=term) |
+                Q(component__long_description = term) |
+                Q(component__name = term) |
+                Q(component__slug = term) |
+                Q(component___unit__root__icontains = term) |
+                Q(component___unit__vcsunit__web_frontend__icontains = term) |
+                Q(component___unit__type__icontains = term)
+                )
         results = results.filter(query).distinct()
     else:
         results = []
