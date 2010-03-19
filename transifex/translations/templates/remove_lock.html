@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% url component_toggle_lock_file pofile.object.project.slug pofile.object.slug pofile.filename as toggle_lock_url %}
+
+{% if pofile.locked %}
+    <form action="{{ toggle_lock_url }}" method="POST" class="microform">
+        <input id="po-{{pofile.id}}" class="i16 lock_break nodecoration_icon image_submit_type" value="" type="image">
+    </form>
+    <script type="text/javascript">
+      tooltip("#po-{{pofile.id}}",
+              "{% trans 'Unlock this file when you are finished working with it.' %}<br /><span class=\"i16 actionlog\">Date locked:</span> {{pofile.locks.get.created|date:"d M Y H:i:s"}}");
+    </script>
+{% endif %}

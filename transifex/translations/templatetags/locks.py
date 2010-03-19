@@ -10,3 +10,11 @@ def pofile_lock(context, pofile):
 
     context['pofile'] =  pofile
     return context
+
+
+@register.inclusion_tag('remove_lock.html', takes_context=True)
+def remove_lock(context, pofile):
+    """Display a lock with a tooltip and a link to remove the lock."""
+
+    context['pofile'] =  pofile
+    return context
