@@ -295,7 +295,8 @@ class Component(models.Model):
                  'component_slug': self.slug })
 
     def get_stats(self):
-        return POFile.objects.get_for_object(self)
+        """Get translation stats for a component listed by language."""
+        return POFile.objects.by_object_total(self)
 
     def get_full_name(self):
         return "%s.%s" % (self.project.slug, self.slug)
