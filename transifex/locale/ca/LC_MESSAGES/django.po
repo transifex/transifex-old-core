@@ -1629,18 +1629,14 @@ msgid "Notice"
 msgstr "Avís"
 
 #: templates/notification/project_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr ""
-"\n"
-"S'ha afegit <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>un projecte nou.\n"
+msgstr "S'ha afegit <a href=\"%(project_url)s\">%(project)s</a> com a projecte projecte nou."
 
 #: templates/notification/project_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
-msgstr ""
-"\n"
-"S'ha afegit <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>un projecte nou.\n"
+msgstr "S'ha canviat el projecte <a href=\"%(project_url)s\">%(project)s</a>."
 
 #: templates/notification/project_component_added/notice.html:2
 #, fuzzy, python-format
@@ -1679,7 +1675,7 @@ msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
-msgstr ""
+msgstr "Un fitxer per a <a href=\"(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perfc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1701,11 +1697,9 @@ msgstr ""
 "S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> project was generated"
-msgstr ""
-"\n"
-"S'ha afegit <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>un projecte nou.\n"
+msgstr "S'ha generat el resum setmanal del projecte <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, fuzzy, python-format
@@ -1729,11 +1723,9 @@ msgstr ""
 "S'ha afegit <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>un projecte nou.\n"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Requested access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
-msgstr ""
-"\n"
-"S'ha afegit <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>un projecte nou.\n"
+msgstr "S'ha demanat permís per a enviar fitxers al projecte <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, fuzzy, python-format
@@ -1764,11 +1756,12 @@ msgstr ""
 "S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
 
 #: templates/notification/project_team_join_approved/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"\n"
-"S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
+"L'usuari <a href=\"%(user_url)s\">%(user_name)s</a> ha estat aprovat com a "
+"membre de l'<a href=\"%(team_url)s\">%(team_name)s equip de traducció</a> "
+"del projecte <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, fuzzy, python-format
@@ -3467,9 +3460,9 @@ msgid "Click here to see the multiple files for"
 msgstr ""
 
 #: translations/templates/component_submit.html:5
-#, fuzzy, python-format
+#, python-format
 msgid "Submit a translation for %(pofile_filename)s"
-msgstr "Envia una traducció per a aquest idioma."
+msgstr "Envieu una traducció per a %(pofile_filename)s"
 
 #: translations/templates/component_submit.html:9
 msgid "Submit file"
@@ -3488,21 +3481,19 @@ msgid "Go to this component page"
 msgstr "Vés a la pàgina del component"
 
 #: translations/templates/pofile_lock.html:15
-#, fuzzy
 msgid "Unlock this file when you are finished working with it."
 msgstr "Desbloqueu aquest fitxer quan hagueu acabat de treballar amb ell."
 
 #: translations/templates/pofile_lock.html:21
-#, fuzzy, python-format
+#, python-format
 msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr "Aquest fitxer està blocat, això indica que algú hi està treballant."
+msgstr "Aquest fitxer està blocat per l'usuari '%(owner)s', això indica que ell hi està treballant."
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
 msgstr "Bloca aquest fitxer per a avisar als altres que hi esteu treballant."
 
 #: translations/templates/pofile_lock.html:30
-#, fuzzy
 msgid "This file is unlocked. Most likely no one is working with it right now."
 msgstr "Aquest fitxer està desblocat. Problablement ningú hi està treballant actualment."
 
