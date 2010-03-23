@@ -1735,11 +1735,9 @@ msgstr ""
 "S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
 
 #: templates/notification/project_team_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"\n"
-"S'ha afegit un nou component <a href=\"http://%(current_site)s%(component_url)s\">%(component)s</a> al projecte <a href=\"http://%(current_site)s%(project_url)s\">%(project)s</a>.\n"
+msgstr "S'ha afegit un nou equip de traducció <a href=\"%(team_url)s\">%(team_name)s</a> al projecte <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_team_changed/notice.html:2
 #, fuzzy, python-format
@@ -1758,10 +1756,7 @@ msgstr ""
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_name)s</a> has been approved as a member of the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"L'usuari <a href=\"%(user_url)s\">%(user_name)s</a> ha estat aprovat com a "
-"membre de l'<a href=\"%(team_url)s\">%(team_name)s equip de traducció</a> "
-"del projecte <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "L'usuari <a href=\"%(user_url)s\">%(user_name)s</a> ha estat aprovat com a membre de l'<a href=\"%(team_url)s\">%(team_name)s equip de traducció</a> del projecte <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, fuzzy, python-format
@@ -2648,13 +2643,13 @@ msgid "Say goodbye to <em>%(lang_name)s</em> team?"
 msgstr "Voleu dir adeu a l'equip <em>%(lang_name)s</em>?"
 
 #: templates/teams/team_confirm_delete.html:14
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Segur que voleu suprimir permanentment el component '%(component_name)s' que pertany a %(project_name)s?\n"
+" Esteu segurs que voleu eliminar l'equip '%(lang_name)s' que pertany al projecte '%(project_name)s?'\n"
 
 #: templates/teams/team_detail.html:19
 #, python-format
@@ -2662,6 +2657,8 @@ msgid ""
 "\n"
 "  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 msgstr ""
+"\n"
+"Equips de traducció - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 
 #: templates/teams/team_detail.html:33
 msgid "Mainlist:"
@@ -2833,7 +2830,7 @@ msgstr "Procés de validació del correu electrònic"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\">overview page</a>."
-msgstr ""
+msgstr "Podeu configurar el procés de validació via correu electrònic des de <a href=\"%(profile_overview)s\">Pàgina general</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -2841,7 +2838,7 @@ msgstr "El correu electrònic s'ha validat correctament."
 
 #: templates/userprofile/account/email_validation_done.html:19
 msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
-msgstr ""
+msgstr "La clau que heu rebut via correu electrònic ja no és vàlida. Si us plau, proveu de nou el procés de validació per correu electrònic."
 
 #: templates/userprofile/account/email_validation_processed.html:4
 #: templates/userprofile/account/email_validation_processed.html:14
@@ -2850,7 +2847,7 @@ msgstr "S'ha processat el canvi de correu electrònic"
 
 #: templates/userprofile/account/email_validation_processed.html:15
 msgid "An e-mail has been sent to the new e-mail address for verification purposes. Please check your e-mail and complete this process by following the instructions specified in the e-mail body."
-msgstr ""
+msgstr "Amb motius de verificació s'ha enviat un correu electrònic a la nova adreça electrònica. Comproveu el vostre correu i completeu el procés seguint les instruccions especificades al cos del correu."
 
 #: templates/userprofile/account/email_validation_reset.html:5
 #: templates/userprofile/account/email_validation_reset.html:18
@@ -2859,7 +2856,7 @@ msgstr "Reenviar validació de correu electrònic"
 
 #: templates/userprofile/account/email_validation_reset.html:19
 msgid "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again."
-msgstr ""
+msgstr "No podreu iniciar fins que no hagueu validat el vostre correu electrònic. Introduïu la vostra adreça de correu electrònic per a rebre una altra vegada el correu de validació."
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
@@ -3457,7 +3454,7 @@ msgstr "No hi ha idiomes registrats que coincideixin amb aquest codi"
 #: translations/templates/comp_stats_table.html:49
 #: translations/templates/lang_stats_table.html:39
 msgid "Click here to see the multiple files for"
-msgstr ""
+msgstr "Premeu aquí per a visualitzar múltiples fitxers per a"
 
 #: translations/templates/component_submit.html:5
 #, python-format
