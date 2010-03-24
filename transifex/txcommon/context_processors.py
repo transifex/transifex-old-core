@@ -19,22 +19,4 @@ def site_url_prefix_processor(request):
     """
     Inserts context variable SITE_URL_PREFIX for absolute URLs
     """
-    key = "SITE_URL_PREFIX"
-
-    # If settings.SITE_URL_PREFIX is defined return it
-    # This should be used for production environment
-    custom_url = getattr(settings, key, None)
-    if custom_url:
-        return {key:custom_url}
-
-    # TODO: Generate URL based on django.contrib.sites.models.Site here
-
-    # If HTTP_HOST is defined in META, return it with http:// prefix
-    # This is used by development server
-    meta = getattr(request, "META", None)
-    if meta and "HTTP_HOST" in meta:
-        return {key:"http://%s" % meta['HTTP_HOST']}
-
-    # Fallback is 'http://localhost'
-    # Unittests default to this
-    return {key:"http://localhost"}
+    return {"SITE_URL_PREFIX" : request.build_absolute_uri("") }
