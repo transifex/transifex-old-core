@@ -87,9 +87,9 @@ class TransFormWizard(SessionWizard):
 
         # Getting filtering settings
         if f:
-            self.only_translated = f.get('only_translated', None)
-            self.only_fuzzy = f.get('only_fuzzy', None)
-            self.only_untranslated = f.get('only_untranslated', None)
+            self.only_translated = f.get('only_translated', False)
+            self.only_fuzzy = f.get('only_fuzzy', False)
+            self.only_untranslated = f.get('only_untranslated', False)
             self.string = f.get('string', '')
         else: # Default values
             self.only_translated = False
@@ -100,7 +100,8 @@ class TransFormWizard(SessionWizard):
                 self.only_untranslated, self.string)
 
         # Getting po_entries based on the filter settings
-        self.po_entries_list = self.filter_po_entries()
+        self.po_entries_list = self.get_stored_po_entries_list() or \
+            self.filter_po_entries()
         
         if 'extra_context' in kwargs:
             self.extra_context.update(kwargs['extra_context'])
@@ -219,6 +220,7 @@ class TransFormWizard(SessionWizard):
             elif entry.msgstr == '':
                 if self.only_untranslated:
                     po_entries_list.append(entry)
+        self.store_po_entries_list(po_entries_list)
         return po_entries_list
 
     def store_filters(self, only_translated, only_fuzzy, only_untranslated, string):
@@ -242,6 +244,15 @@ class TransFormWizard(SessionWizard):
         """Get the po_entries stored from the session."""
         if self._storage:
             return self._storage.get('po_entries', None)
+
+    def store_po_entries_list(self, po_entries_list):
+        """Store the po_entries_list in the session."""
+        self._storage['po_entries_list'] = po_entries_list
+
+    def get_stored_po_entries_list(self):
+        """Get the po_entries_list stored from the session."""
+        if self._storage:
+            return self._storage.get('po_entries_list', None)
 
     def update_po_entries(self, form):
         """
@@ -284,48 +295,74 @@ class TransFormWizard(SessionWizard):
         else:
             self._storage['steps'] = {step: (data, files)}
 
+    def filters_changed(self, request):
+        """
+        Check whether one of the filter settings has changed from the 
+        request.POST. If something has changed re-set the wizard filtering 
+        settings and return True. Otherwise return False.
+        """
+
+        if request.POST.has_key('only_translated'):
+            only_translated = True
+        else:
+            only_translated = False
+
+        if request.POST.has_key('only_fuzzy'):
+            only_fuzzy = True
+        else:
+            only_fuzzy = False
+
+        if request.POST.has_key('only_untranslated'):
+            only_untranslated = True
+        else:
+            only_untranslated = False
+
+        string = request.POST.get('string', '')
+
+        # If at least one of the filter settings has changed, re-set the new 
+        # filter settings and return True 
+        if only_translated != self.only_translated or \
+            only_fuzzy != self.only_fuzzy or \
+            only_untranslated  != self.only_untranslated or \
+            string != self.string:
+
+            self.only_translated = only_translated
+            self.only_fuzzy = only_fuzzy
+            self.only_untranslated = only_untranslated
+            self.string = string
+            return True
+
+        return False
+
     def render(self, request, step, form=None, context=None):
         """
         Called to render a specific step.
         You may pass 'form' manually in case you want a form that has been error-checked.
         If you don't give 'form', it will be retreived from storage.
         """
-        # Get filter settings from the form
-        if request.method == 'POST' and not form:
-            only_translated = request.POST.get('only_translated', None)
-            only_fuzzy = request.POST.get('only_fuzzy', None)
-            only_untranslated = request.POST.get('only_untranslated', None)
-            string = request.POST.get('string', None)
+        # Get filter settings from the form and re-filter the po_entries_list
+        # in case a filter has changed.
+        if request.method == 'POST' and not form and \
+            self.filters_changed(request):
 
-            # If filter changed
-            if only_translated != self.only_translated or \
-                only_fuzzy != self.only_fuzzy or \
-                only_untranslated  != self.only_untranslated or \
-                string != self.string:
+            # Store the current filters
+            self.store_filters(self.only_translated, self.only_fuzzy, 
+                self.only_untranslated, self.string)
 
-                self.only_translated = only_translated
-                self.only_fuzzy = only_fuzzy
-                self.only_untranslated = only_untranslated
-                self.string = string
+            if 'steps' in self._storage:
+                del self._storage['steps']
 
-                # Store the current filters
-                self.store_filters(self.only_translated, self.only_fuzzy, 
-                    self.only_untranslated, self.string)
+            # Getting po_entries based on the filter settings
+            self.po_entries_list = self.filter_po_entries()
 
-                if 'steps' in self._storage:
-                    del self._storage['steps']
-
-                # Getting po_entries based on the filter settings
-                self.po_entries_list = self.filter_po_entries()
-
-                # Make sure the current page is never greater than the total 
-                # number of pages of the wizard
-                nsteps = self.num_steps() - 1
-                if step > nsteps:
-                    if nsteps > 0:
-                        step = nsteps
-                    else:
-                        step = 0
+            # Make sure the current page is never greater than the total 
+            # number of pages of the wizard
+            nsteps = self.num_steps() - 1
+            if step > nsteps:
+                if nsteps > 0:
+                    step = nsteps
+                else:
+                    step = 0
 
         self.extra_context.update({'pofile': self.pofile, 
             'po_entries': self.po_entries_list, 
