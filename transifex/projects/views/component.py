@@ -26,10 +26,10 @@ from projects.signals import (submission_error,
     sig_refresh_cache,
     sig_clear_cache,
     sig_submit_file)
-from submissions.utils import (submit_by_email, msgfmt_error_send_mail)
+from submissions.utils import submit_by_email
 from reviews.views import review_add
 from teams.models import Team
-from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
+from translations.lib.types.pot import FileFilterError
 from translations.lib.types.publican import PotDirError
 from translations.models import POFile, POFileLock
 
@@ -465,10 +465,8 @@ def component_submit_file(request, project_slug, component_slug,
                             args=(project_slug, component_slug,)))
 
         try:
-            if settings.MSGFMT_CHECK and filename.endswith('.po'):
-                logger.debug("Checking %s with msgfmt -c for component %s" % 
-                            (filename, component.full_name))
-                component.trans.msgfmt_check(submitted_file)
+            pre_submit_file.send(sender=Component, filename=filename, stream = submitted_file,
+                component=component, user=request.user, file_dict = file_dict)
             logger.debug("Checking out for component %s" % component.full_name)
             component.prepare()
 
@@ -510,7 +508,6 @@ def component_submit_file(request, project_slug, component_slug,
                 # Getting the new PO file stats after submit it
                 postats = POFile.objects.get(filename=filename,
                                                  object_id=component.id)
-                sig_submit_file.send(sender=None, component=component)
             else:
                 postats = None
 
@@ -531,25 +528,11 @@ def component_submit_file(request, project_slug, component_slug,
             if settings.ENABLE_NOTICES:
                 txnotification.send_observation_notices_for(component.project,
                        signal=nt, extra_context=context)
-
-        except MsgfmtCheckError:
-            logger.debug("Msgfmt -c check failed for file %s." % filename)
-            if (hasattr(settings, 'EMAIL_HOST') and settings.EMAIL_HOST and
-                request.user.email):
-                msgfmt_error_send_mail(component, request.user, submitted_file,
-                                       file_dict, filename)
-                request.user.message_set.create(message=_(
-                    "Your file does not pass the correctness checks "
-                    "(msgfmt -c). Your file has been e-mailed to you to avoid "
-                    "losing any work."))
-            else:
-                request.user.message_set.create(message=_(
-                    "Your file does not pass the correctness checks "
-                    "(msgfmt -c). Please run this command on your system to "
-                    "see the errors. We couldn't send you an email to preserve "
-                    "your work because you haven't registered an email address. "
-                    "Please do so now to avoid such issues in the future."))
-
+            post_submit_file.send(sender=Component, component=component, 
+                pofile = postats, request = request, user = request.user)
+        except AddonError, err:
+            logger.debug("An addon encountered exception: %s" % err)
+            request.user.message_set.create(message=str(err))
         except StandardError, e:
             logger.debug("Error submiting translation file %s"
                          " for %s component: %s" % (filename,

@@ -358,7 +358,7 @@ class POTManager(TransManagerMixin):
             command = 'msgfmt -o /dev/null -c -'
             status, stdout, stderr = run_msgfmt_check(po_contents)
             # Not sure why msgfmt sends its output to stderr instead of stdout
-            if 'warning:' in stderr:
+            if 'warning:' in stderr or 'too many errors, aborting' in stderr:
                 raise CommandError(command, status, stderr)
         except CommandError:
             raise MsgfmtCheckError, ("Your file does not pass by the check "
