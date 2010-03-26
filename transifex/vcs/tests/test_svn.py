@@ -24,7 +24,7 @@ class SvnTestCase(unittest.TestCase):
         from os import path
         from vcs.lib.types.svn import REPO_PATH 
         self.unit._init_browser()
-        self.unit.browser.init_repo()
+        self.unit.browser.setup_repo()
         local_unit_path = path.join(REPO_PATH, self.unit.name)
         self.assertTrue(path.isdir(local_unit_path))
 

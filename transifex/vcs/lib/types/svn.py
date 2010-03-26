@@ -39,7 +39,7 @@ def domain_from_hostname(hostname):
     >>> domain_from_hostname('http://foo.bar.com/')
     'bar.com'
     >>> domain_from_hostname('http://localhost:8000/foo/bar/')
-    'localhost'
+    'localhost:8000'
     """
     urlparser = urlparse.urlsplit(hostname)
     if isinstance(urlparser, tuple):
