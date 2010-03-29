@@ -19,4 +19,4 @@ def site_url_prefix_processor(request):
     """
     Inserts context variable SITE_URL_PREFIX for absolute URLs
     """
-    return {"SITE_URL_PREFIX" : request.build_absolute_uri("") }
+    return {"SITE_URL_PREFIX" : request.build_absolute_uri("/")[:-1] }
