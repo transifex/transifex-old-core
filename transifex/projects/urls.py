@@ -191,7 +191,7 @@ urlpatterns += patterns('',
         view = component_submit_file,
         name = 'component_submit_new_file',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/l/(?P<language_code>(.*))$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/l/(?P<language_code>(.*))/$',
         view = component_language_detail,
         name = 'component_language_detail',),
     url (
