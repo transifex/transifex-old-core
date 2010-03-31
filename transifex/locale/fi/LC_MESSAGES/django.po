@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-01 11:09+0000\n"
-"PO-Revision-Date: 2010-03-05 10:49+0200\n"
+"PO-Revision-Date: 2010-03-31 20:36+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -92,12 +92,12 @@ msgstr "yksiköt"
 #: languages/feeds.py:14
 #, python-format
 msgid "Languages on %(site_name)s"
-msgstr "Kielet kohteessa %(site_name)s"
+msgstr "Kielet sivustolla %(site_name)s"
 
 #: languages/feeds.py:17
 #, python-format
 msgid "The languages spoken on %s."
-msgstr "Kohteessa %s käytetyt kielet."
+msgstr "Sivustolla %s käytössä olevat kielet."
 
 #: languages/models.py:39 languages/migrations/0001_initial.py:14
 #: projects/models.py:87 projects/models.py:201 projects/models.py:460
@@ -764,12 +764,12 @@ msgstr "Komponentin alkuperäiskieli (esim. 'en', 'pt_BR' tai 'el'."
 
 #: projects/models.py:209 projects/migrations/0001_initial.py:42
 msgid "I18n type"
-msgstr "l18n-tyyppi"
+msgstr "Kännösmetodi"
 
 #: projects/models.py:211
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
-msgstr "Ohjelmakoodin tukema i18n-tyyppi (%s)"
+msgstr "Käännöstuen toteutustapa lähdekoodissa (%s)"
 
 #: projects/models.py:213 projects/migrations/0001_initial.py:43
 msgid "File filter"
@@ -927,7 +927,7 @@ msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
-"Tämän intltool POT-perusteisen komponentin tiedostosuodatin ei näytä "
+"Komponentin käännösmetodi on intltool POT, mutta tiedostosuodatin ei näytä "
 "sallivan tiedostoa POTFILES.in. Ole hyvä ja korjaa se."
 
 #: projects/views/component.py:281
@@ -936,7 +936,7 @@ msgid ""
 "component. Maybe its file filter is not allowing access to it."
 msgstr ""
 "Tämän Publican-tyyppisen komponentin tiedostovalikoimasssa ei ole \"pot\"-"
-"kansiota. Ehkä tiedostosuodatin estää sen käytön?"
+"kansiota. Estääkö tiedostosuodatin sen käytön?"
 
 #: projects/views/component.py:289
 msgid "This component is not configured for statistics calculation."
@@ -999,7 +999,6 @@ msgstr ""
 "virheilmoitukset. Emme voineet lähettää tiedostoasi sinulle sähköpostitse "
 "työn menetyksen estämiseksi, koska et ole ilmoittanut osoitettasi. Ole hyvä "
 "ja tee se nyt, jotta näiltä ongelmilta vältytään jatkossa."
-
 
 #: projects/views/component.py:549
 msgid "Sorry, your file could not be sent because of an error."
@@ -1191,7 +1190,7 @@ msgstr "Hylätty"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
-msgstr "Tarkistuksen tila (avoinna, suljettu yms.)"
+msgstr "Tarkistuksen tila (avoinna, suljettu tms.)"
 
 #: reviews/models.py:56
 msgid "The review's resolution/closing state."
@@ -1437,7 +1436,7 @@ msgstr "Projektit"
 
 #: templates/base-sample.html:40
 msgid "The languages our service serves"
-msgstr "Palvelumme tarjoamat kielet"
+msgstr "Palvelumme tukemat kielet"
 
 #: templates/base-sample.html:40 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
@@ -1603,7 +1602,7 @@ msgid ""
 "We'd like to make this web service as useful as possible for our users. If "
 "you have any feedback to provide, please do so!"
 msgstr ""
-"Haluamme käyttäjiemme hyötyvän palvelustamme mahdollisimman paljon. Olemme "
+"Haluamme käyttäjien hyötyvän palvelustamme mahdollisimman paljon. Olemme "
 "kiitollisia kaikesta palautteesta."
 
 #: templates/contact_form/contact_form.html:22
@@ -1692,7 +1691,7 @@ msgstr ""
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
-msgstr "Pääasiallinen sähköposti"
+msgstr "Ensisijainen sähköposti"
 
 #: templates/notification/notices.html:92
 msgid "change under"
@@ -1748,8 +1747,8 @@ msgid ""
 "A new component <a href=\"%(component_url)s\">%(component_name)s</a> has "
 "been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"Komponentti <a href=\"%(component_url)s\">%(component_name)s</a> on "
-"lisätty projektiin <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Projektiin <a href=\"%(project_url)s\">%(project_name)s</a> on lisätty "
+"komponentti <a href=\"%(component_url)s\">%(component_name)s</a>"
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
@@ -1919,8 +1918,8 @@ msgid ""
 "the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Käyttäjä <a href=\"%(user_url)s\">%(user_name)s</a> on hyväksytty projektin "
-"<a href=\"%(project_url)s\">%(project_name)s</a> <a href=\"käännösryhmään "
-"%(team_url)s\">%(team_name)s</a>"
+"<a href=\"%(project_url)s\">%(project_name)s</a> <a href=\"%(team_url)s\">"
+"käännösryhmään %(team_name)s</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
@@ -1969,8 +1968,8 @@ msgid ""
 "a> project has been denied"
 msgstr ""
 "Kielen <a href=\"%(language_url)s\">%(language_name)s</a> käännösryhmän "
-"luontihakemus projektille <a href=\"%(project_url)s\">%(project_name)s</a> "
-"evätty"
+"perustamishakemus projektiin <a href=\"%(project_url)s\">%(project_name)s</a>"
+" evätty"
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
@@ -1980,8 +1979,8 @@ msgid ""
 "\">%(project_name)s</a>."
 msgstr ""
 "Kielen <a href=\"%(language_url)s\">%(language_name)s</a> käännösryhmän "
-"luontihakemus jätetty projektille <a href=\"%(project_url)s\">%(project_name)"
-"s</a>"
+"perustamishakemus jätetty projektiin <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
 
 #: templates/notification/user_nudge/notice.html:2
 #, python-format
@@ -2241,8 +2240,8 @@ msgid ""
 "    Examples of components of a software project could be \"UI\" and \"Docs"
 "\" or development branches like <code>HEAD</code>."
 msgstr ""
-"<em>Komponentit</em> ovat pienempiä, itsenäisiä, isomman projektin osia, "
-"jotka koostuvat tiedostoista.\n"
+"<em>Komponentit</em> ovat pienempiä, itsenäisiä, tiedostoista koostuvia "
+"isomman projektin osia.\n"
 "    Komponentteja voivat olla esimerkiksi ohjelmiston \"Käyttöliittymä\" ja "
 "\"Dokumentaatio\" tai kehityshaarat kuten <code>HEAD</code>."
 
@@ -2292,7 +2291,7 @@ msgstr "Tallennusviesti:"
 
 #: templates/projects/component_submit_new_file.html:37
 msgid "Example: Updates to Brazilian Portuguese translation"
-msgstr "Esimerkki: Updates to Finnish translation."
+msgstr "Esimerkki: Updated Finnish translation"
 
 #: templates/projects/component_submit_new_file.html:43
 #: translations/templates/component_submit.html:13
@@ -2303,7 +2302,7 @@ msgstr "Lähetä"
 #: templates/webtrans/transfile_edit.html:137
 #: translations/templates/component_submit.html:15
 msgid "Send for Review"
-msgstr "Lähetä tarkastettavaksi"
+msgstr "Lähetä tarkistettavaksi"
 
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
@@ -2378,7 +2377,7 @@ msgstr[1] "Ylläpitäjät:"
 
 #: templates/projects/project_detail.html:87
 msgid "External links:"
-msgstr "Ulkoiet linkit:"
+msgstr "Ulkoiset linkit:"
 
 #: templates/projects/project_detail.html:89
 msgid "Screenshots"
@@ -2490,7 +2489,7 @@ msgstr "Ei rekisteröityjä projekteja. :-("
 #: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
-msgstr "Voit toki <a href=\"%(project_create)s\">lisätä sellaisen</a>"
+msgstr "Ole hyvä ja <a href=\"%(project_create)s\">lisää sellainen</a>."
 
 #: templates/projects/project_list.html:67
 #, python-format
@@ -2689,7 +2688,7 @@ msgstr "Avoimet pyynnöt"
 #: templates/reviews/review_list.html:39
 #, python-format
 msgid "Review Request #%(review_id)s "
-msgstr "Tarkastuspyyntö numero %(review_id)s"
+msgstr "Tarkastuspyyntö %(review_id)s"
 
 #: templates/reviews/review_list.html:47
 msgid "Who and when"
@@ -2725,7 +2724,7 @@ msgstr "Tiedostokohde"
 
 #: templates/reviews/review_list.html:67
 msgid "Download the version sent for review"
-msgstr "Lataa tarkastettavaksi lähetetty versio"
+msgstr "Lataa tarkistettavaksi lähetetty versio"
 
 #: templates/reviews/review_list.html:70
 msgid "Score"
@@ -2737,7 +2736,7 @@ msgstr "Tila"
 
 #: templates/reviews/review_list.html:94
 msgid "Close Review"
-msgstr "Lopeta tarkastus"
+msgstr "Lopeta tarkistus"
 
 #: templates/reviews/review_list.html:97
 msgid "Accept and submit translation"
@@ -2801,7 +2800,7 @@ msgstr "Toiminnot"
 
 #: templates/reviews/review_list.html:182
 msgid "Reopen review request"
-msgstr "Uusi tarkastuspyyntö"
+msgstr "Uusi tarkistuspyyntö"
 
 #: templates/reviews/review_list.html:194
 msgid "No closed requests!"
@@ -3061,7 +3060,7 @@ msgid ""
 "Enter the new e-mail address. An e-mail will be sent to it for testing and "
 "confirmation."
 msgstr ""
-"Kirjoita uusi sähköpostiosoite. Osoitteeseen lähetetään koe- ja "
+"Kirjoita uusi sähköpostiosoite. Osoitteeseen lähetetään testi- ja "
 "vahvistusviesti."
 
 #: templates/userprofile/account/email_validation_done.html:4
@@ -3368,7 +3367,7 @@ msgstr "Etsi Picasa-verkkoalbumeista"
 #: templates/userprofile/avatar/crop.html:4
 #: templates/userprofile/avatar/crop.html:19
 msgid "Crop &amp; resize the area you want"
-msgstr "Rajaa &amp; haluamasi alue ja muuta sen kokoa"
+msgstr "Rajaa haluamasi alue ja muuta sen kokoa"
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
