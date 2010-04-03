@@ -24,12 +24,18 @@ TRANSLATION_STATE_CHOICES = (
 
 class TResource(models.Model):
     """
-    A translation resource, equivalent to a PO file, YAML file, string stream etc.
+    A translation resource, equivalent to a POT file, YAML file, string stream etc.
+    
+    The TResource points to a source language (template) file path! For example,
+    it should be pointing to a .pot file or to a english .po file.of a project
+    with english as the source language.
     """
     name = models.CharField(_('Name'), max_length=255, null=False,
         blank=False, 
         help_text=_('A descriptive name unique inside the project.'))
     # URI, filepath etc.
+    # FOR FILES: this should be the path to the source file (if pot exists) or
+    # a parent folder path of the source language file.
     path = models.CharField(_('Path'), max_length=255, null=False,
         blank=False, 
         help_text=_("A path to the template file or to the source stream "
@@ -97,6 +103,9 @@ class SourceString(models.Model):
         help_text=_("The flags which mark the source string. For example, if"
                     "there is a python formatted string this is marked as "
                     "\"#, python-format\" in gettext."))
+    developer_comment = models.TextField(_('Flags'), max_length=1000,
+        blank=True, editable=False,
+        help_text=_("The comment of the developer."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -121,7 +130,7 @@ class SourceString(models.Model):
         unique_together = (('string', 'description', 'tresource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
-        ordering  = ['string', 'description']
+        ordering = ['string', 'description']
         order_with_respect_to = 'tresource'
         get_latest_by = 'created'
 
@@ -161,7 +170,7 @@ class TranslationString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'source_string'),)
+        unique_together = (('string', 'source_string', 'language'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
