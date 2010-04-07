@@ -7,8 +7,8 @@ import datetime, hashlib, sys
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from projects.models import Project
 from languages.models import Language
+from projects.models import Project
 
 
 # State Codes for translations
@@ -135,6 +135,25 @@ class SourceString(models.Model):
         get_latest_by = 'created'
 
 
+class SearchStringManager(models.Manager):
+    def by_source_string_and_language(self, string,
+            source_code='en', target_code=None):
+        """
+        Return the results of searching, based on a specific source string and
+        maybe on specific source and/or target language.
+        """
+        source_language = Language.objects.by_code_or_alias(source_code)
+        language = Language.objects.by_code_or_alias(target_code)
+        source_strings = SourceString.objects.filter(string=string,
+                                                     language=source_language)
+        if target_code:
+            results = self.filter(
+                        source_string__in=source_strings, language=language)
+        else:
+            results = self.filter(source_string__in=source_strings)
+        return results
+
+
 class TranslationString(models.Model):
     """
     The representation of a live translation for a given source string.
@@ -164,6 +183,7 @@ class TranslationString(models.Model):
         help_text=_("The language in which this translation string belongs to."))
 
     #TODO: Managers
+    objects = SearchStringManager()
 #    factory = SourceStringFactory()
 
     def __unicode__(self):
