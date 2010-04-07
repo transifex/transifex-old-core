@@ -100,6 +100,11 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
     # Open the pofile (FYI, the return value is a list!)
     pofile = polib.pofile(path_to_file)
 
+    # Reset the positions which are currently put.
+    if not created:
+        SourceString.objects.filter(tresource=tres,
+            language=source_language,).update(position=None)
+
     for position, entry in enumerate(pofile):
         # If msgid is empty continue to the next iteration
         content=entry.msgid
@@ -157,9 +162,6 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
             defaults={'position': position, 'occurrences': occurrences,
                         'flags': flags, 'developer_comment': entry.comment})
 
-    if created:
-        pass
-
     return tres
 
 
@@ -200,9 +202,14 @@ def load_gettext_po(path_to_file, tresource, target_language,
         if not entry.msgstr:
             continue
         else:
-            ts = TranslationString.objects.get_or_create(string=entry.msgstr,
-                                            source_string=source_string,
-                                            language=target_language)
+            # WARNING!!! If there is already the relation, then update only the string.
+            ts, created = TranslationString.objects.get_or_create(
+                    source_string=source_string, language=target_language,
+                    defaults={'string' : entry.msgstr},)
+            if not created and ts.string != entry.msgstr:
+                ts.string = entry.msgstr
+                ts.save()
+
     return tresource
 
 
