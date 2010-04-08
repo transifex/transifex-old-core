@@ -161,7 +161,8 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
             description=description,
             tresource=tres, language=source_language,
             defaults={'position': position, 'occurrences': occurrences,
-                      'flags': flags, 'developer_comment': entry.comment})
+                      'flags': flags, 'developer_comment': entry.comment,
+                      'plural': entry.msgid_plural})
         # Refill position correctly!
         if not st_created and st.position != position:
             st.position = position
@@ -202,12 +203,33 @@ def load_gettext_po(path_to_file, tresource, target_language,
         except SourceString.DoesNotExist:
             continue
 
+        # Plurals processing
+        # WARNING! Plural string includes the singular forms.
+        if entry.msgid_plural and entry.msgstr_plural:
+            msgstrs = entry.msgstr_plural
+            keys = list(msgstrs)
+            keys.sort()
+            # Iterate through all the plural strings and store them appropriately
+            for index in keys:
+                msgstr = msgstrs[index]
+                # WARNING!!! If there already exists the relation, update only the string.
+                # This means that we override the OLD STRING and we DONT KEEP HISTORY
+                pts, created = PluralTranslationString.objects.get_or_create(
+                                source_string=source_string, 
+                                language=target_language,
+                                index=index,
+                                defaults={'string' : msgstr},)
+                if not created and pts.string != msgstr:
+                    pts.string = msgstr
+                    pts.save()
+
         # Get or Create the new translation strings
         # If the string is empty then continue to the next iteration
         if not entry.msgstr:
             continue
         else:
             # WARNING!!! If there is already the relation, then update only the string.
+            # This means that we override the OLD STRING and we DONT KEEP HISTORY
             ts, created = TranslationString.objects.get_or_create(
                     source_string=source_string, language=target_language,
                     defaults={'string' : entry.msgstr},)
