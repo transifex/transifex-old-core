@@ -142,11 +142,18 @@ class SearchStringManager(models.Manager):
         Return the results of searching, based on a specific source string and
         maybe on specific source and/or target language.
         """
-        source_language = Language.objects.by_code_or_alias(source_code)
-        language = Language.objects.by_code_or_alias(target_code)
-        source_strings = SourceString.objects.filter(string=string,
+        source_strings = []
+        # If the source language has not been provided, search strings for 
+        # every source language.
+        if source_code:
+            source_language = Language.objects.by_code_or_alias(source_code)
+            source_strings = SourceString.objects.filter(string=string,
                                                      language=source_language)
+        else:
+            source_strings = SourceString.objects.filter(string=string,)
+        # If no target language given search on any target language.
         if target_code:
+            language = Language.objects.by_code_or_alias(target_code)
             results = self.filter(
                         source_string__in=source_strings, language=language)
         else:

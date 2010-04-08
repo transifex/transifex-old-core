@@ -157,10 +157,15 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
         flags = '\n'.join(ret)
 
         # Get or create the SourceString.
-        SourceString.objects.get_or_create(string=content, description=description,
+        st, st_created = SourceString.objects.get_or_create(string=content, 
+            description=description,
             tresource=tres, language=source_language,
             defaults={'position': position, 'occurrences': occurrences,
-                        'flags': flags, 'developer_comment': entry.comment})
+                      'flags': flags, 'developer_comment': entry.comment})
+        # Refill position correctly!
+        if not st_created and st.position != position:
+            st.position = position
+            st.save()
 
     return tres
 
