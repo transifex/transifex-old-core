@@ -4,7 +4,7 @@ Utility methods used for happix core functionality
 """
 import os, re, settings
 
-
+#TODO: Refine util methods according to our needs.
 # ./codebases/lib/__init__.py
 def valid_filename(filename, filefilter=None):
     """

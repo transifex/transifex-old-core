@@ -27,13 +27,15 @@ from txcommon.log import logger
 
 
 def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
-        format='gettext'):
+        format='gettext', secondary_source_languages=['en_GB', 'en_US',]):
     """
-    Attempts to load a set of pofiles to the database as one TResource.
+    Attempts to load a set of pofiles to the database as ONE TResource.
 
     The direcotry_path should be absolute! The name is the TResource's unique
     name. If no name is given, then directory_path will be used.
     Returns a TResource instance for this resource hierarchy.
+    Secondary source language codes are used as a workaround to identify the 
+    source strings in the case we don't find any pot or source language file.
     """
 
     if not name:
@@ -47,22 +49,46 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
             directory_path += os.sep
         # CAUTION! os.path.dirname always needs a slash at the end!!!
         pofiles = get_files(os.path.dirname(directory_path), filefilter=".*\.po$")
+        source_file_list = get_files(os.path.dirname(directory_path), filefilter=".*\.pot$")
 
     tres = None
-    pre_allocation_len = 0
-
     source_file = None
+    length = 0
+
+    # Firstly, try to find the pot
+    # As source_file_list contains a generator we must iterate over all items 
+    # to determine the length
+    for item in source_file_list:
+        length+=1
+        source_file = item
+    if length>1:
+        raise Exception, "Found more than one source language files!"
+
+    # Secondly, if we didn't find a pot, try to locate the source language file.
     translation_files = []
     for f in pofiles:
         guessed_lang = guess_language(f)
-        if guessed_lang == source_language.code:
+        if not source_file and guessed_lang == source_language.code:
+            # Raise exception
+            if source_file:
+                raise Exception, "Found more than one source language files!"
             source_file = f
         else:
             translation_files.append((f, guessed_lang))
 
-    # First load the source file
+    # Thirdly, use the secondary source languages to obtain the source strings!
+    if not source_file:
+        for tuple_pair in translation_files:
+            if tuple_pair[1] in secondary_source_languages:
+                source_file = tuple_pair[0]
+                #XXX We silently supposed that source_language instance is the 
+                # one gotten from the source_language argument, this may not be
+                # the best/correct way.
+                break
+
+    # Load the source file
     tres = load_gettext_source(path_to_file=source_file, project=project,
-        source_language=source_language, name=name)
+        source_language=source_language, name=None)
 
     # Then load the other translation files
     for pair in translation_files:
@@ -180,7 +206,11 @@ def load_gettext_po(path_to_file, tresource, target_language,
     #TODO: Language instantation should be based on caching
     if not source_language:
         source_language = Language.objects.by_code_or_alias('en')
-    target_language = Language.objects.by_code_or_alias(target_language)
+    try:
+        target_language = Language.objects.by_code_or_alias(target_language)
+    except Language.DoesNotExist:
+        # If the language code does not exist return None and ignore the pofile
+        return None
 
     # Open the pofile (FYI, the return value is a list!)
     pofile = polib.pofile(path_to_file)
