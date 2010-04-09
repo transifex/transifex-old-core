@@ -1044,7 +1044,7 @@ msgstr "Você adicionou o utilizador '%(user)s' nas equipa '%(team)s'."
 #: projects/views/team.py:314
 #, python-format
 msgid "You have denied the request of the user '%(user)s' to join the '%(team)s' team."
-msgstr ""
+msgstr "Você rejeitou o pedido do utilizador '%(user)s' para integração na equipa '%(team)s'."
 
 #: projects/views/team.py:357
 #, python-format
@@ -1073,22 +1073,22 @@ msgstr "A equipa '%s'  já existe."
 #: projects/views/team.py:459
 #, python-format
 msgid "A request for creating the '%s' team already exist."
-msgstr ""
+msgstr "Já existe um pedido para a criação da equipa '%s'."
 
 #: projects/views/team.py:467
 #, python-format
 msgid "You have requested the '%s' team creation."
-msgstr ""
+msgstr "Você rejeitou o pedido para a criação da equipa '%s'."
 
 #: projects/views/team.py:512
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "Você aprovou a equipa '%(team)s', solicitada por '%(user)s'."
 
 #: projects/views/team.py:554
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
-msgstr ""
+msgstr "Você rejeitou a equipa '%(team)s', solicitada por '%(user)s'."
 
 #: releases/models.py:34
 msgid "When the translatable strings will be frozen (no strings which affect translations can be added/modified)."
@@ -1246,7 +1246,7 @@ msgstr "Idioma"
 
 #: teams/models.py:30 teams/models.py:72
 msgid "People in this team will only be able to submit translations files related to the specific language."
-msgstr ""
+msgstr "As pessoas desta equipa apenas poderão submeter traduções relacionadas com o idioma específico."
 
 #: teams/models.py:32
 msgid "Coordinators"
@@ -1696,17 +1696,17 @@ msgstr "Foi revogado ao utilizador <a href=\"%(user_url)s\">%(user_request)s</a>
 #: templates/notification/project_team_added/notice.html:2
 #, python-format
 msgid "A new <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "Uma nova <a href=\"%(team_url)s\">%(team_name)s equipa de tradução</a> foi adicionada ao projecto <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_changed/notice.html:2
 #, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
-msgstr ""
+msgstr "A <a href=\"%(team_url)s\">%(team_name)s equipa de tradução</a>  do projecto <a href=\"%(project_url)s\">%(project_name)s</a> foi alterada"
 
 #: templates/notification/project_team_deleted/notice.html:2
 #, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s tranlation team</a> has been deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "A <a href=\"%(team_url)s\">%(team_name)s equipa de tradução</a> foi apagada do projecto <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
@@ -2370,7 +2370,7 @@ msgstr "Versões do Projecto"
 #: templates/projects/release_list.html:29
 #, python-format
 msgid "No releases are registered for this project yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
+msgstr "Sem lançamentos registados a este projecto. Porque não os <a href=\"%(release_create)s\">adiciona</a>?"
 
 #: templates/reviews/review_form.html:10
 msgid "Submit"
@@ -2405,6 +2405,9 @@ msgid ""
 "        %(time_since)s ago\n"
 "      "
 msgstr ""
+"\n"
+"        %(time_since)s atrás\n"
+"      "
 
 #: templates/reviews/review_list.html:56
 msgid "Translation Language"
@@ -2519,7 +2522,7 @@ msgstr "Definições de perfil"
 
 #: templates/simpleauth/login_box.html:8
 msgid "Sign in to add or modify projects, work on translations, and other stuff."
-msgstr ""
+msgstr "Inicie sessão para adicionar ou modificar projectos, trabalhar nas traduções, etc."
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -2793,7 +2796,7 @@ msgstr "E-mail de validação enviado"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Your user account was already activated"
-msgstr ""
+msgstr "A sua conta de utilizador já está activa."
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "You can manage the e-mail validation process from the"
@@ -2805,7 +2808,7 @@ msgstr "página geral"
 
 #: templates/userprofile/account/email_validation_reset_response.html:17
 msgid "We've sent you the e-mail validation link."
-msgstr ""
+msgstr "Enviamos-lhe uma mensagem de validação."
 
 #: templates/userprofile/account/email_validation_reset_response.html:19
 msgid "Your e-mail was already validated"
@@ -2982,7 +2985,7 @@ msgstr "Concluído"
 
 #: templates/userprofile/avatar/choose.html:56
 msgid "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you"
-msgstr ""
+msgstr "Seleccione uma imagem de uma url remota. Indique a URL no campo abaixo e nós a obteremos por si"
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -3394,11 +3397,11 @@ msgstr ""
 #: translations/templates/pofile_lock.html:21
 #, python-format
 msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr ""
+msgstr "O utilizador '%(owner)s' bloqueou este ficheiro para indicar que está a trabalhar nele."
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
-msgstr ""
+msgstr "Bloquear para notificar os outros utilizadores que está a trabalhar no ficheiro."
 
 #: translations/templates/pofile_lock.html:30
 msgid "This file is unlocked. Most likely no one is working with it right now."
@@ -3552,7 +3555,7 @@ msgstr ""
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
-msgstr ""
+msgstr "Componente Alterado"
 
 #: txcommon/notifications.py:81
 msgid "when a component of a project is changed"
@@ -3560,7 +3563,7 @@ msgstr ""
 
 #: txcommon/notifications.py:87
 msgid "Component Deleted"
-msgstr ""
+msgstr "Componente Apagado"
 
 #: txcommon/notifications.py:88
 msgid "when a component of a project is deleted"
@@ -3640,7 +3643,7 @@ msgstr ""
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
-msgstr ""
+msgstr "Nova Equipa Adicionada"
 
 #: txcommon/notifications.py:169
 msgid "when a new translation team is added to a project"
@@ -3648,7 +3651,7 @@ msgstr ""
 
 #: txcommon/notifications.py:176
 msgid "Team Changed"
-msgstr ""
+msgstr "Equipa Alterada"
 
 #: txcommon/notifications.py:177
 msgid "when a translation team of a project is changed"
@@ -3664,7 +3667,7 @@ msgstr ""
 
 #: txcommon/notifications.py:192
 msgid "Team Creation Requested"
-msgstr ""
+msgstr "Pedida a Criação de Equipa"
 
 #: txcommon/notifications.py:193
 msgid "when a translation team creation is requestedfor a project"
