@@ -24,6 +24,29 @@ TRANSLATION_STATE_CHOICES = (
 
 class TResourceManager(models.Manager):
 
+    def create_or_update_from_file(self, path_to_file, project, 
+                                   source_language=None,
+                                   name=None, format='gettext'):
+        """
+        Wrapper to choose between create_from_file or TResource.update_from_file.
+        """
+        if not name:
+            name = path_to_file
+        #TODO: Language instantation should be based on caching
+        # If None get the default which is english language instance.
+        if not source_language:
+            source_language = Language.objects.by_code_or_alias('en')
+
+        try:
+            tres = self.get(name=name, path=path_to_file, project=project, 
+                            source_language=source_language)
+            tres.update_from_file(path_to_file, format)
+        except TResource.DoesNotExist:
+            tres = self.create_from_file(name=name, path_to_file=path_to_file,
+                                         project=project,
+                                         source_language=source_language)
+        return tres
+
     def create_from_file(self, path_to_file, project, source_language=None,
                          name=None, format='gettext'):
         """
@@ -42,11 +65,11 @@ class TResourceManager(models.Manager):
         if not source_language:
             source_language = Language.objects.by_code_or_alias('en')
 
-        # Get or Create the resource instance.
-        tres, created = TResource.objects.get_or_create(name=name,
-                            path=path_to_file,
-                            project=project, 
-                            defaults={'source_language':source_language})
+        # Create the resource instance.
+        tres = TResource.objects.create(name=name,
+                                        path=path_to_file,
+                                        project=project, 
+                                        source_language=source_language)
 
         # Load the file to the DB and return the TResource instace.
         return load_source_file(path_to_file, tres, source_language, format)
@@ -113,7 +136,7 @@ class TResource(models.Model):
         
         Returns the TResource instance.
         """
-        # To avoid circular referencing
+        # To avoid circular referrencing
         from happix.loaders import load_source_file
 
         # Reset the positions which are currently put.
@@ -123,6 +146,16 @@ class TResource(models.Model):
         # Load the DB and return the instace.
         return load_source_file(path_to_file, self, self.source_language, format)
 
+    def update_translations(self, path_to_file, target_language, format='gettext'):
+        """
+        Fetch the translations file and update the existing translations of the
+        TResource for the target language
+        """
+        # To avoid circular referrencing
+        from happix.loaders import load_translation_file
+        tlanguage = Language.objects.by_code_or_alias(target_language)
+        return load_translation_file(path_to_file, self, tlanguage,
+                                     self.source_language, format)
 
 class SourceString(models.Model):
     """

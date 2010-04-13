@@ -26,6 +26,14 @@ from happix.models import *
 
 from txcommon.log import logger
 
+def locate_source_files(directory_path, source_language=None, 
+        secondary_source_languages=['en_GB', 'en_US',], format='gettext'):
+    """
+    Try to locate the source (template) files in directory hierarchy.
+    
+    Return a list with all the source files.
+    """
+    pass
 
 def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
         format='gettext', secondary_source_languages=['en_GB', 'en_US',]):
@@ -89,14 +97,14 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
                 break
 
     # Load the source file
-    tres = load_gettext_source(path_to_file=source_file, project=project,
-        source_language=source_language, name=None)
+    tres = TResource.objects.create_or_update_from_file(path_to_file=source_file,
+               project=project, source_language=source_language, name=None,
+               format=format)
 
     # Then load the other translation files
     for pair in translation_files:
-        tres = load_gettext_po(path_to_file=pair[0], tresource=tres,
-                               target_language=pair[1],
-                               source_language=source_language)
+        tres.update_translations(path_to_file=pair[0], target_language=pair[1],
+                                 format=format)
 
     return tres
 
@@ -196,6 +204,26 @@ def load_gettext_source(path_to_file, tresource, source_language):
     return tresource
 
 
+def load_translation_file(url, tresource, target_language, source_language,
+                          format='gettext'):
+    """
+    Load a source file to the DB based on its format.
+    """
+    #TODO: fill in the remaining format loaders
+    if format=='gettext':
+        return load_gettext_po(url, tresource, target_language, source_language)
+    elif format=='rails':
+        return None
+    elif format=='java':
+        return None
+    elif format=='net':
+        return None
+    elif format=='qt':
+        return None
+    elif format=='apple':
+        return None
+
+
 def load_gettext_po(path_to_file, tresource, target_language,
                     source_language=None):
     """
@@ -205,11 +233,6 @@ def load_gettext_po(path_to_file, tresource, target_language,
     #TODO: Language instantation should be based on caching
     if not source_language:
         source_language = Language.objects.by_code_or_alias('en')
-    try:
-        target_language = Language.objects.by_code_or_alias(target_language)
-    except Language.DoesNotExist:
-        # If the language code does not exist return None and ignore the pofile
-        return None
 
     # Open the pofile (FYI, the return value is a list!)
     pofile = polib.pofile(path_to_file)
@@ -228,7 +251,8 @@ def load_gettext_po(path_to_file, tresource, target_language,
             # For gettext there should only be one position per msgid,msgctxt
             source_string = SourceString.objects.get(string=content, 
                                                      description=description,
-                                                     tresource=tresource)
+                                                     tresource=tresource,
+                                                     position__isnull=False)
         except SourceString.DoesNotExist:
             continue
 
