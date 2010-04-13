@@ -20,8 +20,9 @@ PO file headers Example
 import os, polib, textwrap
 
 # FIXME: specify the specific modules
-from happix.models import *
+from languages.models import Language
 from happix.utils import *
+from happix.models import *
 
 from txcommon.log import logger
 
@@ -37,6 +38,7 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
     Secondary source language codes are used as a workaround to identify the 
     source strings in the case we don't find any pot or source language file.
     """
+    #XXX: Needs refactoring after the last change!!!
 
     if not name:
         name = directory_path
@@ -99,37 +101,34 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
     return tres
 
 
-def load_tresource(uri):
-    pass
-
-def load_file(url, target_language, source_language, name=None):
-    pass
-
-def load_gettext_source(path_to_file, project, source_language=None, name=None):
+def load_source_file(url, tresource, source_language, format='gettext'):
     """
-    Load or update a source pofile (may be pot) in the db.
+    Load a source file to the DB based on its format.
+    """
+    #TODO: fill in the remaining format loaders
+    if format=='gettext':
+        return load_gettext_source(url, tresource, source_language)
+    elif format=='rails':
+        return None
+    elif format=='java':
+        return None
+    elif format=='net':
+        return None
+    elif format=='qt':
+        return None
+    elif format=='apple':
+        return None
+
+
+def load_gettext_source(path_to_file, tresource, source_language):
+    """
+    Load a set of source strings in the DB from the specified file.
     
-    Return the TResource instance that has been loaded
+    Return the TResource instance that has been loaded.
     """
-    if not name:
-        name = path_to_file
-    #TODO: Language instantation should be based on caching
-    if not source_language:
-        source_language = Language.objects.by_code_or_alias('en')
-
-    # Get or Create the resource instance.
-    tres, created = TResource.objects.get_or_create(name=name,
-                        path=path_to_file,
-                        project=project, 
-                        defaults={'source_language':source_language})
 
     # Open the pofile (FYI, the return value is a list!)
     pofile = polib.pofile(path_to_file)
-
-    # Reset the positions which are currently put.
-    if not created:
-        SourceString.objects.filter(tresource=tres,
-            language=source_language,).update(position=None)
 
     for position, entry in enumerate(pofile):
         # If msgid is empty continue to the next iteration
@@ -185,7 +184,7 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
         # Get or create the SourceString.
         st, st_created = SourceString.objects.get_or_create(string=content, 
             description=description,
-            tresource=tres, language=source_language,
+            tresource=tresource, language=source_language,
             defaults={'position': position, 'occurrences': occurrences,
                       'flags': flags, 'developer_comment': entry.comment,
                       'plural': entry.msgid_plural})
@@ -194,7 +193,7 @@ def load_gettext_source(path_to_file, project, source_language=None, name=None):
             st.position = position
             st.save()
 
-    return tres
+    return tresource
 
 
 def load_gettext_po(path_to_file, tresource, target_language,

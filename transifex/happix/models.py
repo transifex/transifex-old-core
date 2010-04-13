@@ -22,6 +22,36 @@ TRANSLATION_STATE_CHOICES = (
 # CORE
 ##############################################################
 
+class TResourceManager(models.Manager):
+
+    def create_from_file(self, path_to_file, project, source_language=None,
+                         name=None, format='gettext'):
+        """
+        Create a TResource based on a provided source file and put the 
+        source strings in the db by using the appropriate loaders.
+        
+        Return the TResource instance that is going to be loaded.
+        """
+        # To avoid circular referencing
+        from happix.loaders import load_source_file
+
+        if not name:
+            name = path_to_file
+        #TODO: Language instantation should be based on caching
+        # If None get the default which is english language instance.
+        if not source_language:
+            source_language = Language.objects.by_code_or_alias('en')
+
+        # Get or Create the resource instance.
+        tres, created = TResource.objects.get_or_create(name=name,
+                            path=path_to_file,
+                            project=project, 
+                            defaults={'source_language':source_language})
+
+        # Load the file to the DB and return the TResource instace.
+        return load_source_file(path_to_file, tres, source_language, format)
+
+
 class TResource(models.Model):
     """
     A translation resource, equivalent to a POT file, YAML file, string stream etc.
@@ -29,6 +59,10 @@ class TResource(models.Model):
     The TResource points to a source language (template) file path! For example,
     it should be pointing to a .pot file or to a english .po file.of a project
     with english as the source language.
+    The path_to_file should be point to :
+        1. the relative path of the pot/source file in the vcs folder hierarchy
+        2. an absolute URL (not local) to the file.
+    The path_to_file should be used for loading (pull) operations!
     """
     name = models.CharField(_('Name'), max_length=255, null=False,
         blank=False, 
@@ -57,8 +91,8 @@ class TResource(models.Model):
         verbose_name=_('Source Language'),blank=False, null=True,
         help_text=_("The source language of the translation resource."))
 
-    #TODO: Managers
-#    factory = TResourceFactory()
+    # Managers
+    objects = TResourceManager()
 
     def __unicode__(self):
         return self.name
@@ -72,6 +106,22 @@ class TResource(models.Model):
         ordering  = ['name',]
         order_with_respect_to = 'project'
         get_latest_by = 'created'
+
+    def update_from_file(self, path_to_file=None, format='gettext'):
+        """
+        Update the SourceStrings of the specific TResource based on file content.
+        
+        Returns the TResource instance.
+        """
+        # To avoid circular referencing
+        from happix.loaders import load_source_file
+
+        # Reset the positions which are currently put.
+        SourceString.objects.filter(tresource=self,
+            language=self.source_language,).update(position=None)
+
+        # Load the DB and return the instace.
+        return load_source_file(path_to_file, self, self.source_language, format)
 
 
 class SourceString(models.Model):
