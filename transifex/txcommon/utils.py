@@ -46,12 +46,15 @@ def size_human(size):
         (1<<30L, 'G'), 
         (1<<20L, 'M'), 
         (1<<10L, 'k'),
-        (1, '')]
+        (1, 'bytes')]
 
         for factor, suffix in _abbrevs:
             if size > factor:
                 break
-        return "%.3f%s" % (float(size)/float(factor), suffix)
+        if factor == 1:
+            return "%d %s" % (size, suffix)
+        else:
+            return "%.3f%s" % (float(size)/float(factor), suffix)
 
 
 def restructured_table(column_names, column_ids, object_list, truncate_len=13):
