@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.contrib.auth.models import User
 from django.db.models.fields.related import OneToOneField
+from django.db.models.signals import post_save
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -77,3 +79,7 @@ def inclusive_fields(inmodel, except_fields=[]):
         if field.name in except_fields:
             continue
         yield field
+
+# Signal Registration
+import listeners
+post_save.connect(listeners.add_user_to_registered_group, sender=User)
