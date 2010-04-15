@@ -12,15 +12,15 @@ function watch_handler(data, textStatus)
     if (j.error)
     {
         obj.attr('title', j.error);
-        obj.addClass(j.style);
         obj.removeClass('waiting');
+        obj.addClass(j.style);
     }
     else
     {
         obj.attr('title', j.title);
-        obj.click(click_function(obj, j.url));
-        obj.addClass(j.style);
+        obj.click(click_function(obj, j.url))
         obj.removeClass('waiting');
+        obj.addClass(j.style);
     };
 }
 
@@ -37,7 +37,6 @@ function watch_toggle(obj, url)
     obj.onclick = null;
     o = $(obj);
     o.unbind('click');
-    o.addClass('waiting'); /* will be removed in the callback */
     for (cls in watch_classes)
     {
         if (o.hasClass(watch_classes[cls]))
@@ -45,5 +44,6 @@ function watch_toggle(obj, url)
             o.removeClass(watch_classes[cls]);
         }
     }
+    o.addClass('waiting'); /* will be removed in the callback */
     $.post(url=url, callback=watch_handler, type='json');
 }
