@@ -5,6 +5,31 @@ from translations.lib.types import (TransManagerMixin, TransManagerError)
 from txcommon.commands import (run_command, CommandError)
 from txcommon.log import logger
 
+# Reusable regex for languages, to be inserted in the re list elements.
+# We are excluding the match 'po' in order to be more flexible with
+# the matching below (thanks to #regex folks Accolate/ackana)
+LANG_RE = r"(?P<lang>\b(?!po\b)[-_@\w]+)"
+FBASE_RE = r"(?P<filebase>[^/]+)" # No slashes or dots.
+# List of regex to match. These should include a %(lang)s where the
+# language locale should appear.
+RE_LIST = (
+    #^el.po Notice the ^, only matching in beginning.
+    r"^%(lang)s\.po$",
+    #^po/el.po: Notice the ^, only matching in beginning.
+    r"^po/%(lang)s\.po$",
+    #.../po/el.po: Too generic to avoid the po/ prefix.
+    r".+/po/%(lang)s\.po$",
+    #.../el/LC_MESSAGES/foo.po
+    r".+/%(lang)s/LC_MESSAGES/%(fbase)s\.po$",
+    #.../po/el/foo.po
+    r".+/%(lang)s/%(fbase)s\.po$",
+    #.../po/foo.el.po
+    r".+/%(fbase)s\.%(lang)s\.po$",
+)
+# Inject the language regex into the list elements
+RE_LIST = [re.compile(r % {'lang': LANG_RE, 'fbase': FBASE_RE})
+                      for r in RE_LIST]
+
 def run_msgfmt_check(po_contents, with_exceptions=True):
     """
     Run a `msgfmt -c` on a file (file object).
@@ -66,12 +91,16 @@ class POTManager(TransManagerMixin):
         self.msgmerge_path = os.path.join(settings.MSGMERGE_DIR, full_name)
 
     def guess_language(self, filename):
-        """Guess a language from the filename."""
-        if 'LC_MESSAGES' in filename:
-            fp = filename.split('LC_MESSAGES')
-            return os.path.basename(fp[0][:-1:])
-        else:
-            return os.path.basename(filename[:-3:])
+        """Guess a language from the filename.
+        
+        A number of regexxes will be applied, and the first one which matches
+        is the winner.
+        """
+
+        for regex in RE_LIST:
+            m = regex.match(filename)
+            if m:
+                return m.group('lang')
 
     def guess_po_dir(self):
         """Guess the po/ diretory to run intltool."""
@@ -200,7 +229,9 @@ class POTManager(TransManagerMixin):
         # if the component has more that one POT file
         if len(source_files) > 1:
             for source in source_files:
-                sb = os.path.basename(source)[:-1] # *.po instead *.pot
+                sb = os.path.basename(source)
+                if sb.endswith('.pot'):
+                    sb = sb[:-1]
                 pb = source.split(sb)[0]
                 if pb==fp or sb==fb:
                     return source
