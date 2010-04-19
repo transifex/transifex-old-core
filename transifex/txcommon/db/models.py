@@ -6,6 +6,7 @@ from django.db import models
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from south.modelsinspector import add_introspection_rules
 
 
 class IntegerTupleField(models.CharField):
@@ -58,3 +59,19 @@ class IntegerTupleField(models.CharField):
     
     def value_to_string(self, obj):
         return self.get_db_prep_value(obj)
+
+
+# South Introspection Extending for Custom fields
+# Reference: http://south.aeracode.org/docs/customfields.html#extending-introspection
+rules = [
+    (
+        [IntegerTupleField],
+        [],
+        {
+            "blank": ["blank", {"default": True}],
+            "null": ["null", {"default": True}],
+            "max_length": ["max_length", {"default": 64}],
+        },
+    ),
+]
+add_introspection_rules(rules, ["^txcommon\.db\.models\.IntegerTupleField",])
