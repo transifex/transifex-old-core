@@ -59,7 +59,8 @@ class Command(LabelCommand):
         import_lang(verbose=verbose)
 
 def export_lang(filename=None, verbose=False):
-    """Export the already existing languages
+    """
+    Export the already existing languages
 
     Just like the dumpdata does but just for a specific model it serializes the
     models contents and depending on the filename it either writes to it or to
@@ -68,8 +69,13 @@ def export_lang(filename=None, verbose=False):
     data = serializers.serialize("json", Language.objects.all().order_by('id'),
         indent=2)
     if filename:
-        with open(filename, 'w') as storefile:
+        try:
+            storefile = open(filename, 'w')
             storefile.write(data)
+        except:
+            pass
+        finally:
+            storefile.close()            
     else:
         print data
 
