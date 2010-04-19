@@ -4,6 +4,7 @@ String Level models.
 """
 import datetime, hashlib, sys
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -157,6 +158,28 @@ class TResource(models.Model):
         return load_translation_file(path_to_file, self, tlanguage,
                                      self.source_language, format)
 
+    def translated_strings(self, language):
+        """
+        Return the QuerySet of source strings, translated in this language.
+        """
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceString.objects.filter(
+                    tresource=self, 
+                    position__isnull=False,
+                    translationstring__language=target_language)
+
+    def untranslated_strings(self, language):
+        """
+        Return the QuerySet of source strings which are not yet translated in
+        the specific language.
+        """
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceString.objects.filter(
+                    tresource=self, 
+                    position__isnull=False,).exclude(
+                            translationstring__language=target_language)
+
+
 class SourceString(models.Model):
     """
     A representation of a source string which is translated in many languages.
@@ -275,6 +298,9 @@ class TranslationString(models.Model):
     language = models.ForeignKey(Language,
         verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
+#    user = models.ForeignKey(User,
+#        verbose_name=_('Committer'), blank=False, null=True,
+#        help_text=_("The user who commited the specific translation."))
 
     #TODO: Managers
     objects = SearchStringManager()
