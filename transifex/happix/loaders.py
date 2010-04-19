@@ -54,6 +54,8 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
     if not source_language:
         source_language = Language.objects.by_code_or_alias('en')
 
+    pofiles = []
+    source_file_list = []
     if os.path.isdir(directory_path):
         if not directory_path.endswith(os.sep):
             directory_path += os.sep
