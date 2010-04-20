@@ -282,6 +282,12 @@ def load_gettext_po(path_to_file, tresource, target_language,
         # If the string is empty then continue to the next iteration
         if not entry.msgstr:
             continue
+
+        # If we have a fuzzy translation we put it in suggestions
+        if 'fuzzy' in entry.flags:
+            ts, created = TranslationSuggestion.objects.get_or_create(
+                    source_string=source_string, string=entry.msgstr,
+                    language=target_language,)
         else:
             # WARNING!!! If there is already the relation, then update only the string.
             # This means that we override the OLD STRING and we DONT KEEP HISTORY

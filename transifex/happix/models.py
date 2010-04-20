@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from languages.models import Language
 from projects.models import Project
-
+from txcommon.log import logger
 
 # State Codes for translations
 TRANSLATION_STATE_CHOICES = (
@@ -154,9 +154,12 @@ class TResource(models.Model):
         """
         # To avoid circular referrencing
         from happix.loaders import load_translation_file
-        tlanguage = Language.objects.by_code_or_alias(target_language)
-        return load_translation_file(path_to_file, self, tlanguage,
-                                     self.source_language, format)
+        try:
+            tlanguage = Language.objects.by_code_or_alias(target_language)
+            return load_translation_file(path_to_file, self, tlanguage,
+                                         self.source_language, format)
+        except Language.DoesNotExist:
+            logger.warning("No Language exists with code or alias %s" % (target_language))
 
     def translated_strings(self, language):
         """
@@ -298,19 +301,18 @@ class TranslationString(models.Model):
     language = models.ForeignKey(Language,
         verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
-#    user = models.ForeignKey(User,
-#        verbose_name=_('Committer'), blank=False, null=True,
-#        help_text=_("The user who commited the specific translation."))
+    user = models.ForeignKey(User,
+        verbose_name=_('Committer'), blank=False, null=True,
+        help_text=_("The user who committed the specific translation."))
 
     #TODO: Managers
     objects = SearchStringManager()
-#    factory = SourceStringFactory()
 
     def __unicode__(self):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'source_string', 'language'),)
+        unique_together = (('source_string', 'string', 'language'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
@@ -357,8 +359,64 @@ class PluralTranslationString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'source_string', 'language', 'index'),)
+        unique_together = (('source_string', 'string', 'language', 'index'),)
         verbose_name = _('plural translation string')
         verbose_name_plural = _('plural translation strings')
         ordering  = ['source_string', 'index']
+        get_latest_by = 'created'
+
+
+class TranslationSuggestion(models.Model):
+    """
+    A suggestion for the translation of a specific source string in a language.
+
+    Suggestions are used as hints to the committers of the original translations.
+    A fuzzy translation string is also put here as a suggestion. Suggestions
+    can also be used (if it is chosen) to give non-team members the chance
+    to suggest a translation on a source string, permitting anonymous or
+    arbitrary logged in user translation.
+    Suggestions have a score which can be increased or decreased by users,
+    indicating how good is the translation of the source string.
+    The best translation could be automatically chosen as a live 
+    TranslationString by using a heuristic.
+    """
+
+    string = models.CharField(_('String'), max_length=255,
+        blank=False, null=False,
+        help_text=_("The actual string content of translation."))
+    score = models.FloatField(_('Score'), blank=True, null=True, default=0,
+        help_text=_("A value which indicates the relevance of this translation."))
+    live = models.BooleanField(_('Live'), default=False, editable=False)
+
+    # Timestamps
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_update = models.DateTimeField(auto_now=True, editable=False)
+
+    # Foreign Keys
+    # A source string must always belong to a tresource
+    source_string = models.ForeignKey(SourceString,
+        verbose_name=_('Source String'),
+        blank=False, null=False,
+        help_text=_("The source string which is being translated by this"
+                    "suggestion instance."))
+    language = models.ForeignKey(Language,
+        verbose_name=_('Target Language'),blank=False, null=True,
+        help_text=_("The language in which this translation string belongs to."))
+    user = models.ForeignKey(User,
+        verbose_name=_('Committer'), blank=False, null=True,
+        help_text=_("The user who committed the specific suggestion."))
+
+    #TODO: Managers
+
+    def __unicode__(self):
+        return self.string
+
+    class Meta:
+        # Only one suggestion can be committed by each user for a source_string 
+        # in a specific language!
+        unique_together = (('source_string', 'string', 'language'),)
+        verbose_name = _('translation suggestion')
+        verbose_name_plural = _('translation suggestions')
+        ordering  = ['string',]
+        order_with_respect_to = 'source_string'
         get_latest_by = 'created'
