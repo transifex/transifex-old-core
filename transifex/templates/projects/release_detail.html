@@ -11,6 +11,15 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
   <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   {% include "translations/stats_table_filter_header.html" %}
+
+  <script type="text/javascript">
+    $(function(){
+        // Toogle to components list
+        $("#component-list-toggler").click(function () {
+            $("#component-list").slideToggle("slow");
+        });
+    });
+  </script>
 {% endblock %}
 
 {% block body_class %}{{ block.super }} release_detail{% endblock %}
@@ -71,7 +80,20 @@
     <tr class="separator"></tr>
     <tr>
       <th class="component i16">{% trans "Components:" %}</th>
-      <td><ul class="simple links">{% for comp in release.components.all %}<li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>{% endfor %}</ul></td>
+      <td>
+        {% with release.components.all|dictsort:"full_name" as component_list %}
+        {% with component_list|length as components_number %}
+        <span id="component-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the component list" %}">
+        {% blocktrans %}This release has {{ components_number }} components.{% endblocktrans %}
+        </span>
+        <ul id="component-list" class="simple links" style="display:none;">
+          {% for comp in component_list %}
+            <li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endwith %}
+        {% endwith %}
+      </td>
     </tr>
   </table>
 </div>
