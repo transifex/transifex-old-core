@@ -9,6 +9,7 @@ from django.conf import settings
 from vcs.lib import RepoError
 from codebases.lib import BrowserMixin, BrowserError
 from txcommon.log import logger
+from txcommon.models import Profile
 
 REPO_PATH = settings.REPO_PATHS['svn']
 SVN_CREDENTIALS = getattr(settings, 'SVN_CREDENTIALS', {})
@@ -234,6 +235,10 @@ class SvnBrowser(BrowserMixin):
         svn ci -m <msg> <filename>
         svn update
         """
+        # Get User object if parameter 'user' is instance of Profile
+        if isinstance(user, Profile):
+                user = user.user
+
         # Save contents
         for fieldname, uploadedfile in files.iteritems():
             self.save_file_contents(uploadedfile.targetfile,
@@ -248,9 +253,7 @@ class SvnBrowser(BrowserMixin):
             if not self.client.status(filename)[0]['is_versioned']:
                 self.client.add(filename)
 
-        # Get username from User or Profile, depending on the type of instance 
-        # that the parameter 'user' is.
-        username = getattr(user, 'username', user.user.username)
+        username = user.username
 
         try:
             # svn ci files
