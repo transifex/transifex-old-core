@@ -699,8 +699,9 @@ msgid "Hidden"
 msgstr "Verborgen"
 
 #: projects/models.py:103 projects/models.py:223 releases/models.py:42
+#, fuzzy
 msgid "Hide this object from the list view?"
-msgstr ""
+msgstr "Dit object verbergen van de overzichtslijst?"
 
 #: projects/models.py:104 projects/models.py:224
 #: projects/migrations/0001_initial.py:24
@@ -708,11 +709,11 @@ msgstr ""
 #: txcollections/migrations/0001_initial.py:17
 #: txcollections/migrations/0001_initial.py:38
 msgid "Enabled"
-msgstr ""
+msgstr "Geactiveerd"
 
 #: projects/models.py:105 projects/models.py:225 releases/models.py:44
 msgid "Enable this object or disable its use?"
-msgstr ""
+msgstr "Dit object activeren of deactiveren?"
 
 #: projects/models.py:109 projects/migrations/0001_initial.py:23
 msgid "Tags"
@@ -720,7 +721,7 @@ msgstr "Tags"
 
 #: projects/models.py:112
 msgid "Maintainers"
-msgstr ""
+msgstr "Onderhouders"
 
 #: projects/models.py:116 projects/models.py:234 projects/models.py:485
 #: projects/migrations/0001_initial.py:22
@@ -763,7 +764,7 @@ msgstr "I18n type"
 #: projects/models.py:211
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
-msgstr ""
+msgstr "Het soort ondersteuning van i18n van de broncode (%s)"
 
 #: projects/models.py:213 projects/migrations/0001_initial.py:43
 msgid "File filter"
@@ -775,7 +776,7 @@ msgstr ""
 
 #: projects/models.py:218
 msgid "Does this module repository allow write access?"
-msgstr ""
+msgstr "Laat deze module repository schrijftoegang toe?"
 
 #: projects/models.py:228 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
@@ -831,20 +832,20 @@ msgstr "Wanneer zal deze release beschikbaar zijn."
 
 #: projects/models.py:471 releases/models.py:33
 msgid "String freeze date"
-msgstr ""
+msgstr "Datum waarop strings worden bevroren."
 
 #: projects/models.py:473
 msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
-msgstr ""
+msgstr "De datum waarop vertaalbare strings bevroren worden (strings kunnen niet meer worden toegevoegd of veranderd als dat de vertalingen beïnvloedt)"
 
 #: projects/models.py:475 releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
-msgstr ""
+msgstr "Datum waarop ontwikkeling wordt bevroren."
 
 #: projects/models.py:477 releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
-msgstr ""
+msgstr "De laatste datum waarop ontwikkelaars packages uit deze release kunnen bouwen. Vertalingen ingezonden na deze datum zullen niet worden opgenomen in de gereleasede versie."
 
 #: projects/models.py:492
 msgid "Components"
@@ -906,43 +907,44 @@ msgstr "Totaal:"
 #: projects/views/component.py:239 projects/views/project.py:138
 #, python-format
 msgid "The %s was deleted."
-msgstr ""
+msgstr "De %s  is verwijderd."
 
 #: projects/views/component.py:274
 msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
-msgstr ""
+msgstr "Het bestandsfilter van deze intltool POT-gebaseerde component lijkt het POTFILES.in bestand niet toe te staan. Repareer dit aub."
 
 #: projects/views/component.py:281
 msgid "There is no 'pot' directory named in the set of files of this Publican like component. Maybe its file filter is not allowing access to it."
-msgstr ""
+msgstr "Er wordt geen 'pot' map genoemd in de verzameling bestanden van dit Publican-achtige component. Mogelijk staat het bestandsfilter geen toegang ernaar toe."
 
 #: projects/views/component.py:289
 msgid "This component is not configured for statistics calculation."
-msgstr ""
+msgstr "Deze component is niet geconfigureerd voor de berekening van statistieken."
 
 #: projects/views/component.py:372
 msgid "This component does  not allow write access."
-msgstr ""
+msgstr "Deze component staat geen schrijf-toegang toe."
 
 #: projects/views/component.py:380
 msgid "Please select a file from your system to be uploaded."
-msgstr ""
+msgstr "Kies een bestand om te uploaden vanaf uw systeem."
 
 #: projects/views/component.py:388
 msgid "Please enter a target to upload the file."
-msgstr ""
+msgstr "Voer een doel in om een bestand te uploaden."
 
 #: projects/views/component.py:393
+#, fuzzy
 msgid "Please enter only ONE target to upload the file."
-msgstr ""
+msgstr "Voer aub slechts één doel in om het bestand te uploaden."
 
 #: projects/views/component.py:404
 msgid "The target file does not match the component file filter"
-msgstr ""
+msgstr "Het doelbestand komt niet overeen met het bestandsfilter van de component."
 
 #: projects/views/component.py:412
 msgid "Enter a commit message"
-msgstr ""
+msgstr "Voer een commit-bericht in."
 
 #: projects/views/component.py:453
 #, python-format
@@ -952,7 +954,7 @@ msgstr ""
 #: projects/views/component.py:513
 #, python-format
 msgid "File submitted successfully: %s"
-msgstr ""
+msgstr "Bestand succesvol gesubmit: %s"
 
 #: projects/views/component.py:533
 msgid "Your file does not pass the correctness checks (msgfmt -c). Your file has been e-mailed to you to avoid losing any work."
@@ -968,7 +970,7 @@ msgstr ""
 
 #: projects/views/component.py:552 projects/views/component.py:585
 msgid "Sorry, but you need to send a POST request."
-msgstr ""
+msgstr "Sorry, maar je moet een POST request versturen."
 
 #: projects/views/component.py:574
 msgid "Lock removed."
@@ -1001,60 +1003,60 @@ msgstr ""
 #: projects/views/release.py:94
 #, python-format
 msgid "%s was deleted."
-msgstr ""
+msgstr "%s is verwijderd."
 
 #: projects/views/review.py:66
 msgid "Request closed as Rejected."
-msgstr ""
+msgstr "Verzoek gesloten als Verworpen."
 
 #: projects/views/review.py:72
 msgid "Request reopened."
-msgstr ""
+msgstr "Verzoek heropend."
 
 #: projects/views/team.py:168
 #, python-format
 msgid "The '%s' team was deleted."
-msgstr ""
+msgstr "Het '%s' team is verwijderd."
 
 #: projects/views/team.py:205
 #, python-format
 msgid "You are in the '%s' team already."
-msgstr ""
+msgstr "Je bent al lid van het '%s' team."
 
 #: projects/views/team.py:210
 #, python-format
 msgid "You have added a request for joining the '%s' team."
-msgstr ""
+msgstr "Je hebt een verzoek toegevoegd om lid te worden van het '%s' team."
 
 #: projects/views/team.py:233
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
-msgstr ""
+msgstr "Je hebt al een openstaand verzoek om lid te worden van het '%s' team."
 
 #: projects/views/team.py:260
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
-msgstr ""
+msgstr "Gebruiker '%(user)s' is al lid van het '%(team)s' team."
 
 #: projects/views/team.py:267
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
-msgstr ""
+msgstr "Je hebt gebruiker '%(user)s'  lid gemaakt van het '%(team)s' team."
 
 #: projects/views/team.py:314
 #, python-format
 msgid "You have denied the request of the user '%(user)s' to join the '%(team)s' team."
-msgstr ""
+msgstr "Je hebt het verzoek van '%(user)s' om lid te worden van het '%(team)s' team afgewezen."
 
 #: projects/views/team.py:357
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
-msgstr ""
+msgstr "Je hebt je verzoek om lid te worden van het '%s' team ingetrokken."
 
 #: projects/views/team.py:398
 #, python-format
 msgid "You have left the '%s' team."
-msgstr ""
+msgstr "Je hebt het '%s' team verlaten."
 
 #: projects/views/team.py:419
 #, python-format
@@ -1117,11 +1119,11 @@ msgstr ""
 
 #: reviews/forms.py:9
 msgid "Write a short blurb for your review request."
-msgstr ""
+msgstr "Schrijf een korte uitleg voor je verzoek tot nakijken."
 
 #: reviews/forms.py:11
 msgid "Select a translation file for review."
-msgstr ""
+msgstr "Kies een vertalingsbestand om na te kijken"
 
 #: reviews/models.py:44
 msgid "Open"
@@ -1133,7 +1135,7 @@ msgstr "Gesloten"
 
 #: reviews/models.py:47
 msgid "Null"
-msgstr ""
+msgstr "Nul"
 
 #: reviews/models.py:48
 msgid "Accepted"
@@ -1153,15 +1155,15 @@ msgstr ""
 
 #: reviews/models.py:58
 msgid "Date and time of creation"
-msgstr ""
+msgstr "Datum en tijd waarop aangemaakt"
 
 #: reviews/models.py:60
 msgid "Date and time of last update"
-msgstr ""
+msgstr "Datum en tijd van laatste wijziging"
 
 #: reviews/models.py:63
 msgid "The review file name"
-msgstr ""
+msgstr "Naam van het na te kijken bestand"
 
 #: reviews/models.py:65
 msgid "The path of the target file which will be used on submission"
@@ -1173,19 +1175,19 @@ msgstr "Component"
 
 #: reviews/models.py:87
 msgid "Review Request"
-msgstr ""
+msgstr "Verzoek tot nakijken"
 
 #: reviews/models.py:88
 msgid "Review Requests"
-msgstr ""
+msgstr "Verzoeken tot nakijken"
 
 #: reviews/models.py:89
 msgid "-created_on"
-msgstr ""
+msgstr "-gemaakt_op"
 
 #: reviews/models.py:90
 msgid "created_on"
-msgstr ""
+msgstr "gemaakt_op"
 
 #: reviews/views.py:33
 msgid "You can upload a file for review only if it's related to an existing language."
@@ -1404,11 +1406,11 @@ msgstr "Over"
 
 #: templates/base-sample.html:114
 msgid "Drops us a line"
-msgstr ""
+msgstr "Stuur ons een kattebelletje"
 
 #: templates/base-sample.html:114
 msgid "Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #: templates/base-sample.html:116
 msgid "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community\">Transifex</a>, the Open Translation Platform"
@@ -1416,7 +1418,7 @@ msgstr ""
 
 #: templates/index.html:24
 msgid "Transifex is a service aimed at helping translators keep track of their favourite translation projects."
-msgstr ""
+msgstr "Transifex is een dienst die vertalers wil helpen hun favoriete vertaalprojecten te volgen."
 
 #: templates/index.html:28
 #, python-format
@@ -1458,11 +1460,11 @@ msgstr ""
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
-msgstr ""
+msgstr "Vind projecten op naam, beschrijving, etc."
 
 #: templates/timeline.html:11
 msgid "Filter results"
-msgstr ""
+msgstr "Filterresultaten"
 
 #: templates/timeline.html:17
 msgid "Go"
@@ -1505,23 +1507,23 @@ msgstr "Laat ons weten wat je denkt!"
 
 #: templates/contact_form/contact_form.html:10
 msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
-msgstr ""
+msgstr "We willen deze webdienst zo bruikbaar als mogelijk maken. Als je enige feedback wilt geven, doen dat dan aub!"
 
 #: templates/contact_form/contact_form.html:22
 msgid "Send feedback"
-msgstr ""
+msgstr "Stuur feedback"
 
 #: templates/contact_form/contact_form_sent.html:4
 msgid "Thanks for the feedback!"
-msgstr ""
+msgstr "Bedankt voor de feedback!"
 
 #: templates/contact_form/contact_form_sent.html:7
 msgid "Thanks!"
-msgstr ""
+msgstr "Dank je!"
 
 #: templates/contact_form/contact_form_sent.html:11
 msgid "Thank you for your feedback."
-msgstr ""
+msgstr "Bedankt voor je feedback."
 
 #: templates/languages/language_detail.html:17
 #, python-format
@@ -1535,45 +1537,45 @@ msgstr ""
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
-msgstr ""
+msgstr "Talen op Transifex"
 
 #: templates/languages/language_list.html:28
 msgid "No languages registered yet. :-("
-msgstr ""
+msgstr "Nog geen talen geregistreerd. :-("
 
 #: templates/languages/language_list.html:35
 msgid "Couldn't find your language? Please use the feedback form and let us know!"
-msgstr ""
+msgstr "Kon je je taal niet vinden? Laat het ons weten via het feedbackformulier!"
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 #: templates/notification/notices.html:8
 msgid "Notifications"
-msgstr ""
+msgstr "Meldingen"
 
 #: templates/notification/notices.html:32
 msgid "Received Notifications"
-msgstr ""
+msgstr "Ontvangen Meldingen"
 
 #: templates/notification/notices.html:43
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: templates/notification/notices.html:72
 msgid "Mark all unseen notices seen"
-msgstr ""
+msgstr "Markeer alle ongeziene meldingen als gezien"
 
 #: templates/notification/notices.html:79
 msgid "No notices."
-msgstr ""
+msgstr "Geen meldingen."
 
 #: templates/notification/notices.html:83
 #: templates/notification/notices.html:85
 msgid "Change your notification settings"
-msgstr ""
+msgstr "Verander je instellingen voor meldingen."
 
 #: templates/notification/notices.html:83
 msgid "Notification settings"
-msgstr ""
+msgstr "Instellingen voor meldingen"
 
 #: templates/notification/notices.html:88
 msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you in the list below and choose which events you would like to be notified by email."
@@ -1581,39 +1583,40 @@ msgstr ""
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
-msgstr ""
+msgstr "hoofdemail"
 
 #: templates/notification/notices.html:92
+#, fuzzy
 msgid "change under"
-msgstr ""
+msgstr "verander onder"
 
 #: templates/notification/notices.html:92
 #: templates/notification/notices.html:96
 msgid "Account"
-msgstr ""
+msgstr "Account"
 
 #: templates/notification/notices.html:95
 #: templates/projects/component_detail.html:121
 msgid "Note"
-msgstr ""
+msgstr "Noot"
 
 #: templates/notification/notices.html:96
 msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
-msgstr ""
+msgstr "Je hebt geen geverifieerd e-mailadres waar meldingen naar toe gestuurd kunnen worden. Je kunt er een toevoegen door te gaan naar"
 
 #: templates/notification/notices.html:104
 msgid "Notification Type"
-msgstr ""
+msgstr "Soort melding"
 
 #: templates/notification/notices.html:123
 #: templates/userprofile/account/email_validation.html:31
 #: templates/userprofile/account/password_change.html:29
 msgid "Change"
-msgstr ""
+msgstr "Verander"
 
 #: templates/notification/single.html:5 templates/notification/single.html:8
 msgid "Notice"
-msgstr ""
+msgstr "Melding"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
@@ -1778,7 +1781,7 @@ msgstr ""
 #: templates/projects/release_confirm_delete.html:24
 #: templates/teams/team_confirm_delete.html:19
 msgid "Yes, I'm sure!"
-msgstr ""
+msgstr "Ja, ik weet het zeker!"
 
 #: templates/projects/component_detail.html:30
 msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
@@ -1797,15 +1800,15 @@ msgstr ""
 #: templates/projects/release_detail.html:44
 #: templates/teams/team_detail.html:25
 msgid "Edit"
-msgstr ""
+msgstr "Wijzig"
 
 #: templates/projects/component_detail.html:84
 msgid "Source details"
-msgstr ""
+msgstr "Brondetails"
 
 #: templates/projects/component_detail.html:88
 msgid "Repository:"
-msgstr ""
+msgstr "Repository:"
 
 #: templates/projects/component_detail.html:91
 #: templates/projects/component_detail.html:93
@@ -1815,21 +1818,21 @@ msgstr ""
 #: templates/projects/component_detail.html:91
 #: templates/projects/component_detail.html:93
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: templates/projects/component_detail.html:98
 msgid "Branch:"
-msgstr ""
+msgstr "Branch:"
 
 #: templates/projects/component_detail.html:103
 msgid "File filter:"
-msgstr ""
+msgstr "Bestandsfilter:"
 
 #: templates/projects/component_detail.html:109
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
-msgstr[1] "Lanzamientos:"
+msgstr[0] "Release:"
+msgstr[1] "Releases:"
 
 #: templates/projects/component_detail.html:117
 msgid "Allows submissions:"
@@ -1837,19 +1840,20 @@ msgstr ""
 
 #: templates/projects/component_detail.html:131
 msgid "Translation files"
-msgstr ""
+msgstr "Vertaalbestanden"
 
 #: templates/projects/component_detail.html:136
 msgid "Source file:"
-msgstr ""
+msgstr "Bronbestand:"
 
 #: templates/projects/component_detail.html:143
 msgid "Statistics last updated:"
-msgstr ""
+msgstr "Laatste verversing van de statistieken:"
 
 #: templates/projects/component_detail.html:145
+#, fuzzy
 msgid "ago"
-msgstr ""
+msgstr "terug"
 
 #: templates/projects/component_detail.html:146
 msgid "Component not yet pulled from source repository."
@@ -1881,11 +1885,12 @@ msgstr ""
 
 #: templates/projects/component_detail.html:164
 msgid "Teams:"
-msgstr ""
+msgstr "Teams:"
 
 #: templates/projects/component_detail.html:166
+#, fuzzy
 msgid "See the translation teams."
-msgstr ""
+msgstr "Zie de vertaalteams."
 
 #: templates/projects/component_detail.html:190
 msgid "Translation files reviews"
@@ -1907,16 +1912,16 @@ msgstr ""
 #: templates/projects/project_detail.html:103
 #: templates/teams/team_detail.html:125
 msgid "History"
-msgstr ""
+msgstr "Geschiedenis"
 
 #: templates/projects/component_detail.html:220
 msgid "Delete component"
-msgstr ""
+msgstr "Verwijder component"
 
 #: templates/projects/component_form.html:6
 #: templates/projects/component_form.html:11
 msgid "Add a component"
-msgstr ""
+msgstr "Voeg een component toe"
 
 #: templates/projects/component_form.html:7
 #, python-format
@@ -1954,21 +1959,22 @@ msgstr ""
 #: templates/projects/component_list.html:10
 #: templates/projects/release_list.html:8
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
-msgstr[0] ""
-msgstr[1] "Componentes de Proyecto"
+msgstr[0] "Project Component"
+msgstr[1] "Project Componenten"
 
 #: templates/projects/component_list.html:26
 msgid "edit"
-msgstr ""
+msgstr "wijzig"
 
 #: templates/projects/component_list.html:29
+#, fuzzy
 msgid "del"
-msgstr ""
+msgstr "verwijder"
 
 #: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
@@ -1976,7 +1982,7 @@ msgstr ""
 
 #: templates/projects/component_list.html:47
 msgid "Add one!"
-msgstr ""
+msgstr "Voeg er een toe!"
 
 #: templates/projects/component_list.html:53
 msgid ""
@@ -1990,15 +1996,15 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
-msgstr ""
+msgstr "Voeg een nieuwe vertaling toe"
 
 #: templates/projects/component_submit_new_file.html:9
 msgid "Add a translation file"
-msgstr ""
+msgstr "Voeg een vertaalbestand toe"
 
 #: templates/projects/component_submit_new_file.html:13
 msgid "Local file:"
-msgstr ""
+msgstr "Lokaal bestand:"
 
 #: templates/projects/component_submit_new_file.html:15
 msgid "The translation file to be uploaded for the new language."
@@ -2018,7 +2024,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:32
 msgid "Example: "
-msgstr ""
+msgstr "Voorbeeld:"
 
 #: templates/projects/component_submit_new_file.html:35
 msgid "Commit message:"
@@ -2031,7 +2037,7 @@ msgstr ""
 #: templates/projects/component_submit_new_file.html:43
 #: translations/templates/component_submit.html:13
 msgid "Send"
-msgstr ""
+msgstr "Verstuur"
 
 #: templates/projects/component_submit_new_file.html:45
 #: templates/webtrans/transfile_edit.html:137
@@ -2052,7 +2058,7 @@ msgstr ""
 #: templates/projects/project_confirm_delete.html:8
 #: templates/userprofile/avatar/choose.html:42
 msgid "Delete"
-msgstr ""
+msgstr "Verwijder"
 
 #: templates/projects/project_confirm_delete.html:11
 #, python-format
@@ -2070,7 +2076,7 @@ msgstr ""
 #: templates/projects/project_form_base.html:89
 #: templates/projects/release_detail.html:51
 msgid "Details"
-msgstr ""
+msgstr "Details"
 
 #: templates/projects/project_detail.html:44
 msgid "Watch:"
@@ -2079,7 +2085,7 @@ msgstr ""
 #: templates/projects/project_detail.html:52
 #: templates/projects/release_detail.html:55
 msgid "Homepage:"
-msgstr ""
+msgstr "Homepagina:"
 
 #: templates/projects/project_detail.html:53
 #, python-format
@@ -2103,8 +2109,8 @@ msgstr ""
 #: templates/projects/project_detail.html:73
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
-msgstr[0] ""
-msgstr[1] "Encargados del proyecto"
+msgstr[0] "Onderhouder"
+msgstr[1] "Onderhouders"
 
 #: templates/projects/project_detail.html:87
 msgid "External links:"
