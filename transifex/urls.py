@@ -15,12 +15,16 @@ urlpatterns = patterns('',
     url(r'^search/$', 'txcommon.views.search', name='search'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^contact/', include('contact_form.urls'), name='contact'),
     url(r'^languages/', include('languages.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ajax/', include('ajax_select.urls')),
     url(r'^accounts/timeline/$', 'txcommon.views.user_timeline', name='user_timeline'),
     url(r'^threadedcomments/', include('threadedcomments.urls')),
+)
+
+if settings.ENABLE_CONTACT_FORM:
+    urlpatterns += patterns('',
+        url(r'^contact/', include('contact_form.urls'), name='contact'),
 )
 
 if settings.ENABLE_SIMPLEAUTH:
