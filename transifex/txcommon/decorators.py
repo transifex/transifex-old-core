@@ -126,6 +126,13 @@ def one_perm_required(perms, *model_lookups, **kwargs):
     
     The permissions are checked in the same order as they are put in the tuple 
     and it is allowed to add how many permissions checks as wanted.
+    
+    CAUTION:
+    This decorator implies login_required, since this is checked in the body.
+    The ``allow_anonymous`` keyword allows you to use this decorator also for
+    non-logged-in users. For example, we use it to limit access to the private
+    projects, but at the same time allow anonymous users to see the page if the
+    project is public.
 
     """
     
