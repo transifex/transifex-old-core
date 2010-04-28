@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from polib import unescape
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -15,6 +16,7 @@ from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 from txcommon.formtools.wizards import SessionWizard
 from webtrans.forms import TranslationForm
+from webtrans.signals import webtrans_form_init, webtrans_form_done
 
 def chunks(clist, crange):
     """Yield successive crange-sized chunks from clist."""
@@ -74,6 +76,8 @@ class TransFormWizard(SessionWizard):
         self._storage = request.session.setdefault(self.key, {})
 
         # Initializing TranslationForm vars
+        if getattr(self, 'pofile', None) != pofile:
+            webtrans_form_init.send(None, pofile = pofile, user = request.user)
         self.pofile = pofile
         self.po_entries = self.get_stored_po_entries()
         if not self.po_entries:
@@ -146,6 +150,7 @@ class TransFormWizard(SessionWizard):
             # are pressed
             if 'submit_file' in request.POST or \
                 'submit_for_review' in request.POST:
+                webtrans_form_done.send(None, pofile = self.pofile, user = request.user)
                 return self.done(request)
 
             return self.render(request, self.next_step(request, step))
