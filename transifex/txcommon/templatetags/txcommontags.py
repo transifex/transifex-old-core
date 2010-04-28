@@ -5,7 +5,7 @@ from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext as _
-
+from django.template import Node, NodeList, TemplateSyntaxError
 from actionlog.models import LogEntry
 from projects.models import Project
 import txcommon
@@ -283,3 +283,33 @@ def as_rest_title(value, border=None):
     border - Character to be used in the header bottom-border
     """
     return txcommon.rst.as_title(value, border)
+
+class TooltipNode(Node):
+    def __init__(self, prefix, id, nodelist):
+        self.prefix = prefix
+        self.id = id
+        self.nodelist = nodelist
+
+    def __repr__(self):
+        return "<TooltipNode:%s>" % self.id
+
+    def render(self, context):
+        output = self.nodelist.render(context).replace("\"", "\\\"").replace("\n", "") # We need better escaping ofc!
+        id = self.id.resolve(context)
+        return """<script type=\"text/javascript\">\ntooltip("#%s-%s", "%s");\n</script>""" % (self.prefix, id, output)
+
+def do_tooltip(parser, token):
+    try:
+        bits = token.split_contents()
+        cmd, prefix, id = bits
+        
+    except:
+        raise TemplateSyntaxError("%r expects two arguments constant 'prefix' and variable 'id'" %
+                                  bits[0])
+    nodelist = parser.parse(('endtooltip',))
+    parser.delete_first_token()
+    prefix = prefix[1:-1] # Strip quotes
+    id = parser.compile_filter(id)
+    return TooltipNode(prefix, id, nodelist)
+
+register.tag('tooltip', do_tooltip)
