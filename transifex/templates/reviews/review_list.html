@@ -5,16 +5,16 @@
 {% load threadedcommentstags %}
 
 {% block extra_head %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
-  <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript">
   $(document).ready(function() { 
       $(".tablesorter").tablesorter(); 
   }); 
   </script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/houdini.js"></script>
-  <link media="screen" href="{{ MEDIA_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}js/houdini.js"></script>
+  <link media="screen" href="{{ STATIC_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
 
 {% endblock %}
 
@@ -72,10 +72,10 @@
         <span>{{ review.score }}</span>
         {% if perms.reviews.add_poreviewrequest or perms.reviews.change_poreviewrequest or can_submit_file %}
         <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
-            <input type="image" src="{{ MEDIA_URL }}images/icons/thumb_down.png" name="dislike" value="dislike" style="border:0">
+            <input type="image" src="{{ STATIC_URL }}images/icons/thumb_down.png" name="dislike" value="dislike" style="border:0">
         </form>
         <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
-            <input type="image" src="{{ MEDIA_URL }}images/icons/thumb_up.png" name="like" value="like" style="border:0">
+            <input type="image" src="{{ STATIC_URL }}images/icons/thumb_up.png" name="like" value="like" style="border:0">
         </form>
         {% endif %}
       </td>

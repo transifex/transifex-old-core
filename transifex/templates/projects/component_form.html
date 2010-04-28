@@ -13,9 +13,9 @@
 {% endif %}{% endblock %}
 
 {% block extra_head %}
-  <link type="text/css" href="{{ MEDIA_URL }}css/ui.tabs.css" rel="stylesheet" />
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.core.min.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.tabs.min.js"></script>
+  <link type="text/css" href="{{ STATIC_URL }}css/ui.tabs.css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}js/ui.core.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/ui.tabs.min.js"></script>
 <script type="text/javascript">
 triggers = new Object();
 {% for subform in unit_subforms %}{% for trigger in subform.triggers %}triggers["{{ trigger }}"] = "sub_{{ subform.id }}";

@@ -8,8 +8,8 @@
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed release.project.slug release.slug %}" />
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
-  <link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   {% include "translations/stats_table_filter_header.html" %}
 
   <script type="text/javascript">
@@ -29,7 +29,7 @@
 {% block breadcrumb %}{{ block.super }} &raquo; Release '{{ release.name }}'{% endblock %}
 
 {% block content_sec %}
-  <a class="simlink" href="{% url release_feed release.project.slug release.slug %}" title="Statistics feed for this release"><img border="0" src="{{ MEDIA_URL }}/images/icons/feed.png" /></a>
+  <a class="simlink" href="{% url release_feed release.project.slug release.slug %}" title="Statistics feed for this release"><img border="0" src="{{ STATIC_URL }}/images/icons/feed.png" /></a>
 {% endblock %}
 
 {% block content_main %}

@@ -5,8 +5,8 @@
 {% load txcommontags %}
 
 {% block extra_head %}
-<link media="screen" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="{{ MEDIA_URL }}js/tablesorted.js"></script>
+<link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
 {% endblock %}
 
 {% block title %}{{ block.super }} | {{ request.user }} | {% trans "Timeline" %}{% endblock %}

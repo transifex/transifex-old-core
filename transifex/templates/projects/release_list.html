@@ -3,7 +3,7 @@
 {% url release_create project_slug=project.slug as release_create %}
 <div id="releases" class="releases separate">
   <div class="editlinks">
-    {# <p><a class="simlink" href="{% url release_feed param=release.slug %}" title="Release feed"><img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" /></a></p> #}
+    {# <p><a class="simlink" href="{% url release_feed param=release.slug %}" title="Release feed"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" /></a></p> #}
       {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
         <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
       {% endif %}
