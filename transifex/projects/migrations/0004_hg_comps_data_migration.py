@@ -5,6 +5,9 @@ from django.db import models
 from projects.models import *
 
 class Migration:
+    depends_on = (
+        ('vcs', '0002_svn_data_migration'),
+    )
     
     def forwards(self, orm):
         
