@@ -1423,9 +1423,10 @@ msgid "Project/Component statistics"
 msgstr "Statistiques Projet/Composant"
 
 #: templates/languages/language_release.html:60
-#, fuzzy
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Can we interest you in sending in your work instead?"
-msgstr "Transifex a recherché des projets et des publications contenant des traductions pour cette langue mais n'a pu en trouver. Essayez de soumettre un fichier de traduction pour cette langue puis recommencez la recherche."
+msgstr "Transifex a recherché des projets contenant des traductions pour cette "
+"langue mais n'a pu en trouver. Etes-vous intéressé par soumettre votre "
+"travail à la place ?"
 
 #: templates/languages/language_release.html:61
 #, python-format
@@ -1472,9 +1473,11 @@ msgid "Notification settings"
 msgstr "Paramètres de notification"
 
 #: templates/notification/notices.html:88
-#, fuzzy
 msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you in the list below and choose which events you would like to be notified by email."
-msgstr "Vous pouvez recevoir des notifications dès qu'un évènement se produit sur Transifex. Consultez les notifications disponibles pour vous dans la liste ci-dessous et selectionnez les évènements pour lesquels vous souhaitez être notifié par email."
+msgstr "Vous pouvez recevoir des notifications dès qu'un évènement se produit "
+"sur Transifex. Consultez les notifications disponibles pour vous dans la "
+"liste ci-dessous et selectionnez les évènements pour lesquels vous souhaitez "
+"être notifié par email."
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
@@ -2074,9 +2077,8 @@ msgstr "Demandes en attente :"
 
 #: templates/projects/project_form_permissions.html:82
 #: templates/txpermissions/base_permission_form.html:18
-#, fuzzy
 msgid "Users with access to submit files:"
-msgstr "Demandes d'accès pour soumettre des fichiers"
+msgstr "Utilisateur pouvant soumettre des fichiers"
 
 #: templates/projects/project_latests.html:6
 msgid "Latest Projects"
@@ -2142,11 +2144,11 @@ msgid "Top Translators"
 msgstr "Traducteurs principaux"
 
 #: templates/projects/project_top_translators.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "%(number)s submission"
 msgid_plural "%(number)s submissions"
-msgstr[0] "Autorise les envois"
-msgstr[1] "Autorise les envois"
+msgstr[0] "%(number)s soumission"
+msgstr[1] "%(number)s soumissions"
 
 #: templates/simpleauth/base_profile.html:4
 #: templates/simpleauth/base_profile.html:7
@@ -2214,18 +2216,18 @@ msgstr ""
 "<p>Merci de vous identifier avec votre email, nom d'utilisateur ou en utilisant votre URL OpenID.<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
-#, fuzzy, python-format
+#, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
-msgstr "Dire adieu à <em>%(collection_name)s</em> ?"
+msgstr "Dire adieu à l'équipe <em>%(lang_name)s</em> ?"
 
 #: templates/teams/team_confirm_delete.html:14
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Êtes vous sûr de vouloir supprimer définitivement le composant '%(component_name)s' appartenant à %(project_name)s?\n"
+"  Êtes vous sûr de vouloir supprimer définitivement l'équipe '%(lang_name)s' appartenant à %(project_name)s ?\n"
 
 #: templates/teams/team_detail.html:19
 #, python-format
@@ -2694,7 +2696,7 @@ msgstr "Perdu votre mot de passe?"
 #: templates/userprofile/account/login.html:40
 #: templates/userprofile/profile/overview.html:91
 msgid "Resend validation e-mail"
-msgstr ""
+msgstr "Renvoyer le couriel de validation"
 
 #: templates/userprofile/account/login.html:42
 msgid "Sign up!"
@@ -2879,7 +2881,6 @@ msgid "%(user)s's Dashboard"
 msgstr ""
 
 #: templates/userprofile/profile/location.html:21
-#, fuzzy
 msgid "Define your location"
 msgstr "Définir votre localisation"
 
@@ -2954,7 +2955,7 @@ msgstr "Non renseigné"
 
 #: templates/userprofile/profile/overview.html:87
 msgid "Management:"
-msgstr ""
+msgstr "Gestion :"
 
 #: templates/userprofile/profile/overview.html:90
 msgid "Change your e-mail address"
@@ -2965,7 +2966,6 @@ msgid "Add your e-mail address"
 msgstr "Ajouter votre adresse email"
 
 #: templates/userprofile/profile/overview.html:95
-#, fuzzy
 msgid "Add location"
 msgstr "Ajouter une localité"
 
@@ -2984,7 +2984,7 @@ msgstr "Éditez vos informations personnelles"
 
 #: templates/userprofile/profile/personal.html:29
 msgid "Insert some information about you."
-msgstr ""
+msgstr "Inscriver quelques information sur vous."
 
 #: templates/userprofile/profile/public.html:50
 #, python-format
@@ -3391,7 +3391,7 @@ msgstr "À la recherche de travail ?"
 
 #: txcommon/notifications.py:12
 msgid "New Project Added"
-msgstr ""
+msgstr "Nouveau projet ajouté"
 
 #: txcommon/notifications.py:13
 msgid "when a new project is added"
@@ -3399,7 +3399,7 @@ msgstr ""
 
 #: txcommon/notifications.py:19
 msgid "Project Changed"
-msgstr ""
+msgstr "Projet modifié"
 
 #: txcommon/notifications.py:20
 msgid "when a project is changed"
@@ -3407,7 +3407,7 @@ msgstr ""
 
 #: txcommon/notifications.py:26
 msgid "Project Deleted"
-msgstr ""
+msgstr "Projet supprimé"
 
 #: txcommon/notifications.py:27
 msgid "when a project is deleted"
@@ -3456,7 +3456,7 @@ msgstr ""
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
-msgstr ""
+msgstr "Nouveau composant ajouté"
 
 #: txcommon/notifications.py:74
 msgid "when a new component is added to a project"
@@ -3464,7 +3464,7 @@ msgstr ""
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
-msgstr ""
+msgstr "Composant modifié"
 
 #: txcommon/notifications.py:81
 msgid "when a component of a project is changed"
@@ -3472,7 +3472,7 @@ msgstr ""
 
 #: txcommon/notifications.py:87
 msgid "Component Deleted"
-msgstr ""
+msgstr "Composant supprimé"
 
 #: txcommon/notifications.py:88
 msgid "when a component of a project is deleted"
@@ -3480,7 +3480,7 @@ msgstr ""
 
 #: txcommon/notifications.py:94
 msgid "File Submitted"
-msgstr ""
+msgstr "Fichier envoyé"
 
 #: txcommon/notifications.py:95
 msgid "when a component file of a project is submitted"
@@ -3496,7 +3496,7 @@ msgstr ""
 
 #: txcommon/notifications.py:110
 msgid "Translation Source File (POT) has a Problem"
-msgstr ""
+msgstr "Le fichier source de traduction (POT) a un problème"
 
 #: txcommon/notifications.py:111
 msgid "when the source file (POT) of a component that you are a maintainer has a problem"
@@ -3504,7 +3504,7 @@ msgstr ""
 
 #: txcommon/notifications.py:121
 msgid "New Team Added"
-msgstr ""
+msgstr "Nouvelle équipe ajoutée"
 
 #: txcommon/notifications.py:122
 #, fuzzy
@@ -3688,11 +3688,11 @@ msgstr "Entrez une expression régulière valide."
 
 #: txcommon/validators.py:28
 msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr ""
+msgstr "L'URL racine ne pointe pas vers un fichier .tar.gz ou .tgz"
 
 #: txcommon/validators.py:31
 msgid "The root url must start with http:// or ftp://"
-msgstr ""
+msgstr "L'URL racine doit commencer par http:// or ftp://"
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
@@ -3764,7 +3764,7 @@ msgstr ""
 #: vcs/models.py:58
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr ""
+msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
 #: vcs/models.py:61
 msgid "vcsunit"
@@ -3775,9 +3775,9 @@ msgid "vcsunits"
 msgstr "vcsunits"
 
 #: webtrans/fields.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "The %s fields should be filled."
-msgstr "Le %s à été supprimé."
+msgstr "Le champs %s doit être rempli."
 
 #: webtrans/wizards.py:210
 msgid "Nothing was sent because you haven't changed anything in the translation form."
@@ -3785,11 +3785,11 @@ msgstr ""
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #: webtrans/templates/pagination.html:49
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #~ msgid "Brazilian Portuguese"
 #~ msgstr "Portugais brésilien"
