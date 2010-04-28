@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
 from notification import models as notification
-from threadedcomments.forms import FreeThreadedCommentForm
 
 from languages.models import Language
 from projects.models import Component

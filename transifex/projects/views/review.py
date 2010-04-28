@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 from authority.views import permission_denied
 from notification import models as notification
-from threadedcomments.forms import FreeThreadedCommentForm
+from threadedcomments.forms import ThreadedCommentForm
 
 from actionlog.models import action_logging
 from languages.models import Language
@@ -23,7 +23,7 @@ from projects.models import Component
 from projects.permissions.project import ProjectPermission
 from projects.views.component import component_submit_file
 from reviews.models import POReviewRequest, ReviewLike
-from reviews.forms import (POFileSubmissionForm, AuthenticatedCommentForm)
+from reviews.forms import POFileSubmissionForm
 from teams.models import Team
 from translations.models import POFile
 from txcommon.decorators import one_perm_required_or_403
@@ -77,15 +77,11 @@ def review_modify(request, project_slug, component_slug, id):
         args=[review_request.component.project.slug,
               review_request.component.slug]))
 
+@login_required
 def review_list(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
-                                  project__slug=project_slug)      
-    if request.user.is_authenticated():
-        comment_form = AuthenticatedCommentForm(request.user)
-    else:
-        comment_form = FreeThreadedCommentForm()
+                                  project__slug=project_slug)
     return render_to_response('reviews/review_list.html', {
         'component': component,
-        'comment_form': comment_form,
     }, context_instance=RequestContext(request))
 
