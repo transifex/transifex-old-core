@@ -4,6 +4,7 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load addons %}
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
@@ -121,6 +122,8 @@
 {% endif %}
 {% endwith %}
 </div>
+
+{% hook "team_detail.html" extra_content %}
 
 <h3>{% trans 'History' %}</h3>
 {% load tx_action_log %}

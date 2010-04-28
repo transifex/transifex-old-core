@@ -92,6 +92,8 @@
     </tr>
 {% endcomment %}
   </table>
+  {% hook "project.html" overview_top %}
+
 </div>
 
 {% include "projects/component_list.html" %}
@@ -99,7 +101,6 @@
 {% include "projects/release_list.html" %}
 
 </div>
-
 <h3>{% trans 'History' %}</h3>
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object project %}

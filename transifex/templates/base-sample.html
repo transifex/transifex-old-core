@@ -2,7 +2,7 @@
 {% load txcommontags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
-
+{% load addons %}
 <html lang="en">
 <head>
   <title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
@@ -26,6 +26,7 @@
   {% block extracss %}{% endblock %}
   {% block extrajs %}{% endblock %}
   {% block extra_head %}{% endblock %}
+  {% hook "base.html" head %}
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
@@ -42,19 +43,21 @@
     <div id="header_secnav">
       <!-- <span id="login">-->
           {% if user.is_authenticated %}
-              {% url profile_overview as user_profile %} 
-              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %} |
-              <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform"><input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" /></form>
+              {% hook "transifex_base.html" global-usernav %}
+              <a href="{% url profile_overview %}">{% trans "Account" %}</a>&nbsp; | &nbsp;
+              <form action="{% url logout %}?next={{request.path}}" method="post">
+                  <button type="submit" title="{% trans "Sign out from Transifex" %}">{% trans "Sign out" %}</button>
+              </form>
           {% else %}
               <a href="{% url login %}?next={{request|get_next}}">{% trans "Sign in" %}</a>
               {% url signup as signup_url %}
               {% if signup_url %}
-              | <a href="{{ signup_url }}">{% trans "Register" %}</a>
+              &nbsp; | &nbsp; <a href="{{ signup_url }}">{% trans "Register" %}</a>
               {% endif %}
           {% endif %}
       <!--</span> -->
-    {% url django.views.i18n.set_language as set_language_url %}
-    <form action="{{ set_language_url }}" method="post" class="microform">
+    {% url django.views.i18n.set_language as set_language_url %} &nbsp;
+    <form id="global-language-chooser" class="microform" action="{{ set_language_url }}" method="post">
         <input name="next" type="hidden" value="{{ request.path }}" />
             <select id="language_switch" name="language">
             {% for lang in LANGUAGES %}

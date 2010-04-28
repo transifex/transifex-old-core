@@ -2,8 +2,7 @@
 {% load i18n %}
 {% load permissions %}
 {% load txcommontags %}
-{% load threadedcommentstags %}
-
+{% load addons %}
 {% block extra_head %}
   <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
@@ -104,35 +103,7 @@
   </tbody>
 </table>
 
-{% get_free_threaded_comment_tree for review as comment_tree %}
-{% if comment_tree %}
-<h3>Comments</h3>
-<ol class="comments">
-{% for comment in comment_tree %}
-        <li id="c{{ comment.id }}" style="margin-left: {{ comment.depth }}em;">
-                <p class="title">
-                        <a class="jump" href="#c{{ comment.id }}">#{{ forloop.counter }}</a> ~
-                        <span class="author">{% trans "By" %} <a href="{% url profile_public comment.name %}" title="{% trans "See profile" %}">{{ comment.name }}</a></span>
-                        ~ {{ comment.date_submitted|timesince }}
-                </p>
-                {% auto_transform_markup comment %}
-        </li>
-{% endfor %}
-</ol>
-{% endif %}
-
-{% if perms.reviews.add_poreviewrequest or perms.reviews.change_poreviewrequest or can_submit_file %}
-<h4 style="margin-bottom: 0;">{% trans "Add your comment as" %} <em>{{ request.user }}</em></h4>
-
-<fieldset class="shinyform">
-<form method="POST" action="{% get_free_comment_url review %}">
-    <ol>
-        {{ comment_form.as_ul }}
-        <li><input class="i16 comment" type="submit" value="{% trans "Say it!" %}" /></li>
-    </ol>
-</form>
-</fieldset>
-{% endif %}
+{% hook "review.html" listitem_extra %}
 
 {% endwith %}
 </div>
