@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load watches %}
+{% block extra_details %}
+  {% if request.user.is_authenticated %}
+    {% url notification.views.notices as notices_url %}
+    {% if notices_url %}
+    <tr>
+      <th class="i16 watch">{% trans "Watch:" %}</th>
+      <td>{% watch_toggle project %}</td>
+    </tr>
+    {% endif %}
+  {% endif %}
+{% endblock %}

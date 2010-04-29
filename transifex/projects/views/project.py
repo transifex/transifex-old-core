@@ -16,7 +16,6 @@ from projects.models import Project
 from projects.forms import ProjectAccessControlForm, ProjectForm
 from projects.permissions import *
 from projects import signals
-from repowatch import WatchException
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -178,52 +177,6 @@ def project_delete(request, project_slug):
             'projects/project_confirm_delete.html', {'project': project,},
             context_instance=RequestContext(request))
 
-
-@login_required
-def project_toggle_watch(request, project_slug):
-    """Add/Remove watches on a project for a specific user."""
-    if request.method != 'POST':
-        return json_error(_('Must use POST to activate'))
-
-    if not settings.ENABLE_NOTICES:
-        return json_error(_('Notification is not enabled'))
-
-    project = get_object_or_404(Project, slug=project_slug)
-    url = reverse('project_toggle_watch', args=(project_slug,))
-
-    project_signals = ['project_changed',
-                       'project_deleted',
-                       'project_component_added',
-                       'project_component_changed',
-                       'project_component_deleted']
-    try:
-        result = {
-            'style': 'watch_add',
-            'title': _('Watch this project'),
-            'project': True,
-            'url': url,
-            'error': None,
-        }
-
-        for signal in project_signals:
-            notification.stop_observing(project, request.user, signal)
-
-    except notification.ObservedItem.DoesNotExist:
-        try:
-            result = {
-                'style': 'watch_remove',
-                'title': _('Stop watching this project'),
-                'project': True,
-                'url': url,
-                'error': None,
-            }
-
-            for signal in project_signals:
-                notification.observe(project, request.user, signal, signal)
-
-        except WatchException, e:
-            return json_error(e.message, result)
-    return json_result(result)
 
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)

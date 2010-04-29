@@ -1,18 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django import template
 from translations.models import POFile
 from projects.models import Project
-from repowatch import watch_titles
 
 register = template.Library()
-
-@register.simple_tag
-def watch_add_title():
-    return watch_titles['watch_add_title']
-
-@register.simple_tag
-def watch_remove_title():
-    return watch_titles['watch_remove_title']
 
 @register.inclusion_tag('watch_toggle.html', takes_context=True)
 def watch_toggle(context, obj):

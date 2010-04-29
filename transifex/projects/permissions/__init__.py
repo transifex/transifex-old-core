@@ -19,7 +19,6 @@ pr_project_view_log = (
     ('granular', 'project_perm.maintain'),
 )
 
-
 pr_project_add_perm = (
     ('granular', 'project_perm.maintain'),
     ('general',  'authority.add_permission'),
@@ -74,11 +73,6 @@ pr_component_lock_file = (
     ('general',  'translations.delete_pofilelock'),
 )
 
-pr_component_watch_file = (
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'repowatch.add_watch'),
-    ('general',  'repowatch.delete_watch'),
-)
 
 
 # Release permissions required

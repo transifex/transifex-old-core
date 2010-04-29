@@ -1,22 +1,15 @@
+# -*- coding: utf-8 -*-
 import operator
 import itertools
 
-from django.core.mail import send_mail
-from django.template import loader, Context
-from django.shortcuts import get_object_or_404
-from django.contrib.sites.models import Site
-from django.utils.translation import ugettext as _
 
-from projects import signals
 from txcommon.log import logger
+from txcommon import notifications as txnotification
+from projects.signals import pre_clear_cache, post_comp_prep
+from projects.models import Component
 from translations.models import POFile
 from codebases.lib import BrowserError
-from notification import models as notification
-# Temporary
-from txcommon import notifications as txnotification
-
-class WatchException(StandardError):
-    pass
+from models import Watch
 
 def _notify_watchers(component, files):
     """
@@ -40,9 +33,7 @@ def _findchangesbycomponent(component):
     Looks through the watches for a specific component and
     e-mails the users watching it
     """
-    from repowatch.models import Watch
     watches = Watch.objects.filter(component=component)
-    repochanged = False
     changes = []
     for watch in watches:
         try:
@@ -50,9 +41,7 @@ def _findchangesbycomponent(component):
             logger.debug('Repowatch revision file %s: Old: %s, New: %s' % (
                 watch.path, watch.rev, newrev))
             if newrev != watch.rev:
-                if not watch.path:
-                    repochanged = True
-                else:
+                if watch.path:
                     changes.append((watch.user.all(), watch.path))
                 watch.rev = newrev
                 watch.save()
@@ -64,13 +53,13 @@ def _findchangesbycomponent(component):
             key=operator.itemgetter(0)):
             _notify_watchers(component, [change[1] for change in usergroup[1]])
 
-def _compposthandler(sender, **kwargs):
+def comp_post_handler(sender, **kwargs):
     if 'instance' in kwargs:
         _findchangesbycomponent(kwargs['instance'])
 
-signals.post_comp_prep.connect(_compposthandler)
+def clear_cache_handler(sender, component = None, instance = None, **kwargs):
+    Watch.objects.filter(component=instance or component).delete()
 
-watch_titles = {
-    'watch_add_title': _('Watch it'),
-    'watch_remove_title': _('Stop watching it'),
-}
+def connect():
+    post_comp_prep.connect(comp_post_handler)
+    pre_clear_cache.connect(clear_cache_handler, sender = Component)

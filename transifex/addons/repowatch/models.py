@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
 import traceback
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from projects.models import Component
-from repowatch import WatchException
-from translations.models import POFile
+from errors import WatchException
 from txcommon.db.models import IntegerTupleField
 from txcommon.log import logger
 
@@ -43,7 +43,8 @@ class WatchManager(models.Manager):
         component: projects.models.Component to watch
         path: Path for file to watch, or None for a repo change
         """
-        watch = self.get(user__id__exact=user.id, component=component, path=path)
+        watch = self.get(user__id__exact=user.id, component=component,
+            path=path)
         watch.user.remove(user)
 
     def get_watches(self, user, component):
@@ -64,7 +65,8 @@ class WatchManager(models.Manager):
         path: Path for file to watch, or None for a repo change
         """
         try:
-            watch = self.get(user__id__exact=user.id, component=component, path=path)
+            watch = self.get(user__id__exact=user.id, component=component,
+                path=path)
             try:
                 rev = component.get_rev(path)
             except ValueError:

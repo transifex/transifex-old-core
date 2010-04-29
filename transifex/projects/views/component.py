@@ -12,7 +12,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-
+from django_addons.errors import AddonError
 from actionlog.models import action_logging
 from authority.views import permission_denied
 from codebases.forms import UnitForm
@@ -26,8 +26,6 @@ from projects.signals import (submission_error,
     sig_refresh_cache,
     sig_clear_cache,
     sig_submit_file)
-from repowatch import WatchException, watch_titles
-from repowatch.models import Watch
 from submissions.utils import (submit_by_email, msgfmt_error_send_mail)
 from reviews.views import review_add
 from teams.models import Team
@@ -599,62 +597,3 @@ def component_toggle_lock_file(request, project_slug, component_slug,
     except:
         return HttpResponseRedirect(reverse('projects.views.component.component_detail',
                                         args=(project_slug, component_slug,)))
-
-
-@login_required
-def component_toggle_watch(request, project_slug, component_slug, filename):
-    """Add/Remove a watch for a path on a component for a specific user."""
-
-    if request.method != 'POST':
-        return json_error(_('Must use POST to activate'))
-
-    if not settings.ENABLE_NOTICES:
-        return json_error(_('Notification is not enabled'))
-
-    component = get_object_or_404(Component, slug=component_slug,
-                                project__slug=project_slug)
-    ctype = ContentType.objects.get_for_model(Component)
-
-    pofile = get_object_or_404(POFile, object_id=component.pk, 
-                               content_type=ctype, filename=filename)
-
-    # FIXME: It's kinda redundancy, only a decorator should be enough
-    # Also it's only accepting granular permissions
-    check = ProjectPermission(request.user)
-    if not check.submit_file(pofile) and not \
-        request.user.has_perm('repowatch.add_watch') and not \
-        request.user.has_perm('repowatch.delete_watch'):
-        return permission_denied(request)
-
-    url = reverse('component_toggle_watch', args=(project_slug, component_slug, 
-                                                  filename))
-    try:
-        watch = Watch.objects.get(path=filename, component=component, 
-                                  user__id__exact=request.user.id)
-        watch.user.remove(request.user)
-        result = {
-            'style': 'watch_add',
-            'title': watch_titles['watch_add_title'],
-            'id': pofile.id,
-            'url': url,
-            'error': None,
-        }
-        notification.stop_observing(pofile, request.user, 
-                            signal='project_component_file_changed')
-    except Watch.DoesNotExist:
-        try:
-            Watch.objects.add_watch(request.user, component, filename)
-            result = {
-                'style': 'watch_remove',
-                'title': watch_titles['watch_remove_title'],
-                'id': pofile.id,
-                'url': url,
-                'error': None,
-            }
-            notification.observe(pofile, request.user,
-                                 'project_component_file_changed',
-                                 signal='project_component_file_changed')
-        except WatchException, e:
-            return json_error(e.message, result)
-    return json_result(result)
-

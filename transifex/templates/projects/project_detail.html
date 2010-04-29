@@ -38,16 +38,6 @@
     <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
   {% endif %}
   <table class="definition">
-    {% if request.user.is_authenticated%}
-      {% url notification.views.notices as notices_url %}
-      {% if notices_url %}
-   <tr>
-      <th class="i16 watch">{% trans "Watch:" %}</th>
-      <td>
-        {% watch_toggle project %}
-    </td>
-      {% endif %}
-    {% endif %}
     {% if project.homepage %}
     <tr>
       <th class="homepage i16">{% trans "Homepage:" %}</th>

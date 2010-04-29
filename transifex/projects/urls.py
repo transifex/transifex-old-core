@@ -108,20 +108,16 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/$',
         view = project_detail,
         name = 'project_detail'),
-    url(
-        regex = '^p/(?P<project_slug>[-\w]+)/toggle_watch/$',
-        view = project_toggle_watch,
-        name = 'project_toggle_watch',),
 )
       
 
 urlpatterns += patterns('django.views.generic',
-    url (
+    url(
         regex = '^$',
         view = 'list_detail.object_list',
         kwargs = public_project_list,
         name = 'project_list'),
-     url(
+    url(
         '^recent/$', 'list_detail.object_list',
         kwargs = {
             'queryset': Project.public.recent(),
@@ -197,10 +193,6 @@ urlpatterns += patterns('',
         regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/(?P<filename>(.*))$',
         view = component_submit_file,
         name = 'component_submit_file',),
-    url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/toggle_watch/pofile/(?P<filename>(.*))$',
-        view = component_toggle_watch,
-        name = 'component_toggle_watch',),
     url(
         regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/$',
         view = component_submit_file,
