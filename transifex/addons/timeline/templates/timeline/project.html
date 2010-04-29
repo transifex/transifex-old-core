@@ -1,0 +1,15 @@
+{% comment %}These are the blocks injected to view under /projects/p/PROJECT_SLUG/{% endcomment %}
+{% load i18n %}
+{% load tx_action_log %}
+
+{% block menu %}
+{% if is_maintainer %}
+<li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected ui-state-active{% endif %}">
+    <a id="tab-link-5" href="{% url project_timeline slug=project.slug %}">
+        <span>{% trans "Timeline" %}</span>
+    </a>
+</li>
+{% endif %}
+{% endblock %}
+
+

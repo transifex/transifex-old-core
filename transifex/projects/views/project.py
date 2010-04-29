@@ -135,25 +135,6 @@ def project_access_control_edit(request, project_slug):
 
 
 @login_required
-@one_perm_required_or_403(pr_project_view_log, 
-    (Project, 'slug__exact', 'slug'))
-def project_timeline(request, *args, **kwargs):
-    """
-    Present a log of the latest actions on the project.
-    
-    The view limits the results and uses filters to allow the user to even
-    further refine the set.
-    """
-    project = get_object_or_404(Project, slug=kwargs['slug'])
-    log_entries = LogEntry.objects.by_object(project)
-    f = LogEntryFilter(request.GET, queryset=log_entries)
-    # The template needs both these variables. The first is used in filtering,
-    # the second is used for pagination and sorting.
-    kwargs.setdefault('extra_context', {}).update({'f': f,
-                                                   'actionlog': f.qs})
-    return list_detail.object_detail(request, *args, **kwargs)
-
-@login_required
 @one_perm_required_or_403(pr_project_delete, 
     (Project, 'slug__exact', 'project_slug'))
 def project_delete(request, project_slug):

@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
+{% load addons %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
@@ -71,15 +72,7 @@ $(document).ready(
          <span>{% trans "Translation Teams" %}</span>
        </a>
     </li>
-
-    {% if is_maintainer %}
-    <li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected ui-state-active{% endif %}">
-       <a id="tab-link-3" href="{% url project_timeline slug=project.slug %}">
-         <span>{% trans "Timeline" %}</span>
-       </a>
-    </li>
-    {% endif %}
-
+    {% hook "project.html" menu %}
   </ul>
 </div>
 {% endif %}

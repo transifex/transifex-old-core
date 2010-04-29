@@ -1,0 +1,33 @@
+{% extends "projects/project_menu.html" %}
+{% comment %}This is the view under /projects/p/PROJECT_SLUG/timeline{% endcomment %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load sorting_tags %}
+{% load txcommontags %}
+
+{% block extracss %}
+<link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<link href="{{ STATIC_URL }}timeline/css/base.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body_class %}{{ block.super }} project_widgets{% endblock %}
+
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Timeline" %}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+
+{% block content_main %}
+
+<div class="obj_bigdetails ui-tabs-panel">
+<h2 class="name">
+ {% blocktrans with project.name as project_name %}
+ {{ project_name }} Timeline
+ {% endblocktrans %}
+</h2>
+<p class="description">
+{% include "timeline/timeline_base.html" %}
+</p>
+</div>
+
+{% endblock %}
+

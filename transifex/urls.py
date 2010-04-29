@@ -26,7 +26,6 @@ urlpatterns += patterns('',
     url(r'^languages/', include('languages.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ajax/', include('ajax_select.urls')),
-    url(r'^accounts/timeline/$', 'txcommon.views.user_timeline', name='user_timeline'),
     url(r'^threadedcomments/', include('threadedcomments.urls')),
 )
 
