@@ -44,9 +44,10 @@
       <!-- <span id="login">-->
           {% if user.is_authenticated %}
               {% hook "transifex_base.html" global-usernav %}
-              <a href="{% url profile_overview %}">{% trans "Account" %}</a>&nbsp; | &nbsp;
-              <form action="{% url logout %}?next={{request.path}}" method="post">
-                  <button type="submit" title="{% trans "Sign out from Transifex" %}">{% trans "Sign out" %}</button>
+              {% url profile_overview as user_profile %} 
+              {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %}&nbsp; | &nbsp;
+              <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform">
+                <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" />
               </form>
           {% else %}
               <a href="{% url login %}?next={{request|get_next}}">{% trans "Sign in" %}</a>
