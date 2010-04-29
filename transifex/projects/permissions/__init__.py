@@ -66,12 +66,6 @@ pr_component_submit_file = (
     ('general',  'projects.submit_file'),
 )
 
-pr_component_lock_file = (
-    ('granular', 'project_perm.maintain'),
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'translations.add_pofilelock'),
-    ('general',  'translations.delete_pofilelock'),
-)
 
 
 

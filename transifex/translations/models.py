@@ -9,7 +9,6 @@ from django.utils.itercompat import groupby
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
-from simplelock.models import Lock
 from txcommon.db.models import IntegerTupleField
 from txcommon.notifications import is_watched_by_user_signal
 
@@ -273,12 +272,6 @@ class POFile(models.Model):
             self.calculate_perc()
 
     @property
-    def locked(self):
-        if self.locks.all():
-            return True
-        else:
-            return False
-    @property
     def symbolic_path(self):
         """Return a path in the form project/component/pofile_path."""
         path = self.object.trans.tm.get_file_path(self.filename)
@@ -288,20 +281,6 @@ class POFile(models.Model):
 
     def is_watched_by(self, user, signal=None):
         return is_watched_by_user_signal(self, user, signal)
-
-class POFileLock(Lock):
-    """A lock/hold on a POFile object."""
-    
-    pofile = models.ForeignKey(POFile, related_name='locks', null=True)
-
-    class Meta(Lock.Meta):
-        db_table = 'translations_pofile_lock'
-        unique_together = ('pofile', 'owner')
-
-    def __unicode__(self):
-        return u"%(pofile)s (%(owner)s)" % {
-            'owner': self.owner,
-            'pofile': self.pofile.filename,}
 
 def suite():
     """

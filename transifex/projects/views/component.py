@@ -31,7 +31,7 @@ from reviews.views import review_add
 from teams.models import Team
 from translations.lib.types.pot import FileFilterError
 from translations.lib.types.publican import PotDirError
-from translations.models import POFile, POFileLock
+from translations.models import POFile
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -545,38 +545,3 @@ def component_submit_file(request, project_slug, component_slug,
     return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 
-
-@login_required
-@one_perm_required_or_403(pr_component_lock_file, 
-    (Project, 'slug__exact', 'project_slug'))
-def component_toggle_lock_file(request, project_slug, component_slug,
-                               filename):
-    if request.method == 'POST':
-        component = get_object_or_404(Component, slug=component_slug,
-                                    project__slug=project_slug)
-        ctype = ContentType.objects.get_for_model(Component)
-
-        pofile = get_object_or_404(POFile, object_id=component.pk, 
-                                   content_type=ctype, filename=filename)
-
-        try:
-            lock = POFileLock.objects.get(pofile=pofile)
-            if request.user.pk == lock.owner.pk:
-                lock.delete()
-                request.user.message_set.create(message=_("Lock removed."))
-            else:
-                request.user.message_set.create(
-                    message=_("Error: Only the owner of a lock can remove it."))
-        except POFileLock.DoesNotExist:
-            lock = POFileLock.objects.create(pofile=pofile, owner=request.user)
-            request.user.message_set.create(
-                message=_("Lock created. Please don't forget to remove it when "
-                "you're done."))
-    else:
-        request.user.message_set.create(message = _(
-                "Sorry, but you need to send a POST request."))
-    try:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    except:
-        return HttpResponseRedirect(reverse('projects.views.component.component_detail',
-                                        args=(project_slug, component_slug,)))

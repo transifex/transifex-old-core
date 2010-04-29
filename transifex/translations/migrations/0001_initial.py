@@ -5,7 +5,11 @@ from django.db import models
 from translations.models import *
 
 class Migration:
-    
+
+    depends_on = (
+        ("languages", "0001_initial"),
+    )
+
     def forwards(self, orm):
         
         # Adding model 'POFileLock'

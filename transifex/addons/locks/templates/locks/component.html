@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load locks_tags %}
+{% block submit %}
+{% with pofile.locks.valid.get as lock %}
+{% if lock %}
+      {% ifequal request.user lock.owner %}
+      <input type="checkbox" name="lock_extend"/> Keep file locked
+      {% else %}
+      <p style="margin: 0px; color:#C27878;">{% trans "This file is locked by someone else." %}</p>
+      <script type="text/javascript">
+      $(document).ready(function() { $('#pofile-submit-{{pofile.language_code}}').attr('disabled','true'); });
+      </script>
+      {% endifequal %}
+{% endif %}
+{% endwith %}
+{% endblock %}
+

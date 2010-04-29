@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load addons %}
 {% load submissions %}
 {% url component_submit_file pofile.object.project.slug pofile.object.slug pofile.filename as file_submit_url %}
 {% with pofile.filename as pofile_filename %}
@@ -9,17 +10,32 @@
   <legend>{% trans "Submit file" %}</legend>
     <input type="file" name="submitted_file">
     <p>
+    <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
+    <input type="hidden" name="message" value="Updates to {{pofile.lang_or_code}} translation">
     {% if perms.projects.submit_file or can_submit_file %}
-    <input type="submit" class="i16 submit" size="10" name="submit" value="{% trans "Send" %}">
+    {% else %}
+    <script type="text/javascript">
+    $(document).ready(function() { $('#pofile-submit-{{pofile.language_code}}').attr('disabled','true'); });
+    </script>
     {% endif %}
-    <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
     </p>
-  {% with pofile.locks.get.owner as owner %}
-    {% if pofile.locked %}
-      {% ifnotequal request.user.username owner.username %}
-      <p style="margin: 0px; color:#C27878;">This file is locked by someone else. Are you sure that you want to do it?</p>
-      {% endifnotequal %}
-    {% endif %}
-  {% endwith %}
+
+{% comment %}Temporarily hooks are disabled here, until we improve the compontent detail view{% endcomment %}
+
+{% load locks_tags %}
+{% with pofile.locks.valid.get as lock %}
+{% if lock %}
+      {% ifequal request.user lock.owner %}
+      <input type="checkbox" name="lock_extend"/> Keep file locked
+      {% else %}
+      <p style="margin: 0px; color:#C27878;">{% trans "This file is locked by someone else." %}</p>
+      <script type="text/javascript">
+      $(document).ready(function() { $('#pofile-submit-{{pofile.language_code}}').attr('disabled','true'); });
+      </script>
+      {% endifequal %}
+{% endif %}
+{% endwith %}
+
+{% comment %}{% hook "component.html" submit %}{% endcomment %}
 </fieldset>
 </form>
