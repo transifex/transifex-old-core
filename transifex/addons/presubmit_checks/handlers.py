@@ -8,7 +8,6 @@ from txcommon.log import logger
 from projects.signals import pre_submit_file, post_submit_file
 from projects.models import Component
 from translations.lib.types.pot import FileFilterError, MsgfmtCheckError
-from submissions.utils import msgfmt_error_send_mail
 from errors import SubmitError
 
 def pobuffer(buf):
@@ -23,7 +22,7 @@ def pobuffer(buf):
     return po
     
 def pre_submit_check(sender, instance=None, user=None, component=None,
-    stream=None, filename=None, **kwargs):
+    stream=None, filename=None, file_dict=None,  **kwargs):
     # Sanity checks
     if not component or not stream or not user or not filename:
         raise SubmitError("'component', 'filename', 'stream' or 'user' "
@@ -66,7 +65,7 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
             raise SubmitError(_("Only UTF-8 encoded files are allowed!"))
 
     # (6.1) No translated entires check
-    if len(po.translated_entries()) < 1:
+    if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
         raise SubmitError(_("Uploaded file doesn't contain any "
             "translated entries!"))
 
@@ -80,8 +79,9 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
             logger.debug("Msgfmt -c check failed for file %s." % filename)
             if (hasattr(settings, 'EMAIL_HOST') and settings.EMAIL_HOST and
                 user.email):
-                msgfmt_error_send_mail(component, request.user, stream,
-                    file_dict, filename)
+                from submissions.utils import msgfmt_error_send_mail
+                msgfmt_error_send_mail(component, user, stream, file_dict,
+                    filename)
                 user.message_set.create(message=_(
                     "Your file has been e-mailed to you to avoid "
                     "loss of any work."))
