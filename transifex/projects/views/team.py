@@ -206,6 +206,8 @@ def team_delete(request, project_slug, language_code):
 
 @access_off(team_off)
 @login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
 @transaction.commit_on_success
 def team_join_request(request, project_slug, language_code):
 
@@ -358,6 +360,8 @@ def team_join_deny(request, project_slug, language_code, username):
 
 @access_off(team_off)
 @login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
 @transaction.commit_on_success
 def team_join_withdraw(request, project_slug, language_code):
 
@@ -400,6 +404,8 @@ def team_join_withdraw(request, project_slug, language_code):
 
 @access_off(team_off)
 @login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
 @transaction.commit_on_success
 def team_leave(request, project_slug, language_code):
 
@@ -447,6 +453,8 @@ def team_leave(request, project_slug, language_code):
 # Team Creation
 @access_off(team_off)
 @login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
 @transaction.commit_on_success
 def team_request(request, project_slug):
 

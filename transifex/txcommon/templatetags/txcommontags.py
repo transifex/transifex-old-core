@@ -40,7 +40,7 @@ class LatestProjects(template.Node):
 
     def render(self, context):
         try:
-            latest_projects = Project.objects.order_by('-created')[:self.number]
+            latest_projects = Project.public.order_by('-created')[:self.number]
         except ValueError:
             latest_projects = None
 

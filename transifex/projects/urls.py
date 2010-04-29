@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -23,10 +24,11 @@ project_list = {
     'template_object_name': 'project',
 }
 
-project_detail = {
-    'extra_context': {'project_overview': True},
+public_project_list = {
+    'queryset': Project.public.all(),
+    'template_object_name': 'project',
+    'extra_context' : {'type_of_qset' : 'projects.all',},
 }
-project_detail.update(project_list)
 
 feeds = {
     'latest': LatestProjects,
@@ -36,17 +38,16 @@ feeds = {
 }
 
 #TODO: Temporary until we import view from a common place
-SLUG_FEED = 'projects.views.slug_feed'
 urlpatterns = patterns('',
     url(
         regex = r'^feed/$',
-        view = SLUG_FEED,
+        view = 'projects.views.slug_feed',
         name = 'project_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
     url(
         regex = '^p/(?P<param>[-\w]+)/components/feed/$',
-        view = SLUG_FEED,
+        view = 'projects.views.project_feed',
         name = 'project_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'project'}),
@@ -104,6 +105,10 @@ urlpatterns += patterns('',
         view = project_approve_permission_request,
         name = "project_approve_permission_request"),
     url(
+        regex = '^p/(?P<project_slug>[-\w]+)/$',
+        view = project_detail,
+        name = 'project_detail'),
+    url(
         regex = '^p/(?P<project_slug>[-\w]+)/toggle_watch/$',
         view = project_toggle_watch,
         name = 'project_toggle_watch',),
@@ -111,16 +116,28 @@ urlpatterns += patterns('',
       
 
 urlpatterns += patterns('django.views.generic',
-    url(
-        regex = '^p/(?P<slug>[-\w]+)/$',
-        view = 'list_detail.object_detail',
-        name = 'project_detail',
-        kwargs = project_detail),
     url (
         regex = '^$',
         view = 'list_detail.object_list',
-        kwargs = project_list,
+        kwargs = public_project_list,
         name = 'project_list'),
+     url(
+        '^recent/$', 'list_detail.object_list',
+        kwargs = {
+            'queryset': Project.public.recent(),
+            'template_object_name': 'project',
+            'extra_context' : {'type_of_qset' : 'projects.recent',},
+        },
+        name = 'project_list_recent'),
+    url (
+        regex = '^open_translations/$',
+        view = 'list_detail.object_list',
+        kwargs = {
+            'queryset': Project.public.open_translations(),
+            'template_object_name': 'project',
+            'extra_context' : {'type_of_qset' : 'projects.open_translations',},
+        },
+        name = 'project_list_open_translations'),
     url(
         r'^tag/(?P<tag>[^/]+)/$',
         tagged_object_list,
@@ -136,8 +153,6 @@ urlpatterns += patterns('django.views.generic',
                   'template_name': 'projects/project_timeline.html',
                   'extra_context': {'project_timeline': True},},),
 )
-      
-
 
 # Components
 urlpatterns += patterns('',

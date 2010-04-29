@@ -190,7 +190,8 @@ def component_submission_edit(request, project_slug, component_slug):
 
 
 
-
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def component_detail(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
@@ -202,6 +203,8 @@ def component_detail(request, project_slug, component_slug):
         )
 
 
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def component_language_detail(request, project_slug, component_slug,
                                 language_code=None):
     component = get_object_or_404(Component, slug=component_slug,
@@ -308,6 +311,9 @@ def component_clear_cache(request, project_slug, component_slug):
                                 args=(project_slug, component_slug,)))
 
 
+#FIXME: Not sure for this permission
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def component_file(request, project_slug, component_slug, filename, 
                    view=False, is_msgmerged=True):
     component = get_object_or_404(Component, slug=component_slug,

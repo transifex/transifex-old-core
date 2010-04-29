@@ -14,6 +14,8 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.html import escape
 
+from authority.models import Permission
+from notification.models import ObservedItem
 import tagging
 from tagging.fields import TagField
 
@@ -62,6 +64,65 @@ def cached_property(func):
     return property(_set_cache, fdel=_del_cache)
 
 
+class DefaultProjectManager(models.Manager):
+    """
+    This is the defautl manager of the project model (asigned to objects field).
+    """
+
+    def watched_by(self, user):
+        """
+        Retrieve projects being watched by the specific user.
+        """
+        try:
+            ct = ContentType.objects.get(name="project")
+        except ContentType.DoesNotExist:
+            pass
+        observed_projects = [i[0] for i in list(set(ObservedItem.objects.filter(user=user, content_type=ct).values_list("object_id")))]
+        watched_projects = []
+        for object_id in observed_projects:
+            try:
+                watched_projects.append(Project.objects.get(id=object_id))
+            except Project.DoesNotExist:
+                pass
+        return watched_projects
+
+    def maintained_by(self,user):
+        """
+        Retrieve projects being maintained by the specific user.
+        """
+        return Project.objects.filter(maintainers__id=user.id)
+
+    def translated_by(self, user):
+        """
+        Retrieve projects being translated by the specific user.
+        
+        The method returns all the projects in which user has been granted 
+        permissions to submit translations.
+        """
+        try:
+            ct = ContentType.objects.get(name="project")
+        except ContentType.DoesNotExist:
+            pass
+        return Permission.objects.filter(user=user, content_type=ct, approved=True)
+    
+
+class PublicProjectManager(models.Manager):
+    """
+    Return a QuerySet of public projects.
+    
+    Usage: Projects.public.all()
+    """
+
+    def get_query_set(self):
+        return super(PublicProjectManager, self).get_query_set().filter(private=False)
+
+    def recent(self):
+        return self.order_by('-created')
+
+    def open_translations(self):
+        return self.filter(component__allows_submission=True).distinct()
+
+
 class Project(models.Model):
 
     """
@@ -79,6 +140,10 @@ class Project(models.Model):
 
     """
 
+    private = models.BooleanField(default=False, verbose_name=_('Private'),
+        help_text=_('A private project is visible only by you and your team.'
+                    'Moreover, private projects are limited according to billing'
+                    'plans for the user account.'))
     slug = models.SlugField(_('Slug'), max_length=30, unique=True,
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
@@ -116,10 +181,18 @@ class Project(models.Model):
         verbose_name=_('Outsource project'),
         help_text=_('Project that owns the access control of this project.'))
 
+    owner = models.ForeignKey(User, blank=True, null=True,
+        editable=False, verbose_name=_('Owner'),
+        help_text=_('The user who owns this project.'))
+
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'), blank=True, 
         max_length=1000,
         help_text=_('Description in HTML.'), editable=False)
+
+    # Managers
+    objects = DefaultProjectManager()
+    public = PublicProjectManager()
 
     def __unicode__(self):
         return self.name
@@ -147,7 +220,7 @@ class Project(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('project_detail', None, { 'slug': self.slug })
+        return ('project_detail', None, { 'project_slug': self.slug })
 
     def is_watched_by(self, user, signal=None):
         return is_watched_by_user_signal(self, user, signal)
@@ -403,6 +476,7 @@ class Component(models.Model):
         """
         logger.debug("Clearing local cache for %s" % self.full_name)
         try:
+            
             self.trans.clean_stats()
             self.delete_static_dir()
             self.unit.teardown()

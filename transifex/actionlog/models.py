@@ -108,6 +108,15 @@ class LogEntryManager(models.Manager):
         return self.filter(content_type__pk=ctype.pk, object_id=obj.pk,
             action_time__gt=last_week_date)
 
+    def by_user_and_public_projects(self, user):
+        """
+        Return LogEntries for a specific user and his actions on public projects.
+        """
+        from projects.models import Project
+        ctype = ContentType.objects.get(model='project')
+        q = self.filter(user__pk__exact=user.pk, content_type=ctype, 
+                object_id__in=Project.objects.filter(private=False))
+        return _distinct_action_time(q)
 
     def for_projects_by_user(self, user):
         """Return project LogEntries for a related user."""

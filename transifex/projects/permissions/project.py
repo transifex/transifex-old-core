@@ -103,4 +103,17 @@ class ProjectPermission(BasePermission):
     submit_file.short_description=_('Is allowed to submit file to this project')
 
 
+    def private(self, project=None):
+        """Test if a user has access to a private project."""
+        if project:
+            if project.private:
+                # Maintainers, writers (submitters, team coordinators, members)
+                return self.maintain(project) or self.submit_file(project,
+                     any_team=True)
+            else:
+                # The project is public so let them continue
+                return True
+        return False
+    private.short_description=_('Is allowed to browse this private project')
+
 authority.register(Project, ProjectPermission)

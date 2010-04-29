@@ -35,6 +35,10 @@ pr_project_delete_perm = (
     ('general',  'authority.delete_permission'),
 )
 
+pr_project_private_perm = (
+    ('granular', 'project_perm.private'),
+)
+
 # Component permissions required
 pr_component_add_change = (
     ('granular', 'project_perm.maintain'),

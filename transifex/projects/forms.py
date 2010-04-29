@@ -19,7 +19,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('anyone_submit', 'outsource',)
+        exclude = ('anyone_submit', 'outsource', 'private')
 
 
 class RadioFieldRenderer(widgets.RadioFieldRenderer):

@@ -30,7 +30,9 @@ def permission_denied(request, template_name=None, extra_context={}, *args,
 def search(request):
     query_string = request.GET.get('q', "")
     search_terms = query_string.split()
-    results = Project.objects.filter()
+    # Search only public projects
+    # TODO: enable searching for private projects that the user has permissions.
+    results = Project.public.filter()
 
     if search_terms:
         query = Q()

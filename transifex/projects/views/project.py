@@ -46,6 +46,9 @@ def _project_create_update(request, project_slug=None,
         if project_form.is_valid(): 
             project = project_form.save(commit=False)
             project_id = project.id
+            # Only here the owner is written to the project model
+            if not project_id:
+                project.owner = request.user
             project.save()
             project_form.save_m2m()
 
@@ -221,5 +224,16 @@ def project_toggle_watch(request, project_slug):
         except WatchException, e:
             return json_error(e.message, result)
     return json_result(result)
+
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
+def project_detail(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
+    return list_detail.object_detail(
+        request,
+        queryset = Project.objects.all(),
+        object_id=project.id,
+        template_object_name = 'project',
+        extra_context= {'project_overview': True})
 
 

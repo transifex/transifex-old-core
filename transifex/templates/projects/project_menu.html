@@ -53,7 +53,7 @@ $(document).ready(
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 
     <li class="ui-state-default ui-corner-top {% if project_overview %}ui-tabs-selected ui-state-active{% endif %}">
-       <a id="tab-link-1" href="{% url project_detail slug=project.slug %}">
+       <a id="tab-link-1" href="{% url project_detail project_slug=project.slug %}">
          <span>{% trans "Overview" %}</span>
        </a>
     </li>
