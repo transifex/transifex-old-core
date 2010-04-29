@@ -23,9 +23,10 @@ from projects.forms import ComponentForm, ComponentAllowSubForm
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from projects.signals import (submission_error,
-    sig_refresh_cache,
-    sig_clear_cache,
-    sig_submit_file)
+    pre_refresh_cache,
+    post_clear_cache,
+    post_submit_file,
+    pre_submit_file)
 from submissions.utils import submit_by_email
 from reviews.views import review_add
 from teams.models import Team
@@ -270,6 +271,7 @@ def component_set_stats(request, project_slug, component_slug):
         component.prepare()
         # Calculate statistics
         try:
+            pre_refresh_cache.send(sender=None, component=component)
             component.trans.set_stats()
         except FileFilterError:
             logger.debug("File filter does not allow POTFILES.in file name"
@@ -304,7 +306,6 @@ def component_clear_cache(request, project_slug, component_slug):
     component = get_object_or_404(Component, slug=component_slug,
                                   project__slug=project_slug)
     component.clear_cache()
-    sig_clear_cache.send(sender=None, component=component)
     return HttpResponseRedirect(reverse('projects.views.component.component_detail', 
                                 args=(project_slug, component_slug,)))
 

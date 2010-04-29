@@ -475,6 +475,7 @@ class Component(models.Model):
         Delete statistics, teardown repo, remove static dir, rest unit.
         """
         logger.debug("Clearing local cache for %s" % self.full_name)
+        Signal.send(signals.pre_clear_cache, sender=Component, component=self)
         try:
             
             self.trans.clean_stats()
@@ -487,6 +488,7 @@ class Component(models.Model):
                 self.unit.save()
         except:
             logger.error("Clearing cache failed for %s." % (self.full_name))
+        Signal.send(signals.post_clear_cache, sender=Component, component=self)
 
     def get_rev(self, path=None):
         """Get revision of a path from the underlying Unit"""
