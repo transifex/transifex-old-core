@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
@@ -54,10 +55,10 @@ class ProjectPermission(BasePermission):
             if self.maintain(project):
                 return True
             if language:
-                team = get_object_or_404(Team, project__pk=project.pk,
-                    language__code=language.code)
+                # TODO: Changed from get_object_or_404 to this, check implications!
+                team = Team.objects.get_or_none(project, language.code)
                 #Coordinator
-                if self.user in team.coordinators.all():
+                if team and self.user in team.coordinators.all():
                     return True
         return False
     coordinate_team.short_description=_('Is allowed to coordinate a team project')
