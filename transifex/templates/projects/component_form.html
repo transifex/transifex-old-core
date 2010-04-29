@@ -1,6 +1,7 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
 {% load txcommontags %}
+{% load addons %}
 
 {% block title %}
 {% if not component %}{{ block.super }} | {{ project.name }} | {% trans "Add a component" %}
@@ -131,6 +132,7 @@ $(document).ready(
                 </table>
                 <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save component" %}" /></p>
             </form>
+            {% hook "allow_submission_form_extra.html" allow_submission_form_extra %}
         {% endif %}
         </div>
     </div>

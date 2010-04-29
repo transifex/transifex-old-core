@@ -60,10 +60,13 @@
   {% get_permission "project_perm.maintain" for request.user and component.project as "is_maintainer" %}
 
   <div class="obj_bigdetails">
-
-  <h2 class="pagetitle">{{ component.project.name }}</h2>
-
-  <h3 class="pagesubtitle">Component '{{ component.name }}'</h3>
+  {% if component.project.private %}
+  <span id="private_project_banner" class="ui-corner-all">
+    {% trans "Private Project"%}
+    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
+  </span>
+  {% endif %}
+  <h2 class="name">{{ component.project.name }} &raquo; {{ component.name }}</h2>
 
   {% if component.description %}<p class="description">{{ component.description }}</p>{% endif %}
 

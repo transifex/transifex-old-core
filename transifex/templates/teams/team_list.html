@@ -16,7 +16,7 @@
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Translation Teams" %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Teams" %}{% endblock %}
 
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}

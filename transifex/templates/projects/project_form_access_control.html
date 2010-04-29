@@ -15,7 +15,7 @@
 
 <h2 class="name">{% trans "Access Control" %}</h2>
 
-<h3>{% trans "You have the following choices to manage how people can have submission access to your project:" %}</h3>
+<p class="description">{% trans "You have the following choices to manage how people can have submission access to your project:" %}</p>
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 

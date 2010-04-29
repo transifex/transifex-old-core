@@ -8,7 +8,9 @@
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; 
+<a href="{% url team_list team.project.slug %}">{% trans "Teams" %}</a> &raquo; {{ team.language.name }}
+{% endblock %}
 
 {% block content_main %}
 {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_file" %}
