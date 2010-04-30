@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from piston.handler import BaseHandler
 from piston.utils import rc
-
-from happix.models import TResource, SourceString, TranslationString
+from django.contrib.auth.models import User
+from happix.models import TResource, SourceString, TranslationString, StringSet
 from languages.models import Language
 from projects.models import Project
+
+from django.db import transaction
 
 #TODO: Create handlers for stats, for languages supporting by every project.
 
@@ -18,25 +20,40 @@ class ProjectHandler(BaseHandler):
     exclude = ()
 
 class TResourceHandler(BaseHandler):
-    """
-    API handler for the model TResource.
-    
-    This handler returns the set of strings corresponding to the specific 
-    TResource which is referred by its unique id. If a language code is given,
-    then the translation strings are returned.
-    """
-    allowed_methods = ('GET',)
-    model = TResource
+    @transaction.commit_manually
+    def create(self, request, project_id, tresource_id): #, lang_code=None):
+        source_language = Language.objects.by_code_or_alias('en')
 
-    def read(self, request, project_id, tresource_id, lang_code=None):
-        """Return a list of the source or translation strings"""
-        # Get the source strings if no language given.
-        results = SourceString.objects.filter(tresource__project__pk=project_id,
-                                              tresource__pk=tresource_id,
-                                              position__isnull=False)
-        # If a specific language has been given return translations.
-        if lang_code:
-            lang = Language.objects.by_code_or_alias(lang_code)
-            results = TranslationString.objects.filter(source_string__in=results,
-                                                       language=lang)
-        return results
+        j = 0
+        if request.content_type:
+            translation_resource = TResource.objects.get(id = tresource_id)
+            try:
+                target_language = Language.objects.by_code_or_alias(request.data['target_language'])
+            except Language.DoesNotExist:
+                return rc.NOT_IMPLEMENTED
+            for i in request.data['strings']:
+                ss, created = SourceString.objects.get_or_create(
+                    string= i['source_string'], 
+                    description=i['context'] or "None",
+                    tresource=translation_resource,
+                    defaults = {
+                        'position' : 1,
+                    }
+                )
+
+                sset, created = StringSet.objects.get_or_create(
+                    tresource=translation_resource,
+                    path = request.data['filename'],
+                    language = target_language,
+                )
+
+                ts, created = TranslationString.objects.get_or_create(
+                    source_string=ss,
+                    stringset = sset,
+                    defaults={
+                        'string' : i["translation_string"],
+                        'user' : User.objects.get(id=1),
+                    },
+                )
+            j += 1
+        transaction.commit()

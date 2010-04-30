@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+{{block.super}} » <a href="{% url _projects %}">{% trans "Projects" %}</a>
+{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Projects" %}{% endblock %}
+
+{% block body_class %}project_list{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+    {% trans "Projects" %}
+  </h2>
+{% endblock %}
+
+{% block content %}
+
+<ul>
+{% for project in projects %}
+  <li><a href="{% url _project project.slug %}">{{project}}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}

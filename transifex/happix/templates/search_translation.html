@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block title %}{{ block.super }} | {% trans "Search" %}{% endblock %}
+
+{% block body_class %}search project_list{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+    {% trans "Search Results" %} {% if result_count %}<sup style="color:#666;font-size:0.7em">({{ result_count }})</sup> {% endif %}
+  </h2>
+{% endblock %}
+  
+{% block content %}
+
+{% include "search_form.html" %}
+
+  {% if query %}
+    {% if results %}
+      <div class="project_list">
+      {% for result in results %}
+      
+        <div class="entry">
+          {% with result.source_string as source_string %}
+          <p class="long_description">{{ result.language }}</p>
+          <p class="name highlight">{{ result.string }}</p>
+          <p class="long_description">
+            <span>Description :</span>
+            {{ source_string.description }}
+          </p>
+          {% with source_string.tresource as tresource %}
+          <p class="long_description">
+            <span>Resource :</span>
+            {{ tresource.name }}
+          </p>
+          <p class="long_description">
+            <span>Project :</span>
+            {{ tresource.project }}
+          </p>
+          {% endwith %}
+          <p class="long_description">
+            <span>Source Position :</span>
+            {{ source_string.position }}
+          </p>
+          {% endwith %}
+        </div>
+      {% endfor %}
+
+      </div>
+    {% else %}
+        {% trans "No results obtained" %}
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}

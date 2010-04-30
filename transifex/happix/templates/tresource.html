@@ -1,0 +1,72 @@
+{% extends "project.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+{{block.super}} » <a href="{% url _project_resource project.slug tresource.slug %}">{{tresource}}</a>
+{% endblock %}
+
+{% block title %}
+{{ block.super }} | 
+{{tresource}}
+{% endblock %}
+
+{% block body_class %}project_list{% endblock %}
+
+{% block content_title %}
+
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Stringsets</h2>
+
+  <p>This is internally used structure to map stringsets to filenames (+language).
+   The user should be presented with a list of ALL strings in current TResource which are translatable or to show a subset:</p>
+
+<select>
+<option>All (all strings in current translation resource)</option>
+{% for stringset in stringsets %}
+  <option>{{stringset.path}}</option>
+{% endfor %}
+</select>
+
+<!-- a href="{% url _stringset project.slug tresource.slug stringset.path %}"-->
+
+<h2>Strings</h2>
+
+
+<table>
+
+  <tr>
+    <td>From language:</td>
+    <td>To language:</td>
+  </tr>
+
+{% for language in languages %}
+  <tr>
+    <td>{{language}}</td>
+    <td><a href="{% url _project_resource project.slug tresource.slug language.code %}">{{language}}</a></td>
+  </tr>
+{% endfor %}
+  <tr>
+    <td>---</td>
+    <td>---</td>
+  </tr>
+
+{% for string in strings %}
+  <tr>
+    <td>{{string.from}}</td>
+    <td>{{string.to}}</td>
+  </tr>
+{% endfor %}
+</table>
+
+
+
+
+
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}

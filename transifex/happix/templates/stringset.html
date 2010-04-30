@@ -1,0 +1,32 @@
+{% extends "project.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+{{block.super}} » <a href="{% url _project_resource project.slug tresource.slug %}">{{stringset.path}}</a>
+{% endblock %}
+
+{% block title %}
+{{ block.super }} | 
+{{tresource}}
+{% endblock %}
+
+{% block body_class %}project_list{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+    {% trans "Strings" %}
+  </h2>
+{% endblock %}
+
+{% block content %}
+
+<ul>
+{ for project in projects }
+  <li><a href="{ url _project project.slug }">{{project}}</a></li>
+{ endfor }
+</ul>
+
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}

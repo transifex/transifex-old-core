@@ -12,6 +12,11 @@ from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
 
+def reset():
+    TranslationString.objects.all().delete()
+    StringSet.objects.all().delete()
+    SourceString.objects.all().delete()
+
 # State Codes for translations
 TRANSLATION_STATE_CHOICES = (
     ('APR', 'Approved'),
@@ -24,57 +29,7 @@ TRANSLATION_STATE_CHOICES = (
 ##############################################################
 
 class TResourceManager(models.Manager):
-
-    def create_or_update_from_file(self, path_to_file, project, 
-                                   source_language=None,
-                                   name=None, format='gettext'):
-        """
-        Wrapper to choose between create_from_file or TResource.update_from_file.
-        """
-        if not name:
-            name = path_to_file
-        #TODO: Language instantation should be based on caching
-        # If None get the default which is english language instance.
-        if not source_language:
-            source_language = Language.objects.by_code_or_alias('en')
-
-        try:
-            tres = self.get(name=name, path=path_to_file, project=project, 
-                            source_language=source_language)
-            tres.update_from_file(path_to_file, format)
-        except TResource.DoesNotExist:
-            tres = self.create_from_file(name=name, path_to_file=path_to_file,
-                                         project=project,
-                                         source_language=source_language)
-        return tres
-
-    def create_from_file(self, path_to_file, project, source_language=None,
-                         name=None, format='gettext'):
-        """
-        Create a TResource based on a provided source file and put the 
-        source strings in the db by using the appropriate loaders.
-        
-        Return the TResource instance that is going to be loaded.
-        """
-        # To avoid circular referencing
-        from happix.loaders import load_source_file
-
-        if not name:
-            name = path_to_file
-        #TODO: Language instantation should be based on caching
-        # If None get the default which is english language instance.
-        if not source_language:
-            source_language = Language.objects.by_code_or_alias('en')
-
-        # Create the resource instance.
-        tres = TResource.objects.create(name=name,
-                                        path=path_to_file,
-                                        project=project, 
-                                        source_language=source_language)
-
-        # Load the file to the DB and return the TResource instace.
-        return load_source_file(path_to_file, tres, source_language, format)
-
+    pass
 
 class TResource(models.Model):
     """
@@ -88,20 +43,15 @@ class TResource(models.Model):
         2. an absolute URL (not local) to the file.
     The path_to_file should be used for loading (pull) operations!
     """
+
     name = models.CharField(_('Name'), max_length=255, null=False,
         blank=False, 
         help_text=_('A descriptive name unique inside the project.'))
-    # URI, filepath etc.
-    # FOR FILES: this should be the path to the source file (if pot exists) or
-    # a parent folder path of the source language file.
-    path = models.CharField(_('Path'), max_length=255, null=False,
-        blank=False, 
-        help_text=_("A path to the template file or to the source stream "
-                    "inside the project folders hierarchy or a URI."))
+
     # Short identifier to be used in the API URLs
-#    slug = models.SlugField(_('Slug'), max_length=50,
-#        help_text=_('A short label to be used in the URL, containing only '
-#                    'letters, numbers, underscores or hyphens.'))
+    slug = models.SlugField(_('Slug'), max_length=50,
+        help_text=_('A short label to be used in the URL, containing only '
+            'letters, numbers, underscores or hyphens.'))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -109,11 +59,9 @@ class TResource(models.Model):
 
     # Foreign Keys
     project = models.ForeignKey(Project, verbose_name=_('Project'),
-        blank=False, null=True,
+        blank=False,
+        null=True,
         help_text=_("The project which owns the translation resource."))
-    source_language = models.ForeignKey(Language,
-        verbose_name=_('Source Language'),blank=False, null=True,
-        help_text=_("The source language of the translation resource."))
 
     # Managers
     objects = TResourceManager()
@@ -122,44 +70,14 @@ class TResource(models.Model):
         return self.name
 
     class Meta:
-        unique_together = (('name', 'project'), 
+        unique_together = (('name', 'project'),)
                            #('slug', 'project'),
-                           ('path', 'project'))
+                           #('path', 'project'))
         verbose_name = _('tresource')
         verbose_name_plural = _('tresources')
         ordering  = ['name',]
         order_with_respect_to = 'project'
         get_latest_by = 'created'
-
-    def update_from_file(self, path_to_file=None, format='gettext'):
-        """
-        Update the SourceStrings of the specific TResource based on file content.
-        
-        Returns the TResource instance.
-        """
-        # To avoid circular referrencing
-        from happix.loaders import load_source_file
-
-        # Reset the positions which are currently put.
-        SourceString.objects.filter(tresource=self,
-            language=self.source_language,).update(position=None)
-
-        # Load the DB and return the instace.
-        return load_source_file(path_to_file, self, self.source_language, format)
-
-    def update_translations(self, path_to_file, target_language, format='gettext'):
-        """
-        Fetch the translations file and update the existing translations of the
-        TResource for the target language
-        """
-        # To avoid circular referrencing
-        from happix.loaders import load_translation_file
-        try:
-            tlanguage = Language.objects.by_code_or_alias(target_language)
-            return load_translation_file(path_to_file, self, tlanguage,
-                                         self.source_language, format)
-        except Language.DoesNotExist:
-            logger.warning("No Language exists with code or alias %s" % (target_language))
 
     def translated_strings(self, language):
         """
@@ -182,6 +100,26 @@ class TResource(models.Model):
                     position__isnull=False,).exclude(
                             translationstring__language=target_language)
 
+class StringSet(models.Model):
+    path = models.CharField(_('Path'), max_length=255, null=False,
+        blank=False, 
+        help_text=_("A path to the template file or to the source stream "
+                    "inside the project folders hierarchy or a URI."))
+    language = models.ForeignKey(Language,
+        verbose_name=_('Target Language'),blank=False, null=True,
+        help_text=_("The language in which this translation string belongs to."))
+
+    tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+        blank=False, null=False,
+        help_text=_("The translation resource which owns the source string."))
+
+    def __unicode__(self):
+        return "%s/%s%s" % (self.tresource.project.slug, self.tresource.slug, self.path)
+
+    def relpath(self):
+        if self.path[0] == "/":
+            return self.path[1:]
+        return self.path
 
 class SourceString(models.Model):
     """
@@ -191,7 +129,6 @@ class SourceString(models.Model):
     defined by the string, description and tresource fields (so they are unique
     together).
     """
-
     string = models.CharField(_('String'), max_length=255,
         blank=False, null=False,
         help_text=_("The actual string content of source string."))
@@ -215,6 +152,7 @@ class SourceString(models.Model):
     developer_comment = models.TextField(_('Flags'), max_length=1000,
         blank=True, editable=False,
         help_text=_("The comment of the developer."))
+
     #TODO: Decide if this field should be separated to a table to support more plurals.
     plural = models.CharField(_('Plural'), max_length=255,
         blank=True, editable=False,
@@ -229,12 +167,6 @@ class SourceString(models.Model):
     tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
         blank=False, null=False,
         help_text=_("The translation resource which owns the source string."))
-    language = models.ForeignKey(Language,
-        verbose_name=_('Source Language'),blank=False, null=True,
-        help_text=_("The source language of the translation resource."))
-
-    #TODO: Managers
-#    factory = SourceStringFactory()
 
     def __unicode__(self):
         return self.string
@@ -256,14 +188,9 @@ class SearchStringManager(models.Manager):
         maybe on specific source and/or target language.
         """
         source_strings = []
-        # If the source language has not been provided, search strings for 
-        # every source language.
-        if source_code:
-            source_language = Language.objects.by_code_or_alias(source_code)
-            source_strings = SourceString.objects.filter(string=string,
-                                                     language=source_language)
-        else:
-            source_strings = SourceString.objects.filter(string=string,)
+
+        source_strings = SourceString.objects.filter(string=string,)
+
         # If no target language given search on any target language.
         if target_code:
             language = Language.objects.by_code_or_alias(target_code)
@@ -298,9 +225,9 @@ class TranslationString(models.Model):
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
                     "translation string instance."))
-    language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True,
-        help_text=_("The language in which this translation string belongs to."))
+    stringset = models.ForeignKey(StringSet,
+        verbose_name=_('Set of strings which group strings by filename and language'))
+
     user = models.ForeignKey(User,
         verbose_name=_('Committer'), blank=False, null=True,
         help_text=_("The user who committed the specific translation."))
@@ -312,7 +239,7 @@ class TranslationString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_string', 'string', 'language'),)
+        unique_together = (('source_string', 'string', 'stringset'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
