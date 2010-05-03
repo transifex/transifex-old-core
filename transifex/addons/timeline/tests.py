@@ -2,9 +2,9 @@
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 from projects.models import Project
-from txcommon.tests.base import TransifexBaseTestCase
+from addons.commontests.tests.base import BaseTestCase
 
-class TestTimeline(TransifexBaseTestCase):
+class TestTimeline(BaseTestCase):
 
     def setUp(self):
         super(TestTimeline, self).setUp(skip_stats=True)
@@ -25,12 +25,12 @@ class TestTimeline(TransifexBaseTestCase):
         Test anonymous user
         """
         # Check user timeline page as anonymous user
-        resp = self.client['anon'].get( self.url_user_timeline, follow = True )
+        resp = self.client['anonymous'].get( self.url_user_timeline, follow = True )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Enter your username and password to sign in." in resp.content)
 
         # Check project timeline page as anonymous user
-        resp = self.client['anon'].get( self.url_project_timeline, follow = True )
+        resp = self.client['anonymous'].get( self.url_project_timeline, follow = True )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Enter your username and password to sign in." in resp.content)
 
@@ -40,7 +40,7 @@ class TestTimeline(TransifexBaseTestCase):
         """
 
         # Check user timeline page as regular user
-        resp = self.client['regist'].get( self.url_user_timeline )
+        resp = self.client['registered'].get( self.url_user_timeline )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Timeline" in resp.content)
         self.assertTrue("Filter results" in resp.content)
@@ -49,11 +49,11 @@ class TestTimeline(TransifexBaseTestCase):
         self.assertTrue( a or b)
 
         # Check project timeline page as regular user
-        resp = self.client['regist'].get( self.url_project_timeline )
+        resp = self.client['registered'].get( self.url_project_timeline )
         self.assertEqual(resp.status_code, 403)
 
         # Check wether link to user timeline is injected to profile page
-        resp = self.client['regist'].get( self.url_user_profile )
+        resp = self.client['registered'].get( self.url_user_profile )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("My Timeline" in resp.content)
 
@@ -61,19 +61,18 @@ class TestTimeline(TransifexBaseTestCase):
         """
         Test maintainer
         """
-        client = Client()
 
         # Check user timeline page as regular user
-        resp = self.client['maint'].get( self.url_user_timeline )
+        resp = self.client['maintainer'].get( self.url_user_timeline )
         self.assertEqual(resp.status_code, 200)
 
         # Check project timeline as maintainer
-        resp = self.client['maint'].get( self.url_project_timeline )
+        resp = self.client['maintainer'].get( self.url_project_timeline )
         self.assertEqual(resp.status_code, 200)
 
         # Fetch project overview page
         
-        resp = self.client['maint'].get( self.url_project_detail )
+        resp = self.client['maintainer'].get( self.url_project_detail )
         self.assertEqual(resp.status_code, 200)
 
         # Check wether link to timeline page is found on the page

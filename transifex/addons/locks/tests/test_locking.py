@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-import unittest
 from time import sleep
 from django.core import management
 from django.conf import settings
-from django.db.models.loading import get_model, get_app, get_apps
-from django.contrib.auth.models import User, Group
+from django.db.models.loading import get_model, get_app
 from django.core.urlresolvers import reverse
-from django.test.client import Client
-from txcommon.tests.base import TransifexBaseTestCase
+from addons.commontests.tests.base import BaseTestCase
 from txcommon.log import logger
-from txcron.signals import cron_daily, cron_hourly
 from notification.models import Notice
 
 # Load models
@@ -20,18 +16,17 @@ POFileLock = get_model('locks', 'POFileLock')
 POFileLockError = get_app('locks').POFileLockError
 
 # These Languages and POFiles should exist:
-TEAM_LANG_CODES = ['fi', 'es', 'fr']
+TEAM_LANG_CODES = ['en', 'es', 'fr']
 
 # To invoke IPython shell during runtime you can use following piece of code:
 # from IPython.Shell import IPShellEmbed
 # IPShellEmbed()()
 
-class TestLocking(TransifexBaseTestCase):
+class TestLocking(BaseTestCase):
     def setUp(self):
         self.assertFalse('external.csrf.middleware.CsrfMiddleware' in
             settings.MIDDLEWARE_CLASSES, msg = 'Locking test doesn\'t '
             'work with CSRF Middleware enabled')
-
         super(TestLocking, self).setUp()
         self.assertNoticeTypeExistence("project_component_file_lock_expiring")
         
@@ -44,11 +39,11 @@ class TestLocking(TransifexBaseTestCase):
         for code in TEAM_LANG_CODES:
             logger.debug("Trying to create team for: %s" % code)
             team = Team()
-            team.creator = self.user['maint']
+            team.creator = self.user['maintainer']
             team.language = Language.objects.get(code=code)
             team.project = self.project
             team.save()
-            team.members.add(self.user['trans'])
+            team.members.add(self.user['team_member'])
             team.save()
 
         # Select first POFile
@@ -69,7 +64,7 @@ class TestLocking(TransifexBaseTestCase):
 
     def test_lotte(self):
         # Try opening Lotte and check wether file was locked
-        resp = self.client['trans'].post(self.url_start_lotte, follow = True)
+        resp = self.client['team_member'].post(self.url_start_lotte, follow = True)
         self.assertEqual( resp.status_code, 200 )
         self.assertEqual( POFileLock.objects.valid().count(), 1)
         POFileLock.objects.all().delete()
@@ -85,26 +80,26 @@ class TestLocking(TransifexBaseTestCase):
         self.component.save()
 
         # Try to submit file as translator: should succeed
-        resp = self.client['trans'].post(self.url_submit, {'submitted_file':
+        resp = self.client['team_member'].post(self.url_submit, {'submitted_file':
             get_file_handle(self.pofile),'message':'Test'}, follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("File submitted successfully" in resp.content)
 
         # Try to submit file as maintainer: should succeed
-        resp = self.client['maint'].post(self.url_submit, {'submitted_file':
+        resp = self.client['maintainer'].post(self.url_submit, {'submitted_file':
             get_file_handle(self.pofile),'message':'Test'}, follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("File submitted successfully" in resp.content)
 
         # Lock the file
-        lock = POFileLock.objects.create_update(self.pofile, self.user['trans'])
+        lock = POFileLock.objects.create_update(self.pofile, self.user['team_member'])
         
         # Get the expiration time of current lock
         expires = self.pofile.locks.get().expires
         sleep(2)
 
         # Try to submit file as translator: should succeed
-        resp = self.client['trans'].post(self.url_submit, {'submitted_file':
+        resp = self.client['team_member'].post(self.url_submit, {'submitted_file':
             get_file_handle(self.pofile),'message':'Test'}, follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("File submitted successfully" in resp.content)
@@ -114,7 +109,7 @@ class TestLocking(TransifexBaseTestCase):
         sleep(2)
 
         # Try to submit file AND EXTEND LOCK: should succeed
-        resp = self.client['trans'].post(self.url_submit, {'submitted_file':
+        resp = self.client['team_member'].post(self.url_submit, {'submitted_file':
             get_file_handle(self.pofile),'message':'Test', 'lock_extend':'1'}, follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("File submitted successfully" in resp.content)
@@ -122,7 +117,7 @@ class TestLocking(TransifexBaseTestCase):
             "Extend lock checkbox doesn't work")
 
         # Try to submit file as maintainer: should get 403
-        resp = self.client['maint'].post(self.url_submit, {'submitted_file':
+        resp = self.client['maintainer'].post(self.url_submit, {'submitted_file':
             get_file_handle(self.pofile),'message':'Test'}, follow=True)
         self.assertEqual(resp.status_code, 403)
 
@@ -133,9 +128,21 @@ class TestLocking(TransifexBaseTestCase):
     def test_permissions(self):
         # format: locker : (could_lock, {unlocker : could_unlock}),
         LOCK_PERM_MATRIX = {
-            'maint' : (True, {'anon':False, 'trans':False, 'maint' : True}),
-            'trans' : (True, {'anon':False, 'trans':True, 'maint' : True}),
-            'anon' : (False, {'anon':False} )
+            'maintainer' : (
+                True,
+                {
+                    'anonymous':False,
+                    'team_member':False,
+                    'maintainer' : True
+                }),
+            'team_member' : (
+                True,
+                {
+                    'anonymous':False,
+                    'team_member':True,
+                    'maintainer' : True
+                }),
+            'anonymous' : (False, {'anonymous':False} )
         }
 
         for locker_nick, (could_lock, unlockers) in LOCK_PERM_MATRIX.iteritems():
@@ -171,16 +178,19 @@ class TestLocking(TransifexBaseTestCase):
         teams = []
         for pofile in self.pofiles:
             
-            value = POFileLock.can_lock(pofile, self.user['trans'])
+            value = POFileLock.can_lock(pofile, self.user['team_member'])
             if pofile.language and pofile.language.code in TEAM_LANG_CODES:
                 teams.append(pofile.language.code)
                 self.assertTrue( value )
             else:
                 self.assertFalse( value )
             # Project maintainers should be able to access locks
-            self.assertTrue( POFileLock.can_lock(pofile, self.user['maint'] ) )
-            # Registered but otherwise not associated users shouldn't be able to access locks
-            self.assertFalse( POFileLock.can_lock(pofile, self.user['regist'] ) )
+            self.assertTrue(POFileLock.can_lock(pofile,
+                self.user['maintainer']))
+            # Registered but otherwise not associated users shouldn't be able to
+            #access locks
+            self.assertFalse( POFileLock.can_lock(pofile,
+                self.user['registered']))
  
         for team in teams:
             self.assertTrue( team in TEAM_LANG_CODES )
@@ -192,14 +202,17 @@ class TestLocking(TransifexBaseTestCase):
         # Try to lock all files
         for pofile in self.pofiles:
             try:
-                POFileLock.objects.create_update(pofile, self.user['trans'])
+                POFileLock.objects.create_update(pofile,
+                    self.user['team_member'])
                 logger.debug("Locked: %s" % pofile)
             except POFileLockError:
-                self.assertFalse( pofile.language and pofile.language.code in TEAM_LANG_CODES )
+                self.assertFalse( pofile.language and pofile.language.code in
+                    TEAM_LANG_CODES )
 
         # Check wether lock was created and is valid
         self.assertEqual(POFileLock.objects.all().count(), len(TEAM_LANG_CODES))
-        self.assertEqual(POFileLock.objects.valid().count(), len(TEAM_LANG_CODES))
+        self.assertEqual(POFileLock.objects.valid().count(),
+            len(TEAM_LANG_CODES))
 
         
         for lock in POFileLock.objects.valid():
@@ -207,11 +220,12 @@ class TestLocking(TransifexBaseTestCase):
             self.assertTrue(lock.pofile.language.code in TEAM_LANG_CODES)
 
             # Check permissions again
-            self.assertFalse(lock.can_unlock(self.user['regist']))
-            self.assertTrue(lock.can_unlock(self.user['trans']))
-            self.assertTrue(lock.can_unlock(self.user['maint']))
+            self.assertFalse(lock.can_unlock(self.user['registered']))
+            self.assertTrue(lock.can_unlock(self.user['team_member']))
+            self.assertTrue(lock.can_unlock(self.user['maintainer']))
 
-        # No need to actually delete locks because can_unlock is only contraint for delete_by
+        # No need to actually delete locks because can_unlock is only contraint
+        #for delete_by
         
         # Now sleep and check lock validness again
         logger.debug("Sleeping for %i seconds" % settings.LOCKS_LIFETIME)
@@ -222,7 +236,8 @@ class TestLocking(TransifexBaseTestCase):
         self.assertEqual(POFileLock.objects.valid().count(), 0)
 
         # TODO: Check mail.outbox also?
-        logger.debug("Sending cron_hourly signal to send notifications about lock expiration")
+        logger.debug("Sending cron_hourly signal to send notifications about "
+            "lock expiration")
         management.call_command('cron', interval='hourly')
         self.assertEqual( Notice.objects.count(), len(TEAM_LANG_CODES))    
 
