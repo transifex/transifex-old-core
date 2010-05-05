@@ -24,9 +24,9 @@ def check_page_status(unittest, user_role, url_roles):
     the 'url_roles' dictionary using a predefined structure of data.
 
     unittest - It's a instance of a class that inherits
-        commontests.tests.base.BaseTestCase.
+        txcommon.tests.base.BaseTestCase.
     user_role - One of the user roles allowed on
-        commontests.tests.base.BaseTestCase.
+        txcommon.tests.base.BaseTestCase.
     url_roles - A structured dictionary containing the url to be tested.
 
     Structure of 'url_roles':
@@ -40,7 +40,7 @@ def check_page_status(unittest, user_role, url_roles):
         <REQUEST_METHOD> - Might be 'GET' or 'POST'.
         <URL> - The url that must be tested.
         <USER_ROLE> - One of the user roles allowed on 
-            commontests.tests.base.BaseTestCase. At least one user 
+            txcommon.tests.base.BaseTestCase. At least one user 
             role is required.
         <STATUS_CODE> - Code of status for the HTTP response.
         <DICT_OF_ARGS> - Arguments that might be passed to the HTTP request. 

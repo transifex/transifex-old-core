@@ -2,7 +2,7 @@
 from django.dispatch import Signal
 from django.core.management.base import BaseCommand
 from optparse import make_option
-from transifex.addons.txcron import signals
+from txcron import signals
 from django_addons.autodiscover import autodiscover
 
 class Command(BaseCommand):

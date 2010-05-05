@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 from projects.models import Project
-from addons.commontests.tests.base import BaseTestCase
+from txcommon.tests.base import BaseTestCase
 
 class TestTimeline(BaseTestCase):
 

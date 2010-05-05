@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from txcommon.db.models import IntegerTupleField
 
-#doing that since this might not be on addons.repowatch...
+#doing that since this might not be on repowatch...
 Watch = models.get_model('repowatch', 'Watch')
 
 class Migration:

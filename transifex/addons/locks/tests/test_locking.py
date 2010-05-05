@@ -4,7 +4,7 @@ from django.core import management
 from django.conf import settings
 from django.db.models.loading import get_model, get_app
 from django.core.urlresolvers import reverse
-from addons.commontests.tests.base import BaseTestCase
+from txcommon.tests.base import BaseTestCase
 from txcommon.log import logger
 from notification.models import Notice
 

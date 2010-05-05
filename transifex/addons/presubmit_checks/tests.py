@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from StringIO import StringIO
 from django.core.urlresolvers import reverse
-from addons.commontests.tests.base import BaseTestCase
+from txcommon.tests.base import BaseTestCase
 
 class TestPresubmitChecks(BaseTestCase):
     def test_main(self):
