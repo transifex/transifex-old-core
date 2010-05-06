@@ -74,9 +74,10 @@ setup(
         "django-piston",
         "django-sorting >= 0.1",
         "django-tagging >= 0.3",
-        "South >= 0.6-rc1",
+        "South >= 0.7",
         "django-ajax-selects",
         "django-threadedcomments",
+        "django-staticfiles",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
