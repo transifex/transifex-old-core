@@ -100,27 +100,6 @@ class TResource(models.Model):
                     position__isnull=False,).exclude(
                             translationstring__language=target_language)
 
-class StringSet(models.Model):
-    path = models.CharField(_('Path'), max_length=255, null=False,
-        blank=False, 
-        help_text=_("A path to the template file or to the source stream "
-                    "inside the project folders hierarchy or a URI."))
-    language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True,
-        help_text=_("The language in which this translation string belongs to."))
-
-    tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
-        blank=False, null=False,
-        help_text=_("The translation resource which owns the source string."))
-
-    def __unicode__(self):
-        return "%s/%s%s" % (self.tresource.project.slug, self.tresource.slug, self.path)
-
-    def relpath(self):
-        if self.path[0] == "/":
-            return self.path[1:]
-        return self.path
-
 class SourceString(models.Model):
     """
     A representation of a source string which is translated in many languages.
@@ -172,7 +151,7 @@ class SourceString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'description', 'tresource'),)
+#        unique_together = (('string', 'description', 'tresource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
         ordering = ['string', 'description']
@@ -225,8 +204,16 @@ class TranslationString(models.Model):
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
                     "translation string instance."))
-    stringset = models.ForeignKey(StringSet,
-        verbose_name=_('Set of strings which group strings by filename and language'))
+
+    language = models.ForeignKey(Language,
+        verbose_name=_('Target Language'),blank=False, null=True,
+        help_text=_("The language in which this translation string belongs to."))
+
+    # Foreign Keys
+    # A source string must always belong to a tresource
+    tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+        blank=False, null=False,
+        help_text=_("The translation resource which owns the source string."))
 
     user = models.ForeignKey(User,
         verbose_name=_('Committer'), blank=False, null=True,
@@ -239,7 +226,7 @@ class TranslationString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_string', 'string', 'stringset'),)
+#        unique_together = (('source_string', 'string', 'language', 'tresource'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]

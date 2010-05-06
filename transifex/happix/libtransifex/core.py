@@ -82,18 +82,21 @@ class Parser:
     default_encoding = "utf-8"
 
     @classmethod
-    def open(cls, filename = None, root = None):
-        if filename and root:
-            relpath = filename
-            if relpath[0] == "/":
-                relpath = relpath[1:]
-
-            fh = codecs.open( os.path.join(root, relpath), "r", cls.default_encoding )
-
-            buf = fh.read()
-            if ord(buf[0]) == 0xfeff:
+    def open(cls, filename = None, root = None, fd = None):
+        if filename or fd:
+            if not fd:
+		if root:
+		    relpath = filename
+		    if relpath[0] == "/":
+			relpath = relpath[1:]
+		    fullpath = os.path.join(root, relpath)
+		else:
+		    fullpath = filename
+		fd = codecs.open( fullpath, "r", cls.default_encoding )
+            buf = fd.read()
+	    if ord(buf[0]) == 0xfeff:
                 buf = buf[1:] # Remove byte order marker
-            fh.close()
+            fd.close()
             stringset = cls.parse(buf)
             stringset.filename = filename
             return stringset
@@ -122,6 +125,7 @@ class StringSet:
 
     def to_json(self):
         return json.dumps(self, cls=CustomSerializer)
+
 
     #def serialize(self):
         #d =  {

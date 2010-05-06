@@ -2,7 +2,16 @@
 {% load i18n %}
 
 {% block breadcrumb %}
-{{block.super}} » <a href="{% url _project_resource project.slug tresource.slug %}">{{stringset.path}}</a>
+{{block.super}} » 
+<a href="{% url _project_resource project.slug tresource.slug %}">{{ tresource }}</a> » 
+<a href="{% url translation project.slug tresource.slug target_language.code %}">{{ target_language.name }}</a>
+{% endblock %}
+
+
+{% block extra_head %}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/json2.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/sprintf.js"></script>
+  <link media="screen" href="{{ MEDIA_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}
@@ -20,11 +29,431 @@
 
 {% block content %}
 
-<ul>
-{ for project in projects }
-  <li><a href="{ url _project project.slug }">{{project}}</a></li>
-{ endfor }
-</ul>
+<style type="text/css">
+.paginate_page_selected {
+  background-color: white !important;
+  border-color: #888 !important;
+}
+
+</style>
+<script type="text/javascript">
+
+    /* Global functions */
+    function json_post(url, struct, callback) {
+        if (callback) {
+            var fp = function(xmlhttpreq, textStatus) {
+                callback(textStatus, JSON.parse(xmlhttpreq.responseText));
+            }
+        } else {
+            var fp = null;
+        }
+        $.ajax({
+            contentType : 'application/json', /* Workaround for django-piston */
+            url: push_url,
+            global : false,
+            type : 'POST',
+            dataType: 'text', /* Workaround for django-piston */
+            data: JSON.stringify(packed), /* Workaround for django-piston */
+            complete: fp,
+        });
+    }
+
+    /* Global variables */
+    stringset = null;
+
+    /* TranslationString class which stores information about one translation string */
+    function TranslationString(parent, id, source_string, translated_string) {
+        this.parent = parent;
+        this.id = id;
+        this.source_string = source_string;
+        this.translated_string = translated_string;
+        this.modified = false;
+        this.toString = function() {
+            return "TranslationString(" + this.id + ", '" + this.source_string + "', '" + this.translated_string + "');";
+        }
+        this.isModified = function() {
+            return this.modified;
+        }
+        this.isUntranslated = function() {
+            return this.translated_string == "";
+        }
+        this.isTranslated = function() {
+            return this.translated_string != "";
+        }
+        this.translate = function(new_string) {
+            if (new_string != this.translated_string) {
+                this.translated_string = new_string;
+                this.modified = true;
+                this.parent.updateStats(true); // Issue statistics update with delay
+            }
+        }
+
+        this.push = function() {
+            this.parent.push(this);
+        }
+
+        this.flagString = function() {
+            if (this.modified) {
+                return "fuzzy";
+            } else if (this.translated_string == "") {
+                return "untranslated";
+            } else {
+                return "translated";
+            }
+        }
+    }
+
+    
+    /* StringSet class which stores list of translation strings and maps them to visible table */
+    function StringSet(json) {
+        // bindings[table_row_index] = TranslationString();
+        this.bindings = [];
+
+        // Visible table offset
+        this.offset = 0;
+
+        // Timer for stats 
+        this.update_stats_timer = null;
+
+        // Initialize strings from JSON data
+        this.strings = []
+        for (i=0; i<json.length; i++) {
+          j = json[i];
+          this.strings[i] = new TranslationString(this, j[0], j[1], j[2]);
+        }
+        this.filtered = this.strings;
+
+        /* StringSet.bindToTable(target_table_id) */
+        this.bindToTable = function(target_table_id) {
+            this.bound_table = $("table#" + target_table_id);
+        }
+
+        this.push = function(ts) {
+            this_stringset = this;
+            push_url = '{% url api_resource_translation project.slug tresource.slug target_language.code %}';
+            packed = {};
+            if (ts) {
+                packed[ts.id] = ts.translated_string;
+            } else {
+                for (i=0; i<this.strings.length; i++)
+                    if (this.strings[i].modified)
+                        packed[this.strings[i].id] =  this.strings[i].translated_string;
+            }
+            if (packed == {}) {
+                alert("No strings to push");
+            } else {
+                json_post(push_url, packed, function(stat, dict){
+                    ids = dict['saved'];
+                    for (i=0; i<ids.length; i++) {
+                        for (j=0; j<this_stringset.strings.length; j++) {
+                            if (this_stringset.strings[j].id == ids[i])
+                                this_stringset.strings[j].modified = false;
+                        }
+                    }
+                    this_stringset.updateView();
+                    this_stringset.updateStats();
+                });
+            }
+        }
+
+        this.updateView = function() {
+            /* The view subset of strings is based on table size */
+            /* We clone tbody here so we can replace the old one in all at once not row by row */
+            var table_body = $("tbody", this.bound_table).clone();
+            var table_rows = $("tr", table_body);
+            var items_per_view = table_rows.length;
+
+            /* Push stuff from this.strings to the table */
+            for(i=0; i< items_per_view; i++) {
+                table_row = table_rows[i];
+                if (i + this.offset < this.filtered.length) {
+                    s = this.filtered[i + this.offset];
+                    this.bindings[i] = s; // Bind string to table row
+                    $("td.num", table_row).html(s.id); // Set string number
+                    $("td.msg", table_row).html(s.source_string); // Set source string
+                    textarea = $("td.trans textarea", table_row);
+                    textarea.val(s.translated_string);
+                    textarea.removeClass("fuzzy translated untranslated").addClass(s.flagString());
+
+                    /* Toggle per string save button */
+                    button_save = $("td.notes span.save", table_row);
+                    if (s.modified)
+                        button_save.show();
+                    else
+                        button_save.hide();
+
+                    $(table_row).show();
+                } else {
+                    this.bindings[i] = null;
+                    $(table_row).hide();
+                }
+
+            }
+            $("tbody", this.bound_table).replaceWith(table_body);
+
+            /* Bind textarea editing to strings */
+            var this_stringset = this;
+            $('tr td textarea', table_body).keyup(function() {
+                id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+                string = this_stringset.bindings[id];
+                string.translate($(this).val());
+                if (string.modified) {
+                    $(this).removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                    $('tbody tr td.notes span#save_' + id).show();
+                }
+            });
+
+            /* Bind save button events */
+            $('tr td.notes span.save', table_body).click(function() {
+                table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
+                this_stringset.bindings[table_row_id].push();
+            });
+        }
+
+        /* StringSet.filter(); */
+        this.filter = function() {
+            j = 0;
+
+            conModified = false;
+            conTranslated = false;
+            conUntranslated = false;
+
+            $('tr td input[type=checkbox]:checked', this.bound_stats).each(function(){
+                if ($(this).attr("id") == "only_translated") {
+                    conTranslated = true;
+                }
+                if ($(this).attr("id") == "only_fuzzy") {
+                    conModified = true;
+                }
+                if ($(this).attr("id") == "only_untranslated") {
+                    conUntranslated = true;
+                }
+            });
+
+            this.filtered = [];
+
+            for (i=0; i<this.strings.length; i++) {
+                s = this.strings[i];
+                status_passed = (conModified && s.isModified() ||
+                    (!s.isModified()) && (conUntranslated && s.isUntranslated() ||
+                    conTranslated && s.isTranslated()))
+                if (status_passed) {
+                    this.filtered[j] = s;
+                    j++;
+                }
+            }
+            this.updatePagination(); /* Update pagination if count of the strings changes */
+        }
+
+        /* StringSet.bindPagination(target_div_id) 
+        * Binds this StringSet to div which contains 
+        * #paginate_prev - Button for going to previous page (required)
+        * #paginate_next - Button for going to next page (required)
+        * #paginate_pages - Container for page buttons (required)
+        * #paginate_pages span.paginate_page - Page buttons
+        *
+        */
+        this.bindPagination = function(target_div_id) {
+            var items_per_view = $("tbody tr", this.bound_table).length;
+            var this_stringset = this;
+            var container = $("div#" + target_div_id);
+            this.bound_pagination = container;
+
+            $("#paginate_prev", container).click(function(){
+                if (this_stringset.offset >= items_per_view) {
+                    this_stringset.offset -= items_per_view;
+                    this_stringset.updatePagination();
+                    this_stringset.updateView();
+                }
+            });
+
+            $("#paginate_next", container).click(function(){
+                if (this_stringset.offset <= this_stringset.filtered.length - items_per_view) {
+                    this_stringset.offset += items_per_view;
+                    this_stringset.updatePagination();
+                    this_stringset.updateView();
+                }
+            });
+        }
+
+
+        /* StringSet.updatePagination() 
+        * Updates bound pagination div
+        * If number of pages changes then page buttons are regenerated
+        */
+        this.updatePagination = function() {
+            var items_per_view = $("tbody tr", this.bound_table).length;
+            var pages = Math.ceil(this.filtered.length/items_per_view);
+            var container = this.bound_pagination;
+            var container_pages = $("#paginate_pages", container);
+
+            
+            if (pages != container_pages.children().length) { /* Don't update if count of pages is same */
+                /* Create page buttons */
+                var buf = " ";
+                for (page=0; page<pages; page++) {
+                    buf += "<span class=\"buttonized paginate_page\" id=\"paginate_page_" + page + "\">" + (page+1) + "</span> ";
+                }
+                container_pages.html(buf);
+
+                /* Attach function to each button */
+                $("#paginate_pages span.paginate_page", container).click(function(){
+//                    $(this).addClass("i16 waiting");
+                    page = parseInt($(this).attr("id").split("_")[2]);
+                    this_stringset.offset = items_per_view * page;
+                    this_stringset.updatePagination();
+                    this_stringset.updateView();
+                });
+            }
+
+
+            /* Update highlighted page */
+            $("#paginate_pages span.paginate_page").removeClass("paginate_page_selected");
+            var items_per_view = $("tbody tr", this.bound_table).length;
+            var page = this.offset / items_per_view;
+            $("#paginate_pages span#paginate_page_" + page).addClass("paginate_page_selected");
+        }
+
+        /* StringSet.bindStats(target_table_id) */
+        this.bindStatsAndFilter = function(target_table_id) {
+            this_stringset = this; /* Workaround for this overriding */
+            table = $("table#" + target_table_id);
+            this.bound_stats = table
+            $('tr td input[type="checkbox"]', table).click(function(){
+                this_stringset.filter();
+                this_stringset.updateView();
+            });
+        }
+
+        /* StringSet.updateStats(later=false) */
+        this.updateStats = function(later) {
+            var this_stringset = this;
+            if (later) {
+                clearTimeout(this.update_stats_timer);
+                this.update_stats_timer = window.setTimeout(function() { this_stringset.updateStats(); }, 1000);
+            } else {
+                this.translated = 0;
+                this.untranslated = 0;
+                this.modified = 0;
+                for (i=0; i<this.strings.length; i++) {
+                    j = this.strings[i];
+                    if (j.modified) {
+                        this.modified += 1;
+                    } else if (j.translated_string == "") {
+                        this.untranslated += 1;
+                    } else {
+                        this.translated += 1;
+                    }
+                }
+                if (this.bound_stats) {
+                    $('#total_sum', this.bound_stats).html(stringset.strings.length);
+                    $('#total_translated', this.bound_stats).html(stringset.translated);
+                    $('#total_translated_perc', this.bound_stats).html(sprintf("%.02f%%", stringset.translated*100.0/stringset.strings.length));
+                    $('#total_fuzzy', this.bound_stats).html(stringset.modified);
+                    $('#total_fuzzy_perc', this.bound_stats).html(sprintf("%.02f%%", stringset.modified*100.0/stringset.strings.length));
+                    $('#total_untranslated', this.bound_stats).html(stringset.untranslated);
+                    $('#total_untranslated_perc', this.bound_stats).html(sprintf("%.02f%%", stringset.untranslated*100.0/stringset.strings.length));
+                }
+            }
+        }
+    }
+    
+    $(document).ready(function(){
+        pull_url = '{% url api_resource_translation project.slug tresource.slug target_language.code %}';
+        $.getJSON(pull_url, {}, function(data, textStatus) {
+            stringset = new StringSet(data);
+
+            /* Source and translated strings table */
+            stringset.bindToTable("trans_web_edit");
+            stringset.updateView(); /* Update shown strings */
+
+            /* Statistics and filtering by flag table */
+            stringset.bindStatsAndFilter("stats_table");
+            stringset.updateStats(); /* Update statistics */
+
+            stringset.bindPagination("trans_pagination");
+            stringset.updatePagination(); /* Highlight corrent page */
+        });
+
+        
+        $("#save_all").click(function(){stringset.push();});
+
+    });
+
+</script>
+  <div style="float:right;">
+    <span class="i16 save_all buttonized" id="save_all">Save all</span>
+  </div>
+
+  <table class="definition stats_totals" id="stats_table">
+  <input id="filter_entries" type="hidden" name="filter_entries"/>
+  <tr>
+    <th class="translated">Translated</th>
+
+      <td id="total_translated">?</td>
+      <td id="total_translated_perc">?</td>
+      <td><input id="only_translated" type="checkbox"  checked="checked"  name="only_translated"/></td>
+  </tr>
+  <tr>
+    <th class="fuzzy">Modified</th>
+      <td id="total_fuzzy">?</td>
+      <td id="total_fuzzy_perc">?</td>
+      <td><input id="only_fuzzy" type="checkbox" name="only_fuzzy"/></td>
+  </tr>
+  <tr>
+    <th class="untranslated">Untranslated</th>
+      <td id="total_untranslated">?</td>
+      <td id="total_untranslated_perc">?</td>
+
+      <td><input id="only_untranslated" type="checkbox" checked="checked" name="only_untranslated"/></td>
+  </tr>
+  <tr class="last">
+    <th>Total</th>
+      <td id="total_sum">?</td>
+  </tr>
+  </table>
+
+  <div class="generic_form" >
+  <table id="trans_web_edit" class="trans_web_edit stats_comp tablesorter" style="width:100%" >
+   <thead>
+    <tr>
+      <th>{% trans "#" %}</th>
+      <th>{% trans "Source String" %}</th>
+      <th>{% trans "Translation" %}</th>
+    {% if WEBTRANS_SUGGESTIONS %}      
+      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
+    {% endif %}
+      <th style="width:48px;">&nbsp;</th>
+    </tr>
+   </thead>
+   <tbody>
+
+  {% for row in rows %}
+  <tr>
+    <td class="num" id="id_{{row}}">{{row}}</td>
+    <td class="msg" style="width:45%; text-align:left;" id="source_{{row}}">{{ field.label }}</td>
+    <td class="trans" style="width:45%" >
+      <textarea id="translation_{{row}}" class="translation" style="width:100%; height: 100%;">&nbsp;
+      </textarea>
+    </td>
+     <td class="notes" style="vertical-align:middle;padding-left: 20px;">
+       <span class="i16 save buttonized_simple" id="save_{{row}}" style="display:none;"></span>
+     </td>
+  </tr>
+  {% endfor %}
+
+
+
+   </tbody>
+  </table>
+  </div>
+
+  <div style="line-height:200%" id="trans_pagination">
+    <span id="paginate_prev" class="i16 previous buttonized">Previous</span>
+    <span id="paginate_pages"></span>
+    <span id="paginate_next" class="i16 next buttonized">Next</span>
+  </div>
+
 
 {% endblock %}
 

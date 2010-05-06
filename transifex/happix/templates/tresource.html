@@ -19,49 +19,19 @@
 
 {% block content %}
 
-<h2>Stringsets</h2>
+<h2>Upload</h2>
+{% url project.resource.upload project.slug tresource.slug as file_submit_url %}
+<form action="{{ file_submit_url }}" method="post" enctype="multipart/form-data">
+  <input type="file" name="submitted_file">
+  <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
+</form>
 
-  <p>This is internally used structure to map stringsets to filenames (+language).
-   The user should be presented with a list of ALL strings in current TResource which are translatable or to show a subset:</p>
-
-<select>
-<option>All (all strings in current translation resource)</option>
-{% for stringset in stringsets %}
-  <option>{{stringset.path}}</option>
+Available translations:
+<ul>
+{% for language,count in languages.items %}
+    <li><a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup></li>
 {% endfor %}
-</select>
-
-<!-- a href="{% url _stringset project.slug tresource.slug stringset.path %}"-->
-
-<h2>Strings</h2>
-
-
-<table>
-
-  <tr>
-    <td>From language:</td>
-    <td>To language:</td>
-  </tr>
-
-{% for language in languages %}
-  <tr>
-    <td>{{language}}</td>
-    <td><a href="{% url _project_resource project.slug tresource.slug language.code %}">{{language}}</a></td>
-  </tr>
-{% endfor %}
-  <tr>
-    <td>---</td>
-    <td>---</td>
-  </tr>
-
-{% for string in strings %}
-  <tr>
-    <td>{{string.from}}</td>
-    <td>{{string.to}}</td>
-  </tr>
-{% endfor %}
-</table>
-
+</ul>
 
 
 

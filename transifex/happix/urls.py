@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from happix.views import search_translation, \
-    view_projects, view_project, view_translation_resource, view_stringset
+    view_projects, view_project, view_translation_resource, view_upload, view_translation #view_stringset, 
 
 
 urlpatterns = patterns('',
@@ -10,9 +10,12 @@ urlpatterns = patterns('',
     url(r'^project/(?P<project_slug>[-\w]+)/$', view_project, name='_project'),
     url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/$', view_translation_resource, name='_project_resource'),
 
-    url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/(?P<to_lang>[-\w]+)/$', view_translation_resource, name='_project_resource'),
 
-    url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/stringset(?P<stringset_path>(.*))/$', view_stringset, name='_stringset'),
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/upload/$', view_upload, name = "project.resource.upload"),
+
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', view_translation, name='translation'),
+
+    #url(r'^project/(?P<project_slug>[-\w]+)/(?P<tresource_slug>[-\w]+)/stringset(?P<stringset_path>(.*))/$', view_stringset, name='_stringset'),
 
     url(r'^search/$', search_translation, name='search_translation'),
 

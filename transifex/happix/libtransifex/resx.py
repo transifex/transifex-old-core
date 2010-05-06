@@ -16,6 +16,7 @@ class ResXmlCompileError(CompileError):
 
 class ResXmlParser(Parser):
     name = "Microsoft .resx parser"
+    mimetype = "text/microsoft-resx"
 
     @classmethod
     def accept(cls, filename):
