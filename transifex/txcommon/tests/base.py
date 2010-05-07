@@ -121,9 +121,9 @@ class BaseTestCase(TestCase):
  
             # Fetch pofiles
             self.pofiles = POFile.objects.filter(component = self.component)
+            self.assertNotEqual(self.pofiles, None)
         else:
             self.pofiles = None          
-        self.assertNotEqual(self.pofiles, None)
 
     def tearDown(self):
         self.project.delete()
