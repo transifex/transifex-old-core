@@ -1,3 +1,4 @@
+import commands
 import os
 import unittest
 from vcs.models import VcsUnit
@@ -10,9 +11,21 @@ class SvnTestCase(unittest.TestCase):
 
     #TODO: Run the init stuff only when needed.
     def setUp(self):
+
+        root='%s/test_repo/svn/' % os.path.split(__file__)[0]
+        #we need to remove any old checkout dir in order for it to exists within
+        # our local paths
+        try:
+            os.unlink('%scheckout' % root)
+        except OSError:
+            pass
+        #now recreate this within to create all the necessary local paths
+        stat = commands.getstatusoutput('svn co file://%s/svnrepo/ %scheckout'
+            % (root, root))
+        print stat
         self.unit = VcsUnit.objects.create(
             name="Test-SVN",
-            root='%s/test_repo/svn/checkout' % os.path.split(__file__)[0],
+            root='%scheckout' % root,
             branch='trunk', type='svn')
     def tearDown(self):
         self.unit.delete()
