@@ -319,6 +319,7 @@ are available.
 .. code-block:: bash
 
     easy_install Markdown httplib2 pygments>=1.0 polib>=0.5.1
+    easy_install pygooglechart
     easy_install django-pagination django-notification django-authority \
       django-piston south>=0.7 django-sorting django-filter \
       django-threadedcomments django-staticfiles
@@ -358,6 +359,10 @@ installation should be very simple. Customize ``settings/*.conf`` and
 To enable Transifex's notifications you'll need to switch the relevant setting
 called ENABLE_NOTICES to ``True``.
 
+To have your widget code viewable from outside your transifex instance you have
+to set your ``STATIC_URL`` variable to an absolute URL (by using relative paths
+you can still view the widgets on your own installation)
+
 .. note::
  
     Ensure the database server defined in the settings files is properly
@@ -380,6 +385,7 @@ Once you're done configuring, run inside the project directory::
     ./manage.py migrate             # Setup more DB tables
     ./manage.py txcreatelanguages   # Create a standard set of languages
     ./manage.py txcreatenoticetypes # Create a standard set of notice types
+    ./manage.py build_static        # Copy all the addons files to the static dir
     ./manage.py runserver 8088      # Start the development server
 
 The first command will create the necessary directories on the disk. Note that

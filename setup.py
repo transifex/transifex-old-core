@@ -78,6 +78,7 @@ setup(
         "django-ajax-selects",
         "django-threadedcomments",
         "django-staticfiles",
+        "pygooglechart",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
