@@ -34,7 +34,7 @@
                 return;
             }
             code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
-            code += "<img border=\"0\" src=\"{{SITE_URL_PREFIX}}{{STATIC_URL}}images/" +filename+".png\">\n";
+            code += "<img border=\"0\" src=\"{{ STATIC_URL }}widgets/images/" +filename+".png\">\n";
             code += "</a>";
             snippet.html(code.entityify());
             snippet.slideDown("slow");
@@ -56,8 +56,8 @@
   <table class="widget">
       <tr>
           <td class="userbars">
-              <img src="{{ STATIC_URL }}images/transifex-userbar.png"/><br/>
-              <img src="{{ STATIC_URL }}images/transifex-userbar-2.png"/>
+              <img src="{{ STATIC_URL }}widgets/images/transifex-userbar.png"/><br/>
+              <img src="{{ STATIC_URL }}widgets/images/transifex-userbar-2.png"/>
           </td>
           <td>
               <p>{% blocktrans %}You can insert userbars to forums, e-mail signatures etc.{% endblocktrans %}</p>
