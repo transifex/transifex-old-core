@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import warnings
 from time import sleep
 from django.core import management
 from django.conf import settings
@@ -27,7 +28,7 @@ class TestLocking(BaseTestCase):
         self.assertFalse('external.csrf.middleware.CsrfMiddleware' in
             settings.MIDDLEWARE_CLASSES, msg = 'Locking test doesn\'t '
             'work with CSRF Middleware enabled')
-        super(TestLocking, self).setUp()
+        super(TestLocking, self).setUp(create_teams=False)
         self.assertNoticeTypeExistence("project_component_file_lock_expiring")
         
         # Set settings for testcase
@@ -177,13 +178,13 @@ class TestLocking(BaseTestCase):
         # Check
         teams = []
         for pofile in self.pofiles:
-            
+
             value = POFileLock.can_lock(pofile, self.user['team_member'])
             if pofile.language and pofile.language.code in TEAM_LANG_CODES:
                 teams.append(pofile.language.code)
                 self.assertTrue( value )
             else:
-                self.assertFalse( value )
+                    self.assertFalse( value )
             # Project maintainers should be able to access locks
             self.assertTrue(POFileLock.can_lock(pofile,
                 self.user['maintainer']))
@@ -235,11 +236,16 @@ class TestLocking(BaseTestCase):
         self.assertEqual(POFileLock.objects.all().count(), len(TEAM_LANG_CODES))
         self.assertEqual(POFileLock.objects.valid().count(), 0)
 
-        # TODO: Check mail.outbox also?
-        logger.debug("Sending cron_hourly signal to send notifications about "
-            "lock expiration")
-        management.call_command('cron', interval='hourly')
-        self.assertEqual( Notice.objects.count(), len(TEAM_LANG_CODES))    
+        if settings.ENABLE_NOTICES:
+            # TODO: Check mail.outbox also?
+            logger.debug("Sending cron_hourly signal to send notifications about "
+                "lock expiration")
+            management.call_command('cron', interval='hourly')
+            self.assertEqual( Notice.objects.count(), len(TEAM_LANG_CODES))
+        else:
+            warnings.warn("Please set ENABLE_NOTICES to True to run all tests.",
+                UserWarning)
+
 
         logger.debug("Sending cron_daily signal to clean up database")
         management.call_command('cron', interval='daily')

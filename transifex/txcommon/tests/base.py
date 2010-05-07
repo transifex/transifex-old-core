@@ -39,7 +39,7 @@ class BaseTestCase(TestCase):
     # Use the vcs app git test repo
     root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
 
-    def setUp(self, skip_stats = False):
+    def setUp(self, skip_stats = False, create_teams=True):
         """
         Set up project, component and vcsunit. Insert POFile objects.
         """
@@ -100,10 +100,11 @@ class BaseTestCase(TestCase):
         self.release.components.add(self.component)
 
         self.language = Language.objects.get(code='pt_BR')
-        self.team = Team.objects.get_or_create(language=self.language,
-            project=self.project, creator=self.user['maintainer'])[0]
-        self.team.coordinators.add(self.user['team_coordinator'])
-        self.team.members.add(self.user['team_member'])
+        if create_teams:
+            self.team = Team.objects.get_or_create(language=self.language,
+                project=self.project, creator=self.user['maintainer'])[0]
+            self.team.coordinators.add(self.user['team_coordinator'])
+            self.team.members.add(self.user['team_member'])
 
         # Add django-authority permission for writer
         self.permission = Permission(codename='project_perm.submit_file', 
