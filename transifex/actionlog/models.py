@@ -230,11 +230,15 @@ class LogEntry(models.Model):
         Return a shortened, generalized version of an action type.
         
         Useful for presenting an image signifying an action type. Example::
-        
-        >>> print l.action_type
+        >>> from notification.models import  NoticeType
+        >>> nt = NoticeType(label='project_component_added')
+        >>> zlog = LogEntry(action_type=nt)
+        >>> nt
         <NoticeType: project_component_added>
-        >>> print l.action_type_short
-        u'added'
+        >>> zlog.action_type
+        <NoticeType: project_component_added>
+        >>> zlog.action_type_short
+        'added'
         """
         return self.action_type.label.split('_')[-1]
 
