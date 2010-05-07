@@ -128,7 +128,7 @@ class Project(models.Model):
     """
     A project is a group of translatable resources.
 
-    >>> p = Project.objects.create(slug="foo", name="Foo Project")
+    >>> p, created = Project.objects.get_or_create(slug="foo", name="Foo Project")
     >>> p = Project.objects.get(slug='foo')
     >>> p
     <Project: Foo Project>
@@ -136,7 +136,7 @@ class Project(models.Model):
     Traceback (most recent call last):
         ...
     IntegrityError: column slug is not unique
-    >>> p.delete()
+    >>> if created: p.delete()
 
     """
 
