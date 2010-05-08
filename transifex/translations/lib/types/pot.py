@@ -260,8 +260,9 @@ class POTManager(TransManagerMixin):
                 _input=po_contents, with_extended_output=True)
             # Not sure why msgfmt sends its output to stderr instead of stdout
             output = stderr
-        except CommandError:
+        except CommandError, e:
             error = True
+            logger.debug("'msgfmt --statistics' FAILED: %s" % str(e))
 
         r_tr = re.search(r"([0-9]+) translated", output)
         r_un = re.search(r"([0-9]+) untranslated", output)
@@ -334,16 +335,20 @@ class POTManager(TransManagerMixin):
 
         #Copy the current file (non-msgmerged) to the static dir
         if not is_msgmerged:
+            logger.debug("Copied original file (non-msgmerged) to the cache "
+                "dir.")
             self.copy_file_to_static_dir(filename)
 
         po_contents = self.get_file_contents(filename, is_msgmerged)
         postats = self.get_po_stats(po_contents)
 
-        return {'trans': postats['translated'],
-                'fuzzy': postats['fuzzy'],
-                'untrans': postats['untranslated'],
-                'error': postats['error'],
-                'is_msgmerged': is_msgmerged}
+        result = {'trans': postats['translated'],
+                  'fuzzy': postats['fuzzy'],
+                  'untrans': postats['untranslated'],
+                  'error': postats['error'],
+                  'is_msgmerged': is_msgmerged}
+        logger.debug("Stats: %s" % result)
+        return result
 
     @staticmethod
     def msgfmt_check(po_contents):
@@ -381,6 +386,9 @@ class POTManager(TransManagerMixin):
         if not os.path.exists(msgmerge_dir):
             os.makedirs(msgmerge_dir)
 
+        logger.debug("Trying to merge the PO '%s' with POT '%s'." % (pofile,
+            potfile))
+
         try:
             # TODO: Find a library to avoid call msgmerge by command
             command = "msgmerge -o %(outpo)s %(pofile)s %(potfile)s" % {
@@ -388,8 +396,9 @@ class POTManager(TransManagerMixin):
                       'pofile': os.path.join(self.path, pofile),
                       'potfile': os.path.join(self.msgmerge_path, potfile),}
             stdout = run_command(command)
-        except CommandError:
+        except CommandError, e:
             is_msgmerged = False
+            logger.debug("MSGMERGE FAILED: %s" % str(e))
         return is_msgmerged
 
     def intltool_update(self):
@@ -402,8 +411,9 @@ class POTManager(TransManagerMixin):
         try:
             stdout = run_command("rm -f missing notexist", cwd=po_dir)
             stdout = run_command("intltool-update -p", cwd=po_dir)
-        except CommandError:
+        except CommandError, e:
             error = True
+            logger.debug("INTLTOOL FAILED: %s" % str(e))
 
         # Copy the potfile if it exist to the merged files directory
         potfiles = self.get_source_files()

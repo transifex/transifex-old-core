@@ -41,14 +41,18 @@ class POTHandler:
         s, created = POFile.objects.get_or_create(object_id=self.component.id,
             content_type=ctype, filename=filename, is_pot=is_pot)
 
+        logger.debug("Setting stats for %s." % s.filename)
+
         if not is_pot:
             lang_code = self.guess_language(filename)
+            logger.debug("Guessed language is '%s'." % lang_code)
             if not s.language:
                 try:
                     l = Language.objects.by_code_or_alias(code=lang_code)
                     s.language=l
                 except Language.DoesNotExist:
-                    pass
+                    logger.debug("No language found for the '%s' language " \
+                        "code." % lang_code)
 
             s.language_code = lang_code
         calcstats = True
@@ -62,6 +66,8 @@ class POTHandler:
 
             if rev and rev == s.rev:
                 calcstats = False
+            else:
+                logger.debug("VCS revision for the file has changed.")
 
         # For intltool components that the pot file has changes, it's
         # necessary to recalc the stats even if the 'rev' is the same
@@ -76,6 +82,8 @@ class POTHandler:
             s.is_msgmerged = stats['is_msgmerged']
             if rev:
                 s.rev = rev
+        else:
+            logger.debug("No need to re-calculate stats.")
         return s.save()
 
     def set_stats_base(self, is_msgmerged=True, is_pot=False):
