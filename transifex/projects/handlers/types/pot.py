@@ -31,6 +31,15 @@ class POTHandler:
         self.tm = POTManager(component.full_name, browser.path, 
             component.source_lang, component.file_filter)
 
+        # It stores a mapping of source files intended to be used to find out
+        # if the related POT of a PO file has changed. If it has changed, the
+        # PO should be merged and the stats recalculated for it.
+        # This dict var is filled whenever the set_file_stat is called with 
+        # is_pot=True. It's usually done only by the set_source_stats, that is 
+        # called by set_stats, which is used to calculate the stats for the
+        # whole component of a project.
+        self.SOURCE_MAP = {}
+
     def get_manager(self):
         return self.tm
 
@@ -55,8 +64,8 @@ class POTHandler:
                         "code." % lang_code)
 
             s.language_code = lang_code
-        calcstats = True
 
+        calcstats = True
         rev = None
         if hasattr(self.component, 'get_rev'):
             try:
@@ -75,8 +84,18 @@ class POTHandler:
         if self.component.i18n_type=='INTLTOOL' and is_msgmerged:
             calcstats = True
 
-        if calcstats:
-            stats = self.tm.calculate_file_stats(filename, is_msgmerged)
+        if is_pot:
+            self.SOURCE_MAP.update({filename:calcstats})
+            source_file, source_changed = None, False
+        else:
+            source_file = self.tm.get_source_file_for_pofile(filename)
+            logger.debug("Related source file: %s" % source_file)
+            source_changed = self.SOURCE_MAP.get(source_file, False)
+            logger.debug("Source file changed? %s." % source_changed)
+
+        if calcstats or source_changed:
+            stats = self.tm.calculate_file_stats(filename, source_file,
+                is_msgmerged)
             s.set_stats(trans=stats['trans'], fuzzy=stats['fuzzy'], 
                 untrans=stats['untrans'], error=stats['error'])
             s.is_msgmerged = stats['is_msgmerged']
@@ -128,8 +147,14 @@ class POTHandler:
             # It looks like an intltool POT-based, what should we do?
             is_msgmerged=False
 
+        # Making sure the mapping is empty. Here is where it is actually used.
+        # As set_source_stats and set_po_stats are called here in serial, it 
+        # fills the SOURCE_MAP and then the next method uses it to know what 
+        # POTs have changed and do whatever is needed based on it.
+        self.SOURCE_MAP = {}
         self.set_source_stats(is_msgmerged=False)
         self.set_po_stats(is_msgmerged)
+
         self.clean_old_stats()
         Signal.send(post_set_stats, sender=Component,
                     instance=self.component)

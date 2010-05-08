@@ -313,18 +313,16 @@ class POTManager(TransManagerMixin):
                stats['untranslated'])
         return status
 
-    def calculate_file_stats(self, filename, try_to_merge):
+    def calculate_file_stats(self, filename, source_file, try_to_merge):
         """
         Return the stats of a specificy file copying it to the static directory.
 
         If `try_to_merge` is set to True, the stats are calculated after merging
         the PO file with the related POT.
-
         """
         if try_to_merge:
             # Only try to get the POT for a PO when it's really needed.
             # It might be an expensive operation
-            source_file = self.get_source_file_for_pofile(filename)
             if not source_file:
                 is_msgmerged = False
                 logger.debug("No POT file found for the '%s' file." % filename)
