@@ -11,6 +11,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django_addons.autodiscover import autodiscover_notifications
 from txcommon.notifications import NOTICE_TYPES
+
 from vcs.tests import test_git
 
 # Load models
@@ -39,16 +40,30 @@ class BaseTestCase(TestCase):
     # Use the vcs app git test repo
     root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
 
+    def __init__(self, *args, **kwargs):
+        super(BaseTestCase, self).__init__(*args, **kwargs)
+       
+        #we need to remove the caching middlewares because they interfere with
+        #the annonymous client.
+        list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+        try:
+            list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
+        except ValueError:
+            pass
+        try:
+            list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
+        except ValueError:
+            pass
+        try:
+            list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
+        except ValueError:
+            pass
+        settings.MIDDLEWARE_CLASSES = list_middl_c
+
     def setUp(self, skip_stats = False, create_teams=True):
         """
         Set up project, component and vcsunit. Insert POFile objects.
         """
-
-        # I think it doesn't work if you just remove it here from 
-        # MIDDLEWARE_CLASSES list, it should be disabled in settings already
-        self.assertFalse('external.csrf.middleware.CsrfMiddleware' in \
-            settings.MIDDLEWARE_CLASSES, msg = "Running tests with CSRF " \
-            "middleware enabled is not supported!")
 
         # Run management commands
         management.call_command('txcreatelanguages')
@@ -67,7 +82,8 @@ class BaseTestCase(TestCase):
         self.user = {}
         self.client = {}
         self.client['anonymous'] = Client()
-
+        resp = self.client['anonymous'].get('/')
+        self.assertEquals(resp.status_code, 200)
         prefix = 'test_suite'
         password = '123412341234'
         for nick in USER_ROLES:
