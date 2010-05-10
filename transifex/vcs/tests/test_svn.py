@@ -1,48 +1,50 @@
-import commands
 import os
 import unittest
+from txcommon.commands import (run_command, CommandError)
+from vcs.lib.types.svn import REPO_PATH 
 from vcs.models import VcsUnit
 
 class SvnTestCase(unittest.TestCase):
     """Test Subversion VCS support.
-    
+
     Supplementary tests, in addition to doctests.   
     """
-
-    #TODO: Run the init stuff only when needed.
     def setUp(self):
+        # Base location of the SVN repo test stuff.
+        base_path = '%s/test_repo/svn' % os.path.split(__file__)[0]
 
-        self.root = '%s/test_repo/svn/' % os.path.split(__file__)[0]
-        #we need to remove any old checkout dir in order for it to exists within
-        # our local paths
-        try:
-            os.unlink('%scheckout' % self.root)
-        except OSError:
-            pass
-        #now recreate this within to create all the necessary local paths
-        stat = commands.getstatusoutput('svn co file://%s/svnrepo/ %scheckout'
-            % (self.root, self.root))
-        self.unit = VcsUnit.objects.create(
-            name="Test-SVN",
-            root='%scheckout' % self.root,
+        # Base repo path.
+        self.svn_repo = '%s/repo' % base_path
+
+        # Path to the data that should be used to create the svn repo.
+        self.repo_data = '%s/data' % base_path
+
+        # Root URL of the repo. Used in checkouts for example.
+        self.root = 'file://%s/repo_data' % self.svn_repo
+
+        # Creating a SVN repo and importing some data into a project repo.
+        run_command("rm -rf %s" % self.svn_repo )
+        run_command('svnadmin create %s' % self.svn_repo)
+        run_command('svn import %s %s -m "Initial"' % (self.repo_data,
+            self.root))
+
+        self.unit = VcsUnit.objects.create(name="Test-SVN", root=self.root,
             branch='trunk', type='svn')
         self.unit._init_browser()
         self.unit.browser.setup_repo()
-        self.unit.browser.update()  
-        
+        self.unit.browser.update()
+
     def tearDown(self):
         self.unit.browser.teardown_repo()
         self.unit.delete()
-        
+        # Removing temp SVN repo
+        run_command("rm -rf %s" % self.svn_repo )
+
     def test_repo_init(self):
         """Test correct SVN repo initialization."""
-        from os import path
-        from vcs.lib.types.svn import REPO_PATH 
-        local_unit_path = path.join(REPO_PATH, self.unit.name)
-        self.assertTrue(path.isdir(local_unit_path))
+        self.assertTrue(os.path.isdir(os.path.join(REPO_PATH, self.unit.name)))
 
     def test_get_file_contents(self):
         """Test that SVN get_file_contents returns correct file size."""
-        #FIXME: This is not the best way to test something like this!
         self.assertEquals(len(self.unit.browser.get_file_contents(
             'po/test_repo.pot')), 594)
