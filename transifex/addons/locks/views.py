@@ -71,8 +71,8 @@ def component_file_lock(request, project_slug, component_slug, filename):
             request.user.message_set.create(
                 message=_("Lock created. Please don't forget to remove it "
                 "when you're done."))
-        except POFileLockError, err:
-            request.user.message_set.create(message=err)
+        except POFileLockError, e:
+            request.user.message_set.create(message=str(e))
     else:
        request.user.message_set.create(message = _(
            "Sorry, but you need to send a POST request."))
