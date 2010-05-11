@@ -69,13 +69,14 @@ def export_lang(filename=None, verbose=False):
     data = serializers.serialize("json", Language.objects.all().order_by('id'),
         indent=2)
     if filename:
+        storefile = None
         try:
             storefile = open(filename, 'w')
             storefile.write(data)
         except:
             pass
-        finally:
-            storefile.close()            
+        if storefile:
+            storefile.close()
     else:
         print data
 
