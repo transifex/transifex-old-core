@@ -151,5 +151,4 @@ def get_filename(args):
         ret=args[0]
     except:
         pass
-    finally:
-        return ret
+    return ret
