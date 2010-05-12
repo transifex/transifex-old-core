@@ -19,7 +19,7 @@
 
 <ul>
 {% for tresource in tresources %}
-  <li><a href="{% url _project_resource project.slug tresource.slug %}">{{tresource}}</a></li>
+  <li><a href="{% url project.resource project.slug tresource.slug %}">{{tresource}}</a></li>
 {% endfor %}
 </ul>
 

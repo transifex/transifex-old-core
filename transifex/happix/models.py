@@ -3,7 +3,7 @@
 String Level models.
 """
 import datetime, hashlib, sys
-
+from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +27,19 @@ TRANSLATION_STATE_CHOICES = (
 
 # CORE
 ##############################################################
+from django.db import transaction
+from libtransifex.qt import LinguistParser # Qt4 TS files
+from libtransifex.java import JavaPropertiesParser # Java .properties
+from libtransifex.apple import AppleStringsParser # Apple .strings
+#from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
+#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
+from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser (not started)
+
+PARSERS = [PofileParser, LinguistParser, JavaPropertiesParser, AppleStringsParser]
+
+PARSER_MAPPING = {}
+for parser in PARSERS:
+    PARSER_MAPPING[parser.mime_type] = parser
 
 class TResourceManager(models.Manager):
     pass
@@ -79,6 +92,11 @@ class TResource(models.Model):
         order_with_respect_to = 'project'
         get_latest_by = 'created'
 
+    @permalink
+    def get_absolute_url(self):
+        return ('project.resource', None, { 'project_slug': self.project.slug, 'tresource_slug' : self.slug })
+
+
     def translated_strings(self, language):
         """
         Return the QuerySet of source strings, translated in this language.
@@ -99,6 +117,59 @@ class TResource(models.Model):
                     tresource=self, 
                     position__isnull=False,).exclude(
                             translationstring__language=target_language)
+
+    @transaction.commit_manually
+    def merge_stringset(self, stringset, target_language, user=None, overwrite_translations=True):
+        try:
+            strings_added = 0
+            strings_updated = 0
+            for j in stringset.strings:
+                # If is primary language update source strings!
+                ss, created = SourceString.objects.get_or_create(
+                    string= j.source_string,
+                    description=j.context or "None",
+                    tresource=self,
+                    defaults = {
+                        'position' : 1,
+                    }
+                )
+                ts, created = TranslationString.objects.get_or_create(
+                    source_string=ss,
+                    language = target_language,
+                    tresource = self,
+                    defaults={
+                        'string' : j.translation_string,
+                        'user' : user,
+                    },
+                )
+
+                if created:
+                    strings_added += 1
+
+                if not created and overwrite_translations:
+                    if ts.string != j.translation_string:
+                        ts.string = j.translation_string
+                        strings_updated += 1
+                        updated = True
+        except:
+            transaction.rollback()
+            return 0,0
+        else:
+            transaction.commit()
+            return strings_added, strings_updated
+
+    def merge_translation_file(self, translation_file):
+        
+        stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(filename = translation_file.get_storage_path())
+        return self.merge_stringset(stringset, translation_file.source_language)
+
+
+
+
+
+
+
+
 
 class SourceString(models.Model):
     """
@@ -334,3 +405,73 @@ class TranslationSuggestion(models.Model):
         ordering  = ['string',]
         order_with_respect_to = 'source_string'
         get_latest_by = 'created'
+
+class TranslationFile(models.Model):
+    # File name of the uploaded file
+    name = models.CharField(max_length=1024)
+    size = models.IntegerField(_('File size in bytes'), blank=True, null=True)
+    mime_type = models.CharField(max_length=255)
+
+    # Path for storage
+    storage_uuid = models.CharField(max_length=1024)
+
+    # Foreign Keys
+    source_language = models.ForeignKey(Language,
+        verbose_name=_('Source language'),blank=False, null=True,
+        help_text=_("The language in which this translation string belongs to."))
+
+    #resource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+        #blank=False, null=True,
+        #help_text=_("The translation resource which owns the source string."))
+
+
+
+    project = models.ForeignKey(TResource, verbose_name=_('Translation Resource'), blank=False, null=True)
+
+    user = models.ForeignKey(User,
+        verbose_name=_('Owner'), blank=False, null=True,
+        help_text=_("The user who committed the specific translation."))
+    
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    total_strings = models.IntegerField(_('Total number of strings'), blank=True, null=True)
+
+    # mimetype?
+
+    def get_storage_path(self):
+        return "/tmp/%s-%s" % (self.storage_uuid, self.name)
+
+    def translatable(self):
+        return (self.total_strings > 0)
+
+
+#    def merge_file(self, filename, suggest_target_language=None, user=None, overwrite_translations=True):
+        """
+        filename - Used to detect file format by extension so base name is enough
+        stream -  Any object on which you can issue read() like file pointer returned by open()
+        suggest_target_language - If target language is not found in the file suggest it
+        overwrite_translations - If TranslationString already exists, it will be overwritten
+        """
+    def update_props(self):
+        parser = None
+        for p in PARSERS:
+            if p.accept(self.name):
+                parser = p
+                break
+
+        if not parser:
+            return
+
+        self.mime_type = parser.mime_type
+
+        stringset = parser.parse_file(filename = self.get_storage_path()) 
+        if not stringset:
+            return
+        print "STRINGSERT:", stringset.target_language
+        if stringset.target_language:
+            try:
+                self.source_language = Language.objects.by_code_or_alias(stringset.target_language)
+            except Language.DoesNotExist:
+                pass
+        print "WAT:", self.source_language
+        self.total_strings = len(stringset.strings)
+        return

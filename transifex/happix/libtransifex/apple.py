@@ -16,11 +16,13 @@ STRICT=True
 
 class AppleStringsParser(Parser):
     name = "Apple .strings parser"
+    format = "Apple Translations (*.strings)"
     default_encoding = "utf-8" # or theoretically utf-16
+    mime_type = "text/apple-strings" # Not official
 
     @classmethod
     def accept(cls, filename):
-        return filename.endswith("/Localizable.strings")
+        return filename.endswith("Localizable.strings")
 
     @classmethod
     def compile(cls, stringset):

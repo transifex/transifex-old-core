@@ -10,11 +10,13 @@ Available commands:
   pull - Pull strings from Transifex server
 """
 
-import re
-
-from libtransifex import core as tx
 import os
 import sys
+import re
+import httplib
+import mimetypes
+import urllib2
+
 
 reload(sys) # WTF? Otherwise setdefaultencoding doesn't work
 
@@ -23,12 +25,14 @@ reload(sys) # WTF? Otherwise setdefaultencoding doesn't work
 sys.setdefaultencoding('utf-8')
 
 
+from libtransifex import core as tx
 from libtransifex.core import ParseError, CompileError
 from libtransifex.qt import LinguistParser # Qt4 TS files
 from libtransifex.java import JavaPropertiesParser # Java .properties
 from libtransifex.apple import AppleStringsParser # Apple .strings
 #from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
-#from libtransifex.resx import ResXmlParser # Microsoft .NET
+#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
+#from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser (not started)
 
 parsers = [LinguistParser, JavaPropertiesParser, AppleStringsParser] #, ResXmlParser, YamlParser]
 
@@ -49,10 +53,6 @@ def parse_tx_url(url):
         print "Couldn't parse pull/push URL!"
         exit(1)
     
-
-import httplib
-import mimetypes
-
 def post_multipart(host, selector, fields, files):
     def encode_multipart_formdata(fields, files):
         LIMIT = '----------lImIt_of_THE_fIle_eW_$'
@@ -87,11 +87,6 @@ def post_multipart(host, selector, fields, files):
         print buf
     return buf
 
-
-
-
-
-
 class Project():
     def __init__(self):
         def find_dot_tx(path = os.getcwd()):
@@ -117,8 +112,6 @@ class Project():
         if len(self.config['resources']) == 0:
             self.config['resources']['master'] = {'regex':'.*'}
         self.save()
-#        if not "ignored_files" in self.config:
-#            self.config['ignored_files'] = {}
 
     def get_project_name():
         if "project" in self.config:
@@ -136,13 +129,8 @@ class Project():
             return os.path.join(self.root, relpath)
 
     def push(self, url):
-        import httplib, mimetypes
-
         hostname, project = parse_tx_url(url)
         url_resources = "%s/api/project/%s/resources" % (hostname, project)
-#        print "oppna:", url_resources
-        import urllib2
-
         fh = urllib2.urlopen(url_resources)
         raw = fh.read()
         fh.close()
@@ -164,14 +152,9 @@ class Project():
         for resource, _resource in self.config['resources'].iteritems():
             for lang, path in _resource['mapping'].iteritems():
                 url_push = "/api/project/%s/resource/%s/" % (project, resource)
-#                push_url = "/api/project/%s/resource/%s/" % (project, resource)
-#                print "Opening:", push_url
-#                print post_multipart("localhost:8000", url_push, [], [(path, path, open(self.get_full_path(path)).read())])
                 filename = os.path.basename(path).encode("ascii") # WTF ascii?
                 print "Pushing %s to %s" % (path, url_push)
                 post_multipart("localhost:8000", url_push, [('target_language',lang.encode("ascii"))],[(filename, filename, open(self.get_full_path(path)).read())])
-
-#                print "%s bound to %s" % (push_url, path, )
 
     def scan(self, url):
 
@@ -197,7 +180,6 @@ class Project():
                     total += 1
             if total == 0:
                 return None
-#                raise ResourceError("Multiple resources defined but filename '%s' not matched by any regexes" % relpath)
             elif total == 1:
                 return matched_resources[0]
             else:

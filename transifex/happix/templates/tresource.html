@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block breadcrumb %}
-{{block.super}} » <a href="{% url _project_resource project.slug tresource.slug %}">{{tresource}}</a>
+{{block.super}} » <a href="{% url project.resource project.slug tresource.slug %}">{{tresource}}</a>
 {% endblock %}
 
 {% block title %}
@@ -19,16 +19,14 @@
 
 {% block content %}
 
-<h2>Upload</h2>
-{% url project.resource.upload project.slug tresource.slug as file_submit_url %}
-<form action="{{ file_submit_url }}" method="post" enctype="multipart/form-data">
-  <input type="file" name="submitted_file">
-  <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
-</form>
+
+{% load upload_manager_tags %}
+{% upload_manager tresource %}
+
 
 Available translations:
 <ul>
-{% for language,count in languages.items %}
+{% for language,count in translated_languages.items %}
     <li><a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup></li>
 {% endfor %}
 </ul>

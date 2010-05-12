@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+
+{% load upload_manager_tags %}
+{% upload_manager project %}
+
+<div id="resources" class="resources">
+
+
+
+<!--  <div class="editlinks">
+  <p>
+    <a class="simlink rss_feed" href="{% url project_feed param=project.slug %}" title="Project feed">
+      <span>Subscribe to this feed</span>&nbsp;<img border="0" src="{{ MEDIA_URL }}images/icons/feed.png" />
+    </a>
+  </p>
+  {% if perms.projects.add_component or is_maintainer %}
+    <p style="text-align: right;"><a class="i16 add buttonized" href="{% url component_create project_slug=project.slug %}">{% trans "Add" %}</a></p>
+  {% endif %}
+  </div>-->
+
+  {% with project.tresource_set.all as resources %}
+  <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
+    {% render_metacount resources _("resources") %}
+  </h3>
+
+  {% if resources %}
+  <p> 
+  {% for res in resources %}
+    <a href="{{ res.get_absolute_url }}">{{ res.name }}</a>{% if not forloop.last %},{% endif %}
+  {% endfor %}
+  </p>
+  {% else %}
+
+  <p>{% trans "No resources are registered for this project yet." %}
+<!--    { if perms.projects.add_component or is_maintainer }
+    <a href="{ url component_create project_slug=project.slug }">{% trans "Add one!" %}</a>
+    { endif } -->
+  </p>
+    {% endif %}
+  {% endwith %}
+  <p class="i16 tip compact clear">
+    {% blocktrans %}A <em>Resource</em> is mapped to master file and it's translated versions.
+    For example Resource could be bound to nano.pot and de.po, it.po, fi.po, etc.{% endblocktrans %}
+  </p>
+</div>

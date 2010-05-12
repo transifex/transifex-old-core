@@ -18,6 +18,8 @@ class JavaPropertiesParser(Parser):
     http://java.sun.com/j2se/1.4.2/docs/api/java/util/Properties.html
     """
     name = "Java .properties parser"
+    format = "Java Resource Bundles (*.properties)"
+    mime_type = "text/java-properties" # Not official
     default_encoding = "iso-8859-1" # Used for reading/saving files
 
     @classmethod

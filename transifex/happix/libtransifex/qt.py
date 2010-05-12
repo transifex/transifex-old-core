@@ -16,6 +16,8 @@ class LinguistCompileError(CompileError):
 
 class LinguistParser(Parser):
     name = "Qt4 TS parser"
+    format = "Qt4 Translation XML files (*.ts)"
+    mime_type = "application/x-linguist"
     @classmethod
     def accept(cls, filename):
         return filename.endswith(".ts")
@@ -93,7 +95,7 @@ class LinguistParser(Parser):
         if root.tagName != "TS":
             raise LinguistParseError("Root element is not 'TS'")
 
-        language = get_attribute(root, "language", die = True)
+        language = get_attribute(root, "language", die = STRICT)
 
         stringset = StringSet()
         stringset.target_language = language

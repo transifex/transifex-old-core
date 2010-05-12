@@ -6,7 +6,7 @@
 {% load statistics %}
 {% load watches %}
 {% load permissions %}
-
+{% load upload_manager_tags %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -105,7 +105,11 @@
 
   {% hook "project.html" overview_top %}
 
+
 {% include "projects/component_list.html" %}
+{% include "projects/resource_list.html" %}
+
+
 
 {% include "projects/release_list.html" %}
 

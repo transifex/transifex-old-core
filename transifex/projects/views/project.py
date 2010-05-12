@@ -17,6 +17,8 @@ from projects.forms import ProjectAccessControlForm, ProjectForm
 from projects.permissions import *
 from projects import signals
 
+from happix.models import TranslationFile, PARSERS
+from languages.models import Language
 # Temporary
 from txcommon import notifications as txnotification
 
@@ -168,6 +170,8 @@ def project_detail(request, project_slug):
         queryset = Project.objects.all(),
         object_id=project.id,
         template_object_name = 'project',
-        extra_context= {'project_overview': True})
+        extra_context= {
+          'project_overview': True,
+        })
 
 
