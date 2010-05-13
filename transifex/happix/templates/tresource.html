@@ -1,12 +1,18 @@
-{% extends "project.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 
 {% block breadcrumb %}
-{{block.super}} » <a href="{% url project.resource project.slug tresource.slug %}">{{tresource}}</a>
+
+{{block.super}} »
+<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
+<a href="{% url project_detail project.slug %}">{{project}}</a> »
+<a href="{% url project.resource project.slug tresource.slug %}">{{tresource}}</a>
 {% endblock %}
 
 {% block title %}
-{{ block.super }} | 
+{{ block.super }} |
+Projects |
+{{project}}
 {{tresource}}
 {% endblock %}
 
@@ -20,8 +26,10 @@
 {% block content %}
 
 
+{% if request.user.is_authenicated %}
 {% load upload_manager_tags %}
 {% upload_manager tresource %}
+{% endif %}
 
 
 Available translations:

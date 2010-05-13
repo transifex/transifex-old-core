@@ -2,203 +2,69 @@
 
 <script type="text/javascript">
 
-function Language(code, aliases, name) {
-    this.code = code;
-    this.aliases = aliases;
-    this.name = name;
-    this.toString = function() {
-        return sprintf("Language(code='%s',aliases='%s',name='%s');", this.code, this.aliases, this.name);
-    }   
-}
+$(document).ready(function(){
+    $("#button_uploads").toggle(function(){
+        /* TODO: Implement class based code for nice client side notifications (like Gmail) */
+        /* TODO: Implement toggling in a load-once way, currently each expansion hits the server */
+        $("div#notification-container div").html("Loading storage information...");
+        $("div#notification-container").fadeIn("fast");
 
-function Languages() {
-    /* Languages class is used to pull languages 
-     * from Transifex and to generate language 
-     * selectors on client side */
-    zork = this;
-    this.languages = [];
-    this.timestamp = null;
+        /* Make sure we have languages on client */
+        if (typeof(languages) == 'undefined') {
+            languages = new Languages();
+            languages.pull(); /* Synchronous call */
+        }
 
-    /* Languages.pull() pulls languages from Transfifex */
-    this.pull = function() {
-        $.ajax({
-            url : '{% url api.languages %}',
-            contentType : 'application/json',
-            data : '',
-            type : 'GET',
-            dataType : 'text',
-            async : true,
-            complete : function(xmlhttpreq, textStatus) {
-                data = JSON.parse(xmlhttpreq.responseText);
-                i = 0
-                for (var key in data) {
-                    zork.languages[i] = new Language(data[key]['code'], data[key]['code_aliases'], data[key]['name']);
-                    i++;
-                }
+
+        /* Fetch list of files uploaded by user */
+        $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
+          storage = new Storage(data);
+          storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
+          storage.resource = {'name':'{{tresource.name}}', 'slug':'{{tresource.slug}}'};
+          $("div#notification-container").fadeOut("fast");
+          $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        });
+
+
+        /* Bind ajax upload button */
+        new AjaxUpload('button_upload', {
+            action: '{% url api.storage %}',
+            onSubmit : function(file, extension) {
+              $("div#notification-container div").html(sprintf("Uploading '%s'", file));
+              $("div#notification-container").fadeIn("fast");
+              this.disable();
+            },
+            onComplete : function(file, response) {
+                if(response != "<pre>Created</pre>")
+                    alert(response);
+
+                $("#upload_button").addClass("send_file").removeClass("waiting disabled");
+                this.enable();
+                /* TODO: Remove duplication of this code, use implement bind() and update() for Storage or something */
+                $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
+                    storage = new Storage(data);
+                    storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
+                    storage.resource = {'name':'{{tresource.name}}', 'slug':'{{tresource.slug}}'};
+                    $("div#notification-container").fadeOut("fast");
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+                });
             }
         });
-    }
-
-    /* Languages.render_selector renders HTML fragment of combobox */
-    this.render_selector = function(element_name, selected_language_code) {
-        html = sprintf("<select name=\"%s\" class=\"language\"><option value=\"\">Not detected</option>", element_name);
-        for (var i=0; i<zork.languages.length; i++) {
-            html += sprintf(
-                "<option value=\"%s\"%s>%s</option>",
-                zork.languages[i].code,
-                (zork.languages[i].code == selected_language_code) && " selected=\"selected\"",
-                zork.languages[i].name
-            );
-        }
-        return html + "</selected>";
-    }
-}
-
-if (typeof(languages) == 'undefined') {
-    languages = new Languages();
-    languages.pull(); /* Synchronous call */
-}
-
-function size_format (filesize) {
-        if (filesize >= 1073741824)
-             return sprintf("%dGb", filesize / 1073741824);
-        if (filesize >= 1048576)
-	     return sprintf("%dMb", filesize / 1048576);
-	if (filesize >= 1024)
-             return sprintf("%dKb", filesize / 1024);
-	return sprintf("%d bytes", filesize);
-};
-
-function StorageFile(storage, storage_file) {
-    
-    var this_storage_file = this;
-    this.storage = storage;
-    if (storage_file['source_language'])
-        this.language_code = storage_file['source_language']['code']; /* TODO: Rename model */
-    else
-        this.language_code = null;
-    this.name = storage_file['name'];
-    this.uuid = storage_file['storage_uuid']; /* TODO: Rename model */
-
-    storage.files[this.uuid] = this; /* For faster lookup */
-    this.mime_type = storage_file['mime_type'];
-    this.size = storage_file['size'];
-    this.total_strings = storage_file['total_strings'];
-
-    this.remove = function(complete) {
-        url = '{% url api.storage.file "123456789" %}'.replace('123456789', this.uuid);
-        $.ajax({
-          url : url,
-          type : 'DELETE',
-          complete : complete
-        });
-
-    }
-
-    this.set_language = function(new_code) {
-        this_storage_file.language_code = new_code; // TODO: validate
-        url = '{% url api.storage.file "123456789" %}'.replace('123456789', this.uuid);
-        $.ajax({
-          contentType : 'application/json',
-          url : url,
-          type : 'POST',
-          dataType : 'text',
-          data : JSON.stringify({'language':this_storage_file.language_code}),
-        });
-    }
-
-    this.render_table_row = function() {
-        return sprintf(
-            "<tr>" +
-            "<input name=\"uuid\" type=\"hidden\" value=\"%s\"/>" +
-            "<td class=\"i16 text\">%s</td>" + 
-            "<td>%s</td>" + 
-            "<td>%s</td>" + 
-            "<td>%s</td>" + 
-            "<td><span class=\"i16 delete buttonized_simple tipsy_enable storage_delete\" title=\"Delete uploaded file\"></span></td>" +
-            "<td><a href=\"/happix/project/{{project.slug}}/storage/"+this.uuid+"/bootstrap/\" class=\"i16 branch buttonized_simple tipsy_enable\" title=\"Extract strings from file '"+this.name+"' and start translating them\"></a></td>"+
-            "</tr>",
-
-            this.uuid,
-            this.name,
-            (this.size > 0) && size_format(this.size) || "0 bytes",
-            this.total_strings || "-",
-            (this.total_strings > 0) && languages.render_selector(this.uuid, this.language_code) || "Unknown format"
-        ); 
-    }
-
-    this.toString = function() {
-        return sprintf("StorageFile(uuid='%s');", this.uuid);
-    }
-}
-
-function Storage(files) {
-    var this_storage = this;
-    //tbody = $("table#storage_files tbody").clone();
-    this_storage.files = []; /* Storage.files[uuid] = StorageFile() */
-    content = "";
-
-    for(var key in files) {
-        var sf = new StorageFile(this, files[key]);
-        content += sf.render_table_row();
-        this_storage.files[sf.uuid] = sf;
-    }
+        $("#uploads").slideDown();
 
 
-    $("table#storage_files tbody").html(content);
-
-    $("table#storage_files tbody tr td select.language").change(function(){
-        var storage_file_uuid = $(this).attr('name');
-        var new_lang_code = $("option:selected", this).val();
-        this_storage.files[storage_file_uuid].set_language(new_lang_code);
+    }, function(){
+        $("#uploads").slideUp();
     });
-
-    $("table#storage_files tbody tr td span.storage_delete").click(function(){
-        var tr = $(this).parents("tr");
-        var uuid = $("input", tr).val();
-        this_storage.files[uuid].remove(function(){
-          tr.fadeOut("slow");
-        });
-    });
-}
-
-
-$(document).ready(function(){
-  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-  $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
-    storage = Storage(data);
-    
-  });
-
-
-
-  // Sending to: 
-  new AjaxUpload('upload_button', {
-      action: '{% url api.storage %}',
-      onSubmit : function(file, extension) {
-        this.disable();
-        $("#upload_button").removeClass("send_file").addClass("waiting disabled");
-      },
-      onComplete : function(file, response) {
-        if(response != "<pre>Created</pre>")
-          alert(response);
-
-        $("#upload_button").addClass("send_file").removeClass("waiting disabled");
-        this.enable();
-        $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
-          storage = Storage(data);
-          
-        });
-      }
-  });
 
 });
 </script>
-<div id="uploads" style="border: 1px dashed #ddd; padding-left: 1em;">
+
+<div id="uploads" style="border: 1px dashed #ddd; padding-left: 1em; display:none;">
+  <span id="button_upload" class="i16 send_file buttonized" style="float:right;margin:2em;">Upload another</span>
 
   <h2>Upload files</h2>
-
-
   Your files:
   <table id="storage_files">
     <thead>
@@ -208,51 +74,12 @@ $(document).ready(function(){
         <th>Strings</th>
         <th>Language</th>
         <th width="50px">&nbsp;</th>
-
       </tr>
     </thead>
     <tbody>
-<!--
-      {% for file in files %}
-        <tr id="table-row-{{file.storage_uuid}}">
-          <td class="i16 text">{{file.name}}</td>
-          <td>
-            <span class="i16 stats buttonized_simple tipsy_enable" 
-               title="File size: {{file.size|filesizeformat}} ({{file.size}} bytes)<br/>Uploaded: {{file.created}}<br/>Extractable strings: {{file.total_strings}}<br/>Mime-type: {{file.mime_type}}"></span>
-          </td>
-          <td>
-            {% if file.translatable %}
-            <select>
-              <option value="">Not detected</option>
-              {% for language in languages %}
-                <option value="{{language.code}}" {% ifequal language file.source_language %}selected="selected"{% endifequal %}>{{language.name}}</option>
-              {% endfor %}
-            </select>
-            {% else %}
-            Unknown file format
-            {% endif %}
-          </td>
-          <td>
-            {% if file.translatable %}
-              <a href="{% url project.resource.bootstrap project.slug file.storage_uuid %}" 
-                 class="i16 branch buttonized_simple tipsy_enable" 
-                 title="Extract strings from file '{{file.name}}' and start translating them"></a>
-            {% endif %}
-
-              <span class="i16 delete buttonized_simple tipsy_enable storage_delete" 
-                 title="Delete uploaded file '{{file.name}}'" onClick="storage_delete('{{file.storage_uuid}}');"></span>
-
-          </td>
-        </tr>
-      {% endfor %}-->
     </tbody>
   </table>
-
-
-    <span id="upload_button" class="i16 send_file buttonized">Upload</span>
-<br/>
-<br/>
-    
-    
-
 </div>
+
+<span id="button_uploads" class="i16 send_file buttonized" style="float:right;">Uploads</span>
+

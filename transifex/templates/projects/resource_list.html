@@ -2,8 +2,10 @@
 {% load txcommontags %}
 {% load permissions %}
 
+{% if request.user.is_authenticated %}
 {% load upload_manager_tags %}
 {% upload_manager project %}
+{% endif %}
 
 <div id="resources" class="resources">
 
@@ -26,11 +28,11 @@
   </h3>
 
   {% if resources %}
-  <p> 
+  <ul> 
   {% for res in resources %}
-    <a href="{{ res.get_absolute_url }}">{{ res.name }}</a>{% if not forloop.last %},{% endif %}
+    <li><a href="{{ res.get_absolute_url }}">{{ res.name }}</a></li>
   {% endfor %}
-  </p>
+  </ul>
   {% else %}
 
   <p>{% trans "No resources are registered for this project yet." %}

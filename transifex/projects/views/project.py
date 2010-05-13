@@ -17,7 +17,7 @@ from projects.forms import ProjectAccessControlForm, ProjectForm
 from projects.permissions import *
 from projects import signals
 
-from happix.models import TranslationFile, PARSERS
+from happix.models import StorageFile, PARSERS
 from languages.models import Language
 # Temporary
 from txcommon import notifications as txnotification

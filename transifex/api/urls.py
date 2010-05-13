@@ -11,12 +11,20 @@ language_handler = Resource(LanguageHandler)
 tresource_handler = Resource(TResourceHandler)
 strings_handler = Resource(StringHandler)
 storage_handler = Resource(StorageHandler)
+project_handler = Resource(ProjectHandler)
 
 urlpatterns = patterns('',
     url(
         r'^languages/$',
         language_handler,
         name='api.languages',
+    ), url(
+        r'^project/$', 
+        project_handler,
+    ), url(
+        r'^project/(?P<project_slug>[-\w]+)/$', 
+        project_handler,
+        name='api_project',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$', 
         tresource_handler
@@ -38,7 +46,7 @@ urlpatterns = patterns('',
         storage_handler,
         name='api.storage'
     ), url(
-        r'^storage/(?P<storage_uuid>[-\w]+)/$',
+        r'^storage/(?P<uuid>[-\w]+)/$',
         storage_handler,
         name='api.storage.file'
     ),

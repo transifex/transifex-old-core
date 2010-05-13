@@ -23,6 +23,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script> 
   <script type="text/javascript" src="{{ STATIC_URL }}js/ajaxupload.js"></script> 
   <script type="text/javascript" src="{{ STATIC_URL }}js/sprintf.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tx.core.js"></script>
   {% endblock %}
   {% block shortcut_icon %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
@@ -34,6 +35,12 @@
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
+  <div id="notification-container" style="width:20em; left:50%; margin-left:-10em; border: 1px solid red; position: fixed; z-index: 10000; display:none;
+      border-width: 2px; border-style: none solid solid; border-color: #f00; -moz-border-radius: 0px 0px 1em 1em; background-color: #fff8f8; padding:0.5em;">
+    <div class="i16 waiting" onClick="$('#notifier').slideUp()">
+    Loading languages...
+    </div>
+  </div>
   <div id="header">
     <div id="logo">
       <a class="simlink" href="{% url transifex.home %}" title="{% trans "Go to the start page" %}">

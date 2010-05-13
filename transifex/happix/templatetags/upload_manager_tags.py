@@ -2,7 +2,7 @@
 from django import template
 from languages.models import Language
 from projects.models import Project
-from happix.models import TResource, TranslationFile, PARSERS
+from happix.models import TResource, StorageFile, PARSERS
 
 register = template.Library()
 
@@ -19,7 +19,7 @@ def upload_manager(target_object):
         project = None
         resource = None
     return {
-          'files' : TranslationFile.objects.all(), #, project = project, user = request.user),
+          'files' : StorageFile.objects.all(), #, project = project, user = request.user),
           'project' : target_object,
           'parsers' : PARSERS,
           'languages' : Language.objects.all(),

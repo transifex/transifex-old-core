@@ -24,19 +24,26 @@ TRANSLATION_STATE_CHOICES = (
     ('REJ', 'Rejected'),
 )
 
-
-# CORE
-##############################################################
 from django.db import transaction
+
+"""
+Parsers need to be somewhat rewritten, currently each one implements parse(buf) function which returns libtransifex.core.StringSet class,
+and compile(stringset) which returns file buffer.
+
+It actually makes more sense to store all uploaded files, parse only the information we are interested in, and during compilation,
+take the uploaded file as template, and just replace modified parts
+"""
+
 from libtransifex.qt import LinguistParser # Qt4 TS files
 from libtransifex.java import JavaPropertiesParser # Java .properties
 from libtransifex.apple import AppleStringsParser # Apple .strings
 #from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
 #from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
-from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser (not started)
+from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser
 
 PARSERS = [PofileParser, LinguistParser, JavaPropertiesParser, AppleStringsParser]
 
+# For faster lookup
 PARSER_MAPPING = {}
 for parser in PARSERS:
     PARSER_MAPPING[parser.mime_type] = parser
@@ -161,15 +168,7 @@ class TResource(models.Model):
     def merge_translation_file(self, translation_file):
         
         stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(filename = translation_file.get_storage_path())
-        return self.merge_stringset(stringset, translation_file.source_language)
-
-
-
-
-
-
-
-
+        return self.merge_stringset(stringset, translation_file.language)
 
 class SourceString(models.Model):
     """
@@ -406,17 +405,20 @@ class TranslationSuggestion(models.Model):
         order_with_respect_to = 'source_string'
         get_latest_by = 'created'
 
-class TranslationFile(models.Model):
+class StorageFile(models.Model):
+    """
+    StorageFile refers to a uploaded file. Initially
+    """
     # File name of the uploaded file
     name = models.CharField(max_length=1024)
     size = models.IntegerField(_('File size in bytes'), blank=True, null=True)
     mime_type = models.CharField(max_length=255)
 
     # Path for storage
-    storage_uuid = models.CharField(max_length=1024)
+    uuid = models.CharField(max_length=1024)
 
     # Foreign Keys
-    source_language = models.ForeignKey(Language,
+    language = models.ForeignKey(Language,
         verbose_name=_('Source language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
 
@@ -424,34 +426,34 @@ class TranslationFile(models.Model):
         #blank=False, null=True,
         #help_text=_("The translation resource which owns the source string."))
 
+#    project = models.ForeignKey(Project, verbose_name=_('Project'), blank=False, null=True)
 
-
-    project = models.ForeignKey(TResource, verbose_name=_('Translation Resource'), blank=False, null=True)
+    bound = models.BooleanField(verbose_name=_('Bound to any object'), default=False,
+        help_text=_('Wether this file is bound to a project/translation resource, otherwise show in the upload box'))
 
     user = models.ForeignKey(User,
         verbose_name=_('Owner'), blank=False, null=True,
-        help_text=_("The user who committed the specific translation."))
+        help_text=_("The user who uploaded the specific file."))
     
     created = models.DateTimeField(auto_now_add=True, editable=False)
     total_strings = models.IntegerField(_('Total number of strings'), blank=True, null=True)
 
-    # mimetype?
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.uuid)
 
     def get_storage_path(self):
-        return "/tmp/%s-%s" % (self.storage_uuid, self.name)
+        return "/tmp/%s-%s" % (self.uuid, self.name)
 
     def translatable(self):
+        """
+        Wether we could extract any strings -> wether we can translate file
+        """
         return (self.total_strings > 0)
 
-
-#    def merge_file(self, filename, suggest_target_language=None, user=None, overwrite_translations=True):
-        """
-        filename - Used to detect file format by extension so base name is enough
-        stream -  Any object on which you can issue read() like file pointer returned by open()
-        suggest_target_language - If target language is not found in the file suggest it
-        overwrite_translations - If TranslationString already exists, it will be overwritten
-        """
     def update_props(self):
+        """
+        Try to parse the file and fill in information fields in current model
+        """
         parser = None
         for p in PARSERS:
             if p.accept(self.name):
@@ -466,12 +468,12 @@ class TranslationFile(models.Model):
         stringset = parser.parse_file(filename = self.get_storage_path()) 
         if not stringset:
             return
-        print "STRINGSERT:", stringset.target_language
+
         if stringset.target_language:
             try:
-                self.source_language = Language.objects.by_code_or_alias(stringset.target_language)
+                self.language = Language.objects.by_code_or_alias(stringset.target_language)
             except Language.DoesNotExist:
                 pass
-        print "WAT:", self.source_language
+
         self.total_strings = len(stringset.strings)
         return
