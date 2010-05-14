@@ -889,7 +889,7 @@ msgstr "Übersetzt:"
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
 msgid "Fuzzy:"
-msgstr "Unsicher:"
+msgstr "Unklar:"
 
 #: projects/templates/feeds/release_description.html:6
 #: projects/templates/feeds/release_language_description.html:6
@@ -953,6 +953,7 @@ msgid "File submitted successfully: %s"
 msgstr "Datei erfolgreich übertragen: %s"
 
 #: projects/views/component.py:533
+#, fuzzy
 msgid "Your file does not pass the correctness checks (msgfmt -c). Your file has been e-mailed to you to avoid losing any work."
 msgstr "Ihre Datei bestand den Test auf Korrektheit (msgfmt -c PO-DATEI) nicht. Die Datei wurde an Sie per Mail geschickt, um keine Änderungen zu verlieren. Korrigieren Sie die Fehler der Übermittlung."
 
@@ -1836,7 +1837,7 @@ msgstr "Übersetzungsdateien"
 
 #: templates/projects/component_detail.html:136
 msgid "Source file:"
-msgstr ""
+msgstr "Quelldatei:"
 
 #: templates/projects/component_detail.html:143
 msgid "Statistics last updated:"
@@ -1985,7 +1986,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
-msgstr "Ein neues Übersetzung hinzufügen"
+msgstr "Eine neue Übersetzung hinzufügen"
 
 #: templates/projects/component_submit_new_file.html:9
 msgid "Add a translation file"
@@ -2139,6 +2140,7 @@ msgid "New project"
 msgstr "Neues Projekt"
 
 #: templates/projects/project_form.html:37
+#, fuzzy
 msgid "Add the details of your project"
 msgstr "Fügen Sie die Details über Ihr Projekt hinzu"
 
@@ -2311,6 +2313,7 @@ msgstr ""
 #: templates/projects/release_form.html:14
 #: templates/projects/release_form.html:19
 #: templates/projects/release_form.html:25
+#, fuzzy
 msgid "Add a release"
 msgstr "Sag es!"
 
@@ -2492,9 +2495,8 @@ msgid "Attachment"
 msgstr ""
 
 #: templates/reviews/review_list.html:158
-#, fuzzy
 msgid "Actions"
-msgstr "Optionen"
+msgstr "Aktionen"
 
 #: templates/reviews/review_list.html:182
 msgid "Reopen review request"
@@ -2593,8 +2595,8 @@ msgstr "Betreuer"
 #: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Koordinator:"
+msgstr[1] "Koordinatoren:"
 
 #: templates/teams/team_detail.html:56
 msgid "Become a translator:"
@@ -2614,7 +2616,7 @@ msgstr ""
 
 #: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
 msgid "Deny"
-msgstr ""
+msgstr "Verweigern"
 
 #: templates/teams/team_detail.html:91
 msgid "Withdraw"
@@ -2625,14 +2627,12 @@ msgid "Team Members:"
 msgstr ""
 
 #: templates/teams/team_detail.html:114
-#, fuzzy
 msgid "Leave"
-msgstr "Speichern"
+msgstr "Verlassen"
 
 #: templates/teams/team_detail.html:147
-#, fuzzy
 msgid "Delete team"
-msgstr "die Veröffentlichungsseite"
+msgstr "Team löschen"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2649,14 +2649,12 @@ msgid "Please note that notification will not be sent when coordinators or membe
 msgstr ""
 
 #: templates/teams/team_form.html:40
-#, fuzzy
 msgid "Save team"
-msgstr "Speichern"
+msgstr "Team speichern"
 
 #: templates/teams/team_list.html:30
-#, fuzzy
 msgid "Add a new team"
-msgstr "Ein neues Projekt hinzufügen"
+msgstr "Ein neues Team hinzufügen"
 
 #: templates/teams/team_list.html:41
 msgid "List of team requests:"
@@ -2709,7 +2707,7 @@ msgstr ""
 
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
-msgstr ""
+msgstr "Anfrage verweigern"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
@@ -2731,9 +2729,8 @@ msgid "Remove profile"
 msgstr "Profil entfernen"
 
 #: templates/userprofile/account/email_validation.html:5
-#, fuzzy
 msgid "Change e-mail"
-msgstr "E-Mail-Adresse ändern"
+msgstr "E-Mail ändern"
 
 #: templates/userprofile/account/email_validation.html:5
 msgid "Add e-mail"
@@ -3122,7 +3119,7 @@ msgstr "Ort ändern"
 
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr ""
+msgstr "Meine Zeitleiste"
 
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
@@ -3168,7 +3165,17 @@ msgid_plural ""
 "            Coordinator of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"\r\n"
+"            Koordinator des folgenden Teams:\n"
+"\r\n"
+"        "
 msgstr[1] ""
+"\n"
+"\r\n"
+"            Koordinator der folgenden Teams:\n"
+"\r\n"
+"        "
 
 #: templates/userprofile/profile/public.html:115
 #: templates/userprofile/profile/public.html:142
@@ -3234,9 +3241,8 @@ msgid "Verbose editing:"
 msgstr ""
 
 #: templates/webtrans/transfile_edit.html:74
-#, fuzzy
 msgid "Filter"
-msgstr "Dateien"
+msgstr "Filter"
 
 #: templates/webtrans/transfile_edit.html:75
 msgid "Clear"
@@ -3248,7 +3254,7 @@ msgstr "Übersetzt"
 
 #: templates/webtrans/transfile_edit.html:86
 msgid "Fuzzy"
-msgstr ""
+msgstr "Unklar"
 
 #: templates/webtrans/transfile_edit.html:92
 msgid "Untranslated"
@@ -3280,7 +3286,7 @@ msgstr "AT"
 
 #: templates/webtrans/transfile_edit.html:122
 msgid "Fuzzy?"
-msgstr ""
+msgstr "Unklar?"
 
 #: templates/webtrans/transfile_edit.html:135
 msgid "Submit translations"
@@ -3688,9 +3694,8 @@ msgid "when a translation team of a project is changed"
 msgstr "wenn eine Veröffentlichung einer Zusammenstellung geändert wird"
 
 #: txcommon/notifications.py:184
-#, fuzzy
 msgid "Team Deleted"
-msgstr "Veröffentlichung gelöscht"
+msgstr "Team gelöscht"
 
 #: txcommon/notifications.py:185
 #, fuzzy
