@@ -3172,6 +3172,9 @@ msgid ""
 "                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project\n"
 "                "
 msgstr ""
+"\n"
+"                Equipa <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> do projecto <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a>\n"
+"                "
 
 #: templates/userprofile/profile/public.html:131
 msgid ""
@@ -3183,7 +3186,13 @@ msgid_plural ""
 "            Members of the following teams:\n"
 "        "
 msgstr[0] ""
+"\n"
+"            Membro da seguinte equipa:\n"
+"        "
 msgstr[1] ""
+"\n"
+"            Membros das seguintes equipas:\n"
+"        "
 
 #: templates/webtrans/comments.html:3
 msgid "Context"
@@ -3440,7 +3449,7 @@ msgstr "Data de bloqueio das linhas"
 
 #: txcommon/admin.py:10
 msgid "Required. 30 characters or fewer. Unicode alphanumeric characters only (letters, digits and underscores)."
-msgstr ""
+msgstr "Obrigatório. 30 caracteres ou menos. Apenas caracteres alfa numéricos Unicode (letras, dígitos e traços inferiores)."
 
 #: txcommon/admin.py:13
 msgid "This value must contain only unicode letters, numbers and underscores."
@@ -3613,11 +3622,11 @@ msgstr ""
 
 #: txcommon/notifications.py:134
 msgid "when a new release is added to a project"
-msgstr ""
+msgstr "quando uma nova versão for adicionada ao projecto"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
-msgstr ""
+msgstr "Versão Alterada"
 
 #: txcommon/notifications.py:141
 msgid "when a release of a project is changed"
@@ -3625,7 +3634,7 @@ msgstr ""
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
-msgstr ""
+msgstr "Versão Apagada"
 
 #: txcommon/notifications.py:147
 msgid "when a release of a project is deleted"
@@ -3633,19 +3642,19 @@ msgstr ""
 
 #: txcommon/notifications.py:152
 msgid "Release Added to a Project"
-msgstr ""
+msgstr "Versão Adicionada ao Projecto"
 
 #: txcommon/notifications.py:153
 msgid "when a release is added to a project"
-msgstr ""
+msgstr "quando uma versão for adicionada ao projecto"
 
 #: txcommon/notifications.py:158
 msgid "Release Deleted from a Project"
-msgstr ""
+msgstr "Versão Apagada do Projecto"
 
 #: txcommon/notifications.py:159
 msgid "when a release is deleted from a project"
-msgstr ""
+msgstr "quando uma versão for apagada ao projecto"
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
@@ -3681,7 +3690,7 @@ msgstr ""
 
 #: txcommon/notifications.py:200
 msgid "Team Creation Request Denied"
-msgstr ""
+msgstr "Rejeitado o Pedido de Criação de Equipa"
 
 #: txcommon/notifications.py:201
 msgid "when a translation team creation requestfor a project is denied by a maintainer"
@@ -3689,7 +3698,7 @@ msgstr ""
 
 #: txcommon/notifications.py:208
 msgid "Team User Joining Requested"
-msgstr ""
+msgstr "Efectuado o Pedido de Integração na Equipa"
 
 #: txcommon/notifications.py:209
 msgid "when an user requests for joining to a translation team of a project"
@@ -3697,7 +3706,7 @@ msgstr ""
 
 #: txcommon/notifications.py:216
 msgid "Team User Joining Approved"
-msgstr ""
+msgstr "Aprovado o Pedido de Integração na Equipa"
 
 #: txcommon/notifications.py:217
 msgid "when an user is approved as a member of a translation team of a project"
@@ -3705,7 +3714,7 @@ msgstr ""
 
 #: txcommon/notifications.py:224
 msgid "Team User Joining Denied"
-msgstr ""
+msgstr "Rejeitado o Pedido de Integração na Equipa"
 
 #: txcommon/notifications.py:225
 msgid "when an user is denied as a member of a translation team of a project"
@@ -3762,7 +3771,7 @@ msgstr ""
 
 #: txcommon/validators.py:86
 msgid "This repository already belongs to another project. Please choose a different one."
-msgstr ""
+msgstr "Este repositório já pertence a outro projecto. Por favor, escolha outro."
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
@@ -3779,11 +3788,11 @@ msgstr ""
 
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
+msgstr "Indique 0 ou números inteiros separados por vírgulas e entre parênteses."
 
 #: txcommon/db/models.py:28
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "No mínimo, deve indicar um conjunto de parênteses sem nada."
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -3810,8 +3819,9 @@ msgid "You removed the permission request."
 msgstr "Você removeu o pedido de permissão."
 
 #: vcs/forms.py:18
+#, fuzzy
 msgid "Repo URL root"
-msgstr ""
+msgstr "Repo URL root"
 
 #: vcs/forms.py:19 vcs/forms.py:43
 msgid "The URL of the versioning system repository/branch."
@@ -3827,7 +3837,7 @@ msgstr "Ramo"
 
 #: vcs/models.py:49
 msgid "A VCS branch this unit is associated with"
-msgstr ""
+msgstr "O ramo VCS ao qual esta unidade está associada"
 
 #: vcs/models.py:50
 msgid "Web frontend"
@@ -3835,7 +3845,7 @@ msgstr "Interface Gráfica Web"
 
 #: vcs/models.py:52
 msgid "A URL to the project's web front-end"
-msgstr ""
+msgstr "A URL para a interface gráfica do projecto"
 
 #: vcs/models.py:58
 #, python-format
@@ -3853,11 +3863,11 @@ msgstr "vcsunits"
 #: webtrans/fields.py:55
 #, python-format
 msgid "The %s fields should be filled."
-msgstr ""
+msgstr "O campo %s deve ser preenchido."
 
 #: webtrans/wizards.py:364
 msgid "Nothing was sent because you haven't changed anything in the translation form."
-msgstr ""
+msgstr "Nada foi enviado pois não alterou nada."
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
