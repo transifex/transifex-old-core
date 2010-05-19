@@ -10,14 +10,14 @@
   <legend>{% trans "Submit file" %}</legend>
     <input type="file" name="submitted_file">
     <p>
-    <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
-    <input type="hidden" name="message" value="Updates to {{pofile.lang_or_code}} translation">
     {% if perms.projects.submit_file or can_submit_file %}
+    <input type="submit" class="i16 send_file" size="10" value="{% trans "Send" %}">
     {% else %}
     <script type="text/javascript">
     $(document).ready(function() { $('#pofile-submit-{{pofile.language_code}}').attr('disabled','true'); });
     </script>
     {% endif %}
+    <input type="submit" class="i16 send_file" size="10" name="submit_for_review" value="{% trans "Send for Review" %}">
     </p>
 
 {% comment %}Temporarily hooks are disabled here, until we improve the compontent detail view{% endcomment %}
