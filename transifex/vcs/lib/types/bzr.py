@@ -71,6 +71,7 @@ class BzrBrowser(BrowserMixin):
             self.work_tree = self.repo.create_checkout(
                 self.path, lightweight=True, accelerator_tree=remote_work_tree)
         except Exception, e:
+            self.teardown_repo()
             raise SetupRepoError(e)
 
     def init_repo(self):

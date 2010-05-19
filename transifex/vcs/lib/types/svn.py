@@ -168,6 +168,7 @@ class SvnBrowser(BrowserMixin):
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
         except Exception, e:
+            self.teardown_repo()
             raise SetupRepoError(_exception_handler(e))
 
 

@@ -29,7 +29,8 @@ class BaseVCSError(Exception):
 
     def get_user_message(self, with_details=True):
         if with_details:
-            return "%s Details from the VCS backend: '%s'." % (self.user_message, self.original_exception)
+            return "%s Details from the VCS backend: '%s'." % (
+                self.user_message, self.original_exception)
         else:
             return user_message
 
@@ -51,7 +52,7 @@ class InitRepoError(BaseVCSError):
 class UpdateRepoError(BaseVCSError):
     message = "Update/Pull from remote repository failed"
     user_message = _("Unable to pull data from the remote repository. Is the"
-        "remote host up?")
+        " remote host up?")
     notify_maintainers = True
 
 

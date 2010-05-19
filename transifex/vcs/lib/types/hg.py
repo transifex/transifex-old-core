@@ -74,6 +74,7 @@ class HgBrowser(BrowserMixin):
             remote_repo, repo = hg.clone(ui, self.remote_path, self.path,
                                          update=True)
         except Exception, e:
+            self.teardown_repo()
             raise SetupRepoError(e)
 
 
