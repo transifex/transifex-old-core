@@ -4,7 +4,6 @@ import polib
 import itertools
 from django.contrib.contenttypes.models import ContentType
 from django.dispatch import Signal
-from codebases.lib import BrowserError
 from translations.lib.types.pot import POTManager
 from translations.models import POFile
 from languages.models import Language
@@ -12,6 +11,7 @@ from txcommon.log import logger
 from txcommon import rst
 from projects.models import Component
 from projects.signals import pre_set_stats, post_set_stats
+from vcs.lib.exceptions import RevisionRepoError
 
 class POTHandler:
     """
@@ -70,7 +70,7 @@ class POTHandler:
         if hasattr(self.component, 'get_rev'):
             try:
                 rev = self.component.get_rev(filename)
-            except BrowserError:
+            except RevisionRepoError:
                 pass
 
             if rev and rev == s.rev:

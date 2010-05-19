@@ -102,22 +102,16 @@ class VcsUnit(Unit):
     @need_browser
     def prepare(self):
         """Abstraction for the vcsunit.browser.update."""
-        Signal.send(pre_prepare_repo, sender=VcsUnit,
-            instance=self.component)
-        try:
+        Signal.send(pre_prepare_repo, sender=VcsUnit, instance=self.component)
+        if self.last_checkout:
             logger.debug("Preparing repo for vcsunit %s" % self.name)
             self.browser.update()
-            self.last_checkout = datetime.now()
-            self.save()
-        except:
-            logger.debug("Repo update failed. Let's clean up and try again.")
-            # Try once again with a clean local repo.
-            self.teardown()
+        else:
+            logger.debug("Repo is not created yet. Creating it!")
             self.browser.setup_repo()
-            #TODO: Do something if this fails.
-            self.browser.update()
-        Signal.send(post_prepare_repo, sender=VcsUnit,
-            instance=self.component)
+        self.last_checkout = datetime.now()
+        self.save()
+        Signal.send(post_prepare_repo, sender=VcsUnit, instance=self.component)
 
     @need_browser
     def get_files(self, file_filter):

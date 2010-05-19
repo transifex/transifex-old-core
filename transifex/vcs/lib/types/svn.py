@@ -8,6 +8,7 @@ import pysvn
 from django.conf import settings
 from vcs.lib import RepoError
 from codebases.lib import BrowserMixin, BrowserError
+from vcs.lib.exceptions import *
 from txcommon.log import logger
 from txcommon.models import Profile
 
@@ -61,34 +62,33 @@ def _exception_handler(e, default_message=None):
     """
     stre = str(e)
     if 'File not found' in stre or 'path not found' in stre:
-        msg = "File not found in repo!"
+        msg = "File not found in repo"
         logger.error(msg)
-        raise RepoError(msg)
+        return RepoError(msg)
     elif 'callback_ssl_server_trust_prompt required' in stre:
         home = os.path.expanduser('~')
         msg = ('HTTPS certificate not accepted. Please ensure that '
             'the proper certificate exists in %s/.subversion/auth '
             'for the user that Transifex is running as.' % home)
         logger.error(msg)
-        raise RepoError('HTTPS certificate not accepted.')
+        return RepoError('HTTPS certificate not accepted')
     elif 'callback_get_login required' in stre:
-        msg = 'Login to the SCM server failed.'
+        msg = 'Login to the SCM server failed'
         logger.error(msg)
-        raise RepoError(msg)
+        return RepoError(msg)
     else:
         logger.error(traceback.format_exc())
-        raise RepoError(default_message or stre)
+        return RepoError(default_message or stre)
 
 class SvnBrowser(BrowserMixin):
-    
     """
     A browser class for Subversion repositories.
-    
+
     Note, that compared to the other Browsers, this one is stateless: It
     doesn't require a self.repo object or something, since each command
     can execute without any preparation. For this reason, init_repo is
     not doing much.
-   
+
     Subversion homepage: http://subversion.tigris.org/
 
     >>> b = SvnBrowser(name='test-svn', branch='trunk',
@@ -97,7 +97,6 @@ class SvnBrowser(BrowserMixin):
     Traceback (most recent call last):
     ...
     AssertionError: Unit checkout path outside of nominal repo checkout path.
-    
     """
 
     # We are using the pysvn module.
@@ -117,7 +116,7 @@ class SvnBrowser(BrowserMixin):
         self.root = root
         self.name = name
         self.branch = branch
-        
+
         self.path = os.path.normpath(os.path.join(REPO_PATH, name))
         self.path = os.path.abspath(self.path)
         #Test for possible directory traversal
@@ -126,14 +125,15 @@ class SvnBrowser(BrowserMixin):
             "Unit checkout path outside of nominal repo checkout path.")
         self.client = pysvn.Client()
         self.client.callback_ssl_server_trust_prompt = _ssl_server_trust_prompt
-        
+        self.client.set_interactive(False)
+
+
     def _authenticate(self):
         """
         Authentication for SVN repositories.
-        
-        Used primarly for https:// repos, which require a username and password
-        for write
-        operations, taken from the configuration settings.
+
+        Used primarly for https:// repos, which require a username and 
+        password for write operations, taken from the configuration settings.
         """
         domain = domain_from_hostname(self.root)
         username, passwd = SVN_CREDENTIALS.get(domain, (None, None))
@@ -141,6 +141,7 @@ class SvnBrowser(BrowserMixin):
         self.client.set_auth_cache(False)
         self.client.set_default_username(username)
         self.client.set_default_password(passwd)
+
 
     @property
     def remote_path(self):
@@ -159,7 +160,7 @@ class SvnBrowser(BrowserMixin):
     def setup_repo(self):
         """
         Initialize repository for the first time.
-        
+
         Commands used:
         svn co <remote_path> <self.path>
         """
@@ -167,14 +168,14 @@ class SvnBrowser(BrowserMixin):
             self.client.checkout(self.remote_path, self.path,
                 ignore_externals=True)
         except Exception, e:
-            _exception_handler(e, "Checkout from remote repository failed.")
+            raise SetupRepoError(_exception_handler(e))
 
 
     @need_auth
     def init_repo(self):
         """
         A browser repo initialization method, for compatibility reasons.
-        
+
         pysvn runs commands in a stateless fashion, so we don't require an
         initialization phase. The local repo existence check is handled by
         the ``need_repo`` decorator.
@@ -185,34 +186,36 @@ class SvnBrowser(BrowserMixin):
     def _clean_dir(self):
         """
         Clean the local working directory.
-        
+
         Commands used:
         svn revert -R .
-        
         """
         try:
             self.client.revert(self.path, recurse=True)
-        except:
-            pass
+        except Exception, e:
+            raise CleanupRepoError(e)
 
     @need_repo
     def update(self):
         """
         Fully update the local repository.
-        
+
         Commands used:
         clean dir
         svn update
         """
-        self._clean_dir()
-        self.client.update(self.path)
+        try:
+            self._clean_dir()
+            self.client.update(self.path)
+        except Exception, e:
+            raise UpdateRepoError(e)
 
     @need_repo
     def get_rev(self, obj=None):
         """
         Get the current revision of the repository or a specific
         object.
-        
+
         Commands used:
         svn info
         """
@@ -222,10 +225,8 @@ class SvnBrowser(BrowserMixin):
             else:
                 entry = self.client.info(os.path.join(self.path, obj))
             return (entry.commit_revision.number,)
-        # TODO: Make it more specific
-        except:
-            logger.error(traceback.format_exc())
-            raise BrowserError()
+        except Exception, e:
+            raise RevisionRepoError(e)
 
     @need_repo
     @need_auth
@@ -253,19 +254,21 @@ class SvnBrowser(BrowserMixin):
             if not self.client.status(filename)[0]['is_versioned']:
                 self.client.add(filename)
 
-        username = user.username
-
         try:
             # svn ci files
             r = self.client.checkin(absolute_filenames, msg.encode('utf-8'))
+        except Exception, e:
+            raise CommitRepoError(_exception_handler(e))
 
-            try:
-                # Set the author property for the revision
-                self.client.revpropset("svn:author", username, self.root, r)
-            except pysvn.ClientError, e:
-                logger.info("Could not set author property for a svn commit:\n"
-                    "%s" % str(e))
+        try:
+            username = user.username
+            # Set the author property for the revision
+            self.client.revpropset("svn:author", username, self.root, r)
+        except Exception, e:
+            logger.info("Could not set author property for a svn commit:\n"
+                "%s" % str(e))
 
+        try:
             self.update()
-        except pysvn.ClientError, e:
-            _exception_handler(e)
+        except Exception, e:
+            raise PushRepoError(_exception_handler(e))

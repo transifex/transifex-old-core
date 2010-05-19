@@ -3,12 +3,13 @@ import os
 import time
 import traceback
 import os.path
-
 from django.conf import settings
-from vcs.lib import RepoError
 from codebases.lib import BrowserMixin, BrowserError
-from vcs.lib.types import need_repo
+#from vcs.lib import RepoError
+from vcs.lib.exceptions import *
 from vcs.lib.support.cvs import repository, checkout
+from vcs.lib.types import need_repo
+from txcommon.commands import CommandError
 from txcommon.log import logger
 
 REPO_PATH = settings.REPO_PATHS['cvs']
@@ -74,38 +75,46 @@ class CvsBrowser(BrowserMixin):
     def setup_repo(self):
         """
         Initialize repository for the first time.
-        
+
         Commands used:
         cvs -d checkout 
-       
         """
         branch = None
         if self.branch != 'HEAD':
             branch = self.branch
-        repo = checkout(root=self.root, module=self.module,
-                        dest=self.path, branch=branch)
-        return repo
-
+        try:
+            self.repo = checkout(root=self.root, module=self.module,
+                dest=self.path, branch=branch)
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            self.teardown_repo()
+            raise SetupRepoError(e)
 
     def init_repo(self):
         """
         Initialize the ``repo`` variable on the browser.
-        
+
         If local repo exists, use that. If not, check it out.
         """
-        
         try:
             self.repo = repository(self.path)
-        except RepoError:
-            self.repo = self.setup_repo()
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            raise InitRepoError(e)
 
     @need_repo
     def update(self):
         """
         cvs up -PdC
         """
-        self.repo.up(P=True, d=True, C=True)
-
+        try:
+            self.repo.up(P=True, d=True, C=True)
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            raise UpdateRepoError(e)
 
     def _clean_dir(self):
         """
@@ -113,23 +122,20 @@ class CvsBrowser(BrowserMixin):
         """
         try:
             self.update()
-        except:
-            pass
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            raise CleanupRepoError(e)
 
     @need_repo
     def get_rev(self, obj=None):
-        """
-        Get the current revision of a file within the repository.
-        
-        Commands used:
-        none
-        """
+        """Get the current revision of a file within the repository."""
         try:
             if not obj:
                 raise ValueError('CVS repos do not have a global revision')
             p = os.path.join(self.path, obj)
             if not os.path.exists(p):
-                return None
+                raise ValueError('File does not exist in the repository')
             if not os.path.isfile(p):
                 raise ValueError('Only files have a revision in CVS')
             d, b = os.path.split(p)
@@ -143,13 +149,13 @@ class CvsBrowser(BrowserMixin):
                 else:
                     rev = None
                 ef.close()
-            except IOError:
-                return None
+                if rev==None:
+                    raise Exception('Could not find a revision')
+            except IOError, e:
+                raise Exception(str(e))
             return tuple(int(p) for p in rev.split('.'))
-        # TODO: Make it more specific
-        except:
-            logger.error(traceback.format_exc())
-            raise BrowserError()
+        except Exception, e:
+            raise RevisionRepoError(e)
 
     @need_repo
     def submit(self, files, msg, user):
@@ -173,6 +179,16 @@ class CvsBrowser(BrowserMixin):
 
         files = ' '.join(filenames).encode('utf-8')
 
-        # cvs ci files
-        self.repo.commit(files, m=msg.encode('utf-8'))
-        self.update()
+        try:
+            self.repo.commit(files, m=msg.encode('utf-8'))
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            raise CommitRepoError(e)
+
+        try:
+            self.update()
+        except Exception, e:
+            if hasattr(e, 'stderr'):
+                e = e.stderr
+            raise PushRepoError(e)

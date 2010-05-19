@@ -42,6 +42,7 @@ from txcommon.forms import unit_sub_forms
 from txcommon.log import logger
 from txcommon.models import exclusive_fields, get_profile_or_user
 from txcommon.views import json_result, json_error
+from vcs.lib.exceptions import BaseVCSError
 
 # Cache the current site
 current_site = Site.objects.get_current()
@@ -267,10 +268,10 @@ def component_set_stats(request, project_slug, component_slug):
                                   project__slug=project_slug)
     logger.debug("Requested stats calc for component %s" % component.full_name)
     if component.should_calculate:
-        # Checkout
-        component.prepare()
         # Calculate statistics
         try:
+            # Checkout
+            component.prepare()
             pre_refresh_cache.send(sender=None, component=component)
             component.trans.set_stats()
         except FileFilterError:
@@ -287,6 +288,11 @@ def component_set_stats(request, project_slug, component_slug):
             request.user.message_set.create(message = _("There is no 'pot' "
                 "directory named in the set of files of this Publican like "
                 "component. Maybe its file filter is not allowing access to it."))
+
+        except BaseVCSError, e:
+            if e.notify_admins:
+                pass
+            request.user.message_set.create(message=e.get_user_message())
 
     else:
         logger.debug("Statistics calculation is disabled for the '%s' component."
@@ -534,6 +540,10 @@ def component_submit_file(request, project_slug, component_slug,
         except AddonError, err:
             logger.debug("An addon encountered exception: %s" % err)
             request.user.message_set.create(message=str(err))
+        except BaseVCSError, e:
+            if e.notify_admins:
+                pass
+            request.user.message_set.create(message=e.get_user_message())
         except StandardError, e:
             logger.debug("Error submiting translation file %s"
                          " for %s component: %s" % (filename,

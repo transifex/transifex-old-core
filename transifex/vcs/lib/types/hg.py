@@ -11,6 +11,7 @@ except:
 
 from django.conf import settings
 from codebases.lib import BrowserMixin, BrowserError
+from vcs.lib.exceptions import *
 from vcs.lib.types import need_repo
 from txcommon.log import logger
 
@@ -69,16 +70,11 @@ class HgBrowser(BrowserMixin):
         hg update <branch>
         
         """
-
         try:
             remote_repo, repo = hg.clone(ui, self.remote_path, self.path,
                                          update=True)
-        except RepoError, e:
-            # Remote repo error
-            logger.error(traceback.format_exc())
-            raise BrowserError, e
-
-        return (remote_repo, repo)
+        except Exception, e:
+            raise SetupRepoError(e)
 
 
     def init_repo(self):
@@ -90,9 +86,8 @@ class HgBrowser(BrowserMixin):
         
         try:
             self.repo = hg.repository(ui, self.path)
-            self.remote_repo = hg.repository(ui, self.remote_path)
-        except RepoError:
-            self.remote_repo, self.repo = self.setup_repo()
+        except Exception, e:
+            raise InitRepoError(e)
 
     def _clean_dir(self):
         """
@@ -104,8 +99,8 @@ class HgBrowser(BrowserMixin):
         """
         try:
             hg.clean(self.repo, self.branch, show_stats=False)
-        except:
-            pass
+        except Exception, e:
+            raise CleanupRepoError(e)
 
     @need_repo
     def update(self):
@@ -119,9 +114,8 @@ class HgBrowser(BrowserMixin):
         """
         try:
             commands.pull(self.repo.ui, self.repo, force=True, update=True) 
-        except RepoError, e:
-            logger.error(traceback.format_exc())
-            raise BrowserError, e
+        except Exception, e:
+            raise UpdateRepoError(e)
 
     @need_repo
     def get_rev(self, obj=None):
@@ -137,7 +131,7 @@ class HgBrowser(BrowserMixin):
                 node = ctx.node()
             return (int(node.encode('hex'), 16),)
         except LookupError, e:
-            raise BrowserError(e)
+            raise RevisionRepoError(e)
 
     @need_repo
     def submit(self, files, msg, user):
@@ -157,8 +151,19 @@ class HgBrowser(BrowserMixin):
 
         # Ensure of committing only the right files
         match = cmdutil.match(self.repo, filenames, default=self.path)
-        
-        self.repo.commit(msg.encode('utf-8'), user=user, match=match)
 
-        commands.push(ui, self.repo, self.root, force=False, branch=self.branch)
+        try:
+            self.repo.commit(msg.encode('utf-8'), user=user, match=match)
+        except Exception, e:
+            raise CommitRepoError(e)
 
+        try:
+            # Push might fail without raising an exception and also return
+            # True if it fails. WTF?!
+            # TODO: Discuss it with the mercurial guys.
+            if bool(commands.push(ui, self.repo, self.root,
+                branch=self.branch)):
+                raise Exception("Could not push to the remote repository "
+                    "due a strange bug on Mercurial.")
+        except Exception, e:
+            raise PushRepoError(e)

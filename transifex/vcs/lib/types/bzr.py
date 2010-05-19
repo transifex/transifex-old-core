@@ -13,6 +13,7 @@ from bzrlib.errors import NotBranchError
 
 from django.conf import settings
 from codebases.lib import BrowserMixin, BrowserError
+from vcs.lib.exceptions import *
 from vcs.lib.types import need_repo
 from txcommon.log import logger
 
@@ -64,11 +65,13 @@ class BzrBrowser(BrowserMixin):
         Commands used:
         bzr checkout --lightweight <remote_path> <self.path>
         """
-        remote_work_tree, self.repo = bzrdir.BzrDir.open_tree_or_branch(
-            self.remote_path)
-        self.work_tree = self.repo.create_checkout(
-            self.path, lightweight=True, accelerator_tree=remote_work_tree)
-
+        try:
+            remote_work_tree, self.repo = bzrdir.BzrDir.open_tree_or_branch(
+                self.remote_path)
+            self.work_tree = self.repo.create_checkout(
+                self.path, lightweight=True, accelerator_tree=remote_work_tree)
+        except Exception, e:
+            raise SetupRepoError(e)
 
     def init_repo(self):
         """
@@ -83,10 +86,9 @@ class BzrBrowser(BrowserMixin):
             # Check that the path is a checkout
             self.work_tree, self.repo = bzrdir.BzrDir.open_tree_or_branch(
                 self.path)
-        except NotBranchError:
-            # Else create a lightweight checkout there.
-            self.setup_repo()
-            
+        except Exception, e :
+            raise InitRepoError(e)
+
     def _clean_dir(self):
         """
         Clean the local working directory.
@@ -105,8 +107,8 @@ class BzrBrowser(BrowserMixin):
             # want to import files that were left over from another run by mistake.
             clean_tree.clean_tree(self.path, unknown=True, ignored=True,
                               detritus=True, no_prompt=True)
-        except:
-            pass
+        except Exception, e:
+            raise CleanupRepoError(e)
 
     @need_repo
     def update(self):
@@ -119,8 +121,11 @@ class BzrBrowser(BrowserMixin):
         """
         # Note: If we used a branch instead of a checkout, we'd want to use
         # bzr pull.
-        self._clean_dir()
-        self.work_tree.update()
+        try:
+            self._clean_dir()
+            self.work_tree.update()
+        except Exception, e:
+            raise UpdateRepoError(e)
 
     @need_repo
     def get_rev(self, obj=None):
@@ -137,10 +142,8 @@ class BzrBrowser(BrowserMixin):
                     self.repo.last_revision())
                 i = t.inventory[t.path2id(obj)]
                 return m[i.revision]
-        # TODO: Make it more specific
-        except:
-            logger.error(traceback.format_exc())
-            raise BrowserError()
+        except Exception, e:
+            raise RevisionRepoError(e)
 
     @need_repo
     def submit(self, files, msg, user):
@@ -160,6 +163,9 @@ class BzrBrowser(BrowserMixin):
         committer = '%s <%s>' % (settings.COMMITTER_NAME,
                                  settings.COMMITTER_EMAIL)
 
-        self.work_tree.commit(message=msg, committer=committer,
-                              specific_files=filenames,
-                              revprops={'author': user})
+        try:
+            self.work_tree.commit(message=msg, committer=committer,
+                                specific_files=filenames,
+                                revprops={'author': user})
+        except Exception, e:
+            raise PushRepoError(e)
