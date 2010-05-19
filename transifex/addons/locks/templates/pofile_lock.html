@@ -17,8 +17,9 @@
         <span id="po-lock-toggle-{{pofile_id}}" class="i16 lock nodecoration_icon"></span>
     {% endif %}
     {% tooltip "po-lock-toggle" pofile_id %}
-        {% blocktrans %}This file has been locked by user '{{ owner }}'.{% endblocktrans %}
-        <span class="i16 actionlog">Time left:</span> {{lock.expires|timeuntil}}
+        {% blocktrans %}This file has been locked by user '{{ owner }}'.{% endblocktrans %}<br />
+        <span class="bold">{% blocktrans %}Click on it to unlook the file.{% endblocktrans %}</span><br />
+        <span class="i16 actionlog">{% blocktrans %}Time left:{% endblocktrans %}</span> {{lock.expires|timeuntil}}.
     {% endtooltip %}
 
     {% if is_owner %}
