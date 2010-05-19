@@ -67,18 +67,22 @@ def _group_pofiles(postats, grouping_key, pot_total):
 
 
 class POFileManager(models.Manager):
+    def enabled(self):
+        """Filter POFiles by the 'enabled=True' field."""
+        return self.filter(enabled=True)
+
     def by_object(self, obj):
         """
         Create a queryset matching all POFiles associated with the given
         object.
         """
         ctype = ContentType.objects.get_for_model(obj)
-        return self.filter(content_type__pk=ctype.pk,
+        return self.enabled().filter(content_type__pk=ctype.pk,
                            object_id=obj.pk).order_by('-trans_perc')
 
     def by_language(self, language):
         """Return a list of objects statistics for a language."""
-        return self.filter(language=language)
+        return self.enabled().filter(language=language)
 
     def by_release(self, release):
         """
@@ -88,7 +92,7 @@ class POFileManager(models.Manager):
         """
         ctype = ContentType.objects.get(app_label='projects', model='component')
         comp_query = release.components.values('pk').query
-        return self.filter(content_type=ctype, object_id__in=comp_query)
+        return self.enabled().filter(content_type=ctype, object_id__in=comp_query)
 
     def by_release_and_language(self, release, language):
         """

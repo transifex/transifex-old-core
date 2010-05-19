@@ -52,6 +52,11 @@ class POTHandler:
 
         logger.debug("Setting stats for %s." % s.filename)
 
+        if created:
+            logger.debug("POFile has been created.")
+        else:
+            logger.debug("POFile already existed.")
+
         if not is_pot:
             lang_code = self.guess_language(filename)
             logger.debug("Guessed language is '%s'." % lang_code)
@@ -78,11 +83,17 @@ class POTHandler:
             else:
                 logger.debug("VCS revision for the file has changed.")
 
+        # If POFile is enabled=False we must enforce the stats calculation
+        if not s.enabled:
+            calcstats, s.enabled = True, True
+            logger.debug("POFile had attr 'enabled=False'.")
+
         # For intltool components that the pot file has changes, it's
         # necessary to recalc the stats even if the 'rev' is the same
         # FIXME: It's too tied
-        if self.component.i18n_type=='INTLTOOL' and is_msgmerged:
+        elif self.component.i18n_type=='INTLTOOL' and is_msgmerged:
             calcstats = True
+            logger.debug("It's an intltool component with POT changes.")
 
         if is_pot:
             self.SOURCE_MAP.update({filename:calcstats})
@@ -213,9 +224,14 @@ class POTHandler:
         return self.tm.get_source_file()
 
     def clean_stats(self):
-        """Clean all stats of translations for the component in the database."""
+        """
+        Set all stats of translations for the component in the database as
+        enabled=False.
+
+        POFiles with enabled=False do not appear at the UI.
+        """
         logger.debug("Cleaning stats for %s" % self.component)
-        POFile.objects.by_object(self.component).delete()
+        POFile.objects.by_object(self.component).update(enabled=False)
 
     def clean_old_stats(self):
         """
