@@ -289,6 +289,11 @@ def get_next(request):
         return ''
 
 @register.filter
+def size_humanize(value):
+    """Return a more human readable size number with the appropriate unit type."""
+    return txcommon.utils.size_human(value)
+
+@register.filter
 def strip_tags(value):
     """Return the value with HTML tags striped."""
     return txcommon.rst.strip_tags(value)
