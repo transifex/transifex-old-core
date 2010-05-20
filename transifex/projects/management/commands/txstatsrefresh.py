@@ -6,6 +6,8 @@ import traceback
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import LabelCommand, CommandError
+
+from django_addons.autodiscover import autodiscover
 from projects.models import Project, Component
 
 _HELP_TEXT = """Refresh translation statistics of registered components.
@@ -40,6 +42,10 @@ class Command(LabelCommand):
     # Validation is called explicitly each time the server is reloaded.
     requires_model_validation = False
     
+    def __init__(self):
+        autodiscover()
+        super(Command, self)
+
     def handle(self, *comps, **options):
         """Override default method to make it work without arguments."""
         _continue = options.get('continue')
