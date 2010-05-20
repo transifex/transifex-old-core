@@ -142,6 +142,24 @@ def txversion():
     """Return the version of Transifex"""
     return txcommon.version
 
+@register.simple_tag
+def txrevision():
+    """
+    Return the revision of the Transifex repository in case it's running on 
+    top of a checkout. If it's not, return an empty string.
+    """
+    return txcommon.revision
+
+@register.simple_tag
+def txversion_full():
+    """
+    Return the full version of Transifex.
+    
+    For versions that are not 'final' return the current version of Transifex 
+    plus the revision of the repository, in case it's running on top of a 
+    checkout.
+    """
+    return txcommon.version_full
 
 class CounterNode(ResolverNode):
     """A template node to count how many times it was called."""
