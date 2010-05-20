@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transifex.0-7-x.django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-02 17:17+0000\n"
-"PO-Revision-Date: 2010-05-15 21:26+0100\n"
+"PO-Revision-Date: 2010-05-20 21:51+0100\n"
 "Last-Translator: Thomas De Rocker <thomasderocker-at-yahoo-dot-com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,7 @@ msgstr "Het type van de codebase (%s)"
 
 #: codebases/models.py:44
 msgid "The last time this unit was updated"
-msgstr "De laatste keer dat deze eenheid is geüpdate"
+msgstr "De laatste keer dat deze eenheid is geüpdatet"
 
 #: codebases/models.py:53
 msgid "unit"
@@ -627,18 +627,18 @@ msgstr "Vertaalstatistieken voor %(lang)s in %(release)s release."
 #: projects/forms.py:15
 #: txpermissions/forms.py:19
 msgid "Search for a username"
-msgstr "Zoek naar een gebruikersnaam"
+msgstr "Zoeken naar een gebruikersnaam"
 
 #: projects/forms.py:35
 #: projects/models.py:214
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
-msgstr "Een reguliere expressie om de getoonde bestanden te filteren. Bv: 'po/.*'"
+msgstr "Een reguliere expressie om de getoonde bestanden te filteren. Bijvoorbeeld: 'po/.*'"
 
 #: projects/forms.py:52
 #: projects/models.py:219
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
-msgstr "Submitten naar"
+msgstr "Inzenden naar"
 
 #: projects/forms.py:53
 msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
@@ -646,7 +646,7 @@ msgstr "Bepaal hoe deze component om moet gaan met aangeleverde bestanden. De be
 
 #: projects/forms.py:68
 msgid "Search for a component"
-msgstr "Zoek naar een component"
+msgstr "Zoeken naar een component"
 
 #: projects/models.py:82
 #: projects/models.py:196
@@ -722,11 +722,11 @@ msgstr "De URL voor het bug en ticket tracking systeem (Bugzilla, Trac, etc.)"
 #: projects/models.py:98
 #: projects/migrations/0003_add_anyone_submit_field.py:12
 msgid "Anyone can submit"
-msgstr "Iedereen kan submitten"
+msgstr "Iedereen kan inzenden"
 
 #: projects/models.py:100
 msgid "Can anyone submit files to this project?"
-msgstr "Kan iedereen bestanden voor dit project submitten?"
+msgstr "Kan iedereen bestanden inzenden naar dit project?"
 
 #: projects/models.py:102
 #: projects/models.py:222
@@ -1886,7 +1886,7 @@ msgstr "Deze component ondersteunt geen lokaal opslaan van de ingezonden bestand
 
 #: templates/projects/component_detail.html:36
 msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
-msgstr "Deze component ondersteunt lokaal opslaan van ingezonden bestanden en zendt ook de bestanden direct naar de upstream-opslag"
+msgstr "Deze component ondersteunt lokaal opslaan van ingezonden bestanden en zendt ook de bestanden direct naar de upstream-repository."
 
 #: templates/projects/component_detail.html:79
 #: templates/projects/project_detail.html:31
@@ -1949,11 +1949,11 @@ msgstr "geleden"
 
 #: templates/projects/component_detail.html:146
 msgid "Component not yet pulled from source repository."
-msgstr ""
+msgstr "Component nog niet van bronrepository gehaald."
 
 #: templates/projects/component_detail.html:149
 msgid "Refresh and re-calculate statistics. This action may take some time."
-msgstr ""
+msgstr "Statistieken vernieuwen en opnieuw berekenen. Deze actie kan enige tijd duren."
 
 #: templates/projects/component_detail.html:149
 msgid "Refresh cache"
@@ -1961,7 +1961,7 @@ msgstr "Vernieuw cache"
 
 #: templates/projects/component_detail.html:154
 msgid "Reset Transifex's local data for a clean pull"
-msgstr ""
+msgstr "Locale data van Transifex herstellen voor een schone overdracht"
 
 #: templates/projects/component_detail.html:154
 msgid "Clear cache"
@@ -1993,6 +1993,9 @@ msgid ""
 "  can take a look at his work and provide any feedback needed, or simply submit\n"
 "  the file to the upstream project."
 msgstr ""
+"Vertalers kunnen een aanvraag doen om hun bestand te laten nakijken door een andere persoon, die\n"
+"  hun werk kan nakijken en feedback geven, of gewoon het bestand inzenden naar het \n"
+"  upstream project."
 
 #: templates/projects/component_detail.html:197
 #: templates/reviews/review_list.html:21
@@ -2024,12 +2027,12 @@ msgstr "%(component_name)s bewerken"
 #: templates/projects/component_form.html:83
 #, python-format
 msgid "Edit Component '%(component_name)s'"
-msgstr ""
+msgstr "Component '%(component_name)s' wijzigen"
 
 #: templates/projects/component_form.html:81
 #, python-format
 msgid "New component for %(project_name)s"
-msgstr ""
+msgstr "Nieuwe component voor %(project_name)s"
 
 #: templates/projects/component_form.html:102
 msgid "Checkout"
@@ -2080,6 +2083,8 @@ msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
 "    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
+"<em>Componenten</em> zijn kleinere, op zichzelf staande onderdelen van een groter project dat bestaat uit eigenlijke bestanden.\n"
+"    Voorbeelden van componenten van een software-project zijn bijvoorbeeld \"UI\" (user interface, gebruikersinterface) en \"Docs\" of ontwikkelingstakken zoals<code>HEAD</code>."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
@@ -2107,7 +2112,7 @@ msgstr "Selecteer het doelbestand:"
 
 #: templates/projects/component_submit_new_file.html:27
 msgid "The target file is the name of the new file language. It must match the component file filter."
-msgstr ""
+msgstr "Het doelbestand is de naam van de nieuwe bestandstaal. Deze moet overeenkomen met de bestandsfilter van de component."
 
 #: templates/projects/component_submit_new_file.html:30
 msgid "or enter it here:"
@@ -2162,6 +2167,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
 msgstr ""
+"\n"
+"  Ben je zeker dat je het geregistreerde project '%(project_name)s' permanent wil wissen?\n"
 
 #: templates/projects/project_detail.html:37
 #: templates/projects/project_form_base.html:89
@@ -2257,12 +2264,12 @@ msgstr "<em>%(project_name)s</em> bewerken"
 
 #: templates/projects/project_form_base.html:29
 msgid "Access control will be enabled once the project is created"
-msgstr ""
+msgstr "Toegangsbeheer zal geactiveerd worden op het moment dat het project aangemaakt wordt"
 
 #: templates/projects/project_form_base.html:76
 #, python-format
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
-msgstr ""
+msgstr "<a href=\"%(project_url)s\">%(project_name)s wijzigen</a>"
 
 #: templates/projects/project_form_base.html:90
 #: templates/projects/project_form_permissions.html:8
@@ -2274,7 +2281,7 @@ msgstr "Toegangscontrole"
 #: templates/projects/project_form_permissions.html:18
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
-msgstr ""
+msgstr "Geef toegang tot een vertaler om vertalingen naar je project te zenden"
 
 #: templates/projects/project_form_permissions.html:20
 msgid "Requests for access to submit files"
@@ -2317,12 +2324,12 @@ msgstr "Nog geen projecten geregistreerd. :-("
 #: templates/projects/project_list.html:57
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
-msgstr ""
+msgstr "Waarom geen project <a href=\"%(project_create)s\">toevoegen</a>?"
 
 #: templates/projects/project_list.html:67
 #, python-format
 msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
-msgstr ""
+msgstr "Kon je je project niet vinden? Ga verder en <a href=\"%(project_create)s\">voeg het toe</a>!"
 
 #: templates/projects/project_menu.html:40
 #: templates/userprofile/menu.html:5
@@ -2381,6 +2388,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  Ben je zeker dat je release '%(release_name)s' die behoort aan %(project_name)s permanent wilt wissen?\n"
 
 #: templates/projects/release_detail.html:60
 msgid "Release date:"
@@ -2392,7 +2401,7 @@ msgstr "String freeze:"
 
 #: templates/projects/release_detail.html:68
 msgid "Devel freeze:"
-msgstr "Ontwikkelingsfreeze"
+msgstr "Ontwikkelingsfreeze:"
 
 #: templates/projects/release_detail.html:73
 msgid "Components:"
@@ -2433,6 +2442,9 @@ msgid ""
 "        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
 "      "
 msgstr ""
+"\n"
+"        '<a href=\"%(release_url)s\">%(release_name)s bewerken</a>'\n"
+"      "
 
 #: templates/projects/release_form.html:46
 msgid "Save release"
@@ -2449,12 +2461,12 @@ msgstr "Project-/componentstatistieken"
 
 #: templates/projects/release_language_detail.html:60
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
-msgstr ""
+msgstr "Transifex zocht naar projecten die vertaalbestanden bevatten voor deze taal en release, maar kon er geen vinden. Probeer zo'n bestand in te zenden en probeer het daarna opnieuw."
 
 #: templates/projects/release_language_detail.html:61
 #, python-format
 msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
-msgstr ""
+msgstr "Als je denkt dat niet niet zou mogen gebeuren, gelieve ons dit te <a href=\"%(contact_form)s\">laten weten</a>."
 
 #: templates/projects/release_language_detail.html:65
 msgid "Untranslated Components"
@@ -2463,7 +2475,7 @@ msgstr "Niet-vertaalde componenten"
 #: templates/projects/release_language_detail.html:67
 #, python-format
 msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
-msgstr ""
+msgstr "De volgende componenten zullen ingesloten worden in %(release_name)s, maar er zijn nog geen vertalingen ingezonden voor %(language_name)s."
 
 #: templates/projects/release_list.html:14
 msgid "Project Releases"
@@ -2472,7 +2484,7 @@ msgstr "Projectreleases"
 #: templates/projects/release_list.html:29
 #, python-format
 msgid "No releases are registered for this project yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr ""
+msgstr "Er werden voor dit project nog geen releases geregistreerd. Als je wil, kan je er een <a href=\"%(release_create)s\">toevoegen</a>."
 
 #: templates/reviews/review_form.html:10
 msgid "Submit"
@@ -2625,7 +2637,7 @@ msgstr "Profielinstellingen"
 
 #: templates/simpleauth/login_box.html:8
 msgid "Sign in to add or modify projects, work on translations, and other stuff."
-msgstr ""
+msgstr "Log in om projecten toe te voegen of te wijzigen, aan vertalingen te werken en andere zaken."
 
 #: templates/simpleauth/logout.html:9
 msgid "<p>You have been logged out."
@@ -2654,7 +2666,7 @@ msgstr "Jouw profiel, %(user)s"
 
 #: templates/simpleauth/settings.html:15
 msgid "Any settings associated with your account are presented and may be modified here."
-msgstr ""
+msgstr "Instellingen die geassocieerd zijn met je account worden weergegeven en kunnen hier gewijzigd worden."
 
 #: templates/simpleauth/settings.html:23
 #: templates/userprofile/profile/overview.html:102
@@ -2663,13 +2675,15 @@ msgstr "Notificaties aanpassen"
 
 #: templates/simpleauth/settings.html:24
 msgid "Change notifications associated to your account"
-msgstr ""
+msgstr "Notificaties aanpassen die met je account geassocieerd zijn"
 
 #: templates/simpleauth/signin.html:10
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
+"\n"
+"<p>Gelieve in te loggen met je e-mail of schermnaam.<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
@@ -2682,6 +2696,8 @@ msgid ""
 "\n"
 "  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
 msgstr ""
+"\n"
+"  Ben je zeker dat je het '%(lang_name)s' team dat behoort tot %(project_name)s permanent wilt wissen?\n"
 
 #: templates/teams/team_detail.html:19
 #, python-format
@@ -2689,6 +2705,8 @@ msgid ""
 "\n"
 "  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 msgstr ""
+"\n"
+"  Vertaalteams - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
 
 #: templates/teams/team_detail.html:33
 msgid "Mainlist:"
@@ -2711,7 +2729,7 @@ msgstr "Lid worden van dit team"
 
 #: templates/teams/team_detail.html:70
 msgid "People waiting for team membership approving:"
-msgstr ""
+msgstr "Personen die wachten op goedkeuring van team-lidmaatschap:"
 
 #: templates/teams/team_detail.html:81
 #: templates/teams/team_list.html:50
@@ -2742,7 +2760,7 @@ msgstr "Team wissen"
 #: templates/teams/team_form.html:19
 #, python-format
 msgid "%(project_name)s Translation Teams"
-msgstr ""
+msgstr "%(project_name)s vertaalteams"
 
 #: templates/teams/team_form.html:27
 msgid "Translation team details"
@@ -2774,7 +2792,7 @@ msgstr "Nog geen vertaalteam aangemaakt. :("
 
 #: templates/teams/team_list.html:92
 msgid "Request a new translation team for this project"
-msgstr ""
+msgstr "Een nieuwe vertaling aanvragen voor dit project"
 
 #: templates/teams/team_list.html:92
 msgid "Request a new team"
@@ -2889,7 +2907,7 @@ msgstr "E-mail validatie opnieuw verzenden"
 
 #: templates/userprofile/account/email_validation_reset.html:19
 msgid "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again."
-msgstr ""
+msgstr "Je kan je niet inloggen totdat je je e-mailadres gevalideerd hebt. Geef je geregistreerde e-mailadres in om de validatiemail opnieuw te ontvangen."
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
@@ -2905,7 +2923,7 @@ msgstr "Je gebruikersaccount werd al geactiveerd"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "You can manage the e-mail validation process from the"
-msgstr ""
+msgstr "Je kan het validatieproces van je e-mail beheren vanaf de"
 
 #: templates/userprofile/account/email_validation_reset_response.html:14
 msgid "overview page"
@@ -3076,7 +3094,7 @@ msgstr "Avatar-selectiepagina"
 #: templates/userprofile/avatar/choose.html:37
 #: templates/userprofile/avatar/crop.html:42
 msgid "You have several options to select the image you want to use as avatar on your profile."
-msgstr ""
+msgstr "Je hebt verschillende mogelijkheden om de afbeelding te selecteren die je wilt gebruiken als avatar op je profiel."
 
 #: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
@@ -3090,7 +3108,7 @@ msgstr "Klaar"
 
 #: templates/userprofile/avatar/choose.html:56
 msgid "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you"
-msgstr ""
+msgstr "Selecteer een afbeelding van een link op afstand. Typ de link in het onderstaande veld en wij zullen de afbeelding voor jou terugvinden"
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -3484,17 +3502,17 @@ msgstr "Geen team voor deze taal"
 
 #: translations/templates/comp_stats_table.html:34
 msgid "There are no languages registered matching this code"
-msgstr ""
+msgstr "Er zijn geen geregistreerde talen met deze code"
 
 #: translations/templates/comp_stats_table.html:49
 #: translations/templates/lang_stats_table.html:39
 msgid "Click here to see the multiple files for"
-msgstr ""
+msgstr "Klik hier om meerdere bestanden te zien voor"
 
 #: translations/templates/component_submit.html:5
 #, python-format
 msgid "Submit a translation for %(pofile_filename)s"
-msgstr ""
+msgstr "Een vertaling inzenden voor %(pofile_filename)s"
 
 #: translations/templates/component_submit.html:9
 msgid "Submit file"
@@ -3523,32 +3541,32 @@ msgstr "Gebruiker '%(owner)s' heeft dit bestand gesloten om aan te tonen dat hij
 
 #: translations/templates/pofile_lock.html:27
 msgid "Lock this file to notify others you're working with it."
-msgstr ""
+msgstr "Doe dit bestand op slot om anderen te laten zien dat je ermee aan het werken bent."
 
 #: translations/templates/pofile_lock.html:30
 msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr ""
+msgstr "Dit bestand is losgemaakt. Er is waarschijnlijk niemand mee aan het werken op dit moment."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
-msgstr ""
+msgstr "Zie de gedetailleerde statistieken voor deze taal"
 
 #: translations/templates/release_stats_table.html:19
 msgid "There are no languages registered matching this file"
-msgstr ""
+msgstr "Er zijn geen geregistreerde talen die met dit bestand overeenkomen"
 
 #: translations/templates/source_files.html:5
 msgid "Click here to show or hide the source files"
-msgstr ""
+msgstr "Klik hier om de bronbestanden weer te geven of te verbergen"
 
 #: translations/templates/source_files.html:5
 #, python-format
 msgid "This component has %(sources_number)s source files"
-msgstr ""
+msgstr "Deze component heeft %(sources_number)s bronbestanden"
 
 #: translations/templates/source_files.html:13
 msgid "entries"
-msgstr ""
+msgstr "ingangen"
 
 #: txcollections/migrations/0001_initial.py:21
 msgid "String freese date"
@@ -3556,11 +3574,11 @@ msgstr "Datum voor string-freeze"
 
 #: txcommon/admin.py:10
 msgid "Required. 30 characters or fewer. Unicode alphanumeric characters only (letters, digits and underscores)."
-msgstr ""
+msgstr "Vereist. 30 tekens of minder. Uitsluitend unicode alfanumerieke tekens (letters, cijfers en underscores)."
 
 #: txcommon/admin.py:13
 msgid "This value must contain only unicode letters, numbers and underscores."
-msgstr ""
+msgstr "Deze waarde mag alleen unicode letters, cijfers en underscores bevatten."
 
 #: txcommon/i18n.py:18
 #, python-format
@@ -3655,7 +3673,7 @@ msgstr "Toegang tot inzenden naar een project ingetrokken"
 
 #: txcommon/notifications.py:50
 msgid "when an user withdraws the access requestto submit files to a project"
-msgstr ""
+msgstr "wanneer een gebruiker de toegangsaanvraag om bestanden in te zenden naar een project terugtrekt"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
@@ -3663,7 +3681,7 @@ msgstr "Toegang tot inzenden naar een project verleend"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants access to an user to submit files to a project"
-msgstr ""
+msgstr "wanneer een onderhouder toegang verleent aan een gebruiker om bestanden naar een project te zenden"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
@@ -3671,7 +3689,7 @@ msgstr "Toegang tot inzenden naar een project ingetrokken"
 
 #: txcommon/notifications.py:66
 msgid "when a maintainer revokes the access of an user to submit files to a project"
-msgstr ""
+msgstr "wanneer een onderhouder de toegang van een gebruiker om bestanden naar een project in te zenden opnieuw intrekt"
 
 #: txcommon/notifications.py:73
 msgid "New Component Added"
@@ -3679,7 +3697,7 @@ msgstr "Nieuwe component toegevoegd"
 
 #: txcommon/notifications.py:74
 msgid "when a new component is added to a project"
-msgstr ""
+msgstr "wanneer een nieuwe component aan een project toegevoegd is"
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
@@ -3687,175 +3705,175 @@ msgstr "Comonent gewijzigd"
 
 #: txcommon/notifications.py:81
 msgid "when a component of a project is changed"
-msgstr ""
+msgstr "wanneer een component van een project gewijzigd is"
 
 #: txcommon/notifications.py:87
 msgid "Component Deleted"
-msgstr ""
+msgstr "Component gewist"
 
 #: txcommon/notifications.py:88
 msgid "when a component of a project is deleted"
-msgstr ""
+msgstr "wanneer een component van een project gewist is"
 
 #: txcommon/notifications.py:94
 msgid "File Submitted"
-msgstr ""
+msgstr "Bestand ingezonden"
 
 #: txcommon/notifications.py:95
 msgid "when a component file of a project is submitted"
-msgstr ""
+msgstr "wanneer een componentbestand van een project ingezonden is"
 
 #: txcommon/notifications.py:105
 msgid "File Review Submitted"
-msgstr ""
+msgstr "Bestandsnazicht ingezonden"
 
 #: txcommon/notifications.py:106
 msgid "when a file of a component is submitted for review"
-msgstr ""
+msgstr "wanneer een bestand van een component ter nazicht ingezonden is"
 
 #: txcommon/notifications.py:113
 msgid "Translation File Changed"
-msgstr ""
+msgstr "Vertaalbestand gewijzigd"
 
 #: txcommon/notifications.py:114
 msgid "when a component translation file of a project is changed"
-msgstr ""
+msgstr "Wanneer een component-vertaalbestand van een project gewijzigd is"
 
 #: txcommon/notifications.py:121
 msgid "Translation Source File (POT) has a Problem"
-msgstr ""
+msgstr "Vertaal-bronbestand (POT) heeft een probleem"
 
 #: txcommon/notifications.py:122
 msgid "when the source file (POT) of a component that you are a maintainer has a problem"
-msgstr ""
+msgstr "wanneer het bronbestand (POT) van een component waarvan jij de onderhouder bent een probleem heeft"
 
 #: txcommon/notifications.py:133
 msgid "New Release Added for a Watched Project"
-msgstr ""
+msgstr "Nieuwe release toegevoegd voor een gevolgd project"
 
 #: txcommon/notifications.py:134
 msgid "when a new release is added to a project"
-msgstr ""
+msgstr "wanneer een nieuwe release toegevoegd is aan een project"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
-msgstr ""
+msgstr "Release gewijzigd"
 
 #: txcommon/notifications.py:141
 msgid "when a release of a project is changed"
-msgstr ""
+msgstr "wanneer een release van een project gewijzigd is"
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
-msgstr ""
+msgstr "Release gewist"
 
 #: txcommon/notifications.py:147
 msgid "when a release of a project is deleted"
-msgstr ""
+msgstr "wanneer een release van een project gewist is"
 
 #: txcommon/notifications.py:152
 msgid "Release Added to a Project"
-msgstr ""
+msgstr "Release toegevoegd aan een project"
 
 #: txcommon/notifications.py:153
 msgid "when a release is added to a project"
-msgstr ""
+msgstr "wanneer een release aan een project toegevoegd is"
 
 #: txcommon/notifications.py:158
 msgid "Release Deleted from a Project"
-msgstr ""
+msgstr "Release gewist van een project"
 
 #: txcommon/notifications.py:159
 msgid "when a release is deleted from a project"
-msgstr ""
+msgstr "wanneer een release van een project gewist is"
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
-msgstr ""
+msgstr "Nieuw team toegevoegd"
 
 #: txcommon/notifications.py:169
 msgid "when a new translation team is added to a project"
-msgstr ""
+msgstr "wanneer een vertaalteam aan een project toegevoegd is"
 
 #: txcommon/notifications.py:176
 msgid "Team Changed"
-msgstr ""
+msgstr "Team gewijzigd"
 
 #: txcommon/notifications.py:177
 msgid "when a translation team of a project is changed"
-msgstr ""
+msgstr "wanneer een vertaalteam van een project gewijzigd is"
 
 #: txcommon/notifications.py:184
 msgid "Team Deleted"
-msgstr ""
+msgstr "Team gewist"
 
 #: txcommon/notifications.py:185
 msgid "when a translation team of a project is deleted"
-msgstr ""
+msgstr "wanneer een vertaalteam van een project gewist is"
 
 #: txcommon/notifications.py:192
 msgid "Team Creation Requested"
-msgstr ""
+msgstr "Team-creatie aangevraagd"
 
 #: txcommon/notifications.py:193
 msgid "when a translation team creation is requestedfor a project"
-msgstr ""
+msgstr "wanneer het aanmaken van een vertaalteam voor een project aangevraagd is"
 
 #: txcommon/notifications.py:200
 msgid "Team Creation Request Denied"
-msgstr ""
+msgstr "Aanvraag voor team-creatie geweigerd"
 
 #: txcommon/notifications.py:201
 msgid "when a translation team creation requestfor a project is denied by a maintainer"
-msgstr ""
+msgstr "wanneer een aanvraag voor het aanmaken van een vertaalteam voor een project geweigerd is door een onderhouder"
 
 #: txcommon/notifications.py:208
 msgid "Team User Joining Requested"
-msgstr ""
+msgstr "Gebruikersaanvraag voor team-lidmaatschap"
 
 #: txcommon/notifications.py:209
 msgid "when an user requests for joining to a translation team of a project"
-msgstr ""
+msgstr "wanneer een gebruiker aanvraagt om lid te worden van een vertaalteam van een project"
 
 #: txcommon/notifications.py:216
 msgid "Team User Joining Approved"
-msgstr ""
+msgstr "Team gebruikerslidmaatschap goedgekeurd"
 
 #: txcommon/notifications.py:217
 msgid "when an user is approved as a member of a translation team of a project"
-msgstr ""
+msgstr "wanneer een gebruiker aanvraard is als lid van een vertaalteam of project"
 
 #: txcommon/notifications.py:224
 msgid "Team User Joining Denied"
-msgstr ""
+msgstr "Team gebruikerslidmaatschap geweigerd"
 
 #: txcommon/notifications.py:225
 msgid "when an user is denied as a member of a translation team of a project"
-msgstr ""
+msgstr "wanneer een gebruiker geweigerd is als lid van een vertaalteam van een project"
 
 #: txcommon/notifications.py:232
 msgid "Team User Joining Withdrawn"
-msgstr ""
+msgstr "Team gebruikerslidmaatschap teruggetrokken"
 
 #: txcommon/notifications.py:233
 msgid "when an user withdrawn its own request for joining a translation team of a project"
-msgstr ""
+msgstr "wanneer een gebruiker zijn eigen aanvraag voor het lid worden van een vertaalteam van een project teruggetrokken heeft"
 
 #: txcommon/notifications.py:240
 msgid "Team User Left"
-msgstr ""
+msgstr "Gebruiker team verlaten"
 
 #: txcommon/notifications.py:241
 msgid "when an user leaves a translation team of a project"
-msgstr ""
+msgstr "wanneer een gebruiker een vertaalteam van een project verlaat"
 
 #: txcommon/notifications.py:251
 msgid "Weekly project report for maintainers"
-msgstr ""
+msgstr "Wekelijks projectrapport voor onderhouders"
 
 #: txcommon/notifications.py:252
 msgid "when you receive the weekly report of projects that you maintain."
-msgstr ""
+msgstr "wanneer je het wekelijkse rapport ontvangt van projecten die je onderhoudt."
 
 #: txcommon/notifications.py:259
 msgid "User Nudge"
@@ -3867,24 +3885,24 @@ msgstr "als een gebruiker je port"
 
 #: txcommon/validators.py:24
 msgid "Enter a valid regular expression."
-msgstr ""
+msgstr "Geef een geldige reguliere expressie in."
 
 #: txcommon/validators.py:38
 msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr ""
+msgstr "De root-link wijst niet naar een .tar.gz of .tgz-bestand"
 
 #: txcommon/validators.py:41
 msgid "The root url must start with http:// or ftp://"
-msgstr ""
+msgstr "De root-link moet beginnen met http:// or ftp://"
 
 #: txcommon/validators.py:69
 #, python-format
 msgid "This is not a valid root URL for this repository type. Valid choices are: %s"
-msgstr ""
+msgstr "Dit is geen geldige root-link voor dit type repository. Geldige keuzes zijn: %s"
 
 #: txcommon/validators.py:86
 msgid "This repository already belongs to another project. Please choose a different one."
-msgstr ""
+msgstr "Deze repository behoort al toe aan een ander project. Gelieve een verschillend type te kiezen."
 
 #: txcommon/views.py:85
 msgid "You can't re-nudge the same user in a short amount of time."
@@ -3901,11 +3919,11 @@ msgstr "Je hebt '%s' gepord."
 
 #: txcommon/db/models.py:26
 msgid "Enter 0 or more comma-separated integers in parentheses."
-msgstr ""
+msgstr "Geef 0 of meer gehele getallen tussen haakjes in, door komma's gescheiden."
 
 #: txcommon/db/models.py:28
 msgid "You must enter at least a pair of parentheses containing nothing."
-msgstr ""
+msgstr "Je moet ten minste een paar haakjes die niks bevatten ingeven."
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -3933,7 +3951,7 @@ msgstr "Je hebt een verzoek om toestemming verwijderd."
 
 #: vcs/forms.py:18
 msgid "Repo URL root"
-msgstr ""
+msgstr "Opslagplaats URL root"
 
 #: vcs/forms.py:19
 #: vcs/forms.py:43
