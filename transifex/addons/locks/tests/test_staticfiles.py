@@ -24,7 +24,10 @@ class TestStaticfiles(unittest.TestCase):
          * STATICFILES_MEDIA_DIRNAMES doesn't include 'media'
         """
         suffix = 'css/icons.css'
-        ref = os.path.realpath('%s/locks/media/%s' % (settings.ADDONS_ROOT, suffix))
+        for addons_root in settings.ADDONS_ROOTS:
+            ref = os.path.realpath('%s/locks/media/%s' % (addons_root, suffix))
+            if os.path.exists(ref):
+                break
         path = 'locks/%s' % suffix
         self.assertEqual(ref, resolve_for_app(get_app('locks'), path, False))
         self.assertEqual(ref, resolve(path))
