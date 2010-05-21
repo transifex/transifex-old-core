@@ -11,8 +11,6 @@ from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
 
-
-
 class StorageHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'DELETE')
     model = StorageFile
@@ -295,6 +293,250 @@ class TResourceHandler(BaseHandler):
             translation_resource.objects.merge_stream(filename, upload, request.POST['target_language'])
         return rc.CREATED
 
+########################################################
+# String Handlers for Projects, TResources and Strings #
+########################################################
+def create_json_from_tr_translated_strings(translation_resource, lang_list):
+    '''
+    Given a translation resource and a list of lang codes, this creates the
+    json response with all transtation strings
+    '''
+
+     # init empty response
+    response = []
+
+    # iter all languages requested and get all translated strings. append
+    # to the response and then send back
+    for lang in lang_list:
+        try:
+            lang = Language.objects.by_code_or_alias(lang)
+        except Language.DoesNotExist:
+            return rc.BAD_REQUEST
+        data_string = []
+        try:
+            strings = TranslationString.objects.filter(
+                    tresource=translation_resource,
+                    language=lang)
+        except Language.DoesNotExist:
+            return rc.BAD_REQUEST
+        for s in strings:
+            data_string.append({
+                'translated_string':s.string,
+                'occurrence': s.source_string.occurrences,
+                'original_string': s.source_string.string,
+            })
+
+        response.append({'tresource': translation_resource.name,
+                       'target_lang': lang.code,
+                       'strings':  data_string },)
+
+    return response[0]
+
+
+class ProjectStringHandler(BaseHandler):
+    allowed_methods = ('GET', 'POST')
+
+    def read(self, request, project_slug):
+        '''
+        '''
+        trs = TResource.objects.filter(project__slug=project_slug)
+
+        response = []
+
+        for tr in trs:
+            language_list = TranslationString.objects.filter(tresource=tr).order_by('language').distinct('language').values_list('language__code')
+            language_list = [ l[0] for l in language_list ]
+            response.append(create_json_from_tr_translated_strings(tr, language_list))
+
+        return response
+
+    def create(self, request, project_slug):
+        '''
+        '''
+
+        trs_slugs = request.POST['data'].split(',')
+
+        trs = TResource.objects.filter(slug__in=trs_slugs)
+
+        response = []
+
+        for tr in trs:
+            language_list = TranslationString.objects.filter(tresource=tr).order_by('language').distinct('language').values_list('language__code')
+            language_list = [ l[0] for l in language_list ]
+            response.append(create_json_from_tr_translated_strings(tr,
+                                                        language_list))
+
+        return response
+
+class TResourceStringHandler(BaseHandler):
+    allowed_methods = ('GET', 'POST')
+
+    def read(self, request, project_slug, tresource_slug):
+        '''
+        Return all translation strings for a specific TResource.
+        '''
+        try:
+            translation_resource = TResource.objects.get(
+                                    slug = tresource_slug,
+                                    project__slug =project_slug)
+        except TResource.DoesNotExist:
+            return rc.BAD_REQUEST
+
+        # get all available languages
+        language_list = TranslationString.objects.filter(tresource=translation_resource).order_by('language').distinct('language').values_list('language__code')
+        language_list = [ l[0] for l in language_list ]
+
+        response =  create_json_from_tr_translated_strings(translation_resource,
+                                                    language_list)
+
+        return response
+
+    def create(self, request, project_slug, tresource_slug):
+        '''
+        Return all translation strings for a TResource in the languages
+        specified in the post data list.
+        '''
+        # get tresource
+        try:
+            translation_resource = TResource.objects.get(
+                                    slug = tresource_slug,
+                                    project__slug =project_slug)
+        except TResource.DoesNotExist:
+            return rc.BAD_REQUEST
+
+        # get lang code list from post data
+        language_list = request.POST['data'].split(',')
+
+        response = create_json_from_tr_translated_strings(translation_resource,
+                                                    language_list)
+
+        return response
+
+class JSONStringHandler(BaseHandler):
+    allowed_methods = ('GET', 'POST')
+
+    def read(self, request, project_slug, tresource_slug, target_lang_code):
+        '''
+        This api call returns all strings for a specific tresource of a project
+        and for a given target language. The data is returned in json format,
+        following this organization:
+
+        {
+            'tresource': 'sampleresource',
+            'target_lang': 'el',
+            'strings':
+            [{
+                'oringinal_string': 'str1',
+                'translated_string': 'str2',
+                'occurrence': 'filename:linenumber'
+            },
+            {
+                ...
+            }]
+        }
+
+        '''
+
+        # check if we have the requested tresource || die
+        try:
+             translation_resource = TResource.objects.get(slug = tresource_slug,
+                                             project__slug =project_slug)
+        except TResource.DoesNotExist:
+            return rc.BAD_REQUEST
+
+        # check if we have the requesed lang || die
+        try:
+            lang = Language.objects.by_code_or_alias(target_lang_code)
+        except Language.DoesNotExist:
+            return rc.BAD_REQUEST
+
+        # get translated strings if there are any
+        strings = TranslationString.objects.filter(
+                            tresource=translation_resource,
+                            language=lang)
+
+        # if no strings were found return empty list
+        if not strings:
+            return []
+
+        # data to be sent out
+        data = []
+        # iterate found translated strings and create json
+        for s in strings:
+            data.append({
+                'translated_string':s.string,
+                'occurrence': s.source_string.occurrences,
+                'original_string': s.source_string.string,
+            })
+
+        # maybe we should use json.dumps before sending these out but
+        # json.dumps escapes all \" and somewhat messes up readability.
+        return {'tresource': translation_resource.name,
+                           'target_lang': target_lang_code,
+                           'strings':  data }
+
+    def create(self, request, project_slug, tresource_slug):
+        '''
+        Using this API call, a user may create a tresource and assign source
+        strings for a specific language. It gets the project and tresource name
+        from the url and the source lang code from the json file. The json
+        should be in the following schema:
+
+        {
+            'tresource': 'sampleresource',
+            'source_lang': 'en',
+            'strings':
+            [{
+                'string': 'str1',
+                'value': 'str1.value',
+                'occurrence': 'filename:lineno',
+            },
+            {
+            }]
+        }
+
+        '''
+        # check translation project is there. if not fail
+        try:
+            translation_project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.BAD_REQUEST
+
+        # check if tresource exists
+        translation_resource, created = TResource.objects.get_or_create(
+                                        slug = tresource_slug,
+                                        project = translation_project)
+        # if new make sure, it's initialized correctly
+        if created:
+            translation_resource.name = tresource_slug
+            translation_resource.project = translation_project
+            translation_resource.save()
+
+        if request.content_type == 'application/json': # we got JSON strings
+            strings = request.data.get('strings', [])
+            source_lang = request.data.get('source_language', 'en')
+            try:
+                lang = Language.objects.by_code_or_alias(source_lang)
+            except Language.DoesNotExist:
+                return rc.BAD_REQUEST
+
+            # create source strings and translation strings for the source lang
+            for s in strings:
+                obj, cr = SourceString.objects.get_or_create(string=s.get('value'),
+                                    occurrences=s.get('occurrence'),
+                                    description="yadayada",
+                                    tresource=translation_resource)
+                ts, created = TranslationString.objects.get_or_create(
+                                    language=lang,
+                                    source_string=obj,
+                                    tresource=translation_resource)
+                if created:
+                    ts.string = s.get('value')
+                    ts.save()
+        else:
+            return rc.BAD_REQUEST
+
+
 """
 This used to be API call for adding translation strings from JSON stringset
 
@@ -309,7 +551,7 @@ This used to be API call for adding translation strings from JSON stringset
                 return rc.NOT_IMPLEMENTED
             for i in request.data['strings']:
                 ss, created = SourceString.objects.get_or_create(
-                    string= i['source_string'], 
+                    string= i['source_string'],
                     description=i['context'] or "None",
                     tresource=translation_resource,
                     defaults = {
