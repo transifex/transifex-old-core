@@ -1,0 +1,379 @@
+.. _releases-0.9:
+ 
+=======================================
+ Transifex version 0.9.x release notes
+=======================================
+ 
+ 
+Transifex 0.9 (Mojo)
+====================
+ 
+Welcome to Transifex 0.9, codenamed Mojo_.
+ 
+To be Released:
+  June 4, 2010
+ 
+Transifex 0.9 'Mojo' is a production release, [featuring a
+multitude of collaboration features. It is targeted for new installations of
+Transifex and parties who choose to migrate to a new major version and enjoy
+the new features.]
+
+Here's a 40K-foot view of the release major features and numbers:
+
+- ...
+
+
+.. code-block:: bash
+
+    256 changesets recorded
+    [89 tickets resolved]
+    433 files changed, 52411 insertions(+), 17774 deletions(-)
+
+
+A note about Transifex.net
+--------------------------
+
+Transifex 0.9 is a release of the open-source, community-powered Transifex
+flavor. It is suitable for very large proejcts with their own existing
+translation community, such as the Fedora Project, the GNOME Desktop etc.
+
+Transifex is also offered as another flavor: Software-as-a-Service, at
+www.transifex.net_, ready to serve your translations with a few clicks.
+Transifex.net is a one-stop, batteries-included hosted service serving
+independent projects and businesses which don't want to worry about deploying
+their own Tx instance.
+
+Tranisfex.net is managed by Indifex_, the company sponsoring the development
+of Transifex itself.
+
+.. figure:: ../../screenshots/transifex.net/frontpage.png
+   :class: alcenter shot2
+   
+For a hassle-free translation management platform, visit Transifex.net_.
+
+
+What's new in Transifex 0.9
+---------------------------
+
+Let's see what's fresh now!
+
+
+Add-ons engine
+::::::::::::::
+
+Transifex 0.9 sports a brand-new extension engine, allowing developers to
+write plugins which extend or override parts of the functionality.
+
+This support was developed as a reusable application called 'django-addons'.
+Here are some of the changesets recorderd:
+
+- Added django-addons support
+- Use STATIC_URL instead of MEDIA_URL
+- Raising some signals through the projects app
+- Bunch of fixes around templates related to the addonizations
+- Fixed some issues around the presubmit_checks addon
+- Settings changes due django-addons improvements
+
+
+Project Team Outsourcing
+::::::::::::::::::::::::
+
+In reality, a number of projects, upstream or not, belong to bigger collections
+of software. A great example of such collections are desktop environments or
+distributions. These projects have repeatedly requested the ability to re-use
+the collection's translation teams instead of managing their own.
+
+For example, the Anaconda project may choose to use Fedora's translation teams,
+for example.
+
+Permission and Team views are disabled once the project outsources its access
+control.
+
+
+More i18n directory structures
+::::::::::::::::::::::::::::::
+
+Transifex 0.9 introduces an overhaul of the ``guess_language`` method using
+regular expressions. This addresses tickets #541, #542.
+
+The new method takes 0.1 millisecond more when hitting 'Refresh Stats'
+and for the 'txstatsfresh' on Txn, when run against 30K files, it takes
+0.30s, compared to 0.14s it took before. This is a penalty of appx.
+0.01%.
+
+
+Widgets
+:::::::
+
+Note: To have your widget code viewable from outside your transifex instance
+you have to set your ``STATIC_URL`` variable to an absolute URL (by using
+relative paths you can still view the widgets on your own installation).
+
+
+Improved handling of VCS Exceptions
+:::::::::::::::::::::::::::::::::::
+
+Transifex now shows in the UI what's going on with the related VCS backend
+whenever something goes wrong. This will allow project developers to better
+understand what's wrong with their project repository URL and fix it
+accordingly.
+
+
+Improved searching
+::::::::::::::::::
+
+
+Lock expiration
+:::::::::::::::
+
+
+Pre-submit checks
+:::::::::::::::::
+
+
+Tx-cron
+:::::::
+
+
+Various improvements and bugfixes
+---------------------------------
+
+
+Under-the-hood Improvements
+:::::::::::::::::::::::::::
+
+- Allow local repos URIs on DEBUG mode
+- Added ':pserver:' as a prefix for CVS repos
+- Do not delete POFiles when cleaning cache
+
+  - The problem was when cleaning and refreshing the component cache.
+    Due the fact that it deletes all the POFiles from the database
+    and creates them again, Tx was losing 'locks' and possibly 'watches'
+    of users, because of the db cascade mechanism.
+  - This patch allows TX to continue cleaning/refresh the component cache,
+    however without deleting the POFiles. It sets them as enabled=False
+    and hide them from the UI.
+  - Deleting a project or a component thought, still deletes the POFiles
+    that belong to it, as expected.
+
+Added Tx repository revision into the footer. Helpful to identify the exactly
+revision used to run a Tx instance using a devel branch.
+
+
+Improved Mercurial Backend
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Mercurial backend needs to 'update' whenever a pull is done
+- Setting default mercurial branches as 'tip' instead of 'default'
+- Mercurial dual head saga
+
+Setting default mercurial branches as 'tip' instead of 'default'
+
+- We need to update always to the latest changeset when closing or
+  pulling a repository. For doing it, nothing better that use 'tip',
+  apparently.
+
+- After some scrutiny tests we realized that using 'tip'
+  as the default branch might be trouble for repos that have
+  branches (inside). The 'tip' might alternate among the branches,
+  as it's always the last changeset committed in the repo. This way,
+  we could have commits from Tx on different branches for the same
+  component, which is NOT expected. Reverted it back to 'default'.
+- The 'commands.push' command doesn't use a 'revs' argument, so
+  we turned it into 'branch' argument.
+- Somehow (don't ask me why) the _clean_dir() method was causing
+  troubles, whenever trying to get a repo updated. As we already use
+  'update=True' in the 'pull', excluding it seems to fix the problem. The
+  other way around didn't work.
+
+
+Bugfixes
+::::::::
+
+- Fixed issues with Dutch language (#537)
+
+- Delete file watches whenever a component has its cache cleaned
+
+  - Whenever a component has its cache cleaned, all the related POFile objects
+    are deleted. This way other objects that use those POfiles are also deleted
+    in cascade. The repowatch app does not use the POFile object. Instead it uses
+    the 'component' and the 'file_path' to identify the POFiles that the users are
+    watching/following. It means that the 'cascade' is not applied here and it
+    needs to be done manually.
+  - It fixes the "DoesNotExist: ObservedItem matching query does not exist."
+    exception.
+
+- Fixed permission check for components with multiple po files
+- Calling correct method on the component get_stats method
+- Fixed Lotte data session wizard craziness when changing pages (#552)
+- Fixed url for components with multiple po files per language
+- Handling user object on the svn lib with more property (#565)
+- Fixed registration problem, occured after merging.
+- Added a dependency into a projects app migration script
+- Fixed permission check for team coordinators
+- Converted exception output into a string before using it
+- Missing JS lib for the component multiple POFiles page
+- Missing 'Send for Review' button after locks addonization
+- Fix wrapping of multi-line messages on top of page.
+- Made form errors more visible
+- Fixed get_or_none method for the Team class (#531)
+- Fixed some permission checks on the component_submit_file view
+- Dropped adding permissions from fixtures
+- Fixed multiple copies of same event on timeline lists (#528)
+- Fix an issue in run commands where no env was passed via kwargs.
+- Bugfix: the rev kwarg should not be passed to hg pull cause we donot pull specific revision numbers!
+- Improved get_log templatetag for the actionlog app
+- Fix SITE_URL_PREIFX generation with request.build_absolute_uri("") call
+- Added option for enabling/disabling django-contact app URL
+- Added option for setting up the Django admin panel URL
+- BUGFix: Variable intialization was missing in settings file.
+- Fix initializers of test_svn.
+- Minor cleanup on the bzr repositories.
+- Added empty models.py file on modules that didn't have one.
+- When skip_stats was in effect the pofiles was equal to None.
+- Improved debugging for the stats calculation process
+- Fixed stats calc whenever a POT changes (#583, #587)
+- Added django-staticfiles context processors
+- Do not delete POFiles when cleaning cache
+- Clear unlocking of files
+- Added a permission check for lock info
+- Added Tx repository revision into the footer
+- txstatsrefresh command has been setup to correctly register addon handlers.
+- A simple templatetag to wrap the size_human utility method.
+
+
+Translations
+------------
+
+[to be filled]
+
+
+Getting Transifex 0.9
+---------------------
+
+You can experience Transifex 0.9 live at the upstream instance hosted by
+Indifex, at http://www.transifex.net/. 
+
+Project and community managers who want to deploy Transifex for their 
+own community can get Transifex in a variety of ways. A tarball is available
+from the following locations:
+
+* The Transifex.org Download section: http://transifex.org/files/
+* The Python Packaging Index (Cheeseshop): http://pypi.python.org/pypi/transifex/
+
+RPM packages for the latest versions of Fedora are or will soon be available
+via yum. The same applies for RHEL 5, CentOS 5, and Scientific Linux 5, from
+the `Fedora EPEL`_ yum repository::
+
+    yum install transifex transifex-extras 
+
+Information about installing Transifex can be found in the
+:ref:`Installation documentation <intro-install>`.
+
+
+The Transifex Appliance
+:::::::::::::::::::::::
+
+If you want to play with the latest Transifex code, you may want to use our
+development images for the Transifex Appliance. Following the stand-alone,
+"batteries included" model of software appliances, you get a complete
+Transifex system with all dependencies and services pre-configured so that
+you can start experimenting with it right away. Choose from ISO, VMware or EC2
+images, for both x86 and x86_64 architectures to run on a virtual machine,
+dedicated server or using a virtualization software.
+
+.. image:: ../../screenshots/0.7/0.7_appliance_front_page.png
+   :class: shot2 alcenter
+
+Your appliances can be updated using its own web based management system by
+pointing your browser to the appliance’s IP using port 8003. Login with the
+credentials 'admin' and 'password'. Make sure to change the password once
+you’ve successfully logged in.
+
+This appliance version is based on the latest branch of Transifex, where a
+couple of projects have already been created for you to play with. Log in using
+either guest/guest or editor/editor as your user name and password combination
+and tinker to your heart’s content!
+
+Make sure to read the documentation and file issues/send us your feedback.
+
+Transifex Appliance web site:
+ http://www.rpath.org/web/project/transifex/
+
+Stable and development images:
+ http://www.rpath.org/web/project/transifex/releases
+
+
+Upgrading to this version
+-------------------------
+
+To upgrade the code, update your package distribution as usual:
+
+- If you installed from your package distribution, check if there's been a
+  package upgrade and go for it.
+- If you used ``easy_install``, run ``easy_install -U`` to upgrade.
+- Fresh tarballs are available, if you installed from a release zipfile.
+- Finally, if you're of the daredevil kind and feed straight from the source,
+  an ``hg update <version>`` should do the trick for you.
+
+
+Dependencies
+::::::::::::
+
+The following dependencies were *added* in this version:
+
+- django-addons
+- South >= 0.7
+- django-threadedcomments >= 0.9
+- django-staticfiles
+- pygooglechart
+
+Instructions on how to install them can be found at the
+:ref:`Installation docs <intro-install>`. You'll need to complete this step
+before actually doing the database upgrade.
+
+
+Database migration
+::::::::::::::::::
+
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. All you need to do, from a clean
+schema of the previous version, is run the following:
+
+.. code-block:: bash
+
+    ./manage.py syncdb
+    ./manage.py migrate
+    ./manage.py build_static        # Copy all the addons files to the static dir
+
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+(to be filled)
+
+For a list of our awesome translators, refer to the `Translations`_ section.
+
+
+Transifex 0.9 Development Releases
+==================================
+
+- Alpha: 21 May 2010
+- Beta: n/a
+- Release Candidate: n/a
+
+Please refer to the full `Transifex 0.9 changelog`_ for more information on
+what has changed between the development releases and final one.
+
+.. _Transifex.net: http://www.transifex.net/
+.. _www.transifex.net: http://www.transifex.net/
+.. _Indifex: http://www.indifex.com/
+.. _Transifex 0.9 changelog: http://code.transifex.org/0.9.x/shortlog
+.. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
+.. _Moblin Project: http://translate.moblin.org/
+.. _XFCE Project: http://wiki.xfce.org/translations 
+.. _Mojo: http://en.wikipedia.org/wiki/Mojo_(comics)
+
