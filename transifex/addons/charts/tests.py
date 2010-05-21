@@ -36,7 +36,7 @@ nian%20%28et%29%7C1:%7C76%25%7C77%25%7C77%25%7C78%25%7C78%25%7C79%25%7C79%25%\
 
 class TestCharts(unittest.TestCase):
     def setUp(self):
-        management.call_command('build_static')
+        management.call_command('build_static', interactive=False)
         management.call_command('txcreatelanguages')
 
     def test_main(self):
