@@ -91,7 +91,7 @@ class POTHandler:
         # For intltool components that the pot file has changes, it's
         # necessary to recalc the stats even if the 'rev' is the same
         # FIXME: It's too tied
-        elif self.component.i18n_type=='INTLTOOL' and is_msgmerged:
+        elif self.component.i18n_type=='INTLTOOL' and (is_msgmerged or is_pot):
             calcstats = True
             logger.debug("It's an intltool component with POT changes.")
 
