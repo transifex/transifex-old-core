@@ -12,9 +12,8 @@ tresource_handler = Resource(TResourceHandler)
 strings_handler = Resource(StringHandler)
 storage_handler = Resource(StorageHandler)
 project_handler = Resource(ProjectHandler)
-jsonstring_handler = Resource(JSONStringHandler)
-trstring_handler = Resource(TResourceStringHandler)
-pjstring_handler = Resource(ProjectStringHandler)
+tresourcestring_handler = Resource(TResourceStringHandler)
+projectstring_handler = Resource(ProjectStringHandler)
 
 urlpatterns = patterns('',
     url(
@@ -30,7 +29,7 @@ urlpatterns = patterns('',
         name='api_project',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/pull_strings/$',
-        pjstring_handler
+        projectstring_handler
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
         tresource_handler
@@ -40,16 +39,16 @@ urlpatterns = patterns('',
         name='api_resource'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/push_strings/$',
-        jsonstring_handler,
-        name='jsonstring_resource_push'
+        tresourcestring_handler,
+        name='string_resource_push'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/pull_strings/$',
-        trstring_handler,
-        name='jsonstring_resource_pullall'
+        tresourcestring_handler,
+        name='string_resource_pullall'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/pull_strings/(?P<target_lang_code>[-\w]+)/$',
-        jsonstring_handler,
-        name='jsonstring_resource_pullfrom'
+        tresourcestring_handler,
+        name='string_resource_pullfrom'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/$',
         strings_handler,
