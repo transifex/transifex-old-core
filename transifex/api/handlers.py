@@ -412,7 +412,10 @@ class ProjectStringHandler(BaseHandler):
         if tresources:
             trs = TResource.objects.filter(slug__in=tresources.split(','))
         else:
-            trs = TResource.objects.filter(project__slug=project_slug)
+            trs = TResource.objects.filter(project__slug=project_slug) or None
+
+        if not trs:
+            return rc.BAD_REQUEST
 
         for tr in trs:
             if not lang_codes:

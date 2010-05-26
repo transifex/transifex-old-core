@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db.models import Count
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -92,3 +92,53 @@ def view_translation(request, project_slug=None, tresource_slug=None, lang_code=
           'target_language' : target_language,
           'rows' : range(0,10),},
         context_instance = RequestContext(request))
+
+def clone_translation(request, project_slug=None, tresource_slug=None,
+            source_lang_code=None, target_lang_code=None):
+    '''
+    Get a tresource, a src lang and a target lang and clone all translation
+    strings for the src to the target.
+    '''
+
+    tresource = TResource.objects.get(
+        slug = tresource_slug,
+        project__slug = project_slug
+    )
+    # get original translation strings
+    strings = TranslationString.objects.filter(
+                tresource = tresource,
+                language__code = source_lang_code)
+
+    target_lang = Language.objects.get(code=target_lang_code)
+
+
+    # clone them in new translation
+    for s in strings:
+        TranslationString.objects.get_or_create(
+                    tresource = tresource,
+                    language = target_lang,
+                    string = s.string,
+                    source_string = s.source_string)
+
+    return HttpResponse(status=200)
+
+def start_new_translation(request, project_slug=None, tresource_slug=None,
+                                    target_lang_code=None):
+    '''
+    Create new language for specified tresource
+    '''
+
+    tresource = TResource.objects.get(
+        slug = tresource_slug,
+        project__slug = project_slug
+    )
+
+    strings = SourceString.objects.filter(tresource=tresource)
+
+    target_lang = Language.objects.get(code=target_lang_code)
+
+    for s in strings:
+        TranslationString.objects.get_or_create(
+                    tresource = tresource,
+                    language = target_lang,
+                    source_string = s.source_string)
