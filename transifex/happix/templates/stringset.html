@@ -42,7 +42,7 @@
         $("div#notification-container div").html("Loading strings...");
         $("div#notification-container").fadeIn("slow");
 
-        pull_url = '{% url api_resource_translation_from project.slug tresource.slug target_language.code request.LANGUAGE_CODE %}';
+        pull_url = '{% url string_resource_push project.slug tresource.slug %}?languages={{target_language.code}},{{request.LANGUAGE_CODE}}';
 
         $.ajax({
             contentType : 'application/json', /* Workaround for django-piston */
@@ -55,8 +55,8 @@
 
 
                 
-                var push_url = '{% url api_resource_translation project.slug tresource.slug target_language.code %}';
-                stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{target_language.code}}', '{{request.LANGUAGE_CODE}}');
+                var push_url = '{% url string_resource_pullfrom project.slug tresource.slug target_language.code %}';
+                stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{request.LANGUAGE_CODE}}', '{{target_language.code}}');
 
                 /* Source and translated strings table */
                 stringset.bindToTable("trans_web_edit");

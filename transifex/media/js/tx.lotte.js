@@ -55,8 +55,9 @@ function StringSet(json, push_url, from_lang, to_lang) {
     this_stringset = this;
 /*    Initialize strings from JSON data*/
     var i = 0;
-    for(var source_id in json) {
-      this_stringset.strings[i] = new TranslationString(this, json[source_id]['id'], json[source_id]['a'], json[source_id]['b']);
+    for(var index in json[0]['strings']) {
+      var string = json[0]['strings'][index];
+      this_stringset.strings[i] = new TranslationString(this, string['id'], string['original_string'], string['translations'][to_lang]);
       i++;
     }
     this.filtered = this.strings;
