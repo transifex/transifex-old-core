@@ -1,7 +1,8 @@
 /* TranslationString class which stores information about one translation string */
-function TranslationString(parent, id, source_string, translated_string) {
+function TranslationString(parent, id, source_string, translated_string, context) {
     this.parent = parent;
     this.id = id;
+    this.context = context;
     this.source_string = source_string;
     this.translated_string = translated_string;
     this.modified = false;
@@ -44,6 +45,7 @@ function TranslationString(parent, id, source_string, translated_string) {
 /* StringSet class which stores list of translation strings and maps them to visible table */
 function StringSet(json, push_url, from_lang, to_lang) {
 /*    bindings[table_row_index] = TranslationString();*/
+    this.to_lang = to_lang;
     this.bindings = [];
 
 /*    Visible table offset*/
@@ -57,7 +59,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
     var i = 0;
     for(var index in json[0]['strings']) {
       var string = json[0]['strings'][index];
-      this_stringset.strings[i] = new TranslationString(this, string['id'], string['original_string'], string['translations'][to_lang]);
+      this_stringset.strings[i] = new TranslationString(this, string['id'], string['original_string'], string['translations'][to_lang], string['context']);
       i++;
     }
     this.filtered = this.strings;
@@ -69,19 +71,18 @@ function StringSet(json, push_url, from_lang, to_lang) {
 
     this.push = function(ts) {
         this_stringset = this;
-        var to_update = {};
-        var to_add = {};
+        var to_update = [];
         if (ts) { /* Pushing one TranslationString instance */
-            to_update[ts.id] = ts.translated_string;
+            to_update[0] = {'string':ts.source_string,'context':this.strings[i].context,'value':ts.translated_string};
         } else { /* Pushing all TranslationString instances from current StringSet */
             for (i=0; i<this.strings.length; i++)
                 if (this.strings[i].modified)
-                    to_update[this.strings[i].id] =  this.strings[i].translated_string;
+                    to_update[i] =  {'string':this.strings[i].source_string,'context':this.strings[i].context,'value':this.strings[i].translated_string};
         }
         if (to_update == {} && to_add == {}) {
             alert("No strings to push");
         } else {
-            json_request('POST', push_url, {'add':to_add, 'update':to_update}, function(stat, dict){
+            json_request('POST', push_url, {'language':this_stringset.to_lang, 'strings':to_update}, function(stat, dict){
                 ids = dict['updated'];
                 for (i=0; i<ids.length; i++) {
                     for (j=0; j<this_stringset.strings.length; j++) {

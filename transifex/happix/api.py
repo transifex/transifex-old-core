@@ -99,7 +99,11 @@ class StringHandler(BaseHandler):
             strings = {}
             for ss in SourceString.objects.filter(tresource = translation_resource):
                 if not ss.id in strings:
-                    strings[ss.id] = {'id':ss.id,'original_string':ss.string,'occurrence':'blah','translations':{}}
+                    strings[ss.id] = {
+		        'id':ss.id,
+		        'original_string':ss.string,
+		        'context':ss.description,
+		        'translations':{}}
 
             translated_strings = TranslationString.objects.filter(tresource = translation_resource)
             if target_langs:
@@ -109,108 +113,68 @@ class StringHandler(BaseHandler):
                     
             retval.append({'resource':translation_resource.slug,'strings':strings.values()})
         return retval
-        
+
+
     def create(self, request, project_slug, tresource_slug, target_lang_code=None):
-        """
-        API call for inserting list of strings back to database
-        Used by Lotte 'Save' and 'Save all' buttons
+        '''
+        Using this API call, a user may create a tresource and assign source
+        strings for a specific language. It gets the project and tresource name
+        from the url and the source lang code from the json file. The json
+        should be in the following schema:
 
-        Lotte pushes dictionary of translated strings identified by translation string id
         {
-            'update' : {
-                str(SourceString.id) : str(TranslationString.string)
-            }, 
+            'tresource': 'sampleresource',
+            'language': 'en',
+            'strings':
+            [{
+                'string': 'str1',
+                'value': 'str1.value',
+                'occurrence': 'filename:lineno',
+            },
+            {
+            }]
         }
 
-        Return value is dictionary with list of saved objects
-        {
-            'updated' : [SourceString.id, SourceString.id, ...]
-        }
-        """
+        '''
+        # check translation project is there. if not fail
         try:
-            translation_resource = TResource.objects.get(slug = tresource_slug, project__slug = project_slug)
-            target_language = Language.objects.by_code_or_alias(target_lang_code)
-            if "application/json" in request.content_type: 
-                # Updating
-                ids = [int(id) for id in request.data['update'].keys()]
-                ids_updated = []
-                for ts in TranslationString.objects.filter(tresource = translation_resource, language = target_language, source_string__id__in = ids):
-                    ts.string = request.data['update'][str(ts.source_string.id)]
+            translation_project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
+
+        # check if tresource exists
+        translation_resource, created = TResource.objects.get_or_create(
+                                        slug = tresource_slug,
+                                        project = translation_project)
+        # if new make sure, it's initialized correctly
+        if created:
+            translation_resource.name = tresource_slug
+            translation_resource.project = translation_project
+            translation_resource.save()
+
+        if 'application/json' in request.content_type: # we got JSON strings
+        
+            strings = request.data.get('strings', [])
+            try:
+                lang = Language.objects.by_code_or_alias(request.data.get('language', 'en'))
+            except Language.DoesNotExist:
+                return rc.NOT_FOUND
+
+	    
+            # create source strings and translation strings for the source lang
+            for s in strings:
+                obj, cr = SourceString.objects.get_or_create(string=s.get('string'),
+                                    description=s.get('context'),
+                                    tresource=translation_resource,
+                                    defaults = {'occurrences':s.get('occurrences')})
+                ts, created = TranslationString.objects.get_or_create(
+                                    language=lang,
+                                    source_string=obj,
+                                    tresource=translation_resource)
+                if created:
+                    ts.string = s.get('value')
                     ts.save()
-                    ids_updated.append(ts.source_string.id)
-
-                logger.debug("Updated %s translation of source strings: %s" % (target_language.code, ids_updated))
-                ids_added = {}
-                return {'updated':ids_updated}
-            else:
-                return rc.BAD_REQUEST
-        except Exception, err:
-            print err
-
-
-
-    """
-    Following call should be POST for TResourceHandler I think (by:lauri)
-    """
-    #def create(self, request, project_slug, tresource_slug):
-        #'''
-        #Using this API call, a user may create a tresource and assign source
-        #strings for a specific language. It gets the project and tresource name
-        #from the url and the source lang code from the json file. The json
-        #should be in the following schema:
-
-        #{
-            #'tresource': 'sampleresource',
-            #'source_lang': 'en',
-            #'strings':
-            #[{
-                #'string': 'str1',
-                #'value': 'str1.value',
-                #'occurrence': 'filename:lineno',
-            #},
-            #{
-            #}]
-        #}
-
-        #'''
-        ## check translation project is there. if not fail
-        #try:
-            #translation_project = Project.objects.get(slug=project_slug)
-        #except Project.DoesNotExist:
-            #return rc.BAD_REQUEST
-
-        ## check if tresource exists
-        #translation_resource, created = TResource.objects.get_or_create(
-                                        #slug = tresource_slug,
-                                        #project = translation_project)
-        ## if new make sure, it's initialized correctly
-        #if created:
-            #translation_resource.name = tresource_slug
-            #translation_resource.project = translation_project
-            #translation_resource.save()
-
-        #if request.content_type == 'application/json': # we got JSON strings
-            #strings = request.data.get('strings', [])
-            #source_lang = request.data.get('source_language', 'en')
-            #try:
-                #lang = Language.objects.by_code_or_alias(source_lang)
-            #except Language.DoesNotExist:
-                #return rc.BAD_REQUEST
-
-            ## create source strings and translation strings for the source lang
-            #for s in strings:
-                #obj, cr = SourceString.objects.get_or_create(string=s.get('value'),
-                                    #occurrences=s.get('occurrence'),
-                                    #description=s.get('occurrence'),
-                                    #tresource=translation_resource)
-                #ts, created = TranslationString.objects.get_or_create(
-                                    #language=lang,
-                                    #source_string=obj,
-                                    #tresource=translation_resource)
-                #if created:
-                    #ts.string = s.get('value')
-                    #ts.save()
-        #else:
-            #return rc.BAD_REQUEST
+        else:
+            return rc.BAD_REQUEST
 
 

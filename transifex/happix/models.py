@@ -191,7 +191,7 @@ class SourceString(models.Model):
                     "po template (.pot) file in gettext."))
     #TODO: Decision for the following
     occurrences = models.TextField(_('Occurrences'), max_length=1000,
-        blank=True, editable=False,
+        blank=True, editable=False, null=True,
         help_text=_("The occurrences of the source string in the project code."))
     flags = models.TextField(_('Flags'), max_length=100,
         blank=True, editable=False,
