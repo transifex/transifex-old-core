@@ -43,16 +43,14 @@ Projects |
 			}
 					
 		});
-
 		$(".languages").hover(
 			function() {
-				$(this).next().hide();
+				$(this).children().next().show()
 			},
 			function() {
-				$(this).next().show();
-			});
-			
-		
+				$(this).children().next().hide();
+			}	
+		);
 	});
 </script>
 
@@ -66,17 +64,16 @@ Projects |
 Available translations:
 <tbody id='translated_tablebody'>
 {% for language,count in translated_languages.items %}
-    <tr>
-		<td style="padding-right:4em;" class="languages"><a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup></td>
-		<td><select name="{{ language.code }}" class="language">
+    <tr class="languages">
+		<td style="padding-right:4em;" ><a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup></td>
+		<td style="display:none"><select name="{{ language.code }}" class="language">
 			<option value="">Select Language</option>
 			{% for lang in languages %}
 				<option value="{{ lang.code }}">{{ lang.name }}</option>
 			{% endfor %}
 			</select>
-		</td>
-		<td><span class="i16 branch buttonized_simple tipsy_enable extract" title="Extract strings from translation and place them into new translation resource">Clone</span></td>
-		<td><span class="i16 delete buttonized_simple tipsy_enable" title="Delete uploaded file">Delete</span></td>	
+		<span class="i16 branch buttonized_simple tipsy_enable extract" title="Extract strings from translation and place them into new translation resource">Clone</span>
+		<span class="i16 delete buttonized_simple tipsy_enable" title="Delete uploaded file">Delete</span></td>	
 	</tr>	
 {% endfor %}
 </tbody>

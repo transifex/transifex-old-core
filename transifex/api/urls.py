@@ -10,14 +10,15 @@ from piston.authentication import OAuthAuthentication
 from languages.api import LanguageHandler
 from projects.api import ProjectHandler
 from storage.api import StorageHandler
-from happix.api import StringHandler, TResourceHandler
+from happix.api import ( TResourceHandler, ProjectStringHandler,
+                            TResourceStringHandler)
 
 tresource_handler = Resource(TResourceHandler)
-strings_handler = Resource(StringHandler)
+#strings_handler = Resource(StringHandler)
 storage_handler = Resource(StorageHandler)
 project_handler = Resource(ProjectHandler)
-#tresourcestring_handler = Resource(TResourceStringHandler)
-#projectstring_handler = Resource(ProjectStringHandler)
+tresourcestring_handler = Resource(TResourceStringHandler)
+projectstring_handler = Resource(ProjectStringHandler)
 
 urlpatterns = patterns('',
     url(
@@ -31,9 +32,9 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/$',
         project_handler,
         name='api_project',
-    #), url(
-        #r'^project/(?P<project_slug>[-\w]+)/pull_strings/$',
-        #projectstring_handler
+    ), url(
+        r'^project/(?P<project_slug>[-\w]+)/strings/$',
+        projectstring_handler
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
         tresource_handler
@@ -41,26 +42,22 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/$',
         tresource_handler,
         name='api_resource'
-    #), url(
-        #r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/push_strings/$',
-        #tresourcestring_handler,
-        #name='string_resource_push'
-    #), url(
-        #r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/pull_strings/$',
-        #tresourcestring_handler,
-        #name='string_resource_pullall'
-    #), url(
-        #r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/pull_strings/(?P<target_lang_code>[-\w]+)/$',
-        #tresourcestring_handler,
-        #name='string_resource_pullfrom'
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/$',
-        strings_handler,
-        name='api_resource_translation'
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/strings/$',
+        tresourcestring_handler,
+        name='string_resource_push'
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/(?P<source_lang_code>[-\w]+)/$',
-        strings_handler,
-        name='api_resource_translation_from'
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/strings/(?P<target_lang_code>[-\w]+)/$',
+        tresourcestring_handler,
+        name='string_resource_pullfrom'
+#    ), url(
+#        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/$',
+#        strings_handler,
+#        name='api_resource_translation'
+#    ), url(
+#        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/(?P<source_lang_code>[-\w]+)/$',
+#        strings_handler,
+#        name='api_resource_translation_from'
     ), url(
         r'^storage/$',
         storage_handler,
