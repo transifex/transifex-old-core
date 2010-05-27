@@ -44,12 +44,6 @@ else:
         url(r'^accounts/', include('userprofile.urls')),
     )
 
-if settings.STATIC_SERVE:
-    urlpatterns += patterns('',
-        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
-         {'document_root': settings.MEDIA_ROOT}),
-    )
-
 if settings.ENABLE_NOTICES:
     urlpatterns += patterns('',
         (r'^notices/', include('notification.urls')),
@@ -57,7 +51,7 @@ if settings.ENABLE_NOTICES:
     )
 
 # This is used by django-staticfiles for development process
-if settings.DEBUG:
+if settings.SERVE_MEDIA:
     urlpatterns += patterns('',
         (r'', include('staticfiles.urls')),
     )

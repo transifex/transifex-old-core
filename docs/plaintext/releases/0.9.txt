@@ -344,9 +344,10 @@ schema of the previous version, is run the following:
 
     ./manage.py syncdb
     ./manage.py migrate
-    ./manage.py build_static        # Copy all the addons files to the static dir
-
-
+    ./manage.py build_static
+    cd transifex/site_media/
+    mv userprofile media/userprofile
+    mv reviews_files media/reviews_files
 
 Contributors
 ------------
