@@ -3,6 +3,9 @@ from django.conf import settings
 from django.contrib import admin
 import authority
 
+# Overriding 500 error handler
+handler500 = 'views.server_error'
+
 admin.autodiscover()
 authority.autodiscover()
 
