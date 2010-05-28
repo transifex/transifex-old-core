@@ -48,7 +48,7 @@ class TResourceHandler(BaseHandler):
         return rc.CREATED
 
 class StringHandler(BaseHandler):
-    allowed_methods = ('GET', 'POST')
+    allowed_methods = ('GET', 'POST','PUT')
 
     def read(self, request, project_slug, tresource_slug=None, target_lang_code=None):
         '''
@@ -117,13 +117,88 @@ class StringHandler(BaseHandler):
             retval.append({'resource':translation_resource.slug,'strings':strings.values()})
         return retval
 
+    # FIXME: Find out what permissions are needed for this. Maybe implement new
+    # ones for TResource similar to Components? Something like 'tresource_edit'
+    #@method_decorator(one_perm_required_or_403())
+    def create(self, request, project_slug, tresource_slug):
+        '''
+        This API call is for uploading TranslationStrings to a specific
+        TResource. If no corresponding SourceStrings are found, the uploading
+        should fail. The translation strings should be created if not in db or
+        if already there, they should be overwritten. Format for incoming json
+        files is:
+
+        {
+          'tresource': 'sampleresource',
+          'language': 'el',
+          'strings' :
+            [{
+              'string' : 'str1',
+              'value' : 'str2',
+              'occurrence' : 'somestring',
+              'context' : 'someotherstring'
+            },
+            {
+              ....
+            }]
+        }
+
+        '''
+        try:
+            translation_project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
+
+
+        try:
+            translation_resource = TResource.objects.get(slug=tresource_slug)
+        except TResource.DoesNotExist:
+            return rc.NOT_FOUND
+
+        if 'application/json' in request.content_type: # we got JSON strings
+            import json
+            try:
+                data = json.loads(getattr(request, 'data', None))
+            except ValueError, TypeError:
+                return rc.BAD_REQUEST
+
+            if not data:
+                return rc.BAD_REQUEST
+
+            strings = data.get('strings', [])
+
+            try:
+                lang = Language.objects.by_code_or_alias(data.get('language',None))
+            except Language.DoesNotExist:
+                return rc.BAD_REQUEST
+
+            for s in strings:
+                try:
+                    ss = SourceString.objects.get(string=s.get('string',None),
+                                             description=s.get('context',None),
+                                             tresource=translation_resource)
+                except SourceString.DoesNotExist:
+                    # We have no such string for translation. Either we got
+                    # wrong file or something is messed up. Fail...
+                    return rc.BAD_REQUEST
+
+                ts, created = TranslationString.objects.get_or_create(
+                                    language=lang,
+                                    source_string=ss,
+                                    tresource=translation_resource)
+                ts.string = s.get('value')
+                ts.save()
+
+            return rc.CREATED
+        else:
+            return rc.BAD_REQUEST
 
     # this probably needs some more fine grained permissions for real world
     # usage. for now all people who can change a project can add/edit resources
     # and strings in it
     @method_decorator(one_perm_required_or_403(pr_project_add_change,
         (Project, 'slug__exact', 'project_slug')))
-    def create(self, request, project_slug, tresource_slug, target_lang_code=None):
+    def update(self, request, project_slug, tresource_slug, target_lang_code=None):
         '''
         Using this API call, a user may create a tresource and assign source
         strings for a specific language. It gets the project and tresource name
@@ -137,11 +212,14 @@ class StringHandler(BaseHandler):
             [{
                 'string': 'str1',
                 'value': 'str1.value',
-                'occurrence': 'filename:lineno',
+                'occurrence': 'somestring',
+                'context': 'someotherstring'
             },
             {
             }]
         }
+
+
 
         '''
         # check translation project is there. if not fail
@@ -174,7 +252,7 @@ class StringHandler(BaseHandler):
             try:
                 lang = Language.objects.by_code_or_alias(data.get('language', 'en'))
             except Language.DoesNotExist:
-                return rc.NOT_FOUND
+                return rc.BAD_REQUEST
 
             # create source strings and translation strings for the source lang
             for s in strings:
@@ -186,9 +264,8 @@ class StringHandler(BaseHandler):
                                     language=lang,
                                     source_string=obj,
                                     tresource=translation_resource)
-                if created:
-                    ts.string = s.get('value')
-                    ts.save()
+                ts.string = s.get('value')
+                ts.save()
 
             return rc.CREATED
         else:
