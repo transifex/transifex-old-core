@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from piston.resource import Resource
-from piston.authentication import OAuthAuthentication
+#from piston.authentication import OAuthAuthentication
+from piston.authentication import HttpBasicAuthentication
+
 
 
 #TODO: Implement full support for OAUTH and refactor URLs!
@@ -12,12 +14,17 @@ from projects.api import ProjectHandler
 from storage.api import StorageHandler
 from happix.api import ( TResourceHandler, StringHandler)
 
+auth = HttpBasicAuthentication(realm='Happix API')
+
 tresource_handler = Resource(TResourceHandler)
 #strings_handler = Resource(StringHandler)
 storage_handler = Resource(StorageHandler)
 project_handler = Resource(ProjectHandler)
-string_handler = Resource(StringHandler)
+string_handler = Resource(StringHandler, authentication=auth)
 #projectstring_handler = Resource(ProjectStringHandler)
+
+
+
 
 urlpatterns = patterns('',
     url(

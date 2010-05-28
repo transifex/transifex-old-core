@@ -4,12 +4,15 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from projects.permissions import *
+from txcommon.decorators import one_perm_required_or_403
 from happix.models import TResource, SourceString, TranslationString, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
+from happix.decorators import method_decorator
 
 
 class TResourceHandler(BaseHandler):
@@ -110,11 +113,16 @@ class StringHandler(BaseHandler):
                 translated_strings = translated_strings.filter(language__in = target_langs)
             for ts in translated_strings.select_related('source_string','language'):
                 strings[ts.source_string.id]['translations'][ts.language.code] = ts.string
-                    
+
             retval.append({'resource':translation_resource.slug,'strings':strings.values()})
         return retval
 
 
+    # this probably needs some more fine grained permissions for real world
+    # usage. for now all people who can change a project can add/edit resources
+    # and strings in it
+    @method_decorator(one_perm_required_or_403(pr_project_add_change,
+        (Project, 'slug__exact', 'project_slug')))
     def create(self, request, project_slug, tresource_slug, target_lang_code=None):
         '''
         Using this API call, a user may create a tresource and assign source
@@ -153,20 +161,27 @@ class StringHandler(BaseHandler):
             translation_resource.save()
 
         if 'application/json' in request.content_type: # we got JSON strings
-        
-            strings = request.data.get('strings', [])
+            import json
             try:
-                lang = Language.objects.by_code_or_alias(request.data.get('language', 'en'))
+                data = json.loads(getattr(request, 'data', None))
+            except ValueError, TypeError:
+                return rc.BAD_REQUEST
+
+            if not data:
+                return rc.BAD_REQUEST
+
+            strings = data.get('strings', [])
+            try:
+                lang = Language.objects.by_code_or_alias(data.get('language', 'en'))
             except Language.DoesNotExist:
                 return rc.NOT_FOUND
 
-	    
             # create source strings and translation strings for the source lang
             for s in strings:
                 obj, cr = SourceString.objects.get_or_create(string=s.get('string'),
                                     description=s.get('context'),
-                                    tresource=translation_resource,
-                                    defaults = {'occurrences':s.get('occurrences')})
+                                    occurrences=s.get('occurrence'),
+                                    tresource=translation_resource)
                 ts, created = TranslationString.objects.get_or_create(
                                     language=lang,
                                     source_string=obj,
@@ -174,7 +189,8 @@ class StringHandler(BaseHandler):
                 if created:
                     ts.string = s.get('value')
                     ts.save()
+
+            return rc.CREATED
         else:
             return rc.BAD_REQUEST
-
 
