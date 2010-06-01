@@ -90,7 +90,7 @@
     <table class="widget">
         <tr>
             <td style="align: center;">
-                <iframe src="{{SITE_URL_PREFIX}}{% url chart_comp_html project.slug default_component.slug %}" 
+                <iframe src="{% url chart_comp_html project.slug default_component.slug %}"
                   id="chart-interactive-iframe" style="width: 100%; height:300px; overflow:hidden;">{% blocktrans %}Loading...{% endblocktrans %}</iframe>
             </td>
 
