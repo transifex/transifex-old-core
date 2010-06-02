@@ -13,10 +13,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: PORTUGAL\n"
-"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: PORTUGAL\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: actionlog/filters.py:12
 msgid "Search for an username or leave it blank"
@@ -586,7 +586,7 @@ msgstr "Últimos componentes no projecto %s."
 #: projects/feeds.py:67
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release"
-msgstr ""
+msgstr "%(site_name)s: %(project)s :: versão %(release)s"
 
 #: projects/feeds.py:73
 #, python-format
@@ -596,12 +596,12 @@ msgstr "Estatísticas de tradução para todos os idiomas em relação à versã
 #: projects/feeds.py:108
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
-msgstr ""
+msgstr "%(site_name)s: %(project)s :: %(release)s versão :: %(lang)s"
 
 #: projects/feeds.py:115
 #, python-format
 msgid "Translation statistics for %(lang)s language against %(release)s release."
-msgstr ""
+msgstr "Estatísticas de tradução do idioma %(lang)s comparativamente à versão %(release)s."
 
 #: projects/forms.py:15 txpermissions/forms.py:19
 msgid "Search for a username"
@@ -845,7 +845,7 @@ msgstr "Data de congelamento do desenvolvimento"
 
 #: projects/models.py:477 releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
-msgstr ""
+msgstr "A data final para os pacotes desta versão a serem compilados pelos programadores. As traduções enviadas após esta data não serão incluídas na versão final."
 
 #: projects/models.py:492
 msgid "Components"
@@ -914,7 +914,7 @@ msgstr "O filtro do ficheiro deste componente inltool baseada em POT não parece
 
 #: projects/views/component.py:281
 msgid "There is no 'pot' directory named in the set of files of this Publican like component. Maybe its file filter is not allowing access to it."
-msgstr ""
+msgstr "Não existe o directório pot no conjunto de ficheiros deste componente Público. É possível que o filtro não lhe permita o acesso."
 
 #: projects/views/component.py:289
 msgid "This component is not configured for statistics calculation."
@@ -1049,7 +1049,7 @@ msgstr "Você rejeitou o pedido do utilizador '%(user)s' para integração na eq
 #: projects/views/team.py:357
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
-msgstr ""
+msgstr "Você retirou o seu pedido de integração na equipa '%s'."
 
 #: projects/views/team.py:398
 #, python-format
@@ -1092,7 +1092,7 @@ msgstr "Você rejeitou a equipa '%(team)s', solicitada por '%(user)s'."
 
 #: releases/models.py:34
 msgid "When the translatable strings will be frozen (no strings which affect translations can be added/modified)."
-msgstr ""
+msgstr "Quando as linhas a traduzir serão bloqueadas (nenhuma linha que afecte traduções será adicionada/modificada)"
 
 #: repowatch/__init__.py:74
 msgid "Watch it"
@@ -1117,7 +1117,7 @@ msgstr "vigilâncias"
 
 #: reviews/forms.py:9
 msgid "Write a short blurb for your review request."
-msgstr ""
+msgstr "Escreva um pequeno anuncio para o seu pedido de revisão."
 
 #: reviews/forms.py:11
 msgid "Select a translation file for review."
@@ -1181,11 +1181,11 @@ msgstr "Rever Pedidos"
 
 #: reviews/models.py:89
 msgid "-created_on"
-msgstr ""
+msgstr "-criado_em"
 
 #: reviews/models.py:90
 msgid "created_on"
-msgstr ""
+msgstr "criado_em"
 
 #: reviews/views.py:33
 msgid "You can upload a file for review only if it's related to an existing language."
@@ -1225,12 +1225,12 @@ msgstr "Os coordenadores são as pessoas que podem fazer a gestão dos membros d
 
 #: teams/forms.py:16
 msgid "Members are actually people that can submit translations. Search for usernames."
-msgstr ""
+msgstr "Os membros são as pessoas que podem submeter traduções. Pesquise os nomes de utilizador."
 
 #: teams/forms.py:52
 #, python-format
 msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
-msgstr ""
+msgstr "Você tem o utilizador '%s'  na lista de coordenadores e na lista de membros. Por favor, retire-o(a) de uma das listas."
 
 #: teams/models.py:27 teams/models.py:69
 msgid "The project which this team belongs to."
@@ -1453,7 +1453,7 @@ msgstr "Nenhum projecto encontrado para \"%(q)s\". Deve ser mais preciso na cons
 #: templates/search.html:63
 #, python-format
 msgid "Couldn't find your project? Why don't you go ahead and <a href=\"%(project_create_url)s\">add it</a>?"
-msgstr ""
+msgstr "Não encontrou o projecto? Porque não dá um passo em frente e o <a href=\"%(project_create_url)s\">adiciona</a>?"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -1482,7 +1482,11 @@ msgid_plural ""
 "\n"
 "  The query returned %(counter)s results\n"
 msgstr[0] ""
+"\n"
+"  A consulta devolveu %(counter)s resultado\n"
 msgstr[1] ""
+"\n"
+"  A consulta devolveu %(counter)s resultados\n"
 
 #: templates/admin/base_site.html:9
 msgid "Transifex administration"
@@ -1571,7 +1575,7 @@ msgstr "Definições de notificação"
 
 #: templates/notification/notices.html:88
 msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you in the list below and choose which events you would like to be notified by email."
-msgstr ""
+msgstr "Você pode receber notificações sobre os eventos que ocorrem no Transifex. Verifique as notificações disponíveis na lista abaixo e escolha sobre quais eventos gostava de ser notificado por e-mail."
 
 #: templates/notification/notices.html:89
 msgid "Primary email"
@@ -1642,7 +1646,7 @@ msgstr "Os seguintes ficheiros no <a href=\"%(component_url)s\">%(component_name
 #: templates/notification/project_component_file_review_submitted/notice.html:2
 #, python-format
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "Um ficheiro para <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> foi submetido para revisão no <a href=\"%(component_url)s\">%(component_name)s</a> do projecto <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
@@ -1661,12 +1665,12 @@ msgstr "foi submetido para o <a href=\"%(component_url)s\">%(component_name)s</a
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
 msgid "The source file (POT) has some problems and can not be created/updated for the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
+msgstr "O ficheiro de origem (POT) tem alguns problemas e não pode ser criado/actualizado para o <a href=\"%(component_url)s\">%(component_name)s</a> do projecto <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> project was generated"
-msgstr ""
+msgstr "O relatório semanal do projecto <a href=\"%(project_url)s\">%(project_name)s</a> foi gerado"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1676,12 +1680,12 @@ msgstr "O utilizador <a href=\"%(user_url)s\">%(user_request)s</a> teve acesso �
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> denied"
-msgstr ""
+msgstr "O utilizador<a href=\"%(user_url)s\">%(user_request)s</a> viu o seu pedido de acesso à submissão de ficheiros no projecto <a href=\"%(project_url)s\">%(project)s</a> rejeitado"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid "Withdrew own request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
-msgstr ""
+msgstr "Retirado o seu pedido de acesso à submissão de ficheiros no projecto <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
