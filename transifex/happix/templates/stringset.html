@@ -8,12 +8,12 @@
 
 
 {% block extra_head %}
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/json2.min.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/sprintf.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.paginate.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/tx.lotte.js"></script>
-  <link media="screen" href="{{ MEDIA_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ MEDIA_URL }}css/jquery.paginate.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}js/json2.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/sprintf.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.paginate.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tx.lotte.js"></script>
+  <link media="screen" href="{{ STATIC_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}css/jquery.paginate.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}
@@ -53,8 +53,6 @@
             data: '', /* Workaround for django-piston */
             complete: function(xmlhttpreq, status) {
 
-
-                
                 var push_url = '{% url string_resource_pullfrom project.slug tresource.slug target_language.code %}';
                 stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{request.LANGUAGE_CODE}}', '{{target_language.code}}');
 

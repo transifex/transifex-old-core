@@ -26,31 +26,20 @@ Projects |
 {% block content %}
 
 <script type="text/javascript">
-	var clone_url = "{% url project.resource project.slug tresource.slug %}";
 	$(document).ready(function(){
 		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-		$(".extract").click(function() {
-		
-			var target_lang_code = $(this).parent().prev().children().val();
-			var source_lang_code = $(this).parent().prev().children().attr('name');
-			if ( target_lang_code != "" ) {
-				request_url = clone_url+source_lang_code+"/clone/"+target_lang_code;
-				$.ajax({ url: request_url, success: function(){
-					window.location.reload();
-				}});
-			} else {
-				alert("Please select a target language first and then click clone");
-			}
-					
-		});
-		$(".languages").hover(
-			function() {
-				$(this).children().next().show()
-			},
-			function() {
-				$(this).children().next().hide();
-			}	
-		);
+        $("#new_translation").click( function (){ 
+            $("#new_translation_box").toggle();
+        });
+        $("#start_new_translation").click( function() {
+            var target_lang_code = $(this).prev().val();
+            if ( target_lang_code != "" ) {
+                request_url = window.location + target_lang_code;
+                window.location = request_url;
+            } else {
+                alert("Please select a target language first and then click crate.");
+            }
+        });
 	});
 </script>
 
@@ -60,27 +49,30 @@ Projects |
 {% endif %}
 
 
-<table>
 Available translations:
-<tbody id='translated_tablebody'>
+<ul>
 {% for language,count in translated_languages.items %}
-    <tr class="languages">
-		<td style="padding-right:4em;" ><a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup></td>
-		<td style="display:none"><select name="{{ language.code }}" class="language">
-			<option value="">Select Language</option>
-			{% for lang in languages %}
-				<option value="{{ lang.code }}">{{ lang.name }}</option>
-			{% endfor %}
-			</select>
-		<span class="i16 branch buttonized_simple tipsy_enable extract" title="Extract strings from translation and place them into new translation resource">Clone</span>
-		<span class="i16 delete buttonized_simple tipsy_enable" title="Delete uploaded file">Delete</span></td>	
-	</tr>	
+    <li>
+		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
+    </li>
 {% endfor %}
-</tbody>
-</table>
+</ul>
 
+<!-- This is just to show how it could be handled easily. Needs polishing!! -->
+<a id="new_translation" class="buttonized i16">Start New Translation</a>
 
-<a href="" class="i16 buttonized add">Start New Translation</a>
+<div id="new_translation_box" style="display:none; padding:1em; margin:0; border:1px solid; border-color:#CCC;">
+
+    <select name="{{ language.code }}" class="language">
+        <option value="">Select Language</option>
+        {% for lang in languages %}
+            <option value="{{ lang.code }}">{{ lang.name }}</option>
+        {% endfor %}
+    </select>
+
+    <a id="start_new_translation" class="i16 buttonized add">Create</a>
+</div>
+
 
 {% endblock %}
 

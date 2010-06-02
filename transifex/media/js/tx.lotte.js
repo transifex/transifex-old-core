@@ -1,8 +1,9 @@
 /* TranslationString class which stores information about one translation string */
-function TranslationString(parent, id, source_string, translated_string, context) {
+function TranslationString(parent, id, source_string, translated_string, context,occurrence) {
     this.parent = parent;
     this.id = id;
     this.context = context;
+	this.occurrence = occurrence;
     this.source_string = source_string;
     this.translated_string = translated_string;
     this.modified = false;
@@ -59,7 +60,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
     var i = 0;
     for(var index in json[0]['strings']) {
       var string = json[0]['strings'][index];
-      this_stringset.strings[i] = new TranslationString(this, string['id'], string['original_string'], string['translations'][to_lang], string['context']);
+      this_stringset.strings[i] = new TranslationString(this, string['id'], string['original_string'], string['translations'][to_lang], string['context'], string['occurrence']);
       i++;
     }
     this.filtered = this.strings;
@@ -73,28 +74,32 @@ function StringSet(json, push_url, from_lang, to_lang) {
         this_stringset = this;
         var to_update = [];
         if (ts) { /* Pushing one TranslationString instance */
-            to_update[0] = {'string':ts.source_string,'context':this.strings[i].context,'value':ts.translated_string};
+            to_update[0] = {'string':ts.source_string,'context':ts.context,'value':ts.translated_string, "occurrence":ts.occurrence};
         } else { /* Pushing all TranslationString instances from current StringSet */
             for (i=0; i<this.strings.length; i++)
-                if (this.strings[i].modified)
-                    to_update[i] =  {'string':this.strings[i].source_string,'context':this.strings[i].context,'value':this.strings[i].translated_string};
+                if (this_stringset.strings[i].modified == true) {
+                    to_update.push( {"string":this.strings[i].source_string,"context":this.strings[i].context,"value":this.strings[i].translated_string, "occurrence":this.strings[i].occurrence});
+				}
         }
         if (to_update == {} && to_add == {}) {
             alert("No strings to push");
         } else {
-            json_request('POST', push_url, {'language':this_stringset.to_lang, 'strings':to_update}, function(stat, dict){
-                ids = dict['updated'];
-                for (i=0; i<ids.length; i++) {
-                    for (j=0; j<this_stringset.strings.length; j++) {
-                        if (this_stringset.strings[j].id == ids[i])
-                            this_stringset.strings[j].modified = false;
-                    }
-                }
-                this_stringset.updateView();
-                this_stringset.updateStats();
-            });
-        }
-    }
+            $.ajax({
+				url: push_url,
+				type: 'POST',
+				contentType: "application/json",
+				dataType: 'text',
+				data: JSON.stringify({language:this_stringset.to_lang, strings:to_update}),
+				success: function(stat, dict){
+					for (j=0; j<this_stringset.strings.length; j++) {
+							this_stringset.strings[j].modified = false;
+					}
+					this_stringset.updateView();
+					this_stringset.updateStats();
+				}
+			});
+		}
+	}
 
     this.updateView = function() {
         /* The view subset of strings is based on table size */

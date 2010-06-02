@@ -120,7 +120,7 @@ class StringHandler(BaseHandler):
     # FIXME: Find out what permissions are needed for this. Maybe implement new
     # ones for TResource similar to Components? Something like 'tresource_edit'
     #@method_decorator(one_perm_required_or_403())
-    def create(self, request, project_slug, tresource_slug):
+    def create(self, request, project_slug, tresource_slug, target_lang_code=None):
         '''
         This API call is for uploading TranslationStrings to a specific
         TResource. If no corresponding SourceStrings are found, the uploading
@@ -143,6 +143,9 @@ class StringHandler(BaseHandler):
             }]
         }
 
+        FIXME: args include target_lang which is also in json. We should decide
+               which to use and maybe drop support for the other.
+
         '''
         try:
             translation_project = Project.objects.get(slug=project_slug)
@@ -157,10 +160,7 @@ class StringHandler(BaseHandler):
 
         if 'application/json' in request.content_type: # we got JSON strings
             import json
-            try:
-                data = json.loads(getattr(request, 'data', None))
-            except ValueError, TypeError:
-                return rc.BAD_REQUEST
+            data = getattr(request, 'data',None)
 
             if not data:
                 return rc.BAD_REQUEST
@@ -240,10 +240,7 @@ class StringHandler(BaseHandler):
 
         if 'application/json' in request.content_type: # we got JSON strings
             import json
-            try:
-                data = json.loads(getattr(request, 'data', None))
-            except ValueError, TypeError:
-                return rc.BAD_REQUEST
+            data = getattr(request, 'data', None)
 
             if not data:
                 return rc.BAD_REQUEST
