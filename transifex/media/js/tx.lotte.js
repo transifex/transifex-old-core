@@ -3,21 +3,26 @@ function TranslationString(parent, id, source_string, translated_string, context
     this.parent = parent;
     this.id = id;
     this.context = context;
-	this.occurrence = occurrence;
+    this.occurrence = occurrence;
     this.source_string = source_string;
     this.translated_string = translated_string;
     this.modified = false;
     this.toString = function() {
         return "TranslationString(" + this.id + ", '" + this.source_string + "', '" + this.translated_string + "');";
     }
+
+    this.checkVar = function(v) {
+        return (typeof v === 'undefined' || !v); // Check whether v is undefined or empty
+    }
+
     this.isModified = function() {
         return this.modified;
     }
     this.isUntranslated = function() {
-        return this.translated_string == "";
+        return this.checkVar(this.translated_string);
     }
     this.isTranslated = function() {
-        return this.translated_string != "";
+        return !this.checkVar(this.translated_string);
     }
     this.translate = function(new_string) {
         if (new_string != this.translated_string) {
@@ -34,7 +39,7 @@ function TranslationString(parent, id, source_string, translated_string, context
     this.flagString = function() {
         if (this.modified) {
             return "fuzzy";
-        } else if (this.translated_string == "") {
+        } else if (this.checkVar(this.translated_string)) {
             return "untranslated";
         } else {
             return "translated";
@@ -267,7 +272,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
                 j = this.strings[i];
                 if (j.modified) {
                     this.modified += 1;
-                } else if (j.translated_string == "") {
+                } else if (j.checkVar(j.translated_string)) {
                     this.untranslated += 1;
                 } else {
                     this.translated += 1;
