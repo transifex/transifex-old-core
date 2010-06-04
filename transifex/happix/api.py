@@ -200,19 +200,29 @@ class StringHandler(BaseHandler):
             for s in strings:
                 try:
                     ss = SourceEntity.objects.get(string=s.get('string',None),
-                                             context=s.get('context',None),
-                                             tresource=translation_resource)
+                                                context=s.get('context',None),
+                                                tresource=translation_resource)
                 except SourceEntity.DoesNotExist:
                     # We have no such string for translation. Either we got
                     # wrong file or something is messed up. Fail...
                     return rc.BAD_REQUEST
 
-                ts, created = Translation.objects.get_or_create(
-                                    language=lang,
-                                    source_entity=ss,
-                                    tresource=translation_resource)
-                ts.string = s.get('value')
-                ts.save()
+                try:
+                    ts = Translation.objects.get(language=lang, source_entity=ss,
+                                                 tresource=translation_resource)
+                    # For a existing Translation delete the value if we get a '' or None value
+                    if s.get('value'):
+                        ts.string = s.get('value')
+                        ts.save()
+                    else:
+                        ts.delete()
+                except Translation.DoesNotExist:
+                    # For new Translations store the value only if it is not None or ''!
+                    if s.get('value'):
+                        ts = Translation.objects.create(language=lang,
+                                source_entity=ss,
+                                tresource=translation_resource,
+                                string=s.get('value'))
 
             return rc.CREATED
         else:
@@ -283,13 +293,16 @@ class StringHandler(BaseHandler):
 
             # create source strings and translation strings for the source lang
             for s in strings:
-                obj, cr = SourceEntity.objects.get_or_create(tresource=translation_resource,**s)
-                ts, created = Translation.objects.get_or_create(
-                                    language=lang,
-                                    source_entity=obj,
-                                    tresource=translation_resource)
-                ts.string = s.get('string')
-                ts.save()
+                # Store the value only if it is not None or ''!
+                if s.get('string'):
+                    obj, cr = SourceEntity.objects.get_or_create(
+                                tresource=translation_resource,**s)
+                    ts, created = Translation.objects.get_or_create(
+                                        language=lang,
+                                        source_entity=obj,
+                                        tresource=translation_resource)
+                    ts.string = s.get('string')
+                    ts.save()
 
             return rc.CREATED
         else:
