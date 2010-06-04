@@ -14,7 +14,7 @@
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Timeline" %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Timeline" %}{% endblock %}
 
 {% block content_main %}
 
