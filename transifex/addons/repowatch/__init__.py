@@ -2,6 +2,7 @@
 
 class Meta:
     author = "Indifex"
-    title = "User dashboard for Transifex"
-    description = ""
+    title = "Repository watching"
+    description = ("Monitor VCS repositories for changes and notify users "
+                   "when changes are detected")
 
