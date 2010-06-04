@@ -11,16 +11,29 @@ Transifex 0.9 (Mojo)
 Welcome to Transifex 0.9, codenamed Mojo_.
  
 To be Released:
-  June 4, 2010
+  June 2010
  
-Transifex 0.9 'Mojo' is a production release, [featuring a
-multitude of collaboration features. It is targeted for new installations of
-Transifex and parties who choose to migrate to a new major version and enjoy
-the new features.]
+Transifex 0.9 'Mojo' is a production release of Transifex. It is targeted for
+new installations of Transifex and parties who choose to migrate to a new major
+version and enjoy the new features.
+
+Transifex 0.9 is an interim release, sorts of. It does ship a number of new
+features and a multitude of important bugfixes. It also prepares the ground for
+the next major release, which will include some huge changes in Transifex's
+codebase. Stay tuned for more, but until then, let's enjoy the fresh air
+Transifex 0.9 brings to our daily multilingual life.
+
 
 Here's a 40K-foot view of the release major features and numbers:
 
-- ...
+- Add-ons engine
+- Project Team Sharing
+- More i18n directory structures
+- Widgets
+- Improved file ownership
+- More pre-submit checks
+- Improved handling of VCS Exceptions
+- Improved searching
 
 
 .. code-block:: bash
@@ -34,7 +47,7 @@ A note about Transifex.net
 --------------------------
 
 Transifex 0.9 is a release of the open-source, community-powered Transifex
-flavor. It is suitable for very large proejcts with their own existing
+flavor. It is suitable for very large projects with their own existing
 translation community, such as the Fedora Project, the GNOME Desktop etc.
 
 Transifex is also offered as another flavor: Software-as-a-Service, at
@@ -43,7 +56,7 @@ Transifex.net is a one-stop, batteries-included hosted service serving
 independent projects and businesses which don't want to worry about deploying
 their own Tx instance.
 
-Tranisfex.net is managed by Indifex_, the company sponsoring the development
+Transifex.net is managed by Indifex_, the company sponsoring the development
 of Transifex itself.
 
 .. figure:: ../../screenshots/transifex.net/frontpage.png
@@ -55,63 +68,196 @@ For a hassle-free translation management platform, visit Transifex.net_.
 What's new in Transifex 0.9
 ---------------------------
 
-Let's see what's fresh now!
+Let's see what's fresh!
 
 
-Add-ons engine
-::::::::::::::
+Extension engine
+::::::::::::::::
 
-Transifex 0.9 sports a brand-new extension engine, allowing developers to
-write plugins which extend or override parts of the functionality.
+Transifex 0.9 sports a brand-new extension engine called django-addons_, which
+allows developers to write plug-and-play extensions (or plug-ins) which extend
+or override parts of the core functionality. django-addons_ was developed by
+the Transifex team and is now shipped as a reusable Django application.
 
-This support was developed as a reusable application called 'django-addons'.
-Here are some of the changesets recorderd:
+.. _django-addons: http://bitbucket.org/indifex/django-addons/
 
-- Added django-addons support
-- Use STATIC_URL instead of MEDIA_URL
-- Raising some signals through the projects app
-- Bunch of fixes around templates related to the addonizations
-- Fixed some issues around the presubmit_checks addon
-- Settings changes due django-addons improvements
+Here are some of the benefits of this support:
+
+- **Extensibility**: By creating hooks and connectors in the Transifex core code,
+  extra code can be decoupled and stored in separate directories. This allows
+  more functionality to be added when needed with less hassle. 
+- **Reduced code complexity**: By storing code in more and smaller files, the code
+  is more readable and manageable.
+- **Scalability**: Addons can be enabled and disabled on the production web-server,
+  and the addons which fully support this functionality can simply be
+  deactivated if needed (for example, when high traffic hits your site).
+- **Friendlier code**: New developers are more free to experiment with new features
+  without having to mess with Transifex internals which might seem complex in
+  first sight.
+
+A number of Transifex applications have been converted to addons, which may be
+disabled if needed. Here's a list of them::
+
+    $ ./manage.py addons
+    Available addons:
+     * charts - Google Charts for Transifex
+     * locks - Locking mechanism for Transifex
+     * presubmit_checks
+     * repowatch - Repository watching
+     * timeline - Timeline for Transifex
+     * txcron - Transifex Cronjobs
+     * widgets - Transifex Widgets
+     
+Finally, for the Django developers out there, here are some of the features
+supported by django-addons:
+
+- Automatic URL discovery of addons: No need to tweak your main project's
+  'url.py' file.
+- Automatic signal connecting of addons
+- Support for 'default settings' per addon
+- Template hooking system (inject code from addons to your main project)
+- Support for 'django-staticfiles' to serve site media from each addon
+- Automatic registration of 'django-notification_' notice types
+- Support for storing and loading localization from inside each addon
+- Disable addons using a management command: ``./manage.py addons``
+- Addons overview page, allowing admins to learn what addons are currently
+  activated.
+
+For a full list of features and code examples, please refer to the
+`django-addons documentation`_ itself.
+
+.. figure:: ../../screenshots/0.9/addons.png
+   :class: alcenter shot2
+
+Project Team Sharing
+::::::::::::::::::::
+
+A great new feature is the ability to share translation teams between projects.
+A Transifex project can now 'outsource' its language teams to another one,
+effectively trusting and re-using the other project's community to translate
+its own resources.
+
+Why is this useful? Open source software projects tend to group together in
+larger communities. Good examples of such project collections are desktop
+environments, such as GNOME and KDE, or distributions, such as Fedora and
+Moblin. Since Transifex supports per-project translation teams, these
+communities requested the ability to re-use the collection's translation teams
+instead of managing their own.
+
+This control can accessed by Project Maintainers under the tab "Access Control".
+Note that this project's fine-grained permission and team controls are disabled
+once the project outsources its access control.
+
+.. figure:: ../../screenshots/0.9/outsource.png
+   :class: alcenter shot2
+
+The Teams Outsourcing feature is the major lever behind the very influential
+website http://meego.transifex.net/. There, the MeeGo project, a common effort
+between Intel, Nokia and the Linux Foundation, hosts the translations of a large
+number of projects, all being translated by the same community: The MeeGo
+Localization Community.
 
 
-Project Team Outsourcing
-::::::::::::::::::::::::
+Widgets
+:::::::
 
-In reality, a number of projects, upstream or not, belong to bigger collections
-of software. A great example of such collections are desktop environments or
-distributions. These projects have repeatedly requested the ability to re-use
-the collection's translation teams instead of managing their own.
+Starting with this version, each Transifex project now has its own Widgets.
+You may now display your project's translation statistics on your website
+as a simple image. Perfect for embedding in wiki pages, Trac instances, emails.
+The chart will always reflect your live Transifex numbers.
 
-For example, the Anaconda project may choose to use Fedora's translation teams,
-for example.
+Widgets are publicly accessible from a tab on the Project Details page.
+Additional widgets may be available in the next releases in the same place.
 
-Permission and Team views are disabled once the project outsources its access
-control.
+.. figure:: ../../screenshots/0.9/chart.png
+   :class: alcenter shot2
+
+
+Improved file ownership
+:::::::::::::::::::::::
+
+The file locking feature has been greatly improved in this version. The new
+functionality more closely resembles "file ownership". Here's a list of the
+improvements which have taken place:
+
+- The download button has been replaced with the message "Download for viewing",
+  indicating that this action will not also assign the translation to the person
+  clicking it.
+- Submit access has been restricted to the person holding the lock.
+- Editing in Lotte now automatically assigns the file to the user.
+- Users are only allowed to lock 2 files and locks expire by default in 2 days,
+  signifying the importance of the file ownerships. Both these settings are
+  configurable by the Transifex administrator.
+- When a file ownership is about to expire (e.g. 12 hours before), a
+  notification is sent to the owner.
+- Users can submit part of their job and continue working on their files by
+  extending the lock upon file submission.
+- The owner of a file is allowed to “Extend lock for 2 more days” by clicking
+  the related icon next to the file.
+- Language coordinators are able to remove ownership from other people's files
+  for the language files they are responsible for.
+
+.. figure:: ../../screenshots/0.9/lock.png
+   :class: alcenter shot2
 
 
 More i18n directory structures
 ::::::::::::::::::::::::::::::
 
 Transifex 0.9 introduces an overhaul of the ``guess_language`` method using
-regular expressions. This addresses tickets #541, #542.
+regular expressions (tickets #541, #542), adding support for a number of i18n
+directory structures and shows improved extensibility.
 
-The new method takes 0.1 millisecond more when hitting 'Refresh Stats'
-and for the 'txstatsfresh' on Txn, when run against 30K files, it takes
-0.30s, compared to 0.14s it took before. This is a penalty of appx.
-0.01%.
+This method is run whenever the statistics are refreshed, so approximately once
+per day. The new code has no visible overhead (when run against 30.000 files, it
+takes 0.30 seconds, compared to 0.14 seconds it took before).
+
+The standard directory structures supported now are the following:
+
+#. PO files inside a po directory named with the language code
+   (``/po/<lang>.po``). Depending on the i18n method, a POT file might be
+   available or not.
+
+#. The LC_MESSAGES locale standard (``/<lang>/LC_MESSAGES/something.po``).
+
+#. Grouped language files (``/po/el/foo.po``)
+
+#. Suffixed language files (``/po/foo.el.po``)
+   
+#. The Publican standard structure. The languages are discovered by the
+   presence of the 'pot' directory in the tree. A 'pot' directory is needed to
+   allow the language discovery.
 
 
-Widgets
-:::::::
+More pre-submit checks
+::::::::::::::::::::::
 
-Note: To have your widget code viewable from outside your transifex instance
-you have to set your ``STATIC_URL`` variable to an absolute URL (by using
-relative paths you can still view the widgets on your own installation).
+Transifex now supports more validation checks for a submission. This helps
+avoiding wrong submissions and can reduce the maintenance overhead for the
+developer and Transifex administrator. Here is a list of the checks added:
+
+- Reject empty files (0% translations) (empty files)
+- Reject access to POT files
+- Warn in the presence of DOS language endings in the file
+- Option to disallow anything other than UTF-8 header encoding
+- Check the existence of a 'Plurals-Form' header in a file
 
 
-Improved handling of VCS Exceptions
-:::::::::::::::::::::::::::::::::::
+Various improvements and bugfixes
+---------------------------------
+
+
+Improved searching
+::::::::::::::::::
+
+The search box now also crawls in project names and descriptions, components,
+repository URLs. Now, users can search for projects having specific keywords
+in their description, projects hosted on a particular hosting website such as
+gitorious, etc.
+
+
+Improved handling of VCS Errors
+:::::::::::::::::::::::::::::::
 
 Transifex now shows in the UI what's going on with the related VCS backend
 whenever something goes wrong. This will allow project developers to better
@@ -119,113 +265,63 @@ understand what's wrong with their project repository URL and fix it
 accordingly.
 
 
-Improved searching
-::::::::::::::::::
-
-
-Lock expiration
-:::::::::::::::
-
-
-Pre-submit checks
-:::::::::::::::::
-
-
-Tx-cron
-:::::::
-
-
-Various improvements and bugfixes
----------------------------------
-
-
 Under-the-hood Improvements
 :::::::::::::::::::::::::::
 
-- Allow local repos URIs on DEBUG mode
+- Local repo URIs are now allowed on DEBUG mode
 - Added ':pserver:' as a prefix for CVS repos
-- Do not delete POFiles when cleaning cache
-
-  - The problem was when cleaning and refreshing the component cache.
-    Due the fact that it deletes all the POFiles from the database
-    and creates them again, Tx was losing 'locks' and possibly 'watches'
-    of users, because of the db cascade mechanism.
-  - This patch allows TX to continue cleaning/refresh the component cache,
-    however without deleting the POFiles. It sets them as enabled=False
-    and hide them from the UI.
-  - Deleting a project or a component thought, still deletes the POFiles
-    that belong to it, as expected.
-
-Added Tx repository revision into the footer. Helpful to identify the exactly
-revision used to run a Tx instance using a devel branch.
+- Do not delete POFiles when cleaning cache. This fixes a problem when cleaning
+  and refreshing the component cache. This patch allows Tx to continue
+  cleaning/refresh the component cache but without deleting the POFiles. They are
+  set as enabled=False and hidden from the UI. A project or component deletion
+  still removes the POFiles that belong to it.
+- Added Tx repository revision into the footer. Helpful to identify the exactly
+  revision used to run a Tx instance using a devel branch.
 
 
 Improved Mercurial Backend
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Mercurial backend needs to 'update' whenever a pull is done
-- Setting default mercurial branches as 'tip' instead of 'default'
-- Mercurial dual head saga
-
-Setting default mercurial branches as 'tip' instead of 'default'
-
-- We need to update always to the latest changeset when closing or
-  pulling a repository. For doing it, nothing better that use 'tip',
-  apparently.
-
+- Mercurial backend now updates whenever a pull is done, avoiding the creation
+  of local new heads in the repo history
 - After some scrutiny tests we realized that using 'tip'
-  as the default branch might be trouble for repos that have
-  branches (inside). The 'tip' might alternate among the branches,
-  as it's always the last changeset committed in the repo. This way,
-  we could have commits from Tx on different branches for the same
-  component, which is NOT expected. Reverted it back to 'default'.
+  as the default branch might be troublesome for repos that have
+  named branches, so it was reverted back to 'default'.
 - The 'commands.push' command doesn't use a 'revs' argument, so
   we turned it into 'branch' argument.
-- Somehow (don't ask me why) the _clean_dir() method was causing
-  troubles, whenever trying to get a repo updated. As we already use
-  'update=True' in the 'pull', excluding it seems to fix the problem. The
-  other way around didn't work.
 
 
 Bugfixes
 ::::::::
 
 - Fixed issues with Dutch language (#537)
-
-- Delete file watches whenever a component has its cache cleaned
-
-  - Whenever a component has its cache cleaned, all the related POFile objects
-    are deleted. This way other objects that use those POfiles are also deleted
-    in cascade. The repowatch app does not use the POFile object. Instead it uses
-    the 'component' and the 'file_path' to identify the POFiles that the users are
-    watching/following. It means that the 'cascade' is not applied here and it
-    needs to be done manually.
-  - It fixes the "DoesNotExist: ObservedItem matching query does not exist."
-    exception.
-
-- Fixed permission check for components with multiple po files
+- Fix for the "DoesNotExist: ObservedItem matching query does not exist."
+  exception. Whenever a component has its cache cleaned, all the related POFile
+  objects are now deleted. This way, other objects that use those POfiles are
+  also deleted in cascade. The repowatch app does not use the POFile object and
+  'cascade' is not applied.
+- Fixed permission check for components with multiple PO files
 - Calling correct method on the component get_stats method
 - Fixed Lotte data session wizard craziness when changing pages (#552)
-- Fixed url for components with multiple po files per language
-- Handling user object on the svn lib with more property (#565)
-- Fixed registration problem, occured after merging.
+- Fixed URL for components with multiple po files per language
+- Handling user object on the svn lib with more properties (#565)
+- Fixed registration problem, occurring after merging.
 - Added a dependency into a projects app migration script
 - Fixed permission check for team coordinators
 - Converted exception output into a string before using it
 - Missing JS lib for the component multiple POFiles page
-- Missing 'Send for Review' button after locks addonization
 - Fix wrapping of multi-line messages on top of page.
 - Made form errors more visible
 - Fixed get_or_none method for the Team class (#531)
 - Fixed some permission checks on the component_submit_file view
-- Dropped adding permissions from fixtures
 - Fixed multiple copies of same event on timeline lists (#528)
 - Fix an issue in run commands where no env was passed via kwargs.
-- Bugfix: the rev kwarg should not be passed to hg pull cause we donot pull specific revision numbers!
+- Bugfix: the rev kwarg should not be passed to hg pull cause we do not pull
+  specific revision numbers!
 - Improved get_log templatetag for the actionlog app
 - Fix SITE_URL_PREIFX generation with request.build_absolute_uri("") call
-- Added option for enabling/disabling django-contact app URL
-- Added option for setting up the Django admin panel URL
+- Added option to enable django-contact app URL
+- Added option to setup up the Django admin panel URL
 - BUGFix: Variable intialization was missing in settings file.
 - Fix initializers of test_svn.
 - Minor cleanup on the bzr repositories.
@@ -261,7 +357,7 @@ from the following locations:
 * The Transifex.org Download section: http://transifex.org/files/
 * The Python Packaging Index (Cheeseshop): http://pypi.python.org/pypi/transifex/
 
-RPM packages for the latest versions of Fedora are or will soon be available
+RPM packages for the latest versions of Fedora may soon be available
 via yum. The same applies for RHEL 5, CentOS 5, and Scientific Linux 5, from
 the `Fedora EPEL`_ yum repository::
 
@@ -322,9 +418,10 @@ Dependencies
 
 The following dependencies were *added* in this version:
 
-- django-addons
+- Django = 1.1.2
 - South >= 0.7
 - django-threadedcomments >= 0.9
+- django-addons
 - django-staticfiles
 - pygooglechart
 
@@ -363,18 +460,20 @@ Transifex 0.9 Development Releases
 ==================================
 
 - Alpha: 21 May 2010
-- Beta: n/a
+- Beta: 4 June 2010
 - Release Candidate: n/a
 
 Please refer to the full `Transifex 0.9 changelog`_ for more information on
 what has changed between the development releases and final one.
 
+
 .. _Transifex.net: http://www.transifex.net/
 .. _www.transifex.net: http://www.transifex.net/
 .. _Indifex: http://www.indifex.com/
-.. _Transifex 0.9 changelog: http://code.transifex.org/0.9.x/shortlog
 .. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
-.. _Moblin Project: http://translate.moblin.org/
-.. _XFCE Project: http://wiki.xfce.org/translations 
+
 .. _Mojo: http://en.wikipedia.org/wiki/Mojo_(comics)
+.. _Transifex 0.9 changelog: http://code.transifex.org/0.9.x/shortlog
+.. _`django-notification`: http://github.com/jtauber/django-notification/
+.. _`django-addons documentation`: http://bitbucket.org/indifex/django-addons/src/tip/docs/index.rst
 
