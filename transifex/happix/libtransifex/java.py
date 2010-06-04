@@ -4,7 +4,7 @@ Java .properties file parser
 """
 import re
 import os
-from core import StringSet, Parser, TranslationString, CompileError, ParseError
+from core import StringSet, Parser, Translation, CompileError, ParseError
 
 class PropsParseError(ParseError):
     pass
@@ -39,7 +39,7 @@ class JavaPropertiesParser(Parser):
 
         buf = u""
         for i in stringset.strings:
-            buf += u"%s=%s\n" % (i.source_string, prop_escape(i.translation_string))
+            buf += u"%s=%s\n" % (i.source_entity, prop_escape(i.translation_string))
         return buf
         
     @classmethod
@@ -124,5 +124,5 @@ class JavaPropertiesParser(Parser):
                 key, value = line, ''
             if "\\u" in value:
                 value = value.decode('unicode_escape')
-            stringset.strings.append(TranslationString(key, value))
+            stringset.strings.append(Translation(key, value))
         return stringset

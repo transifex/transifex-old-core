@@ -4,7 +4,7 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import TResource, SourceString, TranslationString, StorageFile
+from happix.models import TResource, SourceEntity, Translation, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger

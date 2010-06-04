@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from happix.models import SourceString, TResource, TranslationString, PluralTranslationString
+from happix.models import SourceEntity, TResource, TranslationString, PluralTranslationString
 from languages.models import Language
 from languages.management.commands import txcreatelanguages
 from projects.models import Project
@@ -72,7 +72,7 @@ class LoadingGettextTests(TestCase):
         """
         path_to_file = os.path.join(BASE_SAMPLE_FILE_PATH, SOURCE_PO)
 
-        source_strings = SourceString.objects.filter(tresource=self.tres)
+        source_strings = SourceEntity.objects.filter(tresource=self.tres)
         pofile = polib.pofile(path_to_file)
 
         # Check that source language strings in DB has the same len as the
@@ -86,7 +86,7 @@ class LoadingGettextTests(TestCase):
             # CAUTION! MSGCTXT None is converted to empty string u'' in DB.
             if msgctxt == None:
                 msgctxt = u''
-            self.assertEqual(si.description, msgctxt)
+            self.assertEqual(si.context, msgctxt)
 #            self.assertEqual(si.developer_comment, entry.comment)
 #            self.assertEqual(si.occurrences, entry.occurrences)
 #            self.assertEqual(si.flags, entry.flags)
@@ -105,7 +105,7 @@ class LoadingGettextTests(TestCase):
         # Now test the update of the same TResource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceString.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
                                                      position__isnull=False)
         pofile = polib.pofile(path_to_file)
 
@@ -120,14 +120,14 @@ class LoadingGettextTests(TestCase):
             # CAUTION! MSGCTXT None is converted to empty string u'' in DB.
             if msgctxt == None:
                 msgctxt = u''
-            self.assertEqual(si.description, msgctxt)
+            self.assertEqual(si.context, msgctxt)
 #            self.assertEqual(si.developer_comment, entry.comment)
 #            self.assertEqual(si.occurrences, entry.occurrences)
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there is one source string with position=None that belongs
         # to the same TResource (it is the historical one :))
-        self.assertEqual(len(SourceString.objects.filter(tresource=self.tres, 
+        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
                              position__isnull=True)), 1)
 
     def test_source_po_update_more(self):
@@ -139,7 +139,7 @@ class LoadingGettextTests(TestCase):
         # Now test the update of the same TResource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceString.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
                             position__isnull=False).order_by('position')
         pofile = polib.pofile(path_to_file)
 
@@ -154,14 +154,14 @@ class LoadingGettextTests(TestCase):
             # CAUTION! MSGCTXT None is converted to empty string u'' in DB.
             if msgctxt == None:
                 msgctxt = u''
-            self.assertEqual(si.description, msgctxt)
+            self.assertEqual(si.context, msgctxt)
 #            self.assertEqual(si.developer_comment, entry.comment)
 #            self.assertEqual(si.occurrences, entry.occurrences)
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there is one source string with position=None that belongs
         # to the same TResource (it is the historical one :))
-        self.assertEqual(len(SourceString.objects.filter(tresource=self.tres, 
+        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
                              position__isnull=True)), 0)
 
     def test_source_po_update_mix(self):
@@ -173,7 +173,7 @@ class LoadingGettextTests(TestCase):
         # Now test the update of the same TResource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceString.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
                             position__isnull=False).order_by('position')
         pofile = polib.pofile(path_to_file)
 
@@ -188,12 +188,12 @@ class LoadingGettextTests(TestCase):
             # CAUTION! MSGCTXT None is converted to empty string u'' in DB.
             if msgctxt == None:
                 msgctxt = u''
-            self.assertEqual(si.description, msgctxt)
+            self.assertEqual(si.context, msgctxt)
 #            self.assertEqual(si.developer_comment, entry.comment)
 #            self.assertEqual(si.occurrences, entry.occurrences)
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there are 3 source string with position=None that belongs
         # to the same TResource (it is the historical ones :))
-        self.assertEqual(len(SourceString.objects.filter(tresource=self.tres, 
+        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
                              position__isnull=True)), 3)

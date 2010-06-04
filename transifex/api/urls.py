@@ -12,12 +12,12 @@ from piston.authentication import HttpBasicAuthentication
 from languages.api import LanguageHandler
 from projects.api import ProjectHandler
 from storage.api import StorageHandler
-from happix.api import ( TResourceHandler, StringHandler)
+from happix.api import (TResourceHandler, StringHandler, SingleStringHandler)
 
 auth = HttpBasicAuthentication(realm='Happix API')
 
 tresource_handler = Resource(TResourceHandler)
-#strings_handler = Resource(StringHandler)
+singlestring_handler = Resource(SingleStringHandler)
 storage_handler = Resource(StorageHandler)
 project_handler = Resource(ProjectHandler)
 string_handler = Resource(StringHandler, authentication=auth)
@@ -32,15 +32,18 @@ urlpatterns = patterns('',
         Resource(LanguageHandler),
         name='api.languages',
     ), url(
-        r'^project/$',
+        r'^projects/$',
         project_handler,
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/$',
         project_handler,
         name='api_project',
     ), url(
+        r'^project/(?P<project_slug>[-\w]+)/string/$',
+        singlestring_handler
+    ), url(
         r'^project/(?P<project_slug>[-\w]+)/strings/$',
-	string_handler
+        string_handler
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
         tresource_handler
@@ -48,6 +51,9 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/$',
         tresource_handler,
         name='api_resource'
+    ), url(
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/string/$',
+        string_handler,
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<tresource_slug>[-\w]+)/strings/$',
         string_handler,

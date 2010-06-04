@@ -6,7 +6,7 @@ Microsoft .NET resources XML (.resx) parser/compiler
 
 import xml.dom.minidom
 from xml.dom.minidom import DOMImplementation
-from core import StringSet, ParseError, TranslationString, CompileError, Parser, STRICT
+from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
 
 class ResXmlParseError(ParseError):
     pass
@@ -78,6 +78,6 @@ class ResXmlParser(Parser):
         print meta
 
 #        for data in root.getElementsByTagName("data")
-#            source_string = get_attribute(data, "name")
+#            source_entity = get_attribute(data, "name")
 #            translation_string =
         exit(1)

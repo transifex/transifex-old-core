@@ -17,9 +17,9 @@ STRICT=False
 
 class CustomSerializer(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, TranslationString):
+        if isinstance(obj, Translation):
             d = {
-                'source_string' : obj.source_string,
+                'source_entity' : obj.source_entity,
                 'translation_string' : obj.translation_string,
             }
             if obj.occurrences:
@@ -43,10 +43,10 @@ class ParseError(StandardError):
 class CompileError(StandardError):
     pass
 
-class TranslationString:
-    def __init__(self, source_string, translation_string,
+class Translation:
+    def __init__(self, source_entity, translation_string,
         occurrences = None, comments = None, context = None):
-        self.source_string = source_string
+        self.source_entity = source_entity
         self.translation_string = translation_string
         self.occurrences = occurrences
         self.comments = comments
@@ -54,7 +54,7 @@ class TranslationString:
 
     #def serialize(self):
         #d = {
-            #'source_string' : self.source_string,
+            #'source_entity' : self.source_entity,
             #'translation_string' : self.translation_string,
         #}
         #if self.occurrences:
@@ -66,14 +66,14 @@ class TranslationString:
 
     def __hash__(self):
         if STRICT:
-            return hash((self.source_string, self.translation_string, 
+            return hash((self.source_entity, self.translation_string, 
                 self.occurrences))
         else:
-            return hash((self.source_string, self.translation_string))
+            return hash((self.source_entity, self.translation_string))
 
     def __eq__(self, other):
         if isinstance(other, self.__class__) and \
-            self.source_string == other.source_string and \
+            self.source_entity == other.source_entity and \
             self.translation_string == other.translation_string:
             return True
         return False

@@ -145,8 +145,8 @@ def load_gettext_source(path_to_file, tresource, source_language):
         content=entry.msgid
         if not entry.msgid:
             continue
-        # Get the description
-        description = entry.msgctxt or ''
+        # Get the context
+        context = entry.msgctxt or ''
 
         # occurrences (with text wrapping as xgettext does)
         ret = []
@@ -191,9 +191,9 @@ def load_gettext_source(path_to_file, tresource, source_language):
             ret.append('#, %s' % ', '.join(flags))
         flags = '\n'.join(ret)
 
-        # Get or create the SourceString.
-        st, st_created = SourceString.objects.get_or_create(string=content, 
-            description=description,
+        # Get or create the SourceEntity.
+        st, st_created = SourceEntity.objects.get_or_create(string=content, 
+            context=context,
             tresource=tresource, language=source_language,
             defaults={'position': position, 'occurrences': occurrences,
                       'flags': flags, 'developer_comment': entry.comment,
@@ -246,16 +246,16 @@ def load_gettext_po(path_to_file, tresource, target_language,
         content=entry.msgid
         if not entry.msgid:
             continue
-        # Get the description
-        description = entry.msgctxt or ''
+        # Get the context
+        context = entry.msgctxt or ''
 
         try:
             # For gettext there should only be one position per msgid,msgctxt
-            source_string = SourceString.objects.get(string=content, 
-                                                     description=description,
+            source_string = SourceEntity.objects.get(string=content, 
+                                                     context=context,
                                                      tresource=tresource,
                                                      position__isnull=False)
-        except SourceString.DoesNotExist:
+        except SourceEntity.DoesNotExist:
             continue
 
         # Plurals processing
@@ -269,7 +269,7 @@ def load_gettext_po(path_to_file, tresource, target_language,
                 msgstr = msgstrs[index]
                 # WARNING!!! If there already exists the relation, update only the string.
                 # This means that we override the OLD STRING and we DONT KEEP HISTORY
-                pts, created = PluralTranslationString.objects.get_or_create(
+                pts, created = PluralTranslation.objects.get_or_create(
                                 source_string=source_string, 
                                 language=target_language,
                                 index=index,
@@ -291,7 +291,7 @@ def load_gettext_po(path_to_file, tresource, target_language,
         else:
             # WARNING!!! If there is already the relation, then update only the string.
             # This means that we override the OLD STRING and we DONT KEEP HISTORY
-            ts, created = TranslationString.objects.get_or_create(
+            ts, created = Translation.objects.get_or_create(
                     source_string=source_string, language=target_language,
                     defaults={'string' : entry.msgstr},)
             if not created and ts.string != entry.msgstr:

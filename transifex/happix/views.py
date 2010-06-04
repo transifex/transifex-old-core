@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from happix.models import TranslationString, TResource, SourceString, PARSERS, StorageFile
+from happix.models import Translation, TResource, SourceEntity, PARSERS, StorageFile
 from languages.models import Language
 from projects.models import Project
 
@@ -24,7 +24,7 @@ def search_translation(request):
     if search_terms:
         #TODO: AND and OR query matching operations, icontains etc.
         # For the moment we support only exact matching queries only.
-        results = TranslationString.objects.by_source_string_and_language(
+        results = Translation.objects.by_source_string_and_language(
                     string=query_string,
                     source_code=source_lang,
                     target_code=target_lang)
@@ -41,10 +41,10 @@ def search_translation(request):
 def view_translation_resource(request, project_slug, tresource_slug, to_lang = 'ru'):
     _to_lang = Language.objects.by_code_or_alias(to_lang)
     tresource = TResource.objects.get(project__slug = project_slug, slug = tresource_slug)
-    source_strings = SourceString.objects.filter(tresource = tresource)[:100]
+    source_strings = SourceEntity.objects.filter(tresource = tresource)[:100]
 
     translated_languages = {}
-    lang_counts = TranslationString.objects.filter(tresource=tresource).order_by("language").values("language").annotate(Count("language"))
+    lang_counts = Translation.objects.filter(tresource=tresource).order_by("language").values("language").annotate(Count("language"))
     for lang_count in lang_counts:
         language = Language.objects.get(id = lang_count['language'])
         count = lang_count['language__count']
@@ -105,7 +105,7 @@ def clone_translation(request, project_slug=None, tresource_slug=None,
         project__slug = project_slug
     )
     # get original translation strings
-    strings = TranslationString.objects.filter(
+    strings = Translation.objects.filter(
                 tresource = tresource,
                 language__code = source_lang_code)
 
@@ -114,7 +114,7 @@ def clone_translation(request, project_slug=None, tresource_slug=None,
 
     # clone them in new translation
     for s in strings:
-        TranslationString.objects.get_or_create(
+        Translation.objects.get_or_create(
                     tresource = tresource,
                     language = target_lang,
                     string = s.string,
@@ -133,12 +133,12 @@ def start_new_translation(request, project_slug=None, tresource_slug=None,
         project__slug = project_slug
     )
 
-    strings = SourceString.objects.filter(tresource=tresource)
+    strings = SourceEntity.objects.filter(tresource=tresource)
 
     target_lang = Language.objects.get(code=target_lang_code)
 
     for s in strings:
-        TranslationString.objects.get_or_create(
+        Translation.objects.get_or_create(
                     tresource = tresource,
                     language = target_lang,
                     source_string = s.source_string)

@@ -4,7 +4,7 @@
 GNU Gettext .PO/.POT file parser/compiler
 """
 import polib
-from core import StringSet, ParseError, TranslationString, CompileError, Parser, STRICT
+from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
 
 #class ResXmlParseError(ParseError):
     #pass
@@ -35,7 +35,7 @@ class PofileParser(Parser):
     def parse_file(cls, filename):
         stringset = StringSet()
         for entry in polib.pofile(filename):
-            stringset.strings.append(TranslationString(entry.msgid,
+            stringset.strings.append(Translation(entry.msgid,
                 entry.msgstr, context = entry.msgctxt,
                 occurrences = entry.occurrences ))
         return stringset

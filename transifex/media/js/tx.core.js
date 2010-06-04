@@ -56,7 +56,7 @@ function StorageFile(storage, storage_file) {
 
     this.extract = function(complete) {
         json_request(
-            'PUT',
+            'POST',
             sprintf(url_api_project, this_storage_file.storage.project.slug),
             {'uuid':this_storage_file.uuid},
             complete);

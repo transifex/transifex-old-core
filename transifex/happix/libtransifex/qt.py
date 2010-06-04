@@ -6,7 +6,7 @@ Qt4 TS file parser for Python
 
 import xml.dom.minidom
 from xml.dom.minidom import DOMImplementation
-from core import StringSet, ParseError, TranslationString, CompileError, Parser, STRICT
+from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
 
 class LinguistParseError(ParseError):
     pass
@@ -45,7 +45,7 @@ class LinguistParser(Parser):
                 source = doc.createElement("source")
                 translation = doc.createElement("translation")
 
-                source.appendChild(doc.createTextNode(_message.source_string))
+                source.appendChild(doc.createTextNode(_message.source_entity))
                 translation.appendChild(doc.createTextNode(_message.translation_string))
                 
                 message.appendChild(source)
@@ -145,7 +145,7 @@ class LinguistParser(Parser):
                     translationString = None # WTF?
 
                 if sourceString and translationString:
-                    stringset.strings.append(TranslationString(sourceString, 
+                    stringset.strings.append(Translation(sourceString, 
                         translationString, context = context_name,
                         occurrences = ";".join(occurrences) ))
                 i += 1

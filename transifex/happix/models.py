@@ -13,9 +13,9 @@ from projects.models import Project
 from txcommon.log import logger
 
 def reset():
-    TranslationString.objects.all().delete()
+    Translation.objects.all().delete()
     StringSet.objects.all().delete()
-    SourceString.objects.all().delete()
+    SourceEntity.objects.all().delete()
 
 # State Codes for translations
 TRANSLATION_STATE_CHOICES = (
@@ -48,6 +48,15 @@ PARSER_MAPPING = {}
 for parser in PARSERS:
     PARSER_MAPPING[parser.mime_type] = parser
 
+
+class TResourceGroup(models.Model):
+    """
+    Model for grouping TResources.
+    """
+    # FIXME: add necessary fields
+    pass
+
+
 class TResourceManager(models.Manager):
     pass
 
@@ -78,10 +87,18 @@ class TResource(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
+    source_language = models.ForeignKey(Language,
+        verbose_name=_('Source Language'),blank=False, null=False,
+        help_text=_("The source language of this TResource."))
+
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False,
         null=True,
         help_text=_("The project which owns the translation resource."))
+
+    tresource_group = models.ForeignKey(TResourceGroup, verbose_name=_("TResource Group"),
+        blank=False, null=True,
+        help_text=_("A group under which TResources are organized."))
 
     # Managers
     objects = TResourceManager()
@@ -109,7 +126,7 @@ class TResource(models.Model):
         Return the QuerySet of source strings, translated in this language.
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceString.objects.filter(
+        return SourceEntity.objects.filter(
                     tresource=self, 
                     position__isnull=False,
                     translationstring__language=target_language)
@@ -120,7 +137,7 @@ class TResource(models.Model):
         the specific language.
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceString.objects.filter(
+        return SourceEntity.objects.filter(
                     tresource=self, 
                     position__isnull=False,).exclude(
                             translationstring__language=target_language)
@@ -132,16 +149,16 @@ class TResource(models.Model):
             strings_updated = 0
             for j in stringset.strings:
                 # If is primary language update source strings!
-                ss, created = SourceString.objects.get_or_create(
-                    string= j.source_string,
-                    description=j.context or "None",
+                ss, created = SourceEntity.objects.get_or_create(
+                    string= j.source_entity,
+                    context=j.context or "None",
                     tresource=self,
                     defaults = {
                         'position' : 1,
                     }
                 )
-                ts, created = TranslationString.objects.get_or_create(
-                    source_string=ss,
+                ts, created = Translation.objects.get_or_create(
+                    source_entity=ss,
                     language = target_language,
                     tresource = self,
                     defaults={
@@ -166,22 +183,21 @@ class TResource(models.Model):
             return strings_added, strings_updated
 
     def merge_translation_file(self, translation_file):
-        
         stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(filename = translation_file.get_storage_path())
         return self.merge_stringset(stringset, translation_file.language)
 
-class SourceString(models.Model):
+class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
     
-    The SourceString is pointing to a specific TResource and it is uniquely 
-    defined by the string, description and tresource fields (so they are unique
+    The SourceEntity is pointing to a specific TResource and it is uniquely 
+    defined by the string, context and tresource fields (so they are unique
     together).
     """
     string = models.CharField(_('String'), max_length=255,
         blank=False, null=False,
         help_text=_("The actual string content of source string."))
-    description = models.CharField(_('Description'), max_length=255,
+    context = models.CharField(_('Context'), max_length=255,
         blank=False, null=False,
         help_text=_("A description of the source string. This field specifies"
                     "the context of the source string inside the tresource."))
@@ -221,36 +237,36 @@ class SourceString(models.Model):
         return self.string
 
     class Meta:
-#        unique_together = (('string', 'description', 'tresource'),)
+#        unique_together = (('string', 'context', 'tresource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
-        ordering = ['string', 'description']
+        ordering = ['string', 'context']
         order_with_respect_to = 'tresource'
         get_latest_by = 'created'
 
 
 class SearchStringManager(models.Manager):
-    def by_source_string_and_language(self, string,
+    def by_source_entity_and_language(self, string,
             source_code='en', target_code=None):
         """
         Return the results of searching, based on a specific source string and
         maybe on specific source and/or target language.
         """
-        source_strings = []
+        source_entitys = []
 
-        source_strings = SourceString.objects.filter(string=string,)
+        source_entitys = SourceEntity.objects.filter(string=string,)
 
         # If no target language given search on any target language.
         if target_code:
             language = Language.objects.by_code_or_alias(target_code)
             results = self.filter(
-                        source_string__in=source_strings, language=language)
+                        source_entity__in=source_entitys, language=language)
         else:
-            results = self.filter(source_string__in=source_strings)
+            results = self.filter(source_entity__in=source_entitys)
         return results
 
 
-class TranslationString(models.Model):
+class Translation(models.Model):
     """
     The representation of a live translation for a given source string.
     
@@ -263,13 +279,18 @@ class TranslationString(models.Model):
         blank=False, null=False,
         help_text=_("The actual string content of translation."))
 
+    number = models.IntegerField(_('Number'), blank=False,
+         null=False, default=0,
+        help_text=_("The number of the string. 0 for singular and 1,2,3,etc"
+                    " for plural forms."))
+
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
     # A source string must always belong to a tresource
-    source_string = models.ForeignKey(SourceString,
+    source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
@@ -296,17 +317,17 @@ class TranslationString(models.Model):
         return self.string
 
     class Meta:
-#        unique_together = (('source_string', 'string', 'language', 'tresource'),)
+#        unique_together = (('source_entity', 'string', 'language', 'tresource'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
-        order_with_respect_to = 'source_string'
+        order_with_respect_to = 'source_entity'
         get_latest_by = 'created'
 
 
-#TODO: Consider and decide if we should merge it with TranslationString 
+#TODO: Consider and decide if we should merge it with Translation 
 # (index field is the only one needed)
-class PluralTranslationString(models.Model):
+class PluralTranslation(models.Model):
     """
     This table holds the plural statements of every translation string 
     on specific source strings.
@@ -330,7 +351,7 @@ class PluralTranslationString(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
-    source_string = models.ForeignKey(SourceString,
+    source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
@@ -343,10 +364,10 @@ class PluralTranslationString(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_string', 'string', 'language', 'index'),)
+        unique_together = (('source_entity', 'string', 'language', 'index'),)
         verbose_name = _('plural translation string')
         verbose_name_plural = _('plural translation strings')
-        ordering  = ['source_string', 'index']
+        ordering  = ['source_entity', 'index']
         get_latest_by = 'created'
 
 
@@ -362,7 +383,7 @@ class TranslationSuggestion(models.Model):
     Suggestions have a score which can be increased or decreased by users,
     indicating how good is the translation of the source string.
     The best translation could be automatically chosen as a live 
-    TranslationString by using a heuristic.
+    Translation by using a heuristic.
     """
 
     string = models.CharField(_('String'), max_length=255,
@@ -378,7 +399,7 @@ class TranslationSuggestion(models.Model):
 
     # Foreign Keys
     # A source string must always belong to a tresource
-    source_string = models.ForeignKey(SourceString,
+    source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
@@ -396,13 +417,13 @@ class TranslationSuggestion(models.Model):
         return self.string
 
     class Meta:
-        # Only one suggestion can be committed by each user for a source_string 
+        # Only one suggestion can be committed by each user for a source_entity 
         # in a specific language!
-        unique_together = (('source_string', 'string', 'language'),)
+        unique_together = (('source_entity', 'string', 'language'),)
         verbose_name = _('translation suggestion')
         verbose_name_plural = _('translation suggestions')
         ordering  = ['string',]
-        order_with_respect_to = 'source_string'
+        order_with_respect_to = 'source_entity'
         get_latest_by = 'created'
 
 class StorageFile(models.Model):

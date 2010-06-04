@@ -3,7 +3,7 @@
 """
 Apple Localizable.strings file parser class for Python
 """
-from core import Parser, ParseError, TranslationString, CompileError, StringSet
+from core import Parser, ParseError, Translation, CompileError, StringSet
 
 class AppleParseError(ParseError):
     pass
@@ -29,7 +29,7 @@ class AppleStringsParser(Parser):
         buf = u""
         for i in stringset.strings:
             # TODO: Escape chars: \n \\ \" etc
-            buf += u"\"%s\" = \"%s\" ;\n" % (i.source_string, i.translation_string)
+            buf += u"\"%s\" = \"%s\" ;\n" % (i.source_entity, i.translation_string)
         return buf
 
     @classmethod
@@ -38,10 +38,10 @@ class AppleStringsParser(Parser):
         An Apple .strings file looks like this:
         /* Some comments
          * May span multiple lines */
-        "source_string_identifier" = "Translated string" ; # Prepended comments
-        "source_string_identifier" = "More translated string" ;
+        "source_entity_identifier" = "Translated string" ; # Prepended comments
+        "source_entity_identifier" = "More translated string" ;
         # One line comments
-        "source_string_identifier" = "Even more translated String" ;
+        "source_entity_identifier" = "Even more translated String" ;
 
         """
         stringset = StringSet()
@@ -105,7 +105,7 @@ class AppleStringsParser(Parser):
                 continue
             if len(stack) == 2 and a == ';':
                 key, value = stack
-                stringset.strings.append(TranslationString(key, value))
+                stringset.strings.append(Translation(key, value))
                 stack = []
                 continue
 

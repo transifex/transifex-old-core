@@ -4,7 +4,7 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import TResource, SourceString, TranslationString, StorageFile
+from happix.models import TResource, SourceEntity, Translation, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
@@ -15,12 +15,28 @@ class ProjectHandler(BaseHandler):
     """
     API handler for model Project.
     """
-    allowed_methods = ('GET','PUT')
+    allowed_methods = ('GET','POST')
     model = Project
     #TODO: Choose the fields we want to return
+    fields = ('slug', 'name', 'description', 'long_description', 'created',
+              'anyone_submit', 'bugtracker', ('owner', ('username', 'email')),
+              ('tresource_set', ('slug', 'name',)))
     exclude = ()
 
-    def update(self, request, project_slug):
+    def read(self, request, project_slug=None):
+        """
+        Get project details in json format
+        """
+        if project_slug:
+            try:
+                project = Project.objects.get(slug=project_slug)
+            except Project.DoesNotExist:
+                return rc.NOT_FOUND
+            return project
+        else:
+            return Project.objects.all()
+
+    def create(self, request, project_slug):
         """
         Creates subelement for project, currently supports creating translation resource by UUID of StorageFile
         """
@@ -33,6 +49,7 @@ class ProjectHandler(BaseHandler):
                 translation_resource, created = TResource.objects.get_or_create(
                         slug = "resource-%s" % (slugify(storage_file.name)),
                         name = "Translations of '%s'" % storage_file.name,
+                        source_language = storage_file.language,
                         project = project,
                 )
 

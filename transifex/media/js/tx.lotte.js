@@ -91,7 +91,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
         } else {
             $.ajax({
 				url: push_url,
-				type: 'POST',
+				type: 'PUT',
 				contentType: "application/json",
 				dataType: 'text',
 				data: JSON.stringify({language:this_stringset.to_lang, strings:to_update}),
