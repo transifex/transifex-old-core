@@ -123,24 +123,26 @@ class TResource(models.Model):
 
     def translated_strings(self, language):
         """
-        Return the QuerySet of source strings, translated in this language.
+        Return the QuerySet of source entities, translated in this language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(
-                    tresource=self, 
-                    position__isnull=False,
-                    translationstring__language=target_language)
+        return SourceEntity.objects.filter(tresource=self,
+            id__in=Translation.objects.filter(language=target_language,
+                tresource=self).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
         """
-        Return the QuerySet of source strings which are not yet translated in
+        Return the QuerySet of source entities which are not yet translated in
         the specific language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(
-                    tresource=self, 
-                    position__isnull=False,).exclude(
-                            translationstring__language=target_language)
+        return SourceEntity.objects.filter(tresource=self).exclude(
+            id__in=Translation.objects.filter(language=target_language,
+                tresource=self).values_list('source_entity', flat=True))
 
     @transaction.commit_manually
     def merge_stringset(self, stringset, target_language, user=None, overwrite_translations=True):
