@@ -19,7 +19,7 @@
     {% tooltip "po-lock-toggle" pofile_id %}
         {% blocktrans %}This file has been locked by user '{{ owner }}'.{% endblocktrans %}<br />
         {% if is_unlockable %}
-            <span class="bold">{% blocktrans %}Click on it to unlook the file.{% endblocktrans %}</span><br />
+            <span class="bold">{% blocktrans %}Click on it to unlock the file.{% endblocktrans %}</span><br />
         {% endif %}
         <span class="i16 actionlog">{% blocktrans %}Time left:{% endblocktrans %}</span> {{lock.expires|timeuntil}}.
     {% endtooltip %}
