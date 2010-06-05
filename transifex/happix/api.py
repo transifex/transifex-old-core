@@ -224,7 +224,7 @@ class StringHandler(BaseHandler):
                                 tresource=translation_resource,
                                 string=s.get('value'))
 
-            return rc.CREATED
+            return rc.ALL_OK
         else:
             return rc.BAD_REQUEST
 
