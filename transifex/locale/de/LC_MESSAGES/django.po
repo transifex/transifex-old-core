@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-02 17:17+0000\n"
-"PO-Revision-Date: 2010-05-30 14:32+0100\n"
+"PO-Revision-Date: 2010-06-04 11:42+0100\n"
 "Last-Translator: Tim Gerundt <tim@gerundt.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1017,7 +1017,7 @@ msgstr "Geben Sie eine Commit-Nachricht ein"
 #: projects/views/component.py:453
 #, python-format
 msgid "You need to be in the '%s' team of this project for being able to send translations to that file target."
-msgstr "Sie müssen dem Team '%s' dieses Projekts angehören, um hier Übersetzungen einsenden zu können."
+msgstr "Sie müssen dem Team '%s' dieses Projekts angehören, um hier Übersetzungen senden zu können."
 
 #: projects/views/component.py:513
 #, python-format
@@ -1031,7 +1031,7 @@ msgstr "Ihre Datei bestand den Test auf Korrektheit (msgfmt -c PO-DATEI) nicht. 
 
 #: projects/views/component.py:538
 msgid "Your file does not pass the correctness checks (msgfmt -c). Please run this command on your system to see the errors. We couldn't send you an email to preserve your work because you haven't registered an email address. Please do so now to avoid such issues in the future."
-msgstr "Ihre Datei bestand den Test auf Korrektheit (msgfmt -c PO-DATEI) nicht. Bitte führen Sie den Befehl auf Ihrem System aus, um die Fehler einzusehen. Wir konnten Ihnen leider keine Email, zum sichern ihrer Arbeit schicken, weil Sie keine Email Adresse registriert haben. Bitte registrieren Sie eine Email Adresse, um solche Probleme in Zukunft zu vermeiden."
+msgstr "Ihre Datei bestand den Test auf Korrektheit (msgfmt -c) nicht. Bitte führen Sie den Befehl auf Ihrem System aus, um die Fehler einzusehen. Wir konnten Ihnen leider keine E-Mail, zum Sichern Ihrer Arbeit senden, weil Sie keine E-Mail-Adresse registriert haben. Bitte registrieren Sie eine E-Mail-Adresse, um solche Probleme in Zukunft zu vermeiden."
 
 #: projects/views/component.py:549
 msgid "Sorry, your file could not be sent because of an error."
@@ -1191,11 +1191,11 @@ msgstr "Beobachtungen"
 
 #: reviews/forms.py:9
 msgid "Write a short blurb for your review request."
-msgstr "Schreiben Sie einen kurzen Satz zu ihre Review-Anfrage."
+msgstr "Schreiben Sie einen kurzen Satz zu Ihrer Überprüfungsanfrage."
 
 #: reviews/forms.py:11
 msgid "Select a translation file for review."
-msgstr "Wählen Sie eine Übersetzungsdatei für das Review."
+msgstr "Wählen Sie eine Übersetzungsdatei für die Überprüfung."
 
 #: reviews/models.py:44
 msgid "Open"
@@ -1219,11 +1219,11 @@ msgstr "Abgelehnt"
 
 #: reviews/models.py:54
 msgid "The review's status (open, closed, etc.)"
-msgstr "Der Review-Status (offen, geschlossen, etc.)"
+msgstr "Der Überprüfungsstatus (offen, geschlossen, etc.)"
 
 #: reviews/models.py:56
 msgid "The review's resolution/closing state."
-msgstr "Das abschließende Review-Ergebnis."
+msgstr "Das abschließende Überprüfungsergebnis."
 
 #: reviews/models.py:58
 msgid "Date and time of creation"
@@ -1235,7 +1235,7 @@ msgstr "Datum und Zeit der letzten Aktualisierung"
 
 #: reviews/models.py:63
 msgid "The review file name"
-msgstr "Der Review-Dateiname"
+msgstr "Der Überprüfungsdateiname"
 
 #: reviews/models.py:65
 msgid "The path of the target file which will be used on submission"
@@ -1247,11 +1247,11 @@ msgstr "Komponente"
 
 #: reviews/models.py:87
 msgid "Review Request"
-msgstr "Review-Anfrage"
+msgstr "Überprüfungsanfrage"
 
 #: reviews/models.py:88
 msgid "Review Requests"
-msgstr "Review-Anfragen"
+msgstr "Überprüfungsanfragen"
 
 #: reviews/models.py:89
 msgid "-created_on"
@@ -1263,11 +1263,11 @@ msgstr ""
 
 #: reviews/views.py:33
 msgid "You can upload a file for review only if it's related to an existing language."
-msgstr "Sie können eine Datei nur dann zur Review hochladen, wenn diese zu einer bereits existierenden Sprache gehört."
+msgstr "Sie können eine Datei nur dann zur Überprüfung hochladen, wenn diese zu einer bereits existierenden Sprache gehört."
 
 #: reviews/views.py:53
 msgid "Your file has been successfully placed for reviewing."
-msgstr "Ihre Datei wurde erfolgreich für das Review eingereicht."
+msgstr "Ihre Datei wurde erfolgreich für die Überprüfung eingereicht."
 
 #: simplelock/models.py:39
 msgid "Lock"
@@ -1741,7 +1741,7 @@ msgstr "Die folgenden Dateien aus der Komponente <a href=\"%(component_url)s\">%
 #: templates/notification/project_component_file_review_submitted/notice.html:2
 #, python-format
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> has been submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Eine Datei für <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> wurde zum Review an die Komponente <a href=\"%(component_url)s\">%(component_name)s</a> aus dem Projekt <a href=\"%(project_url)s\">%(project_name)s</a> gesendet."
+msgstr "Eine Datei für <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> wurde zum Überprüfen an die Komponente <a href=\"%(component_url)s\">%(component_name)s</a> aus dem Projekt <a href=\"%(project_url)s\">%(project_name)s</a> gesendet."
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
@@ -1851,7 +1851,7 @@ msgstr ""
 #: templates/projects/component_confirm_delete.html:10
 #, python-format
 msgid "Delete %(component_name)s"
-msgstr " %(component_name)s löschen"
+msgstr "%(component_name)s löschen"
 
 #: templates/projects/component_confirm_delete.html:14
 #, python-format
@@ -2009,12 +2009,12 @@ msgstr "Komponente löschen"
 #: templates/projects/component_form.html:6
 #: templates/projects/component_form.html:11
 msgid "Add a component"
-msgstr "Komponente hinzufügen"
+msgstr "Eine Komponente hinzufügen"
 
 #: templates/projects/component_form.html:7
 #, python-format
 msgid "Edit %(component_name)s"
-msgstr ""
+msgstr "%(component_name)s bearbeiten"
 
 #: templates/projects/component_form.html:12
 #: templates/projects/component_form.html:83
@@ -2025,7 +2025,7 @@ msgstr "Komponente '%(component_name)s' bearbeiten"
 #: templates/projects/component_form.html:81
 #, python-format
 msgid "New component for %(project_name)s"
-msgstr ""
+msgstr "Neue Komponente für %(project_name)s"
 
 #: templates/projects/component_form.html:102
 msgid "Checkout"
@@ -2052,8 +2052,8 @@ msgstr "Hinzufügen"
 #: templates/projects/component_list.html:15
 msgid "Project Component"
 msgid_plural "Project Components"
-msgstr[0] "Projekt Komponente"
-msgstr[1] "Projektwebseiten"
+msgstr[0] "Projekt-Komponente"
+msgstr[1] "Projekt-Komponenten"
 
 #: templates/projects/component_list.html:26
 msgid "edit"
@@ -2065,7 +2065,7 @@ msgstr "löschen"
 
 #: templates/projects/component_list.html:45
 msgid "No components are registered for this project yet."
-msgstr ""
+msgstr "Bisher wurden keine Komponenten für dieses Projekt registriert."
 
 #: templates/projects/component_list.html:47
 msgid "Add one!"
@@ -2079,7 +2079,7 @@ msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Send a new translation for this component."
-msgstr ""
+msgstr "Eine neue Übersetzung für diese Komponente senden."
 
 #: templates/projects/component_submit_new_file.html:6
 msgid "Add a new translation"
@@ -2124,13 +2124,13 @@ msgstr "Beispiel: Verbesserungen für die Portugiesische Übersetzung"
 #: templates/projects/component_submit_new_file.html:43
 #: translations/templates/component_submit.html:13
 msgid "Send"
-msgstr "Abschicken"
+msgstr "Senden"
 
 #: templates/projects/component_submit_new_file.html:45
 #: templates/webtrans/transfile_edit.html:137
 #: translations/templates/component_submit.html:15
 msgid "Send for Review"
-msgstr "Zur Überprüfung übermitteln"
+msgstr "Zur Überprüfung senden"
 
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
@@ -2407,24 +2407,23 @@ msgstr "Keine Übersetzungen für diese Version hinzugefügt. :-("
 
 #: templates/projects/release_detail.html:99
 msgid "Delete release"
-msgstr ""
+msgstr "Version löschen"
 
 #: templates/projects/release_form.html:14
 #: templates/projects/release_form.html:19
 #: templates/projects/release_form.html:25
-#, fuzzy
 msgid "Add a release"
-msgstr ""
+msgstr "Eine Version hinzufügen"
 
 #: templates/projects/release_form.html:15
 #, python-format
 msgid "Edit %(release_name)s"
-msgstr ""
+msgstr "%(release_name)s bearbeiten"
 
 #: templates/projects/release_form.html:20
 #, python-format
 msgid "Edit <em>%(release_name)s</em> release"
-msgstr ""
+msgstr "<em>%(release_name)s</em> Version bearbeiten"
 
 #: templates/projects/release_form.html:28
 #, python-format
@@ -2436,7 +2435,7 @@ msgstr ""
 
 #: templates/projects/release_form.html:46
 msgid "Save release"
-msgstr ""
+msgstr "Version speichern"
 
 #: templates/projects/release_language_detail.html:27
 #, python-format
@@ -2489,7 +2488,7 @@ msgstr "Offene Anfragen"
 #: templates/reviews/review_list.html:39
 #, python-format
 msgid "Review Request #%(review_id)s "
-msgstr ""
+msgstr "Überprüfunganfrage #%(review_id)s "
 
 #: templates/reviews/review_list.html:47
 msgid "Who and when"
@@ -2534,7 +2533,7 @@ msgstr "Status"
 
 #: templates/reviews/review_list.html:94
 msgid "Close Review"
-msgstr ""
+msgstr "Überprüfung schließen"
 
 #: templates/reviews/review_list.html:97
 msgid "Accept and submit translation"
@@ -2598,7 +2597,7 @@ msgstr "Aktionen"
 
 #: templates/reviews/review_list.html:182
 msgid "Reopen review request"
-msgstr ""
+msgstr "Überprüfungsanfrage erneut öffnen"
 
 #: templates/reviews/review_list.html:194
 msgid "No closed requests!"
@@ -2889,7 +2888,7 @@ msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:26
 msgid "Resend confirmation"
-msgstr ""
+msgstr "Bestätigung erneut senden"
 
 #: templates/userprofile/account/email_validation_reset_response.html:4
 msgid "Validation e-mail sent"
@@ -3296,7 +3295,7 @@ msgstr[1] ""
 
 #: templates/webtrans/comments.html:3
 msgid "Context"
-msgstr ""
+msgstr "Kontext"
 
 #: templates/webtrans/comments.html:4
 msgid "Developer comments"
@@ -3495,15 +3494,15 @@ msgstr "Datei einreichen"
 
 #: translations/templates/lang_stats_table.html:14
 msgid "Project/Component"
-msgstr ""
+msgstr "Projekt/Komponente"
 
 #: translations/templates/lang_stats_table.html:24
 msgid "Go to this project page"
-msgstr ""
+msgstr "Zur Projektseite"
 
 #: translations/templates/lang_stats_table.html:25
 msgid "Go to this component page"
-msgstr ""
+msgstr "Zur Komponentenseite"
 
 #: translations/templates/pofile_lock.html:15
 msgid "Unlock this file when you are finished working with it."
@@ -3537,7 +3536,7 @@ msgstr ""
 #: translations/templates/source_files.html:5
 #, python-format
 msgid "This component has %(sources_number)s source files"
-msgstr ""
+msgstr "Diese Komponente hat %(sources_number)s Quelldateien"
 
 #: translations/templates/source_files.html:13
 msgid "entries"
@@ -3672,7 +3671,7 @@ msgstr "Neue Komponente hinzugefügt"
 
 #: txcommon/notifications.py:74
 msgid "when a new component is added to a project"
-msgstr ""
+msgstr "wenn eine neue Komponente einem Projekt hinzugefügt wurde"
 
 #: txcommon/notifications.py:80
 msgid "Component Changed"
@@ -3696,15 +3695,15 @@ msgstr "Datei übertragen"
 
 #: txcommon/notifications.py:95
 msgid "when a component file of a project is submitted"
-msgstr ""
+msgstr "wenn eine Komponentendatei eines Projektes übertragen wurde"
 
 #: txcommon/notifications.py:105
 msgid "File Review Submitted"
-msgstr ""
+msgstr "Dateiüberprüfung übertragen"
 
 #: txcommon/notifications.py:106
 msgid "when a file of a component is submitted for review"
-msgstr ""
+msgstr "wenn eine Komponentendatei zur Überprüfung übertragen wurde"
 
 #: txcommon/notifications.py:113
 msgid "Translation File Changed"
@@ -3712,7 +3711,7 @@ msgstr "Übersetzungsdatei geändert"
 
 #: txcommon/notifications.py:114
 msgid "when a component translation file of a project is changed"
-msgstr ""
+msgstr "wenn eine Komponenten-Übersetzungsdatei eines Projektes geändert wurde"
 
 #: txcommon/notifications.py:121
 msgid "Translation Source File (POT) has a Problem"
@@ -3728,23 +3727,23 @@ msgstr ""
 
 #: txcommon/notifications.py:134
 msgid "when a new release is added to a project"
-msgstr ""
+msgstr "wenn eine neue Version einem Projekt hinzugefügt wurde"
 
 #: txcommon/notifications.py:140
 msgid "Release Changed"
-msgstr "Veröffentlichung geändert"
+msgstr "Version geändert"
 
 #: txcommon/notifications.py:141
 msgid "when a release of a project is changed"
-msgstr ""
+msgstr "wenn eine Version eines Projektes geändert wurde"
 
 #: txcommon/notifications.py:146
 msgid "Release Deleted"
-msgstr "Veröffentlichung gelöscht"
+msgstr "Version gelöscht"
 
 #: txcommon/notifications.py:147
 msgid "when a release of a project is deleted"
-msgstr ""
+msgstr "wenn eine Version eines Projektes gelöscht wurde"
 
 #: txcommon/notifications.py:152
 msgid "Release Added to a Project"
@@ -3752,7 +3751,7 @@ msgstr "Version zum Projekt hinzugefügt"
 
 #: txcommon/notifications.py:153
 msgid "when a release is added to a project"
-msgstr ""
+msgstr "wenn eine Version einem Projekt hinzugefügt wurde"
 
 #: txcommon/notifications.py:158
 msgid "Release Deleted from a Project"
@@ -3760,7 +3759,7 @@ msgstr "Version vom Projekt gelöscht"
 
 #: txcommon/notifications.py:159
 msgid "when a release is deleted from a project"
-msgstr ""
+msgstr "wenn eine Version vom Projekt gelöscht wurde"
 
 #: txcommon/notifications.py:168
 msgid "New Team Added"
@@ -3946,13 +3945,12 @@ msgid "A VCS branch this unit is associated with"
 msgstr ""
 
 #: vcs/models.py:50
-#, fuzzy
 msgid "Web frontend"
-msgstr "(web front-end)"
+msgstr "Web-Frontend"
 
 #: vcs/models.py:52
 msgid "A URL to the project's web front-end"
-msgstr ""
+msgstr "Eine URL zum Web-Frontend des Projektes"
 
 #: vcs/models.py:58
 #, python-format
@@ -4081,7 +4079,7 @@ msgstr "Nächste"
 #~ msgstr "Ein neues Konto"
 
 #~ msgid "Delete my account"
-#~ msgstr "Lösche meinen Konto"
+#~ msgstr "Mein Konto löschen"
 
 #~ msgid "Delete account"
 #~ msgstr "Konto löschen"
@@ -4129,7 +4127,7 @@ msgstr "Nächste"
 #~ msgstr "Entschuldigung, ein Fehler ist aufgetreten und somit kann Ihre Datei nicht gesendet werden."
 
 #~ msgid "Send confirmation"
-#~ msgstr "Modul-Informationen"
+#~ msgstr "Bestätigung senden"
 
 #~ msgid "Insert your e-mail address"
 #~ msgstr "E-Mail-Adresse"
@@ -4153,4 +4151,4 @@ msgstr "Nächste"
 #~ msgstr "Passwort"
 
 #~ msgid "Delete your personal information"
-#~ msgstr "Modul-Informationen"
+#~ msgstr ""
