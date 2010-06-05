@@ -95,6 +95,7 @@
         {# FIXME: tar too restrictive #}
         {% ifequal component.unit.type "tar" %}<sup>(<a title="{% trans "Link to a web front-end for the source code" %}" href="{{ component.unit.root }}" target="_blank" >{% trans "web" %}</a>)</sup>{% endifequal %}
         <img class="repotype" src="{{ STATIC_URL }}images/icons/vcs/{{ component.unit.type }}.png" alt="{{ component.unit.type }}" title="{{ component.unit.type }}" />
+      </td>
     </tr>
     {% if component.unit.branch %}
     <tr>
@@ -166,7 +167,7 @@
     <tr>
       <th class="i16 team">{% trans "Teams:" %}</th>
       <td>
-         <a href="{% url team_list component.project.slug %}">{% trans "See the translation teams." %}<a/>
+         <a href="{% url team_list component.project.slug %}">{% trans "See the translation teams." %}</a>
       </td>
     </tr>
 {% endif %}
@@ -209,6 +210,7 @@
 {% for entry in action_log %}
     <li class="i16 actionlog">
     {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+    </li>
 {% endfor %}
 </ul>
 {% endif %}
