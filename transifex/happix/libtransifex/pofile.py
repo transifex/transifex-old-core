@@ -34,7 +34,13 @@ class PofileParser(Parser):
     @classmethod
     def parse_file(cls, filename):
         stringset = StringSet()
+        if filename.endswith(".pot"):
+            use_msgid = True
+        else:
+            use_msgid = False
         for entry in polib.pofile(filename):
+            if use_msgid:
+                entry.msgstr = entry.msgid
             stringset.strings.append(Translation(entry.msgid,
                 entry.msgstr, context = entry.msgctxt,
                 occurrences = entry.occurrences ))
