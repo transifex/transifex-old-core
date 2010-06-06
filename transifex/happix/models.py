@@ -144,6 +144,43 @@ class TResource(models.Model):
             id__in=Translation.objects.filter(language=target_language,
                 tresource=self).values_list('source_entity', flat=True))
 
+    def num_translated(self, language):
+        """
+        Return the number of translated strings in this TResource for the language.
+        """
+        return self.translated_strings(language).count()
+
+    def num_untranslated(self, language):
+        """
+        Return the number of untranslated strings in this TResource for the language.
+        """
+        return self.untranslated_strings(language).count()
+
+    #TODO:We need this as a cached value in order to avoid hitting the db all the time
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        return SourceEntity.objects.filter(tresource=self).count()
+
+    def trans_percent(self, language):
+        """Return the percent of untranslated strings in this TResource."""
+        t = self.num_translated(language)
+        try:
+            return (t * 100 / self.total_entities)
+        except ZeroDivisionError:
+            return 100
+
+    def untrans_percent(self, language):
+        """Return the percent of untranslated strings in this TResource."""
+        translated_percent = self.trans_percent(language)
+        return (100 - translated_percent)
+        # With the next approach we lose some data because we cut floating points
+#        u = self.num_untranslated(language)
+#        try:
+#            return (u * 100 / self.total_entities)
+#        except ZeroDivisionError:
+#            return 0
+
     @transaction.commit_manually
     def merge_stringset(self, stringset, target_language, user=None, overwrite_translations=True):
         try:
