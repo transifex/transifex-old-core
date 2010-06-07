@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from happix.models import SourceEntity, TResource, TranslationString, PluralTranslationString
+from happix.models import SourceEntity, TResource, TranslationString
 from languages.models import Language
 from languages.management.commands import txcreatelanguages
 from projects.models import Project

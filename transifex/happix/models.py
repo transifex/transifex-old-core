@@ -364,52 +364,6 @@ class Translation(models.Model):
         get_latest_by = 'created'
 
 
-#TODO: Consider and decide if we should merge it with Translation 
-# (index field is the only one needed)
-class PluralTranslation(models.Model):
-    """
-    This table holds the plural statements of every translation string 
-    on specific source strings.
-    
-    The plural translation is pointing to the source string because there may be
-    cases where a singular form translation string may not exist, but a plural
-    string exists. Both of them should point to the correct source string which
-    is being translated.
-    In order to permit lookups based on number of plurals for each language, we
-    provide an index similar to the one Gettext is using.
-    """
-
-    string = models.CharField(_('String'), max_length=255,
-        blank=False, null=False,
-        help_text=_("The actual string content of plural translation."))
-    index = models.IntegerField(_('Index'), blank=False, null=False,
-        help_text=_("The position of the plural string in the list of plurals."))
-
-    # Timestamps
-    created = models.DateTimeField(auto_now_add=True, editable=False)
-    last_update = models.DateTimeField(auto_now=True, editable=False)
-
-    # Foreign Keys
-    source_entity = models.ForeignKey(SourceEntity,
-        verbose_name=_('Source String'),
-        blank=False, null=False,
-        help_text=_("The source string which is being translated by this"
-                    "plural translation string instance."))
-    language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True,
-        help_text=_("The language in which this translation string belongs to."))
-
-    def __unicode__(self):
-        return self.string
-
-    class Meta:
-        unique_together = (('source_entity', 'string', 'language', 'index'),)
-        verbose_name = _('plural translation string')
-        verbose_name_plural = _('plural translation strings')
-        ordering  = ['source_entity', 'index']
-        get_latest_by = 'created'
-
-
 class TranslationSuggestion(models.Model):
     """
     A suggestion for the translation of a specific source string in a language.
