@@ -53,7 +53,7 @@ Projects |
 Available translations:
 <ul style="width:500px">
 {% for language,count in translated_languages.items %}
-    <li>
+    <li style="list-style:none">
 		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
         {% with 200 as barwidth %}
             <div class="stats" style='float:right;width:{{ barwidth|add:"2" }}px;'>

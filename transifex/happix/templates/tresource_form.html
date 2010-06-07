@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+
+{% block breadcrumb %}
+
+{{block.super}} »
+<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
+<a href="{% url project_detail tresource.project.slug %}">{{project}}</a> »
+Edit {{tresource}}
+{% endblock %}
+
+{% block title %}
+    {{ block.super }} | Edit {{ tresource}}
+{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+  {% if not tresource %}
+    {% blocktrans with tresource.name as tresource_name %}Edit {{ tresource_name }}{% endblocktrans %}
+  {% endif %}
+  </h2>
+{% endblock %}
+
+{% block content_main %}
+<h3>
+    {% trans "Edit the details of the translation resource" %}
+</h3>
+
+<div class="project_create generic_form">
+  <form action='' method='post'>
+    <table>
+        <tbody>
+        {% form_as_table_rows tresource_form %}
+        </tbody>
+    </table>
+    <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save translation resource" %}" /></p>
+  </form>
+</div>
+{% endblock %}
+

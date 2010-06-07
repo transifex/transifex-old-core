@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+from actionlog.models import action_logging
 from happix.models import Translation, TResource, SourceEntity, PARSERS, StorageFile
+from happix.forms import TResourceForm
 from languages.models import Language
 from projects.models import Project
 
@@ -56,6 +60,73 @@ def view_translation_resource(request, project_slug, tresource_slug, to_lang = '
           'languages' : Language.objects.order_by('name'),
           'translated_languages' : translated_languages },
         context_instance = RequestContext(request))
+
+
+@login_required
+def delete_translation_resource(request, project_slug, tresource_slug):
+    """
+    Delete a Translation Resource in a specific project.
+    """
+    tresource = get_object_or_404(TResource, project__slug = project_slug,
+                                  slug = tresource_slug)
+    if request.method == 'POST':
+        import copy
+        tresource_ = copy.copy(tresource)
+        tresource.delete()
+
+        request.user.message_set.create(
+            message=_("The %s translation resource was deleted.") % tresource_.name)
+
+        #TODO: Create the specific notice type and update all the other actions.
+        # ActionLog & Notification
+#        nt = 'tresource_deleted'
+#        context={'tresource': tresource_}
+#        action_logging(request.user, [tresource_], nt, context=context)
+
+        return HttpResponseRedirect(reverse('project_detail', 
+                                    args=[tresource.project.slug]),)
+    else:
+        return render_to_response(
+            'tresource_confirm_delete.html', {'tresource': tresource,},
+            context_instance=RequestContext(request))
+
+
+@login_required
+def edit_translation_resource(request, project_slug, tresource_slug):
+    """
+    Edit the metadata of  a Translation Resource in a specific project.
+    """
+    tresource = get_object_or_404(TResource, project__slug = project_slug,
+                                  slug = tresource_slug)
+
+    if request.method == 'POST':
+        tresource_form = TResourceForm(request.POST, instance=tresource,) 
+        if tresource_form.is_valid(): 
+            tresource_new = tresource_form.save()
+
+            # TODO: (Optional) Put some signal here to denote the udpate.
+
+            # FIXME: enable the following actionlog
+            # ActionLog & Notification
+#            context = {'tresource': tresource}
+#            nt = 'tresource_changed'
+#            action_logging(request.user, [tresource], nt, context=context)
+#            if settings.ENABLE_NOTICES:
+#                txnotification.send_observation_notices_for(tresource, 
+#                                    signal=nt, extra_context=context)
+
+            return HttpResponseRedirect(reverse('project_detail',
+                                        args=[tresource.project.slug]),)
+    else:
+        if tresource:
+            initial_data = {}
+
+        tresource_form = TResourceForm(instance=tresource)
+
+    return render_to_response('tresource_form.html', {
+        'tresource_form': tresource_form,
+        'tresource': tresource,
+    }, context_instance=RequestContext(request))
 
 
 #from libtransifex.qt import LinguistParser

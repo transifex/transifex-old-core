@@ -2,14 +2,13 @@
 {% load txcommontags %}
 {% load permissions %}
 
-{% if request.user.is_authenticated %}
-{% load upload_manager_tags %}
-{% upload_manager project %}
-{% endif %}
 
-<div id="resources" class="resources">
+<div id="resources" class="resources separate">
 
-
+  {% if request.user.is_authenticated %}
+    {% load upload_manager_tags %}
+    {% upload_manager project %}
+  {% endif %}
 
 <!--  <div class="editlinks">
   <p>
@@ -30,7 +29,17 @@
   {% if resources %}
   <ul> 
   {% for res in resources %}
-    <li><a href="{{ res.get_absolute_url }}">{{ res.name }}</a></li>
+    <li style="list-style:none;list-style-image:url({{ STATIC_URL }}images/icons/page_white_stack.png)">
+        <a href="{{ res.get_absolute_url }}" style="font-weight:bold">{{ res.name }}</a>
+        <sup class="entry_metalink">
+           {% if is_maintainer %}
+             <a href="{% url tresource_edit project_slug=project.slug tresource_slug=res.slug %}">{% trans "edit" %}</a>
+           {% endif %}
+           {% if is_maintainer %}
+             , <a href="{% url tresource_delete project_slug=project.slug tresource_slug=res.slug %}">{% trans "del" %}</a>
+           {% endif %}
+        </sup>
+    </li>
   {% endfor %}
   </ul>
   {% else %}

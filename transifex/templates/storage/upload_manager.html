@@ -61,19 +61,19 @@ $(document).ready(function(){
 });
 </script>
 
-<div id="uploads" style="border: 1px dashed #ddd; padding-left: 1em; display:none;">
-  <span id="button_upload" class="i16 send_file buttonized" style="float:right;margin:2em;">Upload another</span>
+<div id="uploads" style="margin: 10px 0 5px 0;border: 1px dashed #ddd; padding:0 0 10px 1em; display:none;">
+  <span id="button_upload" class="i16 send_file buttonized" style="float:right;margin:2em;">Upload file</span>
 
   <h2>Upload files</h2>
-  Your files:
-  <table id="storage_files">
+  <p>You have uploaded the following files:</p>
+  <table id="storage_files" style="padding:7px">
     <thead>
       <tr>
         <th>File name</th>
         <th>Size</th>
         <th>Strings</th>
         <th>Language</th>
-        <th width="50px">&nbsp;</th>
+        <th colspan="2" width="40px">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -81,5 +81,5 @@ $(document).ready(function(){
   </table>
 </div>
 
-<span id="button_uploads" class="i16 send_file buttonized" style="float:right;">Uploads</span>
+<p id="button_uploads" class="i16 send_file buttonized" style="float:right;">Uploads</span>
 

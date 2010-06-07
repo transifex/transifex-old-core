@@ -1,0 +1,26 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} | {% blocktrans with tresource.name as tresource_name %}Delete {{ tresource_name }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; {% blocktrans with tresource.name as tresource_name %}Delete <em>{{ tresource_name}}</em>{% endblocktrans %}{% endblock %}
+
+{% block content_title %}
+    <h2 class="pagetitle">{% blocktrans with tresource.name as tresource_name %}Say goodbye to <em>{{ tresource_name }}</em>?{% endblocktrans %}</h2>
+{% endblock %}
+
+{% block content %}
+
+<p>{% blocktrans with tresource.name as tresource_name %}
+  Are you sure you want to permanently delete the translation resource '{{ tresource_name }}'?
+{% endblocktrans %}</p>
+
+  <form action="{% url tresource_delete project_slug=tresource.project.slug tresource_slug=tresource.slug %}" method="post">
+    <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />
+  </form>
+
+{% endblock %}
+
+{% block content_footer %}
+
+{% endblock %}
