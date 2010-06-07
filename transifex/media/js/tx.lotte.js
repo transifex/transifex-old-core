@@ -190,8 +190,10 @@ function StringSet(json, push_url, from_lang, to_lang) {
             if (status_passed) {
                 // The user has specified search string, so filter among passed strings
                 if (filter_string)
-                    if ((s.source_string.search(filter_string) == -1) &&
-                        (s.translated_string.search(filter_string) == -1))
+                    if ((!s.source_string ||
+                         s.source_string.search(filter_string) == -1) &&
+                        (!s.translated_string ||
+                         s.translated_string.search(filter_string) == -1))
                         continue; // Jump to next for loop
                 this.filtered[j] = s;
                 j++;
