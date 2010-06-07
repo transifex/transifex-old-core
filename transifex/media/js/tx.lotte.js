@@ -96,9 +96,14 @@ function StringSet(json, push_url, from_lang, to_lang) {
 				dataType: 'text',
 				data: JSON.stringify({language:this_stringset.to_lang, strings:to_update}),
 				success: function(stat, dict){
-					for (j=0; j<this_stringset.strings.length; j++) {
-							this_stringset.strings[j].modified = false;
-					}
+				    /* This is a final variable accessed outside of callback */
+				    if(ts)
+				        ts.modified = false;
+				    else
+				        /* For save_all button */
+    					for (j=0; j<this_stringset.strings.length; j++) {
+    							this_stringset.strings[j].modified = false;
+    					}
 					this_stringset.updateView();
 					this_stringset.updateStats();
 				}
