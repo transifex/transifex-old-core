@@ -125,7 +125,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
                 s = this.filtered[i + this.offset];
                 this.bindings[i] = s; // Bind string to table row
                 $("td.num", table_row).html(s.id); // Set string number
-                $("td.msg", table_row).html(s.source_string); // Set source string
+                $("td.msg", table_row).text(s.source_string); // Set source string
                 textarea = $("td.trans textarea", table_row);
                 textarea.val(s.translated_string);
                 textarea.removeClass("fuzzy translated untranslated").addClass(s.flagString());
