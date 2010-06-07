@@ -44,13 +44,14 @@ class CompileError(StandardError):
     pass
 
 class Translation:
-    def __init__(self, source_entity, translation_string,
-        occurrences = None, comments = None, context = None):
+    def __init__(self, source_entity, translation_string, occurrences=None, 
+            comments=None, context=None, number=0):
         self.source_entity = source_entity
         self.translation_string = translation_string
         self.occurrences = occurrences
         self.comments = comments
         self.context = context
+        self.number = int(number)
 
     #def serialize(self):
         #d = {

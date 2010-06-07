@@ -34,14 +34,36 @@ class PofileParser(Parser):
     @classmethod
     def parse_file(cls, filename):
         stringset = StringSet()
+        # For .pot files the msgid entry must be used as the translation for
+        # the related language.
         if filename.endswith(".pot"):
             use_msgid = True
         else:
             use_msgid = False
+
         for entry in polib.pofile(filename):
-            if use_msgid:
-                entry.msgstr = entry.msgid
-            stringset.strings.append(Translation(entry.msgid,
-                entry.msgstr, context = entry.msgctxt,
-                occurrences = entry.occurrences ))
+            # Get the correct entry messages based in the on its plural and/or
+            # the file extention (use_msgid).
+            if entry.msgid_plural:
+                if use_msgid:
+                    messages = [entry.msgid, entry.msgid_plural]
+                else:
+                    message_keys = entry.msgstr_plural.keys()
+                    message_keys.sort()
+                    messages = [entry.msgstr_plural[k] for k in message_keys]
+            else:
+                if use_msgid:
+                    messages = [entry.msgid]
+                else:
+                    messages = [entry.msgstr]
+
+            # Add messages with the correct number (plural)
+            for number, msgstr in enumerate(messages):
+                if number == 0:
+                    msgid = entry.msgid
+                else:
+                    msgid = entry.msgid_plural
+                stringset.strings.append(Translation(msgid, msgstr,
+                    context=entry.msgctxt, occurrences=entry.occurrences,
+                    number=number))
         return stringset

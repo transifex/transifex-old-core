@@ -188,23 +188,25 @@ class TResource(models.Model):
             strings_updated = 0
             for j in stringset.strings:
                 # If is primary language update source strings!
-                ss, created = SourceEntity.objects.get_or_create(
-                    string= j.source_entity,
-                    context=j.context or "None",
-                    tresource=self,
+                se, created = SourceEntity.objects.get_or_create(
+                    string = j.source_entity,
+                    context = j.context or "None",
+                    tresource = self,
+                    number = j.number,
                     defaults = {
                         'position' : 1,
-                    }
-                )
-                ts, created = Translation.objects.get_or_create(
-                    source_entity=ss,
+                        }
+                    )
+                tr, created = Translation.objects.get_or_create(
+                    source_entity = se,
                     language = target_language,
                     tresource = self,
-                    defaults={
+                    number = j.number,
+                    defaults = {
                         'string' : j.translation_string,
                         'user' : user,
-                    },
-                )
+                        },
+                    )
 
                 if created:
                     strings_added += 1
