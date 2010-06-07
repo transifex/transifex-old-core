@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from piston.handler import BaseHandler
+from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
@@ -72,8 +72,69 @@ class SingleStringHandler(BaseHandler):
 #
 #        Translation.objects.filter(tresource__in = resources)
 
+def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
+    '''
+    Helper function to create json stringset for a project/resource for one or
+    multiple languages.
+    '''
+    try:
+        if tresource_slug:
+            resources = [TResource.objects.get(project__slug=project_slug,slug=tresource_slug)]
+        elif "resources" in request.GET:
+            resources = []
+            for resource_slug in request.GET["resources"].split(","):
+                resources.append(TResource.objects.get(slug=resource_slug))
+        else:
+            resources = TResource.objects.filter(project__slug=project_slug)
+    except TResource.DoesNotExist:
+        return rc.NOT_FOUND
+
+    try:
+        if target_lang_code:
+            target_langs = [Language.objects.by_code_or_alias(target_lang_code)]
+        elif "languages" in request.GET:
+            target_langs = []
+            for lang_code in request.GET["languages"].split(","):
+                target_langs.append(Language.objects.by_code_or_alias(lang_code))
+        else:
+            target_langs = None
+    except Language.DoesNotExist:
+        return rc.NOT_FOUND
+
+    retval = []
+    for translation_resource in resources:
+        strings = {}
+        for ss in SourceEntity.objects.filter(tresource = translation_resource):
+            if not ss.id in strings:
+                strings[ss.id] = {
+            'id':ss.id,
+            'original_string':ss.string,
+            'context':ss.context,
+            'translations':{}}
+
+        translated_strings = Translation.objects.filter(tresource = translation_resource)
+        if target_langs:
+            translated_strings = translated_strings.filter(language__in = target_langs)
+        for ts in translated_strings.select_related('source_entity','language'):
+            strings[ts.source_entity.id]['translations'][ts.language.code] = ts.string
+
+        retval.append({'resource':translation_resource.slug,'strings':strings.values()})
+    return retval
+
+
+class AnonymousStringHandler(AnonymousBaseHandler):
+    allowed_methods = ('GET')
+
+    def read(self, request, project_slug, tresource_slug=None, target_lang_code=None):
+        '''
+        Same as the handler below but this is for anonymous users.
+        '''
+        return _create_stringset(request, project_slug, tresource_slug, target_lang_code)
+
+
 class StringHandler(BaseHandler):
     allowed_methods = ('GET', 'POST','PUT')
+    anonymous = AnonymousStringHandler
 
     def read(self, request, project_slug, tresource_slug=None, target_lang_code=None):
         '''
@@ -98,54 +159,12 @@ class StringHandler(BaseHandler):
         }
 
         '''
-        try:
-            if tresource_slug:
-                resources = [TResource.objects.get(project__slug=project_slug,slug=tresource_slug)]
-            elif "resources" in request.GET:
-                resources = []
-                for resource_slug in request.GET["resources"].split(","):
-                    resources.append(TResource.objects.get(slug=resource_slug))
-            else:
-                resources = TResource.objects.filter(project__slug=project_slug)
-        except TResource.DoesNotExist:
-            return rc.NOT_FOUND
-
-        try:
-            if target_lang_code:
-                target_langs = [Language.objects.by_code_or_alias(target_lang_code)]
-            elif "languages" in request.GET:
-                target_langs = []
-                for lang_code in request.GET["languages"].split(","):
-                    target_langs.append(Language.objects.by_code_or_alias(lang_code))
-            else:
-                target_langs = None
-        except Language.DoesNotExist:
-            return rc.NOT_FOUND
-
-        retval = []
-        for translation_resource in resources:
-            strings = {}
-            for ss in SourceEntity.objects.filter(tresource = translation_resource):
-                if not ss.id in strings:
-                    strings[ss.id] = {
-		        'id':ss.id,
-		        'original_string':ss.string,
-		        'context':ss.context,
-		        'translations':{}}
-
-            translated_strings = Translation.objects.filter(tresource = translation_resource)
-            if target_langs:
-                translated_strings = translated_strings.filter(language__in = target_langs)
-            for ts in translated_strings.select_related('source_entity','language'):
-                strings[ts.source_entity.id]['translations'][ts.language.code] = ts.string
-
-            retval.append({'resource':translation_resource.slug,'strings':strings.values()})
-        return retval
+        return _create_stringset(request, project_slug, tresource_slug, target_lang_code)
 
     # FIXME: Find out what permissions are needed for this. Maybe implement new
     # ones for TResource similar to Components? Something like 'tresource_edit'
     #@method_decorator(one_perm_required_or_403())
-    def update(self, request, project_slug, tresource_slug, target_lang_code=None):
+    def update(self, request, project_slug, tresource_slug,target_lang_code=None):
         '''
         This API call is for uploading Translations to a specific
         TResource. If no corresponding SourceEntitys are found, the uploading
@@ -168,9 +187,6 @@ class StringHandler(BaseHandler):
             }]
         }
 
-        FIXME: args include target_lang which is also in json. We should decide
-               which to use and maybe drop support for the other.
-
         '''
         try:
             translation_project = Project.objects.get(slug=project_slug)
@@ -184,7 +200,6 @@ class StringHandler(BaseHandler):
             return rc.NOT_FOUND
 
         if 'application/json' in request.content_type: # we got JSON strings
-            import json
             data = getattr(request, 'data',None)
 
             if not data:
@@ -195,7 +210,10 @@ class StringHandler(BaseHandler):
             try:
                 lang = Language.objects.by_code_or_alias(data.get('language',None))
             except Language.DoesNotExist:
-                return rc.BAD_REQUEST
+                try: 
+                    lang = Language.objects.by_code_or_alias(target_lang_code)
+                except Language.DoesNotExist:
+                    return rc.BAD_REQUEST
 
             for s in strings:
                 try:
@@ -231,9 +249,9 @@ class StringHandler(BaseHandler):
     # this probably needs some more fine grained permissions for real world
     # usage. for now all people who can change a project can add/edit resources
     # and strings in it
-    @method_decorator(one_perm_required_or_403(pr_project_add_change,
-        (Project, 'slug__exact', 'project_slug')))
-    def create(self, request, project_slug, tresource_slug, target_lang_code=None):
+    #@method_decorator(one_perm_required_or_403(pr_project_add_change,
+    #    (Project, 'slug__exact', 'project_slug')))
+    def create(self, request, project_slug, tresource_slug):
         '''
         Using this API call, a user may create a tresource and assign source
         strings for a specific language. It gets the project and tresource name
@@ -246,7 +264,6 @@ class StringHandler(BaseHandler):
             'strings':
             [{
                 'string': 'str1',
-                'value': 'str1.value',
                 'occurrences': 'somestring',
                 'context': 'someotherstring'
             },
@@ -261,37 +278,34 @@ class StringHandler(BaseHandler):
         except Project.DoesNotExist:
             return rc.NOT_FOUND
 
-        try:
-            lang = Language.objects.by_code_or_alias(target_lang_code)
-        except Language.DoesNotExist:
-            return rc.BAD_REQUEST
-
-        # check if tresource exists
-        translation_resource, created = TResource.objects.get_or_create(
-                                        slug = tresource_slug,
-                                        source_language = lang,
-                                        project = translation_project)
-        # if new make sure, it's initialized correctly
-        if created:
-            translation_resource.name = tresource_slug
-            translation_resource.project = translation_project
-            translation_resource.source_language = lang
-            translation_resource.save()
-
         if 'application/json' in request.content_type: # we got JSON strings
             data = getattr(request, 'data', None)
 
             if not data:
                 return rc.BAD_REQUEST
 
-            strings = data.get('strings', [])
+            # get lang
             try:
                 lang = Language.objects.by_code_or_alias(data.get('language', 'en'))
             except Language.DoesNotExist:
                 return rc.BAD_REQUEST
 
+            # check if tresource exists
+            translation_resource, created = TResource.objects.get_or_create(
+                                            slug = tresource_slug,
+                                            source_language = lang,
+                                            project = translation_project)
+            # if new make sure, it's initialized correctly
+            if created:
+                translation_resource.name = tresource_slug
+                translation_resource.project = translation_project
+                translation_resource.source_language = lang
+                translation_resource.save()
 
-            # create source strings and translation strings for the source lang
+            # get strings
+            strings = data.get('strings', [])
+
+            # create source strings and translations for the source lang
             for s in strings:
                 # Store the value only if it is not None or ''!
                 if s.get('string'):

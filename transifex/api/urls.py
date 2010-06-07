@@ -45,6 +45,9 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/strings/$',
         string_handler
     ), url(
+        r'^project/(?P<project_slug>[-\w]+)/strings/(?P<target_lang_code>[-\w]+)/$',
+        string_handler
+    ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
         tresource_handler
     ), url(
