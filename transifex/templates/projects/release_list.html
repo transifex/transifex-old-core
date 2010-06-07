@@ -7,7 +7,6 @@
       {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
         <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
       {% endif %}
-    </p>
   </div>
 
   {% with project.releases.all as releases %}

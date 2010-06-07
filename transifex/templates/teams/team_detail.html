@@ -137,6 +137,7 @@
 {% for entry in action_log %}
     <li class="i16 actionlog">
     {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+    </li>
 {% endfor %}
 </ul>
 {% endif %}
