@@ -257,10 +257,10 @@ class SourceEntity(models.Model):
         blank=True, editable=False,
         help_text=_("The comment of the developer."))
 
-    #TODO: Decide if this field should be separated to a table to support more plurals.
-    plural = models.CharField(_('Plural'), max_length=255,
-        blank=True, editable=False,
-        help_text=_("The plural form of the source string."))
+    number = models.IntegerField(_('Number'), blank=False,
+         null=False, default=0,
+        help_text=_("The number of the string. 0 for singular and 1, 2, 3, "
+                    "etc. for plural forms."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -320,8 +320,8 @@ class Translation(models.Model):
 
     number = models.IntegerField(_('Number'), blank=False,
          null=False, default=0,
-        help_text=_("The number of the string. 0 for singular and 1,2,3,etc"
-                    " for plural forms."))
+        help_text=_("The number of the string. 0 for singular and 1, 2, 3, "
+                    "etc. for plural forms."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
