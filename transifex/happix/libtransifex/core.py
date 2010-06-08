@@ -20,7 +20,7 @@ class CustomSerializer(json.JSONEncoder):
         if isinstance(obj, Translation):
             d = {
                 'source_entity' : obj.source_entity,
-                'translation_string' : obj.translation_string,
+                'translation' : obj.translation,
             }
             if obj.occurrences:
                 d['occurrences'] = obj.occurrences
@@ -28,11 +28,13 @@ class CustomSerializer(json.JSONEncoder):
                 d['comments'] = obj.comments
             if obj.context:
                 d['context'] = obj.context
+            if obj.context:
+                d['number'] = obj.number
             return d
 
         if isinstance(obj, StringSet):
             return {
-                'filename' : obj.filename,
+                #'filename' : obj.filename,
                 'target_language' : obj.target_language,
                 'strings' : obj.strings,
             }
@@ -40,62 +42,31 @@ class CustomSerializer(json.JSONEncoder):
 class ParseError(StandardError):
     pass
 
+
 class CompileError(StandardError):
     pass
 
-class Translation:
-    def __init__(self, source_entity, translation_string, occurrences=None, 
-            comments=None, context=None, number=0):
-        self.source_entity = source_entity
-        self.translation_string = translation_string
-        self.occurrences = occurrences
-        self.comments = comments
-        self.context = context
-        self.number = int(number)
-
-    #def serialize(self):
-        #d = {
-            #'source_entity' : self.source_entity,
-            #'translation_string' : self.translation_string,
-        #}
-        #if self.occurrences:
-            #d['occurrences'] = self.occurrences
-        #if self.comment:
-            #d['comments'] = self.comment
-        #d['context'] = self.context
-        #return d
-
-    def __hash__(self):
-        if STRICT:
-            return hash((self.source_entity, self.translation_string, 
-                self.occurrences))
-        else:
-            return hash((self.source_entity, self.translation_string))
-
-    def __eq__(self, other):
-        if isinstance(other, self.__class__) and \
-            self.source_entity == other.source_entity and \
-            self.translation_string == other.translation_string:
-            return True
-        return False
 
 class Parser:
+    """
+    Base class for writting file parsers for all the I18N types.
+    """
     default_encoding = "utf-8"
 
     @classmethod
     def open(cls, filename = None, root = None, fd = None):
         if filename or fd:
             if not fd:
-		if root:
-		    relpath = filename
-		    if relpath[0] == "/":
-			relpath = relpath[1:]
-		    fullpath = os.path.join(root, relpath)
-		else:
-		    fullpath = filename
-		fd = codecs.open( fullpath, "r", cls.default_encoding )
+                if root:
+                    relpath = filename
+                    if relpath[0] == "/":
+                        relpath = relpath[1:]
+                    fullpath = os.path.join(root, relpath)
+                else:
+                    fullpath = filename
+                fd = codecs.open( fullpath, "r", cls.default_encoding )
             buf = fd.read()
-	    if ord(buf[0]) == 0xfeff:
+            if ord(buf[0]) == 0xfeff:
                 buf = buf[1:] # Remove byte order marker
             fd.close()
             stringset = cls.parse(buf)
@@ -115,7 +86,11 @@ class Parser:
         fh = open(filename, "ru")
         return cls.parse(fh.read())
 
+
 class StringSet:
+    """
+    Store a list of Translation objects for a given language.
+    """
     def __init__(self):
         self.strings = []
         self.target_language = None
@@ -133,12 +108,43 @@ class StringSet:
         return json.dumps(self, cls=CustomSerializer)
 
 
-    #def serialize(self):
-        #d =  {
-            #'filename' : self.filename,
-            #'target_language' : self.target_language,
-            #'strings' : [],
-        #}
-        #for i in self.strings:
-            #d['strings'].append(i.serialize())
-        #return d
+class Translation:
+    """
+    Store translations of any kind of I18N type (POT, QT, etc...).
+
+    Parameters:
+        source_entity - The original entity found in the source code.
+        translation - The related source_entity written in another language.
+        context - The related context for the source_entity.
+        occurrences - Occurrences of the source_entity from the source code.
+        comments - Comments for the given source_entity from the source code.
+        number - 0 means singular and 1, 2, 3, etc. are the respective plurals.
+        singular - Related singular Translation object for plural objects.
+
+    The parameter ``singular`` works as a circular reference. It stores the
+    related singular Translation object for Translation objects that have 
+    number > 0.
+    """
+    def __init__(self, source_entity, translation, occurrences=None, 
+            comments=None, context=None, number=0, singular=None):
+        self.source_entity = source_entity
+        self.translation = translation
+        self.context = context
+        self.occurrences = occurrences
+        self.comments = comments
+        self.number = int(number)
+        self.singular = singular
+
+    def __hash__(self):
+        if STRICT:
+            return hash((self.source_entity, self.translation, 
+                self.occurrences))
+        else:
+            return hash((self.source_entity, self.translation))
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__) and \
+            self.source_entity == other.source_entity and \
+            self.translation == other.translation:
+            return True
+        return False

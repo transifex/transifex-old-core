@@ -212,7 +212,7 @@ class TResource(models.Model):
                     tresource = self,
                     number = j.number,
                     defaults = {
-                        'string' : j.translation_string,
+                        'string' : j.translation,
                         'user' : user,
                         },
                     )
@@ -221,8 +221,8 @@ class TResource(models.Model):
                     strings_added += 1
 
                 if not created and overwrite_translations:
-                    if ts.string != j.translation_string:
-                        ts.string = j.translation_string
+                    if ts.string != j.translation:
+                        ts.string = j.translation
                         strings_updated += 1
                         updated = True
         except:

@@ -61,9 +61,16 @@ class PofileParser(Parser):
             for number, msgstr in enumerate(messages):
                 if number == 0:
                     msgid = entry.msgid
+                    singular = None
                 else:
                     msgid = entry.msgid_plural
-                stringset.strings.append(Translation(msgid, msgstr,
-                    context=entry.msgctxt, occurrences=entry.occurrences,
-                    number=number))
+
+                translation = Translation(msgid, msgstr, context=entry.msgctxt,
+                    occurrences=entry.occurrences, number=number, 
+                    singular=singular)
+
+                if singular is None:
+                    singular = translation
+
+                stringset.strings.append(translation)
         return stringset
