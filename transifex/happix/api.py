@@ -56,21 +56,6 @@ class TResourceHandler(BaseHandler):
             translation_resource.objects.merge_stream(filename, upload, request.POST['target_language'])
         return rc.CREATED
 
-class SingleStringHandler(BaseHandler):
-    allowed_methods = ('GET',)
-    model = Translation
-
-    def read(self, request, project_slug, tresource_slug=None):
-        """
-        Get translation for a single string by popularity.
-        """
-        return rc.NOT_IMPLEMENTED
-#        if tresource_slug:
-#            resources = [TResource.objects.get(project__slug=project_slug,slug=tresource_slug)]
-#        else:
-#            resources = TResources.objects.filter(project__slug=project_slug)
-#
-#        Translation.objects.filter(tresource__in = resources)
 
 def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
     '''
@@ -101,10 +86,23 @@ def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
     except Language.DoesNotExist:
         return rc.NOT_FOUND
 
+    # handle string search
+    #
+    # FIXME: currently it supports case insensitive search. Maybe it should
+    # look for exact matches only? Also, there are issues in case insensitive
+    # searches in sqlite and UTF8 charsets according to this
+    # http://docs.findjango.com/ref/databases.html#sqlite-string-matching
+    qstrings = {}
+    # user requested specific strings?
+    if "strings" in request.GET:
+        qstrings = {
+            'string__iregex': eval('r\'('+'|'.join(request.GET['strings'].split(',')) + ')\'')
+        }
+
     retval = []
     for translation_resource in resources:
         strings = {}
-        for ss in SourceEntity.objects.filter(tresource = translation_resource):
+        for ss in SourceEntity.objects.filter(tresource=translation_resource,**qstrings):
             if not ss.id in strings:
                 strings[ss.id] = {
             'id':ss.id,
@@ -112,7 +110,13 @@ def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
             'context':ss.context,
             'translations':{}}
 
-        translated_strings = Translation.objects.filter(tresource = translation_resource)
+        if not qstrings:
+            translated_strings = Translation.objects.filter(tresource = translation_resource)
+        else:
+            translated_strings = Translation.objects.filter(
+                                            tresource = translation_resource,
+                                            source_entity__string__iregex=qstrings['string__iregex'])
+
         if target_langs:
             translated_strings = translated_strings.filter(language__in = target_langs)
         for ts in translated_strings.select_related('source_entity','language'):
