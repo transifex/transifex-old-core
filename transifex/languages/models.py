@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib import admin
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, get_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -86,6 +86,62 @@ class Language(models.Model):
             self.code_aliases='%s ' % self.code_aliases
 
         super(Language, self).save(*args, **kwargs)
+
+    def translated_strings(self):
+        """
+        Return the QuerySet of source entities, translated in this language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        return SourceEntity.objects.filter(id__in=Translation.objects.filter(
+                language=self).values_list('source_entity', flat=True))
+
+    def untranslated_strings(self):
+        """
+        Return the QuerySet of source entities which are not yet translated in
+        the specific language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        return SourceEntity.objects.exclude(id__in=Translation.objects.filter(
+                language=self).values_list('source_entity', flat=True))
+
+    def num_translated(self):
+        """
+        Return the number of translated strings in all TResources for the language.
+        """
+        return self.translated_strings().count()
+
+    def num_untranslated(self):
+        """
+        Return the number of untranslated strings in all TResources for the language.
+        """
+        return self.untranslated_strings().count()
+
+    #TODO:We need this as a cached value in order to avoid hitting the db all the time
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        return SourceEntity.objects.count()
+
+    def trans_percent(self):
+        """Return the percent of untranslated strings in all TResources."""
+        t = self.num_translated()
+        try:
+            return (t * 100 / self.total_entities)
+        except ZeroDivisionError:
+            return 100
+
+    def untrans_percent(self):
+        """Return the percent of untranslated strings in this TResource."""
+        translated_percent = self.trans_percent()
+        return (100 - translated_percent)
 
 def suite():
     """Define this application's testing suite for Django's test runner."""

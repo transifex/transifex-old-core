@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load statistics %}
+{% load statistics_happix %}
 
 {% block body_class %}{{ block.super }} language_detail{% endblock %}
 
@@ -12,6 +13,17 @@
 {% block content_title %}<h2 class="pagetitle">{{ language.name }} <sup class="entry_metalink">{{ language.code }}</sup></h2>{% endblock %}
 
 {% block content_main %}
+
+ {% with 500 as barwidth %}
+    <div class="stats" style='padding-top:1em;float:right;width:{{ barwidth|add:"2" }}px;'>
+        <div class="stats_string_comp" title="{% trans "Trans:" %}{% translated language language.code %} {% trans "Untrans:" %}{% untranslated language language.code %}" >{% trans_percent language language.code %}% <span class='trans_detail'>({% translated language language.code %}/{% untranslated language language.code %})</span></div> 
+        {% stats_bar_simple language language.code barwidth %}
+    </div>
+    <div style="padding-top:1em;">
+        <em>Total statistics for translated strings in all project resources:</em>
+    </div>
+ {% endwith %}
+
  {% for project in project_list %}
   {% with project.releases.all as releases %}
   <h3>{% blocktrans %}{{ project }} Releases{% endblocktrans %}

@@ -8,7 +8,7 @@
 
 {{block.super}} »
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
-<a href="{% url project_detail tresource.project.slug %}">{{project}}</a> »
+<a href="{% url project_detail tresource.project.slug %}">{{tresource.project}}</a> »
 Edit {{tresource}}
 {% endblock %}
 
