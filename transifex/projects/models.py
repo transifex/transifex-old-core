@@ -20,6 +20,7 @@ import tagging
 from tagging.fields import TagField
 
 from codebases.models import Unit
+from languages.models import Language
 from vcs.models import VcsUnit
 from tarball.models import Tarball
 from translations.models import POFile
@@ -230,6 +231,85 @@ class Project(models.Model):
         """Return all the vcsunits that arent allowed to be used."""
         return VcsUnit.objects.exclude(
             component__id__in=self.component_set.all().values('id'))
+
+    @property
+    def available_languages(self):
+        """
+        Return the languages with at least one Translation of a SourceEntity for
+        all TResources in the specific project instance.
+        """
+        # I put it here due to circular dependency on module
+        from happix.models import Translation
+        tresources = self.tresource_set.all()
+        languages = Translation.objects.filter(
+            tresource__in=tresources).values_list(
+            'language', flat=True).distinct()
+        # The distinct() below is not important ... I put it just to be sure.
+        return Language.objects.filter(id__in=languages).distinct()
+
+    def translated_strings(self, language):
+        """
+        Return the QuerySet of source entities, translated in this language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceEntity.objects.filter(tresource__in=self.tresource_set.all(),
+            id__in=Translation.objects.filter(language=target_language,
+                tresource__in=self.tresource_set.all()).values_list(
+                    'source_entity', flat=True))
+
+    def untranslated_strings(self, language):
+        """
+        Return the QuerySet of source entities which are not yet translated in
+        the specific language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceEntity.objects.filter(
+            tresource__in=self.tresource_set.all()).exclude(
+            id__in=Translation.objects.filter(language=target_language,
+                tresource__in=self.tresource_set.all()).values_list(
+                    'source_entity', flat=True))
+
+    def num_translated(self, language):
+        """
+        Return the number of translated strings in all TResources of the project.
+        """
+        return self.translated_strings(language).count()
+
+    def num_untranslated(self, language):
+        """
+        Return the number of untranslated strings in all TResources of the project.
+        """
+        return self.untranslated_strings(language).count()
+
+    #TODO:We need this as a cached value in order to avoid hitting the db all the time
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity
+        return SourceEntity.objects.filter(
+                tresource__in=self.tresource_set.all()).count()
+
+    def trans_percent(self, language):
+        """Return the percent of untranslated strings in this TResource."""
+        t = self.num_translated(language)
+        try:
+            return (t * 100 / self.total_entities)
+        except ZeroDivisionError:
+            return 100
+
+    def untrans_percent(self, language):
+        """Return the percent of untranslated strings in this TResource."""
+        translated_percent = self.trans_percent(language)
+        return (100 - translated_percent)
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)

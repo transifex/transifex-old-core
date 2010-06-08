@@ -120,6 +120,15 @@ class TResource(models.Model):
     def get_absolute_url(self):
         return ('project.resource', None, { 'project_slug': self.project.slug, 'tresource_slug' : self.slug })
 
+    @property
+    def available_languages(self):
+        """
+        Return the languages with at least one Translation of a SourceEntity for
+        this TResource.
+        """
+        languages = Translation.objects.filter(tresource=self).values_list(
+            'language', flat=True).distinct()
+        return Language.objects.filter(id__in=languages).distinct()
 
     def translated_strings(self, language):
         """

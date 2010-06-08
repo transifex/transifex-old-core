@@ -27,10 +27,17 @@
   </h3>
 
   {% if resources %}
-  <ul> 
+
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    	});
+    </script>
+
+  <ul style="clear:both"> 
   {% for res in resources %}
     <li style="list-style:none;list-style-image:url({{ STATIC_URL }}images/icons/page_white_stack.png)">
-        <a href="{{ res.get_absolute_url }}" style="font-weight:bold">{{ res.name }}</a>
+        <a href="{{ res.get_absolute_url }}" style="font-weight:bold" class="res_tipsy_enable" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
         <sup class="entry_metalink">
            {% if request.user.is_authenticated and is_maintainer %}
              <a href="{% url tresource_edit project_slug=project.slug tresource_slug=res.slug %}">{% trans "edit" %}</a>

@@ -127,7 +127,7 @@ class Language(models.Model):
     def total_entities(self):
         """Return the total number of source entities to be translated."""
         # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity, Translation
+        from happix.models import SourceEntity
         return SourceEntity.objects.count()
 
     def trans_percent(self):
