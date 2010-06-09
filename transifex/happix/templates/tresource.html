@@ -1,6 +1,27 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load statistics_happix %}
+{% load permissions %}
+
+{% block extra_head %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $("#new_translation1").click( function (){ 
+            $("#new_translation_box1").toggle();
+        });
+        $("#start_new_translation").click( function() {
+            var target_lang_code = $(this).prev().val();
+            if ( target_lang_code != "" ) {
+                request_url = window.location + target_lang_code;
+                window.location = request_url;
+            } else {
+                alert("Please select a target language first and then click crate.");
+            }
+        });
+	});
+</script>
+{% endblock %}
 
 {% block breadcrumb %}
 
@@ -19,69 +40,106 @@ Projects |
 
 {% block body_class %}project_list{% endblock %}
 
-{% block content_title %}
+{% block content_title %}{% endblock %}
 
 
-{% endblock %}
+{% block content_main %}
+  {% get_permission "project_perm.maintain" for request.user and tresource.project as "is_maintainer" %}
 
-{% block content %}
+<div class="obj_bigdetails">
+  {% if tresource.project.private %}
+  <span id="private_project_banner" class="ui-corner-all">
+    {% trans "Private Project"%}
+    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
+  </span>
+  {% endif %}
+  <h2 class="name">{{ tresource.name }}</h2>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-        $("#new_translation").click( function (){ 
-            $("#new_translation_box").toggle();
-        });
-        $("#start_new_translation").click( function() {
-            var target_lang_code = $(this).prev().val();
-            if ( target_lang_code != "" ) {
-                request_url = window.location + target_lang_code;
-                window.location = request_url;
-            } else {
-                alert("Please select a target language first and then click crate.");
-            }
-        });
-	});
-</script>
+  {% if perms.projects.add_tresource or is_maintainer %}
+    <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url tresource_edit project_slug=tresource.project.slug tresource_slug=tresource.slug %}">{% trans "Edit" %}</a></p></div>
+  {% endif %}
 
-{% if request.user.is_authenicated %}
-{% load upload_manager_tags %}
-{% upload_manager tresource %}
-{% endif %}
+<div id="vcs_details">
+  <h3>{% trans "Translation Resource details" %}</h3>
+  <table class="definition">
+    <tr>
+      <th class="i16 omega">{% trans "Primary Language:" %}</th>
+      <td>
+        {{ tresource.source_language }}
+      </td>
+    </tr>
+  </table>
+</div>
 
-
-Available translations:
-<ul style="width:500px">
-{% for language,count in translated_languages.items %}
-    <li style="list-style:none">
-		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
-        {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated tresource language.code %}<br />{% trans "Untranslated: " %}{% untranslated tresource language.code %}">
-                <div class="stats_string_comp" >{% trans_percent tresource language.code %}% <span class='trans_detail'>({% translated tresource language.code %}/{% untranslated tresource language.code %})</span></div> 
-                {% stats_bar_simple tresource language.code barwidth %}
-            </div>
-        {% endwith %}
-    </li>
-{% endfor %}
-</ul>
-
-<!-- This is just to show how it could be handled easily. Needs polishing!! -->
-<a id="new_translation" class="buttonized i16">Start New Translation</a>
-
-<div id="new_translation_box" style="display:none; padding:1em; margin:0; border:1px solid; border-color:#CCC;">
-
+<p style="text-align:center;padding-top:1em">
+  <a id="new_translation1" class="buttonized i16 add">{% trans "Start New Translation" %}</a>
+</p>
+<div id="new_translation_box1" style="text-align:center; display:none; padding:1em; margin:0;background-color:#EBF2F8;border-top:1px solid #ccc; border-bottom:1px solid #ccc">
     <select name="{{ language.code }}" class="language">
         <option value="">Select Language</option>
         {% for lang in languages %}
             <option value="{{ lang.code }}">{{ lang.name }}</option>
         {% endfor %}
     </select>
-
-    <a id="start_new_translation" class="i16 buttonized add">Create</a>
+    <a id="start_new_translation" class="i16 buttonized action">Create</a>
 </div>
 
+<h3>{% trans "Available translations" %}</h3>
+
+{% if request.user.is_authenicated %}
+{% load upload_manager_tags %}
+{% upload_manager tresource %}
+{% endif %}
+
+<div class="list separate" style="clear:both">
+<ul>
+{% for language,count in translated_languages.items %}
+    <li style="list-style:none">
+		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
+        <span style="color:#666666;font-size:0.85em;float:right">
+           <a href="{% url translation project.slug tresource.slug language.code %}">
+            <img class="tipsy_enable" style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png" title='{% trans "Translate Now" %}'>
+           </a>
+        </span>
+        <span class="details" style="padding-left:1em;color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Actions: &nbsp;{% endblocktrans %}</span>
+        {% with 200 as barwidth %}
+            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated tresource language.code %}<br />{% trans "Untranslated: " %}{% untranslated tresource language.code %}">
+                <div class="stats_string_comp" >{% trans_percent tresource language.code %}% <span class='trans_detail'>({% translated tresource language.code %}/{% untranslated tresource language.code %})</span></div> 
+                {% stats_bar_simple tresource language.code barwidth %}
+            </div>
+            <span class="i16 stats" style="color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Translated Strings: &nbsp;{% endblocktrans %}</span>
+        {% endwith %}
+    </li>
+{% endfor %}
+</ul>
+</div>
+
+</div>
+
+
+<h3>{% trans 'History' %}</h3>
+{% load tx_action_log %}
+{% get_log 5 as action_log for_object tresource %}
+{% if not action_log %}
+<p>{% trans 'No actions recorded yet :)' %}</p>
+{% else %}
+<ul class="actionlist simple">
+{% for entry in action_log %}
+    <li class="i16 actionlog">
+    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+{% endfor %}
+</ul>
+{% endif %}
 
 {% endblock %}
 
 {% block content_footer %}
+  <div id="content_footer_center">
+    {% get_permission "project_perm.maintain" for request.user and tresource.project as "is_maintainer" %}
+    {% if perms.projects.delete_tresource or is_maintainer %}
+    <div class="deletelink">
+      <a class="i16 delete buttonized" href="{% url tresource_delete project_slug=tresource.project.slug tresource_slug=tresource.slug %}">{% trans "Delete translation resource" %}</a>
+    </div>
+    {% endif %}
+  </div>
 {% endblock %}
