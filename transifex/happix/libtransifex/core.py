@@ -28,7 +28,7 @@ class CustomSerializer(json.JSONEncoder):
                 d['comments'] = obj.comments
             if obj.context:
                 d['context'] = obj.context
-            if obj.context:
+            if obj.number:
                 d['number'] = obj.number
             return d
 
