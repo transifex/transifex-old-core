@@ -67,6 +67,7 @@ setup(
         "Pygments >= 0.9",
         "PIL == 1.1.6",
         "contact_form >= 0.3", # hg 97559a887345 or newer
+        "django-addons",
         "django-authority",
         "django-filter >= 0.1",
         "django-notification >= 0.1.2",
