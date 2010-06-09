@@ -56,8 +56,8 @@ Available translations:
     <li style="list-style:none">
 		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
         {% with 200 as barwidth %}
-            <div class="stats" style='float:right;width:{{ barwidth|add:"2" }}px;'>
-                <div class="stats_string_comp" title="{% trans "Trans:" %}{% translated tresource language.code %} {% trans "Untrans:" %}{% untranslated tresource language.code %}" >{% trans_percent tresource language.code %}% <span class='trans_detail'>({% translated tresource language.code %}/{% untranslated tresource language.code %})</span></div> 
+            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated tresource language.code %}<br />{% trans "Untranslated: " %}{% untranslated tresource language.code %}">
+                <div class="stats_string_comp" >{% trans_percent tresource language.code %}% <span class='trans_detail'>({% translated tresource language.code %}/{% untranslated tresource language.code %})</span></div> 
                 {% stats_bar_simple tresource language.code barwidth %}
             </div>
         {% endwith %}

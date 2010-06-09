@@ -91,6 +91,13 @@
     {% endif %}
     {% endwith %}
 
+    <tr>
+      <th class="i16 sitemap_color" title="only for resources">{% blocktrans %}Number of Languages: {% endblocktrans %}</th>
+      <td>
+        {{ project.available_languages|length }}
+      </td>
+    </tr>
+
 {% comment %}
     <tr>
       <th class="i16 link">{% trans "External links:" %}</th>
