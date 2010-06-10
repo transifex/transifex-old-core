@@ -287,7 +287,7 @@ class SourceEntity(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'context', 'resource'),)
+        unique_together = (('string', 'context', 'resource', 'number'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
         ordering = ['string', 'context']
@@ -367,7 +367,8 @@ class Translation(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_entity', 'string', 'language', 'resource'),)
+        unique_together = (('source_entity', 'string', 'language', 'resource',
+                            'number'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
