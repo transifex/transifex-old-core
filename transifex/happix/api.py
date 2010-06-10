@@ -74,16 +74,23 @@ def _create_stringset(request, project_slug, resource_slug, target_lang_code):
     except Resource.DoesNotExist:
         return rc.NOT_FOUND
 
-    try:
-        if target_lang_code:
-            target_langs = [Language.objects.by_code_or_alias(target_lang_code)]
-        elif "languages" in request.GET:
-            target_langs = []
-            for lang_code in request.GET["languages"].split(","):
-                target_langs.append(Language.objects.by_code_or_alias(lang_code))
-        else:
-            target_langs = None
-    except Language.DoesNotExist:
+    # Getting language codes from the request
+    lang_codes = []
+    if target_lang_code:
+        lang_codes.append(target_lang_code)
+    elif "languages" in request.GET:
+        lang_codes.extend([l for l in request.GET["languages"].split(",")])
+
+    # Finding the respective Language objects in the database
+    target_langs = []
+    for lang_code in lang_codes:
+        try:
+            target_langs.append(Language.objects.by_code_or_alias(lang_code))
+        except Language.DoesNotExist:
+            logger.info("No language found for code '%s'." % lang_code)
+
+    # If any language is found
+    if not target_langs:
         return rc.NOT_FOUND
 
     # handle string search
