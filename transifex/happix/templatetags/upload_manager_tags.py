@@ -2,7 +2,7 @@
 from django import template
 from languages.models import Language
 from projects.models import Project
-from happix.models import TResource, StorageFile, PARSERS
+from happix.models import Resource, StorageFile, PARSERS
 
 register = template.Library()
 
@@ -12,7 +12,7 @@ def upload_manager(target_object):
     if isinstance(target_object, Project):
         project = target_object
         resource = None
-    elif isinstance(target_object, TResource):
+    elif isinstance(target_object, Resource):
         project = target_object.project
         resource = target_object
     else:

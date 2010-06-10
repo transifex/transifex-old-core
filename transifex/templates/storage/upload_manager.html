@@ -20,7 +20,7 @@ $(document).ready(function(){
         $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
           storage = new Storage(data);
           storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
-          storage.resource = {'name':'{{tresource.name}}', 'slug':'{{tresource.slug}}'};
+          storage.resource = {'name':'{{resource.name}}', 'slug':'{{resource.slug}}'};
           $("div#notification-container").fadeOut("fast");
           $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
         });
@@ -44,7 +44,7 @@ $(document).ready(function(){
                 $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
                     storage = new Storage(data);
                     storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
-                    storage.resource = {'name':'{{tresource.name}}', 'slug':'{{tresource.slug}}'};
+                    storage.resource = {'name':'{{resource.name}}', 'slug':'{{resource.slug}}'};
                     $("div#notification-container").fadeOut("fast");
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 

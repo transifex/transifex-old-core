@@ -236,13 +236,13 @@ class Project(models.Model):
     def available_languages(self):
         """
         Return the languages with at least one Translation of a SourceEntity for
-        all TResources in the specific project instance.
+        all Resources in the specific project instance.
         """
         # I put it here due to circular dependency on module
         from happix.models import Translation
-        tresources = self.tresource_set.all()
+        resources = self.resource_set.all()
         languages = Translation.objects.filter(
-            tresource__in=tresources).values_list(
+            resource__in=resources).values_list(
             'language', flat=True).distinct()
         # The distinct() below is not important ... I put it just to be sure.
         return Language.objects.filter(id__in=languages).distinct()
@@ -256,9 +256,9 @@ class Project(models.Model):
         # I put it here due to circular dependency on modules
         from happix.models import SourceEntity, Translation
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(tresource__in=self.tresource_set.all(),
+        return SourceEntity.objects.filter(resource__in=self.resource_set.all(),
             id__in=Translation.objects.filter(language=target_language,
-                tresource__in=self.tresource_set.all()).values_list(
+                resource__in=self.resource_set.all()).values_list(
                     'source_entity', flat=True))
 
     def untranslated_strings(self, language):
@@ -272,20 +272,20 @@ class Project(models.Model):
         from happix.models import SourceEntity, Translation
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(
-            tresource__in=self.tresource_set.all()).exclude(
+            resource__in=self.resource_set.all()).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                tresource__in=self.tresource_set.all()).values_list(
+                resource__in=self.resource_set.all()).values_list(
                     'source_entity', flat=True))
 
     def num_translated(self, language):
         """
-        Return the number of translated strings in all TResources of the project.
+        Return the number of translated strings in all Resources of the project.
         """
         return self.translated_strings(language).count()
 
     def num_untranslated(self, language):
         """
-        Return the number of untranslated strings in all TResources of the project.
+        Return the number of untranslated strings in all Resources of the project.
         """
         return self.untranslated_strings(language).count()
 
@@ -296,10 +296,10 @@ class Project(models.Model):
         # I put it here due to circular dependency on modules
         from happix.models import SourceEntity
         return SourceEntity.objects.filter(
-                tresource__in=self.tresource_set.all()).count()
+                resource__in=self.resource_set.all()).count()
 
     def trans_percent(self, language):
-        """Return the percent of untranslated strings in this TResource."""
+        """Return the percent of untranslated strings in this Resource."""
         t = self.num_translated(language)
         try:
             return (t * 100 / self.total_entities)
@@ -307,7 +307,7 @@ class Project(models.Model):
             return 100
 
     def untrans_percent(self, language):
-        """Return the percent of untranslated strings in this TResource."""
+        """Return the percent of untranslated strings in this Resource."""
         translated_percent = self.trans_percent(language)
         return (100 - translated_percent)
 

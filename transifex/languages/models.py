@@ -112,13 +112,13 @@ class Language(models.Model):
 
     def num_translated(self):
         """
-        Return the number of translated strings in all TResources for the language.
+        Return the number of translated strings in all Resources for the language.
         """
         return self.translated_strings().count()
 
     def num_untranslated(self):
         """
-        Return the number of untranslated strings in all TResources for the language.
+        Return the number of untranslated strings in all Resources for the language.
         """
         return self.untranslated_strings().count()
 
@@ -131,7 +131,7 @@ class Language(models.Model):
         return SourceEntity.objects.count()
 
     def trans_percent(self):
-        """Return the percent of untranslated strings in all TResources."""
+        """Return the percent of untranslated strings in all Resources."""
         t = self.num_translated()
         try:
             return (t * 100 / self.total_entities)
@@ -139,7 +139,7 @@ class Language(models.Model):
             return 100
 
     def untrans_percent(self):
-        """Return the percent of untranslated strings in this TResource."""
+        """Return the percent of untranslated strings in this Resource."""
         translated_percent = self.trans_percent()
         return (100 - translated_percent)
 

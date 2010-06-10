@@ -4,4 +4,4 @@ from happix.models import *
 
 admin.site.register(Translation)
 admin.site.register(SourceEntity)
-admin.site.register(TResource)
+admin.site.register(Resource)

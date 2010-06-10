@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from happix.models import SourceEntity, TResource, TranslationString
+from happix.models import SourceEntity, Resource, TranslationString
 from languages.models import Language
 from languages.management.commands import txcreatelanguages
 from projects.models import Project
@@ -55,13 +55,13 @@ class LoadingGettextTests(TestCase):
         source_language = Language.objects.by_code_or_alias(code=SOURCE_LANG)
         name = TRESOURCE_BASE_NAME
         # Get a new tres
-        self.tres = TResource.objects.create_from_file(path_to_file=path_to_file,
+        self.tres = Resource.objects.create_from_file(path_to_file=path_to_file,
                         project=self.project,
                         source_language=source_language,
                         name=name)
 
     def tearDown(self):
-        # Delete the TResource so we apply the updates on the original one!
+        # Delete the Resource so we apply the updates on the original one!
         self.tres.delete()
 
     def test_source_po_loading(self):
@@ -72,7 +72,7 @@ class LoadingGettextTests(TestCase):
         """
         path_to_file = os.path.join(BASE_SAMPLE_FILE_PATH, SOURCE_PO)
 
-        source_strings = SourceEntity.objects.filter(tresource=self.tres)
+        source_strings = SourceEntity.objects.filter(resource=self.tres)
         pofile = polib.pofile(path_to_file)
 
         # Check that source language strings in DB has the same len as the
@@ -102,10 +102,10 @@ class LoadingGettextTests(TestCase):
         """
         path_to_file = os.path.join(BASE_SAMPLE_FILE_PATH, SOURCE_PO_2)
 
-        # Now test the update of the same TResource source strings
+        # Now test the update of the same Resource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(resource=self.tres, 
                                                      position__isnull=False)
         pofile = polib.pofile(path_to_file)
 
@@ -126,8 +126,8 @@ class LoadingGettextTests(TestCase):
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there is one source string with position=None that belongs
-        # to the same TResource (it is the historical one :))
-        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
+        # to the same Resource (it is the historical one :))
+        self.assertEqual(len(SourceEntity.objects.filter(resource=self.tres, 
                              position__isnull=True)), 1)
 
     def test_source_po_update_more(self):
@@ -136,10 +136,10 @@ class LoadingGettextTests(TestCase):
         """
         path_to_file = os.path.join(BASE_SAMPLE_FILE_PATH, SOURCE_PO_3)
 
-        # Now test the update of the same TResource source strings
+        # Now test the update of the same Resource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(resource=self.tres, 
                             position__isnull=False).order_by('position')
         pofile = polib.pofile(path_to_file)
 
@@ -160,8 +160,8 @@ class LoadingGettextTests(TestCase):
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there is one source string with position=None that belongs
-        # to the same TResource (it is the historical one :))
-        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
+        # to the same Resource (it is the historical one :))
+        self.assertEqual(len(SourceEntity.objects.filter(resource=self.tres, 
                              position__isnull=True)), 0)
 
     def test_source_po_update_mix(self):
@@ -170,10 +170,10 @@ class LoadingGettextTests(TestCase):
         """
         path_to_file = os.path.join(BASE_SAMPLE_FILE_PATH, SOURCE_PO_4)
 
-        # Now test the update of the same TResource source strings
+        # Now test the update of the same Resource source strings
         # (One less source string)
         self.tres.update_from_file(path_to_file=path_to_file, format='gettext')
-        source_strings = SourceEntity.objects.filter(tresource=self.tres, 
+        source_strings = SourceEntity.objects.filter(resource=self.tres, 
                             position__isnull=False).order_by('position')
         pofile = polib.pofile(path_to_file)
 
@@ -194,6 +194,6 @@ class LoadingGettextTests(TestCase):
 #            self.assertEqual(si.flags, entry.flags)
 
         # Check that there are 3 source string with position=None that belongs
-        # to the same TResource (it is the historical ones :))
-        self.assertEqual(len(SourceEntity.objects.filter(tresource=self.tres, 
+        # to the same Resource (it is the historical ones :))
+        self.assertEqual(len(SourceEntity.objects.filter(resource=self.tres, 
                              position__isnull=True)), 3)

@@ -28,14 +28,14 @@
 {{block.super}} »
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
 <a href="{% url project_detail project.slug %}">{{project}}</a> »
-<a href="{% url project.resource project.slug tresource.slug %}">{{tresource}}</a>
+<a href="{% url project.resource project.slug resource.slug %}">{{resource}}</a>
 {% endblock %}
 
 {% block title %}
 {{ block.super }} |
 Projects |
 {{project}}
-{{tresource}}
+{{resource}}
 {% endblock %}
 
 {% block body_class %}project_list{% endblock %}
@@ -44,19 +44,19 @@ Projects |
 
 
 {% block content_main %}
-  {% get_permission "project_perm.maintain" for request.user and tresource.project as "is_maintainer" %}
+  {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 <div class="obj_bigdetails">
-  {% if tresource.project.private %}
+  {% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
     <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
   </span>
   {% endif %}
-  <h2 class="name">{{ tresource.name }}</h2>
+  <h2 class="name">{{ resource.name }}</h2>
 
-  {% if perms.projects.add_tresource or is_maintainer %}
-    <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url tresource_edit project_slug=tresource.project.slug tresource_slug=tresource.slug %}">{% trans "Edit" %}</a></p></div>
+  {% if perms.projects.add_resource or is_maintainer %}
+    <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a></p></div>
   {% endif %}
 
 <div id="vcs_details">
@@ -65,7 +65,7 @@ Projects |
     <tr>
       <th class="i16 omega">{% trans "Primary Language:" %}</th>
       <td>
-        {{ tresource.source_language }}
+        {{ resource.source_language }}
       </td>
     </tr>
   </table>
@@ -88,24 +88,24 @@ Projects |
 
 {% if request.user.is_authenicated %}
 {% load upload_manager_tags %}
-{% upload_manager tresource %}
+{% upload_manager resource %}
 {% endif %}
 
 <div class="list separate" style="clear:both">
 <ul>
 {% for language,count in translated_languages.items %}
     <li style="list-style:none">
-		<a href="{% url translation project.slug tresource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
+		<a href="{% url translation project.slug resource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
         <span style="color:#666666;font-size:0.85em;float:right">
-           <a href="{% url translation project.slug tresource.slug language.code %}">
+           <a href="{% url translation project.slug resource.slug language.code %}">
             <img class="tipsy_enable" style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png" title='{% trans "Translate Now" %}'>
            </a>
         </span>
         <span class="details" style="padding-left:1em;color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Actions: &nbsp;{% endblocktrans %}</span>
         {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated tresource language.code %}<br />{% trans "Untranslated: " %}{% untranslated tresource language.code %}">
-                <div class="stats_string_comp" >{% trans_percent tresource language.code %}% <span class='trans_detail'>({% translated tresource language.code %}/{% untranslated tresource language.code %})</span></div> 
-                {% stats_bar_simple tresource language.code barwidth %}
+            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
+                <div class="stats_string_comp" >{% trans_percent resource language.code %}% <span class='trans_detail'>({% translated resource language.code %}/{% untranslated resource language.code %})</span></div> 
+                {% stats_bar_simple resource language.code barwidth %}
             </div>
             <span class="i16 stats" style="color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Translated Strings: &nbsp;{% endblocktrans %}</span>
         {% endwith %}
@@ -119,7 +119,7 @@ Projects |
 
 <h3>{% trans 'History' %}</h3>
 {% load tx_action_log %}
-{% get_log 5 as action_log for_object tresource %}
+{% get_log 5 as action_log for_object resource %}
 {% if not action_log %}
 <p>{% trans 'No actions recorded yet :)' %}</p>
 {% else %}
@@ -135,10 +135,10 @@ Projects |
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% get_permission "project_perm.maintain" for request.user and tresource.project as "is_maintainer" %}
-    {% if perms.projects.delete_tresource or is_maintainer %}
+    {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+    {% if perms.projects.delete_resource or is_maintainer %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url tresource_delete project_slug=tresource.project.slug tresource_slug=tresource.slug %}">{% trans "Delete translation resource" %}</a>
+      <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete translation resource" %}</a>
     </div>
     {% endif %}
   </div>

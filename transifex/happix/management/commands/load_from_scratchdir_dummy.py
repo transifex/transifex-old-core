@@ -7,11 +7,11 @@ from happix.loaders import load_dir_hierarchy
 from projects.models import Project
 from txcommon.log import logger
 
-_HELP_TEXT = """Load TResources to the DB by parsing the scratchdir.
+_HELP_TEXT = """Load Resources to the DB by parsing the scratchdir.
 
 This is a dummy command, it uses the well known path for scratchdir and it 
 automatically parses all the sources there, extracts the project names and 
-fills the data in the db by creating the appropriate TResources, SourceStrings,
+fills the data in the db by creating the appropriate Resources, SourceStrings,
 TranslationStrings.
 
 This command does not use Component and VcsUnit models.

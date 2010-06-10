@@ -38,11 +38,11 @@ def locate_source_files(directory_path, source_language=None,
 def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
         format='gettext', secondary_source_languages=['en_GB', 'en_US',]):
     """
-    Attempts to load a set of pofiles to the database as ONE TResource.
+    Attempts to load a set of pofiles to the database as ONE Resource.
 
-    The direcotry_path should be absolute! The name is the TResource's unique
+    The direcotry_path should be absolute! The name is the Resource's unique
     name. If no name is given, then directory_path will be used.
-    Returns a TResource instance for this resource hierarchy.
+    Returns a Resource instance for this resource hierarchy.
     Secondary source language codes are used as a workaround to identify the 
     source strings in the case we don't find any pot or source language file.
     """
@@ -99,7 +99,7 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
                 break
 
     # Load the source file
-    tres = TResource.objects.create_or_update_from_file(path_to_file=source_file,
+    tres = Resource.objects.create_or_update_from_file(path_to_file=source_file,
                project=project, source_language=source_language, name=None,
                format=format)
 
@@ -111,13 +111,13 @@ def load_dir_hierarchy(directory_path, project, source_language=None, name=None,
     return tres
 
 
-def load_source_file(url, tresource, source_language, format='gettext'):
+def load_source_file(url, resource, source_language, format='gettext'):
     """
     Load a source file to the DB based on its format.
     """
     #TODO: fill in the remaining format loaders
     if format=='gettext':
-        return load_gettext_source(url, tresource, source_language)
+        return load_gettext_source(url, resource, source_language)
     elif format=='rails':
         return None
     elif format=='java':
@@ -130,11 +130,11 @@ def load_source_file(url, tresource, source_language, format='gettext'):
         return None
 
 
-def load_gettext_source(path_to_file, tresource, source_language):
+def load_gettext_source(path_to_file, resource, source_language):
     """
     Load a set of source strings in the DB from the specified file.
     
-    Return the TResource instance that has been loaded.
+    Return the Resource instance that has been loaded.
     """
 
     # Open the pofile (FYI, the return value is a list!)
@@ -194,7 +194,7 @@ def load_gettext_source(path_to_file, tresource, source_language):
         # Get or create the SourceEntity.
         st, st_created = SourceEntity.objects.get_or_create(string=content, 
             context=context,
-            tresource=tresource, language=source_language,
+            resource=resource, language=source_language,
             defaults={'position': position, 'occurrences': occurrences,
                       'flags': flags, 'developer_comment': entry.comment,
                       'plural': entry.msgid_plural})
@@ -203,17 +203,17 @@ def load_gettext_source(path_to_file, tresource, source_language):
             st.position = position
             st.save()
 
-    return tresource
+    return resource
 
 
-def load_translation_file(url, tresource, target_language, source_language,
+def load_translation_file(url, resource, target_language, source_language,
                           format='gettext'):
     """
     Load a source file to the DB based on its format.
     """
     #TODO: fill in the remaining format loaders
     if format=='gettext':
-        return load_gettext_po(url, tresource, target_language, source_language)
+        return load_gettext_po(url, resource, target_language, source_language)
     elif format=='rails':
         return None
     elif format=='java':
@@ -226,7 +226,7 @@ def load_translation_file(url, tresource, target_language, source_language,
         return None
 
 
-def load_gettext_po(path_to_file, tresource, target_language,
+def load_gettext_po(path_to_file, resource, target_language,
                     source_language=None):
     """
     Load a pofile in the db.
@@ -240,7 +240,7 @@ def load_gettext_po(path_to_file, tresource, target_language,
     pofile = polib.pofile(path_to_file)
 
     for position, entry in enumerate(pofile):
-        # If the TResource created now then fill the 
+        # If the Resource created now then fill the 
         # Check the msgids and update the existing ones, drop the others!
         # If msgid is empty continue to the next iteration
         content=entry.msgid
@@ -253,7 +253,7 @@ def load_gettext_po(path_to_file, tresource, target_language,
             # For gettext there should only be one position per msgid,msgctxt
             source_string = SourceEntity.objects.get(string=content, 
                                                      context=context,
-                                                     tresource=tresource,
+                                                     resource=resource,
                                                      position__isnull=False)
         except SourceEntity.DoesNotExist:
             continue
@@ -298,7 +298,7 @@ def load_gettext_po(path_to_file, tresource, target_language,
                 ts.string = entry.msgstr
                 ts.save()
 
-    return tresource
+    return resource
 
 
 def load_rails_yml(path_to_file, target_language, source_language='en', name=None):

@@ -30,14 +30,14 @@
             <span>Description :</span>
             {{ source_string.context }}
           </p>
-          {% with source_string.tresource as tresource %}
+          {% with source_string.resource as resource %}
           <p class="long_description">
             <span>Resource :</span>
-            {{ tresource.name }}
+            {{ resource.name }}
           </p>
           <p class="long_description">
             <span>Project :</span>
-            {{ tresource.project }}
+            {{ resource.project }}
           </p>
           {% endwith %}
           <p class="long_description">

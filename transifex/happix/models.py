@@ -49,22 +49,22 @@ for parser in PARSERS:
     PARSER_MAPPING[parser.mime_type] = parser
 
 
-class TResourceGroup(models.Model):
+class ResourceGroup(models.Model):
     """
-    Model for grouping TResources.
+    Model for grouping Resources.
     """
     # FIXME: add necessary fields
     pass
 
 
-class TResourceManager(models.Manager):
+class ResourceManager(models.Manager):
     pass
 
-class TResource(models.Model):
+class Resource(models.Model):
     """
     A translation resource, equivalent to a POT file, YAML file, string stream etc.
     
-    The TResource points to a source language (template) file path! For example,
+    The Resource points to a source language (template) file path! For example,
     it should be pointing to a .pot file or to a english .po file.of a project
     with english as the source language.
     The path_to_file should be point to :
@@ -89,19 +89,19 @@ class TResource(models.Model):
     # Foreign Keys
     source_language = models.ForeignKey(Language,
         verbose_name=_('Source Language'),blank=False, null=False,
-        help_text=_("The source language of this TResource."))
+        help_text=_("The source language of this Resource."))
 
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False,
         null=True,
         help_text=_("The project which owns the translation resource."))
 
-    tresource_group = models.ForeignKey(TResourceGroup, verbose_name=_("TResource Group"),
+    resource_group = models.ForeignKey(ResourceGroup, verbose_name=_("Resource Group"),
         blank=False, null=True,
-        help_text=_("A group under which TResources are organized."))
+        help_text=_("A group under which Resources are organized."))
 
     # Managers
-    objects = TResourceManager()
+    objects = ResourceManager()
 
     def __unicode__(self):
         return self.name
@@ -110,23 +110,23 @@ class TResource(models.Model):
         unique_together = (('name', 'project'),)
                            #('slug', 'project'),
                            #('path', 'project'))
-        verbose_name = _('tresource')
-        verbose_name_plural = _('tresources')
+        verbose_name = _('resource')
+        verbose_name_plural = _('resources')
         ordering  = ['name',]
         order_with_respect_to = 'project'
         get_latest_by = 'created'
 
     @permalink
     def get_absolute_url(self):
-        return ('project.resource', None, { 'project_slug': self.project.slug, 'tresource_slug' : self.slug })
+        return ('project.resource', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
     def available_languages(self):
         """
         Return the languages with at least one Translation of a SourceEntity for
-        this TResource.
+        this Resource.
         """
-        languages = Translation.objects.filter(tresource=self).values_list(
+        languages = Translation.objects.filter(resource=self).values_list(
             'language', flat=True).distinct()
         return Language.objects.filter(id__in=languages).distinct()
 
@@ -137,9 +137,9 @@ class TResource(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(tresource=self,
+        return SourceEntity.objects.filter(resource=self,
             id__in=Translation.objects.filter(language=target_language,
-                tresource=self).values_list('source_entity', flat=True))
+                resource=self).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
         """
@@ -149,19 +149,19 @@ class TResource(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(tresource=self).exclude(
+        return SourceEntity.objects.filter(resource=self).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                tresource=self).values_list('source_entity', flat=True))
+                resource=self).values_list('source_entity', flat=True))
 
     def num_translated(self, language):
         """
-        Return the number of translated strings in this TResource for the language.
+        Return the number of translated strings in this Resource for the language.
         """
         return self.translated_strings(language).count()
 
     def num_untranslated(self, language):
         """
-        Return the number of untranslated strings in this TResource for the language.
+        Return the number of untranslated strings in this Resource for the language.
         """
         return self.untranslated_strings(language).count()
 
@@ -169,10 +169,10 @@ class TResource(models.Model):
     @property
     def total_entities(self):
         """Return the total number of source entities to be translated."""
-        return SourceEntity.objects.filter(tresource=self).count()
+        return SourceEntity.objects.filter(resource=self).count()
 
     def trans_percent(self, language):
-        """Return the percent of untranslated strings in this TResource."""
+        """Return the percent of untranslated strings in this Resource."""
         t = self.num_translated(language)
         try:
             return (t * 100 / self.total_entities)
@@ -180,7 +180,7 @@ class TResource(models.Model):
             return 100
 
     def untrans_percent(self, language):
-        """Return the percent of untranslated strings in this TResource."""
+        """Return the percent of untranslated strings in this Resource."""
         translated_percent = self.trans_percent(language)
         return (100 - translated_percent)
         # With the next approach we lose some data because we cut floating points
@@ -200,7 +200,7 @@ class TResource(models.Model):
                 se, created = SourceEntity.objects.get_or_create(
                     string = j.source_entity,
                     context = j.context or "None",
-                    tresource = self,
+                    resource = self,
                     number = j.number,
                     defaults = {
                         'position' : 1,
@@ -209,7 +209,7 @@ class TResource(models.Model):
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = target_language,
-                    tresource = self,
+                    resource = self,
                     number = j.number,
                     defaults = {
                         'string' : j.translation,
@@ -240,8 +240,8 @@ class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
     
-    The SourceEntity is pointing to a specific TResource and it is uniquely 
-    defined by the string, context and tresource fields (so they are unique
+    The SourceEntity is pointing to a specific Resource and it is uniquely 
+    defined by the string, context and resource fields (so they are unique
     together).
     """
     string = models.CharField(_('String'), max_length=255,
@@ -250,9 +250,9 @@ class SourceEntity(models.Model):
     context = models.CharField(_('Context'), max_length=255,
         blank=False, null=False,
         help_text=_("A description of the source string. This field specifies"
-                    "the context of the source string inside the tresource."))
+                    "the context of the source string inside the resource."))
     position = models.IntegerField(_('Position'), blank=True, null=True,
-        help_text=_("The position of the source string in the TResource."
+        help_text=_("The position of the source string in the Resource."
                     "For example, the specific position of msgid field in a "
                     "po template (.pot) file in gettext."))
     #TODO: Decision for the following
@@ -278,8 +278,8 @@ class SourceEntity(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
-    # A source string must always belong to a tresource
-    tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+    # A source string must always belong to a resource
+    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         blank=False, null=False,
         help_text=_("The translation resource which owns the source string."))
 
@@ -287,11 +287,11 @@ class SourceEntity(models.Model):
         return self.string
 
     class Meta:
-#        unique_together = (('string', 'context', 'tresource'),)
+        unique_together = (('string', 'context', 'resource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
         ordering = ['string', 'context']
-        order_with_respect_to = 'tresource'
+        order_with_respect_to = 'resource'
         get_latest_by = 'created'
 
 
@@ -339,7 +339,7 @@ class Translation(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
-    # A source string must always belong to a tresource
+    # A source string must always belong to a resource
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         blank=False, null=False,
@@ -351,8 +351,8 @@ class Translation(models.Model):
         help_text=_("The language in which this translation string belongs to."))
 
     # Foreign Keys
-    # A source string must always belong to a tresource
-    tresource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+    # A source string must always belong to a resource
+    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         blank=False, null=False,
         help_text=_("The translation resource which owns the source string."))
 
@@ -367,7 +367,7 @@ class Translation(models.Model):
         return self.string
 
     class Meta:
-#        unique_together = (('source_entity', 'string', 'language', 'tresource'),)
+        unique_together = (('source_entity', 'string', 'language', 'resource'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
@@ -402,7 +402,7 @@ class TranslationSuggestion(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
-    # A source string must always belong to a tresource
+    # A source string must always belong to a resource
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         blank=False, null=False,
@@ -447,7 +447,7 @@ class StorageFile(models.Model):
         verbose_name=_('Source language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
 
-    #resource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+    #resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         #blank=False, null=True,
         #help_text=_("The translation resource which owns the source string."))
 

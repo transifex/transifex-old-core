@@ -21,7 +21,7 @@
   {% endif %}
   </div>-->
 
-  {% with project.tresource_set.all as resources %}
+  {% with project.resource_set.all as resources %}
   <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
     {% render_metacount resources _("resources") %}
   </h3>
@@ -40,8 +40,8 @@
         <a href="{{ res.get_absolute_url }}" style="font-weight:bold" class="res_tipsy_enable" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
         <sup class="entry_metalink">
            {% if request.user.is_authenticated and is_maintainer %}
-             <a href="{% url tresource_edit project_slug=project.slug tresource_slug=res.slug %}">{% trans "edit" %}</a>
-             , <a href="{% url tresource_delete project_slug=project.slug tresource_slug=res.slug %}">{% trans "del" %}</a>
+             <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
+             , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
            {% endif %}
         </sup>
     </li>

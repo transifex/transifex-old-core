@@ -7,7 +7,7 @@ from happix.loaders import load_dir_hierarchy
 from projects.models import Project, Component
 from txcommon.log import logger
 
-_HELP_TEXT = """Load TResources to the DB.
+_HELP_TEXT = """Load Resources to the DB.
 
 The paths are automatically retrieved from the legacy models Project, POFile etc.
 

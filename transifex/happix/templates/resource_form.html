@@ -8,18 +8,18 @@
 
 {{block.super}} »
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
-<a href="{% url project_detail tresource.project.slug %}">{{tresource.project}}</a> »
-Edit {{tresource}}
+<a href="{% url project_detail resource.project.slug %}">{{resource.project}}</a> »
+Edit {{resource}}
 {% endblock %}
 
 {% block title %}
-    {{ block.super }} | Edit {{ tresource}}
+    {{ block.super }} | Edit {{ resource}}
 {% endblock %}
 
 {% block content_title %}
   <h2 class="pagetitle">
-  {% if not tresource %}
-    {% blocktrans with tresource.name as tresource_name %}Edit {{ tresource_name }}{% endblocktrans %}
+  {% if not resource %}
+    {% blocktrans with resource.name as resource_name %}Edit {{ resource_name }}{% endblocktrans %}
   {% endif %}
   </h2>
 {% endblock %}
@@ -33,7 +33,7 @@ Edit {{tresource}}
   <form action='' method='post'>
     <table>
         <tbody>
-        {% form_as_table_rows tresource_form %}
+        {% form_as_table_rows resource_form %}
         </tbody>
     </table>
     <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save translation resource" %}" /></p>

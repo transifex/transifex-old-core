@@ -20,9 +20,9 @@ class HappixModelTests(TestCase):
         # Clear up the DB
         pass
 
-    def test_model_tresource(self):
+    def test_model_resource(self):
         """
-        Test TResource model creation.
+        Test Resource model creation.
         
         """
         pass

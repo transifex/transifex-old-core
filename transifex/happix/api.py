@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from projects.permissions import *
 from txcommon.decorators import one_perm_required_or_403
-from happix.models import TResource, SourceEntity, Translation, StorageFile
+from happix.models import Resource, SourceEntity, Translation, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
@@ -15,26 +15,26 @@ from uuid import uuid4
 from happix.decorators import method_decorator
 
 
-class TResourceHandler(BaseHandler):
+class ResourceHandler(BaseHandler):
     allowed_methods = ('GET', 'POST')
-    model = TResource
+    model = Resource
     fields = ('slug', 'name', 'created',)
 
-    def read(self, request, project_slug, tresource_slug=None):
+    def read(self, request, project_slug, resource_slug=None):
         """
         """
-        if tresource_slug:
+        if resource_slug:
             try:
-                tresource = TResource.objects.get(slug=tresource_slug)
-            except TResource.DoesNotExist:
+                resource = Resource.objects.get(slug=resource_slug)
+            except Resource.DoesNotExist:
                 return rc.NOT_FOUND
-            return tresource
+            return resource
         else:
-            return TResource.objects.all()
+            return Resource.objects.all()
 
-    #Should be changed to allow creating new tresources!
+    #Should be changed to allow creating new resources!
     #@transaction.commit_manually
-    def create(self, request, project_slug, tresource_slug):
+    def create(self, request, project_slug, resource_slug):
         """
         API call for uploading translation files (OBSOLETE since uploading files works via StorageFile now)
 
@@ -44,12 +44,12 @@ class TResourceHandler(BaseHandler):
         """
         project = Project.objects.get(slug = project_slug)
 
-        translation_resource, created = TResource.objects.get_or_create(
-            slug = tresource_slug,
+        translation_resource, created = Resource.objects.get_or_create(
+            slug = resource_slug,
             project = project,
             defaults = {
                 'project' : project,
-                'name' : tresource_slug.replace("-", " ").replace("_", " ").capitalize()
+                'name' : resource_slug.replace("-", " ").replace("_", " ").capitalize()
             })
 
         for filename, upload in request.FILES.iteritems():
@@ -57,21 +57,21 @@ class TResourceHandler(BaseHandler):
         return rc.CREATED
 
 
-def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
+def _create_stringset(request, project_slug, resource_slug, target_lang_code):
     '''
     Helper function to create json stringset for a project/resource for one or
     multiple languages.
     '''
     try:
-        if tresource_slug:
-            resources = [TResource.objects.get(project__slug=project_slug,slug=tresource_slug)]
+        if resource_slug:
+            resources = [Resource.objects.get(project__slug=project_slug,slug=resource_slug)]
         elif "resources" in request.GET:
             resources = []
             for resource_slug in request.GET["resources"].split(","):
-                resources.append(TResource.objects.get(slug=resource_slug))
+                resources.append(Resource.objects.get(slug=resource_slug))
         else:
-            resources = TResource.objects.filter(project__slug=project_slug)
-    except TResource.DoesNotExist:
+            resources = Resource.objects.filter(project__slug=project_slug)
+    except Resource.DoesNotExist:
         return rc.NOT_FOUND
 
     try:
@@ -102,7 +102,7 @@ def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
     retval = []
     for translation_resource in resources:
         strings = {}
-        for ss in SourceEntity.objects.filter(tresource=translation_resource,**qstrings):
+        for ss in SourceEntity.objects.filter(resource=translation_resource,**qstrings):
             if not ss.id in strings:
                 strings[ss.id] = {
             'id':ss.id,
@@ -111,10 +111,10 @@ def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
             'translations':{}}
 
         if not qstrings:
-            translated_strings = Translation.objects.filter(tresource = translation_resource)
+            translated_strings = Translation.objects.filter(resource = translation_resource)
         else:
             translated_strings = Translation.objects.filter(
-                                            tresource = translation_resource,
+                                            resource = translation_resource,
                                             source_entity__string__iregex=qstrings['string__iregex'])
 
         if target_langs:
@@ -129,25 +129,25 @@ def _create_stringset(request, project_slug, tresource_slug, target_lang_code):
 class AnonymousStringHandler(AnonymousBaseHandler):
     allowed_methods = ('GET')
 
-    def read(self, request, project_slug, tresource_slug=None, target_lang_code=None):
+    def read(self, request, project_slug, resource_slug=None, target_lang_code=None):
         '''
         Same as the handler below but this is for anonymous users.
         '''
-        return _create_stringset(request, project_slug, tresource_slug, target_lang_code)
+        return _create_stringset(request, project_slug, resource_slug, target_lang_code)
 
 
 class StringHandler(BaseHandler):
     allowed_methods = ('GET', 'POST','PUT')
     anonymous = AnonymousStringHandler
 
-    def read(self, request, project_slug, tresource_slug=None, target_lang_code=None):
+    def read(self, request, project_slug, resource_slug=None, target_lang_code=None):
         '''
-        This api call returns all strings for a specific tresource of a project
+        This api call returns all strings for a specific resource of a project
         and for a given target language. The data is returned in json format,
         following this organization:
 
         {
-            'tresource': 'sampleresource',
+            'resource': 'sampleresource',
             'strings':
             [{
                 'oringinal_string': 'str1',
@@ -163,21 +163,21 @@ class StringHandler(BaseHandler):
         }
 
         '''
-        return _create_stringset(request, project_slug, tresource_slug, target_lang_code)
+        return _create_stringset(request, project_slug, resource_slug, target_lang_code)
 
     # FIXME: Find out what permissions are needed for this. Maybe implement new
-    # ones for TResource similar to Components? Something like 'tresource_edit'
+    # ones for Resource similar to Components? Something like 'resource_edit'
     #@method_decorator(one_perm_required_or_403())
-    def update(self, request, project_slug, tresource_slug,target_lang_code=None):
+    def update(self, request, project_slug, resource_slug,target_lang_code=None):
         '''
         This API call is for uploading Translations to a specific
-        TResource. If no corresponding SourceEntitys are found, the uploading
+        Resource. If no corresponding SourceEntitys are found, the uploading
         should fail. The translation strings should be created if not in db or
         if already there, they should be overwritten. Format for incoming json
         files is:
 
         {
-          'tresource': 'sampleresource',
+          'resource': 'sampleresource',
           'language': 'el',
           'strings' :
             [{
@@ -199,8 +199,8 @@ class StringHandler(BaseHandler):
 
 
         try:
-            translation_resource = TResource.objects.get(slug=tresource_slug)
-        except TResource.DoesNotExist:
+            translation_resource = Resource.objects.get(slug=resource_slug)
+        except Resource.DoesNotExist:
             return rc.NOT_FOUND
 
         if 'application/json' in request.content_type: # we got JSON strings
@@ -223,7 +223,7 @@ class StringHandler(BaseHandler):
                 try:
                     ss = SourceEntity.objects.get(string=s.get('string',None),
                                                 context=s.get('context',None),
-                                                tresource=translation_resource)
+                                                resource=translation_resource)
                 except SourceEntity.DoesNotExist:
                     # We have no such string for translation. Either we got
                     # wrong file or something is messed up. Fail...
@@ -231,7 +231,7 @@ class StringHandler(BaseHandler):
 
                 try:
                     ts = Translation.objects.get(language=lang, source_entity=ss,
-                                                 tresource=translation_resource)
+                                                 resource=translation_resource)
                     # For a existing Translation delete the value if we get a '' or None value
                     if s.get('value'):
                         ts.string = s.get('value')
@@ -243,7 +243,7 @@ class StringHandler(BaseHandler):
                     if s.get('value'):
                         ts = Translation.objects.create(language=lang,
                                 source_entity=ss,
-                                tresource=translation_resource,
+                                resource=translation_resource,
                                 string=s.get('value'))
 
             return rc.ALL_OK
@@ -255,15 +255,15 @@ class StringHandler(BaseHandler):
     # and strings in it
     #@method_decorator(one_perm_required_or_403(pr_project_add_change,
     #    (Project, 'slug__exact', 'project_slug')))
-    def create(self, request, project_slug, tresource_slug):
+    def create(self, request, project_slug, resource_slug):
         '''
-        Using this API call, a user may create a tresource and assign source
-        strings for a specific language. It gets the project and tresource name
+        Using this API call, a user may create a resource and assign source
+        strings for a specific language. It gets the project and resource name
         from the url and the source lang code from the json file. The json
         should be in the following schema:
 
         {
-            'tresource': 'sampleresource',
+            'resource': 'sampleresource',
             'language': 'en',
             'strings':
             [{
@@ -294,14 +294,14 @@ class StringHandler(BaseHandler):
             except Language.DoesNotExist:
                 return rc.BAD_REQUEST
 
-            # check if tresource exists
-            translation_resource, created = TResource.objects.get_or_create(
-                                            slug = tresource_slug,
+            # check if resource exists
+            translation_resource, created = Resource.objects.get_or_create(
+                                            slug = resource_slug,
                                             source_language = lang,
                                             project = translation_project)
             # if new make sure, it's initialized correctly
             if created:
-                translation_resource.name = tresource_slug
+                translation_resource.name = resource_slug
                 translation_resource.project = translation_project
                 translation_resource.source_language = lang
                 translation_resource.save()
@@ -314,11 +314,11 @@ class StringHandler(BaseHandler):
                 # Store the value only if it is not None or ''!
                 if s.get('string'):
                     obj, cr = SourceEntity.objects.get_or_create(
-                                tresource=translation_resource,**s)
+                                resource=translation_resource,**s)
                     ts, created = Translation.objects.get_or_create(
                                         language=lang,
                                         source_entity=obj,
-                                        tresource=translation_resource)
+                                        resource=translation_resource)
                     ts.string = s.get('string')
                     ts.save()
 

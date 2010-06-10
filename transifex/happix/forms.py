@@ -1,9 +1,9 @@
 from django import forms
-from happix.models import TResource
+from happix.models import Resource
 
-class TResourceForm(forms.ModelForm):
+class ResourceForm(forms.ModelForm):
 
     class Meta:
-        model = TResource
-        exclude = ('project', 'tresource_group')
+        model = Resource
+        exclude = ('project', 'resource_group')
 

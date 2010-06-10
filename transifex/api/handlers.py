@@ -4,7 +4,7 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import TResource, SourceString, TranslationString, StorageFile
+from happix.models import Resource, SourceString, TranslationString, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
@@ -12,7 +12,7 @@ from django.db import transaction
 from uuid import uuid4
 
 ########################################################
-# String Handlers for Projects and TResources          #
+# String Handlers for Projects and Resources          #
 ########################################################
 
 #def create_json_from_tres_translated_strings(translation_resource, lang_list):
@@ -33,7 +33,7 @@ from uuid import uuid4
             #return rc.BAD_REQUEST
 
         #strings = TranslationString.objects.filter(
-                #tresource=translation_resource,
+                #resource=translation_resource,
                 #language=lang)
 
         #data_string = []
@@ -45,7 +45,7 @@ from uuid import uuid4
                 #'original_string': s.source_string.string,
             #})
 
-        #response.append({'tresource': translation_resource.name,
+        #response.append({'resource': translation_resource.name,
                        #'target_lang': lang.code,
                        #'strings':  data_string },)
 
@@ -53,7 +53,7 @@ from uuid import uuid4
 
 #class ProjectStringHandler(BaseHandler):
     #'''
-    #Handler to return strings for a whole project or for specific tresources
+    #Handler to return strings for a whole project or for specific resources
     #inside a project.
     #'''
 
@@ -62,12 +62,12 @@ from uuid import uuid4
     #def read(self, request, project_slug):
         #'''
         #This api calls returns all translation strings for a projects'
-        #tresources. If no tresources are specified, all tresource translation
+        #resources. If no resources are specified, all resource translation
         #strings are returned.
 
-        #To specify specific tresources, you can pass the variable with the
-        #'tresources' variable a comma  separated list of tresource slugs and
-        #the API will return all translation strings for this tresource in all
+        #To specify specific resources, you can pass the variable with the
+        #'resources' variable a comma  separated list of resource slugs and
+        #the API will return all translation strings for this resource in all
         #languages available.
 
         #If you want to request translation of specific languages, you can pass
@@ -79,7 +79,7 @@ from uuid import uuid4
         #The response is in the following format:
 
         #[{
-           #"tresource": "tres1",
+           #"resource": "tres1",
            #"target_lang": "lang1",
            #"strings" :
             #[{
@@ -92,7 +92,7 @@ from uuid import uuid4
             #}]
          #},
          #{
-           #"tresource": "tres1",
+           #"resource": "tres1",
            #"target_lang": "lang2",
            #"strings" :
             #[{
@@ -105,7 +105,7 @@ from uuid import uuid4
             #}]
          #},
          #{
-           #"tresource": "tres2",
+           #"resource": "tres2",
            #"target_lang": "lang1",
            #"strings" :
             #[{
@@ -124,20 +124,20 @@ from uuid import uuid4
 
         ## check if user asked for specific languages
         #lang_codes = request.GET.get('lang_codes', None)
-        ## check if user asked for specific tresources
-        #tresources = request.GET.get('tresources', None)
+        ## check if user asked for specific resources
+        #resources = request.GET.get('resources', None)
 
-        #if tresources:
-            #trs = TResource.objects.filter(slug__in=tresources.split(','))
+        #if resources:
+            #trs = Resource.objects.filter(slug__in=resources.split(','))
         #else:
-            #trs = TResource.objects.filter(project__slug=project_slug) or None
+            #trs = Resource.objects.filter(project__slug=project_slug) or None
 
         #if not trs:
             #return rc.BAD_REQUEST
 
         #for tr in trs:
             #if not lang_codes:
-                #language_list = TranslationString.objects.filter(tresource=tr).order_by('language').distinct('language').values_list('language__code')
+                #language_list = TranslationString.objects.filter(resource=tr).order_by('language').distinct('language').values_list('language__code')
                 #language_list = [ l[0] for l in language_list ]
             #else:
                 #language_list = lang_codes.split(',')
@@ -146,17 +146,17 @@ from uuid import uuid4
         #return response[0]
 
 
-#class TResourceStringHandler(BaseHandler):
+#class ResourceStringHandler(BaseHandler):
     #allowed_methods = ('GET', 'POST')
 
-    #def read(self, request, project_slug, tresource_slug, target_lang_code=None):
+    #def read(self, request, project_slug, resource_slug, target_lang_code=None):
         #'''
-        #This api call returns all strings for a specific tresource of a project
+        #This api call returns all strings for a specific resource of a project
         #and for a given target language. The data is returned in json format,
         #following this organization:
 
         #{
-            #'tresource': 'sampleresource',
+            #'resource': 'sampleresource',
             #'target_lang': 'el',
             #'strings':
             #[{
@@ -171,11 +171,11 @@ from uuid import uuid4
 
         #'''
 
-        ## check if we have the requested tresource || die
+        ## check if we have the requested resource || die
         #try:
-             #translation_resource = TResource.objects.get(slug = tresource_slug,
+             #translation_resource = Resource.objects.get(slug = resource_slug,
                                              #project__slug =project_slug)
-        #except TResource.DoesNotExist:
+        #except Resource.DoesNotExist:
             #return rc.BAD_REQUEST
 
         ## check if we have the requesed lang || die
@@ -187,7 +187,7 @@ from uuid import uuid4
 
             ## get all available languages
             #if not lang_codes:
-                #language_list = TranslationString.objects.filter(tresource=translation_resource).order_by('language').distinct('language').values_list('language__code')
+                #language_list = TranslationString.objects.filter(resource=translation_resource).order_by('language').distinct('language').values_list('language__code')
                 #language_list = [ l[0] for l in language_list ]
             #else:
                 #language_list = lang_codes.split(',')
@@ -195,15 +195,15 @@ from uuid import uuid4
         #return  create_json_from_tres_translated_strings(translation_resource,
                                                     #language_list)
 
-    #def create(self, request, project_slug, tresource_slug):
+    #def create(self, request, project_slug, resource_slug):
         #'''
-        #Using this API call, a user may create a tresource and assign source
-        #strings for a specific language. It gets the project and tresource name
+        #Using this API call, a user may create a resource and assign source
+        #strings for a specific language. It gets the project and resource name
         #from the url and the source lang code from the json file. The json
         #should be in the following schema:
 
         #{
-            #'tresource': 'sampleresource',
+            #'resource': 'sampleresource',
             #'source_lang': 'en',
             #'strings':
             #[{
@@ -222,13 +222,13 @@ from uuid import uuid4
         #except Project.DoesNotExist:
             #return rc.BAD_REQUEST
 
-        ## check if tresource exists
-        #translation_resource, created = TResource.objects.get_or_create(
-                                        #slug = tresource_slug,
+        ## check if resource exists
+        #translation_resource, created = Resource.objects.get_or_create(
+                                        #slug = resource_slug,
                                         #project = translation_project)
         ## if new make sure, it's initialized correctly
         #if created:
-            #translation_resource.name = tresource_slug
+            #translation_resource.name = resource_slug
             #translation_resource.project = translation_project
             #translation_resource.save()
 
@@ -245,11 +245,11 @@ from uuid import uuid4
                 #obj, cr = SourceString.objects.get_or_create(string=s.get('value'),
                                     #occurrences=s.get('occurrence'),
                                     #description="yadayada",
-                                    #tresource=translation_resource)
+                                    #resource=translation_resource)
                 #ts, created = TranslationString.objects.get_or_create(
                                     #language=lang,
                                     #source_string=obj,
-                                    #tresource=translation_resource)
+                                    #resource=translation_resource)
                 #if created:
                     #ts.string = s.get('value')
                     #ts.save()
@@ -263,7 +263,7 @@ This used to be API call for adding translation strings from JSON stringset
         source_language = Language.objects.by_code_or_alias('en')
         j = 0
         if request.content_type:
-            translation_resource = TResource.objects.get(id = tresource_id)
+            translation_resource = Resource.objects.get(id = resource_id)
             try:
 #                target_language = Language.objects.by_code_or_alias()
                 target_language = Language.objects.by_code_or_alias(request.data['target_language'])
@@ -273,14 +273,14 @@ This used to be API call for adding translation strings from JSON stringset
                 ss, created = SourceString.objects.get_or_create(
                     string= i['source_string'],
                     description=i['context'] or "None",
-                    tresource=translation_resource,
+                    resource=translation_resource,
                     defaults = {
                         'position' : 1,
                     }
                 )
 
                 sset, created = StringSet.objects.get_or_create(
-                    tresource=translation_resource,
+                    resource=translation_resource,
                     path = request.data['filename'],
                     language = target_language,
                 )

@@ -26,7 +26,7 @@ class StorageFile(models.Model):
         verbose_name=_('Source language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
 
-    #resource = models.ForeignKey(TResource, verbose_name=_('TResource'),
+    #resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         #blank=False, null=True,
         #help_text=_("The translation resource which owns the source string."))
 

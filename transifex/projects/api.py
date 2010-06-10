@@ -4,7 +4,7 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import TResource, SourceEntity, Translation, StorageFile
+from happix.models import Resource, SourceEntity, Translation, StorageFile
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
@@ -20,7 +20,7 @@ class ProjectHandler(BaseHandler):
     #TODO: Choose the fields we want to return
     fields = ('slug', 'name', 'description', 'long_description', 'created',
               'anyone_submit', 'bugtracker', ('owner', ('username', 'email')),
-              ('tresource_set', ('slug', 'name',)))
+              ('resource_set', ('slug', 'name',)))
     exclude = ()
 
     def read(self, request, project_slug=None):
@@ -46,7 +46,7 @@ class ProjectHandler(BaseHandler):
                 project = Project.objects.get(slug=project_slug)
                 storage_file = StorageFile.objects.get(uuid=uuid,user=request.user)
 
-                translation_resource, created = TResource.objects.get_or_create(
+                translation_resource, created = Resource.objects.get_or_create(
                         slug = "resource-%s" % (slugify(storage_file.name)),
                         name = "Translations of '%s'" % storage_file.name,
                         source_language = storage_file.language,
