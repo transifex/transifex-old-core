@@ -283,6 +283,12 @@ class SourceEntity(models.Model):
         blank=False, null=False,
         help_text=_("The translation resource which owns the source string."))
 
+    singular = models.ForeignKey('SourceEntity', verbose_name=_('Singular'),
+        blank=True, null=True,
+        help_text=_("The source entity that is the singular reference for"
+            " this plural source entity. If this source entity is not a"
+            " plural one, leave it as blank."))
+
     def __unicode__(self):
         return self.string
 
