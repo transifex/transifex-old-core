@@ -90,7 +90,7 @@ def _create_stringset(request, project_slug, resource_slug, target_lang_code):
             logger.info("No language found for code '%s'." % lang_code)
 
     # If any language is found
-    if not target_langs:
+    if not target_langs and lang_codes:
         return rc.NOT_FOUND
 
     # handle string search
@@ -204,7 +204,6 @@ class StringHandler(BaseHandler):
         except Project.DoesNotExist:
             return rc.NOT_FOUND
 
-
         try:
             translation_resource = Resource.objects.get(slug=resource_slug)
         except Resource.DoesNotExist:
@@ -221,7 +220,7 @@ class StringHandler(BaseHandler):
             try:
                 lang = Language.objects.by_code_or_alias(data.get('language',None))
             except Language.DoesNotExist:
-                try: 
+                try:
                     lang = Language.objects.by_code_or_alias(target_lang_code)
                 except Language.DoesNotExist:
                     return rc.BAD_REQUEST

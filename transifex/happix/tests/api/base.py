@@ -4,6 +4,7 @@ from happix.libtransifex.pofile import PofileParser
 from happix.models import Resource
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
+from happix.tests.api.utils import ORIGINAL, TRANSLATION
 
 class APIBaseTests(BaseTestCase):
     """Tests for the ResourceHandler API."""
@@ -16,8 +17,8 @@ class APIBaseTests(BaseTestCase):
         self.resource.save()
 
         # Opening JSON data for pushing through the API
-        self.data = open('%s/data.json' % self.current_path).read()
-
+        self.data = ORIGINAL
+        self.trans = TRANSLATION
         self.pofile_path = '%s/../libtransifex/pofile' % self.current_path
 
         # Loading POT (en_US) into the resource
