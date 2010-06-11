@@ -49,7 +49,10 @@ function TranslationString(parent, id, source_string, translated_string, context
 
 
 /* StringSet class which stores list of translation strings and maps them to visible table */
-function StringSet(json, push_url, from_lang, to_lang) {
+function StringSet(json, push_url, from_lang, to_lang, user) {
+/*    The committer */
+    this.user = user;
+
 /*    bindings[table_row_index] = TranslationString();*/
     this.to_lang = to_lang;
     this.bindings = [];
@@ -94,7 +97,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
 				type: 'PUT',
 				contentType: "application/json",
 				dataType: 'text',
-				data: JSON.stringify({language:this_stringset.to_lang, strings:to_update}),
+				data: JSON.stringify({language:this_stringset.to_lang, strings:to_update, user:this_stringset.user}),
 				success: function(stat, dict){
 				    /* This is a final variable accessed outside of callback */
 				    if(ts)

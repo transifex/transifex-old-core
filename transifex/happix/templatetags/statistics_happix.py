@@ -1,8 +1,31 @@
 from django import template
+from django.utils.timesince import timesince
 from languages.models import Language
 from translations.templatetags.statistics import StatBarsPositions
 
 register = template.Library()
+
+
+@register.simple_tag
+def last_translation_update(obj, lang_code=None):
+    t = obj.last_translation(lang_code)
+    if t:
+        return timesince(t.last_update)
+    return ''
+
+@register.simple_tag
+def last_committer(obj, lang_code=None):
+    t = obj.last_translation(lang_code)
+    if t:
+        return t.user
+    return ''
+
+@register.simple_tag
+def last_translation(obj, lang_code=None):
+    t = obj.last_translation(lang_code)
+    if t:
+        return t
+    return ''
 
 @register.simple_tag
 def trans_percent(obj, lang_code=None):

@@ -87,7 +87,7 @@
             complete: function(xmlhttpreq, status) {
 
                 var push_url = '{% url string_resource_pullfrom project.slug resource.slug target_language.code %}';
-                stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{request.LANGUAGE_CODE}}', '{{target_language.code}}');
+                stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{request.LANGUAGE_CODE}}', '{{target_language.code}}' {% if request.user %},'{{request.user}}'{% endif %});
 
                 /* Source and translated strings table */
                 stringset.bindToTable("trans_web_edit");

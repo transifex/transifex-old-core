@@ -92,26 +92,39 @@ Projects |
 {% endif %}
 
 <div class="list separate" style="clear:both">
-<ul>
+<table style="clear:both;margin-top:0.5em;width:100%">
+    <th class="i16 comment" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Language" %}</th>
+    <th class="i16 stats" style="width:320px;text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Completion" %}</th>
+    <th class="i16 clock" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Last Updated" %}</th>
+    <th class="i16" style="width:50px;text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Actions" %}</th>
 {% for language,count in translated_languages.items %}
-    <li style="list-style:none">
+    <tr>
+        <td>
 		<a href="{% url translation project.slug resource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
-        <span style="color:#666666;font-size:0.85em;float:right">
+        </td>
+        <td>
+        {% with 300 as barwidth %}
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
+                <div class="stats_string_comp" >{% trans_percent resource language.code %}% <span class='trans_detail'>({% translated resource language.code %}/{% untranslated resource language.code %})</span></div> 
+                {% stats_bar_simple resource language.code barwidth %}
+            </div>
+        {% endwith %}
+        </td>
+        <td>
+        <span class="tipsy_enable" title="Committed by {% last_committer resource language.code %}<br/>">
+          {% last_translation_update resource language.code %}
+        </span>
+        </td>
+        <td style="text-align:center">
+        <span style="color:#666666;font-size:0.85em;">
            <a href="{% url translation project.slug resource.slug language.code %}">
             <img class="tipsy_enable" style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png" title='{% trans "Translate Now" %}'>
            </a>
         </span>
-        <span class="details" style="padding-left:1em;color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Actions: &nbsp;{% endblocktrans %}</span>
-        {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='float:right;width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
-                <div class="stats_string_comp" >{% trans_percent resource language.code %}% <span class='trans_detail'>({% translated resource language.code %}/{% untranslated resource language.code %})</span></div> 
-                {% stats_bar_simple resource language.code barwidth %}
-            </div>
-            <span class="i16 stats" style="color:#666666;font-size:0.85em;float:right"> {% blocktrans %}Translated Strings: &nbsp;{% endblocktrans %}</span>
-        {% endwith %}
-    </li>
+        </td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
 </div>
 
 </div>

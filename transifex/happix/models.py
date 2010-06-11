@@ -121,6 +121,33 @@ class Resource(models.Model):
         return ('project.resource', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
+    def last_committer(self):
+        """
+        Return the overall last committer for the translation of this resource.
+        """
+        lt = self.last_translation(language=None)
+        if lt:
+            return lt.user
+        return None
+
+    def last_translation(self, language=None):
+        """
+        Return the last translation for this Resource and the specific lang.
+        
+        If None language value then return in all languages avaible the last 
+        translation.
+        """
+        if language:
+            target_language = Language.objects.by_code_or_alias(language)
+            t = Translation.objects.filter(resource=self,
+                    language=target_language).order_by('-last_update')
+        else:
+            t = Translation.objects.filter(resource=self).order_by('-last_update')
+        if t:
+            return t[0]
+        return None
+
+    @property
     def available_languages(self):
         """
         Return the languages with at least one Translation of a SourceEntity for

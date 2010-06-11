@@ -228,6 +228,18 @@ class StringHandler(BaseHandler):
                 except Language.DoesNotExist:
                     return rc.BAD_REQUEST
 
+            # Get the committer if exists
+            committer = None
+            if data.has_key('user'):
+                username = data.get('user',None)
+                if username:
+                    try:
+                        committer = User.objects.get(username=username)
+                    except User.DoesNotExist:
+                        return rc.BAD_REQUEST
+                else:
+                    return rc.BAD_REQUEST
+
             for s in strings:
                 try:
                     ss = SourceEntity.objects.get(string=s.get('string',None),
@@ -244,6 +256,8 @@ class StringHandler(BaseHandler):
                     # For a existing Translation delete the value if we get a '' or None value
                     if s.get('value'):
                         ts.string = s.get('value')
+                        if committer:
+                            ts.user = committer
                         ts.save()
                     else:
                         ts.delete()
@@ -253,7 +267,8 @@ class StringHandler(BaseHandler):
                         ts = Translation.objects.create(language=lang,
                                 source_entity=ss,
                                 resource=translation_resource,
-                                string=s.get('value'))
+                                string=s.get('value'),
+                                user=committer)
 
             return rc.ALL_OK
         else:
@@ -303,6 +318,18 @@ class StringHandler(BaseHandler):
             except Language.DoesNotExist:
                 return rc.BAD_REQUEST
 
+            # Get the committer if exists
+            committer = None
+            if data.has_key('user'):
+                username = data.get('user',None)
+                if username:
+                    try:
+                        committer = User.objects.get(username=username)
+                    except User.DoesNotExist:
+                        return rc.BAD_REQUEST
+                else:
+                    return rc.BAD_REQUEST
+
             # check if resource exists
             translation_resource, created = Resource.objects.get_or_create(
                                             slug = resource_slug,
@@ -327,7 +354,8 @@ class StringHandler(BaseHandler):
                     ts, created = Translation.objects.get_or_create(
                                         language=lang,
                                         source_entity=obj,
-                                        resource=translation_resource)
+                                        resource=translation_resource,
+                                        user=committer)
                     ts.string = s.get('string')
                     ts.save()
 
