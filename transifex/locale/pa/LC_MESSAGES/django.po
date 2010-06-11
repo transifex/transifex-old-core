@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 17:18+0000\n"
+"POT-Creation-Date: 2010-06-11 07:53+0000\n"
 "PO-Revision-Date: 2010-04-30 08:22+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -20,11 +20,11 @@ msgstr ""
 msgid "Search for an username or leave it blank"
 msgstr "ਯੂਜ਼ਰ-ਨਾਂ ਲਈ ਲੱਭੋ ਜਾਂ ਖਾਲੀ ਛੱਡੋ"
 
-#: actionlog/models.py:155
+#: actionlog/models.py:204
 msgid "log entry"
 msgstr "ਲਾਗ ਐਂਟਰੀ"
 
-#: actionlog/models.py:156
+#: actionlog/models.py:205
 msgid "log entries"
 msgstr "ਲਾਗ ਐਂਟਰੀਆਂ"
 
@@ -32,8 +32,8 @@ msgstr "ਲਾਗ ਐਂਟਰੀਆਂ"
 msgid "Date/time"
 msgstr "ਮਿਤੀ/ਸਮਾਂ"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:74
-#: teams/models.py:110 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:76
+#: teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
 msgstr "ਯੂਜ਼ਰ"
 
@@ -49,9 +49,363 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "ਹਾਲੇ ਕੋਈ ਅਤੀਤ ਰਿਕਾਰਡ ਨਹੀਂ।"
 
+#: addons/charts/templates/charts/widget_snippet.html:61
+msgid "Image charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:65
+#: addons/charts/templates/charts/widget_snippet.html:94
+#: templates/userprofile/profile/location.html:22
+msgid "Loading..."
+msgstr "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
+
+#: addons/charts/templates/charts/widget_snippet.html:68
+msgid ""
+"Display your project's translation statistics on your own website as a "
+"simple image.\n"
+"                Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:70
+msgid "The chart will always reflect your live Transifex numbers."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:71
+#: addons/charts/templates/charts/widget_snippet.html:103
+msgid "Show code snippet for component:"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:73
+#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
+#: projects/models.py:299 projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: txcollections/migrations/0001_initial.py:23
+#: txcollections/migrations/0001_initial.py:41
+msgid "Hidden"
+msgstr "ਲੁਕਵਾਂ"
+
+#: addons/charts/templates/charts/widget_snippet.html:87
+msgid "Interactive charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:98
+msgid ""
+"Display your project's translation statistics on your own website as "
+"interactive chart.\n"
+"                This requires modifications to your homepage's HTML code."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:101
+msgid ""
+"By tweaking the code you can adjust verbosity, dimensions and colors of the "
+"chart"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:121
+msgid "Interactive and Image Charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:122
+msgid ""
+"Sorry, but your project doesn't have any components with up-to-date "
+"statistics. \n"
+"You need to have at least one component with statistics to export charts "
+"from Transifex."
+msgstr ""
+
+#: addons/locks/handlers.py:58
+msgid ""
+"Couldn't lock file, this means that you can send files only for reviewing."
+msgstr ""
+
+#: addons/locks/models.py:65
+#, python-format
+msgid ""
+"User '%(user)s' has no permission to submit files for or coordinate  '%"
+"(pofile)s'"
+msgstr ""
+
+#: addons/locks/models.py:77
+#, python-format
+msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
+msgstr ""
+
+#: addons/locks/models.py:158
+#, python-format
+msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
+msgstr ""
+
+#: addons/locks/notifications.py:15
+msgid "Lock is expring"
+msgstr ""
+
+#: addons/locks/notifications.py:16
+msgid "when a lock for file is expiring"
+msgstr ""
+
+#: addons/locks/views.py:42
+msgid "Lock removed."
+msgstr "ਲਾਕ ਹਟਾਇਆ।"
+
+#: addons/locks/views.py:47 addons/locks/views.py:78
+#: projects/views/component.py:556
+msgid "Sorry, but you need to send a POST request."
+msgstr "ਅਫਸੋਸ, ਪਰ ਤੁਹਾਨੂੰ  POST ਮੰਗ ਭੇਜਣੀ ਪਵੇਗੀ।"
+
+#: addons/locks/views.py:72
+msgid "Lock created. Please don't forget to remove it when you're done."
+msgstr "ਲਾਕ ਬਣਾਇਆ ਗਿਆ: ਜਦੋਂ ਤੁਸੀਂ ਕੰਮ ਕਰ ਲਿਆ ਤਾਂ ਇਸ ਨੂੰ ਹਟਾਉਣਾ ਨਾ ਭੁੱਲਣਾ।"
+
+#: addons/locks/templates/pofile_lock.html:20
+#, python-format
+msgid "This file has been locked by user '%(owner)s'."
+msgstr ""
+
+#: addons/locks/templates/pofile_lock.html:22
+#, fuzzy
+msgid "Click on it to unlock the file."
+msgstr "ਫਾਇਲ ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਟਾਰਗੇਟ ਦੀ ਚੋਣ ਕਰੋ ਜੀ।"
+
+#: addons/locks/templates/pofile_lock.html:24
+#, fuzzy
+msgid "Time left:"
+msgstr "ਟਾਈਮ-ਲਾਈਨ"
+
+#: addons/locks/templates/pofile_lock.html:32
+#, python-format
+msgid ""
+"\n"
+"                Extend lock by %(hours)s hour.\n"
+"            "
+msgid_plural ""
+"\n"
+"                Extend lock by %(hours)s hours.\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: addons/locks/templates/pofile_lock.html:46
+#, fuzzy
+msgid "Lock and download this file to notify others you're working with it."
+msgstr "ਇਹ ਫਾਇਲ ਲਾਕ ਕਰੋ ਤਾਂ ਕਿ ਹੋਰਾਂ ਨੂੰ ਜਾਣਕਾਰੀ ਰਹੇ ਕਿ ਤੁਸੀਂ ਇਸ ਉੱਤੇ ਕੰਮ ਕਰ ਰਹੇ ਹੋ।"
+
+#: addons/locks/templates/pofile_lock.html:51
+msgid "This file is unlocked. Most likely no one is working with it right now."
+msgstr "ਇਹ ਫਾਇਲ ਅਣ-ਲਾਕ ਹੈ। ਸੰਭਵ ਤੌਰ ਉੱਤੇ ਇਸ ਸਮੇਂ ਕੋਈ ਇਸ ਉੱਤੇ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ ਹੈ।"
+
+#: addons/locks/templates/locks/component.html:9
+#: translations/templates/component_submit.html:31
+msgid "This file is locked by someone else."
+msgstr ""
+
+#: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
+#, python-format
+msgid ""
+"\n"
+"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
+"a> is about to expire on %(expires)s\n"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:35
+msgid "You are only allowed to upload PO files (*.po)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:39
+msgid "You have submitted empty file!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:48
+msgid "Uploaded file contains DOS newlines (\\r)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:59
+#, python-format
+msgid "Uploaded file header doesn't have '%s' field!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:65
+msgid "Only UTF-8 encoded files are allowed!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:69
+msgid "Uploaded file doesn't contain any translated entries!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:86
+#, fuzzy
+msgid "Your file has been e-mailed to you to avoid loss of any work."
+msgstr ""
+"ਤੁਹਾਡੀ ਫਾਇਲ ਠੀਕ-ਠਾਕ ਜਾਂਚ ਵਿੱਚੋਂ ਪਾਸ ਨਹੀਂ ਹੋ ਸਕੀ (msgfmt -c)। ਤੁਹਾਡੀ ਫਾਇਲ ਨੂੰ ਤੁਹਾਨੂੰ ਈਮੇਲ "
+"ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਕਿ ਤੁਹਾਡੇ ਕੰਮ ਦਾ ਨੁਕਸਾਨ ਨਾ ਹੋ ਜਾਵੇ।"
+
+#: addons/presubmit_checks/handlers.py:90
+msgid ""
+"We couldn't send you an email to preserve your work because you haven't "
+"registered an email address."
+msgstr ""
+
+#: addons/repowatch/models.py:28
+#, python-format
+msgid "Unable to add watch for path %r"
+msgstr ""
+
+#: addons/repowatch/models.py:99
+msgid "watch"
+msgstr "ਨਿਗ੍ਹਾ"
+
+#: addons/repowatch/models.py:100
+msgid "watches"
+msgstr "ਨਿਗ੍ਹਾ"
+
+#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
+msgid "Must use POST to activate"
+msgstr "ਐਕਟੀਵੇਟ ਕਰਨ ਲਈ POST ਵਰਤਣਾ ਲਾਜ਼ਮੀ ਹੈ"
+
+#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
+msgid "Notification is not enabled"
+msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਚਾਲੂ ਨਹੀਂ ਹੈ"
+
+#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
+msgid "Watch it"
+msgstr "ਨਿਗ੍ਹਾ ਰੱਖੋ"
+
+#: addons/repowatch/views.py:65
+#, fuzzy
+msgid "Stop watching"
+msgstr "ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
+
+#: addons/repowatch/views.py:100
+msgid "Watch this project"
+msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਚ ਨਿਗ੍ਹਾ ਰੱਖੋ"
+
+#: addons/repowatch/views.py:113
+msgid "Stop watching this project"
+msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਤੇ ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
+
+#: addons/repowatch/templates/watch_toggle.html:5
+msgid "Stop watching it"
+msgstr "ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
+
+#: addons/repowatch/templates/repowatch/project_detail.html:8
+#: templates/projects/project_detail.html:52
+msgid "Watch:"
+msgstr "ਵਾਚ:"
+
+#: addons/timeline/templates/timeline/additional_account_links.html:3
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr "ਮੇਰੀ ਸਮਾਂ-ਸੀਮਾ"
+
+#: addons/timeline/templates/timeline/project.html:9
+#: addons/timeline/templates/timeline/timeline_project.html:15
+#: addons/timeline/templates/timeline/timeline_project.html:17
+#: addons/timeline/templates/timeline/timeline_user.html:13
+#: templates/projects/project_timeline.html:12
+#: templates/projects/project_timeline.html:14
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr "ਟਾਈਮ-ਲਾਈਨ"
+
+#: addons/timeline/templates/timeline/timeline_base.html:12
+#: templates/timeline.html:11
+msgid "Filter results"
+msgstr "ਨਤੀਜੇ ਫਿਲਟਰ"
+
+#: addons/timeline/templates/timeline/timeline_base.html:18
+#: templates/timeline.html:17
+msgid "Go"
+msgstr "ਜਾਓ"
+
+#: addons/timeline/templates/timeline/timeline_base.html:25
+#: templates/timeline.html:24 templates/projects/component_detail.html:207
+#: templates/projects/project_detail.html:119
+#: templates/teams/team_detail.html:134
+msgid "None available"
+msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
+
+#: addons/timeline/templates/timeline/timeline_base.html:29
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+msgstr[1] ""
+
+#: addons/timeline/templates/timeline/timeline_base.html:44
+#: languages/models.py:39 languages/migrations/0001_initial.py:14
+#: projects/models.py:152 projects/models.py:278 projects/models.py:541
+#: projects/migrations/0001_initial.py:20
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/reviews/review_list.html:42
+#: txcollections/migrations/0001_initial.py:14
+#: txcollections/migrations/0001_initial.py:34
+msgid "Description"
+msgstr "ਵੇਰਵਾ"
+
+#: addons/timeline/templates/timeline/timeline_project.html:23
+#: addons/timeline/templates/timeline/timeline_user.html:23
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr ""
+"\n"
+" %(project_name)s ਸਮਾਂ-ਸੀਮਾ\n"
+" "
+
+#: addons/timeline/templates/timeline/timeline_user.html:16
+#: templates/simpleauth/base_profile.html:4
+#: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
+msgid "Profile"
+msgstr "ਪਰੋਫਾਇਲ"
+
+#: addons/widgets/templates/project_widgets.html:12
+#: addons/widgets/templates/project_widgets.html:14
+#: addons/widgets/templates/widgets/project.html:7
+msgid "Widgets"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:48
+msgid "Widgets, buttons, etc"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:49
+msgid ""
+"Here are some widgets, buttons and other cool stuff you can add to your "
+"homepage!"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:54
+#, fuzzy
+msgid "Userbars"
+msgstr "ਯੂਜ਼ਰ"
+
+#: addons/widgets/templates/project_widgets.html:63
+msgid "You can insert userbars to forums, e-mail signatures etc."
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:64
+msgid "Show code snippet for userbar:"
+msgstr ""
+
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:85 projects/models.py:199 projects/models.py:458
+#: projects/models.py:150 projects/models.py:276 projects/models.py:539
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
 #: templates/userprofile/profile/public.html:60
@@ -99,17 +453,6 @@ msgstr "%(site_name)s ਉੱਤੇ ਭਾਸ਼ਾ"
 msgid "The languages spoken on %s."
 msgstr "%s ਵਿੱਚ ਬੋਲੀਆਂ ਜਾਂਦੀਆਂ ਭਾਸ਼ਾਵਾਂ।"
 
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:87 projects/models.py:201 projects/models.py:460
-#: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
-#: templates/reviews/review_list.html:43
-#: txcollections/migrations/0001_initial.py:14
-#: txcollections/migrations/0001_initial.py:34
-msgid "Description"
-msgstr "ਵੇਰਵਾ"
-
 #: languages/models.py:40 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "ਕੋਡ"
@@ -141,426 +484,6 @@ msgstr "ਭਾਸ਼ਾ"
 #: languages/models.py:64 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "ਭਾਸ਼ਾਵਾਂ"
-
-#: languages/management/commands/txcreatelanguages.py:27
-msgid "Afrikaans"
-msgstr "ਅਫਰੀਕੀ"
-
-#: languages/management/commands/txcreatelanguages.py:42
-msgid "Amharic"
-msgstr "ਅੰਹਰਿਕ"
-
-#: languages/management/commands/txcreatelanguages.py:48
-msgid "Arabic"
-msgstr "ਅਰਬੀ"
-
-#: languages/management/commands/txcreatelanguages.py:56
-msgid "Assamese"
-msgstr "ਆਸਾਮੀ"
-
-#: languages/management/commands/txcreatelanguages.py:64
-msgid "Asturian"
-msgstr "ਅਸਟਰੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:73
-msgid "Azerbaijani"
-msgstr "ਅਜ਼ਰਬਾਈਜਾਨ"
-
-#: languages/management/commands/txcreatelanguages.py:81
-msgid "Balochi"
-msgstr "ਬਲੋਚੀ"
-
-#: languages/management/commands/txcreatelanguages.py:88
-msgid "Belarusian"
-msgstr "ਬੇਲਾਰੂਸੀ"
-
-#: languages/management/commands/txcreatelanguages.py:97
-msgid "Bulgarian"
-msgstr "ਬੁਲਗਾਰੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:106
-msgid "Bengali"
-msgstr "ਬੰਗਾਲੀ"
-
-#: languages/management/commands/txcreatelanguages.py:114
-msgid "Bengali (India)"
-msgstr "ਬੰਗਾਲੀ (ਭਾਰਤ)"
-
-#: languages/management/commands/txcreatelanguages.py:122
-msgid "Tibetan"
-msgstr "ਤਿੱਬਤੀ"
-
-#: languages/management/commands/txcreatelanguages.py:131
-msgid "Bosnian"
-msgstr "ਬੋਸਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:140
-msgid "Catalan (Valencian)"
-msgstr "ਕਾਟਾਲਾਨ (ਵਾਲਿਨਸੀਆਈ)"
-
-#: languages/management/commands/txcreatelanguages.py:149
-msgid "Czech"
-msgstr "ਚੈੱਕ"
-
-#: languages/management/commands/txcreatelanguages.py:158
-msgid "Welsh"
-msgstr "ਵਾਲਿਸ਼"
-
-#: languages/management/commands/txcreatelanguages.py:167
-msgid "Danish"
-msgstr "ਡੈਨਿਸ਼"
-
-#: languages/management/commands/txcreatelanguages.py:176
-msgid "German"
-msgstr "ਜਰਮਨ"
-
-#: languages/management/commands/txcreatelanguages.py:184
-msgid "Swiss German"
-msgstr "ਸਵਿੱਸ ਜਰਮਨ"
-
-#: languages/management/commands/txcreatelanguages.py:193
-msgid "Dzongkha"
-msgstr "ਡਜ਼ੋਨਗਖਾ"
-
-#: languages/management/commands/txcreatelanguages.py:202
-msgid "Greek"
-msgstr "ਗਰੀਕ"
-
-#: languages/management/commands/txcreatelanguages.py:209
-msgid "English"
-msgstr "ਅੰਗਰੇਜ਼ੀ"
-
-#: languages/management/commands/txcreatelanguages.py:217
-msgid "English (United Kingdom)"
-msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਆ)"
-
-#: languages/management/commands/txcreatelanguages.py:225
-msgid "English (United States)"
-msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕਾ)"
-
-#: languages/management/commands/txcreatelanguages.py:233
-msgid "English (South Africa)"
-msgstr "ਅੰਗਰੇਜ਼ੀ (ਦੱਖਣੀ ਅਫਰੀਕਾ)"
-
-#: languages/management/commands/txcreatelanguages.py:240
-msgid "Esperanto"
-msgstr "ਈਸਪੀਰਟੋ"
-
-#: languages/management/commands/txcreatelanguages.py:249
-msgid "Spanish (Castilian)"
-msgstr "ਸਪੇਨੀ (ਕਾਸਟਿਲਿਨ)"
-
-#: languages/management/commands/txcreatelanguages.py:257
-msgid "Spanish (Argentinian)"
-msgstr "ਸਪੇਨੀ (ਅਰਜਨਟੀਨਾ)"
-
-#: languages/management/commands/txcreatelanguages.py:265
-msgid "Spanish (Mexican)"
-msgstr "ਸਪੇਨੀ (ਮੈਕਸੀਕੋ)"
-
-#: languages/management/commands/txcreatelanguages.py:274
-msgid "Estonian"
-msgstr "ਇਸਟੋਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:283
-msgid "Basque"
-msgstr "ਬਾਸਕਿਊ"
-
-#: languages/management/commands/txcreatelanguages.py:291
-msgid "Persian"
-msgstr "ਫਾਰਸੀ"
-
-#: languages/management/commands/txcreatelanguages.py:300
-msgid "Finnish"
-msgstr "ਫੈਨਿਸ਼"
-
-#: languages/management/commands/txcreatelanguages.py:315
-msgid "French"
-msgstr "ਫਰੈਂਚ"
-
-#: languages/management/commands/txcreatelanguages.py:324
-msgid "Friulian"
-msgstr ""
-
-#: languages/management/commands/txcreatelanguages.py:333
-msgid "Western Frisian"
-msgstr "ਪੱਛਮੀ ਫਰਾਸੀ"
-
-#: languages/management/commands/txcreatelanguages.py:342
-msgid "Irish"
-msgstr "ਆਈਰਸ਼"
-
-#: languages/management/commands/txcreatelanguages.py:351
-msgid "Galician"
-msgstr "ਗਾਈਲੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:360
-msgid "Gujarati"
-msgstr "ਗੁਜਰਾਤੀ"
-
-#: languages/management/commands/txcreatelanguages.py:368
-msgid "Hebrew"
-msgstr "ਹੈਬਰਿਊ"
-
-#: languages/management/commands/txcreatelanguages.py:377
-msgid "Hindi"
-msgstr "ਹਿੰਦੀ"
-
-#: languages/management/commands/txcreatelanguages.py:386
-msgid "Croatian"
-msgstr "ਕਰੋਆਟੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:394
-msgid "Haitian (Haitian Creole)"
-msgstr ""
-
-#: languages/management/commands/txcreatelanguages.py:403
-msgid "Hungarian"
-msgstr "ਹੰਗਰੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:411
-msgid "Armenian"
-msgstr "ਅਰਮੀਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:418
-msgid "Indonesian"
-msgstr "ਇੰਡੋਨੇਸ਼ੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:426
-msgid "Iloko"
-msgstr "ਆਈਲੋਕੋ"
-
-#: languages/management/commands/txcreatelanguages.py:432
-msgid "Icelandic"
-msgstr "ਆਈਲੈਡਿਕ"
-
-#: languages/management/commands/txcreatelanguages.py:441
-msgid "Italian"
-msgstr "ਇਤਾਲਵੀ"
-
-#: languages/management/commands/txcreatelanguages.py:450
-msgid "Japanese"
-msgstr "ਜਾਪਾਨੀ"
-
-#: languages/management/commands/txcreatelanguages.py:459
-msgid "Georgian"
-msgstr "ਜਾਰਜੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:467
-msgid "Khmer"
-msgstr "ਖਮੇਰ"
-
-#: languages/management/commands/txcreatelanguages.py:475
-msgid "Kannada"
-msgstr "ਕੰਨੜ"
-
-#: languages/management/commands/txcreatelanguages.py:482
-msgid "Korean"
-msgstr "ਕੋਰੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:490
-msgid "Kashmiri"
-msgstr "ਕਸ਼ਮੀਰੀ"
-
-#: languages/management/commands/txcreatelanguages.py:499
-msgid "Kurdish"
-msgstr "ਕੁਰਦ"
-
-#: languages/management/commands/txcreatelanguages.py:506
-msgid "Kirgyz"
-msgstr "ਕਿਰਗਜ਼"
-
-#: languages/management/commands/txcreatelanguages.py:513
-msgid "Latin"
-msgstr "ਲੈਟਿਨ"
-
-#: languages/management/commands/txcreatelanguages.py:527
-msgid "Lao"
-msgstr "ਲਾਓ"
-
-#: languages/management/commands/txcreatelanguages.py:534
-msgid "Lithuanian"
-msgstr "ਲਿਥੂਆਨਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:543
-msgid "Latvian"
-msgstr "ਲਾਟਵੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:551
-msgid "Maithili"
-msgstr "ਮੈਥਲੀ"
-
-#: languages/management/commands/txcreatelanguages.py:557
-msgid "Macedonian"
-msgstr "ਮੈਕਡੋਨਿਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:563
-msgid "Malayalam"
-msgstr "ਮਲਿਆਲਮ"
-
-#: languages/management/commands/txcreatelanguages.py:577
-msgid "Mongolian"
-msgstr "ਮੰਗੋਲੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:585
-msgid "Marathi"
-msgstr "ਮਰਾਠੀ"
-
-#: languages/management/commands/txcreatelanguages.py:593
-msgid "Malay"
-msgstr "ਮਾਲਿਆ"
-
-#: languages/management/commands/txcreatelanguages.py:602
-msgid "Maltese"
-msgstr "ਮਾਲਟੀ"
-
-#: languages/management/commands/txcreatelanguages.py:610
-msgid "Burmese"
-msgstr "ਬੁਰਮੀ"
-
-#: languages/management/commands/txcreatelanguages.py:622
-msgid "Norwegian Bokmål"
-msgstr "ਨਾਰਵੇਗੀਆਈ ਬੋਕਮਾਲ"
-
-#: languages/management/commands/txcreatelanguages.py:630
-msgid "Nepali"
-msgstr "ਨੇਪਾਲੀ"
-
-#: languages/management/commands/txcreatelanguages.py:639
-msgid "Dutch (Flemish)"
-msgstr "ਡੱਚ (ਫਲਿਮਿਸ਼)"
-
-#: languages/management/commands/txcreatelanguages.py:648
-msgid "Norwegian Nynorsk"
-msgstr "ਨਾਰਵੇਗੀਅਨ ਨਿਉਨੋਰਸਕ"
-
-#: languages/management/commands/txcreatelanguages.py:656
-msgid "Norwegian"
-msgstr "ਨਾਰਵੇਗੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:663
-msgid "Northern Sotho"
-msgstr "ਉੱਤਰੀ ਸੋਥੋ"
-
-#: languages/management/commands/txcreatelanguages.py:672
-msgid "Oriya"
-msgstr "ਓੜੀਆ"
-
-#: languages/management/commands/txcreatelanguages.py:680
-msgid "Panjabi (Punjabi)"
-msgstr "ਪੰਜਾਬੀ"
-
-#: languages/management/commands/txcreatelanguages.py:694
-msgid "Polish"
-msgstr "ਪੋਲੈਂਡੀ"
-
-#: languages/management/commands/txcreatelanguages.py:711
-msgid "Portuguese"
-msgstr "ਪੁਰਤਗਾਲੀ"
-
-#: languages/management/commands/txcreatelanguages.py:720
-msgid "Portuguese (Brazilian)"
-msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ)"
-
-#: languages/management/commands/txcreatelanguages.py:729
-msgid "Romanian"
-msgstr "ਰੋਮਾਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:738
-msgid "Russian"
-msgstr "ਰੂਸੀ"
-
-#: languages/management/commands/txcreatelanguages.py:746
-msgid "Sinhala"
-msgstr "ਸਿੰਹਾਲਾ"
-
-#: languages/management/commands/txcreatelanguages.py:753
-msgid "Slovak"
-msgstr "ਸਲੋਵਾਕ"
-
-#: languages/management/commands/txcreatelanguages.py:762
-msgid "Slovenian"
-msgstr "ਸਲੋਵੀਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:771
-msgid "Albanian"
-msgstr "ਅਲਬੀਨੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:780
-msgid "Serbian"
-msgstr "ਸਰਬੀਆਈ"
-
-#: languages/management/commands/txcreatelanguages.py:788
-msgid "Serbian (Latin)"
-msgstr "ਸਰਬੀਆਈ (ਲੈਟਿਨ)"
-
-#: languages/management/commands/txcreatelanguages.py:798
-msgid "Sotho, Southern"
-msgstr "ਸੋਥੋ, ਦੱਖਣੀ"
-
-#: languages/management/commands/txcreatelanguages.py:807
-msgid "Swedish"
-msgstr "ਸਵੀਡਸ"
-
-#: languages/management/commands/txcreatelanguages.py:816
-msgid "Tamil"
-msgstr "ਤਾਮਿਲ"
-
-#: languages/management/commands/txcreatelanguages.py:824
-msgid "Telugu"
-msgstr "ਤੇਲਗੂ"
-
-#: languages/management/commands/txcreatelanguages.py:830
-msgid "Tajik"
-msgstr "ਤਾਜਿਕ"
-
-#: languages/management/commands/txcreatelanguages.py:836
-msgid "Thai"
-msgstr "ਥਾਈ"
-
-#: languages/management/commands/txcreatelanguages.py:842
-msgid "Tagalog"
-msgstr "ਤਾਗਾਲੋਗ"
-
-#: languages/management/commands/txcreatelanguages.py:855
-msgid "Turkish"
-msgstr "ਤੁਰਕ"
-
-#: languages/management/commands/txcreatelanguages.py:863
-msgid "Urdu"
-msgstr "ਊਰਦੁ"
-
-#: languages/management/commands/txcreatelanguages.py:870
-msgid "Ukrainian"
-msgstr "ਯੂਕਰੇਨੀ"
-
-#: languages/management/commands/txcreatelanguages.py:885
-msgid "Vietnamese"
-msgstr "ਵੀਅਤਨਾਮੀ"
-
-#: languages/management/commands/txcreatelanguages.py:893
-msgid "Wolof"
-msgstr "ਵੋਲੋਫ"
-
-#: languages/management/commands/txcreatelanguages.py:906
-msgid "Xhosa"
-msgstr "ਝੋਸਾ"
-
-#: languages/management/commands/txcreatelanguages.py:915
-msgid "Chinese (China)"
-msgstr "ਚੀਨੀ (ਚੀਨ)"
-
-#: languages/management/commands/txcreatelanguages.py:925
-msgid "Chinese (Hong Kong)"
-msgstr "ਚੀਨੀ (ਹਾਂਗਕਾਂਗ)"
-
-#: languages/management/commands/txcreatelanguages.py:935
-msgid "Chinese (Taiwan)"
-msgstr "ਚੀਨੀ (ਤਾਈਵਾਨ)"
-
-#: languages/management/commands/txcreatelanguages.py:944
-msgid "Zulu"
-msgstr "ਜੂਲੂ"
 
 #: projects/feeds.py:16
 #, python-format
@@ -602,30 +525,90 @@ msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "%(lang)s ਭਾਸ਼ਾ ਦੇ %(release)s ਰੀਲਿਜ਼ ਲਈ ਅਨੁਵਾਦ ਅੰਕੜੇ ਹਨ।"
 
-#: projects/forms.py:15 txpermissions/forms.py:19
+#: projects/forms.py:18 txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "ਯੂਜ਼ਰ ਨਾਂ ਲਈ ਖੋਜ"
 
-#: projects/forms.py:35 projects/models.py:214
+#: projects/forms.py:55
+msgid "Free for all"
+msgstr ""
+
+#: projects/forms.py:56
+msgid ""
+"Allow any logged-in user to submit files to my\n"
+"                              project. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Imagine</a> all the "
+"people, \n"
+"                              sharing all the world. Recommended for quick \n"
+"                              translations, and when a pre-commit review \n"
+"                              process is in place, e.g. when contributions "
+"are\n"
+"                              submitted by email or to a separate branch."
+msgstr ""
+
+#: projects/forms.py:66
+msgid "Limited access"
+msgstr ""
+
+#: projects/forms.py:67
+msgid ""
+"Give access to specific people. Translations \n"
+"                              teams will have access to their language's "
+"files\n"
+"                              only, and global writers will have access to "
+"all\n"
+"                              translation files. Recommended for most \n"
+"                              projects."
+msgstr ""
+
+#: projects/forms.py:75
+msgid "Outsourced access"
+msgstr ""
+
+#: projects/forms.py:76
+msgid ""
+"Re-use another project's teams and writers by \n"
+"                              trusting access control to that project. If "
+"a \n"
+"                              person can contribute to that project, it "
+"can \n"
+"                              contribute to this one as well. Recommended "
+"for \n"
+"                              non-upstream projects such as distribution \n"
+"                              packages, desktop environment modules, etc."
+msgstr ""
+
+#: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 
-#: projects/forms.py:52 projects/models.py:219
+#: projects/forms.py:151 projects/models.py:296
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "ਭੇਜੋ"
 
-#: projects/forms.py:53
+#: projects/forms.py:152
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
 msgstr ""
 
-#: projects/forms.py:68
+#: projects/forms.py:167
 msgid "Search for a component"
 msgstr "ਭਾਗ ਲਈ ਖੋਜ"
 
-#: projects/models.py:82 projects/models.py:196 projects/models.py:455
+#: projects/models.py:143
+msgid "Private"
+msgstr ""
+
+#: projects/models.py:144
+msgid ""
+"A private project is visible only by you and your team.Moreover, private "
+"projects are limited according to billingplans for the user account."
+msgstr ""
+
+#: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
 #: projects/migrations/0001_initial.py:38 releases/models.py:20
 #: txcollections/migrations/0001_initial.py:13
@@ -635,22 +618,22 @@ msgstr "ਭਾਗ ਲਈ ਖੋਜ"
 msgid "Slug"
 msgstr "ਸਲੁਗ"
 
-#: projects/models.py:83 projects/models.py:197 projects/models.py:456
+#: projects/models.py:148 projects/models.py:274 projects/models.py:537
 #: releases/models.py:21
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:86 projects/models.py:200 releases/models.py:24
+#: projects/models.py:151 projects/models.py:277 releases/models.py:24
 msgid "A short name or very short description."
 msgstr "ਛੋਟਾ ਨਾਂ ਜਾਂ ਬਹੁਤ ਹੀ ਸੰਖੇਪ ਵੇਰਵਾ"
 
-#: projects/models.py:88 projects/models.py:202
+#: projects/models.py:153 projects/models.py:279
 msgid "A sentence or two describing the object (optional)."
 msgstr "ਆਬਜੈਕਟ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲਈ ਇੱਕ ਜਾਂ ਦੋ ਸਤਰਾਂ 'ਚ ਜਾਣਕਾਰੀ (ਚੋਣਵੀਂ)।"
 
-#: projects/models.py:89 projects/models.py:203 projects/models.py:463
+#: projects/models.py:154 projects/models.py:280 projects/models.py:544
 #: projects/migrations/0001_initial.py:30
 #: projects/migrations/0001_initial.py:45 releases/models.py:27
 #: txcollections/migrations/0001_initial.py:25
@@ -658,53 +641,45 @@ msgstr "ਆਬਜੈਕਟ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲਈ ਇੱਕ �
 msgid "Long description"
 msgstr "ਲੰਮਾ ਵੇਰਵਾ"
 
-#: projects/models.py:91 projects/models.py:205
+#: projects/models.py:156 projects/models.py:282
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "ਲੰਮਾ ਵੇਰਵਾ (ਚੋਣਵਾਂ)। Markdown ਸੰਟੈਕਸ ਵਰਤੋਂ।"
 
-#: projects/models.py:92 projects/migrations/0001_initial.py:29
+#: projects/models.py:157 projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
 msgstr "ਮੁੱਖ ਪੇਜ਼"
 
-#: projects/models.py:93 projects/migrations/0001_initial.py:18
+#: projects/models.py:158 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "ਫੀਡ"
 
-#: projects/models.py:94
+#: projects/models.py:159
 msgid "An RSS feed with updates to the project."
 msgstr "ਪਰੋਜੈਕਟ ਅੱਪਡੇਟ ਲਈ RSS ਫੀਡ।"
 
-#: projects/models.py:95 projects/migrations/0001_initial.py:27
+#: projects/models.py:160 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "ਬੱਗ ਟਰੈਕਰ"
 
-#: projects/models.py:96
+#: projects/models.py:161
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "ਬੱਗ ਅਤੇ ਟਿਕਟ ਟਰੈਕਿੰਗ ਸਿਸਟਮ (ਜਿਵੇਂ ਕਿ ਬੱਗਜ਼ੀਲਾ, ਟਰੇਕ ਆਦਿ) ਲਈ URL"
 
-#: projects/models.py:98
+#: projects/models.py:163
 #: projects/migrations/0003_add_anyone_submit_field.py:12
 msgid "Anyone can submit"
 msgstr "ਕੋਈ ਵੀ ਭੇਜ ਸਕਦਾ ਹੈ"
 
-#: projects/models.py:100
+#: projects/models.py:165
 msgid "Can anyone submit files to this project?"
 msgstr "ਕੀ ਕੋਈ ਵੀ ਇਸ ਪਰੋਜੈਕਟ ਲਈ ਫਾਇਲਾਂ ਭੇਜ ਸਕਦਾ ਹੈ?"
 
-#: projects/models.py:102 projects/models.py:222
-#: projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
-#: txcollections/migrations/0001_initial.py:23
-#: txcollections/migrations/0001_initial.py:41
-msgid "Hidden"
-msgstr "ਲੁਕਵਾਂ"
-
-#: projects/models.py:103 projects/models.py:223 releases/models.py:42
+#: projects/models.py:168 projects/models.py:300 releases/models.py:42
 msgid "Hide this object from the list view?"
 msgstr "ਇਹ ਆਬਜੈਕਟ ਲਿਸਟ ਝਲਕ ਵਿੱਚ ਓਹਲੇ ਰੱਖਣਾ?"
 
-#: projects/models.py:104 projects/models.py:224
+#: projects/models.py:169 projects/models.py:301
 #: projects/migrations/0001_initial.py:24
 #: projects/migrations/0001_initial.py:41 releases/models.py:43
 #: txcollections/migrations/0001_initial.py:17
@@ -712,19 +687,36 @@ msgstr "ਇਹ ਆਬਜੈਕਟ ਲਿਸਟ ਝਲਕ ਵਿੱਚ ਓਹਲ�
 msgid "Enabled"
 msgstr "ਚਾਲੂ"
 
-#: projects/models.py:105 projects/models.py:225 releases/models.py:44
+#: projects/models.py:170 projects/models.py:302 releases/models.py:44
 msgid "Enable this object or disable its use?"
 msgstr "ਇਹ ਆਬਜੈਕਟ ਅਤੇ ਇਸ ਦੀ ਵਰਤੋਂ ਚਾਲੂ ਕਰਨੀ ਹੈ?"
 
-#: projects/models.py:109 projects/migrations/0001_initial.py:23
+#: projects/models.py:174 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "ਟੈਗ"
 
-#: projects/models.py:112
+#: projects/models.py:177
 msgid "Maintainers"
 msgstr "ਪਰਬੰਧਕ"
 
-#: projects/models.py:116 projects/models.py:234 projects/models.py:485
+#: projects/models.py:181
+#, fuzzy
+msgid "Outsource project"
+msgstr "ਪਰੋਜੈਕਟ ਹਟਾਓ"
+
+#: projects/models.py:182
+msgid "Project that owns the access control of this project."
+msgstr ""
+
+#: projects/models.py:185
+msgid "Owner"
+msgstr ""
+
+#: projects/models.py:186
+msgid "The user who owns this project."
+msgstr ""
+
+#: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
 #: projects/migrations/0001_initial.py:47 releases/models.py:49
 #: txcollections/migrations/0001_initial.py:22
@@ -732,157 +724,162 @@ msgstr "ਪਰਬੰਧਕ"
 msgid "HTML Description"
 msgstr "HTML ਵੇਰਵਾ"
 
-#: projects/models.py:118 projects/models.py:236 projects/models.py:487
+#: projects/models.py:191 projects/models.py:313 projects/models.py:568
 #: releases/models.py:50
 msgid "Description in HTML."
 msgstr "HTML ਵਿੱਚ ਵੇਰਵਾ ਹੈ।"
 
-#: projects/models.py:124
+#: projects/models.py:201
 #, python-format
 msgid "<Project: %s>"
 msgstr "<ਪਰੋਜੈਕਟ: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:204
 msgid "project"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
+#: projects/models.py:205 templates/projects/project_list.html:18
 msgid "projects"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: projects/models.py:206 projects/migrations/0001_initial.py:52
+#: projects/models.py:283 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "ਸਰੋਤ ਭਾਸ਼ਾ"
 
-#: projects/models.py:207
+#: projects/models.py:284
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "ਇਹ ਭਾਗ ਦੀ ਸਰੋਤ ਭਾਸ਼ਾ (ਜਿਵੇਂ, 'en', ' pa', 'pa_PK')।"
 
-#: projects/models.py:209 projects/migrations/0001_initial.py:42
+#: projects/models.py:286 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "I18n ਕਿਸਮ"
 
-#: projects/models.py:211
+#: projects/models.py:288
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
 msgstr ""
 
-#: projects/models.py:213 projects/migrations/0001_initial.py:43
+#: projects/models.py:290 projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "ਫਾਇਲ ਫਿਲਟਰ"
 
-#: projects/models.py:216 projects/migrations/0001_initial.py:51
+#: projects/models.py:293 projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "ਭੇਜਣ ਮਨਜ਼ੂਰ"
 
-#: projects/models.py:218
+#: projects/models.py:295
 msgid "Does this module repository allow write access?"
 msgstr "ਕੀ ਇਹ ਮੋਡੀਊਲ ਰਿਪੋਜ਼ਟਰੀ ਲਈ ਲਿਖਣ ਅਧਿਕਾਰ ਹੈ?"
 
-#: projects/models.py:228 projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "ਅੰਕੜੇ ਗਿਣਤੀ?"
 
-#: projects/models.py:229
+#: projects/models.py:306
 msgid "Should statistics be calculated for this component?"
 msgstr "ਕੀ ਇਹ ਭਾਗ ਲਈ ਅੰਕੜੇ ਇੱਕਠੇ ਕੀਤੇ ਜਾਣ?"
 
-#: projects/models.py:239 projects/models.py:490
-#: projects/migrations/0001_initial.py:46 teams/models.py:25
-#: teams/models.py:67
+#: projects/models.py:316 projects/models.py:571
+#: projects/migrations/0001_initial.py:46 teams/models.py:27
+#: teams/models.py:69
 msgid "Project"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: projects/models.py:240 projects/migrations/0001_initial.py:37
+#: projects/models.py:317 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "ਯੂਨਿਟ"
 
-#: projects/models.py:261
+#: projects/models.py:338
 #, python-format
 msgid "<Component: %s>"
 msgstr "<ਭਾਗ: %s>"
 
-#: projects/models.py:265
+#: projects/models.py:342
 msgid "component"
 msgstr "ਭਾਗ"
 
-#: projects/models.py:266 templates/projects/component_list.html:16
+#: projects/models.py:343 templates/projects/component_list.html:16
 msgid "components"
 msgstr "ਭਾਗ"
 
-#: projects/models.py:459
+#: projects/models.py:540
 msgid "A string like a name or very short description."
 msgstr ""
 
-#: projects/models.py:462 releases/models.py:26
+#: projects/models.py:543 releases/models.py:26
 msgid "A sentence or two describing the object."
 msgstr ""
 
-#: projects/models.py:465 releases/models.py:28
+#: projects/models.py:546 releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "Markdown ਸੰਟੈਕਸ ਵਰਤੋਂ।"
 
-#: projects/models.py:468 releases/models.py:31
+#: projects/models.py:549 releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
 msgstr "ਰੀਲਿਜ਼ ਮਿਤੀ"
 
-#: projects/models.py:470 releases/models.py:32
+#: projects/models.py:551 releases/models.py:32
 msgid "When this release will be available."
 msgstr "ਇਹ ਰੀਲਿਜ਼ ਕਦੋਂ ਉਪਲੱਬਧ ਹੋਵੇਗਾ।"
 
-#: projects/models.py:471 releases/models.py:33
+#: projects/models.py:552 releases/models.py:33
 msgid "String freeze date"
 msgstr "ਲਾਈਨ ਸਥਿਰ ਕਰਨ ਦੀ ਮਿਤੀ"
 
-#: projects/models.py:473
+#: projects/models.py:554
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
 msgstr ""
 
-#: projects/models.py:475 releases/models.py:36
+#: projects/models.py:556 releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
 msgstr "ਡਿਵੈਲਪਰ ਸਥਿਰ ਮਿਤੀ"
 
-#: projects/models.py:477 releases/models.py:37
+#: projects/models.py:558 releases/models.py:37
 msgid ""
 "The last date packages from this release can be built from the developers. "
 "Translations sent after this date will not be included in the released "
 "version."
 msgstr ""
 
-#: projects/models.py:492
+#: projects/models.py:573
 msgid "Components"
 msgstr "ਭਾਗ"
 
-#: projects/models.py:499
+#: projects/models.py:580
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<ਰੀਲਿਜ਼: %(rel)s (ਪਰੋਜੈਕਟ %(proj)s)>"
 
-#: projects/models.py:517 releases/models.py:54
+#: projects/models.py:598 releases/models.py:54
 msgid "release"
 msgstr "ਰੀਲਿਜ਼"
 
-#: projects/models.py:518 releases/models.py:55
+#: projects/models.py:599 releases/models.py:55
 #: templates/languages/language_detail.html:18
-#: templates/projects/release_list.html:15
+#: templates/projects/release_list.html:14
 msgid "releases"
 msgstr "ਰੀਲਿਜ਼"
 
-#: projects/permissions/project.py:21
+#: projects/permissions/project.py:50
 msgid "Is allowed to maintain this project"
 msgstr "ਕੀ ਇਹ ਪਰੋਜੈਕਟ ਦਾ ਪਰਬੰਧ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
 
-#: projects/permissions/project.py:35
+#: projects/permissions/project.py:64
 msgid "Is allowed to coordinate a team project"
 msgstr ""
 
-#: projects/permissions/project.py:81
+#: projects/permissions/project.py:103
 msgid "Is allowed to submit file to this project"
 msgstr "ਕੀ ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਫਾਇਲ ਭੇਜਣ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
+
+#: projects/permissions/project.py:117
+#, fuzzy
+msgid "Is allowed to browse this private project"
+msgstr "ਕੀ ਇਹ ਪਰੋਜੈਕਟ ਦਾ ਪਰਬੰਧ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -892,7 +889,7 @@ msgstr "ਅਨੁਵਾਦ:"
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -909,123 +906,67 @@ msgstr "ਨਾ-ਅਨੁਵਾਦ:"
 msgid "Total:"
 msgstr "ਕੁੱਲ:"
 
-#: projects/views/component.py:239 projects/views/project.py:138
+#: projects/views/component.py:246 projects/views/project.py:148
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s ਹਟਾਇਆ ਗਿਆ।"
 
-#: projects/views/component.py:274
+#: projects/views/component.py:282
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
 msgstr ""
 
-#: projects/views/component.py:281
+#: projects/views/component.py:289
 msgid ""
 "There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
 msgstr ""
 
-#: projects/views/component.py:289
+#: projects/views/component.py:302
 msgid "This component is not configured for statistics calculation."
 msgstr "ਇਹ ਭਾਗ ਲਈ ਅੰਕੜੇ ਗਿਨਣ ਦੀ ਸੰਰਚਨਾ ਨਹੀਂ ਕੀਤੀ ਗਈ।"
 
-#: projects/views/component.py:372
+#: projects/views/component.py:388
 msgid "This component does  not allow write access."
 msgstr "ਇਹ ਭਾਗ ਲਈ ਲਿਖਣ ਅਸੈੱਸ ਨਹੀਂ ਹੈ।"
 
-#: projects/views/component.py:380
+#: projects/views/component.py:396
 msgid "Please select a file from your system to be uploaded."
 msgstr "ਅੱਪਲੋਡ ਕਰਨ ਵਾਸਤੇ ਆਪਣੇ ਸਿਸਟਮ ਤੋਂ ਫਾਇਲ ਚੁਣੋ ਜੀ।"
 
-#: projects/views/component.py:388
+#: projects/views/component.py:404
 msgid "Please enter a target to upload the file."
 msgstr "ਫਾਇਲ ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਟਾਰਗੇਟ ਦੀ ਚੋਣ ਕਰੋ ਜੀ।"
 
-#: projects/views/component.py:393
+#: projects/views/component.py:409
 msgid "Please enter only ONE target to upload the file."
 msgstr "ਫਾਇਲ ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਕੇਵਲ ਇੱਕ ਹੀ ਟਾਰਗੇਟ ਦਿਓ ਜੀ।"
 
-#: projects/views/component.py:404
+#: projects/views/component.py:420
 msgid "The target file does not match the component file filter"
 msgstr "ਟਾਰਗੇਟ ਫਾਇਲ ਭਾਗ ਫਾਇਲ ਫਿਲਟਰ ਨਾਲ ਮਿਲਦੀ ਨਹੀਂ ਹੈ।"
 
-#: projects/views/component.py:412
+#: projects/views/component.py:428
 msgid "Enter a commit message"
 msgstr "ਕਮਿਟ ਸੁਨੇਹਾ ਦਿਓ"
 
-#: projects/views/component.py:453
+#: projects/views/component.py:469
 #, python-format
 msgid ""
 "You need to be in the '%s' team of this project for being able to send "
 "translations to that file target."
 msgstr ""
-"ਉਸ ਫਾਇਲ ਟਾਰਗੇਟ ਦਾ ਅਨੁਵਾਦ ਭੇਜਣ ਲਈ ਤੁਹਾਨੂੰ ਇਸ ਪਰੋਜੈਕਟ ਦੀ '%s' ਟੀਮ ਵਿੱਚ ਹੋਣਾ "
-"ਚਾਹੀਦਾ ਹੈ।"
+"ਉਸ ਫਾਇਲ ਟਾਰਗੇਟ ਦਾ ਅਨੁਵਾਦ ਭੇਜਣ ਲਈ ਤੁਹਾਨੂੰ ਇਸ ਪਰੋਜੈਕਟ ਦੀ '%s' ਟੀਮ ਵਿੱਚ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
 
-#: projects/views/component.py:513
+#: projects/views/component.py:527
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "ਫਾਇਲ ਠੀਕ ਤਰ੍ਹਾਂ ਭੇਜੀ ਗਈ: %s"
 
-#: projects/views/component.py:533
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Your file has "
-"been e-mailed to you to avoid losing any work."
-msgstr ""
-"ਤੁਹਾਡੀ ਫਾਇਲ ਠੀਕ-ਠਾਕ ਜਾਂਚ ਵਿੱਚੋਂ ਪਾਸ ਨਹੀਂ ਹੋ ਸਕੀ (msgfmt -c)। ਤੁਹਾਡੀ ਫਾਇਲ ਨੂੰ "
-"ਤੁਹਾਨੂੰ ਈਮੇਲ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਕਿ ਤੁਹਾਡੇ ਕੰਮ ਦਾ ਨੁਕਸਾਨ ਨਾ ਹੋ ਜਾਵੇ।"
-
-#: projects/views/component.py:538
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Please run this "
-"command on your system to see the errors. We couldn't send you an email to "
-"preserve your work because you haven't registered an email address. Please "
-"do so now to avoid such issues in the future."
-msgstr ""
-"ਤੁਹਾਡੀ ਫਾਇਲ ਠੀਕ-ਠਾਕ ਜਾਂਚ ਵਿੱਚੋਂ ਪਾਸ ਨਹੀਂ ਹੋ ਸਕੀ (msgfmt -c)। ਇਹ ਕਮਾਂਡ ਆਪਣੇ "
-"ਸਿਸਟਮ ਉੱਤੇ "
-"ਗਲਤੀਆਂ ਵੇਖਣ ਲਈ ਚੁਲਾਉ ਜੀ। ਅਸੀਂ ਤੁਹਾਡੀ ਫਾਇਲ ਨੂੰ ਤੁਹਾਨੂੰ ਈਮੇਲ ਨਹੀਂ ਕਰ ਸਕੇ, "
-"ਕਿਉਂਕਿ ਤੁਹਾਡੇ ਕੋਲ "
-"ਕੋਈ ਰਜਿਸਟਰ ਈਮੇਲ ਐਡਰੈੱਸ ਨਹੀਂ ਹੈ। ਆਉਣ ਵਾਲੇ ਸਮੇਂ ਵਿੱਚ ਇਹੋ ਜਿਹੀਆਂ ਸਮੱਸਿਆਵਾਂ ਤੋਂ "
-"ਬਚਣ ਲਈ ਇਹ "
-"ਠੀਕ ਕਰੋ।"
-
-#: projects/views/component.py:549
+#: projects/views/component.py:553
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "ਅਫਸੋਸ, ਤੁਹਾਡੀ ਫਾਇਲ ਗਲਤੀ ਕਰਕੇ ਭੇਜੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
-
-#: projects/views/component.py:552 projects/views/component.py:585
-msgid "Sorry, but you need to send a POST request."
-msgstr "ਅਫਸੋਸ, ਪਰ ਤੁਹਾਨੂੰ  POST ਮੰਗ ਭੇਜਣੀ ਪਵੇਗੀ।"
-
-#: projects/views/component.py:574
-msgid "Lock removed."
-msgstr "ਲਾਕ ਹਟਾਇਆ।"
-
-#: projects/views/component.py:577
-msgid "Error: Only the owner of a lock can remove it."
-msgstr "ਗਲਤੀ: ਕੇਵਲ ਓਨਰ ਹੀ ਇਹ ਲਾਕ ਹਟਾ ਸਕਦਾ ਹੈ।"
-
-#: projects/views/component.py:581
-msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr "ਲਾਕ ਬਣਾਇਆ ਗਿਆ: ਜਦੋਂ ਤੁਸੀਂ ਕੰਮ ਕਰ ਲਿਆ ਤਾਂ ਇਸ ਨੂੰ ਹਟਾਉਣਾ ਨਾ ਭੁੱਲਣਾ।"
-
-#: projects/views/component.py:598 projects/views/project.py:156
-msgid "Must use POST to activate"
-msgstr "ਐਕਟੀਵੇਟ ਕਰਨ ਲਈ POST ਵਰਤਣਾ ਲਾਜ਼ਮੀ ਹੈ"
-
-#: projects/views/component.py:601 projects/views/project.py:159
-msgid "Notification is not enabled"
-msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਚਾਲੂ ਨਹੀਂ ਹੈ"
-
-#: projects/views/project.py:172
-msgid "Watch this project"
-msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਚ ਨਿਗ੍ਹਾ ਰੱਖੋ"
-
-#: projects/views/project.py:185
-msgid "Stop watching this project"
-msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਤੇ ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
 
 #: projects/views/release.py:94
 #, python-format
@@ -1040,83 +981,83 @@ msgstr ""
 msgid "Request reopened."
 msgstr "ਮੰਗ ਮੁੜ-ਖੋਲ੍ਹੀ ਗਈ।"
 
-#: projects/views/team.py:168
+#: projects/views/team.py:182
 #, python-format
 msgid "The '%s' team was deleted."
 msgstr "'%s' ਟੀਮ ਹਟਾਈ ਗਈ।"
 
-#: projects/views/team.py:205
+#: projects/views/team.py:222
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ '%s' ਟੀਮ ਵਿੱਚ ਹੋ।"
 
-#: projects/views/team.py:210
+#: projects/views/team.py:227
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਦਾ ਮੈਂਬਰ ਬਣ ਲਈ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
 
-#: projects/views/team.py:233
+#: projects/views/team.py:250
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "ਤੁਹਾਡੀ '%s' ਟੀਮ ਦਾ ਮੈਂਬਰ ਬਣਨ ਦੀ ਮੰਗ ਪਹਿਲਾਂ ਹੀ ਬਾਕੀ ਰਹਿੰਦੀ ਹੈ।"
 
-#: projects/views/team.py:260
+#: projects/views/team.py:278
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "ਯੂਜ਼ਰ '%(user)s'  '%(team)s' ਟੀਮ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਹੈ।"
 
-#: projects/views/team.py:267
+#: projects/views/team.py:285
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr ""
 
-#: projects/views/team.py:314
+#: projects/views/team.py:333
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
 "team."
 msgstr ""
 
-#: projects/views/team.py:357
+#: projects/views/team.py:378
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr ""
 
-#: projects/views/team.py:398
+#: projects/views/team.py:421
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਛੱਡ ਚੁੱਕੇ ਹੋ।"
 
-#: projects/views/team.py:419
+#: projects/views/team.py:442
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਵਿੱਚ ਨਹੀਂ ਹੋ।"
 
-#: projects/views/team.py:440
+#: projects/views/team.py:465
 msgid "Please, select a language before submit the form."
 msgstr "ਫਾਰਮ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ ਜੀ।"
 
-#: projects/views/team.py:453
+#: projects/views/team.py:478
 #, python-format
 msgid "'%s' team already exist."
 msgstr "'%s' ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
 
-#: projects/views/team.py:459
+#: projects/views/team.py:484
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "'%s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਪਹਿਲਾਂ ਹੀ ਕੀਤੀ ਜਾ ਚੁੱਕੀ ਹੈ।"
 
-#: projects/views/team.py:467
+#: projects/views/team.py:492
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
 
-#: projects/views/team.py:512
+#: projects/views/team.py:538
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 
-#: projects/views/team.py:554
+#: projects/views/team.py:581
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
@@ -1127,32 +1068,11 @@ msgid ""
 "translations can be added/modified)."
 msgstr ""
 
-#: repowatch/__init__.py:74
-msgid "Watch it"
-msgstr "ਨਿਗ੍ਹਾ ਰੱਖੋ"
-
-#: repowatch/__init__.py:75
-msgid "Stop watching it"
-msgstr "ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
-
-#: repowatch/models.py:28
-#, python-format
-msgid "Unable to add watch for path %r"
-msgstr ""
-
-#: repowatch/models.py:97
-msgid "watch"
-msgstr "ਨਿਗ੍ਹਾ"
-
-#: repowatch/models.py:98
-msgid "watches"
-msgstr "ਨਿਗ੍ਹਾ"
-
-#: reviews/forms.py:9
+#: reviews/forms.py:8
 msgid "Write a short blurb for your review request."
 msgstr ""
 
-#: reviews/forms.py:11
+#: reviews/forms.py:10
 msgid "Select a translation file for review."
 msgstr "ਪੜਤਾਲ ਲਈ ਅਨੁਵਾਦ ਫਾਇਲ ਚੁਣੋ।"
 
@@ -1220,23 +1140,15 @@ msgstr ""
 msgid "created_on"
 msgstr ""
 
-#: reviews/views.py:33
+#: reviews/views.py:32
 msgid ""
 "You can upload a file for review only if it's related to an existing "
 "language."
 msgstr ""
 
-#: reviews/views.py:53
+#: reviews/views.py:52
 msgid "Your file has been successfully placed for reviewing."
 msgstr ""
-
-#: simplelock/models.py:39
-msgid "Lock"
-msgstr "ਲਾਕ"
-
-#: simplelock/models.py:40
-msgid "Locks"
-msgstr "ਲਾਕ"
 
 #: tarball/forms.py:16
 msgid "Tarball URL"
@@ -1273,71 +1185,70 @@ msgid ""
 "him/her from one of those lists."
 msgstr ""
 
-#: teams/models.py:27 teams/models.py:69
+#: teams/models.py:29 teams/models.py:71
 msgid "The project which this team belongs to."
 msgstr ""
 
-#: teams/models.py:28 teams/models.py:70
-#: templates/reviews/review_list.html:154
+#: teams/models.py:30 teams/models.py:72
+#: templates/reviews/review_list.html:125
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "ਭਾਸ਼ਾ"
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:32 teams/models.py:74
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
 msgstr ""
-"ਖਾਸ ਭਾਸ਼ਾ ਨਾਲ ਸਬੰਧਿਤ ਅਨੁਵਾਦ ਕੀਤੀਆਂ ਫਾਇਲਾਂ ਨੂੰ ਇਸ ਟੀਮ ਦੇ ਲੋਕਾਂ ਵਲੋਂ ਹੀ ਭੇਜਿਆ "
-"ਜਾ ਸਕਦਾ ਹੈ"
+"ਖਾਸ ਭਾਸ਼ਾ ਨਾਲ ਸਬੰਧਿਤ ਅਨੁਵਾਦ ਕੀਤੀਆਂ ਫਾਇਲਾਂ ਨੂੰ ਇਸ ਟੀਮ ਦੇ ਲੋਕਾਂ ਵਲੋਂ ਹੀ ਭੇਜਿਆ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: teams/models.py:32
+#: teams/models.py:34
 msgid "Coordinators"
 msgstr "ਮੋਢੀ"
 
-#: teams/models.py:34
+#: teams/models.py:36
 msgid "Members"
 msgstr "ਮੈਂਬਰ"
 
-#: teams/models.py:37
+#: teams/models.py:39
 msgid "Mainlist"
 msgstr "ਮੁੱਖ-ਲਿਸਟ"
 
-#: teams/models.py:38
+#: teams/models.py:40
 msgid "The main mailing list of the team."
 msgstr "ਟੀਮ ਦੀ ਮੁੱਖ ਮੇਲਿੰਗ ਲਿਸਟ।"
 
-#: teams/models.py:40
+#: teams/models.py:42
 msgid "creator"
 msgstr "ਬਣਾਓ"
 
-#: teams/models.py:56
+#: teams/models.py:58
 msgid "team"
 msgstr "ਟੀਮ"
 
-#: teams/models.py:57
+#: teams/models.py:59
 msgid "teams"
 msgstr "ਟੀਮ"
 
-#: teams/models.py:89
+#: teams/models.py:91
 msgid "team creation request"
 msgstr "ਟੀਮ ਬਣਾਉਣ ਮੰਗ"
 
-#: teams/models.py:90
+#: teams/models.py:92
 msgid "team creation requests"
 msgstr "ਟੀਮ ਬਣਾਉਣ ਮੰਗ"
 
-#: teams/models.py:108
+#: teams/models.py:110
 msgid "Team"
 msgstr "ਟੀਮ"
 
-#: teams/models.py:125
+#: teams/models.py:127
 msgid "team access request"
 msgstr "ਟੀਮ ਅਸੈੱਸ ਮੰਗਾਂ"
 
-#: teams/models.py:126
+#: teams/models.py:128
 msgid "team access requests"
 msgstr "ਟੀਮ ਅਸੈੱਸ ਮੰਗਾਂ"
 
@@ -1355,8 +1266,7 @@ msgstr ""
 msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
 "case."
-msgstr ""
-"<a href=\"%(home)s\">ਮੁੱਖ ਪੇਜ਼</a> ਲਈ ਲਿੰਕ ਹੈ। ਤੁਸੀਂ ਜਾਣਦੇ ਹੋਵੋ, ਸ਼ਾਇਦ।"
+msgstr "<a href=\"%(home)s\">ਮੁੱਖ ਪੇਜ਼</a> ਲਈ ਲਿੰਕ ਹੈ। ਤੁਸੀਂ ਜਾਣਦੇ ਹੋਵੋ, ਸ਼ਾਇਦ।"
 
 #: templates/404.html:4 templates/404.html.py:7
 msgid "Page not found"
@@ -1368,21 +1278,21 @@ msgid ""
 "href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
 
-#: templates/500.html:4 templates/500.html.py:7
+#: templates/500.html:6 templates/500.html.py:21
 msgid "Page unavailable"
 msgstr "ਪੇਜ਼ ਉਪਲੱਬਧ ਨਹੀਂ"
 
-#: templates/500.html:12
+#: templates/500.html:22
 msgid "We're sorry, but the requested page is currently unavailable."
 msgstr "ਸਾਨੂੰ ਅਫਸੋਸ ਹੈ, ਪਰ ਮੰਗਿਆ ਗਿਆ ਪੇਜ਼ ਇਸ ਸਮੇਂ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
 
-#: templates/500.html:14
+#: templates/500.html:23
 msgid ""
 "We're messing around with things internally, and the server had a bit of a "
 "hiccup."
 msgstr ""
 
-#: templates/500.html:16
+#: templates/500.html:24
 msgid "Please try again later."
 msgstr "ਬਾਅਦ 'ਚ ਕੋਸ਼ਿਸ਼ ਕਰੀਓ।"
 
@@ -1390,56 +1300,56 @@ msgstr "ਬਾਅਦ 'ਚ ਕੋਸ਼ਿਸ਼ ਕਰੀਓ।"
 msgid "Welcome to Transifex"
 msgstr "ਟਰਾਂਜ਼ੀਫਿਕਸ ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/base-sample.html:8 templates/admin/base_site.html:5
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "ਟਰਾਂਜ਼ੀਫਿਕਸ"
 
-#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:35 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "ਸ਼ੁਰੂ ਵਾਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 
-#: templates/base-sample.html:35
+#: templates/base-sample.html:36
 msgid "Go to start page"
 msgstr "ਸ਼ੁਰੂ ਵਾਲੇ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 
-#: templates/base-sample.html:39
+#: templates/base-sample.html:40
 msgid "The projects being served"
 msgstr ""
 
-#: templates/base-sample.html:39 templates/projects/base.html:6
+#: templates/base-sample.html:40 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: templates/base-sample.html:40
+#: templates/base-sample.html:41
 msgid "The languages our service serves"
 msgstr "ਭਾਸ਼ਾ, ਅਸੀਂ ਸਰਵਿਸ ਦਿੰਦੇ ਹਾਂ"
 
-#: templates/base-sample.html:40 templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "ਭਾਸ਼ਾਵਾਂ"
 
-#: templates/base-sample.html:46
+#: templates/base-sample.html:48
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr ""
-"<a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a> ਜੀ ਆਇਆਂ ਨੂੰ!"
+"<a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</"
+"a> ਜੀ ਆਇਆਂ ਨੂੰ!"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out from the website"
 msgstr "ਵੈੱਬਸਾਈਟ ਤੋਂ ਸਾਈਨ-ਆਉਟ ਕਰੋ"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out"
 msgstr "ਸਾਈਨ-ਆਉਟ"
 
-#: templates/base-sample.html:49 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:53 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1449,31 +1359,30 @@ msgstr "ਸਾਈਨ-ਆਉਟ"
 msgid "Sign in"
 msgstr "ਸਾਈਨ-ਇਨ"
 
-#: templates/base-sample.html:52
+#: templates/base-sample.html:56
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "ਰਜਿਸਟਰ ਹੋਵੋ"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "About"
 msgstr "ਇਸ ਬਾਰੇ"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Drops us a line"
 msgstr "ਟਿੱਪਣੀ"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Feedback"
 msgstr "ਫੀਡਬੈਕ"
 
-#: templates/base-sample.html:116
+#: templates/base-sample.html:120
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
 msgstr ""
-"<a href=\"http://transifex.org/\" title=\"Transifex community\">ਟਰਾਂਜ਼ੀਫਿਕਸ<"
-"/a> "
-"ਨਾਲ ਤਿਆਰ, ਜੋ ਖੁੱਲ੍ਹਾ ਅਨੁਵਾਦ ਪਲੇਟਫਾਰਮ ਹੈ"
+"<a href=\"http://transifex.org/\" title=\"Transifex community\">ਟਰਾਂਜ਼ੀਫਿਕਸ</"
+"a> ਨਾਲ ਤਿਆਰ, ਜੋ ਖੁੱਲ੍ਹਾ ਅਨੁਵਾਦ ਪਲੇਟਫਾਰਮ ਹੈ"
 
 #: templates/index.html:24
 msgid ""
@@ -1523,40 +1432,14 @@ msgid ""
 "Couldn't find your project? Why don't you go ahead and <a href=\"%"
 "(project_create_url)s\">add it</a>?"
 msgstr ""
-"ਤੁਹਾਡਾ ਪਰੋਜੈਕਟ ਨਹੀਂ ਲੱਭਿਆ? ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ <a "
-"href=\"%(project_create_url)s\">ਸ਼ਾਮਲ "
+"ਤੁਹਾਡਾ ਪਰੋਜੈਕਟ ਨਹੀਂ ਲੱਭਿਆ? ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ <a href=\"%(project_create_url)s\">ਸ਼ਾਮਲ "
 "ਕਿਓ ਨਹੀਂ ਕਰਵਾਉਂਦੇ</a>?"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
 msgstr "ਪਰੋਜੈਕਟ ਨਾਂ, ਵੇਰਵੇ ਆਦਿ ਨਾਲ ਲੱਭੋ।"
 
-#: templates/timeline.html:11
-msgid "Filter results"
-msgstr "ਨਤੀਜੇ ਫਿਲਟਰ"
-
-#: templates/timeline.html:17
-msgid "Go"
-msgstr "ਜਾਓ"
-
-#: templates/timeline.html:24 templates/projects/component_detail.html:203
-#: templates/projects/project_detail.html:108
-#: templates/teams/team_detail.html:129
-msgid "None available"
-msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
-
-#: templates/timeline.html:28
-#, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/admin/base_site.html:9
+#: templates/admin/base_site.html:10
 msgid "Transifex administration"
 msgstr "ਟਰਾਜ਼ੀਫਿਕਸ ਪਰਸ਼ਾਸ਼ਨ"
 
@@ -1667,7 +1550,7 @@ msgid "Account"
 msgstr "ਅਕਾਊਂਟ"
 
 #: templates/notification/notices.html:95
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:125
 msgid "Note"
 msgstr "ਨੋਟ"
 
@@ -1695,8 +1578,7 @@ msgstr "ਸੂਚਨਾ"
 #, python-format
 msgid ""
 "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
-msgstr ""
-"ਨਵਾਂ ਪਰੋਜੈਕਟ <a href=\"%(project_url)s\">%(project)s</a> ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ ਹੈ"
+msgstr "ਨਵਾਂ ਪਰੋਜੈਕਟ <a href=\"%(project_url)s\">%(project)s</a> ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
@@ -1747,8 +1629,8 @@ msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "(%(trans_perc)s%)"
 msgstr ""
-"<a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"(%(trans_perc)s%) ਲਈ ਫਾਇਲ"
+"<a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%"
+"(trans_perc)s%) ਲਈ ਫਾਇਲ"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1761,9 +1643,8 @@ msgid ""
 "has been submitted to the <a href=\"%(component_url)s\">%(component_name)s</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a "
-"href=\"%(component_url)s\">%(component_name)s</"
-"a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
+"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
@@ -1779,8 +1660,8 @@ msgid ""
 "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
 "project was generated"
 msgstr ""
-"ਪਰੋਜੈਕਟ <a href=\"%(project_url)s\">%(project_name)s</a> ਲਈ ਹਫ਼ਤੇਵਾਰ ਰਿਪੋਰਟ "
-"ਤਿਆਰ ਕੀਤੀ ਗਈ ਹੈ।"
+"ਪਰੋਜੈਕਟ <a href=\"%(project_url)s\">%(project_name)s</a> ਲਈ ਹਫ਼ਤੇਵਾਰ ਰਿਪੋਰਟ ਤਿਆਰ "
+"ਕੀਤੀ ਗਈ ਹੈ।"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1944,106 +1825,112 @@ msgid ""
 "files direct to the upstream repository."
 msgstr ""
 
-#: templates/projects/component_detail.html:79
-#: templates/projects/project_detail.html:31
-#: templates/projects/release_detail.html:44
-#: templates/teams/team_detail.html:25
+#: templates/projects/component_detail.html:65
+#: templates/projects/project_detail.html:22
+#, fuzzy
+msgid "Private Project"
+msgstr "ਤਾਜ਼ਾ ਪਰੋਜੈਕਟ"
+
+#: templates/projects/component_detail.html:82
+#: templates/projects/project_detail.html:39
+#: templates/projects/release_detail.html:53
+#: templates/teams/team_detail.html:28
 msgid "Edit"
 msgstr "ਸੋਧ"
 
-#: templates/projects/component_detail.html:84
+#: templates/projects/component_detail.html:87
 msgid "Source details"
 msgstr "ਸਰੋਤ ਵੇਰਵਾ"
 
-#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:91
 msgid "Repository:"
 msgstr "ਰਿਪੋਜ਼ਟਰੀ:"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "Link to a web front-end for the source code"
 msgstr "ਸਰੋਤ ਕੋਡ ਲਈ ਵੈੱਬ ਫਰੰਟ-ਐਂਡ ਵਾਸਤੇ ਲਿੰਕ"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "web"
 msgstr "ਵੈੱਬ"
 
-#: templates/projects/component_detail.html:98
+#: templates/projects/component_detail.html:102
 msgid "Branch:"
 msgstr "ਬਰਾਂਚ:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:107
 msgid "File filter:"
 msgstr "ਫਾਇਲ ਫਿਲਟਰ:"
 
-#: templates/projects/component_detail.html:109
+#: templates/projects/component_detail.html:113
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "ਰੀਲਿਜ਼:"
 msgstr[1] ""
 
-#: templates/projects/component_detail.html:117
+#: templates/projects/component_detail.html:121
 msgid "Allows submissions:"
 msgstr "ਭੇਜਣ ਮਨਜ਼ੂਰ:"
 
-#: templates/projects/component_detail.html:131
+#: templates/projects/component_detail.html:135
 msgid "Translation files"
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ"
 
-#: templates/projects/component_detail.html:136
+#: templates/projects/component_detail.html:140
 msgid "Source file:"
 msgstr "ਸਰੋਤ ਫਾਇਲ:"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:147
 msgid "Statistics last updated:"
 msgstr "ਅੰਕੜੇ ਆਖਰੀ ਵਾਰ ਅੱਪਡੇਟ ਕੀਤੇ:"
 
-#: templates/projects/component_detail.html:145
+#: templates/projects/component_detail.html:149
 msgid "ago"
 msgstr "ਪਹਿਲਾਂ"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Component not yet pulled from source repository."
 msgstr "ਭਾਗ ਹਾਲੇ ਸਰੋਤ ਰਿਪੋਜ਼ਟਰੀ ਵਿੱਚੋਂ ਨਹੀਂ ਲਏ ਗਏ।"
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh cache"
 msgstr "ਕੈਸ਼ ਤਾਜ਼ਾ"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Reset Transifex's local data for a clean pull"
 msgstr ""
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Clear cache"
 msgstr "ਕੈਸ਼ ਸਾਫ਼"
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "warning"
 msgstr "ਚੇਤਾਵਨੀ"
 
-#: templates/projects/component_detail.html:164
+#: templates/projects/component_detail.html:168
 msgid "Teams:"
 msgstr "ਟੀਮਾਂ:"
 
-#: templates/projects/component_detail.html:166
+#: templates/projects/component_detail.html:170
 msgid "See the translation teams."
 msgstr "ਅਨੁਵਾਦ ਟੀਮਾਂ ਵੇਖੋ।"
 
-#: templates/projects/component_detail.html:190
+#: templates/projects/component_detail.html:194
 msgid "Translation files reviews"
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ ਪੜਤਾਲ।"
 
-#: templates/projects/component_detail.html:192
+#: templates/projects/component_detail.html:196
 msgid ""
 "Translators can request a file review from another person, who\n"
 "  can take a look at his work and provide any feedback needed, or simply "
@@ -2051,56 +1938,56 @@ msgid ""
 "  the file to the upstream project."
 msgstr ""
 
-#: templates/projects/component_detail.html:197
-#: templates/reviews/review_list.html:21 templates/reviews/review_list.html:23
+#: templates/projects/component_detail.html:201
+#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "ਪੜਤਾਲ"
 
-#: templates/projects/component_detail.html:199
-#: templates/projects/project_detail.html:103
-#: templates/teams/team_detail.html:125
+#: templates/projects/component_detail.html:203
+#: templates/projects/project_detail.html:114
+#: templates/teams/team_detail.html:130
 msgid "History"
 msgstr "ਅਤੀਤ"
 
-#: templates/projects/component_detail.html:220
+#: templates/projects/component_detail.html:225
 msgid "Delete component"
 msgstr "ਭਾਗ ਹਟਾਓ"
 
-#: templates/projects/component_form.html:6
-#: templates/projects/component_form.html:11
+#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:12
 msgid "Add a component"
 msgstr "ਭਾਗ ਸ਼ਾਮਲ"
 
-#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:8
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "%(component_name)s ਸੋਧ"
 
-#: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:83
+#: templates/projects/component_form.html:13
+#: templates/projects/component_form.html:84
 #, python-format
 msgid "Edit Component '%(component_name)s'"
 msgstr "ਭਾਗ '%(component_name)s' ਸੋਧੋ"
 
-#: templates/projects/component_form.html:81
+#: templates/projects/component_form.html:82
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "%(project_name)s ਲਈ ਨਵਾਂ ਭਾਗ"
 
-#: templates/projects/component_form.html:102
+#: templates/projects/component_form.html:103
 msgid "Checkout"
 msgstr "ਚੈਕਆਉਟ"
 
-#: templates/projects/component_form.html:106
+#: templates/projects/component_form.html:107
 msgid "Submission"
 msgstr "ਭੇਜੋ"
 
-#: templates/projects/component_form.html:122
-#: templates/projects/component_form.html:132
+#: templates/projects/component_form.html:123
+#: templates/projects/component_form.html:133
 msgid "Save component"
 msgstr "ਭਾਗ ਸੰਭਾਲੋ"
 
-#: templates/projects/component_lang_detail.html:29
+#: templates/projects/component_lang_detail.html:30
 msgid "translation files"
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ"
 
@@ -2186,13 +2073,13 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr "ਜਿਵੇਂ: Punjabi Translation is updated"
 
 #: templates/projects/component_submit_new_file.html:43
-#: translations/templates/component_submit.html:13
+#: translations/templates/component_submit.html:14
 msgid "Send"
 msgstr "ਭੇਜੋ"
 
 #: templates/projects/component_submit_new_file.html:45
 #: templates/webtrans/transfile_edit.html:137
-#: translations/templates/component_submit.html:15
+#: translations/templates/component_submit.html:20
 msgid "Send for Review"
 msgstr "ਪੜਤਾਲ ਲਈ ਭੇਜੋ"
 
@@ -2224,59 +2111,51 @@ msgid ""
 "(project_name)s'?\n"
 msgstr ""
 
-#: templates/projects/project_detail.html:37
+#: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:51
+#: templates/projects/release_detail.html:60
 msgid "Details"
 msgstr "ਵੇਰਵਾ"
 
-#: templates/projects/project_detail.html:44
-msgid "Watch:"
-msgstr "ਵਾਚ:"
-
-#: templates/projects/project_detail.html:52
-#: templates/projects/release_detail.html:55
+#: templates/projects/project_detail.html:60
+#: templates/projects/release_detail.html:64
 msgid "Homepage:"
 msgstr "ਮੁੱਖ ਪੇਜ਼:"
 
-#: templates/projects/project_detail.html:53
+#: templates/projects/project_detail.html:61
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "%(project_name)s ਲਈ ਮੁੱਖ ਪੇਜ਼"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:66
 msgid "Bug tracker:"
 msgstr "ਬੱਗ ਟਰੈਕਰ:"
 
-#: templates/projects/project_detail.html:59
+#: templates/projects/project_detail.html:67
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s ਲਈ ਬੱਗ ਟਰੈਕਰ"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:72
 #: templates/projects/project_list.html:46
 msgid "Tags:"
 msgstr "ਟੈਗ:"
 
-#: templates/projects/project_detail.html:73
+#: templates/projects/project_detail.html:81
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "ਪਰਬੰਧਕ:"
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:87
+#: templates/projects/project_detail.html:96
 msgid "External links:"
 msgstr "ਬਾਹਰੀ ਲਿੰਕ:"
 
-#: templates/projects/project_detail.html:89
+#: templates/projects/project_detail.html:98
 msgid "Screenshots"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ"
 
-#: templates/projects/project_detail.html:120
-msgid "View complete action log"
-msgstr ""
-
-#: templates/projects/project_detail.html:135
+#: templates/projects/project_detail.html:144
 msgid "Delete project"
 msgstr "ਪਰੋਜੈਕਟ ਹਟਾਓ"
 
@@ -2311,6 +2190,32 @@ msgstr "ਆਪਣੇ ਪਰੋਜੈਕਟ ਬਾਰੇ ਵੇਰਵਾ ਸੋ�
 msgid "Save project"
 msgstr "ਪਰੋਜੈਕਟ ਸੰਭਾਲੋ"
 
+#: templates/projects/project_form_access_control.html:8
+#: templates/projects/project_form_access_control.html:10
+#: templates/projects/project_form_access_control.html:16
+#: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:65
+msgid "Access Control"
+msgstr "ਅਸੈੱਸ ਕੰਟਰੋਲ"
+
+#: templates/projects/project_form_access_control.html:18
+msgid ""
+"You have the following choices to manage how people can have submission "
+"access to your project:"
+msgstr ""
+
+#: templates/projects/project_form_access_control.html:58
+#, fuzzy
+msgid "Go to the project writers page."
+msgstr "ਇਹ ਪਰੋਜੈਕਟ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
+
+#: templates/projects/project_form_access_control.html:62
+#, fuzzy
+msgid "Save Access Control Settings"
+msgstr "ਅਸੈੱਸ ਕੰਟਰੋਲ"
+
 #: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
@@ -2325,27 +2230,17 @@ msgstr ""
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> ਸੋਧ ਜਾਰੀ"
 
-#: templates/projects/project_form_base.html:90
-#: templates/projects/project_form_permissions.html:8
-#: templates/projects/project_form_permissions.html:15
-#: templates/projects/project_menu.html:47
-msgid "Access Control"
-msgstr "ਅਸੈੱਸ ਕੰਟਰੋਲ"
-
-#: templates/projects/project_form_permissions.html:18
-#: templates/txpermissions/base_permission_form.html:8
-msgid "Give access to a translator to send translations to your project"
+#: templates/projects/project_form_permissions.html:26
+msgid ""
+"Give write access to a translator to send translations to your project "
+"independent of a translation team."
 msgstr ""
 
-#: templates/projects/project_form_permissions.html:20
-msgid "Requests for access to submit files"
-msgstr "ਫਾਇਲਾਂ ਭੇਜਣ ਲਈ ਅਸੈੱਸ ਵਾਸਤੇ ਮੰਗ"
-
-#: templates/projects/project_form_permissions.html:62
+#: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
 msgstr "ਬਾਕੀ ਰਹਿੰਦੀਆਂ ਮੰਗਾਂ:"
 
-#: templates/projects/project_form_permissions.html:82
+#: templates/projects/project_form_permissions.html:59
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with access to submit files:"
 msgstr ""
@@ -2387,32 +2282,14 @@ msgid ""
 "it</a>!"
 msgstr ""
 
-#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "ਸੰਖੇਪ"
 
-#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 msgid "Translation Teams"
 msgstr "ਅਨੁਵਾਦ ਟੀਮਾਂ"
-
-#: templates/projects/project_menu.html:61
-#: templates/projects/project_timeline.html:12
-#: templates/txcommon/user_timeline.html:12
-msgid "Timeline"
-msgstr "ਟਾਈਮ-ਲਾਈਨ"
-
-#: templates/projects/project_timeline.html:20
-#: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
-msgstr ""
-"\n"
-" %(project_name)s ਸਮਾਂ-ਸੀਮਾ\n"
-" "
 
 #: templates/projects/project_top_translators.html:4
 msgid "Top Translators"
@@ -2444,31 +2321,41 @@ msgid ""
 "which belongs to %(project_name)s?\n"
 msgstr ""
 
-#: templates/projects/release_detail.html:60
+#: templates/projects/release_detail.html:69
 msgid "Release date:"
 msgstr "ਰੀਲਿਜ਼ ਮਿਤੀ:"
 
-#: templates/projects/release_detail.html:64
+#: templates/projects/release_detail.html:73
 msgid "String freeze:"
 msgstr ""
 
-#: templates/projects/release_detail.html:68
+#: templates/projects/release_detail.html:77
 msgid "Devel freeze:"
 msgstr ""
 
-#: templates/projects/release_detail.html:73
+#: templates/projects/release_detail.html:82
 msgid "Components:"
 msgstr "ਭਾਗ:"
 
-#: templates/projects/release_detail.html:81
+#: templates/projects/release_detail.html:86
+#, fuzzy
+msgid "Click here to show or hide the component list"
+msgstr "ਸਰੋਤ ਫਾਇਲਾਂ ਵੇਖਣ ਜਾਂ ਓਹਲੇ ਕਰਨ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ"
+
+#: templates/projects/release_detail.html:87
+#, python-format
+msgid "This release has %(components_number)s components."
+msgstr ""
+
+#: templates/projects/release_detail.html:103
 msgid "Translation statistics"
 msgstr "ਅਨੁਵਾਦ ਅੰਕੜੇ"
 
-#: templates/projects/release_detail.html:88
+#: templates/projects/release_detail.html:110
 msgid "No translations added for this release. :-("
 msgstr ""
 
-#: templates/projects/release_detail.html:99
+#: templates/projects/release_detail.html:121
 msgid "Delete release"
 msgstr "ਰੀਲਿਜ਼ ਹਟਾਓ"
 
@@ -2500,48 +2387,47 @@ msgstr ""
 msgid "Save release"
 msgstr "ਰੀਲਿਜ਼ ਸੰਭਾਲੋ"
 
-#: templates/projects/release_language_detail.html:27
+#: templates/projects/release_language_detail.html:26
 #, python-format
 msgid "Release '%(release_name)s"
 msgstr "'%(release_name)s ਰੀਲਿਜ਼"
 
-#: templates/projects/release_language_detail.html:39
+#: templates/projects/release_language_detail.html:38
 msgid "Project/Component statistics"
 msgstr "ਪਰੋਜੈਕਟ/ਭਾਗ ਅੰਕੜੇ"
 
-#: templates/projects/release_language_detail.html:60
+#: templates/projects/release_language_detail.html:59
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
 "check again."
 msgstr ""
 
-#: templates/projects/release_language_detail.html:61
+#: templates/projects/release_language_detail.html:60
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"ਜੇ ਤੁਹਾਨੂੰ ਜਾਪਦਾ ਹੈ ਕਿ ਇੰਝ ਨਹੀਂ ਹੋਣਾ ਚਾਹੀਦਾ ਸੀ, ਤਾਂ <a "
-"href=\"%(contact_form)s\">ਸਾਨੂੰ "
+"ਜੇ ਤੁਹਾਨੂੰ ਜਾਪਦਾ ਹੈ ਕਿ ਇੰਝ ਨਹੀਂ ਹੋਣਾ ਚਾਹੀਦਾ ਸੀ, ਤਾਂ <a href=\"%(contact_form)s\">ਸਾਨੂੰ "
 "ਜਾਣਕਾਰੀ ਦਿਓ</a> ਜੀ।"
 
-#: templates/projects/release_language_detail.html:65
+#: templates/projects/release_language_detail.html:64
 msgid "Untranslated Components"
 msgstr "ਨਾ-ਅਨੁਵਾਦ ਕੀਤੇ ਭਾਗ"
 
-#: templates/projects/release_language_detail.html:67
+#: templates/projects/release_language_detail.html:66
 #, python-format
 msgid ""
 "The following components will be included in %(release_name)s, but there are "
 "no translations sent for %(language_name)s yet."
 msgstr ""
 
-#: templates/projects/release_list.html:14
+#: templates/projects/release_list.html:13
 msgid "Project Releases"
 msgstr "ਪਰੋਜੈਕਟ ਰੀਲਿਜ਼"
 
-#: templates/projects/release_list.html:29
+#: templates/projects/release_list.html:28
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href=\"%"
@@ -2552,29 +2438,28 @@ msgstr ""
 msgid "Submit"
 msgstr "ਭੇਜੋ"
 
-#: templates/reviews/review_list.html:27
+#: templates/reviews/review_list.html:26
 msgid "Translation Review Requests"
 msgstr "ਅਨੁਵਾਦ ਪੜਤਾਲ ਮੰਗ"
 
-#: templates/reviews/review_list.html:31
+#: templates/reviews/review_list.html:30
 msgid "Open Requests"
 msgstr "ਮੰਗ ਖੋਲ੍ਹੋ"
 
-#: templates/reviews/review_list.html:39
+#: templates/reviews/review_list.html:38
 #, python-format
 msgid "Review Request #%(review_id)s "
 msgstr ""
 
-#: templates/reviews/review_list.html:47
+#: templates/reviews/review_list.html:46
 msgid "Who and when"
 msgstr "ਕੌਣ ਅਤੇ ਕਦੋਂ"
 
-#: templates/reviews/review_list.html:49
-#: templates/reviews/review_list.html:115
+#: templates/reviews/review_list.html:48
 msgid "See profile"
 msgstr "ਪਰੋਫਾਇਲ ਵੇਖੋ"
 
-#: templates/reviews/review_list.html:50
+#: templates/reviews/review_list.html:49
 #, python-format
 msgid ""
 "\n"
@@ -2585,112 +2470,89 @@ msgstr ""
 "        %(time_since)s ਪਹਿਲਾਂ\n"
 "      "
 
-#: templates/reviews/review_list.html:56
+#: templates/reviews/review_list.html:55
 msgid "Translation Language"
 msgstr "ਅਨੁਵਾਦ ਭਾਸ਼ਾ"
 
-#: templates/reviews/review_list.html:59
+#: templates/reviews/review_list.html:58
 msgid "Go to language page"
 msgstr "ਭਾਸ਼ਾ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:65
 msgid "File target"
 msgstr "ਟਾਰਗੇਟ ਫਾਇਲ"
 
-#: templates/reviews/review_list.html:67
+#: templates/reviews/review_list.html:66
 msgid "Download the version sent for review"
 msgstr ""
 
-#: templates/reviews/review_list.html:70
+#: templates/reviews/review_list.html:69
 msgid "Score"
 msgstr "ਸਕੋਰ"
 
-#: templates/reviews/review_list.html:84
+#: templates/reviews/review_list.html:83
 msgid "Status"
 msgstr "ਹਾਲਤ"
 
-#: templates/reviews/review_list.html:94
+#: templates/reviews/review_list.html:93
 msgid "Close Review"
 msgstr "ਝਲਕ ਬੰਦ ਕਰੋ"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept and submit translation"
 msgstr "ਮਨਜ਼ੂਰ ਅਤੇ ਅਨੁਵਾਦ ਭੇਜੋ"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept"
 msgstr "ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject translation"
 msgstr "ਅਨੁਵਾਦ ਨਾ-ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject"
 msgstr "ਨਾ-ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:115
-msgid "By"
-msgstr "ਵਲੋਂ"
-
-#: templates/reviews/review_list.html:125
-msgid "Add your comment as"
-msgstr "ਆਪਣੀ ਟਿੱਪਣੀ ਵਜੋਂ ਜੋੜ੍ਹੋ"
-
-#: templates/reviews/review_list.html:131
-msgid "Say it!"
-msgstr "ਕਹੋ!"
-
-#: templates/reviews/review_list.html:142
+#: templates/reviews/review_list.html:113
 msgid "No open requests!"
 msgstr ""
 
-#: templates/reviews/review_list.html:146
+#: templates/reviews/review_list.html:117
 msgid "Closed Requests"
 msgstr ""
 
-#: templates/reviews/review_list.html:152
+#: templates/reviews/review_list.html:123
 msgid "ID"
 msgstr "ID"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:124
 msgid "Author"
 msgstr "ਲੇਖਕ"
 
-#: templates/reviews/review_list.html:155
+#: templates/reviews/review_list.html:126
 msgid "Time Since"
 msgstr "ਸਮਾਂ ਜਦੋਂ ਤੋਂ"
 
-#: templates/reviews/review_list.html:156
+#: templates/reviews/review_list.html:127
 msgid "Resolution"
 msgstr "ਹੱਲ਼"
 
-#: templates/reviews/review_list.html:157
+#: templates/reviews/review_list.html:128
 msgid "Attachment"
 msgstr "ਅਟੈਚਮੈਂਟ"
 
-#: templates/reviews/review_list.html:158
+#: templates/reviews/review_list.html:129
 msgid "Actions"
 msgstr "ਐਕਸ਼ਨ"
 
-#: templates/reviews/review_list.html:182
+#: templates/reviews/review_list.html:153
 msgid "Reopen review request"
 msgstr ""
 
-#: templates/reviews/review_list.html:194
+#: templates/reviews/review_list.html:165
 msgid "No closed requests!"
 msgstr ""
-
-#: templates/simpleauth/base_profile.html:4
-#: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/public_profile.html:4
-#: templates/simpleauth/public_profile.html:5
-#: templates/simpleauth/settings.html:5
-#: templates/txcommon/user_timeline.html:15
-#: templates/userprofile/base_2col.html:3
-#: templates/userprofile/profile/public.html:28
-msgid "Profile"
-msgstr "ਪਰੋਫਾਇਲ"
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2761,7 +2623,12 @@ msgid ""
 "belongs to %(project_name)s?\n"
 msgstr ""
 
-#: templates/teams/team_detail.html:19
+#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
+#, fuzzy
+msgid "Teams"
+msgstr "ਟੀਮਾਂ:"
+
+#: templates/teams/team_detail.html:22
 #, python-format
 msgid ""
 "\n"
@@ -2772,51 +2639,56 @@ msgstr ""
 "  ਅਨੁਵਾਦ ਟੀਮਾਂ - %(language_name)s <sup class=\"entry_metalink\">%"
 "(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:33
+#: templates/teams/team_detail.html:36
 msgid "Mainlist:"
 msgstr "ਮੁੱਖ-ਲਿਸਟ:"
 
-#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "ਮੋਢੀ:"
 msgstr[1] ""
 
-#: templates/teams/team_detail.html:56
+#: templates/teams/team_detail.html:59
 msgid "Become a translator:"
 msgstr "ਅਨੁਵਾਦਕ ਬਣੋ:"
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:62
 msgid "Join this Team"
 msgstr "ਇਹ ਟੀਮ ਜੁਆਇੰਨ ਕਰੋ"
 
-#: templates/teams/team_detail.html:70
+#: templates/teams/team_detail.html:73
 msgid "People waiting for team membership approving:"
 msgstr "ਲੋਕ ਟੀਮ ਮੈਂਬਰੀ ਮਨਜ਼ੂਰ ਕਰਨ ਦੀ ਉਡੀਕ ਕਰ ਰਹੇ ਹਨ:"
 
-#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "ਮਨਜ਼ੂਰ"
 
-#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "ਇਨਕਾਰ"
 
-#: templates/teams/team_detail.html:91
+#: templates/teams/team_detail.html:94
 msgid "Withdraw"
 msgstr "ਵਾਪਸ ਲਵੋ"
 
-#: templates/teams/team_detail.html:104
+#: templates/teams/team_detail.html:107
 msgid "Team Members:"
 msgstr "ਟੀਮ ਮੈਂਬਰ:"
 
-#: templates/teams/team_detail.html:114
+#: templates/teams/team_detail.html:117
 msgid "Leave"
 msgstr "ਛੱਡੋ"
 
-#: templates/teams/team_detail.html:147
+#: templates/teams/team_detail.html:153
 msgid "Delete team"
 msgstr "ਟੀਮ ਹਟਾਓ"
+
+#: templates/teams/team_form.html:10
+#, fuzzy
+msgid "Add Team"
+msgstr "ਟੀਮ"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2865,9 +2737,38 @@ msgstr "ਨਵੀਂ ਟੀਮ ਲਈ ਮੰਗ"
 msgid "Request team"
 msgstr "ਟੀਮ ਲਈ ਮੰਗ"
 
+#: templates/teams/team_off.html:12
+#, fuzzy
+msgid "This project is not using Translation Teams"
+msgstr "%(project_name)s ਅਨੁਵਾਦ ਟੀਮਾਂ"
+
+#: templates/teams/team_off.html:17
+#, python-format
+msgid ""
+"\n"
+"            This project does not maintain its own teams, but has chosen to "
+"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
+"s</a>'.\n"
+"            In order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'.\n"
+"        "
+msgstr ""
+
+#: templates/teams/team_off.html:22
+msgid ""
+"\n"
+"            This project allows translation submission from <em>anyone</em>, "
+"and thus no translation teams exist.\n"
+"        "
+msgstr ""
+
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
 msgstr "ਪੂਰਾ ਹੋਏ ਵੇਖੋ"
+
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr ""
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
@@ -3083,8 +2984,7 @@ msgstr "ਪਾਸਵਰਡ ਕੁੰਜੀ ਦੀ ਮਿਆਦ ਪੁੱਗੀ"
 msgid ""
 "The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
-"ਪਾਸਵਰਡ ਕੀ, ਜੋ ਤੁਸੀਂ ਵਰਤਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਹੇ ਹੋ, ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ। ਨਵੀਂ ਲਈ "
-"ਮੰਗ ਕਰੋ ਜੀ।"
+"ਪਾਸਵਰਡ ਕੀ, ਜੋ ਤੁਸੀਂ ਵਰਤਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਹੇ ਹੋ, ਦੀ ਮਿਆਦ ਪੁੱਗ ਗਈ ਹੈ। ਨਵੀਂ ਲਈ ਮੰਗ ਕਰੋ ਜੀ।"
 
 #: templates/userprofile/account/password_reset.html:5
 #: templates/userprofile/account/password_reset_complete.html:12
@@ -3103,9 +3003,8 @@ msgid ""
 "Forgotten your password? Enter your e-mail address, and we'll reset your "
 "password and e-mail the new one to you."
 msgstr ""
-"ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ? ਆਪਣਾ ਈਮੇਲ ਐਡਰੈੱਸ ਦਿਓ ਅਤੇ ਅਸੀਂ ਤੁਹਾਡਾ ਪਾਸਵਰਡ ਮੁੜ-ਸੈੱਟ ਕਰ "
-"ਦੇਵਾਂਗੇ ਅਤੇ "
-"ਤੁਹਾਨੂੰ ਨਵਾਂ ਪਾਸਵਰਡ ਈਮੇਲ ਵਿੱਚ ਭੇਜ ਦੇਵਾਂਗੇ।"
+"ਪਾਸਵਰਡ ਭੁੱਲ ਗਏ? ਆਪਣਾ ਈਮੇਲ ਐਡਰੈੱਸ ਦਿਓ ਅਤੇ ਅਸੀਂ ਤੁਹਾਡਾ ਪਾਸਵਰਡ ਮੁੜ-ਸੈੱਟ ਕਰ ਦੇਵਾਂਗੇ ਅਤੇ ਤੁਹਾਨੂੰ "
+"ਨਵਾਂ ਪਾਸਵਰਡ ਈਮੇਲ ਵਿੱਚ ਭੇਜ ਦੇਵਾਂਗੇ।"
 
 #: templates/userprofile/account/password_reset.html:27
 msgid "Reset my password"
@@ -3140,8 +3039,7 @@ msgid ""
 "We've e-mailed you the instructions to obtain a new password. You should be "
 "receiving it shortly."
 msgstr ""
-"ਅਸੀਂ ਤੁਹਾਨੂੰ ਨਵੇਂ ਪਾਸਵਰਡ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਹਦਾਇਤਾਂ ਈਮੇਲ ਕਰ ਦਿੱਤੀਆਂ ਹਨ। ਤੁਹਾਨੂੰ "
-"ਛੇਤੀ ਹੀ ਇਹ ਮਿਲ "
+"ਅਸੀਂ ਤੁਹਾਨੂੰ ਨਵੇਂ ਪਾਸਵਰਡ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਹਦਾਇਤਾਂ ਈਮੇਲ ਕਰ ਦਿੱਤੀਆਂ ਹਨ। ਤੁਹਾਨੂੰ ਛੇਤੀ ਹੀ ਇਹ ਮਿਲ "
 "ਜਾਵੇਗੀ।"
 
 #: templates/userprofile/account/registration.html:4
@@ -3177,8 +3075,8 @@ msgid ""
 "You have successfully registered a new account. Go to the <a href=\"%"
 "(overview_url)s\">sign in page</a> to authenticate and start using this site."
 msgstr ""
-"ਤੁਸੀਂ ਨਵਾਂ ਅਕਾਊਂਟ ਠੀਕ ਤਰ੍ਹਾਂ ਰਜਿਸਟਰ ਕਰਵਾ ਲਿਆ ਹੈ। ਪਰਮਾਣਿਤ ਹੋਣ ਅਤੇ ਇਹ ਸਾਇਟ ਨੂੰ "
-"ਵਰਤਣਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ <a href=\"%(overview_url)s\">ਪੇਜ਼ ਉੱਤੇ ਸਾਇਨ ਇਨ</a> ਕਰੋ।"
+"ਤੁਸੀਂ ਨਵਾਂ ਅਕਾਊਂਟ ਠੀਕ ਤਰ੍ਹਾਂ ਰਜਿਸਟਰ ਕਰਵਾ ਲਿਆ ਹੈ। ਪਰਮਾਣਿਤ ਹੋਣ ਅਤੇ ਇਹ ਸਾਇਟ ਨੂੰ ਵਰਤਣਾ ਸ਼ੁਰੂ "
+"ਕਰਨ ਲਈ <a href=\"%(overview_url)s\">ਪੇਜ਼ ਉੱਤੇ ਸਾਇਨ ਇਨ</a> ਕਰੋ।"
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -3258,10 +3156,6 @@ msgstr "ਆਟੋਮੈਟਿਕ ਟਿਕਾਣਾ ਖੋਜ"
 msgid "Country"
 msgstr "ਦੇਸ਼"
 
-#: templates/userprofile/profile/location.html:22
-msgid "Loading..."
-msgstr "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
-
 #: templates/userprofile/profile/location.html:26
 msgid "Location:"
 msgstr "ਟਿਕਾਣਾ:"
@@ -3338,10 +3232,6 @@ msgstr "ਟਿਕਾਣਾ ਸ਼ਾਮਲ"
 msgid "Change location"
 msgstr "ਟਿਕਾਣਾ ਬਦਲੋ"
 
-#: templates/userprofile/profile/overview.html:105
-msgid "My Timeline"
-msgstr "ਮੇਰੀ ਸਮਾਂ-ਸੀਮਾ"
-
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -3364,12 +3254,12 @@ msgstr "ਮਾਂ ਬੋਲੀ"
 msgid "Blog/Site"
 msgstr "ਬਲੌਗ/ਸਾਈਟ"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "ਟਵਿੱਟਰ"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3403,10 +3293,8 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"                <a class=\"name\" href=\"%(project_url)s\">%(project_name)s<"
-"/a> "
-"ਪਰੋਜੈਕਟ ਲਈ <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
-"ਟੀਮ\n"
+"                <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</"
+"a> ਪਰੋਜੈਕਟ ਲਈ <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> ਟੀਮ\n"
 "                "
 
 #: templates/userprofile/profile/public.html:131
@@ -3527,11 +3415,11 @@ msgstr "ਸਰੋਤ ਸਤਰ ਕਾਪੀ ਕਰੋ"
 msgid "Auto-suggest translation"
 msgstr "ਆਟੋਮੈਟਿਕ-ਸੁਝਾਇਆ ਅਨੁਵਾਦ"
 
-#: translations/models.py:242
+#: translations/models.py:245
 msgid "PO file"
 msgstr "PO ਫਾਇਲ"
 
-#: translations/models.py:243
+#: translations/models.py:246
 msgid "PO files"
 msgstr "PO ਫਾਇਲਾਂ"
 
@@ -3553,14 +3441,14 @@ msgid "Options"
 msgstr "ਚੋਣਾਂ"
 
 #: translations/templates/comp_lang_stats_table.html:26
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:39
 #: translations/templates/lang_stats_table.html:27
 #: translations/templates/release_stats_table.html:22
 msgid "Could not generate statistics for this file"
 msgstr "ਇਹ ਫਾਇਲ ਲਈ ਅੰਕੜੇ ਬਣਾਏ ਨਹੀਂ ਜਾ ਸਕੇ"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3568,7 +3456,7 @@ msgid "Trans:"
 msgstr "ਅਨੁ:"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3576,53 +3464,59 @@ msgid "Untrans:"
 msgstr "ਨਾ-ਅਨੁ:"
 
 #: translations/templates/comp_lang_stats_table.html:39
-#: translations/templates/comp_stats_table.html:54
+#: translations/templates/comp_stats_table.html:56
 #: translations/templates/lang_stats_table.html:44
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "ਵੇਖੋ "
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:55
+#: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#: translations/templates/source_files.html:19
-msgid "Download "
-msgstr "ਡਾਊਨਲੋਡ "
+#, fuzzy
+msgid "Download for viewing "
+msgstr "ਪੜਤਾਲ ਲਈ ਭੇਜੋ"
 
-#: translations/templates/comp_lang_stats_table.html:50
-#: translations/templates/comp_stats_table.html:65
-#: translations/templates/lang_stats_table.html:55
+#: translations/templates/comp_lang_stats_table.html:55
+#: translations/templates/comp_stats_table.html:72
+#: translations/templates/lang_stats_table.html:60
 msgid "Edit "
 msgstr "ਸੋਧ "
 
-#: translations/templates/comp_stats_table.html:28
+#: translations/templates/comp_stats_table.html:29
+msgid ""
+"See the outsource team for this language. You will be redirected to another "
+"project team page."
+msgstr ""
+
+#: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
 msgstr "ਇਹ ਭਾਸ਼ਾ ਲਈ ਟੀਮ ਵੇਖੋ"
 
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:29
+#: translations/templates/comp_stats_table.html:31
 msgid "See statistics for this language"
 msgstr "ਇਹ ਭਾਸ਼ਾ ਲਈ ਅੰਕੜੇ ਵੇਖੋ"
 
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:31
 msgid "No team for this language"
 msgstr "ਇਹ ਭਾਸ਼ਾ ਲਈ ਕੋਈ ਟੀਮ ਨਹੀਂ"
 
-#: translations/templates/comp_stats_table.html:34
+#: translations/templates/comp_stats_table.html:36
 msgid "There are no languages registered matching this code"
 msgstr ""
 
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:51
 #: translations/templates/lang_stats_table.html:39
 msgid "Click here to see the multiple files for"
 msgstr "ਇਸ ਵਾਸਤੇ ਕਈ ਫਾਇਲਾਂ ਵੇਖਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ"
 
-#: translations/templates/component_submit.html:5
+#: translations/templates/component_submit.html:6
 #, python-format
 msgid "Submit a translation for %(pofile_filename)s"
 msgstr "%(pofile_filename)s ਲਈ ਅਨੁਵਾਦ ਭੇਜੋ"
 
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:10
 msgid "Submit file"
 msgstr "ਫਾਇਲ ਭੇਜੋ"
 
@@ -3637,27 +3531,6 @@ msgstr "ਇਹ ਪਰੋਜੈਕਟ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 #: translations/templates/lang_stats_table.html:25
 msgid "Go to this component page"
 msgstr "ਇਹ ਭਾਗ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
-
-#: translations/templates/pofile_lock.html:15
-msgid "Unlock this file when you are finished working with it."
-msgstr "ਜਦੋਂ ਤੁਸੀਂ ਇਸ ਉੱਤੇ ਕੰਮ ਮੁਕੰਮਲ ਕਰਨ ਲਿਆ ਤਾਂ ਇਹ ਫਾਇਲ ਅਣ-ਲਾਕ ਕਰੋ।"
-
-#: translations/templates/pofile_lock.html:21
-#, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr ""
-"ਯੂਜ਼ਰ '%(owner)s' ਨੇ ਇਹ ਫਾਇਲ ਲਾਕ ਕੀਤੀ ਹੈ, ਦਰਸਾਉਂਦਾ ਹੈ ਕਿ ਉਹ ਇਸ ਉੱਤੇ ਕੰਮ ਕਰ "
-"ਰਿਹਾ ਹੈ।"
-
-#: translations/templates/pofile_lock.html:27
-msgid "Lock this file to notify others you're working with it."
-msgstr ""
-"ਇਹ ਫਾਇਲ ਲਾਕ ਕਰੋ ਤਾਂ ਕਿ ਹੋਰਾਂ ਨੂੰ ਜਾਣਕਾਰੀ ਰਹੇ ਕਿ ਤੁਸੀਂ ਇਸ ਉੱਤੇ ਕੰਮ ਕਰ ਰਹੇ ਹੋ।"
-
-#: translations/templates/pofile_lock.html:30
-msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr ""
-"ਇਹ ਫਾਇਲ ਅਣ-ਲਾਕ ਹੈ। ਸੰਭਵ ਤੌਰ ਉੱਤੇ ਇਸ ਸਮੇਂ ਕੋਈ ਇਸ ਉੱਤੇ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ ਹੈ।"
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -3680,6 +3553,10 @@ msgstr "ਇਹ ਭਾਗ ਵਿੱਚ %(sources_number)s ਸਰੋਤ ਫਾਇ�
 msgid "entries"
 msgstr "ਐਂਟਰੀਆਂ"
 
+#: translations/templates/source_files.html:19
+msgid "Download "
+msgstr "ਡਾਊਨਲੋਡ "
+
 #: txcollections/migrations/0001_initial.py:21
 msgid "String freese date"
 msgstr "ਲਾਈਨ ਫਰੀਜ਼ ਮਿਤੀ"
@@ -3694,44 +3571,44 @@ msgstr ""
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 
-#: txcommon/i18n.py:18
-#, python-format
-msgid "The LINGUAS file could not be opened: %s"
+#: txcommon/i18n.py:19
+#, fuzzy, python-format
+msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "LINGUAS ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ: %s"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Female"
 msgstr "ਔਰਤ"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Male"
 msgstr "ਮਰਦ"
 
-#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "ਪਹਿਲਾਂ ਨਾਂ"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "ਆਖਰੀ ਨਾਂ"
 
-#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "ਮਾਂ ਬੋਲੀ"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "ਬਲੌਗ"
 
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "ਤੁਹਾਡੇ ਬਾਰੇ"
 
-#: txcommon/models.py:38
+#: txcommon/models.py:39
 msgid "Short description of yourself (140 chars)."
 msgstr ""
 
-#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "ਕੰਮ ਲੱਭ ਰਹੇ ਹੋ?"
 
@@ -4022,25 +3899,31 @@ msgid ""
 "different one."
 msgstr "ਇਹ ਰਿਪੋਜ਼ਟਰੀ ਪਹਿਲਾਂ ਹੀ ਹੋਰ ਪਰੋਜੈਕਟ ਨਾਲ ਸਬੰਧਿਤ ਹੈ। ਵੱਖਰੀ ਚੁਣੋ ਜੀ।"
 
-#: txcommon/views.py:85
+#: txcommon/views.py:109
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr ""
 
-#: txcommon/views.py:88
+#: txcommon/views.py:112
 msgid "You can't nudge yourself."
 msgstr ""
 
-#: txcommon/views.py:95
+#: txcommon/views.py:119
 #, python-format
 msgid "You have nudged '%s'."
 msgstr ""
 
-#: txcommon/db/models.py:26
+#: txcommon/db/models.py:27
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr ""
 
-#: txcommon/db/models.py:28
+#: txcommon/db/models.py:29
 msgid "You must enter at least a pair of parentheses containing nothing."
+msgstr ""
+
+#: txcommon/templatetags/avatars.py:108
+msgid ""
+"You have to provide only the size as             an integer (both sides will "
+"be equal) and optionally, the             username."
 msgstr ""
 
 #: txcommon/templatetags/txcommontags.py:136
@@ -4079,46 +3962,85 @@ msgstr ""
 msgid "This type of repository does not accept branches"
 msgstr ""
 
-#: vcs/models.py:48
+#: vcs/models.py:50
 msgid "Branch"
 msgstr "ਬਰਾਂਚ"
 
-#: vcs/models.py:49
+#: vcs/models.py:51
 msgid "A VCS branch this unit is associated with"
 msgstr ""
 
-#: vcs/models.py:50
+#: vcs/models.py:52
 msgid "Web frontend"
 msgstr "ਵੈੱਬ ਫਰੰਟਐਂਡ"
 
-#: vcs/models.py:52
+#: vcs/models.py:54
 msgid "A URL to the project's web front-end"
 msgstr "ਪਰੋਜੈਕਟ ਦੇ ਵੈੱਬ ਫਰੰਟ-ਐਂਡ ਲਈ URL ਹੈ।"
 
-#: vcs/models.py:58
+#: vcs/models.py:60
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
-#: vcs/models.py:61
+#: vcs/models.py:63
 msgid "vcsunit"
 msgstr "vcsunit"
 
-#: vcs/models.py:62
+#: vcs/models.py:64
 msgid "vcsunits"
 msgstr "vcsunits"
+
+#: vcs/lib/exceptions/__init__.py:17
+msgid ""
+"Your request could not be completed. The admins have been notified to take a "
+"closer look at it. Please try again in a few minutes"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:40
+msgid "Setup of the repository locally could not be done successfully."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:47
+msgid ""
+"The local repository has not been setup yet. Please, first do a check-out of "
+"the repository."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:54
+msgid "Unable to pull data from the remote repository. Is the remote host up?"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:61
+msgid ""
+"Cleanup of the repository failed. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:67
+msgid "Commit to the repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:72
+msgid "Pushing to the remote repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:78
+msgid ""
+"Given file does not have a revision. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
 
 #: webtrans/fields.py:55
 #, python-format
 msgid "The %s fields should be filled."
 msgstr "%s ਖੇਤਰ ਭਰਨ ਦੀ ਲੋੜ ਹੈ।"
 
-#: webtrans/wizards.py:364
+#: webtrans/wizards.py:414
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
-msgstr ""
-"ਕੁਝ ਵੀ ਭੇਜਿਆ ਨਹੀਂ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ ਤੁਸੀਂ ਅਨੁਵਾਦ ਫਾਰਮ 'ਚ ਕੁਝ ਵੀ ਨਹੀਂ ਬਦਲਿਆ ਹੈ।"
+msgstr "ਕੁਝ ਵੀ ਭੇਜਿਆ ਨਹੀਂ ਗਿਆ ਹੈ, ਕਿਉਂਕਿ ਤੁਸੀਂ ਅਨੁਵਾਦ ਫਾਰਮ 'ਚ ਕੁਝ ਵੀ ਨਹੀਂ ਬਦਲਿਆ ਹੈ।"
 
 #: webtrans/templates/pagination.html:7
 msgid "Previous"
@@ -4128,4 +4050,351 @@ msgstr "ਪਿੱਛੇ"
 msgid "Next"
 msgstr "ਅੱਗੇ"
 
+#~ msgid "Afrikaans"
+#~ msgstr "ਅਫਰੀਕੀ"
 
+#~ msgid "Amharic"
+#~ msgstr "ਅੰਹਰਿਕ"
+
+#~ msgid "Arabic"
+#~ msgstr "ਅਰਬੀ"
+
+#~ msgid "Assamese"
+#~ msgstr "ਆਸਾਮੀ"
+
+#~ msgid "Asturian"
+#~ msgstr "ਅਸਟਰੀਆਈ"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "ਅਜ਼ਰਬਾਈਜਾਨ"
+
+#~ msgid "Balochi"
+#~ msgstr "ਬਲੋਚੀ"
+
+#~ msgid "Belarusian"
+#~ msgstr "ਬੇਲਾਰੂਸੀ"
+
+#~ msgid "Bulgarian"
+#~ msgstr "ਬੁਲਗਾਰੀਆਈ"
+
+#~ msgid "Bengali"
+#~ msgstr "ਬੰਗਾਲੀ"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "ਬੰਗਾਲੀ (ਭਾਰਤ)"
+
+#~ msgid "Tibetan"
+#~ msgstr "ਤਿੱਬਤੀ"
+
+#~ msgid "Bosnian"
+#~ msgstr "ਬੋਸਨੀਆਈ"
+
+#~ msgid "Catalan (Valencian)"
+#~ msgstr "ਕਾਟਾਲਾਨ (ਵਾਲਿਨਸੀਆਈ)"
+
+#~ msgid "Czech"
+#~ msgstr "ਚੈੱਕ"
+
+#~ msgid "Welsh"
+#~ msgstr "ਵਾਲਿਸ਼"
+
+#~ msgid "Danish"
+#~ msgstr "ਡੈਨਿਸ਼"
+
+#~ msgid "German"
+#~ msgstr "ਜਰਮਨ"
+
+#~ msgid "Swiss German"
+#~ msgstr "ਸਵਿੱਸ ਜਰਮਨ"
+
+#~ msgid "Dzongkha"
+#~ msgstr "ਡਜ਼ੋਨਗਖਾ"
+
+#~ msgid "Greek"
+#~ msgstr "ਗਰੀਕ"
+
+#~ msgid "English"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਬਰਤਾਨੀਆ)"
+
+#~ msgid "English (United States)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਅਮਰੀਕਾ)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "ਅੰਗਰੇਜ਼ੀ (ਦੱਖਣੀ ਅਫਰੀਕਾ)"
+
+#~ msgid "Esperanto"
+#~ msgstr "ਈਸਪੀਰਟੋ"
+
+#~ msgid "Spanish (Castilian)"
+#~ msgstr "ਸਪੇਨੀ (ਕਾਸਟਿਲਿਨ)"
+
+#~ msgid "Spanish (Argentinian)"
+#~ msgstr "ਸਪੇਨੀ (ਅਰਜਨਟੀਨਾ)"
+
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "ਸਪੇਨੀ (ਮੈਕਸੀਕੋ)"
+
+#~ msgid "Estonian"
+#~ msgstr "ਇਸਟੋਨੀਆਈ"
+
+#~ msgid "Basque"
+#~ msgstr "ਬਾਸਕਿਊ"
+
+#~ msgid "Persian"
+#~ msgstr "ਫਾਰਸੀ"
+
+#~ msgid "Finnish"
+#~ msgstr "ਫੈਨਿਸ਼"
+
+#~ msgid "French"
+#~ msgstr "ਫਰੈਂਚ"
+
+#~ msgid "Western Frisian"
+#~ msgstr "ਪੱਛਮੀ ਫਰਾਸੀ"
+
+#~ msgid "Irish"
+#~ msgstr "ਆਈਰਸ਼"
+
+#~ msgid "Galician"
+#~ msgstr "ਗਾਈਲੀਆਈ"
+
+#~ msgid "Gujarati"
+#~ msgstr "ਗੁਜਰਾਤੀ"
+
+#~ msgid "Hebrew"
+#~ msgstr "ਹੈਬਰਿਊ"
+
+#~ msgid "Hindi"
+#~ msgstr "ਹਿੰਦੀ"
+
+#~ msgid "Croatian"
+#~ msgstr "ਕਰੋਆਟੀਆਈ"
+
+#~ msgid "Hungarian"
+#~ msgstr "ਹੰਗਰੀਆਈ"
+
+#~ msgid "Armenian"
+#~ msgstr "ਅਰਮੀਨੀਆਈ"
+
+#~ msgid "Indonesian"
+#~ msgstr "ਇੰਡੋਨੇਸ਼ੀਆਈ"
+
+#~ msgid "Iloko"
+#~ msgstr "ਆਈਲੋਕੋ"
+
+#~ msgid "Icelandic"
+#~ msgstr "ਆਈਲੈਡਿਕ"
+
+#~ msgid "Italian"
+#~ msgstr "ਇਤਾਲਵੀ"
+
+#~ msgid "Japanese"
+#~ msgstr "ਜਾਪਾਨੀ"
+
+#~ msgid "Georgian"
+#~ msgstr "ਜਾਰਜੀਆਈ"
+
+#~ msgid "Khmer"
+#~ msgstr "ਖਮੇਰ"
+
+#~ msgid "Kannada"
+#~ msgstr "ਕੰਨੜ"
+
+#~ msgid "Korean"
+#~ msgstr "ਕੋਰੀਆਈ"
+
+#~ msgid "Kashmiri"
+#~ msgstr "ਕਸ਼ਮੀਰੀ"
+
+#~ msgid "Kurdish"
+#~ msgstr "ਕੁਰਦ"
+
+#~ msgid "Kirgyz"
+#~ msgstr "ਕਿਰਗਜ਼"
+
+#~ msgid "Latin"
+#~ msgstr "ਲੈਟਿਨ"
+
+#~ msgid "Lao"
+#~ msgstr "ਲਾਓ"
+
+#~ msgid "Lithuanian"
+#~ msgstr "ਲਿਥੂਆਨਆਈ"
+
+#~ msgid "Latvian"
+#~ msgstr "ਲਾਟਵੀਆਈ"
+
+#~ msgid "Maithili"
+#~ msgstr "ਮੈਥਲੀ"
+
+#~ msgid "Macedonian"
+#~ msgstr "ਮੈਕਡੋਨਿਆਈ"
+
+#~ msgid "Malayalam"
+#~ msgstr "ਮਲਿਆਲਮ"
+
+#~ msgid "Mongolian"
+#~ msgstr "ਮੰਗੋਲੀਆਈ"
+
+#~ msgid "Marathi"
+#~ msgstr "ਮਰਾਠੀ"
+
+#~ msgid "Malay"
+#~ msgstr "ਮਾਲਿਆ"
+
+#~ msgid "Maltese"
+#~ msgstr "ਮਾਲਟੀ"
+
+#~ msgid "Burmese"
+#~ msgstr "ਬੁਰਮੀ"
+
+#~ msgid "Norwegian Bokmål"
+#~ msgstr "ਨਾਰਵੇਗੀਆਈ ਬੋਕਮਾਲ"
+
+#~ msgid "Nepali"
+#~ msgstr "ਨੇਪਾਲੀ"
+
+#~ msgid "Dutch (Flemish)"
+#~ msgstr "ਡੱਚ (ਫਲਿਮਿਸ਼)"
+
+#~ msgid "Norwegian Nynorsk"
+#~ msgstr "ਨਾਰਵੇਗੀਅਨ ਨਿਉਨੋਰਸਕ"
+
+#~ msgid "Norwegian"
+#~ msgstr "ਨਾਰਵੇਗੀਆਈ"
+
+#~ msgid "Northern Sotho"
+#~ msgstr "ਉੱਤਰੀ ਸੋਥੋ"
+
+#~ msgid "Oriya"
+#~ msgstr "ਓੜੀਆ"
+
+#~ msgid "Panjabi (Punjabi)"
+#~ msgstr "ਪੰਜਾਬੀ"
+
+#~ msgid "Polish"
+#~ msgstr "ਪੋਲੈਂਡੀ"
+
+#~ msgid "Portuguese"
+#~ msgstr "ਪੁਰਤਗਾਲੀ"
+
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "ਪੁਰਤਗਾਲੀ (ਬਰਾਜ਼ੀਲ)"
+
+#~ msgid "Romanian"
+#~ msgstr "ਰੋਮਾਨੀਆਈ"
+
+#~ msgid "Russian"
+#~ msgstr "ਰੂਸੀ"
+
+#~ msgid "Sinhala"
+#~ msgstr "ਸਿੰਹਾਲਾ"
+
+#~ msgid "Slovak"
+#~ msgstr "ਸਲੋਵਾਕ"
+
+#~ msgid "Slovenian"
+#~ msgstr "ਸਲੋਵੀਨੀਆਈ"
+
+#~ msgid "Albanian"
+#~ msgstr "ਅਲਬੀਨੀਆਈ"
+
+#~ msgid "Serbian"
+#~ msgstr "ਸਰਬੀਆਈ"
+
+#~ msgid "Serbian (Latin)"
+#~ msgstr "ਸਰਬੀਆਈ (ਲੈਟਿਨ)"
+
+#~ msgid "Sotho, Southern"
+#~ msgstr "ਸੋਥੋ, ਦੱਖਣੀ"
+
+#~ msgid "Swedish"
+#~ msgstr "ਸਵੀਡਸ"
+
+#~ msgid "Tamil"
+#~ msgstr "ਤਾਮਿਲ"
+
+#~ msgid "Telugu"
+#~ msgstr "ਤੇਲਗੂ"
+
+#~ msgid "Tajik"
+#~ msgstr "ਤਾਜਿਕ"
+
+#~ msgid "Thai"
+#~ msgstr "ਥਾਈ"
+
+#~ msgid "Tagalog"
+#~ msgstr "ਤਾਗਾਲੋਗ"
+
+#~ msgid "Turkish"
+#~ msgstr "ਤੁਰਕ"
+
+#~ msgid "Urdu"
+#~ msgstr "ਊਰਦੁ"
+
+#~ msgid "Ukrainian"
+#~ msgstr "ਯੂਕਰੇਨੀ"
+
+#~ msgid "Vietnamese"
+#~ msgstr "ਵੀਅਤਨਾਮੀ"
+
+#~ msgid "Wolof"
+#~ msgstr "ਵੋਲੋਫ"
+
+#~ msgid "Xhosa"
+#~ msgstr "ਝੋਸਾ"
+
+#~ msgid "Chinese (China)"
+#~ msgstr "ਚੀਨੀ (ਚੀਨ)"
+
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "ਚੀਨੀ (ਹਾਂਗਕਾਂਗ)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "ਚੀਨੀ (ਤਾਈਵਾਨ)"
+
+#~ msgid "Zulu"
+#~ msgstr "ਜੂਲੂ"
+
+#~ msgid ""
+#~ "Your file does not pass the correctness checks (msgfmt -c). Please run "
+#~ "this command on your system to see the errors. We couldn't send you an "
+#~ "email to preserve your work because you haven't registered an email "
+#~ "address. Please do so now to avoid such issues in the future."
+#~ msgstr ""
+#~ "ਤੁਹਾਡੀ ਫਾਇਲ ਠੀਕ-ਠਾਕ ਜਾਂਚ ਵਿੱਚੋਂ ਪਾਸ ਨਹੀਂ ਹੋ ਸਕੀ (msgfmt -c)। ਇਹ ਕਮਾਂਡ ਆਪਣੇ ਸਿਸਟਮ "
+#~ "ਉੱਤੇ ਗਲਤੀਆਂ ਵੇਖਣ ਲਈ ਚੁਲਾਉ ਜੀ। ਅਸੀਂ ਤੁਹਾਡੀ ਫਾਇਲ ਨੂੰ ਤੁਹਾਨੂੰ ਈਮੇਲ ਨਹੀਂ ਕਰ ਸਕੇ, ਕਿਉਂਕਿ ਤੁਹਾਡੇ "
+#~ "ਕੋਲ ਕੋਈ ਰਜਿਸਟਰ ਈਮੇਲ ਐਡਰੈੱਸ ਨਹੀਂ ਹੈ। ਆਉਣ ਵਾਲੇ ਸਮੇਂ ਵਿੱਚ ਇਹੋ ਜਿਹੀਆਂ ਸਮੱਸਿਆਵਾਂ ਤੋਂ ਬਚਣ ਲਈ ਇਹ "
+#~ "ਠੀਕ ਕਰੋ।"
+
+#~ msgid "Error: Only the owner of a lock can remove it."
+#~ msgstr "ਗਲਤੀ: ਕੇਵਲ ਓਨਰ ਹੀ ਇਹ ਲਾਕ ਹਟਾ ਸਕਦਾ ਹੈ।"
+
+#~ msgid "Lock"
+#~ msgstr "ਲਾਕ"
+
+#~ msgid "Locks"
+#~ msgstr "ਲਾਕ"
+
+#~ msgid "Requests for access to submit files"
+#~ msgstr "ਫਾਇਲਾਂ ਭੇਜਣ ਲਈ ਅਸੈੱਸ ਵਾਸਤੇ ਮੰਗ"
+
+#~ msgid "By"
+#~ msgstr "ਵਲੋਂ"
+
+#~ msgid "Add your comment as"
+#~ msgstr "ਆਪਣੀ ਟਿੱਪਣੀ ਵਜੋਂ ਜੋੜ੍ਹੋ"
+
+#~ msgid "Say it!"
+#~ msgstr "ਕਹੋ!"
+
+#~ msgid "Unlock this file when you are finished working with it."
+#~ msgstr "ਜਦੋਂ ਤੁਸੀਂ ਇਸ ਉੱਤੇ ਕੰਮ ਮੁਕੰਮਲ ਕਰਨ ਲਿਆ ਤਾਂ ਇਹ ਫਾਇਲ ਅਣ-ਲਾਕ ਕਰੋ।"
+
+#~ msgid ""
+#~ "User '%(owner)s' has locked this file indicating he's working with it."
+#~ msgstr ""
+#~ "ਯੂਜ਼ਰ '%(owner)s' ਨੇ ਇਹ ਫਾਇਲ ਲਾਕ ਕੀਤੀ ਹੈ, ਦਰਸਾਉਂਦਾ ਹੈ ਕਿ ਉਹ ਇਸ ਉੱਤੇ ਕੰਮ ਕਰ ਰਿਹਾ ਹੈ।"

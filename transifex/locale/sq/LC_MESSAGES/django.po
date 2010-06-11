@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 17:18+0000\n"
+"POT-Creation-Date: 2010-06-11 07:56+0000\n"
 "PO-Revision-Date: 2010-02-27 21:09+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <besnik@programeshqip.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 msgid "Search for an username or leave it blank"
 msgstr "Kërkoni për një emër përdoruesi ose lëreni bosh"
 
-#: actionlog/models.py:155
+#: actionlog/models.py:204
 msgid "log entry"
 msgstr "zë regjistrimi"
 
-#: actionlog/models.py:156
+#: actionlog/models.py:205
 msgid "log entries"
 msgstr "zëra regjistrimi"
 
@@ -31,8 +31,8 @@ msgstr "zëra regjistrimi"
 msgid "Date/time"
 msgstr "Datë/kohë"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:74
-#: teams/models.py:110 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:76
+#: teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
 msgstr "Përdorues"
 
@@ -48,9 +48,371 @@ msgstr "DATETIME_FORMAT"
 msgid "No history recorded yet."
 msgstr "Ende pa regjistrim historiku."
 
+#: addons/charts/templates/charts/widget_snippet.html:61
+msgid "Image charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:65
+#: addons/charts/templates/charts/widget_snippet.html:94
+#: templates/userprofile/profile/location.html:22
+msgid "Loading..."
+msgstr "Po ngarkohet..."
+
+#: addons/charts/templates/charts/widget_snippet.html:68
+msgid ""
+"Display your project's translation statistics on your own website as a "
+"simple image.\n"
+"                Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:70
+msgid "The chart will always reflect your live Transifex numbers."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:71
+#: addons/charts/templates/charts/widget_snippet.html:103
+msgid "Show code snippet for component:"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:73
+#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
+#: projects/models.py:299 projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: txcollections/migrations/0001_initial.py:23
+#: txcollections/migrations/0001_initial.py:41
+msgid "Hidden"
+msgstr "Padukshëm"
+
+#: addons/charts/templates/charts/widget_snippet.html:87
+#, fuzzy
+msgid "Interactive charts"
+msgstr "Joveprues"
+
+#: addons/charts/templates/charts/widget_snippet.html:98
+msgid ""
+"Display your project's translation statistics on your own website as "
+"interactive chart.\n"
+"                This requires modifications to your homepage's HTML code."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:101
+msgid ""
+"By tweaking the code you can adjust verbosity, dimensions and colors of the "
+"chart"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:121
+msgid "Interactive and Image Charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:122
+msgid ""
+"Sorry, but your project doesn't have any components with up-to-date "
+"statistics. \n"
+"You need to have at least one component with statistics to export charts "
+"from Transifex."
+msgstr ""
+
+#: addons/locks/handlers.py:58
+msgid ""
+"Couldn't lock file, this means that you can send files only for reviewing."
+msgstr ""
+
+#: addons/locks/models.py:65
+#, python-format
+msgid ""
+"User '%(user)s' has no permission to submit files for or coordinate  '%"
+"(pofile)s'"
+msgstr ""
+
+#: addons/locks/models.py:77
+#, python-format
+msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
+msgstr ""
+
+#: addons/locks/models.py:158
+#, python-format
+msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
+msgstr ""
+
+#: addons/locks/notifications.py:15
+msgid "Lock is expring"
+msgstr ""
+
+#: addons/locks/notifications.py:16
+msgid "when a lock for file is expiring"
+msgstr ""
+
+#: addons/locks/views.py:42
+msgid "Lock removed."
+msgstr "Kyçja iu hoq"
+
+#: addons/locks/views.py:47 addons/locks/views.py:78
+#: projects/views/component.py:556
+msgid "Sorry, but you need to send a POST request."
+msgstr "Na ndjeni, por lypset të dërgoni një kërkesë POST."
+
+#: addons/locks/views.py:72
+msgid "Lock created. Please don't forget to remove it when you're done."
+msgstr ""
+"Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
+
+#: addons/locks/templates/pofile_lock.html:20
+#, python-format
+msgid "This file has been locked by user '%(owner)s'."
+msgstr ""
+
+#: addons/locks/templates/pofile_lock.html:22
+#, fuzzy
+msgid "Click on it to unlock the file."
+msgstr "Klikim _njësh për aktivizim elementësh"
+
+#: addons/locks/templates/pofile_lock.html:24
+#, fuzzy
+msgid "Time left:"
+msgstr "Rrjedhë Kohore"
+
+#: addons/locks/templates/pofile_lock.html:32
+#, python-format
+msgid ""
+"\n"
+"                Extend lock by %(hours)s hour.\n"
+"            "
+msgid_plural ""
+"\n"
+"                Extend lock by %(hours)s hours.\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: addons/locks/templates/pofile_lock.html:46
+#, fuzzy
+msgid "Lock and download this file to notify others you're working with it."
+msgstr "Kyçeni këtë kartelë, që të njoftoni të tjerët se po merreni me të."
+
+#: addons/locks/templates/pofile_lock.html:51
+msgid "This file is unlocked. Most likely no one is working with it right now."
+msgstr ""
+"Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të "
+"hëpërhë."
+
+#: addons/locks/templates/locks/component.html:9
+#: translations/templates/component_submit.html:31
+msgid "This file is locked by someone else."
+msgstr ""
+
+#: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
+#, python-format
+msgid ""
+"\n"
+"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
+"a> is about to expire on %(expires)s\n"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:35
+msgid "You are only allowed to upload PO files (*.po)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:39
+msgid "You have submitted empty file!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:48
+msgid "Uploaded file contains DOS newlines (\\r)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:59
+#, python-format
+msgid "Uploaded file header doesn't have '%s' field!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:65
+msgid "Only UTF-8 encoded files are allowed!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:69
+msgid "Uploaded file doesn't contain any translated entries!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:86
+#, fuzzy
+msgid "Your file has been e-mailed to you to avoid loss of any work."
+msgstr ""
+"Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Kartela ju është "
+"dërguar me e-mail, për të shmangur humbjen e ndonjë kontributi."
+
+#: addons/presubmit_checks/handlers.py:90
+msgid ""
+"We couldn't send you an email to preserve your work because you haven't "
+"registered an email address."
+msgstr ""
+
+#: addons/repowatch/models.py:28
+#, python-format
+msgid "Unable to add watch for path %r"
+msgstr "I pazoti të shtojë mbikqyrje për shtegun %r"
+
+#: addons/repowatch/models.py:99
+msgid "watch"
+msgstr "mbikqyrje"
+
+#: addons/repowatch/models.py:100
+msgid "watches"
+msgstr "mbikqyrje"
+
+#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
+msgid "Must use POST to activate"
+msgstr "Duhet përdorur POST për aktivizimin"
+
+#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
+msgid "Notification is not enabled"
+msgstr "Njoftimet nuk janë aktivizuar"
+
+#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
+msgid "Watch it"
+msgstr "Ndiqe!"
+
+#: addons/repowatch/views.py:65
+#, fuzzy
+msgid "Stop watching"
+msgstr "Resht së ndjekuri"
+
+#: addons/repowatch/views.py:100
+msgid "Watch this project"
+msgstr "Ndiqe këtë projekt"
+
+#: addons/repowatch/views.py:113
+msgid "Stop watching this project"
+msgstr "Ndal së vëzhguari këtë projekt"
+
+#: addons/repowatch/templates/watch_toggle.html:5
+msgid "Stop watching it"
+msgstr "Resht së ndjekuri"
+
+#: addons/repowatch/templates/repowatch/project_detail.html:8
+#: templates/projects/project_detail.html:52
+msgid "Watch:"
+msgstr "Ndiq:"
+
+#: addons/timeline/templates/timeline/additional_account_links.html:3
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr "Rrjedha Ime Kohore"
+
+#: addons/timeline/templates/timeline/project.html:9
+#: addons/timeline/templates/timeline/timeline_project.html:15
+#: addons/timeline/templates/timeline/timeline_project.html:17
+#: addons/timeline/templates/timeline/timeline_user.html:13
+#: templates/projects/project_timeline.html:12
+#: templates/projects/project_timeline.html:14
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr "Rrjedhë Kohore"
+
+#: addons/timeline/templates/timeline/timeline_base.html:12
+#: templates/timeline.html:11
+msgid "Filter results"
+msgstr "Filtro përfundimet"
+
+#: addons/timeline/templates/timeline/timeline_base.html:18
+#: templates/timeline.html:17
+msgid "Go"
+msgstr "Shko tek"
+
+#: addons/timeline/templates/timeline/timeline_base.html:25
+#: templates/timeline.html:24 templates/projects/component_detail.html:207
+#: templates/projects/project_detail.html:119
+#: templates/teams/team_detail.html:134
+msgid "None available"
+msgstr "Asnjë i passhëm"
+
+#: addons/timeline/templates/timeline/timeline_base.html:29
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+"\n"
+"  Kërkimi gjeti %(counter)s përfundim\n"
+msgstr[1] ""
+"\n"
+"    Kërkimi gjeti %(counter)s përfundime\n"
+
+#: addons/timeline/templates/timeline/timeline_base.html:44
+#: languages/models.py:39 languages/migrations/0001_initial.py:14
+#: projects/models.py:152 projects/models.py:278 projects/models.py:541
+#: projects/migrations/0001_initial.py:20
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/reviews/review_list.html:42
+#: txcollections/migrations/0001_initial.py:14
+#: txcollections/migrations/0001_initial.py:34
+msgid "Description"
+msgstr "Përshkrim"
+
+#: addons/timeline/templates/timeline/timeline_project.html:23
+#: addons/timeline/templates/timeline/timeline_user.html:23
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr ""
+"\n"
+" Rrjedhë Kohore për %(project_name)s\n"
+" "
+
+#: addons/timeline/templates/timeline/timeline_user.html:16
+#: templates/simpleauth/base_profile.html:4
+#: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
+msgid "Profile"
+msgstr "Profil"
+
+#: addons/widgets/templates/project_widgets.html:12
+#: addons/widgets/templates/project_widgets.html:14
+#: addons/widgets/templates/widgets/project.html:7
+msgid "Widgets"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:48
+msgid "Widgets, buttons, etc"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:49
+msgid ""
+"Here are some widgets, buttons and other cool stuff you can add to your "
+"homepage!"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:54
+#, fuzzy
+msgid "Userbars"
+msgstr "Përdorues"
+
+#: addons/widgets/templates/project_widgets.html:63
+msgid "You can insert userbars to forums, e-mail signatures etc."
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:64
+msgid "Show code snippet for userbar:"
+msgstr ""
+
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:85 projects/models.py:199 projects/models.py:458
+#: projects/models.py:150 projects/models.py:276 projects/models.py:539
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
 #: templates/userprofile/profile/public.html:60
@@ -98,17 +460,6 @@ msgstr "Gjuhë te %(site_name)s"
 msgid "The languages spoken on %s."
 msgstr "Gjuhë të folura te %s."
 
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:87 projects/models.py:201 projects/models.py:460
-#: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
-#: templates/reviews/review_list.html:43
-#: txcollections/migrations/0001_initial.py:14
-#: txcollections/migrations/0001_initial.py:34
-msgid "Description"
-msgstr "Përshkrim"
-
 #: languages/models.py:40 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Kod"
@@ -142,426 +493,6 @@ msgstr "gjuhë"
 #: languages/models.py:64 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "gjuhë"
-
-#: languages/management/commands/txcreatelanguages.py:27
-msgid "Afrikaans"
-msgstr "Afrikaans"
-
-#: languages/management/commands/txcreatelanguages.py:42
-msgid "Amharic"
-msgstr "Amharike"
-
-#: languages/management/commands/txcreatelanguages.py:48
-msgid "Arabic"
-msgstr "Arabe"
-
-#: languages/management/commands/txcreatelanguages.py:56
-msgid "Assamese"
-msgstr "Asameze"
-
-#: languages/management/commands/txcreatelanguages.py:64
-msgid "Asturian"
-msgstr "Asturiane"
-
-#: languages/management/commands/txcreatelanguages.py:73
-msgid "Azerbaijani"
-msgstr "Azerbaixhan"
-
-#: languages/management/commands/txcreatelanguages.py:81
-msgid "Balochi"
-msgstr "Baloki"
-
-#: languages/management/commands/txcreatelanguages.py:88
-msgid "Belarusian"
-msgstr "Bjelloruse"
-
-#: languages/management/commands/txcreatelanguages.py:97
-msgid "Bulgarian"
-msgstr "Bulgare"
-
-#: languages/management/commands/txcreatelanguages.py:106
-msgid "Bengali"
-msgstr "Bengali"
-
-#: languages/management/commands/txcreatelanguages.py:114
-msgid "Bengali (India)"
-msgstr "Bengali (India)"
-
-#: languages/management/commands/txcreatelanguages.py:122
-msgid "Tibetan"
-msgstr "Tibetane"
-
-#: languages/management/commands/txcreatelanguages.py:131
-msgid "Bosnian"
-msgstr "Boshnjake"
-
-#: languages/management/commands/txcreatelanguages.py:140
-msgid "Catalan (Valencian)"
-msgstr "Katalane (Valenciane)"
-
-#: languages/management/commands/txcreatelanguages.py:149
-msgid "Czech"
-msgstr "Çeke"
-
-#: languages/management/commands/txcreatelanguages.py:158
-msgid "Welsh"
-msgstr "Uellsiane"
-
-#: languages/management/commands/txcreatelanguages.py:167
-msgid "Danish"
-msgstr "Daneze"
-
-#: languages/management/commands/txcreatelanguages.py:176
-msgid "German"
-msgstr "Gjermane"
-
-#: languages/management/commands/txcreatelanguages.py:184
-msgid "Swiss German"
-msgstr "Gjermanishte Zvicerane"
-
-#: languages/management/commands/txcreatelanguages.py:193
-msgid "Dzongkha"
-msgstr "Xonga"
-
-#: languages/management/commands/txcreatelanguages.py:202
-msgid "Greek"
-msgstr "Greke"
-
-#: languages/management/commands/txcreatelanguages.py:209
-msgid "English"
-msgstr "Angleze"
-
-#: languages/management/commands/txcreatelanguages.py:217
-msgid "English (United Kingdom)"
-msgstr "Anglisht (Mbretëria e Bashkuar)"
-
-#: languages/management/commands/txcreatelanguages.py:225
-msgid "English (United States)"
-msgstr "Anglishte (Shtetet e Bashkuara)"
-
-#: languages/management/commands/txcreatelanguages.py:233
-msgid "English (South Africa)"
-msgstr "Angleze (Afrika e Jugut)"
-
-#: languages/management/commands/txcreatelanguages.py:240
-msgid "Esperanto"
-msgstr "Esperanto"
-
-#: languages/management/commands/txcreatelanguages.py:249
-msgid "Spanish (Castilian)"
-msgstr "Spanjisht (Kastiliane)"
-
-#: languages/management/commands/txcreatelanguages.py:257
-msgid "Spanish (Argentinian)"
-msgstr "Spanjisht (Argjentinase)"
-
-#: languages/management/commands/txcreatelanguages.py:265
-msgid "Spanish (Mexican)"
-msgstr "Spanjisht (Meksikane)"
-
-#: languages/management/commands/txcreatelanguages.py:274
-msgid "Estonian"
-msgstr "Estoneze"
-
-#: languages/management/commands/txcreatelanguages.py:283
-msgid "Basque"
-msgstr "Baske"
-
-#: languages/management/commands/txcreatelanguages.py:291
-msgid "Persian"
-msgstr "Persiane"
-
-#: languages/management/commands/txcreatelanguages.py:300
-msgid "Finnish"
-msgstr "Finlandeze"
-
-#: languages/management/commands/txcreatelanguages.py:315
-msgid "French"
-msgstr "Frënge"
-
-#: languages/management/commands/txcreatelanguages.py:324
-msgid "Friulian"
-msgstr "Friuliane"
-
-#: languages/management/commands/txcreatelanguages.py:333
-msgid "Western Frisian"
-msgstr "Frisiane Perëndimore"
-
-#: languages/management/commands/txcreatelanguages.py:342
-msgid "Irish"
-msgstr "Irlandeze"
-
-#: languages/management/commands/txcreatelanguages.py:351
-msgid "Galician"
-msgstr "Galike"
-
-#: languages/management/commands/txcreatelanguages.py:360
-msgid "Gujarati"
-msgstr "Gujarati"
-
-#: languages/management/commands/txcreatelanguages.py:368
-msgid "Hebrew"
-msgstr "Hebraishte"
-
-#: languages/management/commands/txcreatelanguages.py:377
-msgid "Hindi"
-msgstr "Indiane"
-
-#: languages/management/commands/txcreatelanguages.py:386
-msgid "Croatian"
-msgstr "Kroate"
-
-#: languages/management/commands/txcreatelanguages.py:394
-msgid "Haitian (Haitian Creole)"
-msgstr "Haitiane (Kreole Haitiane)"
-
-#: languages/management/commands/txcreatelanguages.py:403
-msgid "Hungarian"
-msgstr "Hungareze"
-
-#: languages/management/commands/txcreatelanguages.py:411
-msgid "Armenian"
-msgstr "Armene"
-
-#: languages/management/commands/txcreatelanguages.py:418
-msgid "Indonesian"
-msgstr "Indoneziane"
-
-#: languages/management/commands/txcreatelanguages.py:426
-msgid "Iloko"
-msgstr "Iloko"
-
-#: languages/management/commands/txcreatelanguages.py:432
-msgid "Icelandic"
-msgstr "Islandisht"
-
-#: languages/management/commands/txcreatelanguages.py:441
-msgid "Italian"
-msgstr "Italisht"
-
-#: languages/management/commands/txcreatelanguages.py:450
-msgid "Japanese"
-msgstr "Japoneze"
-
-#: languages/management/commands/txcreatelanguages.py:459
-msgid "Georgian"
-msgstr "Gjeorgjiane"
-
-#: languages/management/commands/txcreatelanguages.py:467
-msgid "Khmer"
-msgstr "Khmere"
-
-#: languages/management/commands/txcreatelanguages.py:475
-msgid "Kannada"
-msgstr "Kannada"
-
-#: languages/management/commands/txcreatelanguages.py:482
-msgid "Korean"
-msgstr "Koreane"
-
-#: languages/management/commands/txcreatelanguages.py:490
-msgid "Kashmiri"
-msgstr "Kashmire"
-
-#: languages/management/commands/txcreatelanguages.py:499
-msgid "Kurdish"
-msgstr "Kurde"
-
-#: languages/management/commands/txcreatelanguages.py:506
-msgid "Kirgyz"
-msgstr "Kirgyze"
-
-#: languages/management/commands/txcreatelanguages.py:513
-msgid "Latin"
-msgstr "Latine"
-
-#: languages/management/commands/txcreatelanguages.py:527
-msgid "Lao"
-msgstr "Lao"
-
-#: languages/management/commands/txcreatelanguages.py:534
-msgid "Lithuanian"
-msgstr "Lituaneze"
-
-#: languages/management/commands/txcreatelanguages.py:543
-msgid "Latvian"
-msgstr "Letoneze"
-
-#: languages/management/commands/txcreatelanguages.py:551
-msgid "Maithili"
-msgstr "Maithili"
-
-#: languages/management/commands/txcreatelanguages.py:557
-msgid "Macedonian"
-msgstr "Maqedonishte"
-
-#: languages/management/commands/txcreatelanguages.py:563
-msgid "Malayalam"
-msgstr "Malajalame"
-
-#: languages/management/commands/txcreatelanguages.py:577
-msgid "Mongolian"
-msgstr "Mongoliane"
-
-#: languages/management/commands/txcreatelanguages.py:585
-msgid "Marathi"
-msgstr "Marati"
-
-#: languages/management/commands/txcreatelanguages.py:593
-msgid "Malay"
-msgstr "Malaje"
-
-#: languages/management/commands/txcreatelanguages.py:602
-msgid "Maltese"
-msgstr "Maltë"
-
-#: languages/management/commands/txcreatelanguages.py:610
-msgid "Burmese"
-msgstr "Burmeze"
-
-#: languages/management/commands/txcreatelanguages.py:622
-msgid "Norwegian Bokmål"
-msgstr "Norvegjeze Bokmal"
-
-#: languages/management/commands/txcreatelanguages.py:630
-msgid "Nepali"
-msgstr "Nepaleze"
-
-#: languages/management/commands/txcreatelanguages.py:639
-msgid "Dutch (Flemish)"
-msgstr "Hollandishte (Flamande)"
-
-#: languages/management/commands/txcreatelanguages.py:648
-msgid "Norwegian Nynorsk"
-msgstr "Norvegjeze Nynorsk"
-
-#: languages/management/commands/txcreatelanguages.py:656
-msgid "Norwegian"
-msgstr "Norvegjeze"
-
-#: languages/management/commands/txcreatelanguages.py:663
-msgid "Northern Sotho"
-msgstr "Soto Veriore"
-
-#: languages/management/commands/txcreatelanguages.py:672
-msgid "Oriya"
-msgstr "Orija"
-
-#: languages/management/commands/txcreatelanguages.py:680
-msgid "Panjabi (Punjabi)"
-msgstr "Panxhabe (Punxhabi)"
-
-#: languages/management/commands/txcreatelanguages.py:694
-msgid "Polish"
-msgstr "Polake"
-
-#: languages/management/commands/txcreatelanguages.py:711
-msgid "Portuguese"
-msgstr "Portugeze"
-
-#: languages/management/commands/txcreatelanguages.py:720
-msgid "Portuguese (Brazilian)"
-msgstr "Portugeze (Braziliane)"
-
-#: languages/management/commands/txcreatelanguages.py:729
-msgid "Romanian"
-msgstr "Rumune"
-
-#: languages/management/commands/txcreatelanguages.py:738
-msgid "Russian"
-msgstr "Ruse"
-
-#: languages/management/commands/txcreatelanguages.py:746
-msgid "Sinhala"
-msgstr "Sinhala"
-
-#: languages/management/commands/txcreatelanguages.py:753
-msgid "Slovak"
-msgstr "Slovake"
-
-#: languages/management/commands/txcreatelanguages.py:762
-msgid "Slovenian"
-msgstr "Slovene"
-
-#: languages/management/commands/txcreatelanguages.py:771
-msgid "Albanian"
-msgstr "Shqip"
-
-#: languages/management/commands/txcreatelanguages.py:780
-msgid "Serbian"
-msgstr "Serbe"
-
-#: languages/management/commands/txcreatelanguages.py:788
-msgid "Serbian (Latin)"
-msgstr "Serbe (Latine)"
-
-#: languages/management/commands/txcreatelanguages.py:798
-msgid "Sotho, Southern"
-msgstr "Soto, Jugore"
-
-#: languages/management/commands/txcreatelanguages.py:807
-msgid "Swedish"
-msgstr "Suedeze"
-
-#: languages/management/commands/txcreatelanguages.py:816
-msgid "Tamil"
-msgstr "Tamileze"
-
-#: languages/management/commands/txcreatelanguages.py:824
-msgid "Telugu"
-msgstr "Telugu"
-
-#: languages/management/commands/txcreatelanguages.py:830
-msgid "Tajik"
-msgstr "Taxhike"
-
-#: languages/management/commands/txcreatelanguages.py:836
-msgid "Thai"
-msgstr "Tailandeze"
-
-#: languages/management/commands/txcreatelanguages.py:842
-msgid "Tagalog"
-msgstr "Tagaloge"
-
-#: languages/management/commands/txcreatelanguages.py:855
-msgid "Turkish"
-msgstr "Turke"
-
-#: languages/management/commands/txcreatelanguages.py:863
-msgid "Urdu"
-msgstr "Urdu"
-
-#: languages/management/commands/txcreatelanguages.py:870
-msgid "Ukrainian"
-msgstr "Ukrainase"
-
-#: languages/management/commands/txcreatelanguages.py:885
-msgid "Vietnamese"
-msgstr "Vietnameze"
-
-#: languages/management/commands/txcreatelanguages.py:893
-msgid "Wolof"
-msgstr "Uolof"
-
-#: languages/management/commands/txcreatelanguages.py:906
-msgid "Xhosa"
-msgstr "Xhosa"
-
-#: languages/management/commands/txcreatelanguages.py:915
-msgid "Chinese (China)"
-msgstr "Kineze (Kinë)"
-
-#: languages/management/commands/txcreatelanguages.py:925
-msgid "Chinese (Hong Kong)"
-msgstr "Kineze (Hong Kong)"
-
-#: languages/management/commands/txcreatelanguages.py:935
-msgid "Chinese (Taiwan)"
-msgstr "Kineze (Taivan)"
-
-#: languages/management/commands/txcreatelanguages.py:944
-msgid "Zulu"
-msgstr "Zulu"
 
 #: projects/feeds.py:16
 #, python-format
@@ -606,21 +537,73 @@ msgstr ""
 "Statistika përkthimesh për gjuhën %(lang)s lidhur me hedhjen në qarkullim %"
 "(release)s."
 
-#: projects/forms.py:15 txpermissions/forms.py:19
+#: projects/forms.py:18 txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "Kërkoni për një emër  përdoruesi"
 
-#: projects/forms.py:35 projects/models.py:214
+#: projects/forms.py:55
+msgid "Free for all"
+msgstr ""
+
+#: projects/forms.py:56
+msgid ""
+"Allow any logged-in user to submit files to my\n"
+"                              project. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Imagine</a> all the "
+"people, \n"
+"                              sharing all the world. Recommended for quick \n"
+"                              translations, and when a pre-commit review \n"
+"                              process is in place, e.g. when contributions "
+"are\n"
+"                              submitted by email or to a separate branch."
+msgstr ""
+
+#: projects/forms.py:66
+#, fuzzy
+msgid "Limited access"
+msgstr "Hyrje e ndaluar"
+
+#: projects/forms.py:67
+msgid ""
+"Give access to specific people. Translations \n"
+"                              teams will have access to their language's "
+"files\n"
+"                              only, and global writers will have access to "
+"all\n"
+"                              translation files. Recommended for most \n"
+"                              projects."
+msgstr ""
+
+#: projects/forms.py:75
+#, fuzzy
+msgid "Outsourced access"
+msgstr "Hyrje e ndaluar"
+
+#: projects/forms.py:76
+msgid ""
+"Re-use another project's teams and writers by \n"
+"                              trusting access control to that project. If "
+"a \n"
+"                              person can contribute to that project, it "
+"can \n"
+"                              contribute to this one as well. Recommended "
+"for \n"
+"                              non-upstream projects such as distribution \n"
+"                              packages, desktop environment modules, etc."
+msgstr ""
+
+#: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr ""
 "Një shprehje e rregullt për filtrim të kartelave të paraqitura. Psh: 'po/.*'"
 
-#: projects/forms.py:52 projects/models.py:219
+#: projects/forms.py:151 projects/models.py:296
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Parashtro te"
 
-#: projects/forms.py:53
+#: projects/forms.py:152
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
@@ -628,11 +611,22 @@ msgstr ""
 "Zgjidhni se si duhet t'i trajtojë kjo përbërëse parashtrimet e kartelave."
 "Mundësitë e këtushme janë të passhme mbi bazën e llojit të përbërëses"
 
-#: projects/forms.py:68
+#: projects/forms.py:167
 msgid "Search for a component"
 msgstr "Kërkoni për një përbërës"
 
-#: projects/models.py:82 projects/models.py:196 projects/models.py:455
+#: projects/models.py:143
+#, fuzzy
+msgid "Private"
+msgstr "_Aktivizoje"
+
+#: projects/models.py:144
+msgid ""
+"A private project is visible only by you and your team.Moreover, private "
+"projects are limited according to billingplans for the user account."
+msgstr ""
+
+#: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
 #: projects/migrations/0001_initial.py:38 releases/models.py:20
 #: txcollections/migrations/0001_initial.py:13
@@ -642,7 +636,7 @@ msgstr "Kërkoni për një përbërës"
 msgid "Slug"
 msgstr "Identifikues"
 
-#: projects/models.py:83 projects/models.py:197 projects/models.py:456
+#: projects/models.py:148 projects/models.py:274 projects/models.py:537
 #: releases/models.py:21
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -651,15 +645,15 @@ msgstr ""
 "Një etiketë e vockël për përdorim te URL-ja, vetëm me shkronja, numra, "
 "nënvija ose vija ndarëse."
 
-#: projects/models.py:86 projects/models.py:200 releases/models.py:24
+#: projects/models.py:151 projects/models.py:277 releases/models.py:24
 msgid "A short name or very short description."
 msgstr "Një emër të shkurtër ose një përshkrim shumë të shkurtër."
 
-#: projects/models.py:88 projects/models.py:202
+#: projects/models.py:153 projects/models.py:279
 msgid "A sentence or two describing the object (optional)."
 msgstr "Një a dy fraza që përshkruajnë objektin (opsionale)."
 
-#: projects/models.py:89 projects/models.py:203 projects/models.py:463
+#: projects/models.py:154 projects/models.py:280 projects/models.py:544
 #: projects/migrations/0001_initial.py:30
 #: projects/migrations/0001_initial.py:45 releases/models.py:27
 #: txcollections/migrations/0001_initial.py:25
@@ -667,55 +661,47 @@ msgstr "Një a dy fraza që përshkruajnë objektin (opsionale)."
 msgid "Long description"
 msgstr "Përshkrim i gjatë"
 
-#: projects/models.py:91 projects/models.py:205
+#: projects/models.py:156 projects/models.py:282
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Përshkrim më i gjatë (opsional). Përdorni sintaksë Markdown."
 
-#: projects/models.py:92 projects/migrations/0001_initial.py:29
+#: projects/models.py:157 projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
 msgstr "Faqe Hyrëse"
 
-#: projects/models.py:93 projects/migrations/0001_initial.py:18
+#: projects/models.py:158 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "Prurje"
 
-#: projects/models.py:94
+#: projects/models.py:159
 msgid "An RSS feed with updates to the project."
 msgstr "Një prurje RSS me përditësime te projekti."
 
-#: projects/models.py:95 projects/migrations/0001_initial.py:27
+#: projects/models.py:160 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "Gjurmes të metash"
 
-#: projects/models.py:96
+#: projects/models.py:161
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)URL-ja "
 "për sistemin e ndjekjes së të metave (Bugzilla, Trac, etj.)"
 
-#: projects/models.py:98
+#: projects/models.py:163
 #: projects/migrations/0003_add_anyone_submit_field.py:12
 msgid "Anyone can submit"
 msgstr "Mund të parashtrojë kushdo"
 
-#: projects/models.py:100
+#: projects/models.py:165
 msgid "Can anyone submit files to this project?"
 msgstr "A mundet gjithkush të parashtrojë kartela për këtë projekt?"
 
-#: projects/models.py:102 projects/models.py:222
-#: projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
-#: txcollections/migrations/0001_initial.py:23
-#: txcollections/migrations/0001_initial.py:41
-msgid "Hidden"
-msgstr "Padukshëm"
-
-#: projects/models.py:103 projects/models.py:223 releases/models.py:42
+#: projects/models.py:168 projects/models.py:300 releases/models.py:42
 msgid "Hide this object from the list view?"
 msgstr "Të fshihet ky objek prej shfaqjes si listë?"
 
-#: projects/models.py:104 projects/models.py:224
+#: projects/models.py:169 projects/models.py:301
 #: projects/migrations/0001_initial.py:24
 #: projects/migrations/0001_initial.py:41 releases/models.py:43
 #: txcollections/migrations/0001_initial.py:17
@@ -723,19 +709,36 @@ msgstr "Të fshihet ky objek prej shfaqjes si listë?"
 msgid "Enabled"
 msgstr "Veprues"
 
-#: projects/models.py:105 projects/models.py:225 releases/models.py:44
+#: projects/models.py:170 projects/models.py:302 releases/models.py:44
 msgid "Enable this object or disable its use?"
 msgstr "Të aktivizohet ky objekt apo të çaktivizohet përdorimi i tij?"
 
-#: projects/models.py:109 projects/migrations/0001_initial.py:23
+#: projects/models.py:174 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Etiketa"
 
-#: projects/models.py:112
+#: projects/models.py:177
 msgid "Maintainers"
 msgstr "Mirëmbajtësa"
 
-#: projects/models.py:116 projects/models.py:234 projects/models.py:485
+#: projects/models.py:181
+#, fuzzy
+msgid "Outsource project"
+msgstr "Fshije projektin"
+
+#: projects/models.py:182
+msgid "Project that owns the access control of this project."
+msgstr ""
+
+#: projects/models.py:185
+msgid "Owner"
+msgstr ""
+
+#: projects/models.py:186
+msgid "The user who owns this project."
+msgstr ""
+
+#: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
 #: projects/migrations/0001_initial.py:47 releases/models.py:49
 #: txcollections/migrations/0001_initial.py:22
@@ -743,110 +746,110 @@ msgstr "Mirëmbajtësa"
 msgid "HTML Description"
 msgstr "Përshkrim HTML"
 
-#: projects/models.py:118 projects/models.py:236 projects/models.py:487
+#: projects/models.py:191 projects/models.py:313 projects/models.py:568
 #: releases/models.py:50
 msgid "Description in HTML."
 msgstr "Përshkrim në HTML."
 
-#: projects/models.py:124
+#: projects/models.py:201
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Projekt: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:204
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
+#: projects/models.py:205 templates/projects/project_list.html:18
 msgid "projects"
 msgstr "projekte"
 
-#: projects/models.py:206 projects/migrations/0001_initial.py:52
+#: projects/models.py:283 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Gjuhë burimi"
 
-#: projects/models.py:207
+#: projects/models.py:284
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "Gjuha burim për këtë përbërëse (p.sh., 'en', 'pt_BR', 'el')."
 
-#: projects/models.py:209 projects/migrations/0001_initial.py:42
+#: projects/models.py:286 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "lloj I18n"
 
-#: projects/models.py:211
+#: projects/models.py:288
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
 msgstr "Lloji i mbulimit i18n për kodin burim (%s)"
 
-#: projects/models.py:213 projects/migrations/0001_initial.py:43
+#: projects/models.py:290 projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "Filtër kartele"
 
-#: projects/models.py:216 projects/migrations/0001_initial.py:51
+#: projects/models.py:293 projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "Lejo parashtrime"
 
-#: projects/models.py:218
+#: projects/models.py:295
 msgid "Does this module repository allow write access?"
 msgstr "A lejon kjo depo moduli hyrje për shkrim?"
 
-#: projects/models.py:228 projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "Të llogariten statistikat?"
 
-#: projects/models.py:229
+#: projects/models.py:306
 msgid "Should statistics be calculated for this component?"
 msgstr "A duhen llogaritur statistikat për këtë përbërëse?"
 
-#: projects/models.py:239 projects/models.py:490
-#: projects/migrations/0001_initial.py:46 teams/models.py:25
-#: teams/models.py:67
+#: projects/models.py:316 projects/models.py:571
+#: projects/migrations/0001_initial.py:46 teams/models.py:27
+#: teams/models.py:69
 msgid "Project"
 msgstr "Projekt"
 
-#: projects/models.py:240 projects/migrations/0001_initial.py:37
+#: projects/models.py:317 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Njësi"
 
-#: projects/models.py:261
+#: projects/models.py:338
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Përbërës: %s>"
 
-#: projects/models.py:265
+#: projects/models.py:342
 msgid "component"
 msgstr "përbërës"
 
-#: projects/models.py:266 templates/projects/component_list.html:16
+#: projects/models.py:343 templates/projects/component_list.html:16
 msgid "components"
 msgstr "përbërës"
 
-#: projects/models.py:459
+#: projects/models.py:540
 msgid "A string like a name or very short description."
 msgstr "Një varg si punë emri ose një përshkrim shumë të shkurtër."
 
-#: projects/models.py:462 releases/models.py:26
+#: projects/models.py:543 releases/models.py:26
 msgid "A sentence or two describing the object."
 msgstr "Një a dy togfjalësha përshkrimi për objektin."
 
-#: projects/models.py:465 releases/models.py:28
+#: projects/models.py:546 releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "Përdor sintaksë Markdown"
 
-#: projects/models.py:468 releases/models.py:31
+#: projects/models.py:549 releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
 msgstr "Datë qarkullimi"
 
-#: projects/models.py:470 releases/models.py:32
+#: projects/models.py:551 releases/models.py:32
 msgid "When this release will be available."
 msgstr "Kur ky qarkullim të jetë i passhëm."
 
-#: projects/models.py:471 releases/models.py:33
+#: projects/models.py:552 releases/models.py:33
 msgid "String freeze date"
 msgstr "Datë ngrirje e vargjeve"
 
-#: projects/models.py:473
+#: projects/models.py:554
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
@@ -854,12 +857,12 @@ msgstr ""
 "Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
 "vargje që prekin përkthimin)."
 
-#: projects/models.py:475 releases/models.py:36
+#: projects/models.py:556 releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
 msgstr "Datë ngrirjeje zhvillimi"
 
-#: projects/models.py:477 releases/models.py:37
+#: projects/models.py:558 releases/models.py:37
 msgid ""
 "The last date packages from this release can be built from the developers. "
 "Translations sent after this date will not be included in the released "
@@ -869,36 +872,41 @@ msgstr ""
 "zhvilluesit. Përkthimet e dërguara pas kësaj date nuk do të përfshihen në "
 "versionin e qarkulluar."
 
-#: projects/models.py:492
+#: projects/models.py:573
 msgid "Components"
 msgstr "Përbërësa"
 
-#: projects/models.py:499
+#: projects/models.py:580
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<Hedhje në Qarkullim: %(rel)s (Projekt %(proj)s)>"
 
-#: projects/models.py:517 releases/models.py:54
+#: projects/models.py:598 releases/models.py:54
 msgid "release"
 msgstr "qarkullim"
 
-#: projects/models.py:518 releases/models.py:55
+#: projects/models.py:599 releases/models.py:55
 #: templates/languages/language_detail.html:18
-#: templates/projects/release_list.html:15
+#: templates/projects/release_list.html:14
 msgid "releases"
 msgstr "qarkullime"
 
-#: projects/permissions/project.py:21
+#: projects/permissions/project.py:50
 msgid "Is allowed to maintain this project"
 msgstr "Lejohet ta mirëmbajë këtë projekt"
 
-#: projects/permissions/project.py:35
+#: projects/permissions/project.py:64
 msgid "Is allowed to coordinate a team project"
 msgstr "I lejohet të bashkërendojë projekte ekipi"
 
-#: projects/permissions/project.py:81
+#: projects/permissions/project.py:103
 msgid "Is allowed to submit file to this project"
 msgstr "I lejohet të parashtrojë kartelë te ky projekt"
+
+#: projects/permissions/project.py:117
+#, fuzzy
+msgid "Is allowed to browse this private project"
+msgstr "Lejohet ta mirëmbajë këtë projekt"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -908,7 +916,7 @@ msgstr "E përkthyer:"
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -925,12 +933,12 @@ msgstr "E papërkthyer:"
 msgid "Total:"
 msgstr "Gjithsej:"
 
-#: projects/views/component.py:239 projects/views/project.py:138
+#: projects/views/component.py:246 projects/views/project.py:148
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s u fshi."
 
-#: projects/views/component.py:274
+#: projects/views/component.py:282
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -938,7 +946,7 @@ msgstr ""
 "Filtri i kartelave i kësaj përbërëse intltool me bazë POT nuk duket se lejon "
 "kartelë POTFILES.in. Ju lutem ndreqeni."
 
-#: projects/views/component.py:281
+#: projects/views/component.py:289
 msgid ""
 "There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
@@ -946,35 +954,35 @@ msgstr ""
 "Në këtë grup kartelash të kësaj përbërëse tip Publican nuk ka drejtori 'pot' "
 "të emërtuar. Ndoshta filtri i saj i kartelave nuk po lejon hyrje në të."
 
-#: projects/views/component.py:289
+#: projects/views/component.py:302
 msgid "This component is not configured for statistics calculation."
 msgstr "Kjo përbërëse nuk është formësuar për llogaritje statistikash."
 
-#: projects/views/component.py:372
+#: projects/views/component.py:388
 msgid "This component does  not allow write access."
 msgstr "Kjo përbërëse nuk lejon hyrje për shkrim."
 
-#: projects/views/component.py:380
+#: projects/views/component.py:396
 msgid "Please select a file from your system to be uploaded."
 msgstr "Ju lutem përzgjidhni prej sistemit tuaj një kartelë për ta ngarkuar.  "
 
-#: projects/views/component.py:388
+#: projects/views/component.py:404
 msgid "Please enter a target to upload the file."
 msgstr "Ju lutem përzgjidhni një objektiv ku të ngarkohet kartela."
 
-#: projects/views/component.py:393
+#: projects/views/component.py:409
 msgid "Please enter only ONE target to upload the file."
 msgstr "Ju lutem përzgjidhni vetëm NJË objektiv ku të ngarkohet kartela."
 
-#: projects/views/component.py:404
+#: projects/views/component.py:420
 msgid "The target file does not match the component file filter"
 msgstr "Kartela në fjalë nuk përputhet me filtrin për kartelën e përbërësit"
 
-#: projects/views/component.py:412
+#: projects/views/component.py:428
 msgid "Enter a commit message"
 msgstr "Jepni një mesazh parashtrimi"
 
-#: projects/views/component.py:453
+#: projects/views/component.py:469
 #, python-format
 msgid ""
 "You need to be in the '%s' team of this project for being able to send "
@@ -983,68 +991,14 @@ msgstr ""
 "Lypset të jeni te ekipi '%s' i këtij projekti, që të jeni në gjendje të "
 "dërgoni përkthime për atë kartelë."
 
-#: projects/views/component.py:513
+#: projects/views/component.py:527
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Kartela u parashtrua me sukses: %s"
 
-#: projects/views/component.py:533
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Your file has "
-"been e-mailed to you to avoid losing any work."
-msgstr ""
-"Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Kartela ju është "
-"dërguar me e-mail, për të shmangur humbjen e ndonjë kontributi."
-
-#: projects/views/component.py:538
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Please run this "
-"command on your system to see the errors. We couldn't send you an email to "
-"preserve your work because you haven't registered an email address. Please "
-"do so now to avoid such issues in the future."
-msgstr ""
-"Kartela juaj nuk e kalon provat e saktësisë (msgfmt -c). Ju lutem, që të "
-"shihni gabimet, xhirojeni këtë urdhër te sistemi juaj. Nuk mundëm t'ju "
-"dërgojmë një email e të ruanin punën tuaj, ngaqë nuk keni të regjistruar "
-"ndonjë email. Ju lutem, bëjeni këtë tani, që të shmangen gjëra të tilla në "
-"të ardhmen."
-
-#: projects/views/component.py:549
+#: projects/views/component.py:553
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Na ndjeni, kartela juaj nuk u dërgua dot për shkak të një gabimi."
-
-#: projects/views/component.py:552 projects/views/component.py:585
-msgid "Sorry, but you need to send a POST request."
-msgstr "Na ndjeni, por lypset të dërgoni një kërkesë POST."
-
-#: projects/views/component.py:574
-msgid "Lock removed."
-msgstr "Kyçja iu hoq"
-
-#: projects/views/component.py:577
-msgid "Error: Only the owner of a lock can remove it."
-msgstr "Gabim: Vetëm i zoti i një dryni mund ta heqë atë."
-
-#: projects/views/component.py:581
-msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
-"Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
-
-#: projects/views/component.py:598 projects/views/project.py:156
-msgid "Must use POST to activate"
-msgstr "Duhet përdorur POST për aktivizimin"
-
-#: projects/views/component.py:601 projects/views/project.py:159
-msgid "Notification is not enabled"
-msgstr "Njoftimet nuk janë aktivizuar"
-
-#: projects/views/project.py:172
-msgid "Watch this project"
-msgstr "Ndiqe këtë projekt"
-
-#: projects/views/project.py:185
-msgid "Stop watching this project"
-msgstr "Ndal së vëzhguari këtë projekt"
 
 #: projects/views/release.py:94
 #, python-format
@@ -1059,37 +1013,37 @@ msgstr "Kërkesa u mbyll si e Hedhur Tej."
 msgid "Request reopened."
 msgstr "Kërkesa u rihap."
 
-#: projects/views/team.py:168
+#: projects/views/team.py:182
 #, python-format
 msgid "The '%s' team was deleted."
 msgstr "Ekipi '%s' është fshirë."
 
-#: projects/views/team.py:205
+#: projects/views/team.py:222
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "Jeni tashmë te ekipi '%s'."
 
-#: projects/views/team.py:210
+#: projects/views/team.py:227
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "Keni shtuar një kërkesë për anëtarësim te ekipi '%s'."
 
-#: projects/views/team.py:233
+#: projects/views/team.py:250
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "Keni tashmë në pritje një kërkesë për anëtarësim te ekipi '%s'."
 
-#: projects/views/team.py:260
+#: projects/views/team.py:278
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "Përdoruesi '%(user)s' gjendet tashmë te ekipi '%(team)s'."
 
-#: projects/views/team.py:267
+#: projects/views/team.py:285
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "E keni shtuar '%(user)s' te ekipi '%(team)s'."
 
-#: projects/views/team.py:314
+#: projects/views/team.py:333
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
@@ -1098,47 +1052,47 @@ msgstr ""
 "Keni hedhur poshtë kërkesën e përdoruesit '%(user)s' për t'u anëtarësuar te "
 "ekipi '%(team)s'."
 
-#: projects/views/team.py:357
+#: projects/views/team.py:378
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "E keni tërhequr kërkesën tuaj për t'iu anëtarësuar ekipit '%s'."
 
-#: projects/views/team.py:398
+#: projects/views/team.py:421
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "Ikët prej ekipit '%s'."
 
-#: projects/views/team.py:419
+#: projects/views/team.py:442
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "Nuk jeni te ekipi '%s'."
 
-#: projects/views/team.py:440
+#: projects/views/team.py:465
 msgid "Please, select a language before submit the form."
 msgstr "Ju lutem, përzgjidhni një gjuhë përpara se të prashtroni formularin."
 
-#: projects/views/team.py:453
+#: projects/views/team.py:478
 #, python-format
 msgid "'%s' team already exist."
 msgstr "Ka tashmë një ekip '%s'."
 
-#: projects/views/team.py:459
+#: projects/views/team.py:484
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "Ka tashmë një kërkesë për krijimin e ekipit '%s'."
 
-#: projects/views/team.py:467
+#: projects/views/team.py:492
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "Keni kërkuar krijimin e ekipit '%s'."
 
-#: projects/views/team.py:512
+#: projects/views/team.py:538
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Ia keni pranuar përdoruesit '%(user)s' kërkesën për në ekipin '%(team)s'."
 
-#: projects/views/team.py:554
+#: projects/views/team.py:581
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
@@ -1152,32 +1106,11 @@ msgstr ""
 "Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
 "vargje që prekin përkthimin."
 
-#: repowatch/__init__.py:74
-msgid "Watch it"
-msgstr "Ndiqe!"
-
-#: repowatch/__init__.py:75
-msgid "Stop watching it"
-msgstr "Resht së ndjekuri"
-
-#: repowatch/models.py:28
-#, python-format
-msgid "Unable to add watch for path %r"
-msgstr "I pazoti të shtojë mbikqyrje për shtegun %r"
-
-#: repowatch/models.py:97
-msgid "watch"
-msgstr "mbikqyrje"
-
-#: repowatch/models.py:98
-msgid "watches"
-msgstr "mbikqyrje"
-
-#: reviews/forms.py:9
+#: reviews/forms.py:8
 msgid "Write a short blurb for your review request."
 msgstr "Shkruani dy fjalë për kërkesën tuaj për shqyrtim"
 
-#: reviews/forms.py:11
+#: reviews/forms.py:10
 msgid "Select a translation file for review."
 msgstr "Përzgjidhni një kartelë përkthimi për shqyrtim"
 
@@ -1245,7 +1178,7 @@ msgstr "-krijuar_më"
 msgid "created_on"
 msgstr "krijuar_më"
 
-#: reviews/views.py:33
+#: reviews/views.py:32
 msgid ""
 "You can upload a file for review only if it's related to an existing "
 "language."
@@ -1253,17 +1186,9 @@ msgstr ""
 "Një kartelë mund ta ngarkoni për shqyrtim vetëm nëse lidhet me një gjuhë të "
 "pranishme."
 
-#: reviews/views.py:53
+#: reviews/views.py:52
 msgid "Your file has been successfully placed for reviewing."
 msgstr "Kartela juaj u depozitua me sukses për shqyrtim."
-
-#: simplelock/models.py:39
-msgid "Lock"
-msgstr "Kyçe"
-
-#: simplelock/models.py:40
-msgid "Locks"
-msgstr "Dryna"
 
 #: tarball/forms.py:16
 msgid "Tarball URL"
@@ -1306,19 +1231,19 @@ msgstr ""
 "Përdoruesin '%s' e keni në dy listat, te bashkërenduesit dhe anëtarët. Ju "
 "lutem, hiqeni prej njërës nga këto lista."
 
-#: teams/models.py:27 teams/models.py:69
+#: teams/models.py:29 teams/models.py:71
 msgid "The project which this team belongs to."
 msgstr "Projekti te i cili ky ekip merr pjesë."
 
-#: teams/models.py:28 teams/models.py:70
-#: templates/reviews/review_list.html:154
+#: teams/models.py:30 teams/models.py:72
+#: templates/reviews/review_list.html:125
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Gjuhë"
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:32 teams/models.py:74
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
@@ -1326,51 +1251,51 @@ msgstr ""
 "Personat në këtë ekip do të jenë në gjendje vetëm të parashtrojnë kartela "
 "përkthimi te një gjuhë e dhënë."
 
-#: teams/models.py:32
+#: teams/models.py:34
 msgid "Coordinators"
 msgstr "Bashkërenduesa"
 
-#: teams/models.py:34
+#: teams/models.py:36
 msgid "Members"
 msgstr "Anëtarë"
 
-#: teams/models.py:37
+#: teams/models.py:39
 msgid "Mainlist"
 msgstr "Lista Kryesore"
 
-#: teams/models.py:38
+#: teams/models.py:40
 msgid "The main mailing list of the team."
 msgstr "Lista kryesore e postimeve të ekipit."
 
-#: teams/models.py:40
+#: teams/models.py:42
 msgid "creator"
 msgstr "krijues"
 
-#: teams/models.py:56
+#: teams/models.py:58
 msgid "team"
 msgstr "ekip"
 
-#: teams/models.py:57
+#: teams/models.py:59
 msgid "teams"
 msgstr "ekipe"
 
-#: teams/models.py:89
+#: teams/models.py:91
 msgid "team creation request"
 msgstr "kërkesë krijimi ekipi"
 
-#: teams/models.py:90
+#: teams/models.py:92
 msgid "team creation requests"
 msgstr "kërkesa krijimi ekipi"
 
-#: teams/models.py:108
+#: teams/models.py:110
 msgid "Team"
 msgstr "Ekip"
 
-#: teams/models.py:125
+#: teams/models.py:127
 msgid "team access request"
 msgstr "kërkesë hyrjeje në ekip"
 
-#: teams/models.py:126
+#: teams/models.py:128
 msgid "team access requests"
 msgstr "kërkesa hyrjeje në ekip"
 
@@ -1404,22 +1329,22 @@ msgstr ""
 "Duket se ndoqët një lidhje të gabuar. Nëse mendoni se është faji ynë, ju "
 "lutem <a href='http://transifex.org/newticket'>na e njoftoni</a>."
 
-#: templates/500.html:4 templates/500.html.py:7
+#: templates/500.html:6 templates/500.html.py:21
 msgid "Page unavailable"
 msgstr "Faqe jo e passhme"
 
-#: templates/500.html:12
+#: templates/500.html:22
 msgid "We're sorry, but the requested page is currently unavailable."
 msgstr "Na vjen keq, por faqja e kërkuar hëpëhrë nuk është e passhme."
 
-#: templates/500.html:14
+#: templates/500.html:23
 msgid ""
 "We're messing around with things internally, and the server had a bit of a "
 "hiccup."
 msgstr ""
 "Po bëjmë ca rrëmujë nga brenda me gjërat, dhe shërbyesin e ngau ca lemza."
 
-#: templates/500.html:16
+#: templates/500.html:24
 msgid "Please try again later."
 msgstr "Ju lutem riprovoni më vonë."
 
@@ -1427,39 +1352,39 @@ msgstr "Ju lutem riprovoni më vonë."
 msgid "Welcome to Transifex"
 msgstr "Mirë se vini te Transifex"
 
-#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/base-sample.html:8 templates/admin/base_site.html:5
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:35 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Shko te faqja hyrëse"
 
-#: templates/base-sample.html:35
+#: templates/base-sample.html:36
 msgid "Go to start page"
 msgstr "Shko te faqja kryesore"
 
-#: templates/base-sample.html:39
+#: templates/base-sample.html:40
 msgid "The projects being served"
 msgstr "Projektet që shërbehen"
 
-#: templates/base-sample.html:39 templates/projects/base.html:6
+#: templates/base-sample.html:40 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "Projekte"
 
-#: templates/base-sample.html:40
+#: templates/base-sample.html:41
 msgid "The languages our service serves"
 msgstr "Gjuhët në të cilat punon shërbimi ynë"
 
-#: templates/base-sample.html:40 templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Gjuhë"
 
-#: templates/base-sample.html:46
+#: templates/base-sample.html:48
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
@@ -1468,15 +1393,15 @@ msgstr ""
 "Mirë se vini <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out from the website"
 msgstr "Dilni prej \"site\"-it web"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out"
 msgstr "Çnënshkruani"
 
-#: templates/base-sample.html:49 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:53 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1486,24 +1411,24 @@ msgstr "Çnënshkruani"
 msgid "Sign in"
 msgstr "Nënshkruani"
 
-#: templates/base-sample.html:52
+#: templates/base-sample.html:56
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Regjistrohuni"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "About"
 msgstr "Rreth"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Drops us a line"
 msgstr "Na shkruani dy fjalë"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Feedback"
 msgstr "Përshtypje"
 
-#: templates/base-sample.html:116
+#: templates/base-sample.html:120
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -1572,36 +1497,7 @@ msgstr ""
 msgid "Find projects by name, description, etc."
 msgstr "Gjeni projekte sipas emrash, përshkrimi, etj"
 
-#: templates/timeline.html:11
-msgid "Filter results"
-msgstr "Filtro përfundimet"
-
-#: templates/timeline.html:17
-msgid "Go"
-msgstr "Shko tek"
-
-#: templates/timeline.html:24 templates/projects/component_detail.html:203
-#: templates/projects/project_detail.html:108
-#: templates/teams/team_detail.html:129
-msgid "None available"
-msgstr "Asnjë i passhëm"
-
-#: templates/timeline.html:28
-#, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
-msgstr[0] ""
-"\n"
-"  Kërkimi gjeti %(counter)s përfundim\n"
-msgstr[1] ""
-"\n"
-"    Kërkimi gjeti %(counter)s përfundime\n"
-
-#: templates/admin/base_site.html:9
+#: templates/admin/base_site.html:10
 msgid "Transifex administration"
 msgstr "Administrim Transifex-i"
 
@@ -1722,7 +1618,7 @@ msgid "Account"
 msgstr "Llogari"
 
 #: templates/notification/notices.html:95
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:125
 msgid "Note"
 msgstr "Shënim"
 
@@ -2068,108 +1964,114 @@ msgstr ""
 "Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i "
 "dërgon gjithashtu kartelat drejt e te depoja kryesore."
 
-#: templates/projects/component_detail.html:79
-#: templates/projects/project_detail.html:31
-#: templates/projects/release_detail.html:44
-#: templates/teams/team_detail.html:25
+#: templates/projects/component_detail.html:65
+#: templates/projects/project_detail.html:22
+#, fuzzy
+msgid "Private Project"
+msgstr "Projektet më të Fundit"
+
+#: templates/projects/component_detail.html:82
+#: templates/projects/project_detail.html:39
+#: templates/projects/release_detail.html:53
+#: templates/teams/team_detail.html:28
 msgid "Edit"
 msgstr "Përpunoni"
 
-#: templates/projects/component_detail.html:84
+#: templates/projects/component_detail.html:87
 msgid "Source details"
 msgstr "Hollësi burimi"
 
-#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:91
 msgid "Repository:"
 msgstr "Depo:"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "Link to a web front-end for the source code"
 msgstr "Lidhje te një prani në web për kodin burim"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "web"
 msgstr "web"
 
-#: templates/projects/component_detail.html:98
+#: templates/projects/component_detail.html:102
 msgid "Branch:"
 msgstr "Degë:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:107
 msgid "File filter:"
 msgstr "Filtër kartele:"
 
-#: templates/projects/component_detail.html:109
+#: templates/projects/component_detail.html:113
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Qarkullim:"
 msgstr[1] "Qarkullime:"
 
-#: templates/projects/component_detail.html:117
+#: templates/projects/component_detail.html:121
 msgid "Allows submissions:"
 msgstr "Lejo parashtrime:"
 
-#: templates/projects/component_detail.html:131
+#: templates/projects/component_detail.html:135
 msgid "Translation files"
 msgstr "Kartela përkthimi"
 
-#: templates/projects/component_detail.html:136
+#: templates/projects/component_detail.html:140
 msgid "Source file:"
 msgstr "Kartelë burim:"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:147
 msgid "Statistics last updated:"
 msgstr "Statistika të përditësuara së fundi më:"
 
-#: templates/projects/component_detail.html:145
+#: templates/projects/component_detail.html:149
 msgid "ago"
 msgstr "më parë"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Component not yet pulled from source repository."
 msgstr "Përbërëse ende e patërhequr prej depos burim."
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr "Rifreskoje dhe rillogarit statistikat. Ky veprim mund të hajë ca kohë."
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh cache"
 msgstr "Rifresko fshehtinën"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Ricakto të dhënat vendore të Transifex-it për një tërheqje të pastër"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Clear cache"
 msgstr "Pastro fshehtinën"
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr ""
 "Çfarëdo të dhënash të ndryshuara lokalisht do të mbishkruhen me kopje të "
 "freskëta."
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "warning"
 msgstr "sinjalizim"
 
-#: templates/projects/component_detail.html:164
+#: templates/projects/component_detail.html:168
 msgid "Teams:"
 msgstr "Ekipe:"
 
-#: templates/projects/component_detail.html:166
+#: templates/projects/component_detail.html:170
 msgid "See the translation teams."
 msgstr "Shihni ekipet e përkthimit."
 
-#: templates/projects/component_detail.html:190
+#: templates/projects/component_detail.html:194
 msgid "Translation files reviews"
 msgstr "Shqyrtime kartelash përkthimi"
 
-#: templates/projects/component_detail.html:192
+#: templates/projects/component_detail.html:196
 msgid ""
 "Translators can request a file review from another person, who\n"
 "  can take a look at his work and provide any feedback needed, or simply "
@@ -2181,56 +2083,56 @@ msgstr ""
 "thjesht\n"
 "  ta parashtrojëkartelën te projekti."
 
-#: templates/projects/component_detail.html:197
-#: templates/reviews/review_list.html:21 templates/reviews/review_list.html:23
+#: templates/projects/component_detail.html:201
+#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "Shqyrtime"
 
-#: templates/projects/component_detail.html:199
-#: templates/projects/project_detail.html:103
-#: templates/teams/team_detail.html:125
+#: templates/projects/component_detail.html:203
+#: templates/projects/project_detail.html:114
+#: templates/teams/team_detail.html:130
 msgid "History"
 msgstr "Historik"
 
-#: templates/projects/component_detail.html:220
+#: templates/projects/component_detail.html:225
 msgid "Delete component"
 msgstr "Fshije përbërësin"
 
-#: templates/projects/component_form.html:6
-#: templates/projects/component_form.html:11
+#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:12
 msgid "Add a component"
 msgstr "Shtoni një përbërës"
 
-#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:8
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "Përpunoni %(component_name)s"
 
-#: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:83
+#: templates/projects/component_form.html:13
+#: templates/projects/component_form.html:84
 #, python-format
 msgid "Edit Component '%(component_name)s'"
 msgstr "Përpunoni Përbërësen '%(component_name)s'"
 
-#: templates/projects/component_form.html:81
+#: templates/projects/component_form.html:82
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Përbërës i ri për %(project_name)s"
 
-#: templates/projects/component_form.html:102
+#: templates/projects/component_form.html:103
 msgid "Checkout"
 msgstr "Marrje"
 
-#: templates/projects/component_form.html:106
+#: templates/projects/component_form.html:107
 msgid "Submission"
 msgstr "Parashtrim"
 
-#: templates/projects/component_form.html:122
-#: templates/projects/component_form.html:132
+#: templates/projects/component_form.html:123
+#: templates/projects/component_form.html:133
 msgid "Save component"
 msgstr "Ruaje përbërësin"
 
-#: templates/projects/component_lang_detail.html:29
+#: templates/projects/component_lang_detail.html:30
 msgid "translation files"
 msgstr "Kartela përkthimi"
 
@@ -2322,13 +2224,13 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr "Shembull: Përditësime për përkthimin në Portugezçe Braziliane"
 
 #: templates/projects/component_submit_new_file.html:43
-#: translations/templates/component_submit.html:13
+#: translations/templates/component_submit.html:14
 msgid "Send"
 msgstr "Dërgoje"
 
 #: templates/projects/component_submit_new_file.html:45
 #: templates/webtrans/transfile_edit.html:137
-#: translations/templates/component_submit.html:15
+#: translations/templates/component_submit.html:20
 msgid "Send for Review"
 msgstr "Dërgojeni për Shqyrtim"
 
@@ -2363,59 +2265,51 @@ msgstr ""
 "  Jeni i sigurt që doni të fshihet përgjithmonë projekti i regjistruar '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:37
+#: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:51
+#: templates/projects/release_detail.html:60
 msgid "Details"
 msgstr "Hollësi"
 
-#: templates/projects/project_detail.html:44
-msgid "Watch:"
-msgstr "Ndiq:"
-
-#: templates/projects/project_detail.html:52
-#: templates/projects/release_detail.html:55
+#: templates/projects/project_detail.html:60
+#: templates/projects/release_detail.html:64
 msgid "Homepage:"
 msgstr "Faqe Hyrëse:"
 
-#: templates/projects/project_detail.html:53
+#: templates/projects/project_detail.html:61
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Faqe hyrëse për %(project_name)s"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:66
 msgid "Bug tracker:"
 msgstr "Gjurmes të metash:"
 
-#: templates/projects/project_detail.html:59
+#: templates/projects/project_detail.html:67
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Gjurmues të metash për %(project_name)s"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:72
 #: templates/projects/project_list.html:46
 msgid "Tags:"
 msgstr "Etiketa:"
 
-#: templates/projects/project_detail.html:73
+#: templates/projects/project_detail.html:81
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Mirëmbajtës:"
 msgstr[1] "Mirëmbajtësa:"
 
-#: templates/projects/project_detail.html:87
+#: templates/projects/project_detail.html:96
 msgid "External links:"
 msgstr "Lidhje të jashtme:"
 
-#: templates/projects/project_detail.html:89
+#: templates/projects/project_detail.html:98
 msgid "Screenshots"
 msgstr "Foto ekrani"
 
-#: templates/projects/project_detail.html:120
-msgid "View complete action log"
-msgstr "Shihni regjistrimin e plotë të veprimeve"
-
-#: templates/projects/project_detail.html:135
+#: templates/projects/project_detail.html:144
 msgid "Delete project"
 msgstr "Fshije projektin"
 
@@ -2450,6 +2344,32 @@ msgstr "Përpunoni hollësitë e projektit tuaj"
 msgid "Save project"
 msgstr "Ruaje projektin"
 
+#: templates/projects/project_form_access_control.html:8
+#: templates/projects/project_form_access_control.html:10
+#: templates/projects/project_form_access_control.html:16
+#: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:65
+msgid "Access Control"
+msgstr "Kontroll Hyrjesh"
+
+#: templates/projects/project_form_access_control.html:18
+msgid ""
+"You have the following choices to manage how people can have submission "
+"access to your project:"
+msgstr ""
+
+#: templates/projects/project_form_access_control.html:58
+#, fuzzy
+msgid "Go to the project writers page."
+msgstr "Shko te faqja e këtij projekti"
+
+#: templates/projects/project_form_access_control.html:62
+#, fuzzy
+msgid "Save Access Control Settings"
+msgstr "Kontroll Hyrjesh"
+
 #: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
@@ -2464,27 +2384,18 @@ msgstr "Kontrolli i hyrjeve do të aktivizohet sapo të krijohet projekti"
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Po përpunohet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form_base.html:90
-#: templates/projects/project_form_permissions.html:8
-#: templates/projects/project_form_permissions.html:15
-#: templates/projects/project_menu.html:47
-msgid "Access Control"
-msgstr "Kontroll Hyrjesh"
-
-#: templates/projects/project_form_permissions.html:18
-#: templates/txpermissions/base_permission_form.html:8
-msgid "Give access to a translator to send translations to your project"
+#: templates/projects/project_form_permissions.html:26
+#, fuzzy
+msgid ""
+"Give write access to a translator to send translations to your project "
+"independent of a translation team."
 msgstr "Lejojini hyrje një përkthyesi të dërgojë përkthime te projekti juaj"
 
-#: templates/projects/project_form_permissions.html:20
-msgid "Requests for access to submit files"
-msgstr "Kërkesa për hyrje për parashtrim kartelas"
-
-#: templates/projects/project_form_permissions.html:62
+#: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
 msgstr "Kërkesa në pritje të shqyrtimit:"
 
-#: templates/projects/project_form_permissions.html:82
+#: templates/projects/project_form_permissions.html:59
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with access to submit files:"
 msgstr "Përdoruesa me hyrje parashtrimi kartelash:"
@@ -2528,32 +2439,14 @@ msgstr ""
 "S'e gjetët projektin tuaj? Ecni më tej dhe <a href=\"%(project_create)s"
 "\">shtojeni vetë</a>!"
 
-#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Përmbledhje"
 
-#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 msgid "Translation Teams"
 msgstr "Ekipe Përkthimi"
-
-#: templates/projects/project_menu.html:61
-#: templates/projects/project_timeline.html:12
-#: templates/txcommon/user_timeline.html:12
-msgid "Timeline"
-msgstr "Rrjedhë Kohore"
-
-#: templates/projects/project_timeline.html:20
-#: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
-msgstr ""
-"\n"
-" Rrjedhë Kohore për %(project_name)s\n"
-" "
 
 #: templates/projects/project_top_translators.html:4
 msgid "Top Translators"
@@ -2588,31 +2481,41 @@ msgstr ""
 "  Jeni të sigurt se doni të fshihet përgjithmonë hedhja në qarkullim '%"
 "(release_name)s' qëi përket %(project_name)s?\n"
 
-#: templates/projects/release_detail.html:60
+#: templates/projects/release_detail.html:69
 msgid "Release date:"
 msgstr "Datë qarkullimi:"
 
-#: templates/projects/release_detail.html:64
+#: templates/projects/release_detail.html:73
 msgid "String freeze:"
 msgstr "Ngrirje vargjesh:"
 
-#: templates/projects/release_detail.html:68
+#: templates/projects/release_detail.html:77
 msgid "Devel freeze:"
 msgstr "Ngrirje zhvillimi:"
 
-#: templates/projects/release_detail.html:73
+#: templates/projects/release_detail.html:82
 msgid "Components:"
 msgstr "Përbërës:"
 
-#: templates/projects/release_detail.html:81
+#: templates/projects/release_detail.html:86
+#, fuzzy
+msgid "Click here to show or hide the component list"
+msgstr "Për shfaqje ose fshehjeje të kartelave burim, klikoni këtu"
+
+#: templates/projects/release_detail.html:87
+#, python-format
+msgid "This release has %(components_number)s components."
+msgstr ""
+
+#: templates/projects/release_detail.html:103
 msgid "Translation statistics"
 msgstr "Statistika përkthimi"
 
-#: templates/projects/release_detail.html:88
+#: templates/projects/release_detail.html:110
 msgid "No translations added for this release. :-("
 msgstr "Pa përkthime të shtuara për këtë qarkullim. :-("
 
-#: templates/projects/release_detail.html:99
+#: templates/projects/release_detail.html:121
 msgid "Delete release"
 msgstr "Fshije qarkullimin"
 
@@ -2648,16 +2551,16 @@ msgstr ""
 msgid "Save release"
 msgstr "Ruaje qarkullimin"
 
-#: templates/projects/release_language_detail.html:27
+#: templates/projects/release_language_detail.html:26
 #, python-format
 msgid "Release '%(release_name)s"
 msgstr "Hedhja në Qarkullim '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:39
+#: templates/projects/release_language_detail.html:38
 msgid "Project/Component statistics"
 msgstr "Statistika projekti/përbërëseje"
 
-#: templates/projects/release_language_detail.html:60
+#: templates/projects/release_language_detail.html:59
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
@@ -2667,7 +2570,7 @@ msgstr ""
 "gjuhë dhe version, por nuk gjeti gjë. Provoni ta parashtroni një kartelë të "
 "tillë dhe kontrolloni sërish."
 
-#: templates/projects/release_language_detail.html:61
+#: templates/projects/release_language_detail.html:60
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
@@ -2676,11 +2579,11 @@ msgstr ""
 "Nëse mendoni se kjo nuk do të duhej të kish ndodhur, ju lutem <a href=\"%"
 "(contact_form)s\">na e njoftoni</a>."
 
-#: templates/projects/release_language_detail.html:65
+#: templates/projects/release_language_detail.html:64
 msgid "Untranslated Components"
 msgstr "Përbërësa të Papërkthyer"
 
-#: templates/projects/release_language_detail.html:67
+#: templates/projects/release_language_detail.html:66
 #, python-format
 msgid ""
 "The following components will be included in %(release_name)s, but there are "
@@ -2689,11 +2592,11 @@ msgstr ""
 "Përbërësit vijues do të përfshihen te %(release_name)s, por nuk ka ende "
 "përkthime të dërguara për %(language_name)s."
 
-#: templates/projects/release_list.html:14
+#: templates/projects/release_list.html:13
 msgid "Project Releases"
 msgstr "Hedhje në Qarkullim të Projektit"
 
-#: templates/projects/release_list.html:29
+#: templates/projects/release_list.html:28
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href=\"%"
@@ -2706,29 +2609,28 @@ msgstr ""
 msgid "Submit"
 msgstr "Parashtroje"
 
-#: templates/reviews/review_list.html:27
+#: templates/reviews/review_list.html:26
 msgid "Translation Review Requests"
 msgstr "Kërkesa Shqyrtimi Përkthimi"
 
-#: templates/reviews/review_list.html:31
+#: templates/reviews/review_list.html:30
 msgid "Open Requests"
 msgstr "Kërkesa të Hapura"
 
-#: templates/reviews/review_list.html:39
+#: templates/reviews/review_list.html:38
 #, python-format
 msgid "Review Request #%(review_id)s "
 msgstr "Kërkesë Shqyrtimi #%(review_id)s "
 
-#: templates/reviews/review_list.html:47
+#: templates/reviews/review_list.html:46
 msgid "Who and when"
 msgstr "Kush dhe kur"
 
-#: templates/reviews/review_list.html:49
-#: templates/reviews/review_list.html:115
+#: templates/reviews/review_list.html:48
 msgid "See profile"
 msgstr "Shiheni profilin"
 
-#: templates/reviews/review_list.html:50
+#: templates/reviews/review_list.html:49
 #, python-format
 msgid ""
 "\n"
@@ -2739,112 +2641,89 @@ msgstr ""
 "        %(time_since)s më parë\n"
 "      "
 
-#: templates/reviews/review_list.html:56
+#: templates/reviews/review_list.html:55
 msgid "Translation Language"
 msgstr "Gjuhë Përkthimi"
 
-#: templates/reviews/review_list.html:59
+#: templates/reviews/review_list.html:58
 msgid "Go to language page"
 msgstr "Shkoni te faqja e gjuhëve"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:65
 msgid "File target"
 msgstr "Objektiv kartele"
 
-#: templates/reviews/review_list.html:67
+#: templates/reviews/review_list.html:66
 msgid "Download the version sent for review"
 msgstr "Shkarkoni versionin e dërguar për shqyrtim"
 
-#: templates/reviews/review_list.html:70
+#: templates/reviews/review_list.html:69
 msgid "Score"
 msgstr "Pikë"
 
-#: templates/reviews/review_list.html:84
+#: templates/reviews/review_list.html:83
 msgid "Status"
 msgstr "Gjendje"
 
-#: templates/reviews/review_list.html:94
+#: templates/reviews/review_list.html:93
 msgid "Close Review"
 msgstr "Mbylle Shqyrtimin"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept and submit translation"
 msgstr "Pranoje dhe parashtroje përkthimin"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept"
 msgstr "Pranoje"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject translation"
 msgstr "Hidhe tej përkthimin"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject"
 msgstr "Hidhe tej"
 
-#: templates/reviews/review_list.html:115
-msgid "By"
-msgstr "Nga"
-
-#: templates/reviews/review_list.html:125
-msgid "Add your comment as"
-msgstr "Shtoni komentin tuaj si"
-
-#: templates/reviews/review_list.html:131
-msgid "Say it!"
-msgstr "Thuajeni!"
-
-#: templates/reviews/review_list.html:142
+#: templates/reviews/review_list.html:113
 msgid "No open requests!"
 msgstr "Nuk ka kërkesa të hapura!"
 
-#: templates/reviews/review_list.html:146
+#: templates/reviews/review_list.html:117
 msgid "Closed Requests"
 msgstr "Kërkesa të Mbyllura"
 
-#: templates/reviews/review_list.html:152
+#: templates/reviews/review_list.html:123
 msgid "ID"
 msgstr "ID"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:124
 msgid "Author"
 msgstr "Autor"
 
-#: templates/reviews/review_list.html:155
+#: templates/reviews/review_list.html:126
 msgid "Time Since"
 msgstr "Kohë Që Prej"
 
-#: templates/reviews/review_list.html:156
+#: templates/reviews/review_list.html:127
 msgid "Resolution"
 msgstr "Zgjidhje"
 
-#: templates/reviews/review_list.html:157
+#: templates/reviews/review_list.html:128
 msgid "Attachment"
 msgstr "Bashkangjitje"
 
-#: templates/reviews/review_list.html:158
+#: templates/reviews/review_list.html:129
 msgid "Actions"
 msgstr "Veprime"
 
-#: templates/reviews/review_list.html:182
+#: templates/reviews/review_list.html:153
 msgid "Reopen review request"
 msgstr "Rihape kërkesën për shqyrtim"
 
-#: templates/reviews/review_list.html:194
+#: templates/reviews/review_list.html:165
 msgid "No closed requests!"
 msgstr "Nuk ka kërkesa të mbyllura!"
-
-#: templates/simpleauth/base_profile.html:4
-#: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/public_profile.html:4
-#: templates/simpleauth/public_profile.html:5
-#: templates/simpleauth/settings.html:5
-#: templates/txcommon/user_timeline.html:15
-#: templates/userprofile/base_2col.html:3
-#: templates/userprofile/profile/public.html:28
-msgid "Profile"
-msgstr "Profil"
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2922,7 +2801,12 @@ msgstr ""
 "  Jeni i sigurt se doni të fshihet përgjithmonë ekipi '%(lang_name)s' që bën "
 "pjese te %(project_name)s?\n"
 
-#: templates/teams/team_detail.html:19
+#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
+#, fuzzy
+msgid "Teams"
+msgstr "Ekipe:"
+
+#: templates/teams/team_detail.html:22
 #, python-format
 msgid ""
 "\n"
@@ -2933,51 +2817,56 @@ msgstr ""
 "  Ekipe Përkthimi - %(language_name)s <sup class=\"entry_metalink\">%"
 "(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:33
+#: templates/teams/team_detail.html:36
 msgid "Mainlist:"
 msgstr "Lista kryesore:"
 
-#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Bashkërendues"
 msgstr[1] "Bashkërenduesa"
 
-#: templates/teams/team_detail.html:56
+#: templates/teams/team_detail.html:59
 msgid "Become a translator:"
 msgstr "Bëhuni përkthyes:"
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:62
 msgid "Join this Team"
 msgstr "Bashkojuni këtij Ekipi"
 
-#: templates/teams/team_detail.html:70
+#: templates/teams/team_detail.html:73
 msgid "People waiting for team membership approving:"
 msgstr "Persona në pritje të miratimit të anëtarësisë në ekip:"
 
-#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "Miratoje"
 
-#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "Mohoje"
 
-#: templates/teams/team_detail.html:91
+#: templates/teams/team_detail.html:94
 msgid "Withdraw"
 msgstr "Tërhiqeni"
 
-#: templates/teams/team_detail.html:104
+#: templates/teams/team_detail.html:107
 msgid "Team Members:"
 msgstr "Anëtarë Ekipi:"
 
-#: templates/teams/team_detail.html:114
+#: templates/teams/team_detail.html:117
 msgid "Leave"
 msgstr "Dil"
 
-#: templates/teams/team_detail.html:147
+#: templates/teams/team_detail.html:153
 msgid "Delete team"
 msgstr "Fshije ekipin"
+
+#: templates/teams/team_form.html:10
+#, fuzzy
+msgid "Add Team"
+msgstr "Ekip"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -3028,9 +2917,38 @@ msgstr "Kërkoni një ekip të ri"
 msgid "Request team"
 msgstr "Kërkoni një ekip"
 
+#: templates/teams/team_off.html:12
+#, fuzzy
+msgid "This project is not using Translation Teams"
+msgstr "Ekipi Përkthimi të %(project_name)s"
+
+#: templates/teams/team_off.html:17
+#, python-format
+msgid ""
+"\n"
+"            This project does not maintain its own teams, but has chosen to "
+"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
+"s</a>'.\n"
+"            In order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'.\n"
+"        "
+msgstr ""
+
+#: templates/teams/team_off.html:22
+msgid ""
+"\n"
+"            This project allows translation submission from <em>anyone</em>, "
+"and thus no translation teams exist.\n"
+"        "
+msgstr ""
+
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
 msgstr "Shfaq të plotësuarit"
+
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr "Lejojini hyrje një përkthyesi të dërgojë përkthime te projekti juaj"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
@@ -3448,10 +3366,6 @@ msgstr "Vetëzbulo vendin"
 msgid "Country"
 msgstr "Vend"
 
-#: templates/userprofile/profile/location.html:22
-msgid "Loading..."
-msgstr "Po ngarkohet..."
-
 #: templates/userprofile/profile/location.html:26
 msgid "Location:"
 msgstr "Vend:"
@@ -3528,10 +3442,6 @@ msgstr "Shtoni vend"
 msgid "Change location"
 msgstr "Ndryshoni vendin"
 
-#: templates/userprofile/profile/overview.html:105
-msgid "My Timeline"
-msgstr "Rrjedha Ime Kohore"
-
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -3554,12 +3464,12 @@ msgstr "Gjuha mëmë"
 msgid "Blog/Site"
 msgstr "Blog/Site"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3716,11 +3626,11 @@ msgstr "Kopjo vargun burim"
 msgid "Auto-suggest translation"
 msgstr "Përkthim me vetëkëshillim"
 
-#: translations/models.py:242
+#: translations/models.py:245
 msgid "PO file"
 msgstr "Kartelë PO"
 
-#: translations/models.py:243
+#: translations/models.py:246
 msgid "PO files"
 msgstr "Kartela PO"
 
@@ -3742,14 +3652,14 @@ msgid "Options"
 msgstr "Mundësi"
 
 #: translations/templates/comp_lang_stats_table.html:26
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:39
 #: translations/templates/lang_stats_table.html:27
 #: translations/templates/release_stats_table.html:22
 msgid "Could not generate statistics for this file"
 msgstr "Nuk prodhoi dot statistika për këtë kartelë"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3757,7 +3667,7 @@ msgid "Trans:"
 msgstr "Përkth:"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3765,53 +3675,59 @@ msgid "Untrans:"
 msgstr "Papërkth:"
 
 #: translations/templates/comp_lang_stats_table.html:39
-#: translations/templates/comp_stats_table.html:54
+#: translations/templates/comp_stats_table.html:56
 #: translations/templates/lang_stats_table.html:44
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Shiheni"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:55
+#: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#: translations/templates/source_files.html:19
-msgid "Download "
-msgstr "Shkarkojeni"
+#, fuzzy
+msgid "Download for viewing "
+msgstr "Dërgojeni për Shqyrtim"
 
-#: translations/templates/comp_lang_stats_table.html:50
-#: translations/templates/comp_stats_table.html:65
-#: translations/templates/lang_stats_table.html:55
+#: translations/templates/comp_lang_stats_table.html:55
+#: translations/templates/comp_stats_table.html:72
+#: translations/templates/lang_stats_table.html:60
 msgid "Edit "
 msgstr "Përpunojeni"
 
-#: translations/templates/comp_stats_table.html:28
+#: translations/templates/comp_stats_table.html:29
+msgid ""
+"See the outsource team for this language. You will be redirected to another "
+"project team page."
+msgstr ""
+
+#: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
 msgstr "Shihni ekipin për këtë gjuhë"
 
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:29
+#: translations/templates/comp_stats_table.html:31
 msgid "See statistics for this language"
 msgstr "Shihni statistikat për këtë gjuhë"
 
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:31
 msgid "No team for this language"
 msgstr "Nuk ka ekip për këtë gjuhë"
 
-#: translations/templates/comp_stats_table.html:34
+#: translations/templates/comp_stats_table.html:36
 msgid "There are no languages registered matching this code"
 msgstr "Nuk ka gjuhë të regjistruara që përputhen me këtë kod"
 
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:51
 #: translations/templates/lang_stats_table.html:39
 msgid "Click here to see the multiple files for"
 msgstr "Klikoni këtu për të parë kartela shumëfishe të"
 
-#: translations/templates/component_submit.html:5
+#: translations/templates/component_submit.html:6
 #, python-format
 msgid "Submit a translation for %(pofile_filename)s"
 msgstr "Parashtroni një përkthim për %(pofile_filename)s"
 
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:10
 msgid "Submit file"
 msgstr "Parashtroje kartelën"
 
@@ -3826,27 +3742,6 @@ msgstr "Shko te faqja e këtij projekti"
 #: translations/templates/lang_stats_table.html:25
 msgid "Go to this component page"
 msgstr "Shko te faqja e këtij përbërësi"
-
-#: translations/templates/pofile_lock.html:15
-msgid "Unlock this file when you are finished working with it."
-msgstr "Çkyçeni këtë kartelë, kur të keni mbaruar së punuari me të."
-
-#: translations/templates/pofile_lock.html:21
-#, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr ""
-"Përdoruesi '%(owner)s' e ka kyçur këtë kartelë, për të treguar që po merret "
-"me të."
-
-#: translations/templates/pofile_lock.html:27
-msgid "Lock this file to notify others you're working with it."
-msgstr "Kyçeni këtë kartelë, që të njoftoni të tjerët se po merreni me të."
-
-#: translations/templates/pofile_lock.html:30
-msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr ""
-"Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të "
-"hëpërhë."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -3869,6 +3764,10 @@ msgstr "Ky përbër ka %(sources_number)s kartela burim"
 msgid "entries"
 msgstr "zëra"
 
+#: translations/templates/source_files.html:19
+msgid "Download "
+msgstr "Shkarkojeni"
+
 #: txcollections/migrations/0001_initial.py:21
 msgid "String freese date"
 msgstr "Datë ngrirjeje vargjesh"
@@ -3885,44 +3784,44 @@ msgstr ""
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr "Kjo vlerë duhet të përmbajë vetëm shkronja unikod, numra dhe nënvija."
 
-#: txcommon/i18n.py:18
-#, python-format
-msgid "The LINGUAS file could not be opened: %s"
+#: txcommon/i18n.py:19
+#, fuzzy, python-format
+msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "Nuk u hap dot kartela LINGUAS: %s"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Female"
 msgstr "Femër"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Male"
 msgstr "Mashkull"
 
-#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Emër"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Mbiemër"
 
-#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Gjuha Mëmë"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Rreth vetes suaj"
 
-#: txcommon/models.py:38
+#: txcommon/models.py:39
 msgid "Short description of yourself (140 chars)."
 msgstr "Përshkrim i shkurtër i vetvetes (140 shenja)."
 
-#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Kërkoni punë?"
 
@@ -4234,26 +4133,32 @@ msgstr ""
 "Kjo depo bën pjesë tashmë në një projekt tjetër. Ju lute, zgjidhni një "
 "tjetër."
 
-#: txcommon/views.py:85
+#: txcommon/views.py:109
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr "Nuk mund të cysni sërish një përdorues brenda një kohe të shkurtër."
 
-#: txcommon/views.py:88
+#: txcommon/views.py:112
 msgid "You can't nudge yourself."
 msgstr "Nuk mund të cysni vetev."
 
-#: txcommon/views.py:95
+#: txcommon/views.py:119
 #, python-format
 msgid "You have nudged '%s'."
 msgstr "Cytët '%s'."
 
-#: txcommon/db/models.py:26
+#: txcommon/db/models.py:27
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Jepni në kllapa 0 ose më tepër numra të plotë të ndarë me presje."
 
-#: txcommon/db/models.py:28
+#: txcommon/db/models.py:29
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Duhet të jepni e pakta një çift kllapash që nuk përmbajnë gjë."
+
+#: txcommon/templatetags/avatars.py:108
+msgid ""
+"You have to provide only the size as             an integer (both sides will "
+"be equal) and optionally, the             username."
+msgstr ""
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -4291,41 +4196,81 @@ msgstr "URL-ja për te depoja/dega e sistemit të ruajtjes së versioneve."
 msgid "This type of repository does not accept branches"
 msgstr "Kjo lloj depoje nuk pranon degë"
 
-#: vcs/models.py:48
+#: vcs/models.py:50
 msgid "Branch"
 msgstr "Degë"
 
-#: vcs/models.py:49
+#: vcs/models.py:51
 msgid "A VCS branch this unit is associated with"
 msgstr "Degë VCS me të cilën është përshoqëruar kjo njësi"
 
-#: vcs/models.py:50
+#: vcs/models.py:52
 msgid "Web frontend"
 msgstr "\"Web frontend\""
 
-#: vcs/models.py:52
+#: vcs/models.py:54
 msgid "A URL to the project's web front-end"
 msgstr "URL për te prania web e projektit"
 
-#: vcs/models.py:58
+#: vcs/models.py:60
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
-#: vcs/models.py:61
+#: vcs/models.py:63
 msgid "vcsunit"
 msgstr "njësi vcs"
 
-#: vcs/models.py:62
+#: vcs/models.py:64
 msgid "vcsunits"
 msgstr "njësi vcs"
+
+#: vcs/lib/exceptions/__init__.py:17
+msgid ""
+"Your request could not be completed. The admins have been notified to take a "
+"closer look at it. Please try again in a few minutes"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:40
+msgid "Setup of the repository locally could not be done successfully."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:47
+msgid ""
+"The local repository has not been setup yet. Please, first do a check-out of "
+"the repository."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:54
+msgid "Unable to pull data from the remote repository. Is the remote host up?"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:61
+msgid ""
+"Cleanup of the repository failed. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:67
+msgid "Commit to the repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:72
+msgid "Pushing to the remote repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:78
+msgid ""
+"Given file does not have a revision. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
 
 #: webtrans/fields.py:55
 #, python-format
 msgid "The %s fields should be filled."
 msgstr "Fushat %s duhen plotësuar."
 
-#: webtrans/wizards.py:364
+#: webtrans/wizards.py:414
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -4339,6 +4284,366 @@ msgstr "E mëparshmja"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Pasuesja"
+
+#~ msgid "Afrikaans"
+#~ msgstr "Afrikaans"
+
+#~ msgid "Amharic"
+#~ msgstr "Amharike"
+
+#~ msgid "Arabic"
+#~ msgstr "Arabe"
+
+#~ msgid "Assamese"
+#~ msgstr "Asameze"
+
+#~ msgid "Asturian"
+#~ msgstr "Asturiane"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "Azerbaixhan"
+
+#~ msgid "Balochi"
+#~ msgstr "Baloki"
+
+#~ msgid "Belarusian"
+#~ msgstr "Bjelloruse"
+
+#~ msgid "Bulgarian"
+#~ msgstr "Bulgare"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengali"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengali (India)"
+
+#~ msgid "Tibetan"
+#~ msgstr "Tibetane"
+
+#~ msgid "Bosnian"
+#~ msgstr "Boshnjake"
+
+#~ msgid "Catalan (Valencian)"
+#~ msgstr "Katalane (Valenciane)"
+
+#~ msgid "Czech"
+#~ msgstr "Çeke"
+
+#~ msgid "Welsh"
+#~ msgstr "Uellsiane"
+
+#~ msgid "Danish"
+#~ msgstr "Daneze"
+
+#~ msgid "German"
+#~ msgstr "Gjermane"
+
+#~ msgid "Swiss German"
+#~ msgstr "Gjermanishte Zvicerane"
+
+#~ msgid "Dzongkha"
+#~ msgstr "Xonga"
+
+#~ msgid "Greek"
+#~ msgstr "Greke"
+
+#~ msgid "English"
+#~ msgstr "Angleze"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Anglisht (Mbretëria e Bashkuar)"
+
+#~ msgid "English (United States)"
+#~ msgstr "Anglishte (Shtetet e Bashkuara)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "Angleze (Afrika e Jugut)"
+
+#~ msgid "Esperanto"
+#~ msgstr "Esperanto"
+
+#~ msgid "Spanish (Castilian)"
+#~ msgstr "Spanjisht (Kastiliane)"
+
+#~ msgid "Spanish (Argentinian)"
+#~ msgstr "Spanjisht (Argjentinase)"
+
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "Spanjisht (Meksikane)"
+
+#~ msgid "Estonian"
+#~ msgstr "Estoneze"
+
+#~ msgid "Basque"
+#~ msgstr "Baske"
+
+#~ msgid "Persian"
+#~ msgstr "Persiane"
+
+#~ msgid "Finnish"
+#~ msgstr "Finlandeze"
+
+#~ msgid "French"
+#~ msgstr "Frënge"
+
+#~ msgid "Friulian"
+#~ msgstr "Friuliane"
+
+#~ msgid "Western Frisian"
+#~ msgstr "Frisiane Perëndimore"
+
+#~ msgid "Irish"
+#~ msgstr "Irlandeze"
+
+#~ msgid "Galician"
+#~ msgstr "Galike"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gujarati"
+
+#~ msgid "Hebrew"
+#~ msgstr "Hebraishte"
+
+#~ msgid "Hindi"
+#~ msgstr "Indiane"
+
+#~ msgid "Croatian"
+#~ msgstr "Kroate"
+
+#~ msgid "Haitian (Haitian Creole)"
+#~ msgstr "Haitiane (Kreole Haitiane)"
+
+#~ msgid "Hungarian"
+#~ msgstr "Hungareze"
+
+#~ msgid "Armenian"
+#~ msgstr "Armene"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indoneziane"
+
+#~ msgid "Iloko"
+#~ msgstr "Iloko"
+
+#~ msgid "Icelandic"
+#~ msgstr "Islandisht"
+
+#~ msgid "Italian"
+#~ msgstr "Italisht"
+
+#~ msgid "Japanese"
+#~ msgstr "Japoneze"
+
+#~ msgid "Georgian"
+#~ msgstr "Gjeorgjiane"
+
+#~ msgid "Khmer"
+#~ msgstr "Khmere"
+
+#~ msgid "Kannada"
+#~ msgstr "Kannada"
+
+#~ msgid "Korean"
+#~ msgstr "Koreane"
+
+#~ msgid "Kashmiri"
+#~ msgstr "Kashmire"
+
+#~ msgid "Kurdish"
+#~ msgstr "Kurde"
+
+#~ msgid "Kirgyz"
+#~ msgstr "Kirgyze"
+
+#~ msgid "Latin"
+#~ msgstr "Latine"
+
+#~ msgid "Lao"
+#~ msgstr "Lao"
+
+#~ msgid "Lithuanian"
+#~ msgstr "Lituaneze"
+
+#~ msgid "Latvian"
+#~ msgstr "Letoneze"
+
+#~ msgid "Maithili"
+#~ msgstr "Maithili"
+
+#~ msgid "Macedonian"
+#~ msgstr "Maqedonishte"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malajalame"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongoliane"
+
+#~ msgid "Marathi"
+#~ msgstr "Marati"
+
+#~ msgid "Malay"
+#~ msgstr "Malaje"
+
+#~ msgid "Maltese"
+#~ msgstr "Maltë"
+
+#~ msgid "Burmese"
+#~ msgstr "Burmeze"
+
+#~ msgid "Norwegian Bokmål"
+#~ msgstr "Norvegjeze Bokmal"
+
+#~ msgid "Nepali"
+#~ msgstr "Nepaleze"
+
+#~ msgid "Dutch (Flemish)"
+#~ msgstr "Hollandishte (Flamande)"
+
+#~ msgid "Norwegian Nynorsk"
+#~ msgstr "Norvegjeze Nynorsk"
+
+#~ msgid "Norwegian"
+#~ msgstr "Norvegjeze"
+
+#~ msgid "Northern Sotho"
+#~ msgstr "Soto Veriore"
+
+#~ msgid "Oriya"
+#~ msgstr "Orija"
+
+#~ msgid "Panjabi (Punjabi)"
+#~ msgstr "Panxhabe (Punxhabi)"
+
+#~ msgid "Polish"
+#~ msgstr "Polake"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugeze"
+
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "Portugeze (Braziliane)"
+
+#~ msgid "Romanian"
+#~ msgstr "Rumune"
+
+#~ msgid "Russian"
+#~ msgstr "Ruse"
+
+#~ msgid "Sinhala"
+#~ msgstr "Sinhala"
+
+#~ msgid "Slovak"
+#~ msgstr "Slovake"
+
+#~ msgid "Slovenian"
+#~ msgstr "Slovene"
+
+#~ msgid "Albanian"
+#~ msgstr "Shqip"
+
+#~ msgid "Serbian"
+#~ msgstr "Serbe"
+
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbe (Latine)"
+
+#~ msgid "Sotho, Southern"
+#~ msgstr "Soto, Jugore"
+
+#~ msgid "Swedish"
+#~ msgstr "Suedeze"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamileze"
+
+#~ msgid "Telugu"
+#~ msgstr "Telugu"
+
+#~ msgid "Tajik"
+#~ msgstr "Taxhike"
+
+#~ msgid "Thai"
+#~ msgstr "Tailandeze"
+
+#~ msgid "Tagalog"
+#~ msgstr "Tagaloge"
+
+#~ msgid "Turkish"
+#~ msgstr "Turke"
+
+#~ msgid "Urdu"
+#~ msgstr "Urdu"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ukrainase"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnameze"
+
+#~ msgid "Wolof"
+#~ msgstr "Uolof"
+
+#~ msgid "Xhosa"
+#~ msgstr "Xhosa"
+
+#~ msgid "Chinese (China)"
+#~ msgstr "Kineze (Kinë)"
+
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "Kineze (Hong Kong)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Kineze (Taivan)"
+
+#~ msgid "Zulu"
+#~ msgstr "Zulu"
+
+#~ msgid ""
+#~ "Your file does not pass the correctness checks (msgfmt -c). Please run "
+#~ "this command on your system to see the errors. We couldn't send you an "
+#~ "email to preserve your work because you haven't registered an email "
+#~ "address. Please do so now to avoid such issues in the future."
+#~ msgstr ""
+#~ "Kartela juaj nuk e kalon provat e saktësisë (msgfmt -c). Ju lutem, që të "
+#~ "shihni gabimet, xhirojeni këtë urdhër te sistemi juaj. Nuk mundëm t'ju "
+#~ "dërgojmë një email e të ruanin punën tuaj, ngaqë nuk keni të regjistruar "
+#~ "ndonjë email. Ju lutem, bëjeni këtë tani, që të shmangen gjëra të tilla "
+#~ "në të ardhmen."
+
+#~ msgid "Error: Only the owner of a lock can remove it."
+#~ msgstr "Gabim: Vetëm i zoti i një dryni mund ta heqë atë."
+
+#~ msgid "Lock"
+#~ msgstr "Kyçe"
+
+#~ msgid "Locks"
+#~ msgstr "Dryna"
+
+#~ msgid "View complete action log"
+#~ msgstr "Shihni regjistrimin e plotë të veprimeve"
+
+#~ msgid "Requests for access to submit files"
+#~ msgstr "Kërkesa për hyrje për parashtrim kartelas"
+
+#~ msgid "By"
+#~ msgstr "Nga"
+
+#~ msgid "Add your comment as"
+#~ msgstr "Shtoni komentin tuaj si"
+
+#~ msgid "Say it!"
+#~ msgstr "Thuajeni!"
+
+#~ msgid "Unlock this file when you are finished working with it."
+#~ msgstr "Çkyçeni këtë kartelë, kur të keni mbaruar së punuari me të."
+
+#~ msgid ""
+#~ "User '%(owner)s' has locked this file indicating he's working with it."
+#~ msgstr ""
+#~ "Përdoruesi '%(owner)s' e ka kyçur këtë kartelë, për të treguar që po "
+#~ "merret me të."
 
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: qarkullimi %(release)s"
@@ -5392,9 +5697,6 @@ msgstr "Pasuesja"
 #~ msgid "Point to Point (IP):"
 #~ msgstr "Pikë më Pikë (IP):"
 
-#~ msgid "Inactive"
-#~ msgstr "Joveprues"
-
 #~ msgid "auto"
 #~ msgstr "auto"
 
@@ -6268,9 +6570,6 @@ msgstr "Pasuesja"
 #~ "Ju lutem jepni emrin për profilin. Emri mund të përmbajë vetëm gërma dhe "
 #~ "shifra."
 
-#~ msgid "_Activate"
-#~ msgstr "_Aktivizoje"
-
 #~ msgid "_Deactivate"
 #~ msgstr "_Çaktivizoje"
 
@@ -6399,10 +6698,6 @@ msgstr "Pasuesja"
 #, fuzzy
 #~ msgid "Auto _Select"
 #~ msgstr "Përzgjidh Tërë"
-
-#, fuzzy
-#~ msgid "Click to activate the selected profile"
-#~ msgstr "Klikim _njësh për aktivizim elementësh"
 
 #, fuzzy
 #~ msgid "Click to bring up the interface"

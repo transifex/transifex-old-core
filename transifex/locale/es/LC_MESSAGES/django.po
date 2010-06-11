@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex.0-7-x.django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-02 17:17+0000\n"
+"POT-Creation-Date: 2010-06-11 07:55+0000\n"
 "PO-Revision-Date: 2010-02-26 19:37-0300\n"
 "Last-Translator: Héctor Daniel Cabrera <logan@fedoraproject.org>\n"
 "Language-Team: Spanish <trans-es@lists.fedoraproject.org>\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Search for an username or leave it blank"
 msgstr "Busque un nombre de usuario o déjelo en blanco"
 
-#: actionlog/models.py:155
+#: actionlog/models.py:204
 msgid "log entry"
 msgstr "entrada de registro"
 
-#: actionlog/models.py:156
+#: actionlog/models.py:205
 msgid "log entries"
 msgstr "entradas de registro"
 
@@ -37,8 +37,8 @@ msgstr "entradas de registro"
 msgid "Date/time"
 msgstr "Fecha/Hora"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:74
-#: teams/models.py:110 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7 teams/models.py:76
+#: teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
 msgstr "Usuario"
 
@@ -54,9 +54,371 @@ msgstr "FORMATO_FECHAHORA"
 msgid "No history recorded yet."
 msgstr "Todavía no hay registro histórico."
 
+#: addons/charts/templates/charts/widget_snippet.html:61
+msgid "Image charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:65
+#: addons/charts/templates/charts/widget_snippet.html:94
+#: templates/userprofile/profile/location.html:22
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: addons/charts/templates/charts/widget_snippet.html:68
+msgid ""
+"Display your project's translation statistics on your own website as a "
+"simple image.\n"
+"                Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:70
+msgid "The chart will always reflect your live Transifex numbers."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:71
+#: addons/charts/templates/charts/widget_snippet.html:103
+msgid "Show code snippet for component:"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:73
+#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
+#: projects/models.py:299 projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: txcollections/migrations/0001_initial.py:23
+#: txcollections/migrations/0001_initial.py:41
+msgid "Hidden"
+msgstr "Oculto"
+
+#: addons/charts/templates/charts/widget_snippet.html:87
+msgid "Interactive charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:98
+msgid ""
+"Display your project's translation statistics on your own website as "
+"interactive chart.\n"
+"                This requires modifications to your homepage's HTML code."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:101
+msgid ""
+"By tweaking the code you can adjust verbosity, dimensions and colors of the "
+"chart"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:121
+msgid "Interactive and Image Charts"
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:122
+msgid ""
+"Sorry, but your project doesn't have any components with up-to-date "
+"statistics. \n"
+"You need to have at least one component with statistics to export charts "
+"from Transifex."
+msgstr ""
+
+#: addons/locks/handlers.py:58
+msgid ""
+"Couldn't lock file, this means that you can send files only for reviewing."
+msgstr ""
+
+#: addons/locks/models.py:65
+#, python-format
+msgid ""
+"User '%(user)s' has no permission to submit files for or coordinate  '%"
+"(pofile)s'"
+msgstr ""
+
+#: addons/locks/models.py:77
+#, python-format
+msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
+msgstr ""
+
+#: addons/locks/models.py:158
+#, python-format
+msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
+msgstr ""
+
+#: addons/locks/notifications.py:15
+msgid "Lock is expring"
+msgstr ""
+
+#: addons/locks/notifications.py:16
+msgid "when a lock for file is expiring"
+msgstr ""
+
+#: addons/locks/views.py:42
+msgid "Lock removed."
+msgstr "Candado removido."
+
+#: addons/locks/views.py:47 addons/locks/views.py:78
+#: projects/views/component.py:556
+msgid "Sorry, but you need to send a POST request."
+msgstr "Lo sentimos, pero usted tendrá que enviar una solicitud POST."
+
+#: addons/locks/views.py:72
+msgid "Lock created. Please don't forget to remove it when you're done."
+msgstr "Candado creado. Por favor no olvide removerlo cuando haya terminado."
+
+#: addons/locks/templates/pofile_lock.html:20
+#, python-format
+msgid "This file has been locked by user '%(owner)s'."
+msgstr ""
+
+#: addons/locks/templates/pofile_lock.html:22
+#, fuzzy
+msgid "Click on it to unlock the file."
+msgstr "Por favor ingrese un destino para cargar el archivo."
+
+#: addons/locks/templates/pofile_lock.html:24
+#, fuzzy
+msgid "Time left:"
+msgstr "Línea de tiempo"
+
+#: addons/locks/templates/pofile_lock.html:32
+#, python-format
+msgid ""
+"\n"
+"                Extend lock by %(hours)s hour.\n"
+"            "
+msgid_plural ""
+"\n"
+"                Extend lock by %(hours)s hours.\n"
+"            "
+msgstr[0] ""
+msgstr[1] ""
+
+#: addons/locks/templates/pofile_lock.html:46
+#, fuzzy
+msgid "Lock and download this file to notify others you're working with it."
+msgstr ""
+"Bloquear este archivo para notificar a otros que estás trabajando con él."
+
+#: addons/locks/templates/pofile_lock.html:51
+msgid "This file is unlocked. Most likely no one is working with it right now."
+msgstr ""
+"Este archivo está desbloqueado. Lo más probable sea que actualmente nadie se "
+"encuentre trabajando en él."
+
+#: addons/locks/templates/locks/component.html:9
+#: translations/templates/component_submit.html:31
+msgid "This file is locked by someone else."
+msgstr ""
+
+#: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
+#, python-format
+msgid ""
+"\n"
+"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
+"a> is about to expire on %(expires)s\n"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:35
+msgid "You are only allowed to upload PO files (*.po)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:39
+msgid "You have submitted empty file!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:48
+msgid "Uploaded file contains DOS newlines (\\r)!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:59
+#, python-format
+msgid "Uploaded file header doesn't have '%s' field!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:65
+msgid "Only UTF-8 encoded files are allowed!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:69
+msgid "Uploaded file doesn't contain any translated entries!"
+msgstr ""
+
+#: addons/presubmit_checks/handlers.py:86
+#, fuzzy
+msgid "Your file has been e-mailed to you to avoid loss of any work."
+msgstr ""
+"Su archivo no ha superado las pruebas de verificación (msgfmt -c). Ha sido "
+"enviado por correo electrónico a la dirección que ha registrado para evitar "
+"perder algún dato. "
+
+#: addons/presubmit_checks/handlers.py:90
+msgid ""
+"We couldn't send you an email to preserve your work because you haven't "
+"registered an email address."
+msgstr ""
+
+#: addons/repowatch/models.py:28
+#, python-format
+msgid "Unable to add watch for path %r"
+msgstr "No se puede agregar la función monitorear para la ruta %r"
+
+#: addons/repowatch/models.py:99
+msgid "watch"
+msgstr "mirar"
+
+#: addons/repowatch/models.py:100
+msgid "watches"
+msgstr "vistas"
+
+#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
+msgid "Must use POST to activate"
+msgstr "Se debe utilizar POST para activar"
+
+#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
+msgid "Notification is not enabled"
+msgstr "La notificación no está habilitada"
+
+#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
+msgid "Watch it"
+msgstr "Mirar esto"
+
+#: addons/repowatch/views.py:65
+#, fuzzy
+msgid "Stop watching"
+msgstr "Dejar de ver esto"
+
+#: addons/repowatch/views.py:100
+msgid "Watch this project"
+msgstr "Mirar este proyecto"
+
+#: addons/repowatch/views.py:113
+msgid "Stop watching this project"
+msgstr "Dejar de monitorear este proyecto"
+
+#: addons/repowatch/templates/watch_toggle.html:5
+msgid "Stop watching it"
+msgstr "Dejar de ver esto"
+
+#: addons/repowatch/templates/repowatch/project_detail.html:8
+#: templates/projects/project_detail.html:52
+msgid "Watch:"
+msgstr "Mirar:"
+
+#: addons/timeline/templates/timeline/additional_account_links.html:3
+#: templates/userprofile/profile/overview.html:105
+msgid "My Timeline"
+msgstr "Mi línea de tiempo"
+
+#: addons/timeline/templates/timeline/project.html:9
+#: addons/timeline/templates/timeline/timeline_project.html:15
+#: addons/timeline/templates/timeline/timeline_project.html:17
+#: addons/timeline/templates/timeline/timeline_user.html:13
+#: templates/projects/project_timeline.html:12
+#: templates/projects/project_timeline.html:14
+#: templates/txcommon/user_timeline.html:12
+msgid "Timeline"
+msgstr "Línea de tiempo"
+
+#: addons/timeline/templates/timeline/timeline_base.html:12
+#: templates/timeline.html:11
+msgid "Filter results"
+msgstr "Resultados de filtro"
+
+#: addons/timeline/templates/timeline/timeline_base.html:18
+#: templates/timeline.html:17
+msgid "Go"
+msgstr "Ir"
+
+#: addons/timeline/templates/timeline/timeline_base.html:25
+#: templates/timeline.html:24 templates/projects/component_detail.html:207
+#: templates/projects/project_detail.html:119
+#: templates/teams/team_detail.html:134
+msgid "None available"
+msgstr "Ninguno disponible"
+
+#: addons/timeline/templates/timeline/timeline_base.html:29
+#: templates/timeline.html:28
+#, python-format
+msgid ""
+"\n"
+"  The query returned %(counter)s result\n"
+msgid_plural ""
+"\n"
+"  The query returned %(counter)s results\n"
+msgstr[0] ""
+"\n"
+"  La cnsulta devolvió %(counter)s resultado\n"
+msgstr[1] ""
+"\n"
+"  La cnsulta devolvió %(counter)s resultados\n"
+
+#: addons/timeline/templates/timeline/timeline_base.html:44
+#: languages/models.py:39 languages/migrations/0001_initial.py:14
+#: projects/models.py:152 projects/models.py:278 projects/models.py:541
+#: projects/migrations/0001_initial.py:20
+#: projects/migrations/0001_initial.py:39 releases/models.py:25
+#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/reviews/review_list.html:42
+#: txcollections/migrations/0001_initial.py:14
+#: txcollections/migrations/0001_initial.py:34
+msgid "Description"
+msgstr "Descripción"
+
+#: addons/timeline/templates/timeline/timeline_project.html:23
+#: addons/timeline/templates/timeline/timeline_user.html:23
+#: templates/projects/project_timeline.html:20
+#: templates/txcommon/user_timeline.html:22
+#, python-format
+msgid ""
+"\n"
+" %(project_name)s Timeline\n"
+" "
+msgstr ""
+"\n"
+" %(project_name)s Línea de tiempo\n"
+" "
+
+#: addons/timeline/templates/timeline/timeline_user.html:16
+#: templates/simpleauth/base_profile.html:4
+#: templates/simpleauth/base_profile.html:7
+#: templates/simpleauth/public_profile.html:4
+#: templates/simpleauth/public_profile.html:5
+#: templates/simpleauth/settings.html:5
+#: templates/txcommon/user_timeline.html:15
+#: templates/userprofile/base_2col.html:3
+#: templates/userprofile/profile/public.html:28
+msgid "Profile"
+msgstr "Perfil"
+
+#: addons/widgets/templates/project_widgets.html:12
+#: addons/widgets/templates/project_widgets.html:14
+#: addons/widgets/templates/widgets/project.html:7
+msgid "Widgets"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:48
+msgid "Widgets, buttons, etc"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:49
+msgid ""
+"Here are some widgets, buttons and other cool stuff you can add to your "
+"homepage!"
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:54
+#, fuzzy
+msgid "Userbars"
+msgstr "Usuario"
+
+#: addons/widgets/templates/project_widgets.html:63
+msgid "You can insert userbars to forums, e-mail signatures etc."
+msgstr ""
+
+#: addons/widgets/templates/project_widgets.html:64
+msgid "Show code snippet for userbar:"
+msgstr ""
+
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:85 projects/models.py:199 projects/models.py:458
+#: projects/models.py:150 projects/models.py:276 projects/models.py:539
 #: projects/migrations/0001_initial.py:31
 #: projects/migrations/0001_initial.py:53 releases/models.py:23
 #: templates/userprofile/profile/public.html:60
@@ -104,17 +466,6 @@ msgstr "Idiomas en %(site_name)s"
 msgid "The languages spoken on %s."
 msgstr "Los idomas hablados en %s."
 
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:87 projects/models.py:201 projects/models.py:460
-#: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
-#: templates/reviews/review_list.html:43
-#: txcollections/migrations/0001_initial.py:14
-#: txcollections/migrations/0001_initial.py:34
-msgid "Description"
-msgstr "Descripción"
-
 #: languages/models.py:40 languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "Código"
@@ -148,426 +499,6 @@ msgstr "idioma"
 #: languages/models.py:64 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "idiomas"
-
-#: languages/management/commands/txcreatelanguages.py:27
-msgid "Afrikaans"
-msgstr "Afrikáans"
-
-#: languages/management/commands/txcreatelanguages.py:42
-msgid "Amharic"
-msgstr "Amárico "
-
-#: languages/management/commands/txcreatelanguages.py:48
-msgid "Arabic"
-msgstr "Árabe"
-
-#: languages/management/commands/txcreatelanguages.py:56
-msgid "Assamese"
-msgstr "Asamés"
-
-#: languages/management/commands/txcreatelanguages.py:64
-msgid "Asturian"
-msgstr "Asturiano"
-
-#: languages/management/commands/txcreatelanguages.py:73
-msgid "Azerbaijani"
-msgstr "Azerbaiyán"
-
-#: languages/management/commands/txcreatelanguages.py:81
-msgid "Balochi"
-msgstr "Balochi"
-
-#: languages/management/commands/txcreatelanguages.py:88
-msgid "Belarusian"
-msgstr "Bielorruso"
-
-#: languages/management/commands/txcreatelanguages.py:97
-msgid "Bulgarian"
-msgstr "Búlgaro"
-
-#: languages/management/commands/txcreatelanguages.py:106
-msgid "Bengali"
-msgstr "Bengalí"
-
-#: languages/management/commands/txcreatelanguages.py:114
-msgid "Bengali (India)"
-msgstr "Bengalí (India)"
-
-#: languages/management/commands/txcreatelanguages.py:122
-msgid "Tibetan"
-msgstr "Tibetano"
-
-#: languages/management/commands/txcreatelanguages.py:131
-msgid "Bosnian"
-msgstr "Bosnio"
-
-#: languages/management/commands/txcreatelanguages.py:140
-msgid "Catalan (Valencian)"
-msgstr "Catalán (Valencia)"
-
-#: languages/management/commands/txcreatelanguages.py:149
-msgid "Czech"
-msgstr "Checo"
-
-#: languages/management/commands/txcreatelanguages.py:158
-msgid "Welsh"
-msgstr "Galés"
-
-#: languages/management/commands/txcreatelanguages.py:167
-msgid "Danish"
-msgstr "Danés "
-
-#: languages/management/commands/txcreatelanguages.py:176
-msgid "German"
-msgstr "Alemán"
-
-#: languages/management/commands/txcreatelanguages.py:184
-msgid "Swiss German"
-msgstr "Alemán Suizo"
-
-#: languages/management/commands/txcreatelanguages.py:193
-msgid "Dzongkha"
-msgstr "Dzongkha"
-
-#: languages/management/commands/txcreatelanguages.py:202
-msgid "Greek"
-msgstr "Griego"
-
-#: languages/management/commands/txcreatelanguages.py:209
-msgid "English"
-msgstr "Inglés"
-
-#: languages/management/commands/txcreatelanguages.py:217
-msgid "English (United Kingdom)"
-msgstr "Inglés (Reino Unido)"
-
-#: languages/management/commands/txcreatelanguages.py:225
-msgid "English (United States)"
-msgstr "Inglés (Estados Unidos)"
-
-#: languages/management/commands/txcreatelanguages.py:233
-msgid "English (South Africa)"
-msgstr "Inglés (Sudáfrica)"
-
-#: languages/management/commands/txcreatelanguages.py:240
-msgid "Esperanto"
-msgstr "Esperanto"
-
-#: languages/management/commands/txcreatelanguages.py:249
-msgid "Spanish (Castilian)"
-msgstr "Español (Castellano)"
-
-#: languages/management/commands/txcreatelanguages.py:257
-msgid "Spanish (Argentinian)"
-msgstr "Español (Argentino)"
-
-#: languages/management/commands/txcreatelanguages.py:265
-msgid "Spanish (Mexican)"
-msgstr "Español (Mexicano)"
-
-#: languages/management/commands/txcreatelanguages.py:274
-msgid "Estonian"
-msgstr "Estonio"
-
-#: languages/management/commands/txcreatelanguages.py:283
-msgid "Basque"
-msgstr "Vasco"
-
-#: languages/management/commands/txcreatelanguages.py:291
-msgid "Persian"
-msgstr "Persa"
-
-#: languages/management/commands/txcreatelanguages.py:300
-msgid "Finnish"
-msgstr "Finlandés"
-
-#: languages/management/commands/txcreatelanguages.py:315
-msgid "French"
-msgstr "Francés"
-
-#: languages/management/commands/txcreatelanguages.py:324
-msgid "Friulian"
-msgstr "Friulano"
-
-#: languages/management/commands/txcreatelanguages.py:333
-msgid "Western Frisian"
-msgstr "Frisiano occidental"
-
-#: languages/management/commands/txcreatelanguages.py:342
-msgid "Irish"
-msgstr "Irlandés"
-
-#: languages/management/commands/txcreatelanguages.py:351
-msgid "Galician"
-msgstr "Gallego"
-
-#: languages/management/commands/txcreatelanguages.py:360
-msgid "Gujarati"
-msgstr "Gujarati"
-
-#: languages/management/commands/txcreatelanguages.py:368
-msgid "Hebrew"
-msgstr "Hebreo"
-
-#: languages/management/commands/txcreatelanguages.py:377
-msgid "Hindi"
-msgstr "Hindi"
-
-#: languages/management/commands/txcreatelanguages.py:386
-msgid "Croatian"
-msgstr "Croata"
-
-#: languages/management/commands/txcreatelanguages.py:394
-msgid "Haitian (Haitian Creole)"
-msgstr "Criollo haitiano"
-
-#: languages/management/commands/txcreatelanguages.py:403
-msgid "Hungarian"
-msgstr "Húngaro"
-
-#: languages/management/commands/txcreatelanguages.py:411
-msgid "Armenian"
-msgstr "Armenio"
-
-#: languages/management/commands/txcreatelanguages.py:418
-msgid "Indonesian"
-msgstr "Indonesio"
-
-#: languages/management/commands/txcreatelanguages.py:426
-msgid "Iloko"
-msgstr "Ilocano"
-
-#: languages/management/commands/txcreatelanguages.py:432
-msgid "Icelandic"
-msgstr "Islandés"
-
-#: languages/management/commands/txcreatelanguages.py:441
-msgid "Italian"
-msgstr "Italiano"
-
-#: languages/management/commands/txcreatelanguages.py:450
-msgid "Japanese"
-msgstr "Japonés"
-
-#: languages/management/commands/txcreatelanguages.py:459
-msgid "Georgian"
-msgstr "Georgiano"
-
-#: languages/management/commands/txcreatelanguages.py:467
-msgid "Khmer"
-msgstr "Khmer "
-
-#: languages/management/commands/txcreatelanguages.py:475
-msgid "Kannada"
-msgstr "Canarés"
-
-#: languages/management/commands/txcreatelanguages.py:482
-msgid "Korean"
-msgstr "Coreano"
-
-#: languages/management/commands/txcreatelanguages.py:490
-msgid "Kashmiri"
-msgstr "Cachemira "
-
-#: languages/management/commands/txcreatelanguages.py:499
-msgid "Kurdish"
-msgstr "Kurdo"
-
-#: languages/management/commands/txcreatelanguages.py:506
-msgid "Kirgyz"
-msgstr "Kirgyz"
-
-#: languages/management/commands/txcreatelanguages.py:513
-msgid "Latin"
-msgstr "Latín"
-
-#: languages/management/commands/txcreatelanguages.py:527
-msgid "Lao"
-msgstr "Lao"
-
-#: languages/management/commands/txcreatelanguages.py:534
-msgid "Lithuanian"
-msgstr "Lituano"
-
-#: languages/management/commands/txcreatelanguages.py:543
-msgid "Latvian"
-msgstr "Letón"
-
-#: languages/management/commands/txcreatelanguages.py:551
-msgid "Maithili"
-msgstr "Maithili"
-
-#: languages/management/commands/txcreatelanguages.py:557
-msgid "Macedonian"
-msgstr "Macedonio"
-
-#: languages/management/commands/txcreatelanguages.py:563
-msgid "Malayalam"
-msgstr "Malabar"
-
-#: languages/management/commands/txcreatelanguages.py:577
-msgid "Mongolian"
-msgstr "Mongol"
-
-#: languages/management/commands/txcreatelanguages.py:585
-msgid "Marathi"
-msgstr "Maratí"
-
-#: languages/management/commands/txcreatelanguages.py:593
-msgid "Malay"
-msgstr "Malayo"
-
-#: languages/management/commands/txcreatelanguages.py:602
-msgid "Maltese"
-msgstr "Maltés"
-
-#: languages/management/commands/txcreatelanguages.py:610
-msgid "Burmese"
-msgstr "Birmano"
-
-#: languages/management/commands/txcreatelanguages.py:622
-msgid "Norwegian Bokmål"
-msgstr "Noruego Bokmål"
-
-#: languages/management/commands/txcreatelanguages.py:630
-msgid "Nepali"
-msgstr "Nepalés"
-
-#: languages/management/commands/txcreatelanguages.py:639
-msgid "Dutch (Flemish)"
-msgstr "Neerlandés (Flamenco) "
-
-#: languages/management/commands/txcreatelanguages.py:648
-msgid "Norwegian Nynorsk"
-msgstr "Noruego Nynorsk "
-
-#: languages/management/commands/txcreatelanguages.py:656
-msgid "Norwegian"
-msgstr "Noruego"
-
-#: languages/management/commands/txcreatelanguages.py:663
-msgid "Northern Sotho"
-msgstr "Sotho del Norte"
-
-#: languages/management/commands/txcreatelanguages.py:672
-msgid "Oriya"
-msgstr "Oriya"
-
-#: languages/management/commands/txcreatelanguages.py:680
-msgid "Panjabi (Punjabi)"
-msgstr "Panjabi (Punjabi)"
-
-#: languages/management/commands/txcreatelanguages.py:694
-msgid "Polish"
-msgstr "Polaco"
-
-#: languages/management/commands/txcreatelanguages.py:711
-msgid "Portuguese"
-msgstr "Portugués"
-
-#: languages/management/commands/txcreatelanguages.py:720
-msgid "Portuguese (Brazilian)"
-msgstr "Portugués (Brasileño)"
-
-#: languages/management/commands/txcreatelanguages.py:729
-msgid "Romanian"
-msgstr "Rumano"
-
-#: languages/management/commands/txcreatelanguages.py:738
-msgid "Russian"
-msgstr "Ruso"
-
-#: languages/management/commands/txcreatelanguages.py:746
-msgid "Sinhala"
-msgstr "Cingalés"
-
-#: languages/management/commands/txcreatelanguages.py:753
-msgid "Slovak"
-msgstr "Eslovaco "
-
-#: languages/management/commands/txcreatelanguages.py:762
-msgid "Slovenian"
-msgstr "Esloveno"
-
-#: languages/management/commands/txcreatelanguages.py:771
-msgid "Albanian"
-msgstr "Albanés"
-
-#: languages/management/commands/txcreatelanguages.py:780
-msgid "Serbian"
-msgstr "Serbio"
-
-#: languages/management/commands/txcreatelanguages.py:788
-msgid "Serbian (Latin)"
-msgstr "Serbio (Latín)"
-
-#: languages/management/commands/txcreatelanguages.py:798
-msgid "Sotho, Southern"
-msgstr "Sotho del Sur"
-
-#: languages/management/commands/txcreatelanguages.py:807
-msgid "Swedish"
-msgstr "Sueco"
-
-#: languages/management/commands/txcreatelanguages.py:816
-msgid "Tamil"
-msgstr "Tamil"
-
-#: languages/management/commands/txcreatelanguages.py:824
-msgid "Telugu"
-msgstr "Telugu"
-
-#: languages/management/commands/txcreatelanguages.py:830
-msgid "Tajik"
-msgstr "Tayiko (Persa)"
-
-#: languages/management/commands/txcreatelanguages.py:836
-msgid "Thai"
-msgstr " Tailandés"
-
-#: languages/management/commands/txcreatelanguages.py:842
-msgid "Tagalog"
-msgstr "Tagalo"
-
-#: languages/management/commands/txcreatelanguages.py:855
-msgid "Turkish"
-msgstr "Turco"
-
-#: languages/management/commands/txcreatelanguages.py:863
-msgid "Urdu"
-msgstr "Urdu"
-
-#: languages/management/commands/txcreatelanguages.py:870
-msgid "Ukrainian"
-msgstr "Ucraniano"
-
-#: languages/management/commands/txcreatelanguages.py:885
-msgid "Vietnamese"
-msgstr "Vietnamita"
-
-#: languages/management/commands/txcreatelanguages.py:893
-msgid "Wolof"
-msgstr "Wolof o Volofo"
-
-#: languages/management/commands/txcreatelanguages.py:906
-msgid "Xhosa"
-msgstr "Xhosa"
-
-#: languages/management/commands/txcreatelanguages.py:915
-msgid "Chinese (China)"
-msgstr "Chino (China)"
-
-#: languages/management/commands/txcreatelanguages.py:925
-msgid "Chinese (Hong Kong)"
-msgstr "Chino (Hong Kong)"
-
-#: languages/management/commands/txcreatelanguages.py:935
-msgid "Chinese (Taiwan)"
-msgstr "Chino (Taiwan)"
-
-#: languages/management/commands/txcreatelanguages.py:944
-msgid "Zulu"
-msgstr "Zulú"
 
 #: projects/feeds.py:16
 #, python-format
@@ -613,20 +544,72 @@ msgstr ""
 "Estadísticas de traducción para el idioma %(lang)s del lanzamiento %(release)"
 "s."
 
-#: projects/forms.py:15 txpermissions/forms.py:19
+#: projects/forms.py:18 txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "Buscar el nombre de un usuario"
 
-#: projects/forms.py:35 projects/models.py:214
+#: projects/forms.py:55
+msgid "Free for all"
+msgstr ""
+
+#: projects/forms.py:56
+msgid ""
+"Allow any logged-in user to submit files to my\n"
+"                              project. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Imagine</a> all the "
+"people, \n"
+"                              sharing all the world. Recommended for quick \n"
+"                              translations, and when a pre-commit review \n"
+"                              process is in place, e.g. when contributions "
+"are\n"
+"                              submitted by email or to a separate branch."
+msgstr ""
+
+#: projects/forms.py:66
+#, fuzzy
+msgid "Limited access"
+msgstr "Acceso denegado"
+
+#: projects/forms.py:67
+msgid ""
+"Give access to specific people. Translations \n"
+"                              teams will have access to their language's "
+"files\n"
+"                              only, and global writers will have access to "
+"all\n"
+"                              translation files. Recommended for most \n"
+"                              projects."
+msgstr ""
+
+#: projects/forms.py:75
+#, fuzzy
+msgid "Outsourced access"
+msgstr "Acceso denegado"
+
+#: projects/forms.py:76
+msgid ""
+"Re-use another project's teams and writers by \n"
+"                              trusting access control to that project. If "
+"a \n"
+"                              person can contribute to that project, it "
+"can \n"
+"                              contribute to this one as well. Recommended "
+"for \n"
+"                              non-upstream projects such as distribution \n"
+"                              packages, desktop environment modules, etc."
+msgstr ""
+
+#: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "Una expresión regular para filtrar archivos expuestos. Ej: 'po/.*'"
 
-#: projects/forms.py:52 projects/models.py:219
+#: projects/forms.py:151 projects/models.py:296
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "Enviar a"
 
-#: projects/forms.py:53
+#: projects/forms.py:152
 msgid ""
 "Choose how this component should handle submissions of files.The options "
 "here are available based on the component type"
@@ -634,11 +617,21 @@ msgstr ""
 "Seleccionar cómo este componente debe manejar envíos de archivos. Las "
 "opciones aquí están disponibles basadas en el tipo de componente "
 
-#: projects/forms.py:68
+#: projects/forms.py:167
 msgid "Search for a component"
 msgstr "Buscar un componente"
 
-#: projects/models.py:82 projects/models.py:196 projects/models.py:455
+#: projects/models.py:143
+msgid "Private"
+msgstr ""
+
+#: projects/models.py:144
+msgid ""
+"A private project is visible only by you and your team.Moreover, private "
+"projects are limited according to billingplans for the user account."
+msgstr ""
+
+#: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
 #: projects/migrations/0001_initial.py:38 releases/models.py:20
 #: txcollections/migrations/0001_initial.py:13
@@ -648,7 +641,7 @@ msgstr "Buscar un componente"
 msgid "Slug"
 msgstr "Slug"
 
-#: projects/models.py:83 projects/models.py:197 projects/models.py:456
+#: projects/models.py:148 projects/models.py:274 projects/models.py:537
 #: releases/models.py:21
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
@@ -657,15 +650,15 @@ msgstr ""
 "Una breve etiqueta que se utilizará en la URL, la cual sólo contiene letras, "
 "números, guiones o subrayado."
 
-#: projects/models.py:86 projects/models.py:200 releases/models.py:24
+#: projects/models.py:151 projects/models.py:277 releases/models.py:24
 msgid "A short name or very short description."
 msgstr "Un nombre o descripción corta."
 
-#: projects/models.py:88 projects/models.py:202
+#: projects/models.py:153 projects/models.py:279
 msgid "A sentence or two describing the object (optional)."
 msgstr "Una frase o dos describiendo el objeto (opcional)."
 
-#: projects/models.py:89 projects/models.py:203 projects/models.py:463
+#: projects/models.py:154 projects/models.py:280 projects/models.py:544
 #: projects/migrations/0001_initial.py:30
 #: projects/migrations/0001_initial.py:45 releases/models.py:27
 #: txcollections/migrations/0001_initial.py:25
@@ -673,55 +666,47 @@ msgstr "Una frase o dos describiendo el objeto (opcional)."
 msgid "Long description"
 msgstr "Descripción larga"
 
-#: projects/models.py:91 projects/models.py:205
+#: projects/models.py:156 projects/models.py:282
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Una descripción extensa (opcional). Use la sintaxis de Markdown."
 
-#: projects/models.py:92 projects/migrations/0001_initial.py:29
+#: projects/models.py:157 projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
 msgstr "Página Principal"
 
-#: projects/models.py:93 projects/migrations/0001_initial.py:18
+#: projects/models.py:158 projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "Suscripción"
 
-#: projects/models.py:94
+#: projects/models.py:159
 msgid "An RSS feed with updates to the project."
 msgstr "Una suscripción RSS con actualizaciones del proyecto."
 
-#: projects/models.py:95 projects/migrations/0001_initial.py:27
+#: projects/models.py:160 projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "Rastreador de errores"
 
-#: projects/models.py:96
+#: projects/models.py:161
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 "La URL para el sitio web de rastreo de errores y tickets (Bugzilla, Trac, "
 "etc.)"
 
-#: projects/models.py:98
+#: projects/models.py:163
 #: projects/migrations/0003_add_anyone_submit_field.py:12
 msgid "Anyone can submit"
 msgstr "Cualquiera puede enviar"
 
-#: projects/models.py:100
+#: projects/models.py:165
 msgid "Can anyone submit files to this project?"
 msgstr "¿Alguien puede enviar archivos a este proyecto?"
 
-#: projects/models.py:102 projects/models.py:222
-#: projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
-#: txcollections/migrations/0001_initial.py:23
-#: txcollections/migrations/0001_initial.py:41
-msgid "Hidden"
-msgstr "Oculto"
-
-#: projects/models.py:103 projects/models.py:223 releases/models.py:42
+#: projects/models.py:168 projects/models.py:300 releases/models.py:42
 msgid "Hide this object from the list view?"
 msgstr "¿Ocultar este objeto de la vista de lista?"
 
-#: projects/models.py:104 projects/models.py:224
+#: projects/models.py:169 projects/models.py:301
 #: projects/migrations/0001_initial.py:24
 #: projects/migrations/0001_initial.py:41 releases/models.py:43
 #: txcollections/migrations/0001_initial.py:17
@@ -729,19 +714,36 @@ msgstr "¿Ocultar este objeto de la vista de lista?"
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: projects/models.py:105 projects/models.py:225 releases/models.py:44
+#: projects/models.py:170 projects/models.py:302 releases/models.py:44
 msgid "Enable this object or disable its use?"
 msgstr "¿Activar o desactivar el uso de este objeto?"
 
-#: projects/models.py:109 projects/migrations/0001_initial.py:23
+#: projects/models.py:174 projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: projects/models.py:112
+#: projects/models.py:177
 msgid "Maintainers"
 msgstr "Encargados del proyecto"
 
-#: projects/models.py:116 projects/models.py:234 projects/models.py:485
+#: projects/models.py:181
+#, fuzzy
+msgid "Outsource project"
+msgstr "Eliminar proyecto"
+
+#: projects/models.py:182
+msgid "Project that owns the access control of this project."
+msgstr ""
+
+#: projects/models.py:185
+msgid "Owner"
+msgstr ""
+
+#: projects/models.py:186
+msgid "The user who owns this project."
+msgstr ""
+
+#: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
 #: projects/migrations/0001_initial.py:47 releases/models.py:49
 #: txcollections/migrations/0001_initial.py:22
@@ -749,110 +751,110 @@ msgstr "Encargados del proyecto"
 msgid "HTML Description"
 msgstr "Descripción HTML"
 
-#: projects/models.py:118 projects/models.py:236 projects/models.py:487
+#: projects/models.py:191 projects/models.py:313 projects/models.py:568
 #: releases/models.py:50
 msgid "Description in HTML."
 msgstr "Descripción en HTML."
 
-#: projects/models.py:124
+#: projects/models.py:201
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Proyecto: %s>"
 
-#: projects/models.py:127
+#: projects/models.py:204
 msgid "project"
 msgstr "proyecto"
 
-#: projects/models.py:128 templates/projects/project_list.html:18
+#: projects/models.py:205 templates/projects/project_list.html:18
 msgid "projects"
 msgstr "proyectos"
 
-#: projects/models.py:206 projects/migrations/0001_initial.py:52
+#: projects/models.py:283 projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "Idioma Fuente"
 
-#: projects/models.py:207
+#: projects/models.py:284
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "El idioma fuente de este componente, ej. 'en', 'pt_BR', 'el'."
 
-#: projects/models.py:209 projects/migrations/0001_initial.py:42
+#: projects/models.py:286 projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "Tipo I18n"
 
-#: projects/models.py:211
+#: projects/models.py:288
 #, python-format
 msgid "The type of i18n support for the source code (%s)"
 msgstr "El tipo de soporte i18n para el código fuente (%s)"
 
-#: projects/models.py:213 projects/migrations/0001_initial.py:43
+#: projects/models.py:290 projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "Filtro de archivo"
 
-#: projects/models.py:216 projects/migrations/0001_initial.py:51
+#: projects/models.py:293 projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "Permite envío"
 
-#: projects/models.py:218
+#: projects/models.py:295
 msgid "Does this module repository allow write access?"
 msgstr "¿Este repositorio de módulo permite acceso de escritura?"
 
-#: projects/models.py:228 projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "¿Calcular estadísticas?"
 
-#: projects/models.py:229
+#: projects/models.py:306
 msgid "Should statistics be calculated for this component?"
 msgstr "¿Se deben calcular las estadísticas para este componente?"
 
-#: projects/models.py:239 projects/models.py:490
-#: projects/migrations/0001_initial.py:46 teams/models.py:25
-#: teams/models.py:67
+#: projects/models.py:316 projects/models.py:571
+#: projects/migrations/0001_initial.py:46 teams/models.py:27
+#: teams/models.py:69
 msgid "Project"
 msgstr "Proyecto"
 
-#: projects/models.py:240 projects/migrations/0001_initial.py:37
+#: projects/models.py:317 projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "Unidad"
 
-#: projects/models.py:261
+#: projects/models.py:338
 #, python-format
 msgid "<Component: %s>"
 msgstr "<Componente: %s>"
 
-#: projects/models.py:265
+#: projects/models.py:342
 msgid "component"
 msgstr "componente"
 
-#: projects/models.py:266 templates/projects/component_list.html:16
+#: projects/models.py:343 templates/projects/component_list.html:16
 msgid "components"
 msgstr "componente"
 
-#: projects/models.py:459
+#: projects/models.py:540
 msgid "A string like a name or very short description."
 msgstr "Una cadena como un nombre, o una descripción muy breve."
 
-#: projects/models.py:462 releases/models.py:26
+#: projects/models.py:543 releases/models.py:26
 msgid "A sentence or two describing the object."
 msgstr "Una frase o dos describiendo el objeto."
 
-#: projects/models.py:465 releases/models.py:28
+#: projects/models.py:546 releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "Usar sintaxis Markdown."
 
-#: projects/models.py:468 releases/models.py:31
+#: projects/models.py:549 releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
 msgstr "Fecha de lanzamiento"
 
-#: projects/models.py:470 releases/models.py:32
+#: projects/models.py:551 releases/models.py:32
 msgid "When this release will be available."
 msgstr "Cuándo esta versión estará disponible."
 
-#: projects/models.py:471 releases/models.py:33
+#: projects/models.py:552 releases/models.py:33
 msgid "String freeze date"
 msgstr "Fecha de congelamiento de cadena"
 
-#: projects/models.py:473
+#: projects/models.py:554
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
@@ -860,12 +862,12 @@ msgstr ""
 "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o "
 "modificar cadenas que afecten las  traducciones)."
 
-#: projects/models.py:475 releases/models.py:36
+#: projects/models.py:556 releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
 msgstr "Fecha de congelamiento del desarrollo"
 
-#: projects/models.py:477 releases/models.py:37
+#: projects/models.py:558 releases/models.py:37
 msgid ""
 "The last date packages from this release can be built from the developers. "
 "Translations sent after this date will not be included in the released "
@@ -875,36 +877,41 @@ msgstr ""
 "desde los desarrolladores. Las traducciones enviadas después de esta fecha "
 "no serán incluidas en esta versión."
 
-#: projects/models.py:492
+#: projects/models.py:573
 msgid "Components"
 msgstr "Componentes"
 
-#: projects/models.py:499
+#: projects/models.py:580
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<Lanzamiento: %(rel)s (Project %(proj)s)>"
 
-#: projects/models.py:517 releases/models.py:54
+#: projects/models.py:598 releases/models.py:54
 msgid "release"
 msgstr "lanzamiento"
 
-#: projects/models.py:518 releases/models.py:55
+#: projects/models.py:599 releases/models.py:55
 #: templates/languages/language_detail.html:18
-#: templates/projects/release_list.html:15
+#: templates/projects/release_list.html:14
 msgid "releases"
 msgstr "lanzamientos"
 
-#: projects/permissions/project.py:21
+#: projects/permissions/project.py:50
 msgid "Is allowed to maintain this project"
 msgstr "Está permitido mantener este proyecto"
 
-#: projects/permissions/project.py:35
+#: projects/permissions/project.py:64
 msgid "Is allowed to coordinate a team project"
 msgstr "Está permitido coordinar un proyecto en equipo"
 
-#: projects/permissions/project.py:81
+#: projects/permissions/project.py:103
 msgid "Is allowed to submit file to this project"
 msgstr "Está permitido enviar archivo a este proyecto"
+
+#: projects/permissions/project.py:117
+#, fuzzy
+msgid "Is allowed to browse this private project"
+msgstr "Está permitido mantener este proyecto"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -914,7 +921,7 @@ msgstr "Traducido:"
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -931,12 +938,12 @@ msgstr "Sin Traducir:"
 msgid "Total:"
 msgstr "Total:"
 
-#: projects/views/component.py:239 projects/views/project.py:138
+#: projects/views/component.py:246 projects/views/project.py:148
 #, python-format
 msgid "The %s was deleted."
 msgstr "El %s fue eliminado."
 
-#: projects/views/component.py:274
+#: projects/views/component.py:282
 msgid ""
 "The file filter of this intltool POT-based component does not  seem to allow "
 "the POTFILES.in file. Please fix it."
@@ -944,7 +951,7 @@ msgstr ""
 "El filtro de archivo de este componente basado en intltool POT no parece "
 "aceptar los POTFILES. en archivo. Por favor corríjalo."
 
-#: projects/views/component.py:281
+#: projects/views/component.py:289
 msgid ""
 "There is no 'pot' directory named in the set of files of this Publican like "
 "component. Maybe its file filter is not allowing access to it."
@@ -952,36 +959,36 @@ msgstr ""
 "No hay directorio 'pot' en el conjunto de archivos de este componente "
 "Publican. Quizás su filtro de archivo no está permitiendo acceso a éste."
 
-#: projects/views/component.py:289
+#: projects/views/component.py:302
 msgid "This component is not configured for statistics calculation."
 msgstr ""
 "Este componente no está configurado para realizar cálculos estadísticos."
 
-#: projects/views/component.py:372
+#: projects/views/component.py:388
 msgid "This component does  not allow write access."
 msgstr "Este componente no permite acceso a escritura."
 
-#: projects/views/component.py:380
+#: projects/views/component.py:396
 msgid "Please select a file from your system to be uploaded."
 msgstr "Por favor, seleccione un archivo de su sistema para ser cargado."
 
-#: projects/views/component.py:388
+#: projects/views/component.py:404
 msgid "Please enter a target to upload the file."
 msgstr "Por favor ingrese un destino para cargar el archivo."
 
-#: projects/views/component.py:393
+#: projects/views/component.py:409
 msgid "Please enter only ONE target to upload the file."
 msgstr "Por favor ingrese sólo UN destino para cargar el archivo."
 
-#: projects/views/component.py:404
+#: projects/views/component.py:420
 msgid "The target file does not match the component file filter"
 msgstr "El archivo destino no coincide con el filtro de archivo del componente"
 
-#: projects/views/component.py:412
+#: projects/views/component.py:428
 msgid "Enter a commit message"
 msgstr "Entrar un mensaje de envío"
 
-#: projects/views/component.py:453
+#: projects/views/component.py:469
 #, python-format
 msgid ""
 "You need to be in the '%s' team of this project for being able to send "
@@ -990,68 +997,14 @@ msgstr ""
 "Necesita estar en el equipo '%s' de este proyecto para poder enviar "
 "traducciones de este archivo."
 
-#: projects/views/component.py:513
+#: projects/views/component.py:527
 #, python-format
 msgid "File submitted successfully: %s"
 msgstr "Archivo enviado satisfactoriamente: %s"
 
-#: projects/views/component.py:533
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Your file has "
-"been e-mailed to you to avoid losing any work."
-msgstr ""
-"Su archivo no ha superado las pruebas de verificación (msgfmt -c). Ha sido "
-"enviado por correo electrónico a la dirección que ha registrado para evitar "
-"perder algún dato. "
-
-#: projects/views/component.py:538
-msgid ""
-"Your file does not pass the correctness checks (msgfmt -c). Please run this "
-"command on your system to see the errors. We couldn't send you an email to "
-"preserve your work because you haven't registered an email address. Please "
-"do so now to avoid such issues in the future."
-msgstr ""
-"Su archivo no ha superado las pruebas de verificación (msgfmt -c). Por "
-"favor, ejecute este comando en su sistema para conocer los errores. No "
-"podemos enviarle un correo electrónico para proteger su trabajo ya que no ha "
-"registrado una dirección de correo. Por favor, hágalo ahora de modo de poder "
-"prevenir estos inconvenientes en el futuro."
-
-#: projects/views/component.py:549
+#: projects/views/component.py:553
 msgid "Sorry, your file could not be sent because of an error."
 msgstr "Lo sentimos, no se pudo enviar el archivo debido a un error."
-
-#: projects/views/component.py:552 projects/views/component.py:585
-msgid "Sorry, but you need to send a POST request."
-msgstr "Lo sentimos, pero usted tendrá que enviar una solicitud POST."
-
-#: projects/views/component.py:574
-msgid "Lock removed."
-msgstr "Candado removido."
-
-#: projects/views/component.py:577
-msgid "Error: Only the owner of a lock can remove it."
-msgstr "Error: Sólo el propietario de un candado puede removerlo."
-
-#: projects/views/component.py:581
-msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr "Candado creado. Por favor no olvide removerlo cuando haya terminado."
-
-#: projects/views/component.py:598 projects/views/project.py:156
-msgid "Must use POST to activate"
-msgstr "Se debe utilizar POST para activar"
-
-#: projects/views/component.py:601 projects/views/project.py:159
-msgid "Notification is not enabled"
-msgstr "La notificación no está habilitada"
-
-#: projects/views/project.py:172
-msgid "Watch this project"
-msgstr "Mirar este proyecto"
-
-#: projects/views/project.py:185
-msgid "Stop watching this project"
-msgstr "Dejar de monitorear este proyecto"
 
 #: projects/views/release.py:94
 #, python-format
@@ -1066,37 +1019,37 @@ msgstr "La petición se ha cerrado dado que fue rechazada."
 msgid "Request reopened."
 msgstr "Petición reabierta."
 
-#: projects/views/team.py:168
+#: projects/views/team.py:182
 #, python-format
 msgid "The '%s' team was deleted."
 msgstr "El equipo %s fue eliminado."
 
-#: projects/views/team.py:205
+#: projects/views/team.py:222
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "Ya estás en el equipo '%s'."
 
-#: projects/views/team.py:210
+#: projects/views/team.py:227
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "Has añadido una solicitud para unirte al equipo '%s'."
 
-#: projects/views/team.py:233
+#: projects/views/team.py:250
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "Tienes una solicitud pendiente para unirte al equipo '%s'."
 
-#: projects/views/team.py:260
+#: projects/views/team.py:278
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "El usuario '%(user)s' ya está en el equipo '%(team)s'."
 
-#: projects/views/team.py:267
+#: projects/views/team.py:285
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "Has añadido a '%(user)s' al equipo '%(team)s'."
 
-#: projects/views/team.py:314
+#: projects/views/team.py:333
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
@@ -1105,48 +1058,48 @@ msgstr ""
 "Has negado la solicitud del usuario '%(user)s' para unirse al equipo '%(team)"
 "s'"
 
-#: projects/views/team.py:357
+#: projects/views/team.py:378
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "Has retirado tu solicitud para unirte al equipo '%s'."
 
-#: projects/views/team.py:398
+#: projects/views/team.py:421
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "Has dejado el equipo '%s'."
 
-#: projects/views/team.py:419
+#: projects/views/team.py:442
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "No estás en el equipo '%s'."
 
-#: projects/views/team.py:440
+#: projects/views/team.py:465
 msgid "Please, select a language before submit the form."
 msgstr "Por favor, seleccione un idioma antes de enviar el formulario."
 
-#: projects/views/team.py:453
+#: projects/views/team.py:478
 #, python-format
 msgid "'%s' team already exist."
 msgstr "El equipo '%s' ya existe."
 
-#: projects/views/team.py:459
+#: projects/views/team.py:484
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "Ya existe una solicitud para crear el equipo '%s'."
 
-#: projects/views/team.py:467
+#: projects/views/team.py:492
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "Has solicitado la creación del equipo '%s'."
 
-#: projects/views/team.py:512
+#: projects/views/team.py:538
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Has aprobado la solicitud de creación del equipo '%(team)s' hecha por '%"
 "(user)s'."
 
-#: projects/views/team.py:554
+#: projects/views/team.py:581
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
@@ -1161,32 +1114,11 @@ msgstr ""
 "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o "
 "modificar cadenas que afecten las  traducciones)."
 
-#: repowatch/__init__.py:74
-msgid "Watch it"
-msgstr "Mirar esto"
-
-#: repowatch/__init__.py:75
-msgid "Stop watching it"
-msgstr "Dejar de ver esto"
-
-#: repowatch/models.py:28
-#, python-format
-msgid "Unable to add watch for path %r"
-msgstr "No se puede agregar la función monitorear para la ruta %r"
-
-#: repowatch/models.py:97
-msgid "watch"
-msgstr "mirar"
-
-#: repowatch/models.py:98
-msgid "watches"
-msgstr "vistas"
-
-#: reviews/forms.py:9
+#: reviews/forms.py:8
 msgid "Write a short blurb for your review request."
 msgstr "Escriba un breve comentario acerca de la revisión de su petición."
 
-#: reviews/forms.py:11
+#: reviews/forms.py:10
 msgid "Select a translation file for review."
 msgstr "Elegir un archivo de traducción para revisión."
 
@@ -1255,7 +1187,7 @@ msgstr "-created_on"
 msgid "created_on"
 msgstr "created_on"
 
-#: reviews/views.py:33
+#: reviews/views.py:32
 msgid ""
 "You can upload a file for review only if it's related to an existing "
 "language."
@@ -1263,17 +1195,9 @@ msgstr ""
 "Sólo puede subir un archivo para revisión, si es que está relacionado con un "
 "idioma existente."
 
-#: reviews/views.py:53
+#: reviews/views.py:52
 msgid "Your file has been successfully placed for reviewing."
 msgstr "Su archivo ha sido recibido exitosamente para una revisión."
-
-#: simplelock/models.py:39
-msgid "Lock"
-msgstr "Bloquear"
-
-#: simplelock/models.py:40
-msgid "Locks"
-msgstr "Bloqueos"
 
 #: tarball/forms.py:16
 msgid "Tarball URL"
@@ -1315,19 +1239,19 @@ msgstr ""
 "Tienes al usuario '%s' en la lista de coordinadores y de miembros. Por "
 "favor, quítalo de alguna."
 
-#: teams/models.py:27 teams/models.py:69
+#: teams/models.py:29 teams/models.py:71
 msgid "The project which this team belongs to."
 msgstr "El proyecto al que pertenece este equipo."
 
-#: teams/models.py:28 teams/models.py:70
-#: templates/reviews/review_list.html:154
+#: teams/models.py:30 teams/models.py:72
+#: templates/reviews/review_list.html:125
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
 msgid "Language"
 msgstr "Idioma"
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:32 teams/models.py:74
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
@@ -1335,51 +1259,51 @@ msgstr ""
 "Los integrantes de este equipo sólo podrán enviar archivos de traducción "
 "relacionados al idioma específico."
 
-#: teams/models.py:32
+#: teams/models.py:34
 msgid "Coordinators"
 msgstr "Coordinadores"
 
-#: teams/models.py:34
+#: teams/models.py:36
 msgid "Members"
 msgstr "Miembros"
 
-#: teams/models.py:37
+#: teams/models.py:39
 msgid "Mainlist"
 msgstr "Lista principal"
 
-#: teams/models.py:38
+#: teams/models.py:40
 msgid "The main mailing list of the team."
 msgstr "La lista principal del equipo"
 
-#: teams/models.py:40
+#: teams/models.py:42
 msgid "creator"
 msgstr "creador"
 
-#: teams/models.py:56
+#: teams/models.py:58
 msgid "team"
 msgstr "equipo"
 
-#: teams/models.py:57
+#: teams/models.py:59
 msgid "teams"
 msgstr "equipos"
 
-#: teams/models.py:89
+#: teams/models.py:91
 msgid "team creation request"
 msgstr "solicitud de creación de equipo"
 
-#: teams/models.py:90
+#: teams/models.py:92
 msgid "team creation requests"
 msgstr "solicitudes de creación de equipo"
 
-#: teams/models.py:108
+#: teams/models.py:110
 msgid "Team"
 msgstr "Equipo"
 
-#: teams/models.py:125
+#: teams/models.py:127
 msgid "team access request"
 msgstr "petición de acceso del equipo"
 
-#: teams/models.py:126
+#: teams/models.py:128
 msgid "team access requests"
 msgstr "peticiones de acceso de equipo"
 
@@ -1415,15 +1339,15 @@ msgstr ""
 "usted cometió, por favor <a href='http://transifex.org/newticket'>háganoslo "
 "saber</a>."
 
-#: templates/500.html:4 templates/500.html.py:7
+#: templates/500.html:6 templates/500.html.py:21
 msgid "Page unavailable"
 msgstr "Página no disponible"
 
-#: templates/500.html:12
+#: templates/500.html:22
 msgid "We're sorry, but the requested page is currently unavailable."
 msgstr "Lo sentimos, pero la página solicitada no está disponible actualmente."
 
-#: templates/500.html:14
+#: templates/500.html:23
 msgid ""
 "We're messing around with things internally, and the server had a bit of a "
 "hiccup."
@@ -1431,7 +1355,7 @@ msgstr ""
 "Estamos jugando un poco con las cosas internamente, y el servidor tiene un "
 "poco de hipo."
 
-#: templates/500.html:16
+#: templates/500.html:24
 msgid "Please try again later."
 msgstr "Por favor intente nuevamente mas tarde."
 
@@ -1439,39 +1363,39 @@ msgstr "Por favor intente nuevamente mas tarde."
 msgid "Welcome to Transifex"
 msgstr "Bienvenido a Transifex"
 
-#: templates/base-sample.html:8 templates/admin/base_site.html:4
+#: templates/base-sample.html:8 templates/admin/base_site.html:5
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:34 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:35 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Ir a la página de inicio"
 
-#: templates/base-sample.html:35
+#: templates/base-sample.html:36
 msgid "Go to start page"
 msgstr "Ir a la página inicial"
 
-#: templates/base-sample.html:39
+#: templates/base-sample.html:40
 msgid "The projects being served"
 msgstr "Los proyectos que se sirve"
 
-#: templates/base-sample.html:39 templates/projects/base.html:6
+#: templates/base-sample.html:40 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "Proyectos"
 
-#: templates/base-sample.html:40
+#: templates/base-sample.html:41
 msgid "The languages our service serves"
 msgstr "Los idiomas que nuestro servicio sirve"
 
-#: templates/base-sample.html:40 templates/languages/base.html:5
+#: templates/base-sample.html:41 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Idiomas"
 
-#: templates/base-sample.html:46
+#: templates/base-sample.html:48
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
@@ -1480,15 +1404,15 @@ msgstr ""
 "¡Bienvenido <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out from the website"
 msgstr "Salir del sitio web"
 
-#: templates/base-sample.html:47
+#: templates/base-sample.html:50
 msgid "Sign out"
 msgstr "Salir"
 
-#: templates/base-sample.html:49 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:53 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1498,24 +1422,24 @@ msgstr "Salir"
 msgid "Sign in"
 msgstr "Ingresar"
 
-#: templates/base-sample.html:52
+#: templates/base-sample.html:56
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Registro"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "About"
 msgstr "Acerca de"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Drops us a line"
 msgstr "Dejenos una línea"
 
-#: templates/base-sample.html:114
+#: templates/base-sample.html:118
 msgid "Feedback"
 msgstr "Comentarios"
 
-#: templates/base-sample.html:116
+#: templates/base-sample.html:120
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -1584,36 +1508,7 @@ msgstr ""
 msgid "Find projects by name, description, etc."
 msgstr "Encontrar proyectos por nombre, descripción, etc."
 
-#: templates/timeline.html:11
-msgid "Filter results"
-msgstr "Resultados de filtro"
-
-#: templates/timeline.html:17
-msgid "Go"
-msgstr "Ir"
-
-#: templates/timeline.html:24 templates/projects/component_detail.html:203
-#: templates/projects/project_detail.html:108
-#: templates/teams/team_detail.html:129
-msgid "None available"
-msgstr "Ninguno disponible"
-
-#: templates/timeline.html:28
-#, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
-msgstr[0] ""
-"\n"
-"  La cnsulta devolvió %(counter)s resultado\n"
-msgstr[1] ""
-"\n"
-"  La cnsulta devolvió %(counter)s resultados\n"
-
-#: templates/admin/base_site.html:9
+#: templates/admin/base_site.html:10
 msgid "Transifex administration"
 msgstr "Administración de Transifex"
 
@@ -1734,7 +1629,7 @@ msgid "Account"
 msgstr "Cuenta"
 
 #: templates/notification/notices.html:95
-#: templates/projects/component_detail.html:121
+#: templates/projects/component_detail.html:125
 msgid "Note"
 msgstr "Nota"
 
@@ -2084,107 +1979,113 @@ msgstr ""
 "envía los archivos directamente al repositorio de la línea principal de "
 "desarrollo."
 
-#: templates/projects/component_detail.html:79
-#: templates/projects/project_detail.html:31
-#: templates/projects/release_detail.html:44
-#: templates/teams/team_detail.html:25
+#: templates/projects/component_detail.html:65
+#: templates/projects/project_detail.html:22
+#, fuzzy
+msgid "Private Project"
+msgstr "Últimos Proyectos"
+
+#: templates/projects/component_detail.html:82
+#: templates/projects/project_detail.html:39
+#: templates/projects/release_detail.html:53
+#: templates/teams/team_detail.html:28
 msgid "Edit"
 msgstr "Modificar"
 
-#: templates/projects/component_detail.html:84
+#: templates/projects/component_detail.html:87
 msgid "Source details"
 msgstr "Detalles de origen"
 
-#: templates/projects/component_detail.html:88
+#: templates/projects/component_detail.html:91
 msgid "Repository:"
 msgstr "Repositorio:"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "Link to a web front-end for the source code"
 msgstr "Enlace hacia una interfaz de red del código fuente"
 
-#: templates/projects/component_detail.html:91
-#: templates/projects/component_detail.html:93
+#: templates/projects/component_detail.html:94
+#: templates/projects/component_detail.html:96
 msgid "web"
 msgstr "red"
 
-#: templates/projects/component_detail.html:98
+#: templates/projects/component_detail.html:102
 msgid "Branch:"
 msgstr "Rama:"
 
-#: templates/projects/component_detail.html:103
+#: templates/projects/component_detail.html:107
 msgid "File filter:"
 msgstr "Filtro de archivo:"
 
-#: templates/projects/component_detail.html:109
+#: templates/projects/component_detail.html:113
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Lanzamiento:"
 msgstr[1] "Lanzamientos:"
 
-#: templates/projects/component_detail.html:117
+#: templates/projects/component_detail.html:121
 msgid "Allows submissions:"
 msgstr "Permite entregas:"
 
-#: templates/projects/component_detail.html:131
+#: templates/projects/component_detail.html:135
 msgid "Translation files"
 msgstr "Archivos de traducción"
 
-#: templates/projects/component_detail.html:136
+#: templates/projects/component_detail.html:140
 msgid "Source file:"
 msgstr "Archivo fuente:"
 
-#: templates/projects/component_detail.html:143
+#: templates/projects/component_detail.html:147
 msgid "Statistics last updated:"
 msgstr "Última actualización de Estadísticas:"
 
-#: templates/projects/component_detail.html:145
+#: templates/projects/component_detail.html:149
 msgid "ago"
 msgstr "atrás"
 
-#: templates/projects/component_detail.html:146
+#: templates/projects/component_detail.html:150
 msgid "Component not yet pulled from source repository."
 msgstr "Componente no extraido de repositorio fuente."
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh and re-calculate statistics. This action may take some time."
 msgstr ""
 "Actualizar y re-calcular estadísticas. Esta acción puede tardar un poco."
 
-#: templates/projects/component_detail.html:149
+#: templates/projects/component_detail.html:153
 msgid "Refresh cache"
 msgstr "Refrescar cache"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Reset Transifex's local data for a clean pull"
 msgstr "Reconfigurar datos locales de Transifex para una extracción limpia"
 
-#: templates/projects/component_detail.html:154
+#: templates/projects/component_detail.html:158
 msgid "Clear cache"
 msgstr "Limpiar cache"
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "Any locally modified data will be overwritten with fresh copies."
 msgstr "Cualquier información modificada será sobrescrita con copias frescas."
 
-#: templates/projects/component_detail.html:157
+#: templates/projects/component_detail.html:161
 msgid "warning"
 msgstr "advertencia"
 
-#: templates/projects/component_detail.html:164
+#: templates/projects/component_detail.html:168
 msgid "Teams:"
 msgstr "Equipos:"
 
-#: templates/projects/component_detail.html:166
+#: templates/projects/component_detail.html:170
 msgid "See the translation teams."
 msgstr "Ver los equipos de traducción."
 
-#: templates/projects/component_detail.html:190
+#: templates/projects/component_detail.html:194
 msgid "Translation files reviews"
 msgstr "Revisiones de archivos de traducción"
 
-#: templates/projects/component_detail.html:192
+#: templates/projects/component_detail.html:196
 msgid ""
 "Translators can request a file review from another person, who\n"
 "  can take a look at his work and provide any feedback needed, or simply "
@@ -2196,56 +2097,56 @@ msgstr ""
 "necesario,\n"
 "  o directamente enviar el archivo al proyecto."
 
-#: templates/projects/component_detail.html:197
-#: templates/reviews/review_list.html:21 templates/reviews/review_list.html:23
+#: templates/projects/component_detail.html:201
+#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "Revisiones"
 
-#: templates/projects/component_detail.html:199
-#: templates/projects/project_detail.html:103
-#: templates/teams/team_detail.html:125
+#: templates/projects/component_detail.html:203
+#: templates/projects/project_detail.html:114
+#: templates/teams/team_detail.html:130
 msgid "History"
 msgstr "Historial"
 
-#: templates/projects/component_detail.html:220
+#: templates/projects/component_detail.html:225
 msgid "Delete component"
 msgstr "Borrar componente"
 
-#: templates/projects/component_form.html:6
-#: templates/projects/component_form.html:11
+#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:12
 msgid "Add a component"
 msgstr "Agregar componente"
 
-#: templates/projects/component_form.html:7
+#: templates/projects/component_form.html:8
 #, python-format
 msgid "Edit %(component_name)s"
 msgstr "Modificar %(component_name)s"
 
-#: templates/projects/component_form.html:12
-#: templates/projects/component_form.html:83
+#: templates/projects/component_form.html:13
+#: templates/projects/component_form.html:84
 #, python-format
 msgid "Edit Component '%(component_name)s'"
 msgstr "Modificar componente '%(component_name)s'"
 
-#: templates/projects/component_form.html:81
+#: templates/projects/component_form.html:82
 #, python-format
 msgid "New component for %(project_name)s"
 msgstr "Nuevo componente para %(project_name)s"
 
-#: templates/projects/component_form.html:102
+#: templates/projects/component_form.html:103
 msgid "Checkout"
 msgstr "Control"
 
-#: templates/projects/component_form.html:106
+#: templates/projects/component_form.html:107
 msgid "Submission"
 msgstr "Entrega"
 
-#: templates/projects/component_form.html:122
-#: templates/projects/component_form.html:132
+#: templates/projects/component_form.html:123
+#: templates/projects/component_form.html:133
 msgid "Save component"
 msgstr "Guardar componente"
 
-#: templates/projects/component_lang_detail.html:29
+#: templates/projects/component_lang_detail.html:30
 msgid "translation files"
 msgstr "archivos de traducción"
 
@@ -2337,13 +2238,13 @@ msgid "Example: Updates to Brazilian Portuguese translation"
 msgstr "Ejemplo: Actualizaciones a traducción de Portugués brasileño"
 
 #: templates/projects/component_submit_new_file.html:43
-#: translations/templates/component_submit.html:13
+#: translations/templates/component_submit.html:14
 msgid "Send"
 msgstr "Enviar"
 
 #: templates/projects/component_submit_new_file.html:45
 #: templates/webtrans/transfile_edit.html:137
-#: translations/templates/component_submit.html:15
+#: translations/templates/component_submit.html:20
 msgid "Send for Review"
 msgstr "Enviar para revisión"
 
@@ -2378,59 +2279,51 @@ msgstr ""
 "  ¿Está seguro de que quiere borrar permanentemente el proyecto registrado '%"
 "(project_name)s'?\n"
 
-#: templates/projects/project_detail.html:37
+#: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:51
+#: templates/projects/release_detail.html:60
 msgid "Details"
 msgstr "Detalles"
 
-#: templates/projects/project_detail.html:44
-msgid "Watch:"
-msgstr "Mirar:"
-
-#: templates/projects/project_detail.html:52
-#: templates/projects/release_detail.html:55
+#: templates/projects/project_detail.html:60
+#: templates/projects/release_detail.html:64
 msgid "Homepage:"
 msgstr "Página Principal:"
 
-#: templates/projects/project_detail.html:53
+#: templates/projects/project_detail.html:61
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "Página Principal para %(project_name)s"
 
-#: templates/projects/project_detail.html:58
+#: templates/projects/project_detail.html:66
 msgid "Bug tracker:"
 msgstr "Rastreador de errores:"
 
-#: templates/projects/project_detail.html:59
+#: templates/projects/project_detail.html:67
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "Rastreador de errores para %(project_name)s"
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:72
 #: templates/projects/project_list.html:46
 msgid "Tags:"
 msgstr "Etiquetas:"
 
-#: templates/projects/project_detail.html:73
+#: templates/projects/project_detail.html:81
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Encargado del proyecto"
 msgstr[1] "Encargados del proyecto"
 
-#: templates/projects/project_detail.html:87
+#: templates/projects/project_detail.html:96
 msgid "External links:"
 msgstr "Enlaces externos:"
 
-#: templates/projects/project_detail.html:89
+#: templates/projects/project_detail.html:98
 msgid "Screenshots"
 msgstr "Capturas de Pantalla"
 
-#: templates/projects/project_detail.html:120
-msgid "View complete action log"
-msgstr "Ver todo el registro de acción "
-
-#: templates/projects/project_detail.html:135
+#: templates/projects/project_detail.html:144
 msgid "Delete project"
 msgstr "Eliminar proyecto"
 
@@ -2465,6 +2358,32 @@ msgstr "Editar los detalles de su proyecto"
 msgid "Save project"
 msgstr "Guardar proyecto"
 
+#: templates/projects/project_form_access_control.html:8
+#: templates/projects/project_form_access_control.html:10
+#: templates/projects/project_form_access_control.html:16
+#: templates/projects/project_form_base.html:90
+#: templates/projects/project_form_permissions.html:8
+#: templates/projects/project_form_permissions.html:15
+#: templates/projects/project_menu.html:65
+msgid "Access Control"
+msgstr "Control de Acceso"
+
+#: templates/projects/project_form_access_control.html:18
+msgid ""
+"You have the following choices to manage how people can have submission "
+"access to your project:"
+msgstr ""
+
+#: templates/projects/project_form_access_control.html:58
+#, fuzzy
+msgid "Go to the project writers page."
+msgstr "Ir a la página de este proyecto"
+
+#: templates/projects/project_form_access_control.html:62
+#, fuzzy
+msgid "Save Access Control Settings"
+msgstr "Control de Acceso"
+
 #: templates/projects/project_form_base.html:14
 #, python-format
 msgid "Edit <em>%(project_name)s</em>"
@@ -2479,27 +2398,18 @@ msgstr "Control de acceso será habilitado una vez haya sido creado el proyecto"
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Modificando <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form_base.html:90
-#: templates/projects/project_form_permissions.html:8
-#: templates/projects/project_form_permissions.html:15
-#: templates/projects/project_menu.html:47
-msgid "Access Control"
-msgstr "Control de Acceso"
-
-#: templates/projects/project_form_permissions.html:18
-#: templates/txpermissions/base_permission_form.html:8
-msgid "Give access to a translator to send translations to your project"
+#: templates/projects/project_form_permissions.html:26
+#, fuzzy
+msgid ""
+"Give write access to a translator to send translations to your project "
+"independent of a translation team."
 msgstr "Dar acceso a un traductor para enviar traducciones a su proyecto"
 
-#: templates/projects/project_form_permissions.html:20
-msgid "Requests for access to submit files"
-msgstr "Solicitudes de acceso para enviar archivos"
-
-#: templates/projects/project_form_permissions.html:62
+#: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
 msgstr "Solicitudes pendientes:"
 
-#: templates/projects/project_form_permissions.html:82
+#: templates/projects/project_form_permissions.html:59
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with access to submit files:"
 msgstr "Los usuarios a quienes se les ha otorgado acceso para enviar archivos:"
@@ -2543,32 +2453,14 @@ msgstr ""
 "¿No pudo hallar su proyecto? Prosiga y <a href=\"%(project_create)s"
 "\">¡añádalo</a>!"
 
-#: templates/projects/project_menu.html:40 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "Vista Previa"
 
-#: templates/projects/project_menu.html:54 templates/teams/team_list.html:17
+#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 msgid "Translation Teams"
 msgstr "Equipos de traducción"
-
-#: templates/projects/project_menu.html:61
-#: templates/projects/project_timeline.html:12
-#: templates/txcommon/user_timeline.html:12
-msgid "Timeline"
-msgstr "Línea de tiempo"
-
-#: templates/projects/project_timeline.html:20
-#: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
-msgstr ""
-"\n"
-" %(project_name)s Línea de tiempo\n"
-" "
 
 #: templates/projects/project_top_translators.html:4
 msgid "Top Translators"
@@ -2603,31 +2495,41 @@ msgstr ""
 "  ¿Está seguro de querer eliminar permanentemente el lanzamiento al equipo '%"
 "(release_name)s' perteneciente al proyecto %(project_name)s?\n"
 
-#: templates/projects/release_detail.html:60
+#: templates/projects/release_detail.html:69
 msgid "Release date:"
 msgstr "Fecha de Lanzamiento:"
 
-#: templates/projects/release_detail.html:64
+#: templates/projects/release_detail.html:73
 msgid "String freeze:"
 msgstr "Cadena congelada:"
 
-#: templates/projects/release_detail.html:68
+#: templates/projects/release_detail.html:77
 msgid "Devel freeze:"
 msgstr "Desarrollo congelado:"
 
-#: templates/projects/release_detail.html:73
+#: templates/projects/release_detail.html:82
 msgid "Components:"
 msgstr "Componentes:"
 
-#: templates/projects/release_detail.html:81
+#: templates/projects/release_detail.html:86
+#, fuzzy
+msgid "Click here to show or hide the component list"
+msgstr "Haga clic para mostrar u ocultar los archivos fuente"
+
+#: templates/projects/release_detail.html:87
+#, python-format
+msgid "This release has %(components_number)s components."
+msgstr ""
+
+#: templates/projects/release_detail.html:103
 msgid "Translation statistics"
 msgstr "Estadísticas de traducción"
 
-#: templates/projects/release_detail.html:88
+#: templates/projects/release_detail.html:110
 msgid "No translations added for this release. :-("
 msgstr "No se han agregado traducciones a este lanzamiento. :-("
 
-#: templates/projects/release_detail.html:99
+#: templates/projects/release_detail.html:121
 msgid "Delete release"
 msgstr "Lanzamiento eliminado"
 
@@ -2663,16 +2565,16 @@ msgstr ""
 msgid "Save release"
 msgstr "Guardar lanzamiento"
 
-#: templates/projects/release_language_detail.html:27
+#: templates/projects/release_language_detail.html:26
 #, python-format
 msgid "Release '%(release_name)s"
 msgstr "Lanzamiento '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:39
+#: templates/projects/release_language_detail.html:38
 msgid "Project/Component statistics"
 msgstr "Estadísticas de Proyecto/Componente"
 
-#: templates/projects/release_language_detail.html:60
+#: templates/projects/release_language_detail.html:59
 msgid ""
 "Transifex searched for projects containing translation files for this "
 "language and release, but couldn't find any. Try submitting such a file and "
@@ -2682,7 +2584,7 @@ msgstr ""
 "idioma y lanzamiento, pero no halló ninguno. En su lugar, intente enviar ese "
 "archivo y verifique nuevamente."
 
-#: templates/projects/release_language_detail.html:61
+#: templates/projects/release_language_detail.html:60
 #, python-format
 msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
@@ -2691,11 +2593,11 @@ msgstr ""
 "Si piensa que esto no debe suceder, por favor <a href=\"%(contact_form)s"
 "\">háganoslo saber</a>."
 
-#: templates/projects/release_language_detail.html:65
+#: templates/projects/release_language_detail.html:64
 msgid "Untranslated Components"
 msgstr "Componentes Sin Traducir"
 
-#: templates/projects/release_language_detail.html:67
+#: templates/projects/release_language_detail.html:66
 #, python-format
 msgid ""
 "The following components will be included in %(release_name)s, but there are "
@@ -2704,11 +2606,11 @@ msgstr ""
 "Los siguientes componentes se incluirán en %(release_name)s, pero aún no hay "
 "traducciones enviadas a %(language_name)s."
 
-#: templates/projects/release_list.html:14
+#: templates/projects/release_list.html:13
 msgid "Project Releases"
 msgstr "Lanzamientos de proyecto"
 
-#: templates/projects/release_list.html:29
+#: templates/projects/release_list.html:28
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href=\"%"
@@ -2721,29 +2623,28 @@ msgstr ""
 msgid "Submit"
 msgstr "Enviar"
 
-#: templates/reviews/review_list.html:27
+#: templates/reviews/review_list.html:26
 msgid "Translation Review Requests"
 msgstr "Peticiones de revisión de traducción"
 
-#: templates/reviews/review_list.html:31
+#: templates/reviews/review_list.html:30
 msgid "Open Requests"
 msgstr "Peticiones abiertas"
 
-#: templates/reviews/review_list.html:39
+#: templates/reviews/review_list.html:38
 #, python-format
 msgid "Review Request #%(review_id)s "
 msgstr "Peticiones de revisión #%(review_id)s "
 
-#: templates/reviews/review_list.html:47
+#: templates/reviews/review_list.html:46
 msgid "Who and when"
 msgstr "Quién y cuándo"
 
-#: templates/reviews/review_list.html:49
-#: templates/reviews/review_list.html:115
+#: templates/reviews/review_list.html:48
 msgid "See profile"
 msgstr "Ver prefil"
 
-#: templates/reviews/review_list.html:50
+#: templates/reviews/review_list.html:49
 #, python-format
 msgid ""
 "\n"
@@ -2754,112 +2655,89 @@ msgstr ""
 "        hace %(time_since)s\n"
 "      "
 
-#: templates/reviews/review_list.html:56
+#: templates/reviews/review_list.html:55
 msgid "Translation Language"
 msgstr "Idioma de traducción"
 
-#: templates/reviews/review_list.html:59
+#: templates/reviews/review_list.html:58
 msgid "Go to language page"
 msgstr "Ir a la página del idioma"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:65
 msgid "File target"
 msgstr "Archivo elegido"
 
-#: templates/reviews/review_list.html:67
+#: templates/reviews/review_list.html:66
 msgid "Download the version sent for review"
 msgstr "Descargar la versión enviada para revisión"
 
-#: templates/reviews/review_list.html:70
+#: templates/reviews/review_list.html:69
 msgid "Score"
 msgstr "Puntaje"
 
-#: templates/reviews/review_list.html:84
+#: templates/reviews/review_list.html:83
 msgid "Status"
 msgstr "Estado"
 
-#: templates/reviews/review_list.html:94
+#: templates/reviews/review_list.html:93
 msgid "Close Review"
 msgstr "Cerrar revisión"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept and submit translation"
 msgstr "Aceptar y enviar traducciones"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:96
 msgid "Accept"
 msgstr "Aceptar"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject translation"
 msgstr "Rechazar traducción"
 
-#: templates/reviews/review_list.html:98
+#: templates/reviews/review_list.html:97
 msgid "Reject"
 msgstr "Rechazar"
 
-#: templates/reviews/review_list.html:115
-msgid "By"
-msgstr "Por"
-
-#: templates/reviews/review_list.html:125
-msgid "Add your comment as"
-msgstr "Agregar su comentario como"
-
-#: templates/reviews/review_list.html:131
-msgid "Say it!"
-msgstr "¡Dígalo!"
-
-#: templates/reviews/review_list.html:142
+#: templates/reviews/review_list.html:113
 msgid "No open requests!"
 msgstr "¡No existen peticiones abiertas!"
 
-#: templates/reviews/review_list.html:146
+#: templates/reviews/review_list.html:117
 msgid "Closed Requests"
 msgstr "Solicitudes cerradas"
 
-#: templates/reviews/review_list.html:152
+#: templates/reviews/review_list.html:123
 msgid "ID"
 msgstr "ID"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:124
 msgid "Author"
 msgstr "Autor"
 
-#: templates/reviews/review_list.html:155
+#: templates/reviews/review_list.html:126
 msgid "Time Since"
 msgstr "Tiempo desde"
 
-#: templates/reviews/review_list.html:156
+#: templates/reviews/review_list.html:127
 msgid "Resolution"
 msgstr "Resolución"
 
-#: templates/reviews/review_list.html:157
+#: templates/reviews/review_list.html:128
 msgid "Attachment"
 msgstr "Adjunto"
 
-#: templates/reviews/review_list.html:158
+#: templates/reviews/review_list.html:129
 msgid "Actions"
 msgstr "Acciones"
 
-#: templates/reviews/review_list.html:182
+#: templates/reviews/review_list.html:153
 msgid "Reopen review request"
 msgstr "Reabrir petición de revisión"
 
-#: templates/reviews/review_list.html:194
+#: templates/reviews/review_list.html:165
 msgid "No closed requests!"
 msgstr "¡No existen peticiones cerradas!"
-
-#: templates/simpleauth/base_profile.html:4
-#: templates/simpleauth/base_profile.html:7
-#: templates/simpleauth/public_profile.html:4
-#: templates/simpleauth/public_profile.html:5
-#: templates/simpleauth/settings.html:5
-#: templates/txcommon/user_timeline.html:15
-#: templates/userprofile/base_2col.html:3
-#: templates/userprofile/profile/public.html:28
-msgid "Profile"
-msgstr "Perfil"
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2938,7 +2816,12 @@ msgstr ""
 "  ¿Está seguro de querer eliminar permanentemente al equipo '%(lang_name)s' "
 "perteneciente al proyecto %(project_name)s?\n"
 
-#: templates/teams/team_detail.html:19
+#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
+#, fuzzy
+msgid "Teams"
+msgstr "Equipos:"
+
+#: templates/teams/team_detail.html:22
 #, python-format
 msgid ""
 "\n"
@@ -2949,51 +2832,56 @@ msgstr ""
 "  Equipos de traducción - %(language_name)s <sup class=\"entry_metalink\">%"
 "(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:33
+#: templates/teams/team_detail.html:36
 msgid "Mainlist:"
 msgstr "Lista principal:"
 
-#: templates/teams/team_detail.html:41 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Coordinador:"
 msgstr[1] "Coordinadores:"
 
-#: templates/teams/team_detail.html:56
+#: templates/teams/team_detail.html:59
 msgid "Become a translator:"
 msgstr "Conviértase en traductor:"
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:62
 msgid "Join this Team"
 msgstr "Unirse a este equipo"
 
-#: templates/teams/team_detail.html:70
+#: templates/teams/team_detail.html:73
 msgid "People waiting for team membership approving:"
 msgstr "Personas esperando aprobación de pertenencia a un equipo:"
 
-#: templates/teams/team_detail.html:81 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "Aprobar"
 
-#: templates/teams/team_detail.html:85 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "Negar"
 
-#: templates/teams/team_detail.html:91
+#: templates/teams/team_detail.html:94
 msgid "Withdraw"
 msgstr "Retirar"
 
-#: templates/teams/team_detail.html:104
+#: templates/teams/team_detail.html:107
 msgid "Team Members:"
 msgstr "Miembros del equipo:"
 
-#: templates/teams/team_detail.html:114
+#: templates/teams/team_detail.html:117
 msgid "Leave"
 msgstr "Abandonar"
 
-#: templates/teams/team_detail.html:147
+#: templates/teams/team_detail.html:153
 msgid "Delete team"
 msgstr "Eliminar equipo"
+
+#: templates/teams/team_form.html:10
+#, fuzzy
+msgid "Add Team"
+msgstr "Equipo"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -3044,9 +2932,38 @@ msgstr "Solicitar un nuevo equipo"
 msgid "Request team"
 msgstr "Solicitar equipo"
 
+#: templates/teams/team_off.html:12
+#, fuzzy
+msgid "This project is not using Translation Teams"
+msgstr "%(project_name)s Equipos de traducción"
+
+#: templates/teams/team_off.html:17
+#, python-format
+msgid ""
+"\n"
+"            This project does not maintain its own teams, but has chosen to "
+"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
+"s</a>'.\n"
+"            In order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'.\n"
+"        "
+msgstr ""
+
+#: templates/teams/team_off.html:22
+msgid ""
+"\n"
+"            This project allows translation submission from <em>anyone</em>, "
+"and thus no translation teams exist.\n"
+"        "
+msgstr ""
+
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
 msgstr "Mostrar lo que está completo"
+
+#: templates/txpermissions/base_permission_form.html:8
+msgid "Give access to a translator to send translations to your project"
+msgstr "Dar acceso a un traductor para enviar traducciones a su proyecto"
 
 #: templates/txpermissions/permission_delete_form.html:5
 msgid "Revoke permission"
@@ -3465,10 +3382,6 @@ msgstr "Auto-descubrir ubicación"
 msgid "Country"
 msgstr "País"
 
-#: templates/userprofile/profile/location.html:22
-msgid "Loading..."
-msgstr "Cargando..."
-
 #: templates/userprofile/profile/location.html:26
 msgid "Location:"
 msgstr "Ubicación:"
@@ -3545,10 +3458,6 @@ msgstr "Agregue ubicación"
 msgid "Change location"
 msgstr "Cambie ubicación"
 
-#: templates/userprofile/profile/overview.html:105
-msgid "My Timeline"
-msgstr "Mi línea de tiempo"
-
 #: templates/userprofile/profile/personal.html:5
 #: templates/userprofile/profile/personal.html:27
 msgid "Edit your personal information"
@@ -3571,12 +3480,12 @@ msgstr "Idioma nativo"
 msgid "Blog/Site"
 msgstr "Blog/Sitio web"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:35
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3733,11 +3642,11 @@ msgstr "Copiar cadena fuente"
 msgid "Auto-suggest translation"
 msgstr "Auto-sugerir traducción"
 
-#: translations/models.py:242
+#: translations/models.py:245
 msgid "PO file"
 msgstr "Archivo PO"
 
-#: translations/models.py:243
+#: translations/models.py:246
 msgid "PO files"
 msgstr "Archivos PO"
 
@@ -3759,14 +3668,14 @@ msgid "Options"
 msgstr "Opciones"
 
 #: translations/templates/comp_lang_stats_table.html:26
-#: translations/templates/comp_stats_table.html:37
+#: translations/templates/comp_stats_table.html:39
 #: translations/templates/lang_stats_table.html:27
 #: translations/templates/release_stats_table.html:22
 msgid "Could not generate statistics for this file"
 msgstr "No se puedo genera estadísticas para este archivo"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3774,7 +3683,7 @@ msgid "Trans:"
 msgstr "Traducido:"
 
 #: translations/templates/comp_lang_stats_table.html:31
-#: translations/templates/comp_stats_table.html:42
+#: translations/templates/comp_stats_table.html:44
 #: translations/templates/lang_stats_table.html:32
 #: translations/templates/project_stats_table.html:20
 #: translations/templates/release_stats_table.html:27
@@ -3782,53 +3691,59 @@ msgid "Untrans:"
 msgstr "Sin Traducir:"
 
 #: translations/templates/comp_lang_stats_table.html:39
-#: translations/templates/comp_stats_table.html:54
+#: translations/templates/comp_stats_table.html:56
 #: translations/templates/lang_stats_table.html:44
 #: translations/templates/source_files.html:18
 msgid "View "
 msgstr "Ver"
 
 #: translations/templates/comp_lang_stats_table.html:40
-#: translations/templates/comp_stats_table.html:55
+#: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#: translations/templates/source_files.html:19
-msgid "Download "
-msgstr "Descargar"
+#, fuzzy
+msgid "Download for viewing "
+msgstr "Enviar para revisión"
 
-#: translations/templates/comp_lang_stats_table.html:50
-#: translations/templates/comp_stats_table.html:65
-#: translations/templates/lang_stats_table.html:55
+#: translations/templates/comp_lang_stats_table.html:55
+#: translations/templates/comp_stats_table.html:72
+#: translations/templates/lang_stats_table.html:60
 msgid "Edit "
 msgstr "Modificar"
 
-#: translations/templates/comp_stats_table.html:28
+#: translations/templates/comp_stats_table.html:29
+msgid ""
+"See the outsource team for this language. You will be redirected to another "
+"project team page."
+msgstr ""
+
+#: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
 msgstr "Ver el equipo de este idioma"
 
-#: translations/templates/comp_stats_table.html:28
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:29
+#: translations/templates/comp_stats_table.html:31
 msgid "See statistics for this language"
 msgstr "Ver estadísticas para este idioma"
 
-#: translations/templates/comp_stats_table.html:30
+#: translations/templates/comp_stats_table.html:31
 msgid "No team for this language"
 msgstr "No existe un equipo para este idioma"
 
-#: translations/templates/comp_stats_table.html:34
+#: translations/templates/comp_stats_table.html:36
 msgid "There are no languages registered matching this code"
 msgstr "No existen idiomas registrado coincidentes con este código"
 
-#: translations/templates/comp_stats_table.html:49
+#: translations/templates/comp_stats_table.html:51
 #: translations/templates/lang_stats_table.html:39
 msgid "Click here to see the multiple files for"
 msgstr "Haga clic aquí para ver los archivos múltiples para"
 
-#: translations/templates/component_submit.html:5
+#: translations/templates/component_submit.html:6
 #, python-format
 msgid "Submit a translation for %(pofile_filename)s"
 msgstr "Envíe una traducción para %(pofile_filename)s"
 
-#: translations/templates/component_submit.html:9
+#: translations/templates/component_submit.html:10
 msgid "Submit file"
 msgstr "Enviar archivo"
 
@@ -3843,28 +3758,6 @@ msgstr "Ir a la página de este proyecto"
 #: translations/templates/lang_stats_table.html:25
 msgid "Go to this component page"
 msgstr "Ir a la página de este componente"
-
-#: translations/templates/pofile_lock.html:15
-msgid "Unlock this file when you are finished working with it."
-msgstr "Libere este archivo cuando haya terminado de trabajar en él."
-
-#: translations/templates/pofile_lock.html:21
-#, python-format
-msgid "User '%(owner)s' has locked this file indicating he's working with it."
-msgstr ""
-"El usuario '%(owner)s' ha bloqueado este archivo para indicar que está "
-"trabajando en él."
-
-#: translations/templates/pofile_lock.html:27
-msgid "Lock this file to notify others you're working with it."
-msgstr ""
-"Bloquear este archivo para notificar a otros que estás trabajando con él."
-
-#: translations/templates/pofile_lock.html:30
-msgid "This file is unlocked. Most likely no one is working with it right now."
-msgstr ""
-"Este archivo está desbloqueado. Lo más probable sea que actualmente nadie se "
-"encuentre trabajando en él."
 
 #: translations/templates/release_stats_table.html:16
 msgid "See the detailed statistics for this language"
@@ -3887,6 +3780,10 @@ msgstr "Este componente tiene %(sources_number)s archivos fuente"
 msgid "entries"
 msgstr "entradas"
 
+#: translations/templates/source_files.html:19
+msgid "Download "
+msgstr "Descargar"
+
 #: txcollections/migrations/0001_initial.py:21
 msgid "String freese date"
 msgstr "Fecha de congelación de cadena"
@@ -3904,44 +3801,44 @@ msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 "Este valor debe contener solamente letras unicode, números o guiones bajos."
 
-#: txcommon/i18n.py:18
-#, python-format
-msgid "The LINGUAS file could not be opened: %s"
+#: txcommon/i18n.py:19
+#, fuzzy, python-format
+msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "El archivo LINGUAS no se pudo abrir: %s"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Female"
 msgstr "Femenino"
 
-#: txcommon/models.py:11
+#: txcommon/models.py:12
 msgid "Male"
 msgstr "Masculino"
 
-#: txcommon/models.py:29 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Nombre"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Apellido"
 
-#: txcommon/models.py:33 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Idioma Nativo"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:37 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Acerca de usted mismo"
 
-#: txcommon/models.py:38
+#: txcommon/models.py:39
 msgid "Short description of yourself (140 chars)."
 msgstr "Descripción corta de usted mismo (140 caracteres)."
 
-#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "¿En busca de trabajo?"
 
@@ -4258,28 +4155,34 @@ msgid ""
 msgstr ""
 "Este repositorio ya pertenece a otro proyecto. Por favor, elija uno diferente"
 
-#: txcommon/views.py:85
+#: txcommon/views.py:109
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr ""
 "No puede volver a llamar la atención del mismo usuario en un espacio de "
 "tiempo corto."
 
-#: txcommon/views.py:88
+#: txcommon/views.py:112
 msgid "You can't nudge yourself."
 msgstr "No puede llamarse la atención a usted mismo"
 
-#: txcommon/views.py:95
+#: txcommon/views.py:119
 #, python-format
 msgid "You have nudged '%s'."
 msgstr "Están llamando su atención '%s'."
 
-#: txcommon/db/models.py:26
+#: txcommon/db/models.py:27
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Entre 0 o más enteros en paréntesis separados por comas."
 
-#: txcommon/db/models.py:28
+#: txcommon/db/models.py:29
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Debe ingresar al menos un par de paréntesis sin contenido."
+
+#: txcommon/templatetags/avatars.py:108
+msgid ""
+"You have to provide only the size as             an integer (both sides will "
+"be equal) and optionally, the             username."
+msgstr ""
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -4317,41 +4220,81 @@ msgstr "La URL del repositorio/rama de versiones de sistema."
 msgid "This type of repository does not accept branches"
 msgstr "Este tipo de repositorio no acepta ramificaciones (branches)"
 
-#: vcs/models.py:48
+#: vcs/models.py:50
 msgid "Branch"
 msgstr "Rama"
 
-#: vcs/models.py:49
+#: vcs/models.py:51
 msgid "A VCS branch this unit is associated with"
 msgstr "Una rama VCS esta unidad está asociada con"
 
-#: vcs/models.py:50
+#: vcs/models.py:52
 msgid "Web frontend"
 msgstr "Interfaz web"
 
-#: vcs/models.py:52
+#: vcs/models.py:54
 msgid "A URL to the project's web front-end"
 msgstr "Una URL para la interfaz de red de proyecto"
 
-#: vcs/models.py:58
+#: vcs/models.py:60
 #, python-format
 msgid "<VcsUnit: %(name)s (%(type)s)>"
 msgstr "<VcsUnit: %(name)s (%(type)s)>"
 
-#: vcs/models.py:61
+#: vcs/models.py:63
 msgid "vcsunit"
 msgstr "vcsunit"
 
-#: vcs/models.py:62
+#: vcs/models.py:64
 msgid "vcsunits"
 msgstr "vcsunits"
+
+#: vcs/lib/exceptions/__init__.py:17
+msgid ""
+"Your request could not be completed. The admins have been notified to take a "
+"closer look at it. Please try again in a few minutes"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:40
+msgid "Setup of the repository locally could not be done successfully."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:47
+msgid ""
+"The local repository has not been setup yet. Please, first do a check-out of "
+"the repository."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:54
+msgid "Unable to pull data from the remote repository. Is the remote host up?"
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:61
+msgid ""
+"Cleanup of the repository failed. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:67
+msgid "Commit to the repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:72
+msgid "Pushing to the remote repository failed."
+msgstr ""
+
+#: vcs/lib/exceptions/__init__.py:78
+msgid ""
+"Given file does not have a revision. The admins have been notified to take a "
+"closer look at it."
+msgstr ""
 
 #: webtrans/fields.py:55
 #, python-format
 msgid "The %s fields should be filled."
 msgstr "Los campos %s deberían ser completados."
 
-#: webtrans/wizards.py:364
+#: webtrans/wizards.py:414
 msgid ""
 "Nothing was sent because you haven't changed anything in the translation "
 "form."
@@ -4366,6 +4309,366 @@ msgstr "Previo"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Siguiente"
+
+#~ msgid "Afrikaans"
+#~ msgstr "Afrikáans"
+
+#~ msgid "Amharic"
+#~ msgstr "Amárico "
+
+#~ msgid "Arabic"
+#~ msgstr "Árabe"
+
+#~ msgid "Assamese"
+#~ msgstr "Asamés"
+
+#~ msgid "Asturian"
+#~ msgstr "Asturiano"
+
+#~ msgid "Azerbaijani"
+#~ msgstr "Azerbaiyán"
+
+#~ msgid "Balochi"
+#~ msgstr "Balochi"
+
+#~ msgid "Belarusian"
+#~ msgstr "Bielorruso"
+
+#~ msgid "Bulgarian"
+#~ msgstr "Búlgaro"
+
+#~ msgid "Bengali"
+#~ msgstr "Bengalí"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengalí (India)"
+
+#~ msgid "Tibetan"
+#~ msgstr "Tibetano"
+
+#~ msgid "Bosnian"
+#~ msgstr "Bosnio"
+
+#~ msgid "Catalan (Valencian)"
+#~ msgstr "Catalán (Valencia)"
+
+#~ msgid "Czech"
+#~ msgstr "Checo"
+
+#~ msgid "Welsh"
+#~ msgstr "Galés"
+
+#~ msgid "Danish"
+#~ msgstr "Danés "
+
+#~ msgid "German"
+#~ msgstr "Alemán"
+
+#~ msgid "Swiss German"
+#~ msgstr "Alemán Suizo"
+
+#~ msgid "Dzongkha"
+#~ msgstr "Dzongkha"
+
+#~ msgid "Greek"
+#~ msgstr "Griego"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Inglés (Reino Unido)"
+
+#~ msgid "English (United States)"
+#~ msgstr "Inglés (Estados Unidos)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "Inglés (Sudáfrica)"
+
+#~ msgid "Esperanto"
+#~ msgstr "Esperanto"
+
+#~ msgid "Spanish (Castilian)"
+#~ msgstr "Español (Castellano)"
+
+#~ msgid "Spanish (Argentinian)"
+#~ msgstr "Español (Argentino)"
+
+#~ msgid "Spanish (Mexican)"
+#~ msgstr "Español (Mexicano)"
+
+#~ msgid "Estonian"
+#~ msgstr "Estonio"
+
+#~ msgid "Basque"
+#~ msgstr "Vasco"
+
+#~ msgid "Persian"
+#~ msgstr "Persa"
+
+#~ msgid "Finnish"
+#~ msgstr "Finlandés"
+
+#~ msgid "French"
+#~ msgstr "Francés"
+
+#~ msgid "Friulian"
+#~ msgstr "Friulano"
+
+#~ msgid "Western Frisian"
+#~ msgstr "Frisiano occidental"
+
+#~ msgid "Irish"
+#~ msgstr "Irlandés"
+
+#~ msgid "Galician"
+#~ msgstr "Gallego"
+
+#~ msgid "Gujarati"
+#~ msgstr "Gujarati"
+
+#~ msgid "Hebrew"
+#~ msgstr "Hebreo"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindi"
+
+#~ msgid "Croatian"
+#~ msgstr "Croata"
+
+#~ msgid "Haitian (Haitian Creole)"
+#~ msgstr "Criollo haitiano"
+
+#~ msgid "Hungarian"
+#~ msgstr "Húngaro"
+
+#~ msgid "Armenian"
+#~ msgstr "Armenio"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indonesio"
+
+#~ msgid "Iloko"
+#~ msgstr "Ilocano"
+
+#~ msgid "Icelandic"
+#~ msgstr "Islandés"
+
+#~ msgid "Italian"
+#~ msgstr "Italiano"
+
+#~ msgid "Japanese"
+#~ msgstr "Japonés"
+
+#~ msgid "Georgian"
+#~ msgstr "Georgiano"
+
+#~ msgid "Khmer"
+#~ msgstr "Khmer "
+
+#~ msgid "Kannada"
+#~ msgstr "Canarés"
+
+#~ msgid "Korean"
+#~ msgstr "Coreano"
+
+#~ msgid "Kashmiri"
+#~ msgstr "Cachemira "
+
+#~ msgid "Kurdish"
+#~ msgstr "Kurdo"
+
+#~ msgid "Kirgyz"
+#~ msgstr "Kirgyz"
+
+#~ msgid "Latin"
+#~ msgstr "Latín"
+
+#~ msgid "Lao"
+#~ msgstr "Lao"
+
+#~ msgid "Lithuanian"
+#~ msgstr "Lituano"
+
+#~ msgid "Latvian"
+#~ msgstr "Letón"
+
+#~ msgid "Maithili"
+#~ msgstr "Maithili"
+
+#~ msgid "Macedonian"
+#~ msgstr "Macedonio"
+
+#~ msgid "Malayalam"
+#~ msgstr "Malabar"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongol"
+
+#~ msgid "Marathi"
+#~ msgstr "Maratí"
+
+#~ msgid "Malay"
+#~ msgstr "Malayo"
+
+#~ msgid "Maltese"
+#~ msgstr "Maltés"
+
+#~ msgid "Burmese"
+#~ msgstr "Birmano"
+
+#~ msgid "Norwegian Bokmål"
+#~ msgstr "Noruego Bokmål"
+
+#~ msgid "Nepali"
+#~ msgstr "Nepalés"
+
+#~ msgid "Dutch (Flemish)"
+#~ msgstr "Neerlandés (Flamenco) "
+
+#~ msgid "Norwegian Nynorsk"
+#~ msgstr "Noruego Nynorsk "
+
+#~ msgid "Norwegian"
+#~ msgstr "Noruego"
+
+#~ msgid "Northern Sotho"
+#~ msgstr "Sotho del Norte"
+
+#~ msgid "Oriya"
+#~ msgstr "Oriya"
+
+#~ msgid "Panjabi (Punjabi)"
+#~ msgstr "Panjabi (Punjabi)"
+
+#~ msgid "Polish"
+#~ msgstr "Polaco"
+
+#~ msgid "Portuguese"
+#~ msgstr "Portugués"
+
+#~ msgid "Portuguese (Brazilian)"
+#~ msgstr "Portugués (Brasileño)"
+
+#~ msgid "Romanian"
+#~ msgstr "Rumano"
+
+#~ msgid "Russian"
+#~ msgstr "Ruso"
+
+#~ msgid "Sinhala"
+#~ msgstr "Cingalés"
+
+#~ msgid "Slovak"
+#~ msgstr "Eslovaco "
+
+#~ msgid "Slovenian"
+#~ msgstr "Esloveno"
+
+#~ msgid "Albanian"
+#~ msgstr "Albanés"
+
+#~ msgid "Serbian"
+#~ msgstr "Serbio"
+
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbio (Latín)"
+
+#~ msgid "Sotho, Southern"
+#~ msgstr "Sotho del Sur"
+
+#~ msgid "Swedish"
+#~ msgstr "Sueco"
+
+#~ msgid "Tamil"
+#~ msgstr "Tamil"
+
+#~ msgid "Telugu"
+#~ msgstr "Telugu"
+
+#~ msgid "Tajik"
+#~ msgstr "Tayiko (Persa)"
+
+#~ msgid "Thai"
+#~ msgstr " Tailandés"
+
+#~ msgid "Tagalog"
+#~ msgstr "Tagalo"
+
+#~ msgid "Turkish"
+#~ msgstr "Turco"
+
+#~ msgid "Urdu"
+#~ msgstr "Urdu"
+
+#~ msgid "Ukrainian"
+#~ msgstr "Ucraniano"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnamita"
+
+#~ msgid "Wolof"
+#~ msgstr "Wolof o Volofo"
+
+#~ msgid "Xhosa"
+#~ msgstr "Xhosa"
+
+#~ msgid "Chinese (China)"
+#~ msgstr "Chino (China)"
+
+#~ msgid "Chinese (Hong Kong)"
+#~ msgstr "Chino (Hong Kong)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Chino (Taiwan)"
+
+#~ msgid "Zulu"
+#~ msgstr "Zulú"
+
+#~ msgid ""
+#~ "Your file does not pass the correctness checks (msgfmt -c). Please run "
+#~ "this command on your system to see the errors. We couldn't send you an "
+#~ "email to preserve your work because you haven't registered an email "
+#~ "address. Please do so now to avoid such issues in the future."
+#~ msgstr ""
+#~ "Su archivo no ha superado las pruebas de verificación (msgfmt -c). Por "
+#~ "favor, ejecute este comando en su sistema para conocer los errores. No "
+#~ "podemos enviarle un correo electrónico para proteger su trabajo ya que no "
+#~ "ha registrado una dirección de correo. Por favor, hágalo ahora de modo de "
+#~ "poder prevenir estos inconvenientes en el futuro."
+
+#~ msgid "Error: Only the owner of a lock can remove it."
+#~ msgstr "Error: Sólo el propietario de un candado puede removerlo."
+
+#~ msgid "Lock"
+#~ msgstr "Bloquear"
+
+#~ msgid "Locks"
+#~ msgstr "Bloqueos"
+
+#~ msgid "View complete action log"
+#~ msgstr "Ver todo el registro de acción "
+
+#~ msgid "Requests for access to submit files"
+#~ msgstr "Solicitudes de acceso para enviar archivos"
+
+#~ msgid "By"
+#~ msgstr "Por"
+
+#~ msgid "Add your comment as"
+#~ msgstr "Agregar su comentario como"
+
+#~ msgid "Say it!"
+#~ msgstr "¡Dígalo!"
+
+#~ msgid "Unlock this file when you are finished working with it."
+#~ msgstr "Libere este archivo cuando haya terminado de trabajar en él."
+
+#~ msgid ""
+#~ "User '%(owner)s' has locked this file indicating he's working with it."
+#~ msgstr ""
+#~ "El usuario '%(owner)s' ha bloqueado este archivo para indicar que está "
+#~ "trabajando en él."
 
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: lanzamiento %(release)s"
