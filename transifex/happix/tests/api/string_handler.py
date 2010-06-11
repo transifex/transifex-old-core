@@ -17,19 +17,38 @@ class StringHandlerTests(APIBaseTests):
     def test_api_get(self):
         """ Test GET method."""
 
-        # use existing resource for get in order to avoid re-entering strings
-        # into the db.
-        get_url = reverse('string_resource_push',
-            args=[self.project.slug, 'json'])
 
-        response = self.client['maintainer'].get(get_url,
-            {'languages':'pt_BR,en_US'})
+        # User info for authentication
+        prefix = 'test_suite'
+        password = '123412341234'
+        nick = 'maintainer'
+        username = '%s_%s' % (prefix, nick)
 
-        # Check for a string of the en_US translation
-        self.assertContains(response, '"en_US": "{0} results"')
+        auth_string = create_auth_string(username, password)
+        client = Client()
 
-        # Check for a string of the pt_BR translation
-        self.assertContains(response, '"pt_BR": "{0} resultados"')
+        # Create resource with initial strings to test GET
+        resp = client.post(self.resource_handler_url,json.dumps(self.data),
+                                content_type='application/json',
+                                HTTP_AUTHORIZATION=auth_string)
+        self.assertEqual(resp.status_code, 201)
+
+        response = self.client['maintainer'].get(self.resource_handler_url)
+        json_data = json.loads(response.content)[0] # get 1st resource
+        # Check that we got all translation strings
+        self.assertEqual(len(json_data['strings']),
+                            Translation.objects.filter(
+                            resource__slug = self.data['resource'],
+                            language__code = self.data['language']).count())
+
+        self.assertTrue(self.data['language'] in response.content)
+        for t in Translation.objects.filter(
+                        resource__slug = self.data['resource'],
+                        language__code = self.data['language']):
+            self.assertTrue(t.string in response.content)
+            self.assertTrue(t.source_entity.context in response.content)
+
+
 
     def test_api_post(self):
         """ Test POST method."""
