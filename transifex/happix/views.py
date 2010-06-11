@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
@@ -161,7 +162,8 @@ def view_translation(request, project_slug=None, resource_slug=None, lang_code=N
         { 'project' : translation_resource.project,
           'resource' : translation_resource,
           'target_language' : target_language,
-          'rows' : range(0,10),},
+          'rows' : range(0,10),
+          'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS},
         context_instance = RequestContext(request))
 
 def clone_translation(request, project_slug=None, resource_slug=None,

@@ -14,6 +14,13 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/tx.lotte.js"></script>
   <link media="screen" href="{{ STATIC_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}css/jquery.paginate.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+  {% if WEBTRANS_SUGGESTIONS %}
+    google.load("language", "1");
+    {% include 'js/google-translate.js' %}
+  {% endif %}
+  </script>
 {% endblock %}
 
 {% block title %}
@@ -136,7 +143,7 @@
       <th>{% trans "Source String" %}</th>
       <th>{% trans "Translation" %}</th>
     {% if WEBTRANS_SUGGESTIONS %}      
-      <th class="suggest_container"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
+      <th class="suggest_container" style="padding-left: 20px;"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
     {% endif %}
       <th style="width:48px;">&nbsp;</th>
     </tr>
@@ -150,6 +157,11 @@
     <td class="trans" style="width:45%" >
       <textarea id="translation_{{row}}" class="translation" style="width:100%; height: 100%;"></textarea>
     </td>
+   {% if WEBTRANS_SUGGESTIONS %}    
+    <td class="notes suggest_container location" style="vertical-align:middle;padding-left: 20px;">
+      <a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a>
+    </td>
+   {% endif %}
      <td class="notes" style="vertical-align:middle;padding-left: 20px;">
        <span class="i16 save buttonized_simple" id="save_{{row}}" style="display:none;"></span>
      </td>
