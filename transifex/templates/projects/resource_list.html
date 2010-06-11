@@ -34,26 +34,36 @@
     	});
     </script>
 
-  <ul style="clear:both"> 
+  <table style="clear:both;margin-top:0.5em;width:100%"> 
+   <tr>
+    <th style="color:#666666;font-size:0.85em;font-weight:normal">Resource Name</th>
+    <th style="color:#666666;font-size:0.85em;font-weight:normal">Languages</th>
+    <th style="color:#666666;font-size:0.85em;font-weight:normal">Last Updated</th>
+   </tr>
   {% for res in resources %}
-    <li style="list-style:none;list-style-image:url({{ STATIC_URL }}images/icons/page_white_stack.png)">
-        <a href="{{ res.get_absolute_url }}" style="font-weight:bold" class="res_tipsy_enable" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
+    <tr>
+        <td class="res_tipsy_enable" style="padding-left:1.5em;background:url({{ STATIC_URL }}images/icons/page_white_stack.png) no-repeat left center" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">
+        <a href="{{ res.get_absolute_url }}" style="font-weight:bold">{{ res.name }}</a>
         <sup class="entry_metalink">
            {% if request.user.is_authenticated and is_maintainer %}
              <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
              , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
            {% endif %}
         </sup>
-    </li>
+        </td>
+        <td class="more_table">
+        {% for language in res.available_languages %}
+            <span>{{ language }}</span>
+        {% endfor %}
+        </td>
+        <td class="last_updated">
+        </td>
+    </tr>
   {% endfor %}
-  </ul>
+  </table>
   {% else %}
 
-  <p>{% trans "No resources are registered for this project yet." %}
-<!--    { if perms.projects.add_component or is_maintainer }
-    <a href="{ url component_create project_slug=project.slug }">{% trans "Add one!" %}</a>
-    { endif } -->
-  </p>
+  <p>{% trans "No resources are registered for this project yet." %}</p>
     {% endif %}
   {% endwith %}
   <p class="i16 tip compact clear">
