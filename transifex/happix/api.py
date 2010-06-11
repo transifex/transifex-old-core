@@ -215,7 +215,10 @@ class StringHandler(BaseHandler):
             if not data:
                 return rc.BAD_REQUEST
 
-            strings = data.get('strings', [])
+            try:
+                strings = data.get('strings', [])
+            except AttributeError:
+                return rc.BAD_REQUEST
 
             try:
                 lang = Language.objects.by_code_or_alias(data.get('language',None))
