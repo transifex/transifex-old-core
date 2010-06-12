@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
+{% load statistics_happix %}
 
 
 <div id="resources" class="resources separate">
@@ -36,9 +37,9 @@
 
   <table style="clear:both;margin-top:0.5em;width:100%"> 
    <tr>
-    <th style="color:#666666;font-size:0.85em;font-weight:normal">Resource Name</th>
-    <th style="color:#666666;font-size:0.85em;font-weight:normal">Languages</th>
-    <th style="color:#666666;font-size:0.85em;font-weight:normal">Last Updated</th>
+    <th class="i16 tag" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Resource Name</th>
+    <th class="i16 comment" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Languages</th>
+    <th class="i16 clock" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Last Updated</th>
    </tr>
   {% for res in resources %}
     <tr>
@@ -57,6 +58,9 @@
         {% endfor %}
         </td>
         <td class="last_updated">
+        <span class="res_tipsy_enable" title="Committed by {% last_committer res %}<br/>">
+          {% last_translation_update res %}
+        </span>
         </td>
     </tr>
   {% endfor %}
