@@ -230,15 +230,8 @@ class StringHandler(BaseHandler):
 
             # Get the committer if exists
             committer = None
-            if data.has_key('user'):
-                username = data.get('user',None)
-                if username:
-                    try:
-                        committer = User.objects.get(username=username)
-                    except User.DoesNotExist:
-                        return rc.BAD_REQUEST
-                else:
-                    return rc.BAD_REQUEST
+            if request and hasattr(request, 'user'):
+                committer = getattr(request, 'user', None)
 
             for s in strings:
                 try:
@@ -320,15 +313,8 @@ class StringHandler(BaseHandler):
 
             # Get the committer if exists
             committer = None
-            if data.has_key('user'):
-                username = data.get('user',None)
-                if username:
-                    try:
-                        committer = User.objects.get(username=username)
-                    except User.DoesNotExist:
-                        return rc.BAD_REQUEST
-                else:
-                    return rc.BAD_REQUEST
+            if request and hasattr(request, 'user'):
+                committer = getattr(request, 'user', None)
 
             # check if resource exists
             translation_resource, created = Resource.objects.get_or_create(
