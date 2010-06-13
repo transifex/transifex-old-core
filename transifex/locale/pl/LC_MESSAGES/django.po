@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 07:53+0000\n"
-"PO-Revision-Date: 2010-03-01 11:58+0100\n"
+"PO-Revision-Date: 2010-06-13 21:44+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <trans-pl@lists.fedoraproject.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "Nie zarejestrowano jeszcze historii."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 msgid "Image charts"
-msgstr ""
+msgstr "Wykresy"
 
 #: addons/charts/templates/charts/widget_snippet.html:65
 #: addons/charts/templates/charts/widget_snippet.html:94
@@ -64,15 +64,18 @@ msgid ""
 "simple image.\n"
 "                Perfect for embedding in wiki pages, Trac instances, emails."
 msgstr ""
+"Wyświetla statystyki tłumaczenia na innych stronach jako prosty obraz.\n"
+"                Doskonałe do umieszczania na stronach WWW, stronach Trac i "
+"wiadomościach e-mail."
 
 #: addons/charts/templates/charts/widget_snippet.html:70
 msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
+msgstr "Wykres zawsze wyświetla liczby z systemu Transifex na żywo."
 
 #: addons/charts/templates/charts/widget_snippet.html:71
 #: addons/charts/templates/charts/widget_snippet.html:103
 msgid "Show code snippet for component:"
-msgstr ""
+msgstr "Wyświetlanie kodu dla składnika:"
 
 #: addons/charts/templates/charts/widget_snippet.html:73
 #: addons/charts/templates/charts/widget_snippet.html:105
@@ -86,7 +89,7 @@ msgstr "Ukryte"
 
 #: addons/charts/templates/charts/widget_snippet.html:87
 msgid "Interactive charts"
-msgstr ""
+msgstr "Wykresy interaktywne"
 
 #: addons/charts/templates/charts/widget_snippet.html:98
 msgid ""
@@ -94,16 +97,20 @@ msgid ""
 "interactive chart.\n"
 "                This requires modifications to your homepage's HTML code."
 msgstr ""
+"Wyświetla statystyki tłumaczenia na innych stronach jako interaktywny "
+"wykres.\n"
+"                Wymagane są modyfikacje w kodzie HTML strony."
 
 #: addons/charts/templates/charts/widget_snippet.html:101
 msgid ""
 "By tweaking the code you can adjust verbosity, dimensions and colors of the "
 "chart"
 msgstr ""
+"Zmieniając kod można dostosować ilość informacji, wymiary i kolory wykresu"
 
 #: addons/charts/templates/charts/widget_snippet.html:121
 msgid "Interactive and Image Charts"
-msgstr ""
+msgstr "Wykresy interaktywne i proste"
 
 #: addons/charts/templates/charts/widget_snippet.html:122
 msgid ""
@@ -112,11 +119,16 @@ msgid ""
 "You need to have at least one component with statistics to export charts "
 "from Transifex."
 msgstr ""
+"Projekt nie posiada żadnych składników z aktualnymi statystykami. \n"
+"Wymagany jest co najmniej jeden składnik ze statystykami, aby eksportować "
+"wykresy z systemu Transifex."
 
 #: addons/locks/handlers.py:58
 msgid ""
 "Couldn't lock file, this means that you can send files only for reviewing."
 msgstr ""
+"Nie można zablokować pliku, co oznacza, że można wysyłać pliki tylko do "
+"recenzji."
 
 #: addons/locks/models.py:65
 #, python-format
@@ -124,24 +136,28 @@ msgid ""
 "User '%(user)s' has no permission to submit files for or coordinate  '%"
 "(pofile)s'"
 msgstr ""
+"Użytkownik \"%(user)s\" nie posiada uprawnień do wysyłania plików lub "
+"koordynowania \"%(pofile)s\""
 
 #: addons/locks/models.py:77
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
+"Użytkownik \"%(user)s\" posiada maksymalną dozwoloną liczbę blokad "
+"(%(locks)i)."
 
 #: addons/locks/models.py:158
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
-msgstr ""
+msgstr "Użytkownik \"%(user)s\" nie może usunąć blokady \"%(lock)s\""
 
 #: addons/locks/notifications.py:15
 msgid "Lock is expring"
-msgstr ""
+msgstr "Blokada wygasa"
 
 #: addons/locks/notifications.py:16
 msgid "when a lock for file is expiring"
-msgstr ""
+msgstr "kiedy blokada pliku wygasa"
 
 #: addons/locks/views.py:42
 msgid "Lock removed."
@@ -160,17 +176,15 @@ msgstr ""
 #: addons/locks/templates/pofile_lock.html:20
 #, python-format
 msgid "This file has been locked by user '%(owner)s'."
-msgstr ""
+msgstr "Ten plik został zablokowany przez użytkownika \"%(owner)s\"."
 
 #: addons/locks/templates/pofile_lock.html:22
-#, fuzzy
 msgid "Click on it to unlock the file."
-msgstr "Proszę podać plik docelowy do wysłania."
+msgstr "Naciśnięcie odblokuje plik."
 
 #: addons/locks/templates/pofile_lock.html:24
-#, fuzzy
 msgid "Time left:"
-msgstr "Oś czasu"
+msgstr "Pozostały czas:"
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
@@ -183,14 +197,23 @@ msgid_plural ""
 "                Extend lock by %(hours)s hours.\n"
 "            "
 msgstr[0] ""
+"\n"
+"                Przedłuża blokadę o %(hours)s godzinę.\n"
+"            "
 msgstr[1] ""
+"\n"
+"                Przedłuża blokadę o %(hours)s godziny.\n"
+"            "
 msgstr[2] ""
+"\n"
+"                Przedłuża blokadę o %(hours)s godzin.\n"
+"            "
 
 #: addons/locks/templates/pofile_lock.html:46
-#, fuzzy
 msgid "Lock and download this file to notify others you're working with it."
 msgstr ""
-"Można zablokować ten plik, aby powiadomić innych, że nad nim pracujesz."
+"Można zablokować i pobrać ten plik, aby powiadomić innych, że nad nim "
+"pracujesz."
 
 #: addons/locks/templates/pofile_lock.html:51
 msgid "This file is unlocked. Most likely no one is working with it right now."
@@ -200,7 +223,7 @@ msgstr ""
 #: addons/locks/templates/locks/component.html:9
 #: translations/templates/component_submit.html:31
 msgid "This file is locked by someone else."
-msgstr ""
+msgstr "Ten plik został zablokowany przez kogoś innego."
 
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
@@ -209,44 +232,46 @@ msgid ""
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
 "a> is about to expire on %(expires)s\n"
 msgstr ""
+"\n"
+"Blokada <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
+"a> wygaśnie za %(expires)s\n"
 
 #: addons/presubmit_checks/handlers.py:35
 msgid "You are only allowed to upload PO files (*.po)!"
-msgstr ""
+msgstr "Można wysyłać tylko pliki PO (*.po)."
 
 #: addons/presubmit_checks/handlers.py:39
 msgid "You have submitted empty file!"
-msgstr ""
+msgstr "Wysłano pusty plik."
 
 #: addons/presubmit_checks/handlers.py:48
 msgid "Uploaded file contains DOS newlines (\\r)!"
-msgstr ""
+msgstr "Wysłano plik zawierające znaki końca wiersza systemu DOS (\\r)."
 
 #: addons/presubmit_checks/handlers.py:59
 #, python-format
 msgid "Uploaded file header doesn't have '%s' field!"
-msgstr ""
+msgstr "Nagłówek wysłanego pliku nie posiada pola \"%s\"."
 
 #: addons/presubmit_checks/handlers.py:65
 msgid "Only UTF-8 encoded files are allowed!"
-msgstr ""
+msgstr "Dozwolone są pliki zakodowane w UTF-8."
 
 #: addons/presubmit_checks/handlers.py:69
 msgid "Uploaded file doesn't contain any translated entries!"
-msgstr ""
+msgstr "Wysłany plik nie zawiera żadnych przetłumaczonych wpisów."
 
 #: addons/presubmit_checks/handlers.py:86
-#, fuzzy
 msgid "Your file has been e-mailed to you to avoid loss of any work."
-msgstr ""
-"Plik nie przechodzi sprawdzenia poprawności (msgfmt -c). Plik został wysłany "
-"na adres e-mail, aby uniknąć utraty pracy."
+msgstr "Plik został wysłany na adres e-mail, aby uniknąć utraty pracy."
 
 #: addons/presubmit_checks/handlers.py:90
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
 msgstr ""
+"Nie można wysłać adresu e-mail, aby zachować pracę, ponieważ nie "
+"zarejestrowano adresu e-mail."
 
 #: addons/repowatch/models.py:28
 #, python-format
@@ -274,7 +299,6 @@ msgid "Watch it"
 msgstr "Obserwuj"
 
 #: addons/repowatch/views.py:65
-#, fuzzy
 msgid "Stop watching"
 msgstr "Przestań obserwować"
 
@@ -388,30 +412,32 @@ msgstr "Profil"
 #: addons/widgets/templates/project_widgets.html:14
 #: addons/widgets/templates/widgets/project.html:7
 msgid "Widgets"
-msgstr ""
+msgstr "Widgety"
 
 #: addons/widgets/templates/project_widgets.html:48
 msgid "Widgets, buttons, etc"
-msgstr ""
+msgstr "Widgety, przyciski itp."
 
 #: addons/widgets/templates/project_widgets.html:49
 msgid ""
 "Here are some widgets, buttons and other cool stuff you can add to your "
 "homepage!"
 msgstr ""
+"Kilka widgetów, przycisków i innych fajnych rzeczy, które można dodać do "
+"własnej strony."
 
 #: addons/widgets/templates/project_widgets.html:54
-#, fuzzy
 msgid "Userbars"
-msgstr "Użytkownik"
+msgstr "Paski użytkownika"
 
 #: addons/widgets/templates/project_widgets.html:63
 msgid "You can insert userbars to forums, e-mail signatures etc."
 msgstr ""
+"Można umieścić pasek użytkownika na forach, podpisach wiadomości e-mail itp."
 
 #: addons/widgets/templates/project_widgets.html:64
 msgid "Show code snippet for userbar:"
-msgstr ""
+msgstr "Wyświetlanie kodu na pasku użytkownika:"
 
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
@@ -543,7 +569,7 @@ msgstr "Wyszukiwanie nazwy użytkownika"
 
 #: projects/forms.py:55
 msgid "Free for all"
-msgstr ""
+msgstr "Dostęp dla wszystkich"
 
 #: projects/forms.py:56
 msgid ""
@@ -558,11 +584,20 @@ msgid ""
 "are\n"
 "                              submitted by email or to a separate branch."
 msgstr ""
+"Każdy zalogowany użytkownik może wysyłać pliki\n"
+"                              do projektu. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Wyobraźmy sobie</a> "
+"wszystkich \n"
+"                              ludzi, dzielących się światem. Zalecane dla \n"
+"                              szybkich tłumaczeń, a także kiedy \n"
+"                              tłumaczenia są recenzowane przed wysłaniem, \n"
+"                              np. kiedy są wysyłane na adres e-mail lub do \n"
+"                              oddzielnej gałęzi."
 
 #: projects/forms.py:66
-#, fuzzy
 msgid "Limited access"
-msgstr "Zabroniony dostęp"
+msgstr "Ograniczony dostęp"
 
 #: projects/forms.py:67
 msgid ""
@@ -574,11 +609,15 @@ msgid ""
 "                              translation files. Recommended for most \n"
 "                              projects."
 msgstr ""
+"Udostępnia projekt konkretnym osobom. Zespoły \n"
+"                              tłumaczenia będą miały dostęp tylko do \n"
+"                              plików swojego języka, a globalni redaktorzy \n"
+"                              będą mieli dostęp do wszystkich plików \n"
+"                              tłumaczeń. Zalecane dla większości projektów."
 
 #: projects/forms.py:75
-#, fuzzy
 msgid "Outsourced access"
-msgstr "Zabroniony dostęp"
+msgstr "Dostęp z zewnątrz"
 
 #: projects/forms.py:76
 msgid ""
@@ -592,6 +631,13 @@ msgid ""
 "                              non-upstream projects such as distribution \n"
 "                              packages, desktop environment modules, etc."
 msgstr ""
+"Używa zespołów i tłumaczy innego projektu, \n"
+"                              powierzając mu kontrolę dostępu nad \n"
+"                              projektem. Jeśli dana osoba posiada dostęp \n"
+"                              do tamtego projektu, posiada go także do \n"
+"                              tego. Zalecane zależnym projektom, takim jak \n"
+"                              pakiety dystrybucji, moduły środowisk \n"
+"                              graficznych itp."
 
 #: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
@@ -616,13 +662,15 @@ msgstr "Wyszukiwanie składnika"
 
 #: projects/models.py:143
 msgid "Private"
-msgstr ""
+msgstr "Prywatny"
 
 #: projects/models.py:144
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr ""
+"Prywatny projekt jest widoczny tylko dla użytkownika i jego zespołu. Co "
+"więcej, jest on ograniczony zgodnie z planem bilingowym konta użytkownika."
 
 #: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
@@ -718,21 +766,20 @@ msgid "Maintainers"
 msgstr "Opiekunowie"
 
 #: projects/models.py:181
-#, fuzzy
 msgid "Outsource project"
-msgstr "Usuń projekt"
+msgstr "Outsourcing projektu"
 
 #: projects/models.py:182
 msgid "Project that owns the access control of this project."
-msgstr ""
+msgstr "Projekt, który kontroluje dostęp do tego projektu."
 
 #: projects/models.py:185
 msgid "Owner"
-msgstr ""
+msgstr "Właściciel"
 
 #: projects/models.py:186
 msgid "The user who owns this project."
-msgstr ""
+msgstr "Użytkownik, który jest właścicielem tego projektu."
 
 #: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
@@ -900,9 +947,8 @@ msgid "Is allowed to submit file to this project"
 msgstr "Może wysyłać pliki do tego projektu"
 
 #: projects/permissions/project.py:117
-#, fuzzy
 msgid "Is allowed to browse this private project"
-msgstr "Może opiekować się tym projektem"
+msgstr "Może przeglądać ten prywatny projektem"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -1952,9 +1998,8 @@ msgstr ""
 
 #: templates/projects/component_detail.html:65
 #: templates/projects/project_detail.html:22
-#, fuzzy
 msgid "Private Project"
-msgstr "Najnowsze projekty"
+msgstr "Prywatny projekt"
 
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
@@ -2347,16 +2392,16 @@ msgid ""
 "You have the following choices to manage how people can have submission "
 "access to your project:"
 msgstr ""
+"Dostępne są następujące sposoby na zarządzanie dostępem do wysyłania dla "
+"projektu:"
 
 #: templates/projects/project_form_access_control.html:58
-#, fuzzy
 msgid "Go to the project writers page."
-msgstr "Przejdź do strony tego projektu"
+msgstr "Przejście do strony twórców projektu."
 
 #: templates/projects/project_form_access_control.html:62
-#, fuzzy
 msgid "Save Access Control Settings"
-msgstr "Kontrola dostępu"
+msgstr "Zapisz ustawienia kontroli dostępu"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -2373,11 +2418,12 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Modyfikowanie <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_permissions.html:26
-#, fuzzy
 msgid ""
 "Give write access to a translator to send translations to your project "
 "independent of a translation team."
-msgstr "Udzielenie dostępu tłumaczowi, aby wysyłał tłumaczenia do projektu"
+msgstr ""
+"Udzielenie dostępu do zapisu tłumaczowi, aby wysyłał tłumaczenia do projektu "
+"niezależnie od zespołu tłumaczenia."
 
 #: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
@@ -2487,14 +2533,13 @@ msgid "Components:"
 msgstr "Składniki:"
 
 #: templates/projects/release_detail.html:86
-#, fuzzy
 msgid "Click here to show or hide the component list"
-msgstr "Proszę nacisnąć tutaj, aby wyświetlić lub ukryć pliki źródłowe"
+msgstr "Proszę nacisnąć tutaj, aby wyświetlić lub ukryć listę składników"
 
 #: templates/projects/release_detail.html:87
 #, python-format
 msgid "This release has %(components_number)s components."
-msgstr ""
+msgstr "To wydanie zawiera %(components_number)s składników."
 
 #: templates/projects/release_detail.html:103
 msgid "Translation statistics"
@@ -2792,9 +2837,8 @@ msgstr ""
 "(project_name)s?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-#, fuzzy
 msgid "Teams"
-msgstr "Zespoły:"
+msgstr "Zespoły"
 
 #: templates/teams/team_detail.html:22
 #, python-format
@@ -2855,9 +2899,8 @@ msgid "Delete team"
 msgstr "Usuń zespół"
 
 #: templates/teams/team_form.html:10
-#, fuzzy
 msgid "Add Team"
-msgstr "Zespół"
+msgstr "Dodaj zespół"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2909,9 +2952,8 @@ msgid "Request team"
 msgstr "Zażądaj zespół"
 
 #: templates/teams/team_off.html:12
-#, fuzzy
 msgid "This project is not using Translation Teams"
-msgstr "Zespoły tłumaczenia projektu %(project_name)s"
+msgstr "Ten projekt nie używa zespołów tłumaczenia"
 
 #: templates/teams/team_off.html:17
 #, python-format
@@ -2924,6 +2966,13 @@ msgid ""
 "'%(outsource_project)s'.\n"
 "        "
 msgstr ""
+"\n"
+"            Ten projekt nie zarządza swoimi własnymi zespołami, ale wybrał "
+"powierzenie tłumaczenia projektowi \"<a href=%(outsource_url)s>%(outsource_"
+"project)s</a>\".\n"
+"            Aby wysyłać tłumaczenia, należy dołączyć do zespołu "
+"\"%(outsource_project)s\".\n"
+"        "
 
 #: templates/teams/team_off.html:22
 msgid ""
@@ -2932,6 +2981,10 @@ msgid ""
 "and thus no translation teams exist.\n"
 "        "
 msgstr ""
+"\n"
+"            Ten projekt umożliwia wysyłanie tłumaczeń <em>każdemu</em>, "
+"dlatego nie istnieje żaden zespół tłumaczenia.\n"
+"        "
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -3681,9 +3734,8 @@ msgstr "Wyświetl "
 #: translations/templates/comp_lang_stats_table.html:40
 #: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#, fuzzy
 msgid "Download for viewing "
-msgstr "Wyślij do recenzji"
+msgstr "Pobierz do przejrzenia "
 
 #: translations/templates/comp_lang_stats_table.html:55
 #: translations/templates/comp_stats_table.html:72
@@ -3696,6 +3748,8 @@ msgid ""
 "See the outsource team for this language. You will be redirected to another "
 "project team page."
 msgstr ""
+"Wyświetla zewnętrzny zespół dla tego języka. Użytkownik zostanie "
+"przekierowany na stronę zespołu innego projektu."
 
 #: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
@@ -3783,9 +3837,9 @@ msgstr ""
 "Ta wartość może zawierać tylko litery, liczby i podkreślniki w unikodzie."
 
 #: txcommon/i18n.py:19
-#, fuzzy, python-format
+#, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
-msgstr "Nie można otworzyć pliku LINGUAS: %s"
+msgstr "Nie można otworzyć pliku LINGUAS (%(file)s): %(exc)s"
 
 #: txcommon/models.py:12
 msgid "Female"
@@ -4155,6 +4209,8 @@ msgid ""
 "You have to provide only the size as             an integer (both sides will "
 "be equal) and optionally, the             username."
 msgstr ""
+"Należy podać rozmiar jako liczbę całkowitą (obie strony będą równe) i "
+"opcjonalnie nazwę użytkownika."
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -4226,40 +4282,50 @@ msgid ""
 "Your request could not be completed. The admins have been notified to take a "
 "closer look at it. Please try again in a few minutes"
 msgstr ""
+"Żądanie nie mogło zostać ukończone. Administratorzy zostali powiadomieni, "
+"aby przyjrzeć się temu bliżej. Proszę spróbować ponownie za kilka minut"
 
 #: vcs/lib/exceptions/__init__.py:40
 msgid "Setup of the repository locally could not be done successfully."
 msgstr ""
+"Ustawienie lokalnego repozytorium nie mogło zostać pomyślnie ukończone."
 
 #: vcs/lib/exceptions/__init__.py:47
 msgid ""
 "The local repository has not been setup yet. Please, first do a check-out of "
 "the repository."
 msgstr ""
+"Lokalne repozytorium nie zostało jeszcze ustawione. Proszę wykonać pierwsze "
+"pobranie repozytorium."
 
 #: vcs/lib/exceptions/__init__.py:54
 msgid "Unable to pull data from the remote repository. Is the remote host up?"
 msgstr ""
+"Nie można pobrać danych ze zdalnego repozytorium. Czy zdalny komputer działa?"
 
 #: vcs/lib/exceptions/__init__.py:61
 msgid ""
 "Cleanup of the repository failed. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"Wyczyszczenie repozytorium nie powiodło się. Administratorzy zostali "
+"powiadomieni, aby przyjrzeć się temu bliżej."
 
 #: vcs/lib/exceptions/__init__.py:67
 msgid "Commit to the repository failed."
-msgstr ""
+msgstr "Wysłanie do repozytorium nie powiodło się."
 
 #: vcs/lib/exceptions/__init__.py:72
 msgid "Pushing to the remote repository failed."
-msgstr ""
+msgstr "Wysłanie do zdalnego repozytorium nie powiodło się."
 
 #: vcs/lib/exceptions/__init__.py:78
 msgid ""
 "Given file does not have a revision. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"Podany plik nie zawiera wersji. Administratorzy zostali powiadomieni, aby "
+"przyjrzeć się temu bliżej."
 
 #: webtrans/fields.py:55
 #, python-format
@@ -4279,363 +4345,3 @@ msgstr "Wstecz"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Dalej"
-
-#~ msgid "Afrikaans"
-#~ msgstr "afrykanerski"
-
-#~ msgid "Amharic"
-#~ msgstr "amharski"
-
-#~ msgid "Arabic"
-#~ msgstr "arabski"
-
-#~ msgid "Assamese"
-#~ msgstr "asamski"
-
-#~ msgid "Asturian"
-#~ msgstr "asturyjski"
-
-#~ msgid "Azerbaijani"
-#~ msgstr "azerbejdżański"
-
-#~ msgid "Balochi"
-#~ msgstr "beludżyjski"
-
-#~ msgid "Belarusian"
-#~ msgstr "białoruski"
-
-#~ msgid "Bulgarian"
-#~ msgstr "bułgarski"
-
-#~ msgid "Bengali"
-#~ msgstr "bengalski"
-
-#~ msgid "Bengali (India)"
-#~ msgstr "bengalski (Indie)"
-
-#~ msgid "Tibetan"
-#~ msgstr "tybetański"
-
-#~ msgid "Bosnian"
-#~ msgstr "bośniacki"
-
-#~ msgid "Catalan (Valencian)"
-#~ msgstr "kataloński (walencki)"
-
-#~ msgid "Czech"
-#~ msgstr "czeski"
-
-#~ msgid "Welsh"
-#~ msgstr "walijski"
-
-#~ msgid "Danish"
-#~ msgstr "duński"
-
-#~ msgid "German"
-#~ msgstr "niemiecki"
-
-#~ msgid "Swiss German"
-#~ msgstr "niemiecki szwajcarski"
-
-#~ msgid "Dzongkha"
-#~ msgstr "dzongka"
-
-#~ msgid "Greek"
-#~ msgstr "grecki"
-
-#~ msgid "English"
-#~ msgstr "angielski"
-
-#~ msgid "English (United Kingdom)"
-#~ msgstr "angielski (Zjednoczone Królestwo)"
-
-#~ msgid "English (United States)"
-#~ msgstr "angielski (Stany Zjednoczone)"
-
-#~ msgid "English (South Africa)"
-#~ msgstr "angielski (Afryka Południowa)"
-
-#~ msgid "Esperanto"
-#~ msgstr "esperanto"
-
-#~ msgid "Spanish (Castilian)"
-#~ msgstr "hiszpański (kastylijski)"
-
-#~ msgid "Spanish (Argentinian)"
-#~ msgstr "hiszpański (argentyński)"
-
-#~ msgid "Spanish (Mexican)"
-#~ msgstr "hiszpański (meksykański)"
-
-#~ msgid "Estonian"
-#~ msgstr "estoński"
-
-#~ msgid "Basque"
-#~ msgstr "baskijski"
-
-#~ msgid "Persian"
-#~ msgstr "perski"
-
-#~ msgid "Finnish"
-#~ msgstr "fiński"
-
-#~ msgid "French"
-#~ msgstr "francuski"
-
-#~ msgid "Friulian"
-#~ msgstr "friulski"
-
-#~ msgid "Western Frisian"
-#~ msgstr "zachodniofryzyjski"
-
-#~ msgid "Irish"
-#~ msgstr "irlandzki"
-
-#~ msgid "Galician"
-#~ msgstr "galicyjski"
-
-#~ msgid "Gujarati"
-#~ msgstr "gudżarati"
-
-#~ msgid "Hebrew"
-#~ msgstr "hebrajski"
-
-#~ msgid "Hindi"
-#~ msgstr "hindi"
-
-#~ msgid "Croatian"
-#~ msgstr "chorwacki"
-
-#~ msgid "Haitian (Haitian Creole)"
-#~ msgstr "haitański (kreolski haitański)"
-
-#~ msgid "Hungarian"
-#~ msgstr "węgierski"
-
-#~ msgid "Armenian"
-#~ msgstr "ormiański"
-
-#~ msgid "Indonesian"
-#~ msgstr "indonezyjski"
-
-#~ msgid "Iloko"
-#~ msgstr "iloko"
-
-#~ msgid "Icelandic"
-#~ msgstr "islandzki"
-
-#~ msgid "Italian"
-#~ msgstr "włoski"
-
-#~ msgid "Japanese"
-#~ msgstr "japoński"
-
-#~ msgid "Georgian"
-#~ msgstr "gruziński"
-
-#~ msgid "Khmer"
-#~ msgstr "khmerski"
-
-#~ msgid "Kannada"
-#~ msgstr "kannada"
-
-#~ msgid "Korean"
-#~ msgstr "koreański"
-
-#~ msgid "Kashmiri"
-#~ msgstr "kaszmirski"
-
-#~ msgid "Kurdish"
-#~ msgstr "kurdyjski"
-
-#~ msgid "Kirgyz"
-#~ msgstr "kirgiski"
-
-#~ msgid "Latin"
-#~ msgstr "łacina"
-
-#~ msgid "Lao"
-#~ msgstr "laotański"
-
-#~ msgid "Lithuanian"
-#~ msgstr "litewski"
-
-#~ msgid "Latvian"
-#~ msgstr "łotewski"
-
-#~ msgid "Maithili"
-#~ msgstr "maithili"
-
-#~ msgid "Macedonian"
-#~ msgstr "macedoński"
-
-#~ msgid "Malayalam"
-#~ msgstr "malajalam"
-
-#~ msgid "Mongolian"
-#~ msgstr "mongolski"
-
-#~ msgid "Marathi"
-#~ msgstr "marathi"
-
-#~ msgid "Malay"
-#~ msgstr "malajski"
-
-#~ msgid "Maltese"
-#~ msgstr "maltański"
-
-#~ msgid "Burmese"
-#~ msgstr "birmański"
-
-#~ msgid "Norwegian Bokmål"
-#~ msgstr "norweski bokmål"
-
-#~ msgid "Nepali"
-#~ msgstr "nepalski"
-
-#~ msgid "Dutch (Flemish)"
-#~ msgstr "holenderski (flamandzki)"
-
-#~ msgid "Norwegian Nynorsk"
-#~ msgstr "norweski nynorsk"
-
-#~ msgid "Norwegian"
-#~ msgstr "norweski"
-
-#~ msgid "Northern Sotho"
-#~ msgstr "północne sotho"
-
-#~ msgid "Oriya"
-#~ msgstr "orija"
-
-#~ msgid "Panjabi (Punjabi)"
-#~ msgstr "pendżabski (Pendżab)"
-
-#~ msgid "Polish"
-#~ msgstr "polski"
-
-#~ msgid "Portuguese"
-#~ msgstr "portugalski"
-
-#~ msgid "Portuguese (Brazilian)"
-#~ msgstr "portugalski (brazylijski)"
-
-#~ msgid "Romanian"
-#~ msgstr "rumuński"
-
-#~ msgid "Russian"
-#~ msgstr "rosyjski"
-
-#~ msgid "Sinhala"
-#~ msgstr "syngaleski"
-
-#~ msgid "Slovak"
-#~ msgstr "słowacki"
-
-#~ msgid "Slovenian"
-#~ msgstr "słoweński"
-
-#~ msgid "Albanian"
-#~ msgstr "albański"
-
-#~ msgid "Serbian"
-#~ msgstr "serbski"
-
-#~ msgid "Serbian (Latin)"
-#~ msgstr "serbski (alfabet łaciński)"
-
-#~ msgid "Sotho, Southern"
-#~ msgstr "południowe sotho"
-
-#~ msgid "Swedish"
-#~ msgstr "szwedzki"
-
-#~ msgid "Tamil"
-#~ msgstr "tamilski"
-
-#~ msgid "Telugu"
-#~ msgstr "telugu"
-
-#~ msgid "Tajik"
-#~ msgstr "tadżycki"
-
-#~ msgid "Thai"
-#~ msgstr "tajski"
-
-#~ msgid "Tagalog"
-#~ msgstr "tagalog"
-
-#~ msgid "Turkish"
-#~ msgstr "turecki"
-
-#~ msgid "Urdu"
-#~ msgstr "urdu"
-
-#~ msgid "Ukrainian"
-#~ msgstr "ukraiński"
-
-#~ msgid "Vietnamese"
-#~ msgstr "wietnamski"
-
-#~ msgid "Wolof"
-#~ msgstr "wolof"
-
-#~ msgid "Xhosa"
-#~ msgstr "xhosa"
-
-#~ msgid "Chinese (China)"
-#~ msgstr "chiński (Chiny)"
-
-#~ msgid "Chinese (Hong Kong)"
-#~ msgstr "chiński (Hong Kong)"
-
-#~ msgid "Chinese (Taiwan)"
-#~ msgstr "chiński (Tajwan)"
-
-#~ msgid "Zulu"
-#~ msgstr "zulu"
-
-#~ msgid ""
-#~ "Your file does not pass the correctness checks (msgfmt -c). Please run "
-#~ "this command on your system to see the errors. We couldn't send you an "
-#~ "email to preserve your work because you haven't registered an email "
-#~ "address. Please do so now to avoid such issues in the future."
-#~ msgstr ""
-#~ "Plik nie przechodzi sprawdzenia poprawności (msgfmt -c). Proszę wykonać "
-#~ "te polecenie w systemie, aby zobaczyć błędy. Nie można było wysłać pliku "
-#~ "na adres e-mail, aby uniknąć utraty pracy, ponieważ nie zarejestrowano "
-#~ "adresu e-mail. Proszę to teraz zrobić, aby uniknąć takich problemów w "
-#~ "przyszłości."
-
-#~ msgid "Error: Only the owner of a lock can remove it."
-#~ msgstr "Błąd: tylko właściciel blokady może ją usunąć."
-
-#~ msgid "Lock"
-#~ msgstr "Blokada"
-
-#~ msgid "Locks"
-#~ msgstr "Blokady"
-
-#~ msgid "View complete action log"
-#~ msgstr "Wyświetl pełny dziennik czynności"
-
-#~ msgid "Requests for access to submit files"
-#~ msgstr "Żądania dostępu do wysyłania plików"
-
-#~ msgid "By"
-#~ msgstr "autorstwa"
-
-#~ msgid "Add your comment as"
-#~ msgstr "Dodaj komentarz jako"
-
-#~ msgid "Say it!"
-#~ msgstr "Powiedz to!"
-
-#~ msgid "Unlock this file when you are finished working with it."
-#~ msgstr "Należy odblokować ten plik po ukończeniu nad nim pracy."
-
-#~ msgid ""
-#~ "User '%(owner)s' has locked this file indicating he's working with it."
-#~ msgstr ""
-#~ "Użytkownik \"%(owner)s\" zablokował ten plik, wskazując że nad nim "
-#~ "pracuje."
