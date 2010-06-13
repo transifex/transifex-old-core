@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 08:08+0000\n"
-"PO-Revision-Date: 2010-04-04 10:52+0300\n"
+"PO-Revision-Date: 2010-06-13 22:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.1\n"
 
 #: actionlog/filters.py:12
 msgid "Search for an username or leave it blank"
@@ -54,7 +54,7 @@ msgstr "Ще немає записів у історії."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 msgid "Image charts"
-msgstr ""
+msgstr "Зображення-діаграми"
 
 #: addons/charts/templates/charts/widget_snippet.html:65
 #: addons/charts/templates/charts/widget_snippet.html:94
@@ -68,15 +68,19 @@ msgid ""
 "simple image.\n"
 "                Perfect for embedding in wiki pages, Trac instances, emails."
 msgstr ""
+"Показ статистичних даних вашого проекту на вашому власному веб-сайті у форматі "
+"простого зображення.\n"
+"                Чудова можливість для вбудовування до сторінок вікі, Trac та "
+"повідомлень електронної пошти."
 
 #: addons/charts/templates/charts/widget_snippet.html:70
 msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
+msgstr "Діаграма завжди відповідатиме поточним цифрам вашого проекту Transifex."
 
 #: addons/charts/templates/charts/widget_snippet.html:71
 #: addons/charts/templates/charts/widget_snippet.html:103
 msgid "Show code snippet for component:"
-msgstr ""
+msgstr "Фрагмент коду для компонента:"
 
 #: addons/charts/templates/charts/widget_snippet.html:73
 #: addons/charts/templates/charts/widget_snippet.html:105
@@ -90,7 +94,7 @@ msgstr "Прихований"
 
 #: addons/charts/templates/charts/widget_snippet.html:87
 msgid "Interactive charts"
-msgstr ""
+msgstr "Інтерактивні діаграми"
 
 #: addons/charts/templates/charts/widget_snippet.html:98
 msgid ""
@@ -98,16 +102,21 @@ msgid ""
 "interactive chart.\n"
 "                This requires modifications to your homepage's HTML code."
 msgstr ""
+"Показ статистики перекладу вашого проекту на вашому веб-сайті у формі "
+"інтерактивної діаграми.\n"
+"                Показ потребуватиме зміни коду HTML вашої домашньої сторінки."
 
 #: addons/charts/templates/charts/widget_snippet.html:101
 msgid ""
 "By tweaking the code you can adjust verbosity, dimensions and colors of the "
 "chart"
 msgstr ""
+"Зміною коду ви зможете визначити рівень докладності, розмірності зображення та "
+"кольори діаграми"
 
 #: addons/charts/templates/charts/widget_snippet.html:121
 msgid "Interactive and Image Charts"
-msgstr ""
+msgstr "Інтерактивні діаграми та діаграми-зображення"
 
 #: addons/charts/templates/charts/widget_snippet.html:122
 msgid ""
@@ -116,11 +125,16 @@ msgid ""
 "You need to have at least one component with statistics to export charts "
 "from Transifex."
 msgstr ""
+"Вибачте, але у вашому проекті немає компонентів з поточною статистикою. \n"
+"Для експортування діаграми з Transifex вам слід створити принаймні один "
+"компонент."
 
 #: addons/locks/handlers.py:58
 msgid ""
 "Couldn't lock file, this means that you can send files only for reviewing."
 msgstr ""
+"Не вдалося заблокувати файл, це означає, що ви можете надсилати файли лише для "
+"рецензування."
 
 #: addons/locks/models.py:65
 #, python-format
@@ -128,24 +142,28 @@ msgid ""
 "User '%(user)s' has no permission to submit files for or coordinate  '%"
 "(pofile)s'"
 msgstr ""
+"Користувач «%(user)s» немає прав доступу до надсилання та координування "
+"перекладу «%(pofile)s»"
 
 #: addons/locks/models.py:77
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
+"Користувачем «%(user)s» вже створено максимально можливу кількість блокувань "
+"(%(locks)i)."
 
 #: addons/locks/models.py:158
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
-msgstr ""
+msgstr "Користувач «%(user)s» не має права вилучати блокування «%(lock)s»"
 
 #: addons/locks/notifications.py:15
 msgid "Lock is expring"
-msgstr ""
+msgstr "Строк дії блокування вичерпано"
 
 #: addons/locks/notifications.py:16
 msgid "when a lock for file is expiring"
-msgstr ""
+msgstr "термін дії блокування файла"
 
 #: addons/locks/views.py:42
 msgid "Lock removed."
@@ -163,17 +181,15 @@ msgstr "Блокування створено. Не забудьте вилуч�
 #: addons/locks/templates/pofile_lock.html:20
 #, python-format
 msgid "This file has been locked by user '%(owner)s'."
-msgstr ""
+msgstr "Цей файл було заблоковано користувачем «%(owner)s»."
 
 #: addons/locks/templates/pofile_lock.html:22
-#, fuzzy
 msgid "Click on it to unlock the file."
-msgstr "Вкажіть ціль для файла, що вивантажується."
+msgstr "Натисніть, щоб розблокувати файл."
 
 #: addons/locks/templates/pofile_lock.html:24
-#, fuzzy
 msgid "Time left:"
-msgstr "Розклад"
+msgstr "Залишилось часу:"
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
@@ -186,13 +202,22 @@ msgid_plural ""
 "                Extend lock by %(hours)s hours.\n"
 "            "
 msgstr[0] ""
+"\n"
+"                Продовжити блокування на %(hours)s годину.\n"
+"            "
 msgstr[1] ""
+"\n"
+"                Продовжити блокування на %(hours)s години.\n"
+"            "
 msgstr[2] ""
+"\n"
+"                Продовжити блокування на %(hours)s годин.\n"
+"            "
 
 #: addons/locks/templates/pofile_lock.html:46
-#, fuzzy
 msgid "Lock and download this file to notify others you're working with it."
-msgstr "Заблокувати файл, щоб сповістити інших, що ви над ним працюєте."
+msgstr ""
+"Заблокувати і звантажити файл, щоб сповістити інших, що ви над ним працюєте."
 
 #: addons/locks/templates/pofile_lock.html:51
 msgid "This file is unlocked. Most likely no one is working with it right now."
@@ -201,7 +226,7 @@ msgstr "Цей файл розблоковано. Швидше за все, на
 #: addons/locks/templates/locks/component.html:9
 #: translations/templates/component_submit.html:31
 msgid "This file is locked by someone else."
-msgstr ""
+msgstr "Цей файл заблоковано іншим користувачем."
 
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
@@ -210,44 +235,50 @@ msgid ""
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
 "a> is about to expire on %(expires)s\n"
 msgstr ""
+"\n"
+"Термін блокування <a href=\"http://%(current_site)s%(component_url)s\">"
+"%(pofile)s</"
+"a> буде вичерпано %(expires)s\n"
 
 #: addons/presubmit_checks/handlers.py:35
 msgid "You are only allowed to upload PO files (*.po)!"
-msgstr ""
+msgstr "Ви можете лише вивантажувати файли PO (*.po)!"
 
 #: addons/presubmit_checks/handlers.py:39
 msgid "You have submitted empty file!"
-msgstr ""
+msgstr "Вами було надіслано порожній файл!"
 
 #: addons/presubmit_checks/handlers.py:48
 msgid "Uploaded file contains DOS newlines (\\r)!"
-msgstr ""
+msgstr "Вивантажений файл містить розбиття рядків у форматі DOS (\\r)!"
 
 #: addons/presubmit_checks/handlers.py:59
 #, python-format
 msgid "Uploaded file header doesn't have '%s' field!"
-msgstr ""
+msgstr "У заголовку вивантаженого файла немає поля «%s»!"
 
 #: addons/presubmit_checks/handlers.py:65
 msgid "Only UTF-8 encoded files are allowed!"
-msgstr ""
+msgstr "Можна працювати лише з файлами у кодуванні UTF-8!"
 
 #: addons/presubmit_checks/handlers.py:69
 msgid "Uploaded file doesn't contain any translated entries!"
-msgstr ""
+msgstr "У вивантаженому файлі немає жодного перекладеного повідомлення!"
 
 #: addons/presubmit_checks/handlers.py:86
-#, fuzzy
 msgid "Your file has been e-mailed to you to avoid loss of any work."
 msgstr ""
-"Ваш файл не пройшов перевірку на належний формат (msgfmt -c). Файл надіслано "
-"вам електронною поштою для того, щоб ваші зміни не було втрачено."
+"Файл надіслано вам електронною поштою для того, щоб ваші зміни не було "
+"втрачено."
 
 #: addons/presubmit_checks/handlers.py:90
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
 msgstr ""
+"Ми не можемо надіслати вам листа електронної пошти з вашою роботою, оскільки "
+"ви не вказали адреси електронної "
+"пошти."
 
 #: addons/repowatch/models.py:28
 #, python-format
@@ -275,7 +306,6 @@ msgid "Watch it"
 msgstr "Стежити"
 
 #: addons/repowatch/views.py:65
-#, fuzzy
 msgid "Stop watching"
 msgstr "Припинити стеження"
 
@@ -389,30 +419,33 @@ msgstr "Профіль"
 #: addons/widgets/templates/project_widgets.html:14
 #: addons/widgets/templates/widgets/project.html:7
 msgid "Widgets"
-msgstr ""
+msgstr "Віджети"
 
 #: addons/widgets/templates/project_widgets.html:48
 msgid "Widgets, buttons, etc"
-msgstr ""
+msgstr "Віджети, кнопки тощо"
 
 #: addons/widgets/templates/project_widgets.html:49
 msgid ""
 "Here are some widgets, buttons and other cool stuff you can add to your "
 "homepage!"
 msgstr ""
+"Тут ви знайдете віджети, кнопки та інші корисні елементи для вашої домашньої "
+"сторінки!"
 
 #: addons/widgets/templates/project_widgets.html:54
-#, fuzzy
 msgid "Userbars"
-msgstr "Користувач"
+msgstr "Панелі користувачів"
 
 #: addons/widgets/templates/project_widgets.html:63
 msgid "You can insert userbars to forums, e-mail signatures etc."
 msgstr ""
+"Ви можете додати панелі для форумів, підписи повідомлень електронної пошти "
+"тощо."
 
 #: addons/widgets/templates/project_widgets.html:64
 msgid "Show code snippet for userbar:"
-msgstr ""
+msgstr "Фрагмент коду панелі користувача:"
 
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
@@ -533,8 +566,7 @@ msgstr "%(site_name)s: %(project)s :: випуск %(release)s :: %(lang)s"
 
 #: projects/feeds.py:115
 #, python-format
-msgid ""
-"Translation statistics for %(lang)s language against %(release)s release."
+msgid "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "Статистика перекладів мовою %(lang)s для випуску %(release)s."
 
 #: projects/forms.py:18 txpermissions/forms.py:19
@@ -543,7 +575,7 @@ msgstr "Знайти користувача"
 
 #: projects/forms.py:55
 msgid "Free for all"
-msgstr ""
+msgstr "Вільний для всіх"
 
 #: projects/forms.py:56
 msgid ""
@@ -558,11 +590,21 @@ msgid ""
 "are\n"
 "                              submitted by email or to a separate branch."
 msgstr ""
+"Надсилати файли до вашого проекту може\n"
+"                              будь-який користувач. <a href=\"http://www."
+"youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Уявіть</a> всіх людей \n"
+"                              у всьому світі. Цим варіантом варто "
+"користуватися \n"
+"                              для пришвидшення перекладу та швидкого \n"
+"                              рецензування на місці, наприклад, у разі\n"
+"                              надсилання перекладу електронною поштою або до "
+"окремої гілки."
 
 #: projects/forms.py:66
-#, fuzzy
 msgid "Limited access"
-msgstr "Доступ заборонено"
+msgstr "Обмежений доступ"
 
 #: projects/forms.py:67
 msgid ""
@@ -574,11 +616,16 @@ msgid ""
 "                              translation files. Recommended for most \n"
 "                              projects."
 msgstr ""
+"Надати доступ вказаним особам. Доступ до файлів перекладу \n"
+"                              матимуть лише учасники команди перекладу\n"
+"                              певною мовою. Учасники з правами запису зможуть "
+"виконувати\n"
+"                              запис до всіх файлів перекладу. Рекомендовано \n"
+"                              для більшості проектів."
 
 #: projects/forms.py:75
-#, fuzzy
 msgid "Outsourced access"
-msgstr "Доступ заборонено"
+msgstr "Зовнішній доступ"
 
 #: projects/forms.py:76
 msgid ""
@@ -592,6 +639,16 @@ msgid ""
 "                              non-upstream projects such as distribution \n"
 "                              packages, desktop environment modules, etc."
 msgstr ""
+"Використати команди та користувачів з правом запису з іншого \n"
+"                              проекту для цього проекту. Якщо хтось \n"
+"                              мав право внесків до основного проекту, він або "
+"вона \n"
+"                              матимуть право внесків до цього проекту. Цим "
+"варіантом \n"
+"                              варто користуватися для підлеглих проектів, "
+"зокрема \n"
+"                              пакунків дистрибутивів, модулів стільничних "
+"середовищ тощо."
 
 #: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
@@ -616,13 +673,16 @@ msgstr "Знайти компонент"
 
 #: projects/models.py:143
 msgid "Private"
-msgstr ""
+msgstr "Приватний"
 
 #: projects/models.py:144
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr ""
+"Приватний проект зможете бачити лише ви і ваша команда. Крім того, доступ до "
+"приватних проектів обмежено відповідно до системи обліку для запису "
+"користувача."
 
 #: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
@@ -720,21 +780,20 @@ msgid "Maintainers"
 msgstr "Супровідники"
 
 #: projects/models.py:181
-#, fuzzy
 msgid "Outsource project"
-msgstr "Вилучити проект"
+msgstr "Основний проект"
 
 #: projects/models.py:182
 msgid "Project that owns the access control of this project."
-msgstr ""
+msgstr "Проект, який є основним під час визначення прав доступ до цього проекту."
 
 #: projects/models.py:185
 msgid "Owner"
-msgstr ""
+msgstr "Власник"
 
 #: projects/models.py:186
 msgid "The user who owns this project."
-msgstr ""
+msgstr "Користувач, який є власником цього проекту."
 
 #: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
@@ -901,9 +960,8 @@ msgid "Is allowed to submit file to this project"
 msgstr "Чи дозволено надсилати файли до цього проекту"
 
 #: projects/permissions/project.py:117
-#, fuzzy
 msgid "Is allowed to browse this private project"
-msgstr "Чи дозволено супровід цього проекту"
+msgstr "Чи дозволено перегляд цього приватного проекту"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -1640,14 +1698,12 @@ msgstr "Сповіщення"
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
-msgid ""
-"A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
+msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> has been added"
 msgstr "Додано новий проект: <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
-msgid ""
-"The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
+msgid "The project <a href=\"%(project_url)s\">%(project)s</a> has been changed"
 msgstr "Проект <a href=\"%(project_url)s\">%(project)s</a> було змінено"
 
 #: templates/notification/project_component_added/notice.html:2
@@ -1957,9 +2013,8 @@ msgstr ""
 
 #: templates/projects/component_detail.html:65
 #: templates/projects/project_detail.html:22
-#, fuzzy
 msgid "Private Project"
-msgstr "Останні проекти"
+msgstr "Приватний проект"
 
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
@@ -2350,16 +2405,16 @@ msgid ""
 "You have the following choices to manage how people can have submission "
 "access to your project:"
 msgstr ""
+"Доступ перекладачів до надсилання файлів до вашого проекту обмежено такими "
+"варіантами:"
 
 #: templates/projects/project_form_access_control.html:58
-#, fuzzy
 msgid "Go to the project writers page."
-msgstr "Перейти до сторінки цього проекту"
+msgstr "Перейти до сторінки учасників з правом запису до цього проекту."
 
 #: templates/projects/project_form_access_control.html:62
-#, fuzzy
 msgid "Save Access Control Settings"
-msgstr "Керування доступом"
+msgstr "Зберегти параметри керування доступом"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -2376,12 +2431,12 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Редагування <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_permissions.html:26
-#, fuzzy
 msgid ""
 "Give write access to a translator to send translations to your project "
 "independent of a translation team."
 msgstr ""
-"Надати доступ для перекладачів для надсилання перекладів до вашого проекту"
+"Надати права запису для перекладачів для надсилання перекладів до вашого "
+"проекту, незалежно від належності до певної команди з перекладу."
 
 #: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
@@ -2491,14 +2546,14 @@ msgid "Components:"
 msgstr "Компоненти:"
 
 #: templates/projects/release_detail.html:86
-#, fuzzy
 msgid "Click here to show or hide the component list"
-msgstr "Натисніть тут, щоб показати чи сховати первинні файли"
+msgstr ""
+"Натисніть тут, щоб наказати системі показати чи приховати список компонентів"
 
 #: templates/projects/release_detail.html:87
 #, python-format
 msgid "This release has %(components_number)s components."
-msgstr ""
+msgstr "У цьому випуску %(components_number)s компонентів."
 
 #: templates/projects/release_detail.html:103
 msgid "Translation statistics"
@@ -2723,8 +2778,7 @@ msgid "Profile settings"
 msgstr "Параметри профілю"
 
 #: templates/simpleauth/login_box.html:8
-msgid ""
-"Sign in to add or modify projects, work on translations, and other stuff."
+msgid "Sign in to add or modify projects, work on translations, and other stuff."
 msgstr ""
 "Зареєструйтеся для додавання або зміни проектів, роботи над перекладами або "
 "виконання інших завдань."
@@ -2795,9 +2849,8 @@ msgstr ""
 "належить проекту %(project_name)s?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-#, fuzzy
 msgid "Teams"
-msgstr "Команди:"
+msgstr "Команди"
 
 #: templates/teams/team_detail.html:22
 #, python-format
@@ -2858,9 +2911,8 @@ msgid "Delete team"
 msgstr "Вилучити команду"
 
 #: templates/teams/team_form.html:10
-#, fuzzy
 msgid "Add Team"
-msgstr "Команда"
+msgstr "Додати команду"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2912,9 +2964,8 @@ msgid "Request team"
 msgstr "Запит щодо команди"
 
 #: templates/teams/team_off.html:12
-#, fuzzy
 msgid "This project is not using Translation Teams"
-msgstr "Команди перекладачів %(project_name)s"
+msgstr "У цьому проекті не використовуються команди перекладачів"
 
 #: templates/teams/team_off.html:17
 #, python-format
@@ -2927,6 +2978,13 @@ msgid ""
 "'%(outsource_project)s'.\n"
 "        "
 msgstr ""
+"\n"
+"            У цьому проекті не передбачено власних команд перекладачів. "
+"Власник проекту використав команди перекладачів з «<a href=%(outsource_url)s>"
+"%(outsource_project)s</a>».\n"
+"            Щоб отримати право внеску, вам слід долучитися до команди проекту "
+"«%(outsource_project)s».\n"
+"        "
 
 #: templates/teams/team_off.html:22
 msgid ""
@@ -2935,6 +2993,10 @@ msgid ""
 "and thus no translation teams exist.\n"
 "        "
 msgstr ""
+"\n"
+"            Доступ до надсилання перекладів цього проекту відкрито для <em>"
+"всіх</em>, отже ніяких команд перекладачів не існує.\n"
+"        "
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -3294,8 +3356,7 @@ msgstr "Сторінка вибору аватару"
 msgid ""
 "You have several options to select the image you want to use as avatar on "
 "your profile."
-msgstr ""
-"Ви маєте вибрати один з варіантів визначення аватару для вашого профілю."
+msgstr "Ви маєте вибрати один з варіантів визначення аватару для вашого профілю."
 
 #: templates/userprofile/avatar/choose.html:50
 msgid "Select an image from disk"
@@ -3688,9 +3749,8 @@ msgstr "Перегляд"
 #: translations/templates/comp_lang_stats_table.html:40
 #: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#, fuzzy
 msgid "Download for viewing "
-msgstr "Надіслати для рецензування"
+msgstr "Звантажити для перегляду "
 
 #: translations/templates/comp_lang_stats_table.html:55
 #: translations/templates/comp_stats_table.html:72
@@ -3703,6 +3763,8 @@ msgid ""
 "See the outsource team for this language. You will be redirected to another "
 "project team page."
 msgstr ""
+"Вам слід переглянути сторінку перекладу відповідною мовою для зовнішнього "
+"проекту. Вас буде переспрямовано на цю сторінку."
 
 #: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
@@ -3789,9 +3851,9 @@ msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr "Значенням можуть бути лише літери Unicode, цифри і підкреслення."
 
 #: txcommon/i18n.py:19
-#, fuzzy, python-format
+#, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
-msgstr "Не вдалося відкрити файл LINGUAS: %s"
+msgstr "Не вдалося відкрити файл LINGUAS (%(file)s): %(exc)s"
 
 #: txcommon/models.py:12
 msgid "Female"
@@ -4159,6 +4221,8 @@ msgid ""
 "You have to provide only the size as             an integer (both sides will "
 "be equal) and optionally, the             username."
 msgstr ""
+"Вам достатньо вказати розмір (ціле число, однакова довжина сторін) і, якщо "
+"хочете, ім’я користувача."
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -4230,40 +4294,50 @@ msgid ""
 "Your request could not be completed. The admins have been notified to take a "
 "closer look at it. Please try again in a few minutes"
 msgstr ""
+"Ваш запит не може бути оброблено. Про помилку повідомлено адміністраторів. "
+"Будь ласка, повторіть спробу за декільк хвилин."
 
 #: vcs/lib/exceptions/__init__.py:40
 msgid "Setup of the repository locally could not be done successfully."
-msgstr ""
+msgstr "Не вдалося здійснити налаштування локального сховища."
 
 #: vcs/lib/exceptions/__init__.py:47
 msgid ""
 "The local repository has not been setup yet. Please, first do a check-out of "
 "the repository."
 msgstr ""
+"Локальне сховище ще не налаштовано. Будь ласка, почніть зі звантаження даних з "
+"основного сховища."
 
 #: vcs/lib/exceptions/__init__.py:54
 msgid "Unable to pull data from the remote repository. Is the remote host up?"
 msgstr ""
+"Не вдалося отримати дані з віддаленого сховища. Перевірте доступність "
+"віддаленого вузла."
 
 #: vcs/lib/exceptions/__init__.py:61
 msgid ""
 "Cleanup of the repository failed. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"Спроба спорожнення сховища зазнала невдачі. Про помилку повідомлено "
+"адміністраторів."
 
 #: vcs/lib/exceptions/__init__.py:67
 msgid "Commit to the repository failed."
-msgstr ""
+msgstr "Спроба створення пакунка надсилання даних до сховища зазнала невдачі."
 
 #: vcs/lib/exceptions/__init__.py:72
 msgid "Pushing to the remote repository failed."
-msgstr ""
+msgstr "Спроба надсилання даних до віддаленого сховища зазнала невдачі."
 
 #: vcs/lib/exceptions/__init__.py:78
 msgid ""
 "Given file does not have a revision. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"Вказаний файл не має визначеної версії. Про помилку повідомлено "
+"адміністраторів."
 
 #: webtrans/fields.py:55
 #, python-format
