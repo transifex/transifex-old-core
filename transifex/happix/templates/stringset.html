@@ -11,6 +11,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/json2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/sprintf.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.paginate.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/tx.lotte.js"></script>
   <link media="screen" href="{{ STATIC_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}css/jquery.paginate.css" type="text/css" rel="stylesheet" />
@@ -43,6 +44,7 @@
     stringset = null;
     is_supported_source_lang = null;
     is_supported_lang = null;
+    var links = [];
 
     $(document).ready(function(){
         $("#save_all").click(function(){ stringset.push(); });
@@ -186,6 +188,29 @@
     <td class="msg" style="width:45%; text-align:left;" id="source_{{row}}">{{ field.label }}</td>
     <td class="trans" style="width:45%" >
       <textarea id="translation_{{row}}" class="translation" style="width:100%; height: 100%;"></textarea>
+       <script type="text/javascript">
+        links[{{ row }}] = "<span id=\"tooltip_{{row}}\" class=\"tooltip\" style=\"-moz-border-radius:0 0 4px 4px;border-top:1px solid #ccc;background-color:#EEE;padding:6px;margin:0;\">"
+            +"<a class=\"tipsy_enable copy_source\" style=\"vertical-align:middle;border:0px;padding:3px 4px 0 4px;cursor:pointer\" title=\"{% trans "Copy source string" %}\">"
+            +"<img style=\"border:0px\" src=\"{{ STATIC_URL }}images/icons/previous.png\" >"
+            +"</a>"
+            +"<script type=\"text/javascript\">"
+            +"\$(\"span#tooltip_{{row}} .tipsy_enable\").tipsy({\'html\':true, \'gravity\':\'s\'});"
+            +"\$(\"span#tooltip_{{row}} .copy_source\").click(function(){"
+            +"    tr = $('textarea#translation_{{row}}').parents('tr');"
+            +"    source_string=$('.msg', tr).text();"
+            +"    var trans = $('.translation', tr);"
+            +"    trans.val(source_string);"
+            +"    string = stringset.bindings[{{row}}];"
+            +"    string.translate(trans.val());"
+            +"    if (string.modified) {"
+            +"             trans.removeClass(\"fuzzy translated untranslated\").addClass(\"fuzzy\");"
+            +"             $('tbody tr td.notes span#save_{{row}}').show();"
+            +"    }"
+            +"    return false;"
+            +"});"
+            +"<\/script>"
+            +"<\/span>";
+        </script>
     </td>
    {% if WEBTRANS_SUGGESTIONS %}    
     <td class="notes suggest_container" style="vertical-align:middle;padding-left: 20px;">

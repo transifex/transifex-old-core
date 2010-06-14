@@ -196,6 +196,25 @@ function StringSet(json, push_url, from_lang, to_lang) {
             $('tr td.suggest_container', table_body).hide()
         }
 
+        /* Bind mouseenter/leave event on textarea for tools */
+        $('tr td textarea', table_body).each(function(){
+          $(this).qtip({
+             content: links[$(this).attr('id').split('translation_')[1]],
+             position: 'topRight',
+             hide: {
+                fixed: true // Make it fixed so it can be hovered over
+             },
+             style: {
+                'font-size': '0.8em',
+                padding: '10px', // Give it some extra padding
+                border: {
+                width: 0,
+                radius: 0
+                },
+             }
+          });
+        });
+
     }
 
     /* StringSet.filter(); */
