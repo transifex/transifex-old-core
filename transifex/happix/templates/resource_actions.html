@@ -1,0 +1,81 @@
+{% load i18n %}
+{% load statistics_happix %}
+{% load truncate %}
+{% load permissions %}
+
+<fieldset style="border:2px solid #ddd;min-width:680px;margin:0;padding:12px 20px 6px 20px;-moz-border-radius:8px">
+  <legend style="color:#666666">{% trans "Translation Details"%}</legend>
+  <div style="text-align:center;width:100%">
+    <span class="breadcrumb" >
+      <a href="{% url project_detail project.slug %}">{{project.name|truncate_chars_middle:"40"}}</a> »
+      <a href="{% url project.resource project.slug resource.slug %}">{{resource.name|truncate_chars_middle:"40"}}</a> »
+      {{ target_language }}
+    </span>
+    <span style="float:right">
+      <img class="tipsy_enable" src="{{ STATIC_URL }}images/icons/heart.png" title="Favourite Resource Language" />
+    </span>
+  </div>
+  <div style="color:#666666;font-size:11px;text-align:center;padding:0.5em">
+    {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings{% endblocktrans %}
+  </div>
+  <div>
+    <span style="padding:2.5em 1em 2em 1em;float:right;width:240px;text-align:center">
+      <a class="i16 tick" style="background-position:2% 50%;font-size:16px;background-color:#F5F5F5;border:1px solid #CCCCCC !important;color:#555;padding-bottom:0.2em;padding-top:0.2em;padding-right:0.8em;-moz-box-shadow:1px 1px 3px #ccc" id="translate_now" href="{% url translation project.slug resource.slug target_language.code %}" title='{% trans "Translate Now" %}'>{% trans "Translate Now" %}</a>
+    </span>
+    <div style="padding:2.5em 1em 2em 2.5em;width:370px;text-align:center">
+      {% with 300 as barwidth %}
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{% translated resource target_language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource target_language.code %}">
+          <div class="stats_string_resource_actions" >
+              {% trans_percent resource target_language.code %}% 
+          </div> 
+          {% stats_bar_actions resource target_language.code barwidth %}
+      </div>
+      {% endwith %}
+      <div style="color:#666666;font-size:11px;text-align:left;padding:0.5em;padding-left:0">
+      {% blocktrans with resource.total_entities as total_entities %} {{ total_entities }} strings,{% endblocktrans %} 
+      {% untranslated resource target_language.code %} {% trans "remaining strings" %}
+      </div>
+    </div>
+  </div>
+  <div style="width:100%;vertical-align:top;clear;both">
+        <ul style="margin-top:0;width:300px;float:right;list-style:none">
+          <li style="margin-top:0;">
+            <a class="i16 connect" href="{% url translation project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a>
+          </li>
+          <li>
+            <a class="i16 clone disabled" >{% trans "Clone to new language" %}</a> 
+            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+          </li>
+        </ul>
+        <ul style="margin-top:0;width:300px;list-style:none">
+          <li style="margin-top:0;">
+            <a class="i16 get_file disabled">{% trans "Download for viewing" %}</a>
+            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+          </li>
+          <li>
+            <a class="i16 lock disabled">{% trans "Download for translation" %}</a> 
+            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+          </li>
+          <li>
+            <a class="i16 submit_file disabled">{% trans "Upload new version" %}</a>
+            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+          </li>
+        </ul>
+  </div>
+  <div style="width:100%;vertical-align:top;clear;both;margin-top:3em">
+        <ul style="margin-top:0;list-style:none;color:#777">
+          <li style="margin-top:0;">
+            <span class="i16 lock_none">{% trans "Resource is not locked by anyone." %} </span>
+          </li>
+          <li>
+            <span class="i16 clock">{% trans "Translation last updated by" %} <strong>{% last_committer resource target_language.code %}</strong> ({% last_translation_update resource target_language.code %})</span>
+          </li>
+        </ul>
+  </div>
+  {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+  {% if perms.projects.delete_resource or is_maintainer %}
+  <div style="width:100%;vertical-align:top;clear;both;margin-top:4em;text-align:center">
+    <a class="i16 delete">{% trans "Delete translations" %}</a>
+  <div>
+  {% endif %}
+</fieldset>

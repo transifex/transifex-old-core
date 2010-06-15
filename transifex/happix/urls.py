@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 #    url(r'^search/$', search_translation, name='search_translation'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/edit$', edit_translation_resource, name='resource_edit'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/delete$', delete_translation_resource, name='resource_delete'),
+    url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/actions/(?P<target_lang_code>[-\w]+)/$', resource_actions, name='resource_actions'),
 )

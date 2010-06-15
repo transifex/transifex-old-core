@@ -19,6 +19,14 @@
                 alert("Please select a target language first and then click crate.");
             }
         });
+       /* FancyBox Using custom settings */ 
+        $("a.inline").fancybox({ 
+            'hideOnContentClick': false,
+            'onComplete':function() {
+                $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+            }
+        });
+        
 	});
 </script>
 {% endblock %}
@@ -86,42 +94,49 @@ Projects |
 
 <h3>{% trans "Available translations" %}</h3>
 
-{% if request.user.is_authenicated %}
-{% load upload_manager_tags %}
-{% upload_manager resource %}
-{% endif %}
 
 <div class="list separate" style="clear:both">
-<table style="clear:both;margin-top:0.5em;width:100%">
-    <th class="i16 comment" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Language" %}</th>
-    <th class="i16 stats" style="width:320px;text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Completion" %}</th>
-    <th class="i16 clock" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Last Updated" %}</th>
-    <th class="i16" style="width:50px;text-align:left;color:#666666;font-size:0.85em;font-weight:normal">{% trans "Actions" %}</th>
+<table class="stat_table_font stats_table" style="clear:both;margin-top:0.5em;width:100%">
+    <th class="i16 comment">{% trans "Language" %}</th>
+    <th class="i16 stats" style="width:320px">{% trans "Completion" %}</th>
+    <th class="i16 clock">{% trans "Last Updated" %}</th>
+    {% if request.user.is_authenticated %}
+      <th class="i16" style="width:50px">{% trans "Actions" %}</th>
+    {% endif %}
 {% for language,count in translated_languages.items %}
     <tr>
         <td>
-		<a href="{% url translation project.slug resource.slug language.code %}">{{language}}</a><sup>{{count}}</sup>
+          <a href="{% url translation project.slug resource.slug language.code %}">{{language}}</a>
         </td>
         <td>
-        {% with 300 as barwidth %}
-            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"2" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
-                <div class="stats_string_comp" >{% trans_percent resource language.code %}% <span class='trans_detail'>({% translated resource language.code %}/{% untranslated resource language.code %})</span></div> 
+          {% with 200 as barwidth %}
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
+                <div class="stats_string_resource" >
+                    {% trans_percent resource language.code %}% 
+                </div> 
                 {% stats_bar_simple resource language.code barwidth %}
             </div>
-        {% endwith %}
+          {% endwith %}
         </td>
         <td>
-        <span class="tipsy_enable" title="Committed by {% last_committer resource language.code %}<br/>">
+        <span class="tipsy_enable" style="border:0" title="Committed by {% last_committer resource language.code %}<br/>">
           {% last_translation_update resource language.code %}
         </span>
         </td>
+        {% if request.user.is_authenticated %}
         <td style="text-align:center">
         <span style="color:#666666;font-size:0.85em;">
-           <a href="{% url translation project.slug resource.slug language.code %}">
-            <img class="tipsy_enable" style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png" title='{% trans "Translate Now" %}'>
+           <a class="tipsy_enable" href="{% url translation project.slug resource.slug language.code %}" title='{% trans "Translate Now" %}'>
+            <img  style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png">
+           </a>
+        </span>
+        <span style="color:#666666;font-size:0.85em;">&nbsp;
+           <a class="tipsy_enable inline" href="{% url resource_actions resource.project.slug resource.slug language.code %}" id="action_{{count}}" title='{% trans "Click to see more actions." %}'>
+             {% trans "more" %}
            </a>
         </span>
         </td>
+        {% endif %}
     </tr>
 {% endfor %}
 </table>

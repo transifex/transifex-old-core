@@ -198,7 +198,7 @@ def clone_translation(request, project_slug=None, resource_slug=None,
 def start_new_translation(request, project_slug=None, resource_slug=None,
                                     target_lang_code=None):
     '''
-    Create new language for specified resource
+    Create new language for specified resource.
     '''
 
     resource = Resource.objects.get(
@@ -215,3 +215,20 @@ def start_new_translation(request, project_slug=None, resource_slug=None,
                     resource = resource,
                     language = target_lang,
                     source_string = s.source_string)
+
+@login_required
+def resource_actions(request, project_slug=None, resource_slug=None,
+                     target_lang_code=None):
+    """
+    Ajax view that returns an fancybox template snippet for resource specific 
+    actions.
+    """
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+                                 slug = resource_slug)
+    target_language = get_object_or_404(Language, code=target_lang_code)
+
+    return render_to_response("resource_actions.html",
+    { 'project' : resource.project,
+      'resource' : resource,
+      'target_language' : target_language,},
+    context_instance = RequestContext(request))

@@ -62,4 +62,25 @@ def stats_bar_simple(stat, lang_code=None, width=100):
     return {'untrans_percent': untrans_percent,
             'trans_percent': trans_percent,
             'pos': StatBarsPositions([('trans', trans_percent),
-                                      ('untrans', untrans_percent)], width),}
+                                      ('untrans', untrans_percent)], width),
+            'width':width}
+
+@register.inclusion_tag("stats_bar_actions.html")
+def stats_bar_actions(stat, lang_code=None, width=100):
+    """
+    Create a HTML bar to present the statistics of an object. 
+
+    The object should have attributes trans_percent/untrans_percent.
+    Accepts an optional parameter to specify the width of the total bar.
+    """
+    if isinstance(stat, Language):
+        untrans_percent = stat.untrans_percent()
+        trans_percent = stat.trans_percent()
+    else:
+        untrans_percent = stat.untrans_percent(lang_code)
+        trans_percent = stat.trans_percent(lang_code)
+    return {'untrans_percent': untrans_percent,
+            'trans_percent': trans_percent,
+            'pos': StatBarsPositions([('trans', trans_percent),
+                                      ('untrans', untrans_percent)], width),
+            'width':width}
