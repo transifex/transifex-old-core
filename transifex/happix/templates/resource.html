@@ -19,14 +19,6 @@
                 alert("Please select a target language first and then click crate.");
             }
         });
-       /* FancyBox Using custom settings */ 
-        $("a.inline").fancybox({ 
-            'hideOnContentClick': false,
-            'onComplete':function() {
-                $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-            }
-        });
-        
 	});
 </script>
 {% endblock %}
@@ -96,17 +88,14 @@ Projects |
 
 
 <div class="list separate" style="clear:both">
-<table class="stat_table_font stats_table" style="clear:both;margin-top:0.5em;width:100%">
+<table class="stat_table_font stats_table highlighted" style="clear:both;margin-top:0.5em;width:100%">
     <th class="i16 comment">{% trans "Language" %}</th>
     <th class="i16 stats" style="width:320px">{% trans "Completion" %}</th>
     <th class="i16 clock">{% trans "Last Updated" %}</th>
-    {% if request.user.is_authenticated %}
-      <th class="i16" style="width:50px">{% trans "Actions" %}</th>
-    {% endif %}
 {% for language,count in translated_languages.items %}
-    <tr>
+    <tr id="stat_row_{{count}}">
         <td>
-          <a href="{% url translation project.slug resource.slug language.code %}">{{language}}</a>
+          {{language}}
         </td>
         <td>
           {% with 200 as barwidth %}
@@ -119,25 +108,24 @@ Projects |
           {% endwith %}
         </td>
         <td>
-        <span class="tipsy_enable" style="border:0" title="Committed by {% last_committer resource language.code %}<br/>">
-          {% last_translation_update resource language.code %}
+        <span style="border:0">
+          {% last_translation_update resource language.code %}, by {% last_committer resource language.code %}
         </span>
         </td>
-        {% if request.user.is_authenticated %}
-        <td style="text-align:center">
-        <span style="color:#666666;font-size:0.85em;">
-           <a class="tipsy_enable" href="{% url translation project.slug resource.slug language.code %}" title='{% trans "Translate Now" %}'>
-            <img  style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png">
-           </a>
-        </span>
-        <span style="color:#666666;font-size:0.85em;">&nbsp;
-           <a class="tipsy_enable inline" href="{% url resource_actions resource.project.slug resource.slug language.code %}" id="action_{{count}}" title='{% trans "Click to see more actions." %}'>
-             {% trans "more" %}
-           </a>
-        </span>
-        </td>
-        {% endif %}
     </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{count}}").click(function(){
+           /* FancyBox Using custom settings */ 
+           $.fancybox(
+               { 
+                'href': '{% url resource_actions resource.project.slug resource.slug language.code %}',
+                'hideOnContentClick': false,
+                'onComplete':function() {
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                }
+           });
+        });
+    </script>
 {% endfor %}
 </table>
 </div>
