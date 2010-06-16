@@ -80,8 +80,8 @@
             {% endfor %}
           </span>
         {% with 200 as barwidth %}
+            <div class="stats_string_resource" >{% trans_percent project team.language.code %}% </div> 
             <div class="stats tipsy_enable" title="{% trans "Translated: " %}{% translated project team.language.code %}<br />{% trans "Untranslated: " %}{% untranslated project team.language.code %}" style='display:inline;float:right;width:{{ barwidth|add:"2" }}px;'>
-                <div class="stats_string_comp" >{% trans_percent project team.language.code %}% <span class='trans_detail'>({% translated project team.language.code %}/{% untranslated project team.language.code %})</span></div> 
                 {% stats_bar_simple project team.language.code barwidth %}
             </div>
             <span class="details i16 stats" style="float:right"> {% blocktrans %}Translated Strings: &nbsp;{% endblocktrans %}</span>

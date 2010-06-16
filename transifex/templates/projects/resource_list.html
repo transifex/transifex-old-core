@@ -29,33 +29,33 @@
 
   {% if resources %}
 
-    <script type="text/javascript">
-    	$(document).ready(function(){
-    		$(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-    	});
-    </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $(".tablesorter_resource_list").tablesorter({
+            widgets: ['zebra'],
+        });
+    });
+</script>
 
-  <table style="clear:both;margin-top:0.5em;width:100%"> 
+  <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
+  <thead>
    <tr>
-    <th class="i16 tag" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Resource Name</th>
-    <th class="i16 comment" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Languages</th>
-    <th class="i16 clock" style="text-align:left;color:#666666;font-size:0.85em;font-weight:normal">Last Updated</th>
+    <th><span class="i16 tag">Resource Name</span</th>
+    <th><span class="i16 clock">Last Updated</span></th>
    </tr>
+  </thead>
+  <tbody>
   {% for res in resources %}
     <tr>
-        <td class="res_tipsy_enable" style="padding-left:1.5em;background:url({{ STATIC_URL }}images/icons/page_white_stack.png) no-repeat left center" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">
-        <a href="{{ res.get_absolute_url }}" style="font-weight:bold">{{ res.name }}</a>
+        <td>
+        <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
         <sup class="entry_metalink">
            {% if request.user.is_authenticated and is_maintainer %}
              <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
              , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
            {% endif %}
         </sup>
-        </td>
-        <td class="more_table">
-        {% for language in res.available_languages %}
-            <span>{{ language }}</span>
-        {% endfor %}
         </td>
         <td class="last_updated">
         <span class="res_tipsy_enable" title="Committed by {% last_committer res %}<br/>">
@@ -64,7 +64,9 @@
         </td>
     </tr>
   {% endfor %}
+  </tbody>
   </table>
+
   {% else %}
 
   <p>{% trans "No resources are registered for this project yet." %}</p>
