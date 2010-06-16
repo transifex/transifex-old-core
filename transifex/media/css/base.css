@@ -780,6 +780,10 @@ span.note {
   cursor: pointer;
 }
 
+.buttonized{
+  -moz-box-shadow:1px 1px 3px #ccc;
+}
+
 .buttonized,
 .microform input[type="submit"] {
   border: 1px solid #ccc !important;
@@ -809,6 +813,7 @@ span.note {
 .buttonized:hover {
   background-color: #fafafa;
   border: 1px solid #ccc;
+  -moz-box-shadow:1px 1px 3px #999;
 }
 
 .results_on_deck {
@@ -835,6 +840,7 @@ a.buttonized2:hover{
   background-color: #fafafa;
   border: 1px solid #ccc;
   -moz-box-shadow:1px 1px 5px #999;
+  cursor: pointer;
 }
 
 /*List*/
@@ -1065,6 +1071,15 @@ ul.errorlist li{
         line-height: 1.1em;
 }
 
+#new_translation_box1 {
+  text-align:center;
+  display:none;
+  padding:1.5em;
+  margin:0;
+  background-color:#EBF2F8;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+}
 
 /* actions popup */
 fieldset.actions_popup {
@@ -1158,4 +1173,15 @@ fieldset.actions_popup div.title_wrapper {
 fieldset.actions_popup div.title_wrapper div.details_font{
   text-align:center;
   padding:0.5em;
+}
+
+/* resource templates */
+.locale {
+  color:#999;
+}
+
+.big_number {
+  color:#8f8f8f;
+  font-size:20px;
+  font-weight:bold;
 }

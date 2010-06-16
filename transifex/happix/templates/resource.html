@@ -4,6 +4,8 @@
 {% load permissions %}
 
 {% block extra_head %}
+<link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
@@ -19,6 +21,10 @@
                 alert("Please select a target language first and then click crate.");
             }
         });
+        $(".tablesorter_resource").tablesorter({
+            widgets: ['zebra'],
+        });
+
 	});
 </script>
 {% endblock %}
@@ -56,7 +62,11 @@ Projects |
   <h2 class="name">{{ resource.name }}</h2>
 
   {% if perms.projects.add_resource or is_maintainer %}
-    <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a></p></div>
+    <div class="editlinks">
+      <p>
+        <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a>
+      </p>
+    </div>
   {% endif %}
 
 <div id="vcs_details">
@@ -68,34 +78,31 @@ Projects |
         {{ resource.source_language }}
       </td>
     </tr>
+    <tr>
+      <th class="i16 bricks">{% trans "Total Strings:" %}</th>
+      <td class="big_number">
+        {{ resource.total_entities }}
+      </td>
+    </tr>
   </table>
-</div>
-
-<p style="text-align:center;padding-top:1em">
-  <a id="new_translation1" class="buttonized i16 add">{% trans "Start New Translation" %}</a>
-</p>
-<div id="new_translation_box1" style="text-align:center; display:none; padding:1em; margin:0;background-color:#EBF2F8;border-top:1px solid #ccc; border-bottom:1px solid #ccc">
-    <select name="{{ language.code }}" class="language">
-        <option value="">Select Language</option>
-        {% for lang in languages %}
-            <option value="{{ lang.code }}">{{ lang.name }}</option>
-        {% endfor %}
-    </select>
-    <a id="start_new_translation" class="i16 buttonized action">Create</a>
 </div>
 
 <h3>{% trans "Available translations" %}</h3>
 
-
-<div class="list separate" style="clear:both">
-<table class="stat_table_font stats_table highlighted" style="clear:both;margin-top:0.5em;width:100%">
-    <th class="i16 comment">{% trans "Language" %}</th>
-    <th class="i16 stats" style="width:320px">{% trans "Completion" %}</th>
-    <th class="i16 clock">{% trans "Last Updated" %}</th>
+<div class="list separate clear">
+<table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Language" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
 {% for language,count in translated_languages.items %}
     <tr id="stat_row_{{count}}">
         <td>
-          {{language}}
+          {{language.name}} <span class="locale">({{ language.code }})</span>
         </td>
         <td>
           {% with 200 as barwidth %}
@@ -109,7 +116,7 @@ Projects |
         </td>
         <td>
         <span style="border:0">
-          {% last_translation_update resource language.code %}, by {% last_committer resource language.code %}
+          {% last_translation_update resource language.code %}, <strong>by {% last_committer resource language.code %}</strong>
         </span>
         </td>
     </tr>
@@ -127,8 +134,22 @@ Projects |
         });
     </script>
 {% endfor %}
+  </tbody>
 </table>
 </div>
+
+<div id="new_translation_box1">
+    <select name="{{ language.code }}" class="language">
+        <option value="">Select Language</option>
+        {% for lang in languages %}
+            <option value="{{ lang.code }}">{{ lang.name }}</option>
+        {% endfor %}
+    </select>
+    <a id="start_new_translation" class="i16 buttonized action">GO</a>
+</div>
+<p style="text-align:center;padding-top:1em">
+  <a id="new_translation1" class="buttonized2 i16 add">{% trans "Start New Translation" %}</a>
+</p>
 
 </div>
 
