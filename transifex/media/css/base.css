@@ -816,6 +816,27 @@ span.note {
   padding: 0px;
 }
 
+/* Buttonized2 (bigger font-size buttons) */
+/* This is a version for anchor tags */
+a.buttonized2 {
+  background-position:3% 50%;
+  font-size:16px;
+  background-color:#F5F5F5;
+  border:1px solid #CCCCCC !important;
+  color:#555;
+  padding-bottom:0.2em;
+  padding-top:0.2em;
+  padding-right:0.8em;
+  padding-left:1.6em; /* The class is intended to be used with i16 icons! */
+  -moz-box-shadow:1px 1px 3px #ccc;
+}
+
+a.buttonized2:hover{
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  -moz-box-shadow:1px 1px 5px #999;
+}
+
 /*List*/
 div.list ul {
   list-style-image: none;
@@ -1042,4 +1063,99 @@ ul.errorlist li{
         font-size: 0.9em;
         color: #c00;
         line-height: 1.1em;
+}
+
+
+/* actions popup */
+fieldset.actions_popup {
+  border:2px solid #ddd;
+  min-width:680px;
+  margin:0;
+  padding:12px 18px 6px 18px;
+  -moz-border-radius:8px
+}
+
+fieldset.actions_popup legend {
+  color:#666666;
+}
+
+fieldset.actions_popup .first_level {
+  clear:both;
+  width:100%;
+}
+
+fieldset.actions_popup .details_font {
+  color:#666666;
+  font-size:11px;
+}
+
+fieldset.actions_popup .footer_position {
+  vertical-align:top;
+  margin-top:2.5em;
+  text-align:center;
+}
+
+fieldset.actions_popup div.more_actions {
+  vertical-align:top;
+}
+
+fieldset.actions_popup div.more_actions ul {
+  margin-top:0;
+  width:300px;
+  list-style:none
+}
+
+fieldset.actions_popup div.more_actions ul.right {
+  float:right;
+}
+
+fieldset.actions_popup div.more_actions li.top {
+  margin-top:0;
+}
+
+fieldset.actions_popup div.last_update {
+  vertical-align:top;
+  margin-top:2.5em;
+}
+
+fieldset.actions_popup div.last_update ul {
+  margin-top:0;
+  list-style:none;
+  color:#777
+}
+
+fieldset.actions_popup div.last_update li.top {
+  margin-top:0;
+}
+
+fieldset.actions_popup div.stats_details_string {
+  text-align:left;
+  padding:0.5em;
+  padding-left:0;
+}
+
+fieldset.actions_popup div.stats_wrapper {
+  padding:2.5em 1em 2em 2.5em;
+  width:370px;
+  text-align:center;
+}
+
+fieldset.actions_popup span.translate_button_wrapper {
+  padding:2.5em 1em 2em 1em;
+  float:right;
+  width:240px;
+  text-align:center;
+}
+
+fieldset.actions_popup span.favourite_wrapper {
+  float:right;
+}
+
+fieldset.actions_popup div.title_wrapper {
+  text-align:center;
+}
+
+fieldset.actions_popup div.title_wrapper div.details_font{
+  text-align:center;
+  padding:0.5em;
 }
