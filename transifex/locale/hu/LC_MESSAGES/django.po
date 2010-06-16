@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 07:56+0000\n"
-"PO-Revision-Date: 2010-04-04 20:59+0200\n"
+"PO-Revision-Date: 2010-06-16 22:31+0200\n"
 "Last-Translator: Nikolas Slivka <snicore@gmail.com>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,15 @@ msgstr ""
 
 #: actionlog/filters.py:12
 msgid "Search for an username or leave it blank"
-msgstr "Keresés egy felhasználónévre, vagy hagyja üresen"
+msgstr "Használót keres név szerint, vagy hagyja üresen"
 
 #: actionlog/models.py:204
 msgid "log entry"
-msgstr "napló bejegyzés"
+msgstr "naplóbejegyzés"
 
 #: actionlog/models.py:205
 msgid "log entries"
-msgstr "napló bejegyzések"
+msgstr "naplóbejegyzések"
 
 #: actionlog/templates/object_action_list.html:6
 msgid "Date/time"
@@ -38,7 +38,7 @@ msgstr "Dátum/idő"
 #: actionlog/templates/object_action_list.html:7 teams/models.py:76
 #: teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
-msgstr "Felhasználó"
+msgstr "Használó"
 
 #: actionlog/templates/object_action_list.html:8
 msgid "Action"
@@ -54,7 +54,7 @@ msgstr "Még nincs történet."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 msgid "Image charts"
-msgstr ""
+msgstr "Képes szemléltetők"
 
 #: addons/charts/templates/charts/widget_snippet.html:65
 #: addons/charts/templates/charts/widget_snippet.html:94
@@ -68,15 +68,18 @@ msgid ""
 "simple image.\n"
 "                Perfect for embedding in wiki pages, Trac instances, emails."
 msgstr ""
+"Jelenítse meg a terve fordítási statisztikáit a saját webhelyén egyszerű "
+"képként.\n"
+"                Wiki oldalakra, Trac-példányokra, levelekbe tökéletes."
 
 #: addons/charts/templates/charts/widget_snippet.html:70
 msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
+msgstr "Az ábra mindig időszerű Transifex-számokat fog tükrözni"
 
 #: addons/charts/templates/charts/widget_snippet.html:71
 #: addons/charts/templates/charts/widget_snippet.html:103
 msgid "Show code snippet for component:"
-msgstr ""
+msgstr "Kódcsipetet mutat az összetevőhöz:"
 
 #: addons/charts/templates/charts/widget_snippet.html:73
 #: addons/charts/templates/charts/widget_snippet.html:105
@@ -90,7 +93,7 @@ msgstr "Rejtett"
 
 #: addons/charts/templates/charts/widget_snippet.html:87
 msgid "Interactive charts"
-msgstr ""
+msgstr "Interaktív szemléltetők"
 
 #: addons/charts/templates/charts/widget_snippet.html:98
 msgid ""
@@ -98,16 +101,21 @@ msgid ""
 "interactive chart.\n"
 "                This requires modifications to your homepage's HTML code."
 msgstr ""
+"Jelenítse meg a terve fordítási statisztikáit a saját webhelyén interaktív "
+"szemléltetővel.\n"
+"                Ehhez az érintett honlap HTML-kódját kell változtatni."
 
 #: addons/charts/templates/charts/widget_snippet.html:101
 msgid ""
 "By tweaking the code you can adjust verbosity, dimensions and colors of the "
 "chart"
 msgstr ""
+"A kódot változtatva igazíthat a szemléltető beszédességén, méretein és "
+"színein."
 
 #: addons/charts/templates/charts/widget_snippet.html:121
 msgid "Interactive and Image Charts"
-msgstr ""
+msgstr "Interaktív és kép szemléltetők"
 
 #: addons/charts/templates/charts/widget_snippet.html:122
 msgid ""
@@ -116,11 +124,17 @@ msgid ""
 "You need to have at least one component with statistics to export charts "
 "from Transifex."
 msgstr ""
+"Sajnálom, de a tervében nincs időszerű statisztikákkal rendelkező "
+"összetevő. \n"
+"Legalább egy összetevő kell legyen statisztikával, hogy szemléltetőket "
+"vihessen ki Transifexből."
 
 #: addons/locks/handlers.py:58
 msgid ""
 "Couldn't lock file, this means that you can send files only for reviewing."
 msgstr ""
+"Nem tudtam lelakatolni a fájlt. Ez azt jelenti, hogy csak felülvizsgálatra "
+"küldhet be a fájlokat."
 
 #: addons/locks/models.py:65
 #, python-format
@@ -128,24 +142,27 @@ msgid ""
 "User '%(user)s' has no permission to submit files for or coordinate  '%"
 "(pofile)s'"
 msgstr ""
+"„%(user)s” használónak nincs engedélye fájlokat beküldeni illetve „%(pofile)"
+"s” fájlt igazgatni"
 
 #: addons/locks/models.py:77
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
+"„%(user)s” használónak már megvan a megengedett legtöbb (%(locks)i) lakatja."
 
 #: addons/locks/models.py:158
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
-msgstr ""
+msgstr "„%(user)s” használó nem távolíthatja el „%(lock)s” lakatot"
 
 #: addons/locks/notifications.py:15
 msgid "Lock is expring"
-msgstr ""
+msgstr "A lakat lejár"
 
 #: addons/locks/notifications.py:16
 msgid "when a lock for file is expiring"
-msgstr ""
+msgstr "amikor egy fájl lakatja lejár"
 
 #: addons/locks/views.py:42
 msgid "Lock removed."
@@ -163,17 +180,15 @@ msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 #: addons/locks/templates/pofile_lock.html:20
 #, python-format
 msgid "This file has been locked by user '%(owner)s'."
-msgstr ""
+msgstr "A fájlt „%(owner)s” használó lelakatolta."
 
 #: addons/locks/templates/pofile_lock.html:22
-#, fuzzy
 msgid "Click on it to unlock the file."
-msgstr "Kérem válasszon célt a feltöltéshez."
+msgstr "Kattintson, hogy kilakatolja."
 
 #: addons/locks/templates/pofile_lock.html:24
-#, fuzzy
 msgid "Time left:"
-msgstr "Időzítés"
+msgstr "Maradt még"
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
@@ -186,10 +201,15 @@ msgid_plural ""
 "                Extend lock by %(hours)s hours.\n"
 "            "
 msgstr[0] ""
+"\n"
+"                Lakatot hosszabbít %(hours)s órával.\n"
+"            "
 msgstr[1] ""
+"\n"
+"                Lakatot hosszabbít %(hours)s órával.\n"
+"            "
 
 #: addons/locks/templates/pofile_lock.html:46
-#, fuzzy
 msgid "Lock and download this file to notify others you're working with it."
 msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: dolgozik rajta."
 
@@ -200,7 +220,7 @@ msgstr "A fájl nincs lelakatolva. Valószínű, hogy most nem dolgoznak rajta."
 #: addons/locks/templates/locks/component.html:9
 #: translations/templates/component_submit.html:31
 msgid "This file is locked by someone else."
-msgstr ""
+msgstr "E fájlt lelakatolta valaki más."
 
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
@@ -209,44 +229,47 @@ msgid ""
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
 "a> is about to expire on %(expires)s\n"
 msgstr ""
+"\n"
+"Lakat <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> "
+"fájlon lejár %(expires)s\n"
 
 #: addons/presubmit_checks/handlers.py:35
 msgid "You are only allowed to upload PO files (*.po)!"
-msgstr ""
+msgstr "Ön csak feltölthet PO fájlokat (*.po)!"
 
 #: addons/presubmit_checks/handlers.py:39
 msgid "You have submitted empty file!"
-msgstr ""
+msgstr "Üres fájlt küldött be!"
 
 #: addons/presubmit_checks/handlers.py:48
 msgid "Uploaded file contains DOS newlines (\\r)!"
-msgstr ""
+msgstr "DOS-os sorvége jel (\\r) van a feltöltött fájlban!"
 
 #: addons/presubmit_checks/handlers.py:59
 #, python-format
 msgid "Uploaded file header doesn't have '%s' field!"
-msgstr ""
+msgstr "A feltöltött fájl fejlécében nincs „%s” mező!"
 
 #: addons/presubmit_checks/handlers.py:65
 msgid "Only UTF-8 encoded files are allowed!"
-msgstr ""
+msgstr "Csak UTF-8-cal kódolt fájl megengedett!"
 
 #: addons/presubmit_checks/handlers.py:69
 msgid "Uploaded file doesn't contain any translated entries!"
-msgstr ""
+msgstr "A feltöltött fájl nem tartalmaz lefordított bejegyzést!"
 
 #: addons/presubmit_checks/handlers.py:86
-#, fuzzy
 msgid "Your file has been e-mailed to you to avoid loss of any work."
 msgstr ""
-"A fájl nem ment át a helyesség vizsgálaton (msgfmt -c). A fájlt elküldtem "
-"önnek levélben, hogy elkerüljük bármi munka elvesztését."
+"A fájlt elküldtem önnek levélben, hogy elkerüljük bármi munka elvesztését."
 
 #: addons/presubmit_checks/handlers.py:90
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
 msgstr ""
+"Nem tudtunk levelet küldeni a munkája megőrzése végett, mert önnek nincs "
+"bejegyzett levélcíme."
 
 #: addons/repowatch/models.py:28
 #, python-format
@@ -274,7 +297,6 @@ msgid "Watch it"
 msgstr "figyelés"
 
 #: addons/repowatch/views.py:65
-#, fuzzy
 msgid "Stop watching"
 msgstr "Ne figyelje tovább"
 
@@ -385,30 +407,29 @@ msgstr "Adatok"
 #: addons/widgets/templates/project_widgets.html:14
 #: addons/widgets/templates/widgets/project.html:7
 msgid "Widgets"
-msgstr ""
+msgstr "Kütyük"
 
 #: addons/widgets/templates/project_widgets.html:48
 msgid "Widgets, buttons, etc"
-msgstr ""
+msgstr "Kütyük, gombok, stb."
 
 #: addons/widgets/templates/project_widgets.html:49
 msgid ""
 "Here are some widgets, buttons and other cool stuff you can add to your "
 "homepage!"
-msgstr ""
+msgstr "Íme néhány kütyü, gomb és más király dolog, amit honlaphoz adhat!"
 
 #: addons/widgets/templates/project_widgets.html:54
-#, fuzzy
 msgid "Userbars"
-msgstr "Felhasználó"
+msgstr "Használósor"
 
 #: addons/widgets/templates/project_widgets.html:63
 msgid "You can insert userbars to forums, e-mail signatures etc."
-msgstr ""
+msgstr "Használósort tehet fórumokba, levélaláírásokba, stb."
 
 #: addons/widgets/templates/project_widgets.html:64
 msgid "Show code snippet for userbar:"
-msgstr ""
+msgstr "Kódcsipetet mutat használósorhoz:"
 
 #: codebases/models.py:36 codebases/migrations/0001_initial.py:12
 #: languages/models.py:37 languages/migrations/0001_initial.py:19
@@ -538,7 +559,7 @@ msgstr "Keresés egy felhasználói név után"
 
 #: projects/forms.py:55
 msgid "Free for all"
-msgstr ""
+msgstr "Szabad mindenkinek"
 
 #: projects/forms.py:56
 msgid ""
@@ -553,11 +574,22 @@ msgid ""
 "are\n"
 "                              submitted by email or to a separate branch."
 msgstr ""
+"Bármely bejelentkezett használónak megengedi, hogy fájlokat küldjön be\n"
+"                              a tervbe. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Képzelje el</a>, hogy minden "
+"ember\n"
+"                              osztozik az egész világon. Ajánlott gyors "
+"fordításokhoz, \n"
+"                              illetve amikor a beküldést előbb "
+"felülvizsgálják. Pl. \n"
+"                              amikor a hozzájárulást levelezéssel vagy "
+"külön \n"
+"                              ágban oldják meg."
 
 #: projects/forms.py:66
-#, fuzzy
 msgid "Limited access"
-msgstr "Tiltott hozzáférés"
+msgstr "Korlátozott hozzáférés"
 
 #: projects/forms.py:67
 msgid ""
@@ -569,11 +601,15 @@ msgid ""
 "                              translation files. Recommended for most \n"
 "                              projects."
 msgstr ""
+"Bizonyos embereknek ad hozzáférést. Fordító csapatok \n"
+"                              csak a saját nyelvi fájljaikhoz férhetnek "
+"hozzá, \n"
+"                              illetve általános írók minden fordításhoz. \n"
+"                              Ez ajánlott a legtöbb tervnek."
 
 #: projects/forms.py:75
-#, fuzzy
 msgid "Outsourced access"
-msgstr "Tiltott hozzáférés"
+msgstr "Kiszervezett hozzáférés"
 
 #: projects/forms.py:76
 msgid ""
@@ -587,6 +623,12 @@ msgid ""
 "                              non-upstream projects such as distribution \n"
 "                              packages, desktop environment modules, etc."
 msgstr ""
+"Újrahasznosítja egy másik terv csapatait és íróit \n"
+"                              megadva e tervhez a hozzáférést. Ha egy \n"
+"                              személy hozzájárulhat ahhoz a tervhez, akkor \n"
+"                              ehhez is hozzájárulhat. Ez ajánlott \n"
+"                              nem felmenő terveknek, mint egy terjesztés \n"
+"                              csomagjainak, asztalkörnyezet moduljainak, stb."
 
 #: projects/forms.py:134 projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
@@ -611,13 +653,15 @@ msgstr "Keresés összetevőre"
 
 #: projects/models.py:143
 msgid "Private"
-msgstr ""
+msgstr "Magán"
 
 #: projects/models.py:144
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr ""
+"Magánterv csak önnek és csapatának jelenik meg. Továbbá magántervek "
+"korlátozottak a használó számla számlaterve szerint."
 
 #: projects/models.py:147 projects/models.py:273 projects/models.py:536
 #: projects/migrations/0001_initial.py:19
@@ -713,21 +757,20 @@ msgid "Maintainers"
 msgstr "Karbantartók"
 
 #: projects/models.py:181
-#, fuzzy
 msgid "Outsource project"
-msgstr "Tervet töröl"
+msgstr "Tervet kiszervez"
 
 #: projects/models.py:182
 msgid "Project that owns the access control of this project."
-msgstr ""
+msgstr "Terv, ami e tervhez való hozzáférés ellenőrzését birtokolja."
 
 #: projects/models.py:185
 msgid "Owner"
-msgstr ""
+msgstr "Birtokos"
 
 #: projects/models.py:186
 msgid "The user who owns this project."
-msgstr ""
+msgstr "A használó, aki birtokolja e tervet."
 
 #: projects/models.py:189 projects/models.py:311 projects/models.py:566
 #: projects/migrations/0001_initial.py:22
@@ -887,16 +930,15 @@ msgstr "Karbantarthatja e tervet"
 
 #: projects/permissions/project.py:64
 msgid "Is allowed to coordinate a team project"
-msgstr "Összehangolhatja e tervet"
+msgstr "Összehangolhat csapattervet"
 
 #: projects/permissions/project.py:103
 msgid "Is allowed to submit file to this project"
-msgstr "Betehet-e fájlt e tervbe"
+msgstr "Beadhat fájlt e tervbe"
 
 #: projects/permissions/project.py:117
-#, fuzzy
 msgid "Is allowed to browse this private project"
-msgstr "Karbantarthatja e tervet"
+msgstr "Böngészheti e magántervet"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -1942,9 +1984,8 @@ msgstr ""
 
 #: templates/projects/component_detail.html:65
 #: templates/projects/project_detail.html:22
-#, fuzzy
 msgid "Private Project"
-msgstr "Legújabb tervek"
+msgstr "Magántervek"
 
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
@@ -2330,16 +2371,16 @@ msgid ""
 "You have the following choices to manage how people can have submission "
 "access to your project:"
 msgstr ""
+"A következő lehetőségei vannak, hogy beállítsa, hogyan férhetnek hozzá a "
+"tervhez a beküldők:"
 
 #: templates/projects/project_form_access_control.html:58
-#, fuzzy
 msgid "Go to the project writers page."
-msgstr "A terv oldalára ugrás"
+msgstr "A tervírók oldalára ugrás"
 
 #: templates/projects/project_form_access_control.html:62
-#, fuzzy
 msgid "Save Access Control Settings"
-msgstr "Hozzáférés ellenőrzés"
+msgstr "Hozzáférés-beállításokat ment"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -2356,12 +2397,12 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "<a·href=\"%(project_url)s\">%(project_name)s</a> szerkesztése"
 
 #: templates/projects/project_form_permissions.html:26
-#, fuzzy
 msgid ""
 "Give write access to a translator to send translations to your project "
 "independent of a translation team."
 msgstr ""
-"Hozzáférés megadása egy fordítónak, hogy fordításokat küldhessen a tervbe"
+"Író hozzáférést ad egy fordítónak, hogy fordításokat küldhessen a tervbe "
+"fordító csapattól függetlenül"
 
 #: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
@@ -2468,14 +2509,13 @@ msgid "Components:"
 msgstr "Összetevők:"
 
 #: templates/projects/release_detail.html:86
-#, fuzzy
 msgid "Click here to show or hide the component list"
-msgstr "Kattintson ide, hogy mutassa vagy rejtse a forrás fájlokat"
+msgstr "Kattintson ide, hogy mutassa vagy rejtse az összetevők listáját"
 
 #: templates/projects/release_detail.html:87
 #, python-format
 msgid "This release has %(components_number)s components."
-msgstr ""
+msgstr "E kiadás %(components_number)s összetevőből áll."
 
 #: templates/projects/release_detail.html:103
 msgid "Translation statistics"
@@ -2771,9 +2811,8 @@ msgstr ""
 "s”·csapatát?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-#, fuzzy
 msgid "Teams"
-msgstr "Csapatok:"
+msgstr "Csapatok"
 
 #: templates/teams/team_detail.html:22
 #, python-format
@@ -2833,9 +2872,8 @@ msgid "Delete team"
 msgstr "Csapat törlése"
 
 #: templates/teams/team_form.html:10
-#, fuzzy
 msgid "Add Team"
-msgstr "Csapat"
+msgstr "Csapatot ad hozzá"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2887,9 +2925,8 @@ msgid "Request team"
 msgstr "Csapatot igényel"
 
 #: templates/teams/team_off.html:12
-#, fuzzy
 msgid "This project is not using Translation Teams"
-msgstr "%(project_name)s fordító csapatok"
+msgstr "E terv nem alkalmaz fordító csapatokat"
 
 #: templates/teams/team_off.html:17
 #, python-format
@@ -2902,6 +2939,12 @@ msgid ""
 "'%(outsource_project)s'.\n"
 "        "
 msgstr ""
+"\n"
+"            E terv nem tart fent saját csapatot, hanem „<a href=%"
+"(outsource_url)s>%(outsource_project)s</a>” csapatait hasznosítja újra.\n"
+"            Fordítás beküldése végett be kell kerülnie „%(outsource_project)"
+"s” csapatba.\n"
+"        "
 
 #: templates/teams/team_off.html:22
 msgid ""
@@ -2910,6 +2953,10 @@ msgid ""
 "and thus no translation teams exist.\n"
 "        "
 msgstr ""
+"\n"
+"            E terv <em>mindenkinek</em> megengedi fordítások beküldését, "
+"ezért nincs fordító csapat.\n"
+"        "
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -3645,9 +3692,8 @@ msgstr "Megnéz"
 #: translations/templates/comp_lang_stats_table.html:40
 #: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#, fuzzy
 msgid "Download for viewing "
-msgstr "Küldés felülvizsgálatra"
+msgstr "Letölti, hogy megnézze"
 
 #: translations/templates/comp_lang_stats_table.html:55
 #: translations/templates/comp_stats_table.html:72
@@ -3660,6 +3706,8 @@ msgid ""
 "See the outsource team for this language. You will be redirected to another "
 "project team page."
 msgstr ""
+"Ld. a kiszervezett csapatot e nyelvhez. Át fogják irányítani más terv "
+"csapatának oldalára."
 
 #: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
@@ -3748,9 +3796,9 @@ msgstr ""
 "tartalmaznia."
 
 #: txcommon/i18n.py:19
-#, fuzzy, python-format
+#, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
-msgstr "A LINGUAS fájl nem nyitható meg: %s"
+msgstr "A (%(file)s) LINGUAS fájlt nem tudtam megnyitni: %(exc)s"
 
 #: txcommon/models.py:12
 msgid "Female"
@@ -4118,6 +4166,8 @@ msgid ""
 "You have to provide only the size as             an integer (both sides will "
 "be equal) and optionally, the             username."
 msgstr ""
+"Csak a méretet kell megadnia             egészként (mindkét oldal egyenlő "
+"lesz) és lehetőleg, a             használót."
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -4189,40 +4239,47 @@ msgid ""
 "Your request could not be completed. The admins have been notified to take a "
 "closer look at it. Please try again in a few minutes"
 msgstr ""
+"A kérését nem tudtam befejezni. A rendszergazdákat értesítettem, hogy "
+"közelebbről megvizsgálják azt. Kérem próbálja újra néhány perc múlva."
 
 #: vcs/lib/exceptions/__init__.py:40
 msgid "Setup of the repository locally could not be done successfully."
-msgstr ""
+msgstr "Nem sikerült beállítani helyi tárolót."
 
 #: vcs/lib/exceptions/__init__.py:47
 msgid ""
 "The local repository has not been setup yet. Please, first do a check-out of "
 "the repository."
 msgstr ""
+"A helyi tárolót még nem állították be. Kérem először olvassa ki a tárolót."
 
 #: vcs/lib/exceptions/__init__.py:54
 msgid "Unable to pull data from the remote repository. Is the remote host up?"
-msgstr ""
+msgstr "Nem tudtam adatot lehozni a távoli tárolóból. Működik a távoli gazda?"
 
 #: vcs/lib/exceptions/__init__.py:61
 msgid ""
 "Cleanup of the repository failed. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"A tárolót nem sikerült kitakarítani. A rendszergazdákat értesítettem, hogy "
+"közelebbről megvizsgálják azt."
 
 #: vcs/lib/exceptions/__init__.py:67
 msgid "Commit to the repository failed."
-msgstr ""
+msgstr "Nem sikerült beküldeni a tárolóba."
 
 #: vcs/lib/exceptions/__init__.py:72
 msgid "Pushing to the remote repository failed."
-msgstr ""
+msgstr "Nem sikerült a nyomás a távoli tárolóba."
 
 #: vcs/lib/exceptions/__init__.py:78
 msgid ""
 "Given file does not have a revision. The admins have been notified to take a "
 "closer look at it."
 msgstr ""
+"Az adott fájlhoz nincs változat. A rendszergazdákat értesítettem, hogy "
+"közelebbről megvizsgálják azt."
 
 #: webtrans/fields.py:55
 #, python-format
