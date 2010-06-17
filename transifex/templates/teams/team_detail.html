@@ -11,6 +11,9 @@
 <script type="text/javascript">
   $(function(){
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    $(".tablesorter_resource").tablesorter({
+        widgets: ['zebra'],
+    });
    })
 </script>
 {% endblock %}
@@ -79,7 +82,7 @@
 
 {% if team_access_requests %}
 <div class="list separate ">
-<h4>{% trans "People waiting for team membership approving:" %}</h4>
+<h3>{% trans "People waiting for team membership approving:" %}</h3>
 <ul>
 {% for access_request in team_access_requests|dictsort:"user.username" %}
     <li class="i16 team_user_request ">
@@ -112,28 +115,56 @@
 
 {% with team.project.resource_set.all as resources %}
 <div class="list separate" style="clear:both">
-  <h4>{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h4>
+  <h3>{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h3>
  {% if resources %}
-  <ul> 
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Name" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
   {% for res in resources %}
-    <li class="i16 multifile">
-        <a href="{{ res.get_absolute_url }}" style="font-weight:bold" class="res_tipsy_enable">{{ res.name }}</a>
-        <span style="float:right">
-           <a href="{% url translation team.project.slug res.slug team.language.code %}">
-            <img class="tipsy_enable" style="border:0px" src="{{ STATIC_URL }}images/icons/pencil.png" title='{% trans "Translate Now" %}'>
-           </a>
-        </span>
-        <span class="details" style="padding-left:1em;float:right"> {% blocktrans %}Actions: &nbsp;{% endblocktrans %}</span>
+    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        <td>
+        {{ res.name }}
+        </td>
+        <td>
         {% with 200 as barwidth %}
-            <div class="stats_string_resource" >{% trans_percent res team.language.code %}% </div> 
-            <div class="stats tipsy_enable" title="{% trans "Translated: " %}{% translated res team.language.code %}<br />{% trans "Untranslated: " %}{% untranslated res team.language.code %}" style='display:inline;float:right;width:{{ barwidth|add:"2" }}px;'>
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated res team.language.code %}<br />{% trans "Untranslated: " %}{% untranslated res team.language.code %}">
+                <div class="stats_string_resource" >
+                    {% trans_percent res team.language.code %}% 
+                </div> 
                 {% stats_bar_simple res team.language.code barwidth %}
             </div>
-            <span class="details i16 stats" style="float:right"> {% blocktrans %}Translated Strings: &nbsp;{% endblocktrans %}</span>
         {% endwith %}
-    </li>
+        </td>
+        <td>
+        <span style="border:0">
+          {% last_translation_update res team.language.code %} <strong>by {% last_committer res team.language.code %}</strong>
+        </span>
+        </td>
+    </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
+           /* FancyBox Using custom settings */ 
+           $.fancybox(
+               { 
+                'href': '{% url resource_actions team.project.slug res.slug team.language.code %}',
+                'hideOnContentClick': false,
+                'onComplete':function() {
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                },
+                'titleShow': true,
+                'titlePosition': 'outside',
+                'title': '{% trans "Translation Details"%}'
+           });
+        });
+    </script>
   {% endfor %}
-  </ul>
+  </table>
  {% else %}
   <p>{% trans "No resources are registered for this project yet." %}</p>
  {% endif %}
@@ -143,7 +174,7 @@
 {% with team.members.all as members %}
 {% if members %}
 <div class="list separate" style="clear:both">
-<h4>{% trans "Team Members:" %}</h4>
+<h3>{% trans "Team Members:" %}</h3>
 <ul>
 {% for m in members|dictsort:"username" %}
     <li class="i16 user">

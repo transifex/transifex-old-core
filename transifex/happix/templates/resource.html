@@ -100,7 +100,7 @@ Projects |
   </thead>
   <tbody>
 {% for language,count in translated_languages.items %}
-    <tr id="stat_row_{{count}}">
+    <tr id="stat_row_{{count}}" title="{% trans 'click for translation' %}">
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
         </td>
