@@ -13,4 +13,7 @@ urlpatterns = patterns('',
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/edit$', edit_translation_resource, name='resource_edit'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/delete$', delete_translation_resource, name='resource_delete'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/actions/(?P<target_lang_code>[-\w]+)/$', resource_actions, name='resource_actions'),
+
+    url(r'^project/(?P<project_slug>[-\w]+)/resources/(?P<offset>\d+)$', project_resources, name='project_resources'),
+    url(r'^project/(?P<project_slug>[-\w]+)/resources/(?P<offset>\d+)/more/$', project_resources, kwargs={'more':True}, name='project_resources_more'),
 )

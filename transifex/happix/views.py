@@ -232,3 +232,28 @@ def resource_actions(request, project_slug=None, resource_slug=None,
       'resource' : resource,
       'target_language' : target_language,},
     context_instance = RequestContext(request))
+
+
+@login_required
+def project_resources(request, project_slug=None, offset=None, **kwargs):
+    """
+    Ajax view that returns a table snippet for all the resources in a project.
+    
+    If offset is provided, then the returned table snippet is includes only the
+    rows beginning from the offset and on.
+    """
+    more = kwargs.get('more', False)
+    MORE_ENTRIES = 5
+    project = get_object_or_404(Project, slug=project_slug)
+    total = Resource.objects.filter(project=project).count()
+    begin = int(offset)
+    end_index = (begin + MORE_ENTRIES)
+    resources = Resource.objects.filter(project=project)[begin:]
+    # Get the slice :)
+    if more and (not end_index >= total):
+        resources = resources[begin:end_index]
+
+    return render_to_response("resource_list_more.html",
+    { 'project' : project,
+      'resources' : resources,},
+    context_instance = RequestContext(request))

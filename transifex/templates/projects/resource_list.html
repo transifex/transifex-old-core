@@ -22,18 +22,57 @@
   {% endif %}
   </div>-->
 
-  {% with project.resource_set.all as resources %}
+  {% with project.resource_set.all|slice:":5" as resources %}
   <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
     {% render_metacount resources _("resources") %}
   </h3>
 
   {% if resources %}
+  {% with resources|length as viewed %}
+  {% with project.resource_set.all|length as total %}
 
 <script type="text/javascript">
     $(document).ready(function(){
         $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
         $(".tablesorter_resource_list").tablesorter({
             widgets: ['zebra'],
+        });
+        // Bind show more, show all events
+        $('#show_more').click(function(){
+            $(this).parent().addClass('i16 action_go');
+            $.get('{% url project_resources_more project.slug viewed %}', function(data) {
+              var tbody = $('table.tablesorter_resource_list tbody');
+              tbody.append(data);
+              var current = $('tr', tbody).length;
+              $('#viewed').text(current)
+              total = parseInt($('#total').text());
+              $('#show_more').parent().removeClass('i16 action_go');
+              if(current >= total){
+                $('#show_actions').hide();
+              }
+              // Rebind the tablesorter js
+              $(".tablesorter_resource_list").tablesorter({
+                  widgets: ['zebra'],
+              });
+            });
+        });
+        $('#show_all').click(function(){
+            $(this).parent().addClass('i16 action_go');
+            $.get('{% url project_resources project.slug viewed %}', function(data) {
+              var tbody = $('table.tablesorter_resource_list tbody');
+              tbody.append(data);
+              var current = $('tr', tbody).length;
+              $('#viewed').text(current)
+              total = parseInt($('#total').text());
+              $('#show_all').parent().removeClass('i16 action_go');
+              if(current >= total){
+                $('#show_actions').hide();
+              }
+              // Rebind the tablesorter js
+              $(".tablesorter_resource_list").tablesorter({
+                  widgets: ['zebra'],
+              });
+            });
         });
     });
 </script>
@@ -67,6 +106,20 @@
   </tbody>
   </table>
 
+  <div style="text-align:center;padding:1em;font-size:85%">
+    <span style="color:#8f8f8f">
+      {% trans "showing" %} <span id="viewed">{{ viewed }}</span> {% trans "out of" %} <span id="total">{{ total }}</span>
+    </span>
+    {% ifnotequal viewed total %}
+    <p id="show_actions">
+        <span><a id="show_more" style="cursor:pointer" >{% trans "show more" %}</a></span>
+        &nbsp;,&nbsp;
+        <span><a id="show_all" style="cursor:pointer" >{% trans "show all" %}</a></span>
+    </p>
+    {% endifnotequal %}
+  </div>
+  {% endwith %}
+  {% endwith %}
   {% else %}
 
   <p>{% trans "No resources are registered for this project yet." %}</p>

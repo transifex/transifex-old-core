@@ -103,6 +103,9 @@ Projects |
     <tr id="stat_row_{{count}}" title="{% trans 'click for translation' %}">
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
+          {% ifequal resource.source_language language %}
+             <span style="padding-left:1em"><em>primary language</em></span>
+          {% endifequal %}
         </td>
         <td>
           {% with 200 as barwidth %}
@@ -148,6 +151,7 @@ Projects |
 {% endfor %}
   </tbody>
 </table>
+
 </div>
 
 <div id="new_translation_box1">
