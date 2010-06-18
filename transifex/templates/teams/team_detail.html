@@ -143,7 +143,16 @@
         </td>
         <td>
         <span style="border:0">
-          {% last_translation_update res team.language.code %} <strong>by {% last_committer res team.language.code %}</strong>
+          {% last_translation_update res team.language.code as last_update %}
+          {% last_committer res team.language.code as last_committer %}
+          {% if last_update %}
+              {{ last_update }} 
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no activity yet" %}
+          {% endif %}
         </span>
         </td>
     </tr>

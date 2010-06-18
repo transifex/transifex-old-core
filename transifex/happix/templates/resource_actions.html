@@ -40,30 +40,30 @@
   <div class="first_level more_actions">
         <ul class="right">
           <li class="top">
-            <a class="i16 connect" href="{% url translation project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a>
+            <span class="i16 connect"><a href="{% url translation project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a></span
           </li>
           {% if target_language.code|language_has_team:project %}
           <li>
-            <a class="i16 team" href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a> 
+            <span class="i16 team"><a href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a></span>
           </li>
           {% endif %}
           <li>
-            <a class="i16 clone disabled" >{% trans "Clone to new language" %}</a> 
-            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+            <span class="i16 clone disabled">{% trans "Clone to new language" %}</span>
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
         </ul>
         <ul>
           <li class="top">
-            <a class="i16 get_file disabled">{% trans "Download for viewing" %}</a>
-            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+            <span class="i16 get_file disabled">{% trans "Download for viewing" %}</span>
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
           <li>
-            <a class="i16 lock disabled">{% trans "Download for translation" %}</a> 
-            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+            <span class="i16 lock disabled">{% trans "Download for translation" %}</span> 
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
           <li>
-            <a class="i16 submit_file disabled">{% trans "Upload new version" %}</a>
-            <a class="tipsy_enable" title="Available soon :)">(?)</a>
+            <span class="i16 submit_file disabled">{% trans "Upload new version" %}</span>
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
         </ul>
   </div>

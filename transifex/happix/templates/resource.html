@@ -116,7 +116,16 @@ Projects |
         </td>
         <td>
         <span style="border:0">
-          {% last_translation_update resource language.code %}, <strong>by {% last_committer resource language.code %}</strong>
+          {% last_translation_update resource language.code as last_update %}
+          {% last_committer resource language.code as last_committer %}
+          {% if last_update %}
+              {{ last_update }} 
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no translations yet" %}
+          {% endif %}
         </span>
         </td>
     </tr>
