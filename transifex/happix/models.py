@@ -97,7 +97,7 @@ class Resource(models.Model):
         help_text=_("The project which owns the translation resource."))
 
     resource_group = models.ForeignKey(ResourceGroup, verbose_name=_("Resource Group"),
-        blank=False, null=True,
+        blank=True, null=True,
         help_text=_("A group under which Resources are organized."))
 
     # Managers
