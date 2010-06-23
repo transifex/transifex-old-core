@@ -20,7 +20,7 @@
   </div>
   <div class="first_level">
     <span class="translate_button_wrapper">
-      <a class="i16 tick buttonized2" id="translate_now" href="{% url translation project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
+      <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
     </span>
     <div class="stats_wrapper">
       {% with 300 as barwidth %}
@@ -40,7 +40,7 @@
   <div class="first_level more_actions">
         <ul class="right">
           <li class="top">
-            <span class="i16 connect"><a href="{% url translation project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a></span
+            <span class="i16 connect"><a href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a></span
           </li>
           {% if target_language.code|language_has_team:project %}
           <li>

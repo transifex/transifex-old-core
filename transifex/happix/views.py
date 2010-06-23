@@ -2,10 +2,11 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
-from django.http import HttpResponseRedirect, HttpResponse
+from django.db.models import Count, Q
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from actionlog.models import action_logging
 from happix.models import Translation, Resource, SourceEntity, PARSERS, StorageFile
@@ -13,7 +14,16 @@ from happix.forms import ResourceForm
 from languages.models import Language
 from projects.models import Project
 
+try:
+    import json
+except:
+    import simplejson as json
+
+
 def search_translation(request):
+    """
+    Return a set of results on translations, given a set of terms as query.
+    """
     query_string = request.GET.get('q', "")
     source_lang = request.GET.get('source_lang',None)
     if source_lang == "any_lang":
@@ -43,33 +53,30 @@ def search_translation(request):
                                'results': results}, 
                               context_instance = RequestContext(request))
 
-def view_translation_resource(request, project_slug, resource_slug, to_lang = 'ru'):
-    _to_lang = Language.objects.by_code_or_alias(to_lang)
-    resource = Resource.objects.get(project__slug = project_slug, slug = resource_slug)
-    source_strings = SourceEntity.objects.filter(resource = resource)[:100]
 
-    translated_languages = {}
-    lang_counts = Translation.objects.filter(resource=resource).order_by("language").values("language").annotate(Count("language"))
-    for lang_count in lang_counts:
-        language = Language.objects.get(id = lang_count['language'])
-        count = lang_count['language__count']
-        translated_languages[language] = count
- 
+def resource_details(request, project_slug, resource_slug):
+    """
+    Return the details overview of a project resource.
+    """
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+                                 slug = resource_slug)
+
     return render_to_response("resource.html",
         { 'project' : resource.project,
           'resource' : resource,
           'languages' : Language.objects.order_by('name'),
-          'translated_languages' : translated_languages },
+          'translated_languages' : resource.available_languages },
         context_instance = RequestContext(request))
 
 
+#FIXME: permissions needed
 @login_required
 def delete_translation_resource(request, project_slug, resource_slug):
     """
     Delete a Translation Resource in a specific project.
     """
     resource = get_object_or_404(Resource, project__slug = project_slug,
-                                  slug = resource_slug)
+                                 slug = resource_slug)
     if request.method == 'POST':
         import copy
         resource_ = copy.copy(resource)
@@ -92,6 +99,7 @@ def delete_translation_resource(request, project_slug, resource_slug):
             context_instance=RequestContext(request))
 
 
+#FIXME: permissions needed
 @login_required
 def edit_translation_resource(request, project_slug, resource_slug):
     """
@@ -151,6 +159,8 @@ def edit_translation_resource(request, project_slug, resource_slug):
 
 ##from django.db import transaction
 
+
+#XXX: Obsolete
 def view_translation(request, project_slug=None, resource_slug=None, lang_code=None):
     translation_resource = Resource.objects.get(
         slug = resource_slug,
@@ -166,6 +176,8 @@ def view_translation(request, project_slug=None, resource_slug=None, lang_code=N
           'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS},
         context_instance = RequestContext(request))
 
+
+#XXX: Obsolete
 def clone_translation(request, project_slug=None, resource_slug=None,
             source_lang_code=None, target_lang_code=None):
     '''
@@ -184,7 +196,6 @@ def clone_translation(request, project_slug=None, resource_slug=None,
 
     target_lang = Language.objects.get(code=target_lang_code)
 
-
     # clone them in new translation
     for s in strings:
         Translation.objects.get_or_create(
@@ -192,9 +203,10 @@ def clone_translation(request, project_slug=None, resource_slug=None,
                     language = target_lang,
                     string = s.string,
                     source_string = s.source_string)
-
     return HttpResponse(status=200)
 
+
+#XXX: Obsolete
 def start_new_translation(request, project_slug=None, resource_slug=None,
                                     target_lang_code=None):
     '''
@@ -216,6 +228,8 @@ def start_new_translation(request, project_slug=None, resource_slug=None,
                     language = target_lang,
                     source_string = s.source_string)
 
+
+#FIXME: permissions needed
 @login_required
 def resource_actions(request, project_slug=None, resource_slug=None,
                      target_lang_code=None):
@@ -234,12 +248,11 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     context_instance = RequestContext(request))
 
 
-@login_required
 def project_resources(request, project_slug=None, offset=None, **kwargs):
     """
     Ajax view that returns a table snippet for all the resources in a project.
     
-    If offset is provided, then the returned table snippet is includes only the
+    If offset is provided, then the returned table snippet includes only the
     rows beginning from the offset and on.
     """
     more = kwargs.get('more', False)
@@ -257,3 +270,213 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     { 'project' : project,
       'resources' : resources,},
     context_instance = RequestContext(request))
+
+
+#FIXME: permissions needed
+@login_required
+def translate(request, project_slug, resource_slug, lang_code,
+                     *args, **kwargs):
+    """
+    Main lotte view.
+    """
+
+    translation_resource = Resource.objects.get(
+        slug = resource_slug,
+        project__slug = project_slug
+    )
+    target_language = Language.objects.by_code_or_alias(lang_code)
+
+    total_strings = Translation.objects.filter(
+                        resource = translation_resource,
+                        language = translation_resource.source_language).count()
+
+    translated_strings = Translation.objects.filter(
+                            resource = translation_resource,
+                            language = target_language).exclude(string="").count()
+
+    print total_strings, translated_strings
+
+    return render_to_response("translate.html",
+        { 'project' : translation_resource.project,
+          'resource' : translation_resource,
+          'target_language' : target_language,
+          'translated_strings': translated_strings,
+          'untranslated_strings': total_strings - translated_strings,
+          'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
+        },
+        context_instance = RequestContext(request))
+
+
+#FIXME: Find a more clever way to do it, to avoid putting placeholders.
+SORTING_DICT=( 'id', 'id', 'string')
+
+#FIXME: permissions needed
+def stringset_handling(request, project_slug, resource_slug, lang_code,
+                     *args, **kwargs):
+    """
+    Function to serve AJAX data to the datatable holding the translating
+    stringset.
+    """
+
+#    if settings.DEBUG:
+#       print 'iDisplayStart: %s' % request.POST.get('iDisplayStart','')
+#       print 'iDisplayLength: %s' % request.POST.get('iDisplayLength','')
+#       print 'sSearch: "%s"' % request.POST.get('sSearch','')
+#       print 'bEscapeRegex: %s' % request.POST.get('bEscapeRegex','')
+#       print 'iColumns: %s' % request.POST.get('iColumns','')
+#       print 'iSortingCols: %s' % request.POST.get('iSortingCols','')
+#       print 'iSortCol_0: %s' % request.POST.get('iSortCol_0','')
+#       print 'sSortDir_0: %s' % request.POST.get('sSortDir_0','')
+#       print 'iSortCol_1: %s' % request.POST.get('iSortCol_1','')
+#       print 'sSortDir_1: %s' % request.POST.get('sSortDir_1','')
+#       print 'sEcho: %s' % request.POST.get('sEcho','')
+
+    try:
+        resource = Resource.objects.get(slug=resource_slug,
+                                project__slug = project_slug)
+    except Resource.DoesNotExist:
+        raise Http404
+
+    source_strings = Translation.objects.filter(resource = resource,
+                                language = resource.source_language)
+
+    translated_strings = Translation.objects.filter(resource = resource,
+                                language__code = lang_code)
+
+    # status filtering (translated/untranslated)
+    # TODO
+    if request.POST and request.POST.has_key('filters'):
+        for f in request.POST['filters'].split('&'):
+            if f == "translated":
+                source_strings = source_strings.filter(
+                    Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
+                    ~Q(source_entity__id__in=translated_strings.values('source_entity')))
+            if f == "untranslated":
+                source_strings = source_strings.exclude(
+                    Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
+                    ~Q(source_entity__id__in=translated_strings.values('source_entity')))
+
+    # keyword filtering
+    sSearch = request.POST.get('sSearch','')
+    if not sSearch == '':
+        query = Q()
+        for term in sSearch.split(' '):
+            query &= Q(string__icontains=term)
+        source_strings = source_strings.filter(query)
+
+    # grouping
+    # TODO
+    source_strings.group_by = ['string']
+
+    # sorting
+    scols = request.POST.get('iSortingCols', '0')
+    for i in range(0,int(scols)):
+        if request.POST.has_key('iSortCol_'+str(i)):
+            col = int(request.POST.get('iSortCol_'+str(i)))
+            if request.POST.has_key('sSortDir_'+str(i)) and \
+                request.POST['sSortDir_'+str(i)] == 'asc':
+                source_strings=source_strings.order_by(SORTING_DICT[col])
+            else:
+                source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
+
+    # for items displayed
+    dlength = int(request.POST.get('iDisplayLength','10'))
+    dstart = int(request.POST.get('iDisplayStart','0'))
+    # for statistics
+    total = source_strings.count()
+
+    # NOTE: It's important to keep the translation string matching inside this
+    # iteration to prevent extra un-needed queries. In this iteration only the
+    # strings displayed are calculated, saving a lot of resources.
+    json = simplejson.dumps({
+        'sEcho': request.POST.get('sEcho','1'),
+        'iTotalRecords': total,
+        'iTotalDisplayRecords': total,
+        'aaData': [
+            [
+                s.id,
+                s.source_entity.string,
+                s.string,
+                _get_string(translated_strings, source_entity = s.source_entity),
+                # save buttons and hidden context
+                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;"></span>'
+                 '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + str(s.source_entity.context) + '</span>'
+                 '<span class="source_id" id="sourceid_' + str(counter) + '" style="display:none;">' + str(s.id) + '</span>'),
+            ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
+        ],
+        })
+
+    return HttpResponse(json, mimetype='application/json')
+
+
+def _get_string(query, **kwargs):
+    """
+    Helper function for returning a Translation string or an empty string if no
+    translation is found. Used in the list concatenation above to preserve code
+    sanity.
+    """
+    try:
+        return query.get(**kwargs).string
+    except:
+        return ""
+
+
+#FIXME: permissions needed
+@login_required
+def push_translation(request, project_slug, resource_slug, lang_code,
+                                  *args, **kwargs):
+    """
+    Client pushes an id and a translation string.
+
+    Id is considered to be of the source translation string and the string is
+    in the target_lang.
+    """
+    
+    if not request.POST:
+        return HttpResponseBadRequest()
+
+    data = json.loads(request.raw_post_data)
+    strings = data["strings"]
+
+    try:
+        translation_resource = Resource.objects.get(
+            slug = resource_slug,
+            project__slug = project_slug
+        )
+    except Resource.DoesNotExist:
+        raise Http404
+
+    try:
+        target_language = Language.objects.by_code_or_alias(lang_code)
+    except Language.DoesNotExist:
+        raise Http404
+
+    # Form the strings dictionary, get as Json object
+    # The fields are the following:
+    # id-> source_entity id
+    # translation-> translation string
+    # context-> source_entity context
+    # occurrence-> occurrence (not yet well supported)
+    # Iterate through all the row data that have been sent.
+    for row in strings:
+        try:
+            source_string = Translation.objects.get(id=row['id'])
+        except Translation.DoesNotExist:
+            # TODO: Log or inform here
+            pass
+
+        try:
+            # TODO: Implement get based on context and/or on context too!
+            translation_string, created = Translation.objects.get_or_create(
+                                source_entity =source_string.source_entity,
+                                language = target_language,
+                                resource = translation_resource)
+
+            translation_string.string = row['translation']
+            translation_string.save()
+        # catch-all. if we don't save we _MUST_ inform the user
+        except:
+            # TODO: Log or inform here
+            pass
+
+    return HttpResponse(status=200)
