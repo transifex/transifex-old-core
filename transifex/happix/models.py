@@ -121,6 +121,31 @@ class Resource(models.Model):
         return ('project.resource', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
+    def source_strings(self):
+        """
+        Return the list of all the strings, belonging to the Source Language
+        of the Project/Resource.
+        
+        CAUTION! This function returns Translation and not SourceEntity objects!
+        """
+        return Translation.objects.filter(resource = self,
+                                          language = self.source_language)
+
+    # TODO: needs caching
+    @property
+    def wordcount(self):
+        """
+        Return the number of words which need translation in this resource.
+        
+        The counting of the words uses the Translation objects of the SOURCE
+        LANGUAGE as set of objects.
+        """
+        wc = 0
+        for ss in self.source_strings:
+            wc += ss.wordcount
+        return wc
+
+    @property
     def last_committer(self):
         """
         Return the overall last committer for the translation of this resource.
@@ -197,6 +222,16 @@ class Resource(models.Model):
     def total_entities(self):
         """Return the total number of source entities to be translated."""
         return SourceEntity.objects.filter(resource=self).count()
+
+    @property
+    def total_source_strings(self):
+        """
+        It is the same functionality with the 'total_entities' property but
+        here we use the Translation objects to calculate the total strings which
+        are being translated.
+        """
+        return Translation.objects.filter(resource = self,
+                                          language = self.source_language).count()
 
     def trans_percent(self, language):
         """Return the percent of untranslated strings in this Resource."""
@@ -408,6 +443,15 @@ class Translation(models.Model):
         order_with_respect_to = 'source_entity'
         get_latest_by = 'created'
 
+    # TODO: needs caching
+    @property
+    def wordcount(self):
+        """
+        Return the number of words for this translation string.
+        """
+        # use None to split at any whitespace regardless of length
+        # so for instance double space counts as one space
+        return len(self.string.split(None))
 
 class TranslationSuggestion(models.Model):
     """

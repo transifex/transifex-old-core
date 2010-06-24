@@ -233,6 +233,41 @@ class Project(models.Model):
             component__id__in=self.component_set.all().values('id'))
 
     @property
+    def source_strings(self):
+        """
+        Return the list of all the strings, belonging to the Source Language
+        of the Project/Resource.
+        
+        CAUTION! 
+        1. This function returns Translation and not SourceEntity objects!
+        2. The strings may be in different source languages!!!
+        3. The source strings are not grouped based on the string value.
+        """
+        resources = self.resource_set.all()
+        source_strings = []
+        for resource in resources:
+            source_strings.extend(resource.source_strings)
+        return 
+
+    # TODO: needs caching
+    @property
+    def wordcount(self):
+        """
+        Return the number of words which need translation in this project.
+        
+        The counting of the words uses the Translation objects of the source
+        languages as set of objects.
+        CAUTION: 
+        1. The strings may be in different source languages!!!
+        2. The source strings are not grouped based on the string value.
+        """
+        wc = 0
+        resources = self.resource_set.all()
+        for resource in resources:
+            wc += resource.wordcount
+        return wc
+
+    @property
     def available_languages(self):
         """
         Return the languages with at least one Translation of a SourceEntity for
