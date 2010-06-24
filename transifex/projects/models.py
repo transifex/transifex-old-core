@@ -4,6 +4,7 @@ from datetime import datetime
 import markdown
 
 from django.conf import settings
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from django.db import models, IntegrityError
 from django.db.models import permalink
@@ -249,7 +250,7 @@ class Project(models.Model):
             source_strings.extend(resource.source_strings)
         return 
 
-    # TODO: needs caching
+    # TODO: Invalidation for cached value
     @property
     def wordcount(self):
         """
@@ -261,10 +262,13 @@ class Project(models.Model):
         1. The strings may be in different source languages!!!
         2. The source strings are not grouped based on the string value.
         """
-        wc = 0
-        resources = self.resource_set.all()
-        for resource in resources:
-            wc += resource.wordcount
+        cache_key = ('wordcount.%s' % self.project.slug)
+        wc = cache.get(cache_key)
+        if not wc:
+            wc = 0
+            resources = self.resource_set.all()
+            for resource in resources:
+                wc += resource.wordcount
         return wc
 
     @property

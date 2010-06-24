@@ -80,8 +80,9 @@ Projects |
     </tr>
     <tr>
       <th class="i16 bricks">{% trans "Total Strings:" %}</th>
-      <td class="big_number">
-        {{ resource.total_entities }}
+      <td>
+        {{ resource.total_entities }} 
+        <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
       </td>
     </tr>
   </table>

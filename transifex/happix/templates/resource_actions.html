@@ -15,7 +15,8 @@
       <img class="tipsy_enable" src="{{ STATIC_URL }}images/icons/heart.png" title="Favourite Resource Language" />
     </span>
     <div class="details_font">
-        {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings{% endblocktrans %}
+        {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}
+        {% blocktrans with resource.wordcount as wordcount %} {{ wordcount }} words{% endblocktrans %}
     </div>
   </div>
   <div class="first_level">
@@ -32,7 +33,6 @@
       </div>
       {% endwith %}
       <div class="details_font stats_details_string">
-      {% blocktrans with resource.total_entities as total_entities %} {{ total_entities }} strings,{% endblocktrans %} 
       {% untranslated resource target_language.code %} {% trans "remaining strings" %}
       </div>
     </div>

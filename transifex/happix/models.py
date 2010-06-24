@@ -3,8 +3,9 @@
 String Level models.
 """
 import datetime, hashlib, sys
-from django.db.models import permalink
 from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.db.models import permalink
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -131,7 +132,7 @@ class Resource(models.Model):
         return Translation.objects.filter(resource = self,
                                           language = self.source_language)
 
-    # TODO: needs caching
+    # TODO: Invalidation for cached data!!!
     @property
     def wordcount(self):
         """
@@ -140,9 +141,12 @@ class Resource(models.Model):
         The counting of the words uses the Translation objects of the SOURCE
         LANGUAGE as set of objects.
         """
-        wc = 0
-        for ss in self.source_strings:
-            wc += ss.wordcount
+        cache_key = ('wordcount.%s.%s' % (self.project.slug, self.slug))
+        wc = cache.get(cache_key)
+        if not wc:
+            wc = 0
+            for ss in self.source_strings:
+                wc += ss.wordcount
         return wc
 
     @property
