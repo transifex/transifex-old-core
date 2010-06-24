@@ -71,7 +71,7 @@ class ProjectHandler(BaseHandler):
                     'added':strings_added,
                     'updated':strings_updated,
                     #'redirect':reverse('project.resource',args=[project.slug, translation_resource.slug])
-                    'redirect':reverse('translation',args=[project.slug, translation_resource.slug, storage_file.language.code])
+                    'redirect':reverse('translate',args=[project.slug, translation_resource.slug, storage_file.language.code])
                 }
                 logger.debug("Extraction successful, returning: %s" % retval)
 
