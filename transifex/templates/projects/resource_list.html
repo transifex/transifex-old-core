@@ -36,6 +36,14 @@
         $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
         $(".tablesorter_resource_list").tablesorter({
             widgets: ['zebra'],
+            textExtraction: { // Take value inside an object for the columns
+              0: function(node) {
+                  return $("a", node).text();
+              },
+              1: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
         });
         // Bind show more, show all events
         $('#show_more').click(function(){
@@ -53,6 +61,14 @@
               // Rebind the tablesorter js
               $(".tablesorter_resource_list").tablesorter({
                   widgets: ['zebra'],
+                  textExtraction: { // Take value inside an object for the columns
+                    0: function(node) {
+                        return $("a", node).text();
+                    },
+                    1: function(node) {
+                        return $("span", node).text();
+                    }
+                  }
               });
             });
         });
@@ -71,6 +87,14 @@
               // Rebind the tablesorter js
               $(".tablesorter_resource_list").tablesorter({
                   widgets: ['zebra'],
+                  textExtraction: { // Take value inside an object for the columns
+                    0: function(node) {
+                        return $("a", node).text();
+                    },
+                    1: function(node) {
+                        return $("span", node).text();
+                    }
+                  }
               });
             });
         });
@@ -97,9 +121,15 @@
         </sup>
         </td>
         <td class="last_updated">
-        <span class="res_tipsy_enable" style="border:0" title="Committed by {% last_committer res %}<br/>">
-          {% last_translation_update res %}
-        </span>
+        {% last_translation_update res as last_update %}
+        {% last_committer res as last_committer %}    
+        <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
+        {% if last_update %}
+            <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+            {{ last_update|timesince }}
+        {% else %}
+            {% trans "no translations yet" %}
+        {% endif %}
         </td>
     </tr>
   {% endfor %}

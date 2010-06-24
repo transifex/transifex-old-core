@@ -13,6 +13,19 @@
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
     $(".tablesorter_resource").tablesorter({
         widgets: ['zebra'],
+        headers: { 
+            1: { 
+                sorter: 'percent'
+            }, 
+        },
+        textExtraction: { // Take value inside an object for the columns
+            1: function(node) {
+                return $(".stats_string_resource", node).text();
+            },
+            2: function(node) {
+                return $(".origin_format", node).text();
+            }
+        }
     });
    })
 </script>
@@ -146,7 +159,8 @@
           {% last_translation_update res team.language.code as last_update %}
           {% last_committer res team.language.code as last_committer %}
           {% if last_update %}
-              {{ last_update }} 
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }} 
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}

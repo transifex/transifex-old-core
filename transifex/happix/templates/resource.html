@@ -23,6 +23,19 @@
         });
         $(".tablesorter_resource").tablesorter({
             widgets: ['zebra'],
+            headers: { 
+                1: { 
+                    sorter: 'percent'
+                }, 
+            },
+            textExtraction: { // Take value inside an object for the columns
+              1: function(node) {
+                  return $(".stats_string_resource", node).text();
+              },
+              2: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
         });
 
 	});
@@ -73,7 +86,7 @@ Projects |
   <h3>{% trans "Translation Resource details" %}</h3>
   <table class="definition">
     <tr>
-      <th class="i16 omega">{% trans "Primary Language:" %}</th>
+      <th class="i16 omega">{% trans "Source Language:" %}</th>
       <td>
         {{ resource.source_language }}
       </td>
@@ -105,7 +118,7 @@ Projects |
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
           {% ifequal resource.source_language language %}
-             <span style="padding-left:1em"><em>primary language</em></span>
+             <span style="padding-left:1em"><em>source language</em></span>
           {% endifequal %}
         </td>
         <td>
@@ -123,7 +136,8 @@ Projects |
           {% last_translation_update resource language.code as last_update %}
           {% last_committer resource language.code as last_committer %}
           {% if last_update %}
-              {{ last_update }} 
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }}
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}

@@ -22,7 +22,7 @@ def common_parser(parser, token):
         obj = args[0]
         lang_code = args[1]
         var_name = args[3]
-    elif len(args)==3 and arg[1] == 'as':
+    elif len(args)==3 and args[1] == 'as':
         obj = args[0]
         var_name = args[2]
     elif len(args)==2:
@@ -56,14 +56,14 @@ class LastTranslationNode(template.Node):
             # We have used "as"
             if self.var_name:
                 if self.tag_name == 'last_translation_update':
-                    context[self.var_name] = timesince(t.last_update)
+                    context[self.var_name] = t.last_update
                 elif self.tag_name == 'last_committer':
                     context[self.var_name] = t.user
                 elif self.tag_name == 'last_translation':
                     context[self.var_name] = t
                 return ''
             if self.tag_name == 'last_translation_update':
-                return timesince(t.last_update)
+                return t.last_update
             elif self.tag_name == 'last_committer':
                 return t.user
             elif self.tag_name == 'last_translation':

@@ -15,8 +15,15 @@
     </sup>
     </td>
     <td class="last_updated">
-    <span class="res_tipsy_enable" style="border:0" title="Committed by {% last_committer res %}<br/>">
-        {% last_translation_update res %}
+    {% last_translation_update res as last_update %}
+    {% last_committer res as last_committer %}    
+    <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
+    {% if last_update %}
+        <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+        {{ last_update|timesince }}
+    {% else %}
+        {% trans "no translations yet" %}
+    {% endif %}
     </span>
     </td>
 </tr>
