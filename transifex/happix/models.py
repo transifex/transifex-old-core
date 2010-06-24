@@ -108,9 +108,8 @@ class Resource(models.Model):
         return self.name
 
     class Meta:
-        unique_together = (('name', 'project'),)
-                           #('slug', 'project'),
-                           #('path', 'project'))
+        unique_together = (('name', 'project'),
+                           ('slug', 'project'),)
         verbose_name = _('resource')
         verbose_name_plural = _('resources')
         ordering  = ['name',]
