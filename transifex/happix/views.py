@@ -399,7 +399,8 @@ def stringset_handling(request, project_slug, resource_slug, lang_code,
                 s.string,
                 _get_string(translated_strings, source_entity = s.source_entity),
                 # save buttons and hidden context
-                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;"></span>'
+                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
+                 '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="Undo to initial text"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + str(s.source_entity.context) + '</span>'
                  '<span class="source_id" id="sourceid_' + str(counter) + '" style="display:none;">' + str(s.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])

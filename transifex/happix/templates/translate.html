@@ -149,12 +149,15 @@
 
                 if ($("#toggle_autosave").is(":checked")){ 
                     // Enable the save button push upstream.
-                    stringset.unBindSaveButton();
+                    stringset.unbindSaveButton();
                     stringset.bindBlurTextArea();
                 } else { 
                     stringset.unbindBlurTextArea();
                     stringset.bindSaveButton();
                 }
+
+                // Enable the undo button.
+                stringset.bindUndoButton();
 
                 if ($("#toggle_verbose").is(":checked")){ 
                     // Enable the save button push upstream.
@@ -234,13 +237,11 @@
 
         $("#toggle_autosave").click( function() {
             if ($(this).is(":checked")){ 
-                oTable.fnSetColumnVis( 4, false );
-                stringset.unBindSaveButton();
+                stringset.unbindSaveButton();
                 stringset.bindBlurTextArea();
                 stringset.push();
                 alert("Auto-save translation text has been enabled");
             } else { 
-                oTable.fnSetColumnVis( 4, true );
                 stringset.unbindBlurTextArea();
                 stringset.bindSaveButton();
                 alert("Auto-save translation text has been disabled");

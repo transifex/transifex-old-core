@@ -191,6 +191,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             if (string.modified) {
                 $(this).removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                 $('tbody tr td.notes span#save_' + id).show();
+                $('tbody tr td.notes span#undo_' + id).show();
             }
         });
     }
@@ -208,6 +209,22 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     this.bindFocusTextArea = function() {
         $('tr td textarea', this.bound_table).focus(function() {
             stringset.current_box = $(this);
+        });
+    }
+
+    /* Bind undo button events */
+    this.bindUndoButton = function() {
+        $('tr td.notes span.undo', this.bound_table).click(function() {
+            table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
+            string = this_stringset.strings[table_row_id];
+            undo_value = string.load_default;
+            string.translate(undo_value);
+            $('#translation_'+table_row_id)
+              .focus()
+              .val(undo_value);
+            // Update the color classes now
+            this_stringset.updateColors_Buttons();
+            $(this).hide();
         });
     }
 
@@ -230,8 +247,11 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     this.unbindBlurTextArea = function() {
         $('tr td textarea', this.bound_table).unbind("blur");
     }
-    this.unBindSaveButton = function() {
+    this.unbindSaveButton = function() {
         $('tr td.notes span.save', this.bound_table).unbind("click");
+    }
+    this.unbindUndoButton = function() {
+        $('tr td.notes span.undo', this.bound_table).unbind("click");
     }
 
     /* StringSet.bindStats(target_table_id) */
@@ -309,6 +329,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                             trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                             // TODO: Check for autosave and handle it.
                             $('tbody tr td.notes span#save_' + id).show();
+                            $('tbody tr td.notes span#undo_' + id).show();
                             trans.focus();
                         }
                     } else {
@@ -337,6 +358,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                 // TODO: Check for autosave and handle it.
                 $('tbody tr td.notes span#save_' + id).show();
+                $('tbody tr td.notes span#undo_' + id).show();
                 trans.focus();
             }
         });
