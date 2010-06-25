@@ -301,9 +301,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     this.toolbar = function(){
         $('#stringset_table tr').mouseover(function() {
                 var obj = $(this).find('.lotte-actions');
-                pos = $(this).offset();
+                pos = $(this).find(".translation").offset();
                 w = obj.width();
-                obj.css({top:pos.top - 300 + 4,left:pos.left - w + 40});
+                obj.css({top:pos.top + 4,left:pos.left - w -4});
         }).mouseout(function() {
             var obj = $(this).find('.lotte-actions');
             obj.css({top:-1000 ,left:-1000});
