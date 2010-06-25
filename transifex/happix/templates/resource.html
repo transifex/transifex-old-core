@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        {% if request.user.is_authenticated %}
         $("#new_translation1").click( function (){ 
             $("#new_translation_box1").toggle();
         });
@@ -21,6 +22,7 @@
                 alert("Please select a target language first and then click crate.");
             }
         });
+        {% endif %}
         $(".tablesorter_resource").tablesorter({
             widgets: ['zebra'],
             headers: { 
@@ -74,7 +76,7 @@ Projects |
   {% endif %}
   <h2 class="name">{{ resource.name }}</h2>
 
-  {% if perms.projects.add_resource or is_maintainer %}
+  {% if perms.projects.edit_resource or is_maintainer %}
     <div class="editlinks">
       <p>
         <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a>
@@ -169,6 +171,8 @@ Projects |
 
 </div>
 
+{% get_permission "project_perm.submit_file" for request.user and resource.project as "can_submit_translation" %}
+{% if request.user.is_authenticated and can_submit_translation %}
 <div id="new_translation_box1">
     <select name="{{ language.code }}" class="language">
         <option value="">Select Language</option>
@@ -181,6 +185,7 @@ Projects |
 <p style="text-align:center;padding-top:1em">
   <a id="new_translation1" class="buttonized i16 add">{% trans "Start New Translation" %}</a>
 </p>
+{% endif %}
 
 </div>
 

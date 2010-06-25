@@ -776,12 +776,17 @@ span.note {
 .buttonized:hover,
 .buttonized_simple,
 .buttonized_simple:hover,
+.buttonized_disabled,
+.buttonized_disabled:hover,
 .microform input[type="submit"] {
   cursor: pointer;
 }
 
-.buttonized{
-  -moz-box-shadow:1px 1px 2px #ddd;
+.buttonized,
+.buttonized_disabled,
+.microform input[type="submit"],
+.microform input[type="file"] {
+  font-size: 0.85em;
 }
 
 .buttonized,
@@ -792,18 +797,21 @@ span.note {
   color: #333;
 }
 
-.buttonized{
+.buttonized_disabled {
+  border: 1px solid #ccc !important;
+  background-color: #f5f5f5;
+  -moz-border-radius: 3px;
+  color: #AAAAAA;
+}
+
+.buttonized,
+.buttonized_disabled {
   padding: 0.4em 0.7em;
+  -moz-box-shadow:1px 1px 2px #ddd;
 }
 
 .microform input[type="submit"] {
   padding: 0.2em 0.6em;
-}
-
-.buttonized,
-.microform input[type="submit"],
-.microform input[type="file"] {
-  font-size: 0.85em;
 }
 
 .buttonized.active { background-color: #ddd; }
@@ -817,7 +825,8 @@ span.note {
   cursor: pointer;
 }
 
-.buttonized:hover {
+.buttonized:hover,
+.buttonized_disabled:hover {
   background-color: #fafafa;
   border: 1px solid #ccc;
   -moz-box-shadow:1px 1px 2px #bbb;
@@ -830,12 +839,12 @@ span.note {
 
 /* Buttonized2 (bigger font-size buttons) */
 /* This is a version for anchor tags */
-a.buttonized2 {
+a.buttonized2,
+a.buttonized2_disabled {
   background-position:3% 50%;
   font-size:16px;
   background-color:#F5F5F5;
   border:1px solid #CCCCCC !important;
-  color:#555;
   padding-bottom:0.2em;
   padding-top:0.2em;
   padding-right:0.8em;
@@ -848,6 +857,14 @@ a.buttonized2:hover{
   border: 1px solid #ccc;
   -moz-box-shadow:1px 1px 5px #999;
   cursor: pointer;
+}
+
+a.buttonized2{
+  color:#555;
+}
+
+a.buttonized2_disabled {
+  color:#AAAAAA;
 }
 
 /*List*/

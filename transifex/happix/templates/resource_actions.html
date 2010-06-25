@@ -21,7 +21,13 @@
   </div>
   <div class="first_level">
     <span class="translate_button_wrapper">
+    {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
+    {% if request.user.is_authenticated and can_submit_translation %}
       <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
+      <p>{% blocktrans %}<span>or &nbsp;&nbsp;&nbsp;<a id="view_strings" href="#">View strings</a></span>{% endblocktrans %}</p>
+    {% else %}
+      <a class="i16 find buttonized2" id="view_strings" href="#">{% trans "View Strings" %}</a>
+    {% endif %}
     </span>
     <div class="stats_wrapper">
       {% with 300 as barwidth %}
@@ -42,7 +48,7 @@
           <li class="top">
             <span class="i16 connect"><a href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a></span
           </li>
-          {% if target_language.code|language_has_team:project %}
+          {% if team %}
           <li>
             <span class="i16 team"><a href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a></span>
           </li>
@@ -73,7 +79,21 @@
             <span class="i16 lock_none">{% trans "Resource is not locked by anyone." %} </span>
           </li>
           <li>
-            <span class="i16 clock">{% trans "Translation last updated by" %} <strong>{% last_committer resource target_language.code %}</strong> ({% last_translation_update resource target_language.code %})</span>
+            <span class="i16 clock">
+              {% last_translation_update resource target_language.code as last_update %}
+              {% last_committer resource target_language.code as last_committer %}
+              {% if last_update %}
+                {% blocktrans %}Translation last updated {% endblocktrans %}
+                {% if last_committer %}
+                  {% trans "by" %}
+                  <strong>{{ last_committer }}</strong> ({{ last_update|timesince }})
+                {% else %}
+                  {{ last_update|timesince }}
+                {% endif %}
+              {% else %}
+                {% trans "No translation yet" %}
+              {% endif %}
+            </span>
           </li>
         </ul>
   </div>

@@ -13,6 +13,7 @@ from happix.models import Translation, Resource, SourceEntity, PARSERS, StorageF
 from happix.forms import ResourceForm
 from languages.models import Language
 from projects.models import Project
+from teams.models import Team
 
 try:
     import json
@@ -178,35 +179,6 @@ def view_translation(request, project_slug=None, resource_slug=None, lang_code=N
 
 
 #XXX: Obsolete
-def clone_translation(request, project_slug=None, resource_slug=None,
-            source_lang_code=None, target_lang_code=None):
-    '''
-    Get a resource, a src lang and a target lang and clone all translation
-    strings for the src to the target.
-    '''
-
-    resource = Resource.objects.get(
-        slug = resource_slug,
-        project__slug = project_slug
-    )
-    # get original translation strings
-    strings = Translation.objects.filter(
-                resource = resource,
-                language__code = source_lang_code)
-
-    target_lang = Language.objects.get(code=target_lang_code)
-
-    # clone them in new translation
-    for s in strings:
-        Translation.objects.get_or_create(
-                    resource = resource,
-                    language = target_lang,
-                    string = s.string,
-                    source_string = s.source_string)
-    return HttpResponse(status=200)
-
-
-#XXX: Obsolete
 def start_new_translation(request, project_slug=None, resource_slug=None,
                                     target_lang_code=None):
     '''
@@ -229,8 +201,7 @@ def start_new_translation(request, project_slug=None, resource_slug=None,
                     source_string = s.source_string)
 
 
-#FIXME: permissions needed
-@login_required
+#FIXME: permissions needed for private projects
 def resource_actions(request, project_slug=None, resource_slug=None,
                      target_lang_code=None):
     """
@@ -240,14 +211,19 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     resource = get_object_or_404(Resource, project__slug = project_slug,
                                  slug = resource_slug)
     target_language = get_object_or_404(Language, code=target_lang_code)
+    project = resource.project
+    # Get the team if exists to use it for permissions and links
+    team = Team.objects.get_or_none(project, target_lang_code)
 
     return render_to_response("resource_actions.html",
-    { 'project' : resource.project,
+    { 'project' : project,
       'resource' : resource,
-      'target_language' : target_language,},
+      'target_language' : target_language,
+      'team' : team},
     context_instance = RequestContext(request))
 
 
+#FIXME: permissions needed for private projects
 def project_resources(request, project_slug=None, offset=None, **kwargs):
     """
     Ajax view that returns a table snippet for all the resources in a project.
@@ -270,6 +246,39 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     { 'project' : project,
       'resources' : resources,},
     context_instance = RequestContext(request))
+
+
+#FIXME: Permissions
+def clone_language(request, project_slug=None, resource_slug=None,
+            source_lang_code=None, target_lang_code=None):
+    '''
+    Get a resource, a src lang and a target lang and clone all translation
+    strings for the src to the target.
+    
+    The user is redirected to the online editor for the target language.
+    '''
+
+    resource = Resource.objects.get(
+        slug = resource_slug,
+        project__slug = project_slug
+    )
+    # get the strings which will be cloned
+    strings = Translation.objects.filter(
+                resource = resource,
+                language__code = source_lang_code)
+
+    target_lang = Language.objects.get(code=target_lang_code)
+
+    # clone them in new translation
+    for s in strings:
+        Translation.objects.get_or_create(
+                    resource = resource,
+                    language = target_lang,
+                    string = s.string,
+                    source_entity = s.source_entity,
+                    number = s.number)
+    return HttpResponseRedirect(reverse('translate', args=[project_slug,
+                                resource_slug, target_lang_code]),)
 
 
 #FIXME: permissions needed
