@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Cheng-Chia Tseng <pswo10680@gmail.com>, 2010.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 08:01+0000\n"
-"PO-Revision-Date: 2010-05-03 10:57+0800\n"
+"PO-Revision-Date: 2010-06-27 16:35+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: chinese-l10n <chinese-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -34,8 +34,10 @@ msgstr "日誌條目"
 msgid "Date/time"
 msgstr "日期/時間"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:76
-#: teams/models.py:112 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7
+#: teams/models.py:76
+#: teams/models.py:112
+#: txpermissions/forms.py:18
 msgid "User"
 msgstr "使用者"
 
@@ -78,9 +80,12 @@ msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:73
 #: addons/charts/templates/charts/widget_snippet.html:105
-#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
-#: projects/models.py:299 projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
+#: addons/widgets/templates/project_widgets.html:66
+#: projects/models.py:167
+#: projects/models.py:299
+#: projects/migrations/0001_initial.py:28
+#: projects/migrations/0001_initial.py:50
+#: releases/models.py:41
 #: txcollections/migrations/0001_initial.py:23
 #: txcollections/migrations/0001_initial.py:41
 msgid "Hidden"
@@ -105,43 +110,49 @@ msgid "Interactive and Image Charts"
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:122
+#, fuzzy
 msgid ""
 "Sorry, but your project doesn't have any components with up-to-date statistics. \n"
 "You need to have at least one component with statistics to export charts from Transifex."
 msgstr ""
+"很抱歉，您的專案並沒有任何最新統計過的部件。\n"
+"您需要至少一個有統計的部件來從 Transifex 輸出圖。"
 
 #: addons/locks/handlers.py:58
 msgid "Couldn't lock file, this means that you can send files only for reviewing."
-msgstr ""
+msgstr "無法將檔案上鎖，這代表您只能送出供校閱的檔案。"
 
 #: addons/locks/models.py:65
 #, python-format
 msgid "User '%(user)s' has no permission to submit files for or coordinate  '%(pofile)s'"
-msgstr ""
+msgstr "使用者「%(user)s」沒有得到提交檔案或協調「%(pofile)s」的許可。"
 
 #: addons/locks/models.py:77
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
-msgstr ""
+msgstr "使用者「%(user)s」上的鎖已達到允許的最大數目，%(locks)i  個。"
 
 #: addons/locks/models.py:158
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
-msgstr ""
+msgstr "使用者「%(user)s」不被允許解開「%(lock)s」鎖"
 
 #: addons/locks/notifications.py:15
+#, fuzzy
 msgid "Lock is expring"
-msgstr ""
+msgstr "鎖即將過期"
 
 #: addons/locks/notifications.py:16
+#, fuzzy
 msgid "when a lock for file is expiring"
-msgstr ""
+msgstr "當檔案的鎖即將過期時"
 
 #: addons/locks/views.py:42
 msgid "Lock removed."
 msgstr "鎖已移除。"
 
-#: addons/locks/views.py:47 addons/locks/views.py:78
+#: addons/locks/views.py:47
+#: addons/locks/views.py:78
 #: projects/views/component.py:556
 msgid "Sorry, but you need to send a POST request."
 msgstr "抱歉，但是您必需送出 POST 請求。"
@@ -174,7 +185,13 @@ msgid_plural ""
 "                Extend lock by %(hours)s hours.\n"
 "            "
 msgstr[0] ""
+"\n"
+"                將鎖延期 %(hours)s 個小時。\n"
+"            "
 msgstr[1] ""
+"\n"
+"                將鎖延期 %(hours)s 個小時。\n"
+"            "
 
 #: addons/locks/templates/pofile_lock.html:46
 msgid "Lock and download this file to notify others you're working with it."
@@ -187,7 +204,7 @@ msgstr "此檔案未上鎖。看起來像是現在沒有人在處理它。"
 #: addons/locks/templates/locks/component.html:9
 #: translations/templates/component_submit.html:31
 msgid "This file is locked by someone else."
-msgstr ""
+msgstr "此檔案已被某人上鎖。"
 
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
@@ -195,6 +212,8 @@ msgid ""
 "\n"
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> is about to expire on %(expires)s\n"
 msgstr ""
+"\n"
+"<a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> 的鎖即將於 %(expires)s 過期\n"
 
 #: addons/presubmit_checks/handlers.py:35
 msgid "You are only allowed to upload PO files (*.po)!"
@@ -242,15 +261,18 @@ msgstr "監看"
 msgid "watches"
 msgstr "監看"
 
-#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
+#: addons/repowatch/views.py:25
+#: addons/repowatch/views.py:84
 msgid "Must use POST to activate"
 msgstr "必須使用 POST 來啟動"
 
-#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
+#: addons/repowatch/views.py:28
+#: addons/repowatch/views.py:87
 msgid "Notification is not enabled"
 msgstr "沒有啟用通知"
 
-#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
+#: addons/repowatch/views.py:53
+#: addons/repowatch/templates/watch_toggle.html:5
 msgid "Watch it"
 msgstr "監看它"
 
@@ -301,7 +323,8 @@ msgid "Go"
 msgstr "前往"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:207
+#: templates/timeline.html:24
+#: templates/projects/component_detail.html:207
 #: templates/projects/project_detail.html:119
 #: templates/teams/team_detail.html:134
 msgid "None available"
@@ -324,11 +347,16 @@ msgstr[1] ""
 "  查詢傳回 %(counter)s 個結果\n"
 
 #: addons/timeline/templates/timeline/timeline_base.html:44
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:152 projects/models.py:278 projects/models.py:541
+#: languages/models.py:39
+#: languages/migrations/0001_initial.py:14
+#: projects/models.py:152
+#: projects/models.py:278
+#: projects/models.py:541
 #: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: projects/migrations/0001_initial.py:39
+#: releases/models.py:25
+#: templates/timeline.html:43
+#: templates/notification/notices.html:42
 #: templates/reviews/review_list.html:42
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
@@ -387,18 +415,24 @@ msgstr "您可以將使用者列插入論壇、電子郵件簽名欄位...等之
 msgid "Show code snippet for userbar:"
 msgstr ""
 
-#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
-#: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:150 projects/models.py:276 projects/models.py:539
+#: codebases/models.py:36
+#: codebases/migrations/0001_initial.py:12
+#: languages/models.py:37
+#: languages/migrations/0001_initial.py:19
+#: projects/models.py:150
+#: projects/models.py:276
+#: projects/models.py:539
 #: projects/migrations/0001_initial.py:31
-#: projects/migrations/0001_initial.py:53 releases/models.py:23
+#: projects/migrations/0001_initial.py:53
+#: releases/models.py:23
 #: templates/userprofile/profile/public.html:60
 #: txcollections/migrations/0001_initial.py:27
 #: txcollections/migrations/0001_initial.py:44
 msgid "Name"
 msgstr "名稱"
 
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
+#: codebases/models.py:37
+#: codebases/migrations/0001_initial.py:15
 msgid "Root"
 msgstr "根"
 
@@ -406,7 +440,8 @@ msgstr "根"
 msgid "The URL of the codebase"
 msgstr "代碼庫的網址"
 
-#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
+#: codebases/models.py:39
+#: codebases/migrations/0001_initial.py:17
 msgid "Type"
 msgstr "類型"
 
@@ -437,15 +472,18 @@ msgstr "於 %(site_name)s 上的語言"
 msgid "The languages spoken on %s."
 msgstr "於 %s 上所使用的語言。"
 
-#: languages/models.py:40 languages/migrations/0001_initial.py:13
+#: languages/models.py:40
+#: languages/migrations/0001_initial.py:13
 msgid "Code"
 msgstr "代碼"
 
-#: languages/models.py:43 languages/migrations/0001_initial.py:12
+#: languages/models.py:43
+#: languages/migrations/0001_initial.py:12
 msgid "Code aliases"
 msgstr "代碼別名"
 
-#: languages/models.py:46 languages/migrations/0001_initial.py:17
+#: languages/models.py:46
+#: languages/migrations/0001_initial.py:17
 msgid "Special Chars"
 msgstr "特殊字元"
 
@@ -453,11 +491,13 @@ msgstr "特殊字元"
 msgid "Enter any special characters that users might find difficult to type"
 msgstr "輸入使用者可能會發現難以輸入的任何特殊字元"
 
-#: languages/models.py:50 languages/migrations/0001_initial.py:16
+#: languages/models.py:50
+#: languages/migrations/0001_initial.py:16
 msgid "Number of Plurals"
 msgstr "複數形式數目"
 
-#: languages/models.py:52 languages/migrations/0001_initial.py:15
+#: languages/models.py:52
+#: languages/migrations/0001_initial.py:15
 msgid "Plural Equation"
 msgstr "複數形式方程式"
 
@@ -465,7 +505,8 @@ msgstr "複數形式方程式"
 msgid "language"
 msgstr "語言"
 
-#: languages/models.py:64 templates/languages/language_list.html:15
+#: languages/models.py:64
+#: templates/languages/language_list.html:15
 msgid "languages"
 msgstr "語言"
 
@@ -508,7 +549,8 @@ msgstr "%(site_name)s: %(project)s :: %(release)s 發行 :: %(lang)s"
 msgid "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "針對 %(release)s 發行的 %(lang)s 語言翻譯統計。"
 
-#: projects/forms.py:18 txpermissions/forms.py:19
+#: projects/forms.py:18
+#: txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "搜尋使用者"
 
@@ -526,6 +568,13 @@ msgid ""
 "                              process is in place, e.g. when contributions are\n"
 "                              submitted by email or to a separate branch."
 msgstr ""
+"允許任何已登入的使用者提交檔案到我的\n"
+"                              專案。<a href=\"http://www.youtube.com/watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">想像</a>所有的人， \n"
+"                              一同分享整個世界。建議想要即刻\n"
+"                              翻譯、提交前的校閱程序到位時使用，\n"
+"                              例：藉由電子郵件的方式提交貢獻，\n"
+"                              或是提交貢獻到獨立分支。"
 
 #: projects/forms.py:66
 msgid "Limited access"
@@ -539,11 +588,14 @@ msgid ""
 "                              translation files. Recommended for most \n"
 "                              projects."
 msgstr ""
+"針對特定的人給予存取權。翻譯 \n"
+"                              團隊將僅擁有其語言的檔案存取權，\n"
+"                              而全域撰寫者將擁有所有翻譯檔案的\n"
+"                              存取權。建議大多數專案使用。"
 
 #: projects/forms.py:75
-#, fuzzy
 msgid "Outsourced access"
-msgstr "禁止存取"
+msgstr "外部來源的存取"
 
 #: projects/forms.py:76
 msgid ""
@@ -554,12 +606,20 @@ msgid ""
 "                              non-upstream projects such as distribution \n"
 "                              packages, desktop environment modules, etc."
 msgstr ""
+"信任其它專案的存取控制設定，並重複使用\n"
+"                              該專案的團隊與撰寫者。如果某人\n"
+"                              可以貢獻該專案，他也可以貢獻此\n"
+"                              專案。建議非上游專案使用，\n"
+"                              像是發行用套件、桌面環境模組...\n"
+"                              等。"
 
-#: projects/forms.py:134 projects/models.py:291
+#: projects/forms.py:134
+#: projects/models.py:291
 msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
 msgstr "用來過濾要顯示檔案的正規表示式。例：「po/.*」"
 
-#: projects/forms.py:151 projects/models.py:296
+#: projects/forms.py:151
+#: projects/models.py:296
 #: projects/migrations/0002_release_06_07.py:15
 msgid "Submit to"
 msgstr "提交到"
@@ -574,15 +634,18 @@ msgstr "搜尋部件"
 
 #: projects/models.py:143
 msgid "Private"
-msgstr ""
+msgstr "私人"
 
 #: projects/models.py:144
 msgid "A private project is visible only by you and your team.Moreover, private projects are limited according to billingplans for the user account."
-msgstr ""
+msgstr "私人專案只有您與您的團隊能看見。除此之外，根據該使用者帳號的付費方案，私人專案功能已被限制。"
 
-#: projects/models.py:147 projects/models.py:273 projects/models.py:536
+#: projects/models.py:147
+#: projects/models.py:273
+#: projects/models.py:536
 #: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:38 releases/models.py:20
+#: projects/migrations/0001_initial.py:38
+#: releases/models.py:20
 #: txcollections/migrations/0001_initial.py:13
 #: txcollections/migrations/0001_initial.py:33
 #: txcollections/migrations/0002_release_06_07.py:12
@@ -590,37 +653,48 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:148 projects/models.py:274 projects/models.py:537
+#: projects/models.py:148
+#: projects/models.py:274
+#: projects/models.py:537
 #: releases/models.py:21
 msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
 msgstr "用在網址上的簡短標籤，只能包含字母、數字、底線(_)或連字號(-)。"
 
-#: projects/models.py:151 projects/models.py:277 releases/models.py:24
+#: projects/models.py:151
+#: projects/models.py:277
+#: releases/models.py:24
 msgid "A short name or very short description."
 msgstr "短的名稱或是非常簡短的描述。"
 
-#: projects/models.py:153 projects/models.py:279
+#: projects/models.py:153
+#: projects/models.py:279
 msgid "A sentence or two describing the object (optional)."
 msgstr "一個或是兩個句子來描述專案（選用）。"
 
-#: projects/models.py:154 projects/models.py:280 projects/models.py:544
+#: projects/models.py:154
+#: projects/models.py:280
+#: projects/models.py:544
 #: projects/migrations/0001_initial.py:30
-#: projects/migrations/0001_initial.py:45 releases/models.py:27
+#: projects/migrations/0001_initial.py:45
+#: releases/models.py:27
 #: txcollections/migrations/0001_initial.py:25
 #: txcollections/migrations/0001_initial.py:43
 msgid "Long description"
 msgstr "詳細描述"
 
-#: projects/models.py:156 projects/models.py:282
+#: projects/models.py:156
+#: projects/models.py:282
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "較長的描述（選用）。使用 Markown syntax。"
 
-#: projects/models.py:157 projects/migrations/0001_initial.py:29
+#: projects/models.py:157
+#: projects/migrations/0001_initial.py:29
 #: txcollections/migrations/0001_initial.py:42
 msgid "Homepage"
 msgstr "主頁"
 
-#: projects/models.py:158 projects/migrations/0001_initial.py:18
+#: projects/models.py:158
+#: projects/migrations/0001_initial.py:18
 msgid "Feed"
 msgstr "消息來源"
 
@@ -628,7 +702,8 @@ msgstr "消息來源"
 msgid "An RSS feed with updates to the project."
 msgstr "專案更新的 RSS 消息來源。"
 
-#: projects/models.py:160 projects/migrations/0001_initial.py:27
+#: projects/models.py:160
+#: projects/migrations/0001_initial.py:27
 msgid "Bug tracker"
 msgstr "程式錯誤追蹤器"
 
@@ -645,23 +720,30 @@ msgstr "任何人都能提交"
 msgid "Can anyone submit files to this project?"
 msgstr "任何人都能提交檔案到此專案嗎？"
 
-#: projects/models.py:168 projects/models.py:300 releases/models.py:42
+#: projects/models.py:168
+#: projects/models.py:300
+#: releases/models.py:42
 msgid "Hide this object from the list view?"
 msgstr "從清單檢視中隱藏此物件嗎？"
 
-#: projects/models.py:169 projects/models.py:301
+#: projects/models.py:169
+#: projects/models.py:301
 #: projects/migrations/0001_initial.py:24
-#: projects/migrations/0001_initial.py:41 releases/models.py:43
+#: projects/migrations/0001_initial.py:41
+#: releases/models.py:43
 #: txcollections/migrations/0001_initial.py:17
 #: txcollections/migrations/0001_initial.py:38
 msgid "Enabled"
 msgstr "已啟用"
 
-#: projects/models.py:170 projects/models.py:302 releases/models.py:44
+#: projects/models.py:170
+#: projects/models.py:302
+#: releases/models.py:44
 msgid "Enable this object or disable its use?"
 msgstr "啟用此物件或停用其使用嗎？"
 
-#: projects/models.py:174 projects/migrations/0001_initial.py:23
+#: projects/models.py:174
+#: projects/migrations/0001_initial.py:23
 msgid "Tags"
 msgstr "標籤"
 
@@ -670,31 +752,35 @@ msgid "Maintainers"
 msgstr "維護者"
 
 #: projects/models.py:181
-#, fuzzy
 msgid "Outsource project"
-msgstr "刪除專案"
+msgstr "外部來源專案"
 
 #: projects/models.py:182
 msgid "Project that owns the access control of this project."
-msgstr ""
+msgstr "擁有此專案存取控制權的專案。"
 
 #: projects/models.py:185
 msgid "Owner"
-msgstr ""
+msgstr "擁有者"
 
 #: projects/models.py:186
 msgid "The user who owns this project."
-msgstr ""
+msgstr "擁有此專案的使用者。"
 
-#: projects/models.py:189 projects/models.py:311 projects/models.py:566
+#: projects/models.py:189
+#: projects/models.py:311
+#: projects/models.py:566
 #: projects/migrations/0001_initial.py:22
-#: projects/migrations/0001_initial.py:47 releases/models.py:49
+#: projects/migrations/0001_initial.py:47
+#: releases/models.py:49
 #: txcollections/migrations/0001_initial.py:22
 #: txcollections/migrations/0001_initial.py:36
 msgid "HTML Description"
 msgstr "HTML 描述"
 
-#: projects/models.py:191 projects/models.py:313 projects/models.py:568
+#: projects/models.py:191
+#: projects/models.py:313
+#: projects/models.py:568
 #: releases/models.py:50
 msgid "Description in HTML."
 msgstr "HTML 內的描述。"
@@ -708,11 +794,13 @@ msgstr "<專案：%s>"
 msgid "project"
 msgstr "專案"
 
-#: projects/models.py:205 templates/projects/project_list.html:18
+#: projects/models.py:205
+#: templates/projects/project_list.html:18
 msgid "projects"
 msgstr "專案"
 
-#: projects/models.py:283 projects/migrations/0001_initial.py:52
+#: projects/models.py:283
+#: projects/migrations/0001_initial.py:52
 msgid "Source language"
 msgstr "來源語言"
 
@@ -720,7 +808,8 @@ msgstr "來源語言"
 msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
 msgstr "給此部件用的來源語言（例： 'en', 'pt_BR', 'el'）。"
 
-#: projects/models.py:286 projects/migrations/0001_initial.py:42
+#: projects/models.py:286
+#: projects/migrations/0001_initial.py:42
 msgid "I18n type"
 msgstr "I18n 類型"
 
@@ -729,11 +818,13 @@ msgstr "I18n 類型"
 msgid "The type of i18n support for the source code (%s)"
 msgstr "給源碼用的 i18n 支援類型 (%s)"
 
-#: projects/models.py:290 projects/migrations/0001_initial.py:43
+#: projects/models.py:290
+#: projects/migrations/0001_initial.py:43
 msgid "File filter"
 msgstr "檔案過濾器"
 
-#: projects/models.py:293 projects/migrations/0001_initial.py:51
+#: projects/models.py:293
+#: projects/migrations/0001_initial.py:51
 msgid "Allows submission"
 msgstr "允許提交"
 
@@ -741,7 +832,8 @@ msgstr "允許提交"
 msgid "Does this module repository allow write access?"
 msgstr "此模組倉儲允許寫入的存取嗎？"
 
-#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
+#: projects/models.py:305
+#: projects/migrations/0002_release_06_07.py:12
 msgid "Calculate statistics?"
 msgstr "要算出統計嗎？"
 
@@ -749,13 +841,16 @@ msgstr "要算出統計嗎？"
 msgid "Should statistics be calculated for this component?"
 msgstr "此部件應該納入統計嗎？"
 
-#: projects/models.py:316 projects/models.py:571
-#: projects/migrations/0001_initial.py:46 teams/models.py:27
+#: projects/models.py:316
+#: projects/models.py:571
+#: projects/migrations/0001_initial.py:46
+#: teams/models.py:27
 #: teams/models.py:69
 msgid "Project"
 msgstr "專案"
 
-#: projects/models.py:317 projects/migrations/0001_initial.py:37
+#: projects/models.py:317
+#: projects/migrations/0001_initial.py:37
 msgid "Unit"
 msgstr "單位"
 
@@ -768,7 +863,8 @@ msgstr "<部件：%s>"
 msgid "component"
 msgstr "部件"
 
-#: projects/models.py:343 templates/projects/component_list.html:16
+#: projects/models.py:343
+#: templates/projects/component_list.html:16
 msgid "components"
 msgstr "部件"
 
@@ -776,24 +872,29 @@ msgstr "部件"
 msgid "A string like a name or very short description."
 msgstr "像是名稱的字串或是非常簡短的描述。"
 
-#: projects/models.py:543 releases/models.py:26
+#: projects/models.py:543
+#: releases/models.py:26
 msgid "A sentence or two describing the object."
 msgstr "用一個或兩個句子來描述這個物件。"
 
-#: projects/models.py:546 releases/models.py:28
+#: projects/models.py:546
+#: releases/models.py:28
 msgid "Use Markdown syntax."
 msgstr "使用 Markdown syntax。"
 
-#: projects/models.py:549 releases/models.py:31
+#: projects/models.py:549
+#: releases/models.py:31
 #: txcollections/migrations/0001_initial.py:16
 msgid "Release date"
 msgstr "發行日期"
 
-#: projects/models.py:551 releases/models.py:32
+#: projects/models.py:551
+#: releases/models.py:32
 msgid "When this release will be available."
 msgstr "當此發行版釋出的時候。"
 
-#: projects/models.py:552 releases/models.py:33
+#: projects/models.py:552
+#: releases/models.py:33
 msgid "String freeze date"
 msgstr "字串凍結日期"
 
@@ -801,12 +902,14 @@ msgstr "字串凍結日期"
 msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
 msgstr "當可翻譯字串被凍結的時候 (會影響到翻譯的字串不能再被加入或修改)。"
 
-#: projects/models.py:556 releases/models.py:36
+#: projects/models.py:556
+#: releases/models.py:36
 #: txcollections/migrations/0001_initial.py:26
 msgid "Devel freeze date"
 msgstr "開發凍結日期"
 
-#: projects/models.py:558 releases/models.py:37
+#: projects/models.py:558
+#: releases/models.py:37
 msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
 msgstr "此發行版本其開發者建構套件的最後日期。在此日期之後送出的翻譯不會被納入這個發行版本。"
 
@@ -819,11 +922,13 @@ msgstr "部件"
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<發行：%(rel)s (%(proj)s 專案)>"
 
-#: projects/models.py:598 releases/models.py:54
+#: projects/models.py:598
+#: releases/models.py:54
 msgid "release"
 msgstr "發行"
 
-#: projects/models.py:599 releases/models.py:55
+#: projects/models.py:599
+#: releases/models.py:55
 #: templates/languages/language_detail.html:18
 #: templates/projects/release_list.html:14
 msgid "releases"
@@ -842,9 +947,8 @@ msgid "Is allowed to submit file to this project"
 msgstr "被允許提交檔案給此專案"
 
 #: projects/permissions/project.py:117
-#, fuzzy
 msgid "Is allowed to browse this private project"
-msgstr "被允許維護此專案"
+msgstr "允許瀏覽此私人專案"
 
 #: projects/templates/feeds/release_description.html:4
 #: projects/templates/feeds/release_language_description.html:4
@@ -871,7 +975,8 @@ msgstr "未翻譯："
 msgid "Total:"
 msgstr "總共："
 
-#: projects/views/component.py:246 projects/views/project.py:148
+#: projects/views/component.py:246
+#: projects/views/project.py:148
 #, python-format
 msgid "The %s was deleted."
 msgstr "%s 已刪除。"
@@ -1131,11 +1236,13 @@ msgstr "成員是那些能提交翻譯的人。搜尋使用者名稱。"
 msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
 msgstr "您讓使用者「%s」同時在協調者與成員清單內。請將他或她從這兩個清單之一內拿掉。"
 
-#: teams/models.py:29 teams/models.py:71
+#: teams/models.py:29
+#: teams/models.py:71
 msgid "The project which this team belongs to."
 msgstr "此團隊所屬的專案。"
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:30
+#: teams/models.py:72
 #: templates/reviews/review_list.html:125
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
@@ -1143,7 +1250,8 @@ msgstr "此團隊所屬的專案。"
 msgid "Language"
 msgstr "語言"
 
-#: teams/models.py:32 teams/models.py:74
+#: teams/models.py:32
+#: teams/models.py:74
 msgid "People in this team will only be able to submit translations files related to the specific language."
 msgstr "此團隊內的人們可以提交與特定語言相關的翻譯檔。"
 
@@ -1195,7 +1303,8 @@ msgstr "團隊存取請求"
 msgid "team access requests"
 msgstr "團隊存取請求"
 
-#: templates/403.html:4 templates/403.html.py:7
+#: templates/403.html:4
+#: templates/403.html.py:7
 msgid "Forbidden access"
 msgstr "禁止存取"
 
@@ -1203,12 +1312,14 @@ msgstr "禁止存取"
 msgid "Looks like you do not have the necessary permissions for the required action."
 msgstr "看來您沒有得到要求動作的必須許可。"
 
-#: templates/403.html:15 templates/404.html:15
+#: templates/403.html:15
+#: templates/404.html:15
 #, python-format
 msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
 msgstr "這裡有一個<a href=\"%(home)s\">首頁</a>的連結。您知道的，只是用來以防萬一。"
 
-#: templates/404.html:4 templates/404.html.py:7
+#: templates/404.html:4
+#: templates/404.html.py:7
 msgid "Page not found"
 msgstr "找不到網頁"
 
@@ -1216,7 +1327,8 @@ msgstr "找不到網頁"
 msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
 msgstr "看來您進入了損壞的連結。如果您認為這是我們的錯，請<a href='http://transifex.org/newticket'>讓我們知道</a>。"
 
-#: templates/500.html:6 templates/500.html.py:21
+#: templates/500.html:6
+#: templates/500.html.py:21
 msgid "Page unavailable"
 msgstr "不可用的網頁"
 
@@ -1232,16 +1344,19 @@ msgstr "我們不小心把內部的東西弄得一團亂，讓伺服器出了一
 msgid "Please try again later."
 msgstr "請稍候再重新嘗試。"
 
-#: templates/about.html:9 templates/index.html:10
+#: templates/about.html:9
+#: templates/index.html:10
 msgid "Welcome to Transifex"
 msgstr "歡迎來到 Transifex"
 
-#: templates/base-sample.html:8 templates/admin/base_site.html:5
+#: templates/base-sample.html:8
+#: templates/admin/base_site.html:5
 #: templates/flatpages/default.html:5
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:35 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:35
+#: txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "前往起始頁面"
 
@@ -1253,7 +1368,8 @@ msgstr "前往起始頁面"
 msgid "The projects being served"
 msgstr "所服務的專案"
 
-#: templates/base-sample.html:40 templates/projects/base.html:6
+#: templates/base-sample.html:40
+#: templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 msgid "Projects"
 msgstr "專案"
@@ -1262,7 +1378,8 @@ msgstr "專案"
 msgid "The languages our service serves"
 msgstr "我們所服務的語言"
 
-#: templates/base-sample.html:41 templates/languages/base.html:5
+#: templates/base-sample.html:41
+#: templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
@@ -1281,10 +1398,14 @@ msgstr "從網站登出"
 msgid "Sign out"
 msgstr "登出"
 
-#: templates/base-sample.html:53 templates/simpleauth/login_box.html:7
-#: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
-#: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
-#: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
+#: templates/base-sample.html:53
+#: templates/simpleauth/login_box.html:7
+#: templates/simpleauth/login_box.html:17
+#: templates/simpleauth/logout.html:4
+#: templates/simpleauth/logout.html.py:5
+#: templates/simpleauth/logout.html:6
+#: templates/simpleauth/signin.html:4
+#: templates/simpleauth/signin.html.py:5
 #: templates/simpleauth/signin.html:6
 #: templates/userprofile/account/login.html:18
 #: templates/userprofile/account/login.html:27
@@ -1321,8 +1442,10 @@ msgstr "Transifex 是一個以幫助翻譯者追蹤其喜愛的翻譯專案為�
 msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr "您也可以透過<a href=\"%(project_list)s\">所有專案</a>來瀏覽。"
 
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6 templates/search_form_plain.html:5
+#: templates/search.html:7
+#: templates/search.html.py:9
+#: templates/search_form.html:6
+#: templates/search_form_plain.html:5
 #: templates/userprofile/avatar/choose.html:66
 msgid "Search"
 msgstr "搜尋"
@@ -1413,7 +1536,8 @@ msgstr "尚未有註冊的語言。:-("
 msgid "Couldn't find your language? Please use the feedback form and let us know!"
 msgstr "找不到您的語言？請填寫回饋表來讓我們知道！"
 
-#: templates/notification/notices.html:6 templates/notification/notices.html:7
+#: templates/notification/notices.html:6
+#: templates/notification/notices.html:7
 #: templates/notification/notices.html:8
 msgid "Notifications"
 msgstr "通知"
@@ -1479,7 +1603,8 @@ msgstr "通知類型"
 msgid "Change"
 msgstr "變更"
 
-#: templates/notification/single.html:5 templates/notification/single.html:8
+#: templates/notification/single.html:5
+#: templates/notification/single.html:8
 msgid "Notice"
 msgstr "注意"
 
@@ -1663,9 +1788,8 @@ msgstr "此部件支援將提交的檔案儲存在本機，並且也將這些檔
 
 #: templates/projects/component_detail.html:65
 #: templates/projects/project_detail.html:22
-#, fuzzy
 msgid "Private Project"
-msgstr "最新專案"
+msgstr "私人專案"
 
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
@@ -1777,7 +1901,8 @@ msgstr ""
 "  該檔案到上游專案。"
 
 #: templates/projects/component_detail.html:201
-#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
+#: templates/reviews/review_list.html:20
+#: templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "校閱"
 
@@ -2039,17 +2164,15 @@ msgstr "存取控制"
 
 #: templates/projects/project_form_access_control.html:18
 msgid "You have the following choices to manage how people can have submission access to your project:"
-msgstr ""
+msgstr "您可以從下方替您的專案選擇人們該擁有怎樣的提交存取權："
 
 #: templates/projects/project_form_access_control.html:58
-#, fuzzy
 msgid "Go to the project writers page."
-msgstr "前往本專案網頁"
+msgstr "前往專案撰寫者網頁。"
 
 #: templates/projects/project_form_access_control.html:62
-#, fuzzy
 msgid "Save Access Control Settings"
-msgstr "存取控制"
+msgstr "儲存存取控制設定值"
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -2066,9 +2189,8 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "編輯 <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_permissions.html:26
-#, fuzzy
 msgid "Give write access to a translator to send translations to your project independent of a translation team."
-msgstr "賦予某翻譯者送出翻譯到您的專案的存取權"
+msgstr "賦予某翻譯者 (獨立於翻譯團隊) 送出翻譯到您的專案的存取權"
 
 #: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
@@ -2114,11 +2236,13 @@ msgstr "你何不考慮就<a href=\"%(project_create)s\">加入一份</a>呢？"
 msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
 msgstr "找不到您的專案嗎？直接往前並<a href=\"%(project_create)s\">加入它</a>吧！"
 
-#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
+#: templates/projects/project_menu.html:58
+#: templates/userprofile/menu.html:5
 msgid "Overview"
 msgstr "概覽"
 
-#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
+#: templates/projects/project_menu.html:72
+#: templates/teams/team_list.html:17
 #: templates/teams/team_list.html.py:26
 msgid "Translation Teams"
 msgstr "翻譯團隊"
@@ -2171,14 +2295,13 @@ msgid "Components:"
 msgstr "部件："
 
 #: templates/projects/release_detail.html:86
-#, fuzzy
 msgid "Click here to show or hide the component list"
-msgstr "點擊這裡來顯示或隱藏來源檔案"
+msgstr "點擊這裡來顯示或隱藏部件清單"
 
 #: templates/projects/release_detail.html:87
 #, python-format
 msgid "This release has %(components_number)s components."
-msgstr ""
+msgstr "此發行有 %(components_number)s 個部件。"
 
 #: templates/projects/release_detail.html:103
 msgid "Translation statistics"
@@ -2397,7 +2520,8 @@ msgstr "<p>您已經登出。"
 msgid "Public profile of %(user)s"
 msgstr "%(user)s 的公開個人檔案"
 
-#: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
+#: templates/simpleauth/public_profile.html:14
+#: txcommon/admin.py:20
 #: txcommon/admin.py:27
 msgid "Username"
 msgstr "使用者名稱"
@@ -2446,10 +2570,10 @@ msgstr ""
 "\n"
 "  您確定您想要永久地刪除屬於「%(project_name)s」專案的「%(lang_name)s」團隊嗎？\n"
 
-#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-#, fuzzy
+#: templates/teams/team_detail.html:12
+#: templates/teams/team_list.html:19
 msgid "Teams"
-msgstr "團隊："
+msgstr "團隊"
 
 #: templates/teams/team_detail.html:22
 #, python-format
@@ -2464,7 +2588,8 @@ msgstr ""
 msgid "Mainlist:"
 msgstr "主要清單："
 
-#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:44
+#: templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "協調者："
@@ -2482,11 +2607,13 @@ msgstr "加入此團隊"
 msgid "People waiting for team membership approving:"
 msgstr "等待團隊成員身份批准的人："
 
-#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:84
+#: templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "批准"
 
-#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:88
+#: templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "回絕"
 
@@ -2507,9 +2634,8 @@ msgid "Delete team"
 msgstr "刪除團隊"
 
 #: templates/teams/team_form.html:10
-#, fuzzy
 msgid "Add Team"
-msgstr "團隊"
+msgstr "新增團隊"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2557,9 +2683,8 @@ msgid "Request team"
 msgstr "請求團隊"
 
 #: templates/teams/team_off.html:12
-#, fuzzy
 msgid "This project is not using Translation Teams"
-msgstr "%(project_name)s 翻譯團隊"
+msgstr "此專案不使用翻譯團隊功能"
 
 #: templates/teams/team_off.html:17
 #, python-format
@@ -2569,6 +2694,10 @@ msgid ""
 "            In order to send translations here you'll need to join a team of '%(outsource_project)s'.\n"
 "        "
 msgstr ""
+"\n"
+"            此專案沒有維護自己的翻譯團隊，但選擇重複使用「<a href=%(outsource_url)s>%(outsource_project)s</a>」專案的團隊。\n"
+"            若要在這裡送出翻譯成果，您需要加入「%(outsource_project)s」的團隊之一。\n"
+"        "
 
 #: templates/teams/team_off.html:22
 msgid ""
@@ -2576,6 +2705,9 @@ msgid ""
 "            This project allows translation submission from <em>anyone</em>, and thus no translation teams exist.\n"
 "        "
 msgstr ""
+"\n"
+"            此專案允許<em>任何人</em>提交翻譯，因此不存在翻譯團隊。\n"
+"        "
 
 #: templates/translations/stats_table_filter_box.html:7
 msgid "Show completed"
@@ -3030,12 +3162,14 @@ msgstr "母語"
 msgid "Blog/Site"
 msgstr "網誌/網站"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
+#: templates/userprofile/profile/public.html:78
+#: txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:84
+#: txcommon/models.py:36
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3246,9 +3380,8 @@ msgstr "檢視"
 #: translations/templates/comp_lang_stats_table.html:40
 #: translations/templates/comp_stats_table.html:57
 #: translations/templates/lang_stats_table.html:45
-#, fuzzy
 msgid "Download for viewing "
-msgstr "送出以供校閱"
+msgstr "下載以校閱"
 
 #: translations/templates/comp_lang_stats_table.html:55
 #: translations/templates/comp_stats_table.html:72
@@ -3258,7 +3391,7 @@ msgstr "編輯"
 
 #: translations/templates/comp_stats_table.html:29
 msgid "See the outsource team for this language. You will be redirected to another project team page."
-msgstr ""
+msgstr "查看此語言的外部來源團隊。我們將導引您至其他專案的團隊頁面。"
 
 #: translations/templates/comp_stats_table.html:29
 msgid "See the team for this language"
@@ -3341,9 +3474,9 @@ msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr "此值必須只包含任意 unicode 字母、數字以及底線。"
 
 #: txcommon/i18n.py:19
-#, fuzzy, python-format
+#, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
-msgstr "LINGUAS 檔案無法開啟：%s"
+msgstr "LINGUAS 檔案 (%(file)s)  無法開啟：%(exc)s"
 
 #: txcommon/models.py:12
 msgid "Female"
@@ -3353,23 +3486,28 @@ msgstr "女性"
 msgid "Male"
 msgstr "男性"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:30
+#: txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "名"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:31
+#: txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "姓"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:34
+#: txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "母語"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:35
+#: txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "網誌"
 
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:38
+#: txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "關於你"
 
@@ -3377,7 +3515,8 @@ msgstr "關於你"
 msgid "Short description of yourself (140 chars)."
 msgstr "關於您的簡短描述（140 字元）。"
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:40
+#: txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "正在找工作嗎？"
 
@@ -3680,8 +3819,9 @@ msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "您必須至少輸入一對內含空白的半形括號。"
 
 #: txcommon/templatetags/avatars.py:108
+#, fuzzy
 msgid "You have to provide only the size as             an integer (both sides will be equal) and optionally, the             username."
-msgstr ""
+msgstr "您必須提供"
 
 #: txcommon/templatetags/txcommontags.py:136
 msgid "Home"
@@ -3711,7 +3851,8 @@ msgstr "您已移除許可請求。"
 msgid "Repo URL root"
 msgstr "倉儲根網址"
 
-#: vcs/forms.py:19 vcs/forms.py:43
+#: vcs/forms.py:19
+#: vcs/forms.py:43
 msgid "The URL of the versioning system repository/branch."
 msgstr "版本系統倉儲或分枝的網址。"
 
@@ -3750,35 +3891,35 @@ msgstr "vcsunits"
 
 #: vcs/lib/exceptions/__init__.py:17
 msgid "Your request could not be completed. The admins have been notified to take a closer look at it. Please try again in a few minutes"
-msgstr ""
+msgstr "無法完成您的請求。已通知管理者進一步查看。請在幾分鐘後重試。"
 
 #: vcs/lib/exceptions/__init__.py:40
 msgid "Setup of the repository locally could not be done successfully."
-msgstr ""
+msgstr "本機倉儲的設置無法成功。"
 
 #: vcs/lib/exceptions/__init__.py:47
 msgid "The local repository has not been setup yet. Please, first do a check-out of the repository."
-msgstr ""
+msgstr "本機倉儲尚未設置。請先將該倉儲檢出。"
 
 #: vcs/lib/exceptions/__init__.py:54
 msgid "Unable to pull data from the remote repository. Is the remote host up?"
-msgstr ""
+msgstr "無法從遠端倉儲拉出資料。請問遠端主機有上線嗎？"
 
 #: vcs/lib/exceptions/__init__.py:61
 msgid "Cleanup of the repository failed. The admins have been notified to take a closer look at it."
-msgstr ""
+msgstr "該倉儲清理失敗。已通知管理者進一步查看。"
 
 #: vcs/lib/exceptions/__init__.py:67
 msgid "Commit to the repository failed."
-msgstr ""
+msgstr "提交到倉儲失敗。"
 
 #: vcs/lib/exceptions/__init__.py:72
 msgid "Pushing to the remote repository failed."
-msgstr ""
+msgstr "發佈到遠端倉儲失敗。"
 
 #: vcs/lib/exceptions/__init__.py:78
 msgid "Given file does not have a revision. The admins have been notified to take a closer look at it."
-msgstr ""
+msgstr "給予的檔案沒有校訂版次。已通知管理者進一步查看。"
 
 #: webtrans/fields.py:55
 #, python-format
@@ -4140,6 +4281,7 @@ msgstr "下一頁"
 #~ msgstr "專案的集合"
 
 #~ msgid "Collection:"
+
 #~ msgid_plural "Collections:"
 #~ msgstr[0] "集合："
 #~ msgstr[1] "集合："
@@ -4209,11 +4351,13 @@ msgstr "下一頁"
 #~ msgstr "新增集合"
 
 #~ msgid "1 release"
+
 #~ msgid_plural "%(counter)s releases"
 #~ msgstr[0] "1 次發行"
 #~ msgstr[1] "%(counter)s 次發行"
 
 #~ msgid "1 project"
+
 #~ msgid_plural "%(counter)s projects"
 #~ msgstr[0] "1 個專案"
 #~ msgstr[1] "%(counter)s 個專案"
