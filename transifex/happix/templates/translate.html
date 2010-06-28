@@ -115,8 +115,9 @@
                     var parsed_data = JSON.parse(xmlhttpreq.responseText);
                     var push_url = '{% url push_translation project.slug resource.slug target_language.code %}';
                     if ( stringset ) {    
-                        translated = stringset.translated - stringset.translated_modified;
-                        untranslated = stringset.untranslated - stringset.untranslated_modified;
+                        // Modified strings should be saved or dropped on page change.
+                        translated = stringset.translated// - stringset.translated_modified;
+                        untranslated = stringset.untranslated// - stringset.untranslated_modified;
                     } else { 
                         translated = translated_strings;
                         untranslated = untranslated_strings;

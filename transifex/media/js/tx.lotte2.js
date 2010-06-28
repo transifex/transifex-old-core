@@ -14,7 +14,7 @@ function TranslationString(parent, id, source_string, translated_string, source_
     this.translated_string = translated_string;
     // The corresponding source_entity string
     this.source_entity = source_entity;
-    // holds the previous value at each given time
+    // holds the previous value at each given time (this value is updated on save)
     this.previous = translated_string;
     // For undo purposes!
     this.load_default = translated_string;
@@ -40,12 +40,13 @@ function TranslationString(parent, id, source_string, translated_string, source_
     }
     this.translate = function(new_string) {
         if (new_string != this.translated_string) {
-            if (this.translated_string == "") {
-                this.parent.untranslated_modified += 1;
-            } else {
-                this.parent.translated_modified += 1;
+            if (!this.modified){
+                if (this.translated_string == "") {
+                    this.parent.untranslated_modified += 1;
+                } else {
+                    this.parent.translated_modified += 1;
+                }
             }
-            this.previous = this.translated_string;
             this.translated_string = new_string;
             this.modified = true;
             this.parent.updateStats(true); // Issue statistics update with delay
@@ -135,6 +136,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                             stringset.translated += 1;
                             stringset.untranslated -= 1;
                         }
+                        ts.previous = ts.translated_string;
                     } else {
                         /* For save_all button */
                         for (j=0; j<this_stringset.strings.length; j++) {
@@ -147,6 +149,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                     stringset.untranslated -= 1;
                                 }
                                 this_stringset.strings[j].modified = false;
+                                this_stringset.strings[j].previous = this_stringset.strings[j].translated_string;
                             }
                         }
                     }
