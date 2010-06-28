@@ -118,7 +118,7 @@ class Resource(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('project.resource', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
+        return ('resource_detail', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
     def source_strings(self):

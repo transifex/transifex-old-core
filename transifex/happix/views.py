@@ -54,8 +54,8 @@ def search_translation(request):
                                'results': results}, 
                               context_instance = RequestContext(request))
 
-
-def resource_details(request, project_slug, resource_slug):
+#FIXME: permissions needed for private projects
+def resource_detail(request, project_slug, resource_slug):
     """
     Return the details overview of a project resource.
     """
@@ -72,7 +72,7 @@ def resource_details(request, project_slug, resource_slug):
 
 #FIXME: permissions needed
 @login_required
-def delete_translation_resource(request, project_slug, resource_slug):
+def resource_delete(request, project_slug, resource_slug):
     """
     Delete a Translation Resource in a specific project.
     """
@@ -102,7 +102,7 @@ def delete_translation_resource(request, project_slug, resource_slug):
 
 #FIXME: permissions needed
 @login_required
-def edit_translation_resource(request, project_slug, resource_slug):
+def resource_edit(request, project_slug, resource_slug):
     """
     Edit the metadata of  a Translation Resource in a specific project.
     """
@@ -494,3 +494,39 @@ def push_translation(request, project_slug, resource_slug, lang_code,
             pass
 
     return HttpResponse(status=200)
+
+
+#FIXME: permissions needed
+@login_required
+def resource_translations_delete(request, project_slug, resource_slug, lang_code):
+    """
+    Delete the set of Translation objects for a specific Language in a Resource.
+    """
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+                                 slug = resource_slug)
+
+    language = get_object_or_404(Language, code=lang_code)
+
+    # Use a flag to denote if there is an attempt to delete the source language.
+    is_source_language = False
+    if resource.source_language == language:
+        is_source_language = True
+
+    if request.method == 'POST':
+        Translation.objects.filter(resource=resource, language=language).delete()
+
+        request.user.message_set.create(
+            message=_("The translations of %s language for the %s resource were "
+                      "deleted successfully.") % (language.name, resource.name))
+
+        #TODO: Create the specific notice type and update all the other actions.
+
+        return HttpResponseRedirect(reverse('resource_detail', 
+                                    args=[resource.project.slug, resource.slug]),)
+    else:
+        return render_to_response(
+            'resource_translations_confirm_delete.html',
+            {'resource': resource,
+             'language': language,
+             'is_source_language': is_source_language},
+            context_instance=RequestContext(request))

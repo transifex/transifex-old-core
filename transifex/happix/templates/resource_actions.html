@@ -8,7 +8,7 @@
   <div class="first_level title_wrapper">
     <span class="breadcrumb" >
       <a href="{% url project_detail project.slug %}">{{project.name|truncate_chars_middle:"40"}}</a> »
-      <a href="{% url project.resource project.slug resource.slug %}">{{resource.name|truncate_chars_middle:"40"}}</a> »
+      <a href="{% url resource_detail project.slug resource.slug %}">{{resource.name|truncate_chars_middle:"40"}}</a> »
       {{ target_language }}
     </span>
     <span class="favourite_wrapper">
@@ -100,7 +100,7 @@
   {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
   {% if perms.projects.delete_resource or is_maintainer %}
   <div class="first_level footer_action">
-    <a class="i16 delete">{% trans "Delete translations" %}</a>
+    <a class="i16 delete" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
   <div>
   {% endif %}
 </div>
