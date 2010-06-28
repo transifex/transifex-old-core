@@ -473,7 +473,9 @@ def push_translation(request, project_slug, resource_slug, lang_code,
             source_string = Translation.objects.get(id=row['id'])
         except Translation.DoesNotExist:
             # TODO: Log or inform here
-            pass
+            # If the source_string cannot be identified in the DB then go to next
+            # translation pair.
+            continue
 
         try:
             # TODO: Implement get based on context and/or on context too!
@@ -483,6 +485,8 @@ def push_translation(request, project_slug, resource_slug, lang_code,
                                 resource = translation_resource)
 
             translation_string.string = row['translation']
+            # Save the sender as last committer for the translation.
+            translation_string.user = request.user
             translation_string.save()
         # catch-all. if we don't save we _MUST_ inform the user
         except:
