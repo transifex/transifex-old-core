@@ -316,6 +316,40 @@ def translate(request, project_slug, resource_slug, lang_code,
         context_instance = RequestContext(request))
 
 
+#FIXME: permissions needed
+@login_required
+def view_strings(request, project_slug, resource_slug, lang_code,
+                 *args, **kwargs):
+    """
+    View for observing the translations strings on a specific language.
+    """
+
+    translation_resource = Resource.objects.get(
+        slug = resource_slug,
+        project__slug = project_slug
+    )
+    target_language = Language.objects.by_code_or_alias(lang_code)
+
+    total_strings = Translation.objects.filter(
+                        resource = translation_resource,
+                        language = translation_resource.source_language).count()
+
+    translated_strings = Translation.objects.filter(
+                            resource = translation_resource,
+                            language = target_language).exclude(string="").count()
+
+    print total_strings, translated_strings
+
+    return render_to_response("view_strings.html",
+        { 'project' : translation_resource.project,
+          'resource' : translation_resource,
+          'target_language' : target_language,
+          'translated_strings': translated_strings,
+          'untranslated_strings': total_strings - translated_strings,
+        },
+        context_instance = RequestContext(request))
+
+
 #FIXME: Find a more clever way to do it, to avoid putting placeholders.
 SORTING_DICT=( 'id', 'id', 'string')
 

@@ -4,6 +4,7 @@
 {% load permissions %}
 {% load team_tags %}
 
+
 <div class="actions_popup">
   <div class="first_level title_wrapper">
     <span class="breadcrumb" >
@@ -22,12 +23,21 @@
   <div class="first_level">
     <span class="translate_button_wrapper">
     {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
-    {% if request.user.is_authenticated and can_submit_translation %}
-      <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
-      <p>{% blocktrans %}<span>or &nbsp;&nbsp;&nbsp;<a id="view_strings" href="#">View strings</a></span>{% endblocktrans %}</p>
-    {% else %}
-      <a class="i16 find buttonized2" id="view_strings" href="#">{% trans "View Strings" %}</a>
-    {% endif %}
+    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+
+      {% ifequal resource.source_language target_language %}
+        {% blocktrans %} 
+        <span class="tipsy_enable" style="color:#666" title="You cannot translate the source language strings."> This is the Source Language! </span>
+        {% endblocktrans %}
+      {% else %}
+        {% if request.user.is_authenticated and can_submit_translation %}
+          <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
+        {% else %}
+          <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+          title="{% if request.user.is_anonymous %}<b>Register</b>, {% endif %} {% if team %} <b>Join</b> the {{ team.name }}{% else %} <b>Request</b> the creation of {{ target_language.name }} team <br />and <b>Join</b> the{% endif %} team to be able to translate this.">{% trans "Translate Now" %}</a>
+        {% endif %}
+    {% endifequal %}
+
     </span>
     <div class="stats_wrapper">
       {% with 300 as barwidth %}
@@ -46,23 +56,28 @@
   <div class="first_level more_actions">
         <ul class="right">
           <li class="top">
-            <span class="i16 connect"><a href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate online" %}</a></span
+            <span id="view_strings" class="i16 find">
+            <a href="{% url view_strings resource.project.slug resource.slug target_language.code %}">{% trans "View strings online" %}</a>
+            </span>
           </li>
           {% if team %}
           <li>
             <span class="i16 team"><a href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a></span>
           </li>
           {% endif %}
+          {% ifnotequal resource.source_language target_language %}
           <li>
             <span class="i16 clone disabled">{% trans "Clone to new language" %}</span>
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
+          {% endifnotequal %}
         </ul>
         <ul>
           <li class="top">
             <span class="i16 get_file disabled">{% trans "Download for viewing" %}</span>
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
+          {% ifnotequal resource.source_language target_language %}
           <li>
             <span class="i16 lock disabled">{% trans "Download for translation" %}</span> 
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
@@ -71,6 +86,7 @@
             <span class="i16 submit_file disabled">{% trans "Upload new version" %}</span>
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
+          {% endifnotequal %}
         </ul>
   </div>
   <div class="first_level last_update">
