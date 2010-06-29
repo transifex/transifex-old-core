@@ -307,7 +307,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var obj = $(this).find('.lotte-actions');
             pos = $(this).find(".translation").offset();
             w = obj.width();
-            obj.css({top:pos.top + 4,left:pos.left - w -4});
+            obj.css({top:pos.top -4, left:pos.left - w -2});
+            // panel buttons replacement for cross-browsing reasons
+//            obj.children('p').each(function(){
+//                w = $('a', this).width();
+//                $(this).css({right: - w - 14});
+//            });
             // show details 
             var obj2 = $(this).find('.details_trigger');
             w2 = obj2.width();
@@ -318,6 +323,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var obj2 = $(this).find('.details_trigger');
             obj2.css({top:-1000 ,left:-1000});
         });
+        
         // Bind click events for tools
         // 1.Machine translation
         if (is_supported_lang && is_supported_source_lang) {
@@ -403,6 +409,16 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     $('span', this).text('show details');
                     $(this).removeClass('hide_details').addClass('show_details');
                 }
+            });
+        });
+
+        // Bind sliding animation for each button in the toolbar
+        $('.lotte-actions p').each(function(){
+            $(this).mouseenter(function(){
+                $(this).animate({right:0}, {duration:'fast'});
+            }).mouseleave(function() {
+                w = $('a', this).width();
+                $(this).animate({right: - w - 14}, {duration:'fast'});
             });
         });
 
