@@ -564,3 +564,25 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
              'language': language,
              'is_source_language': is_source_language},
             context_instance=RequestContext(request))
+
+
+#FIXME: permissions needed
+def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
+    """
+    Ajax view that returns a template snippet for translation details.
+    """
+
+    if not request.POST and request.POST.has_key('source_id'):
+        return HttpResponseBadRequest()
+
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+                                 slug = resource_slug)
+    target_language = get_object_or_404(Language, code=lang_code)
+    project = resource.project
+    source_entity = get_object_or_404(SourceEntity, pk=request.POST['source_id'])
+
+    return render_to_response("lotte_details.html",
+    { 'key': source_entity.string,
+      'context': source_entity.context,
+      'occurrences': source_entity.occurrences },
+    context_instance = RequestContext(request))

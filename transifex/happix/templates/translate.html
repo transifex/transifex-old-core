@@ -36,36 +36,38 @@
     var current_defaults = {};
     /* var to keep filter state */
     var filter_var = null;
+    /* url for details requests */
+    var details_url = "{% url get_details project.slug resource.slug target_language.code %}";
 
-    /* document ready. do stuff */
-    $(document).ready(function(){
+    {% if WEBTRANS_SUGGESTIONS %}
+    google.setOnLoadCallback(function() {
 
-        {% if WEBTRANS_SUGGESTIONS %}
-        google.setOnLoadCallback(function() {
-
-            source_lang = '{{ resource.source_language.code }}';
-            target_lang = '{{ target_language.code }}';
-            /* Global variables */
-            is_supported_source_lang = google.language.isTranslatable(source_lang);
-            is_supported_lang = google.language.isTranslatable(target_lang);
-            // If the main language code is not supported, try to find one from the code aliases
-            if (!(is_supported_lang)){
-                // Get aliases
-                code_aliases = '{{ target_language.code_aliases }}';
-                if(code_aliases){
-                    // Drop spaces in the beginning/end of the string and split it
-                    list = code_aliases.replace(/^ /,'').replace(/ $/,'').split(' ');
-                    for (i=0; i<list.length; i++){
-                        is_supported_lang = google.language.isTranslatable(list[i]);
-                        if (is_supported_lang){
-                            target_lang = list[i];
-                            break;
-                        }
+        source_lang = '{{ resource.source_language.code }}';
+        target_lang = '{{ target_language.code }}';
+        /* Global variables */
+        is_supported_source_lang = google.language.isTranslatable(source_lang);
+        is_supported_lang = google.language.isTranslatable(target_lang);
+        // If the main language code is not supported, try to find one from the code aliases
+        if (!(is_supported_lang)){
+            // Get aliases
+            code_aliases = '{{ target_language.code_aliases }}';
+            if(code_aliases){
+                // Drop spaces in the beginning/end of the string and split it
+                list = code_aliases.replace(/^ /,'').replace(/ $/,'').split(' ');
+                for (i=0; i<list.length; i++){
+                    is_supported_lang = google.language.isTranslatable(list[i]);
+                    if (is_supported_lang){
+                        target_lang = list[i];
+                        break;
                     }
                 }
             }
-        });
-        {% endif %}
+        }
+    {% endif %}
+
+
+    /* document ready. do stuff */
+    $(document).ready(function(){
 
         oTable = $('#stringset_table').dataTable({
             "bJQueryUI": false,
@@ -82,7 +84,10 @@
                 { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
                   "fnRender": function(oObj){
                     return '<div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ oObj.aData[1] +'</span></div>'
-                           + '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + oObj.aData[2] + '</div>';
+                           + '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + oObj.aData[2] + '</div>'
+                           + '<div class="details_trigger" style="font-size:11px;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
+                           + '<a class="show_details" style="border:0;cursor:pointer"><span>show details</span><img style="vertical-align:bottom" src="{{ STATIC_URL }}images/icons/bullet_arrow_down.png"></a>'
+                           + '</div>';
                   }
                 },
                 { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
@@ -199,10 +204,10 @@
         /* move to the next page */
         shortcut.add('Alt+i', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:last-child>td:nth-child(2)>textarea').focus();
+                $("#stringset_table").find('tr:not(.details):last-child>td:nth-child(2)>textarea').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().prev().find('td:nth-child(2)>textarea').focus();
+                stringset.current_box.parent().parent().prev('tr:not(.details)').find('td:nth-child(2)>textarea').focus();
             }
         },{
             'type':'keydown',
@@ -210,10 +215,10 @@
         /* move to the previous page */
         shortcut.add('Alt+k', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:nth-child(1)>td:nth-child(2)>textarea').focus();
+                $("#stringset_table").find('tr:not(.details):nth-child(1)>td:nth-child(2)>textarea').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().next().find('td:nth-child(2)>textarea').focus();
+                stringset.current_box.parent().parent().next('tr:not(.details)').find('td:nth-child(2)>textarea').focus();
             }
         },{
             'type':'keydown',
@@ -261,7 +266,9 @@
 
     });
 
-
+    {% if WEBTRANS_SUGGESTIONS %}
+    });
+    {% endif %}
 
 </script>
 

@@ -303,13 +303,20 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     this.toolbar = function(){
         $('#stringset_table tr').mouseover(function() {
-                var obj = $(this).find('.lotte-actions');
-                pos = $(this).find(".translation").offset();
-                w = obj.width();
-                obj.css({top:pos.top + 4,left:pos.left - w -4});
+            // button panel
+            var obj = $(this).find('.lotte-actions');
+            pos = $(this).find(".translation").offset();
+            w = obj.width();
+            obj.css({top:pos.top + 4,left:pos.left - w -4});
+            // show details 
+            var obj2 = $(this).find('.details_trigger');
+            w2 = obj2.width();
+            obj2.css({top:pos.top + 60,left:pos.left - w2 -4});
         }).mouseout(function() {
             var obj = $(this).find('.lotte-actions');
             obj.css({top:-1000 ,left:-1000});
+            var obj2 = $(this).find('.details_trigger');
+            obj2.css({top:-1000 ,left:-1000});
         });
         // Bind click events for tools
         // 1.Machine translation
@@ -364,6 +371,39 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 $('tbody tr td.notes span#undo_' + id).show();
                 trans.focus();
             }
+        });
+
+        // 3 Show details row trigger
+        $('.details_trigger a').each(function(){
+            $(this).click(function(){
+                var nTr = $(this).parents('tr');
+                var flag = $(this).hasClass('show_details');
+                if(flag){
+                    nTr.after('<tr class="details"><td colspan="3"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
+                    var icon = $('img', this);
+                    src = icon.attr('src');
+                    icon.attr('src', src.replace('bullet_arrow_down.png', 'bullet_arrow_up.png'));
+                    $('span', this).text('hide details');
+                    $(this).removeClass('show_details').addClass('hide_details');
+                    var source_id = parseInt(nTr.find('.source_id').text());
+
+                    // Get the details and inject them.
+                    nTr.next(".details").load(details_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                      if (status == "error") {
+                        var msg = "Sorry but there was an error: ";
+                        alert(msg + xhr.status + " " + xhr.statusText);
+                      }
+                    });
+
+                }else{
+                    nTr.next('tr').remove();
+                    var icon = $('img', this);
+                    src = icon.attr('src');
+                    icon.attr('src', src.replace('bullet_arrow_up.png', 'bullet_arrow_down.png'));
+                    $('span', this).text('show details');
+                    $(this).removeClass('hide_details').addClass('show_details');
+                }
+            });
         });
 
     }

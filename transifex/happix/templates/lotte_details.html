@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div>
+
+<ul class="simple contexts" style="display: block;">
+  <li title="Occurences" class="i16 key"><label>Key:</label> <span>{{ key }}</span></li>
+  <li title="Occurences" class="i16 tag"><label>Description:</label> <span>{% if context %}{{ context }}{% else %}{% trans "No description available" %}{% endif %}</span></li>
+  <li title="Occurences" class="i16 file_search"><label>Occurrences:</label> <span>{% if occurrences %}{{ occurrences }}{% else %}{% trans "No occurrences available" %}{% endif %}</span></li>
+</ul>
+
+</div>
