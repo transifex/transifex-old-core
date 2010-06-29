@@ -52,6 +52,20 @@ class Language(models.Model):
     pluralequation = models.CharField(_("Plural Equation"), max_length=255,
         blank=True)
 
+    # Plural rules
+    rule_zero = models.CharField(_("Rule zero"), max_length=255,
+        blank=True, null=True)
+    rule_one = models.CharField(_("Rule one"), max_length=255,
+        blank=True, null=True)
+    rule_two = models.CharField(_("Rule two"), max_length=255,
+        blank=True, null=True)
+    rule_few = models.CharField(_("Rule few"), max_length=255,
+        blank=True, null=True)
+    rule_many = models.CharField(_("Rule many"), max_length=255,
+        blank=True, null=True)
+    rule_other = models.CharField(_("Rule other"), max_length=255,
+        blank=False, null=False, default="everything")
+
 
     # Managers
     objects = LanguageManager()
