@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
@@ -95,10 +96,13 @@ class ProjectPermission(BasePermission):
                         self.user in team.members.all():
                         return True
                 if any_team and not team:
-                    for team in project.team_set.all():
-                        if self.user in team.coordinators.all() or \
-                            self.user in team.members.all():
-                            return True
+                    user_teams = project.team_set.filter(Q(coordinators=self.user)|Q(members=self.user)).distinct()
+                    if user_teams:
+                        return True
+#                    for team in project.team_set.all():
+#                        if self.user in team.coordinators.all() or \
+#                            self.user in team.members.all():
+#                               return True
         return False
     submit_file.short_description=_('Is allowed to submit file to this project')
 
