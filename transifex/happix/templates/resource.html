@@ -171,13 +171,19 @@ Projects |
 
 </div>
 
-{% get_permission "project_perm.submit_file" for request.user and resource.project as "can_submit_translation" %}
+{% get_permission "project_perm.submit_file" for request.user and resource.project,1 as "can_submit_translation" %}
 {% if request.user.is_authenticated and can_submit_translation %}
+
+<p class="i16 tip" style="font-size:85%">
+If you cannot see your language, click the button below to translate.
+<span class="note">( You must belong to a language team of this project, to be able to translate! )</span>
+</p>
+
 <div id="new_translation_box1">
-    <select name="{{ language.code }}" class="language">
+    <select name="translation_languages" class="language">
         <option value="">Select Language</option>
-        {% for lang in languages %}
-            <option value="{{ lang.code }}">{{ lang.name }}</option>
+        {% for team in user_teams %}
+            <option value="{{ team.language.code }}">{{ team.language.name }}</option>
         {% endfor %}
     </select>
     <a id="start_new_translation" class="i16 buttonized action">GO</a>

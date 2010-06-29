@@ -62,11 +62,19 @@ def resource_detail(request, project_slug, resource_slug):
     resource = get_object_or_404(Resource, project__slug = project_slug,
                                  slug = resource_slug)
 
+    # We want the teams to check in which languages user is permitted to translate.
+    user_teams = []
+    if getattr(request, 'user'):
+        user_teams = Team.objects.filter(project=resource.project).filter(
+            Q(coordinators=request.user)|
+            Q(members=request.user)).distinct()
+
     return render_to_response("resource.html",
         { 'project' : resource.project,
           'resource' : resource,
           'languages' : Language.objects.order_by('name'),
-          'translated_languages' : resource.available_languages },
+          'translated_languages' : resource.available_languages,
+          'user_teams' : user_teams },
         context_instance = RequestContext(request))
 
 
@@ -317,7 +325,6 @@ def translate(request, project_slug, resource_slug, lang_code,
 
 
 #FIXME: permissions needed
-@login_required
 def view_strings(request, project_slug, resource_slug, lang_code,
                  *args, **kwargs):
     """
