@@ -13,7 +13,9 @@ from happix.models import Translation, Resource, SourceEntity, PARSERS, StorageF
 from happix.forms import ResourceForm
 from languages.models import Language
 from projects.models import Project
+from projects.permissions import *
 from teams.models import Team
+from txcommon.decorators import one_perm_required_or_403
 
 try:
     import json
@@ -54,7 +56,10 @@ def search_translation(request):
                                'results': results}, 
                               context_instance = RequestContext(request))
 
-#FIXME: permissions needed for private projects
+# Restrict access only for private projects 
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def resource_detail(request, project_slug, resource_slug):
     """
     Return the details overview of a project resource.
@@ -78,8 +83,11 @@ def resource_detail(request, project_slug, resource_slug):
         context_instance = RequestContext(request))
 
 
-#FIXME: permissions needed
-@login_required
+# Restrict access only to maintainers of the projects.
+pr_resource_delete=(("granular", "project_perm.maintain"),
+                    ("general",  "happix.delete_resource"),)
+@one_perm_required_or_403(pr_resource_delete,
+                          (Project, "slug__exact", "project_slug"))
 def resource_delete(request, project_slug, resource_slug):
     """
     Delete a Translation Resource in a specific project.
@@ -108,8 +116,11 @@ def resource_delete(request, project_slug, resource_slug):
             context_instance=RequestContext(request))
 
 
-#FIXME: permissions needed
-@login_required
+# Restrict access only to maintainers of the projects.
+pr_resource_edit=(("granular", "project_perm.maintain"),
+                  ("general",  "happix.change_resource"),)
+@one_perm_required_or_403(pr_resource_edit,
+                          (Project, "slug__exact", "project_slug"))
 def resource_edit(request, project_slug, resource_slug):
     """
     Edit the metadata of  a Translation Resource in a specific project.
@@ -209,7 +220,10 @@ def start_new_translation(request, project_slug=None, resource_slug=None,
                     source_string = s.source_string)
 
 
-#FIXME: permissions needed for private projects
+# Restrict access only for private projects 
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def resource_actions(request, project_slug=None, resource_slug=None,
                      target_lang_code=None):
     """
@@ -231,7 +245,10 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     context_instance = RequestContext(request))
 
 
-#FIXME: permissions needed for private projects
+# Restrict access only for private projects 
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_resources(request, project_slug=None, offset=None, **kwargs):
     """
     Ajax view that returns a table snippet for all the resources in a project.
@@ -314,7 +331,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         if resources.values('source_language').distinct().count() > 1:
             request.user.message_set.create(
                 message=_("This project has more than one source languages and as a "
-                          "result you can not translate all componenents at the "
+                          "result you can not translate all resources at the "
                           "same time."))
 
             return HttpResponseRedirect(reverse('project_detail',
@@ -554,8 +571,11 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     return HttpResponse(status=200)
 
 
-#FIXME: permissions needed
-@login_required
+# Restrict access only to maintainers of the projects.
+pr_resource_translations_delete=(("granular", "project_perm.maintain"),
+                                 ("general",  "happix.delete_resource"),)
+@one_perm_required_or_403(pr_resource_translations_delete,
+                          (Project, "slug__exact", "project_slug"))
 def resource_translations_delete(request, project_slug, resource_slug, lang_code):
     """
     Delete the set of Translation objects for a specific Language in a Resource.
