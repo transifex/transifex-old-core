@@ -8,10 +8,10 @@
 <a href="{% url project_detail project.slug %}">{{project}}</a> »
 
 {% if resource %} 
-<a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>
-<a href="{% url translate project.slug resource.slug target_language.code %}">{{ target_language.name }}</a>
+<a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a> » 
+{{ target_language.name }}
 {% else %}
-<a href="{% url translate project.slug target_language.code %}">{{ target_language.name }}</a>
+{{ target_language.name }}
 {% endif %}
 {% endblock %}
 
