@@ -22,15 +22,20 @@
   </div>
   <div class="first_level">
     <span class="translate_button_wrapper">
-    {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
-    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+    {% if team %}
+      {% comment %} This permission is provided only if team is available{% endcomment %}
+      {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
+    {% else %}
+      {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate Now" {% endcomment %}
+      {% get_permission "project_perm.submit_file" for request.user and project as "can_submit_translation" %}
+    {% endif %}
 
       {% ifequal resource.source_language target_language %}
         {% blocktrans %} 
         <span class="tipsy_enable" style="color:#666" title="You cannot translate the source language strings."> This is the Source Language! </span>
         {% endblocktrans %}
       {% else %}
-        {% if request.user.is_authenticated and can_submit_translation %}
+        {% if can_submit_translation or request.user.is_superuser %}
           <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
         {% else %}
           <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
@@ -114,7 +119,7 @@
         </ul>
   </div>
   {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
-  {% if perms.projects.delete_resource or is_maintainer %}
+  {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
   <div class="first_level footer_action">
     <a class="i16 delete" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
   <div>

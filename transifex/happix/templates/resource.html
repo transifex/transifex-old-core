@@ -76,7 +76,7 @@ Projects |
   {% endif %}
   <h2 class="name">{{ resource.name }}</h2>
 
-  {% if perms.projects.edit_resource or is_maintainer %}
+  {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
     <div class="editlinks">
       <p>
         <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a>
@@ -172,7 +172,7 @@ Projects |
 </div>
 
 {% get_permission "project_perm.submit_file" for request.user and resource.project,1 as "can_submit_translation" %}
-{% if request.user.is_authenticated and can_submit_translation %}
+{% if can_submit_translation or request.user.is_superuser %}
 
 <p class="i16 tip" style="font-size:85%">
 If you cannot see your language, click the button below to translate.
@@ -182,9 +182,15 @@ If you cannot see your language, click the button below to translate.
 <div id="new_translation_box1">
     <select name="translation_languages" class="language">
         <option value="">Select Language</option>
-        {% for team in user_teams %}
-            <option value="{{ team.language.code }}">{{ team.language.name }}</option>
-        {% endfor %}
+        {% if is_maintainer or request.user.is_superuser %}
+          {% for language in languages %}
+              <option value="{{ language.code }}">{{ language.name }}</option>
+          {% endfor %}
+        {% else %}
+          {% for team in user_teams %}
+              <option value="{{ team.language.code }}">{{ team.language.name }}</option>
+          {% endfor %}
+        {% endif %}
     </select>
     <a id="start_new_translation" class="i16 buttonized action">GO</a>
 </div>
@@ -215,7 +221,7 @@ If you cannot see your language, click the button below to translate.
 {% block content_footer %}
   <div id="content_footer_center">
     {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
-    {% if perms.projects.delete_resource or is_maintainer %}
+    {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete translation resource" %}</a>
     </div>
