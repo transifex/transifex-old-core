@@ -311,8 +311,6 @@ def translate(request, project_slug, resource_slug, lang_code,
                             resource = translation_resource,
                             language = target_language).exclude(string="").count()
 
-    print total_strings, translated_strings
-
     return render_to_response("translate.html",
         { 'project' : translation_resource.project,
           'resource' : translation_resource,
@@ -344,8 +342,6 @@ def view_strings(request, project_slug, resource_slug, lang_code,
     translated_strings = Translation.objects.filter(
                             resource = translation_resource,
                             language = target_language).exclude(string="").count()
-
-    print total_strings, translated_strings
 
     return render_to_response("view_strings.html",
         { 'project' : translation_resource.project,
@@ -452,7 +448,7 @@ def stringset_handling(request, project_slug, resource_slug, lang_code,
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
                  '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="Undo to initial text"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + str(s.source_entity.context) + '</span>'
-                 '<span class="source_id" id="sourceid_' + str(counter) + '" style="display:none;">' + str(s.id) + '</span>'),
+                 '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
         ],
         })
