@@ -262,7 +262,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
     '''
     Get a resource, a src lang and a target lang and clone all translation
     strings for the src to the target.
-    
+
     The user is redirected to the online editor for the target language.
     '''
 
@@ -291,28 +291,52 @@ def clone_language(request, project_slug=None, resource_slug=None,
 
 #FIXME: permissions needed
 @login_required
-def translate(request, project_slug, resource_slug, lang_code,
+def translate(request, project_slug, lang_code, resource_slug=None,
                      *args, **kwargs):
     """
     Main lotte view.
     """
 
-    translation_resource = Resource.objects.get(
-        slug = resource_slug,
-        project__slug = project_slug
-    )
+    resources = []
+    if resource_slug:
+        try:
+            resources = [ Resource.objects.get(
+                slug = resource_slug,
+                project__slug = project_slug
+            ) ]
+        except Resource.DoesNotExist:
+            raise Http404
+    else:
+        resources = Resource.objects.filter(project__slug = project_slug)
+
+        # Return a page explaining that the project has multiple source langs and
+        # cannot be translated as a whole.
+        if resources.values('source_language').distinct().count() > 1:
+            request.user.message_set.create(
+                message=_("This project has more than one source languages and as a "
+                          "result you can not translate all componenents at the "
+                          "same time."))
+
+            return HttpResponseRedirect(reverse('project_detail',
+                                        args=[project_slug]),)
+
     target_language = Language.objects.by_code_or_alias(lang_code)
 
-    total_strings = Translation.objects.filter(
-                        resource = translation_resource,
-                        language = translation_resource.source_language).count()
+    project = Project.objects.get(slug=project_slug)
+
+    total_strings = SourceEntity.objects.filter(
+        resource__in = resources).count()
 
     translated_strings = Translation.objects.filter(
-                            resource = translation_resource,
-                            language = target_language).exclude(string="").count()
+        resource__in = resources, language = target_language).exclude(string="").count()
+
+    if len(resources) > 1:
+        translation_resource = None
+    else:
+        translation_resource = resources[0]
 
     return render_to_response("translate.html",
-        { 'project' : translation_resource.project,
+        { 'project' : project,
           'resource' : translation_resource,
           'target_language' : target_language,
           'translated_strings': translated_strings,
@@ -323,7 +347,7 @@ def translate(request, project_slug, resource_slug, lang_code,
 
 
 #FIXME: permissions needed
-def view_strings(request, project_slug, resource_slug, lang_code,
+def view_strings(request, project_slug, lang_code, resource_slug=None,
                  *args, **kwargs):
     """
     View for observing the translations strings on a specific language.
@@ -357,7 +381,7 @@ def view_strings(request, project_slug, resource_slug, lang_code,
 SORTING_DICT=( 'id', 'id', 'string')
 
 #FIXME: permissions needed
-def stringset_handling(request, project_slug, resource_slug, lang_code,
+def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                      *args, **kwargs):
     """
     Function to serve AJAX data to the datatable holding the translating
@@ -377,16 +401,21 @@ def stringset_handling(request, project_slug, resource_slug, lang_code,
 #       print 'sSortDir_1: %s' % request.POST.get('sSortDir_1','')
 #       print 'sEcho: %s' % request.POST.get('sEcho','')
 
-    try:
-        resource = Resource.objects.get(slug=resource_slug,
-                                project__slug = project_slug)
-    except Resource.DoesNotExist:
-        raise Http404
+    resources = []
+    if resource_slug:
+        try:
+            resources = [ Resource.objects.get(slug=resource_slug,
+                                    project__slug = project_slug) ]
+        except Resource.DoesNotExist:
+            raise Http404
+    else:
+        resources = Resource.objects.filter(project__slug = project_slug)
 
-    source_strings = Translation.objects.filter(resource = resource,
-                                language = resource.source_language)
+    # Find a way to determine the source language of multiple resources #FIXME
+    source_strings = Translation.objects.filter(resource__in = resources,
+                                language = resources[0].source_language)
 
-    translated_strings = Translation.objects.filter(resource = resource,
+    translated_strings = Translation.objects.filter(resource__in = resources,
                                 language__code = lang_code)
 
     # status filtering (translated/untranslated)
@@ -470,7 +499,7 @@ def _get_string(query, **kwargs):
 
 #FIXME: permissions needed
 @login_required
-def push_translation(request, project_slug, resource_slug, lang_code,
+def push_translation(request, project_slug, lang_code, resource_slug=None,
                                   *args, **kwargs):
     """
     Client pushes an id and a translation string.
@@ -478,20 +507,12 @@ def push_translation(request, project_slug, resource_slug, lang_code,
     Id is considered to be of the source translation string and the string is
     in the target_lang.
     """
-    
+
     if not request.POST:
         return HttpResponseBadRequest()
 
     data = json.loads(request.raw_post_data)
     strings = data["strings"]
-
-    try:
-        translation_resource = Resource.objects.get(
-            slug = resource_slug,
-            project__slug = project_slug
-        )
-    except Resource.DoesNotExist:
-        raise Http404
 
     try:
         target_language = Language.objects.by_code_or_alias(lang_code)
@@ -519,7 +540,7 @@ def push_translation(request, project_slug, resource_slug, lang_code,
             translation_string, created = Translation.objects.get_or_create(
                                 source_entity =source_string.source_entity,
                                 language = target_language,
-                                resource = translation_resource)
+                                resource = source_string.resource)
 
             translation_string.string = row['translation']
             # Save the sender as last committer for the translation.
@@ -558,7 +579,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 
         #TODO: Create the specific notice type and update all the other actions.
 
-        return HttpResponseRedirect(reverse('resource_detail', 
+        return HttpResponseRedirect(reverse('resource_detail',
                                     args=[resource.project.slug, resource.slug]),)
     else:
         return render_to_response(
@@ -578,10 +599,6 @@ def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
     if not request.POST and request.POST.has_key('source_id'):
         return HttpResponseBadRequest()
 
-    resource = get_object_or_404(Resource, project__slug = project_slug,
-                                 slug = resource_slug)
-    target_language = get_object_or_404(Language, code=lang_code)
-    project = resource.project
     source_entity = get_object_or_404(SourceEntity, pk=request.POST['source_id'])
 
     return render_to_response("lotte_details.html",

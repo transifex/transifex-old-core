@@ -1,9 +1,18 @@
 {% extends "resource.html" %}
 {% load i18n %}
+{% load txcommontags %}
 
 {% block breadcrumb %}
-{{block.super}} » 
+{% homelink %} » 
+<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
+<a href="{% url project_detail project.slug %}">{{project}}</a> »
+
+{% if resource %} 
+<a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>
 <a href="{% url translate project.slug resource.slug target_language.code %}">{{ target_language.name }}</a>
+{% else %}
+<a href="{% url translate project.slug target_language.code %}">{{ target_language.name }}</a>
+{% endif %}
 {% endblock %}
 
 
@@ -37,7 +46,11 @@
     /* var to keep filter state */
     var filter_var = null;
     /* url for details requests */
+    {% if resource %} 
     var details_url = "{% url get_details project.slug resource.slug target_language.code %}";
+    {% else %}
+    var details_url = "{% url get_details project.slug target_language.code %}";
+    {% endif %}
 
     {% if WEBTRANS_SUGGESTIONS %}
     google.setOnLoadCallback(function() {
@@ -75,7 +88,11 @@
             "aaSorting": [[ 0, "asc" ]],
             "bServerSide": true,
             "bProcessing": true,
-            "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
+            {% if resource %}
+                "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
+            {% else %} 
+                "sAjaxSource": "{%  url stringset_handling project.slug target_language.code %}",
+            {% endif %}
             "sDom": '<"top"if<"clear">rt<"bottom"lp<"clear">', 
             "bAutoWidth": false,
             "aoColumns" : [
@@ -118,7 +135,11 @@
                   "complete": function(xmlhttpreq, status) {
 
                     var parsed_data = JSON.parse(xmlhttpreq.responseText);
+                    {% if resource %}
                     var push_url = '{% url push_translation project.slug resource.slug target_language.code %}';
+                    {% else %}
+                    var push_url = '{% url push_translation project.slug target_language.code %}';
+                    {% endif %}
                     if ( stringset ) {    
                         // Modified strings should be saved or dropped on page change.
                         translated = stringset.translated// - stringset.translated_modified;

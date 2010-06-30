@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
-from happix.views import * 
+from happix.views import *
 
 
 urlpatterns = patterns('',
@@ -9,6 +9,10 @@ urlpatterns = patterns('',
 #    url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/create_language/(?P<target_lang_code>[-\w]+)/$', start_new_translation, name='new_translation'),
 
     # Server side lotte
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', translate, name='translate'),
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/details/$', get_details, name='get_details'),
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/stringset/$', stringset_handling, name='stringset_handling'),
+    url(r'^project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/push/$', push_translation, name='push_translation'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', translate, name='translate'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/details/$', get_details, name='get_details'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/view/$', view_strings, name='view_strings'),

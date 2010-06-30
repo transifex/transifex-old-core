@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -25,6 +26,8 @@ from txcommon import notifications as txnotification
 from txcommon.decorators import one_perm_required_or_403
 from txcommon.log import logger
 from txcommon.views import json_result, json_error
+# To calculate user_teams
+from teams.models import Team
 
 def _project_create_update(request, project_slug=None,
     template_name='projects/project_form.html'):
@@ -172,6 +175,10 @@ def project_detail(request, project_slug):
         template_object_name = 'project',
         extra_context= {
           'project_overview': True,
+          'user_teams' : Team.objects.filter(project=project).filter(
+             Q(coordinators=request.user)|
+             Q(members=request.user)).distinct(),
+
         })
 
 

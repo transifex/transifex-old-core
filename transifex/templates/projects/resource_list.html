@@ -87,6 +87,23 @@
               });
             });
         });
+        {% if request.user.is_authenticated %}
+        $("#new_translation1").click( function (){ 
+            $("#new_translation_box1").toggle();
+        });
+        $("#start_new_translation").click( function() {
+            var target_lang_code = $(this).prev().val();
+            if ( target_lang_code != "" ) {
+                //request_url = window.location + target_lang_code;
+                //This is _UGLY_. We need to find a way to do reverse url
+                //lookups from JS code. #FIXME
+                request_url ='/happix/project/{{project.slug}}/'+ target_lang_code;
+                window.location = request_url;
+            } else {
+                alert("Please select a target language first and then click Go.");
+            }
+        });
+        {% endif %}
     });
 </script>
 
@@ -137,6 +154,20 @@
     </p>
     {% endifnotequal %}
   </div>
+  <div id="new_translation_box1">
+      <select name="translation_languages" class="language">
+          <option value="">Select Language</option>
+          {% for team in user_teams %}
+              <option value="{{ team.language.code }}">{{ team.language.name }}</option>
+          {% endfor %}
+      </select>
+      <a id="start_new_translation" class="i16 buttonized action">GO</a>
+  </div>
+  <p style="text-align:center;padding-top:1em">
+   <a id="new_translation1" class="buttonized i16 add">{% trans "Translate All" %}</a>
+  </p>
+
+
   {% endwith %}
   {% endwith %}
   {% else %}
