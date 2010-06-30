@@ -99,10 +99,6 @@ class ProjectPermission(BasePermission):
                     user_teams = project.team_set.filter(Q(coordinators=self.user)|Q(members=self.user)).distinct()
                     if user_teams:
                         return True
-#                    for team in project.team_set.all():
-#                        if self.user in team.coordinators.all() or \
-#                            self.user in team.members.all():
-#                               return True
         return False
     submit_file.short_description=_('Is allowed to submit file to this project')
 
@@ -111,6 +107,9 @@ class ProjectPermission(BasePermission):
         """Test if a user has access to a private project."""
         if project:
             if project.private:
+                # To avoid doing all the checks below!
+                if self.user.is_anonymous():
+                    return False
                 # Maintainers, writers (submitters, team coordinators, members)
                 return self.maintain(project) or self.submit_file(project,
                      any_team=True)
