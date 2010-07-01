@@ -3,26 +3,31 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
-from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseBadRequest
+from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
+                         HttpResponseForbidden, HttpResponseBadRequest)
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from actionlog.models import action_logging
-from happix.models import Translation, Resource, SourceEntity, PARSERS, StorageFile
+from happix.models import (Translation, Resource, SourceEntity, PARSERS,
+                           StorageFile)
 from happix.forms import ResourceForm
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
+from projects.permissions.project import ProjectPermission
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
+
+from authority.views import permission_denied
 
 try:
     import json
 except:
     import simplejson as json
 
-
+#XXX: Obsolete
 def search_translation(request):
     """
     Return a set of results on translations, given a set of terms as query.
@@ -306,7 +311,11 @@ def clone_language(request, project_slug=None, resource_slug=None,
                                 resource_slug, target_lang_code]),)
 
 
-#FIXME: permissions needed
+# Restrict access only to : (The checks are done in the view's body)
+# 1)those belonging to the specific language team (coordinators or members)
+# 2)project maintainers
+# 3)global submitters (perms given through access control tab)
+# 4)superusers  
 @login_required
 def translate(request, project_slug, lang_code, resource_slug=None,
                      *args, **kwargs):
@@ -314,17 +323,25 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     Main lotte view.
     """
 
+    # Permissions handling
+    # Project should always be available
+    project = get_object_or_404(Project, slug=project_slug)
+    team = Team.objects.get_or_none(project, lang_code)
+    check = ProjectPermission(request.user)
+    if not check.submit_file(team or project):
+        return permission_denied(request)
+
     resources = []
     if resource_slug:
         try:
             resources = [ Resource.objects.get(
                 slug = resource_slug,
-                project__slug = project_slug
+                project = project
             ) ]
         except Resource.DoesNotExist:
             raise Http404
     else:
-        resources = Resource.objects.filter(project__slug = project_slug)
+        resources = Resource.objects.filter(project = project)
 
         # Return a page explaining that the project has multiple source langs and
         # cannot be translated as a whole.
@@ -338,8 +355,6 @@ def translate(request, project_slug, lang_code, resource_slug=None,
                                         args=[project_slug]),)
 
     target_language = Language.objects.by_code_or_alias(lang_code)
-
-    project = Project.objects.get(slug=project_slug)
 
     total_strings = SourceEntity.objects.filter(
         resource__in = resources).count()
@@ -363,7 +378,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         context_instance = RequestContext(request))
 
 
-#FIXME: permissions needed
+# Restrict access only for private projects 
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def view_strings(request, project_slug, lang_code, resource_slug=None,
                  *args, **kwargs):
     """
@@ -397,7 +415,10 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
 #FIXME: Find a more clever way to do it, to avoid putting placeholders.
 SORTING_DICT=( 'id', 'id', 'string')
 
-#FIXME: permissions needed
+# Restrict access only for private projects since this is used to fetch stuff!
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                      *args, **kwargs):
     """
@@ -514,7 +535,12 @@ def _get_string(query, **kwargs):
         return ""
 
 
-#FIXME: permissions needed
+# Restrict access only to : (The checks are done in the view's body)
+# 1)those belonging to the specific language team (coordinators or members)
+# 2)project maintainers
+# 3)global submitters (perms given through access control tab)
+# 4)superusers  
+# CAUTION!!! WE RETURN 404 instead of 403 for security reasons
 @login_required
 def push_translation(request, project_slug, lang_code, resource_slug=None,
                                   *args, **kwargs):
@@ -524,6 +550,14 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     Id is considered to be of the source translation string and the string is
     in the target_lang.
     """
+
+    # Permissions handling
+    # Project should always be available
+    project = get_object_or_404(Project, slug=project_slug)
+    team = Team.objects.get_or_none(project, lang_code)
+    check = ProjectPermission(request.user)
+    if not check.submit_file(team or project):
+        return Http404
 
     if not request.POST:
         return HttpResponseBadRequest()
@@ -610,7 +644,10 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-#FIXME: permissions needed
+# Restrict access only for private projects since this is used to fetch stuff!
+# Allow even anonymous access on public projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
     """
     Ajax view that returns a template snippet for translation details.

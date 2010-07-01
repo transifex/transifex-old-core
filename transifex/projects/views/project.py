@@ -178,7 +178,7 @@ def project_detail(request, project_slug):
           'user_teams' : Team.objects.filter(project=project).filter(
              Q(coordinators=request.user)|
              Q(members=request.user)).distinct(),
-
+          'languages' : Language.objects.all(),
         })
 
 

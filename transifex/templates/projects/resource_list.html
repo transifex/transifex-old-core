@@ -154,18 +154,28 @@
     </p>
     {% endifnotequal %}
   </div>
+
+  {% get_permission "project_perm.submit_file" for request.user and project,1 as "can_submit_translation" %}
+  {% if can_submit_translation or request.user.is_superuser %}
   <div id="new_translation_box1">
       <select name="translation_languages" class="language">
           <option value="">Select Language</option>
-          {% for team in user_teams %}
-              <option value="{{ team.language.code }}">{{ team.language.name }}</option>
-          {% endfor %}
+          {% if is_maintainer or request.user.is_superuser %}
+            {% for language in languages %}
+                <option value="{{ language.code }}">{{ language.name }}</option>
+            {% endfor %}
+          {% else %}
+            {% for team in user_teams %}
+                <option value="{{ team.language.code }}">{{ team.language.name }}</option>
+            {% endfor %}
+          {% endif %}
       </select>
       <a id="start_new_translation" class="i16 buttonized action">GO</a>
   </div>
   <p style="text-align:center;padding-top:1em">
    <a id="new_translation1" class="buttonized i16 add">{% trans "Translate All" %}</a>
   </p>
+  {% endif %}
 
 
   {% endwith %}
