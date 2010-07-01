@@ -69,7 +69,7 @@ class StorageFile(models.Model):
 
         self.mime_type = parser.mime_type
 
-        stringset = parser.parse_file(filename = self.get_storage_path()) 
+        stringset = parser.parse_file(self.get_storage_path())
         if not stringset:
             return
 
@@ -79,5 +79,5 @@ class StorageFile(models.Model):
             except Language.DoesNotExist:
                 pass
 
-        self.total_strings = len(stringset.strings)
+        self.total_strings = len([s for s in stringset.strings if s.rule==5])
         return

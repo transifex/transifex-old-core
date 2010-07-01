@@ -101,6 +101,36 @@ class Language(models.Model):
 
         super(Language, self).save(*args, **kwargs)
 
+    def get_pluralrules(self):
+        rules=[]
+        if self.rule_zero:
+            rules.append('zero')
+        if self.rule_one:
+            rules.append('one')
+        if self.rule_two:
+            rules.append('two')
+        if self.rule_few:
+            rules.append('few')
+        if self.rule_many:
+            rules.append('many')
+        rules.append('other')
+        return rules
+
+    def get_pluralrules_numbers(self):
+        rules=[]
+        if self.rule_zero:
+            rules.append(0)
+        if self.rule_one:
+            rules.append(1)
+        if self.rule_two:
+            rules.append(2)
+        if self.rule_few:
+            rules.append(3)
+        if self.rule_many:
+            rules.append(4)
+        rules.append(5)
+        return rules
+
     def translated_strings(self):
         """
         Return the QuerySet of source entities, translated in this language.

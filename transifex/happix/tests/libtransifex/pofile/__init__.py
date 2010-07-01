@@ -17,15 +17,15 @@ class POFile(unittest.TestCase):
 
         for s in self.stringset.strings:
             # Testing if source entity and translation are the same
-            self.assertEqual(s.source_entity, s.translation)
+            if not s.pluralized:
+                self.assertEqual(s.source_entity, s.translation)
 
             # Testing plural number
             if s.source_entity == '{0} results':
-                self.assertEqual(s.number, 1)
-                self.assertEqual(s.singular.number, 0)
+                self.assertEqual(s.rule, 5)
 
             # Counting number of entities
-            if s.number == 0:
+            if s.rule == 5:
                 entities += 1
 
         # Asserting number of entities - POT file has 3 entries.
@@ -36,21 +36,18 @@ class POFile(unittest.TestCase):
         self.stringset = PofileParser.parse_file('%s/pt_BR.po' % 
             os.path.split(__file__)[0])
 
-        ss, nplurals = None, 1
+        nplurals = 0
 
         for s in self.stringset.strings:
+
             # Testing if source entity and translation are NOT the same
             self.assertNotEqual(s.source_entity, s.translation)
 
             # Testing plural number
             if s.source_entity == '{0} results':
-                self.assertEqual(s.singular.number, 0)
+                self.assertEqual(s.rule, 5)
 
-                ss=s.singular
-
-            # Counting nplurals for '{0} results' entity
-            if ss and s.singular == ss:
-                self.assertEqual(s.number, nplurals)
+            if s.source_entity == '{0} result' and s.pluralized:
                 nplurals += 1
 
         # Asserting nplurals based on the number of plurals of the 
@@ -63,21 +60,18 @@ class POFile(unittest.TestCase):
         self.stringset = PofileParser.parse_file('%s/ar.po' % 
             os.path.split(__file__)[0])
 
-        ss, nplurals = None, 1
+        nplurals = 0
 
         for s in self.stringset.strings:
+
             # Testing if source entity and translation are NOT the same
             self.assertNotEqual(s.source_entity, s.translation)
 
             # Testing plural number
             if s.source_entity == '{0} results':
-                self.assertEqual(s.singular.number, 0)
+                self.assertEqual(s.rule, 5)
 
-                ss=s.singular
-
-            # Counting nplurals for '{0} results' entity
-            if ss and s.singular == ss:
-                self.assertEqual(s.number, nplurals)
+            if s.source_entity == '{0} result' and s.pluralized:
                 nplurals += 1
 
         # Asserting nplurals based on the number of plurals of the 

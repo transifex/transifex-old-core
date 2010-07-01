@@ -261,28 +261,30 @@ class Resource(models.Model):
             strings_added = 0
             strings_updated = 0
             for j in stringset.strings:
-                # If is primary language update source strings!
                 se, created = SourceEntity.objects.get_or_create(
                     string = j.source_entity,
                     context = j.context or "None",
                     resource = self,
-                    number = j.number,
+                    pluralized = j.pluralized,
                     defaults = {
                         'position' : 1,
                         }
                     )
+                se.save()
+
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = target_language,
                     resource = self,
-                    number = j.number,
+                    rule = j.rule,
                     defaults = {
                         'string' : j.translation,
                         'user' : user,
                         },
                     )
+                tr.save()
 
-                if created:
+                if created and j.rule==5:
                     strings_added += 1
 
                 if not created and overwrite_translations:
@@ -290,7 +292,10 @@ class Resource(models.Model):
                         ts.string = j.translation
                         strings_updated += 1
                         updated = True
-        except:
+        except Exception, e:
+            logger.error("There was problem while importing the entries  "
+                         "into the database. Entity: '%s'. Error: '%s'."
+                         % (j.source_entity, str(e)))
             transaction.rollback()
             return 0,0
         else:
@@ -298,7 +303,9 @@ class Resource(models.Model):
             return strings_added, strings_updated
 
     def merge_translation_file(self, translation_file):
-        stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(filename = translation_file.get_storage_path())
+        stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(
+            translation_file.get_storage_path(), 
+            translation_file.language.get_pluralrules_numbers())
         return self.merge_stringset(stringset, translation_file.language)
 
 class SourceEntity(models.Model):
@@ -309,8 +316,7 @@ class SourceEntity(models.Model):
     defined by the string, context and resource fields (so they are unique
     together).
     """
-    string = models.CharField(_('String'), max_length=255,
-        blank=False, null=False,
+    string = models.TextField(_('String'), blank=False, null=False,
         help_text=_("The actual string content of source string."))
     context = models.CharField(_('Context'), max_length=255,
         blank=False, null=False,
@@ -333,10 +339,9 @@ class SourceEntity(models.Model):
         blank=True, editable=False,
         help_text=_("The comment of the developer."))
 
-    number = models.IntegerField(_('Number'), blank=False,
-         null=False, default=0,
-        help_text=_("The number of the string. 0 for singular and 1, 2, 3, "
-                    "etc. for plural forms."))
+    pluralized = models.BooleanField(_('Pluralized'), blank=False,
+         null=False, default=False,
+        help_text=_("Identify if the entity is pluralized ot not."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -358,7 +363,7 @@ class SourceEntity(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'context', 'resource', 'number'),)
+        unique_together = (('string', 'context', 'resource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
         ordering = ['string', 'context']
@@ -396,14 +401,15 @@ class Translation(models.Model):
     fields for the context of this translation.
     """
 
-    string = models.CharField(_('String'), max_length=255,
-        blank=False, null=False,
+    string = models.TextField(_('String'), blank=False, null=False,
         help_text=_("The actual string content of translation."))
 
-    number = models.IntegerField(_('Number'), blank=False,
-         null=False, default=0,
-        help_text=_("The number of the string. 0 for singular and 1, 2, 3, "
-                    "etc. for plural forms."))
+    rule = models.IntegerField(_('Plural rule'), blank=False,
+        null=False, default=5,
+        help_text=_("Number related to the plural rule of the translation. "
+                    "It's 0=zero, 1=one, 2=two, 3=few, 4=many and 5=other. "
+                    "For translations that have its entity not pluralized, "
+                    "the rule must be 5 (other)."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -439,7 +445,7 @@ class Translation(models.Model):
 
     class Meta:
         unique_together = (('source_entity', 'string', 'language', 'resource',
-                            'number'),)
+            'rule'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
@@ -571,7 +577,7 @@ class StorageFile(models.Model):
 
         self.mime_type = parser.mime_type
 
-        stringset = parser.parse_file(filename = self.get_storage_path()) 
+        stringset = parser.parse_file(self.get_storage_path())
         if not stringset:
             return
 
@@ -581,5 +587,5 @@ class StorageFile(models.Model):
             except Language.DoesNotExist:
                 pass
 
-        self.total_strings = len(stringset.strings)
+        self.total_strings = len([s for s in stringset.strings if s.rule==5])
         return

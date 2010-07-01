@@ -28,8 +28,11 @@ class CustomSerializer(json.JSONEncoder):
                 d['comments'] = obj.comments
             if obj.context:
                 d['context'] = obj.context
-            if obj.number:
-                d['number'] = obj.number
+            if obj.rule:
+                d['rule'] = obj.rule
+            if obj.pluralized:
+                d['pluralized'] = obj.pluralized
+
             return d
 
         if isinstance(obj, StringSet):
@@ -118,22 +121,18 @@ class Translation:
         context - The related context for the source_entity.
         occurrences - Occurrences of the source_entity from the source code.
         comments - Comments for the given source_entity from the source code.
-        number - 0 means singular and 1, 2, 3, etc. are the respective plurals.
-        singular - Related singular Translation object for plural objects.
-
-    The parameter ``singular`` works as a circular reference. It stores the
-    related singular Translation object for Translation objects that have 
-    number > 0.
+        rule - Plural rule 0=zero, 1=one, 2=two, 3=few, 4=many or 5=other.
+        pluralized - True if the source_entity is a plural entry.
     """
     def __init__(self, source_entity, translation, occurrences=None, 
-            comments=None, context=None, number=0, singular=None):
+            comments=None, context=None, rule=5, pluralized=False):
         self.source_entity = source_entity
         self.translation = translation
         self.context = context
         self.occurrences = occurrences
         self.comments = comments
-        self.number = int(number)
-        self.singular = singular
+        self.rule = int(rule)
+        self.pluralized = pluralized
 
     def __hash__(self):
         if STRICT:
