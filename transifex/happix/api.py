@@ -6,9 +6,10 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from projects.permissions import *
 from txcommon.decorators import one_perm_required_or_403
-from happix.models import Resource, SourceEntity, Translation, StorageFile
+from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
+from storage.models import StorageFile
 from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4

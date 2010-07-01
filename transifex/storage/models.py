@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+#from happix.models import PARSERS
 from languages.models import Language
 from projects.models import Project
 from txcommon.log import logger
@@ -58,26 +59,30 @@ class StorageFile(models.Model):
         """
         Try to parse the file and fill in information fields in current model
         """
-        parser = None
-        for p in PARSERS:
-            if p.accept(self.name):
-                parser = p
-                break
+        pass
+        #FIXME: Decide whether it's important to have it and find a good way 
+        # to import the PARSERS.
 
-        if not parser:
-            return
+        #parser = None
+        #for p in PARSERS:
+            #if p.accept(self.name):
+                #parser = p
+                #break
 
-        self.mime_type = parser.mime_type
+        #if not parser:
+            #return
 
-        stringset = parser.parse_file(self.get_storage_path())
-        if not stringset:
-            return
+        #self.mime_type = parser.mime_type
 
-        if stringset.target_language:
-            try:
-                self.language = Language.objects.by_code_or_alias(stringset.target_language)
-            except Language.DoesNotExist:
-                pass
+        #stringset = parser.parse_file(self.get_storage_path())
+        #if not stringset:
+            #return
 
-        self.total_strings = len([s for s in stringset.strings if s.rule==5])
-        return
+        #if stringset.target_language:
+            #try:
+                #self.language = Language.objects.by_code_or_alias(stringset.target_language)
+            #except Language.DoesNotExist:
+                #pass
+
+        #self.total_strings = len([s for s in stringset.strings if s.rule==5])
+        #return

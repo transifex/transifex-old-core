@@ -2,7 +2,8 @@
 from django import template
 from languages.models import Language
 from projects.models import Project
-from happix.models import Resource, StorageFile, PARSERS
+from happix.models import Resource, PARSERS
+from storage.models import StorageFile
 
 register = template.Library()
 

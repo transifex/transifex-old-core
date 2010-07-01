@@ -4,9 +4,10 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import Resource, SourceString, TranslationString, StorageFile
+from happix.models import Resource, SourceString, TranslationString
 from languages.models import Language
 from projects.models import Project
+from storage.models import StorageFile
 from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
