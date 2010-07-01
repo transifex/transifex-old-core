@@ -366,7 +366,7 @@ class SourceEntity(models.Model):
         get_latest_by = 'created'
 
 
-class SearchStringManager(models.Manager):
+class TranslationManager(models.Manager):
     def by_source_entity_and_language(self, string,
             source_code='en', target_code=None):
         """
@@ -433,7 +433,7 @@ class Translation(models.Model):
         help_text=_("The user who committed the specific translation."))
 
     #TODO: Managers
-    objects = SearchStringManager()
+    objects = TranslationManager()
 
     def __unicode__(self):
         return self.string
