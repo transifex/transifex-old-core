@@ -308,11 +308,6 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             pos = $(this).find(".translation").offset();
             w = obj.width();
             obj.css({top:pos.top -4, left:pos.left - w -2});
-            // panel buttons replacement for cross-browsing reasons
-//            obj.children('p').each(function(){
-//                w = $('a', this).width();
-//                $(this).css({right: - w - 14});
-//            });
             // show details 
             var obj2 = $(this).find('.details_trigger');
             w2 = obj2.width();
@@ -412,8 +407,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             });
         });
 
-        // Bind sliding animation for each button in the toolbar
+        // Bind sliding animation, and postioning for each button in the toolbar
         $('.lotte-actions p').each(function(){
+            // panel buttons replacement for cross-browsing reasons
+            w = $('a', this).width();
+            $(this).css({right: - w - 14});
+            // hover animation
             $(this).mouseenter(function(){
                 $(this).animate({right:0}, {duration:'fast'});
             }).mouseleave(function() {
