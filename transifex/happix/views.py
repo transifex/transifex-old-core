@@ -315,7 +315,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
 # 1)those belonging to the specific language team (coordinators or members)
 # 2)project maintainers
 # 3)global submitters (perms given through access control tab)
-# 4)superusers  
+# 4)superusers
 @login_required
 def translate(request, project_slug, lang_code, resource_slug=None,
                      *args, **kwargs):
@@ -557,7 +557,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
     if not check.submit_file(team or project):
-        return Http404
+        return permission_denied(request)
 
     if not request.POST:
         return HttpResponseBadRequest()
@@ -579,7 +579,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     # Iterate through all the row data that have been sent.
     for row in strings:
         try:
-            source_string = Translation.objects.get(id=row['id'])
+            source_string = Translation.objects.get(id=int(row['id']))
         except Translation.DoesNotExist:
             # TODO: Log or inform here
             # If the source_string cannot be identified in the DB then go to next

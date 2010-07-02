@@ -3,3 +3,4 @@ from happix.tests.models import *
 #from happix.tests.loaders import *
 from libtransifex import *
 from api import *
+from views import *
