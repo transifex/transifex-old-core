@@ -140,7 +140,7 @@ class Language(models.Model):
         # I put it here due to circular dependency on modules
         from happix.models import SourceEntity, Translation
         return SourceEntity.objects.filter(id__in=Translation.objects.filter(
-                language=self).values_list('source_entity', flat=True))
+                language=self, rule=5).values_list('source_entity', flat=True))
 
     def untranslated_strings(self):
         """
@@ -152,7 +152,7 @@ class Language(models.Model):
         # I put it here due to circular dependency on modules
         from happix.models import SourceEntity, Translation
         return SourceEntity.objects.exclude(id__in=Translation.objects.filter(
-                language=self).values_list('source_entity', flat=True))
+                language=self, rule=5).values_list('source_entity', flat=True))
 
     def num_translated(self):
         """

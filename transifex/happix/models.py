@@ -5,8 +5,9 @@ String Level models.
 import datetime, hashlib, sys
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.db.models.signals import post_save, post_delete
 from django.db.models import permalink
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 
 from languages.models import Language
@@ -25,8 +26,6 @@ TRANSLATION_STATE_CHOICES = (
     ('FUZ', 'Fuzzy'),
     ('REJ', 'Rejected'),
 )
-
-from django.db import transaction
 
 """
 Parsers need to be somewhat rewritten, currently each one implements parse(buf) function which returns libtransifex.core.StringSet class,
@@ -50,6 +49,12 @@ PARSER_MAPPING = {}
 for parser in PARSERS:
     PARSER_MAPPING[parser.mime_type] = parser
 
+# keys used in cache
+# We put it here to have them all in one place for the specific models!
+HAPPIX_CACHE_KEYS = {
+    "word_count": "wcount.%s.%s",
+    "source_strings_count": "sscount.%s.%s"
+}
 
 class ResourceGroup(models.Model):
     """
@@ -122,31 +127,89 @@ class Resource(models.Model):
         return ('resource_detail', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
+    def source_strings_with_plurals(self):
+        """
+        Return the list of all the strings, belonging to the Source Language
+        of the Project/Resource.
+        
+        This method returns also the plural strings of the specific resource.
+        CAUTION! This function returns Translation and not SourceEntity objects!
+        """
+        return Translation.objects.filter(resource = self,
+                                          language = self.source_language)
+
+    @property
     def source_strings(self):
         """
         Return the list of all the strings, belonging to the Source Language
         of the Project/Resource.
         
         CAUTION! This function returns Translation and not SourceEntity objects!
+        CAUTION! This does not count the PLURALs!
         """
         return Translation.objects.filter(resource = self,
-                                          language = self.source_language)
+                                          language = self.source_language,
+                                          rule=5)
 
-    # TODO: Invalidation for cached data!!!
+    @property
+    def total_entities(self):
+        """
+        Return the total number of source entities to be translated.
+        
+        It should return the same ammount as total_source_strings, that's why 
+        we store it in the same cache key!
+        """
+        cache_key = (HAPPIX_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
+        sc = cache.get(cache_key)
+        if not sc:
+            sc = SourceEntity.objects.filter(resource=self).count()
+            cache.set(cache_key, sc)
+        return sc
+
+    @property
+    def total_source_strings_with_plurals(self):
+        """
+        It is the same functionality with the 'total_entities' property but
+        here we use the Translation objects to calculate the total strings which
+        are being translated.
+        This also includes plurals!
+        """
+        return Translation.objects.filter(resource = self,
+                                          language = self.source_language).count()
+
+    @property
+    def total_source_strings(self):
+        """
+        It is the same functionality with the 'total_entities' property but
+        here we use the Translation objects to calculate the total strings which
+        are being translated.
+        CAUTION! This does not count the PLURAL strings in the Translation table!!!
+        """
+        cache_key = (HAPPIX_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
+        sc = cache.get(cache_key)
+        if not sc:
+            sc = Translation.objects.filter(resource = self,
+                                            language = self.source_language,
+                                            rule=5).count()
+            cache.set(cache_key, sc)
+        return sc
+
     @property
     def wordcount(self):
         """
         Return the number of words which need translation in this resource.
         
         The counting of the words uses the Translation objects of the SOURCE
-        LANGUAGE as set of objects.
+        LANGUAGE as set of objects. This function does not count the plural 
+        strings!
         """
-        cache_key = ('wordcount.%s.%s' % (self.project.slug, self.slug))
+        cache_key = (HAPPIX_CACHE_KEYS['word_count'] % (self.project.slug, self.slug))
         wc = cache.get(cache_key)
         if not wc:
             wc = 0
             for ss in self.source_strings:
                 wc += ss.wordcount
+            cache.set(cache_key, wc)
         return wc
 
     @property
@@ -169,9 +232,10 @@ class Resource(models.Model):
         if language:
             target_language = Language.objects.by_code_or_alias(language)
             t = Translation.objects.filter(resource=self,
-                    language=target_language).order_by('-last_update')
+                    language=target_language, rule=5).order_by('-last_update')
         else:
-            t = Translation.objects.filter(resource=self).order_by('-last_update')
+            t = Translation.objects.filter(resource=self,
+                                           rule=5).order_by('-last_update')
         if t:
             return t[0]
         return None
@@ -195,7 +259,7 @@ class Resource(models.Model):
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(resource=self,
             id__in=Translation.objects.filter(language=target_language,
-                resource=self).values_list('source_entity', flat=True))
+                resource=self, rule=5).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
         """
@@ -207,7 +271,7 @@ class Resource(models.Model):
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(resource=self).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                resource=self).values_list('source_entity', flat=True))
+                resource=self, rule=5).values_list('source_entity', flat=True))
 
     def num_translated(self, language):
         """
@@ -220,22 +284,6 @@ class Resource(models.Model):
         Return the number of untranslated strings in this Resource for the language.
         """
         return self.untranslated_strings(language).count()
-
-    #TODO:We need this as a cached value in order to avoid hitting the db all the time
-    @property
-    def total_entities(self):
-        """Return the total number of source entities to be translated."""
-        return SourceEntity.objects.filter(resource=self).count()
-
-    @property
-    def total_source_strings(self):
-        """
-        It is the same functionality with the 'total_entities' property but
-        here we use the Translation objects to calculate the total strings which
-        are being translated.
-        """
-        return Translation.objects.filter(resource = self,
-                                          language = self.source_language).count()
 
     def trans_percent(self, language):
         """Return the percent of untranslated strings in this Resource."""
@@ -351,7 +399,7 @@ class SourceEntity(models.Model):
     # Foreign Keys
     # A source string must always belong to a resource
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False,
+        blank=False, null=False, related_name='source_entities',
         help_text=_("The translation resource which owns the source string."))
 
     def __unicode__(self):
@@ -447,7 +495,6 @@ class Translation(models.Model):
         order_with_respect_to = 'source_entity'
         get_latest_by = 'created'
 
-    # TODO: needs caching
     @property
     def wordcount(self):
         """
@@ -457,3 +504,8 @@ class Translation(models.Model):
         # so for instance double space counts as one space
         return len(self.string.split(None))
 
+
+# Signal registrations
+from happix.handlers import *
+post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
+post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)

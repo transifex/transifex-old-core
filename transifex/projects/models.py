@@ -31,6 +31,12 @@ from txcommon.utils import cached_property
 from projects.handlers import get_trans_handler
 from projects import signals
 
+# keys used in cache
+# We put it here to have them all in one place for the specific models!
+PROJECTS_CACHE_KEYS = {
+    "word_count": "wcount.%s",
+    "source_strings_count": "sscount.%s"
+}
 
 class DefaultProjectManager(models.Manager):
     """
@@ -216,6 +222,20 @@ class Project(models.Model):
             source_strings.extend(resource.source_strings)
         return 
 
+    #TODO: Invalidation for cached value
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        cache_key = (PROJECTS_CACHE_KEYS['source_strings_count'] % (self.project.slug,))
+        sc = cache.get(cache_key)
+        if not sc:
+            # I put it here due to circular dependency on modules
+            from happix.models import SourceEntity
+            sc = SourceEntity.objects.filter(
+                resource__in=self.resource_set.all()).count()
+            cache.set(cache_key, sc)
+        return sc
+
     # TODO: Invalidation for cached value
     @property
     def wordcount(self):
@@ -228,13 +248,14 @@ class Project(models.Model):
         1. The strings may be in different source languages!!!
         2. The source strings are not grouped based on the string value.
         """
-        cache_key = ('wordcount.%s' % self.project.slug)
+        cache_key = (PROJECTS_CACHE_KEYS['word_count'] % self.project.slug)
         wc = cache.get(cache_key)
         if not wc:
             wc = 0
             resources = self.resource_set.all()
             for resource in resources:
                 wc += resource.wordcount
+            cache.set(cache_key, wc)
         return wc
 
     @property
@@ -263,7 +284,7 @@ class Project(models.Model):
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(resource__in=self.resource_set.all(),
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resource_set.all()).values_list(
+                resource__in=self.resource_set.all(), rule=5).values_list(
                     'source_entity', flat=True))
 
     def untranslated_strings(self, language):
@@ -279,7 +300,7 @@ class Project(models.Model):
         return SourceEntity.objects.filter(
             resource__in=self.resource_set.all()).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resource_set.all()).values_list(
+                resource__in=self.resource_set.all(), rule=5).values_list(
                     'source_entity', flat=True))
 
     def num_translated(self, language):
@@ -293,15 +314,6 @@ class Project(models.Model):
         Return the number of untranslated strings in all Resources of the project.
         """
         return self.untranslated_strings(language).count()
-
-    #TODO:We need this as a cached value in order to avoid hitting the db all the time
-    @property
-    def total_entities(self):
-        """Return the total number of source entities to be translated."""
-        # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity
-        return SourceEntity.objects.filter(
-                resource__in=self.resource_set.all()).count()
 
     def trans_percent(self, language):
         """Return the percent of untranslated strings in this Resource."""
