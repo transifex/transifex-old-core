@@ -658,8 +658,15 @@ def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
 
     source_entity = get_object_or_404(SourceEntity, pk=request.POST['source_id'])
 
+    last_translations = Translation.objects.filter(source_entity=source_entity,
+        language__code=lang_code).order_by('-last_update')
+    last_translation = None
+    if last_translations:
+        last_translation = last_translations[0]
+
     return render_to_response("lotte_details.html",
     { 'key': source_entity.string,
       'context': source_entity.context,
-      'occurrences': source_entity.occurrences },
+      'occurrences': source_entity.occurrences,
+      'last_translation': last_translation },
     context_instance = RequestContext(request))
