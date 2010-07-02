@@ -88,9 +88,7 @@ def resource_detail(request, project_slug, resource_slug):
         context_instance = RequestContext(request))
 
 
-# Restrict access only to maintainers of the projects.
-pr_resource_delete=(("granular", "project_perm.maintain"),
-                    ("general",  "happix.delete_resource"),)
+
 @one_perm_required_or_403(pr_resource_delete,
                           (Project, "slug__exact", "project_slug"))
 def resource_delete(request, project_slug, resource_slug):
@@ -121,9 +119,7 @@ def resource_delete(request, project_slug, resource_slug):
             context_instance=RequestContext(request))
 
 
-# Restrict access only to maintainers of the projects.
-pr_resource_edit=(("granular", "project_perm.maintain"),
-                  ("general",  "happix.change_resource"),)
+
 @one_perm_required_or_403(pr_resource_edit,
                           (Project, "slug__exact", "project_slug"))
 def resource_edit(request, project_slug, resource_slug):
@@ -606,8 +602,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
 
 
 # Restrict access only to maintainers of the projects.
-pr_resource_translations_delete=(("granular", "project_perm.maintain"),
-                                 ("general",  "happix.delete_resource"),)
+
 @one_perm_required_or_403(pr_resource_translations_delete,
                           (Project, "slug__exact", "project_slug"))
 def resource_translations_delete(request, project_slug, resource_slug, lang_code):
