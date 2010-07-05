@@ -356,7 +356,9 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         resource__in = resources).count()
 
     translated_strings = Translation.objects.filter(
-        resource__in = resources, language = target_language).exclude(string="").count()
+        resource__in = resources,
+        language = target_language,
+        rule = 5).exclude(string="").count()
 
     if len(resources) > 1:
         translation_resource = None
@@ -392,11 +394,13 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
 
     total_strings = Translation.objects.filter(
                         resource = translation_resource,
-                        language = translation_resource.source_language).count()
+                        language = translation_resource.source_language,
+                        rule = 5).count()
 
     translated_strings = Translation.objects.filter(
                             resource = translation_resource,
-                            language = target_language).exclude(string="").count()
+                            language = target_language,
+                            rule = 5).exclude(string="").count()
 
     return render_to_response("view_strings.html",
         { 'project' : translation_resource.project,
@@ -492,7 +496,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     dlength = int(request.POST.get('iDisplayLength','10'))
     dstart = int(request.POST.get('iDisplayStart','0'))
     # for statistics
-    total = source_strings.count()
+    total = source_strings.filter(rule=5).count()
 
     # NOTE: It's important to keep the translation string matching inside this
     # iteration to prevent extra un-needed queries. In this iteration only the
@@ -584,6 +588,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
 
         try:
             # TODO: Implement get based on context and/or on context too!
+            # FIXME: Handle the plurals appropriately!
             translation_string, created = Translation.objects.get_or_create(
                                 source_entity =source_string.source_entity,
                                 language = target_language,
