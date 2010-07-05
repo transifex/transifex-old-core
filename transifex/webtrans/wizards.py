@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from polib import unescape
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -15,6 +16,7 @@ from projects.models import Component
 from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 from txcommon.formtools.wizards import SessionWizard
+from txcommon.log import logger
 from webtrans.forms import TranslationForm
 from webtrans.signals import webtrans_form_init, webtrans_form_done
 
@@ -77,7 +79,7 @@ class TransFormWizard(SessionWizard):
 
         # Initializing TranslationForm vars
         if getattr(self, 'pofile', None) != pofile:
-            webtrans_form_init.send(None, pofile = pofile, user = request.user)
+            webtrans_form_init.send(None, request=request, pofile=pofile)
         self.pofile = pofile
         self.po_entries = self.get_stored_po_entries()
         if not self.po_entries:
@@ -150,7 +152,7 @@ class TransFormWizard(SessionWizard):
             # are pressed
             if 'submit_file' in request.POST or \
                 'submit_for_review' in request.POST:
-                webtrans_form_done.send(None, pofile = self.pofile, user = request.user)
+                webtrans_form_done.send(None, request=request, pofile=self.pofile)
                 return self.done(request)
 
             return self.render(request, self.next_step(request, step))
@@ -406,15 +408,25 @@ class TransFormWizard(SessionWizard):
         if self.po_entries_changed:
             po_contents = self.po_entries.__str__().encode('utf-8')
             edited_file = SimpleUploadedFile(filename, po_contents)
-            result_view = component_submit_file(request=request, 
-                project_slug=project_slug, component_slug=component_slug, 
-                filename=filename, submitted_file=edited_file)
+            try:
+                result_view = component_submit_file(request=request, 
+                    project_slug=project_slug, component_slug=component_slug, 
+                    filename=filename, submitted_file=edited_file)
+            except PermissionDenied, e:
+                request.user.message_set.create(message = _("You can't make "
+                    "submissions for a file locked by someone else."))
+                result_view = HttpResponseRedirect(reverse('component_detail',
+                    args=(project_slug, component_slug,)))
         else:
             request.user.message_set.create(message = _(
                 "Nothing was sent because you haven't changed anything in the "
                 "translation form."))
-            return HttpResponseRedirect(reverse('component_detail',
+            result_view = HttpResponseRedirect(reverse('component_detail',
                 args=(project_slug, component_slug,)))
 
         self.clear_storage(request)
         return result_view
+
+    def clear_storage(self, request):
+        logger.debug('Cleaning session data.')
+        super(TransFormWizard, self).clear_storage(request)

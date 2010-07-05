@@ -46,23 +46,28 @@ def post_handler(sender, request=None, pofile=None, instance=None, user=None, **
         if user:
             POFileLock.objects.create_update(pofile, user).expires
 
-def webtrans_init_handler(sender, pofile=None, user=None, **kwargs):
+def webtrans_init_handler(sender, request, pofile=None, **kwargs):
+    user = request.user
     try:
         POFileLock.objects.create_update(pofile, user)
         logger.debug("lock-addon: Lock aquired/extended for user '%s' "
         "for file '%s'" % (user,pofile))
-    except POFileLockError, err:
-        logger.debug("lock-addon: %s" % err)
-        # BUG: This doesn't work - why?
-        user.message_set.create(message = _(
+    except POFileLockError, e:
+        logger.debug("lock-addon: %s" % str(e))
+        request.user.message_set.create(message = _(
                 "Couldn't lock file, this means that you can "
                 "send files only for reviewing."))
 
-def webtrans_done_handler(sender, pofile=None, user=None, **kwargs):
+def webtrans_done_handler(sender, request, pofile=None, **kwargs):
+    user = request.user
     logger.debug("lock-addon: Finished editing in Lotte")
     lock = POFileLock.objects.get_valid(pofile)
     if lock:
-        lock.delete_by_user(user)
+        try:
+            lock.delete_by_user(user)
+        except POFileLockError, e:
+            logger.debug("lock-addon: User '%s' committed a file locked by "
+                         "someone else: %s" % (user, str(e)))
 
 def expire_notif(sender, **kwargs):
     logger.debug("lock-addon: Sending expiration notifications...")
