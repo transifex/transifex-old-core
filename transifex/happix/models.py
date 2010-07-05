@@ -317,6 +317,8 @@ class Resource(models.Model):
                     pluralized = j.pluralized,
                     defaults = {
                         'position' : 1,
+                        # FIXME: this has been tested with pofiles only
+                        'occurrences' : (",".join(["(%s, %s)" % (occ[0],occ[1]) for occ in j.occurrences])),
                         }
                     )
                 se.save()
