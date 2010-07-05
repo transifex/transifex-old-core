@@ -5,13 +5,14 @@
     <input class="query withbgimage" type="text" name="q" size="40" value="{{ query|escape }}">
     <input class="i16 submit" type="submit" value="{% trans "Search" %}">
     <br/>
+    <div style="padding-top:10px">
     <label for="source_lang">{% trans "Translations From:" %}</label>
     <select name="source_lang" class="query withbgimage" placeholder="Choose language" >
         {% for language in languages %}
             {% ifequal language.code 'en' %}
                 <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
             {% else %}
-                <option devalue="{{ language.code }}">{{ language.name }}</option>
+                <option value="{{ language.code }}">{{ language.name }}</option>
             {% endifequal %}
         {% endfor %}
             <option value="any_lang">Any Language</option>
@@ -24,5 +25,6 @@
         {% endfor %}
             <option value="any_lang">Any Language</option>
     </select>
+    </div>
   </form>
 </div>

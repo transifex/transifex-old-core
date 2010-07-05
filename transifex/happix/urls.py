@@ -7,7 +7,9 @@ from happix.views import *
 urlpatterns = patterns('',
 #    url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', view_translation, name='translation'),
 #    url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/create_language/(?P<target_lang_code>[-\w]+)/$', start_new_translation, name='new_translation'),
-#    url(r'^search/$', search_translation, name='search_translation'),
+
+    # Search strings
+    url(r'^search/$', search_translation, name='search_translation'),
 
     # Resources
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/$', resource_detail, name='resource_detail'),

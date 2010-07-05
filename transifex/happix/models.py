@@ -6,7 +6,7 @@ import datetime, hashlib, sys
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete
-from django.db.models import permalink
+from django.db.models import permalink, Q
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 
@@ -434,6 +434,29 @@ class TranslationManager(models.Manager):
             results = self.filter(source_entity__in=source_entitys)
         return results
 
+    def by_string_and_language(self, string, source_code='en', target_code=None):
+        """
+        Search translation for source strings queries and only in Public projects!
+        """
+        query = Q()
+        for term in string.split(' '):
+            query &= Q(string__icontains=term)
+
+        source_language = Language.objects.by_code_or_alias(source_code)
+
+        # If no target language given search on any target language.
+        if target_code:
+            language = Language.objects.by_code_or_alias(target_code)
+            results =  self.filter(language=language,
+                source_entity__resource__project__in=Project.public.all(),
+                source_entity__id__in=self.filter(query, language=source_language).values_list(
+                    'source_entity', flat=True))
+        else:
+            results =  self.filter(
+                source_entity__resource__project__in=Project.public.all(),
+                source_entity__id__in=self.filter(query, language=source_language).values_list(
+                    'source_entity', flat=True))
+        return results
 
 class Translation(models.Model):
     """

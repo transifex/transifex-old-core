@@ -15,22 +15,22 @@
   
 {% block content %}
 
-{% include "search_form.html" %}
+{% include "search_translation_form.html" %}
 
   {% if query %}
     {% if results %}
-      <div class="project_list">
+      <div class="project_list" style="padding-top:10px">
       {% for result in results %}
       
         <div class="entry">
-          {% with result.source_string as source_string %}
+          {% with result.source_entity as source_entity %}
           <p class="long_description">{{ result.language }}</p>
           <p class="name highlight">{{ result.string }}</p>
           <p class="long_description">
             <span>Description :</span>
-            {{ source_string.context }}
+            {{ source_entity.description }}
           </p>
-          {% with source_string.resource as resource %}
+          {% with source_entity.resource as resource %}
           <p class="long_description">
             <span>Resource :</span>
             {{ resource.name }}
@@ -40,12 +40,9 @@
             {{ resource.project }}
           </p>
           {% endwith %}
-          <p class="long_description">
-            <span>Source Position :</span>
-            {{ source_string.position }}
-          </p>
           {% endwith %}
         </div>
+        <br />
       {% endfor %}
 
       </div>

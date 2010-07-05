@@ -27,7 +27,8 @@ try:
 except:
     import simplejson as json
 
-#XXX: Obsolete
+
+@login_required
 def search_translation(request):
     """
     Return a set of results on translations, given a set of terms as query.
@@ -45,9 +46,7 @@ def search_translation(request):
     result_count = None
 
     if search_terms:
-        #TODO: AND and OR query matching operations, icontains etc.
-        # For the moment we support only exact matching queries only.
-        results = Translation.objects.by_source_string_and_language(
+        results = Translation.objects.by_string_and_language(
                     string=query_string,
                     source_code=source_lang,
                     target_code=target_lang)
@@ -60,6 +59,7 @@ def search_translation(request):
                                'result_count': result_count,
                                'results': results}, 
                               context_instance = RequestContext(request))
+
 
 # Restrict access only for private projects 
 # Allow even anonymous access on public projects
@@ -86,7 +86,6 @@ def resource_detail(request, project_slug, resource_slug):
           'translated_languages' : resource.available_languages,
           'user_teams' : user_teams },
         context_instance = RequestContext(request))
-
 
 
 @one_perm_required_or_403(pr_resource_delete,
@@ -157,28 +156,6 @@ def resource_edit(request, project_slug, resource_slug):
         'resource_form': resource_form,
         'resource': resource,
     }, context_instance=RequestContext(request))
-
-
-#from libtransifex.qt import LinguistParser
-
-#import sys
-
-#reload(sys) # WTF? Otherwise setdefaultencoding doesn't work
-
-## When we open file with f = codecs.open we specifi FROM what encoding to read
-## This sets the encoding for the strings which are created with f.read()
-#sys.setdefaultencoding('utf-8')
-
-#MAX_FILE_SIZE = 5000000
-
-#def parse_file(filename):
-    #parsers = [LinguistParser]
-    #for parser in parsers:
-        #if parser.accept(filename):
-            #return parser.open(filename)
-    #return None
-
-##from django.db import transaction
 
 
 #XXX: Obsolete
@@ -307,9 +284,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
                                 resource_slug, target_lang_code]),)
 
 
-
 # Restrict access only to maintainers of the projects.
-
 @one_perm_required_or_403(pr_resource_translations_delete,
                           (Project, "slug__exact", "project_slug"))
 def resource_translations_delete(request, project_slug, resource_slug, lang_code):
@@ -344,6 +319,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
              'language': language,
              'is_source_language': is_source_language},
             context_instance=RequestContext(request))
+
 
 def not_available(request, project_slug, lang_code, resource_slug = None):
     """
