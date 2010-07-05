@@ -451,10 +451,12 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     # Find a way to determine the source language of multiple resources #FIXME
     source_strings = Translation.objects.filter(resource__in = resources,
-                                language = resources[0].source_language)
+                                language = resources[0].source_language,
+                                rule = 5)
 
     translated_strings = Translation.objects.filter(resource__in = resources,
-                                language__code = lang_code)
+                                language__code = lang_code,
+                                rule = 5)
 
     # status filtering (translated/untranslated)
     # TODO
@@ -496,7 +498,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     dlength = int(request.POST.get('iDisplayLength','10'))
     dstart = int(request.POST.get('iDisplayStart','0'))
     # for statistics
-    total = source_strings.filter(rule=5).count()
+    total = source_strings.count()
 
     # NOTE: It's important to keep the translation string matching inside this
     # iteration to prevent extra un-needed queries. In this iteration only the
