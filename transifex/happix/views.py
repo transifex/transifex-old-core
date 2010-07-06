@@ -158,46 +158,6 @@ def resource_edit(request, project_slug, resource_slug):
     }, context_instance=RequestContext(request))
 
 
-#XXX: Obsolete
-def view_translation(request, project_slug=None, resource_slug=None, lang_code=None):
-    translation_resource = Resource.objects.get(
-        slug = resource_slug,
-        project__slug = project_slug
-    )
-    target_language = Language.objects.by_code_or_alias(lang_code)
-    
-    return render_to_response("stringset.html",
-        { 'project' : translation_resource.project,
-          'resource' : translation_resource,
-          'target_language' : target_language,
-          'rows' : range(0,10),
-          'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS},
-        context_instance = RequestContext(request))
-
-
-#XXX: Obsolete
-def start_new_translation(request, project_slug=None, resource_slug=None,
-                                    target_lang_code=None):
-    '''
-    Create new language for specified resource.
-    '''
-
-    resource = Resource.objects.get(
-        slug = resource_slug,
-        project__slug = project_slug
-    )
-
-    strings = SourceEntity.objects.filter(resource=resource)
-
-    target_lang = Language.objects.get(code=target_lang_code)
-
-    for s in strings:
-        Translation.objects.get_or_create(
-                    resource = resource,
-                    language = target_lang,
-                    source_string = s.source_string)
-
-
 # Restrict access only for private projects 
 # Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
