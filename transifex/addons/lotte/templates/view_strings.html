@@ -35,13 +35,21 @@
             "bServerSide": true,
             "bProcessing": true,
             "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
-            "sDom": '<"top"if<"clear">rt<"bottom"lp<"clear">', 
+            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
             "bAutoWidth": false,
             "aoColumns" : [
                 { "bVisible":false },
                 { "bVisible":false, "bSortable": false, },
-                { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",},
-                { "sClass": "trans", "bSortable": false,  "sWidth": "350px",},
+                { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
+                  "fnRender": function(oObj){
+                     return html_escape(oObj.aData[2]);
+                   }
+                },
+                { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
+                  "fnRender": function(oObj){
+                     return html_escape(oObj.aData[3]);
+                  }
+                },
                 { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {

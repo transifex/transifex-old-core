@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
+from django.utils.html import escape
 from actionlog.models import action_logging
 from happix.models import (Translation, Resource, SourceEntity)
 from languages.models import Language
@@ -233,7 +234,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 # save buttons and hidden context
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
                  '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="Undo to initial text"></span>'
-                 '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + str(s.source_entity.context) + '</span>'
+                 '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + escape(str(s.source_entity.context)) + '</span>'
                  '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
         ],
