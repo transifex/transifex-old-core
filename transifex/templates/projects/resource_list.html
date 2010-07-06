@@ -59,6 +59,8 @@
                     }
                   }
               });
+              // Rebind the tipsy
+              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
             });
         });
         $('#show_all').click(function(){
@@ -85,6 +87,8 @@
                     }
                   }
               });
+              // Rebind the tipsy
+              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
             });
         });
         {% if request.user.is_authenticated %}

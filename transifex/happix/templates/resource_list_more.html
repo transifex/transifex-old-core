@@ -6,7 +6,9 @@
 {% for res in resources %}
 <tr>
     <td>
-    <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
+    <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.total_entities }} <br>Available Languages: {{ res.available_languages|length }}">
+    {{ res.name }}
+    </a>
     <sup class="entry_metalink">
         {% if request.user.is_authenticated and is_maintainer %}
             <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
