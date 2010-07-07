@@ -4,7 +4,7 @@
 {% load permissions %}
 {% load team_tags %}
 
-
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
   <div class="first_level title_wrapper">
     <span class="breadcrumb" >
@@ -88,8 +88,9 @@
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
           <li>
-            <span class="i16 submit_file disabled">{% trans "Upload new version" %}</span>
-            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+            <span class="i16 submit_file"><a style="cursor:pointer" id="button_upload">{% trans "Upload new version" %}</a>
+            <span style="margin-left:10px;font-size:10px;color:#666;display:none" class="i16 tick">File uploaded</span>
+            </span>
           </li>
           {% endifnotequal %}
         </ul>
@@ -118,7 +119,6 @@
           </li>
         </ul>
   </div>
-  {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
   {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
   <div class="first_level footer_action">
     <a class="i16 delete" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>

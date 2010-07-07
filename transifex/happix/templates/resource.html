@@ -159,6 +159,26 @@ Projects |
                 'hideOnContentClick': false,
                 'onComplete':function() {
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+                    {% ifnotequal resource.source_language language %}
+                    /* Bind ajax upload button */
+                    new AjaxUpload('button_upload', {
+                        action: '{% url api.storage %}',
+                        onSubmit : function(file, extension) {
+                          $("div#notification-container div").html("Uploading '"+file+"'");
+                          $("div#notification-container").fadeIn("fast");
+                          this.disable();
+                        },
+                        onComplete : function(file, response) {
+                            if(response != "<pre>Created</pre>")
+                                alert(response);
+                            this.enable();
+                            $("div#notification-container").fadeOut("fast");
+                            $('#button_upload').next().fadeIn().fadeOut(10000);
+                        }
+                    });
+                    {% endifnotequal %}
+
                 },
                 'titleShow': true,
                 'titlePosition': 'outside',
