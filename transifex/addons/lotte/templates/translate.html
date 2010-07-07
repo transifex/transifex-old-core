@@ -282,9 +282,23 @@
             $(".filters").each( function() {
                 if (! $(this).attr('checked')) {
                     filter_var += $(this).attr('id')+'&';            
-                }        
+                }
             });
             oTable.fnDraw();
+        });
+
+        /* Bind menu filters for users */
+        $('#filtermenu1 .filtermenu-trigger').toggle(function(){
+            $('#filtermenu_users').show();
+        }, function(){
+            $('#filtermenu_users').hide();
+        });
+
+        /* Bind menu filters for resources */
+        $('#filtermenu2 .filtermenu-trigger').toggle(function(){
+            $('#filtermenu_resources').show();
+        }, function(){
+            $('#filtermenu_resources').hide();
         });
 
     });
@@ -314,8 +328,8 @@
 {% block content %}
 
 
-<div class="floatright" >
-    <fieldset>
+<div class="floatright" style="position:relative;min-width:550px">
+    <fieldset style="width:200px; float:right">
     <legend>{% trans "Settings" %}</legend>
     <table class="definition">
     <tr>
@@ -329,13 +343,23 @@
     </table>
     </fieldset>
 
-<!--<input id="search_field" class="i16 find" type="text" value="{{string }}"
-    size="15"/>-->
-<!--   <input id="filter_string_apply" class="i16 filter" type="submit" value="{% trans 'Filter' %}"/>
-   <input id="filter_string_clear" class="i16 clear" type="submit" value="{% trans 'Clear' %}"/>-->
+  <div id="filtermenu1" style="position:absolute;top:4px ">
+    <a class="filtermenu-trigger buttonized" href="#" style="border: 1px solid rgb(204, 204, 204); padding: 3px 3px 3px 8px; background: rgb(238, 238, 238) font-family: Trebuchet MS,Verdana,sans-serif; font-size: 11px; color: rgb(102, 102, 102); -moz-border-radius: 2px; text-decoration: none; display: block; height: 14px; outline-color: -moz-use-text-color; outline-style: none; outline-width: 0pt; cursor: pointer; width: 139px;">
+    <span class="filtermenu-icon" style="float:right; background: transparent url({{ STATIC_URL }}images/icons/bullet_arrow_down.png) no-repeat scroll 50% 90%; width: 16px; height: 16px; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;"> </span>
+    <span class="filtermenu-title">Filter by users</span>
+    </a>
+  </div>
+  {% include "filters_menu_users.html" %}
+
+  <div id="filtermenu2" style="position:absolute; top:4px; left:160px">
+    <a class="filtermenu-trigger buttonized" href="#" style="border: 1px solid rgb(204, 204, 204); padding: 3px 3px 3px 8px; background: rgb(238, 238, 238) font-family: Trebuchet MS,Verdana,sans-serif; font-size: 11px; color: rgb(102, 102, 102); -moz-border-radius: 2px; text-decoration: none; display: block; height: 14px; outline-color: -moz-use-text-color; outline-style: none; outline-width: 0pt; cursor: pointer; width: 139px;">
+    <span class="filtermenu-icon" style="float:right; background: transparent url({{ STATIC_URL }}images/icons/bullet_arrow_down.png) no-repeat scroll 50% 90%; width: 16px; height: 16px; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;"> </span>
+    <span class="filtermenu-title">Filter by resources</span>
+    </a>
+  </div>
+  {% include "filters_menu_resources.html" %}
+
 </div>
-
-
 
   <table class="definition stats_totals" id="stats_table">
   <input id="filter_entries" type="hidden" name="filter_entries"/>
@@ -345,7 +369,7 @@
 
       <td id="total_translated">{{ translated_strings }}</td>
       <td id="total_translated_perc">?</td>
-      <td><input id="translated" class="filters"type="checkbox"  checked="checked"  name="only_translated"/></td>
+      <td><input id="translated" class="filters" type="checkbox"  checked="checked"  name="only_translated"/></td>
   </tr>
 
   <tr>

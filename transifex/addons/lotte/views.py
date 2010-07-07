@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db.models import Count, Q
 from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
                          HttpResponseForbidden, HttpResponseBadRequest)
@@ -83,6 +84,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     else:
         translation_resource = resources[0]
 
+    contributors = User.objects.filter(pk__in=Translation.objects.filter(
+        resource__in = resources,
+        language = target_language,
+        rule = 5).values_list("user", flat=True))
+
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -90,6 +96,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'translated_strings': translated_strings,
           'untranslated_strings': total_strings - translated_strings,
           'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
+          'contributors': contributors,
+          'resources': resources,
         },
         context_instance = RequestContext(request))
 
@@ -188,6 +196,9 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 source_strings = source_strings.exclude(
                     Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
                     ~Q(source_entity__id__in=translated_strings.values('source_entity')))
+            if f.startswith("user_"):
+                source_strings = source_strings.exclude(
+                    Q(source_entity__id__in=translated_strings.filter(user__id=int(f.split('_')[1])).values('source_entity')))
 
     # keyword filtering
     sSearch = request.POST.get('sSearch','')
