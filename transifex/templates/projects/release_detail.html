@@ -88,7 +88,7 @@
         </span>
         <ul id="component-list" class="simple links" style="display:none;">
           {% for comp in component_list %}
-            <li><a title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>
+            <li><a title="{% firstof comp.description|escape comp.name|escape %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>
           {% endfor %}
         </ul>
         {% endwith %}

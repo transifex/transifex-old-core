@@ -41,7 +41,7 @@
       <p class="description">{{ project.description }}</p>
       <p>
         <span class="i16 component compact">
-          {% for comp in project.component_set.all|slice:"0:4" %}<a class="component" title="{% firstof comp.description comp.name %}" href="{{ comp.get_absolute_url }}">{{ comp.name }}</a> {% endfor %}
+          {% for comp in project.component_set.all|slice:"0:4" %}<a class="component" title="{% firstof comp.description|escape comp.name|escape %}" href="{{ comp.get_absolute_url }}">{{ comp.name }}</a> {% endfor %}
         </span>
       {% if project.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
       </p>

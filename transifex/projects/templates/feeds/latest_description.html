@@ -1,3 +1,3 @@
-{% firstof obj.description obj.name %}
+{% firstof obj.description|escape obj.name|escape %}
 <br/>
 <br/>Components: {% for comp in obj.component_set.all %}<a href="{{ comp.get_absolute_url }}">{{ comp.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
