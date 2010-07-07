@@ -25,6 +25,8 @@ RE_LIST = (
     r".+/%(lang)s/%(fbase)s\.po$",
     #.../po/foo.el.po
     r".+/%(fbase)s\.%(lang)s\.po$",
+    #^po-.../el.po: Intltool multi-domain support (multiple sub-projects)
+    r"^po-.+/%(lang)s\.po$",
 )
 # Inject the language regex into the list elements
 RE_LIST = [re.compile(r % {'lang': LANG_RE, 'fbase': FBASE_RE})
