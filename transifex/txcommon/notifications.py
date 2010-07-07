@@ -261,6 +261,30 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
+
+            # Resources
+
+            {
+                "label": "project_resource_added",
+                "display": _("Resource Added"),
+                "description": _("when a new resource is added to a project"),
+                "default": 1,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_resource_changed",
+                "display": _("Resource Changed"),
+                "description": _("when a resource of a project is changed"),
+                "default": 1,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_resource_deleted",
+                "display": _("Resource Deleted"),
+                "description": _("when a resource of a project is deleted"),
+                "default": 1,
+                "show_to_user": True,
+            },
     ]
 
 

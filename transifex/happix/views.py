@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.dispatch import Signal
 from django.db.models import Count, Q
 from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
                          HttpResponseForbidden, HttpResponseBadRequest)
@@ -21,6 +22,7 @@ from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 
 from authority.views import permission_denied
+from projects.signals import post_resource_save, post_resource_delete
 
 try:
     import json
@@ -101,16 +103,14 @@ def resource_delete(request, project_slug, resource_slug):
         resource_ = copy.copy(resource)
         resource.delete()
 
+        post_resource_delete.send(sender=None, instance=resource_,
+            user=request.user)
+
+        # Signal for logging
         request.user.message_set.create(
             message=_("The %s translation resource was deleted.") % resource_.name)
 
-        #TODO: Create the specific notice type and update all the other actions.
-        # ActionLog & Notification
-#        nt = 'resource_deleted'
-#        context={'resource': resource_}
-#        action_logging(request.user, [resource_], nt, context=context)
-
-        return HttpResponseRedirect(reverse('project_detail', 
+        return HttpResponseRedirect(reverse('project_detail',
                                     args=[resource.project.slug]),)
     else:
         return render_to_response(
@@ -129,11 +129,13 @@ def resource_edit(request, project_slug, resource_slug):
                                   slug = resource_slug)
 
     if request.method == 'POST':
-        resource_form = ResourceForm(request.POST, instance=resource,) 
-        if resource_form.is_valid(): 
+        resource_form = ResourceForm(request.POST, instance=resource,)
+        if resource_form.is_valid():
             resource_new = resource_form.save()
 
             # TODO: (Optional) Put some signal here to denote the udpate.
+            post_resource_save.send(sender=None, instance=resource_new,
+                created=False, user=request.user)
 
             # FIXME: enable the following actionlog
             # ActionLog & Notification

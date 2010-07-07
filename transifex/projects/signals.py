@@ -9,6 +9,10 @@ submission_error = Signal(providing_args=['filename', 'message'])
 pre_set_stats = Signal(providing_args=['instance'])
 post_set_stats = Signal(providing_args=['instance'])
 
+# Resource signals
+post_resource_save = Signal(providing_args=['instance', 'created', 'user'])
+post_resource_delete = Signal(providing_args=['instance', 'user'])
+
 # This is obsolete:
 sig_refresh_cache = Signal(providing_args=["component"])
 pre_refresh_cache = sig_refresh_cache
