@@ -339,12 +339,12 @@ class Resource(models.Model):
                     strings_added += 1
 
                 if not created and overwrite_translations:
-                    if ts.string != j.translation:
-                        ts.string = j.translation
+                    if tr.string != j.translation:
+                        tr.string = j.translation
                         strings_updated += 1
                         updated = True
         except Exception, e:
-            logger.error("There was problem while importing the entries  "
+            logger.error("There was problem while importing the entries "
                          "into the database. Entity: '%s'. Error: '%s'."
                          % (j.source_entity, str(e)))
             transaction.rollback()
