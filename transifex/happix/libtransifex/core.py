@@ -85,9 +85,9 @@ class Parser:
         raise Exception("Parser.parse(buf) has to be overridden")
 
     @classmethod
-    def parse_file(cls, filename):
+    def parse_file(cls, filename, lang_rules=None):
         fh = open(filename, "ru")
-        return cls.parse(fh.read())
+        return cls.parse(fh.read(), lang_rules)
 
 
 class StringSet:
@@ -123,9 +123,12 @@ class Translation:
         comments - Comments for the given source_entity from the source code.
         rule - Plural rule 0=zero, 1=one, 2=two, 3=few, 4=many or 5=other.
         pluralized - True if the source_entity is a plural entry.
+        fuzzy - True if the translation is fuzzy/unfinished
+        obsolete - True if the entity is obsolete
     """
     def __init__(self, source_entity, translation, occurrences=None, 
-            comments=None, context=None, rule=5, pluralized=False):
+            comments=None, context=None, rule=5, pluralized=False,
+            fuzzy=False, obsolete=False):
         self.source_entity = source_entity
         self.translation = translation
         self.context = context
@@ -133,6 +136,8 @@ class Translation:
         self.comments = comments
         self.rule = int(rule)
         self.pluralized = pluralized
+        self.fuzzy = fuzzy
+        self.obsolete = obsolete
 
     def __hash__(self):
         if STRICT:
@@ -144,6 +149,7 @@ class Translation:
     def __eq__(self, other):
         if isinstance(other, self.__class__) and \
             self.source_entity == other.source_entity and \
-            self.translation == other.translation:
+            self.translation == other.translation and \
+            self.context == other.context:
             return True
         return False

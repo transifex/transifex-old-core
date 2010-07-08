@@ -67,7 +67,7 @@ class LinguistParser(Parser):
         #return doc.toprettyxml(indent="  ", newl="\n", encoding="UTF-8")
 
     @classmethod
-    def parse(cls, buf):
+    def parse(cls, buf, lang_rules):
         def getElementByTagName(element, tagName, noneAllowed = False):
             elements = element.getElementsByTagName(tagName)
             if not noneAllowed and not elements:
@@ -87,6 +87,11 @@ class LinguistParser(Parser):
 
         def clj(s, w):
             return s[:w].replace("\n", " ").ljust(w)
+
+        if lang_rules:
+            nplural = len(lang_rules)
+        else:
+            nplural = None
 
         doc = xml.dom.minidom.parseString(buf)
         if doc.doctype.name != "TS":
@@ -124,29 +129,67 @@ class LinguistParser(Parser):
                     elif STRICT:
                         raise LinguistParseError("Malformed 'location' element")
 
+                pluralized = False
+                if message.attributes.has_key("numerus") and \
+                    message.attributes['numerus'].value=='yes':
+                    pluralized = True
+
                 source = getElementByTagName(message, "source")
                 translation = getElementByTagName(message, "translation")
-                
+
                 status = None
                 if source.firstChild:
                     sourceString = source.firstChild.nodeValue
                 else:
                     sourceString = None # WTF?
 
+                same_nplural = True
+                messages = []
                 if translation and translation.firstChild:
-                    translationString = translation.firstChild.nodeValue
+                    if not pluralized:
+                        messages = [(5, translation.firstChild.nodeValue)]
+                    else:
+                        numerusforms = translation.getElementsByTagName('numerusform')
+                        if nplural:
+                            nplural_file = len(numerusforms)
+                            if nplural != nplural_file:
+                                logger.error("Passed plural rules has nplurals=%s"
+                                    ", but '%s' file has nplurals=%s. String '%s'"
+                                    "skipped." % (nplural, filename, nplural_file,
+                                    entry.msgid))
+                                same_nplural = False
+                        else:
+                            same_nplural = False
+
+                        if not same_nplural:
+                            plural_keys = [n for n, f in enumerate(numerusforms)]
+                        else:
+                            plural_keys = lang_rules
+
+                        for n, rule in enumerate(plural_keys):
+                            nf=numerusforms[n].firstChild
+                            if nf:
+                                messages.append((rule, nf.nodeValue))
+
+                    obsolete, fuzzy = False, False
                     if translation.attributes.has_key("type"):
-                        status = translation.attributes["type"].value
-                        if not status.lower() in ["unfinished", "obsolete"]:
+                        status = translation.attributes["type"].value.lower()
+                        if status in ["unfinished", "obsolete"]:
+                            if status == 'unfinished':
+                                fuzzy = True
+                            else:
+                                obsolete = True
+                        else:
                             raise LinguistParseError("Element 'translation' attribute "\
                                 "'type' isn't either 'unfinished' or 'obsolete'")
                     # NB! If <translation> doesn't have type attribute, it means that string is finished
-                else:
-                    translationString = None # WTF?
 
-                if sourceString and translationString:
-                    stringset.strings.append(Translation(sourceString, 
-                        translationString, context = context_name,
-                        occurrences = ";".join(occurrences) ))
+                if sourceString and messages:
+                    for msg in messages:
+                        stringset.strings.append(Translation(sourceString,
+                            msg[1], context = context_name, rule=msg[0],
+                            occurrences = ";".join(occurrences), 
+                            pluralized=pluralized, fuzzy=fuzzy, 
+                            obsolete=obsolete))
                 i += 1
         return stringset
