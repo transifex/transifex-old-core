@@ -64,10 +64,10 @@ class PofileParser(Parser):
                     messages = []
                     if nplural:
                         if nplural != nplural_file:
-                            logger.error("Language '%s' has nplurals=%s, but"
-                                " '%s' file has nplurals=%s. String '%s'"
-                                "skipped." % (language, nplural, filename, 
-                                nplural_file, entry.msgid))
+                            logger.error("Passed plural rules has nplurals=%s"
+                                ", but '%s' file has nplurals=%s. String '%s'"
+                                "skipped." % (nplural, filename, nplural_file,
+                                entry.msgid))
                             same_nplural = False
                     else:
                         same_nplural = False
