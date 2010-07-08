@@ -185,20 +185,28 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                                 rule=5)
 
     # status filtering (translated/untranslated)
-    # TODO
     if request.POST and request.POST.has_key('filters'):
-        for f in request.POST['filters'].split('&'):
+        for f in request.POST['filters'].split(','):
             if f == "translated":
                 source_strings = source_strings.filter(
                     Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
                     ~Q(source_entity__id__in=translated_strings.values('source_entity')))
-            if f == "untranslated":
+            elif f == "untranslated":
                 source_strings = source_strings.exclude(
                     Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
                     ~Q(source_entity__id__in=translated_strings.values('source_entity')))
-            if f.startswith("user_"):
-                source_strings = source_strings.exclude(
-                    Q(source_entity__id__in=translated_strings.filter(user__id=int(f.split('_')[1])).values('source_entity')))
+
+    # Object filtering (e.g. users, resources etc.)
+    if request.POST and request.POST.has_key('user_filters'):
+        # rsplit is used to remove the trailing ','
+        users = request.POST.get('user_filters').rstrip(',').split(',')
+        source_strings = source_strings.filter(
+            source_entity__id__in=translated_strings.filter(
+                user__id__in=users).values('source_entity'))
+    if request.POST and request.POST.has_key('resource_filters'):
+        # rsplit is used to remove the trailing ','
+        resources = request.POST.get('resource_filters').rstrip(',').split(',')
+        source_strings = source_strings.filter(resource__id__in=resources)
 
     # keyword filtering
     sSearch = request.POST.get('sSearch','')

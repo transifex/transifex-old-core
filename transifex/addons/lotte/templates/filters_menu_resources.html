@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load truncate %}
 
-<div id="filtermenu_resources" class="filtermenu_wrapper" style="left:160px; position: absolute; z-index: 999999; width: 150px; top: 24px; display: none; background-color:#F5F5F5; -moz-border-radius:2px; border-width: 0px 1px 1px 1px; border-style: solid; border-color: #CCC; font-size:0.85em; -moz-box-shadow: 1px 1px 2px #DDDDDD;">	
+<div id="filtermenu_resources" class="filtermenu_wrapper" style="left:160px; position: absolute; z-index: 999999; width: 150px; top: 24px; display: none; background-color:#F5F5F5; -moz-border-radius:2px; border-width: 0px 1px 1px 1px; border-style: solid; border-color: #CCC; font-size:0.85em; -moz-box-shadow: 1px 1px 2px #DDDDDD; overflow-x:hidden; overflow-y:auto; max-height:150px;">
 
 {% if resources %}
   <!-- TODO implement the searching at the following lines to function properly
@@ -13,7 +13,7 @@
   <div class="filters_list" style="float:left">
     <ul style="list-style:none; padding-left:10px; font-size:11px;">
     {% for resource in resources %}
-      <li><input class="filters" type="checkbox" title="{{ resource.name }}" style="margin:0; vertical-align:bottom;" id="resource_{{ resource.id }}" /> {{ resource.name|truncate_chars_middle:"20" }} </li>
+      <li><input class="resource_filters" type="checkbox" title="{{ resource.name }}" style="margin:0; vertical-align:bottom;" id="{{ resource.id }}" /> {{ resource.name|truncate_chars_middle:"20" }} </li>
     {% endfor %}
     </ul>
   </div>

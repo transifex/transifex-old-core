@@ -45,6 +45,8 @@
     var current_defaults = {};
     /* var to keep filter state */
     var filter_var = null;
+    var user_filters_values = null;
+    var resource_filters_values = null;
     /* url for details requests */
     {% if resource %} 
     var details_url = "{% url get_details project.slug resource.slug target_language.code %}";
@@ -125,8 +127,14 @@
               $("#save_all").click(function(){ stringset.push(); });
               $("div#notification-container div").html("Loading strings...");
               $("div#notification-container").fadeIn("slow");
-              if ( filter_var) {
+              if (filter_var) {
                 aoData.push( { "name" : "filters", "value": filter_var});
+              }
+              if (user_filters_values){
+                aoData.push( { "name" : "user_filters", "value": user_filters_values});
+              }
+              if (resource_filters_values){
+                aoData.push( { "name" : "resource_filters", "value": resource_filters_values});
               }
 
               $.ajax ( {
@@ -277,14 +285,44 @@
             }
         });
 
-        $(".filters").change(function() {
+        /* Wrapper ... to be DRY */
+        function traverse_filters(){
             filter_var = "";
             $(".filters").each( function() {
                 if (! $(this).attr('checked')) {
-                    filter_var += $(this).attr('id')+'&';            
+                    filter_var += $(this).attr('id')+',';
+                }
+            });
+            user_filters_values = "";
+            // Parse one by one to reuse the older applied filters
+            $(".user_filters").each( function() {
+                if ($(this).attr('checked')) {
+                    user_filters_values += $(this).attr('id')+',';
+                }
+            });
+            resource_filters_values = "";
+            // Parse one by one to reuse the older applied filters
+            $(".resource_filters").each( function() {
+                if ($(this).attr('checked')) {
+                    resource_filters_values += $(this).attr('id')+',';
                 }
             });
             oTable.fnDraw();
+        }
+
+        /* Bind checkbox change event  for translated/untranslated */
+        $(".filters").change(function() {
+            traverse_filters();
+        });
+
+        /* Bind checkbox change event for user filters*/
+        $(".user_filters").change(function() {
+            traverse_filters();
+        });
+
+        /* Bind checkbox change event for resource filters*/
+        $(".resource_filters").change(function() {
+            traverse_filters();
         });
 
         /* Bind menu filters for users */
@@ -329,7 +367,7 @@
 
 
 <div class="floatright" style="position:relative;min-width:550px">
-    <fieldset style="width:200px; float:right">
+    <fieldset style="width:175px; float:right">
     <legend>{% trans "Settings" %}</legend>
     <table class="definition">
     <tr>
