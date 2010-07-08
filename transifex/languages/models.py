@@ -101,6 +101,20 @@ class Language(models.Model):
 
         super(Language, self).save(*args, **kwargs)
 
+    def get_rule_name_from_num(self, num):
+        if num == 0:
+            return 'zero'
+        elif num == 1:
+            return 'one'
+        elif num == 2:
+            return 'two'
+        elif num == 3:
+            return 'few'
+        elif num == 4:
+            return 'many'
+        elif num == 5:
+            return 'other'
+
     def get_pluralrules(self):
         rules=[]
         if self.rule_zero:

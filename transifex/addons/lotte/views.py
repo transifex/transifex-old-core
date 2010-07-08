@@ -176,13 +176,19 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         resources = Resource.objects.filter(project__slug = project_slug)
 
     # Find a way to determine the source language of multiple resources #FIXME
+    source_language = resources[0].source_language
     source_strings = Translation.objects.filter(resource__in = resources,
-                                language = resources[0].source_language,
+                                language = source_language,
                                 rule=5)
 
     translated_strings = Translation.objects.filter(resource__in = resources,
                                 language__code = lang_code,
                                 rule=5)
+
+    # Flag to present the similar langs
+    similar = False
+    if request.POST and request.POST.has_key('similar_langs') and request.POST['similar_langs']:
+        similar = True
 
     # status filtering (translated/untranslated)
     if request.POST and request.POST.has_key('filters'):
@@ -248,7 +254,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
             [
                 s.id,
                 s.source_entity.string,
-                s.string,
+                _get_source_strings(s, source_language, lang_code, similar),
                 _get_string(translated_strings, source_entity = s.source_entity),
                 # save buttons and hidden context
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
@@ -261,6 +267,43 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     return HttpResponse(json, mimetype='application/json')
 
+
+def _get_source_strings(source_string, source_language, lang_code, similar):
+    """
+    Get all the necessary source strings, including plurals and similar langs.
+    
+    Returns a dictionary with the keys:
+    'source_strings' : {"one":<string>, "two":<string>, ... , "other":<string>}
+    'similar_lang_strings' : 
+        {"lang1": {"one":<string>, ... , "other":<string>},
+         "lang2": {"one":<string>, "two":<string>, ... , "other":<string>}}
+    """
+    source_entity = source_string.source_entity
+    # This is the rule 5 ('other')
+    source_strings = { "other":source_string.string }
+    # List that will contain all the similar translations
+    similar_lang_strings = {}
+    
+    if source_entity.pluralized:
+        # These are the remaining plural forms of the source string.
+        plural_strings = Translation.objects.filter(
+            source_entity = source_entity,
+            language = source_language).exclude(rule=5).order_by('rule')
+        # FIXME: the mapping is maybe wrong
+        for pl_string in plural_strings:
+            plural_name = source_language.get_rule_name_from_num(pl_string.rule)
+            source_strings[plural_name] = pl_string.string
+
+    # for each similar language fetch all the translation strings
+    if similar and hasattr(settings, 'SIMILAR_LANGS'):
+        for lcode in settings.SIMILAR_LANGS.get(lang_code, {}):
+            l = Language.objects.by_code_or_alias(lcode)
+            similar_lang_strings[l.name] = {}
+            for t in Translation.objects.filter(source_entity=source_entity, language=l).order_by('rule'):
+                plural_name = source_language.get_rule_name_from_num(t.rule)
+                similar_lang_strings[l.name][plural_name] = t.string
+    return { 'source_strings' : source_strings,
+             'similar_lang_strings' : similar_lang_strings }
 
 def _get_string(query, **kwargs):
     """

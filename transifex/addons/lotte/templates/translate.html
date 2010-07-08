@@ -102,9 +102,30 @@
                 { "bVisible":false, "bSortable": false, },
                 { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
                   "fnRender": function(oObj){
-                    var clean_array = array_escape({"key":oObj.aData[1], "source_string":oObj.aData[2]});
+                    var clean_array = array_escape({"key":oObj.aData[1], "source_dict":oObj.aData[2]});
+                    var source_divs = '';
+                    for(rule in clean_array["source_dict"]["source_strings"]){
+                        if(rule=='other')
+                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + clean_array["source_dict"]["source_strings"]["other"] + '</div>'
+                        else
+                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["source_strings"][rule] + '</p>'
+                    }
+                    for(lang in clean_array["source_dict"]["similar_lang_strings"]){
+                      lang_strings = "";
+                      for(rule in clean_array["source_dict"]["similar_lang_strings"][lang]){
+                        if(rule=='other')
+                          lang_strings += '<p>' + clean_array["source_dict"]["similar_lang_strings"][lang][rule] + '</p>'
+                        else
+                          lang_strings += '<p><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["similar_lang_strings"][lang][rule] + '</p>'
+                      }
+                      if(!lang_strings==""){
+                        source_divs += '<h3 class="similar_lang_title" style="margin-bottom:-1em;font-size:0.85em">'+lang+'</h3>';
+                        source_divs += lang_strings;
+                      }
+                    }
+
                     return '<div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
-                           + '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + clean_array["source_string"] + '</div>'
+                           + source_divs
                            + '<div class="details_trigger" style="font-size:11px;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
                            + '<a class="show_details" style="border:0;cursor:pointer"><span>show details</span><img style="vertical-align:bottom" src="{{ STATIC_URL }}images/icons/bullet_arrow_down.png"></a>'
                            + '</div>';
@@ -135,6 +156,9 @@
               }
               if (resource_filters_values){
                 aoData.push( { "name" : "resource_filters", "value": resource_filters_values});
+              }
+              if ($("#toggle_similar_langs").is(":checked")){
+                aoData.push( { "name" : "similar_langs", "value": true});
               }
 
               $.ajax ( {
@@ -285,6 +309,10 @@
             }
         });
 
+        $("#toggle_similar_langs").click( function() {
+            oTable.fnDraw();
+        });
+
         /* Wrapper ... to be DRY */
         function traverse_filters(){
             filter_var = "";
@@ -377,6 +405,10 @@
     <tr>
         <th>{% trans "Auto save:" %}</th>
         <td><input id="toggle_autosave" type="checkbox" /></td>
+    </tr>
+    <tr>
+        <th>{% trans "Similar locales:" %}</th>
+        <td><input id="toggle_similar_langs" type="checkbox" /></td>
     </tr>
     </table>
     </fieldset>
