@@ -115,6 +115,20 @@ class Language(models.Model):
         elif num == 5:
             return 'other'
 
+    def get_rule_num_from_name(self, name):
+        if name == 'zero':
+            return 0
+        elif name == 'one':
+            return 1
+        elif name == 'two':
+            return 2
+        elif name == 'few':
+            return 3
+        elif name == 'many':
+            return 4
+        elif name == 'other':
+            return 5
+
     def get_pluralrules(self):
         rules=[]
         if self.rule_zero:

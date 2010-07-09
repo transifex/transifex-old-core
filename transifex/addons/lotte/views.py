@@ -182,8 +182,10 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                                 rule=5)
 
     translated_strings = Translation.objects.filter(resource__in = resources,
-                                language__code = lang_code,
-                                rule=5)
+                                language__code = lang_code)
+
+    # These are only the rule=5 (other) translations
+    default_translated_strings = translated_strings.filter(rule=5)
 
     # Flag to present the similar langs
     similar = False
@@ -195,19 +197,23 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         for f in request.POST['filters'].split(','):
             if f == "translated":
                 source_strings = source_strings.filter(
-                    Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
-                    ~Q(source_entity__id__in=translated_strings.values('source_entity')))
+                    Q(source_entity__id__in=default_translated_strings.filter(
+                        string="").values('source_entity'))|
+                    ~Q(source_entity__id__in=default_translated_strings.values(
+                        'source_entity')))
             elif f == "untranslated":
                 source_strings = source_strings.exclude(
-                    Q(source_entity__id__in=translated_strings.filter(string="").values('source_entity'))|
-                    ~Q(source_entity__id__in=translated_strings.values('source_entity')))
+                    Q(source_entity__id__in=default_translated_strings.filter(
+                        string="").values('source_entity'))|
+                    ~Q(source_entity__id__in=default_translated_strings.values(
+                        'source_entity')))
 
     # Object filtering (e.g. users, resources etc.)
     if request.POST and request.POST.has_key('user_filters'):
         # rsplit is used to remove the trailing ','
         users = request.POST.get('user_filters').rstrip(',').split(',')
         source_strings = source_strings.filter(
-            source_entity__id__in=translated_strings.filter(
+            source_entity__id__in=default_translated_strings.filter(
                 user__id__in=users).values('source_entity'))
     if request.POST and request.POST.has_key('resource_filters'):
         # rsplit is used to remove the trailing ','
@@ -255,7 +261,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 s.id,
                 s.source_entity.string,
                 _get_source_strings(s, source_language, lang_code, similar),
-                _get_string(translated_strings, source_entity = s.source_entity),
+                _get_strings(translated_strings, lang_code, s.source_entity),
                 # save buttons and hidden context
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
                  '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="Undo to initial text"></span>'
@@ -264,7 +270,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
         ],
         })
-
     return HttpResponse(json, mimetype='application/json')
 
 
@@ -289,7 +294,6 @@ def _get_source_strings(source_string, source_language, lang_code, similar):
         plural_strings = Translation.objects.filter(
             source_entity = source_entity,
             language = source_language).exclude(rule=5).order_by('rule')
-        # FIXME: the mapping is maybe wrong
         for pl_string in plural_strings:
             plural_name = source_language.get_rule_name_from_num(pl_string.rule)
             source_strings[plural_name] = pl_string.string
@@ -305,16 +309,35 @@ def _get_source_strings(source_string, source_language, lang_code, similar):
     return { 'source_strings' : source_strings,
              'similar_lang_strings' : similar_lang_strings }
 
-def _get_string(query, **kwargs):
+
+def _get_strings(query, target_lang_code, source_entity):
     """
-    Helper function for returning a Translation string or an empty string if no
-    translation is found. Used in the list concatenation above to preserve code
-    sanity.
+    Helper function for returning all the Translation strings or an empty dict.
+    
+    Used in the list concatenation above to preserve code sanity.
+    Returns a dictionary in the following form:
+    {"zero":<string>, "one":<string>, ... , "other":<string>},
+    where the 'zero', 'one', ... are the plural names of the corresponding 
+    plural forms.
     """
-    try:
-        return query.get(**kwargs).string
-    except:
-        return ""
+    # It includes the plural translations, too!
+    translation_strings = {}
+    target_language = Language.objects.by_code_or_alias(target_lang_code)
+    if source_entity.pluralized:
+        translations = query.filter(source_entity=source_entity).order_by('rule')
+        # Fill with empty strings to have the UNtranslated entries!
+        for rule in target_language.get_pluralrules():
+            translation_strings[rule] = ""
+        for translation in translations:
+            plural_name = target_language.get_rule_name_from_num(translation.rule)
+            translation_strings[plural_name] = translation.string
+    else:
+        try:
+            translation_strings["other"] = query.get(source_entity=source_entity,
+                                                     rule=5).string
+        except Translation.DoesNotExist:
+            translation_strings["other"] = ""
+    return translation_strings
 
 
 # Restrict access only to : (The checks are done in the view's body)
@@ -355,7 +378,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     # Form the strings dictionary, get as Json object
     # The fields are the following:
     # id-> source_entity id
-    # translation-> translation string
+    # translations-> translation strings (inlucdes all plurals)
     # context-> source_entity context
     # occurrence-> occurrence (not yet well supported)
     # Iterate through all the row data that have been sent.
@@ -368,22 +391,25 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
             # translation pair.
             continue
 
-        try:
-            # TODO: Implement get based on context and/or on context too!
-            # FIXME: Handle the plurals appropriately!
-            translation_string, created = Translation.objects.get_or_create(
-                                source_entity =source_string.source_entity,
-                                language = target_language,
-                                resource = source_string.resource)
+        for rule, string in row['translations'].items():
+            try:
+                # TODO: Implement get based on context and/or on context too!
+                # FIXME: Need to finally decide if we need to save EMPTY strings
+                # or DELETE the existed translations on '' new string.
+                translation_string, created = Translation.objects.get_or_create(
+                                    source_entity = source_string.source_entity,
+                                    language = target_language,
+                                    resource = source_string.resource,
+                                    rule = target_language.get_rule_num_from_name(rule))
 
-            translation_string.string = row['translation']
-            # Save the sender as last committer for the translation.
-            translation_string.user = request.user
-            translation_string.save()
-        # catch-all. if we don't save we _MUST_ inform the user
-        except:
-            # TODO: Log or inform here
-            pass
+                # Save the sender as last committer for the translation.
+                translation_string.string = string
+                translation_string.user = request.user
+                translation_string.save()
+            # catch-all. if we don't save we _MUST_ inform the user
+            except:
+                # TODO: Log or inform here
+                pass
 
     return HttpResponse(status=200)
 

@@ -1,53 +1,69 @@
 /* TranslationString class which stores information about one translation string */
-function TranslationString(parent, id, source_string, translated_string, source_entity, context, occurrence) {
+function TranslationString(parent, id, source_strings, translated_strings, source_entity, context, occurrence) {
+
     // The StringSet holding it
     this.parent = parent;
-    // The id of the SourceEntity
+
+    // The id of the default source string!
     this.id = id;
+
     // The context of the SE
     this.context = context;
+
     // The occurrence of the SE
     this.occurrence = occurrence;
-    // The source string as presented in the editor
-    this.source_string = source_string;
-    // The translation (if exists)
-    this.translated_string = translated_string;
-    // The corresponding source_entity string
+
+    // The source strings (includes the default and the plurals)
+    this.source_strings = source_strings
+
+    // The translation (includes the default and the plurals)
+    this.translated_strings = translated_strings
+
+    // The corresponding source_entity string (we call it "Key")
     this.source_entity = source_entity;
-    // holds the previous value at each given time (this value is updated on save)
-    this.previous = translated_string;
+
+    // holds the previous values at each given time (these values are updated on save)
+    this.previous = jQuery.extend(true, {}, this.translated_strings);
+
     // For undo purposes!
-    this.load_default = translated_string;
-    // is the textarea modified?
+    this.load_default = jQuery.extend(true, {}, this.translated_strings);
+
+    // are any of the textareas modified?
     this.modified = false;
 
     this.toString = function() {
-        return "TranslationString(" + this.id + ", '" + this.source_string + "', '" + this.translated_string + "');";
+        return "TranslationString(" + this.id + ", '" + this.source_strings + "', '" + this.translated_strings + "');";
     }
 
+    // Check whether textarea values are undefined or empty
     this.checkVar = function(v) {
-        return (typeof v === 'undefined' || !v); // Check whether v is undefined or empty
+        for(key in v){
+            if(typeof v[key] === 'undefined' || !v[key]){
+                return true;
+            }
+        }
+        return false;
     }
 
     this.isModified = function() {
         return this.modified;
     }
     this.isUntranslated = function() {
-        return this.checkVar(this.translated_string);
+        return this.checkVar(this.translated_strings);
     }
     this.isTranslated = function() {
-        return !this.checkVar(this.translated_string);
+        return !this.checkVar(this.translated_strings);
     }
-    this.translate = function(new_string) {
-        if (new_string != this.translated_string) {
+    this.translate = function(new_string, rule) {
+        if (new_string != this.translated_strings[rule]) {
             if (!this.modified){
-                if (this.translated_string == "") {
+                if (this.translated_strings[rule] == "") {
                     this.parent.untranslated_modified += 1;
                 } else {
                     this.parent.translated_modified += 1;
                 }
             }
-            this.translated_string = new_string;
+            this.translated_strings[rule] = new_string;
             this.modified = true;
             this.parent.updateStats(true); // Issue statistics update with delay
         }
@@ -60,7 +76,7 @@ function TranslationString(parent, id, source_string, translated_string, source_
     this.flagString = function() {
         if (this.modified) {
             return "fuzzy";
-        } else if (this.checkVar(this.translated_string)) {
+        } else if (this.checkVar(this.translated_strings)) {
             return "untranslated";
         } else {
             return "translated";
@@ -91,7 +107,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     var i = 0;
     for(var index in json_object['aaData']) {
       var row = json_object['aaData'][index];
-      this_stringset.strings[i] = new TranslationString(this, row[0], row[2], row[3], row[1], null, null);
+      this_stringset.strings[i] = new TranslationString(this, row[0], row[2]["source_strings"], row[3], row[1], null, null);
       i++;
     }
     this.filtered = this.strings;
@@ -107,12 +123,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         var to_update = [];
         if (ts) { /* Pushing one TranslationString instance */
             to_update[0] = {'id':ts.id,
-                            'translation':ts.translated_string,};
+                            'translations':ts.translated_strings,}; // translations includes all plurals!
         } else { /* Pushing all TranslationString instances from current StringSet */
             for (i=0; i<this.strings.length; i++)
                 if (this_stringset.strings[i].modified == true) {
                     to_update.push( {'id':this.strings[i].id,
-                                     'translation':this.strings[i].translated_string,});
+                                     'translations':this.strings[i].translated_strings,}); // translations includes all plurals!
                 }
         }
         if (to_update == {}) {
@@ -129,27 +145,30 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     // Update the obect classes, and the overall statistics
                     if(ts) { 
                         ts.modified = false;
-                        if (ts.translated_string == "") {
+                        if (ts.isUntranslated()) {
                             stringset.translated -= 1;
                             stringset.untranslated += 1;
-                        } else if (ts.previous == "") { 
+                        } else if (ts.checkVar(ts.previous)) { 
                             stringset.translated += 1;
                             stringset.untranslated -= 1;
                         }
-                        ts.previous = ts.translated_string;
+                        // Deep copy of the array
+                        ts.previous = jQuery.extend(true, {}, ts.translated_strings);
                     } else {
                         /* For save_all button */
                         for (j=0; j<this_stringset.strings.length; j++) {
                             if (this_stringset.strings[j].modified) {
-                                if ( this_stringset.strings[j].translated_string == "" ) {
+                                if ( this_stringset.strings[j].isUntranslated()) {
                                     stringset.translated -= 1;
                                     stringset.untranslated += 1;
-                                } else if ( this_stringset.strings[j].previous == "") { 
+                                } else if ( this_stringset.strings[j].checkVar(
+                                    this_stringset.strings[j].previous)) {
                                     stringset.translated += 1;
                                     stringset.untranslated -= 1;
                                 }
                                 this_stringset.strings[j].modified = false;
-                                this_stringset.strings[j].previous = this_stringset.strings[j].translated_string;
+                                // Deep copy of the array
+                                this_stringset.strings[j].previous =  jQuery.extend(true, {}, this_stringset.strings[j].translated_strings);
                             }
                         }
                     }
@@ -161,7 +180,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     this_stringset.updateStats(true);
                 },
                 error: function() {
-                    alert("Error saving new translation for string #"+id+". Reverting to previous translation.");
+                    alert("Error saving new translation.");
                 },
             });
         }
@@ -170,11 +189,15 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     /* Update the color classes for textareas and show/hide save buttons */
     this.updateColors_Buttons = function() {
-        $('tr td textarea', this.bound_table).each(function (i) {
-            textarea = $(this);
-            id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+        $('tr td textarea.default_translation', this.bound_table).each(function (i) {
+            var textarea = $(this);
+            var id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             var string = this_stringset.strings[id];
-            textarea.removeClass("fuzzy translated untranslated").addClass(this_stringset.strings[id].flagString());
+            var new_class = this_stringset.strings[id].flagString();
+            
+            /* Apply the new class to the default string and all its siblings! */
+            textarea.siblings('textarea').removeClass("fuzzy translated untranslated").addClass(new_class);
+            textarea.removeClass("fuzzy translated untranslated").addClass(new_class);
 
             /* Toggle per string save button */
             button_save = $("span#save_"+id);
@@ -187,12 +210,20 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     /* Bind textarea keyup marking */
     this.bindKeyupTextArea = function() {
-        $('tr td textarea', this.bound_table).keyup(function() {
-            id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+        $('tr td textarea.translation', this.bound_table).keyup(function() {
+            var textarea = $(this);
+            var id;
+            if(textarea.hasClass('default_translation')){
+              id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }else{
+              id = parseInt(textarea.siblings('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }
             string = this_stringset.strings[id];
-            string.translate($(this).val());
+            string.translate(textarea.val(), textarea.prev('span.rule').text());
             if (string.modified) {
-                $(this).removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                // Automatically set edited textareas to fuzzy
+                textarea.removeClass("fuzzy translated untranslated").addClass("fuzzy");
+                textarea.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                 $('tbody tr td.notes span#save_' + id).show();
                 $('tbody tr td.notes span#undo_' + id).show();
             }
@@ -210,7 +241,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     // Bind the current textbox focus event
     // Make the focused textarea current in the StringSet!
     this.bindFocusTextArea = function() {
-        $('tr td textarea', this.bound_table).focus(function() {
+        $('tr td textarea.translation', this.bound_table).focus(function() {
             stringset.current_box = $(this);
         });
     }
@@ -218,13 +249,15 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     /* Bind undo button events */
     this.bindUndoButton = function() {
         $('tr td.notes span.undo', this.bound_table).click(function() {
-            table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
-            string = this_stringset.strings[table_row_id];
-            undo_value = string.load_default;
-            string.translate(undo_value);
-            $('#translation_'+table_row_id)
-              .focus()
-              .val(undo_value);
+            var table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current undo button
+            var string = this_stringset.strings[table_row_id];
+            var undo_value = string.load_default;
+            var tr = $(this).parents('tr');
+            tr.find('span.rule').each(function(i){
+                rule = $(this).text();
+                string.translate(undo_value[rule], rule);
+                $(this).next('textarea').focus().val(undo_value[rule]);
+            });
             // Update the color classes now
             this_stringset.updateColors_Buttons();
             $(this).hide();
@@ -233,8 +266,14 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     // Bind the onblur autosave event
     this.bindBlurTextArea = function() {
-        $('tr td textarea', this.bound_table).blur(function() {
-            id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+        $('tr td textarea.translation', this.bound_table).blur(function() {
+            var id;
+            var textarea = $(this);
+            if(textarea.hasClass('default_translation')){
+              id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }else{
+              id = parseInt(textarea.siblings('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }
             string = this_stringset.strings[id];
             if (string.modified) {
                 /* add timeout and then submit. using the id, this timeout can be canceled */
@@ -248,7 +287,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     // Unbind events
     this.unbindBlurTextArea = function() {
-        $('tr td textarea', this.bound_table).unbind("blur");
+        $('tr td textarea.translation', this.bound_table).unbind("blur");
     }
     this.unbindSaveButton = function() {
         $('tr td.notes span.save', this.bound_table).unbind("click");
@@ -305,7 +344,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         $('#stringset_table tr').mouseover(function() {
             // button panel
             var obj = $(this).find('.lotte-actions');
-            pos = $(this).find(".translation").offset();
+            pos = $(this).find("textarea.default_translation").offset();
             w = obj.width();
             obj.css({top:pos.top -4, left:pos.left - w -2});
             // show details 
@@ -327,7 +366,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 a.removeClass("action");
                 a.addClass("action_go");
                 var orig=$('.msg .source_string', a.parents('tr')).html();
-                var trans=$('textarea', a.parents('tr'));
+                var trans=$('textarea.default_translation', a.parents('tr'));
                 orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
                 google.language.translate(orig, source_lang, target_lang, function(result) {
                     if (!result.error) {
@@ -335,9 +374,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                         /* Mark the translated field as modified */
                         id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
                         string = this_stringset.strings[id];
-                        string.translate(trans.val());
+                        string.translate(trans.val(), "other");
                         if (string.modified) {
                             trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                            trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                             // TODO: Check for autosave and handle it.
                             $('tbody tr td.notes span#save_' + id).show();
                             $('tbody tr td.notes span#undo_' + id).show();
@@ -359,14 +399,15 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         $('.lotte-actions a.copy_source').click(function() {
             var a=$(this);
             var orig=$('.msg .source_string', a.parents('tr')).html();
-            var trans=$('textarea', a.parents('tr'));
+            var trans=$('textarea.default_translation', a.parents('tr'));
             trans.val(orig);
             /* Mark the translated field as modified */
             id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             string = this_stringset.strings[id];
-            string.translate(trans.val());
+            string.translate(trans.val(), "other");
             if (string.modified) {
                 trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                 // TODO: Check for autosave and handle it.
                 $('tbody tr td.notes span#save_' + id).show();
                 $('tbody tr td.notes span#undo_' + id).show();

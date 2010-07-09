@@ -133,8 +133,16 @@
                 },
                 { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
                   "fnRender": function(oObj){
-                      var clean_array = array_escape({"translation":oObj.aData[3]});
-                      return '<textarea class="translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + clean_array["translation"] + '</textarea>'
+                      var clean_array = array_escape({"translations":oObj.aData[3]});
+                    var textareas = '';
+                      for(rule in clean_array["translations"]){
+                          if(rule=='other')
+                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
+                          else
+                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
+                      }
+
+                      return textareas
                       + '<div class="lotte-actions" style="overflow:hidden;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
                       + '<p style="position:relative;right:-90px"><a class="i16 action buttonized suggest">auto translate</a></p>'
                       + '<p style="position:relative;right:-79px"><a class="i16 next buttonized copy_source">copy source</a></p>'
@@ -259,10 +267,10 @@
         /* move to the next page */
         shortcut.add('Alt+i', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.details):last-child>td:nth-child(2)>textarea').focus();
+                $("#stringset_table").find('tr:not(.details):last-child>td:nth-child(2)>textarea.default_translation').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().prev('tr:not(.details)').find('td:nth-child(2)>textarea').focus();
+                stringset.current_box.parent().parent().prev('tr:not(.details)').find('td:nth-child(2)>textarea.default_translation').focus();
             }
         },{
             'type':'keydown',
@@ -270,10 +278,10 @@
         /* move to the previous page */
         shortcut.add('Alt+k', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.details):nth-child(1)>td:nth-child(2)>textarea').focus();
+                $("#stringset_table").find('tr:not(.details):nth-child(1)>td:nth-child(2)>textarea.default_translation').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().next('tr:not(.details)').find('td:nth-child(2)>textarea').focus();
+                stringset.current_box.parent().parent().next('tr:not(.details)').find('td:nth-child(2)>textarea.default_translation').focus();
             }
         },{
             'type':'keydown',
