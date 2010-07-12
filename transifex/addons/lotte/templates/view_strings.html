@@ -42,12 +42,30 @@
                 { "bVisible":false, "bSortable": false, },
                 { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
                   "fnRender": function(oObj){
-                     return html_escape(oObj.aData[2]);
+                    var clean_array = array_escape({"source_dict":oObj.aData[2]});
+                    var source_divs = '';
+                    for(rule in clean_array["source_dict"]["source_strings"]){
+                        if(rule=='other')
+                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + clean_array["source_dict"]["source_strings"]["other"] + '</div>'
+                        else
+                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["source_strings"][rule] + '</p>'
+                    }
+                    return source_divs;
+
                    }
                 },
                 { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
                   "fnRender": function(oObj){
-                     return html_escape(oObj.aData[3]);
+                    var clean_array = array_escape({"translations":oObj.aData[3]});
+                    var translation_containers = '';
+                      for(rule in clean_array["translations"]){
+                          if(rule=='other')
+                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><div class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</div>'
+                          else
+                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><p class="translation" style="width:95%" title="Translation"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["translations"][rule] + '</p>'
+                      }
+
+                      return translation_containers;
                   }
                 },
                 { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
@@ -87,8 +105,8 @@
             filter_var = "";
             $(".filters").each( function() {
                 if (! $(this).attr('checked')) {
-                    filter_var += $(this).attr('id')+'&';            
-                }        
+                    filter_var += $(this).attr('id')+',';
+                }
             });
             oTable.fnDraw();
         });
