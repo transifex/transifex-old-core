@@ -1,5 +1,6 @@
 {% extends "resource.html" %}
 {% load i18n %}
+{% load permissions %}
 {% load txcommontags %}
 
 {% block breadcrumb %}
@@ -15,6 +16,7 @@
 {% endif %}
 {% endblock %}
 
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 {% block extra_head %}
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
@@ -153,7 +155,6 @@
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
-              $("#save_all").click(function(){ stringset.push(); });
               $("div#notification-container div").html("Loading strings...");
               $("div#notification-container").fadeIn("slow");
               if (filter_var) {
@@ -321,6 +322,45 @@
             oTable.fnDraw();
         });
 
+        
+        $("#save_all_2").click(function(){ stringset.push(); });
+        
+        {% if is_maintainer or request.user.is_superuser%}
+        $("#delete_all_2").click(function(){ delete_these(); });
+        {% endif %}
+
+        {% if is_maintainer or request.user.is_superuser%}
+        function delete_these(){
+            var to_delete = [];
+            for (j=0; j<this_stringset.strings.length; j++) {
+                if(this_stringset.strings[j].isTranslated())
+                to_delete.push( $("span#sourceid_"+j).text() );
+            }
+            if(to_delete.length == 0){
+                alert('No translations to delete in this page!');
+            }else if(confirm('This action will delete all '+ to_delete.length +' translations in this page? Are you sure, you want to proceed?')){
+                {% if resource %}
+                var delete_url = '{% url delete_translation project.slug resource.slug target_language.code %}';
+                {% else %}
+                var delete_url = '{% url delete_translation project.slug target_language.code %}';
+                {% endif %}
+                
+                $.ajax({
+                    url: delete_url,
+                    data: JSON.stringify({to_delete: to_delete}), 
+                    dataType : "text", // "json" is strict and we get 500
+                    type: "POST",
+                    contentType: "application/json",
+                    success: function(){
+                        stringset.translated -= to_delete.length;
+                        stringset.untranslated += to_delete.length;
+                        oTable.fnDraw();
+                    }
+                });
+            }
+        }
+        {% endif %}
+
         /* Wrapper ... to be DRY */
         function traverse_filters(){
             filter_var = "";
@@ -486,7 +526,10 @@
           <th></th>
           <th></th>
           <th style="text-align:left;padding-top:1em">
-            <a id="save_all" class="i16 save_all buttonized2">{% trans 'Save all' %}</a>
+            <a id="save_all_2" class="i16 save_all buttonized2">{% trans 'Save all' %}</a>
+            {% if is_maintainer or request.user.is_superuser %}
+            &nbsp;&nbsp;<a id="delete_all_2" class="i16 delete buttonized2">{% trans 'Delete translations' %}</a>
+            {% endif %}
           </th>
           <th></th>
           <th></th>

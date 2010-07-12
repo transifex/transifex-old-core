@@ -394,18 +394,30 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
         for rule, string in row['translations'].items():
             try:
                 # TODO: Implement get based on context and/or on context too!
-                # FIXME: Need to finally decide if we need to save EMPTY strings
-                # or DELETE the existed translations on '' new string.
-                translation_string, created = Translation.objects.get_or_create(
-                                    source_entity = source_string.source_entity,
-                                    language = target_language,
-                                    resource = source_string.resource,
-                                    rule = target_language.get_rule_num_from_name(rule))
+                translation_string = Translation.objects.get(
+                    source_entity = source_string.source_entity,
+                    language = target_language,
+                    resource = source_string.resource,
+                    rule = target_language.get_rule_num_from_name(rule))
 
-                # Save the sender as last committer for the translation.
-                translation_string.string = string
-                translation_string.user = request.user
-                translation_string.save()
+                # FIXME: Maybe we don't want to permit anyone to delete!!!
+                # If an empty string has been issued then we delete the translation.
+                if string == "":
+                    translation_string.delete()
+                else:
+                    translation_string.string = string
+                    translation_string.user = request.user
+                    translation_string.save()
+            except Translation.DoesNotExist:
+                # Only create new if the translation string sent, is not empty!
+                if string != "":
+                    Translation.objects.create(
+                        source_entity = source_string.source_entity,
+                        language = target_language,
+                        resource = source_string.resource,
+                        rule = target_language.get_rule_num_from_name(rule),
+                        string = string,
+                        user = request.user) # Save the sender as last committer
             # catch-all. if we don't save we _MUST_ inform the user
             except:
                 # TODO: Log or inform here
@@ -439,3 +451,38 @@ def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
       'occurrences': source_entity.occurrences,
       'last_translation': last_translation },
     context_instance = RequestContext(request))
+
+# Restrict access only to :
+# 1)project maintainers
+# 2)superusers
+@one_perm_required_or_403(pr_resource_translations_delete,
+                          (Project, "slug__exact", "project_slug"))
+def delete_translation(request, project_slug=None, resource_slug=None,
+                        lang_code=None):
+    """
+    Delete a list of translations according to the post request.
+    """
+
+    if not request.POST and request.POST.has_key('to_delete'):
+        return HttpResponseBadRequest()
+
+    data = json.loads(request.raw_post_data)
+    to_delete = data["to_delete"]
+
+    ids = []
+    # Ensure that there are no empty '' ids
+    for se_id in to_delete:
+        if se_id:
+            ids.append(se_id)
+
+    try:
+        Translation.objects.filter(source_entity__pk__in=ids,
+                                   language__code=lang_code).delete();
+#        request.user.message_set.create(
+#            message=_("Translations deleted successfully!"))
+    except:
+#        request.user.message_set.create(
+#            message=_("Translations did not delete due to some error!"))
+        raise Http404
+
+    return HttpResponse(status=200)
