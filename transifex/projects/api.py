@@ -46,11 +46,39 @@ class ProjectHandler(BaseHandler):
         API call to create new projects via POST.
         """
         if 'application/json' in request.content_type: # we got JSON
+            import ipdb;ipdb.set_trace()
             data = getattr(request, 'data', None)
+            outsource = mainteners = None
+            outsource = data.pop('outsource', {})
+            maintainers = data.pop('maintainers', {})
             try:
-                Project.objects.get_or_create(**data)
+                p, created = Project.objects.get_or_create(**data)
             except:
                 return rc.BAD_REQUEST
+
+            if created:
+                # Owner
+                owner = User.objects.get(username = request.user)
+                p.owner = owner
+
+                # Outsourcing
+                if outsource:
+                    try:
+                        outsource_project = Project.objects.get(slug=outsource)
+                    except Project.DoesNotExist:
+                        # maybe fail when wrong user is given?
+                        pass
+                    p.outsource = outsource_project
+
+                # Handler m2m with maintainers
+                if maintainers:
+                    for user in maintainers.split(','):
+                        try:
+                            p.maintainers.add(User.objects.get(username=user))
+                        except User.DoesNotExist:
+                            # maybe fail when wrong user is given?
+                            pass
+                p.save()
 
             return rc.CREATED
         else:
@@ -65,15 +93,38 @@ class ProjectHandler(BaseHandler):
 
         if 'application/json' in request.content_type: # we got JSON
             data = getattr(request, 'data', None)
+            outsource = mainteners = None
+            outsource = data.pop('outsource', {})
+            maintainers = data.pop('maintainers', {})
             if project_slug:
                 try:
-                    project = Project.objects.get(slug=project_slug)
+                    p = Project.objects.get(slug=project_slug)
                 except Project.DoesNotExist:
                     return rc.BAD_REQUEST
                 try:
                     for key,value in data.items():
-                        setattr(project, key,value)
-                    project.save()
+                        setattr(p, key,value)
+                    # Outsourcing
+                    if outsource:
+                        try:
+                            outsource_project = Project.objects.get(slug=outsource)
+                        except Project.DoesNotExist:
+                            # maybe fail when wrong user is given?
+                            pass
+                        p.outsource = outsource_project
+
+                    # Handler m2m with maintainers
+                    if maintainers:
+                        # remove existing maintainers
+                        p.maintainers.all().clear()
+                        # add then all anew
+                        for user in maintainers.split(','):
+                            try:
+                                p.maintainers.add(User.objects.get(username=user))
+                            except User.DoesNotExist:
+                                # maybe fail when wrong user is given?
+                                pass
+                    p.save()
                 except:
                     return rc.BAD_REQUEST
 
