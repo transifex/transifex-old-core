@@ -46,7 +46,6 @@ class ProjectHandler(BaseHandler):
         API call to create new projects via POST.
         """
         if 'application/json' in request.content_type: # we got JSON
-            import ipdb;ipdb.set_trace()
             data = getattr(request, 'data', None)
             outsource = mainteners = None
             outsource = data.pop('outsource', {})
