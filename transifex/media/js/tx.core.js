@@ -1,9 +1,9 @@
-/* API call URLs */
+/o* API call URLs */
 
 url_api_languages = '/api/languages/';
 url_api_storage = '/api/storage/';
 url_api_storage_file = '/api/storage/%s/';
-url_api_project = '/api/project/%s/';
+url_api_project = '/api/project/%s/files/';
 
 /* Global functions */
 function json_request(type, url, struct, callback) {

@@ -17,12 +17,18 @@ from happix.decorators import method_decorator
 
 
 class ResourceHandler(BaseHandler):
-    allowed_methods = ('GET', 'POST')
+    """
+    Resource Handler for CRUD operations.
+    """
+
+    allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Resource
     fields = ('slug', 'name', 'created',)
+    exclude = ()
 
     def read(self, request, project_slug, resource_slug=None):
         """
+        Get details of a resource.
         """
         if resource_slug:
             try:
@@ -33,30 +39,103 @@ class ResourceHandler(BaseHandler):
         else:
             return Resource.objects.all()
 
-    #Should be changed to allow creating new resources!
-    #@transaction.commit_manually
-    def create(self, request, project_slug, resource_slug):
+    @method_decorator(one_perm_required_or_403(pr_resource_add_change,
+        (Project, 'slug__exact', 'project_slug')))
+    def create(self, request, project_slug, resource_slug=None):
         """
-        API call for uploading translation files (OBSOLETE since uploading files works via StorageFile now)
-
-        Data required:
-
-        Uploaded file which will be merged with translation resource specified by URL
+        Create new resource under project `project_slug` via POST
         """
-        project = Project.objects.get(slug = project_slug)
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
 
-        translation_resource, created = Resource.objects.get_or_create(
-            slug = resource_slug,
-            project = project,
-            defaults = {
-                'project' : project,
-                'name' : resource_slug.replace("-", " ").replace("_", " ").capitalize()
-            })
+        if 'application/json' in request.content_type: # we got JSON
+            data = getattr(request, 'data', None)
+            slang = data.pop('source_language', None)
+            source_language = None
+            try:
+                source_language = Language.objects.by_code_or_alias(slang)
+            except:
+                pass
 
-        for filename, upload in request.FILES.iteritems():
-            translation_resource.objects.merge_stream(filename, upload, request.POST['target_language'])
-        return rc.CREATED
+            if not source_language:
+                return rc.BAD_REQUEST
 
+            try:
+                Resource.objects.get_or_create(project=project,
+                    source_language=source_language, **data)
+            except:
+                return rc.BAD_REQUEST
+
+            return rc.CREATED
+        else:
+            return rc.BAD_REQUEST
+
+    @method_decorator(one_perm_required_or_403(pr_resource_add_change,
+        (Project, 'slug__exact', 'project_slug')))
+    def update(self, request, project_slug, resource_slug):
+        """
+        API call to update resource details via PUT.
+        """
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
+
+
+        if 'application/json' in request.content_type: # we got JSON
+            data = getattr(request, 'data', None)
+            slang = data.pop('source_language', None)
+            source_language = None
+            try:
+                source_language = Language.objects.by_code_or_alias(slang)
+            except:
+                pass
+
+            if resource_slug:
+                try:
+                    resource = Resource.objects.get(slug=resource_slug)
+                except Resource.DoesNotExist:
+                    return rc.BAD_REQUEST
+                try:
+                    for key,value in data.items():
+                        setattr(resource, key,value)
+                    if source_language:
+                        resource.source_language = source_language
+                    resource.save()
+                except:
+                    return rc.BAD_REQUEST
+
+                return rc.ALL_OK
+
+        return rc.BAD_REQUEST
+
+
+    @method_decorator(one_perm_required_or_403(pr_resource_delete,
+        (Project, 'slug__exact', 'project_slug')))
+    def delete(self, request, project_slug, resource_slug):
+        """
+        API call to delete resources via DELETE.
+        """
+        if resource_slug:
+            try:
+                resource = Resource.objects.get(slug=resource_slug)
+            except Resource.DoesNotExist:
+                return rc.NOT_FOUND
+
+            try:
+                resource.delete()
+            except:
+                return rc.INTERNAL_ERROR
+
+            return rc.DELETED
+        else:
+            return rc.BAD_REQUEST
+
+############################
+# Resource String Handlers #
+############################
 
 def _create_stringset(request, project_slug, resource_slug, target_lang_code):
     '''

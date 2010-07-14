@@ -10,15 +10,16 @@ from piston.authentication import HttpBasicAuthentication
 #auth = OAuthAuthentication(realm='Happix API')
 
 from languages.api import LanguageHandler
-from projects.api import ProjectHandler
+from projects.api import ProjectHandler, ProjectResourceHandler
 from storage.api import StorageHandler
 from happix.api import (ResourceHandler, StringHandler)
 
 auth = HttpBasicAuthentication(realm='Happix API')
 
-resource_handler = Resource(ResourceHandler)
+resource_handler = Resource(ResourceHandler,authentication=auth)
 storage_handler = Resource(StorageHandler)
-project_handler = Resource(ProjectHandler)
+project_handler = Resource(ProjectHandler,authentication=auth)
+projectresource_handler = Resource(ProjectResourceHandler,authentication=auth)
 string_handler = Resource(StringHandler, authentication=auth)
 #projectstring_handler = Resource(ProjectStringHandler)
 
@@ -36,6 +37,10 @@ urlpatterns = patterns('',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/$',
         project_handler,
+        name='api_project',
+     ), url(
+        r'^project/(?P<project_slug>[-\w]+)/files/$',
+        projectresource_handler,
         name='api_project',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/strings/$',

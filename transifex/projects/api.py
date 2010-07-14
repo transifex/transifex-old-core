@@ -7,16 +7,19 @@ from django.contrib.auth.models import User
 from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
+from projects.permissions import *
 from storage.models import StorageFile
 from txcommon.log import logger
+from txcommon.decorators import one_perm_required_or_403
 from django.db import transaction
 from uuid import uuid4
+from happix.decorators import method_decorator
 
 class ProjectHandler(BaseHandler):
     """
     API handler for model Project.
     """
-    allowed_methods = ('GET','POST')
+    allowed_methods = ('GET','POST','PUT','DELETE')
     model = Project
     #TODO: Choose the fields we want to return
     fields = ('slug', 'name', 'description', 'long_description', 'created',
@@ -36,6 +39,76 @@ class ProjectHandler(BaseHandler):
             return project
         else:
             return Project.objects.all()
+
+    @method_decorator(one_perm_required_or_403(pr_project_add))
+    def create(self, request,project_slug=None):
+        """
+        API call to create new projects via POST.
+        """
+        if 'application/json' in request.content_type: # we got JSON
+            data = getattr(request, 'data', None)
+            try:
+                Project.objects.get_or_create(**data)
+            except:
+                return rc.BAD_REQUEST
+
+            return rc.CREATED
+        else:
+            return rc.BAD_REQUEST
+
+    @method_decorator(one_perm_required_or_403(pr_project_add_change,
+        (Project, 'slug__exact', 'project_slug')))
+    def update(self, request,project_slug):
+        """
+        API call to update project details via PUT.
+        """
+
+        if 'application/json' in request.content_type: # we got JSON
+            data = getattr(request, 'data', None)
+            if project_slug:
+                try:
+                    project = Project.objects.get(slug=project_slug)
+                except Project.DoesNotExist:
+                    return rc.BAD_REQUEST
+                try:
+                    for key,value in data.items():
+                        setattr(project, key,value)
+                    project.save()
+                except:
+                    return rc.BAD_REQUEST
+
+                return rc.ALL_OK
+
+        return rc.BAD_REQUEST
+
+
+    @method_decorator(one_perm_required_or_403(pr_project_delete,
+        (Project, 'slug__exact', 'project_slug')))
+    def delete(self, request,project_slug):
+        """
+        API call to delete projects via DELETE.
+        """
+        if project_slug:
+            try:
+                project = Project.objects.get(slug=project_slug)
+            except Project.DoesNotExist:
+                return rc.NOT_FOUND
+
+            try:
+                project.delete()
+            except:
+                return rc.INTERNAL_ERROR
+
+            return rc.DELETED
+        else:
+            return rc.BAD_REQUEST
+
+class ProjectResourceHandler(BaseHandler):
+    """
+    API handler for creating resources under projects
+    """
+
+    allowed_methods = ('POST')
 
     def create(self, request, project_slug):
         """

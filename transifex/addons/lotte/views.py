@@ -344,7 +344,7 @@ def _get_strings(query, target_lang_code, source_entity):
 # 1)those belonging to the specific language team (coordinators or members)
 # 2)project maintainers
 # 3)global submitters (perms given through access control tab)
-# 4)superusers  
+# 4)superusers
 # CAUTION!!! WE RETURN 404 instead of 403 for security reasons
 @login_required
 def push_translation(request, project_slug, lang_code, resource_slug=None,

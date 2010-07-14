@@ -119,7 +119,7 @@ def resource_delete(request, project_slug, resource_slug):
 
 
 
-@one_perm_required_or_403(pr_resource_edit,
+@one_perm_required_or_403(pr_resource_add_change,
                           (Project, "slug__exact", "project_slug"))
 def resource_edit(request, project_slug, resource_slug):
     """
