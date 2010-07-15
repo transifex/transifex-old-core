@@ -98,7 +98,7 @@ def _model_lookups_handler(model_lookups, *args, **kwargs):
 
 def one_perm_required(perms, *model_lookups, **kwargs):
     """
-    Decorator for views that checks whether an user has a particular permission
+    Decorator for views that checks whether a user has a particular permission
     enabled for an object or a general permission from the django permission 
     system, redirecting to the log-in page if necessary.
     

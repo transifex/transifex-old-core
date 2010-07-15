@@ -9,7 +9,7 @@ class LogEntryFilter(django_filters.FilterSet):
     action_time = django_filters.DateRangeFilter()
     user = django_filters.ModelChoiceFilter(queryset=User.objects.all(),
         widget=AutoCompleteSelectWidget('users'),
-        help_text=_('Search for an username or leave it blank'))
+        help_text=_('Search for a username or leave it blank'))
 
     class Meta:
         model = LogEntry

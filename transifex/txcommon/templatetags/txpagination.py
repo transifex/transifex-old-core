@@ -9,7 +9,7 @@ it was necessary to implement a new templatetag for this kind of situation.
 The most import part of this templatetag is the fact it allows to use a custom
 template file anywhere it's needed. The template file used for the translation
 wizard has its organization for each page as 'submit' buttons, so the whole
-form is sent whenever an user navigates to another page.
+form is sent whenever a user navigates to another page.
 
 Usage:
 

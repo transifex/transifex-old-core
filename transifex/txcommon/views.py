@@ -94,7 +94,7 @@ def user_timeline(request, *args, **kwargs):
 
 @login_required
 def user_nudge(request, username):
-    """View for nudging an user"""
+    """View for nudging a user"""
     user = get_object_or_404(User, username=username)
     ctype = ContentType.objects.get_for_model(user)
 

@@ -65,14 +65,14 @@ class ProjectPermission(BasePermission):
 
     def submit_file(self, obj, any_team=False):
         """
-        Verify if an user can submit files for a project.
+        Verify if a user can submit files for a project.
 
         This method can receive tree kinds of object through the parameter 'obj',
         which can be Project, Team and POFile. Depending on the type of object,
         different checks are done.
 
         The parameter 'any_team' can be used when a it's necessary to verify if
-        an user has submit access for at least one project team. If an Project
+        a user has submit access for at least one project team. If an Project
         object is passed and the parameter 'any_team' id set as False, the
         verification of access will just return True for maintainers and writers.
         """

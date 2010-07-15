@@ -41,7 +41,7 @@ def _get_project_and_permission(project_slug, permission_pk):
     (Project, 'slug__exact', 'project_slug'))
 def project_add_permission(request, project_slug):
     """
-    Return a view with a form for adding a permission for an user.
+    Return a view with a form for adding a permission for a user.
     
     This view is an abstraction of a txpermissions.views method to be able to
     apply granular permission on it using a decorator. 
@@ -80,7 +80,7 @@ def project_add_permission(request, project_slug):
 #@login_required
 #def project_add_permission_request(request, project_slug):
     #"""
-    #Return a view with a form for adding a request of permission for an user.
+    #Return a view with a form for adding a request of permission for a user.
 
     #This view is an abstraction of a txpermissions.views method. 
     #"""
@@ -130,7 +130,7 @@ def project_approve_permission_request(request, project_slug, permission_pk):
     (Project, 'slug__exact', 'project_slug'))
 def project_delete_permission(request, project_slug, permission_pk):
     """
-    View for deleting a permission of an user.
+    View for deleting a permission of a user.
 
     This view is an abstraction of a txpermissions.views method to be able to
     apply granular permission on it using a decorator. 
@@ -153,7 +153,7 @@ def project_delete_permission(request, project_slug, permission_pk):
 @login_required
 def project_delete_permission_request(request, project_slug, permission_pk):
     """
-    View for deleting a request of permission of an user.
+    View for deleting a request of permission of a user.
 
     This view is an abstraction of a txpermissions.views method. 
     """

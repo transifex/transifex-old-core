@@ -31,7 +31,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_requested",
                 "display": _("Submit access to project requested"),
-                "description": _("when an user request access to submit files " \
+                "description": _("when a user request access to submit files " \
                                  "to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -39,7 +39,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_denied",
                 "display": _("Submit access request to project denied"),
-                "description": _("when a maintainer denies access to an user " \
+                "description": _("when a maintainer denies access to a user " \
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -47,7 +47,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_withdrawn",
                 "display": _("Submit access request to project withdrawn"),
-                "description": _("when an user withdraws the access request" \
+                "description": _("when a user withdraws the access request" \
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -55,7 +55,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_granted",
                 "display": _("Submit access to project granted"),
-                "description": _("when a maintainer grants access to an user " \
+                "description": _("when a maintainer grants access to a user " \
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -206,7 +206,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_requested",
                 "display": _("Team User Joining Requested"),
-                "description": _("when an user requests for joining to a"
+                "description": _("when a user requests for joining to a"
                                  " translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -214,7 +214,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_approved",
                 "display": _("Team User Joining Approved"),
-                "description": _("when an user is approved as a member of a"
+                "description": _("when a user is approved as a member of a"
                                  " translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -222,7 +222,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_denied",
                 "display": _("Team User Joining Denied"),
-                "description": _("when an user is denied as a member of a"
+                "description": _("when a user is denied as a member of a"
                                  " translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -230,7 +230,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_withdrawn",
                 "display": _("Team User Joining Withdrawn"),
-                "description": _("when an user withdrawn its own request for"
+                "description": _("when a user withdrawn its own request for"
                                  " joining a translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -238,7 +238,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_left",
                 "display": _("Team User Left"),
-                "description": _("when an user leaves a translation"
+                "description": _("when a user leaves a translation"
                                  " team of a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -257,7 +257,7 @@ NOTICE_TYPES = [
 
             {   "label": "user_nudge",
                 "display": _("User Nudge"),
-                "description": _("when an user nudges you"),
+                "description": _("when a user nudges you"),
                 "default": 2,
                 "show_to_user": True,
             },
@@ -266,7 +266,7 @@ NOTICE_TYPES = [
 
 def is_watched_by_user_signal(obj, user, signal=None):
     """
-    Return a boolean value if an object is watched by an user or not
+    Return a boolean value if an object is watched by a user or not
 
     It is possible also verify if it is watched by a user in a specific
     signal, passing the signal as a second parameter

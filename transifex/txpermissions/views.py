@@ -48,7 +48,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
                    template_name = 'authority/permission_form.html',
                    extra_context={}):
     """
-    View for adding either a permission or a permission request for an user.
+    View for adding either a permission or a permission request for a user.
     
     This view is a centralized place for adding permissions/requests for any 
     kind of object through the whole Transifex.
@@ -115,7 +115,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
 
 def approve_permission_request(request, requested_permission, extra_context={}):
     """
-    View for approving or not a permission request for an user.
+    View for approving or not a permission request for a user.
     
     This view is a centralized place for approving permission requests for any 
     kind of object through the whole Transifex.
@@ -137,7 +137,7 @@ def approve_permission_request(request, requested_permission, extra_context={}):
 
 def delete_permission_or_request(request, permission, approved, extra_context={}):
     """
-    View for deleting either a permission or a permission request for an user.
+    View for deleting either a permission or a permission request from a user.
     
     This view is a centralized place for deleting permission/requests for any 
     kind of object through the whole Transifex.
