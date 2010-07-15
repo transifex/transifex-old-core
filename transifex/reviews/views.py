@@ -49,7 +49,7 @@ def review_add(request, component, submitted_file, language=None):
         r.save()
         target = os.path.join(settings.REVIEWS_ROOT, r.full_review_filename)
         save_file(target, submitted_file)
-        request.user.message_set.create(message=_("Your file has been "
+        request.user.message_set.create(message=_("Your file was "
             "successfully placed for reviewing."))
 
         # ActionLog & Notification

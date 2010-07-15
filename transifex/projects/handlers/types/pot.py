@@ -53,7 +53,7 @@ class POTHandler:
         logger.debug("Setting stats for %s." % s.filename)
 
         if created:
-            logger.debug("POFile has been created.")
+            logger.debug("POFile was created.")
         else:
             logger.debug("POFile already existed.")
 

@@ -1,5 +1,5 @@
 {% load i18n %}{% url component_detail component.project.slug component.slug as component_url %}{% url project_detail component.project.slug as project_url %}{% with component.name as component_name %}{% with component.project.name as project_name %}
-{% blocktrans %}The component called '{{ component_name }}' has been deleted from the '{{ project_name }}' project.{% endblocktrans %}
+{% blocktrans %}The component called '{{ component_name }}' was deleted from the '{{ project_name }}' project.{% endblocktrans %}
 
 {% blocktrans %}Please, visit Transifex at http://{{current_site}}{{project_url}} in order to see the project page.{% endblocktrans %}
 {% endwith %}{% endwith %}
