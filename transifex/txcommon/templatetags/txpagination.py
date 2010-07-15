@@ -1,7 +1,7 @@
 """
 NOTE: Why does Transifex have another pagination method?
 
-Django-pagination does not work with POST method. Once the navegation among
+Django-pagination does not work with POST method. Once the navigation among
 the forms/pages of the translation wizard (webtrans app) requires a POST 
 method to be sent, in order to save the data in the session for each form/page,
 it was necessary to implement a new templatetag for this kind of situation.
@@ -9,7 +9,7 @@ it was necessary to implement a new templatetag for this kind of situation.
 The most import part of this templatetag is the fact it allows to use a custom
 template file anywhere it's needed. The template file used for the translation
 wizard has its organization for each page as 'submit' buttons, so the whole
-form is sent whenever an user navegates to another page.
+form is sent whenever an user navigates to another page.
 
 Usage:
 
