@@ -39,7 +39,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_denied",
                 "display": _("Submit access request to project denied"),
-                "description": _("when a maintainer denies access to a user "
+                "description": _("when a maintainer denies a user access "
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -47,15 +47,15 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_withdrawn",
                 "display": _("Submit access request to project withdrawn"),
-                "description": _("when a user withdraws the access request "
-                                 "to submit files to a project"),
+                "description": _("when a user withdraws the request for "
+                                 "access to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_submit_access_granted",
                 "display": _("Submit access to project granted"),
-                "description": _("when a maintainer grants access to a user "
+                "description": _("when a maintainer grants a user access "
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
