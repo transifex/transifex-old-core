@@ -83,8 +83,8 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
                 msgfmt_error_send_mail(component, user, stream, file_dict,
                     filename)
                 user.message_set.create(message=_(
-                    "Your file has been e-mailed to you to avoid "
-                    "loss of any work."))
+                    "Your file was sent via e-mail to you to avoid "
+                    "any loss of work."))
             else:
                 user.message_set.create(message=_(
                     "We couldn't send you an email to preserve "
