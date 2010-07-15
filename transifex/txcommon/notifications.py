@@ -31,7 +31,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_requested",
                 "display": _("Submit access to project requested"),
-                "description": _("when a user request access to submit files " \
+                "description": _("when a user request access to submit files "
                                  "to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -39,7 +39,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_denied",
                 "display": _("Submit access request to project denied"),
-                "description": _("when a maintainer denies access to a user " \
+                "description": _("when a maintainer denies access to a user "
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -47,7 +47,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_request_withdrawn",
                 "display": _("Submit access request to project withdrawn"),
-                "description": _("when a user withdraws the access request" \
+                "description": _("when a user withdraws the access request "
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -55,7 +55,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_granted",
                 "display": _("Submit access to project granted"),
-                "description": _("when a maintainer grants access to a user " \
+                "description": _("when a maintainer grants access to a user "
                                  "to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -63,7 +63,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_submit_access_revoked",
                 "display": _("Submit access to project revoked"),
-                "description": _("when a maintainer revokes the access of an " \
+                "description": _("when a maintainer revokes the access of an "
                                  "user to submit files to a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -92,8 +92,8 @@ NOTICE_TYPES = [
             {
                 "label": "project_component_file_submitted",
                 "display": _("File Submitted"),
-                "description": _("when a component file of a project"
-                                 " is submitted"),
+                "description": _("when a component file of a project "
+                                 "is submitted"),
                 "default": 2,
                 "show_to_user": False,
             },
@@ -103,25 +103,25 @@ NOTICE_TYPES = [
             {
                 "label": "project_component_file_review_submitted",
                 "display": _("File Review Submitted"),
-                "description": _("when a file of a component is submitted"
-                                 " for review"),
+                "description": _("when a file of a component is submitted "
+                                 "for review"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_component_file_changed",
                 "display": _("Translation File Changed"),
-                "description": _("when a component translation file of a"
-                                 " project is changed"),
+                "description": _("when a component translation file of a "
+                                 "project is changed"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_component_potfile_error",
                 "display": _("Translation Source File (POT) has a Problem"),
-                "description": _("when the source file (POT) of a"
-                                 " component that you are a maintainer"
-                                 " has a problem"),
+                "description": _("when the source file (POT) of a "
+                                 "component that you are a maintainer "
+                                 "has a problem"),
                 "default": 2,
                 "show_to_user": True,
             },
@@ -138,7 +138,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_release_changed",
                 "display": _("Release Changed"),
-                "description" :_("when a release of a project is changed"),
+                "description": _("when a release of a project is changed"),
                 "default": 1,
                 "show_to_user": False,
             },
@@ -166,31 +166,31 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_added",
                 "display": _("New Team Added"),
-                "description": _("when a new translation team is added"
-                                 " to a project"),
+                "description": _("when a new translation team is added "
+                                 "to a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_changed",
                 "display": _("Team Changed"),
-                "description": _("when a translation team of a project"
-                                 " is changed"),
+                "description": _("when a translation team of a project "
+                                 "is changed"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_deleted",
                 "display": _("Team Deleted"),
-                "description": _("when a translation team of a project"
-                                 " is deleted"),
+                "description": _("when a translation team of a project "
+                                 "is deleted"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_requested",
                 "display": _("Team Creation Requested"),
-                "description": _("when a translation team creation is requested"
+                "description": _("when a translation team creation is requested "
                                  "for a project"),
                 "default": 2,
                 "show_to_user": True,
@@ -198,7 +198,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_request_denied",
                 "display": _("Team Creation Request Denied"),
-                "description": _("when a translation team creation request"
+                "description": _("when a translation team creation request "
                                  "for a project is denied by a maintainer"),
                 "default": 2,
                 "show_to_user": True,
@@ -206,40 +206,40 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_requested",
                 "display": _("Team User Joining Requested"),
-                "description": _("when a user requests for joining to a"
-                                 " translation team of a project"),
+                "description": _("when a user requests for joining to a "
+                                 "translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_join_approved",
                 "display": _("Team User Joining Approved"),
-                "description": _("when a user is approved as a member of a"
-                                 " translation team of a project"),
+                "description": _("when a user is approved as a member of a "
+                                 "translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_join_denied",
                 "display": _("Team User Joining Denied"),
-                "description": _("when a user is denied as a member of a"
-                                 " translation team of a project"),
+                "description": _("when a user is denied as a member of a "
+                                 "translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_join_withdrawn",
                 "display": _("Team User Joining Withdrawn"),
-                "description": _("when a user withdrawn its own request for"
-                                 " joining a translation team of a project"),
+                "description": _("when a user withdrawn its own request for "
+                                 "joining a translation team of a project"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_left",
                 "display": _("Team User Left"),
-                "description": _("when a user leaves a translation"
-                                 " team of a project"),
+                "description": _("when a user leaves a translation "
+                                 "team of a project"),
                 "default": 2,
                 "show_to_user": True,
             },
