@@ -12,7 +12,7 @@ from txcommon.log import logger
 
 def _check_outsource_project(obj):
     """
-    Check if the project, which the obj passed by parameter belongs to, has 
+    Check if the project, which the obj passed by parameter belongs to, has
     outsourced the access control to another project.
 
     The parameter 'obj' can be an Project, Team or POFile instance.
@@ -66,14 +66,14 @@ class ProjectPermission(BasePermission):
     def submit_file(self, obj, any_team=False):
         """
         Verify if an user can submit files for a project.
-        
+
         This method can receive tree kinds of object through the parameter 'obj',
         which can be Project, Team and POFile. Depending on the type of object,
         different checks are done.
-        
+
         The parameter 'any_team' can be used when a it's necessary to verify if
-        an user has submit access for at least one project team. If an Project 
-        object is passed and the parameter 'any_team' id set as False, the 
+        an user has submit access for at least one project team. If an Project
+        object is passed and the parameter 'any_team' id set as False, the
         verification of access will just return True for maintainers and writers.
         """
         project, team = None, None
