@@ -15,7 +15,7 @@ def _check_outsource_project(obj):
     Check if the project, which the obj passed by parameter belongs to, has
     outsourced the access control to another project.
 
-    The parameter 'obj' can be an Project, Team or POFile instance.
+    The parameter 'obj' can be a Project, Team or POFile instance.
 
     Return a tuple '(project, team)'. The 'team' might be None.
     """
@@ -72,7 +72,7 @@ class ProjectPermission(BasePermission):
         different checks are done.
 
         The parameter 'any_team' can be used when a it's necessary to verify that
-        a user has submit access for at least one project team. If an Project
+        a user has submit access for at least one project team. If a Project
         object is passed and the parameter 'any_team' id set as False, the
         verification of access will just return True for maintainers and writers.
         """
