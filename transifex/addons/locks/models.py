@@ -109,7 +109,7 @@ class POFileLock(models.Model):
     enabled = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
-    notified = models.BooleanField(default=False, help_text="Wether "
+    notified = models.BooleanField(default=False, help_text="Whether "
         "notification about the expiration of lock has been sent to owner")
     expires = models.DateTimeField(help_text="Time of lock expiration.")
     owner = models.ForeignKey(User)
