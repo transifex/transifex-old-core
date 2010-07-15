@@ -18,7 +18,7 @@ class Migration:
             ('modified', models.DateTimeField(auto_now=True, editable=False)),
             ('collection', models.ForeignKey(orm.Collection, related_name='releases')),
             ('id', models.AutoField(primary_key=True)),
-            ('stringfreeze_date', models.DateTimeField(_('String freese date'), null=True, blank=True)),
+            ('stringfreeze_date', models.DateTimeField(_('String freeze date'), null=True, blank=True)),
             ('long_description_html', models.TextField(_('HTML Description'), max_length=1000, editable=False, blank=True)),
             ('hidden', models.BooleanField(_('Hidden'), default=False, editable=False)),
             ('homepage', models.URLField(verify_exists=False, blank=True)),
