@@ -2,7 +2,7 @@
 {% if sources %}
 {% with sources|length as sources_number %}
  {% ifnotequal sources_number 1 %}
-  <span id="source-troggle" class="i16 multifile buttonized_simple" title="{% trans "Click here to show or hide the source files" %}">{% blocktrans %}This component has {{ sources_number}} source files{% endblocktrans %}</span>
+  <span id="source-toggle" class="i16 multifile buttonized_simple" title="{% trans "Click here to show or hide the source files" %}">{% blocktrans %}This component has {{ sources_number}} source files{% endblocktrans %}</span>
  {% endifnotequal %}
 
   <table id="source-stats" class="stats_comp stats_comp_source" {% ifnotequal sources_number 1 %} style="display:none;" {% endifnotequal %}>
