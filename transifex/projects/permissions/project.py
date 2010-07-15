@@ -73,8 +73,8 @@ class ProjectPermission(BasePermission):
 
         The parameter 'any_team' can be used when it is necessary to verify that
         a user has submit access for at least one project team. If a Project
-        object is passed and the parameter 'any_team' id set as False, the
-        verification of access will just return True for maintainers and writers.
+        object is passed and the parameter 'any_team' is False, the
+        verification of access will only return True for maintainers and writers.
         """
         project, team = None, None
         if obj:
