@@ -255,7 +255,7 @@ class StringHandler(BaseHandler):
     # FIXME: Find out what permissions are needed for this. Maybe implement new
     # ones for Resource similar to Components? Something like 'resource_edit'
     #@method_decorator(one_perm_required_or_403())
-    def update(self, request, project_slug, resource_slug,target_lang_code=None):
+    def update(self, request, project_slug, resource_slug,target_lang_code):
         '''
         This API call is for uploading Translations to a specific
         Resource. If no corresponding SourceEntitys are found, the uploading
@@ -264,8 +264,6 @@ class StringHandler(BaseHandler):
         files is:
 
         {
-          'resource': 'sampleresource',
-          'language': 'el',
           'strings' :
             [{
               'string' : 'str1',
@@ -309,9 +307,9 @@ class StringHandler(BaseHandler):
                     return rc.BAD_REQUEST
 
             # Get the committer if exists
-            committer = None
-            if request and hasattr(request, 'user'):
-                committer = getattr(request, 'user', None)
+            committer = getattr(request, 'user', None)
+            if committer:
+                committer = User.objects.get(username=committer)
 
             for s in strings:
                 try:
@@ -320,12 +318,15 @@ class StringHandler(BaseHandler):
                                                 resource=translation_resource)
                 except SourceEntity.DoesNotExist:
                     # We have no such string for translation. Either we got
-                    # wrong file or something is messed up. Fail...
-                    return rc.BAD_REQUEST
+                    # wrong file or something is messed up. Maybe we should
+                    # abort the whole transaction?
+                    pass
 
+                rule = s.get('rule', 5)
                 try:
                     ts = Translation.objects.get(language=lang, source_entity=ss,
-                                                 resource=translation_resource)
+                                                 resource=translation_resource,
+                                                 rule=rule)
                     # For a existing Translation delete the value if we get a '' or None value
                     if s.get('value'):
                         ts.string = s.get('value')
@@ -341,7 +342,8 @@ class StringHandler(BaseHandler):
                                 source_entity=ss,
                                 resource=translation_resource,
                                 string=s.get('value'),
-                                user=committer)
+                                user=committer,
+                                rule=rule)
 
             return rc.ALL_OK
         else:
@@ -350,9 +352,9 @@ class StringHandler(BaseHandler):
     # this probably needs some more fine grained permissions for real world
     # usage. for now all people who can change a project can add/edit resources
     # and strings in it
-    #@method_decorator(one_perm_required_or_403(pr_project_add_change,
-    #    (Project, 'slug__exact', 'project_slug')))
-    def create(self, request, project_slug, resource_slug):
+    @method_decorator(one_perm_required_or_403(pr_resource_add_change,
+        (Project, 'slug__exact', 'project_slug')))
+    def create(self, request, project_slug, resource_slug, target_lang_code=None):
         '''
         Using this API call, a user may create a resource and assign source
         strings for a specific language. It gets the project and resource name
@@ -360,13 +362,12 @@ class StringHandler(BaseHandler):
         should be in the following schema:
 
         {
-            'resource': 'sampleresource',
-            'language': 'en',
             'strings':
             [{
                 'string': 'str1',
                 'occurrences': 'somestring',
                 'context': 'someotherstring'
+                ...
             },
             {
             }]
@@ -385,29 +386,31 @@ class StringHandler(BaseHandler):
             if not data:
                 return rc.BAD_REQUEST
 
+            # Get the committer
+            committer = getattr(request, 'user', None)
+            if committer:
+                committer = User.objects.get(username=committer)
+
+            # check if resource exists
+            try:
+                translation_resource = Resource.objects.get(
+                                            slug = resource_slug,
+                                            project = translation_project)
+            except Resource.DoesNotExist:
+                return rc.NOT_FOUND
+
             # get lang
             try:
-                lang = Language.objects.by_code_or_alias(data.get('language', 'en'))
+                lang = Language.objects.by_code_or_alias(
+                    data.get('target_lang_code', translation_resource.source_language.code))
             except Language.DoesNotExist:
                 return rc.BAD_REQUEST
 
-            # Get the committer if exists
-            committer = None
-            if request and hasattr(request, 'user'):
-                committer = getattr(request, 'user', None)
-
-            # check if resource exists
-            translation_resource, created = Resource.objects.get_or_create(
-                                            slug = resource_slug,
-                                            source_language = lang,
-                                            project = translation_project)
-            # if new make sure, it's initialized correctly
-            if created:
-                translation_resource.name = resource_slug
-                translation_resource.project = translation_project
-                translation_resource.source_language = lang
-                translation_resource.save()
-
+            if target_lang_code and\
+              target_lang == translation_resource.source_language.code:
+                # We don't serve POST in other languages but the source
+                # language of the resource.
+                return rc.BAD_REQUEST
             # get strings
             strings = data.get('strings', [])
 
@@ -419,6 +422,7 @@ class StringHandler(BaseHandler):
                                 resource=translation_resource,**s)
                     ts, created = Translation.objects.get_or_create(
                                         language=lang,
+                                        rule=s.get('rule',5),
                                         source_entity=obj,
                                         resource=translation_resource,
                                         user=committer)
@@ -428,4 +432,3 @@ class StringHandler(BaseHandler):
             return rc.CREATED
         else:
             return rc.BAD_REQUEST
-
