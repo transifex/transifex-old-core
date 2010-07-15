@@ -266,7 +266,7 @@ NOTICE_TYPES = [
 
 def is_watched_by_user_signal(obj, user, signal=None):
     """
-    Return a boolean value if an object is watched by a user or not
+    Return a boolean value indicating if an object is watched by a user
 
     It is possible also verify if it is watched by a user in a specific
     signal, passing the signal as a second parameter

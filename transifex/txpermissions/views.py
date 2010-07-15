@@ -115,7 +115,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
 
 def approve_permission_request(request, requested_permission, extra_context={}):
     """
-    View for approving or not a permission request for a user.
+    View for approving/rejecting a user's permission request.
     
     This view is a centralized place for approving permission requests for any 
     kind of object through the whole Transifex.
