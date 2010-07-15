@@ -206,8 +206,8 @@ NOTICE_TYPES = [
             {
                 "label": "project_team_join_requested",
                 "display": _("Team User Joining Requested"),
-                "description": _("when a user requests for joining to a "
-                                 "translation team of a project"),
+                "description": _("when a user requests to join a "
+                                 "project translation team"),
                 "default": 2,
                 "show_to_user": True,
             },
@@ -215,7 +215,7 @@ NOTICE_TYPES = [
                 "label": "project_team_join_approved",
                 "display": _("Team User Joining Approved"),
                 "description": _("when a user is approved as a member of a "
-                                 "translation team of a project"),
+                                 "project translation team"),
                 "default": 2,
                 "show_to_user": True,
             },
@@ -223,23 +223,23 @@ NOTICE_TYPES = [
                 "label": "project_team_join_denied",
                 "display": _("Team User Joining Denied"),
                 "description": _("when a user is denied as a member of a "
-                                 "translation team of a project"),
+                                 "project translation team"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_join_withdrawn",
                 "display": _("Team User Joining Withdrawn"),
-                "description": _("when a user withdrawn its own request for "
-                                 "joining a translation team of a project"),
+                "description": _("when a user decides not to "
+                                 "join a project translation team"),
                 "default": 2,
                 "show_to_user": True,
             },
             {
                 "label": "project_team_left",
                 "display": _("Team User Left"),
-                "description": _("when a user leaves a translation "
-                                 "team of a project"),
+                "description": _("when a user leaves a "
+                                 "project translation team"),
                 "default": 2,
                 "show_to_user": True,
             },
