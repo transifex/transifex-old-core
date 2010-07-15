@@ -283,7 +283,8 @@ class StringHandler(BaseHandler):
             return rc.NOT_FOUND
 
         try:
-            translation_resource = Resource.objects.get(slug=resource_slug)
+            translation_resource = Resource.objects.get(slug=resource_slug,
+                project=translation_project)
         except Resource.DoesNotExist:
             return rc.NOT_FOUND
 
