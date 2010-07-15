@@ -71,7 +71,7 @@ class ProjectPermission(BasePermission):
         which can be Project, Team and POFile. Depending on the type of object,
         different checks are done.
 
-        The parameter 'any_team' can be used when a it's necessary to verify that
+        The parameter 'any_team' can be used when it is necessary to verify that
         a user has submit access for at least one project team. If a Project
         object is passed and the parameter 'any_team' id set as False, the
         verification of access will just return True for maintainers and writers.
