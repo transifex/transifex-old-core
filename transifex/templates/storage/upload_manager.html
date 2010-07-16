@@ -1,0 +1,85 @@
+{% load i18n %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $("#button_uploads").toggle(function(){
+        /* TODO: Implement class based code for nice client side notifications (like Gmail) */
+        /* TODO: Implement toggling in a load-once way, currently each expansion hits the server */
+        $("div#notification-container div").html("Loading storage information...");
+        $("div#notification-container").fadeIn("fast");
+
+        /* Make sure we have languages on client */
+        if (typeof(languages) == 'undefined') {
+            languages = new Languages();
+            languages.pull(); /* Synchronous call */
+        }
+
+
+        /* Fetch list of files uploaded by user */
+        $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
+          storage = new Storage(data);
+          storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
+          storage.resource = {'name':'{{resource.name}}', 'slug':'{{resource.slug}}'};
+          $("div#notification-container").fadeOut("fast");
+          $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        });
+
+
+        /* Bind ajax upload button */
+        new AjaxUpload('button_upload', {
+            action: '{% url api.storage %}',
+            onSubmit : function(file, extension) {
+              $("div#notification-container div").html(sprintf("Uploading '%s'", file));
+              $("div#notification-container").fadeIn("fast");
+              this.disable();
+            },
+            onComplete : function(file, response) {
+                if(response != "<pre>Created</pre>")
+                    alert(response);
+
+                $("#upload_button").addClass("send_file").removeClass("waiting disabled");
+                this.enable();
+                /* TODO: Remove duplication of this code, use implement bind() and update() for Storage or something */
+                $.getJSON('{% url api.storage %}', {}, function(data, textStatus) {
+                    storage = new Storage(data);
+                    storage.project = {'name':'{{project.name}}', 'slug':'{{project.slug}}'};
+                    storage.resource = {'name':'{{resource.name}}', 'slug':'{{resource.slug}}'};
+                    $("div#notification-container").fadeOut("fast");
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+                });
+            }
+        });
+        $("#uploads").slideDown();
+
+
+    }, function(){
+        $("#uploads").slideUp();
+    });
+
+});
+</script>
+
+<div id="uploads" style="margin: 10px 0 5px 0;border: 1px dashed #ddd; padding:0 0 10px 1em; display:none;">
+  <span id="button_upload" class="i16 send_file buttonized" style="float:right;margin:2em;">Upload file</span>
+
+  <h2>Upload files</h2>
+  <p>You have uploaded the following files:</p>
+  <table id="storage_files" style="padding:7px">
+    <thead>
+      <tr>
+        <th>File name</th>
+        <th>Size</th>
+        <th>Strings</th>
+        <th>Language</th>
+        <th colspan="2" width="40px">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<p id="button_uploads" class="i16 send_file buttonized" style="float:right;">Add New Resource</span>
+

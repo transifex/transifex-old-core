@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load truncate %}
+
+<div id="filtermenu_users" class="filtermenu_wrapper" style="position: absolute; z-index: 999999; width: 150px; top: 24px; display: none; background-color:#F5F5F5; -moz-border-radius:2px; border-width: 0px 1px 1px 1px; border-style: solid; border-color: #CCC; font-size:0.85em; -moz-box-shadow: 1px 1px 2px #DDDDDD; overflow-x:hidden; overflow-y:auto; max-height:150px;">
+
+{% if contributors %}
+  <!-- TODO implement the searching at the following lines to function properly
+  <div class="filtermenu_search" style="padding:1em">
+    <input style="width:100px; height:18px; color:#8f8f8f; text-decoration: italic; font-size:11px; padding-top:2px;" type="text" value="search" />
+  </div>
+  -->
+
+  <div class="filters_list" style="float:left">
+    <ul style="list-style:none; padding-left:10px; font-size:11px;">
+    {% for user in contributors %}
+      <li><input class="user_filters" type="checkbox" title="{{ user.username }}" style="margin:0; vertical-align:bottom;" id="{{ user.id }}" /> {{ user.username|truncate_chars_middle:"20" }} </li>
+    {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <div class="filters_list" style="float:left">
+    <p style="padding-left:10px; font-size:11px;">
+    {% trans "No active contributor!" %}
+    </p>
+  </div>
+{% endif %}
+
+</div>
+
+
+

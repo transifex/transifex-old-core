@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib import admin
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, get_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -52,6 +52,20 @@ class Language(models.Model):
     pluralequation = models.CharField(_("Plural Equation"), max_length=255,
         blank=True)
 
+    # Plural rules
+    rule_zero = models.CharField(_("Rule zero"), max_length=255,
+        blank=True, null=True)
+    rule_one = models.CharField(_("Rule one"), max_length=255,
+        blank=True, null=True)
+    rule_two = models.CharField(_("Rule two"), max_length=255,
+        blank=True, null=True)
+    rule_few = models.CharField(_("Rule few"), max_length=255,
+        blank=True, null=True)
+    rule_many = models.CharField(_("Rule many"), max_length=255,
+        blank=True, null=True)
+    rule_other = models.CharField(_("Rule other"), max_length=255,
+        blank=False, null=False, default="everything")
+
 
     # Managers
     objects = LanguageManager()
@@ -86,6 +100,120 @@ class Language(models.Model):
             self.code_aliases='%s ' % self.code_aliases
 
         super(Language, self).save(*args, **kwargs)
+
+    def get_rule_name_from_num(self, num):
+        if num == 0:
+            return 'zero'
+        elif num == 1:
+            return 'one'
+        elif num == 2:
+            return 'two'
+        elif num == 3:
+            return 'few'
+        elif num == 4:
+            return 'many'
+        elif num == 5:
+            return 'other'
+
+    def get_rule_num_from_name(self, name):
+        if name == 'zero':
+            return 0
+        elif name == 'one':
+            return 1
+        elif name == 'two':
+            return 2
+        elif name == 'few':
+            return 3
+        elif name == 'many':
+            return 4
+        elif name == 'other':
+            return 5
+
+    def get_pluralrules(self):
+        rules=[]
+        if self.rule_zero:
+            rules.append('zero')
+        if self.rule_one:
+            rules.append('one')
+        if self.rule_two:
+            rules.append('two')
+        if self.rule_few:
+            rules.append('few')
+        if self.rule_many:
+            rules.append('many')
+        rules.append('other')
+        return rules
+
+    def get_pluralrules_numbers(self):
+        rules=[]
+        if self.rule_zero:
+            rules.append(0)
+        if self.rule_one:
+            rules.append(1)
+        if self.rule_two:
+            rules.append(2)
+        if self.rule_few:
+            rules.append(3)
+        if self.rule_many:
+            rules.append(4)
+        rules.append(5)
+        return rules
+
+    def translated_strings(self):
+        """
+        Return the QuerySet of source entities, translated in this language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        return SourceEntity.objects.filter(id__in=Translation.objects.filter(
+                language=self, rule=5).values_list('source_entity', flat=True))
+
+    def untranslated_strings(self):
+        """
+        Return the QuerySet of source entities which are not yet translated in
+        the specific language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        return SourceEntity.objects.exclude(id__in=Translation.objects.filter(
+                language=self, rule=5).values_list('source_entity', flat=True))
+
+    def num_translated(self):
+        """
+        Return the number of translated strings in all Resources for the language.
+        """
+        return self.translated_strings().count()
+
+    def num_untranslated(self):
+        """
+        Return the number of untranslated strings in all Resources for the language.
+        """
+        return self.untranslated_strings().count()
+
+    #TODO:We need this as a cached value in order to avoid hitting the db all the time
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity
+        return SourceEntity.objects.count()
+
+    def trans_percent(self):
+        """Return the percent of untranslated strings in all Resources."""
+        t = self.num_translated()
+        try:
+            return (t * 100 / self.total_entities)
+        except ZeroDivisionError:
+            return 100
+
+    def untrans_percent(self):
+        """Return the percent of untranslated strings in this Resource."""
+        translated_percent = self.trans_percent()
+        return (100 - translated_percent)
 
 def suite():
     """Define this application's testing suite for Django's test runner."""

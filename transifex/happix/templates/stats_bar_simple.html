@@ -1,0 +1,6 @@
+{% load statistics_happix %}
+
+<div class="graph_resource" style="width: {{width}}px">
+  {% ifnotequal trans_percent 0 %}<div class="translated_comp" style="left: {{pos.trans.l}}px; width: {{pos.trans.w}}px;"></div>{% endifnotequal %}
+  {% ifnotequal untrans_percent 0 %}<div class="untranslated_comp" style="left: {{pos.untrans.l}}px; width: {{pos.untrans.w}}px;"></div>{% endifnotequal %}
+</div>

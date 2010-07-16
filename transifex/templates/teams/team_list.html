@@ -4,13 +4,14 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load statistics_happix %}
 
 {% block extra_head %}
 <script type="text/javascript">
   $(function(){
     $("form.submit_form").hide();
+    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
    })
-
 </script>
 {% endblock %}
 
@@ -47,11 +48,11 @@
         
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">
-            <input class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
+            <input name="team_request_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
         </form>
         
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">
-            <input class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
+            <input name="team_request_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
         </form>
         {% endif %}
 
@@ -99,7 +100,7 @@
         </tbody>
     </table>
     <p class="submit">
-        <input class="i16 submit" type="submit" value="{% trans "Request team" %}"/>
+        <input name="team_request" class="i16 submit" type="submit" value="{% trans "Request team" %}"/>
     </p>
    </fieldset>
 </form>

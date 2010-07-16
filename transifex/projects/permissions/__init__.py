@@ -66,9 +66,6 @@ pr_component_submit_file = (
     ('general',  'projects.submit_file'),
 )
 
-
-
-
 # Release permissions required
 
 pr_release_add_change = (
@@ -81,3 +78,18 @@ pr_release_delete = (
     ('granular', 'project_perm.maintain'),
     ('general',  'projects.delete_release'),
 )
+
+# Resource Permissions
+
+pr_resource_translations_delete=(
+    ("granular", "project_perm.maintain"),
+    ("general",  "happix.delete_resource"),)
+
+pr_resource_add_change=(
+    ("granular", "project_perm.maintain"),
+    ('general',  'happix.add_resource'),
+    ("general",  "happix.change_resource"),)
+
+pr_resource_delete=(
+    ("granular", "project_perm.maintain"),
+    ("general",  "happix.delete_resource"),)

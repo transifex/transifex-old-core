@@ -1,0 +1,181 @@
+{% extends "resource.html" %}
+{% load i18n %}
+
+{% block breadcrumb %}
+{{block.super}} » 
+<a href="{% url translate project.slug resource.slug target_language.code %}">{{ target_language.name }}</a>
+{% endblock %}
+
+
+{% block extra_head %}
+  <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+
+    /* Global variables */
+    var stringset = null;
+    var oTable;
+    /* vars for string calcs */
+    var translated_strings = {{ translated_strings }} 
+    var untranslated_strings = {{ untranslated_strings }} 
+    var total_strings = translated_strings + untranslated_strings;
+
+    /* var to keep filter state */
+    var filter_var = null;
+
+    /* document ready. do stuff */
+    $(document).ready(function(){
+
+        oTable = $('#stringset_table').dataTable({
+            "bJQueryUI": false,
+            "sPaginationType": "full_numbers",
+            "aaSorting": [[ 0, "asc" ]],
+            "bServerSide": true,
+            "bProcessing": true,
+            "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
+            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
+            "bAutoWidth": false,
+            "aoColumns" : [
+                { "bVisible":false },
+                { "bVisible":false, "bSortable": false, },
+                { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
+                  "fnRender": function(oObj){
+                    var clean_array = array_escape({"source_dict":oObj.aData[2]});
+                    var source_divs = '';
+                    for(rule in clean_array["source_dict"]["source_strings"]){
+                        if(rule=='other')
+                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + clean_array["source_dict"]["source_strings"]["other"] + '</div>'
+                        else
+                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["source_strings"][rule] + '</p>'
+                    }
+                    return source_divs;
+
+                   }
+                },
+                { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
+                  "fnRender": function(oObj){
+                    var clean_array = array_escape({"translations":oObj.aData[3]});
+                    var translation_containers = '';
+                      for(rule in clean_array["translations"]){
+                          if(rule=='other')
+                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><div class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</div>'
+                          else
+                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><p class="translation" style="width:95%" title="Translation"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["translations"][rule] + '</p>'
+                      }
+
+                      return translation_containers;
+                  }
+                },
+                { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
+            ],
+            "fnServerData": function (sSource, aoData, fnCallback) {
+
+              $("div#notification-container div").html("Loading strings...");
+              $("div#notification-container").fadeIn("slow");
+              if ( filter_var) {
+                aoData.push( { "name" : "filters", "value": filter_var});
+              }
+
+              $.ajax ( {
+                  "dataType": 'json',
+                  "type": "POST",
+                  "url": sSource,
+                  "data": aoData,
+                  "complete": function(xmlhttpreq, status) {
+
+                    var parsed_data = JSON.parse(xmlhttpreq.responseText);
+
+                    // Draw the table
+                    fnCallback(parsed_data);
+
+                    setTimeout('$("div#notification-container").fadeOut();',1000);
+                    }
+                  });
+
+             },
+            "fnDrawCallback": function() { 
+                $('#total_translated_perc').html((translated_strings*100.0/total_strings).toFixed(2) + "%");
+                $('#total_untranslated_perc').html((untranslated_strings*100.0/total_strings).toFixed(2) + "%");
+            }
+        });
+
+        $(".filters").change(function() {
+            filter_var = "";
+            $(".filters").each( function() {
+                if (! $(this).attr('checked')) {
+                    filter_var += $(this).attr('id')+',';
+                }
+            });
+            oTable.fnDraw();
+        });
+
+    });
+
+
+
+</script>
+
+
+{% endblock %}
+
+{% block title %}
+{{ block.super }} | 
+{{resource}}
+{% endblock %}
+
+{% block body_class %}project_list{% endblock %}
+
+{% block content_title %}
+  <h2 class="pagetitle">
+    {% trans "Strings" %}
+  </h2>
+{% endblock %}
+
+{% block content %}
+
+
+  <table class="definition stats_totals" id="stats_table">
+  <input id="filter_entries" type="hidden" name="filter_entries"/>
+  {% with untranslated_strings|add:translated_strings as total_strings %}
+  <tr>
+    <th class="translated">Translated</th>
+
+      <td id="total_translated">{{ translated_strings }}</td>
+      <td id="total_translated_perc">?</td>
+      <td><input id="translated" class="filters"type="checkbox"  checked="checked"  name="only_translated"/></td>
+  </tr>
+
+  <tr>
+    <th class="untranslated">Untranslated</th>
+      <td id="total_untranslated">{{ untranslated_strings }} </td>
+      <td id="total_untranslated_perc">?</td>
+
+      <td><input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/></td>
+  </tr>
+  <tr class="last">
+    <th>Total</th>
+      <td id="total_sum">{{ total_strings }}</td>
+  </tr>
+  {% endwith %}
+  </table>
+
+
+
+<table id='stringset_table' style='width:100%'>
+    <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th>{% trans "Source String" %}</th>
+        <th>{% trans "Translation" %}</th>
+        <th>&nbsp;</th>
+        </tr>
+    </thead>
+</table>
+
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}

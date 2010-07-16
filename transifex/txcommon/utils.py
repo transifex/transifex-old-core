@@ -1,3 +1,50 @@
+from django.core.urlresolvers import get_resolver
+
+def get_url_pattern(urlname):
+    """
+    Return URL pattern for a URL based on its name.
+
+    >>> get_url_pattern('project_deails')
+    u'/projects/p/%(project_slug)s/'
+
+    """
+    return '/%s' % get_resolver(None).reverse_dict.get(urlname)[0][0][0]
+
+def cached_property(func):
+    """
+    Cached property.
+
+    This function is able to verify if an instance of a property field
+    was already created before and, if not, it creates the new one.
+    When needed it also is able to delete the cached property field from
+    the memory.
+
+    Usage:
+    @cached_property
+    def trans(self):
+        ...
+
+    del(self.trans)
+
+    """
+    def _set_cache(self):
+        cache_attr = "__%s" % func.__name__
+        try:
+            return getattr(self, cache_attr)
+        except AttributeError:
+            value = func(self)
+            setattr(self, cache_attr, value)
+            return value
+
+    def _del_cache(self):
+        cache_attr = "__%s" % func.__name__
+        try:
+            delattr(self, cache_attr)
+        except AttributeError:
+            pass
+
+    return property(_set_cache, fdel=_del_cache)
+
 def key_sort(l, *keys):
     """
     Sort an iterable given an arbitary number of keys relative to it
