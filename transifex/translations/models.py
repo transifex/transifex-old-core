@@ -38,12 +38,15 @@ def _group_pofiles(postats, grouping_key, pot_total):
 
     for key, pofiles in grouped_postats:
         count = po_trans = po_fuzzy = po_untrans = po_total = 0 
+        po_error = False
         for pofile in pofiles:
             po_trans += pofile.trans
             po_fuzzy += pofile.fuzzy
             po_untrans += pofile.untrans
             po_total += pofile.total
             count += 1
+            if pofile.error:
+                po_error = True
         if pot_total and pot_total > po_total:
             # Compare the total of entries between POT and PO
             # We need to sum entries as untranslated for languages 
@@ -56,7 +59,7 @@ def _group_pofiles(postats, grouping_key, pot_total):
         # stats sum. As it doesn't save the objects, it's safe to re-use then
         # in order to save memory.
         pofile.set_stats(po_trans, po_fuzzy, (po_untrans + no_po))
-
+        pofile.error = po_error
         if count > 1:
             pofile.is_aggregated=True
         else:

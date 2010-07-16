@@ -125,6 +125,14 @@ class TransFormWizard(SessionWizard):
         """
         self.init(request, *args, **kwargs)
 
+        if self.pofile.error:
+            request.user.message_set.create(message = _(
+                "The PO file is broken and can't be opened by Lotte."))
+            project_slug = self.pofile.object.project.slug
+            component_slug = self.pofile.object.slug
+            return HttpResponseRedirect(reverse('component_detail',
+                args=(project_slug, component_slug,)))
+
         check = ProjectPermission(request.user)
         if not check.submit_file(self.pofile) and \
             not request.user.has_perm('reviews.add_poreviewrequest'):

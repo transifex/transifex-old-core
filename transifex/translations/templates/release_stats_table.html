@@ -19,7 +19,7 @@
               <span class="stat_message" title="{% trans "There are no languages registered matching this file" %}" >{{stat.filename}}</span>
           {% endif %}
           {% if stat.error %}
-              <span class="i16 notice" title="{% trans "Could not generate statistics for this file" %}"></span>
+              <span class="i16 notice" title="{% trans "There is at least one file with problems for this language." %}"></span>
           {% endif %}
         </td>
         {% with 160 as barwidth %}
