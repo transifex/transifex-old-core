@@ -3,6 +3,7 @@
 {% load truncate %}
 {% load permissions %}
 {% load team_tags %}
+{% load upload_manager_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -88,9 +89,9 @@
             <span class="tipsy_enable" title="Available soon :)">(?)</span>
           </li>
           <li>
-            <span class="i16 submit_file"><a id="button_upload">{% trans "Upload new version" %}</a>
-            <span style="margin-left:10px;font-size:10px;color:#666;display:none" class="i16 tick">File uploaded</span>
-            </span>
+            {% if can_submit_translation %}
+                {% upload_resource_translation_button request resource target_language %}
+            {% endif %}
           </li>
           {% endifnotequal %}
         </ul>

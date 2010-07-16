@@ -2,15 +2,9 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load statistics_happix %}
-
+{% load upload_manager_tags %}
 
 <div id="resources" class="resources separate">
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  {% if is_maintainer or request.user.is_superuser %}
-    {% load upload_manager_tags %}
-    {% upload_manager project %}
-  {% endif %}
-
   {% with project.resource_set.all|slice:":5" as resources %}
   <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
     {% render_metacount resources _("resources") %}
@@ -181,7 +175,6 @@
   </p>
   {% endif %}
 
-
   {% endwith %}
   {% endwith %}
   {% else %}
@@ -193,4 +186,10 @@
     {% blocktrans %}A <em>Resource</em> is mapped to master file and it's translated versions.
     For example Resource could be bound to nano.pot and de.po, it.po, fi.po, etc.{% endblocktrans %}
   </p>
+
+  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+  {% if is_maintainer %}
+    {% upload_create_resource_form request project %}
+  {% endif %}
+
 </div>

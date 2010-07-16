@@ -95,8 +95,13 @@ class Resource(models.Model):
 
     # Foreign Keys
     source_language = models.ForeignKey(Language,
-        verbose_name=_('Source Language'),blank=False, null=False,
+        verbose_name=_('Source Language'), blank=False, null=False,
         help_text=_("The source language of this Resource."))
+
+    source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
+        blank=False, null=False,
+        help_text=_("Select a file from your file system to be used to "
+            "extract the strings to be translated."))
 
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False,
@@ -305,7 +310,7 @@ class Resource(models.Model):
 #            return 0
 
     @transaction.commit_manually
-    def merge_stringset(self, stringset, target_language, user=None, overwrite_translations=True):
+    def merge_stringset(self, stringset, target_language, is_source=False, user=None, overwrite_translations=True):
         try:
             strings_added = 0
             strings_updated = 0
@@ -321,6 +326,10 @@ class Resource(models.Model):
                         'occurrences' : (",".join(["(%s, %s)" % (occ[0],occ[1]) for occ in j.occurrences])),
                         }
                     )
+                # Skip creation of sourceentity object for non-source files.
+                if created and not is_source:
+                    continue
+
                 se.save()
 
                 tr, created = Translation.objects.get_or_create(
@@ -355,9 +364,17 @@ class Resource(models.Model):
 
     def merge_translation_file(self, translation_file):
         stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(
-            translation_file.get_storage_path(), 
+            translation_file.get_storage_path(),
+            False,
             translation_file.language.get_pluralrules_numbers())
         return self.merge_stringset(stringset, translation_file.language)
+
+    def merge_source_file(self):
+        stringset = PARSER_MAPPING[self.source_file.mime_type].parse_file(
+            self.source_file.get_storage_path(),
+            True,
+            self.source_file.language.get_pluralrules_numbers())
+        return self.merge_stringset(stringset, self.source_file.language, True)
 
 class SourceEntity(models.Model):
     """

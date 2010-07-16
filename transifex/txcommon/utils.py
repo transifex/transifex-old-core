@@ -1,3 +1,15 @@
+from django.core.urlresolvers import get_resolver
+
+def get_url_pattern(urlname):
+    """
+    Return URL pattern for a URL based on its name.
+
+    >>> get_url_pattern('project_deails')
+    u'/projects/p/%(project_slug)s/'
+
+    """
+    return '/%s' % get_resolver(None).reverse_dict.get(urlname)[0][0][0]
+
 def cached_property(func):
     """
     Cached property.

@@ -158,7 +158,7 @@ class ProjectResourceHandler(BaseHandler):
     API handler for creating resources under projects
     """
 
-    allowed_methods = ('POST')
+    allowed_methods = ('POST', 'PUT')
 
     def create(self, request, project_slug):
         """
@@ -175,11 +175,12 @@ class ProjectResourceHandler(BaseHandler):
                         name = "Translations of '%s'" % storage_file.name,
                         source_language = storage_file.language,
                         project = project,
+                        source_file=storage_file
                 )
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" % (storage_file.name, storage_file.uuid, project.slug, translation_resource.slug))
                 try:
-                    strings_added, strings_updated = translation_resource.merge_translation_file(storage_file)
+                    strings_added, strings_updated = translation_resource.merge_source_file()
                 except Language.DoesNotExist:
                     request.user.message_set.create(
                         message="We could not guess the language of uploaded file")
@@ -194,8 +195,52 @@ class ProjectResourceHandler(BaseHandler):
                 retval= {
                     'added':strings_added,
                     'updated':strings_updated,
-                    #'redirect':reverse('resource_detail',args=[project.slug, translation_resource.slug])
-                    'redirect':reverse('translate',args=[project.slug, translation_resource.slug, storage_file.language.code])
+                    'redirect':reverse('resource_detail',args=[project.slug, translation_resource.slug])
+                    #'redirect':reverse('translate',args=[project.slug, translation_resource.slug, storage_file.language.code])
+                }
+                logger.debug("Extraction successful, returning: %s" % retval)
+
+                # Set StorageFile to 'bound' status, which means that it is bound to some translation resource
+                # This also means it will not be shown in 'Uploaded files' box anymore
+                storage_file.bound = True
+                storage_file.save()
+                return retval
+            else:
+                return rc.BAD_REQUEST
+        else:
+            return rc.BAD_REQUEST
+
+
+    def update(self, request, project_slug, resource_slug, language_code=None):
+        """
+        Update translations of a resource for project using UUID of StorageFile
+        """
+        if "application/json" in request.content_type:
+            if "uuid" in request.data:
+                uuid = request.data['uuid']
+                project = Project.objects.get(slug=project_slug)
+                resource = Resource.objects.get(slug=resource_slug)
+                storage_file = StorageFile.objects.get(uuid=uuid,user=request.user)
+
+                logger.debug("Going to insert strings from %s (%s) to %s/%s" % (storage_file.name, storage_file.uuid, project.slug, resource.slug))
+                try:
+                    strings_added, strings_updated = resource.merge_translation_file(storage_file)
+                except Language.DoesNotExist:
+                    request.user.message_set.create(
+                        message="We could not guess the language of uploaded file")
+                else:
+                    messages = []
+                    if strings_added > 0:
+                        messages.append("%i strings added" % strings_added)
+                    if strings_updated > 0:
+                        messages.append("%i strings updated" % strings_updated)
+                    request.user.message_set.create(
+                        message=",".join(messages))
+                retval= {
+                    'added':strings_added,
+                    'updated':strings_updated,
+                    'redirect':reverse('resource_detail',args=[project.slug, resource.slug])
+                    #'redirect':reverse('translate',args=[project.slug, translation_resource.slug, storage_file.language.code])
                 }
                 logger.debug("Extraction successful, returning: %s" % retval)
 

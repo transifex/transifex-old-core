@@ -67,7 +67,7 @@ class LinguistParser(Parser):
         #return doc.toprettyxml(indent="  ", newl="\n", encoding="UTF-8")
 
     @classmethod
-    def parse(cls, buf, lang_rules):
+    def parse(cls, buf, is_source, lang_rules):
         def getElementByTagName(element, tagName, noneAllowed = False):
             elements = element.getElementsByTagName(tagName)
             if not noneAllowed and not elements:

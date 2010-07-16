@@ -85,9 +85,9 @@ class Parser:
         raise Exception("Parser.parse(buf) has to be overridden")
 
     @classmethod
-    def parse_file(cls, filename, lang_rules=None):
+    def parse_file(cls, filename, is_source=False, lang_rules=None):
         fh = open(filename, "ru")
-        return cls.parse(fh.read(), lang_rules)
+        return cls.parse(fh.read(), is_source, lang_rules)
 
 
 class StringSet:

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from piston.handler import BaseHandler
 from piston.utils import rc
+from django.http import HttpResponse
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -12,6 +13,7 @@ from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
 
+
 class StorageHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'DELETE')
     model = StorageFile
@@ -22,7 +24,7 @@ class StorageHandler(BaseHandler):
         Deletes file by storage UUID
         """
         try:
-            StorageFile.objects.get(uuid = uuid, user = request.user).delete()
+            StorageFile.objects.get(uuid=uuid, user=request.user).delete()
         except StorageFile.DoesNotExist:
             return rc.NOT_FOUND
         logger.debug("Deleted file %s" % uuid)
@@ -72,6 +74,7 @@ class StorageHandler(BaseHandler):
                 return rc.ALL_OK
             return rc.BAD_REQUEST # Unknown API call
         elif "multipart/form-data" in request.content_type: # Do file upload
+            files=[]
             for name, submitted_file in request.FILES.items():
                 submitted_file = submitted_file
                 sf = StorageFile()
@@ -87,9 +90,21 @@ class StorageHandler(BaseHandler):
                 # FIXME we should fix this for client calls
                 if not request.user.is_anonymous():
                     sf.user = request.user
+                if request.data.keys() == ['language']:
+                    lang_code = request.data['language']
+                    try:
+                        sf.language =  Language.objects.by_code_or_alias(lang_code)
+                    except Language.DoesNotExist:
+                        logger.error("Weird! Selected language code (%s) does "
+                            "not match with any language in the database." 
+                            % lang_code)
                 sf.update_props()
                 sf.save()
                 logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
-            return rc.CREATED
+                files.append(dict(uuid=sf.uuid, id=str(sf.id), name=sf.name))
+            result=dict(status='Created', files=files)
+            # TODO: Not sure, but it looks like a hack. 'return result' 
+            # should be enough.
+            return HttpResponse(str(result), content_type='text/plain', status=201)
         else: # Unknown content type/API call
             return rc.BAD_REQUEST

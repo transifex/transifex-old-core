@@ -23,6 +23,8 @@ function str_repeat(i, m) { for (var o = []; m > 0; o[--m] = i); return(o.join('
 
 function sprintf () {
   var i = 0, a, f = arguments[i++], o = [], m, p, c, x;
+  // Regex to allow strings like: 'Hello %(user)s.' It turns it into: 'Hello %s.'
+  f=f.replace(/\%\(+[\w]+\)s+/g, "%s")
   while (f) {
     if (m = /^[^\x25]+/.exec(f)) o.push(m[0]);
     else if (m = /^\x25{2}/.exec(f)) o.push('%');

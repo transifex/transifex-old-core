@@ -33,11 +33,11 @@ class PofileParser(Parser):
         pass
 
     @classmethod
-    def parse_file(cls, filename, lang_rules=None):
+    def parse_file(cls, filename, is_source=False, lang_rules=None):
         stringset = StringSet()
         # For .pot files the msgid entry must be used as the translation for
         # the related language.
-        if filename.endswith(".pot"):
+        if filename.endswith(".pot") or is_source:
             ispot = True
         else:
             ispot = False
