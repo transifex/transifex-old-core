@@ -169,16 +169,16 @@ urlpatterns += patterns('',
         view = component_set_stats,
         name = 'component_set_stats',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/raw/(?P<filename>[_\./-@\w]+)$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/raw/(?P<filename>[_\./\-@\w]+)$',
         view = component_file,
         name = 'component_raw_file',),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/view/(?P<filename>[_\./-@\w]+)$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/view/(?P<filename>[_\./\-@\w]+)$',
         view = component_file,
         name = 'component_view_file',
         kwargs = {'view': True },),
     url(
-        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/(?P<filename>[_\./-@\w]+)$',
+        regex = '^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/submit/(?P<filename>[_\./\-@\w]+)$',
         view = component_submit_file,
         name = 'component_submit_file',),
     url(
@@ -311,7 +311,7 @@ if getattr(settings, 'ENABLE_WEBTRANS', True):
     urlpatterns += patterns('',
         url(
             regex = ('^p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/'
-                    'edit/(?P<filename>[_\./-@\w]+)$'),
+                    'edit/(?P<filename>[_\./\-@\w]+)$'),
             # It needs to pass through both 'login_required'
             view = login_required(TransFormWizard(key=None, form_list=[])),
             name = 'component_edit_file',),
