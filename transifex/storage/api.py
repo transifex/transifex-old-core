@@ -72,8 +72,8 @@ class StorageHandler(BaseHandler):
                 return rc.ALL_OK
             return rc.BAD_REQUEST # Unknown API call
         elif "multipart/form-data" in request.content_type: # Do file upload
-            if 'userfile' in request.FILES:
-                submitted_file = request.FILES['userfile']
+            for name, submitted_file in request.FILES.items():
+                submitted_file = submitted_file
                 sf = StorageFile()
                 sf.name = str(submitted_file.name)
                 sf.uuid = str(uuid4())
@@ -84,11 +84,12 @@ class StorageHandler(BaseHandler):
                     file_size += len(chunk)
                 fh.close()
                 sf.size = file_size
-                sf.user = request.user
+                # FIXME we should fix this for client calls
+                if not request.user.is_anonymous():
+                    sf.user = request.user
                 sf.update_props()
                 sf.save()
                 logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
-                return rc.CREATED
-            return rc.FAILED
+            return rc.CREATED
         else: # Unknown content type/API call
             return rc.BAD_REQUEST
