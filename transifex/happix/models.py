@@ -315,23 +315,31 @@ class Resource(models.Model):
             strings_added = 0
             strings_updated = 0
             for j in stringset.strings:
-                se, created = SourceEntity.objects.get_or_create(
-                    string = j.source_entity,
-                    context = j.context or "None",
-                    resource = self,
-                    pluralized = j.pluralized,
-                    defaults = {
-                        'position' : 1,
-                        # FIXME: this has been tested with pofiles only
-                        'occurrences' : (",".join(["(%s, %s)" % (occ[0],occ[1]) for occ in j.occurrences])),
-                        }
+                # Check SE existence
+                try:
+                    se = SourceEntity.objects.get(
+                        string = j.source_entity,
+                        context = j.context or "None",
+                        resource = self
                     )
-                # Skip creation of sourceentity object for non-source files.
-                if created and not is_source:
+                except SourceEntity.DoesNotExist:
+                    # Skip creation of sourceentity object for non-source files.
+                    if not is_source:
+                        continue
+                    # Create the new SE
+                    se = SourceEntity.objects.create(
+                        string = j.source_entity,
+                        context = j.context or "None",
+                        resource = self,
+                        pluralized = j.pluralized,
+                        position = 1,
+                        # FIXME: this has been tested with pofiles only
+                        occurrences = (",".join(["(%s, %s)" % (occ[0],occ[1]) for occ in j.occurrences])),
+                    )
+
+                # Skip storing empty strings as translations!
+                if not j.translation:
                     continue
-
-                se.save()
-
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = target_language,
@@ -342,7 +350,6 @@ class Resource(models.Model):
                         'user' : user,
                         },
                     )
-                tr.save()
 
                 if created and j.rule==5:
                     strings_added += 1
