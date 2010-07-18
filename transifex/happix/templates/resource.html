@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load statistics_happix %}
 {% load permissions %}
+{% load upload_manager_tags %}
 
 {% block extra_head %}
 <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/ui.tabs.outside.css" />
@@ -10,12 +11,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
         {% if request.user.is_authenticated %}
         $("#new_translation1").click( function (){ 
             $("#new_translation_box1").toggle();
         });
+
         $("#start_new_translation").click( function() {
-            var target_lang_code = $(this).prev().val();
+            var target_lang_code = $(this).siblings('select').val();
             if ( target_lang_code != "" ) {
                 request_url = window.location + target_lang_code;
                 window.location = request_url;
@@ -24,6 +27,7 @@
             }
         });
         {% endif %}
+
         $(".tablesorter_resource").tablesorter({
             widgets: ['zebra'],
             headers: { 
@@ -181,6 +185,11 @@ If you cannot see your language, click the button below to translate.
 </p>
 
 <div id="new_translation_box1">
+
+{% comment %}
+    I kept this in order to remember to fix the languages in the templatetags.
+    The change should respect the below permissions!!!
+
     <select name="translation_languages" class="language">
         <option value="">Select Language</option>
         {% if is_maintainer or request.user.is_superuser %}
@@ -193,10 +202,12 @@ If you cannot see your language, click the button below to translate.
           {% endfor %}
         {% endif %}
     </select>
-    <a id="start_new_translation" class="i16 buttonized action">GO</a>
+{% endcomment %}
+
+{% upload_resource_translation_button request resource '' 'button' 'True' %}
 </div>
 <p style="text-align:center;padding-top:1em">
-  <a id="new_translation1" class="buttonized i16 add">{% trans "Translate All" %}</a>
+  <a id="new_translation1" class="buttonized i16 add">{% trans "Translate Resource" %}</a>
 </p>
 {% endif %}
 

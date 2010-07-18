@@ -59,7 +59,8 @@ def upload_create_resource_form(request, project, prefix='create_form'):
 
 
 @register.inclusion_tag("happix/upload_resource_translation_button.html")
-def upload_resource_translation_button(request, resource, language=None, prefix='button'):
+def upload_resource_translation_button(request, resource, language=None,
+     prefix='button', translate_online=False):
     """
     Render a StorageFile field to upload translation and insert them into a
     resource on the fly.
@@ -69,6 +70,9 @@ def upload_resource_translation_button(request, resource, language=None, prefix=
 
     The parameter 'prefix' can be used to add a prefix to the field name and
     its sub-fields.
+    
+    If the parameter translate online is given, a new button will appear next
+    to the upload button which onclick will redirect the user to lotte.
     """
     if language:
         initial={'resource_translation':[language.code, ""]}
@@ -92,5 +96,6 @@ def upload_resource_translation_button(request, resource, language=None, prefix=
           'resource': resource,
           'language' : language,
           'resource_translation_form': resource_translation_form,
-          'api_resource_translation_storage': api_resource_translation_storage
+          'api_resource_translation_storage': api_resource_translation_storage,
+          'translate_online': translate_online
     }
