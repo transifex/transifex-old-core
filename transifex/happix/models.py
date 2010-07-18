@@ -338,7 +338,7 @@ class Resource(models.Model):
                     )
 
                 # Skip storing empty strings as translations!
-                if not j.translation:
+                if not se and not j.translation:
                     continue
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
@@ -357,8 +357,8 @@ class Resource(models.Model):
                 if not created and overwrite_translations:
                     if tr.string != j.translation:
                         tr.string = j.translation
+                        tr.save()
                         strings_updated += 1
-                        updated = True
         except Exception, e:
             logger.error("There was problem while importing the entries "
                          "into the database. Entity: '%s'. Error: '%s'."
