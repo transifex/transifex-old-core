@@ -6,7 +6,6 @@ from projects.models import Project
 from happix.forms import CreateResourceForm, ResourceTranslationForm
 from happix.models import Resource, PARSERS
 from storage.models import StorageFile
-from storage.forms import StorageForm
 from txcommon.utils import get_url_pattern
 
 register = template.Library()
