@@ -25,6 +25,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/tx.lotte2.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/footpanel.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
       {% if WEBTRANS_SUGGESTIONS %}
@@ -415,6 +416,30 @@
             $('#filtermenu_resources').hide();
         });
 
+
+        $("#settingspanel a:first").click(function() {
+            if($(this).next(".subpanel").is(':visible')){ //If subpanel is already active...
+                $(this).next(".subpanel").hide(); //Hide active subpanel
+                $("#footpanel li a").removeClass('active'); //Remove active class on the subpanel trigger
+            }
+            else { //if subpanel is not active...
+                $(".subpanel").hide(); //Hide all subpanels
+                $(this).next(".subpanel").toggle(); //Toggle the subpanel to make active
+                $("#footpanel li a").removeClass('active'); //Remove active class on all subpanel trigger
+                $(this).toggleClass('active'); //Toggle the active class on the subpanel trigger
+            }
+            return false; //Prevent browser jump to link anchor
+        });
+
+        //Click event outside of subpanel
+        $(document).click(function() { //Click anywhere and...
+            $(".subpanel").hide(); //hide subpanel
+            $("#footpanel li a").removeClass('active'); //remove active class on subpanel trigger
+        });
+        $('.subpanel ul').click(function(e) {
+            e.stopPropagation(); //Prevents the subpanel ul from closing on click
+        });
+
     });
 
     {% if WEBTRANS_SUGGESTIONS %}
@@ -442,24 +467,7 @@
 {% block content %}
 
 
-<div class="floatright" style="position:relative;min-width:550px">
-    <fieldset style="width:175px; float:right">
-    <legend>{% trans "Settings" %}</legend>
-    <table class="definition">
-    <tr>
-        <th>{% trans "Verbose editing:" %}</th>
-        <td><input id="toggle_verbose" type="checkbox" /></td>
-    </tr>
-    <tr>
-        <th>{% trans "Auto save:" %}</th>
-        <td><input id="toggle_autosave" type="checkbox" /></td>
-    </tr>
-    <tr>
-        <th>{% trans "Similar locales:" %}</th>
-        <td><input id="toggle_similar_langs" type="checkbox" /></td>
-    </tr>
-    </table>
-    </fieldset>
+<div class="floatright" style="position:relative;min-width:320px">
 
   <div id="filtermenu1" style="position:absolute;top:4px ">
     <a class="filtermenu-trigger buttonized" href="#" style="border: 1px solid rgb(204, 204, 204); padding: 3px 3px 3px 8px; background: rgb(238, 238, 238) font-family: Trebuchet MS,Verdana,sans-serif; font-size: 11px; color: rgb(102, 102, 102); -moz-border-radius: 2px; text-decoration: none; display: block; height: 14px; outline-color: -moz-use-text-color; outline-style: none; outline-width: 0pt; cursor: pointer; width: 139px;">
@@ -536,6 +544,33 @@
         </tr>
     </tfoot>
 </table>
+
+<div id="footpanel">
+    <ul id="mainpanel">
+        <li id="settingspanel">
+            <a href="#" style="padding-left:24px;
+            background-image:url({{ STATIC_URL }}images/icons/generic16.png);
+            background-repeat: no-repeat;
+            background-position: 4% 50%" class="settings">General Settings</a>
+            <div class="subpanel">
+                <ul>
+                    <li class="verbose">
+                        <input id="toggle_verbose" type="checkbox" />
+                        <span>{% trans "Verbose editing" %}</span>
+                    </li>
+                    <li class="auto_save">
+                        <input id="toggle_autosave" type="checkbox" />
+                        <span>{% trans "Auto save" %}</span>
+                    </li>
+                    <li class="similar_locales">
+                        <input id="toggle_similar_langs" type="checkbox" />
+                        <span>{% trans "Similar locales" %}</span>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
 
 {% endblock %}
 

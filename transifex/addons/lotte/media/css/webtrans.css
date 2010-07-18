@@ -178,3 +178,114 @@ ul.contexts {
 ul.contexts li {
   margin-bottom: 5px;
 }
+
+
+/* FOOTPANEL */
+
+#footpanel {
+	position: fixed;
+	bottom: 0; left: auto; right:5%;
+	z-index: 9999; /*--Keeps the panel on top of all other elements--*/
+	background: #e3e2e2;
+	border: 1px solid #c3c3c3;
+	border-bottom: none;
+	width: auto;
+	margin: 0 3%;
+	text-shadow:1px 0 #FFFFFF;
+    -moz-box-shadow:0px 1px 2px #DDDDDD;
+}
+
+#footpanel ul {
+	padding: 0; margin: 0;
+	float: left;
+	width: 100%;
+	list-style: none;
+	border-top: 1px solid #fff; /*--Gives the bevel feel on the panel--*/
+	font-size: 11px;
+}
+#footpanel ul li{
+	padding: 0; margin: 0;
+	float: left;
+	position: relative;
+}
+#footpanel ul li a{
+	padding: 5px;
+	float: left;
+	height: 16px; width: auto;
+	text-decoration: none;
+	color: #333;
+	position: relative;
+	font-weight: bold;
+}
+html #footpanel ul li a:hover{	background-color: #fff; }
+html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
+	background-color: #fff;
+	height: 17px;
+	margin-top: -2px; /*--Push it up 2px to attach the active button to sub-panel--*/
+	border: 1px solid #555;
+	border-top: none;
+	z-index: 200; /*--Keeps the active link on top of the sub-panel--*/
+	position: relative;
+}
+
+
+#footpanel ul li div a { /*--Reset link style for sub-panel links--*/
+	text-indent: 0;
+	width: auto;
+	height: auto;
+	padding: 0;
+	float: none;
+	color: #00629a;
+	position: static;
+}
+#footpanel ul li div a:hover {	text-decoration: underline; } /*--Reset hover style for sub-panel links--*/
+
+#footpanel .subpanel {
+	position: absolute;
+	left: 0; bottom: 27px;
+	display: none;	/*--Hide by default--*/
+	width: 180px;
+	border: 1px solid #555;
+	background: #fff;
+	overflow: hidden;
+    -moz-box-shadow:0px 1px 2px #DDDDDD;
+}
+
+#footpanel .subpanel ul{
+	padding: 0; margin: 0;
+	background: #fff;
+	width: 100%;
+	overflow: auto;
+	padding-bottom: 2px;
+}
+#footpanel .subpanel li{
+	float: none; /*--Reset float--*/
+	display: block;
+	padding: 0; margin: 0;
+	overflow: hidden;
+	clear: both;
+	background: #fff;
+	position: static;  /*--Reset relative positioning--*/
+}
+#settingspanel .subpanel li span {
+	padding: 5px;
+	background: #fff;
+	color: #777;
+	float: left;
+}
+#settingspanel .subpanel li input {
+	float: left;
+	margin-top:5px;
+}
+#settingspanel .subpanel li a{
+	padding: 3px 0;	margin: 0;
+	line-height: 22px;
+	height: 22px;
+	background: #fff;
+	display: block;
+}
+#settingspanel .subpanel li a:hover {
+	background: #3b5998;
+	color: #fff;
+	text-decoration: none;
+}
