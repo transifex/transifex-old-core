@@ -5,7 +5,7 @@ String Level models.
 import datetime, hashlib, sys
 from django.contrib.auth.models import User
 from django.core.cache import cache
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.db.models import permalink, Q
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
@@ -99,7 +99,7 @@ class Resource(models.Model):
         help_text=_("The source language of this Resource."))
 
     source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
-        blank=False, null=False,
+        blank=True, null=True,
         help_text=_("Select a file from your file system to be used to "
             "extract the strings to be translated."))
 
@@ -393,6 +393,9 @@ class SourceEntity(models.Model):
     """
     string = models.TextField(_('String'), blank=False, null=False,
         help_text=_("The actual string content of source string."))
+    string_hash = models.CharField(_('String Hash'), blank=False, null=False,
+        max_length=32, editable=False,
+        help_text=_("The hash of the translation string used for indexing"))
     context = models.CharField(_('Context'), max_length=255,
         blank=False, null=False,
         help_text=_("A description of the source string. This field specifies"
@@ -432,7 +435,7 @@ class SourceEntity(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('string', 'context', 'resource'),)
+        unique_together = (('string_hash', 'context', 'resource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
         ordering = ['string', 'context']
@@ -495,7 +498,9 @@ class Translation(models.Model):
 
     string = models.TextField(_('String'), blank=False, null=False,
         help_text=_("The actual string content of translation."))
-
+    string_hash = models.CharField(_('String Hash'), blank=False, null=False,
+        max_length=32, editable=False,
+        help_text=_("The hash of the translation string used for indexing"))
     rule = models.IntegerField(_('Plural rule'), blank=False,
         null=False, default=5,
         help_text=_("Number related to the plural rule of the translation. "
@@ -536,7 +541,7 @@ class Translation(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_entity', 'string', 'language', 'resource',
+        unique_together = (('source_entity', 'string_hash', 'language', 'resource',
             'rule'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
@@ -558,3 +563,5 @@ class Translation(models.Model):
 from happix.handlers import *
 post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
 post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
+pre_save.connect(on_save_update_hash, sender=SourceEntity)
+pre_save.connect(on_save_update_hash, sender=Translation)
