@@ -309,8 +309,6 @@ class StringHandler(BaseHandler):
 
             # Get the committer if exists
             committer = getattr(request, 'user', None)
-            if committer:
-                committer = User.objects.get(username=committer)
 
             for s in strings:
                 try:
@@ -389,8 +387,6 @@ class StringHandler(BaseHandler):
 
             # Get the committer
             committer = getattr(request, 'user', None)
-            if committer:
-                committer = User.objects.get(username=committer)
 
             # check if resource exists
             try:

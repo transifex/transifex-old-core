@@ -57,8 +57,7 @@ class ProjectHandler(BaseHandler):
 
             if created:
                 # Owner
-                owner = User.objects.get(username = request.user)
-                p.owner = owner
+                p.owner = request.user
 
                 # Outsourcing
                 if outsource:
