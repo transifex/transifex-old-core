@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import *
 from piston.resource import Resource
 #from piston.authentication import OAuthAuthentication
-from piston.authentication import HttpBasicAuthentication
+from api.authentication import CustomHttpBasicAuthentication
 
 
 
@@ -14,7 +14,7 @@ from projects.api import ProjectHandler, ProjectResourceHandler
 from storage.api import StorageHandler
 from happix.api import (ResourceHandler, StringHandler)
 
-auth = HttpBasicAuthentication(realm='Happix API')
+auth = CustomHttpBasicAuthentication(realm='Happix API')
 
 resource_handler = Resource(ResourceHandler,authentication=auth)
 storage_handler = Resource(StorageHandler)
