@@ -98,6 +98,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
           'contributors': contributors,
           'resources': resources,
+          'languages': Language.objects.all()
         },
         context_instance = RequestContext(request))
 
@@ -187,11 +188,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     # These are only the rule=5 (other) translations
     default_translated_strings = translated_strings.filter(rule=5)
 
-    # Flag to present the similar langs
-    similar = False
-    if request.POST and request.POST.has_key('similar_langs') and request.POST['similar_langs']:
-        similar = True
-
     # status filtering (translated/untranslated)
     if request.POST and request.POST.has_key('filters'):
         for f in request.POST['filters'].split(','):
@@ -219,6 +215,12 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         # rsplit is used to remove the trailing ','
         resources = request.POST.get('resource_filters').rstrip(',').split(',')
         source_strings = source_strings.filter(resource__id__in=resources)
+
+    more_languages = []
+    if request.POST and request.POST.has_key('more_languages'):
+        # rsplit is used to remove the trailing ','
+        more_languages = request.POST.get('more_languages').rstrip(',').split(',')
+
 
     # keyword filtering
     sSearch = request.POST.get('sSearch','')
@@ -260,7 +262,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
             [
                 s.id,
                 s.source_entity.string,
-                _get_source_strings(s, source_language, lang_code, similar),
+                _get_source_strings(s, source_language, lang_code, more_languages),
                 _get_strings(translated_strings, lang_code, s.source_entity),
                 # save buttons and hidden context
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
@@ -273,7 +275,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     return HttpResponse(json, mimetype='application/json')
 
 
-def _get_source_strings(source_string, source_language, lang_code, similar):
+def _get_source_strings(source_string, source_language, lang_code, more_languages):
     """
     Get all the necessary source strings, including plurals and similar langs.
     
@@ -299,13 +301,12 @@ def _get_source_strings(source_string, source_language, lang_code, similar):
             source_strings[plural_name] = pl_string.string
 
     # for each similar language fetch all the translation strings
-    if similar and hasattr(settings, 'SIMILAR_LANGS'):
-        for lcode in settings.SIMILAR_LANGS.get(lang_code, {}):
-            l = Language.objects.by_code_or_alias(lcode)
-            similar_lang_strings[l.name] = {}
-            for t in Translation.objects.filter(source_entity=source_entity, language=l).order_by('rule'):
-                plural_name = source_language.get_rule_name_from_num(t.rule)
-                similar_lang_strings[l.name][plural_name] = t.string
+    for lang_id in more_languages:
+        l = Language.objects.get(pk=lang_id)
+        similar_lang_strings[l.name] = {}
+        for t in Translation.objects.filter(source_entity=source_entity, language=l).order_by('rule'):
+            plural_name = source_language.get_rule_name_from_num(t.rule)
+            similar_lang_strings[l.name][plural_name] = t.string
     return { 'source_strings' : source_strings,
              'similar_lang_strings' : similar_lang_strings }
 
