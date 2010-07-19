@@ -7,6 +7,7 @@ Qt4 TS file parser for Python
 import xml.dom.minidom
 from xml.dom.minidom import DOMImplementation
 from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
+from txcommon.log import logger
 
 class LinguistParseError(ParseError):
     pass
@@ -67,7 +68,8 @@ class LinguistParser(Parser):
         #return doc.toprettyxml(indent="  ", newl="\n", encoding="UTF-8")
 
     @classmethod
-    def parse(cls, buf, is_source, lang_rules):
+    def parse_file(cls, filename, is_source=False, lang_rules=None):
+        buf = fh = open(filename, "ru").read()
         def getElementByTagName(element, tagName, noneAllowed = False):
             elements = element.getElementsByTagName(tagName)
             if not noneAllowed and not elements:
@@ -100,10 +102,12 @@ class LinguistParser(Parser):
         if root.tagName != "TS":
             raise LinguistParseError("Root element is not 'TS'")
 
-        language = get_attribute(root, "language", die = STRICT)
-
         stringset = StringSet()
-        stringset.target_language = language
+        # This needed to be commented out due the 'is_source' parameter.
+        # When is_source=True we return the value of the <source> node as the 
+        # translation for the given file, instead of the <translation> node(s).
+        #stringset.target_language = language
+        #language = get_attribute(root, "language", die = STRICT)
 
         i = 1
         # There can be many <message> elements, they might have
@@ -144,8 +148,20 @@ class LinguistParser(Parser):
                     sourceString = None # WTF?
 
                 same_nplural = True
+                obsolete, fuzzy = False, False
                 messages = []
-                if translation and translation.firstChild:
+                if is_source:
+                    messages = [(5, sourceString)]
+                    if pluralized:
+                        try:
+                            msgid_plural = getElementByTagName(message,
+                                "extra-po-msgid_plural")
+                            messages.insert(0, (1,
+                                msgid_plural.firstChild.nodeValue))
+                        except LinguistParseError:
+                            pass
+
+                elif translation and translation.firstChild:
                     if not pluralized:
                         messages = [(5, translation.firstChild.nodeValue)]
                     else:
@@ -156,7 +172,7 @@ class LinguistParser(Parser):
                                 logger.error("Passed plural rules has nplurals=%s"
                                     ", but '%s' file has nplurals=%s. String '%s'"
                                     "skipped." % (nplural, filename, nplural_file,
-                                    entry.msgid))
+                                    sourceString))
                                 same_nplural = False
                         else:
                             same_nplural = False
@@ -171,7 +187,6 @@ class LinguistParser(Parser):
                             if nf:
                                 messages.append((rule, nf.nodeValue))
 
-                    obsolete, fuzzy = False, False
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
                         if status in ["unfinished", "obsolete"]:
