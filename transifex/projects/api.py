@@ -218,7 +218,8 @@ class ProjectResourceHandler(BaseHandler):
             if "uuid" in request.data:
                 uuid = request.data['uuid']
                 project = Project.objects.get(slug=project_slug)
-                resource = Resource.objects.get(slug=resource_slug)
+                resource = Resource.objects.get(slug=resource_slug,
+                    project = project)
                 storage_file = StorageFile.objects.get(uuid=uuid,user=request.user)
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" % (storage_file.name, storage_file.uuid, project.slug, resource.slug))
