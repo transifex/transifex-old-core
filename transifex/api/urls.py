@@ -16,10 +16,10 @@ from happix.api import (ResourceHandler, StringHandler)
 
 auth = CustomHttpBasicAuthentication(realm='Happix API')
 
-resource_handler = Resource(ResourceHandler,authentication=auth)
-storage_handler = Resource(StorageHandler)
-project_handler = Resource(ProjectHandler,authentication=auth)
-projectresource_handler = Resource(ProjectResourceHandler,authentication=auth)
+resource_handler = Resource(ResourceHandler, authentication=auth)
+storage_handler = Resource(StorageHandler, authentication=auth)
+project_handler = Resource(ProjectHandler, authentication=auth)
+projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
 string_handler = Resource(StringHandler, authentication=auth)
 #projectstring_handler = Resource(ProjectStringHandler)
 
