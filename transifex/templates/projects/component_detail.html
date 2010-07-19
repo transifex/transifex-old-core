@@ -107,6 +107,10 @@
       <th class="i16 filter">{% trans "File filter:" %}</th>
       <td>{{ component.file_filter }}</td>
     </tr>
+    <tr>
+      <th class="i16 structure">{% trans "i18n method:" %}</th>
+      <td>{{ component.i18n_type|lower|capfirst }}</td>
+    </tr>
     {% with component.releases.all as releases %}
     {% if releases %}
     <tr>
