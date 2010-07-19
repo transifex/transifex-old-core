@@ -1,7 +1,7 @@
 import os
 from mercurial import hg, ui
 
-version_info = (0, 9, 0, 'final')
+version_info = (1, 0, 0, 'devel')
 
 _verpart = ''
 if version_info[3] != 'final':
