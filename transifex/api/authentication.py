@@ -13,9 +13,8 @@ class CustomHttpBasicAuthentication(HttpBasicAuthentication):
     def is_authenticated(self, request):
         auth_string = request.META.get('HTTP_AUTHORIZATION', None)
 
-        if not hasattr(request, 'user'):
-            if not auth_string:
-                return False
+        if auth_string:
+
             try:
                 (authmeth, auth) = auth_string.split(" ", 1)
 
