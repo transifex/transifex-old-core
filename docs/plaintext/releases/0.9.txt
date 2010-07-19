@@ -10,14 +10,9 @@ Transifex 0.9 (Mojo)
  
 Welcome to Transifex 0.9, codenamed Mojo_.
  
-To be Released:
-  June 2010
+Released:
+  19 July 2010
 
-.. warning::
-
-    Transifex 0.9 is **still under development** and has not been released yet.
-    These release notes serve as a page to prepare the final release notes and
-    document what's available in the development versions (alpha, beta, etc).
  
 Transifex 0.9 'Mojo' is a production release of Transifex. It is targeted for
 new installations of Transifex and parties who choose to migrate to a new major
@@ -43,9 +38,9 @@ Here's a 40K-foot view of the release major features and numbers:
 
 .. code-block:: bash
 
-    256 changesets recorded
-    [89 tickets resolved]
-    433 files changed, 52411 insertions(+), 17774 deletions(-)
+    336 changesets recorded
+    38 tickets resolved
+    798 files changed, 132258 insertions(+), 87223 deletions(-)
 
 
 Being served hot at Transifex.net
@@ -55,11 +50,11 @@ Transifex 0.9 is a release of the open-source, community-powered Transifex
 flavor. It is suitable for very large projects with their own existing
 translation community, such as the Fedora Project, the GNOME Desktop etc.
 
-Transifex is also offered as another flavor: Software-as-a-Service, at
+Transifex is also offered as a Software-as-a-Service, at
 www.transifex.net_, ready to serve your translations with a few clicks.
-Transifex.net is a one-stop, batteries-included hosted service serving
-independent projects and businesses which don't want to worry about deploying
-their own Tx instance.
+Transifex.net is a one-stop, batteries-included hosted service serving more
+than 870 independent projects and businesses which don't want to worry about
+deploying their own Transifex instance.
 
 Transifex.net is managed by Indifex_, the company sponsoring the development
 of Transifex itself.
@@ -133,6 +128,7 @@ For a full list of features and code examples, please refer to the
 
 .. figure:: ../../screenshots/0.9/addons.png
    :class: alcenter shot2
+
 
 Project Team Sharing
 ::::::::::::::::::::
@@ -282,6 +278,13 @@ Under-the-hood Improvements
   still removes the POFiles that belong to it.
 - Added Tx repository revision into the footer. Helpful to identify the exactly
   revision used to run a Tx instance using a devel branch.
+- Added projects lookup for django-ajax-select queries.
+- Restrict a bit more the regex for URLS that contain filenames.
+- Splitted Catalan into two languages: 'ca' and 'ca@valencia' (#613).
+- Add template escaping on all firstof tags.
+- Added support for intltool multi-domain projects.
+- Disable Lotte for broken pofiles.
+- Show i18n method on component page (#349).
 
 
 Improved Mercurial Backend
@@ -341,12 +344,51 @@ Bugfixes
 - Added Tx repository revision into the footer
 - txstatsrefresh command has been setup to correctly register addon handlers.
 - A simple templatetag to wrap the size_human utility method.
+- Fixed file locking through Lotte (#593): When a user now tries to open up
+  Lotte for a file locked by someone else, a message is shown explaining that
+  only submission through a review are allowed.
 
 
 Translations
 ------------
 
-[to be filled]
+- A S Alam -- Punjabi (pa)
+- Bruce Cowan -- English (United Kingdom) (en_GB)
+- Cheng-Chia Tseng -- Chinese (Taiwan)
+- David King -- British English
+- Diego Búrigo Zacarão -- Portuguese (Brazilian) (pt_BR)
+- Dimitris Glezos -- Greek (el)
+- Emmanuel Trillaud -- French (fr)
+- Guido Grazioli -- Italian (it)
+- Harald Servat -- Catalan (Valencian) (ca)
+- Héctor Daniel Cabrera -- Spanish (Castilian) (es)
+- Jake Li -- Chinese (China) (zh_CN)
+- Jannis Leidel -- German (de)
+- Jari Rahkonen -- Finnish (fi)
+- Jens -- German (de)
+- Jeroen Hellingman -- Dutch (Netherlands) (nl)
+- Lauri Võsandi -- Estonian (et)
+- Leandro Regueiro -- Galician (gl)
+- Nikolas Slivka -- Hungarian
+- Nikos Tsirakis -- Greek (el)
+- Pavel Maryanov -- Russian (ru)
+- Péter Sulyok -- Hungarian (hu)
+- Petr Novák -- Czech (cs)
+- Piotr Drąg -- Polish (pl)
+- Sankarshan Mukhopadhyay -- Bengali (India)
+- Sérgio Marques -- Portuguese (pt)
+- Silvio Pierro -- Italian (it)
+- Teguh Dwicaksana -- Indonesian (id)
+- Thomas De Rocker -- Dutch (Netherlands) (nl)
+- Thorsten -- German (de)
+- Tim Gerundt -- German (de)
+- Tomáš Virgl -- Slovak (sk)
+- Valerij Krjuchko -- Russian (ru)
+- Veeven -- Telugu (te)
+- Vladimir Stupin -- Russian (ru)
+- Yaron Shahrabani -- Hebrew (he)
+- Yuri Chornoivan -- Ukrainian (uk)
+- వీవెన్ వీరపనేని -- Telugu (te)
 
 
 Getting Transifex 0.9
@@ -451,12 +493,21 @@ schema of the previous version, is run the following:
     mv userprofile media/userprofile
     mv reviews_files media/reviews_files
 
+
 Contributors
 ------------
 
 The following people have contributed to this release, with one way or another:
 
-(to be filled)
+- Andreas Loupasakis
+- Diego Búrigo Zacarão
+- Dimitris Glezos
+- Jannis Leidel
+- Lauri Võsandi
+- Margie Foster
+- Nikos Korkakakis
+- Og Maciel
+- Seraphim Mellos
 
 For a list of our awesome translators, refer to the `Translations`_ section.
 
@@ -466,7 +517,7 @@ Transifex 0.9 Development Releases
 
 - Alpha: 21 May 2010
 - Beta: 4 June 2010
-- Release Candidate: n/a
+- Final: 19 July 2010
 
 Please refer to the full `Transifex 0.9 changelog`_ for more information on
 what has changed between the development releases and final one.
