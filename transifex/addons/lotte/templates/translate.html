@@ -110,17 +110,17 @@
                     var source_divs = '';
                     for(rule in clean_array["source_dict"]["source_strings"]){
                         if(rule=='other')
-                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + clean_array["source_dict"]["source_strings"]["other"] + '</div>'
+                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + html_escape(clean_array["source_dict"]["source_strings"]["other"]) + '</div>'
                         else
-                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["source_strings"][rule] + '</p>'
+                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][rule]) + '</p>'
                     }
                     for(lang in clean_array["source_dict"]["similar_lang_strings"]){
                       lang_strings = "";
                       for(rule in clean_array["source_dict"]["similar_lang_strings"][lang]){
                         if(rule=='other')
-                          lang_strings += '<p>' + clean_array["source_dict"]["similar_lang_strings"][lang][rule] + '</p>'
+                          lang_strings += '<p>' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                         else
-                          lang_strings += '<p><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + clean_array["source_dict"]["similar_lang_strings"][lang][rule] + '</p>'
+                          lang_strings += '<p><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                       }
                       if(!lang_strings==""){
                         source_divs += '<h3 class="similar_lang_title" style="margin-bottom:-1em;font-size:0.85em">In '+lang+':</h3>';
