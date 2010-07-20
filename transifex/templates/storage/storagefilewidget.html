@@ -36,7 +36,7 @@ function show_uploadedfile(file, uuid){
 
     $("#{{ name }}-uploaded_file").unbind("click").click(function() {
         $.ajax({
-            url : sprintf('/api/storage/%s/', uuid),
+            url : sprintf('{{ api_storagefile_url }}', uuid),
             type : 'DELETE',
             beforeSend: function(){
             $("div#notification-container div").html(sprintf("Deleting '%s'", file));
@@ -63,7 +63,7 @@ function first_select_language(update_language){
             $("#{{ name }}-uploaded_file").show();
             if(update_language==true){
                 $.ajax({
-                    url : sprintf('/api/storage/%s/',  $("#{{ name }}-id-uuid").val()),
+                    url : sprintf('{{ api_storagefile_url }}',  $("#{{ name }}-id-uuid").val()),
                     contentType : 'application/json',
                     type : 'POST',
                     data : JSON.stringify({

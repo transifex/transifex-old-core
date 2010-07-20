@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 from languages.models import Language
 from storage.models import StorageFile
 from txcommon.log import logger
+from txcommon.utils import get_url_pattern
 
 class StorageFileWidget(forms.MultiWidget):
     """
@@ -68,11 +69,9 @@ class StorageFileWidget(forms.MultiWidget):
         context = {
                 'name': name,
                 'names': [name + '_%s' %n for n, w in enumerate(self.widgets)],
-                #'storagefile_id': getattr(storagefile,'id', None),
                 'storagefile': storagefile,
-                #'language': language,
                 'rendered_fields': rendered_fields,
-                #'extra_attrs': mark_safe(flatatt(final_attrs)),
+                'api_storagefile_url': get_url_pattern('api.storage.file'),
                 }
 
         return mark_safe(
