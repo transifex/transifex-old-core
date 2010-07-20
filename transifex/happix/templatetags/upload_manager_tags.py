@@ -1,33 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import template
-from django.core.urlresolvers import reverse
-from languages.models import Language
-from projects.models import Project
 from happix.forms import CreateResourceForm, ResourceTranslationForm
-from happix.models import Resource, PARSERS
-from storage.models import StorageFile
 from txcommon.utils import get_url_pattern
 
 register = template.Library()
-
-@register.inclusion_tag("storage/upload_manager.html")
-def upload_manager(target_object):
-#    print "Target object:", target_object
-    if isinstance(target_object, Project):
-        project = target_object
-        resource = None
-    elif isinstance(target_object, Resource):
-        project = target_object.project
-        resource = target_object
-    else:
-        project = None
-        resource = None
-    return {
-          'files' : StorageFile.objects.all(), #, project = project, user = request.user),
-          'project' : target_object,
-          'parsers' : PARSERS,
-          'languages' : Language.objects.all(),
-    }
 
 
 @register.inclusion_tag("happix/upload_create_resource_form.html")
