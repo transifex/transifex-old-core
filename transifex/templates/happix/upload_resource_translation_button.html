@@ -17,7 +17,7 @@ $(document).ready(function(){
         var uuid = $(this).val();
         var language = $("[name='" + prefix + "_0']").val();
         if(uuid != ""){
-            var url_api_project = sprintf('{{ api_resource_translation_storage }}', project_slug, resource_slug, language)
+            var url_api_project = sprintf('{{ api_resource_storage }}', project_slug, resource_slug, language)
             $("div#notification-container div").html(
                 sprintf("Adding translations for '%s', this might take a while...", '{{ language.code }}'));
             $("div#notification-container").fadeIn("slow");
