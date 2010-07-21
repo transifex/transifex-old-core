@@ -19,7 +19,7 @@ $(document).ready(function(){
 
         json_request(
             'POST',
-            sprintf(url_api_project, '{{ project.slug }}'),
+            sprintf('{{ api_project_files }}', '{{ project.slug }}'),
             {'uuid':uuid},
             function(status, retval){
                 $("div#notification-container").fadeOut("slow");

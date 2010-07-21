@@ -41,7 +41,7 @@ urlpatterns = patterns('',
      ), url(
         r'^project/(?P<project_slug>[-\w]+)/files/$',
         projectresource_handler,
-        name='api_project',
+        name='api_project_files',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/strings/$',
         string_handler
@@ -69,7 +69,7 @@ urlpatterns = patterns('',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[-_@\w]+)/$',
         projectresource_handler,
-        name='api_resource_translation_storage'
+        name='api_resource_storage'
 #    ), url(
 #        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/(?P<source_lang_code>[-\w]+)/$',
 #        strings_handler,

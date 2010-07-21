@@ -26,11 +26,14 @@ def upload_create_resource_form(request, project, prefix='create_form'):
         create_resource_form = CreateResourceForm(prefix=prefix)
         display_form=False
 
+    api_project_files = get_url_pattern('api_project_files')
+
     return {
           'project' : project,
           'resource': resource,
           'create_resource_form': create_resource_form,
           'display_form': display_form,
+          'api_project_files': api_project_files,
     }
 
 
@@ -64,14 +67,14 @@ def upload_resource_translation_button(request, resource, language=None,
         resource_translation_form = ResourceTranslationForm(language=language,
             prefix=prefix, initial=initial)
 
-    api_resource_translation_storage = get_url_pattern(
-        'api_resource_translation_storage')
+    api_resource_storage = get_url_pattern(
+        'api_resource_storage')
 
     return {
           'project': resource.project,
           'resource': resource,
           'language' : language,
           'resource_translation_form': resource_translation_form,
-          'api_resource_translation_storage': api_resource_translation_storage,
+          'api_resource_storage': api_resource_storage,
           'translate_online': translate_online
     }
