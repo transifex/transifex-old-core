@@ -36,7 +36,7 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
 
     # (6.1) Empty file check
     if stream.size == 0:
-        raise SubmitError(_("You have submitted empty file!"))
+        raise SubmitError(_("You submitted an empty file!"))
 
     # Read the stream to buffer
     buf = stream.read()
@@ -56,8 +56,8 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
         'Content-Transfer-Encoding']
     for field in required_fields:
         if not "Content-Type" in po.metadata:
-            raise SubmitError(_("Uploaded file header doesn't "
-               "have '%s' field!") % field)
+            raise SubmitError(_("Uploaded file header is missing "
+               "the '%s' field!") % field)
 
     # (6.5.1) Check charset in header (UTF-8)
     if settings.PRESUBMIT_CHECK_UTF8:
