@@ -46,7 +46,8 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
     if settings.PRESUBMIT_CHECK_DOS_NEWLINES:
         if '\r' in buf:
             raise SubmitError(_("Uploaded file contains "
-                "DOS newlines (\\r)!"))
+                "Mac line endings (\\r) or possibly "
+                "DOS line endings (\\r\\n)!"))
 
     # Open POFile on the buffer
     po = pobuffer(buf)
