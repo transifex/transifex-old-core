@@ -63,7 +63,7 @@ def review_modify(request, project_slug, component_slug, id):
             review_request.status = 'C' # Closed
             review_request.save()
             request.user.message_set.create(
-                message=_("Request closed as Rejected."))
+                message=_("Request rejected."))
         elif request.POST.has_key('reopen'):
             review_request.resolution = 'N' # Null
             review_request.status = 'O' # Opened
