@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-22 10:09+0000\n"
-"PO-Revision-Date: 2010-06-16 22:31+0200\n"
+"PO-Revision-Date: 2010-07-22 22:32+0200\n"
 "Last-Translator: Nikolas Slivka <snicore@gmail.com>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,8 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: actionlog/filters.py:12
-#, fuzzy
 msgid "Search for a username or leave it blank"
-msgstr "Használót keres név szerint, vagy hagyja üresen"
+msgstr "Keressen használót név szerint, vagy hagyja üresen"
 
 #: actionlog/models.py:204
 msgid "log entry"
@@ -140,11 +139,11 @@ msgstr ""
 #: addons/locks/models.py:65
 #, python-format
 msgid ""
-"User '%(user)s' has no permission to submit files for or coordinate  '%"
-"(pofile)s'"
+"User '%(user)s' has no permission to submit files for or coordinate  "
+"'%(pofile)s'"
 msgstr ""
-"„%(user)s” használónak nincs engedélye fájlokat beküldeni illetve „%(pofile)"
-"s” fájlt igazgatni"
+"„%(user)s” használónak nincs engedélye fájlokat beküldeni illetve "
+"„%(pofile)s” fájlt igazgatni"
 
 #: addons/locks/models.py:77
 #, python-format
@@ -179,9 +178,9 @@ msgid "Lock created. Please don't forget to remove it when you're done."
 msgstr "Lakat felrakva. Kérem ne felejtse el levenni, amint végzett."
 
 #: addons/locks/templates/pofile_lock.html:20
-#, fuzzy, python-format
+#, python-format
 msgid "This file is locked by user '%(owner)s'."
-msgstr "A fájlt „%(owner)s” használó lelakatolta."
+msgstr "E fájlt „%(owner)s” használó lelakatolta."
 
 #: addons/locks/templates/pofile_lock.html:22
 msgid "Click on it to unlock the file."
@@ -260,7 +259,6 @@ msgid "Uploaded file doesn't contain any translated entries!"
 msgstr "A feltöltött fájl nem tartalmaz lefordított bejegyzést!"
 
 #: addons/presubmit_checks/handlers.py:86
-#, fuzzy
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr ""
 "A fájlt elküldtem önnek levélben, hogy elkerüljük bármi munka elvesztését."
@@ -557,7 +555,7 @@ msgstr "Fordítás statisztikák %(lang)s nyelvre %(release)s kiadásra."
 
 #: projects/forms.py:18 txpermissions/forms.py:19
 msgid "Search for a username"
-msgstr "Keresés egy felhasználói név után"
+msgstr "Használó nevére keres"
 
 #: projects/forms.py:55
 msgid "Free for all"
@@ -1220,7 +1218,6 @@ msgstr ""
 "tartozik."
 
 #: reviews/views.py:52
-#, fuzzy
 msgid "Your file was successfully placed for reviewing."
 msgstr "A fájlt sikerült felülvizsgálatra küldeni."
 
@@ -1417,11 +1414,11 @@ msgstr "Nyelvek"
 #: templates/base-sample.html:49
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
-"Üdvözlöm <a·title=\"Profile·settings\"·href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Üdvözlöm <a·title=\"Profile·settings\"·href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 
 #: templates/base-sample.html:51
 msgid "Sign out from the website"
@@ -1467,13 +1464,12 @@ msgstr ""
 "\">Transifex</a>, a nyílt fordító peron."
 
 #: templates/index.html:24
-#, fuzzy
 msgid ""
 "Transifex is a service aimed at helping translators keep track of their "
 "favorite translation projects."
 msgstr ""
-"Transifex szolgáltatás törekszik fordítókat segíteni, hogy nyomon kövessék a "
-"kedvenc honosításaikat."
+"Transifex szolgáltatás célja, hogy segítse a fordítókat nyomon követni a "
+"kedvenc dolgozataikat."
 
 #: templates/index.html:28
 #, python-format
@@ -1516,11 +1512,11 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
-"Nem találja a tervét? Miért nem lép előre, és <a href=\"%(project_create_url)"
-"s\">adja hozzá</a>?"
+"Nem találja a tervét? Miért nem lép előre, és <a href="
+"\"%(project_create_url)s\">adja hozzá</a>?"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -1673,41 +1669,41 @@ msgid "Notice"
 msgstr "Megjegyzés"
 
 #: templates/notification/project_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> was added."
-msgstr "Új terv hozzáadva: <a href=\"%(project_url)s\">%(project)s</a>."
+msgstr "Új tervet adtak hozzá: <a href=\"%(project_url)s\">%(project)s</a>."
 
 #: templates/notification/project_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The project <a href=\"%(project_url)s\">%(project)s</a> was changed."
-msgstr "<a href=\"%(project_url)s\">%(project)s</a> terv változott."
+msgstr "<a href=\"%(project_url)s\">%(project)s</a> terven változtattak."
 
 #: templates/notification/project_component_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
 "added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<a href=\"%(component_url)s\">%(component_name)s</a> összetevő hozzáadva <a "
+"<a href=\"%(component_url)s\">%(component_name)s</a> összetevőt adták <a "
 "href=\"%(project_url)s\">%(project_name)s</a> tervhez."
 
 #: templates/notification/project_component_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%"
-"(component_url)s\">%(component_name)s</a> összetevője változott."
+"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href="
+"\"%(component_url)s\">%(component_name)s</a> összetevője változott."
 
 #: templates/notification/project_component_deleted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
-"The component '%(component_name)s' was deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project."
+"The component '%(component_name)s' was deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"„%(component_name)s” összetevő törölve<a href=\"%(project_url)s\">%"
-"(project_name)s</a> tervből"
+"„%(component_name)s” összetevőt törölték <a href=\"%(project_url)s\">"
+"%(project_name)s</a> tervből"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1716,21 +1712,21 @@ msgid ""
 "a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
 "have been updated:"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%"
-"(component_url)s\">%(component_name)s</a> összetevőjének következő fájljai "
-"frissítve:"
+"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href="
+"\"%(component_url)s\">%(component_name)s</a> összetevőjének következő "
+"fájljai frissítve:"
 
 #: templates/notification/project_component_file_review_submitted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">%"
-"(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"was submitted for review to the <a href=\"%(component_url)s\">"
+"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
 "a> project"
 msgstr ""
-"Felülvizsgálatra beküldve egy fájl <a href=\"%(lang_url)s\" title=\"%"
-"(filename)s\">%(lang_name)s</a> nyelvhez <a href=\"%(project_url)s\">%"
-"(project_name)s</a> terv <a href=\"%(component_url)s\">%(component_name)s</"
+"Felülvizsgálatra beküldtek egy fájlt <a href=\"%(lang_url)s\" title="
+"\"%(filename)s\">%(lang_name)s</a> nyelvhez <a href=\"%(project_url)s\">"
+"%(project_name)s</a> terv <a href=\"%(component_url)s\">%(component_name)s</"
 "a> összetevőjébe"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
@@ -1738,33 +1734,33 @@ msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "(%(trans_perc)s%)"
 msgstr ""
-"<a·href=\"%(lang_url)s\"·title=\"%(filename)s\">%(lang_name)s</a>·fájl (%"
-"(trans_perc)s%)"
+"<a·href=\"%(lang_url)s\"·title=\"%(filename)s\">%(lang_name)s</a>·fájl "
+"(%(trans_perc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
 msgid "A file called '%(filename)s'"
-msgstr "„%(filename)s” nevű fájl"
+msgstr "„%(filename)s” nevű fájlt"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
 "the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"beküldve <a href=\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%"
-"(component_url)s\">%(component_name)s</a> összetevőjébe "
+"küldtek be <a href=\"%(project_url)s\">%(project_name)s</a> terv <a href="
+"\"%(component_url)s\">%(component_name)s</a> összetevőjébe "
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
 msgid ""
 "The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "A forrás fájlnak (POT) valami baja van, és nem lehet elkészíteni/frissíteni "
-"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%"
-"(component_url)s\">%(component_name)s</a> összetevőjéhez."
+"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href="
+"\"%(component_url)s\">%(component_name)s</a> összetevőjéhez."
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
@@ -1782,34 +1778,34 @@ msgid ""
 "files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
 "<a href=\"%(user_url)s\">%(user_request)s</a> használó jogosultságot "
-"szerzett, hogy fájlokat küldhessen be <a href=\"%(project_url)s\">%(project)"
-"s</a> tervhez"
+"szerzett, hogy fájlokat küldhessen be <a href=\"%(project_url)s\">"
+"%(project)s</a> tervhez"
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
-"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
-"s</a> denied"
+"access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a> denied"
 msgstr ""
 "<a href=\"%(user_url)s\">%(user_request)s</a> használó kérelmet nyújtott be, "
-"hogy jogosult legyen fájlokat beküldeni <a href=\"%(project_url)s\">%"
-"(project)s</a> tervhez"
+"hogy jogosult legyen fájlokat beküldeni <a href=\"%(project_url)s\">"
+"%(project)s</a> tervhez"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrew own request of access to submit files to the project <a href=\"%"
-"(project_url)s\">%(project)s</a>"
+"Withdrew own request of access to submit files to the project <a href="
+"\"%(project_url)s\">%(project)s</a>"
 msgstr ""
-"Visszavonja saját kérelmét, hogy fájlokat küldhessen be <a href=\"%"
-"(project_url)s\">%(project)s</a> tervhez."
+"Visszavonja saját kérelmét, hogy fájlokat küldhessen be <a href="
+"\"%(project_url)s\">%(project)s</a> tervhez."
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"Requested access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
 "Kérelmet nyújtott be, hogy fájlokat küldhessen be <a href=\"%(project_url)s"
 "\">%(project)s</a> tervhez."
@@ -1822,11 +1818,11 @@ msgid ""
 "revoked"
 msgstr ""
 "<a href=\"%(user_url)s\">%(user_request)s</a> használó visszavonta a "
-"kérelmét, hogy fájlokat küldhessen be <a href=\"%(project_url)s\">%(project)"
-"s</a> tervhez."
+"kérelmét, hogy fájlokat küldhessen be <a href=\"%(project_url)s\">"
+"%(project)s</a> tervhez."
 
 #: templates/notification/project_team_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added "
 "to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
@@ -1835,7 +1831,7 @@ msgstr ""
 "href=\"%(project_url)s\">%(project_name)s</a> tervbe."
 
 #: templates/notification/project_team_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
@@ -1844,35 +1840,35 @@ msgstr ""
 "\">%(team_name)s fordító csapata</a> változott."
 
 #: templates/notification/project_team_deleted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted "
 "from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> tervből törölték <a href=\"%"
-"(team_url)s\">%(team_name)s fordító csapatot</a>."
+"<a href=\"%(project_url)s\">%(project_name)s</a> tervből törölték <a href="
+"\"%(team_url)s\">%(team_name)s fordító csapatot</a>."
 
 #: templates/notification/project_team_join_approved/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to "
 "the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(user_url)s\">%(user_name)s</a> használó tagsága <a href=\"%"
-"(project_url)s\">%(project_name)s</a> terv <a href=\"%(team_url)s\">%"
-"(team_name)s fordító csapatában</a> jóváhagyva"
+"<a href=\"%(user_url)s\">%(user_name)s</a> használót felvették <a href="
+"\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%(team_url)s\">"
+"%(team_name)s fordító csapatába</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s "
 "request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(user_url)s\">%(user_name)s</a> használó tagsága <a href=\"%"
-"(project_url)s\">%(project_name)s</a> terv <a href=\"%(team_url)s\">%"
-"(team_name)s fordító csapatában</a> jóváhagyva"
+"%(performer)s elutasította <a href=\"%(user_url)s\">%(user_name)s</a> "
+"használó kérését tagságra <a href=\"%(project_url)s\">%(project_name)s</a> "
+"terv <a href=\"%(team_url)s\">%(team_name)s fordító csapatába</a>"
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
@@ -1886,43 +1882,44 @@ msgstr ""
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
-"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project"
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
+"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project"
 msgstr ""
-"Visszavonta saját arra vonatkozó kérelmét, hogy beállhasson <a href=\"%"
-"(project_url)s\">%(project_name)s</a> terv <a href=\"%(team_url)s\">%"
-"(team_name)s fordító csapatába</a>"
+"Visszavonta saját arra vonatkozó kérelmét, hogy beállhasson <a href="
+"\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%(team_url)s\">"
+"%(team_name)s fordító csapatába</a>"
 
 #: templates/notification/project_team_left/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"A használó elhagyta <a href=\"%(project_url)s\">%(project_name)s</a> terv <a "
+"Használó hagyta el <a href=\"%(project_url)s\">%(project_name)s</a> terv <a "
 "href=\"%(team_url)s\">%(team_name)s fordító csapatát</a>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> "
 "translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> "
 "project was denied."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href=\"%"
-"(language_url)s\">%(language_name)s</a> fordító csapat alakítására vonatkozó "
-"kérelem elutasítva"
+"<a href=\"%(project_url)s\">%(project_name)s</a> terv <a href="
+"\"%(language_url)s\">%(language_name)s</a> fordító csapat alakítására "
+"vonatkozó kérelmet elutasították."
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
 msgid ""
-"The creation of a translation team for <a href=\"%(language_url)s\">%"
-"(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"The creation of a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
 "\">%(project_name)s</a>."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> tervhez <a href=\"%"
-"(language_url)s\">%(language_name)s</a> fordító csapat megalkotását kérték."
+"<a href=\"%(project_url)s\">%(project_name)s</a> tervhez <a href="
+"\"%(language_url)s\">%(language_name)s</a> fordító csapat megalkotását "
+"kérték."
 
 #: templates/notification/user_nudge/notice.html:2
 #, python-format
@@ -1945,12 +1942,12 @@ msgstr "Búcsút int <em>%(component_name)s</em> összetevőnek?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the component '%"
-"(component_name)s' which belongs to %(project_name)s?\n"
+"  Are you sure you want to permanently delete the component "
+"'%(component_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Biztos, hogy véglegesen törölni akarja %(project_name)s „%(component_name)"
-"s”·összetevőjét?\n"
+"  Biztos, hogy véglegesen törölni akarja %(project_name)s "
+"„%(component_name)s”·összetevőjét?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
@@ -2025,7 +2022,7 @@ msgstr "Fájl szűrő:"
 
 #: templates/projects/component_detail.html:111
 msgid "i18n method:"
-msgstr ""
+msgstr "i18n módszer:"
 
 #: templates/projects/component_detail.html:117
 msgid "Release:"
@@ -2278,8 +2275,8 @@ msgstr "Elbúcsuzzunk <em>%(project_name)s</em> tervtől?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?\n"
+"  Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?\n"
 msgstr ""
 "\n"
 "  Biztos, hogy véglegesen törölni akarja „%(project_name)s” tervet?\n"
@@ -2496,8 +2493,8 @@ msgid ""
 "which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Biztos, hogy maradandóan törölni akarja %(project_name)s terv „%"
-"(release_name)s”·kiadását?\n"
+"  Biztos, hogy maradandóan törölni akarja %(project_name)s terv "
+"„%(release_name)s”·kiadását?\n"
 
 #: templates/projects/release_detail.html:69
 msgid "Release date:"
@@ -2593,8 +2590,8 @@ msgid ""
 "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
 "us know</a>."
 msgstr ""
-"Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href=\"%"
-"(contact_form)s\">tudassa velünk</a>."
+"Ha úgy gondolja, ennek nem így kellene lennie, kérem <a·href="
+"\"%(contact_form)s\">tudassa velünk</a>."
 
 #: templates/projects/release_language_detail.html:64
 msgid "Untranslated Components"
@@ -2616,8 +2613,8 @@ msgstr "Terv kiadások"
 #: templates/projects/release_list.html:28
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 "Még nincs e tervhez bejegyzett kiadás. Miért nem <a·href=\"%(release_create)s"
 "\">ad hozzá egyet</a>?"
@@ -2766,7 +2763,7 @@ msgstr "%(user)s nyilvános adatai"
 #: templates/simpleauth/public_profile.html:14 txcommon/admin.py:20
 #: txcommon/admin.py:27
 msgid "Username"
-msgstr "Felhasználónév"
+msgstr "Név"
 
 #: templates/simpleauth/settings.html:4
 msgid "Your Profile"
@@ -2799,7 +2796,7 @@ msgid ""
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
-"<p>Kérem jelentkezzen be az e-mail címével és a felhasználónevével.<br />\n"
+"<p>Kérem jelentkezzen be az e-mail címével vagy a használó nevével.<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
@@ -2814,8 +2811,8 @@ msgid ""
 "belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Biztos, hogy maradandóan törölni akarja %(project_name)s terv „%(lang_name)"
-"s”·csapatát?\n"
+"  Biztos, hogy maradandóan törölni akarja %(project_name)s terv "
+"„%(lang_name)s”·csapatát?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
 msgid "Teams"
@@ -2825,12 +2822,12 @@ msgstr "Csapatok"
 #, python-format
 msgid ""
 "\n"
-"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>\n"
 msgstr ""
 "\n"
-"  Fordító csapatok – %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"  Fordító csapatok – %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>\n"
 
 #: templates/teams/team_detail.html:36
 msgid "Mainlist:"
@@ -2940,17 +2937,17 @@ msgstr "E terv nem alkalmaz fordító csapatokat"
 msgid ""
 "\n"
 "            This project does not maintain its own teams, but has chosen to "
-"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
-"s</a>'.\n"
+"re-use the teams of project '<a href=%(outsource_url)s>"
+"%(outsource_project)s</a>'.\n"
 "            In order to send translations here you'll need to join a team of "
 "'%(outsource_project)s'.\n"
 "        "
 msgstr ""
 "\n"
-"            E terv nem tart fent saját csapatot, hanem „<a href=%"
-"(outsource_url)s>%(outsource_project)s</a>” csapatait hasznosítja újra.\n"
-"            Fordítás beküldése végett be kell kerülnie „%(outsource_project)"
-"s” csapatba.\n"
+"            E terv nem tart fent saját csapatot, hanem „<a href="
+"%(outsource_url)s>%(outsource_project)s</a>” csapatait hasznosítja újra.\n"
+"            Fordítás beküldése végett be kell kerülnie "
+"„%(outsource_project)s” csapatba.\n"
 "        "
 
 #: templates/teams/team_off.html:22
@@ -3053,11 +3050,11 @@ msgstr "Levélcím érvényesítés folyamat"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
-"Igazgathatja a levélcím érvényesítés folyamatát az <a href=\"%"
-"(profile_overview)s\">áttekintés lapon</a>."
+"Igazgathatja a levélcím érvényesítés folyamatát az <a href="
+"\"%(profile_overview)s\">áttekintés lapon</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -3077,7 +3074,6 @@ msgid "E-mail change processed"
 msgstr "Levélcím változás feldolgozva"
 
 #: templates/userprofile/account/email_validation_processed.html:15
-#, fuzzy
 msgid ""
 "An e-mail was sent to the new e-mail address for verification purposes. "
 "Please check your e-mail and complete this process by following the "
@@ -3190,9 +3186,8 @@ msgid "Password change successful"
 msgstr "Sikeresen megváltoztatta a jelszavát"
 
 #: templates/userprofile/account/password_change_done.html:14
-#, fuzzy
 msgid "Password changed."
-msgstr "Jelszó változtatás"
+msgstr "A jelszó megváltozott."
 
 #: templates/userprofile/account/password_expired.html:4
 msgid "Password key expired"
@@ -3228,9 +3223,8 @@ msgid "Reset my password"
 msgstr "Töröljék a jelszavam"
 
 #: templates/userprofile/account/password_reset_complete.html:14
-#, fuzzy
 msgid "Password changed.  You may log in now."
-msgstr "A jelszavát beállítottam.  Most már bejelentkezhet."
+msgstr "A jelszó megváltozott.  Most már bejelentkezhet."
 
 #: templates/userprofile/account/password_reset_confirm.html:32
 #: templates/userprofile/profile/overview.html:88
@@ -3285,21 +3279,20 @@ msgid "Register a new account"
 msgstr "Beiratkozik"
 
 #: templates/userprofile/account/registration_done.html:12
-#, fuzzy
 msgid ""
 "Account created. An activation url was sent to your e-mail address. Please "
 "access that url to complete the registration process."
 msgstr ""
-"Sikerült beiratkoznia, és egy URL-t küldtünk az ön levélcímére. Kérem "
-"kattintson a hivatkozásra, hogy befejezze a beiratkozás folyamatát."
+"A számla kész. Egy URL-t küldtünk az ön levélcímére. Kérem kattintson a "
+"hivatkozásra, hogy befejezze a beiratkozás folyamatát."
 
 #: templates/userprofile/account/registration_done.html:15
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Account created. Go to the <a href=\"%(overview_url)s\">sign in page</a> to "
 "authenticate and start using this site."
 msgstr ""
-"Sikerült beiratkoznia. Hitelesítse magát a <a·href=\"%(overview_url)s"
+"A számla kész. Hitelesítse magát a <a·href=\"%(overview_url)s"
 "\">bejelentkezés lapon</a>, és elkezdheti használni e szolgáltatást."
 
 #: templates/userprofile/avatar/choose.html:4
@@ -3553,7 +3546,6 @@ msgid "Developer comments"
 msgstr "Fejlesztő megjegyzései"
 
 #: templates/webtrans/comments.html:5
-#, fuzzy
 msgid "Occurrences"
 msgstr "Előfordulások"
 
@@ -3674,13 +3666,13 @@ msgstr "Opciók"
 #: translations/templates/comp_stats_table.html:40
 #: translations/templates/lang_stats_table.html:28
 msgid "There is at least one file broken here."
-msgstr ""
+msgstr "Van itt legalább egy rossz fájl."
 
 #: translations/templates/comp_lang_stats_table.html:29
 #: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:30
 msgid "This PO file is broken. The web editor is disabled for it."
-msgstr ""
+msgstr "E PO fájl rossz. A webes szerkesztőt nem használhatják hozzá."
 
 #: translations/templates/comp_lang_stats_table.html:35
 #: translations/templates/comp_stats_table.html:48
@@ -3777,9 +3769,8 @@ msgid "There are no languages registered matching this file"
 msgstr "Nincs e fájlhoz illeszkedő nyelv"
 
 #: translations/templates/release_stats_table.html:22
-#, fuzzy
 msgid "There is at least one file with problems for this language."
-msgstr "Az új nyelvnek feltöltendő fordítás fájl."
+msgstr "Van e nyelvhez legalább egy fájl, amivel baj van."
 
 #: translations/templates/source_files.html:5
 msgid "Click here to show or hide the source files"
@@ -3879,57 +3870,52 @@ msgstr "amikor tervet törölnek"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
-msgstr "Beküldés hozzáférést kérnek"
+msgstr "Beküldő hozzáférést kérnek"
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when a user request access to submit files to a project"
-msgstr ""
-"amikor egy felhasználó kérelmezte, hogy fájlokat küldhessen a projecthez"
+msgstr "amikor használó kérelmezi, hogy fájlokat küldhessen egy tervbe"
 
 #: txcommon/notifications.py:41
 msgid "Submit access request to project denied"
-msgstr "Beküldés hozzáférés kérelmet a tervbe megtagadnak"
+msgstr "Beküldő hozzáférés kérelmet a tervbe megtagadnak"
 
 #: txcommon/notifications.py:42
-#, fuzzy
 msgid "when a maintainer denies a user access to submit files to a project"
 msgstr ""
-"amikor egy karbantartó megtagadta a hozzáférést egy felhasználónak, hogy az "
-"fájlokat küldhessen be a projecthez"
+"amikor karbantartó megtagadja a hozzáférést egy használótól, hogy az "
+"fájlokat küldhessen be a tervbe"
 
 #: txcommon/notifications.py:49
 msgid "Submit access request to project withdrawn"
-msgstr "Beküldés hozzáférés kérelmet a tervbe visszavonnak"
+msgstr "Beküldő hozzáférés kérelmet a tervbe visszavonnak"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid ""
 "when a user withdraws the request for access to submit files to a project"
 msgstr ""
-"amikor egy felhasználó visszavonja az engedélyét, hogy fájlokat küldhessen "
-"be a projectbe"
+"amikor egy használó visszavonja a kérését, hogy fájlokat küldhessen be egy "
+"tervbe"
 
 #: txcommon/notifications.py:57
 msgid "Submit access to project granted"
-msgstr "Beküldés hozzáférést a tervebe megadnak"
+msgstr "Beküldő hozzáférést a tervebe megadnak"
 
 #: txcommon/notifications.py:58
-#, fuzzy
 msgid "when a maintainer grants a user access to submit files to a project"
 msgstr ""
-"amikor a karbantartó hozzáférést adott egy felhasználónak, hogy az fájlokat "
-"küldhessen a projectbe"
+"amikor karbantartó hozzáférést ad egy használónak, hogy fájlokat küldhessen "
+"a tervbe"
 
 #: txcommon/notifications.py:65
 msgid "Submit access to project revoked"
-msgstr "Beküldés hozzáférést a tervebe visszavonnak"
+msgstr "Beküldő hozzáférést a tervebe visszavonnak"
 
 #: txcommon/notifications.py:66
 msgid ""
 "when a maintainer revokes the access of an user to submit files to a project"
 msgstr ""
-"amikor a karbantartó visszavonja az engedélyét egy felhasználónak, hogy az "
+"amikor karbantartó visszavonja egy használó engedélyét, hogy "
 "fájlokat küldhessen a projectbe"
 
 #: txcommon/notifications.py:73
@@ -4059,7 +4045,6 @@ msgid "Team Creation Requested"
 msgstr "Csapat megalakítását kérik"
 
 #: txcommon/notifications.py:193
-#, fuzzy
 msgid "when a translation team creation is requested for a project"
 msgstr "amikor egy tervhez egy fordító csapat megalakítását kérik"
 
@@ -4068,7 +4053,6 @@ msgid "Team Creation Request Denied"
 msgstr "Csapatalakítás kérelmet elutasítanak"
 
 #: txcommon/notifications.py:201
-#, fuzzy
 msgid ""
 "when a translation team creation request for a project is denied by a "
 "maintainer"
@@ -4081,7 +4065,6 @@ msgid "Team User Joining Requested"
 msgstr "Csapatba beállást kérnek"
 
 #: txcommon/notifications.py:209
-#, fuzzy
 msgid "when a user requests to join a project translation team"
 msgstr "amikor egy használó kéri, hogy beállhasson egy terv fordító csapatába"
 
@@ -4090,7 +4073,6 @@ msgid "Team User Joining Approved"
 msgstr "Csapatba beállást jóváhagynak"
 
 #: txcommon/notifications.py:217
-#, fuzzy
 msgid "when a user is approved as a member of a project translation team"
 msgstr "amikor egy használó tagságát egy terv fordító csapatában jóváhagyják"
 
@@ -4099,16 +4081,14 @@ msgid "Team User Joining Denied"
 msgstr "Csapatba beállást megtagadnak"
 
 #: txcommon/notifications.py:225
-#, fuzzy
 msgid "when a user is denied as a member of a project translation team"
 msgstr "amikor egy használó tagságát egy terv fordító csapatában elutasítják"
 
 #: txcommon/notifications.py:232
 msgid "Team User Joining Withdrawn"
-msgstr "Csapatba beállás kérést visszavonnak"
+msgstr "Csapatba beálló kérést visszavonnak"
 
 #: txcommon/notifications.py:233
-#, fuzzy
 msgid "when a user decides not to join a project translation team"
 msgstr "amikor egy használó kéri, hogy beállhasson egy terv fordító csapatába"
 
@@ -4117,7 +4097,6 @@ msgid "Team User Left"
 msgstr "Csapattag kilép"
 
 #: txcommon/notifications.py:241
-#, fuzzy
 msgid "when a user leaves a project translation team"
 msgstr "amikor egy használó elhagyja egy terv fordító csapatát"
 
@@ -4133,10 +4112,9 @@ msgstr ""
 
 #: txcommon/notifications.py:259
 msgid "User Nudge"
-msgstr "Használói noszogatás"
+msgstr "Használó noszogat"
 
 #: txcommon/notifications.py:260
-#, fuzzy
 msgid "when a user nudges you"
 msgstr "amikor önt egy használó noszogatja"
 
@@ -4314,12 +4292,11 @@ msgstr "%s mezőket kell kitölteni."
 
 #: webtrans/wizards.py:130
 msgid "The PO file is broken and can't be opened by Lotte."
-msgstr ""
+msgstr "A PO fájl rossz. Lotte nem nyithatja meg."
 
 #: webtrans/wizards.py:424
-#, fuzzy
 msgid "You can't make submissions for a file locked by someone else."
-msgstr "E fájlt lelakatolta valaki más."
+msgstr "Nem küldhet be olyan fájlt, amit más lelakatolt."
 
 #: webtrans/wizards.py:430
 msgid ""
@@ -4752,8 +4729,8 @@ msgstr "Következő"
 
 #~ msgid ""
 #~ "\n"
-#~ "  Are you sure you want to permanently delete the registered collection '%"
-#~ "(collection_name)s'?\n"
+#~ "  Are you sure you want to permanently delete the registered collection "
+#~ "'%(collection_name)s'?\n"
 #~ msgstr ""
 #~ "\n"
 #~ "  Biztos, hogy véglegesen törölni akarja „%(collection_name)s” "
@@ -4769,8 +4746,8 @@ msgstr "Következő"
 #~ msgstr "Jelenleg a következő terveket soroljuk e gyűjteménybe:"
 
 #~ msgid ""
-#~ "No projects are registered for this collection yet. <a href=\"%"
-#~ "(project_list)s\">Find projects</a> and add them to this collection."
+#~ "No projects are registered for this collection yet. <a href="
+#~ "\"%(project_list)s\">Find projects</a> and add them to this collection."
 #~ msgstr ""
 #~ "Nincs még e gyűjteménybe sorolt terv. <a·href=\"%(project_list)s"
 #~ "\">Keressen terveket</a>, és adja őket e gyűjteményhez."
@@ -4836,8 +4813,8 @@ msgstr "Következő"
 
 #~ msgid ""
 #~ "\n"
-#~ "  Are you sure you want to permanently delete the registered release '%"
-#~ "(release_name)s'?\n"
+#~ "  Are you sure you want to permanently delete the registered release "
+#~ "'%(release_name)s'?\n"
 #~ msgstr ""
 #~ "\n"
 #~ "  Biztos, hogy véglegesen törölni akarja „%(release_name)s” kiadást?\n"
