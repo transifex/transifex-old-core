@@ -78,7 +78,7 @@ class ProjectAccessControlForm(forms.ModelForm):
                               person can contribute to that project, it can
                               contribute to this one as well. Recommended for
                               non-upstream projects such as distribution
-                              packages, desktop environment modules, etc."""),
+                              packages and desktop environment modules."""),
             }
         },
     ]
