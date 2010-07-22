@@ -65,7 +65,7 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
         if not "charset=utf-8" in po.metadata["Content-Type"].lower():
             raise SubmitError(_("File is not encoded using UTF-8!"))
 
-    # (6.1) No translated entires check
+    # (6.1) No translated entries check
     if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
         raise SubmitError(_("Uploaded file doesn't contain any "
             "translated entries!"))
