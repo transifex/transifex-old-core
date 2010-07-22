@@ -50,7 +50,7 @@ def webtrans_init_handler(sender, request, pofile=None, **kwargs):
     user = request.user
     try:
         POFileLock.objects.create_update(pofile, user)
-        logger.debug("lock-addon: Lock aquired/extended for user '%s' "
+        logger.debug("lock-addon: Lock acquired/extended for user '%s' "
         "for file '%s'" % (user,pofile))
     except POFileLockError, e:
         logger.debug("lock-addon: %s" % str(e))

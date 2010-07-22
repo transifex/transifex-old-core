@@ -71,7 +71,7 @@ def review_modify(request, project_slug, component_slug, id):
             request.user.message_set.create(
                 message=_("Request reopened."))
         else:
-            logger.debug('Ops! A POST request was sent to modify the review '
+            logger.debug('Oops! A POST request was sent to modify the review '
                 'number %s, but no valid action was passed.' % review.id)
     return HttpResponseRedirect(reverse('review_list',
         args=[review_request.component.project.slug,
