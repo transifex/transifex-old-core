@@ -62,8 +62,8 @@ class POFileLockManager(models.Manager):
 
         # Permission check
         if not POFileLock.can_lock(pofile, user):
-            raise POFileLockError(_("User '%(user)s' has no permission to "
-               "submit files for or coordinate  '%(pofile)s'") %
+            raise POFileLockError(_("User '%(user)s' does not have "
+               "permission to submit files for '%(pofile)s'.") %
                {"user" : user, "pofile" : pofile})
 
         now = datetime.now()
