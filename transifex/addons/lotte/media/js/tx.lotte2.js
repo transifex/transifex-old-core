@@ -347,15 +347,19 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             pos = $(this).find("textarea.default_translation").offset();
             w = obj.width();
             obj.css({top:pos.top -4, left:pos.left - w -2});
-            // show details 
-            var obj2 = $(this).find('.details_trigger');
-            w2 = obj2.width();
-            obj2.css({top:pos.top + 60,left:pos.left - w2 -4});
+
+            // show bottom tabs 
+            var obj2 = $(this).find('.row_tabs');
+            obj2.css({'visibility': 'visible'});
         }).mouseout(function() {
             var obj = $(this).find('.lotte-actions');
             obj.css({top:-1000 ,left:-1000});
-            var obj2 = $(this).find('.details_trigger');
-            obj2.css({top:-1000 ,left:-1000});
+
+            // show bottom tabs 
+            var obj2 = $(this).find('.row_tabs');
+            // If there is no tab 'current'
+            if(obj2.find('.current').length==0)
+                obj2.css({'visibility': 'hidden'});
         });
         
         // Bind click events for tools
@@ -416,15 +420,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         });
 
         // 3 Show details row trigger
-        $('.details_trigger a').each(function(){
+        $('a.details_trigger').each(function(){
             $(this).click(function(){
                 var nTr = $(this).parents('tr');
                 var flag = $(this).hasClass('show_details');
                 if(flag){
                     nTr.after('<tr class="details"><td colspan="3"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
-                    var icon = $('img', this);
-                    src = icon.attr('src');
-                    icon.attr('src', src.replace('bullet_arrow_down.png', 'bullet_arrow_up.png'));
                     $('span', this).text('hide details');
                     $(this).removeClass('show_details').addClass('hide_details');
                     var source_id = parseInt(nTr.find('.source_id').text());
@@ -437,14 +438,25 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                       }
                     });
 
+                    // Put 1px border around tab
+                    nTr.css({'border-bottom':'1px solid #EEE'});
+
+                    // Fix 'current' class
+                    if(!$(this).hasClass('current'))
+                        $(this).addClass('current');
                 }else{
                     nTr.next('tr').remove();
-                    var icon = $('img', this);
-                    src = icon.attr('src');
-                    icon.attr('src', src.replace('bullet_arrow_up.png', 'bullet_arrow_down.png'));
                     $('span', this).text('show details');
                     $(this).removeClass('hide_details').addClass('show_details');
+
+                    // Put back the 3px border
+                    nTr.css({'border-bottom':'3px solid #EEE'});
+
+                    // Fix 'current' class
+                    if($(this).hasClass('current'))
+                        $(this).removeClass('current');
                 }
+                return false;
             });
         });
 

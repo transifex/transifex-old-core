@@ -21,6 +21,7 @@
 {% block extra_head %}
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
@@ -128,10 +129,22 @@
                       }
                     }
 
-                    return '<div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
+                    return '<div class="source_string_wrapper" style="position:relative;height:100%">'
+                           + '<div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
                            + source_divs
-                           + '<div class="details_trigger" style="font-size:11px;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
-                           + '<a class="show_details" style="border:0;cursor:pointer"><span>show details</span><img style="vertical-align:bottom" src="{{ STATIC_URL }}images/icons/bullet_arrow_down.png"></a>'
+                           + ' <div class="row_tabs">'
+                           + '  <ul>'
+                           + '    <li>'
+                           + '     <a class="details_trigger show_details" href="#">details</a>'
+                           + '    </li>'
+                           + '    <li>'
+                           + '     <a class="show_suggestions" href="#">suggestions</a>'
+                           + '    </li>'
+                           + '    <li>'
+                           + '     <a class="show_comments" href="#">comments</a>'
+                           + '    </li>'
+                           + '  </ul>'
+                           + ' </div>'
                            + '</div>';
                   }
                 },
@@ -410,7 +423,7 @@
             traverse_filters();
         });
 
-        /* Bind menu filters for users */
+        /* Bind menu filters for more languages */
         $('#filtermenu0 .filtermenu-trigger').toggle(function(){
             $('#more_languages_menu').show();
         }, function(){
