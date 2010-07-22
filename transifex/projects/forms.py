@@ -55,29 +55,29 @@ class ProjectAccessControlForm(forms.ModelForm):
             'label': _('Free for all'),
             'help_text': _("""Allow any logged-in user to submit files to my
                               project. <a href="http://www.youtube.com/watch?v=okd3hLlvvLw"
-                              target="_blank">Imagine</a> all the people, 
-                              sharing all the world. Recommended for quick 
-                              translations, and when a pre-commit review 
+                              target="_blank">Imagine</a> all the people,
+                              sharing all the world. Recommended for quick
+                              translations, and when a pre-commit review
                               process is in place, e.g. when contributions are
                               submitted by email or to a separate branch."""),
             }
         },
         {'limited_access': {
             'label': _('Limited access'),
-            'help_text': _("""Give access to specific people. Translations 
+            'help_text': _("""Give access to specific people. Translations
                               teams will have access to their language's files
                               only, and global writers will have access to all
-                              translation files. Recommended for most 
+                              translation files. Recommended for most
                               projects."""),
             }
         },
         {'outsourced_access': {
             'label': _('Outsourced access'),
-            'help_text': _("""Re-use another project's teams and writers by 
-                              trusting access control to that project. If a 
-                              person can contribute to that project, it can 
-                              contribute to this one as well. Recommended for 
-                              non-upstream projects such as distribution 
+            'help_text': _("""Re-use another project's teams and writers by
+                              trusting access control to that project. If a
+                              person can contribute to that project, it can
+                              contribute to this one as well. Recommended for
+                              non-upstream projects such as distribution
                               packages, desktop environment modules, etc."""),
             }
         },
@@ -85,7 +85,7 @@ class ProjectAccessControlForm(forms.ModelForm):
 
     # Setting up some vars based on the 'access_control_options' var
     access_control_types = []
-    access_control_help = {} 
+    access_control_help = {}
     for o in access_control_options:
         for k, v in o.items():
             access_control_types.append((k, v['label']))
@@ -94,7 +94,7 @@ class ProjectAccessControlForm(forms.ModelForm):
     # Add field
     access_control = forms.ChoiceField(choices=access_control_types,
         required=True, widget=forms.RadioSelect(
-            renderer=RadioFieldRenderer, 
+            renderer=RadioFieldRenderer,
             attrs={'help_text': access_control_help }))
 
     class Meta:
@@ -159,7 +159,7 @@ class ComponentAllowSubForm(forms.ModelForm):
     def __init__(self, submission_types, *args, **kwargs):
         super(ComponentAllowSubForm, self).__init__(*args, **kwargs)
         self.fields["submission_type"].choices = submission_types
-      
+
 
 class ReleaseForm(forms.ModelForm):
 

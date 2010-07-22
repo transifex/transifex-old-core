@@ -27,12 +27,12 @@ def need_browser(fn):
 class VcsUnit(Unit):
     """
     A snapshot of a VCS project, an instance of a repository's files.
-    
+
     A vcsunit is a VCS module (component) snapshot, which represents an actual
-    directory of files (eg. a repository, branch combination, or a repository, 
+    directory of files (eg. a repository, branch combination, or a repository,
     directory, date one). VcsUnits can be checked-out and managed like any real
     set of actual files.
-    
+
     It can be considered as the equivalent of a filesystem's directory.
 
     >>> u = VcsUnit.objects.create(name="Foo")
@@ -46,10 +46,10 @@ class VcsUnit(Unit):
     >>> u.delete()
 
     """
-    
+
     branch = models.CharField(_('Branch'), max_length=255,
         help_text=_('A VCS branch this unit is associated with'))
-    web_frontend = models.CharField(_('Web frontend'), blank=True, null=True, 
+    web_frontend = models.CharField(_('Web frontend'), blank=True, null=True,
         max_length=255,
         help_text=_("A URL to the project's web front-end"))
 
@@ -89,10 +89,10 @@ class VcsUnit(Unit):
         """
         Initializes an appropriate VCS browser object, depending
         on the VCS type of the project.
-        
+
         The initialization will raise an exception if the VCS type
         is not specified in the model.
-        """  
+        """
         from codebases import get_browser_object
         browser = get_browser_object(self.type)
         self.browser = browser(root=self.root,
@@ -144,7 +144,7 @@ class VcsUnit(Unit):
     def submit(self, files, msg, user):
         """Get revision of a path from the underlying VCS"""
         return self.browser.submit(files, msg, user)
-        
+
     @classmethod
     def bootstrap_extra(cls, unit):
         unit.branch = ''
@@ -152,10 +152,10 @@ class VcsUnit(Unit):
 def suite():
     """
     Define the testing suite for Django's test runner.
-    
+
     Enables test execution with ``./manage.py test <appname>``.
     """
-     
+
     import unittest
     import doctest
     s = unittest.TestSuite()
@@ -170,5 +170,5 @@ def suite():
     s.addTest(doctest.DocTestSuite(git))
     s.addTest(doctest.DocTestSuite(hg))
     s.addTest(doctest.DocTestSuite(svn))
-        
+
     return s

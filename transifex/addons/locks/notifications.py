@@ -12,8 +12,8 @@ from txcommon.notifications import NOTICE_TYPES
 NOTICE_TYPES += [
             {
                 "label": "project_component_file_lock_expiring",
-                "display": _("Lock is expring"), 
-                "description": _("when a lock for file is expiring"), 
+                "display": _("Lock is expring"),
+                "description": _("when a lock for file is expiring"),
                 "default": 1,
                 "show_to_user": True,
             },

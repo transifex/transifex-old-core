@@ -180,7 +180,7 @@
 
 {% include "translations/stats_table_filter_box.html" %}
 
-{% with component.trans.get_stats as stats %} 
+{% with component.trans.get_stats as stats %}
 {% comp_stats_table stats %}
 
 {% if request.user.is_authenticated and component.allows_submission %}

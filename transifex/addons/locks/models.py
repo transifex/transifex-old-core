@@ -27,7 +27,7 @@ class POFileLockManager(models.Manager):
         """
         return self.filter(
             notified = False,
-            expires__lt = datetime.now() + 
+            expires__lt = datetime.now() +
             timedelta(seconds=settings.LOCKS_EXPIRE_NOTIF))
 
     def expired(self):
@@ -63,7 +63,7 @@ class POFileLockManager(models.Manager):
         # Permission check
         if not POFileLock.can_lock(pofile, user):
             raise POFileLockError(_("User '%(user)s' has no permission to "
-               "submit files for or coordinate  '%(pofile)s'") % 
+               "submit files for or coordinate  '%(pofile)s'") %
                {"user" : user, "pofile" : pofile})
 
         now = datetime.now()
@@ -72,10 +72,10 @@ class POFileLockManager(models.Manager):
         if settings.LOCKS_PER_USER != None:
             locks = self.filter(
                 owner = user,
-                expires__gt = now) 
+                expires__gt = now)
             if len(locks) >= settings.LOCKS_PER_USER:
                 raise POFileLockError(_("User '%(user)s' already has maximum "
-                "allowed %(locks)i locks.") % {"user" : user, 
+                "allowed %(locks)i locks.") % {"user" : user,
                 "locks" : settings.LOCKS_PER_USER})
 
         expires = now + timedelta(seconds=settings.LOCKS_LIFETIME)
@@ -102,7 +102,7 @@ class POFileLockManager(models.Manager):
 class POFileLock(models.Model):
     """
      A lock/hold on a POFile object.
-    
+
     This usually denotes something that someone is working on and shouldn't
     be touched by others.
     """
@@ -131,7 +131,7 @@ class POFileLock(models.Model):
 
     def can_unlock(self, user):
         """
-        This function can be used to perform permission check wether 
+        This function can be used to perform permission check wether
         'user' can unlock this POFileLock instance
         """
         perm = ProjectPermission(user)
@@ -156,6 +156,6 @@ class POFileLock(models.Model):
         """
         if not self.can_unlock(user):
             raise POFileLockError(_("User '%(user)s' is not allowed "
-            "to remove lock '%(lock)s'") % { "user" : user, 
+            "to remove lock '%(lock)s'") % { "user" : user,
             "lock" : self})
         return super(POFileLock, self).delete(*args, **kwargs)

@@ -30,7 +30,7 @@
   <h3>{{ language.name }} {% trans "translation files" %}</h3>
 {% if language %}
   {% comp_lang_stats_table stats %}
- 
+
 {% if request.user.is_authenticated and component.allows_submission %}
  {% get_permission "project_perm.submit_file" for request.user and component.project,1 as "can_submit_file" %}
     {% if component.unit.last_checkout %}

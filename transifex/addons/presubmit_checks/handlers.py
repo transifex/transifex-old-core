@@ -20,7 +20,7 @@ def pobuffer(buf):
     po = pofile(fh.name)
     fh.close() # Delete temporary file
     return po
-    
+
 def pre_submit_check(sender, instance=None, user=None, component=None,
     stream=None, filename=None, file_dict=None,  **kwargs):
     # Sanity checks
@@ -51,8 +51,8 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
     # Open POFile on the buffer
     po = pobuffer(buf)
 
-    # (6.5.2) Check required header fields 
-    required_fields = ['Plural-Forms', 'Content-Type', 
+    # (6.5.2) Check required header fields
+    required_fields = ['Plural-Forms', 'Content-Type',
         'Content-Transfer-Encoding']
     for field in required_fields:
         if not "Content-Type" in po.metadata:

@@ -16,7 +16,7 @@ from models import POFileLock, POFileLockError
 
 # Component presubmit signal handler
 # Allow only owner of the lock to submit files, otherwise throw Exception
-def pre_handler(sender, instance=None, user=None, component=None, 
+def pre_handler(sender, instance=None, user=None, component=None,
     filename=None, **kwargs):
 
     if not component or not filename or not user:
@@ -73,11 +73,11 @@ def expire_notif(sender, **kwargs):
     logger.debug("lock-addon: Sending expiration notifications...")
     if not settings.ENABLE_NOTICES:
         logger.debug("lock-addon: ENABLE_NOTICES is not enabled")
-        return 
+        return
     current_site = Site.objects.get_current()
     locks = POFileLock.objects.expiring()
     nt = 'project_component_file_lock_expiring'
-    for lock in locks:    
+    for lock in locks:
         context = { 'pofile' : lock.pofile,
                     'user': lock.owner,
                     'expires': lock.expires,

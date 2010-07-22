@@ -50,7 +50,7 @@ def review_modify(request, project_slug, component_slug, id):
             #FIXME: The file should be handled with another wrapper!
             redirection = component_submit_file(request,
                  review_request.component.project.slug,
-                 review_request.component.slug, 
+                 review_request.component.slug,
                  filename=review_request.target_filename,
                  submitted_file=InMemoryUploadedFile(
                     open(review_request.file_path,'r'),
