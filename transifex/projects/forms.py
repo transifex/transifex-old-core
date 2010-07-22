@@ -74,7 +74,7 @@ class ProjectAccessControlForm(forms.ModelForm):
         {'outsourced_access': {
             'label': _('Outsourced access'),
             'help_text': _("""Re-use another project's teams and writers by
-                              trusting access control to that project. If a
+                              delegating access control to that project. If a
                               person can contribute to that project, it can
                               contribute to this one as well. Recommended for
                               non-upstream projects such as distribution
