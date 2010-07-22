@@ -55,8 +55,8 @@ def webtrans_init_handler(sender, request, pofile=None, **kwargs):
     except POFileLockError, e:
         logger.debug("lock-addon: %s" % str(e))
         request.user.message_set.create(message = _(
-                "Couldn't lock file, this means that you can "
-                "send files only for reviewing."))
+                "You will need to send this file for review "
+                "because you can't lock this file."))
 
 def webtrans_done_handler(sender, request, pofile=None, **kwargs):
     user = request.user
