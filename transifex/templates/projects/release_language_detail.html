@@ -1,6 +1,6 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
-{% load statistics %}
+{% load statistics_happix %}
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />
@@ -11,11 +11,26 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/houdini.js"></script>
   <link media="screen" href="{{ STATIC_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
 
-  <style type="text/css">
-    form.submit_form { display: none; }
-    form.submit_form fieldset { border: 2px dotted #ddd; }
-  </style>
-  {% include "translations/stats_table_filter_header.html" %}
+  <script type="text/javascript">
+    $(function(){
+        // Enable tooltip
+        $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+        // Stats table sorter
+        $(".tablesorter_resource").tablesorter({
+            widgets: ['zebra'],
+            textExtraction: { // Take value inside an object for the columns
+              0: function(node) {
+                  return $("a", node).text();
+              },
+              1: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
+        });
+
+    });
+  </script>
 
 {% endblock %}
 
@@ -33,45 +48,73 @@
 
 {% block content_main %}
 
-{% if pofile_list %}
-
-<h3>{% trans "Project/Component statistics" %} </h3>
-
-{% include "translations/stats_table_filter_box.html" %}
-
-{% lang_stats_table pofile_list %}
-
-{% url release_language_download release.project.slug release.slug language.code "zip" as zip_download_url %}
-{% url release_language_download release.project.slug release.slug language.code "targz" as targz_download_url %}
-
- {% if zip_download_url %}
- <h4>Download</h4>
-
- Receive all the translation files in a compressed archive.
- <a class="i16 compress buttonized" href="{{ zip_download_url }}">Get <code>.zip</code></a>
- <a class="i16 compress buttonized" href="{{ targz_download_url }}">Get <code>.tar.gz</code></a>
- {% endif %}
- 
-{% endif %}
-
-{% if not pofile_list %}
-{% url contact_form as contact_form %}
-  <p>{% blocktrans %}Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again.{% endblocktrans %}</p>
-  <p class="i16 tip">{% blocktrans %}If you think this shouldn't happen, please <a href="{{ contact_form }}">let us know</a>.{% endblocktrans %}</span></p>
-{% endif %}
-
-{% if untrans_comps %}
-  <h3>{% blocktrans %}Untranslated Components{% endblocktrans %}</h3>
-  <p class="explanation">
-  {% blocktrans with release.name as release_name and language.name as language_name %}The following components will be included in {{ release_name }}, but there are no translations sent for {{language_name}} yet.{% endblocktrans %}</p>
-  <div class="component_list">
-  <ul class="simple">
-  {% for comp in untrans_comps %}
-    <li><p class="i16 component"><a href="{{ comp.get_absolute_url }}">{{ comp.project.name }} &raquo; {{ comp.name }}</a></p></li>
+{% with release.resources.all as resources %}
+<div class="list separate" style="clear:both">
+  <h3>{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
+ {% if resources %}
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Name" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for res in resources %}
+    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        <td>
+        {{ res.name }}
+        </td>
+        <td>
+        {% with 200 as barwidth %}
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated res language %}<br />{% trans "Untranslated: " %}{% untranslated res language %}">
+                <div class="stats_string_resource" >
+                    {% trans_percent res language %}% 
+                </div> 
+                {% stats_bar_simple res language barwidth %}
+            </div>
+        {% endwith %}
+        </td>
+        <td>
+        <span style="border:0">
+          {% last_translation_update res language as last_update %}
+          {% last_committer res language as last_committer %}
+          {% if last_update %}
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }} 
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no activity yet" %}
+          {% endif %}
+        </span>
+        </td>
+    </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
+           /* FancyBox Using custom settings */ 
+           $.fancybox(
+               { 
+                'href': '{% url resource_actions res.project.slug res.slug language.code %}',
+                'hideOnContentClick': false,
+                'onComplete':function() {
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                },
+                'titleShow': true,
+                'titlePosition': 'outside',
+                'title': '{% trans "Translation Details"%}'
+           });
+        });
+    </script>
   {% endfor %}
-  </ul>
-  </div>
+  </table>
+ {% else %}
+  <p>{% trans "No resources are registered for this project yet." %}</p>
+ {% endif %}
+</div>
+{% endwith %}
 
-{% endif %}
 
 {% endblock %}

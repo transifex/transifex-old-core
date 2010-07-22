@@ -116,7 +116,10 @@ class Resource(models.Model):
     objects = ResourceManager()
 
     def __unicode__(self):
-        return self.name
+        return u'%s (%s)' % (self.name, self.project)
+
+    def __repr__(self):
+        return "<Resource: %s>" % self.slug
 
     class Meta:
         unique_together = (('name', 'project'),
@@ -235,9 +238,10 @@ class Resource(models.Model):
         translation.
         """
         if language:
-            target_language = Language.objects.by_code_or_alias(language)
+            if not isinstance(language, Language):
+                language = Language.objects.by_code_or_alias(language)
             t = Translation.objects.filter(resource=self,
-                    language=target_language, rule=5).order_by('-last_update')
+                    language=language, rule=5).order_by('-last_update')
         else:
             t = Translation.objects.filter(resource=self,
                                            rule=5).order_by('-last_update')
@@ -261,9 +265,11 @@ class Resource(models.Model):
         
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
-        target_language = Language.objects.by_code_or_alias(language)
+        if not isinstance(language, Language):
+            language = Language.objects.by_code_or_alias(language)
+
         return SourceEntity.objects.filter(resource=self,
-            id__in=Translation.objects.filter(language=target_language,
+            id__in=Translation.objects.filter(language=language,
                 resource=self, rule=5).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
@@ -273,9 +279,11 @@ class Resource(models.Model):
         
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
-        target_language = Language.objects.by_code_or_alias(language)
+        if not isinstance(language, Language):
+            language = Language.objects.by_code_or_alias(language)
+
         return SourceEntity.objects.filter(resource=self).exclude(
-            id__in=Translation.objects.filter(language=target_language,
+            id__in=Translation.objects.filter(language=language,
                 resource=self, rule=5).values_list('source_entity', flat=True))
 
     def num_translated(self, language):
