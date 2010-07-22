@@ -48,7 +48,7 @@ class VcsUnit(Unit):
     """
 
     branch = models.CharField(_('Branch'), max_length=255,
-        help_text=_('A VCS branch this unit is associated with'))
+        help_text=_('The VCS branch with which this unit is associated'))
     web_frontend = models.CharField(_('Web frontend'), blank=True, null=True,
         max_length=255,
         help_text=_("A URL to the project's web front-end"))
