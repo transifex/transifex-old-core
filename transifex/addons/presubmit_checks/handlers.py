@@ -41,7 +41,7 @@ def pre_submit_check(sender, instance=None, user=None, component=None,
     # Read the stream to buffer
     buf = stream.read()
 
-    # (6.4) Check wether file containts DOS newlines '\r' (0x0D)
+    # (6.4) Check whether file contains DOS newlines '\r' (0x0D)
     # To remove you can run: tr -d '\r' < inputfile > outputfile
     if settings.PRESUBMIT_CHECK_DOS_NEWLINES:
         if '\r' in buf:

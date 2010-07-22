@@ -77,7 +77,7 @@ class TestCharts(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.content, JSON_RESPONSE)
 
-        # Check wether image.png URL redirects
+        # Check whether image.png URL redirects
         resp = c.get(reverse('chart_comp_image', args = [project.slug,
             component.slug]))
         self.assertEqual(resp.status_code, 302)

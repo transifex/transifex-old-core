@@ -55,9 +55,9 @@ class POFileLockManager(models.Manager):
     def create_update(self, pofile, user):
         """
         Creates new or updates existing lock object for 'pofile'
-        * Checks wether 'user' has permissions to lock 'pofile'
-        * Checks wether 'user' has reached max number of locks
-        * Checks wether 'pofile' is already locked by someone else
+        * Checks whether 'user' has permissions to lock 'pofile'
+        * Checks whether 'user' has reached max number of locks
+        * Checks whether 'pofile' is already locked by someone else
         """
 
         # Permission check
@@ -131,7 +131,7 @@ class POFileLock(models.Model):
 
     def can_unlock(self, user):
         """
-        This function can be used to perform permission check wether
+        This function can be used to perform permission check whether
         'user' can unlock this POFileLock instance
         """
         perm = ProjectPermission(user)
@@ -142,7 +142,7 @@ class POFileLock(models.Model):
     @staticmethod
     def can_lock(pofile, user):
         """
-        This function can be used to perform permission check wether
+        This function can be used to perform permission check whether
         'user' can lock 'pofile'. NB! It does not perform lock count check!
         """
         perm = ProjectPermission(user)

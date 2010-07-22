@@ -64,7 +64,7 @@ class TestLocking(BaseTestCase):
         self.assertEqual( POFileLock.objects.valid().count(), 0)
 
     def test_lotte(self):
-        # Try opening Lotte and check wether file was locked
+        # Try opening Lotte and check whether file was locked
         resp = self.client['team_member'].post(self.url_start_lotte, follow = True)
         self.assertEqual( resp.status_code, 200 )
         self.assertEqual( POFileLock.objects.valid().count(), 1)
@@ -210,7 +210,7 @@ class TestLocking(BaseTestCase):
                 self.assertFalse( pofile.language and pofile.language.code in
                     TEAM_LANG_CODES )
 
-        # Check wether lock was created and is valid
+        # Check whether lock was created and is valid
         self.assertEqual(POFileLock.objects.all().count(), len(TEAM_LANG_CODES))
         self.assertEqual(POFileLock.objects.valid().count(),
             len(TEAM_LANG_CODES))
@@ -232,7 +232,7 @@ class TestLocking(BaseTestCase):
         logger.debug("Sleeping for %i seconds" % settings.LOCKS_LIFETIME)
         sleep( settings.LOCKS_LIFETIME + 1)
 
-        # Check wether locks expired
+        # Check whether locks expired
         self.assertEqual(POFileLock.objects.all().count(), len(TEAM_LANG_CODES))
         self.assertEqual(POFileLock.objects.valid().count(), 0)
 

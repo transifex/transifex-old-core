@@ -52,7 +52,7 @@ class TestTimeline(BaseTestCase):
         resp = self.client['registered'].get( self.url_project_timeline )
         self.assertEqual(resp.status_code, 403)
 
-        # Check wether link to user timeline is injected to profile page
+        # Check whether link to user timeline is injected to profile page
         resp = self.client['registered'].get( self.url_user_profile )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("My Timeline" in resp.content)
@@ -75,10 +75,10 @@ class TestTimeline(BaseTestCase):
         resp = self.client['maintainer'].get( self.url_project_detail )
         self.assertEqual(resp.status_code, 200)
 
-        # Check wether link to timeline page is found on the page
+        # Check whether link to timeline page is found on the page
         self.assertTrue( self.url_project_timeline in resp.content )
 
-        # Check wether injected History block is included
+        # Check whether injected History block is included
         self.assertTrue( "History" in resp.content )
 
         # Also check it's content
