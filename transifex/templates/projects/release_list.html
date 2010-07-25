@@ -9,7 +9,7 @@
       {% endif %}
   </div>
 
-  {% with project.releases.all as releases %}
+  {% with project.releases_set.all as releases %}
   <h3>{% blocktrans %}Project Releases{% endblocktrans %}
   {% render_metacount releases _("releases") %}
   </h3>
