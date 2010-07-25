@@ -16,7 +16,6 @@ msgstr ""
 "100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: actionlog/filters.py:12
-#, fuzzy
 msgid "Search for a username or leave it blank"
 msgstr "Wyszukiwanie nazwy użytkownika"
 
@@ -175,9 +174,9 @@ msgstr ""
 "Utworzono blokadę. Proszę nie zapomnieć o jej usunięciu po zakończeniu pracy."
 
 #: addons/locks/templates/pofile_lock.html:20
-#, fuzzy, python-format
+#, python-format
 msgid "This file is locked by user '%(owner)s'."
-msgstr "Ten plik został zablokowany przez użytkownika \"%(owner)s\"."
+msgstr "Ten plik jest zablokowany przez użytkownika \"%(owner)s\"."
 
 #: addons/locks/templates/pofile_lock.html:22
 msgid "Click on it to unlock the file."
@@ -263,7 +262,6 @@ msgid "Uploaded file doesn't contain any translated entries!"
 msgstr "Wysłany plik nie zawiera żadnych przetłumaczonych wpisów."
 
 #: addons/presubmit_checks/handlers.py:86
-#, fuzzy
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr "Plik został wysłany na adres e-mail, aby uniknąć utraty pracy."
 
@@ -1231,7 +1229,6 @@ msgstr ""
 "językiem."
 
 #: reviews/views.py:52
-#, fuzzy
 msgid "Your file was successfully placed for reviewing."
 msgstr "Plik został pomyślnie umieszczony do zrecenzowania."
 
@@ -1482,7 +1479,6 @@ msgstr ""
 "tłumaczenia"
 
 #: templates/index.html:24
-#, fuzzy
 msgid ""
 "Transifex is a service aimed at helping translators keep track of their "
 "favorite translation projects."
@@ -1688,41 +1684,42 @@ msgid "Notice"
 msgstr "Wpis"
 
 #: templates/notification/project_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> was added."
-msgstr "Nowy projekt <a href=\"%(project_url)s\">%(project)s</a> został dodany"
+msgstr ""
+"Nowy projekt <a href=\"%(project_url)s\">%(project)s</a> został dodany."
 
 #: templates/notification/project_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The project <a href=\"%(project_url)s\">%(project)s</a> was changed."
-msgstr "Projekt <a href=\"%(project_url)s\">%(project)s</a> został zmieniony"
+msgstr "Projekt <a href=\"%(project_url)s\">%(project)s</a> został zmieniony."
 
 #: templates/notification/project_component_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
 "added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Nowy składnik <a href=\"%(component_url)s\">%(component_name)s</a> został "
-"dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_component_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
 "Składnik <a href=\"%(component_url)s\">%(component_name)s</a> projektu <a "
-"href=\"%(project_url)s\">%(project_name)s</a> został zmieniony"
+"href=\"%(project_url)s\">%(project_name)s</a> został zmieniony."
 
 #: templates/notification/project_component_deleted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The component '%(component_name)s' was deleted from the <a href=\"%"
 "(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "Składnik \"%(component_name)s\" został usunięty z projektu <a href=\"%"
-"(project_url)s\">%(project_name)s</a>"
+"(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1736,7 +1733,7 @@ msgstr ""
 "zaktualizowane:"
 
 #: templates/notification/project_component_file_review_submitted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "was submitted for review to the <a href=\"%(component_url)s\">%"
@@ -1745,7 +1742,7 @@ msgid ""
 msgstr ""
 "Plik dla <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "został wysłany do recenzji do <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid ""
@@ -1761,13 +1758,13 @@ msgid "A file called '%(filename)s'"
 msgstr "Plik o nazwie \"%(filename)s\""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
 "the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "został wysłany do składnika <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
@@ -1839,7 +1836,7 @@ msgstr ""
 "zostało unieważnione"
 
 #: templates/notification/project_team_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added "
 "to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
@@ -1848,44 +1845,44 @@ msgstr ""
 "dodany do projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
 "<a href=\"%(team_url)s\">%(team_name)s zespół tłumaczenia</a> projektu <a "
-"href=\"%(project_url)s\">%(project_name)s</a> został zmieniony"
+"href=\"%(project_url)s\">%(project_name)s</a> został zmieniony."
 
 #: templates/notification/project_team_deleted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted "
 "from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "<a href=\"%(team_url)s\">%(team_name)s zespół tłumaczenia</a> został "
-"usunięty z projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"usunięty z projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_team_join_approved/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to "
 "the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"Użytkownik <a href=\"%(user_url)s\">%(user_name)s</a> został zaakceptowany "
-"jako członek <a href=\"%(team_url)s\">%(team_name)s zespołu tłumaczenia</a> "
-"projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"Użytkownik <a href=\"%(user_url)s\">%(user_name)s</a> został dodany jako "
+"członek <a href=\"%(team_url)s\">%(team_name)s zespołu tłumaczenia</a> "
+"projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_team_join_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s "
 "request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"Użytkownik <a href=\"%(user_url)s\">%(user_name)s</a> został zaakceptowany "
-"jako członek <a href=\"%(team_url)s\">%(team_name)s zespołu tłumaczenia</a> "
-"projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"%(performer)s odmówił użytkownikowi <a href=\"%(user_url)s\">%(user_name)s</"
+"a> żądanie dołączenia do <a href=\"%(team_url)s\">%(team_name)s zespołu "
+"tłumaczenia</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
@@ -1908,7 +1905,7 @@ msgstr ""
 "(project_name)s</a>"
 
 #: templates/notification/project_team_left/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
@@ -1917,7 +1914,7 @@ msgstr ""
 "tłumaczenia</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> "
 "translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> "
@@ -1925,7 +1922,7 @@ msgid ""
 msgstr ""
 "Żądanie utworzenia zespołu tłumaczenia dla języka <a href=\"%(language_url)s"
 "\">%(language_name)s</a> dla projektu <a href=\"%(project_url)s\">%"
-"(project_name)s</a> zostało odrzucone"
+"(project_name)s</a> zostało odrzucone."
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
@@ -2039,7 +2036,7 @@ msgstr "Filtr plików:"
 
 #: templates/projects/component_detail.html:111
 msgid "i18n method:"
-msgstr ""
+msgstr "Metoda umiędzynaradawiania:"
 
 #: templates/projects/component_detail.html:117
 msgid "Release:"
@@ -3104,7 +3101,6 @@ msgid "E-mail change processed"
 msgstr "Przetworzono zmianę adresu e-mail"
 
 #: templates/userprofile/account/email_validation_processed.html:15
-#, fuzzy
 msgid ""
 "An e-mail was sent to the new e-mail address for verification purposes. "
 "Please check your e-mail and complete this process by following the "
@@ -3219,9 +3215,8 @@ msgid "Password change successful"
 msgstr "Pomyślnie zmieniono hasło"
 
 #: templates/userprofile/account/password_change_done.html:14
-#, fuzzy
 msgid "Password changed."
-msgstr "Zmiana hasła"
+msgstr "Zmieniono hasło."
 
 #: templates/userprofile/account/password_expired.html:4
 msgid "Password key expired"
@@ -3257,7 +3252,6 @@ msgid "Reset my password"
 msgstr "Przywróć hasło"
 
 #: templates/userprofile/account/password_reset_complete.html:14
-#, fuzzy
 msgid "Password changed.  You may log in now."
 msgstr "Hasło zostało ustawione. Można się teraz zalogować."
 
@@ -3314,24 +3308,21 @@ msgid "Register a new account"
 msgstr "Zarejestruj nowe konto"
 
 #: templates/userprofile/account/registration_done.html:12
-#, fuzzy
 msgid ""
 "Account created. An activation url was sent to your e-mail address. Please "
 "access that url to complete the registration process."
 msgstr ""
-"Pomyślnie zarejestrowano nowe konto, a adres URL aktywacji konta został "
-"wysłany na adres e-mail. Proszę użyć tego adresu URL, aby ukończyć proces "
-"rejestracji."
+"Utworzono konto. Adres URL aktywacji konta został wysłany na adres e-mail. "
+"Proszę użyć tego adresu URL, aby ukończyć proces rejestracji."
 
 #: templates/userprofile/account/registration_done.html:15
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Account created. Go to the <a href=\"%(overview_url)s\">sign in page</a> to "
 "authenticate and start using this site."
 msgstr ""
-"Pomyślnie zarejestrowano nowe konto. Proszę przejść do <a href=\"%"
-"(overview_url)s\">strony logowania</a>, aby uwierzytelnić się i zacząć "
-"używać tej strony."
+"Utworzono konto. Proszę przejść do <a href=\"%(overview_url)s\">strony "
+"logowania</a>, aby uwierzytelnić się i zacząć używać tej strony."
 
 #: templates/userprofile/avatar/choose.html:4
 #: templates/userprofile/avatar/choose.html:47
@@ -3595,7 +3586,6 @@ msgid "Developer comments"
 msgstr "Komentarze programisty"
 
 #: templates/webtrans/comments.html:5
-#, fuzzy
 msgid "Occurrences"
 msgstr "Wystąpienia"
 
@@ -3716,13 +3706,13 @@ msgstr "Opcje"
 #: translations/templates/comp_stats_table.html:40
 #: translations/templates/lang_stats_table.html:28
 msgid "There is at least one file broken here."
-msgstr ""
+msgstr "Co najmniej jeden plik jest uszkodzony."
 
 #: translations/templates/comp_lang_stats_table.html:29
 #: translations/templates/comp_stats_table.html:42
 #: translations/templates/lang_stats_table.html:30
 msgid "This PO file is broken. The web editor is disabled for it."
-msgstr ""
+msgstr "Ten plik PO jest uszkodzony. Edytor WWW jest dla niego wyłączony."
 
 #: translations/templates/comp_lang_stats_table.html:35
 #: translations/templates/comp_stats_table.html:48
@@ -3819,9 +3809,8 @@ msgid "There are no languages registered matching this file"
 msgstr "Brak zarejestrowanego języka pasującego do tego pliku"
 
 #: translations/templates/release_stats_table.html:22
-#, fuzzy
 msgid "There is at least one file with problems for this language."
-msgstr "Plik tłumaczenia został wysłany dla nowego języka."
+msgstr "Istnieje co najmniej jeden plik z problemami dla tego języka."
 
 #: translations/templates/source_files.html:5
 msgid "Click here to show or hide the source files"
@@ -3923,7 +3912,6 @@ msgid "Submit access to project requested"
 msgstr "Zażądano dostępu do wysyłania do projektu"
 
 #: txcommon/notifications.py:34
-#, fuzzy
 msgid "when a user request access to submit files to a project"
 msgstr "kiedy użytkownik żąda dostępu do wysyłania plików do projektu"
 
@@ -3932,7 +3920,6 @@ msgid "Submit access request to project denied"
 msgstr "Odrzucono żądanie dostępu do wysyłania do projektu"
 
 #: txcommon/notifications.py:42
-#, fuzzy
 msgid "when a maintainer denies a user access to submit files to a project"
 msgstr ""
 "kiedy opiekun odmawia dostępu użytkownikowi do wysyłania plików do projektu"
@@ -3942,7 +3929,6 @@ msgid "Submit access request to project withdrawn"
 msgstr "Wycofano żądanie dostępu do wysyłania do projektu"
 
 #: txcommon/notifications.py:50
-#, fuzzy
 msgid ""
 "when a user withdraws the request for access to submit files to a project"
 msgstr ""
@@ -3953,7 +3939,6 @@ msgid "Submit access to project granted"
 msgstr "Nadano dostęp do wysyłania do projektu"
 
 #: txcommon/notifications.py:58
-#, fuzzy
 msgid "when a maintainer grants a user access to submit files to a project"
 msgstr ""
 "kiedy opiekun nadaje dostęp użytkownikowi do wysyłania plików do projektu"
@@ -4097,7 +4082,6 @@ msgid "Team Creation Requested"
 msgstr "Zażądano utworzenie zespołu"
 
 #: txcommon/notifications.py:193
-#, fuzzy
 msgid "when a translation team creation is requested for a project"
 msgstr "kiedy zażądano utworzenie zespołu tłumaczenia dla projektu"
 
@@ -4106,7 +4090,6 @@ msgid "Team Creation Request Denied"
 msgstr "Odrzucono żądanie utworzenia zespołu"
 
 #: txcommon/notifications.py:201
-#, fuzzy
 msgid ""
 "when a translation team creation request for a project is denied by a "
 "maintainer"
@@ -4119,7 +4102,6 @@ msgid "Team User Joining Requested"
 msgstr "Zażądano dołączenia użytkownika do zespołu"
 
 #: txcommon/notifications.py:209
-#, fuzzy
 msgid "when a user requests to join a project translation team"
 msgstr "kiedy użytkownik żąda dołączenia do zespołu tłumaczenia projektu"
 
@@ -4128,7 +4110,6 @@ msgid "Team User Joining Approved"
 msgstr "Zaakceptowano dołączenie użytkownika do zespołu"
 
 #: txcommon/notifications.py:217
-#, fuzzy
 msgid "when a user is approved as a member of a project translation team"
 msgstr ""
 "kiedy użytkownik zostaje zaakceptowany jako członek zespołu tłumaczenia "
@@ -4139,7 +4120,6 @@ msgid "Team User Joining Denied"
 msgstr "Odrzucono dołączenie użytkownika do zespołu"
 
 #: txcommon/notifications.py:225
-#, fuzzy
 msgid "when a user is denied as a member of a project translation team"
 msgstr ""
 "kiedy użytkownik został odrzucony jako członek zespołu tłumaczenia projektu"
@@ -4149,16 +4129,14 @@ msgid "Team User Joining Withdrawn"
 msgstr "Wycofanie dołączenia użytkownika do zespołu"
 
 #: txcommon/notifications.py:233
-#, fuzzy
 msgid "when a user decides not to join a project translation team"
-msgstr "kiedy użytkownik żąda dołączenia do zespołu tłumaczenia projektu"
+msgstr "kiedy użytkownik nie chce dołączyć do zespołu tłumaczenia projektu"
 
 #: txcommon/notifications.py:240
 msgid "Team User Left"
 msgstr "Użytkownik opuścił zespół"
 
 #: txcommon/notifications.py:241
-#, fuzzy
 msgid "when a user leaves a project translation team"
 msgstr "kiedy użytkownik opuszcza zespół tłumaczenia projektu"
 
@@ -4176,7 +4154,6 @@ msgid "User Nudge"
 msgstr "Użytkownik został szturchnięty"
 
 #: txcommon/notifications.py:260
-#, fuzzy
 msgid "when a user nudges you"
 msgstr "kiedy użytkownik szturchnął cię"
 
@@ -4360,12 +4337,11 @@ msgstr "Pola %s powinny zostało wypełnione."
 
 #: webtrans/wizards.py:130
 msgid "The PO file is broken and can't be opened by Lotte."
-msgstr ""
+msgstr "Plik PO jest uszkodzony i nie może zostać otwarty w edytorze Lotte."
 
 #: webtrans/wizards.py:424
-#, fuzzy
 msgid "You can't make submissions for a file locked by someone else."
-msgstr "Ten plik został zablokowany przez kogoś innego."
+msgstr "Nie można wysłać pliku zablokowanego przez kogoś innego."
 
 #: webtrans/wizards.py:430
 msgid ""
@@ -4380,30 +4356,3 @@ msgstr "Wstecz"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Dalej"
-
-#~ msgid ""
-#~ "The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for "
-#~ "joining the <a href=\"%(team_url)s\">%(team_name)s translation team </a> "
-#~ "of the <a href=\"%(project_url)s\">%(project_name)s</a> project has been "
-#~ "denied"
-#~ msgstr ""
-#~ "Żądanie użytkownika <a href=\"%(user_url)s\">%(user_name)s</a> dołączenia "
-#~ "do <a href=\"%(team_url)s\">%(team_name)s zespołu tłumaczenia</a> "
-#~ "projektu <a href=\"%(project_url)s\">%(project_name)s</a> zostało "
-#~ "odrzucone"
-
-#~ msgid "The password has been changed successfully."
-#~ msgstr "Pomyślnie zmieniono hasło."
-
-#~ msgid "Could not generate statistics for this file"
-#~ msgstr "Nie można utworzyć statystyk dla tego pliku"
-
-#~ msgid "String freese date"
-#~ msgstr "Data zamrożenia łańcuchów"
-
-#~ msgid ""
-#~ "when an user withdrawn its own request for joining a translation team of "
-#~ "a project"
-#~ msgstr ""
-#~ "kiedy użytkownik wycofuje własne żądanie dołączenia do zespołu "
-#~ "tłumaczenia projektu"
