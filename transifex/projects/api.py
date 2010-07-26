@@ -15,6 +15,7 @@ from txcommon.decorators import one_perm_required_or_403
 from django.db import transaction
 from uuid import uuid4
 from happix.decorators import method_decorator
+from happix.libtransifex import pofile, qt
 
 class ProjectHandler(BaseHandler):
     """
@@ -183,12 +184,18 @@ class ProjectResourceHandler(BaseHandler):
                     (storagefile.name, storagefile.uuid, project.slug, 
                     resource.slug))
 
+
                 strings_added, strings_updated = 0, 0
+                parser = storagefile.find_parser()
+                fhandler = parser(filename=storagefile.get_storage_path())
+                fhandler.bind_resource(resource)
+                fhandler.parse_file(True)
                 try:
-                    strings_added, strings_updated = resource.merge_source_file()
-                except Language.DoesNotExist:
-                    request.user.message_set.create(message=_("We could not "
-                        "guess the language of uploaded file."))
+                    strings_added, strings_updated = fhandler.save2db(True)
+                except:
+                    request.user.message_set.create(message=_("Error importing"
+                        " file."))
+                    return rc.BAD_REQUEST
                 else:
                     messages = []
                     if strings_added > 0:
@@ -232,12 +239,18 @@ class ProjectResourceHandler(BaseHandler):
                     (storagefile.name, storagefile.uuid, project_slug, 
                     resource.slug))
 
+                strings_added, strings_updated = 0, 0
+                parser = storagefile.find_parser()
+                fhandler = parser(filename=storagefile.get_storage_path())
+                fhandler.bind_resource(resource)
+                fhandler.parse_file()
                 try:
-                    strings_added, strings_updated = \
-                        resource.merge_translation_file(storagefile)
-                except Language.DoesNotExist:
-                    request.user.message_set.create(message=_("We could not "
-                        "guess the language of uploaded file."))
+                    strings_added, strings_updated = fhandler.save2db()
+                except:
+                    request.user.message_set.create(message=_("Error importing"
+                        " file."))
+                    return rc.BAD_REQUEST
+
                 else:
                     messages = []
                     if strings_added > 0:

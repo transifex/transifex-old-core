@@ -2,7 +2,7 @@
 """
 String Level models.
 """
-import datetime, hashlib, sys
+import datetime, hashlib, sys, json
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete, pre_save
@@ -34,21 +34,6 @@ and compile(stringset) which returns file buffer.
 It actually makes more sense to store all uploaded files, parse only the information we are interested in, and during compilation,
 take the uploaded file as template, and just replace modified parts
 """
-
-from libtransifex.qt import LinguistParser # Qt4 TS files
-from libtransifex.java import JavaPropertiesParser # Java .properties
-from libtransifex.apple import AppleStringsParser # Apple .strings
-#from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
-#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
-from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser
-
-PARSERS = [PofileParser, LinguistParser, JavaPropertiesParser, AppleStringsParser]
-
-# For faster lookup
-PARSER_MAPPING = {}
-for parser in PARSERS:
-    PARSER_MAPPING[parser.mime_type] = parser
-
 # keys used in cache
 # We put it here to have them all in one place for the specific models!
 HAPPIX_CACHE_KEYS = {
@@ -70,7 +55,7 @@ class ResourceManager(models.Manager):
 class Resource(models.Model):
     """
     A translation resource, equivalent to a POT file, YAML file, string stream etc.
-    
+
     The Resource points to a source language (template) file path! For example,
     it should be pointing to a .pot file or to a english .po file.of a project
     with english as the source language.
@@ -81,7 +66,7 @@ class Resource(models.Model):
     """
 
     name = models.CharField(_('Name'), max_length=255, null=False,
-        blank=False, 
+        blank=False,
         help_text=_('A descriptive name unique inside the project.'))
 
     # Short identifier to be used in the API URLs
@@ -93,16 +78,23 @@ class Resource(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
-    # Foreign Keys
-    source_language = models.ForeignKey(Language,
-        verbose_name=_('Source Language'), blank=False, null=False,
-        help_text=_("The source language of this Resource."))
-
+    # i18n related fields
     source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
         blank=True, null=True,
         help_text=_("Select a file from your file system to be used to "
             "extract the strings to be translated."))
+    source_file_metadata = models.TextField(_("Source file metadata"),
+        max_length=1024, blank=True, null=True,
+        help_text=_("Field to store all source file metadata for exporting "
+            "database strings to files."))
+    i18n_method = models.CharField(_("Internationalization Method"),
+        max_length=12, blank=False, null=False, editable=False, default='None',
+        help_text=_("I18n method used by this resource."))
 
+    # Foreign Keys
+    source_language = models.ForeignKey(Language,
+        verbose_name=_('Source Language'), blank=False, null=False,
+        help_text=_("The source language of this Resource."))
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False,
         null=True,
@@ -139,7 +131,7 @@ class Resource(models.Model):
         """
         Return the list of all the strings, belonging to the Source Language
         of the Project/Resource.
-        
+
         This method returns also the plural strings of the specific resource.
         CAUTION! This function returns Translation and not SourceEntity objects!
         """
@@ -151,7 +143,7 @@ class Resource(models.Model):
         """
         Return the list of all the strings, belonging to the Source Language
         of the Project/Resource.
-        
+
         CAUTION! This function returns Translation and not SourceEntity objects!
         CAUTION! This does not count the PLURALs!
         """
@@ -316,9 +308,15 @@ class Resource(models.Model):
 #            return (u * 100 / self.total_entities)
 #        except ZeroDivisionError:
 #            return 0
+    
+
+
+    # XXX: Obsolete. Now that filehandlers are implemented the merge_*
+    # methods are no longer needed.
 
     @transaction.commit_manually
-    def merge_stringset(self, stringset, target_language, is_source=False, user=None, overwrite_translations=True):
+    def merge_stringset(self, stringset, target_language, metadata=None, is_source=False, user=None, overwrite_translations=True):
+
         try:
             strings_added = 0
             strings_updated = 0
@@ -342,7 +340,7 @@ class Resource(models.Model):
                         pluralized = j.pluralized,
                         position = 1,
                         # FIXME: this has been tested with pofiles only
-                        occurrences = (",".join(["(%s, %s)" % (occ[0],occ[1]) for occ in j.occurrences])),
+                        occurrences = j.occurrences,
                     )
 
                 # Skip storing empty strings as translations!
@@ -374,22 +372,29 @@ class Resource(models.Model):
             transaction.rollback()
             return 0,0
         else:
+            self.source_file_metadata = json.dumps(metadata)
+            self.save()
             transaction.commit()
             return strings_added, strings_updated
 
     def merge_translation_file(self, translation_file):
-        stringset = PARSER_MAPPING[translation_file.mime_type].parse_file(
+        PARSER_MAPPING[translation_file.mime_type].parse_file(
             translation_file.get_storage_path(),
             False,
             translation_file.language.get_pluralrules_numbers())
+        stringset = PARSER_MAPPING[translation_file.mime_type].stringset
         return self.merge_stringset(stringset, translation_file.language)
 
     def merge_source_file(self):
-        stringset = PARSER_MAPPING[self.source_file.mime_type].parse_file(
-            self.source_file.get_storage_path(),
+        fh = PARSER_MAPPING[self.source_file.mime_type](self.source_file.get_storage_path())
+        fh.parse_file(
             True,
             self.source_file.language.get_pluralrules_numbers())
-        return self.merge_stringset(stringset, self.source_file.language, True)
+        stringset = fh.stringset
+        return self.merge_stringset(stringset, self.source_file.language,
+             metadata, True)
+
+    # XXX: Obsolete up to here
 
 class SourceEntity(models.Model):
     """
@@ -426,7 +431,7 @@ class SourceEntity(models.Model):
         help_text=_("The comment of the developer."))
 
     pluralized = models.BooleanField(_('Pluralized'), blank=False,
-         null=False, default=False,
+        null=False, default=False,
         help_text=_("Identify if the entity is pluralized ot not."))
 
     # Timestamps
@@ -573,3 +578,20 @@ post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
 post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
 pre_save.connect(on_save_update_hash, sender=SourceEntity)
 pre_save.connect(on_save_update_hash, sender=Translation)
+
+
+from libtransifex.qt import LinguistHandler # Qt4 TS files
+#from libtransifex.java import JavaPropertiesParser # Java .properties
+#from libtransifex.apple import AppleStringsParser # Apple .strings
+#from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
+#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
+from libtransifex.pofile import POHandler # GNU Gettext .PO/.POT parser
+
+PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsParser]
+
+# For faster lookup
+PARSER_MAPPING = {}
+for parser in PARSERS:
+    PARSER_MAPPING[parser.mime_type] = parser
+
+

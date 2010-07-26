@@ -1,26 +1,34 @@
 # -*- coding: utf-8 -*-
 
 """
-GNU Gettext .PO/.POT file parser/compiler
+GNU Gettext .PO/.POT file handler/compiler
 """
-import polib
-from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
+import uuid
+import polib, datetime
+import simplejson as json
+from django.db import transaction
+from django.db.models import get_model
+from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
 from txcommon.log import logger
+from teams.models import Team
+from happix.libtransifex.decorators import *
 
 #class ResXmlParseError(ParseError):
     #pass
 
 #class ResXmlCompileError(CompileError):
     #pass
+Resource = get_model('happix', 'Resource')
+Translation = get_model('happix', 'Translation')
+SourceEntity = get_model('happix', 'SourceEntity')
+Storage = get_model('storage', 'StorageFile')
 
-import uuid
-
-class PofileParser(Parser):
+class POHandler(Handler):
     """
     Translate Toolkit is using Gettext C library to parse/create PO files in Python
     TODO: Switch to Gettext C library
     """
-    name = "GNU Gettext *.PO/*.POT parser"
+    name = "GNU Gettext *.PO/*.POT handler"
     mime_type = "application/x-gettext"
     format = "GNU Gettext Catalog (*.po, *.pot)"
 
@@ -28,16 +36,89 @@ class PofileParser(Parser):
     def accept(cls, filename):
         return filename.endswith(".po") or filename.endswith(".pot")
 
-    @classmethod
-    def compile(cls, stringset):
-        pass
+    @need_resource
+    def compile(self, language = None):
+        """
+        Compile a resource's strings into a PO file.
+        """
+        if not language:
+            language = self.language
+        # Create POFile
+        po = polib.POFile()
 
-    @classmethod
-    def parse_file(cls, filename, is_source=False, lang_rules=None):
+        # Update POFile Headers
+        self.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
+        self.metadata['Language'] = language.code
+        try:
+            team = Team.objects.get(language = language,
+                project = self.resource.project)
+        except Team.DoesNotExist:
+            pass
+        else:
+            self.metadata['Language-Team'] = ("%s <%s>" % (language.name %
+                team.mainlist))
+        if self.resource.last_committer:
+            u = self.resource.last_committer
+            self.metadata['Last-Translator'] = ("%s <%s>" %
+                (u.get_full_name() or u.username % u.email))
+
+        # Add headers
+        po.metadata = self.metadata
+
+        # Iterate through Source Entities and create PO entries
+        stringset = SourceEntity.objects.filter(
+            resource = self.resource)
+        for string in stringset:
+            try:
+                trans = Translation.objects.get(
+                    source_entity = string,
+                    language = language,
+                    resource = self.resource,
+                    rule=5)
+            except Translation.DoesNotExist:
+                trans = None
+            entry = polib.POEntry(msgid=string.string,
+                msgstr=trans.string if trans else "")
+            entry.occurrences = list(
+                tuple(o.split(':')) for o in string.occurrences.split(', ')
+                if not string.occurrences == "")
+            if string.flags:
+                for f in string.flags.split(', '):
+                    entry.flags.append(f)
+            if string.developer_comment:
+                entry.comment = string.developer_comment
+            if string.pluralized:
+                plurals = Translation.objects.filter(
+                    resource = self.resource,
+                    language = language,
+                    source_entity = string)
+                plural_keys = {}
+                # last rule excluding other(5)
+                last_rule = language.get_pluralrules_numbers()[-2]
+                # Initialize all plural rules up to the last
+                for p in range(0,last_rule):
+                    plural_keys[p] = ""
+                # Fill in the ones that are translated
+                for p in plurals:
+                    plural_keys[p.rule] =  p.string
+                # Remove `other` rule and use it as plural id
+                entry.msgid_plural = plural_keys.pop(5)
+                entry.msgstr_plural = plural_keys
+            po.append(entry)
+
+        # Save compiled output
+        self.compiled = po
+        return po
+
+    @need_file
+    def parse_file(self, is_source=False, lang_rules=None):
+        """
+        Parse a PO file and create a stringset with all PO entries in the file.
+        """
         stringset = StringSet()
         # For .pot files the msgid entry must be used as the translation for
         # the related language.
-        if filename.endswith(".pot") or is_source:
+        if self.filename.endswith(".pot") or is_source:
             ispot = True
         else:
             ispot = False
@@ -47,7 +128,10 @@ class PofileParser(Parser):
         else:
             nplural = None
 
-        for entry in polib.pofile(filename):
+        pofile = polib.pofile(self.filename)
+        metadata = pofile.metadata
+
+        for entry in pofile:
             pluralized = False
             same_nplural = True
 
@@ -66,7 +150,7 @@ class PofileParser(Parser):
                         if nplural != nplural_file:
                             logger.error("Passed plural rules has nplurals=%s"
                                 ", but '%s' file has nplurals=%s. String '%s'"
-                                "skipped." % (nplural, filename, nplural_file,
+                                "skipped." % (nplural, self.filename, nplural_file,
                                 entry.msgid))
                             same_nplural = False
                     else:
@@ -88,9 +172,29 @@ class PofileParser(Parser):
 
             # Add messages with the correct number (plural)
             for number, msgstr in enumerate(messages):
-                translation = Translation(entry.msgid, msgstr[1], 
-                    context=entry.msgctxt, occurrences=entry.occurrences, 
+                translation = GenericTranslation(entry.msgid, msgstr[1],
+                    context=entry.msgctxt,
+                    occurrences=', '.join(
+                        [':'.join([i for i in t ]) for t in entry.occurrences]),
                     rule=msgstr[0], pluralized=pluralized)
 
                 stringset.strings.append(translation)
-        return stringset
+
+            if entry.comment:
+                translation.comment = entry.comment
+            if entry.flags:
+                translation.flags = ', '.join( f for f in entry.flags)
+
+        self.stringset = stringset
+        self.metadata = metadata
+        return
+
+    @need_compiled
+    def save2file(self, filename):
+        """
+        Take the ouput of the compile method and save results to specified file
+        """
+        try:
+            self.compiled.save(filename)
+        except Exception, e:
+            raise Exception("Error opening file %s: %s" % ( filename, e))

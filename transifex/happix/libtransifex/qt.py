@@ -6,8 +6,17 @@ Qt4 TS file parser for Python
 
 import xml.dom.minidom
 from xml.dom.minidom import DOMImplementation
-from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
+from django.db import transaction
+from django.db.models import get_model
+from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
 from txcommon.log import logger
+from happix.libtransifex.decorators import *
+
+# Happix models
+Resource = get_model('happix', 'Resource')
+Translation = get_model('happix', 'Translation')
+SourceEntity = get_model('happix', 'SourceEntity')
+Storage = get_model('storage', 'StorageFile')
 
 class LinguistParseError(ParseError):
     pass
@@ -15,61 +24,121 @@ class LinguistParseError(ParseError):
 class LinguistCompileError(CompileError):
     pass
 
-class LinguistParser(Parser):
+class LinguistHandler(Handler):
     name = "Qt4 TS parser"
     format = "Qt4 Translation XML files (*.ts)"
     mime_type = "application/x-linguist"
+
     @classmethod
     def accept(cls, filename):
         return filename.endswith(".ts")
 
-    @classmethod
-    def compile(cls, stringset):
+    @need_resource
+    def compile(self, is_source=False, language = None):
+        """
+        Method that takes a `language` as and the bound resource as arguments
+        and creates the requested translation file. Contents are not saved to
+        disk but are held under the ``compiled `` class attribute.
+        save2file(filename) needs to be run in order to save all file contents
+        to the disk.
+        """
+        if not language:
+            language = self.language
+
+        # Create XML root
         imp = DOMImplementation()
         doctype = imp.createDocumentType(
             qualifiedName='TS',
-            publicId=None, 
+            publicId=None,
             systemId=None,
         )
         doc = imp.createDocument(None, 'TS', doctype)
         root = doc.documentElement
         root.setAttribute("version", "2.0")
-        root.setAttribute("language", stringset.target_language)
+        root.setAttribute("language", language.code)
         doc.appendChild(root)
-        for _context_name, _context in stringset.strings_grouped_by_context().iteritems():
+
+        # Group source entities by context
+        context_stringset = SourceEntity.objects.filter(
+            resource = self.resource)
+        contexts = context_stringset.values('context').order_by().distinct()
+        for c in contexts:
+            # Create context elements under which the messages are grouped
+            string_context = c['context']
             context = doc.createElement("context")
             context_name = doc.createElement("name")
-            context_name.appendChild(doc.createTextNode(_context_name))
+            context_name.appendChild(doc.createTextNode(string_context))
             context.appendChild(context_name)
-            for _message in _context:
+            stringset = SourceEntity.objects.filter(
+                resource = self.resource,
+                context = string_context)
+            # If single string instead of list, turn into list
+            if not hasattr(stringset, '__iter__'):
+                stringset = [ stringset ]
+            for string in stringset:
+                try:
+                    trans = Translation.objects.get(
+                        resource = self.resource,
+                        source_entity=string,
+                        language = language,
+                        rule =5)
+                except Translation.DoesNotExist:
+                    trans = None
                 message = doc.createElement("message")
                 source = doc.createElement("source")
                 translation = doc.createElement("translation")
 
-                source.appendChild(doc.createTextNode(_message.source_entity))
-                translation.appendChild(doc.createTextNode(_message.translation_string))
-                
+                if string.pluralized:
+                    plural_keys = {}
+                    # last rule excluding other(5)
+                    last_rule = language.get_pluralrules_numbers()[-2]
+                    # Initialize all plural rules up to the last
+                    for p in range(0,last_rule):
+                        plural_keys[p] = ""
+                    plurals = Translation.objects.filter(
+                        resource = self.resource,
+                        language = language,
+                        source_entity = string)
+                    for p in plurals:
+                        plural_keys[p.rule] =  p.string
+                    translation.setAttribute('numerus', 'yes')
+                    numerusform = doc.createElement("numerusform")
+                    for key in plural_keys.keys():
+                        entry = doc.createTextNode(plural_keys[key])
+                        entry.setAttribute
+                        numerusform.appendChild(entry)
+
+                    translation.appendChild(numerusform)
+
+                source.appendChild(doc.createTextNode(string.string))
+                if not trans:
+                    translation.setAttribute('type', 'unfinished')
+                translation.appendChild(doc.createTextNode(trans.string if trans else ""))
+
                 message.appendChild(source)
                 message.appendChild(translation)
 
                 if STRICT:
-                    if _message.occurrences and \
-                        _message.occurrences != "":
-                        for _location in _message.occurrences.split(";"):
+                    if string.occurrences and \
+                        string.occurrences != "":
+                        for _location in string.occurrences.split(";"):
                             filename, line = _location.split(":")
                             location = doc.createElement("location")
                             location.setAttribute("filename", filename)
                             location.setAttribute("line", line)
                             message.appendChild(location)
                 context.appendChild(message)
-                
-            root.appendChild(context)
-        return doc.toxml("UTF-8")
-        #return doc.toprettyxml(indent="  ", newl="\n", encoding="UTF-8")
 
-    @classmethod
-    def parse_file(cls, filename, is_source=False, lang_rules=None):
-        buf = fh = open(filename, "ru").read()
+            root.appendChild(context)
+        self.compiled = doc.toprettyxml(encoding=self.default_encoding)
+        return doc
+
+    @need_file
+    def parse_file(self, is_source=False, lang_rules=None):
+        """
+        Parses QT file and exports all entries as GenericTranslations.
+        """
+        buf = fh = open(self.filename, "ru").read()
         def getElementByTagName(element, tagName, noneAllowed = False):
             elements = element.getElementsByTagName(tagName)
             if not noneAllowed and not elements:
@@ -171,8 +240,8 @@ class LinguistParser(Parser):
                             if nplural != nplural_file:
                                 logger.error("Passed plural rules has nplurals=%s"
                                     ", but '%s' file has nplurals=%s. String '%s'"
-                                    "skipped." % (nplural, filename, nplural_file,
-                                    sourceString))
+                                    "skipped." % (nplural, self.filename,
+                                     nplural_file, sourceString))
                                 same_nplural = False
                         else:
                             same_nplural = False
@@ -201,10 +270,27 @@ class LinguistParser(Parser):
 
                 if sourceString and messages:
                     for msg in messages:
-                        stringset.strings.append(Translation(sourceString,
+                        stringset.strings.append(GenericTranslation(sourceString,
                             msg[1], context = context_name, rule=msg[0],
                             occurrences = ";".join(occurrences), 
                             pluralized=pluralized, fuzzy=fuzzy, 
                             obsolete=obsolete))
                 i += 1
-        return stringset
+
+            self.stringset=stringset
+        return
+
+
+    @need_compiled
+    def save2file(self, filename):
+        """
+        Take the ouput of the compile method and save results to specified file
+        """
+        try:
+            fd=open(filename, 'w')
+        except Exception, e:
+            raise Exception("Error opening file %s: %s" % ( filename, e))
+
+        fd.write(self.compiled)
+        fd.flush()
+        fd.close()

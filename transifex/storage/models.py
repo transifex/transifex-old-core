@@ -54,10 +54,8 @@ class StorageFile(models.Model):
         """
         return (self.total_strings > 0)
 
-    def update_props(self):
-        """
-        Try to parse the file and fill in information fields in current model
-        """
+    def find_parser(self):
+        # to import the PARSERS.
         #FIXME: Decide whether it's important to have it and find a good way 
         # to import the PARSERS.
         from happix.models import PARSERS
@@ -67,12 +65,23 @@ class StorageFile(models.Model):
                 parser = p
                 break
 
+        return parser
+
+    def update_props(self):
+        """
+        Try to parse the file and fill in information fields in current model
+        """
+        parser = self.find_parser()
+
         if not parser:
             return
 
         self.mime_type = parser.mime_type
 
-        stringset = parser.parse_file(self.get_storage_path())
+        fpo = parser(filename = self.get_storage_path() )
+        fpo.parse_file()
+
+        stringset = fpo.stringset
         if not stringset:
             return
 
