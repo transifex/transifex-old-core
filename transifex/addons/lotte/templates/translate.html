@@ -135,13 +135,13 @@
                            + ' <div class="row_tabs">'
                            + '  <ul>'
                            + '    <li>'
-                           + '     <a class="details_trigger show_details" href="#">details</a>'
+                           + '     <a class="tabs_trigger show_details" href="#">details</a>'
                            + '    </li>'
                            + '    <li>'
-                           + '     <a class="show_suggestions" href="#">suggestions</a>'
+                           + '     <a class="tabs_trigger show_suggestions" href="#">suggestions</a>'
                            + '    </li>'
                            + '    <li>'
-                           + '     <a class="show_comments" href="#">comments</a>'
+                           + '     <a class="tabs_trigger show_comments" href="#">comments</a>'
                            + '    </li>'
                            + '  </ul>'
                            + ' </div>'
@@ -153,10 +153,12 @@
                       var clean_array = array_escape({"translations":oObj.aData[3]});
                     var textareas = '';
                       for(rule in clean_array["translations"]){
-                          if(rule=='other')
-                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
-                          else
-                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
+                          if(rule=='other'){
+                            textareas += '<div style="position:relative"><span class="rule" style="display:none">'+rule+'</span><textarea class="translation string_translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%;position:relative" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
+                            textareas += '</div>';
+                          }else{
+                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation string_translation" style="width:95%" title="Translation">' + clean_array["translations"][rule] + '</textarea>'
+                          }
                       }
 
                       return textareas

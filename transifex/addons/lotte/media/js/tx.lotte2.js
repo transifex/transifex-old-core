@@ -224,8 +224,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 // Automatically set edited textareas to fuzzy
                 textarea.removeClass("fuzzy translated untranslated").addClass("fuzzy");
                 textarea.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
-                $('tbody tr td.notes span#save_' + id).show();
-                $('tbody tr td.notes span#undo_' + id).show();
+				textarea.parents('tr').find('span#save_' + id).show();
+				textarea.parents('tr').find('span#undo_' + id).show();
             }
         });
     }
@@ -420,18 +420,23 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         });
 
         // 3 Show details row trigger
-        $('a.details_trigger').each(function(){
-            $(this).click(function(){
+        $('a.tabs_trigger').click(function(){
                 var nTr = $(this).parents('tr');
-                var flag = $(this).hasClass('show_details');
-                if(flag){
-                    nTr.after('<tr class="details"><td colspan="3"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
-                    $('span', this).text('hide details');
-                    $(this).removeClass('show_details').addClass('hide_details');
+
+                if(!$(this).hasClass('current') && $(this).hasClass('show_details')){
+
+                    // Close any previously opened tabs
+                    var previous_open = $(this).parents('.row_tabs').find('.current');
+                    if(previous_open!=0){
+                        nTr.next('tr.metatr').remove();
+                        previous_open.removeClass('current');
+                    }
+
+                    nTr.after('<tr class="metatr details"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
                     var source_id = parseInt(nTr.find('.source_id').text());
 
                     // Get the details and inject them.
-                    nTr.next(".details").load(details_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                    nTr.next(".details").find("td.inject_here").load(details_url, { 'source_id' : source_id }, function(response, status, xhr) {
                       if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);
@@ -445,9 +450,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     if(!$(this).hasClass('current'))
                         $(this).addClass('current');
                 }else{
-                    nTr.next('tr').remove();
-                    $('span', this).text('show details');
-                    $(this).removeClass('hide_details').addClass('show_details');
+                    // Close any previously opened tabs
+                    var previous_open = $(this).parents('.row_tabs').find('.current');
+                    if(previous_open!=0){
+                        nTr.next('tr.metatr').remove();
+                        previous_open.removeClass('current');
+                    }
 
                     // Put back the 3px border
                     nTr.css({'border-bottom':'3px solid #EEE'});
@@ -457,7 +465,6 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                         $(this).removeClass('current');
                 }
                 return false;
-            });
         });
 
         // Bind sliding animation, and postioning for each button in the toolbar
@@ -477,5 +484,3 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     }
 
 }
-
-
