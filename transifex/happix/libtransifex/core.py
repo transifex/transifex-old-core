@@ -182,6 +182,13 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
+    def set_language(language):
+        if isinstance(language, Language):
+            self.language = language
+        else:
+            raise Exception("language neeeds to be of type %s" %
+                Language.__class__)
+
     def accept(self, filename):
         return False
 

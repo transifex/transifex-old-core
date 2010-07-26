@@ -1,15 +1,20 @@
 import os
 import unittest
-from happix.libtransifex.pofile import PofileParser
+from txcommon.tests.base import BaseTestCase
+from languages.models import Language
+from happix.models import *
+from happix.libtransifex.pofile import POHandler
 
-class POFile(unittest.TestCase):
+class POFile(BaseTestCase):
     """Suite of tests for the pofile lib."""
     def test_pot_parser(self):
         """POT file tests."""
         # Parsing POT file
-        self.stringset = PofileParser.parse_file('%s/tests.pot' % 
+        handler = POHandler('%s/tests.pot' % 
             os.path.split(__file__)[0])
 
+        handler.parse_file()
+        self.stringset = handler.stringset
         entities = 0
 
         # POT has no associated language
@@ -33,8 +38,11 @@ class POFile(unittest.TestCase):
 
     def test_po_parser_pt_BR(self):
         """Tests for pt_BR PO file."""
-        self.stringset = PofileParser.parse_file('%s/pt_BR.po' % 
+        handler = POHandler('%s/pt_BR.po' % 
             os.path.split(__file__)[0])
+
+        handler.parse_file()
+        self.stringset = handler.stringset
 
         nplurals = 0
 
@@ -54,12 +62,13 @@ class POFile(unittest.TestCase):
         # '{0 results}' entity - pt_BR has nplurals=2
         self.assertEqual(nplurals, 2)
 
-
     def test_po_parser_ar(self):
         """Tests for ar PO file."""
-        self.stringset = PofileParser.parse_file('%s/ar.po' % 
+        handler = POHandler('%s/ar.po' % 
             os.path.split(__file__)[0])
 
+        handler.parse_file()
+        self.stringset = handler.stringset
         nplurals = 0
 
         for s in self.stringset.strings:
@@ -77,3 +86,38 @@ class POFile(unittest.TestCase):
         # Asserting nplurals based on the number of plurals of the 
         # '{0 results}' entity - ar has nplurals=6.
         self.assertEqual(nplurals, 6)
+
+    def test_po_save2db(self):
+        """Test creating source strings from a PO/POT file works"""
+        handler = POHandler('%s/tests.pot' % 
+            os.path.split(__file__)[0]) 
+
+        handler.parse_file()
+
+        l = Language.objects.get(code='en_US')
+
+        r = Resource.objects.create(
+            slug = 'foo',
+            name = 'foo',
+            source_language = l)
+
+        handler.bind_resource(r)
+
+        handler.save2db(is_source=True)
+
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
+
+        self.assertEqual( Translation.objects.filter(resource=r,
+            language=l), 3)
+
+        handler.bind_file('%s/ar.po' % os.path.split(__file__)[0])
+        l = Language.objects.by_code_or_alias('ar')
+        handler.set_language(l)
+        handler.parse_file()
+
+        handler.save2db()
+
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
+
+        self.assertEqual( Translation.objects.filter(resource=r,
+            language=l), 6)

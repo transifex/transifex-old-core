@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from happix.libtransifex.pofile import PofileParser
+from happix.libtransifex.pofile import POHandler
 from happix.models import Resource
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
@@ -22,14 +22,16 @@ class APIBaseTests(BaseTestCase):
         self.pofile_path = '%s/../libtransifex/pofile' % self.current_path
 
         # Loading POT (en_US) into the resource
-        self.stringset = PofileParser.parse_file('%s/tests.pot' % 
+        handler = POHandler.parse_file('%s/tests.pot' % 
             self.pofile_path)
-        self.resource.merge_stringset(self.stringset, self.language_en)
+        handler.bind_resource(self.resource)
+        handler.save2db(is_source=True)
 
         # Loading PO (pt_BR) into the resource
-        self.stringset = PofileParser.parse_file('%s/pt_BR.po' % 
-            self.pofile_path)
-        self.resource.merge_stringset(self.stringset, self.language)
+        handler.bind_file('%s/pt_BR.po' % self.pofile_path)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
 
     def tearDown(self):
         super(APIBaseTests, self).tearDown()
