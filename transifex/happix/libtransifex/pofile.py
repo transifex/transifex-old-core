@@ -48,7 +48,11 @@ class POHandler(Handler):
 
         # Update POFile Headers
         self.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
+        # The followin is in the specification but it's not being used by po
+        # files. What should we do?
         self.metadata['Language'] = language.code
+        self.metadata['Plural-Forms'] = language.pluralequation
+
         try:
             team = Team.objects.get(language = language,
                 project = self.resource.project)
