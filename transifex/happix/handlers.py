@@ -74,7 +74,3 @@ def on_resource_delete(sender, instance, user,**kwargs):
 # Resource signal handlers for logging
 post_resource_save.connect(on_resource_save)
 post_resource_delete.connect(on_resource_delete)
-
-def on_save_update_hash(sender, instance, **kwargs):
-    # encoding happens to support unicode characters
-    instance.string_hash = md5(instance.string.encode('utf-8')).hexdigest()

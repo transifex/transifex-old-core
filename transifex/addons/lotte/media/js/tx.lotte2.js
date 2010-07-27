@@ -449,6 +449,33 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     // Fix 'current' class
                     if(!$(this).hasClass('current'))
                         $(this).addClass('current');
+
+                }else if(!$(this).hasClass('current') && $(this).hasClass('show_suggestions')){
+
+                    // Close any previously opened tabs
+                    var previous_open = $(this).parents('.row_tabs').find('.current');
+                    if(previous_open!=0){
+                        nTr.next('tr.metatr').remove();
+                        previous_open.removeClass('current');
+                    }
+
+                    nTr.after('<tr class="metatr suggestions"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
+                    var source_id = parseInt(nTr.find('.source_id').text());
+
+                    // Get the details and inject them.
+                    nTr.next(".suggestions").find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                      if (status == "error") {
+                        var msg = "Sorry but there was an error: ";
+                        alert(msg + xhr.status + " " + xhr.statusText);
+                      }
+                    });
+
+                    // Put 1px border around tab
+                    nTr.css({'border-bottom':'1px solid #EEE'});
+
+                    // Fix 'current' class
+                    if(!$(this).hasClass('current'))
+                        $(this).addClass('current');
                 }else{
                     // Close any previously opened tabs
                     var previous_open = $(this).parents('.row_tabs').find('.current');

@@ -1,0 +1,301 @@
+{% load i18n %}
+{% load truncate %}
+{% load avatars %}
+
+<style type="text/css">
+.suggestions {
+  margin:0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1.05em;
+}
+
+.suggestions .title_line {
+  border-top: 1px solid #ccc;
+  width:100%;
+  padding-top: 2px;
+}
+
+.suggestions .title {
+  float: left;
+  padding-left: 0.5em;
+  color: #8f8f8f;
+}
+
+.suggestions_help {
+  float: right;
+  text-indent: -999px;
+  border: 0px;
+}
+
+.user_suggestions {
+  margin: 1em;
+  padding: 1em;
+  height: 100%;
+}
+
+.suggestion_line, .suggestion_create {
+  padding: 1em;
+  clear: both;
+  height: 100%;
+  margin: 0 1em;
+}
+
+.suggestion_line {
+  border-bottom: 1px solid #ccc;
+}
+
+.last_line {
+  border-bottom: 0;
+}
+
+.suggestion_text, .suggestion_textarea, .suggestion_user, .suggestion_button {
+  float: left;
+}
+
+.suggestion_text, .suggestion_textarea {
+  min-width: 520px;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin-right: 2em;
+  font-size: 12px;
+}
+
+.suggestion_textarea {
+  text-align: center;
+}
+
+.suggestion_textarea textarea {
+  border: 2px solid #8f8f8f;
+  width:100%;
+}
+
+.suggestion_user {
+  padding-top: 1em;
+  text-align: center;
+  width: 150px;
+  height: 100%;
+}
+
+.suggestion_create .suggestion_user {
+  padding-top: 2em;
+}
+
+.suggestion_user span {
+  display:block;
+  font-size: 0.75em;
+}
+
+.suggestion_button {
+  padding-top: 1em;
+  width: 150px;
+  text-align: center;
+  height: 100%;
+  line-height: 120px;
+}
+
+.suggestion_score {
+  width: 50px;
+  text-align: center;
+  height: 100%;
+  float: right;
+  position: relative;
+}
+
+.vote_up {
+  position: absolute;
+  top:4px;
+  left:20%;
+}
+
+.score_value {
+  color:#818185;
+  display:block;
+  font-size:24px;
+  font-weight:bold;
+  position:absolute;
+  text-align:center;
+  top:20px;
+  width:100%;
+}
+
+.vote_down {
+  position: absolute;
+  bottom:4px;
+  left:20%;
+}
+
+
+a.vote_up_trigger img, a.vote_down_trigger img {
+  border: 0;
+}
+
+.suggestion_select_button, .suggestion_select_current {
+  width: 140px;
+  text-align: center;
+  height: 100%;
+  float: right;
+  line-height: 100px;
+}
+
+.suggestion_select_button {
+  visibility: hidden;
+}
+</style>
+
+<script>
+/* document ready. do stuff */
+$(document).ready(function(){
+
+    $('#send_suggestion_'+{{ source_entity.id }}).click(function(){
+      var suggestion_string = $('#new_suggestion_'+{{ source_entity.id }}).val();
+      if(suggestion_string==''){
+        alert("You should fill in the suggestion box first!");
+        return false;
+      }
+
+      // Show spinner
+      var abutton = $(this);
+      abutton.removeClass("tick").addClass("action_go");
+
+      // Post the new suggestion text
+      $.ajax({
+        type: 'POST',
+        url: '{% url suggestion_create project_slug resource_slug lang_code %}',
+        data: { 'source_id': {{ source_entity.id }},
+                'suggestion_string': suggestion_string },
+        success: function(data) {
+                // Remove spinner
+                abutton.removeClass("action_go").addClass("tick");
+                $('#new_suggestion_'+{{ source_entity.id }}).val('');
+                },
+        error: function(){
+                alert("An error occurred while trying to store suggestion! We apologize for this!");
+                // Remove spinner
+                abutton.removeClass("action_go").addClass("tick");
+                $('#new_suggestion_'+{{ source_entity.id }}).val('');
+                },
+      });
+    });
+
+    $('.suggestion_line').hover(function(){
+        $(this).find('.suggestion_select_button').css({'visibility':'visible'});
+    },function(){
+        $(this).find('.suggestion_select_button').css({'visibility':'hidden'});
+    });
+
+    $('.suggestion_select_button a').click(function(){
+        var new_value = $(this).parents('.suggestion_line').find('.suggestion_text').html();
+        var trans = $(this).parents('tr.metatr').prev('tr').find('td.trans div textarea.default_translation')
+        trans.val(new_value);
+
+        // Update stringset now!!!
+        if ( stringset ) {
+            /* Mark the translated field as modified */
+            id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            string = stringset.strings[id];
+            string.translate(trans.val(), "other");
+            if (string.modified) {
+                trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
+                // TODO: Check for autosave and handle it.
+                $('tbody tr td.notes span#save_' + id).show();
+                $('tbody tr td.notes span#undo_' + id).show();
+                trans.focus();
+            }
+        }
+    });
+
+    $('.vote_up_trigger').click(function(){
+        var suggestion_id = parseInt($(this).parents('.suggestion_line').attr('id').split("_")[1]);
+
+        // Post the new suggestion text
+        $.ajax({
+            type: 'POST',
+            url: '{% url suggestion_vote_updown project_slug resource_slug lang_code %}',
+            data: { 'suggestion_id': suggestion_id,
+                    'vote_type': 'up' },
+            success: function(data) {
+                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+                    },
+            error: function(){
+                    alert("An error occurred while trying to apply vote! We apologize for this!");
+                    },
+        });
+        return false;
+    });
+
+    $('.vote_down_trigger').click(function(){
+        var suggestion_id = parseInt($(this).parents('.suggestion_line').attr('id').split("_")[1]);
+
+        // Post the new suggestion text
+        $.ajax({
+            type: 'POST',
+            url: '{% url suggestion_vote_updown project_slug resource_slug lang_code %}',
+            data: { 'suggestion_id': suggestion_id,
+                    'vote_type': 'down' },
+            success: function(data) {
+                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+                    },
+            error: function(){
+                    alert("An error occurred while trying to apply vote! We apologize for this!");
+                    },
+        });
+        return false;
+    });
+
+});
+</script>
+
+<div class="suggestions">
+  <span class='suggestions_help' class="i16 help" title="Click to learn how to use suggestions">&nbsp;</span>
+  <div class="user_suggestions">
+  {% if suggestions %}
+    <div class="title_line"><span class="title">USER SUGGESTIONS</span></div>
+      {% for suggestion in suggestions %}
+      <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
+        <div class="suggestion_user">
+          <img class="border top" alt="{{ suggestion.user }}" src="{% avatar 32 suggestion.user %}" />
+          <span>{{ suggestion.user }}</span>
+        </div>
+        <div class="suggestion_text">{{ suggestion.string }}</div>
+        <div class="suggestion_score">
+          <a href='#' class="vote_up_trigger">
+            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="Vote up for this<br /> translation suggestion!" />
+          </a>
+          <span class="score_value">{{ suggestion.integer_score }}</span>
+          <a href='#' class="vote_down_trigger">
+            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="Vote down for this<br /> translation suggestion!"/>
+          </a>
+        </div>
+        {% if current_translation %}
+        {% ifequal current_translation.string suggestion.string %}
+          <div class="suggestion_select_current"><span><img title="This has been accepted as the current translation!" src="{{STATIC_URL}}images/icons/big_tick.png" /></span></div>
+        {% else %}
+          <div class="suggestion_select_button"><a class="i16 smile buttonized2">Use this!</a></div>
+        {% endifequal %}
+        {% else %}
+          <div class="suggestion_select_button"><a class="i16 smile buttonized2">Use this!</a></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+  <div class="clear">&nbsp;</div>
+  {% endif %}
+
+    <div class="title_line"><span class="title">NEW SUGGESTION</span></div>
+    <div class="suggestion_create">
+      <div class="suggestion_user">
+          <img class="border top" alt="{{ request.user }}" src="{% avatar 32 request.user %}" />
+          <span>You!</span>
+      </div>
+      <div class="suggestion_textarea">
+        <textarea id="new_suggestion_{{ source_entity.id }}"></textarea>
+      </div>
+      <div class="suggestion_button">
+        <a id="send_suggestion_{{ source_entity.id }}" class="i16 tick buttonized">Send suggestion!</a>
+      </div>
+    </div>
+  </div>
+
+</div>
