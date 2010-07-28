@@ -2,147 +2,7 @@
 {% load truncate %}
 {% load avatars %}
 
-<style type="text/css">
-.suggestions {
-  margin:0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 1.05em;
-}
-
-.suggestions .title_line {
-  border-top: 1px solid #ccc;
-  width:100%;
-  padding-top: 2px;
-}
-
-.suggestions .title {
-  float: left;
-  padding-left: 0.5em;
-  color: #8f8f8f;
-}
-
-.suggestions_help {
-  float: right;
-  text-indent: -999px;
-  border: 0px;
-}
-
-.user_suggestions {
-  margin: 1em;
-  padding: 1em;
-  height: 100%;
-}
-
-.suggestion_line, .suggestion_create {
-  padding: 1em;
-  clear: both;
-  height: 100%;
-  margin: 0 1em;
-}
-
-.suggestion_line {
-  border-bottom: 1px solid #ccc;
-}
-
-.last_line {
-  border-bottom: 0;
-}
-
-.suggestion_text, .suggestion_textarea, .suggestion_user, .suggestion_button {
-  float: left;
-}
-
-.suggestion_text, .suggestion_textarea {
-  min-width: 520px;
-  padding-bottom: 1em;
-  padding-top: 1em;
-  margin-right: 2em;
-  font-size: 12px;
-}
-
-.suggestion_textarea {
-  text-align: center;
-}
-
-.suggestion_textarea textarea {
-  border: 2px solid #8f8f8f;
-  width:100%;
-}
-
-.suggestion_user {
-  padding-top: 1em;
-  text-align: center;
-  width: 150px;
-  height: 100%;
-}
-
-.suggestion_create .suggestion_user {
-  padding-top: 2em;
-}
-
-.suggestion_user span {
-  display:block;
-  font-size: 0.75em;
-}
-
-.suggestion_button {
-  padding-top: 1em;
-  width: 150px;
-  text-align: center;
-  height: 100%;
-  line-height: 120px;
-}
-
-.suggestion_score {
-  width: 50px;
-  text-align: center;
-  height: 100%;
-  float: right;
-  position: relative;
-}
-
-.vote_up {
-  position: absolute;
-  top:4px;
-  left:20%;
-}
-
-.score_value {
-  color:#818185;
-  display:block;
-  font-size:24px;
-  font-weight:bold;
-  position:absolute;
-  text-align:center;
-  top:20px;
-  width:100%;
-}
-
-.vote_down {
-  position: absolute;
-  bottom:4px;
-  left:20%;
-}
-
-
-a.vote_up_trigger img, a.vote_down_trigger img {
-  border: 0;
-}
-
-.suggestion_select_button, .suggestion_select_current {
-  width: 140px;
-  text-align: center;
-  height: 100%;
-  float: right;
-  line-height: 100px;
-}
-
-.suggestion_select_button {
-  visibility: hidden;
-}
-</style>
+  <link media="screen" href="{{ STATIC_URL }}lotte/css/lotte_suggestions.css" type="text/css" rel="stylesheet" />
 
 <script>
 /* document ready. do stuff */
@@ -159,6 +19,8 @@ $(document).ready(function(){
       var abutton = $(this);
       abutton.removeClass("tick").addClass("action_go");
 
+      var metatr = $(this).parents('.metatr');
+
       // Post the new suggestion text
       $.ajax({
         type: 'POST',
@@ -166,9 +28,36 @@ $(document).ready(function(){
         data: { 'source_id': {{ source_entity.id }},
                 'suggestion_string': suggestion_string },
         success: function(data) {
-                // Remove spinner
-                abutton.removeClass("action_go").addClass("tick");
-                $('#new_suggestion_'+{{ source_entity.id }}).val('');
+                    // Remove spinner
+                    abutton.removeClass("action_go").addClass("tick");
+                    $('#new_suggestion_'+{{ source_entity.id }}).val('');
+
+                    // ISSUE A load to RENDERER
+                    metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                    var nTr = metatr.prev('tr');
+
+                    // Increase suggestions count
+                    var old_string = nTr.find('.show_suggestions').text();
+                    function replacer(str, p1, offset, s){
+                       num = parseInt(p1) + 1;
+                       return "suggestions ("+num+")";
+                    }
+                    var new_string = old_string.replace(/suggestions \(([0-9]*)\)/, replacer);
+                    nTr.find('.show_suggestions').text(new_string);
+
+                    var source_id = {{ source_entity.id }};
+
+                    // Get the details and inject them.
+                    metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                        if (status == "error") {
+                        var msg = "Sorry but there was an error: ";
+                        alert(msg + xhr.status + " " + xhr.statusText);
+                        }
+                    }).hide().fadeIn('slow');
+
+                    // Put 1px border around tab
+                    nTr.css({'border-bottom':'1px solid #EEE'});
+
                 },
         error: function(){
                 alert("An error occurred while trying to store suggestion! We apologize for this!");
@@ -210,6 +99,8 @@ $(document).ready(function(){
     $('.vote_up_trigger').click(function(){
         var suggestion_id = parseInt($(this).parents('.suggestion_line').attr('id').split("_")[1]);
 
+        var metatr = $(this).parents('.metatr');
+
         // Post the new suggestion text
         $.ajax({
             type: 'POST',
@@ -218,9 +109,27 @@ $(document).ready(function(){
                     'vote_type': 'up' },
             success: function(data) {
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+
+                        // ISSUE A load to RENDERER
+                        metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                        var nTr = metatr.prev('tr');
+
+                        var source_id = {{ source_entity.id }};
+
+                        // Get the details and inject them.
+                        metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                          if (status == "error") {
+                            var msg = "Sorry but there was an error: ";
+                            alert(msg + xhr.status + " " + xhr.statusText);
+                          }
+                        }).hide().fadeIn('slow');
+
+                        // Put 1px border around tab
+                        nTr.css({'border-bottom':'1px solid #EEE'});
+
                     },
             error: function(){
-                    alert("An error occurred while trying to apply vote! We apologize for this!");
+                        alert("An error occurred while trying to apply vote! We apologize for this!");
                     },
         });
         return false;
@@ -228,6 +137,8 @@ $(document).ready(function(){
 
     $('.vote_down_trigger').click(function(){
         var suggestion_id = parseInt($(this).parents('.suggestion_line').attr('id').split("_")[1]);
+
+        var metatr = $(this).parents('.metatr');
 
         // Post the new suggestion text
         $.ajax({
@@ -237,9 +148,27 @@ $(document).ready(function(){
                     'vote_type': 'down' },
             success: function(data) {
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+
+                        // ISSUE A load to RENDERER
+                        metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                        var nTr = metatr.prev('tr');
+
+                        var source_id = {{ source_entity.id }};
+
+                        // Get the details and inject them.
+                        metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                          if (status == "error") {
+                            var msg = "Sorry but there was an error: ";
+                            alert(msg + xhr.status + " " + xhr.statusText);
+                          }
+                        }).hide().fadeIn('slow');
+
+                        // Put 1px border around tab
+                        nTr.css({'border-bottom':'1px solid #EEE'});
+
                     },
             error: function(){
-                    alert("An error occurred while trying to apply vote! We apologize for this!");
+                        alert("An error occurred while trying to apply vote! We apologize for this!");
                     },
         });
         return false;
@@ -262,11 +191,11 @@ $(document).ready(function(){
         <div class="suggestion_text">{{ suggestion.string }}</div>
         <div class="suggestion_score">
           <a href='#' class="vote_up_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="Vote up for this<br /> translation suggestion!" />
+            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="Vote up for this translation suggestion! (click again to undo)" />
           </a>
           <span class="score_value">{{ suggestion.integer_score }}</span>
           <a href='#' class="vote_down_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="Vote down for this<br /> translation suggestion!"/>
+            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="Vote down for this translation suggestion! (click again to undo)"/>
           </a>
         </div>
         {% if current_translation %}
@@ -278,6 +207,7 @@ $(document).ready(function(){
         {% else %}
           <div class="suggestion_select_button"><a class="i16 smile buttonized2">Use this!</a></div>
         {% endif %}
+        <div style="padding:0;margin:0;clear:both"></div>
       </div>
       {% endfor %}
   <div class="clear">&nbsp;</div>
