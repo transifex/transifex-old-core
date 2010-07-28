@@ -343,7 +343,7 @@
         });
 
         $("#save_all_2").click(function(){ stringset.push(); });
-        
+
         {% if is_maintainer or request.user.is_superuser%}
         $("#delete_all_2").click(function(){ delete_these(); });
         {% endif %}
@@ -379,6 +379,23 @@
             }
         }
         {% endif %}
+
+        $("#save_and_exit").click(function(){
+            {% if resource_slug %}
+                {% url exit_lotte resource.project.slug resource_slug target_language.code as url_exit_lotte %}
+            {% else%}
+                {% url exit_lotte resource.project.slug target_language.code as url_exit_lotte %}
+            {% endif %}
+
+            //Save & exit
+            stringset.push(
+                false,
+                function(){
+                    window.location= '{{ url_exit_lotte }}';
+                });
+        });
+
+
 
         /* Wrapper ... to be DRY */
         function traverse_filters(){
@@ -586,13 +603,7 @@
     {% if is_maintainer or request.user.is_superuser %}
     &nbsp;&nbsp;<a id="delete_all_2" class="i16 delete buttonized2">{% trans 'Delete translations' %}</a>
     {% endif %}
-
-    {% if resource_slug %}
-        {% url exit_lotte resource.project.slug resource_slug target_language.code as exit_url %}
-    {% else%}
-        {% url exit_lotte resource.project.slug target_language.code as exit_url %}
-    {% endif %}
-    &nbsp;&nbsp;<a id="save_and_exit" href="{{ exit_url }}" class="i16 save buttonized2">{% trans 'Save and Exit' %}</a>
+    &nbsp;&nbsp;<a id="save_and_exit" class="i16 save buttonized2">{% trans 'Save and Exit' %}</a>
 </div>
 
 <div id="footpanel">

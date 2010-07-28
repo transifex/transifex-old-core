@@ -118,7 +118,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     }
 
     // Method for pushing one or more TranslationStrings of this StringSet
-    this.push = function(ts) {
+    this.push = function(ts, callback) {
         this_stringset = this;
         var to_update = [];
         if (ts) { /* Pushing one TranslationString instance */
@@ -181,6 +181,11 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 },
                 error: function() {
                     alert("Error saving new translation.");
+                },
+                complete: function(){
+                    if (typeof callback === 'function'){
+                        callback();
+                    }
                 },
             });
         }
