@@ -13,6 +13,10 @@ post_set_stats = Signal(providing_args=['instance'])
 post_resource_save = Signal(providing_args=['instance', 'created', 'user'])
 post_resource_delete = Signal(providing_args=['instance', 'user'])
 
+# SL Submit Translations signal
+pre_submit_translation = Signal(providing_args=['instance'])
+post_submit_translation = Signal(providing_args=['instance'])
+
 # This is obsolete:
 sig_refresh_cache = Signal(providing_args=["component"])
 pre_refresh_cache = sig_refresh_cache

@@ -109,7 +109,7 @@ class Resource(models.Model):
     objects = ResourceManager()
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.project)
+        return u'%s (%s)' % (self.slug, self.project)
 
     def __repr__(self):
         return "<Resource: %s>" % self.slug
@@ -126,6 +126,10 @@ class Resource(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('resource_detail', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
+
+    @property
+    def full_name(self):
+        return "%s.%s" % (self.project.slug, self.slug)
 
     @property
     def source_strings_with_plurals(self):

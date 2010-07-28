@@ -3,6 +3,7 @@
 {% load truncate %}
 {% load permissions %}
 {% load team_tags %}
+{% load locks_tags %}
 {% load upload_manager_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
@@ -98,9 +99,9 @@
   </div>
   <div class="first_level last_update">
         <ul>
-          <li class="top">
-            <span class="i16 lock_none">{% trans "Resource is not locked by anyone." %} </span>
-          </li>
+          {% ifnotequal resource.source_language target_language %}
+            {% lock_resource_action resource target_language %}
+          {% endifnotequal %}
           <li>
             <span class="i16 clock">
               {% last_translation_update resource target_language.code as last_update %}

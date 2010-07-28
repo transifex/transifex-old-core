@@ -1,84 +1,91 @@
 # -*- coding: utf-8 -*-
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.utils.translation import ugettext as _
-from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
+import simplejson
+from django.conf import settings
+from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
-from txcommon.decorators import one_perm_required_or_403
-from projects.models import Project, Component
-from projects.views.component import component_detail
-from translations.models import POFile
-from teams.models import Team
-from models import POFileLock, POFileLockError
-from permissions import pr_component_lock_file
-from projects.models import Project
-import settings
+from django.shortcuts import get_object_or_404
+from django.utils.timesince import timeuntil
+from django.utils.translation import ugettext as _
 
-try:
-    TFC_CACHING_PREFIX = settings.TFC_CACHING_PREFIX
-except:
-    TFC_CACHING_PREFIX = ""
+from languages.models import Language
+from happix.models import Resource
+from models import Lock, LockError
+from projects.models import Project
+from txcommon.decorators import one_perm_required_or_403
+
+from permissions import pr_resource_language_lock
+
+#try:
+    #TFC_CACHING_PREFIX = settings.TFC_CACHING_PREFIX
+#except:
+    #TFC_CACHING_PREFIX = ""
 
 @login_required
-@one_perm_required_or_403(pr_component_lock_file, 
+@one_perm_required_or_403(pr_resource_language_lock,
     (Project, 'slug__exact', 'project_slug'))
-def component_file_unlock(request, project_slug, component_slug,
-                               filename):
-    extra_context = None
-    if request.method == 'POST':
-        component = get_object_or_404(Component, slug=component_slug,
-                                    project__slug=project_slug)
-        ctype = ContentType.objects.get_for_model(Component)
+def resource_language_lock(request, project_slug, resource_slug, language_code):
+    """
+    View to lock a resource language.
 
-        pofile = get_object_or_404(POFile, object_id=component.pk, 
-                                   content_type=ctype, filename=filename)
-        lock = POFileLock.objects.get_valid(pofile)
+    It uses a json response to be used with Ajax requests.
+    """
+    if request.method == 'POST':
+        resource = get_object_or_404(Resource, slug=resource_slug,
+            project__slug=project_slug)
+        language = get_object_or_404(Language, code=language_code)
+
+        response={}
+        try:
+            lock = Lock.objects.create_update(resource, language, request.user)
+            #cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
+            response['status'] = "OK"
+            response['message'] = _("Lock created.")
+            response['timeuntil'] = timeuntil(lock.expires)
+        except LockError, e:
+            response['status'] = "FAILED"
+            response['message'] = str(e)
+    else:
+        response['status'] = "FAILED"
+        response['message'] = _("Sorry, but you need to send a POST request.")
+
+    return HttpResponse(simplejson.dumps(response),
+        mimetype='application/json')
+
+
+@login_required
+@one_perm_required_or_403(pr_resource_language_lock,
+    (Project, 'slug__exact', 'project_slug'))
+def resource_language_unlock(request, project_slug, resource_slug, 
+    language_code):
+    """
+    View to unlock a resource language.
+
+    It uses a json response to be used with Ajax requests.
+    """
+    if request.method == 'POST':
+        resource = get_object_or_404(Resource, slug=resource_slug,
+            project__slug=project_slug)
+        language = get_object_or_404(Language, code=language_code)
+
+        response={}
+        lock = Lock.objects.get_valid(resource, language)
         if lock:
             try:
                 lock.delete_by_user(request.user)
-                cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
-                request.user.message_set.create(message=_("Lock removed."))
-            except POFileLockError, err:
-                return HttpResponseForbidden("You can't unlock this file.")
+                #cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
+                response['status'] = "OK"
+                response['message'] = _("Lock removed.")
+            except LockError, e:
+                return HttpResponseForbidden(_("You don't have permission to "
+                    "unlock this file."))
+        response['status'] = "FAILED"
+        response['message'] = _("Unlock failed. Lock doesn't exist.")
     else:
-        request.user.message_set.create(message = _(
-                "Sorry, but you need to send a POST request."))
-    try:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    except:
-        return HttpResponseRedirect(reverse('component_detail',
-            args=[project_slug, component_slug]))
+        response['status'] = "FAILED"
+        response['message'] = _("Sorry, but you need to send a POST request.")
 
-@login_required
-@one_perm_required_or_403(pr_component_lock_file, 
-    (Project, 'slug__exact', 'project_slug'))
-def component_file_lock(request, project_slug, component_slug, filename):
-    if request.method == 'POST':
+    return HttpResponse(simplejson.dumps(response),
+        mimetype='application/json')
 
-        component = get_object_or_404(Component, slug=component_slug,
-                                    project__slug=project_slug)
 
-        ctype = ContentType.objects.get_for_model(Component)
-
-        pofile = get_object_or_404(POFile, object_id=component.pk, 
-                                   content_type=ctype, filename=filename)
-
-        try:
-            POFileLock.objects.create_update(pofile, request.user)
-            cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
-            request.user.message_set.create(
-                message=_("Lock created. Please don't forget to remove it "
-                "when you're done."))
-        except POFileLockError, e:
-            request.user.message_set.create(message=str(e))
-    else:
-       request.user.message_set.create(message = _(
-           "Sorry, but you need to send a POST request."))
-
-    try:
-        return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    except:
-        return HttpResponseRedirect(reverse('component_detail',
-            args=[project_slug, component_slug]))

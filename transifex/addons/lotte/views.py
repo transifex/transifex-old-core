@@ -24,6 +24,8 @@ from authority.views import permission_denied
 
 Suggestion = get_model('suggestions', 'Suggestion')
 
+from signals import lotte_init, lotte_done
+
 try:
     import json
 except:
@@ -92,6 +94,9 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         language = target_language,
         rule = 5).values_list("user", flat=True))
 
+    lotte_init.send(None, request=request, resources=resources,
+        language=target_language)
+
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -101,9 +106,43 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'WEBTRANS_SUGGESTIONS': settings.WEBTRANS_SUGGESTIONS,
           'contributors': contributors,
           'resources': resources,
+          'resource_slug': resource_slug,
           'languages': Language.objects.all()
         },
         context_instance = RequestContext(request))
+
+@login_required
+def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
+    """
+    Exiting Lotte
+    """
+
+    # Permissions handling
+    # Project should always be available
+    project = get_object_or_404(Project, slug=project_slug)
+    team = Team.objects.get_or_none(project, lang_code)
+    check = ProjectPermission(request.user)
+    if not check.submit_file(team or project):
+        return permission_denied(request)
+
+    target_language = Language.objects.by_code_or_alias(lang_code)
+
+    resources = []
+    if resource_slug:
+        resources = Resource.objects.filter(slug=resource_slug, project=project)
+        if not resources:
+            raise Http404
+        url = reverse('resource_detail', args=[project_slug, resource_slug])
+    else:
+        resources = Resource.objects.filter(project=project)
+        url = reverse('project_detail', args=[project_slug])
+
+    # TODO: Add ActionLog here
+
+    lotte_done.send(None, request=request, resources=resources,
+        language=target_language)
+
+    return HttpResponseRedirect(url)
 
 
 # Restrict access only for private projects 

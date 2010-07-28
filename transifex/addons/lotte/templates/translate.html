@@ -578,22 +578,22 @@
         <th>&nbsp;</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-          <th></th>
-          <th></th>
-          <th style="text-align:left;padding-top:1em">
-            <a id="save_all_2" class="i16 save_all buttonized2">{% trans 'Save all' %}</a>
-            {% if is_maintainer or request.user.is_superuser %}
-            &nbsp;&nbsp;<a id="delete_all_2" class="i16 delete buttonized2">{% trans 'Delete translations' %}</a>
-            {% endif %}
-          </th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-    </tfoot>
 </table>
+
+<div id="footer_lotte">
+    <a id="save_all_2" class="i16 save_all buttonized2">{% trans 'Save all' %}</a>
+
+    {% if is_maintainer or request.user.is_superuser %}
+    &nbsp;&nbsp;<a id="delete_all_2" class="i16 delete buttonized2">{% trans 'Delete translations' %}</a>
+    {% endif %}
+
+    {% if resource_slug %}
+        {% url exit_lotte resource.project.slug resource_slug target_language.code as exit_url %}
+    {% else%}
+        {% url exit_lotte resource.project.slug target_language.code as exit_url %}
+    {% endif %}
+    &nbsp;&nbsp;<a id="save_and_exit" href="{{ exit_url }}" class="i16 save buttonized2">{% trans 'Save and Exit' %}</a>
+</div>
 
 <div id="footpanel">
     <ul id="mainpanel">
