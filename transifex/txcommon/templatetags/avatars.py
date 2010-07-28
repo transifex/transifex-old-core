@@ -40,7 +40,7 @@ register = Library()
 if hasattr(settings, "DEFAULT_AVATAR") and settings.DEFAULT_AVATAR:
     DEFAULT_AVATAR = settings.DEFAULT_AVATAR
 else:
-    DEFAULT_AVATAR = os.path.join(settings.MEDIA_ROOT, "userprofile", "generic.jpg")
+    DEFAULT_AVATAR = os.path.join(settings.STATIC_ROOT, "userprofile", "images", "generic.jpg")
 
 class ResizedThumbnailNode(Node):
     def __init__(self, size, username=None):
