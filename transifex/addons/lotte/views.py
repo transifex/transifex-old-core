@@ -383,7 +383,7 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
     # Form the strings dictionary, get as Json object
     # The fields are the following:
     # id-> source_entity id
-    # translations-> translation strings (inlucdes all plurals)
+    # translations-> translation strings (includes all plurals)
     # context-> source_entity context
     # occurrence-> occurrence (not yet well supported)
     # Iterate through all the row data that have been sent.

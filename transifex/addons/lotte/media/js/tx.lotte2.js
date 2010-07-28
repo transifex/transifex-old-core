@@ -142,7 +142,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 type: "POST",
                 contentType: "application/json",
                 success: function(){
-                    // Update the obect classes, and the overall statistics
+                    // Update the object classes, and the overall statistics
                     if(ts) { 
                         ts.modified = false;
                         if (ts.isUntranslated()) {
@@ -476,6 +476,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     // Fix 'current' class
                     if(!$(this).hasClass('current'))
                         $(this).addClass('current');
+
                 }else{
                     // Close any previously opened tabs
                     var previous_open = $(this).parents('.row_tabs').find('.current');
@@ -494,7 +495,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 return false;
         });
 
-        // Bind sliding animation, and postioning for each button in the toolbar
+        // Bind sliding animation, and positioning for each button in the toolbar
         $('.lotte-actions p').each(function(){
             // panel buttons replacement for cross-browsing reasons
             w = $('a', this).width();
