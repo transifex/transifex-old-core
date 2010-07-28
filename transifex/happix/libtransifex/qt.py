@@ -101,32 +101,34 @@ class LinguistHandler(Handler):
                         source_entity = string)
                     for p in plurals:
                         plural_keys[p.rule] =  p.string
-                    translation.setAttribute('numerus', 'yes')
-                    numerusform = doc.createElement("numerusform")
+                    message.setAttribute('numerus', 'yes')
                     for key in plural_keys.keys():
-                        entry = doc.createTextNode(plural_keys[key])
-                        entry.setAttribute
-                        numerusform.appendChild(entry)
-
-                    translation.appendChild(numerusform)
+                        e = doc.createElement("numerusform")
+                        e.appendChild(doc.createTextNode(plural_keys[key]))
+                        translation.appendChild(e)
+                else:
+                    translation.appendChild(doc.createTextNode(trans.string if trans else ""))
 
                 source.appendChild(doc.createTextNode(string.string))
                 if not trans:
                     translation.setAttribute('type', 'unfinished')
-                translation.appendChild(doc.createTextNode(trans.string if trans else ""))
+
+                # If we add the STRING flag the location is not outputed to the
+                # file by default. Do we want that?
+                #if STRICT:
+                if string.occurrences and \
+                    string.occurrences != "":
+                    for _location in string.occurrences.split(";"):
+                        filename, line = _location.split(":")
+                        location = doc.createElement("location")
+                        location.setAttribute("filename", filename)
+                        location.setAttribute("line", line)
+                        message.appendChild(location)
 
                 message.appendChild(source)
                 message.appendChild(translation)
 
-                if STRICT:
-                    if string.occurrences and \
-                        string.occurrences != "":
-                        for _location in string.occurrences.split(";"):
-                            filename, line = _location.split(":")
-                            location = doc.createElement("location")
-                            location.setAttribute("filename", filename)
-                            location.setAttribute("line", line)
-                            message.appendChild(location)
+
                 context.appendChild(message)
 
             root.appendChild(context)

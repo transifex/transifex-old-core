@@ -49,7 +49,9 @@ class POFile(BaseTestCase):
         for s in self.stringset.strings:
 
             # Testing if source entity and translation are NOT the same
-            self.assertNotEqual(s.source_entity, s.translation)
+            # XXX: This is not madatory. For example OK could be OK in finnish
+            # as well
+            #self.assertNotEqual(s.source_entity, s.translation)
 
             # Testing plural number
             if s.source_entity == '{0} results':
@@ -107,8 +109,8 @@ class POFile(BaseTestCase):
 
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
 
-        self.assertEqual( Translation.objects.filter(resource=r,
-            language=l), 3)
+        self.assertEqual( len(Translation.objects.filter(resource=r,
+            language=l)), 4)
 
         handler.bind_file('%s/ar.po' % os.path.split(__file__)[0])
         l = Language.objects.by_code_or_alias('ar')
@@ -119,5 +121,7 @@ class POFile(BaseTestCase):
 
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
 
-        self.assertEqual( Translation.objects.filter(resource=r,
-            language=l), 6)
+        self.assertEqual( len(Translation.objects.filter(resource=r,
+            language=l)), 8)
+
+        r.delete()

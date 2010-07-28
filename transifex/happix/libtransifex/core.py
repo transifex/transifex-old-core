@@ -8,6 +8,7 @@ import codecs
 from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
+from languages.models import Language
 from happix.libtransifex.decorators import *
 """
 STRICT flag is used to switch between two parsing modes:
@@ -183,7 +184,7 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
-    def set_language(language):
+    def set_language(self, language):
         if isinstance(language, Language):
             self.language = language
         else:

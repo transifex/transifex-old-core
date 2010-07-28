@@ -17,7 +17,7 @@ from vcs.tests import test_git
 # Load models
 Project = get_model('projects', 'Project')
 Component = get_model('projects', 'Component')
-Release = get_model('projects', 'Release')
+Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
 Language = get_model('languages', 'Language')
 Permission = get_model('authority', 'Permission')
@@ -113,7 +113,7 @@ class BaseTestCase(TestCase):
 
         self.release = Release.objects.get_or_create(slug="r1", name="r1",
             project=self.project)[0]
-        self.release.components.add(self.component)
+#       self.release.components.add(self.component)
 
         self.language = Language.objects.get(code='pt_BR')
         if create_teams:
