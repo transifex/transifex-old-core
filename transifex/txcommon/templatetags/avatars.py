@@ -95,7 +95,7 @@ class ResizedThumbnailNode(Node):
             if gravatar:
                 url = gravatar_for_user(user, self.size)
             else:
-                url = filename.replace(settings.MEDIA_ROOT, settings.MEDIA_URL)
+                url = filename.replace(settings.STATIC_ROOT, settings.STATIC_URL)
                 url = os.path.normpath(url)
 
         return url
