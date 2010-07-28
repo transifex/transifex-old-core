@@ -12,9 +12,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from projects.models import Component
-from transifex.translations.models import POFile 
 from teams.models import Team
 from translations.models import Language
+
+POFile = models.get_model('translations', 'POFile')
 
 class POReviewRequestManager(models.Manager):
 
