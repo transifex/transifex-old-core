@@ -8,7 +8,9 @@
   {% if last_translation %}
       {% if last_translation.last_update %}<span>{{ last_translation.last_update|timesince }}</span>{% endif %}
       {% if last_translation.user %}
-        <span> by {{ last_translation.user }} </span>
+        <span> by 
+          <a href="{% url profile_public last_translation.user.username %}">{{ last_translation.user }}</a>
+        </span>
         &nbsp;
         <img class="border top" alt="{{ last_translation.user }}" src="{% avatar 16 last_translation.user %}"  style="vertical-align: text-bottom"/>
       {% endif %}

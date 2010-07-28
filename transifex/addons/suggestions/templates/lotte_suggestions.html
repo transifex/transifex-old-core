@@ -2,7 +2,7 @@
 {% load truncate %}
 {% load avatars %}
 
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/lotte_suggestions.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}suggestions/css/lotte_suggestions.css" type="text/css" rel="stylesheet" />
 
 <script>
 /* document ready. do stuff */
@@ -39,10 +39,13 @@ $(document).ready(function(){
                     // Increase suggestions count
                     var old_string = nTr.find('.show_suggestions').text();
                     function replacer(str, p1, offset, s){
-                       num = parseInt(p1) + 1;
+                       if(p1)
+                           num = parseInt(p1) + 1;
+                       else
+                           num = 1
                        return "suggestions ("+num+")";
                     }
-                    var new_string = old_string.replace(/suggestions \(([0-9]*)\)/, replacer);
+                    var new_string = old_string.replace(/suggestions ?\(?([0-9]*)\)?/, replacer);
                     nTr.find('.show_suggestions').text(new_string);
 
                     var source_id = {{ source_entity.id }};
@@ -186,14 +189,16 @@ $(document).ready(function(){
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
           <img class="border top" alt="{{ suggestion.user }}" src="{% avatar 32 suggestion.user %}" />
-          <span>{{ suggestion.user }}</span>
+          <a href="{% url profile_public suggestion.user.username %}">
+            <span>{{ suggestion.user }}</span>
+          </a>
         </div>
         <div class="suggestion_text">{{ suggestion.string }}</div>
         <div class="suggestion_score">
           <a href='#' class="vote_up_trigger">
             <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="Vote up for this translation suggestion! (click again to undo)" />
           </a>
-          <span class="score_value">{{ suggestion.integer_score }}</span>
+          <span class="score_value" title="The score of the suggestion! Indicator for the relevance of this translation.">{{ suggestion.integer_score }}</span>
           <a href='#' class="vote_down_trigger">
             <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="Vote down for this translation suggestion! (click again to undo)"/>
           </a>
