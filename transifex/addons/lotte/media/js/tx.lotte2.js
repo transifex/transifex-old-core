@@ -1,3 +1,17 @@
+/* 
+Class to store the Status (in the client-side) of a Lotte instance that a 
+translator opens up.
+
+For not it's only used for ActionLog purposes on the server side, whenever 
+the Save & Exit button is pressed in Lotte.
+*/
+function LotteStatus(){
+    /* Set to true whenever someone pushes a translation to the server */
+    this.updated = false;
+}
+lotteStatus = new LotteStatus();
+
+
 /* TranslationString class which stores information about one translation string */
 function TranslationString(parent, id, source_strings, translated_strings, source_entity, context, occurrence) {
 
@@ -131,8 +145,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                      'translations':this.strings[i].translated_strings,}); // translations includes all plurals!
                 }
         }
-        if (to_update == {}) {
-            alert("No strings to push");
+        if (to_update.length == 0) {
+            if (typeof callback === 'undefined')
+                alert("No strings to push");
         } else {
 
             $.ajax({
@@ -141,6 +156,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 dataType : "text", // "json" is strict and we get 500
                 type: "POST",
                 contentType: "application/json",
+                async: false,
                 success: function(){
                     // Update the object classes, and the overall statistics
                     if(ts) { 
@@ -178,17 +194,16 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     stringset.untranslated_modified = 0;
                     // Update the stats too!
                     this_stringset.updateStats(true);
+                    // Change status to updated=True
+                    lotteStatus.updated=true;
                 },
                 error: function() {
                     alert("Error saving new translation.");
                 },
-                complete: function(){
-                    if (typeof callback === 'function'){
-                        callback();
-                    }
-                },
             });
         }
+        if (typeof callback === 'function')
+            callback(lotteStatus.updated);
     }
 
 

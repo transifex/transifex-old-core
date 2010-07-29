@@ -390,11 +390,22 @@
             //Save & exit
             stringset.push(
                 false,
-                function(){
-                    window.location= '{{ url_exit_lotte }}';
+                function(updated){
+                    $.ajax({
+                        url: "{{ url_exit_lotte }}",
+                        data: {updated:updated}, 
+                        dataType : "json",
+                        type: "POST",
+                        contentType: "application/json",
+                        complete: function(xmlhttpreq, textStatus) {
+                            if (textStatus=='success'){
+                                response = JSON.parse(xmlhttpreq.responseText);
+                                window.location = response['redirect'];
+                            }
+                        }
+                    });
                 });
         });
-
 
 
         /* Wrapper ... to be DRY */

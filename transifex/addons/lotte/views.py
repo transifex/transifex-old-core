@@ -142,6 +142,10 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     lotte_done.send(None, request=request, resources=resources,
         language=target_language)
 
+    if request.is_ajax():
+        json = simplejson.dumps(dict(redirect=url))
+        return HttpResponse(json, mimetype='application/json')
+
     return HttpResponseRedirect(url)
 
 
