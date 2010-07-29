@@ -285,6 +285,14 @@ NOTICE_TYPES = [
                 "default": 1,
                 "show_to_user": True,
             },
+            {
+                "label": "project_resource_translated",
+                "display": _("Resource Translated"), 
+                "description": _("when a translation is sent to a project "
+                    "resource"), 
+                "default": 0,
+                "show_to_user": False,
+            },
     ]
 
 

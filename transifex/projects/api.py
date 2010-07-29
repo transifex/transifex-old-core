@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
-from piston.handler import BaseHandler
-from piston.utils import rc
-from django.utils.translation import ugettext_lazy as _
-from django.template.defaultfilters import slugify
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.db import transaction
+from django.http import HttpResponse
+from django.utils import simplejson
+from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import slugify
+
+from piston.handler import BaseHandler
+from piston.utils import rc
+
+from actionlog.models import action_logging
+from happix.decorators import method_decorator
+from happix.libtransifex import pofile, qt
 from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
@@ -12,10 +21,10 @@ from projects.permissions import *
 from storage.models import StorageFile
 from txcommon.log import logger
 from txcommon.decorators import one_perm_required_or_403
-from django.db import transaction
 from uuid import uuid4
-from happix.decorators import method_decorator
-from happix.libtransifex import pofile, qt
+
+# Temporary
+from txcommon import notifications as txnotification
 
 class ProjectHandler(BaseHandler):
     """
@@ -216,7 +225,9 @@ class ProjectResourceHandler(BaseHandler):
                 # bound to some translation resource
                 storagefile.bound = True
                 storagefile.save()
-                return retval
+                return HttpResponse(simplejson.dumps(retval),
+                    mimetype='application/json')
+
             else:
                 return rc.BAD_REQUEST
         else:
@@ -234,6 +245,7 @@ class ProjectResourceHandler(BaseHandler):
                 resource = Resource.objects.get(slug=resource_slug,
                     project=project)
                 storagefile = StorageFile.objects.get(uuid=uuid)
+                language = storagefile.language
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
                     (storagefile.name, storagefile.uuid, project_slug, 
@@ -273,7 +285,22 @@ class ProjectResourceHandler(BaseHandler):
                 # bound to some translation resource
                 storagefile.bound = True
                 storagefile.save()
-                return retval
+
+                # If any string added/updated
+                if retval['strings_added'] > 0 or retval['strings_updated'] > 0:
+                    # ActionLog & Notification
+                    nt = 'project_resource_translated'
+                    context = {'project': project,
+                                'resource': resource,
+                                'language': language}
+                    object_list = [project, resource, language]
+                    action_logging(request.user, object_list, nt, context=context)
+                    if settings.ENABLE_NOTICES:
+                        txnotification.send_observation_notices_for(project,
+                                signal=nt, extra_context=context)
+
+                return HttpResponse(simplejson.dumps(retval),
+                    mimetype='application/json')
             else:
                 return rc.BAD_REQUEST
         else:

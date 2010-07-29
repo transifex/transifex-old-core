@@ -12,6 +12,8 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
+from authority.views import permission_denied
+
 from actionlog.models import action_logging
 from happix.models import (Translation, Resource, SourceEntity)
 from languages.models import Language
@@ -20,7 +22,9 @@ from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
-from authority.views import permission_denied
+
+# Temporary
+from txcommon import notifications as txnotification
 
 Suggestion = get_model('suggestions', 'Suggestion')
 
@@ -125,7 +129,7 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     if not check.submit_file(team or project):
         return permission_denied(request)
 
-    target_language = Language.objects.by_code_or_alias(lang_code)
+    language = Language.objects.by_code_or_alias(lang_code)
 
     resources = []
     if resource_slug:
@@ -137,10 +141,21 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
         resources = Resource.objects.filter(project=project)
         url = reverse('project_detail', args=[project_slug])
 
-    # TODO: Add ActionLog here
+    if request.POST.get('updated', None) == 'true':
+        # ActionLog & Notification
+        for resource in resources:
+            nt = 'project_resource_translated'
+            context = {'project': project,
+                       'resource': resource,
+                       'language': language}
+            object_list = [project, resource, language]
+            action_logging(request.user, object_list, nt, context=context)
+            if settings.ENABLE_NOTICES:
+                txnotification.send_observation_notices_for(project,
+                        signal=nt, extra_context=context)
 
     lotte_done.send(None, request=request, resources=resources,
-        language=target_language)
+        language=language)
 
     if request.is_ajax():
         json = simplejson.dumps(dict(redirect=url))
