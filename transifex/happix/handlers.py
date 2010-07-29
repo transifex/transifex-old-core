@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.conf import settings
 from actionlog.models import action_logging
 from projects.signals import post_resource_save, post_resource_delete
+from txcommon import notifications as txnotification
 from happix.models import HAPPIX_CACHE_KEYS
 
 # FIXME we can do more clever calculations instead of deleting the values
