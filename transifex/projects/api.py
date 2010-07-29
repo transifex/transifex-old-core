@@ -225,6 +225,20 @@ class ProjectResourceHandler(BaseHandler):
                 # bound to some translation resource
                 storagefile.bound = True
                 storagefile.save()
+
+                # ActionLog & Notification
+                if created:
+                    nt = 'project_resource_added'
+                else:
+                    nt = 'project_resource_changed'
+                context = {'project': project,
+                           'resource': resource}
+                object_list = [project, resource]
+                action_logging(request.user, object_list, nt, context=context)
+                if settings.ENABLE_NOTICES:
+                    txnotification.send_observation_notices_for(project,
+                            signal=nt, extra_context=context)
+
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='application/json')
 
