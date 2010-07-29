@@ -18,7 +18,9 @@ from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
+from projects.permissions.project import ProjectPermission
 from storage.models import StorageFile
+from teams.models import Team
 from txcommon.log import logger
 from txcommon.decorators import one_perm_required_or_403
 from uuid import uuid4
@@ -171,6 +173,8 @@ class ProjectResourceHandler(BaseHandler):
 
     allowed_methods = ('POST', 'PUT')
 
+    @method_decorator(one_perm_required_or_403(pr_resource_add_change,
+        (Project, 'slug__exact', 'project_slug')))
     def create(self, request, project_slug):
         """
         Create resource for project by UUID of StorageFile.
@@ -247,15 +251,24 @@ class ProjectResourceHandler(BaseHandler):
         else:
             return rc.BAD_REQUEST
 
-
     def update(self, request, project_slug, resource_slug, language_code=None):
         """
         Update resource translations of a project by the UUID of a StorageFile.
         """
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
+
+        # Permissions handling
+        team = Team.objects.get_or_none(project, language_code)
+        check = ProjectPermission(request.user)
+        if not check.submit_translations(team or project):
+            return rc.FORBIDDEN
+
         if "application/json" in request.content_type:
             if "uuid" in request.data:
                 uuid = request.data['uuid']
-                project = Project.objects.get(slug=project_slug)
                 resource = Resource.objects.get(slug=resource_slug,
                     project=project)
                 storagefile = StorageFile.objects.get(uuid=uuid)
