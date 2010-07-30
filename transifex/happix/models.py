@@ -611,7 +611,7 @@ class Template(models.Model):
         verbose_name_plural = _('Templates')
         ordering = ['resource']
 
-class L10n_methodManager(models.Model):
+class L10n_methodManager(models.Manager):
     """
     L10n_method manager
     """
@@ -625,8 +625,7 @@ class L10n_methodManager(models.Model):
         except Exception, e:
             raise Exception('Could not guess mimetype for file %s: %s'
                 % (filepath, e))
-        
-        
+
     def get_by_filename(self, filename):
         """
         This manager method takes a filename and returns a l10n_method that can
@@ -658,7 +657,7 @@ class L10n_method(models.Model):
         help_text=_("The mimetype of the files associated with this l10n"
             " method"))
 
-    parser = None
+    objects = L10n_methodManager()
 
     class Meta:
         verbose_name = _('Localization method')

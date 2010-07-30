@@ -81,6 +81,7 @@ class Handler(object):
         self.resource = None # Associated resource
         self.language = None # Resource's source language
 
+		self.template = None # Var to store raw template
         self.compiled_template = None # Var to store output of compile() method
 
         if filename:
@@ -203,8 +204,7 @@ class Handler(object):
         """
         Saves parsed file contents to the database. duh
         """
-        self._pre_save2db(is_source=False, user=None, overwrite_translations=True)
-        import ipdb; ipdb.set_trace()
+        self._pre_save2db(is_source, user, overwrite_translations)
 
         try:
             strings_added = 0
@@ -264,10 +264,9 @@ class Handler(object):
             return 0,0
         else:
             if is_source:
-                t = Template.objects.get_or_create(resource = self.resource)
+                t, created = Template.objects.get_or_create(resource = self.resource)
                 t.content = self.template
                 t.save()
-                self.resource.source_file_template = t
                 self.resource.save()
             transaction.commit()
 
@@ -280,8 +279,8 @@ class Handler(object):
         else:
             raise Exception("language neeeds to be of type %s" %
                 Language.__class__)
-
-   @need_compiled
+   
+ @need_compiled
     def save2file(self, filename):
         """
         Take the ouput of the compile method and save results to specified file.

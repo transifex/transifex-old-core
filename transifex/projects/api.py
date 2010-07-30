@@ -193,14 +193,12 @@ class ProjectResourceHandler(BaseHandler):
                         source_file=storagefile
                 )
                 # update l10n_method
-                if created:
-                    method = L10n_method.objects.get_by_filename(storagefile.get_storage_path())
-                    if not method:
-                        request.user.message_set.create(message=_("Error: We couldn't"
-                        " find a suitable localization method for this file."))
-                        return rc.BAD_REQUEST
-                    resource.l10n_method = method
-                    resource.save()
+                method = L10n_method.objects.get_by_filename(storagefile.get_storage_path())
+                if not method:
+#                    request.user.message_set.create(message=_("Error: We couldn't find a suitable localization method for this file."))
+                    return rc.BAD_REQUEST
+                resource.l10n_method = method
+                resource.save()
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
                     (storagefile.name, storagefile.uuid, project.slug,
@@ -214,8 +212,8 @@ class ProjectResourceHandler(BaseHandler):
                 try:
                     strings_added, strings_updated = fhandler.save2db(True)
                 except:
-                    request.user.message_set.create(message=_("Error importing"
-                        " file."))
+#                   request.user.message_set.create(message=_("Error importing"
+#                       " file."))
                     return rc.BAD_REQUEST
                 else:
                     messages = []
