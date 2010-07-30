@@ -164,6 +164,7 @@ class Handler(object):
 
                 if created and j.rule==5:
                     strings_added += 1
+                    tr.save()
 
                 if not created and overwrite_translations:
                     if tr.string != j.translation:

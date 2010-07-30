@@ -67,26 +67,46 @@
     var target_lang = '{{ target_language.code }}';
 
     {% if WEBTRANS_SUGGESTIONS %}
-    google.setOnLoadCallback(function() {
 
-        /* Global variables */
-        is_supported_source_lang = google.language.isTranslatable(source_lang);
-        is_supported_lang = google.language.isTranslatable(target_lang);
-        // If the main language code is not supported, try to find one from the code aliases
-        if (!(is_supported_lang)){
-            // Get aliases
-            code_aliases = '{{ target_language.code_aliases }}';
-            if(code_aliases){
-                // Drop spaces in the beginning/end of the string and split it
-                list = code_aliases.replace(/^ /,'').replace(/ $/,'').split(' ');
-                for (i=0; i<list.length; i++){
-                    is_supported_lang = google.language.isTranslatable(list[i]);
-                    if (is_supported_lang){
-                        target_lang = list[i];
-                        break;
-                    }
-                }
+    function unique(a){
+        /* Drop duplicated entries from an array (list) */
+        var r = new Array();
+        o:for(var i = 0, n = a.length; i < n; i++){
+            for(var x = 0, y = r.length; x < y; x++){
+                if(r[x]==a[i]) continue o;
             }
+            r[r.length] = a[i];
+        }
+        return r;
+    }
+
+    function supported_language(code_aliases){
+        // Drop spaces in the beginning/end of the string
+        code_aliases = code_aliases.replace(/^ /,'').replace(/ $/,'');
+        // Transform codes like 'pt_BR' into 'pt', droping the locale, which is not supported by google translate
+        code_aliases = code_aliases.replace(/\-+[\w]+/,'').replace(/_+[\w]+/,'').replace(/@+[\w]+/,'')
+        // Remove duplicated elements
+        code_list = unique(code_aliases.split(' '));
+        for (i=0; i<code_list.length; i++){
+            if (google.language.isTranslatable(code_list[i])){
+                return code_list[i];
+            }
+        }
+    }
+
+    target_source_codes = source_lang + ' {{ resource.source_language.code }}';
+    target_codes = target_lang + '{{ target_language.code_aliases }}';
+
+    google.setOnLoadCallback(function() {
+        /* Global variables */
+        source_lang = supported_language(target_source_codes)
+        target_lang = supported_language(target_codes)
+        if(source_lang && target_lang){
+            is_supported_source_lang = true;
+            is_supported_lang = true;
+        }else{
+            is_supported_source_lang = false;
+            is_supported_lang = false;
         }
     {% endif %}
 
