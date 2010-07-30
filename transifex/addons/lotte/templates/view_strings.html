@@ -36,7 +36,7 @@
             "bProcessing": true,
             "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
             "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
-            "bAutoWidth": false,
+            "bAutoWidth": true,
             "aoColumns" : [
                 { "bVisible":false },
                 { "bVisible":false, "bSortable": false, },
@@ -68,7 +68,8 @@
                       return translation_containers;
                   }
                 },
-                { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
+                { "bVisible":false, "bSortable": false, },
+                { "sClass": "notes", "bSortable": false, "bVisible":false, "sWidth": "40px",},
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
@@ -170,6 +171,7 @@
         <th></th>
         <th>{% trans "Source String" %}</th>
         <th>{% trans "Translation" %}</th>
+        <th>&nbsp;</th>
         <th>&nbsp;</th>
         </tr>
     </thead>
