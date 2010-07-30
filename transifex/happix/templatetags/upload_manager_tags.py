@@ -27,7 +27,6 @@ def upload_create_resource_form(request, project, prefix='create_form'):
         display_form=False
 
     api_project_files = get_url_pattern('api_project_files')
-
     return {
           'project' : project,
           'resource': resource,

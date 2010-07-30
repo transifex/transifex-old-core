@@ -3,7 +3,8 @@
 """
 Qt4 TS file parser for Python
 """
-
+from hashlib import md5
+import time
 import xml.dom.minidom
 from xml.dom.minidom import DOMImplementation
 from django.db import transaction
@@ -24,6 +25,24 @@ class LinguistParseError(ParseError):
 class LinguistCompileError(CompileError):
     pass
 
+def _getElementByTagName(element, tagName, noneAllowed = False):
+    elements = element.getElementsByTagName(tagName)
+    if not noneAllowed and not elements:
+        raise LinguistParseError("Element '%s' not found!" % tagName)
+    if len(elements) > 1:
+        raise LinguistParseError("Multiple '%s' elements found!" % tagName)
+    return elements[0]
+
+def _get_attribute(element, key, die = False):
+    if element.attributes.has_key(key):
+        return element.attributes[key].value
+    elif die:
+        raise LinguistParseError("Could not find attribute '%s' "\
+            "for element '%s'" % (key, element.tagName))
+    else:
+        return None
+
+
 class LinguistHandler(Handler):
     name = "Qt4 TS parser"
     format = "Qt4 Translation XML files (*.ts)"
@@ -33,107 +52,44 @@ class LinguistHandler(Handler):
     def accept(cls, filename):
         return filename.endswith(".ts")
 
-    @need_resource
-    def compile(self, is_source=False, language = None):
+    def _post_compile(self, *args, **kwargs):
         """
-        Method that takes a `language` as and the bound resource as arguments
-        and creates the requested translation file. Contents are not saved to
-        disk but are held under the ``compiled `` class attribute.
-        save2file(filename) needs to be run in order to save all file contents
-        to the disk.
         """
-        if not language:
+        if hasattr(kwargs,'language'):
+            language = kwargs['language']
+        else:
             language = self.language
 
-        # Create XML root
-        imp = DOMImplementation()
-        doctype = imp.createDocumentType(
-            qualifiedName='TS',
-            publicId=None,
-            systemId=None,
-        )
-        doc = imp.createDocument(None, 'TS', doctype)
-        root = doc.documentElement
-        root.setAttribute("version", "2.0")
-        root.setAttribute("language", language.code)
-        doc.appendChild(root)
+        doc = xml.dom.minidom.parseString(self.compiled_template)
+        for message in doc.getElementsByTagName("message"):
+            if message.attributes.has_key("numerus") and \
+                message.attributes['numerus'].value=='yes':
+                source = _getElementByTagName(message, "source")
+                translation = _getElementByTagName(message, "translation")
+                numerusforms = message.getElementsByTagName('numerusform')
 
-        # Group source entities by context
-        context_stringset = SourceEntity.objects.filter(
-            resource = self.resource)
-        contexts = context_stringset.values('context').order_by().distinct()
-        for c in contexts:
-            # Create context elements under which the messages are grouped
-            string_context = c['context']
-            context = doc.createElement("context")
-            context_name = doc.createElement("name")
-            context_name.appendChild(doc.createTextNode(string_context))
-            context.appendChild(context_name)
-            stringset = SourceEntity.objects.filter(
-                resource = self.resource,
-                context = string_context)
-            # If single string instead of list, turn into list
-            if not hasattr(stringset, '__iter__'):
-                stringset = [ stringset ]
-            for string in stringset:
-                try:
-                    trans = Translation.objects.get(
-                        resource = self.resource,
-                        source_entity=string,
-                        language = language,
-                        rule =5)
-                except Translation.DoesNotExist:
-                    trans = None
-                message = doc.createElement("message")
-                source = doc.createElement("source")
-                translation = doc.createElement("translation")
+                plurals = Translation.objects.filter(
+                    resource = self.resource,
+                    language = language,
+                    source_entity__string = source.firstChild.toxml())
+                plural_keys = {}
+                # last rule excluding other(5)
+                last_rule = language.get_pluralrules_numbers()[-2]
+                # Initialize all plural rules up to the last
+                for p in range(0,last_rule):
+                    plural_keys[p] = ""
+                plural_nodes = translation.childNodes[:]
+                for node in plural_nodes:
+                    translation.removeChild(node)
+                for p in plurals:
+                    plural_keys[p.rule] =  p.string
+                message.setAttribute('numerus', 'yes')
+                for key in plural_keys.keys():
+                    e = doc.createElement("numerusform")
+                    e.appendChild(doc.createTextNode(plural_keys[key]))
+                    translation.appendChild(e)
 
-                if string.pluralized:
-                    plural_keys = {}
-                    # last rule excluding other(5)
-                    last_rule = language.get_pluralrules_numbers()[-2]
-                    # Initialize all plural rules up to the last
-                    for p in range(0,last_rule):
-                        plural_keys[p] = ""
-                    plurals = Translation.objects.filter(
-                        resource = self.resource,
-                        language = language,
-                        source_entity = string)
-                    for p in plurals:
-                        plural_keys[p.rule] =  p.string
-                    message.setAttribute('numerus', 'yes')
-                    for key in plural_keys.keys():
-                        e = doc.createElement("numerusform")
-                        e.appendChild(doc.createTextNode(plural_keys[key]))
-                        translation.appendChild(e)
-                else:
-                    translation.appendChild(doc.createTextNode(trans.string if trans else ""))
-
-                source.appendChild(doc.createTextNode(string.string))
-                if not trans:
-                    translation.setAttribute('type', 'unfinished')
-
-                # If we add the STRING flag the location is not outputed to the
-                # file by default. Do we want that?
-                #if STRICT:
-                if string.occurrences and \
-                    string.occurrences != "":
-                    for _location in string.occurrences.split(";"):
-                        filename, line = _location.split(":")
-                        location = doc.createElement("location")
-                        location.setAttribute("filename", filename)
-                        location.setAttribute("line", line)
-                        message.appendChild(location)
-
-                message.appendChild(source)
-                message.appendChild(translation)
-
-
-                context.appendChild(message)
-
-            root.appendChild(context)
-        self.compiled = doc.toprettyxml(encoding=self.default_encoding)
-        return doc
+        self.compiled_template = doc.toxml()
 
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
@@ -141,22 +97,7 @@ class LinguistHandler(Handler):
         Parses QT file and exports all entries as GenericTranslations.
         """
         buf = fh = open(self.filename, "ru").read()
-        def getElementByTagName(element, tagName, noneAllowed = False):
-            elements = element.getElementsByTagName(tagName)
-            if not noneAllowed and not elements:
-                raise LinguistParseError("Element '%s' not found!" % tagName)
-            if len(elements) > 1:
-                raise LinguistParseError("Multiple '%s' elements found!" % tagName)
-            return elements[0]
 
-        def get_attribute(element, key, die = False):
-            if element.attributes.has_key(key):
-                return element.attributes[key].value
-            elif die:
-                raise LinguistParseError("Could not find attribute '%s' "\
-                    "for element '%s'" % (key, element.tagName))
-            else:
-                return None
 
         def clj(s, w):
             return s[:w].replace("\n", " ").ljust(w)
@@ -185,7 +126,7 @@ class LinguistHandler(Handler):
         # 'encoding' or 'numerus' = 'yes' | 'no' attributes 
         # if 'numerus' = 'yes' then 'translation' element contains 'numerusform' elements
         for context in root.getElementsByTagName("context"):
-            context_name_element = getElementByTagName(context, "name")
+            context_name_element = _getElementByTagName(context, "name")
             if context_name_element.firstChild:
                 context_name = context_name_element.firstChild.nodeValue or ''
             else:
@@ -209,32 +150,49 @@ class LinguistHandler(Handler):
                     message.attributes['numerus'].value=='yes':
                     pluralized = True
 
-                source = getElementByTagName(message, "source")
-                translation = getElementByTagName(message, "translation")
+                source = _getElementByTagName(message, "source")
+                translation = _getElementByTagName(message, "translation")
 
                 status = None
                 if source.firstChild:
-                    sourceString = source.firstChild.nodeValue
+                    sourceString = source.firstChild.toxml()
                 else:
                     sourceString = None # WTF?
 
                 same_nplural = True
                 obsolete, fuzzy = False, False
                 messages = []
+
                 if is_source:
                     messages = [(5, sourceString)]
                     if pluralized:
                         try:
-                            msgid_plural = getElementByTagName(message,
-                                "extra-po-msgid_plural")
-                            messages.insert(0, (1,
-                                msgid_plural.firstChild.nodeValue))
+                            numerusforms = translation.getElementsByTagName('numerusform')
+                            plural_keys = [n for n, f in enumerate(numerusforms)]
+                            # If we want to support many source languages we
+                            # need to find a way to handle plural mapping. One
+                            # way to do it is to store a dict for each lang
+                            # with a mapping of each number range(0,5) goes to
+                            # which plural form. For english it'd be something
+                            # like {'0':'1', '1': '5'}
+                            # XXX: Temp solution for englis lang 
+                            pl_map = {0:1, 1: 5}
+                            for n, rule in enumerate(plural_keys):
+                                nf=numerusforms[n].firstChild
+                                if nf:
+                                    messages.append((pl_map[rule], nf.toxml()))
+
+                            # What was this?
+#                            msgid_plural = _getElementByTagName(message,
+#                                "extra-po-msgid_plural")
+#                            messages.insert(0, (1,
+#                                msgid_plural.firstChild.toxml()))
                         except LinguistParseError:
                             pass
 
                 elif translation and translation.firstChild:
                     if not pluralized:
-                        messages = [(5, translation.firstChild.nodeValue)]
+                        messages = [(5, translation.firstChild.toxml())]
                     else:
                         numerusforms = translation.getElementsByTagName('numerusform')
                         if nplural:
@@ -256,7 +214,7 @@ class LinguistHandler(Handler):
                         for n, rule in enumerate(plural_keys):
                             nf=numerusforms[n].firstChild
                             if nf:
-                                messages.append((rule, nf.nodeValue))
+                                messages.append((rule, nf.toxml()))
 
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
@@ -279,20 +237,29 @@ class LinguistHandler(Handler):
                             obsolete=obsolete))
                 i += 1
 
+                if is_source:
+                    if message.attributes.has_key("numerus") and \
+                        message.attributes['numerus'].value=='yes':
+                            numerusforms = translation.getElementsByTagName('numerusform')
+                            for n,f in enumerate(numerusforms):
+                                f.firstChild.nodeValue = ("%(hash)s_pl_%(key)s" %
+                                    {'hash': md5(sourceString.encode('utf-8')).hexdigest(),
+                                     'key': n})
+                    else:
+                        if translation and translation.firstChild:
+                            translation.firstChild.data = ("%(hash)s_tr" % 
+                                {'hash':md5(sourceString.encode('utf-8')).hexdigest()})
+                        else:
+                            if not translation:
+                                translation = doc.createElement("translation")
+
+                            translation.appendChild(doc.createTextNode(
+                                ("%(hash)s_tr" % {'hash':md5(sourceString.encode('utf-8')).hexdigest()})))
+
+
+            if is_source:
+                self.template = doc.toxml()
+
+
             self.stringset=stringset
         return
-
-
-    @need_compiled
-    def save2file(self, filename):
-        """
-        Take the ouput of the compile method and save results to specified file
-        """
-        try:
-            fd=open(filename, 'w')
-        except Exception, e:
-            raise Exception("Error opening file %s: %s" % ( filename, e))
-
-        fd.write(self.compiled)
-        fd.flush()
-        fd.close()

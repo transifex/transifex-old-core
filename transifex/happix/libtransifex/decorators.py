@@ -29,8 +29,8 @@ def need_stringset(fn):
 
 def need_compiled(fn):
     def compiled_fn(self, *args, **kw):
-        if not self.compiled:
-            raise Exception("No file found. Please compile a file first and"
-                " then try again.")
+        if not self.compiled_template:
+            raise Exception("No template found. Use copmpile to render the"
+                 " template first")
         return fn(self, *args, **kw)
     return compiled_fn

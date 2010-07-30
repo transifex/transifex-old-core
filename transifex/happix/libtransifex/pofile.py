@@ -3,6 +3,10 @@
 """
 GNU Gettext .PO/.POT file handler/compiler
 """
+import os
+import re
+import time
+from hashlib import md5
 import uuid
 import polib, datetime
 import simplejson as json
@@ -36,22 +40,32 @@ class POHandler(Handler):
     def accept(cls, filename):
         return filename.endswith(".po") or filename.endswith(".pot")
 
-    @need_resource
-    def compile(self, language = None):
+    @need_compiled
+    def _post_compile(self, *args, **kwargs):
         """
-        Compile a resource's strings into a PO file.
+        Here we update the PO file headers and the plurals
         """
-        if not language:
+        if hasattr(kwargs,'language'):
+            language = kwargs['language']
+        else:
             language = self.language
-        # Create POFile
-        po = polib.POFile()
+
+        template = self.compiled_template
+
+        # save to a temp dir to load in polib
+        filename = time.time()
+        file = open("/tmp/%s.tmp" % filename, 'w')
+        file.write(template)
+        file.flush()
+        po = polib.pofile("/tmp/%s.tmp" % filename)
+        os.unlink("/tmp/%s.tmp" % filename)
 
         # Update POFile Headers
-        self.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
-        # The followin is in the specification but it's not being used by po
+        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
+        po.metadata['Plural-Forms'] = language.pluralequation
+        # The following is in the specification but it's not being used by po
         # files. What should we do?
-        self.metadata['Language'] = language.code
-        self.metadata['Plural-Forms'] = language.pluralequation
+        po.metadata['Language'] = language.code
 
         try:
             team = Team.objects.get(language = language,
@@ -59,43 +73,19 @@ class POHandler(Handler):
         except Team.DoesNotExist:
             pass
         else:
-            self.metadata['Language-Team'] = ("%s <%s>" % (language.name %
+            po.metadata['Language-Team'] = ("%s <%s>" % (language.name %
                 team.mainlist))
         if self.resource.last_committer:
             u = self.resource.last_committer
-            self.metadata['Last-Translator'] = ("%s <%s>" %
+            po.metadata['Last-Translator'] = ("%s <%s>" %
                 (u.get_full_name() or u.username % u.email))
 
-        # Add headers
-        po.metadata = self.metadata
-
-        # Iterate through Source Entities and create PO entries
-        stringset = SourceEntity.objects.filter(
-            resource = self.resource)
-        for string in stringset:
-            try:
-                trans = Translation.objects.get(
-                    source_entity = string,
-                    language = language,
-                    resource = self.resource,
-                    rule=5)
-            except Translation.DoesNotExist:
-                trans = None
-            entry = polib.POEntry(msgid=string.string,
-                msgstr=trans.string if trans else "")
-            entry.occurrences = list(
-                tuple(o.split(':')) for o in string.occurrences.split(', ')
-                if not string.occurrences == "")
-            if string.flags:
-                for f in string.flags.split(', '):
-                    entry.flags.append(f)
-            if string.developer_comment:
-                entry.comment = string.developer_comment
-            if string.pluralized:
+        for entry in po:
+            if entry.msgid_plural:
                 plurals = Translation.objects.filter(
                     resource = self.resource,
                     language = language,
-                    source_entity = string)
+                    source_entity__string = entry.msgid)
                 plural_keys = {}
                 # last rule excluding other(5)
                 last_rule = language.get_pluralrules_numbers()[-2]
@@ -105,15 +95,90 @@ class POHandler(Handler):
                 # Fill in the ones that are translated
                 for p in plurals:
                     plural_keys[p.rule] =  p.string
-                # Remove `other` rule and use it as plural id
-                entry.msgid_plural = plural_keys.pop(5)
-                entry.msgstr_plural = plural_keys
-            po.append(entry)
 
-        # Save compiled output
-        self.compiled = po
+        # Instead of saving raw text, we save the polib Handler
+        self.compiled_template = po
         return po
 
+#    @need_resource
+#    def compile(self, language = None):
+#        #XXX: OBSOLETE
+#        """
+#        Compile a resource's strings into a PO file.
+#        """
+#        if not language:
+#            language = self.language
+#        # Create POFile
+#        po = polib.POFile()
+#
+#        # Update POFile Headers
+#        self.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
+#        # The followin is in the specification but it's not being used by po
+#        # files. What should we do?
+#        self.metadata['Language'] = language.code
+#        self.metadata['Plural-Forms'] = language.pluralequation
+#
+#        try:
+#            team = Team.objects.get(language = language,
+#                project = self.resource.project)
+#        except Team.DoesNotExist:
+#            pass
+#        else:
+#            self.metadata['Language-Team'] = ("%s <%s>" % (language.name %
+#                team.mainlist))
+#        if self.resource.last_committer:
+#            u = self.resource.last_committer
+#            self.metadata['Last-Translator'] = ("%s <%s>" %
+#                (u.get_full_name() or u.username % u.email))
+#
+#        # Add headers
+#        po.metadata = self.metadata
+#
+#        # Iterate through Source Entities and create PO entries
+#        stringset = SourceEntity.objects.filter(
+#            resource = self.resource)
+#        for string in stringset:
+#            try:
+#                trans = Translation.objects.get(
+#                    source_entity = string,
+#                    language = language,
+#                    resource = self.resource,
+#                    rule=5)
+#            except Translation.DoesNotExist:
+#                trans = None
+#            entry = polib.POEntry(msgid=string.string,
+#                msgstr=trans.string if trans else "")
+#            entry.occurrences = list(
+#                tuple(o.split(':')) for o in string.occurrences.split(', ')
+#                if not string.occurrences == "")
+#            if string.flags:
+#                for f in string.flags.split(', '):
+#                    entry.flags.append(f)
+#            if string.developer_comment:
+#                entry.comment = string.developer_comment
+#            if string.pluralized:
+#                plurals = Translation.objects.filter(
+#                    resource = self.resource,
+#                    language = language,
+#                    source_entity = string)
+#                plural_keys = {}
+#                # last rule excluding other(5)
+#                last_rule = language.get_pluralrules_numbers()[-2]
+#                # Initialize all plural rules up to the last
+#                for p in range(0,last_rule):
+#                    plural_keys[p] = ""
+#                # Fill in the ones that are translated
+#                for p in plurals:
+#                    plural_keys[p.rule] =  p.string
+#                # Remove `other` rule and use it as plural id
+#                entry.msgid_plural = plural_keys.pop(5)
+#                entry.msgstr_plural = plural_keys
+#            po.append(entry)
+#
+#        # Save compiled output
+#        self.compiled = po
+#        return po
+#
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
         """
@@ -133,7 +198,6 @@ class POHandler(Handler):
             nplural = None
 
         pofile = polib.pofile(self.filename)
-        metadata = pofile.metadata
 
         for entry in pofile:
             pluralized = False
@@ -145,6 +209,7 @@ class POHandler(Handler):
                     # English plural rules
                     messages = [(1, entry.msgid),
                                 (5, entry.msgid_plural)]
+                    plural_keys = [0,1]
                 else:
                     message_keys = entry.msgstr_plural.keys()
                     message_keys.sort()
@@ -189,16 +254,36 @@ class POHandler(Handler):
             if entry.flags:
                 translation.flags = ', '.join( f for f in entry.flags)
 
+            if is_source:
+                entry.msgstr = "%(hash)s_tr" % {'hash': md5(entry.msgid.encode('utf-8')).hexdigest()}
+                if entry.msgid_plural:
+                    for n, rule in enumerate(plural_keys):
+                        entry.msgstr_plural['%s' % n] = ("%(hash)s_pl_%(key)s" %
+                            {'hash':md5(entry.msgid_plural).hexdigest(),
+                            'key': n})
+
+
+        if is_source:
+            # save to a temp dir to load the template
+            filename = time.time()
+            pofile.save("/tmp/%s.tmp" % filename)
+            file = open("/tmp/%s.tmp" % filename, 'r')
+            file.seek(0)
+            self.template = file.read()
+            os.unlink("/tmp/%s.tmp" % filename)
+
+
         self.stringset = stringset
-        self.metadata = metadata
-        return
+        return pofile
 
     @need_compiled
     def save2file(self, filename):
         """
-        Take the ouput of the compile method and save results to specified file
+        Take the ouput of the compile method and save results to specified
+        file. To avoid an extra step here, we take the polib.pofile handler and
+        save directly to the file.
         """
         try:
-            self.compiled.save(filename)
+            self.compiled_template.save(filename)
         except Exception, e:
             raise Exception("Error opening file %s: %s" % ( filename, e))

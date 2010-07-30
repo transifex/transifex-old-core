@@ -3,6 +3,7 @@
 import copy
 import json
 import os
+import re
 import codecs
 
 from django.db import transaction
@@ -24,6 +25,7 @@ STRICT=False
 Resource = get_model('happix', 'Resource')
 Translation = get_model('happix', 'Translation')
 SourceEntity = get_model('happix', 'SourceEntity')
+Template = get_model('happix', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
 class CustomSerializer(json.JSONEncoder):
@@ -74,12 +76,12 @@ class Handler(object):
 
         self.filename = None # Input filename for associated translation file
         self.stringset = None # Stringset to extract entries from files
-        self.metadata = None # Metadata of input file
+
 
         self.resource = None # Associated resource
         self.language = None # Resource's source language
 
-        self.compiled = None # Var to store output of compile() method
+        self.compiled_template = None # Var to store output of compile() method
 
         if filename:
             self.filename = filename
@@ -90,6 +92,17 @@ class Handler(object):
         if language:
             self.language = language
 
+
+    ####################
+    # Helper functions #
+    ####################
+
+    def set_language(self, language):
+        if isinstance(language, Language):
+            self.language = language
+        else:
+            raise Exception("language neeeds to be of type %s" %
+                Language.__class__)
 
 
     def bind_file(self, filename):
@@ -107,11 +120,80 @@ class Handler(object):
         """
         if isinstance(resource, Resource):
             self.resource = resource
-            self.language = self.language or resource.source_language
-            self.metadata = json.loads(resource.source_file_metadata or "{}")
+            self.compiled_template = self.compiled_template or self.resource.source_file_template
+            self.language = self.language or resource.source_languag
         else:
             raise Exception("The specified object is not of the required type")
 
+
+    ####################
+    #  Core functions  #
+    ####################
+
+
+    def _pre_compile(self, *args, **kwargs):
+        """
+        This is called before doing any actual work. Override in inherited
+        classes to alter behaviour.
+        """
+        pass
+
+    def _post_compile(self, *args, **kwargs):
+        """
+        This is called in the end of the compile method. Override if you need
+        the behaviour changed.
+        """
+        pass
+
+    @need_resource
+    def compile(self, language=None):
+        """
+        Compile the template using the database strings
+        """
+        # pre compile init
+        self._pre_compile(language=language)
+
+        if not language:
+            language = self.language
+
+        template = self.resource.source_file_template.content
+
+        stringset = SourceEntity.objects.filter(
+            resource = self.resource)
+
+
+        for string in stringset:
+            # Find translation for string
+            try:
+                trans = Translation.objects.get(
+                    resource = self.resource,
+                    source_entity=string,
+                    language = language,
+                    rule=5)
+            except Translation.DoesNotExist:
+                trans = None
+
+            template = re.sub("%s_tr" % string.string_hash.encode('utf-8'),
+                trans.string.encode('utf-8') if trans else "",template)
+
+
+        self.compiled_template = template
+
+        self._post_compile(language=language)
+
+    def _pre_save2db(self, *args, **kwargs):
+        """
+        This is called before doing any actual work. Override in inherited
+        classes to alter behaviour.
+        """
+        pass
+
+    def _post_save2db(self, *args, **kwargs):
+        """
+        This is called in the end of the save2db method. Override if you need
+        the behaviour changed.
+        """
+        pass
 
     @need_resource
     @need_language
@@ -121,6 +203,9 @@ class Handler(object):
         """
         Saves parsed file contents to the database. duh
         """
+        self._pre_save2db(is_source=False, user=None, overwrite_translations=True)
+        import ipdb; ipdb.set_trace()
+
         try:
             strings_added = 0
             strings_updated = 0
@@ -165,7 +250,6 @@ class Handler(object):
 
                 if created and j.rule==5:
                     strings_added += 1
-                    tr.save()
 
                 if not created and overwrite_translations:
                     if tr.string != j.translation:
@@ -179,9 +263,15 @@ class Handler(object):
             transaction.rollback()
             return 0,0
         else:
-            self.resource.source_file_metadata = json.dumps(self.metadata)
-            self.resource.save()
+            if is_source:
+                t = Template.objects.get_or_create(resource = self.resource)
+                t.content = self.template
+                t.save()
+                self.resource.source_file_template = t
+                self.resource.save()
             transaction.commit()
+
+            self._post_save2db(is_source , user, overwrite_translations)
             return strings_added, strings_updated
 
     def set_language(self, language):
@@ -191,16 +281,25 @@ class Handler(object):
             raise Exception("language neeeds to be of type %s" %
                 Language.__class__)
 
+   @need_compiled
+    def save2file(self, filename):
+        """
+        Take the ouput of the compile method and save results to specified file.
+        """
+        try:
+            file = open ('/tmp/%s' % filename, 'w' )
+            file.write(self.compiled_template)
+            file.flush()
+            file.close()
+        except Exception, e:
+            raise Exception("Error opening file %s: %s" % ( filename, e))
+
+
     def accept(self, filename):
         return False
 
-    def parse(self, buf):
-        raise Exception("Handler.parse(buf) has to be overridden")
-
     def parse_file(self, filename, is_source=False, lang_rules=None):
-        fh = open(filename, "ru")
-        return self.parse(fh.read(), is_source, lang_rules)
-
+        raise Exception("Not Implemented")
 
 class StringSet:
     """

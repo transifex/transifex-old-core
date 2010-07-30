@@ -14,7 +14,7 @@ from piston.utils import rc
 from actionlog.models import action_logging
 from happix.decorators import method_decorator
 from happix.libtransifex import pofile, qt
-from happix.models import Resource, SourceEntity, Translation
+from happix.models import * 
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
@@ -192,11 +192,19 @@ class ProjectResourceHandler(BaseHandler):
                         project = project,
                         source_file=storagefile
                 )
+                # update l10n_method
+                if created:
+                    method = L10n_method.objects.get_by_filename(storagefile.get_storage_path())
+                    if not method:
+                        request.user.message_set.create(message=_("Error: We couldn't"
+                        " find a suitable localization method for this file."))
+                        return rc.BAD_REQUEST
+                    resource.l10n_method = method
+                    resource.save()
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
-                    (storagefile.name, storagefile.uuid, project.slug, 
+                    (storagefile.name, storagefile.uuid, project.slug,
                     resource.slug))
-
 
                 strings_added, strings_updated = 0, 0
                 parser = storagefile.find_parser()
@@ -280,14 +288,17 @@ class ProjectResourceHandler(BaseHandler):
 
                 strings_added, strings_updated = 0, 0
                 parser = storagefile.find_parser()
+                language = storagefile.language
                 fhandler = parser(filename=storagefile.get_storage_path())
+                fhandler.set_language(language)
                 fhandler.bind_resource(resource)
                 fhandler.parse_file()
+
                 try:
                     strings_added, strings_updated = fhandler.save2db()
                 except:
                     request.user.message_set.create(message=_("Error importing"
-                        " file."))
+                       " file."))
                     return rc.BAD_REQUEST
 
                 else:

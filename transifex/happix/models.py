@@ -15,6 +15,7 @@ from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
 from txcommon.log import logger
+from happix.fields import CompressedTextField
 
 def reset():
     Translation.objects.all().delete()
@@ -84,13 +85,8 @@ class Resource(models.Model):
         blank=True, null=True,
         help_text=_("Select a file from your file system to be used to "
             "extract the strings to be translated."))
-    source_file_metadata = models.TextField(_("Source file metadata"),
-        max_length=1024, blank=True, null=True,
-        help_text=_("Field to store all source file metadata for exporting "
-            "database strings to files."))
-    i18n_method = models.CharField(_("Internationalization Method"),
-        max_length=12, blank=False, null=False, editable=False, default='None',
-        help_text=_("I18n method used by this resource."))
+    l10n_method = models.ForeignKey("L10n_method", null=True, blank=True,
+        editable=False, help_text=_("I18n method used by this resource."))
 
     # Foreign Keys
     source_language = models.ForeignKey(Language,
@@ -592,6 +588,98 @@ class Translation(models.Model):
         # so for instance double space counts as one space
         return len(self.string.split(None))
 
+class Template(models.Model):
+    """
+    Source file template for a specific resource.
+
+    This model holds the source file template in a compressed textfield to save
+    space in the database. All translation strings are changed with the md5
+    hashes of the SourceEntity string which enables us to do a quick search and
+    replace each time we want to recreate the file.
+    """
+
+    content = CompressedTextField(null=False, blank=False,
+        help_text=_("This is the actual content of the template"))
+    resource = models.ForeignKey(Resource,
+        verbose_name="Resource",
+        blank=False, null=False,related_name="source_file_template",
+        help_text=_("This is the template of the imported source file which is"
+            " used to export translation files from the db to the user."))
+
+    class Meta:
+        verbose_name = _('Template')
+        verbose_name_plural = _('Templates')
+        ordering = ['resource']
+
+class L10n_methodManager(models.Model):
+    """
+    L10n_method manager
+    """
+    def get_by_mimetype(self, filepath):
+        """
+        This needs the actual file to check it's mimetype and find the method
+        that can handle this kind of mimetype.
+        """
+        try:
+            mime = mimetypes.guess_type(filepath)
+        except Exception, e:
+            raise Exception('Could not guess mimetype for file %s: %s'
+                % (filepath, e))
+        
+        
+    def get_by_filename(self, filename):
+        """
+        This manager method takes a filename and returns a l10n_method that can
+        handler this file or None if this is not supported.
+        """
+        for method in L10n_method.objects.all():
+            if filename.endswith(method.file_extension):
+                return method
+
+        return None
+
+class L10n_method(models.Model):
+    """
+    Localization method
+
+    This model is used to keep track of the l10n methods used for localizing
+    each resource and provides an easy way to access the corresponding handler
+    for importing/exporting files.
+    """
+    name = models.CharField(_('Name'), max_length=255, null=False,
+        blank=False,
+        help_text=_('A descriptive name unique inside the project.'))
+    file_extension = models.CharField(_("File Extension"),
+        max_length=16, null=False, blank=False,
+        help_text=_("This specifies which file extensions correspond to this "
+            " l10n method"))
+    mime_type = models.CharField(_('Mime Type'), max_length=255,
+        null=False, blank=False,
+        help_text=_("The mimetype of the files associated with this l10n"
+            " method"))
+
+    parser = None
+
+    class Meta:
+        verbose_name = _('Localization method')
+        ordering = ['name']
+
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def parser(self):
+        import ipdb; ipdb.set_trace()
+        parser = None
+        for p in PARSERS:
+            # find a better way to do it
+            if p.accept('%s.%s' % ('foo', self.file_extension)):
+                parser = p
+                break
+
+        self.parser=parser
+        return parser
+
 
 # Signal registrations
 from happix.handlers import *
@@ -612,5 +700,3 @@ PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsPa
 PARSER_MAPPING = {}
 for parser in PARSERS:
     PARSER_MAPPING[parser.mime_type] = parser
-
-
