@@ -9,6 +9,7 @@ from django.http import (HttpResponseRedirect, HttpResponse, Http404,
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
 from actionlog.models import action_logging
 from happix.models import (Translation, Resource, SourceEntity, PARSERS,
@@ -291,3 +292,33 @@ def not_available(request, project_slug, lang_code, resource_slug = None):
 
     return render_to_response("not_available.html",
                               context_instance = RequestContext(request))
+
+def get_translation_file(request, project_slug, resource_slug, lang_code):
+    """
+    View to export all translations of a resource for the requested language
+    and give the translation file back to the user.
+    """
+
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+        slug = resource_slug)
+
+    language = get_object_or_404(Language, code=lang_code)
+    parser = resource.l10n_method.parser
+    handler = parser(resource = resource, language = language)
+    try:
+        handler.compile()
+    except:
+        request.user.message_set.create(message=_("Error compiling translation file."))
+        return HttpResponseRedirect(reverse('resource_detail',
+            args=[resource.project.slug, resource.slug]),)
+
+    response = HttpResponse(handler.compiled_template,
+        mimetype=resource.l10n_method.mimetype)
+    print resource.name
+    response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
+        smart_unicode(resource.name), language.code,
+        resource.l10n_method.file_extension))
+
+    #response['Content-Length'] = 
+
+    return response

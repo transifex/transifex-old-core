@@ -601,7 +601,7 @@ class Template(models.Model):
     content = CompressedTextField(null=False, blank=False,
         help_text=_("This is the actual content of the template"))
     resource = models.ForeignKey(Resource,
-        verbose_name="Resource",
+        verbose_name="Resource",unique=True,
         blank=False, null=False,related_name="source_file_template",
         help_text=_("This is the template of the imported source file which is"
             " used to export translation files from the db to the user."))
@@ -652,7 +652,7 @@ class L10n_method(models.Model):
         max_length=16, null=False, blank=False,
         help_text=_("This specifies which file extensions correspond to this "
             " l10n method"))
-    mime_type = models.CharField(_('Mime Type'), max_length=255,
+    mimetype = models.CharField(_('Mime Type'), max_length=255,
         null=False, blank=False,
         help_text=_("The mimetype of the files associated with this l10n"
             " method"))
@@ -668,7 +668,6 @@ class L10n_method(models.Model):
 
     @property
     def parser(self):
-        import ipdb; ipdb.set_trace()
         parser = None
         for p in PARSERS:
             # find a better way to do it
@@ -676,7 +675,6 @@ class L10n_method(models.Model):
                 parser = p
                 break
 
-        self.parser=parser
         return parser
 
 

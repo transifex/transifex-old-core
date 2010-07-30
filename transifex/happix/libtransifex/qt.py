@@ -175,7 +175,7 @@ class LinguistHandler(Handler):
                             # with a mapping of each number range(0,5) goes to
                             # which plural form. For english it'd be something
                             # like {'0':'1', '1': '5'}
-                            # XXX: Temp solution for englis lang 
+                            # XXX: Temp solution for english lang
                             pl_map = {0:1, 1: 5}
                             for n, rule in enumerate(plural_keys):
                                 nf=numerusforms[n].firstChild

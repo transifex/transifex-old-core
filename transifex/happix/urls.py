@@ -23,5 +23,6 @@ urlpatterns = patterns('',
     url(r'^project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', not_available, name='translate'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', not_available, name='translate'),
     url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/view/$', not_available, name='view_strings'),
+    url(r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<lang_code>[-\w]+)/download/$', get_translation_file, name='download_translation'),
 
 )

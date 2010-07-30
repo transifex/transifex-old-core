@@ -81,8 +81,9 @@
         </ul>
         <ul>
           <li class="top">
-            <span class="i16 get_file disabled">{% trans "Download for viewing" %}</span>
-            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+            <span class="i16 get_file">
+            <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
+			</span>
           </li>
           {% ifnotequal resource.source_language target_language %}
           <li>

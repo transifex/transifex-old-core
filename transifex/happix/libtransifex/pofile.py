@@ -27,6 +27,22 @@ Translation = get_model('happix', 'Translation')
 SourceEntity = get_model('happix', 'SourceEntity')
 Storage = get_model('storage', 'StorageFile')
 
+
+def get_po_contents(pofile):
+    """
+    This function takes a pofile object and returns it's contents
+    """
+
+    filename = time.time()
+    pofile.save("/tmp/%s.tmp" % filename)
+    file = open("/tmp/%s.tmp" % filename, 'r')
+    file.seek(0)
+    content = file.read()
+    os.unlink("/tmp/%s.tmp" % filename)
+
+    return content
+
+
 class POHandler(Handler):
     """
     Translate Toolkit is using Gettext C library to parse/create PO files in Python
@@ -93,11 +109,21 @@ class POHandler(Handler):
                 for p in range(0,last_rule):
                     plural_keys[p] = ""
                 # Fill in the ones that are translated
+                # If we want to support many source languages we
+                # need to find a way to handle plural mapping. One
+                # way to do it is to store a dict for each lang
+                # with a mapping of each number range(0,5) goes to
+                # which plural form. For english it'd be something
+                # like {'0':'1', '1': '5'}
+                # XXX: Temp solution for english lang
+                rev_pl_map = {1:0, 5:1}
                 for p in plurals:
-                    plural_keys[p.rule] =  p.string
+                    plural_keys[rev_pl_map[p.rule]] =  p.string
+
+                entry.msgstr_plural = plural_keys
 
         # Instead of saving raw text, we save the polib Handler
-        self.compiled_template = po
+        self.compiled_template = get_po_contents(po)
         return po
 
 #    @need_resource
@@ -264,14 +290,7 @@ class POHandler(Handler):
 
 
         if is_source:
-            # save to a temp dir to load the template
-            filename = time.time()
-            pofile.save("/tmp/%s.tmp" % filename)
-            file = open("/tmp/%s.tmp" % filename, 'r')
-            file.seek(0)
-            self.template = file.read()
-            os.unlink("/tmp/%s.tmp" % filename)
-
+            self.template =  get_po_contents(pofile)
 
         self.stringset = stringset
         return pofile
