@@ -108,17 +108,8 @@ class POHandler(Handler):
                 # Initialize all plural rules up to the last
                 for p in range(0,last_rule):
                     plural_keys[p] = ""
-                # Fill in the ones that are translated
-                # If we want to support many source languages we
-                # need to find a way to handle plural mapping. One
-                # way to do it is to store a dict for each lang
-                # with a mapping of each number range(0,5) goes to
-                # which plural form. For english it'd be something
-                # like {'0':'1', '1': '5'}
-                # XXX: Temp solution for english lang
-                rev_pl_map = {1:0, 5:1}
-                for p in plurals:
-                    plural_keys[rev_pl_map[p.rule]] =  p.string
+                for n,p in enumerate(plurals):
+                    plural_keys[n] =  p.string
 
                 entry.msgstr_plural = plural_keys
 

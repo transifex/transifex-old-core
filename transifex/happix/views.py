@@ -314,7 +314,6 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
 
     response = HttpResponse(handler.compiled_template,
         mimetype=resource.l10n_method.mimetype)
-    print resource.name
     response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
         smart_unicode(resource.name), language.code,
         resource.l10n_method.file_extension))

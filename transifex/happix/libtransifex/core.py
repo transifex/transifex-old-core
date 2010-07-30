@@ -81,7 +81,7 @@ class Handler(object):
         self.resource = None # Associated resource
         self.language = None # Resource's source language
 
-		self.template = None # Var to store raw template
+        self.template = None # Var to store raw template
         self.compiled_template = None # Var to store output of compile() method
 
         if filename:
@@ -122,7 +122,7 @@ class Handler(object):
         if isinstance(resource, Resource):
             self.resource = resource
             self.compiled_template = self.compiled_template or self.resource.source_file_template
-            self.language = self.language or resource.source_languag
+            self.language = self.language or resource.source_language
         else:
             raise Exception("The specified object is not of the required type")
 
@@ -151,17 +151,18 @@ class Handler(object):
         """
         Compile the template using the database strings
         """
-        # pre compile init
-        self._pre_compile(language=language)
 
         if not language:
             language = self.language
 
-        template = self.resource.source_file_template.content
+        # pre compile init
+        self._pre_compile(language=language)
+
+        template = Template.objects.get(resource=self.resource)
+        template = template.content
 
         stringset = SourceEntity.objects.filter(
             resource = self.resource)
-
 
         for string in stringset:
             # Find translation for string
@@ -180,7 +181,7 @@ class Handler(object):
 
         self.compiled_template = template
 
-        self._post_compile(language=language)
+        self._post_compile(language)
 
     def _pre_save2db(self, *args, **kwargs):
         """
@@ -279,8 +280,8 @@ class Handler(object):
         else:
             raise Exception("language neeeds to be of type %s" %
                 Language.__class__)
-   
- @need_compiled
+
+    @need_compiled
     def save2file(self, filename):
         """
         Take the ouput of the compile method and save results to specified file.
