@@ -48,7 +48,10 @@ fetching'''
                 
     def db_type(self):
         from django.conf import settings
-        db_types = {'mysql':'longblob','sqlite3':'blob','postgres':'bytea'}
+        db_types = {'mysql':'longblob',
+                    'sqlite3':'blob',
+                    'postgres':'text',
+                    'postgresql_psycopg2':'text'}
         try:
             return db_types[settings.DATABASE_ENGINE]
         except KeyError:
