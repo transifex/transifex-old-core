@@ -16,6 +16,7 @@ from projects.models import Project
 from storage.models import StorageFile
 from txcommon.log import logger
 from happix.fields import CompressedTextField
+from happix import HAPPIX_CACHE_KEYS
 
 
 # TODO: Parsers need to be somewhat rewritten, currently each one implements
@@ -25,13 +26,6 @@ from happix.fields import CompressedTextField
 # It actually makes more sense to store all uploaded files, parse only the
 # information we are interested in, and during compilation, take the uploaded
 # file as template, and just replace modified parts
-
-# keys used in cache
-# We put it here to have them all in one place for the specific models!
-HAPPIX_CACHE_KEYS = {
-    "word_count": "wcount.%s.%s",
-    "source_strings_count": "sscount.%s.%s"
-}
 
 class ResourceGroup(models.Model):
     """
