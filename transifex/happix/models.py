@@ -34,15 +34,16 @@ class ResourceManager(models.Manager):
 
 class Resource(models.Model):
     """
-    A translation resource, equivalent to a POT file, YAML file, string stream etc.
-
-    The Resource points to a source language (template) file path! For example,
-    it should be pointing to a .pot file or to a english .po file.of a project
-    with english as the source language.
-    The path_to_file should be point to :
-        1. the relative path of the pot/source file in the vcs folder hierarchy
-        2. an absolute URL (not local) to the file.
-    The path_to_file should be used for loading (pull) operations!
+    A translatable resource, such as a document, a set of strings etc.
+    
+    This is roughly equivalent to a POT file, string stream, or some other
+    strings grouped together as a single translatable element.
+    
+    The resource is the rough equivalent to the deprecated 'Component' object,
+    but with an important difference: a resource can only have one "source file"
+    wheras the Component was able to encapsulate multiple ones.
+    
+    A resource is always related to a project.
     """
 
     name = models.CharField(_('Name'), max_length=255, null=False,
