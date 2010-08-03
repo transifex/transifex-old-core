@@ -17,10 +17,6 @@ from storage.models import StorageFile
 from txcommon.log import logger
 from happix.fields import CompressedTextField
 
-def reset():
-    Translation.objects.all().delete()
-    StringSet.objects.all().delete()
-    SourceEntity.objects.all().delete()
 
 """
 Parsers need to be somewhat rewritten, currently each one implements parse(buf) function which returns libtransifex.core.StringSet class,
