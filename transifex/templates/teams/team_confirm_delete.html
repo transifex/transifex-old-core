@@ -11,9 +11,7 @@
 
 {% block content %}
 
-<p>{% blocktrans with team.project.name as project_name and team.language.name as lang_name %}
-  Are you sure you want to permanently delete the '{{ lang_name }}' team which belongs to {{ project_name }}?
-{% endblocktrans %}</p>
+<p>{% blocktrans with team.project.name as project_name and team.language.name as lang_name %}Are you sure you want to permanently delete the '{{ lang_name }}' team which belongs to {{ project_name }}?{% endblocktrans %}</p>
 
   <form action='' method='post'>
     <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />

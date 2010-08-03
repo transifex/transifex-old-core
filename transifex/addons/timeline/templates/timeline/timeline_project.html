@@ -20,9 +20,7 @@
 
 <div class="obj_bigdetails ui-tabs-panel">
 <h2 class="name">
- {% blocktrans with project.name as project_name %}
- {{ project_name }} Timeline
- {% endblocktrans %}
+ {% blocktrans with project.name as project_name %}{{ project_name }} Timeline{% endblocktrans %}
 </h2>
 <p class="description">
 {% include "timeline/timeline_base.html" %}

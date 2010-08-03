@@ -26,11 +26,7 @@
 {% else %}
 
 <h3>
-{% blocktrans count actionlog_total as counter %}
-  The query returned {{ counter }} result
-{% plural %}
-  The query returned {{ counter }} results
-{% endblocktrans %}
+{% blocktrans count actionlog_total as counter %}The query returned {{ counter }} result{% plural %}The query returned {{ counter }} results{% endblocktrans %}
 </h3>
 
   <div class="pagination">{% paginate %}</div>

@@ -46,9 +46,7 @@
       <th class="i16 release">{% trans "Who and when" %}</th>
       <td>
       <a href="{% url profile_public review.author %}" title="{% trans "See profile" %}">{{ review.author }}</a>,
-      {% blocktrans with review.created_on|timesince as time_since %}
-        {{ time_since }} ago
-      {% endblocktrans %}
+      {% blocktrans with review.created_on|timesince as time_since %}{{ time_since }} ago{% endblocktrans %}
       </td>
     </tr>
     <tr>

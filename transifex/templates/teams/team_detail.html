@@ -19,9 +19,7 @@
 <div class="obj_bigdetails">
 
 <h2 class="name">
-{% blocktrans with team.language.name as language_name and team.language.code as language_code %}
-  Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>
-{% endblocktrans %}</h2>
+{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
 
 {% if perms.projects.change_team or is_coordinator %}
 <div class="addteam editlinks">

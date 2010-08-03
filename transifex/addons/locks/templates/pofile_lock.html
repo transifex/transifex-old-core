@@ -29,11 +29,7 @@
             <input id="po-lock-extend-{{pofile_id}}" class="i16 lock_add nodecoration_icon image_submit_type" value="" type="image">
         </form>
         {% tooltip "po-lock-extend" pofile_id %}
-            {% blocktrans count locks_lifetime as hours %}
-                Extend lock by {{hours}} hour.
-            {% plural %}
-                Extend lock by {{hours}} hours.
-            {% endblocktrans %}
+            {% blocktrans count locks_lifetime as hours %}Extend lock by {{hours}} hour.{% plural %}Extend lock by {{hours}} hours.{% endblocktrans %}
         {% endtooltip %}
     {% endif %}
 

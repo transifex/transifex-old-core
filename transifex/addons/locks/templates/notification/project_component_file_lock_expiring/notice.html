@@ -1,5 +1,3 @@
 {% load i18n %}
 {% url component_detail component.project.slug component.slug as component_url %}
-{% blocktrans %}
-A lock for <a href="http://{{current_site}}{{component_url}}">{{pofile}}</a> is about to expire on {{expires}}
-{% endblocktrans %}
+{% blocktrans %}A lock for <a href="http://{{current_site}}{{component_url}}">{{pofile}}</a> is about to expire on {{expires}}{% endblocktrans %}
