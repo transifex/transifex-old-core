@@ -1,5 +1,5 @@
 {% load i18n %}
-{% if components %}
+{% if resources %}
 <script type="text/javascript">
     String.prototype.entityify = function () {
     return this.
@@ -13,13 +13,13 @@
         // Interactive chart
         $("#chart-interactive-menu").change(function(){
             s = $("#chart-interactive-snippet");
-            component_slug = $("#chart-interactive-menu option:selected").val();
-            if (component_slug == "") {
+            resource_slug = $("#chart-interactive-menu option:selected").val();
+            if (resource_slug == "") {
                 s.slideUp("slow");
                 return;
             }
             project_slug = '{{ project.slug }}';
-            url = "{{SITE_URL_PREFIX}}/projects/p/" + project_slug + '/c/' + component_slug + '/chart';
+            url = "{{SITE_URL_PREFIX}}/projects/p/" + project_slug + '/resource/' + resource_slug + '/chart';
             $.ajax({
                 url: url,
                 success: function(data) {
@@ -30,28 +30,28 @@
         });
 
         // Static image
-        function mkcode(component_slug) {
+        function mkcode(resource_slug) {
             project_slug = '{{ project.slug }}';
             tip = "See more information on Transifex.net";
-            base_url = "{{SITE_URL_PREFIX}}/projects/p/" + project_slug + '/c/' + component_slug + '/';
+            base_url = "{{ SITE_URL_PREFIX }}/projects/p/" + project_slug + '/resource/' + resource_slug + '/';
             img_url = base_url + 'chart/image_png';
 
             code = "<a target=\"_blank\" style=\"text-decoration:none; color:black; font-size:66%\" href=\"" + base_url + "\" \n";
-            code += "title=\""+tip+"\">Top translations: " +project_slug+ " » "+component_slug+"</a><br/>\n";
+            code += "title=\""+tip+"\">Top translations: " +project_slug+ " » "+resource_slug+"</a><br/>\n";
             code += "<img border=\"0\" src=\""+img_url+"\"/><br/>\n";
             code +=  "<a target=\"_blank\" href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\"><img border=\"0\" src=\"{{ STATIC_URL }}charts/images/tx-logo-micro.png\"/></a>";
             return code;
         }
 
-        $("#chart-image-div").html(mkcode('{{default_component.slug}}'));
+        $("#chart-image-div").html(mkcode('{{default_resource.slug}}'));
         $("#chart-image-menu").change(function(){
             s = $("#chart-image-snippet");
-            component_slug = $("#chart-image-menu option:selected").val();
-            if (component_slug == "") {
+            resource_slug = $("#chart-image-menu option:selected").val();
+            if (resource_slug == "") {
                 s.slideUp("slow");
                 return;
             }
-            s.html(mkcode(component_slug).entityify());
+            s.html(mkcode(resource_slug).entityify());
             s.slideDown("slow");
         });
     });
@@ -68,11 +68,11 @@
                 <p>{% blocktrans %}Display your project's translation statistics on your own website as a simple image.
                 Perfect for embedding in wiki pages, Trac instances, emails.{% endblocktrans %}</p>
                 <p>{% blocktrans %}The chart will always reflect your live Transifex numbers.{% endblocktrans %}</p>
-                <p>{% blocktrans %}Show code snippet for component:{% endblocktrans %}
+                <p>{% blocktrans %}Show code snippet for resource:{% endblocktrans %}
                 <select id="chart-image-menu">
                     <option value="">{% blocktrans %}Hidden{% endblocktrans %}</option>
-                    {% for component in components %}
-                        <option value="{{component.slug}}">{{component.name}}</option>
+                    {% for resource in resources %}
+                        <option value="{{resource.slug}}">{{resource.name}}</option>
                     {% endfor %}
                 </select>
                 </p>
@@ -90,7 +90,7 @@
     <table class="widget">
         <tr>
             <td style="align: center;">
-                <iframe src="{% url chart_comp_html project.slug default_component.slug %}"
+                <iframe src="{% url chart_resource_html project.slug default_resource.slug %}"
                   id="chart-interactive-iframe" style="width: 100%; height:300px; overflow:hidden;">{% blocktrans %}Loading...{% endblocktrans %}</iframe>
             </td>
 
@@ -100,11 +100,11 @@
 
                 <p>{% blocktrans %}By tweaking the code you can adjust verbosity, dimensions and colors of the chart{% endblocktrans %}</p>
 
-                <p>{% blocktrans %}Show code snippet for component:{% endblocktrans %}
+                <p>{% blocktrans %}Show code snippet for resource:{% endblocktrans %}
                 <select id="chart-interactive-menu">
                     <option value="">{% blocktrans %}Hidden{% endblocktrans %}</option>
-                    {% for component in components %}
-                        <option value="{{component.slug}}">{{component.name}}</option>
+                    {% for resource in resources %}
+                        <option value="{{resource.slug}}">{{resource.name}}</option>
                     {% endfor %}
                 </select>
                 </p>
@@ -119,6 +119,6 @@
 </div>
 {% else %}
 <h3>{% blocktrans %}Interactive and Image Charts{% endblocktrans %}</h3>
-{% blocktrans %}Sorry, but your project doesn't have any components with up-to-date statistics. 
-You need to have at least one component with statistics to export charts from Transifex.{% endblocktrans %}
+{% blocktrans %}Sorry, but your project doesn't have any resources with up-to-date statistics. 
+You need to have at least one resource with statistics to export charts from Transifex.{% endblocktrans %}
 {% endif %}

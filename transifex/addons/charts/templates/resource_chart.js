@@ -4,9 +4,9 @@ google.setOnLoadCallback(init);
 
 
 function init() {
-    var query = new google.visualization.Query('{{SITE_URL_PREFIX}}{% url chart_comp_json project.slug component.slug %}');
+    var query = new google.visualization.Query('{{SITE_URL_PREFIX}}{% url chart_resource_json project.slug resource.slug %}');
     query.send(handleResponse);
-    drawToolbar();
+    //drawToolbar();
 }
 
 function handleResponse(response) {
@@ -29,17 +29,17 @@ function handleResponse(response) {
     link_tx.title = "See more information on Transifex.net";
     link_tx.innerHTML = "<img border=\"0\" src=\"{{ STATIC_URL }}charts/images/tx-logo-micro.png\"/>";
 
-    link_comp = document.createElement("a");
-    link_comp.target = "_blank";
-    link_comp.style.textDecoration = "none";
-    link_comp.style.color = "black";
-    link_comp.style.fontSize = "66%";
-    link_comp.href = "{{SITE_URL_PREFIX}}{% url component_detail project.slug component.slug %}";
-    link_comp.innerHTML = "Top translations: {{project.name}} » {{component.name}}";
+    link_resource = document.createElement("a");
+    link_resource.target = "_blank";
+    link_resource.style.textDecoration = "none";
+    link_resource.style.color = "black";
+    link_resource.style.fontSize = "66%";
+    link_resource.href = "{{SITE_URL_PREFIX}}{% url resource_detail project.slug resource.slug %}";
+    link_resource.innerHTML = "Top translations: {{project.name}} » {{resource.name}}";
 
 
     container.innerHTML = "";
-    container.appendChild(link_comp);
+    container.appendChild(link_resource);
     container.appendChild(chart_div);
     container.appendChild(link_tx);
 

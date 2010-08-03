@@ -14,33 +14,7 @@
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Widgets" %}{% endblock %}
 
 {% block addon_header %}
-    <script type="text/javascript">
 
-    String.prototype.entityify = function () {
-    return this.
-        replace(/&/g, "&amp;").
-        replace(/</g, "&lt;").
-        replace(/>/g, "&gt;").
-        replace(/"/g, "&quot;");
-    };
-
-    $(document).ready(function (){
-
-        $("#userbar-menu").change(function(){
-            snippet = $("#userbar-snippet");
-            filename = $("#userbar-menu option:selected").val();
-            if (filename == "") { 
-                snippet.slideUp("slow");
-                return;
-            }
-            code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
-            code += "<img border=\"0\" src=\"{{ STATIC_URL }}widgets/images/" +filename+".png\">\n";
-            code += "</a>";
-            snippet.html(code.entityify());
-            snippet.slideDown("slow");
-        });
-    });
-    </script>
 {% endblock %}
 
 {% block content_main %}
@@ -76,6 +50,33 @@
 
 </div>
 
+    <script type="text/javascript">
+
+    String.prototype.entityify = function () {
+    return this.
+        replace(/&/g, "&amp;").
+        replace(/</g, "&lt;").
+        replace(/>/g, "&gt;").
+        replace(/"/g, "&quot;");
+    };
+
+    $(document).ready(function (){
+
+        $("#userbar-menu").change(function(){
+            snippet = $("#userbar-snippet");
+            filename = $("#userbar-menu option:selected").val();
+            if (filename == "") { 
+                snippet.slideUp("slow");
+                return;
+            }
+            code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
+            code += "<img border=\"0\" src=\"{{SITE_URL_PREFIX}}{{ STATIC_URL }}widgets/images/" +filename+".png\">\n";
+            code += "</a>";
+            snippet.html(code.entityify());
+            snippet.slideDown("slow");
+        });
+    });
+    </script>
 
 {% endblock %}
 
