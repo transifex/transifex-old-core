@@ -10,7 +10,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language
 from txcommon.db.models import IntegerTupleField
-from txcommon.notifications import is_watched_by_user_signal
 
 
 def _group_pofiles(postats, grouping_key, pot_total):
@@ -285,9 +284,6 @@ class POFile(models.Model):
         return '%s/%s/%s' % (self.object.project.slug,
                                  self.object.slug,
                                  self.filename)
-
-    def is_watched_by(self, user, signal=None):
-        return is_watched_by_user_signal(self, user, signal)
 
 def suite():
     """

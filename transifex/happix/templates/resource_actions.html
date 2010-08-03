@@ -5,6 +5,7 @@
 {% load team_tags %}
 {% load locks_tags %}
 {% load upload_manager_tags %}
+{% load watches_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -15,7 +16,7 @@
       {{ target_language }}
     </span>
     <span class="favourite_wrapper">
-      <img class="tipsy_enable" src="{{ STATIC_URL }}images/icons/heart.png" title="Favourite Resource Language" />
+      {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
         {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}

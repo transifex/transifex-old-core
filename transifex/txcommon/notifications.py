@@ -285,7 +285,7 @@ NOTICE_TYPES = [
                 "default": 1,
                 "show_to_user": True,
             },
-            {
+            {   # Used only for ActionLog purposes.
                 "label": "project_resource_translated",
                 "display": _("Resource Translated"), 
                 "description": _("when a translation is sent to a project "
@@ -293,30 +293,15 @@ NOTICE_TYPES = [
                 "default": 0,
                 "show_to_user": False,
             },
+            {
+                "label": "project_resource_translation_changed",
+                "display": _("Resource Translation Changed"), 
+                "description": _("when a resource translation you are "
+                    "watching changes"), 
+                "default": 0,
+                "show_to_user": True,
+            },
     ]
-
-
-def is_watched_by_user_signal(obj, user, signal=None):
-    """
-    Return a boolean value if an object is watched by an user or not
-
-    It is possible also verify if it is watched by a user in a specific 
-    signal, passing the signal as a second parameter
-    """
-    if signal:
-        return is_observing(obj, user, signal)
-
-    if isinstance(user, AnonymousUser):
-        return False
-    try:
-        ctype = ContentType.objects.get_for_model(obj)
-        observed_items = ObservedItem.objects.get(content_type=ctype,
-                                                object_id=obj.id, user=user)
-        return True
-    except ObservedItem.DoesNotExist:
-        return False
-    except ObservedItem.MultipleObjectsReturned:
-        return True
 
 
 # Overwritting this function temporarily, until the upstream patch

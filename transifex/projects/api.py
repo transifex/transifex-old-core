@@ -19,6 +19,7 @@ from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
+from projects.signals import post_submit_translation
 from storage.models import StorageFile
 from teams.models import Team
 from txcommon.log import logger
@@ -324,6 +325,7 @@ class ProjectResourceHandler(BaseHandler):
 
                 # If any string added/updated
                 if retval['strings_added'] > 0 or retval['strings_updated'] > 0:
+                    modified = True
                     # ActionLog & Notification
                     nt = 'project_resource_translated'
                     context = {'project': project,
@@ -334,6 +336,11 @@ class ProjectResourceHandler(BaseHandler):
                     if settings.ENABLE_NOTICES:
                         txnotification.send_observation_notices_for(project,
                                 signal=nt, extra_context=context)
+                else:
+                    modified=False
+
+                post_submit_translation.send(None, request=request,
+                    resource=resource, language=language, modified=modified)
 
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='application/json')

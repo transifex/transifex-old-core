@@ -142,6 +142,7 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
         url = reverse('project_detail', args=[project_slug])
 
     if request.POST.get('updated', None) == 'true':
+        modified = True
         # ActionLog & Notification
         for resource in resources:
             nt = 'project_resource_translated'
@@ -153,9 +154,11 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
             if settings.ENABLE_NOTICES:
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
+    else:
+        modified = False
 
     lotte_done.send(None, request=request, resources=resources,
-        language=language)
+        language=language, modified=modified)
 
     if request.is_ajax():
         json = simplejson.dumps(dict(redirect=url))

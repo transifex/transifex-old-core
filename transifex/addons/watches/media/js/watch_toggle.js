@@ -7,7 +7,7 @@ function watch_handler(data, textStatus)
     if(j.project)
         obj = $('#watch-project')
     else
-        obj = $('#watch-pofile-' + String(j.id))
+        obj = $('#watch-resource-' + String(j.id))
 
     if (j.error)
     {
