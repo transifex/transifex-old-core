@@ -2,19 +2,20 @@
 """
 String Level models.
 """
+
 import datetime, sys, json
 from hashlib import md5
-from django.contrib.auth.models import User
 from django.core.cache import cache
-from django.db.models.signals import post_save, post_delete, pre_save
-from django.db.models import permalink, Q
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
+
+from django.contrib.auth.models import User
 
 from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
 from txcommon.log import logger
+
 from happix.fields import CompressedTextField
 from happix import HAPPIX_CACHE_KEYS
 
@@ -26,13 +27,6 @@ from happix import HAPPIX_CACHE_KEYS
 # It actually makes more sense to store all uploaded files, parse only the
 # information we are interested in, and during compilation, take the uploaded
 # file as template, and just replace modified parts
-
-class ResourceGroup(models.Model):
-    """
-    Model for grouping Resources.
-    """
-    # FIXME: add necessary fields
-    pass
 
 
 class ResourceManager(models.Manager):
@@ -81,10 +75,6 @@ class Resource(models.Model):
         null=True,
         help_text=_("The project which owns the translation resource."))
 
-    resource_group = models.ForeignKey(ResourceGroup, verbose_name=_("Resource Group"),
-        blank=True, null=True,
-        help_text=_("A group under which Resources are organized."))
-
     # Managers
     objects = ResourceManager()
 
@@ -103,7 +93,7 @@ class Resource(models.Model):
         order_with_respect_to = 'project'
         get_latest_by = 'created'
 
-    @permalink
+    @models.permalink
     def get_absolute_url(self):
         return ('resource_detail', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
@@ -473,9 +463,9 @@ class TranslationManager(models.Manager):
         """
         Search translation for source strings queries and only in Public projects!
         """
-        query = Q()
+        query = models.Q()
         for term in string.split(' '):
-            query &= Q(string__icontains=term)
+            query &= models.Q(string__icontains=term)
 
         source_language = Language.objects.by_code_or_alias(source_code)
 
@@ -664,8 +654,8 @@ class L10n_method(models.Model):
 
 # Signal registrations
 from happix.handlers import *
-post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
-post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
+models.signals.post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
+models.signals.post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
 
 
 from libtransifex.qt import LinguistHandler # Qt4 TS files
