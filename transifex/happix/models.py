@@ -45,15 +45,16 @@ class Resource(models.Model):
     
     A resource is always related to a project.
     """
+    # FIXME: Rich explanation of various fields in docstring (what does the
+    # l10n_method exactly do? What happens if it's left blank?)
 
-    name = models.CharField(_('Name'), max_length=255, null=False,
-        blank=False,
-        help_text=_('A descriptive name unique inside the project.'))
+    name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
+        help_text=_("A descriptive name unique inside the project."))
 
     # Short identifier to be used in the API URLs
     slug = models.SlugField(_('Slug'), max_length=50,
-        help_text=_('A short label to be used in the URL, containing only '
-            'letters, numbers, underscores or hyphens.'))
+        help_text=_("A short label to be used in the URL, containing only "
+                    "letters, numbers, underscores or hyphens."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -62,8 +63,8 @@ class Resource(models.Model):
     # i18n related fields
     source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
         blank=True, null=True,
-        help_text=_("Select a file from your file system to be used to "
-            "extract the strings to be translated."))
+        help_text=_("A local file used to extract the strings to be "
+                    "translated."))
     l10n_method = models.ForeignKey("L10n_method", null=True, blank=True,
         editable=False, help_text=_("I18n method used by this resource."))
 
@@ -72,9 +73,8 @@ class Resource(models.Model):
         verbose_name=_('Source Language'), blank=False, null=False,
         help_text=_("The source language of this Resource."))
     project = models.ForeignKey(Project, verbose_name=_('Project'),
-        blank=False,
-        null=True,
-        help_text=_("The project which owns the translation resource."))
+        blank=False, null=True,
+        help_text=_("The project the translation resource belongs to."))
 
     # Managers
     objects = ResourceManager()
@@ -96,10 +96,16 @@ class Resource(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('resource_detail', None, { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
+        return ('resource_detail', None,
+            { 'project_slug': self.project.slug, 'resource_slug' : self.slug })
 
     @property
     def full_name(self):
+        """
+        Return a simple string without spaces identifying the resource.
+        
+        Can be used instead of __unicode__ to create files on disk, URLs etc.
+        """        
         return "%s.%s" % (self.project.slug, self.slug)
 
     @property
