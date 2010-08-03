@@ -18,13 +18,14 @@ from txcommon.log import logger
 from happix.fields import CompressedTextField
 
 
-"""
-Parsers need to be somewhat rewritten, currently each one implements parse(buf) function which returns libtransifex.core.StringSet class,
-and compile(stringset) which returns file buffer.
+# TODO: Parsers need to be somewhat rewritten, currently each one implements
+# parse(buf) function which returns libtransifex.core.StringSet class, and
+# compile(stringset) which returns file buffer.
+#
+# It actually makes more sense to store all uploaded files, parse only the
+# information we are interested in, and during compilation, take the uploaded
+# file as template, and just replace modified parts
 
-It actually makes more sense to store all uploaded files, parse only the information we are interested in, and during compilation,
-take the uploaded file as template, and just replace modified parts
-"""
 # keys used in cache
 # We put it here to have them all in one place for the specific models!
 HAPPIX_CACHE_KEYS = {
