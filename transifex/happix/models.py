@@ -22,13 +22,6 @@ def reset():
     StringSet.objects.all().delete()
     SourceEntity.objects.all().delete()
 
-# State Codes for translations
-TRANSLATION_STATE_CHOICES = (
-    ('APR', 'Approved'),
-    ('FUZ', 'Fuzzy'),
-    ('REJ', 'Rejected'),
-)
-
 """
 Parsers need to be somewhat rewritten, currently each one implements parse(buf) function which returns libtransifex.core.StringSet class,
 and compile(stringset) which returns file buffer.
