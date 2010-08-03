@@ -86,6 +86,7 @@ class Resource(models.Model):
         return "<Resource: %s>" % self.slug
 
     class Meta:
+        # FIXME: Either name or slug should be unique.
         unique_together = (('name', 'project'),
                            ('slug', 'project'),)
         verbose_name = _('resource')
@@ -108,17 +109,6 @@ class Resource(models.Model):
         """        
         return "%s.%s" % (self.project.slug, self.slug)
 
-    @property
-    def source_strings_with_plurals(self):
-        """
-        Return the list of all the strings, belonging to the Source Language
-        of the Project/Resource.
-
-        This method returns also the plural strings of the specific resource.
-        CAUTION! This function returns Translation and not SourceEntity objects!
-        """
-        return Translation.objects.filter(resource = self,
-                                          language = self.source_language)
 
     @property
     def source_strings(self):
