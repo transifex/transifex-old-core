@@ -112,59 +112,26 @@ class Resource(models.Model):
 
     @property
     def source_strings(self):
-        """
-        Return the list of all the strings, belonging to the Source Language
-        of the Project/Resource.
-
-        CAUTION! This function returns Translation and not SourceEntity objects!
-        CAUTION! This does not count the PLURALs!
-        """
-        return Translation.objects.filter(resource = self,
-                                          language = self.source_language,
-                                          rule=5)
+        """Return the source language translations, including plurals."""
+        return Translation.objects.filter(resource=self,
+                                           language=self.source_language)
 
     @property
-    def total_entities(self):
-        """
-        Return the total number of source entities to be translated.
-        
-        It should return the same ammount as total_source_strings, that's why 
-        we store it in the same cache key!
-        """
+    def entities(self):
+        """Return the resource's translation entities."""
+        return SourceEntity.objects.filter(resource=self)
+
+
+    @property
+    def entities_count(self):
+        """Return the number of source entities."""
         cache_key = (HAPPIX_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
         sc = cache.get(cache_key)
         if not sc:
-            sc = SourceEntity.objects.filter(resource=self).count()
+            sc = self.entities.count()
             cache.set(cache_key, sc)
         return sc
 
-    @property
-    def total_source_strings_with_plurals(self):
-        """
-        It is the same functionality with the 'total_entities' property but
-        here we use the Translation objects to calculate the total strings which
-        are being translated.
-        This also includes plurals!
-        """
-        return Translation.objects.filter(resource = self,
-                                          language = self.source_language).count()
-
-    @property
-    def total_source_strings(self):
-        """
-        It is the same functionality with the 'total_entities' property but
-        here we use the Translation objects to calculate the total strings which
-        are being translated.
-        CAUTION! This does not count the PLURAL strings in the Translation table!!!
-        """
-        cache_key = (HAPPIX_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
-        sc = cache.get(cache_key)
-        if not sc:
-            sc = Translation.objects.filter(resource = self,
-                                            language = self.source_language,
-                                            rule=5).count()
-            cache.set(cache_key, sc)
-        return sc
 
     @property
     def wordcount(self):
@@ -266,7 +233,7 @@ class Resource(models.Model):
         """Return the percent of untranslated strings in this Resource."""
         t = self.num_translated(language)
         try:
-            return (t * 100 / self.total_entities)
+            return (t * 100 / self.entities_count)
         except ZeroDivisionError:
             return 100
 
@@ -277,7 +244,7 @@ class Resource(models.Model):
         # With the next approach we lose some data because we cut floating points
 #        u = self.num_untranslated(language)
 #        try:
-#            return (u * 100 / self.total_entities)
+#            return (u * 100 / self.entities_count)
 #        except ZeroDivisionError:
 #            return 0
     

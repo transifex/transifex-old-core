@@ -194,19 +194,15 @@ class Language(models.Model):
         """
         return self.untranslated_strings().count()
 
-    #TODO:We need this as a cached value in order to avoid hitting the db all the time
-    @property
-    def total_entities(self):
-        """Return the total number of source entities to be translated."""
-        # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity
-        return SourceEntity.objects.count()
-
     def trans_percent(self):
         """Return the percent of untranslated strings in all Resources."""
+        # Import here due to circular dependency on modules
+        from happix.models import SourceEntity
+        #TODO:We need this as a cached value in order to avoid hitting the db all the time
+        total_entities = SourceEntity.objects.count()
         t = self.num_translated()
         try:
-            return (t * 100 / self.total_entities)
+            return (t * 100 / total_entities)
         except ZeroDivisionError:
             return 100
 

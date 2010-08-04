@@ -6,7 +6,7 @@
 {% for res in resources %}
 <tr>
     <td>
-    <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.total_entities }} <br>Available Languages: {{ res.available_languages|length }}">
+    <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.entities_count }} <br>Available Languages: {{ res.available_languages|length }}">
     {{ res.name }}
     </a>
     <sup class="entry_metalink">

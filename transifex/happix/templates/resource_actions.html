@@ -19,7 +19,7 @@
       {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
-        {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}
+        {% blocktrans with resource.entities_count as entities_count %} Total:&nbsp;{{ entities_count }} strings,{% endblocktrans %}
         {% blocktrans with resource.wordcount as wordcount %} {{ wordcount }} words{% endblocktrans %}
     </div>
   </div>
