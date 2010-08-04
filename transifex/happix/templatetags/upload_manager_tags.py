@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import template
-from happix.forms import CreateResourceForm, ResourceTranslationForm
 from txcommon.utils import get_url_pattern
+from happix.forms import CreateResourceForm, ResourceTranslationForm
 
 register = template.Library()
 

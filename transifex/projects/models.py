@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from django.db import models, IntegrityError
-from django.db.models import permalink
+from django.db.models import permalink, get_model
 from django.dispatch import Signal
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -29,6 +29,10 @@ from txcommon.log import logger, log_model
 from txcommon.utils import cached_property
 from projects.handlers import get_trans_handler
 from projects import signals
+
+SourceEntity = get_model('happix', 'SourceEntity')
+Translation = get_model('happix', 'Translation')
+
 
 # keys used in cache
 # We put it here to have them all in one place for the specific models!
@@ -225,8 +229,6 @@ class Project(models.Model):
         cache_key = (PROJECTS_CACHE_KEYS['source_strings_count'] % (self.project.slug,))
         sc = cache.get(cache_key)
         if not sc:
-            # I put it here due to circular dependency on modules
-            from happix.models import SourceEntity
             sc = SourceEntity.objects.filter(
                 resource__in=self.resource_set.all()).count()
             cache.set(cache_key, sc)
@@ -261,7 +263,6 @@ class Project(models.Model):
         all Resources in the specific project instance.
         """
         # I put it here due to circular dependency on module
-        from happix.models import Translation
         resources = self.resource_set.all()
         languages = Translation.objects.filter(
             resource__in=resources).values_list(
@@ -276,7 +277,6 @@ class Project(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity, Translation
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(resource__in=self.resource_set.all(),
             id__in=Translation.objects.filter(language=target_language,
@@ -291,7 +291,6 @@ class Project(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity, Translation
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(
             resource__in=self.resource_set.all()).exclude(

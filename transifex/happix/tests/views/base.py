@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
+from txcommon.tests.base import BaseTestCase
+from languages.models import Language
 from happix.libtransifex.pofile import POHandler
 from happix.models import Resource, SourceEntity
-from languages.models import Language
-from txcommon.tests.base import BaseTestCase
 
 class ViewsBaseTest(BaseTestCase):
     """Tests for happix views."""

@@ -1,11 +1,11 @@
-from django.core.management.base import BaseCommand
-from django.core.management.base import LabelCommand, CommandError
 from optparse import make_option
 import traceback
+from django.core.management.base import BaseCommand
+from django.core.management.base import LabelCommand, CommandError
 
-from happix.loaders import load_dir_hierarchy
 from projects.models import Project, Component
 from txcommon.log import logger
+from happix.loaders import load_dir_hierarchy
 
 _HELP_TEXT = """Load Resources to the DB.
 

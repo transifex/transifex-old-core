@@ -1,11 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext as _
-from happix.models import Resource
 from languages.models import Language
 from storage.fields import StorageFileField
-from storage.widgets import StorageFileWidget
-
 from storage.models import StorageFile
+from storage.widgets import StorageFileWidget
+from happix.models import Resource
 
 class ResourceForm(forms.ModelForm):
 

@@ -1,8 +1,8 @@
 # -*- coding: utf_8 -*-
 import base64
+from django.conf import settings
 from django.db import models
 from django.utils.text import compress_string
-from django.db.models.signals import post_init
 
 def uncompress_string(s):
     '''helper function to reverse django.utils.text.compress_string'''
@@ -41,13 +41,12 @@ fetching'''
 
     def contribute_to_class(self, cls, name):
         super(CompressedTextField, self).contribute_to_class(cls, name)
-        post_init.connect(self.post_init, sender=cls)
+        models.signals.post_init.connect(self.post_init, sender=cls)
     
     def get_internal_type(self):
         return "TextField"
                 
     def db_type(self):
-        from django.conf import settings
         db_types = {'mysql':'longblob',
                     'sqlite3':'blob',
                     'postgres':'text',

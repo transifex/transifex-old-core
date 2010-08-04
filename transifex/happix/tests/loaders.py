@@ -5,10 +5,10 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from happix.models import SourceEntity, Resource, TranslationString
 from languages.models import Language
 from languages.management.commands import txcreatelanguages
 from projects.models import Project
+from happix.models import SourceEntity, Resource, TranslationString
 
 # Uncomment out when you want to use the ipyhotn
 #from IPython.Shell import IPShellEmbed

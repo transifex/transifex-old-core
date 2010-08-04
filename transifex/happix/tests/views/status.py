@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.test.client import Client
-from happix.models import Resource
 from languages.models import Language
+from happix.models import Resource
 from happix.tests.views.base import ViewsBaseTest
 
 

@@ -2,8 +2,7 @@
 """
 Java .properties file parser
 """
-import re
-import os
+import os, re
 from core import StringSet, Parser, Translation, CompileError, ParseError
 
 class PropsParseError(ParseError):

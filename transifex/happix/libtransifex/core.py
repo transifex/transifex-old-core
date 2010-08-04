@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import copy
-import json
-import os
-import re
-import codecs
+import codecs, copy, json, os, re
 
 from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
 from languages.models import Language
 from happix.libtransifex.decorators import *
+
 """
 STRICT flag is used to switch between two parsing modes:
   True - minor bugs in source files are treated fatal

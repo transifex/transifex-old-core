@@ -1,11 +1,10 @@
-from django.core.management.base import BaseCommand
-from django.core.management.base import LabelCommand, CommandError
-from optparse import make_option
 import os, settings, traceback
+from optparse import make_option
+from django.core.management.base import (BaseCommand, LabelCommand, CommandError)
 
-from happix.loaders import load_dir_hierarchy
 from projects.models import Project
 from txcommon.log import logger
+from happix.loaders import load_dir_hierarchy
 
 _HELP_TEXT = """Load Resources to the DB by parsing the scratchdir.
 

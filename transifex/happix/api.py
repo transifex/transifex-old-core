@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
+from uuid import uuid4
+from django.db import transaction
+from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
+
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.utils import rc
-from django.template.defaultfilters import slugify
-from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from projects.permissions import *
+
 from txcommon.decorators import one_perm_required_or_403
-from happix.models import Resource, SourceEntity, Translation
+from txcommon.log import logger
+from projects.permissions import *
 from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
-from txcommon.log import logger
-from django.db import transaction
-from uuid import uuid4
+
 from happix.decorators import method_decorator
+from happix.models import Resource, SourceEntity, Translation
 
 
 class ResourceHandler(BaseHandler):

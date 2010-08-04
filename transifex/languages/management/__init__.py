@@ -1,9 +1,10 @@
 
-from django.db.models import signals
+from django.db.models import signals, get_model
 from languages import models as lang_app
 
+Language = get_model('languages', 'Language')
+
 def create_languages(app, created_models, verbosity, **kwargs):
-    from languages.models import Language
     from django.core.management import call_command
     if Language in created_models and kwargs.get('interactive', True):
         msg = ("\nTransifex's language tables were just initialized.\n"

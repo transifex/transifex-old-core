@@ -3,24 +3,21 @@
 """
 GNU Gettext .PO/.POT file handler/compiler
 """
-import os
-import re
-import time
+import os, re, time, uuid
 from hashlib import md5
-import uuid
 import polib, datetime
-import simplejson as json
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
-from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ugettext
-from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
+from django.utils.translation import ugettext, ugettext_lazy as _
+from core import (CompileError, GenericTranslation, Handler, STRICT, StringSet,
+                  ParseError)
+
+from txcommon.commands import run_command, CommandError
+from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from teams.models import Team
 from happix.libtransifex.decorators import *
-from txcommon.commands import run_command, CommandError
-from txcommon.exceptions import FileCheckError
 
 #class ResXmlParseError(ParseError):
     #pass

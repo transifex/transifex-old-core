@@ -6,12 +6,11 @@ Qt4 TS file parser for Python
 from hashlib import md5
 import time
 import xml.dom.minidom
-from xml.dom.minidom import DOMImplementation
 from django.db import transaction
 from django.db.models import get_model
-from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
 from txcommon.log import logger
 from happix.libtransifex.decorators import *
+from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
 
 # Happix models
 Resource = get_model('happix', 'Resource')

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
-from happix.libtransifex.pofile import POHandler
-from happix.models import Resource
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
+from happix.libtransifex.pofile import POHandler
+from happix.models import Resource
 from happix.tests.api.utils import ORIGINAL, TRANSLATION
 
 class APIBaseTests(BaseTestCase):

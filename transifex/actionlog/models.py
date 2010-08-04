@@ -4,11 +4,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import smart_unicode
-from django.utils.encoding import force_unicode
+from django.utils.encoding import smart_unicode, force_unicode
 from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
+
+Project = models.get_model('projects', 'Project')
+
 
 def _get_formatted_message(label, context):
     """
@@ -112,7 +114,6 @@ class LogEntryManager(models.Manager):
         """
         Return LogEntries for a specific user and his actions on public projects.
         """
-        from projects.models import Project
         ctype = ContentType.objects.get(model='project')
         q = self.filter(user__pk__exact=user.pk, content_type=ctype, 
                 object_id__in=Project.objects.filter(private=False))

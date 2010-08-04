@@ -7,7 +7,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from userprofile.models import BaseProfile
-from languages.models import Language
+
+Language = models.get_model('languages', 'Language')
 
 GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 

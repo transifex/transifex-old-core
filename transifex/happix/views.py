@@ -11,19 +11,20 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
+
+from authority.views import permission_denied
+
 from actionlog.models import action_logging
-from happix.models import (Translation, Resource, SourceEntity, PARSERS,
-                           StorageFile)
-from happix.forms import ResourceForm
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
-from projects.permissions.project import ProjectPermission
+from projects.signals import post_resource_save, post_resource_delete
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 
-from authority.views import permission_denied
-from projects.signals import post_resource_save, post_resource_delete
+from happix.models import (Translation, Resource, SourceEntity, PARSERS,
+                           StorageFile)
+from happix.forms import ResourceForm
 
 try:
     import json

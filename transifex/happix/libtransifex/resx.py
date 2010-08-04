@@ -5,7 +5,6 @@ Microsoft .NET resources XML (.resx) parser/compiler
 """
 
 import xml.dom.minidom
-from xml.dom.minidom import DOMImplementation
 from core import StringSet, ParseError, Translation, CompileError, Parser, STRICT
 
 class ResXmlParseError(ParseError):

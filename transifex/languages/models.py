@@ -6,6 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
+SourceEntity = get_model('happix', 'SourceEntity')
+Translation = get_model('happix', 'Translation')
+Component = get_model('projects', 'Component')
+
 
 class LanguageManager(models.Manager):
     def by_code_or_alias(self, code):        
@@ -28,7 +32,6 @@ class LanguageManager(models.Manager):
             return None
 
 class Language(models.Model):
-
     """
     A spoken language or dialect, with a distinct locale.
     """
@@ -85,7 +88,6 @@ class Language(models.Model):
 
     @property
     def components(self):
-        from projects.models import Component
         return Component.objects.with_language(self)
 
     def save(self, *args, **kwargs):
@@ -166,7 +168,6 @@ class Language(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity, Translation
         return SourceEntity.objects.filter(id__in=Translation.objects.filter(
                 language=self, rule=5).values_list('source_entity', flat=True))
 
@@ -178,7 +179,6 @@ class Language(models.Model):
         This assumes that we DO NOT SAVE empty strings for untranslated entities!
         """
         # I put it here due to circular dependency on modules
-        from happix.models import SourceEntity, Translation
         return SourceEntity.objects.exclude(id__in=Translation.objects.filter(
                 language=self, rule=5).values_list('source_entity', flat=True))
 
@@ -196,8 +196,6 @@ class Language(models.Model):
 
     def trans_percent(self):
         """Return the percent of untranslated strings in all Resources."""
-        # Import here due to circular dependency on modules
-        from happix.models import SourceEntity
         #TODO:We need this as a cached value in order to avoid hitting the db all the time
         total_entities = SourceEntity.objects.count()
         t = self.num_translated()
