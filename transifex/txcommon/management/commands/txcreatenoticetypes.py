@@ -16,6 +16,7 @@ class Command(NoArgsCommand):
     can_import_settings = False
 
     def handle_noargs(self, **options):
-        print "Creating or updating notice types"
+        #FIXME: These don't seem to be working for now.
+        #self.stdout.write("Creating or updating notice types")
         create_notice_types()
-        print "Default set of notice types initialized successfully."
+        #self.stdout.write("Default set of notice types initialized successfully.")

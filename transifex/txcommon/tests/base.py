@@ -60,7 +60,7 @@ class BaseTestCase(TestCase):
             pass
         settings.MIDDLEWARE_CLASSES = list_middl_c
 
-    def setUp(self, skip_stats = False, create_teams=True):
+    def setUp(self, skip_stats=True, create_teams=True):
         """
         Set up project, component and vcsunit. Insert POFile objects.
         """

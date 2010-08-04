@@ -5,13 +5,16 @@ import markdown
 
 from django.conf import settings
 from django.core.cache import cache
+from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
 from django.db import models, IntegrityError
 from django.db.models import permalink
 from django.utils.html import escape
 
 from languages.models import Language
-from happix.models import Translation, SourceEntity
+
+Translation = get_model('happix', 'Translation')
+SourceEntity = get_model('happix', 'SourceEntity')
 
 from txcommon.log import logger, log_model
 
