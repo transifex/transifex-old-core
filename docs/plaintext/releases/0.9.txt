@@ -478,6 +478,12 @@ The following dependencies were *added* in this version:
 - django-staticfiles
 - pygooglechart
 
+.. warning::
+
+  This version is not compatible with Django 1.2 or later, due to numerous
+  changes in this version. To install a specific version of Django using
+  ``easy_install`` you may run ``easy_install Django==1.1.2``.
+
 Instructions on how to install them can be found at the
 :ref:`Installation docs <intro-install>`. You'll need to complete this step
 before actually doing the database upgrade.
@@ -488,9 +494,7 @@ Database migration
 
 Transifex includes a script which will automatically migrate your database to
 the new schema from the previous version. All you need to do, from a clean
-schema of the previous version, is run the following:
-
-.. code-block:: bash
+schema of the previous version, is run the following::
 
     ./manage.py syncdb
     ./manage.py migrate
