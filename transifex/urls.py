@@ -11,16 +11,13 @@ authority.autodiscover()
 
 panel_url = getattr(settings,'DJANGO_ADMIN_PANEL_URL', 'admin')
 
-urlpatterns = patterns('',
-    #url(r'^$', 'django.views.generic.simple.direct_to_template',
-    #    {'template': 'index.html'}, name='home'),
-    url(r'^$', 'txcommon.views.index', name='transifex.home'),
-)
+urlpatterns = patterns('',)
 
 if settings.ENABLE_ADDONS:
     urlpatterns += patterns('', (r'', include('django_addons.urls')))
 
 urlpatterns += patterns('',
+    url(r'^$', 'txcommon.views.index', name='transifex.home'),
     url(r'^projects/', include('projects.urls')),
     url(r'^reviews/', include('reviews.urls')),
     url(r'^search/$', 'txcommon.views.search', name='search'),
