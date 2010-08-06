@@ -19,6 +19,7 @@ class SessionWizard(object):
         self.key = key
         self.form_list = form_list
         self.initial = initial or ()
+        self.step = None
 
     def __repr__(self):
         return 'key: %s\nform_list: %s\ninitial_data: %s' % (self.step, self.form_list, self.initial)
