@@ -10,12 +10,17 @@ from hashlib import md5
 import uuid
 import polib, datetime
 import simplejson as json
+from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from core import StringSet, ParseError, GenericTranslation, CompileError, Handler, STRICT
 from txcommon.log import logger
 from teams.models import Team
 from happix.libtransifex.decorators import *
+from txcommon.commands import run_command, CommandError
+from txcommon.exceptions import FileCheckError
 
 #class ResXmlParseError(ParseError):
     #pass
@@ -32,6 +37,8 @@ def get_po_contents(pofile):
     """
     This function takes a pofile object and returns it's contents
     """
+    #FIXME: The following line could fix the issue. Test it.
+    #return pofile.__str__()
 
     filename = time.time()
     pofile.save("/tmp/%s.tmp" % filename)
@@ -41,6 +48,28 @@ def get_po_contents(pofile):
     os.unlink("/tmp/%s.tmp" % filename)
 
     return content
+
+
+def msgfmt_check(po_contents, with_exceptions=True):
+    """
+    Call run_msgfmt_check (runs a `msgfmt -c` on a file (file object)).
+
+    Raise a MsgfmtCheckError in case the stderror has errors or warnings or
+    the command execution returns Error.
+    """
+
+    try:
+        command = 'msgfmt -o /dev/null -c -'
+        status, stdout, stderr = run_command(command, _input=po_contents,
+            with_extended_output=True, with_exceptions=with_exceptions)
+        # Not sure why msgfmt sends its output to stderr instead of stdout
+        if 'warning:' in stderr or 'too many errors, aborting' in stderr:
+            raise CommandError(command, status, stderr)
+    except CommandError:
+        logger.debug("pofile: The 'msgfmt -c' check failed.")
+        raise FileCheckError, ugettext("Your file does not pass by the check "
+            "for correctness (msgfmt -c). Please run this command on "
+            "your system to see the errors.")
 
 
 class POHandler(Handler):
@@ -55,6 +84,48 @@ class POHandler(Handler):
     @classmethod
     def accept(cls, filename):
         return filename.endswith(".po") or filename.endswith(".pot")
+
+    @classmethod
+    def contents_check(self, filename):
+
+        # Read the stream to buffer
+        po = polib.pofile(filename)
+        buf = get_po_contents(po)
+
+        # Msgfmt check
+        if settings.FILECHECKS['POFILE_MSGFMT']:
+            msgfmt_check(buf)
+
+        # Check wether file containts DOS newlines '\r' (0x0D)
+        # To remove you can run: tr -d '\r' < inputfile > outputfile
+        if settings.FILECHECKS.get('DOS_NEWLINES', None):
+            if '\r' in buf:
+                logger.debug("pofile: DOS newlines (\\r) found!")
+                raise FileCheckError(_("Uploaded file contains "
+                    "DOS newlines (\\r)!"))
+
+        # Check required header fields 
+        required_metadata = ['Plural-Forms', 'Content-Type', 
+            'Content-Transfer-Encoding']
+        for metadata in required_metadata:
+            if not metadata in po.metadata:
+                logger.debug("pofile: Required metadata '%s' not found." % 
+                    metadata)
+                raise FileCheckError(_("Uploaded file header doesn't "
+                "have '%s' metadata!") % metadata)
+
+        # Check charset in header (UTF-8)
+        if settings.FILECHECKS['UTF8']:
+            if not "charset=utf-8" in po.metadata["Content-Type"].lower():
+                logger.debug("pofile: Only UTF-8 encoded files are allowed!")
+                raise FileCheckError(_("Only UTF-8 encoded files are allowed!"))
+
+        # No translated entires check
+        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
+            logger.debug("pofile: No translations found!")
+            raise FileCheckError(_("Uploaded file doesn't contain any "
+                "translated entries!"))
+
 
     @need_compiled
     def _post_compile(self, *args, **kwargs):

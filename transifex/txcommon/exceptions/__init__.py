@@ -4,6 +4,10 @@ from django.core.mail import mail_admins
 from django.conf import settings
 from txcommon.log import logger
 
+class FileCheckError(Exception):
+    """Exception for file checks errors"""
+    pass
+
 def handle_exception_mainling(request, exception):
     """Handle an exception if in production mode."""
     exc_info = sys.exc_info()

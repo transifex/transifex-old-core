@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
     /* Bind ajax upload button */
     new AjaxUpload("{{ name }}-upload_button", {
         action: "{% url api.storage %}",
-        //responseType: "json",
+        responseType: "json",
         onSubmit : function(file, extension) {
             this.setData({
                 'language': $("[name='{{ names.0 }}']").val(),
@@ -104,22 +104,17 @@ jQuery(document).ready(function($){
             this.disable();
         },
         onComplete : function(file, response) {
-            // Tricking it - using 'responseType: "json"' it shouldn't be needed,
-            // however it doesn't work well with django-piston apparently.
-            response = response.replace('<pre>','').replace('</pre>','');
-            response = eval("(" + response + ")");
             if(typeof(response['status']) !== 'undefined' && response['status'] == "Created"){
                 storagefile = response['files'][0]
                 show_uploadedfile(file, storagefile['uuid'])
-
                 $("input[name={{ names.1 }}]").val(storagefile['id']);
-                $("div#notification-container").fadeOut("fast");
-
                 $("#{{ name }}-id-uuid").val(storagefile['uuid']);
                 $("#{{ name }}-id-uuid").trigger('change');
             }else{
-                alert(response);
+                if (typeof(response['message']) !== 'undefined')
+                    alert(response['message']);
             }
+            $("div#notification-container").fadeOut("fast");
             this.enable();
         }
     });

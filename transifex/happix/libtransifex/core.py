@@ -301,6 +301,9 @@ class Handler(object):
     def parse_file(self, filename, is_source=False, lang_rules=None):
         raise Exception("Not Implemented")
 
+    def contents_check(self, filename):
+        raise Exception("Not Implemented")
+
 class StringSet:
     """
     Store a list of Translation objects for a given language.

@@ -3,12 +3,15 @@ from piston.handler import BaseHandler
 from piston.utils import rc
 from django.http import HttpResponse
 from django.template.defaultfilters import slugify
+from django.utils import simplejson
+from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
+from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
@@ -75,6 +78,7 @@ class StorageHandler(BaseHandler):
             return rc.BAD_REQUEST # Unknown API call
         elif "multipart/form-data" in request.content_type: # Do file upload
             files=[]
+            retval = None
             for name, submitted_file in request.FILES.items():
                 submitted_file = submitted_file
                 sf = StorageFile()
@@ -99,12 +103,39 @@ class StorageHandler(BaseHandler):
                             "not match with any language in the database." 
                             % lang_code)
                 sf.update_props()
-                sf.save()
-                logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
-                files.append(dict(uuid=sf.uuid, id=str(sf.id), name=sf.name))
-            result=dict(status='Created', files=files)
-            # TODO: Not sure, but it looks like a hack. 'return result' 
-            # should be enough.
-            return HttpResponse(str(result), content_type='text/plain', status=201)
+                try:
+                    sf.file_check()
+                    sf.save()
+
+                    logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
+                    files.append({'uuid':sf.uuid, 'id':str(sf.id),
+                        'name':sf.name})
+                except Exception, e:
+                    if isinstance(e, FileCheckError):
+                        message = str(e)
+                    else:
+                        #TODO Send email to admins
+                        message = _("A strange error happened.")
+
+                    # The object is not saved yet, but it removes file from 
+                    # the filesystem
+                    sf.delete()
+
+                    # Delete possible uploaded files from the same request.
+                    # It allows multiple files per request, but if one fails,
+                    # the whole request must fail.
+                    StorageFile.objects.filter(
+                        id__in=[f['id'] for f in files]).delete()
+
+                    logger.debug(str(e))
+                    retval=dict(status='Error', message=message)
+                    break
+
+            if not retval:
+                retval=dict(status='Created', files=files,
+                    message=_("File uploaded successfully."))
+
+            return HttpResponse(simplejson.dumps(retval),
+                    mimetype='text/plain')
         else: # Unknown content type/API call
             return rc.BAD_REQUEST

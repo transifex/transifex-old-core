@@ -52,6 +52,10 @@ class LinguistHandler(Handler):
     def accept(cls, filename):
         return filename.endswith(".ts")
 
+    @classmethod
+    def contents_check(self, filename):
+        logger.debug("qt: The 'contents_check' method not implemented!")
+
     def _post_compile(self, *args, **kwargs):
         """
         """
