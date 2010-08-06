@@ -52,12 +52,11 @@ def get_po_contents(pofile):
 
 def msgfmt_check(po_contents, with_exceptions=True):
     """
-    Call run_msgfmt_check (runs a `msgfmt -c` on a file (file object)).
+    Run a `msgfmt -c` on the file contents.
 
-    Raise a MsgfmtCheckError in case the stderror has errors or warnings or
+    Raise a FileCheckError in case the stderror has errors/warnings or
     the command execution returns Error.
     """
-
     try:
         command = 'msgfmt -o /dev/null -c -'
         status, stdout, stderr = run_command(command, _input=po_contents,

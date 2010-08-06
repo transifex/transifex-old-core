@@ -62,7 +62,7 @@ class StorageFile(models.Model):
             super(StorageFile, self).delete(*args, **kwargs)
 
     def get_storage_path(self):
-        return "/tmp/storage/files/%s-%s" % (self.uuid, self.name)
+        return "/tmp/%s-%s" % (self.uuid, self.name)
 
     def translatable(self):
         """
