@@ -40,7 +40,7 @@ register = Library()
 if hasattr(settings, "DEFAULT_AVATAR") and settings.DEFAULT_AVATAR:
     DEFAULT_AVATAR = settings.DEFAULT_AVATAR
 else:
-    DEFAULT_AVATAR = os.path.join(settings.STATIC_ROOT, "userprofile", "images", "generic.jpg")
+    DEFAULT_AVATAR = os.path.join(settings.MEDIA_ROOT, "userprofile", "images", "generic.jpg")
 
 class ResizedThumbnailNode(Node):
     def __init__(self, size, username=None):
@@ -95,7 +95,7 @@ class ResizedThumbnailNode(Node):
             if gravatar:
                 url = gravatar_for_user(user, self.size)
             else:
-                url = filename.replace(settings.STATIC_ROOT, settings.STATIC_URL)
+                url = filename.replace(settings.MEDIA_ROOT, settings.MEDIA_URL)
                 url = os.path.normpath(url)
 
         return url
