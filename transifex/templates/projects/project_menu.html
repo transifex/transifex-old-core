@@ -56,7 +56,7 @@ $(document).ready(
 
     <li class="ui-state-default ui-corner-top {% if project_overview %}ui-tabs-selected ui-state-active{% endif %}">
        <a id="tab-link-1" href="{% url project_detail project_slug=project.slug %}">
-         <span>{% trans "Overview" %}</span>
+         <span>{% trans "Project Overview" %}</span>
        </a>
     </li>
 
@@ -70,7 +70,7 @@ $(document).ready(
 
     <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}">
        <a id="tab-link-3" href="{% url team_list project.slug %}">
-         <span>{% trans "Translation Teams" %}</span>
+         <span>{% trans "Teams" %}</span>
        </a>
     </li>
     {% hook "project.html" menu %}
