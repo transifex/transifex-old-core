@@ -12,7 +12,7 @@ class APIBaseTests(BaseTestCase):
         self.current_path = os.path.split(__file__)[0]
         super(APIBaseTests, self).setUp()
         self.language_en = Language.objects.get(code='en_US')
-        self.resource = Resource(slug="json", name="json", 
+        self.resource = Resource(slug="json", name="json",
             project=self.project, source_language=self.language_en)
         self.resource.save()
 
@@ -22,8 +22,8 @@ class APIBaseTests(BaseTestCase):
         self.pofile_path = '%s/../libtransifex/pofile' % self.current_path
 
         # Loading POT (en_US) into the resource
-        handler = POHandler.parse_file('%s/tests.pot' % 
-            self.pofile_path)
+        handler = POHandler('%s/tests.pot' % self.pofile_path)
+        handler.parse_file(is_source=True)
         handler.bind_resource(self.resource)
         handler.save2db(is_source=True)
 

@@ -24,14 +24,14 @@ class QTFile(BaseTestCase):
 
             # Testing plural number
             if s.source_entity == '%n FILES PROCESSED.':
-                self.assertEqual(s.rule, 5)
+                self.assertTrue(s.rule in [1, 5])
 
             # Counting number of entities
             if s.rule == 5:
                 entities += 1
 
-        # Asserting number of entities - QT file has 43 entries.
-        self.assertEqual(entities, 43)
+        # Asserting number of entities - QT file has 43 entries +1 plural.
+        self.assertEqual(entities, 44)
 
     def test_qt_parser_fi(self):
         """Tests for fi QT file."""
@@ -87,7 +87,7 @@ class QTFile(BaseTestCase):
 
         # Check that all source translations are there
         self.assertEqual(len( Translation.objects.filter(resource=r,
-            language=l)), 43)
+            language=l)), 44)
 
         # Import and save the finish translation
         handler.bind_file('%s/fi.ts' % os.path.split(__file__)[0])

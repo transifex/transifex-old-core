@@ -102,10 +102,11 @@ class CoreViewsTest(ViewsBaseTest):
         trans_lang = 'el'
         trans = "foo"
         new_trans = "foo2"
-        # Create new translation
+        # Create new translation 
+        # FIXME: Test plurals
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, self.resource.slug, trans_lang]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            json.dumps({'strings':[{'id':self.source_entity.id,'translations':{'other':trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(Translation.objects.filter(resource=self.resource,
@@ -114,7 +115,8 @@ class CoreViewsTest(ViewsBaseTest):
         # Update existing translation
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, self.resource.slug, trans_lang]),
-            json.dumps({'strings':[{'id': self.source_entity.id,'translation':new_trans}]}),
+            json.dumps({'strings':[{'id': self.source_entity.id,
+                'translations':{'other':new_trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(Translation.objects.filter(resource=self.resource,
@@ -142,7 +144,8 @@ class CoreViewsTest(ViewsBaseTest):
         # Create new translation
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, self.resource.slug,self.language.code]),
-            json.dumps({'strings':[{'id':self.source_entity.id, 'translation': trans}]}),
+            json.dumps({'strings':[{'id':self.source_entity.id,
+                'translations': { 'other': trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(Translation.objects.filter(resource=self.resource,

@@ -104,8 +104,7 @@ class POHandler(Handler):
                     "DOS newlines (\\r)!"))
 
         # Check required header fields 
-        required_metadata = ['Plural-Forms', 'Content-Type', 
-            'Content-Transfer-Encoding']
+        required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
         for metadata in required_metadata:
             if not metadata in po.metadata:
                 logger.debug("pofile: Required metadata '%s' not found." % 
@@ -120,11 +119,11 @@ class POHandler(Handler):
                 raise FileCheckError(_("Only UTF-8 encoded files are allowed!"))
 
         # No translated entires check
-        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
-            logger.debug("pofile: No translations found!")
-            raise FileCheckError(_("Uploaded file doesn't contain any "
-                "translated entries!"))
-
+#        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
+#            logger.debug("pofile: No translations found!")
+#            raise FileCheckError(_("Uploaded file doesn't contain any "
+#                "translated entries!"))
+#
 
     @need_compiled
     def _post_compile(self, *args, **kwargs):

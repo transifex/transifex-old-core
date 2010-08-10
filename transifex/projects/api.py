@@ -191,7 +191,6 @@ class ProjectResourceHandler(BaseHandler):
                         name = "Translations of '%s'" % storagefile.name,
                         source_language = storagefile.language,
                         project = project,
-                        source_file=storagefile
                 )
                 # update l10n_method
                 method = L10n_method.objects.get_by_filename(storagefile.get_storage_path())
