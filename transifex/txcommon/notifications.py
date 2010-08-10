@@ -261,30 +261,47 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
+
+            # Resources
+
+            {
+                "label": "project_resource_added",
+                "display": _("Resource Added"),
+                "description": _("when a new resource is added to a project"),
+                "default": 1,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_resource_changed",
+                "display": _("Resource Changed"),
+                "description": _("when a resource of a project is changed"),
+                "default": 1,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_resource_deleted",
+                "display": _("Resource Deleted"),
+                "description": _("when a resource of a project is deleted"),
+                "default": 1,
+                "show_to_user": True,
+            },
+            {   # Used only for ActionLog purposes.
+                "label": "project_resource_translated",
+                "display": _("Resource Translated"), 
+                "description": _("when a translation is sent to a project "
+                    "resource"), 
+                "default": 0,
+                "show_to_user": False,
+            },
+            {
+                "label": "project_resource_translation_changed",
+                "display": _("Resource Translation Changed"), 
+                "description": _("when a resource translation you are "
+                    "watching changes"), 
+                "default": 0,
+                "show_to_user": True,
+            },
     ]
-
-
-def is_watched_by_user_signal(obj, user, signal=None):
-    """
-    Return a boolean value indicating if an object is watched by a user
-
-    It is possible also verify that it is watched by a user with a specific
-    signal by passing the signal as a second parameter
-    """
-    if signal:
-        return is_observing(obj, user, signal)
-
-    if isinstance(user, AnonymousUser):
-        return False
-    try:
-        ctype = ContentType.objects.get_for_model(obj)
-        observed_items = ObservedItem.objects.get(content_type=ctype,
-                                                object_id=obj.id, user=user)
-        return True
-    except ObservedItem.DoesNotExist:
-        return False
-    except ObservedItem.MultipleObjectsReturned:
-        return True
 
 
 # Overwritting this function temporarily, until the upstream patch

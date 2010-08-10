@@ -9,7 +9,8 @@ from django.template import RequestContext
 
 from translations.models import POFile
 from models import Language
-from projects.models import Project, Component, Release
+from projects.models import Project, Component
+from releases.models import Release
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """

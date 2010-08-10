@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import codecs
-import settings
 import logging
 from django.utils.translation import ugettext as _
 

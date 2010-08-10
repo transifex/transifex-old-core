@@ -1,0 +1,195 @@
+{% load i18n %}
+{% load txcommontags %}
+{% load permissions %}
+{% load statistics_happix %}
+{% load upload_manager_tags %}
+
+<div id="resources" class="resources separate">
+  {% with project.resource_set.all|slice:":5" as resources %}
+  <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
+    {% render_metacount resources _("resources") %}
+  </h3>
+
+  {% if resources %}
+  {% with resources|length as viewed %}
+  {% with project.resource_set.all|length as total %}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $(".tablesorter_resource_list").tablesorter({
+            widgets: ['zebra'],
+            textExtraction: { // Take value inside an object for the columns
+              0: function(node) {
+                  return $("a", node).text();
+              },
+              1: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
+        });
+        // Bind show more, show all events
+        $('#show_more').click(function(){
+            $(this).parent().addClass('i16 action_go');
+            $.get('{% url project_resources_more project.slug viewed %}', function(data) {
+              var tbody = $('table.tablesorter_resource_list tbody');
+              tbody.append(data);
+              var current = $('tr', tbody).length;
+              $('#viewed').text(current)
+              total = parseInt($('#total').text());
+              $('#show_more').parent().removeClass('i16 action_go');
+              if(current >= total){
+                $('#show_actions').hide();
+              }
+              // Rebind the tablesorter js
+              $(".tablesorter_resource_list").tablesorter({
+                  widgets: ['zebra'],
+                  textExtraction: { // Take value inside an object for the columns
+                    0: function(node) {
+                        return $("a", node).text();
+                    },
+                    1: function(node) {
+                        return $("span", node).text();
+                    }
+                  }
+              });
+              // Rebind the tipsy
+              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+            });
+        });
+        $('#show_all').click(function(){
+            $(this).parent().addClass('i16 action_go');
+            $.get('{% url project_resources project.slug viewed %}', function(data) {
+              var tbody = $('table.tablesorter_resource_list tbody');
+              tbody.append(data);
+              var current = $('tr', tbody).length;
+              $('#viewed').text(current)
+              total = parseInt($('#total').text());
+              $('#show_all').parent().removeClass('i16 action_go');
+              if(current >= total){
+                $('#show_actions').hide();
+              }
+              // Rebind the tablesorter js
+              $(".tablesorter_resource_list").tablesorter({
+                  widgets: ['zebra'],
+                  textExtraction: { // Take value inside an object for the columns
+                    0: function(node) {
+                        return $("a", node).text();
+                    },
+                    1: function(node) {
+                        return $("span", node).text();
+                    }
+                  }
+              });
+              // Rebind the tipsy
+              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+            });
+        });
+        {% if request.user.is_authenticated %}
+        $("#new_translation1").click( function (){ 
+            $("#new_translation_box1").toggle();
+        });
+        $("#start_new_translation").click( function() {
+            var target_lang_code = $(this).prev().val();
+            if ( target_lang_code != "" ) {
+                //request_url = window.location + target_lang_code;
+                //This is _UGLY_. We need to find a way to do reverse url
+                //lookups from JS code. #FIXME
+                request_url ='/happix/project/{{project.slug}}/'+ target_lang_code;
+                window.location = request_url;
+            } else {
+                alert("Please select a target language first and then click Go.");
+            }
+        });
+        {% endif %}
+    });
+</script>
+
+  <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
+  <thead>
+   <tr>
+    <th><span class="i16 tag">Resource Name</span</th>
+    <th><span class="i16 clock">Last Updated</span></th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for res in resources %}
+    <tr>
+        <td>
+        <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.total_entities }}<br/>Available Languages: {{ res.available_languages|length }}">{{ res.name }}</a>
+        <sup class="entry_metalink">
+           {% if is_maintainer or request.user.is_superuser %}
+             <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
+             , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
+           {% endif %}
+        </sup>
+        </td>
+        <td class="last_updated">
+        {% last_translation_update res as last_update %}
+        {% last_committer res as last_committer %}    
+        <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
+        {% if last_update %}
+            <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+            {{ last_update|timesince }}
+        {% else %}
+            {% trans "no translations yet" %}
+        {% endif %}
+        </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+
+  <div style="text-align:center;padding:1em;font-size:85%">
+    <span style="color:#8f8f8f">
+      {% trans "showing" %} <span id="viewed">{{ viewed }}</span> {% trans "out of" %} <span id="total">{{ total }}</span>
+    </span>
+    {% ifnotequal viewed total %}
+    <p id="show_actions">
+        <span><a id="show_more" style="cursor:pointer" >{% trans "show more" %}</a></span>
+        &nbsp;,&nbsp;
+        <span><a id="show_all" style="cursor:pointer" >{% trans "show all" %}</a></span>
+    </p>
+    {% endifnotequal %}
+  </div>
+
+  {% get_permission "project_perm.submit_file" for request.user and project,1 as "can_submit_translation" %}
+  {% if can_submit_translation or request.user.is_superuser %}
+  <div id="new_translation_box1">
+      <select name="translation_languages" class="language">
+          <option value="">Select Language</option>
+          {% if is_maintainer or request.user.is_superuser %}
+            {% for language in languages %}
+                <option value="{{ language.code }}">{{ language.name }}</option>
+            {% endfor %}
+          {% else %}
+            {% for team in user_teams %}
+                <option value="{{ team.language.code }}">{{ team.language.name }}</option>
+            {% endfor %}
+          {% endif %}
+      </select>
+      <a id="start_new_translation" class="i16 buttonized action">GO</a>
+  </div>
+  <p style="text-align:center;padding-top:1em">
+   <a id="new_translation1" class="buttonized i16 add">{% trans "Translate All" %}</a>
+  </p>
+  {% endif %}
+
+  {% endwith %}
+  {% endwith %}
+  {% else %}
+
+  <p>{% trans "No resources are registered for this project yet." %}</p>
+    {% endif %}
+  {% endwith %}
+  <p class="i16 tip compact clear">
+    {% blocktrans %}A <em>Resource</em> is mapped to master file and it's translated versions.
+    For example Resource could be bound to nano.pot and de.po, it.po, fi.po, etc.{% endblocktrans %}
+  </p>
+
+  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+  {% if is_maintainer %}
+    {% upload_create_resource_form request project %}
+  {% endif %}
+
+</div>

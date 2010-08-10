@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load txcommontags %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $("#create_new_resource").toggle(function(){
+        $("#create_new_resource_form").slideDown();
+    }, function(){
+        $("#create_new_resource_form").slideUp();
+    });
+
+    {% if resource %}
+
+        var uuid = '{{ resource.source_file.uuid }}';
+        $("div#notification-container div").html(
+            sprintf("Extracting strings from '%s', this might take a while...", '{{ resource.source_file.name }}'));
+        $("div#notification-container").fadeIn("slow");
+
+        json_request(
+            'POST',
+            sprintf('{{ api_project_files }}', '{{ project.slug }}'),
+            {'uuid':uuid},
+            function(status, retval){
+                $("div#notification-container").fadeOut("slow");
+                window.location = retval['redirect'];
+            }
+        );
+
+    {% endif %}
+
+});
+</script>
+
+<span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">Create New Resource</span>
+
+<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}> 
+
+ <form action='' method='post' class="microform houdini">
+  <fieldset style="margin-top: 1em;">
+  <legend>{% trans "Create resource to be translated" %}</legend>
+
+  <p class="i16 tip compact clear">{% trans "Upload a local file to be used as the source file of the resource. It's equivalent to the POT file for the GNU's gettext method." %}</p>
+
+  <table>
+  <tbody>
+    {% form_as_table_rows create_resource_form %}
+  </tbody>
+  </table>
+  <p class="submit"><input type="submit" class="i16 submit" name="create_resource" value="{% trans "Create Resource" %}" /></p>
+
+  </fieldset>
+ </form>
+
+</div>
+
+

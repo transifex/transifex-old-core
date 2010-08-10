@@ -108,7 +108,7 @@
                 </tr>
                 {% for row in notice_settings.rows|notice_type_user_filter %}
                     <tr>
-                        <td>{% trans row.notice_type.display %}<br/>
+                        <td>{% trans row.notice_type.display %}
                             <span class="notice_type_description">{% trans row.notice_type.description %}</span>
                         </td>
                         {% for cell in row.cells %}

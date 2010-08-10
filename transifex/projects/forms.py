@@ -10,7 +10,8 @@ from django.utils.safestring import mark_safe
 
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from projects.models import Project, Component, Release
+from projects.models import Project, Component
+from releases.models import Release
 from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
@@ -163,7 +164,7 @@ class ComponentAllowSubForm(forms.ModelForm):
 
 class ReleaseForm(forms.ModelForm):
 
-    components = AutoCompleteSelectMultipleField('components', required=True,
+    resources = AutoCompleteSelectMultipleField('resources', required=True,
         help_text=_('Search for a component'))
 
     class Meta:

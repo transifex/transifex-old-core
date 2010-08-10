@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from models import POFileLock
+from models import Lock
 
-admin.site.register(POFileLock)
+admin.site.register(Lock)

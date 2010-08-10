@@ -780,8 +780,17 @@ span.note {
 .buttonized:hover,
 .buttonized_simple,
 .buttonized_simple:hover,
+.buttonized_disabled,
+.buttonized_disabled:hover,
 .microform input[type="submit"] {
   cursor: pointer;
+}
+
+.buttonized,
+.buttonized_disabled,
+.microform input[type="submit"],
+.microform input[type="file"] {
+  font-size: 0.85em;
 }
 
 .buttonized,
@@ -789,14 +798,24 @@ span.note {
   border: 1px solid #ccc !important;
   background-color: #f5f5f5;
   -moz-border-radius: 3px;
-  padding: 0.2em 0.6em;
   color: #333;
 }
 
+.buttonized_disabled {
+  border: 1px solid #ccc !important;
+  background-color: #f5f5f5;
+  -moz-border-radius: 3px;
+  color: #AAAAAA;
+}
+
 .buttonized,
-.microform input[type="submit"],
-.microform input[type="file"] {
-  font-size: 0.85em;
+.buttonized_disabled {
+  padding: 0.4em 0.7em;
+  -moz-box-shadow:1px 1px 2px #ddd;
+}
+
+.microform input[type="submit"] {
+  padding: 0.2em 0.6em;
 }
 
 .buttonized.active { background-color: #ddd; }
@@ -810,14 +829,46 @@ span.note {
   cursor: pointer;
 }
 
-.buttonized:hover {
+.buttonized:hover,
+.buttonized_disabled:hover {
   background-color: #fafafa;
   border: 1px solid #ccc;
+  -moz-box-shadow:1px 1px 2px #bbb;
 }
 
 .results_on_deck {
   margin: 0px;
   padding: 0px;
+}
+
+/* Buttonized2 (bigger font-size buttons) */
+/* This is a version for anchor tags */
+a.buttonized2,
+a.buttonized2_disabled {
+  background-position:3% 50%;
+  font-size:16px;
+  background-color:#F5F5F5;
+  border:1px solid #CCCCCC !important;
+  padding-bottom:0.2em;
+  padding-top:0.2em;
+  padding-right:0.8em;
+  padding-left:1.6em; /* The class is intended to be used with i16 icons! */
+  -moz-box-shadow:1px 1px 3px #ccc;
+}
+
+a.buttonized2:hover{
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  -moz-box-shadow:1px 1px 5px #999;
+  cursor: pointer;
+}
+
+a.buttonized2{
+  color:#555;
+}
+
+a.buttonized2_disabled {
+  color:#AAAAAA;
 }
 
 /*List*/
@@ -943,6 +994,8 @@ div.notification span {
   padding-top: 1px;
   padding-bottom: 1px;
   border: 0px;
+  color:#666666;
+  font-weight: normal;
 }
 
 div.notification table{
@@ -952,6 +1005,10 @@ div.notification td {
   padding-right: 10px !important;
   padding-left: 3px !important;
   max-width: 855px;
+  color: #777;
+  padding-bottom:10px !important;
+  font-weight:bold;  
+  font-size:90%;
 }
 
 div.notification td.unseen {
@@ -1046,4 +1103,133 @@ ul.errorlist li{
         font-size: 0.9em;
         color: #c00;
         line-height: 1.1em;
+}
+
+#new_translation_box1 {
+  text-align:center;
+  display:none;
+  padding:1.5em;
+  margin:0;
+  background-color:#EBF2F8;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+}
+
+/* actions popup */
+div.actions_popup {
+  min-width:680px;
+  margin:0;
+  padding:12px 18px 6px 18px;
+}
+
+div.actions_popup legend {
+  color:#666666;
+}
+
+div.actions_popup .first_level {
+  clear:both;
+  width:100%;
+}
+
+div.actions_popup .details_font {
+  color:#666666;
+  font-size:11px;
+}
+
+div.actions_popup .footer_action {
+  vertical-align:top;
+  margin-top:2.5em;
+  text-align:center;
+  font-size:12px;
+}
+
+div.actions_popup div.more_actions {
+  vertical-align:top;
+}
+
+div.actions_popup div.more_actions ul {
+  margin-top:0;
+  width:300px;
+  list-style:none
+}
+
+div.actions_popup div.more_actions ul.right {
+  float:right;
+}
+
+div.actions_popup div.more_actions li.top {
+  margin-top:0;
+}
+
+div.actions_popup div.last_update {
+  vertical-align:top;
+  margin-top:2.5em;
+}
+
+div.actions_popup div.last_update ul {
+  margin-top:0;
+  list-style:none;
+  color:#777
+}
+
+div.actions_popup div.last_update li.top {
+  margin-top:0;
+}
+
+div.actions_popup div.stats_details_string {
+  text-align:left;
+  padding:0.5em;
+  padding-left:0;
+}
+
+div.actions_popup div.stats_wrapper {
+  padding:2.5em 1em 2em 2.5em;
+  width:370px;
+  text-align:center;
+}
+
+div.actions_popup span.translate_button_wrapper {
+  padding:2.5em 1em 2em 1em;
+  float:right;
+  width:240px;
+  text-align:center;
+}
+
+div.actions_popup span.favourite_wrapper {
+  float:right;
+}
+
+div.actions_popup div.title_wrapper {
+  text-align:center;
+}
+
+div.actions_popup div.title_wrapper div.details_font{
+  text-align:center;
+  padding:0.5em;
+}
+
+/* resource templates */
+.locale {
+  color:#999;
+}
+
+.big_number {
+  color:#8f8f8f;
+}
+
+a.hover {
+  border-bottom: 1px solid #AAAAAA;
+  cursor:pointer !important;
+}
+
+.clickable {
+  color: #0d4c8c;
+  text-decoration: none;
+  border-bottom: 1px dotted #aaa;
+  cursor:pointer !important;
+}
+
+.clickable:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #aaa;
 }

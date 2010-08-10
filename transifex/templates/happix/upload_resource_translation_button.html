@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load txcommontags %}
+
+<div id="upload_resource_translation_button" class="generic_form"> 
+    {{ resource_translation_form.resource_translation }}
+    {% if translate_online %}
+    <a id="start_new_translation" class="i16 buttonized action">Translate Online</a>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var prefix = "{{ resource_translation_form.prefix }}-resource_translation";
+    var project_slug = "{{ resource.project.slug }}";
+    var resource_slug = "{{ resource.slug }}";
+    $("#" + prefix + "-id-uuid").change(function(){
+        var uuid = $(this).val();
+        var language = $("[name='" + prefix + "_0']").val();
+        if(uuid != ""){
+            var url_api_project = sprintf('{{ api_resource_storage }}', project_slug, resource_slug, language)
+            $("div#notification-container div").html(
+                sprintf("Adding translations for '%s', this might take a while...", '{{ language.code }}'));
+            $("div#notification-container").fadeIn("slow");
+            json_request(
+                'PUT',
+                url_api_project,
+                {'uuid':uuid},
+                function(status, retval){
+                    $("div#notification-container").fadeOut("slow");
+                    window.location = retval['redirect'];
+                }
+            );
+        }
+    });
+});
+</script>

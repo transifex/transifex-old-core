@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls.defaults import *
-from views import component_file_unlock, component_file_lock
+from views import resource_language_lock, resource_language_unlock
 
 urlpatterns = patterns('',
     url(
-        regex = '^projects/p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/unlock/(?P<filename>(.*))/$',
-        view = component_file_unlock,
-        name = 'component_file_unlock',),
+        regex = r'^projects/p/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<language_code>[-_@\w]+)/lock/$',
+        view = resource_language_lock,
+        name = 'resource_language_lock',),
     url(
-        regex = '^projects/p/(?P<project_slug>[-\w]+)/c/(?P<component_slug>[-\w]+)/lock/(?P<filename>(.*))/$',
-        view = component_file_lock,
-        name = 'component_file_lock',),
+        regex = r'^projects/p/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<language_code>[-_@\w]+)/unlock/$',
+        view = resource_language_unlock,
+        name = 'resource_language_unlock',),
 )
+

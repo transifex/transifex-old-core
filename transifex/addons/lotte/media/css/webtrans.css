@@ -1,0 +1,296 @@
+/* Edit translation files */
+
+table.trans_web_edit { width: 100%; }
+
+table.trans_web_edit textarea {
+  max-width : 550px;
+  min-width : 400px;
+  width : 95%;
+}
+
+table.trans_web_edit tr { margin: 0; padding: 0; }
+
+table.trans_web_edit th,
+table.trans_web_edit td {
+  margin: 0;
+  padding: 0;
+}
+
+table.trans_web_edit th { 
+  text-align: left !important; 
+  padding: 0.3em 0.3em;
+  font-size: 100%;
+  border-bottom: 3px solid #E3EAEE;
+  color: #444;
+  background-color: #f5f5f5;
+}
+
+
+table.trans_web_edit td.msg {
+  font-weight: normal;
+  text-align: left;
+  font-size: 85%;
+  vertical-align: top;
+  padding: 0.5em 1.5em 0.5em 0.5em;
+  padding-right: 1.5em;
+}
+
+table.trans_web_edit td.trans {
+  vertical-align: top;
+  font-size: 100%;
+}
+
+table.trans_web_edit td.notes {
+  padding: 0.2em 0.5em;
+}
+
+table.trans_web_edit p.notes {
+  font-size: 80%;
+  color: #666;
+  margin-top: 0.5em;
+}
+
+table.trans_web_edit td.trans textarea {
+  font-family: sans-serif;
+  font-size: 85%;
+  border-color: #ccc;
+}
+
+table.trans_web_edit td.trans textarea.translated{
+  /*background-color: #E6FFEA;
+  border-left : 5px solid #E6FFEA;*/
+  border-left : 2px solid #add605;
+}
+
+table.trans_web_edit td.trans textarea.fuzzy{
+  /*background-color: #FFF5E2;
+  border-left: 5px solid #FFF5E2;*/
+  border-left: 2px solid #6499F3;
+}
+
+table.trans_web_edit td.trans textarea.untranslated{
+  /*background-color: #FFEDED;
+  border-left: 5px solid #FFEDED;*/
+  border-left: 2px solid #d64a05;
+}
+
+table.stats_totals th {
+  padding-left: 0.5em;
+}
+
+th.translated,
+span.translated {
+  /*background-color: #add605;*/
+  border-left: 2px solid #add605;
+  margin: 0;
+  padding-top: 3px;
+  padding-right: 5px;
+}
+
+th.fuzzy,
+span.fuzzy {
+  /*background-color: #D69C07;*/
+  border-left: 2px solid #6499F3;
+  margin: 0;
+  padding-top: 3px;
+  padding-right: 5px;
+
+}
+
+th.untranslated,
+span.untranslated {
+  /*background-color: #d64a05;*/
+  border-left: 2px solid #d64a05;
+  margin: 0;
+  padding-top: 3px;
+  padding-right: 5px;
+}
+
+table.trans_web_edit tr.odd th,
+table.trans_web_edit tr.odd td {
+  border-top: 1px solid #eee;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eee;
+}
+
+code.ph {
+  background-color: #ddf8dd;
+  border-bottom: 1px solid #cce5cc;
+  padding: 0 0.1em;
+}
+
+fieldset legend {
+  color:#B65D0E;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+/* Pagination */
+
+form.webtrans div.pagination { 
+  margin: 0px; 
+  padding: 0px; 
+  border: 0px; 
+  text-align:center; 
+}
+
+form.webtrans div.pagination input.page { 
+  margin: 0px; 
+  padding: 0px;
+}
+
+form.webtrans div.pagination span { 
+  font-weight: bold;
+  margin: 0px; 
+  padding: 2px 3px; 
+  border: 1px solid #AAA; 
+  -moz-border-radius-bottomleft:2px;
+  -moz-border-radius-bottomright:2px;
+  -moz-border-radius-topleft:2px;
+  -moz-border-radius-topright:2px;
+}
+
+form.webtrans div.pagination ul { 
+  margin: 5px;
+  padding: 0px;
+  list-style: none; 
+}
+
+form.webtrans div.pagination li {
+  margin: 0px 5px 0px 0px;
+  padding: 0px;
+  display: inline;
+}
+form.webtrans div.pagination ul li a:hover { 
+  color: #FF5200; 
+}
+form.webtrans span.pagination_current { 
+  color: #B65D0E; 
+}
+
+ul.contexts {
+  color: #999;
+  line-height: 20px;
+  font-size: 80%;
+  margin-left: 0;
+}
+
+ul.contexts li {
+  margin-bottom: 5px;
+}
+
+
+/* FOOTPANEL */
+
+#footpanel {
+	position: fixed;
+	bottom: 0; left: auto; right:5%;
+	z-index: 9999; /*--Keeps the panel on top of all other elements--*/
+	background: #e3e2e2;
+	border: 1px solid #c3c3c3;
+	border-bottom: none;
+	width: auto;
+	margin: 0 3%;
+	text-shadow:1px 0 #FFFFFF;
+    -moz-box-shadow:0px 1px 2px #DDDDDD;
+}
+
+#footpanel ul {
+	padding: 0; margin: 0;
+	float: left;
+	width: 100%;
+	list-style: none;
+	border-top: 1px solid #fff; /*--Gives the bevel feel on the panel--*/
+	font-size: 11px;
+}
+#footpanel ul li{
+	padding: 0; margin: 0;
+	float: left;
+	position: relative;
+}
+#footpanel ul li a{
+	padding: 5px;
+	float: left;
+	height: 16px; width: auto;
+	text-decoration: none;
+	color: #333;
+	position: relative;
+	font-weight: bold;
+}
+html #footpanel ul li a:hover{	background-color: #fff; }
+html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
+	background-color: #fff;
+	height: 17px;
+	margin-top: -2px; /*--Push it up 2px to attach the active button to sub-panel--*/
+	border: 1px solid #555;
+	border-top: none;
+	z-index: 200; /*--Keeps the active link on top of the sub-panel--*/
+	position: relative;
+}
+
+
+#footpanel ul li div a { /*--Reset link style for sub-panel links--*/
+	text-indent: 0;
+	width: auto;
+	height: auto;
+	padding: 0;
+	float: none;
+	color: #00629a;
+	position: static;
+}
+#footpanel ul li div a:hover {	text-decoration: underline; } /*--Reset hover style for sub-panel links--*/
+
+#footpanel .subpanel {
+	position: absolute;
+	left: 0; bottom: 27px;
+	display: none;	/*--Hide by default--*/
+	width: 180px;
+	border: 1px solid #555;
+	background: #fff;
+	overflow: hidden;
+    -moz-box-shadow:0px 1px 2px #DDDDDD;
+}
+
+#footpanel .subpanel ul{
+	padding: 0; margin: 0;
+	background: #fff;
+	width: 100%;
+	overflow: auto;
+	padding-bottom: 2px;
+}
+#footpanel .subpanel li{
+	float: none; /*--Reset float--*/
+	display: block;
+	padding: 0; margin: 0;
+	overflow: hidden;
+	clear: both;
+	background: #fff;
+	position: static;  /*--Reset relative positioning--*/
+}
+#settingspanel .subpanel li span {
+	padding: 5px;
+	background: #fff;
+	color: #777;
+	float: left;
+}
+#settingspanel .subpanel li input {
+	float: left;
+	margin-top:5px;
+}
+#settingspanel .subpanel li a{
+	padding: 3px 0;	margin: 0;
+	line-height: 22px;
+	height: 22px;
+	background: #fff;
+	display: block;
+}
+#settingspanel .subpanel li a:hover {
+	background: #3b5998;
+	color: #fff;
+	text-decoration: none;
+}
+
+#footer_lotte {
+    margin-top:20px;
+    padding:10px;
+}

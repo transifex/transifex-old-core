@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,6 +29,7 @@ def _check_outsource_project(obj):
     elif isinstance(obj, Team):
         team = obj
         project = team.project
+    # TODO: Remove it once String Level is in place as a whole
     elif isinstance(obj, POFile):
         if obj.object.project.outsource:
             project = obj.object.project.outsource
@@ -40,7 +42,8 @@ def _check_outsource_project(obj):
 class ProjectPermission(BasePermission):
 
     label = 'project_perm'
-    checks = ('maintain', 'coordinate_team', 'submit_file',)
+    checks = ('maintain', 'coordinate_team', 'submit_file', 
+        'submit_translations')
 
     def maintain(self, project=None, component=None):
         if project:
@@ -55,26 +58,28 @@ class ProjectPermission(BasePermission):
             if self.maintain(project):
                 return True
             if language:
-                # TODO: Changed from get_object_or_404 to this, check implications!
                 team = Team.objects.get_or_none(project, language.code)
                 #Coordinator
                 if team and self.user in team.coordinators.all():
                     return True
         return False
-    coordinate_team.short_description=_('Is allowed to coordinate a team project')
+    coordinate_team.short_description = _("Is allowed to coordinate a "
+        "team project")
 
-    def submit_file(self, obj, any_team=False):
+
+    def submit_translations(self, obj, any_team=False):
         """
-        Verify that a user can submit files for a project.
+        Check whether a user can submit translations to a project.
 
-        This method can receive tree kinds of object through the parameter 'obj',
-        which can be Project, Team and POFile. Depending on the type of object,
-        different checks are done.
+        This method can receive two kinds of object through the parameter 
+        'obj', which can be Project and Team instances. Depending on the 
+        object type different checks are done.
 
-        The parameter 'any_team' can be used when it is necessary to verify that
-        a user has submit access for at least one project team. If a Project
-        object is passed and the parameter 'any_team' is False, the
-        verification of access will only return True for maintainers and writers.
+        The parameter 'any_team' can be used when a it is necessary to verify 
+        that a user has submit access for at least one project team. If a 
+        Project object is passed and the parameter 'any_team' is False, the 
+        verification of access will only return True for maintainers and 
+        writers.
         """
         project, team = None, None
         if obj:
@@ -95,21 +100,29 @@ class ProjectPermission(BasePermission):
                         self.user in team.members.all():
                         return True
                 if any_team and not team:
-                    for team in project.team_set.all():
-                        if self.user in team.coordinators.all() or \
-                            self.user in team.members.all():
-                            return True
+                    user_teams = project.team_set.filter(
+                        Q(coordinators=self.user)| 
+                        Q(members=self.user)).distinct()
+                    if user_teams:
+                        return True
         return False
-    submit_file.short_description=_('Is allowed to submit file to this project')
+    submit_translations.short_description = _("Is allowed to submit "
+        "translations to this project")
 
+    # Backward compatibility
+    # TODO: Remove it once String Level is in place as a whole
+    submit_file = submit_translations
 
     def private(self, project=None):
         """Test if a user has access to a private project."""
         if project:
             if project.private:
-                # Maintainers, writers (submitters, team coordinators, members)
-                return self.maintain(project) or self.submit_file(project,
-                     any_team=True)
+                # To avoid doing all the checks below!
+                if self.user.is_anonymous():
+                    return False
+                # Maintainers, writers (submitters, coordinators, members)
+                return self.maintain(project) or \
+                    self.submit_translations(project, any_team=True)
             else:
                 # The project is public so let them continue
                 return True

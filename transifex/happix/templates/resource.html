@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load statistics_happix %}
+{% load permissions %}
+{% load upload_manager_tags %}
+
+{% block extra_head %}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/ui.tabs.outside.css" />
+<link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+        {% if request.user.is_authenticated %}
+        $("#new_translation1").click( function (){ 
+            $("#new_translation_box1").toggle();
+        });
+
+        $("#start_new_translation").click( function() {
+            var target_lang_code = $(this).siblings('select').val();
+            if ( target_lang_code != "" ) {
+                request_url = window.location + target_lang_code;
+                window.location = request_url;
+            } else {
+                alert("Please select a target language first and then click Go.");
+            }
+        });
+        {% endif %}
+
+        $(".tablesorter_resource").tablesorter({
+            widgets: ['zebra'],
+            headers: { 
+                1: { 
+                    sorter: 'percent'
+                }, 
+            },
+            textExtraction: { // Take value inside an object for the columns
+              1: function(node) {
+                  return $(".stats_string_resource", node).text();
+              },
+              2: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
+        });
+
+	});
+</script>
+{% endblock %}
+
+{% block breadcrumb %}
+
+{{block.super}} »
+<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
+<a href="{% url project_detail project.slug %}">{{project}}</a> »
+<a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>
+{% endblock %}
+
+{% block title %}
+{{ block.super }} |
+Projects |
+{{project}}
+{{resource}}
+{% endblock %}
+
+{% block body_class %}project_list{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+
+{% block content_main %}
+  {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+
+<div class="obj_bigdetails">
+  {% if resource.project.private %}
+  <span id="private_project_banner" class="ui-corner-all">
+    {% trans "Private Project"%}
+    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
+  </span>
+  {% endif %}
+  <h2 class="name">{{ resource.name }}</h2>
+
+  {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
+    <div class="editlinks">
+      <p>
+        <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a>
+      </p>
+    </div>
+  {% endif %}
+
+<div id="vcs_details">
+  <h3>{% trans "Translation Resource details" %}</h3>
+  <table class="definition">
+    <tr>
+      <th class="i16 omega">{% trans "Source Language:" %}</th>
+      <td>
+        {{ resource.source_language }}
+      </td>
+    </tr>
+    <tr>
+      <th class="i16 bricks">{% trans "Total Strings:" %}</th>
+      <td>
+        {{ resource.total_entities }} 
+        <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<h3>{% trans "Available translations" %}</h3>
+
+<div class="list separate clear">
+<table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Language" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
+{% for language in translated_languages %}
+    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        <td>
+          {{language.name}} <span class="locale">({{ language.code }})</span>
+          {% ifequal resource.source_language language %}
+             <span style="padding-left:1em"><em>source language</em></span>
+          {% endifequal %}
+        </td>
+        <td>
+          {% with 200 as barwidth %}
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
+                <div class="stats_string_resource" >
+                    {% trans_percent resource language.code %}% 
+                </div> 
+                {% stats_bar_simple resource language.code barwidth %}
+            </div>
+          {% endwith %}
+        </td>
+        <td>
+        <span style="border:0">
+          {% last_translation_update resource language.code as last_update %}
+          {% last_committer resource language.code as last_committer %}
+          {% if last_update %}
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }}
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no translations yet" %}
+          {% endif %}
+        </span>
+        </td>
+    </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
+           /* FancyBox Using custom settings */ 
+           $.fancybox(
+               { 
+                'href': '{% url resource_actions resource.project.slug resource.slug language.code %}',
+                'hideOnContentClick': false,
+                'onComplete':function() {
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                },
+                'titleShow': true,
+                'titlePosition': 'outside',
+                'title': '{% trans "Translation Details"%}'
+           });
+        });
+    </script>
+{% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% get_permission "project_perm.submit_file" for request.user and resource.project,1 as "can_submit_translation" %}
+{% if can_submit_translation or request.user.is_superuser %}
+
+<p class="i16 tip" style="font-size:85%">
+If you cannot see your language, click the button below to translate.
+<span class="note">( You must belong to a language team of this project, to be able to translate! )</span>
+</p>
+
+<div id="new_translation_box1">
+
+{% comment %}
+    I kept this in order to remember to fix the languages in the templatetags.
+    The change should respect the below permissions!!!
+
+    <select name="translation_languages" class="language">
+        <option value="">Select Language</option>
+        {% if is_maintainer or request.user.is_superuser %}
+          {% for language in languages %}
+              <option value="{{ language.code }}">{{ language.name }}</option>
+          {% endfor %}
+        {% else %}
+          {% for team in user_teams %}
+              <option value="{{ team.language.code }}">{{ team.language.name }}</option>
+          {% endfor %}
+        {% endif %}
+    </select>
+{% endcomment %}
+
+{% upload_resource_translation_button request resource '' 'button-global' 'True' %}
+</div>
+<p style="text-align:center;padding-top:1em">
+  <a id="new_translation1" class="buttonized i16 add">{% trans "Translate Resource" %}</a>
+</p>
+{% endif %}
+
+</div>
+
+
+<h3>{% trans 'History' %}</h3>
+{% load tx_action_log %}
+{% get_log 5 as action_log for_object resource %}
+{% if not action_log %}
+<p>{% trans 'No actions recorded yet :)' %}</p>
+{% else %}
+<ul class="actionlist simple">
+{% for entry in action_log %}
+    <li class="i16 actionlog">
+    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}
+
+{% block content_footer %}
+  <div id="content_footer_center">
+    {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+    {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
+    <div class="deletelink">
+      <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete translation resource" %}</a>
+    </div>
+    {% endif %}
+  </div>
+{% endblock %}

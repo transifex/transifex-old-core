@@ -3,6 +3,7 @@
 {% load markup %}
 {% load i18n %}
 {% load truncate %}
+{% load statistics_happix %}
 {% load permissions %}
 {% load txpermissions %}
 
@@ -10,13 +11,27 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed release.project.slug release.slug %}" />
   <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
   <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-  {% include "translations/stats_table_filter_header.html" %}
-
   <script type="text/javascript">
     $(function(){
-        // Toggle to components list
-        $("#component-list-toggler").click(function () {
-            $("#component-list").slideToggle("slow");
+        // Enable tooltip
+        $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
+        // Stats table sorter
+        $(".tablesorter_release_list").tablesorter({
+            widgets: ['zebra'],
+            textExtraction: { // Take value inside an object for the columns
+              0: function(node) {
+                  return $("a", node).text();
+              },
+              1: function(node) {
+                  return $(".origin_format", node).text();
+              }
+            }
+        });
+
+        // Toggle to resources list
+        $("#resource-list-toggler").click(function () {
+            $("#resource-list").slideToggle("slow");
         });
     });
   </script>
@@ -79,16 +94,16 @@
     </tr>
     <tr class="separator"></tr>
     <tr>
-      <th class="component i16">{% trans "Components:" %}</th>
+      <th class="resource i16">{% trans "Resources:" %}</th>
       <td>
-        {% with release.components.all|dictsort:"full_name" as component_list %}
-        {% with component_list|length as components_number %}
-        <span id="component-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the component list" %}">
-        {% blocktrans %}This release has {{ components_number }} components.{% endblocktrans %}
+        {% with release.resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
+        {% with resource_list|length as resources_number %}
+        <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the component list" %}">
+        {% blocktrans %}This release has {{ resources_number }} resourses.{% endblocktrans %}
         </span>
-        <ul id="component-list" class="simple links" style="display:none;">
-          {% for comp in component_list %}
-            <li><a title="{% firstof comp.description|escape comp.name|escape %}" href="{{ comp.get_absolute_url }}">{{ comp.full_name }}</a></li>
+        <ul id="resource-list" class="simple links" style="display:none;">
+          {% for r in resource_list %}
+            <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
         {% endwith %}
@@ -102,13 +117,58 @@
 
 <h3>{% trans "Translation Statistics" %}</h3>
 
-{% include "translations/stats_table_filter_box.html" %}
+<div class="list separate clear">
+<table class="stat_table_font stats_table highlighted tablesorter_resource tablesorter_release_list" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Language" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Translation" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
+{% for language in release.available_languages %}
+    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        <td>
+          {{language.name}} <span class="locale">({{ language.code }})</span>
+          </td>
+        <td>
+          {% with 200 as barwidth %}
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated release language %}<br />{% trans "Untranslated: " %}{% untranslated release language %}">
+                <div class="stats_string_resource" >
+                    {% trans_percent release language %}% 
+                </div> 
+                {% stats_bar_simple release language barwidth %}
+            </div>
+          {% endwith %}
+        </td>
+        <td>
+        <span style="border:0">
+          {% last_translation_update release language as last_update %}
+          {% last_committer release language as last_committer %}
+          {% if last_update %}
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }}
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no translations yet" %}
+          {% endif %}
+        </span>
+        </td>
+    </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
+            window.location = '{% url release_language_detail release.project.slug release.slug language.code %}';
+        });
+    </script>
+{% endfor %}
+  </tbody>
+</table>
+</div>
 
-{% release_stats_table release %}
 
-{% if not pofile_list %}
-<p>{% trans "No translations added for this release. :-(" %}</p>
-{% endif %}
 
 </div>
 </div>

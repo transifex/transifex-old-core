@@ -4,6 +4,7 @@ from datetime import datetime
 import markdown
 
 from django.conf import settings
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from django.db import models, IntegrityError
 from django.db.models import permalink
@@ -20,49 +21,21 @@ import tagging
 from tagging.fields import TagField
 
 from codebases.models import Unit
+from languages.models import Language
 from vcs.models import VcsUnit
 from tarball.models import Tarball
 from translations.models import POFile
 from txcommon.log import logger, log_model
-from txcommon.notifications import is_watched_by_user_signal
+from txcommon.utils import cached_property
 from projects.handlers import get_trans_handler
 from projects import signals
 
-def cached_property(func):
-    """
-    Cached property.
-
-    This function is able to verify that an instance of a property field
-    was already created before and, if not, it creates the new one.
-    When needed it also is able to delete the cached property field from
-    the memory.
-
-    Usage:
-    @cached_property
-    def trans(self):
-        ...
-
-    del(self.trans)
-
-    """
-    def _set_cache(self):
-        cache_attr = "__%s" % func.__name__
-        try:
-            return getattr(self, cache_attr)
-        except AttributeError:
-            value = func(self)
-            setattr(self, cache_attr, value)
-            return value
-
-    def _del_cache(self):
-        cache_attr = "__%s" % func.__name__
-        try:
-            delattr(self, cache_attr)
-        except AttributeError:
-            pass
-
-    return property(_set_cache, fdel=_del_cache)
-
+# keys used in cache
+# We put it here to have them all in one place for the specific models!
+PROJECTS_CACHE_KEYS = {
+    "word_count": "wcount.%s",
+    "source_strings_count": "sscount.%s"
+}
 
 class DefaultProjectManager(models.Manager):
     """
@@ -222,14 +195,134 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('project_detail', None, { 'project_slug': self.slug })
 
-    def is_watched_by(self, user, signal=None):
-        return is_watched_by_user_signal(self, user, signal)
-
     @property
     def blacklist_vcsunits(self):
         """Return all the vcsunits that arent allowed to be used."""
         return VcsUnit.objects.exclude(
             component__id__in=self.component_set.all().values('id'))
+
+    @property
+    def source_strings(self):
+        """
+        Return the list of all the strings, belonging to the Source Language
+        of the Project/Resource.
+        
+        CAUTION! 
+        1. This function returns Translation and not SourceEntity objects!
+        2. The strings may be in different source languages!!!
+        3. The source strings are not grouped based on the string value.
+        """
+        resources = self.resource_set.all()
+        source_strings = []
+        for resource in resources:
+            source_strings.extend(resource.source_strings)
+        return 
+
+    #TODO: Invalidation for cached value
+    @property
+    def total_entities(self):
+        """Return the total number of source entities to be translated."""
+        cache_key = (PROJECTS_CACHE_KEYS['source_strings_count'] % (self.project.slug,))
+        sc = cache.get(cache_key)
+        if not sc:
+            # I put it here due to circular dependency on modules
+            from happix.models import SourceEntity
+            sc = SourceEntity.objects.filter(
+                resource__in=self.resource_set.all()).count()
+            cache.set(cache_key, sc)
+        return sc
+
+    # TODO: Invalidation for cached value
+    @property
+    def wordcount(self):
+        """
+        Return the number of words which need translation in this project.
+        
+        The counting of the words uses the Translation objects of the source
+        languages as set of objects.
+        CAUTION: 
+        1. The strings may be in different source languages!!!
+        2. The source strings are not grouped based on the string value.
+        """
+        cache_key = (PROJECTS_CACHE_KEYS['word_count'] % self.project.slug)
+        wc = cache.get(cache_key)
+        if not wc:
+            wc = 0
+            resources = self.resource_set.all()
+            for resource in resources:
+                wc += resource.wordcount
+            cache.set(cache_key, wc)
+        return wc
+
+    @property
+    def available_languages(self):
+        """
+        Return the languages with at least one Translation of a SourceEntity for
+        all Resources in the specific project instance.
+        """
+        # I put it here due to circular dependency on module
+        from happix.models import Translation
+        resources = self.resource_set.all()
+        languages = Translation.objects.filter(
+            resource__in=resources).values_list(
+            'language', flat=True).distinct()
+        # The distinct() below is not important ... I put it just to be sure.
+        return Language.objects.filter(id__in=languages).distinct()
+
+    def translated_strings(self, language):
+        """
+        Return the QuerySet of source entities, translated in this language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceEntity.objects.filter(resource__in=self.resource_set.all(),
+            id__in=Translation.objects.filter(language=target_language,
+                resource__in=self.resource_set.all(), rule=5).values_list(
+                    'source_entity', flat=True))
+
+    def untranslated_strings(self, language):
+        """
+        Return the QuerySet of source entities which are not yet translated in
+        the specific language.
+        
+        This assumes that we DO NOT SAVE empty strings for untranslated entities!
+        """
+        # I put it here due to circular dependency on modules
+        from happix.models import SourceEntity, Translation
+        target_language = Language.objects.by_code_or_alias(language)
+        return SourceEntity.objects.filter(
+            resource__in=self.resource_set.all()).exclude(
+            id__in=Translation.objects.filter(language=target_language,
+                resource__in=self.resource_set.all(), rule=5).values_list(
+                    'source_entity', flat=True))
+
+    def num_translated(self, language):
+        """
+        Return the number of translated strings in all Resources of the project.
+        """
+        return self.translated_strings(language).count()
+
+    def num_untranslated(self, language):
+        """
+        Return the number of untranslated strings in all Resources of the project.
+        """
+        return self.untranslated_strings(language).count()
+
+    def trans_percent(self, language):
+        """Return the percent of untranslated strings in this Resource."""
+        t = self.num_translated(language)
+        try:
+            return (t * 100 / self.total_entities)
+        except ZeroDivisionError:
+            return 100
+
+    def untrans_percent(self, language):
+        """Return the percent of untranslated strings in this Resource."""
+        translated_percent = self.trans_percent(language)
+        return (100 - translated_percent)
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
@@ -519,99 +612,3 @@ class Component(models.Model):
             pass
 
 log_model(Component)
-
-
-class Release(models.Model):
-
-    """
-    A release of a project, as in 'a set of specific components'.
-    
-    Represents the packaging and releasing of a software project (big or
-    small) on a particular date, for which makes sense to track
-    translations across the whole release.
-    
-    Examples of Releases is Transifex 1.0, GNOME 2.26, Fedora 10 etc.
-    """
-
-    slug = models.SlugField(_('Slug'), max_length=30,
-        help_text=_('A short label to be used in the URL, containing only '
-                    'letters, numbers, underscores or hyphens.'))
-    name = models.CharField(_('Name'), max_length=50,
-        help_text=_('A string like a name or very short description.'))
-    description = models.CharField(_('Description'),
-        blank=True, max_length=255,
-        help_text=_('A sentence or two describing the object.'))
-    long_description = models.TextField(_('Long description'),
-        blank=True, max_length=1000,
-        help_text=_('Use Markdown syntax.'))
-    homepage = models.URLField(blank=True, verify_exists=False)
-
-    release_date = models.DateTimeField(_('Release date'),
-        blank=True, null=True,
-        help_text=_('When this release will be available.'))
-    stringfreeze_date = models.DateTimeField(_('String freeze date'),
-        blank=True, null=True,
-        help_text=_("When the translatable strings will be frozen (no strings "
-                    "can be added/modified which affect translations."))
-    develfreeze_date = models.DateTimeField(_('Devel freeze date'),
-        blank=True, null=True,
-        help_text=_("The last date packages from this release can be built "
-                    "from the developers. Translations sent after this date "
-                    "will not be included in the released version."))
-    
-    created = models.DateTimeField(auto_now_add=True, editable=False)
-    modified = models.DateTimeField(auto_now=True, editable=False)
-    
-    # Normalized fields
-    long_description_html = models.TextField(_('HTML Description'),
-        blank=True, max_length=1000,
-         help_text=_('Description in HTML.'), editable=False)
-
-    # Relations
-    project = models.ForeignKey(Project, verbose_name=_('Project'), related_name='releases')
-    components = models.ManyToManyField(Component,
-        verbose_name=_('Components'), related_name='releases',
-        blank=True, null=True)
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return _('<Release: %(rel)s (Project %(proj)s)>') % {
-            'rel': self.name,
-            'proj': self.project.name}
-    
-    @property
-    def full_name(self):
-        return "%s (%s)" % (self.name, self.project.name)
-
-    @property
-    def pofiles(self):
-        return POFile.objects.by_release_total(self)
-
-    @property
-    def pofiles_for_language(self, language):
-        return POFile.objects.by_release_and_language_total(self, language)
-
-    class Meta:
-        unique_together = ("slug", "project")
-        verbose_name = _('release')
-        verbose_name_plural = _('releases')
-        ordering  = ('name',)
-        get_latest_by = 'created'
-
-    def save(self, *args, **kwargs):
-        import markdown
-        from cgi import escape
-        desc_escaped = escape(self.long_description)
-        self.long_description_html = markdown.markdown(desc_escaped)
-        created = self.created
-        super(Release, self).save(*args, **kwargs)
-
-    @permalink
-    def get_absolute_url(self):
-        return ('release_detail', None,
-                { 'project_slug': self.project.slug,
-                 'release_slug': self.slug })
-
-log_model(Release)

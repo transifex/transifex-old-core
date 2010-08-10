@@ -11,60 +11,51 @@ from txcommon.log import logger
 from projects.permissions.project import ProjectPermission
 from translations.models import POFile
 
-class POFileLockError(AddonError):
+class LockError(AddonError):
     pass
 
-class POFileLockManager(models.Manager):
-    def get_for_object(self, obj):
-        """Create a queryset matching all objects associated with the obj."""
-        ctype = ContentType.objects.get_for_model(obj)
-        return self.filter(content_type__pk=ctype.pk,
-                           object_id=obj.pk)
-
+class LockManager(models.Manager):
     def expiring(self):
-        """
-        Returns list of locks that are about to expire
-        """
+        """Return list of locks that are about to expire."""
         return self.filter(
             notified = False,
             expires__lt = datetime.now() +
             timedelta(seconds=settings.LOCKS_EXPIRE_NOTIF))
 
     def expired(self):
-        """
-        Returns list of expired locks
-        """
+        """Return list of expired locks."""
         return self.filter(
             expires__lt = datetime.now() )
 
     def valid(self):
-        """
-        Returns list of valid locks
-        """
+        """Return list of valid locks."""
         return self.filter(expires__gt = datetime.now() )
 
-    def get_valid(self, pofile):
+    def get_valid(self, resource, language):
         """
-        Returns valid (not expired) lock if one exists for 'pofile'
+        Return valid (not expired) lock for the given resource and language.
         """
         try:
-            return self.valid().get(pofile=pofile)
-        except POFileLock.DoesNotExist:
+            return self.valid().get(resource=resource, language=language)
+        except Lock.DoesNotExist:
             return None
 
-    def create_update(self, pofile, user):
+    def create_update(self, resource, language, user):
         """
-        Creates new or updates existing lock object for 'pofile'
-        * Checks whether 'user' has permissions to lock 'pofile'
-        * Checks whether 'user' has reached max number of locks
-        * Checks whether 'pofile' is already locked by someone else
+        Create new or update existing lock object for the given resource and 
+        language
+
+        * Checks whether 'user' has permissions to create the lock.
+        * Checks whether 'user' has reached max number of locks.
+        * Checks whether the given resource and language was already locked 
+          by someone else.
         """
 
         # Permission check
-        if not POFileLock.can_lock(pofile, user):
-            raise POFileLockError(_("User '%(user)s' does not have "
-               "permission to submit files for '%(pofile)s'.") %
-               {"user" : user, "pofile" : pofile})
+        if not Lock.can_lock(resource, language, user):
+            raise LockError(_("User '%(user)s' has no permission to submit "
+               "translations for '%(resourse)s' to '%(language)s'.") % {
+               "user" : user, "resource" : resource, "language": language})
 
         now = datetime.now()
 
@@ -74,34 +65,35 @@ class POFileLockManager(models.Manager):
                 owner = user,
                 expires__gt = now)
             if len(locks) >= settings.LOCKS_PER_USER:
-                raise POFileLockError(_("User '%(user)s' already has maximum "
+                raise LockError(_("User '%(user)s' already has maximum "
                 "allowed %(locks)i locks.") % {"user" : user,
                 "locks" : settings.LOCKS_PER_USER})
 
         expires = now + timedelta(seconds=settings.LOCKS_LIFETIME)
         try:
-            lock = self.get(pofile = pofile)
+            lock = self.get(resource=resource, language=language)
             # The lock is not expired and user is not the owner
             if lock.expires and lock.expires > now and lock.owner != user:
-                raise POFileLockError("This file is already locked "
-                    "by '%s'" % lock.owner)
+                raise LockError(_("This resource language is already locked "
+                    "by '%s'") % lock.owner)
             else:
                 # Overwrite old owner
                 lock.owner = user
             # Update expiration date
             lock.expires = expires
-        except POFileLock.DoesNotExist:
-            # Object didn't exist, create new one
-            lock = self.create(pofile=pofile, owner=user, expires=expires)
+        except Lock.DoesNotExist:
+            # Lock didn't exist, create one
+            lock = self.create(resource=resource, language=language, 
+                owner=user, expires=expires)
         # Set notified flag to False meaning that expiration notification
         # has not been sent about this lock yet
         lock.notified = False
         lock.save()
         return lock
 
-class POFileLock(models.Model):
+class Lock(models.Model):
     """
-     A lock/hold on a POFile object.
+    A lock/hold on a POFile object.
 
     This usually denotes something that someone is working on and shouldn't
     be touched by others.
@@ -112,50 +104,60 @@ class POFileLock(models.Model):
     notified = models.BooleanField(default=False, help_text="Whether "
         "the owner was notified that the lock expired")
     expires = models.DateTimeField(help_text="Time the lock expired.")
+
+    # ForeignKeys
     owner = models.ForeignKey(User)
-    pofile = models.ForeignKey(POFile, related_name='locks', null=True)
+    resource = models.ForeignKey('happix.Resource', null=False, blank=False, 
+        related_name='locks')
+    language = models.ForeignKey('languages.Language', null=False, blank=False, 
+        related_name='locks')
 
     # Managers
-    objects = POFileLockManager()
+    objects = LockManager()
 
     def __unicode__(self):
-        return u"%(pofile)s (%(owner)s)" % {
-            'owner': self.owner,
-            'pofile': self.pofile,}
+        return u"%(resource)s (%(language)s:%(owner)s)" % {
+            'resource': self.resource.full_name,
+            'language': self.language.code,
+            'owner': self.owner}
+
+    def __repr__(self):
+        return u"<Lock: %(resource)s (%(language)s:%(owner)s)>" % {
+            'resource': self.resource.full_name,
+            'language': self.language.code,
+            'owner': self.owner}
 
     class Meta:
-        db_table = 'addons_locks_pofile_lock'
-        unique_together = ('pofile', 'owner')
+        db_table = 'addons_locks_lock'
+        unique_together = ('resource','language',)
         ordering  = ('-created',)
         get_latest_by = 'created'
 
     def can_unlock(self, user):
         """
-        This function can be used to perform permission check whether
-        'user' can unlock this POFileLock instance
+        Perform permission check whether 'user' can unlock the Lock instance.
         """
         perm = ProjectPermission(user)
-        allowed = (self.owner == user) or perm.coordinate_team( \
-           project=self.pofile.object.project, language=self.pofile.language)
-        return allowed
+        return (self.owner == user) or perm.coordinate_team(
+            project=self.resource.project, language=self.language)
 
     @staticmethod
-    def can_lock(pofile, user):
+    def can_lock(resource, language, user):
         """
-        This function can be used to perform permission check whether
-        'user' can lock 'pofile'. NB! It does not perform lock count check!
+        Perform permission check whether 'user' can create a Lock.
+
+        CAUTION: It does not perform lock counting check!
         """
         perm = ProjectPermission(user)
-        allowed = perm.submit_file(pofile) or perm.coordinate_team( \
-            project=pofile.object.project, language=pofile.language)
-        return allowed
+        return perm.submit_translations(resource.project, language) or \
+            perm.coordinate_team(project=resource.project, 
+            language=language)
 
     def delete_by_user(self, user, *args, **kwargs):
         """
-        If 'user' can remove the lock, deletes the instance of POFileLock
+        Delete the instance of Lock whether the 'user' has permisson to do so.
         """
         if not self.can_unlock(user):
-            raise POFileLockError(_("User '%(user)s' is not allowed "
-            "to remove lock '%(lock)s'") % { "user" : user,
-            "lock" : self})
-        return super(POFileLock, self).delete(*args, **kwargs)
+            raise LockError(_("User '%(user)s' is not allowed to remove "
+                "lock '%(lock)s'") % { "user" : user, "lock" : self})
+        return super(Lock, self).delete(*args, **kwargs)

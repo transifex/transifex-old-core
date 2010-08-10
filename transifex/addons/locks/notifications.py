@@ -11,10 +11,11 @@ from txcommon.notifications import NOTICE_TYPES
 
 NOTICE_TYPES += [
             {
-                "label": "project_component_file_lock_expiring",
+                "label": "project_resource_language_lock_expiring",
                 "display": _("Lock is expiring"),
-                "description": _("when a lock for file is expiring"),
-                "default": 1,
+                "description": _("when a lock for translation resource is "
+                    "expiring"), 
+                "default": 0,
                 "show_to_user": True,
             },
 ]

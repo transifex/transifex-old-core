@@ -4,9 +4,9 @@
 {% load addons %}
 {% load txcommontags %}
 {% load statistics %}
-{% load watches %}
+{% load watches_tags %}
 {% load permissions %}
-
+{% load upload_manager_tags %}
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -91,6 +91,13 @@
     {% endif %}
     {% endwith %}
 
+    <tr>
+      <th class="i16 sitemap_color" title="only for resources">{% blocktrans %}Number of Languages: {% endblocktrans %}</th>
+      <td>
+        {{ project.available_languages|length }}
+      </td>
+    </tr>
+
 {% comment %}
     <tr>
       <th class="i16 link">{% trans "External links:" %}</th>
@@ -105,8 +112,8 @@
 
   {% hook "project.html" overview_top %}
 
-{% include "projects/component_list.html" %}
 
+{% include "projects/resource_list.html" %}
 {% include "projects/release_list.html" %}
 
 </div>

@@ -1,0 +1,109 @@
+{% load i18n %}
+{% load statistics %}
+{% load permissions %}
+{% load locks_tags %}
+{% load txcommontags %}
+
+{% url resource_language_lock resource.project.slug resource.slug language.code as url_lock %}
+{% url resource_language_unlock resource.project.slug resource.slug language.code as url_unlock %}
+
+{% with lock.owner as owner %}
+
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+
+{% if is_locked %}
+    <li id="locked-{{ lock_html_id }}" class="top lock i16 lock_open image_submit_type">
+    <span id="locked-message-{{ lock_html_id }}" class="{% if is_unlockable %}clickable{% endif %}">
+    {% if is_owner %}
+        {% blocktrans %}This translation has been locked by you.{% endblocktrans %}
+    {% else %}
+        {% blocktrans %}This translation has been locked by user '{{ owner }}'.{% endblocktrans %}
+    {% endif %}
+    </span>
+
+    {% tooltip "locked-message" lock_html_id %}
+        <span class="i16 actionlog">{% blocktrans %}Time left:{% endblocktrans %}</span> {{lock.expires|timeuntil}}.
+        {% if is_unlockable %}
+            <br />
+            <span class="bold">{% blocktrans %}Click on it to unlock.{% endblocktrans %}</span>
+        {% endif %}
+    {% endtooltip %}
+
+    {% if is_owner %}
+        <ul>
+         <li id="locked-extend-{{ lock_html_id }}" class="i16 lock_add image_submit_type">
+          <span id="locked-extend-message-{{ lock_html_id }}" class="clickable">
+            {% blocktrans count locks_lifetime as hours %}
+                Extend lock by {{hours}} hour.
+            {% plural %}
+                Extend lock by {{hours}} hours.
+            {% endblocktrans %}
+          </span>
+         </li>
+        </ul>
+        {% tooltip "locked-extend-message" lock_html_id %}
+            <span class="bold">{% blocktrans %}Click on it to extend your lock expiration.{% endblocktrans %}</span>
+        {% endtooltip %}
+    {% endif %}
+    </li>
+{% else %}
+    {% if can_lock %}
+        <li id="unlocked-lockable-{{ lock_html_id }}" class="top i16 lock_none image_submit_type">
+            <span class="clickable">{% trans "Lock this translation to notify others you're working with it." %}</span>
+        </li>
+    {% else %}
+        <li id="unlocked-nonlockable-{{ lock_html_id }}" class="i16 lock_none clickable top">
+            <span class="clickable">{% blocktrans %}This translation is unlocked. Most likely no one is working with it right now.{% endblocktrans %}</span>
+        </li>
+    {% endif %}
+{% endif %}
+
+{% endwith %}
+
+<script type="text/javascript">
+
+    $("#unlocked-lockable-{{ lock_html_id }}").click(function(){
+        $.ajax({
+            url : '{{ url_lock }}',
+            contentType : 'application/json',
+            type : 'POST',
+            beforeSend: function(){
+            $("div#notification-container div").html('{% trans "Creating lock..." %}');
+            $("div#notification-container").fadeIn("fast");
+            },
+            complete : function(xmlhttpreq, textStatus) {
+                if (textStatus=='success'){
+                    response = xmlhttpreq['responseText'];
+                    $("div#notification-container div").html(response['message']);
+                }
+                $("div#notification-container").fadeOut("fast");
+                window.location= '{{ next }}';
+            }
+        });
+    });
+
+    {% if is_unlockable %}
+
+    $("#locked-{{ lock_html_id }}").click(function(){
+        $.ajax({
+            url : '{{ url_unlock }}',
+            contentType : 'application/json',
+            type : 'POST',
+            beforeSend: function(){
+            $("div#notification-container div").html('{% trans "Removing lock..." %}');
+            $("div#notification-container").fadeIn("fast");
+            },
+            complete : function(xmlhttpreq, textStatus) {
+                if (textStatus=='success'){
+                    response = xmlhttpreq['responseText'];
+                    $("div#notification-container div").html(response['message']);
+                }
+                $("div#notification-container").fadeOut("fast");
+                window.location= '{{ next }}';
+            }
+        });
+    });
+
+    {% endif %}
+
+</script>

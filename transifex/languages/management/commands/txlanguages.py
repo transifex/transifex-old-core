@@ -3,10 +3,12 @@
 File containing the necessary mechanics for the txlanguages management command.
 """
 from optparse import make_option, OptionParser
+import os.path
 import sys
 import simplejson
 from django.core import serializers
 from django.core.management.base import (BaseCommand, LabelCommand, CommandError)
+from django.conf import settings
 from languages.models import Language
 
 _DEFAULT_FIXTURE = 'languages/fixtures/sample_languages.json'
@@ -94,7 +96,10 @@ def import_lang(filename=None, verbose=False):
     """
 
     if not filename:
-        filename=_DEFAULT_FIXTURE
+        filename = os.path.abspath(os.path.join(settings.TX_ROOT,
+                                                _DEFAULT_FIXTURE))
+        if not os.path.exists(filename):
+            raise CommandError("Could not find fixture %s." % filename)
 
     try:
         datafile = open(filename, 'r')
@@ -139,10 +144,16 @@ def fill_language_data(lang, fields):
     """
     lang.code_aliases = fields['code_aliases']
     lang.name = fields['name']
+    lang.description = fields['description']
     lang.specialchars = fields['specialchars']
     lang.nplurals = fields['nplurals']
     lang.pluralequation = fields['pluralequation']
-    lang.description = fields['description']
+    lang.rule_zero = fields['rule_zero']
+    lang.rule_one = fields['rule_one']
+    lang.rule_two = fields['rule_two']
+    lang.rule_few = fields['rule_few']
+    lang.rule_many = fields['rule_many']
+    lang.rule_other = fields['rule_other']
     lang.save()
 
 def get_filename(args):

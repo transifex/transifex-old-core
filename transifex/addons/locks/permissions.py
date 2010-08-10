@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-pr_component_lock_file = (
+pr_resource_language_lock = (
     ('granular', 'project_perm.maintain'),
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'translations.add_pofilelock'),
-    ('general',  'translations.delete_pofilelock'),
+    ('granular', 'project_perm.submit_translations'),
+    ('general',  'locks.add_lock'),
+    ('general',  'locks.delete_lock'),
 )

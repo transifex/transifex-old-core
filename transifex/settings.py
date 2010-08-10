@@ -1,9 +1,14 @@
 import os.path
 import glob
 
-conffiles = glob.glob(os.path.join(os.path.dirname(__file__), 'settings',
-    '*.conf'))
 
+try:
+    TX_ROOT
+except NameError:
+    TX_ROOT = os.path.dirname(__file__)
+
+conf_files_path = os.path.join(TX_ROOT, 'settings', '*.conf')
+conffiles = glob.glob(conf_files_path)
 conffiles.sort()
 
 for f in conffiles:

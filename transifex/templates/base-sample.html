@@ -13,6 +13,8 @@
   <link media="screen" href="{{ STATIC_URL }}css/icons.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}userprofile/css/django-profile.css" type="text/css" rel="stylesheet"  />
   <link media="screen" href="{{ STATIC_URL }}userprofile/css/tx.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}css/jquery.tipsy.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{{ STATIC_URL }}css/jquery.fancybox-1.3.0.css" type="text/css" rel="stylesheet" />
   {% endblock %}
   {% block basejs %}
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.3.2.min.js"></script>
@@ -20,6 +22,11 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}js/ajaxupload.js"></script> 
+  <script type="text/javascript" src="{{ STATIC_URL }}js/sprintf.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tx.core.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.fancybox-1.3.0.pack.js"></script>
   {% endblock %}
   {% block shortcut_icon %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
@@ -31,6 +38,12 @@
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 <div id="wrapper">
+  <div id="notification-container" style="width:20em; left:50%; margin-left:-10em; border: 1px solid red; position: fixed; z-index: 10000; display:none;
+      border-width: 2px; border-style: none solid solid; border-color: #f00; -moz-border-radius: 0px 0px 1em 1em; background-color: #fff8f8; padding:0.5em;">
+    <div class="i16 waiting" onClick="$('#notifier').slideUp()">
+    Loading languages...
+    </div>
+  </div>
   <div id="header">
     <div id="logo">
       <a class="simlink" href="{% url transifex.home %}" title="{% trans "Go to the start page" %}">
@@ -116,7 +129,7 @@
 
   <div id="footer">{% block footer %}
     <p class="main-footer center">
-      {% block footerlinks %}{% trans "About" %} | <a href="{% url contact_form %}" title="{% trans "Drops us a line" %}">{% trans "Feedback" %}</a>{% endblock %}
+      {% block footerlinks %}<a href="http://trac.transifex.org/wiki/About" title="{% trans "Learn more about Transifex" %}">{% trans "About" %}</a> | <a href="{% url contact_form %}" title="{% trans "Drops us a line" %}">{% trans "Feedback" %}</a>{% endblock %}
     </p>
     {% block powered %}<p class="powered">{% blocktrans %}Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform{% endblocktrans %}</p>{% endblock %}
     {% block txversionblock %}<p class="version">v{% txversion_full %} </p>{% endblock %}

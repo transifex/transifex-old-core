@@ -27,6 +27,53 @@ function tooltip(targetnode, message){
     })
 }
 
+/** 
+  * This function escapes the html elements found in a html string!
+  */
+function html_escape(html)
+{
+  var escaped = html;
+  escaped = escaped.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  return(escaped);
+}
+
+/**
+  * The typeOf function above will only recognize arrays that 
+  * are created in the same context (or window or frame).
+  */
+function typeOf(value) {
+    var s = typeof value;
+    if (s === 'object') {
+        if (value) {
+            if (value instanceof Array) {
+                s = 'array';
+            }
+        } else {
+            s = 'null';
+        }
+    }
+    return s;
+}
+
+/**
+  *@desc browse an array and escape all of his field
+  *@return array escaped array
+  */
+function  array_escape(tab)
+{
+  var key;
+  for (key in tab)
+  {
+      if(typeOf(tab[key]) == 'array'){
+          array_escape(tab[key]);
+      }else if(typeOf(tab[key]) == 'string'){
+          tab[key] = html_escape(tab[key]);
+      }
+  }
+  return(tab); 
+}
+
 
 $(document).ready(function(){
     

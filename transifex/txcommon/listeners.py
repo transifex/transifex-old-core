@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group, SiteProfileNotAvailable
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
+from txcommon.log import logger
 
 if not settings.AUTH_PROFILE_MODULE:
     raise SiteProfileNotAvailable
@@ -23,7 +24,12 @@ def add_user_to_registered_group(sender, **kwargs):
     if 'created' in kwargs and kwargs['created'] is True: 
         user = kwargs['instance']
         # Create Public Profile
-        profile, created = Profile.objects.get_or_create(user=user)
+        try:
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.save()
+        except:
+            logger.debug("User profile not created.")
+
         # Add user to registered group
         group, created = Group.objects.get_or_create(name='registered')
         user.groups.add(group)

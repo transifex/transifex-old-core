@@ -1,0 +1,131 @@
+{% load i18n %}
+{% load statistics_happix %}
+{% load truncate %}
+{% load permissions %}
+{% load team_tags %}
+{% load locks_tags %}
+{% load upload_manager_tags %}
+{% load watches_tags %}
+
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+<div class="actions_popup">
+  <div class="first_level title_wrapper">
+    <span class="breadcrumb" >
+      <a href="{% url project_detail project.slug %}">{{project.name|truncate_chars_middle:"40"}}</a> »
+      <a href="{% url resource_detail project.slug resource.slug %}">{{resource.name|truncate_chars_middle:"40"}}</a> »
+      {{ target_language }}
+    </span>
+    <span class="favourite_wrapper">
+      {% watch_toggle resource target_language %}
+    </span>
+    <div class="details_font">
+        {% blocktrans with resource.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}
+        {% blocktrans with resource.wordcount as wordcount %} {{ wordcount }} words{% endblocktrans %}
+    </div>
+  </div>
+  <div class="first_level">
+    <span class="translate_button_wrapper">
+    {% if team %}
+      {% comment %} This permission is provided only if team is available{% endcomment %}
+      {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
+    {% else %}
+      {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate Now" {% endcomment %}
+      {% get_permission "project_perm.submit_file" for request.user and project as "can_submit_translation" %}
+    {% endif %}
+
+      {% ifequal resource.source_language target_language %}
+        {% blocktrans %} 
+        <span class="tipsy_enable" style="color:#666" title="You cannot translate the source language strings."> This is the Source Language! </span>
+        {% endblocktrans %}
+      {% else %}
+        {% if can_submit_translation or request.user.is_superuser %}
+          <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
+        {% else %}
+          <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+          title="{% if request.user.is_anonymous %}<b>Register</b>, {% endif %} {% if team %} <b>Join</b> the {{ team.name }}{% else %} <b>Request</b> the creation of {{ target_language.name }} team <br />and <b>Join</b> the{% endif %} team to be able to translate this.">{% trans "Translate Now" %}</a>
+        {% endif %}
+    {% endifequal %}
+
+    </span>
+    <div class="stats_wrapper">
+      {% with 300 as barwidth %}
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{% translated resource target_language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource target_language.code %}">
+          <div class="stats_string_resource_actions" >
+              {% trans_percent resource target_language.code %}% 
+          </div> 
+          {% stats_bar_actions resource target_language.code barwidth %}
+      </div>
+      {% endwith %}
+      <div class="details_font stats_details_string">
+      {% untranslated resource target_language.code %} {% trans "remaining strings" %}
+      </div>
+    </div>
+  </div>
+  <div class="first_level more_actions">
+        <ul class="right">
+          <li class="top">
+            <span id="view_strings" class="i16 find">
+            <a href="{% url view_strings resource.project.slug resource.slug target_language.code %}">{% trans "View strings online" %}</a>
+            </span>
+          </li>
+          {% if team %}
+          <li>
+            <span class="i16 team"><a href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a></span>
+          </li>
+          {% endif %}
+          {% ifnotequal resource.source_language target_language %}
+          <li>
+            <span class="i16 clone disabled">{% trans "Clone to new language" %}</span>
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+          </li>
+          {% endifnotequal %}
+        </ul>
+        <ul>
+          <li class="top">
+            <span class="i16 get_file">
+            <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
+			</span>
+          </li>
+          {% ifnotequal resource.source_language target_language %}
+          <li>
+            <span class="i16 lock disabled">{% trans "Download for translation" %}</span> 
+            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+          </li>
+          <li>
+            {% if can_submit_translation %}
+                {% upload_resource_translation_button request resource target_language %}
+            {% endif %}
+          </li>
+          {% endifnotequal %}
+        </ul>
+  </div>
+  <div class="first_level last_update">
+        <ul>
+          {% ifnotequal resource.source_language target_language %}
+            {% lock_resource_action resource target_language %}
+          {% endifnotequal %}
+          <li>
+            <span class="i16 clock">
+              {% last_translation_update resource target_language.code as last_update %}
+              {% last_committer resource target_language.code as last_committer %}
+              {% if last_update %}
+                {% blocktrans %}Translation last updated {% endblocktrans %}
+                {% if last_committer %}
+                  {% trans "by" %}
+                  <strong>{{ last_committer }}</strong> ({{ last_update|timesince }})
+                {% else %}
+                  {{ last_update|timesince }}
+                {% endif %}
+              {% else %}
+                {% trans "No translation yet" %}
+              {% endif %}
+            </span>
+          </li>
+        </ul>
+  </div>
+  {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
+  <div class="first_level footer_action">
+    <a class="i16 delete" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
+  <div>
+  {% endif %}
+</div>
