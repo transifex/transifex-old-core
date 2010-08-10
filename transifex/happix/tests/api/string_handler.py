@@ -11,8 +11,15 @@ class StringHandlerTests(APIBaseTests):
     """Tests for the StringHandler API."""
     def setUp(self):
         super(StringHandlerTests, self).setUp()
+        self.resource = Resource.objects.create(name="test", slug="test",
+            project=self.project,
+            source_language=self.language)
         self.resource_handler_url = reverse('string_resource_push',
-            args=[self.project.slug, self.data['resource']])
+            args=[self.project.slug, self.resource.slug])
+
+
+    def tearDown(self):
+        self.resource.delete()
 
     def test_api_get(self):
         """ Test GET method."""

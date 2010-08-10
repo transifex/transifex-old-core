@@ -94,7 +94,7 @@ class POFile(BaseTestCase):
         handler = POHandler('%s/tests.pot' % 
             os.path.split(__file__)[0]) 
 
-        handler.parse_file()
+        handler.parse_file(is_source=True)
 
         l = Language.objects.get(code='en_US')
 

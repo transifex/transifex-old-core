@@ -4,8 +4,6 @@ from piston.resource import Resource
 #from piston.authentication import OAuthAuthentication
 from api.authentication import CustomHttpBasicAuthentication
 
-
-
 #TODO: Implement full support for OAUTH and refactor URLs!
 #auth = OAuthAuthentication(realm='Happix API')
 
@@ -22,9 +20,6 @@ project_handler = Resource(ProjectHandler, authentication=auth)
 projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
 string_handler = Resource(StringHandler, authentication=auth)
 #projectstring_handler = Resource(ProjectStringHandler)
-
-
-
 
 urlpatterns = patterns('',
     url(

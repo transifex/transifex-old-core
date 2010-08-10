@@ -13,8 +13,6 @@ def create_auth_string(username, password):
 
 # Original stringset for POST test
 ORIGINAL = {
-    "resource": "testpack",
-    "language": "en_US",
     "strings": [
         {
             "string": "Cancel",
@@ -36,8 +34,6 @@ ORIGINAL = {
 
 # Translation for PUT test
 TRANSLATION = {
-    "resource": "testpack",
-    "language": "el",
     "strings": [
         {
             "string": "Cancel",
