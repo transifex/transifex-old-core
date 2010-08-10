@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load statistics_happix %}
 {% load permissions %}
@@ -52,7 +52,6 @@
 {% block breadcrumb %}
 
 {{block.super}} »
-<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
 <a href="{% url project_detail project.slug %}">{{project}}</a> »
 <a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>
 {% endblock %}
@@ -66,13 +65,10 @@ Projects |
 
 {% block body_class %}project_list{% endblock %}
 
-{% block content_title %}{% endblock %}
-
-
 {% block content_main %}
   {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
-<div class="obj_bigdetails">
+  <div class="obj_bigdetails ui-tabs-panel">
   {% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
