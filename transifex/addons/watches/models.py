@@ -65,5 +65,20 @@ def is_watched(self, user, signal=None):
         return False
 
 
+def get_watched(cls, user):
+    """
+    Return list of 'cls' objects watched by 'user'.
+
+    cls  - is a class model, not an instance.
+    user - is a user object.
+    """
+    return cls.objects.filter(id__in=user.observeditem_set.filter(
+        content_type=ContentType.objects.get_for_model(cls)
+        ).values_list('object_id', flat=True).query)
+
+
 Project.add_to_class("is_watched", is_watched)
 TranslationWatch.add_to_class("is_watched", is_watched)
+
+Project.add_to_class("get_watched", classmethod(get_watched))
+TranslationWatch.add_to_class("get_watched", classmethod(get_watched))
