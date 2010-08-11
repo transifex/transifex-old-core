@@ -6,10 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-SourceEntity = get_model('resources', 'SourceEntity')
-Translation = get_model('resources', 'Translation')
-Component = get_model('projects', 'Component')
-
 
 class LanguageManager(models.Manager):
     def by_code_or_alias(self, code):        
@@ -161,53 +157,6 @@ class Language(models.Model):
         rules.append(5)
         return rules
 
-    def translated_strings(self):
-        """
-        Return the QuerySet of source entities, translated in this language.
-        
-        This assumes that we DO NOT SAVE empty strings for untranslated entities!
-        """
-        # I put it here due to circular dependency on modules
-        return SourceEntity.objects.filter(id__in=Translation.objects.filter(
-                language=self, rule=5).values_list('source_entity', flat=True))
-
-    def untranslated_strings(self):
-        """
-        Return the QuerySet of source entities which are not yet translated in
-        the specific language.
-        
-        This assumes that we DO NOT SAVE empty strings for untranslated entities!
-        """
-        # I put it here due to circular dependency on modules
-        return SourceEntity.objects.exclude(id__in=Translation.objects.filter(
-                language=self, rule=5).values_list('source_entity', flat=True))
-
-    def num_translated(self):
-        """
-        Return the number of translated strings in all Resources for the language.
-        """
-        return self.translated_strings().count()
-
-    def num_untranslated(self):
-        """
-        Return the number of untranslated strings in all Resources for the language.
-        """
-        return self.untranslated_strings().count()
-
-    def trans_percent(self):
-        """Return the percent of untranslated strings in all Resources."""
-        #TODO:We need this as a cached value in order to avoid hitting the db all the time
-        total_entities = SourceEntity.objects.count()
-        t = self.num_translated()
-        try:
-            return (t * 100 / total_entities)
-        except ZeroDivisionError:
-            return 100
-
-    def untrans_percent(self):
-        """Return the percent of untranslated strings in this Resource."""
-        translated_percent = self.trans_percent()
-        return (100 - translated_percent)
 
 def suite():
     """Define this application's testing suite for Django's test runner."""

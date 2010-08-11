@@ -5,7 +5,7 @@
 {% block menu %}
 {% if is_maintainer %}
 <li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected ui-state-active{% endif %}">
-    <a id="tab-link-5" href="{% url project_timeline slug=project.slug %}">
+    <a id="tab-link-5" href="{% url project_timeline project.slug %}">
         <span>{% trans "Timeline" %}</span>
     </a>
 </li>

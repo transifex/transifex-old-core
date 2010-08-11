@@ -2,23 +2,36 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from lotte.views import *
+from projects.urls import PROJECT_URL
+from resources.urls import RESOURCE_URL
 
 
+# Project-language URLs
+# Prefix example: /projects/p/<project_slug>/l/<lang_code>/
+PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[-\w]+)/'
 
 urlpatterns = patterns('',
-    # Server side lotte
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/$', translate, name='translate'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/details/$', get_details, name='get_details'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/stringset/$', stringset_handling, name='stringset_handling'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/push/$', push_translation, name='push_translation'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/delete/$', delete_translation, name='delete_translation'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/(?P<lang_code>[-\w]+)/exit/$', exit, name='exit_lotte'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/$', translate, name='translate'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/details/$', get_details, name='get_details'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/view/$', view_strings, name='view_strings'),
-#    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/stringset/$', stringset_handling, name='stringset_handling'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/push/$', push_translation, name='push_translation'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/delete/$', delete_translation, name='delete_translation'),
-    url(r'^resources/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<lang_code>[-\w]+)/exit/$', exit, name='exit_lotte'),
+    # Project-wide Lotte
+    url(PROJECT_LANG_URL+'$', translate, name='translate'),
+    url(PROJECT_LANG_URL+'details/$', get_details, name='get_details'),
+    url(PROJECT_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
+    url(PROJECT_LANG_URL+'push/$', push_translation, name='push_translation'),
+    url(PROJECT_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
+    url(PROJECT_LANG_URL+'exit/$', exit, name='exit_lotte'),
+)
+
+# Resource-language URLs
+# Prefix example: /projects/p/<project_slug>/resource/<resource_slug>/l/<lang_code>/
+RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[-\w]+)/'
+
+urlpatterns += patterns('',
+    # Resource-specific Lotte
+    url(RESOURCE_LANG_URL+'$', translate, name='translate'),
+    url(RESOURCE_LANG_URL+'details/$', get_details, name='get_details'),
+    url(RESOURCE_LANG_URL+'view/$', view_strings, name='view_strings'),
+#    url(RESOURCE_URL+r'l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
+    url(RESOURCE_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
+    url(RESOURCE_LANG_URL+'push/$', push_translation, name='push_translation'),
+    url(RESOURCE_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
+    url(RESOURCE_LANG_URL+'exit/$', exit, name='exit_lotte'),
 )

@@ -4,6 +4,8 @@ from django.conf.urls.defaults import *
 from projects.models import Project
 from views import user_timeline, project_timeline
 
+from projects.urls import PROJECT_URL
+
 urlpatterns = patterns('',
     url(
         regex = r'^accounts/timeline/$',
@@ -11,7 +13,7 @@ urlpatterns = patterns('',
         name='user_timeline'),
 
     url(
-        regex = '^projects/p/(?P<slug>[-\w]+)/timeline/$',
+        regex = PROJECT_URL+'timeline/$',
         view = project_timeline,
         name = 'project_timeline',
         kwargs = {'queryset': Project.objects.all(),

@@ -13,13 +13,13 @@ class StatusCodesTest(ViewsBaseTest):
         super(StatusCodesTest, self).setUp()
         self.pages = {
             200: [
-                ('/resources/project/%s/resource/%s/' %
+                ('/projects/p/%s/resource/%s/' %
                     (self.project.slug, self.resource.slug)),
-                ('/resources/project/%s/resource/%s/en/view/' %
+                ('/projects/p/%s/resource/%s/l/en/view/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             404: [
-                'resources/project/f00/resource/b4r/',
+                'projects/p/f00/resource/b4r/',
                 ]}
 
     def testStatusCode(self):

@@ -16,9 +16,11 @@ urlpatterns = patterns('',)
 if settings.ENABLE_ADDONS:
     urlpatterns += patterns('', (r'', include('django_addons.urls')))
 
+PROJECTS_URL = '^projects/'
+
 urlpatterns += patterns('',
     url(r'^$', 'txcommon.views.index', name='transifex.home'),
-    url(r'^projects/', include('projects.urls')),
+    url(PROJECTS_URL, include('projects.urls')),
     url(r'^reviews/', include('reviews.urls')),
     url(r'^search/$', 'txcommon.views.search', name='search'),
     url(r'^%s/doc/' % panel_url, include('django.contrib.admindocs.urls')),
@@ -26,7 +28,6 @@ urlpatterns += patterns('',
     url(r'^languages/', include('languages.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^ajax/', include('ajax_select.urls')),
-    url(r'^resources/', include('resources.urls')),
     url(r'^api/', include('api.urls')),
 )
 
