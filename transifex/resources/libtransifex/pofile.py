@@ -17,16 +17,17 @@ from txcommon.commands import run_command, CommandError
 from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from teams.models import Team
-from happix.libtransifex.decorators import *
+
+from resources.libtransifex.decorators import *
 
 #class ResXmlParseError(ParseError):
     #pass
 
 #class ResXmlCompileError(CompileError):
     #pass
-Resource = get_model('happix', 'Resource')
-Translation = get_model('happix', 'Translation')
-SourceEntity = get_model('happix', 'SourceEntity')
+Resource = get_model('resources', 'Resource')
+Translation = get_model('resources', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
 Storage = get_model('storage', 'StorageFile')
 
 

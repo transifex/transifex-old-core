@@ -6,8 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-SourceEntity = get_model('happix', 'SourceEntity')
-Translation = get_model('happix', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
+Translation = get_model('resources', 'Translation')
 Component = get_model('projects', 'Component')
 
 

@@ -2,9 +2,9 @@
 from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.test.client import Client
-from happix.models import Resource
 from languages.models import Language
-from happix.tests.views.base import ViewsBaseTest
+from resources.models import Resource
+from resources.tests.views.base import ViewsBaseTest
 
 try:
     import json

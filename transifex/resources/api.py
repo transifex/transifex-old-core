@@ -15,8 +15,8 @@ from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
 
-from happix.decorators import method_decorator
-from happix.models import Resource, SourceEntity, Translation
+from resources.decorators import method_decorator
+from resources.models import Resource, SourceEntity, Translation
 
 
 class ResourceHandler(BaseHandler):

@@ -4,7 +4,7 @@ from django.core.management.base import (BaseCommand, LabelCommand, CommandError
 
 from projects.models import Project
 from txcommon.log import logger
-from happix.loaders import load_dir_hierarchy
+from resources.loaders import load_dir_hierarchy
 
 _HELP_TEXT = """Load Resources to the DB by parsing the scratchdir.
 

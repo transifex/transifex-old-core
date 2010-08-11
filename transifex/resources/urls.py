@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
-from happix.views import *
+from resources.views import *
 
 
 urlpatterns = patterns('',

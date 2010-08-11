@@ -3,9 +3,9 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from happix.models import Resource
 from projects.models import Project
 from projects.permissions import pr_project_private_perm
+from resources.models import Resource
 from txcommon.context_processors import site_url_prefix_processor
 from txcommon.decorators import one_perm_required_or_403
 

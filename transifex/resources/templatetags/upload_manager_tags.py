@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import template
 from txcommon.utils import get_url_pattern
-from happix.forms import CreateResourceForm, ResourceTranslationForm
+from resources.forms import CreateResourceForm, ResourceTranslationForm
 
 register = template.Library()
 
 
-@register.inclusion_tag("happix/upload_create_resource_form.html")
+@register.inclusion_tag("resources/upload_create_resource_form.html")
 def upload_create_resource_form(request, project, prefix='create_form'):
     """
     Render a form that uses StorageFile field to upload files. It creates a 
@@ -36,7 +36,7 @@ def upload_create_resource_form(request, project, prefix='create_form'):
     }
 
 
-@register.inclusion_tag("happix/upload_resource_translation_button.html")
+@register.inclusion_tag("resources/upload_resource_translation_button.html")
 def upload_resource_translation_button(request, resource, language=None,
      prefix='button', translate_online=False):
     """

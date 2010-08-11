@@ -16,8 +16,8 @@ from projects.models import Project
 from storage.models import StorageFile
 from txcommon.log import logger
 
-from happix.fields import CompressedTextField
-from happix import HAPPIX_CACHE_KEYS
+from resources.fields import CompressedTextField
+from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 
 
 # TODO: Parsers need to be somewhat rewritten, currently each one implements
@@ -125,7 +125,7 @@ class Resource(models.Model):
     @property
     def entities_count(self):
         """Return the number of source entities."""
-        cache_key = (HAPPIX_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
+        cache_key = (RESOURCES_CACHE_KEYS['source_strings_count'] % (self.project.slug, self.slug))
         sc = cache.get(cache_key)
         if not sc:
             sc = self.entities.count()
@@ -142,7 +142,7 @@ class Resource(models.Model):
         LANGUAGE as set of objects. This function does not count the plural 
         strings!
         """
-        cache_key = (HAPPIX_CACHE_KEYS['word_count'] % (self.project.slug, self.slug))
+        cache_key = (RESOURCES_CACHE_KEYS['word_count'] % (self.project.slug, self.slug))
         wc = cache.get(cache_key)
         if not wc:
             wc = 0
@@ -617,7 +617,7 @@ class L10n_method(models.Model):
 
 
 # Signal registrations
-from happix.handlers import *
+from resources.handlers import *
 models.signals.post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
 models.signals.post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
 

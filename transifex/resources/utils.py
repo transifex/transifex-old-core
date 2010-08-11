@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Utility methods used for happix core functionality
+Utility methods used for resources core functionality
 """
 import os, re, settings
 

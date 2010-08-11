@@ -2,9 +2,9 @@
 import os
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
-from happix.libtransifex.pofile import POHandler
-from happix.models import Resource
-from happix.tests.api.utils import ORIGINAL, TRANSLATION
+from resources.libtransifex.pofile import POHandler
+from resources.models import Resource
+from resources.tests.api.utils import ORIGINAL, TRANSLATION
 
 class APIBaseTests(BaseTestCase):
     """Tests for the ResourceHandler API."""

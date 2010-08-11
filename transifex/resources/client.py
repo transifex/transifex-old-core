@@ -42,7 +42,7 @@ class ResourceError(StandardError):
     pass
 
 def parse_tx_url(url):
-    m = re.match("(?P<hostname>https?://(\w|\.|:)+)/happix/project/(?P<project>(\w|-)+)/", url)
+    m = re.match("(?P<hostname>https?://(\w|\.|:)+)/resources/project/(?P<project>(\w|-)+)/", url)
     if m:
         hostname = m.group('hostname')
         project = m.group('project')

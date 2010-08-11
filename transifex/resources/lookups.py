@@ -1,5 +1,5 @@
 from django.db.models import Q
-from happix.models import Resource
+from resources.models import Resource
 
 class ResourcesLookup(object):
     """

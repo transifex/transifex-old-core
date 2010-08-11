@@ -2,11 +2,11 @@
 import os
 from txcommon.tests.base import BaseTestCase
 from languages.models import Language
-from happix.libtransifex.pofile import POHandler
-from happix.models import Resource, SourceEntity
+from resources.libtransifex.pofile import POHandler
+from resources.models import Resource, SourceEntity
 
 class ViewsBaseTest(BaseTestCase):
-    """Tests for happix views."""
+    """Tests for resources views."""
     def setUp(self):
         self.current_path = os.path.split(__file__)[0]
         super(ViewsBaseTest, self).setUp()

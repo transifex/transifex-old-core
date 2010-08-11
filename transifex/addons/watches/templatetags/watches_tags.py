@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_noop as _
 
 Project = get_model('projects', 'Project')
-Resource = get_model('happix', 'Resource')
+Resource = get_model('resources', 'Resource')
 TranslationWatch = get_model('watches', 'TranslationWatch')
 
 register = template.Library()

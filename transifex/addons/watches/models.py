@@ -5,8 +5,8 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from happix.models import Resource
 from languages.models import Language
+from resources.models import Resource
 from txcommon.db.models import IntegerTupleField
 from txcommon.log import logger
 

@@ -5,7 +5,7 @@ from django.conf import settings
 from actionlog.models import action_logging
 from projects.signals import post_resource_save, post_resource_delete
 from txcommon import notifications as txnotification
-from happix import HAPPIX_CACHE_KEYS
+from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 
 # FIXME we can do more clever calculations instead of deleting the values
 # FIXME: if resource/project doesn't exist cache doesn't clear. maybe force
@@ -13,10 +13,10 @@ from happix import HAPPIX_CACHE_KEYS
 def on_save_invalidate_cache(sender, instance, created, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     if instance and instance.resource and instance.resource.project:
-        cache.delete(HAPPIX_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
+        cache.delete(RESOURCES_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
             instance.resource.slug))
         if created:
-            cache.delete(HAPPIX_CACHE_KEYS["source_strings_count"]% (
+            cache.delete(RESOURCES_CACHE_KEYS["source_strings_count"]% (
                 instance.resource.project.slug,
                 instance.resource.slug))
 
@@ -24,9 +24,9 @@ def on_save_invalidate_cache(sender, instance, created, **kwargs):
 def on_delete_invalidate_cache(sender, instance, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     if instance and instance.resource and instance.resource.project:
-        cache.delete(HAPPIX_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
+        cache.delete(RESOURCES_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
             instance.resource.slug))
-        cache.delete(HAPPIX_CACHE_KEYS["source_strings_count"]% (
+        cache.delete(RESOURCES_CACHE_KEYS["source_strings_count"]% (
             instance.resource.project.slug,
             instance.resource.slug))
 

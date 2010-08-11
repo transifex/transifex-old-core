@@ -6,7 +6,7 @@ from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
 from languages.models import Language
-from happix.libtransifex.decorators import *
+from resources.libtransifex.decorators import *
 
 """
 STRICT flag is used to switch between two parsing modes:
@@ -19,10 +19,10 @@ STRICT flag is used to switch between two parsing modes:
 STRICT=False
 
 
-Resource = get_model('happix', 'Resource')
-Translation = get_model('happix', 'Translation')
-SourceEntity = get_model('happix', 'SourceEntity')
-Template = get_model('happix', 'Template')
+Resource = get_model('resources', 'Resource')
+Translation = get_model('resources', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
+Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
 class CustomSerializer(json.JSONEncoder):

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.test.client import Client
 from languages.models import Language
-from happix.models import Resource
-from happix.tests.views.base import ViewsBaseTest
+from resources.models import Resource
+from resources.tests.views.base import ViewsBaseTest
 
 
 class StatusCodesTest(ViewsBaseTest):
@@ -13,13 +13,13 @@ class StatusCodesTest(ViewsBaseTest):
         super(StatusCodesTest, self).setUp()
         self.pages = {
             200: [
-                ('/happix/project/%s/resource/%s/' %
+                ('/resources/project/%s/resource/%s/' %
                     (self.project.slug, self.resource.slug)),
-                ('/happix/project/%s/resource/%s/en/view/' %
+                ('/resources/project/%s/resource/%s/en/view/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             404: [
-                'happix/project/f00/resource/b4r/',
+                'resources/project/f00/resource/b4r/',
                 ]}
 
     def testStatusCode(self):

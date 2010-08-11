@@ -39,7 +39,7 @@ class Migration(SchemaMigration):
         db.create_table('releases_release_resources', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('release', models.ForeignKey(orm['releases.release'], null=False)),
-            ('resource', models.ForeignKey(orm['happix.resource'], null=False))
+            ('resource', models.ForeignKey(orm['resources.resource'], null=False))
         ))
         db.create_unique('releases_release_resources', ['release_id', 'resource_id'])
 
@@ -90,7 +90,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'happix.resource': {
+        'resources.resource': {
             'Meta': {'unique_together': "(('name', 'project'), ('slug', 'project'))", 'object_name': 'Resource'},
             '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
@@ -98,12 +98,12 @@ class Migration(SchemaMigration):
             'last_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
-            'resource_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['happix.ResourceGroup']", 'null': 'True', 'blank': 'True'}),
+            'resource_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['resources.ResourceGroup']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
             'source_file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['storage.StorageFile']", 'null': 'True', 'blank': 'True'}),
             'source_language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']"})
         },
-        'happix.resourcegroup': {
+        'resources.resourcegroup': {
             'Meta': {'object_name': 'ResourceGroup'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
@@ -159,7 +159,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'releases'", 'to': "orm['projects.Project']"}),
             'release_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'resources': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'releases'", 'symmetrical': 'False', 'to': "orm['happix.Resource']"}),
+            'resources': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'releases'", 'symmetrical': 'False', 'to': "orm['resources.Resource']"}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '30', 'db_index': 'True'}),
             'stringfreeze_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})
         },

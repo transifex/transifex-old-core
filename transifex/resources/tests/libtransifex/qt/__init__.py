@@ -2,8 +2,8 @@ import os
 import unittest
 from txcommon.tests.base import BaseTestCase
 from languages.models import Language
-from happix.models import *
-from happix.libtransifex.qt import LinguistHandler
+from resources.models import *
+from resources.libtransifex.qt import LinguistHandler
 
 class QTFile(BaseTestCase):
     """Suite of tests for the qt lib."""

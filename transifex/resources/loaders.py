@@ -21,8 +21,8 @@ import os, polib, textwrap
 
 # FIXME: specify the specific modules
 from languages.models import Language
-from happix.utils import *
-from happix.models import *
+from resources.utils import *
+from resources.models import *
 
 from txcommon.log import logger
 

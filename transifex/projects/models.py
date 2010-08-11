@@ -30,8 +30,8 @@ from txcommon.utils import cached_property
 from projects.handlers import get_trans_handler
 from projects import signals
 
-SourceEntity = get_model('happix', 'SourceEntity')
-Translation = get_model('happix', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
+Translation = get_model('resources', 'Translation')
 
 
 # keys used in cache

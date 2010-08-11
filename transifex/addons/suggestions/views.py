@@ -5,11 +5,11 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from models import Suggestion
-from happix.models import (Translation, SourceEntity)
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
+from resources.models import (Translation, SourceEntity)
 from txcommon.decorators import one_perm_required_or_403
 
 

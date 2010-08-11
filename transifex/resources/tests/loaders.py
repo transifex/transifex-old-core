@@ -8,7 +8,7 @@ from django.test import TestCase
 from languages.models import Language
 from languages.management.commands import txcreatelanguages
 from projects.models import Project
-from happix.models import SourceEntity, Resource, TranslationString
+from resources.models import SourceEntity, Resource, TranslationString
 
 # Uncomment out when you want to use the ipyhotn
 #from IPython.Shell import IPShellEmbed
@@ -16,7 +16,7 @@ from happix.models import SourceEntity, Resource, TranslationString
 
 # Sample file paths used in the tests
 BASE_SAMPLE_FILE_PATH = os.path.join(settings.PROJECT_PATH,
-                                     'happix/tests/sample_files')
+                                     'resources/tests/sample_files')
 SOURCE_PO = 'source_en.po'
 # One less source string
 SOURCE_PO_2 = 'source_en_2.po'

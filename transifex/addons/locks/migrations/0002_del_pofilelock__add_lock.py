@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
             ('notified', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
             ('expires', self.gf('django.db.models.fields.DateTimeField')()),
             ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('resource', self.gf('django.db.models.fields.related.ForeignKey')(related_name='locks', to=orm['happix.Resource'])),
+            ('resource', self.gf('django.db.models.fields.related.ForeignKey')(related_name='locks', to=orm['resources.Resource'])),
             ('language', self.gf('django.db.models.fields.related.ForeignKey')(related_name='locks', to=orm['languages.Language'])),
         ))
         db.send_create_signal('locks', ['Lock'])
@@ -82,7 +82,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'happix.resource': {
+        'resources.resource': {
             'Meta': {'unique_together': "(('name', 'project'), ('slug', 'project'))", 'object_name': 'Resource'},
             '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
@@ -90,12 +90,12 @@ class Migration(SchemaMigration):
             'last_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True'}),
-            'resource_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['happix.ResourceGroup']", 'null': 'True', 'blank': 'True'}),
+            'resource_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['resources.ResourceGroup']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
             'source_file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['storage.StorageFile']", 'null': 'True', 'blank': 'True'}),
             'source_language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']"})
         },
-        'happix.resourcegroup': {
+        'resources.resourcegroup': {
             'Meta': {'object_name': 'ResourceGroup'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
@@ -126,7 +126,7 @@ class Migration(SchemaMigration):
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'notified': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'resource': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'locks'", 'to': "orm['happix.Resource']"})
+            'resource': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'locks'", 'to': "orm['resources.Resource']"})
         },
         'projects.project': {
             'Meta': {'object_name': 'Project'},

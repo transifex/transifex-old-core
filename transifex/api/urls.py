@@ -5,14 +5,14 @@ from piston.resource import Resource
 from api.authentication import CustomHttpBasicAuthentication
 
 #TODO: Implement full support for OAUTH and refactor URLs!
-#auth = OAuthAuthentication(realm='Happix API')
+#auth = OAuthAuthentication(realm='Transifex API')
 
 from languages.api import LanguageHandler
 from projects.api import ProjectHandler, ProjectResourceHandler
+from resources.api import (ResourceHandler, StringHandler)
 from storage.api import StorageHandler
-from happix.api import (ResourceHandler, StringHandler)
 
-auth = CustomHttpBasicAuthentication(realm='Happix API')
+auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
 resource_handler = Resource(ResourceHandler, authentication=auth)
 storage_handler = Resource(StorageHandler, authentication=auth)

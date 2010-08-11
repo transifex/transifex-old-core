@@ -1,6 +1,6 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
-{% load statistics_happix %}
+{% load statistics_resources %}
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />

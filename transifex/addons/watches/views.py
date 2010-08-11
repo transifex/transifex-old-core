@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from notification import models as notification
 
-from happix.models import Resource
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import pr_project_private_perm
 from projects.permissions.project import ProjectPermission
+from resources.models import Resource
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 from txcommon.views import (json_result, json_error, permission_denied)

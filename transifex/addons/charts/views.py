@@ -3,8 +3,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from happix.models import Resource
 from projects.models import Project
+from resources.models import Resource
 from txcommon.context_processors import site_url_prefix_processor
 
 # For interactive charts:

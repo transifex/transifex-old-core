@@ -9,9 +9,9 @@ from django.utils.timesince import timeuntil
 from django.utils.translation import ugettext as _
 
 from languages.models import Language
-from happix.models import Resource
 from models import Lock, LockError
 from projects.models import Project
+from resources.models import Resource
 from txcommon.decorators import one_perm_required_or_403
 
 from permissions import pr_resource_language_lock

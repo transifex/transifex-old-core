@@ -1,4 +1,4 @@
-"""Happix decorators"""
+"""Resources decorators"""
 try:
     from functools import wraps, update_wrapper
 except ImportError:

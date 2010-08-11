@@ -4,7 +4,7 @@ from languages.models import Language
 from storage.fields import StorageFileField
 from storage.models import StorageFile
 from storage.widgets import StorageFileWidget
-from happix.models import Resource
+from resources.models import Resource
 
 class ResourceForm(forms.ModelForm):
 

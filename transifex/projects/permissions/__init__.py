@@ -83,13 +83,13 @@ pr_release_delete = (
 
 pr_resource_translations_delete=(
     ("granular", "project_perm.maintain"),
-    ("general",  "happix.delete_resource"),)
+    ("general",  "resources.delete_resource"),)
 
 pr_resource_add_change=(
     ("granular", "project_perm.maintain"),
-    ('general',  'happix.add_resource'),
-    ("general",  "happix.change_resource"),)
+    ('general',  'resources.add_resource'),
+    ("general",  "resources.change_resource"),)
 
 pr_resource_delete=(
     ("granular", "project_perm.maintain"),
-    ("general",  "happix.delete_resource"),)
+    ("general",  "resources.delete_resource"),)

@@ -15,11 +15,11 @@ from django.utils.html import escape
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
-from happix.models import (Translation, Resource, SourceEntity)
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
+from resources.models import (Translation, Resource, SourceEntity)
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 

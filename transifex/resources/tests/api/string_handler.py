@@ -3,9 +3,9 @@ import json
 from django.core.urlresolvers import reverse
 from django.db.models import get_model
 from django.test.client import Client
-from happix.models import Resource, Translation, SourceEntity
-from happix.tests.api.base import APIBaseTests
-from happix.tests.api.utils import create_auth_string
+from resources.models import Resource, Translation, SourceEntity
+from resources.tests.api.base import APIBaseTests
+from resources.tests.api.utils import create_auth_string
 
 class StringHandlerTests(APIBaseTests):
     """Tests for the StringHandler API."""

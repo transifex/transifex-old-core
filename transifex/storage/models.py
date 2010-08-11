@@ -74,7 +74,7 @@ class StorageFile(models.Model):
         # to import the PARSERS.
         #FIXME: Decide whether it's important to have it and find a good way 
         # to import the PARSERS.
-        from happix.models import PARSERS
+        from resources.models import PARSERS
         parser = None
         for p in PARSERS:
             if p.accept(self.name):

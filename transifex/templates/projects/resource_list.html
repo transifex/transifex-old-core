@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
-{% load statistics_happix %}
+{% load statistics_resources %}
 {% load upload_manager_tags %}
 
 <div id="resources" class="resources separate">
@@ -95,7 +95,7 @@
                 //request_url = window.location + target_lang_code;
                 //This is _UGLY_. We need to find a way to do reverse url
                 //lookups from JS code. #FIXME
-                request_url ='/happix/project/{{project.slug}}/'+ target_lang_code;
+                request_url ='/resources/project/{{project.slug}}/'+ target_lang_code;
                 window.location = request_url;
             } else {
                 alert("Please select a target language first and then click Go.");

@@ -13,8 +13,8 @@ from django.utils.html import escape
 
 from languages.models import Language
 
-Translation = get_model('happix', 'Translation')
-SourceEntity = get_model('happix', 'SourceEntity')
+Translation = get_model('resources', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
 
 from txcommon.log import logger, log_model
 
@@ -67,7 +67,7 @@ class Release(models.Model):
     # Relations
     project = models.ForeignKey('projects.Project', verbose_name=_('Project'), related_name='releases')
 
-    resources = models.ManyToManyField('happix.Resource',
+    resources = models.ManyToManyField('resources.Resource',
         verbose_name=_('Resources'), related_name='releases',
         blank=False, null=False)
 

@@ -7,9 +7,9 @@ from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from happix.models import Resource, SourceEntity, Translation
 from languages.models import Language
 from projects.models import Project
+from resources.models import Resource, SourceEntity, Translation
 from storage.models import StorageFile
 from txcommon.exceptions import FileCheckError
 from txcommon.log import logger

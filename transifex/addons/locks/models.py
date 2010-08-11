@@ -107,7 +107,7 @@ class Lock(models.Model):
 
     # ForeignKeys
     owner = models.ForeignKey(User)
-    resource = models.ForeignKey('happix.Resource', null=False, blank=False, 
+    resource = models.ForeignKey('resources.Resource', null=False, blank=False, 
         related_name='locks')
     language = models.ForeignKey('languages.Language', null=False, blank=False, 
         related_name='locks')

@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.test import TestCase
 
-from happix.models import *
+from resources.models import *
 
 #from IPython.Shell import IPShellEmbed
 #ipython = IPShellEmbed()
@@ -10,8 +10,8 @@ from happix.models import *
 SAMPLE_STRING = 'Hello'
 SAMPLE_STRINGS = ['%s_%s' % (SAMPLE_STRING, i) for i in range(1, 11)]
 
-class HappixModelTests(TestCase):
-    """Test the happix models."""
+class ResourcesModelTests(TestCase):
+    """Test the resources models."""
 
     def setUp(self):
         pass
