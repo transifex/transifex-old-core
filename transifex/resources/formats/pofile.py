@@ -123,6 +123,15 @@ class POHandler(Handler):
 #                "translated entries!"))
 #
 
+    def _do_replace(self, original, replacement, text):
+        """
+        It just does a search and replace inside `text` and replaces all
+        occurrences of `original` with `replacement`. For pofiles we also want
+        to escape all special characters
+        """
+        return re.sub(original, escape(replacement), text)
+
+
     @need_compiled
     def _post_compile(self, *args, **kwargs):
         """

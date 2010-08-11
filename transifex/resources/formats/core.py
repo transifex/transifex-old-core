@@ -59,6 +59,20 @@ class ParseError(StandardError):
 class CompileError(StandardError):
     pass
 
+def escape(st):
+    """
+    Escape special chars and return the given string *st*.
+
+    **Examples**:
+
+    >>> escape('\\t and \\n and \\r and " and \\\\')
+    '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
+    """
+    return st.replace('\n', r'\\n')\
+             .replace('\t', r'\\t')\
+             .replace('\r', r'\\r')\
+             .replace('\n', r'\\n')\
+             .replace('\"', r'\\"')
 
 class Handler(object):
     """
@@ -96,6 +110,9 @@ class Handler(object):
     ####################
 
     def set_language(self, language):
+        """
+        Set the language for the handler.
+        """
         if isinstance(language, Language):
             self.language = language
         else:
@@ -143,10 +160,20 @@ class Handler(object):
         """
         pass
 
+    def _do_replace(self, original, replacement, text):
+        """
+        It just does a search and replace inside `text` and replaces all
+        occurrences of `original` with `replacement`.
+        """
+        return re.sub(original, replacement, text)
+
     @need_resource
     def compile(self, language=None):
         """
-        Compile the template using the database strings
+        Compile the template using the database strings. The result is the
+        content of the translation file.
+
+        - language: The language of the file
         """
 
         if not language:
@@ -172,9 +199,9 @@ class Handler(object):
             except Translation.DoesNotExist:
                 trans = None
 
-            template = re.sub("%s_tr" % string.string_hash.encode('utf-8'),
-                trans.string.encode('utf-8') if trans else "",template)
-
+            # Do the actual replacement in the template
+            template = self._do_replace("%s_tr" % string.string_hash.encode('utf-8'),
+                    trans.string.encode('utf-8') if trans else "",template)
 
         self.compiled_template = template
 
@@ -270,13 +297,6 @@ class Handler(object):
 
             self._post_save2db(is_source , user, overwrite_translations)
             return strings_added, strings_updated
-
-    def set_language(self, language):
-        if isinstance(language, Language):
-            self.language = language
-        else:
-            raise Exception("language neeeds to be of type %s" %
-                Language.__class__)
 
     @need_compiled
     def save2file(self, filename):
