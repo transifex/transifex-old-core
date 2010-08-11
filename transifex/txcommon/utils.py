@@ -1,14 +1,27 @@
 from django.core.urlresolvers import get_resolver
 
-def get_url_pattern(urlname):
+def get_url_pattern(urlname, args=[]):
     """
     Return URL pattern for a URL based on its name.
 
-    >>> get_url_pattern('project_deails')
+    args - list of argument names for the URL. Useful to distinguish URL 
+    patterns identified with the same name.
+
+    >>> get_url_pattern('project_detail')
+    u'/projects/p/%(project_slug)s/'
+
+    >>> get_url_pattern('project_detail', args=['project_slug'])
     u'/projects/p/%(project_slug)s/'
 
     """
-    return '/%s' % get_resolver(None).reverse_dict.get(urlname)[0][0][0]
+    patterns = get_resolver(None).reverse_dict.getlist(urlname)
+    if not args:
+        return '/%s' % patterns[0][0][0][0]
+
+    for pattern in patterns:
+        if pattern[0][0][1] == args:
+            return '/%s' % pattern[0][0][0]
+
 
 def cached_property(func):
     """
