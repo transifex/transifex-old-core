@@ -5,6 +5,7 @@ String Level models.
 
 import datetime, sys, json
 from hashlib import md5
+from django.conf import settings
 from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
@@ -45,8 +46,6 @@ class Resource(models.Model):
     
     A resource is always related to a project.
     """
-    # FIXME: Rich explanation of various fields in docstring (what does the
-    # l10n_method exactly do? What happens if it's left blank?)
 
     name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
         help_text=_("A descriptive name unique inside the project."))
@@ -65,9 +64,10 @@ class Resource(models.Model):
         blank=True, null=True,
         help_text=_("A local file used to extract the strings to be "
                     "translated."))
-    l10n_method = models.ForeignKey("L10n_method", null=True, blank=True,
-        editable=False, help_text=_("I18n method used by this resource."))
-
+    i18n_type = models.CharField(_('I18n type'), max_length=20,
+        choices=settings.I18N_METHODS.items(),
+        help_text=_("The type of i18n method used in this resource (%s)" %
+                    ', '.join(settings.TRANS_CHOICES.keys())))
     # Foreign Keys
     source_language = models.ForeignKey(Language,
         verbose_name=_('Source Language'), blank=False, null=False,
@@ -548,72 +548,6 @@ class Template(models.Model):
         verbose_name = _('Template')
         verbose_name_plural = _('Templates')
         ordering = ['resource']
-
-class L10n_methodManager(models.Manager):
-    """
-    L10n_method manager
-    """
-    def get_by_mimetype(self, filepath):
-        """
-        This needs the actual file to check it's mimetype and find the method
-        that can handle this kind of mimetype.
-        """
-        try:
-            mime = mimetypes.guess_type(filepath)
-        except Exception, e:
-            raise Exception('Could not guess mimetype for file %s: %s'
-                % (filepath, e))
-
-    def get_by_filename(self, filename):
-        """
-        This manager method takes a filename and returns a l10n_method that can
-        handler this file or None if this is not supported.
-        """
-        for method in L10n_method.objects.all():
-            if filename.endswith(method.file_extension):
-                return method
-
-        return None
-
-class L10n_method(models.Model):
-    """
-    Localization method
-
-    This model is used to keep track of the l10n methods used for localizing
-    each resource and provides an easy way to access the corresponding handler
-    for importing/exporting files.
-    """
-    name = models.CharField(_('Name'), max_length=255, null=False,
-        blank=False,
-        help_text=_('A descriptive name unique inside the project.'))
-    file_extension = models.CharField(_("File Extension"),
-        max_length=16, null=False, blank=False,
-        help_text=_("This specifies which file extensions correspond to this "
-            " l10n method"))
-    mimetype = models.CharField(_('Mime Type'), max_length=255,
-        null=False, blank=False,
-        help_text=_("The mimetype of the files associated with this l10n"
-            " method"))
-
-    objects = L10n_methodManager()
-
-    class Meta:
-        verbose_name = _('Localization method')
-        ordering = ['name']
-
-    def __unicode__(self):
-        return self.name
-
-    @property
-    def parser(self):
-        parser = None
-        for p in PARSERS:
-            # find a better way to do it
-            if p.accept('%s.%s' % ('foo', self.file_extension)):
-                parser = p
-                break
-
-        return parser
 
 
 # Signal registrations

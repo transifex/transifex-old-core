@@ -376,7 +376,7 @@ class Component(models.Model):
         help_text=_("The source language for this component "
                     "(e.g., 'en', 'pt_BR', 'el')."))
     i18n_type = models.CharField(_('I18n type'), max_length=20,
-        choices=settings.TRANS_CHOICES.items(),
+        choices=settings.I18N_METHODS.items(),
         help_text=_("The type of i18n support for the source code (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
     file_filter = models.CharField(_('File filter'), max_length=50,

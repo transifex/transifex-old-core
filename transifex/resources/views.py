@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
+from resources.formats import get_i18n_handler_from_type
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
@@ -304,7 +305,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         slug = resource_slug)
 
     language = get_object_or_404(Language, code=lang_code)
-    parser = resource.l10n_method.parser
+    parser = get_i18n_handler_from_type(resource.i18n_type)
     handler = parser(resource = resource, language = language)
     try:
         handler.compile()
@@ -313,12 +314,11 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         return HttpResponseRedirect(reverse('resource_detail',
             args=[resource.project.slug, resource.slug]),)
 
+    i18n_method = settings.I18N_METHODS[resource.i18n_type]
     response = HttpResponse(handler.compiled_template,
-        mimetype=resource.l10n_method.mimetype)
+        mimetype=i18n_method['mimetype'])
     response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
         smart_unicode(resource.name), language.code,
-        resource.l10n_method.file_extension))
-
-    #response['Content-Length'] = 
+        i18n_method['file-extensions'].split(', ')[0]))
 
     return response

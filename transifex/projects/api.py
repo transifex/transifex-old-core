@@ -18,7 +18,7 @@ from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from projects.signals import post_submit_translation
 from resources.decorators import method_decorator
-from resources.formats import pofile, qt
+from resources.formats import get_i18n_type_from_file, pofile, qt
 from resources.models import * 
 from storage.models import StorageFile
 from teams.models import Team
@@ -192,12 +192,12 @@ class ProjectResourceHandler(BaseHandler):
                         source_language = storagefile.language,
                         project = project,
                 )
-                # update l10n_method
-                method = L10n_method.objects.get_by_filename(storagefile.get_storage_path())
-                if not method:
+                # update i18n_type
+                i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
+                if not i18n_type:
 #                    request.user.message_set.create(message=_("Error: We couldn't find a suitable localization method for this file."))
                     return rc.BAD_REQUEST
-                resource.l10n_method = method
+                resource.i18n_type = i18n_type
                 resource.save()
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
