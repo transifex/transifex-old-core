@@ -11,7 +11,7 @@ from django.db import transaction
 from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
 from core import (CompileError, GenericTranslation, Handler, STRICT, StringSet,
-                  ParseError)
+                  ParseError, escape)
 
 from txcommon.commands import run_command, CommandError
 from txcommon.exceptions import FileCheckError
