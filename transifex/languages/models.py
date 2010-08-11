@@ -2,10 +2,10 @@ from datetime import datetime
 from django.contrib import admin
 from django.db import models
 from django.db.models import permalink, get_model
+from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
 
 class LanguageManager(models.Manager):
     def by_code_or_alias(self, code):        
@@ -26,6 +26,20 @@ class LanguageManager(models.Manager):
             return self.by_code_or_alias(code)
         except Language.DoesNotExist:
             return None
+
+    def by_code_or_alias_or_404(self, code):
+        """
+        Return a language matches the code or something in code_aliases.
+        
+        If no match is found, raise a 404 exception.
+        
+        This method should be used in views.
+        """
+        try:
+            return self.by_code_or_alias(code)
+        except Language.DoesNotExist:
+            raise Http404
+
 
 class Language(models.Model):
     """

@@ -78,7 +78,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project_slug]),)
 
-    target_language = Language.objects.by_code_or_alias(lang_code)
+    target_language = Language.objects.by_code_or_alias_or_404(lang_code)
 
     total_strings = SourceEntity.objects.filter(
         resource__in = resources).count()
