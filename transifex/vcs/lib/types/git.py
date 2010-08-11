@@ -168,8 +168,10 @@ class GitBrowser(BrowserMixin):
         try:
             self.repo.commit(files, m=msg.encode('utf-8'), author=user)
         except Exception, e:
-            if hasattr(e, 'stderr'):
+            if hasattr(e, 'stderr') and e.stderr:
                 e = e.stderr
+            elif hasattr(e, 'stdout') and e.stdout:
+               e = e.stdout
             raise CommitRepoError(e)
 
         try:
