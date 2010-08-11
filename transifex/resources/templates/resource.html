@@ -20,7 +20,8 @@
         $("#start_new_translation").click( function() {
             var target_lang_code = $(this).siblings('select').val();
             if ( target_lang_code != "" ) {
-                request_url = window.location + target_lang_code;
+                request_url = window.location+'l/'+target_lang_code;
+                
                 window.location = request_url;
             } else {
                 alert("Please select a target language first and then click Go.");
