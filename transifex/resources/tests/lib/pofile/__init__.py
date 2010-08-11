@@ -3,7 +3,7 @@ import unittest
 from txcommon.tests.base import BaseTestCase
 from languages.models import Language
 from resources.models import *
-from resources.libtransifex.pofile import POHandler
+from resources.formats.pofile import POHandler
 
 class POFile(BaseTestCase):
     """Suite of tests for the pofile lib."""

@@ -6,7 +6,7 @@ from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
 from languages.models import Language
-from resources.libtransifex.decorators import *
+from resources.formats.decorators import *
 
 """
 STRICT flag is used to switch between two parsing modes:

@@ -2,7 +2,7 @@
 import os
 from txcommon.tests.base import BaseTestCase
 from languages.models import Language
-from resources.libtransifex.pofile import POHandler
+from resources.formats.pofile import POHandler
 from resources.models import Resource, SourceEntity
 
 class ViewsBaseTest(BaseTestCase):

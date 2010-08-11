@@ -21,7 +21,7 @@ from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 
 
 # TODO: Parsers need to be somewhat rewritten, currently each one implements
-# parse(buf) function which returns libtransifex.core.StringSet class, and
+# parse(buf) function which returns lib.core.StringSet class, and
 # compile(stringset) which returns file buffer.
 #
 # It actually makes more sense to store all uploaded files, parse only the
@@ -622,12 +622,12 @@ models.signals.post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
 models.signals.post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
 
 
-from libtransifex.qt import LinguistHandler # Qt4 TS files
-#from libtransifex.java import JavaPropertiesParser # Java .properties
-#from libtransifex.apple import AppleStringsParser # Apple .strings
-#from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
-#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
-from libtransifex.pofile import POHandler # GNU Gettext .PO/.POT parser
+from resources.formats.qt import LinguistHandler # Qt4 TS files
+#from resources.formats.java import JavaPropertiesParser # Java .properties
+#from resources.formats.apple import AppleStringsParser # Apple .strings
+#from resources.formats.ruby import YamlParser # Ruby On Rails (broken)
+#from resources.formats.resx import ResXmlParser # Microsoft .NET (not finished)
+from resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
 
 PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsParser]
 

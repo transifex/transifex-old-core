@@ -9,9 +9,9 @@ import xml.dom.minidom
 from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
-from resources.libtransifex.core import (StringSet, ParseError,
+from resources.formats.core import (StringSet, ParseError,
     GenericTranslation, CompileError, Handler, STRICT)
-from resources.libtransifex.decorators import *
+from resources.formats.decorators import *
 
 # Resources models
 Resource = get_model('resources', 'Resource')

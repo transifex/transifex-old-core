@@ -18,7 +18,7 @@ from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from teams.models import Team
 
-from resources.libtransifex.decorators import *
+from resources.formats.decorators import *
 
 #class ResXmlParseError(ParseError):
     #pass

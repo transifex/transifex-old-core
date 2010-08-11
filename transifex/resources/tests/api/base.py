@@ -2,7 +2,7 @@
 import os
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
-from resources.libtransifex.pofile import POHandler
+from resources.formats.pofile import POHandler
 from resources.models import Resource
 from resources.tests.api.utils import ORIGINAL, TRANSLATION
 
@@ -19,7 +19,7 @@ class APIBaseTests(BaseTestCase):
         # Opening JSON data for pushing through the API
         self.data = ORIGINAL
         self.trans = TRANSLATION
-        self.pofile_path = '%s/../libtransifex/pofile' % self.current_path
+        self.pofile_path = '%s/../lib/pofile' % self.current_path
 
         # Loading POT (en_US) into the resource
         handler = POHandler('%s/tests.pot' % self.pofile_path)

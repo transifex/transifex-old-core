@@ -18,7 +18,7 @@ from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from projects.signals import post_submit_translation
 from resources.decorators import method_decorator
-from resources.libtransifex import pofile, qt
+from resources.formats import pofile, qt
 from resources.models import * 
 from storage.models import StorageFile
 from teams.models import Team

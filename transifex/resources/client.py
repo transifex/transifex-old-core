@@ -25,14 +25,14 @@ reload(sys) # WTF? Otherwise setdefaultencoding doesn't work
 sys.setdefaultencoding('utf-8')
 
 
-from libtransifex import core as tx
-from libtransifex.core import ParseError, CompileError
-from libtransifex.qt import LinguistParser # Qt4 TS files
-from libtransifex.java import JavaPropertiesParser # Java .properties
-from libtransifex.apple import AppleStringsParser # Apple .strings
-#from libtransifex.ruby import YamlParser # Ruby On Rails (broken)
-#from libtransifex.resx import ResXmlParser # Microsoft .NET (not finished)
-#from libtransifex.pofile import PofileParser # GNU Gettext .PO/.POT parser (not started)
+from resources.formats import core as tx
+from resources.formats.core import ParseError, CompileError
+from resources.formats.qt import LinguistParser # Qt4 TS files
+from resources.formats.java import JavaPropertiesParser # Java .properties
+from resources.formats.apple import AppleStringsParser # Apple .strings
+#from resources.formats.ruby import YamlParser # Ruby On Rails (broken)
+#from resources.formats.resx import ResXmlParser # Microsoft .NET (not finished)
+#from resources.formats.pofile import PofileParser # GNU Gettext .PO/.POT parser (not started)
 
 parsers = [LinguistParser, JavaPropertiesParser, AppleStringsParser] #, ResXmlParser, YamlParser]
 
@@ -159,7 +159,7 @@ class Project():
     def scan(self, url):
 
         hostname, project = parse_tx_url(url)
-        from libtransifex.language import Languages
+        from resources.formats.language import Languages
         Languages.pull(hostname)
 
 

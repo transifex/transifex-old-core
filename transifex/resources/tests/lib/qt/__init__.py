@@ -3,7 +3,7 @@ import unittest
 from txcommon.tests.base import BaseTestCase
 from languages.models import Language
 from resources.models import *
-from resources.libtransifex.qt import LinguistHandler
+from resources.formats.qt import LinguistHandler
 
 class QTFile(BaseTestCase):
     """Suite of tests for the qt lib."""
