@@ -270,8 +270,9 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
         Translation.objects.filter(resource=resource, language=language).delete()
 
         request.user.message_set.create(
-            message=_("The translations of %s language for the %s resource were "
-                      "deleted successfully.") % (language.name, resource.name))
+            message=_("The translations of language %(lang)s for the resource "
+                      "%(resource)s were deleted successfully.") % (
+                          language.name, resource.name))
 
         #TODO: Create the specific notice type and update all the other actions.
 
