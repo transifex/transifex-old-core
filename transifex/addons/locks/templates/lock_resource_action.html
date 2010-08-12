@@ -53,7 +53,7 @@
         </li>
     {% else %}
         <li id="unlocked-nonlockable-{{ lock_html_id }}" class="i16 lock_none top">
-            <span class="clickable">{% blocktrans %}This translation is unlocked. Most likely no one is working with it right now.{% endblocktrans %}</span>
+            {% blocktrans %}This translation is unlocked. Most likely no one is working on it right now.{% endblocktrans %}
         </li>
     {% endif %}
 {% endif %}
