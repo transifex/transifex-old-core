@@ -35,7 +35,7 @@
 
       {% ifequal resource.source_language target_language %}
         {% blocktrans %} 
-        <span class="tipsy_enable" style="color:#666" title="You cannot translate the source language strings."> This is the Source Language! </span>
+        <span title="You cannot translate the source language strings.">This is the Source Language</span>
         {% endblocktrans %}
       {% else %}
         {% if can_submit_translation or request.user.is_superuser %}
