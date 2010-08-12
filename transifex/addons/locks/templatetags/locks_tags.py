@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db.models import get_model
 from django.template import Library
+from django.contrib.auth.models import AnonymousUser
 
 Lock = get_model('locks', 'Lock')
 
@@ -12,8 +13,11 @@ def lock_resource_action(context, resource, language):
     """Display a lock with the status of the POFileLock for that POFile."""
     request = context['request']
     user = request.user
-    context['can_lock'] = Lock.can_lock(resource, language, user)
     lock = Lock.objects.get_valid(resource, language)
+    if request.user in (None, AnonymousUser()):
+        context['can_lock'] = False
+    else:
+        context['can_lock'] = Lock.can_lock(resource, language, user)
     if lock:
         context['lock'] = lock
         context['is_unlockable'] = lock.can_unlock(user)
