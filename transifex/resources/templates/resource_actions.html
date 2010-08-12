@@ -42,7 +42,7 @@
           <a class="i16 tick buttonized2" id="translate_now" href="{% url translate project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
         {% else %}
           <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-          title="{% if request.user.is_anonymous %}<b>Register</b>, {% endif %} {% if team %} <b>Join</b> the {{ team.name }}{% else %} <b>Request</b> the creation of {{ target_language.name }} team <br />and <b>Join</b> the{% endif %} team to be able to translate this.">{% trans "Translate Now" %}</a>
+          title="{% blocktrans with target_language.name as lang_name %}To translate, you need to be a member of the {{ lang_name }} team.{% endblocktrans %}">{% trans "Translate Now" %}</a>
         {% endif %}
     {% endifequal %}
 
