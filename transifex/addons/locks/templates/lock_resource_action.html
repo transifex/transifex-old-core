@@ -13,37 +13,23 @@
 
 {% if is_locked %}
     <li id="locked-{{ lock_html_id }}" class="top lock i16 lock_open image_submit_type">
-    <span id="locked-message-{{ lock_html_id }}" class="{% if is_unlockable %}clickable{% endif %}">
-    {% if is_owner %}
+      {% if is_owner %}
         {% blocktrans %}This translation has been locked by you.{% endblocktrans %}
-    {% else %}
+      {% else %}
         {% blocktrans %}This translation has been locked by user '{{ owner }}'.{% endblocktrans %}
-    {% endif %}
-    </span>
+      {% endif %}
+      {% blocktrans with lock.expires|timeuntil as lock_expires %}({{ lock_expires }} left){% endblocktrans %}
 
-    {% tooltip "locked-message" lock_html_id %}
-        <span class="i16 actionlog">{% blocktrans %}Time left:{% endblocktrans %}</span> {{lock.expires|timeuntil}}.
-        {% if is_unlockable %}
-            <br />
-            <span class="bold">{% blocktrans %}Click on it to unlock.{% endblocktrans %}</span>
-        {% endif %}
-    {% endtooltip %}
+      {% if is_unlockable %}(<span class="clickable">{% trans "unlock" %}</span>){% endif %}
 
     {% if is_owner %}
         <ul>
          <li id="locked-extend-{{ lock_html_id }}" class="i16 lock_add image_submit_type">
-          <span id="locked-extend-message-{{ lock_html_id }}" class="clickable">
-            {% blocktrans count locks_lifetime as hours %}
-                Extend lock by {{hours}} hour.
-            {% plural %}
-                Extend lock by {{hours}} hours.
-            {% endblocktrans %}
+          <span id="locked-extend-message-{{ lock_html_id }}" class="clickable tipsy_enable" title="{% trans "Click to renew your lock for a fresh period of time." %}">
+            {% blocktrans count locks_lifetime as hours %}Extend lock by {{hours}} hour.{% plural %}Extend lock by {{hours}} hours.{% endblocktrans %}
           </span>
          </li>
         </ul>
-        {% tooltip "locked-extend-message" lock_html_id %}
-            <span class="bold">{% blocktrans %}Click on it to extend your lock expiration.{% endblocktrans %}</span>
-        {% endtooltip %}
     {% endif %}
     </li>
 {% else %}
