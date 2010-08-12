@@ -12,6 +12,7 @@ of the app actually does not do anything, as it is empty.
 class Migration(SchemaMigration):
 
     depends_on = (
+        ("projects", "0001_initial"),
         ("releases", "0001_initial"),
     )
 

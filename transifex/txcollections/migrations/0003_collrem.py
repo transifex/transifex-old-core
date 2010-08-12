@@ -4,7 +4,11 @@ from django.db import models
 from txcollections.models import *
 
 class Migration:
-    
+
+    depends_on = (
+        ("projects", "0001_initial"),
+    )
+
     def forwards(self, orm):
         
         # Deleting model 'collectionrelease'
