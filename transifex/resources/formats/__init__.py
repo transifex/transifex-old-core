@@ -17,7 +17,7 @@ def get_i18n_type_from_file(filename):
     i18n_type = None
 
     for type, info in settings.I18N_METHODS.items():
-        if filter(filename.endswith, type):
+        if filter(filename.endswith, info['file-extensions'].split(', ')):
             i18n_type = type
             break
     
