@@ -249,8 +249,8 @@ class ProjectResourceHandler(BaseHandler):
                     txnotification.send_observation_notices_for(project,
                             signal=nt, extra_context=context)
 
-                return HttpResponse(simplejson.dumps(retval),
-                    mimetype='application/json')
+                return HttpResponse(simplejson.dumps(retval), 
+                    mimetype='text/plain')
 
             else:
                 return rc.BAD_REQUEST
