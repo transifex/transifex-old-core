@@ -64,7 +64,7 @@ class Resource(models.Model):
         blank=True, null=True,
         help_text=_("A local file used to extract the strings to be "
                     "translated."))
-    i18n_type = models.CharField(_('I18n type'), max_length=20,
+    i18n_type = models.CharField(_('I18n type'), max_length=64,
         choices=settings.I18N_METHODS.items(),
         help_text=_("The type of i18n method used in this resource (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
