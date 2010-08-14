@@ -86,9 +86,7 @@ class Resource(models.Model):
         return "<Resource: %s>" % self.slug
 
     class Meta:
-        # FIXME: Either name or slug should be unique.
-        unique_together = (('name', 'project'),
-                           ('slug', 'project'),)
+        unique_together = ('slug', 'project',)
         verbose_name = _('resource')
         verbose_name_plural = _('resources')
         ordering  = ['name',]
