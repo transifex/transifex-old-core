@@ -27,7 +27,7 @@ $(document).ready(function(){
                 window.location = data['redirect'];
             },
             error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(errorThrown);
+                alert(XMLHttpRequest.responseText);
             },
             complete: function(XMLHttpRequest, textStatus){
                 $("div#notification-container").fadeOut("slow");
