@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import operator
 from datetime import datetime
+from itertools import groupby
 from django.db import models
 from django.db.models import permalink
 from django.template.defaultfilters import dictsort, dictsortreversed
 from django.utils.translation import ugettext_lazy as _
-from django.utils.itercompat import groupby
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from languages.models import Language

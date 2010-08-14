@@ -6,8 +6,9 @@ Called when in a project the submissions are enabled to maintainers email.
 
 import re
 import traceback
+from email.MIMEBase import MIMEBase
 from django.conf import settings
-from django.core.mail import EmailMessage, MIMEBase
+from django.core.mail import EmailMessage
 from django.template import loader, Context
 from django.contrib.sites.models import Site
 from transifex.txcommon.log import logger
