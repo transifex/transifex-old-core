@@ -187,8 +187,8 @@ class ProjectResourceHandler(BaseHandler):
                 storagefile = StorageFile.objects.get(uuid=uuid)
 
                 resource, created = Resource.objects.get_or_create(
-                        slug = "resource-%s" % (slugify(storagefile.name)),
-                        name = "Translations of '%s'" % storagefile.name,
+                        slug = slugify(storagefile.name),
+                        name = storagefile.name,
                         source_language = storagefile.language,
                         project = project,
                 )
