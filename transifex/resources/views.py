@@ -287,15 +287,6 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-def not_available(request, project_slug, lang_code, resource_slug = None):
-    """
-    View to inform the user when the lotte addon is not available that
-    online translations are not supported.
-    """
-
-    return render_to_response("not_available.html",
-                              context_instance = RequestContext(request))
-
 def get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     View to export all translations of a resource for the requested language

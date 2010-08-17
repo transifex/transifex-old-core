@@ -39,11 +39,6 @@ urlpatterns += patterns('',
         resource_translations_delete, name='resource_translations_delete'),
     url(RESOURCE_URL_PARTIAL+r'l/(?P<target_lang_code>[-\w]+)/actions/$',
         resource_actions, name='resource_actions'),
-
-    #FIXME: Change this to ONLY include which works 100%. No placeholders.
-    # Overrides for N/A views
-    url(RESOURCE_LANG_URL_PARTIAL+'$', not_available, name='translate_project'),
-    url(RESOURCE_LANG_URL_PARTIAL+'$', not_available, name='translate'),
-    url(RESOURCE_LANG_URL_PARTIAL+'view/$', not_available, name='view_strings'),
-    url(RESOURCE_LANG_URL_PARTIAL+'download/$', get_translation_file, name='download_translation'),
+    url(RESOURCE_LANG_URL_PARTIAL+'download/$',
+        get_translation_file, name='download_translation'),
 )
