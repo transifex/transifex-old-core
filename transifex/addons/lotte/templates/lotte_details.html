@@ -21,9 +21,9 @@
 </ul>
 
 <ul class="simple contexts " style="display: block; float: left; min-width: 350px;">
-  <li title="Key" class="i16 key" style="margin-top:0"><label>Key:</label> <span>{{ key }}</span></li>
-  <li title="Description" class="i16 tag"><label>Description:</label> <span>{% if context %}{{ context }}{% else %}{% trans "No description available" %}{% endif %}</span></li>
-  <li title="Occurences" class="i16 file_search"><label>Occurrences:</label> <span>{% if occurrences %}{{ occurrences }}{% else %}{% trans "No occurrences available" %}{% endif %}</span></li>
+  <li title="Key" class="i16 key" style="margin-top:0"><label>Key:</label> <span>{{ source_entity.string }}</span></li>
+  <li title="Description" class="i16 tag"><label>Description:</label> <span>{% if source_entity.context %}{{ source_entity.context }}{% else %}{% trans "No description available" %}{% endif %}</span></li>
+  <li title="Occurences" class="i16 file_search"><label>Occurrences:</label> <span>{% if source_entity.occurrences %}{{ source_entity.occurrences }}{% else %}{% trans "No occurrences available" %}{% endif %}</span></li>
 </ul>
 
 </div>

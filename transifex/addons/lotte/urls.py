@@ -13,7 +13,6 @@ PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[-\w]+)/'
 urlpatterns = patterns('',
     # Project-wide Lotte
     url(PROJECT_LANG_URL+'$', translate, name='translate'),
-    url(PROJECT_LANG_URL+'details/$', get_details, name='get_details'),
     url(PROJECT_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
     url(PROJECT_LANG_URL+'push/$', push_translation, name='push_translation'),
     url(PROJECT_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
@@ -27,7 +26,6 @@ RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[-\w]+)/'
 urlpatterns += patterns('',
     # Resource-specific Lotte
     url(RESOURCE_LANG_URL+'$', translate, name='translate'),
-    url(RESOURCE_LANG_URL+'details/$', get_details, name='get_details'),
     url(RESOURCE_LANG_URL+'view/$', view_strings, name='view_strings'),
 #    url(RESOURCE_URL+r'l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
     url(RESOURCE_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
@@ -35,3 +33,10 @@ urlpatterns += patterns('',
     url(RESOURCE_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
     url(RESOURCE_LANG_URL+'exit/$', exit, name='exit_lotte'),
 )
+
+# General URLs
+
+urlpatterns += patterns('',
+    url('^entities/(?P<entity_id>\d+)/$',
+        entity_details_snippet, name='entity_details_snippet'),
+

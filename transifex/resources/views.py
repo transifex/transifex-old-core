@@ -57,7 +57,7 @@ def search_translation(request):
                     target_code=target_lang)
         result_count = len(results)
 
-    return render_to_response("search_translation.html",
+    return render_to_response("resources/search_translation.html",
                               {'languages': Language.objects.all(),
                                'query': query_string, 
                                'terms': search_terms, 
@@ -84,7 +84,7 @@ def resource_detail(request, project_slug, resource_slug):
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
-    return render_to_response("resource.html",
+    return render_to_response("resources/resource.html",
         { 'project' : resource.project,
           'resource' : resource,
           'languages' : Language.objects.order_by('name'),
@@ -117,7 +117,7 @@ def resource_delete(request, project_slug, resource_slug):
                                     args=[resource.project.slug]),)
     else:
         return render_to_response(
-            'resource_confirm_delete.html', {'resource': resource,},
+            'resources/resource_confirm_delete.html', {'resource': resource,},
             context_instance=RequestContext(request))
 
 
@@ -157,7 +157,7 @@ def resource_edit(request, project_slug, resource_slug):
 
         resource_form = ResourceForm(instance=resource)
 
-    return render_to_response('resource_form.html', {
+    return render_to_response('resources/resource_form.html', {
         'resource_form': resource_form,
         'resource': resource,
     }, context_instance=RequestContext(request))
@@ -180,7 +180,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     # Get the team if exists to use it for permissions and links
     team = Team.objects.get_or_none(project, target_lang_code)
 
-    return render_to_response("resource_actions.html",
+    return render_to_response("resources/resource_actions.html",
     { 'project' : project,
       'resource' : resource,
       'target_language' : target_language,
@@ -210,7 +210,7 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     if more and (not end_index >= total):
         resources = resources[begin:end_index]
 
-    return render_to_response("resource_list_more.html",
+    return render_to_response("resources/resource_list_more.html",
     { 'project' : project,
       'resources' : resources,},
     context_instance = RequestContext(request))

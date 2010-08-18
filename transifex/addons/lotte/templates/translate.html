@@ -53,16 +53,9 @@
     var resource_filters_values = null;
     var more_languages_values = null;
     /* url for details requests */
-    {% if resource %} 
-    var details_url = "{% url get_details project.slug resource.slug target_language.code %}";
-    {% else %}
-    var details_url = "{% url get_details project.slug target_language.code %}";
-    {% endif %}
-    {% if resource %} 
-    var suggestions_url = "{% url get_suggestions project.slug resource.slug target_language.code %}";
-    {% else %}
-    var suggestions_url = "{% url get_suggestions project.slug target_language.code %}";
-    {% endif %}
+    /* FIXME: Find a more clever way to do this resolving. */
+    var entity_details_urlp_tmpl = "{% url entity_details_snippet 1111111111 %}";
+    var entity_suggestions_urlp_tmpl = "{% url entity_suggestions_snippet 1111111111 %}";
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
 

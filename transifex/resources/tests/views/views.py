@@ -26,7 +26,7 @@ class CoreViewsTest(ViewsBaseTest):
             'translate', args=[self.project.slug,
             self.resource.slug,self.language.code]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'translate.html')
+        self.assertTemplateUsed(resp, 'resources/translate.html')
 
     def test_stringset_handling(self):
         """
@@ -44,7 +44,7 @@ class CoreViewsTest(ViewsBaseTest):
         resp = self.client['maintainer'].get(reverse('resource_detail',
             args=[self.project.slug, self.resource.slug]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource.html')
 
         # response.context[-1] holds our extra_context. maybe we should check
         # some of these to make sure they're there?
@@ -69,7 +69,7 @@ class CoreViewsTest(ViewsBaseTest):
         resp = self.client['maintainer'].post(reverse('resource_actions',
             args=[self.project.slug, self.resource.slug, self.language.code]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resource_actions.html')
+        self.assertTemplateUsed(resp, 'resources/resource_actions.html')
 
     def test_project_resources(self):
         """
@@ -79,7 +79,7 @@ class CoreViewsTest(ViewsBaseTest):
         resp = self.client['maintainer'].get(reverse('project_resources',
             args=[self.project.slug, 0]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resource_list_more.html')
+        self.assertTemplateUsed(resp, 'resources/resource_list_more.html')
         for r in Resource.objects.filter(project=self.project)[0:4]:
             self.assertTrue(r.slug in resp.content)
 
@@ -105,7 +105,7 @@ class CoreViewsTest(ViewsBaseTest):
         # Create new translation 
         # FIXME: Test plurals
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, trans_lang]),
+            args=[self.project.slug, trans_lang]),
             json.dumps({'strings':[{'id':self.source_entity.id,'translations':{'other':trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
@@ -114,7 +114,7 @@ class CoreViewsTest(ViewsBaseTest):
 
         # Update existing translation
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, trans_lang]),
+            args=[self.project.slug, trans_lang]),
             json.dumps({'strings':[{'id': self.source_entity.id,
                 'translations':{'other':new_trans}}]}),
             content_type='application/json')
@@ -128,11 +128,10 @@ class CoreViewsTest(ViewsBaseTest):
         """
         Tranlsation details view
         """
-        resp = self.client['maintainer'].post(reverse('get_details',
-            args=[self.project.slug,self.resource.slug]),
-            {'source_id':self.source_entity.id})
+        resp = self.client['maintainer'].post(reverse('entity_details_snippet',
+            args=[self.source_entity.id]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'lotte_details.html')
+        self.assertTemplateUsed(resp, 'resources/lotte_details.html')
         self.assertTrue(self.source_entity.occurrences in resp.content)
         self.assertTrue(self.source_entity.string in resp.content)
 
@@ -143,7 +142,7 @@ class CoreViewsTest(ViewsBaseTest):
         trans = "foo"
         # Create new translation
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug,self.language.code]),
+            args=[self.project.slug, self.language.code]),
             json.dumps({'strings':[{'id':self.source_entity.id,
                 'translations': { 'other': trans}}]}),
             content_type='application/json')

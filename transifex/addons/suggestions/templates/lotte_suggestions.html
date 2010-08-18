@@ -51,7 +51,8 @@ $(document).ready(function(){
                     var source_id = {{ source_entity.id }};
 
                     // Get the details and inject them.
-                    metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                    var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                    metatr.find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
                         if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);
@@ -120,7 +121,8 @@ $(document).ready(function(){
                         var source_id = {{ source_entity.id }};
 
                         // Get the details and inject them.
-                        metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                        var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                        metatr.find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
                           if (status == "error") {
                             var msg = "Sorry but there was an error: ";
                             alert(msg + xhr.status + " " + xhr.statusText);
