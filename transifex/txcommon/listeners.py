@@ -23,6 +23,7 @@ def add_user_to_registered_group(sender, **kwargs):
     This signal also creates a public profile for the user if it does not exist.
     """
     if 'created' in kwargs and kwargs['created'] is True: 
+
         user = kwargs['instance']
 
         # Add user to registered group
@@ -35,6 +36,7 @@ def add_user_to_registered_group(sender, **kwargs):
         try:
             profile, created = Profile.objects.get_or_create(user=user)
             profile.save()
+            transaction.commit()
         except:
             logger.debug("User profile not created.")
             transaction.rollback()

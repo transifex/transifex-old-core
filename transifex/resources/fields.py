@@ -25,14 +25,11 @@ fetching'''
             value = base64.encodestring(compress_string(value))
         return models.TextField.get_db_prep_save(self, value)
  
-    def _get_val_from_obj(self, obj):
-        if obj.id:
-            # We need to do the decoding because blog/bytea in the db screw the
-            # encoding
-            return uncompress_string(base64.decodestring(getattr(obj,self.attname)))
-        else:
-            return self.get_default() 
-    
+    def to_python(self, value):
+        if value is not None:
+            value = uncompress_string(base64.decodestring(getattr(obj,self.attname)))
+        return models.TextField.to_python(self, value)
+
     def post_init(self, instance=None, **kwargs):
         value = self._get_val_from_obj(instance)
         if value:
