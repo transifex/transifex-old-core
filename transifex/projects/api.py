@@ -185,13 +185,20 @@ class ProjectResourceHandler(BaseHandler):
                 uuid = request.data['uuid']
                 project = Project.objects.get(slug=project_slug)
                 storagefile = StorageFile.objects.get(uuid=uuid)
+                resource_slug = None
+                if "slug" in request.data:
+                    resource_slug = request.data['slug']
 
                 resource, created = Resource.objects.get_or_create(
-                        slug = slugify(storagefile.name),
-                        name = storagefile.name,
+                        slug = resource_slug or slugify(storagefile.name),
                         source_language = storagefile.language,
-                        project = project,
+                        project = project
                 )
+
+                if created:
+                    resource.name = resource_slug or storagefile.name
+                    resource.save()
+
                 # update i18n_type
                 i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
                 if not i18n_type:

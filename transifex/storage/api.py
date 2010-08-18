@@ -60,7 +60,7 @@ class StorageHandler(BaseHandler):
         API call for uploading a file via POST or updating storage file attributes
         """
         if "application/json" in request.content_type: # Do API calls
-            if request.data.keys() == ['language'] and uuid: # API call for changing language
+            if 'language' in request.data.keys() and uuid: # API call for changing language
                 lang_code = request.data['language'] # TODO: Sanitize
                 try:
                     sf = StorageFile.objects.get(uuid = uuid)
@@ -94,7 +94,7 @@ class StorageHandler(BaseHandler):
                 # FIXME we should fix this for client calls
                 if not request.user.is_anonymous():
                     sf.user = request.user
-                if request.data.keys() == ['language']:
+                if 'language' in request.data.keys():
                     lang_code = request.data['language']
                     try:
                         sf.language =  Language.objects.by_code_or_alias(lang_code)
