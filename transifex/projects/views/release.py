@@ -85,7 +85,7 @@ def release_delete(request, project_slug, release_slug):
         release_ = copy.copy(release)
         release.delete()
         request.user.message_set.create(
-            message=_("%s was deleted.") % release.full_name)
+            message=_("The release '%s' was deleted.") % release.full_name)
 
         # ActionLog & Notification
         nt = 'project_release_deleted'

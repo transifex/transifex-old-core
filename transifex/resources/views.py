@@ -111,7 +111,7 @@ def resource_delete(request, project_slug, resource_slug):
 
         # Signal for logging
         request.user.message_set.create(
-            message=_("The %s translation resource was deleted.") % resource_.name)
+            message=_("The translation resource '%s' was deleted.") % resource_.name)
 
         return HttpResponseRedirect(reverse('project_detail',
                                     args=[resource.project.slug]),)
@@ -271,8 +271,9 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 
         request.user.message_set.create(
             message=_("The translations of language %(lang)s for the resource "
-                      "%(resource)s were deleted successfully.") % (
-                          language.name, resource.name))
+                      "%(resource)s were deleted successfully.") % {
+                          'lang': language.name,
+                          'resource': resource.name})
 
         #TODO: Create the specific notice type and update all the other actions.
 

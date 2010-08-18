@@ -151,7 +151,7 @@ def project_delete(request, project_slug):
         project.delete()
 
         request.user.message_set.create(
-            message=_("The %s was deleted.") % project.name)
+            message=_("The project '%s' was deleted.") % project.name)
 
         # ActionLog & Notification
         nt = 'project_deleted'

@@ -243,7 +243,7 @@ def component_delete(request, project_slug, component_slug):
         component_ = copy.copy(component)
         component.delete()
         request.user.message_set.create(
-            message=_("The %s was deleted.") % component.full_name)
+            message=_("The component '%s' was deleted.") % component.full_name)
 
         # ActionLog & Notification
         nt = 'project_component_deleted'
