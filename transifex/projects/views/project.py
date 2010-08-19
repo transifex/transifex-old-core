@@ -169,6 +169,14 @@ def project_delete(request, project_slug):
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_detail(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
+
+    if not request.user.is_anonymous():
+        user_teams = Team.objects.filter(project=project).filter(
+             Q(coordinators=request.user)|
+             Q(members=request.user)).distinct(),
+    else:
+        user_teams = []
+
     return list_detail.object_detail(
         request,
         queryset = Project.objects.all(),
@@ -176,9 +184,7 @@ def project_detail(request, project_slug):
         template_object_name = 'project',
         extra_context= {
           'project_overview': True,
-          'user_teams' : Team.objects.filter(project=project).filter(
-             Q(coordinators=request.user)|
-             Q(members=request.user)).distinct(),
+          'user_teams': user_teams,
           'languages' : Language.objects.all(),
         })
 
