@@ -6,9 +6,11 @@ import traceback
 from optparse import make_option, OptionParser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import LabelCommand, CommandError
-
+from django.db import models
 from django_addons.autodiscover import autodiscover
-from projects.models import Project, Component
+
+Project = models.get_model("projects", "project")
+Component = models.get_model("projects", "component")
 
 _HELP_TEXT = """Refresh translation statistics of registered components.
 
@@ -44,7 +46,7 @@ class Command(LabelCommand):
     
     def __init__(self):
         autodiscover()
-        super(Command, self)
+        super(Command, self).__init__()
 
     def handle(self, *comps, **options):
         """Override default method to make it work without arguments."""
