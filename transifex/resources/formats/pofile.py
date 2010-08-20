@@ -296,6 +296,10 @@ class POHandler(Handler):
             pluralized = False
             same_nplural = True
 
+            # pass empty strings for non source files
+            if not ispot and entry.msgstr in ["", None]:
+                continue
+
             if entry.msgid_plural:
                 pluralized = True
                 if ispot:
