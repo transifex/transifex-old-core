@@ -153,7 +153,7 @@ class POHandler(Handler):
         os.unlink("/tmp/%s.tmp" % filename)
 
         # Update POFile Headers
-        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M+0000")
+        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but it's not being used by po
         # files. What should we do?
