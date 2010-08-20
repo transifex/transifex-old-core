@@ -23,7 +23,7 @@ class CoreViewsTest(ViewsBaseTest):
             'translate_resource', args=[
                 self.project.slug, self.resource.slug, self.language.code]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/translate.html')
+        self.assertTemplateUsed(resp, 'translate.html')
 
     def test_stringset_handling(self):
         """
@@ -126,9 +126,9 @@ class CoreViewsTest(ViewsBaseTest):
         Tranlsation details view
         """
         resp = self.client['maintainer'].post(reverse('entity_details_snippet',
-            args=[self.source_entity.id, self.language.code]))
+            args=[self.source_entity.id]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/lotte_details.html')
+        self.assertTemplateUsed(resp, 'lotte_details.html')
         self.assertTrue(self.source_entity.occurrences in resp.content)
         self.assertTrue(self.source_entity.string in resp.content)
 
