@@ -88,7 +88,7 @@
             data: '', /* Workaround for django-piston */
             complete: function(xmlhttpreq, status) {
 
-                var push_url = '{% url string_resource_pullfrom project.slug resource.slug target_language.code %}';
+                var push_url = '{% url string_resource_pullfrom project.slug target_language.code %}';
                 stringset = new StringSet(JSON.parse(xmlhttpreq.responseText), push_url, '{{request.LANGUAGE_CODE}}', '{{target_language.code}}');
 
                 /* Source and translated strings table */

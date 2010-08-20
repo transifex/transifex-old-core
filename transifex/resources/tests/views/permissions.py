@@ -22,8 +22,8 @@ class PermissionsTest(ViewsBaseTest):
         Test anonymous user
         """
         # Test main lotte page
-        page_url = reverse('translate', args=[self.project.slug,
-            self.resource.slug,self.language.code])
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
@@ -31,7 +31,7 @@ class PermissionsTest(ViewsBaseTest):
         trans = "foo"
         # Create new translation
         resp = self.client['anonymous'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, self.language.code,]),
+            args=[self.project.slug, self.language.code,]),
             json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 302)
@@ -53,15 +53,15 @@ class PermissionsTest(ViewsBaseTest):
         """
 
         # Test main lotte page
-        page_url = reverse('translate', args=[self.project.slug,
-            self.resource.slug,self.language.code])
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 403)
 
         trans = "foo"
         # Create new translation
         resp = self.client['registered'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, self.language.code,]),
+            args=[self.project.slug, self.language.code,]),
             json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 403)
@@ -83,28 +83,28 @@ class PermissionsTest(ViewsBaseTest):
         """
 
         # Test main lotte page
-        page_url = reverse('translate', args=[self.project.slug,
-            self.resource.slug,self.language.code])
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 200)
 
         # Test main lotte page for other team. This should fail
-        page_url = reverse('translate', args=[self.project.slug,
-            self.resource.slug,'el'])
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, 'el'])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 403)
 
         trans = "foo"
         # Create new translation
         resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, self.language.code,]),
+            args=[self.project.slug, self.language.code,]),
             json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
 
         # Create new translation in other team. Expect this to fail
         resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, 'el']),
+            args=[self.project.slug, 'el']),
             json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 403)
@@ -127,15 +127,15 @@ class PermissionsTest(ViewsBaseTest):
         """
 
         # Test main lotte page
-        page_url = reverse('translate', args=[self.project.slug,
-            self.resource.slug,self.language.code])
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
 
         trans = "foo"
         # Create new translation
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.resource.slug, self.language.code,]),
+            args=[self.project.slug, self.language.code,]),
             json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)

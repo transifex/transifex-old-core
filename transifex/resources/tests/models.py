@@ -40,3 +40,6 @@ class ResourcesModelTests(TestCase):
         
         """
         pass
+    
+    def test_sourcestring_get_translation_method(self):
+        raise NotImplementedError

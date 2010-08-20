@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
+from django.views.generic import list_detail
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
@@ -413,13 +414,14 @@ def _get_strings(query, target_lang_code, source_entity):
 # 4)superusers
 # CAUTION!!! WE RETURN 404 instead of 403 for security reasons
 @login_required
-def push_translation(request, project_slug, lang_code, resource_slug=None,
-                                  *args, **kwargs):
+def push_translation(request, project_slug, lang_code, *args, **kwargs):
     """
     Client pushes an id and a translation string.
 
     Id is considered to be of the source translation string and the string is
     in the target_lang.
+    
+    FIXME: Document in detail the form of the 'strings' POST variable.
     """
 
     # Permissions handling
@@ -491,32 +493,27 @@ def push_translation(request, project_slug, lang_code, resource_slug=None,
 
     return HttpResponse(status=200)
 
-# Restrict access only for private projects since this is used to fetch stuff!
+# FIXME: Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
-@one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
-def get_details(request, project_slug=None, resource_slug=None, lang_code=None):
-    """
-    Ajax view that returns a template snippet for translation details.
-    """
-
-    if not request.POST and request.POST.has_key('source_id'):
-        return HttpResponseBadRequest()
-
-    source_entity = get_object_or_404(SourceEntity, pk=request.POST['source_id'])
-
-    last_translations = Translation.objects.filter(source_entity=source_entity,
-        language__code=lang_code).order_by('-last_update')
-    last_translation = None
-    if last_translations:
-        last_translation = last_translations[0]
-
-    return render_to_response("lotte_details.html",
-    { 'key': source_entity.string,
-      'context': source_entity.context,
-      'occurrences': source_entity.occurrences,
-      'last_translation': last_translation },
-    context_instance = RequestContext(request))
+def entity_details_snippet(request, entity_id, lang_code="en"):
+    """Return a template snippet with entity details."""
+    #####
+    #FIXME: Move this code + last_translator template code to a template tag.
+    source_entity = get_object_or_404(SourceEntity, pk=entity_id)
+    try:
+        last_translation = Translation.objects.filter(
+            source_entity=source_entity, language__code=lang_code
+            ).order_by('-last_update')[0]
+    except IndexError:
+        last_translation = None
+    ####
+    
+    return list_detail.object_detail(request,
+        queryset=SourceEntity.objects.all(),
+        object_id=entity_id,
+        template_name="lotte_details.html",
+        template_object_name='source_entity',
+        extra_context={"last_translation" : last_translation})
 
 # Restrict access only to :
 # 1)project maintainers

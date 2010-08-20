@@ -24,9 +24,8 @@ $(document).ready(function(){
       // Post the new suggestion text
       $.ajax({
         type: 'POST',
-        url: '{% url suggestion_create project_slug resource_slug lang_code %}',
-        data: { 'source_id': {{ source_entity.id }},
-                'suggestion_string': suggestion_string },
+        url: '{% url entity_suggestion_create source_entity.id lang_code %}',
+        data: { 'suggestion_string': suggestion_string, },
         success: function(data) {
                     // Remove spinner
                     abutton.removeClass("action_go").addClass("tick");
@@ -51,7 +50,8 @@ $(document).ready(function(){
                     var source_id = {{ source_entity.id }};
 
                     // Get the details and inject them.
-                    metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                    var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                    metatr.find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
                         if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);
@@ -107,9 +107,8 @@ $(document).ready(function(){
         // Post the new suggestion text
         $.ajax({
             type: 'POST',
-            url: '{% url suggestion_vote_updown project_slug resource_slug lang_code %}',
-            data: { 'suggestion_id': suggestion_id,
-                    'vote_type': 'up' },
+            url: '{% url entity_suggestion_vote_up source_entity.id lang_code 1111111111 %}'.replace('1111111111', suggestion_id),
+            data: {},
             success: function(data) {
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
 
@@ -120,7 +119,8 @@ $(document).ready(function(){
                         var source_id = {{ source_entity.id }};
 
                         // Get the details and inject them.
-                        metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                        var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                        metatr.find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
                           if (status == "error") {
                             var msg = "Sorry but there was an error: ";
                             alert(msg + xhr.status + " " + xhr.statusText);
@@ -146,9 +146,8 @@ $(document).ready(function(){
         // Post the new suggestion text
         $.ajax({
             type: 'POST',
-            url: '{% url suggestion_vote_updown project_slug resource_slug lang_code %}',
-            data: { 'suggestion_id': suggestion_id,
-                    'vote_type': 'down' },
+            url: '{% url entity_suggestion_vote_down source_entity.id lang_code 1111111111 %}'.replace('1111111111', suggestion_id),
+            data: {},
             success: function(data) {
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
 
@@ -159,7 +158,8 @@ $(document).ready(function(){
                         var source_id = {{ source_entity.id }};
 
                         // Get the details and inject them.
-                        metatr.find("td.inject_here").load(suggestions_url, { 'source_id' : source_id }, function(response, status, xhr) {
+                        var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                        metatr.find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
                           if (status == "error") {
                             var msg = "Sorry but there was an error: ";
                             alert(msg + xhr.status + " " + xhr.statusText);
@@ -184,7 +184,7 @@ $(document).ready(function(){
   <span class='suggestions_help' class="i16 help" title="Click to learn how to use suggestions">&nbsp;</span>
   <div class="user_suggestions">
   {% if suggestions %}
-    <div class="title_line"><span class="title">USER SUGGESTIONS</span></div>
+    <div class="title_line"><span class="title">{% trans "User Suggestions" %}</span></div>
       {% for suggestion in suggestions %}
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
@@ -196,21 +196,21 @@ $(document).ready(function(){
         <div class="suggestion_text">{{ suggestion.string }}</div>
         <div class="suggestion_score">
           <a href='#' class="vote_up_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="Vote up for this translation suggestion! (click again to undo)" />
+            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="{% trans "Vote up for this translation suggestion (click again to undo)." %}" />
           </a>
-          <span class="score_value" title="The score of the suggestion! Indicator for the relevance of this translation.">{{ suggestion.integer_score }}</span>
+          <span class="score_value" title="{% trans "The score of the suggestion, indicating its popularity among translators." %}">{{ suggestion.score_rounded }}</span>
           <a href='#' class="vote_down_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="Vote down for this translation suggestion! (click again to undo)"/>
+            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="{% trans "Vote down for this translation suggestion (click again to undo)." %}"/>
           </a>
         </div>
         {% if current_translation %}
         {% ifequal current_translation.string suggestion.string %}
-          <div class="suggestion_select_current"><span><img title="This has been accepted as the current translation!" src="{{STATIC_URL}}images/icons/big_tick.png" /></span></div>
+          <div class="suggestion_select_current"><span><img title="{% trans "This is the currently accepted translation." %}" src="{{STATIC_URL}}images/icons/big_tick.png" /></span></div>
         {% else %}
-          <div class="suggestion_select_button"><a class="i16 smile buttonized2">Use this!</a></div>
+          <div class="suggestion_select_button"><a class="i16 smile buttonized2">{% trans "Use this!" %}</a></div>
         {% endifequal %}
         {% else %}
-          <div class="suggestion_select_button"><a class="i16 smile buttonized2">Use this!</a></div>
+          <div class="suggestion_select_button"><a class="i16 smile buttonized2">{% trans "Use this!" %}</a></div>
         {% endif %}
         <div style="padding:0;margin:0;clear:both"></div>
       </div>
@@ -218,17 +218,17 @@ $(document).ready(function(){
   <div class="clear">&nbsp;</div>
   {% endif %}
 
-    <div class="title_line"><span class="title">NEW SUGGESTION</span></div>
+    <div class="title_line"><span class="title">{% trans "New Suggestion" %}</span></div>
     <div class="suggestion_create">
       <div class="suggestion_user">
           <img class="border top" alt="{{ request.user }}" src="{% avatar 32 request.user %}" />
-          <span>You!</span>
+          <span>{% trans "You!" %}</span>
       </div>
       <div class="suggestion_textarea">
         <textarea id="new_suggestion_{{ source_entity.id }}"></textarea>
       </div>
       <div class="suggestion_button">
-        <a id="send_suggestion_{{ source_entity.id }}" class="i16 tick buttonized">Send suggestion!</a>
+        <a id="send_suggestion_{{ source_entity.id }}" class="i16 tick buttonized">{% trans "Send suggestion!" %}</a>
       </div>
     </div>
   </div>

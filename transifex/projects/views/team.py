@@ -179,7 +179,7 @@ def team_delete(request, project_slug, language_code):
         _team = copy.copy(team)
         team.delete()
         request.user.message_set.create(
-            message=_("The '%s' team was deleted.") % _team.language.name)
+            message=_("The team '%s' was deleted.") % _team.language.name)
 
         # ActionLog & Notification
         # TODO: Use signals

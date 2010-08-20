@@ -31,87 +31,69 @@ class Suggestion(models.Model):
 
     # Foreign Keys
     source_entity = models.ForeignKey(SourceEntity,
-        verbose_name=_('Source Entity'),
-        blank=False, null=False,
+        verbose_name=_('Source Entity'), blank=False, null=False,
+        related_name='suggestions',
         help_text=_("The source entity which is being translated by this"
                     "suggestion instance."))
 
     language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True,
+        verbose_name=_('Target Language'), blank=False, null=True,
         help_text=_("The language in which this suggestion string belongs to."))
-
-    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False,
-        help_text=_("The translation resource which owns the source string."))
 
     user = models.ForeignKey(User,
         verbose_name=_('User'), blank=False, null=True,
         help_text=_("The user who committed the specific suggestion."))
 
-    voters = models.ManyToManyField(User, through='Vote',
-        verbose_name=_('Voters'), blank=True, null=True, related_name='voters',
-        help_text=_("Users who has voted for this suggestion"))
-
-    #TODO: Managers
-
     def __unicode__(self):
         return self.string
 
     class Meta:
-        unique_together = (('source_entity', 'string_hash', 'language',
-            'resource'),)
+        unique_together = ('source_entity', 'language', 'string_hash',)
         verbose_name = _('suggestion')
-        verbose_name_plural = _('suggestion')
+        verbose_name_plural = _('suggestions')
         ordering  = ('-score',)
         order_with_respect_to = 'source_entity'
+        get_latest_by = "created"
 
     def vote_up(self, user):
-        vote, created = Vote.objects.get_or_create(user=user, suggestion=self,
-            defaults={ 'vote_type': True })
-        if created:
-            self.score += 1
-            self.save()
-        else:
-            # Undo the previous choice
-            if vote.vote_type==True:
-                vote.delete()
-                self.score -= 1
-                self.save()
-            # Changed opinion and votes up instead of down.
-            else:
-                vote.vote_type = True
-                vote.save()
-                self.score += 2
-                self.save()
-
-    def vote_down(self, user):
-        vote, created = Vote.objects.get_or_create(user=user, suggestion=self,
-            defaults={ 'vote_type': False })
-        if created:
-            self.score -= 1
-            self.save()
-        else:
-            # Undo the previous choice
-            if vote.vote_type==False:
-                vote.delete()
+        try:
+            existing_vote = self.votes.get(user=user)
+            if existing_vote.vote_type == False:
+                existing_vote.delete()
                 self.score += 1
                 self.save()
-            # Changed opinion and votes up instead of down.
-            else:
-                vote.vote_type = False
-                vote.save()
-                self.score -= 2
+        except Vote.DoesNotExist:
+            vote = self.votes.create(user=user, vote_type=True)
+            self.score += 1
+            self.save()
+
+
+    def vote_down(self, user):
+        try:
+            existing_vote = self.votes.get(user=user)
+            if existing_vote.vote_type == True:
+                existing_vote.delete()
+                self.score -= 1
                 self.save()
+        except Vote.DoesNotExist:
+            vote = self.votes.create(user=user, vote_type=False)
+            self.score -= 1
+            self.save()
+
+
+    def get_vote_or_none(self, user):
+        try:
+            self.votes.get(user=user)
+        except Vote.DoesNotExist:
+            return None
 
     @property
-    def integer_score(self):
+    def score_rounded(self):
+        """Return a nice, rounded (integer) version of the score."""
         return int(self.score)
 
     def save(self, *args, **kwargs):
-        """
-        Do some exra processing before the actual save to db.
-        """
-        # encoding happens to support unicode characters
+        # Encoding happens to support unicode characters
         self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
         super(Suggestion, self).save(*args, **kwargs)
 
@@ -122,9 +104,11 @@ class Vote(models.Model):
     """
     suggestion = models.ForeignKey(Suggestion,
         verbose_name=_('Suggestion'), blank=False, null=False,
+        related_name='votes',
         help_text=_("The suggestion which is being voted."))
     user = models.ForeignKey(User,
         verbose_name=_('User'), blank=False, null=False,
+        related_name='votes',
         help_text=_("The user who voted the specific suggestion."))
 
      # False = -1, True = +1

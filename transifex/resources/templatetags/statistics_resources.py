@@ -106,7 +106,7 @@ def untranslated(obj, lang_code=None):
         return obj.num_untranslated()
     return obj.num_untranslated(lang_code)
 
-@register.inclusion_tag("stats_bar_simple.html")
+@register.inclusion_tag("resources/stats_bar_simple.html")
 def stats_bar_simple(stat, lang_code=None, width=100):
     """
     Create a HTML bar to present the statistics of an object. 
@@ -126,7 +126,7 @@ def stats_bar_simple(stat, lang_code=None, width=100):
                                       ('untrans', untrans_percent)], width),
             'width':width}
 
-@register.inclusion_tag("stats_bar_actions.html")
+@register.inclusion_tag("resources/stats_bar_actions.html")
 def stats_bar_actions(stat, lang_code=None, width=100):
     """
     Create a HTML bar to present the statistics of an object. 

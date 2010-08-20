@@ -156,3 +156,25 @@ class BaseTestCase(TestCase):
                  found = True
         self.assertTrue(found, msg = "Notice type '%s' wasn't "
             "added" % noticetype_label)
+
+    #FIXME: Port all status checks to this method.
+    def assert_url_statuses(self, pages_dict, client):
+        """Test whether a list of URLs return the correct status codes.
+       
+        'pages_dict':
+          A dictionary of status codes, each one listing a
+          set of pages to test whether they return that status code.
+        'client': A django.test.client.Client object.
+        
+        >>> pages = {200: ['/', '/projects/',],
+                     404: ['/foobar'],}
+        >>> self.assert_url_statuses(pages, self.client["anonymous"])
+        
+        """        
+        
+        for expected_code, pages in pages_dict.items():
+            for page_url in pages:
+                page = client.get(page_url)
+                self.assertEquals(page.status_code, expected_code,
+                    "Status code for page '%s' was %s instead of %s" %
+                    (page_url, page.status_code, expected_code))
