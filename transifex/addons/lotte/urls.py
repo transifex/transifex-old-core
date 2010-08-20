@@ -8,7 +8,7 @@ from resources.urls import RESOURCE_URL
 
 # Project-language URLs
 # Prefix example: /projects/p/<project_slug>/l/<lang_code>/
-PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[-\w]+)/'
+PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[-_@\w]+)/'
 
 urlpatterns = patterns('',
     # Project-wide Lotte
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 
 # Resource-language URLs
 # Prefix example: /projects/p/<project_slug>/resource/<resource_slug>/l/<lang_code>/
-RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[-\w]+)/'
+RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[-_@\w]+)/'
 
 urlpatterns += patterns('',
     # Resource-specific Lotte
