@@ -31,7 +31,7 @@ fetching'''
             # the encoding
             return uncompress_string(base64.decodestring(getattr(obj,self.attname)))
         else:
-            return self.get_default
+            return self.get_default()
 
     def to_python(self, value):
         if value is not None:
