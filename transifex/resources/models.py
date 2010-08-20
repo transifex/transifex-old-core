@@ -400,6 +400,13 @@ class SourceEntity(models.Model):
         self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
         super(SourceEntity, self).save(*args, **kwargs)
 
+    def get_translation(self, lang_code, rule=5):
+        """Return the current active translation for this entity."""
+        try:
+            return self.translations.get(language__code=lang_code, rule=rule)
+        except Translation.DoesNotExist:
+            return None
+
 
 class TranslationManager(models.Manager):
     def by_source_entity_and_language(self, string,
@@ -474,6 +481,7 @@ class Translation(models.Model):
     # A source string must always belong to a resource
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
+        related_name='translations',
         blank=False, null=False,
         help_text=_("The source string which is being translated by this"
                     "translation string instance."))

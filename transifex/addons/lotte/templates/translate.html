@@ -1,4 +1,5 @@
-{% extends "resource.html" %}
+{# FIXME: Do not extend from resources #}
+{% extends "resources/resource.html" %}
 {% load i18n %}
 {% load permissions %}
 {% load txcommontags %}
@@ -55,7 +56,7 @@
     /* url for details requests */
     /* FIXME: Find a more clever way to do this resolving. */
     var entity_details_urlp_tmpl = "{% url entity_details_snippet 1111111111 %}";
-    var entity_suggestions_urlp_tmpl = "{% url entity_suggestions_snippet 1111111111 %}";
+    var entity_suggestions_urlp_tmpl = "{% url entity_suggestions_snippet 1111111111 target_language.code %}";
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
 
@@ -215,11 +216,7 @@
                   "complete": function(xmlhttpreq, status) {
 
                     var parsed_data = JSON.parse(xmlhttpreq.responseText);
-                    {% if resource %}
-                    var push_url = '{% url push_translation project.slug resource.slug target_language.code %}';
-                    {% else %}
                     var push_url = '{% url push_translation project.slug target_language.code %}';
-                    {% endif %}
                     if ( stringset ) {    
                         // Modified strings should be saved or dropped on page change.
                         translated = stringset.translated// - stringset.translated_modified;

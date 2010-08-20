@@ -130,3 +130,4 @@ def convert_url_roles(url_with_roles_as_key):
         for url in urls:
             url_keys.update({url:user_roles_dict})
     return url_keys
+

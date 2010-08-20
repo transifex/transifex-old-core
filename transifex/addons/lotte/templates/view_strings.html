@@ -1,9 +1,10 @@
-{% extends "resource.html" %}
+{# FIXME: Lotte should not inherit from resource #}
+{% extends "resources/resource.html" %}
 {% load i18n %}
 
 {% block breadcrumb %}
 {{block.super}} » 
-<a href="{% url translate project.slug resource.slug target_language.code %}">{{ target_language.name }}</a>
+<a href="{% url translate_resource project.slug resource.slug target_language.code %}">{{ target_language.name }}</a>
 {% endblock %}
 
 

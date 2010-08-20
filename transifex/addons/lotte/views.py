@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
+from django.views.generic import list_detail
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
@@ -492,11 +493,10 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
     return HttpResponse(status=200)
 
-# Restrict access only for private projects since this is used to fetch stuff!
+# FIXME: Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
 def entity_details_snippet(request, entity_id, lang_code="en"):
     """Return a template snippet with entity details."""
-    
     #####
     #FIXME: Move this code + last_translator template code to a template tag.
     source_entity = get_object_or_404(SourceEntity, pk=entity_id)
@@ -508,10 +508,12 @@ def entity_details_snippet(request, entity_id, lang_code="en"):
         last_translation = None
     ####
     
-    return list_detail.object_list(
-        "queryset" : SourceEntity.objects.all(),
-        "template_object_name" : "source_entity",
-        "extra_context" : {"last_translation" : last_translation}
+    return list_detail.object_detail(request,
+        queryset=SourceEntity.objects.all(),
+        object_id=entity_id,
+        template_name="lotte_details.html",
+        template_object_name='source_entity',
+        extra_context={"last_translation" : last_translation})
 
 # Restrict access only to :
 # 1)project maintainers

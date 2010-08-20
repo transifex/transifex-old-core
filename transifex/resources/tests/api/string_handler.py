@@ -35,7 +35,7 @@ class StringHandlerTests(APIBaseTests):
         client = Client()
 
         # Create resource with initial strings to test GET
-        resp = client.post(self.resource_handler_url,json.dumps(self.data),
+        resp = client.post(self.resource_handler_url, json.dumps(self.data),
                                 content_type='application/json',
                                 HTTP_AUTHORIZATION=auth_string)
         self.assertEqual(resp.status_code, 201)
@@ -45,12 +45,12 @@ class StringHandlerTests(APIBaseTests):
         # Check that we got all translation strings
         self.assertEqual(len(json_data['strings']),
                             Translation.objects.filter(
-                            resource__slug = self.data['resource'],
+                            resource__slug = self.resource,
                             language__code = self.data['language']).count())
 
         self.assertTrue(self.data['language'] in response.content)
         for t in Translation.objects.filter(
-                        resource__slug = self.data['resource'],
+                        resource__slug = self.resource,
                         language__code = self.data['language']):
             self.assertTrue(t.string in response.content)
             self.assertTrue(t.source_entity.context in response.content)
