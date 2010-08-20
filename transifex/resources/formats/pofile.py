@@ -170,7 +170,7 @@ class POHandler(Handler):
         if self.resource.last_committer:
             u = self.resource.last_committer
             po.metadata['Last-Translator'] = ("%s <%s>" %
-                (u.get_full_name() or u.username % u.email))
+                (u.get_full_name() or u.username , u.email))
 
         for entry in po:
             if entry.msgid_plural:
