@@ -60,7 +60,8 @@ def msgfmt_check(po_contents, with_exceptions=True):
         status, stdout, stderr = run_command(command, _input=po_contents,
             with_extended_output=True, with_exceptions=with_exceptions)
         # Not sure why msgfmt sends its output to stderr instead of stdout
-        if 'warning:' in stderr or 'too many errors, aborting' in stderr:
+        #if 'warning:' in stderr or 'too many errors, aborting' in stderr:
+        if 'too many errors, aborting' in stderr:
             raise CommandError(command, status, stderr)
     except CommandError:
         logger.debug("pofile: The 'msgfmt -c' check failed.")
@@ -295,6 +296,10 @@ class POHandler(Handler):
         for entry in pofile:
             pluralized = False
             same_nplural = True
+            
+            # treat fuzzy translation as nonexistent
+            if "fuzzy" in  entry.flags:
+                entry.msgstr = ""
 
             # pass empty strings for non source files
             if not ispot and entry.msgstr in ["", None]:
