@@ -228,8 +228,10 @@ class ProjectResourceHandler(BaseHandler):
                         messages.append(_("%i strings added") % strings_added)
                     if strings_updated > 0:
                         messages.append(_("%i strings updated") % strings_updated)
-                    request.user.message_set.create(
-                        message=",".join(messages))
+#FIXME: Show this only if the user is logged in etc, not when strings are pushed
+#from the CLI.
+#                    request.user.message_set.create(
+#                        message=",".join(messages))
                 retval= {
                     'strings_added': strings_added,
                     'strings_updated': strings_updated,
