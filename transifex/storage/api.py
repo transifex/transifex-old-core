@@ -134,8 +134,11 @@ class StorageHandler(BaseHandler):
             if not retval:
                 retval=dict(status='Created', files=files,
                     message=_("File uploaded successfully."))
+                status = 200
+            else:
+                status = 400
 
             return HttpResponse(simplejson.dumps(retval),
-                    mimetype='text/plain')
+                    mimetype='text/plain', status=status)
         else: # Unknown content type/API call
             return rc.BAD_REQUEST
