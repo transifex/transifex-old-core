@@ -185,7 +185,7 @@ class POTManager(TransManagerMixin):
         """
         Return a list with the source files (pot) paths 
 
-        Try to find it in the file_set passed to the PO file instace. 
+        Try to find it in the file_set passed to the PO file instance.
         If it still fails, try to find the POT file in the filesystem.
         """
         pofiles=[]
