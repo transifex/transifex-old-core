@@ -24,7 +24,7 @@ def msgfmt_error_send_mail(component, user, submitted_file, attachments,
     """
     Send an e-mail to the user with submitted_file concerning component.
 
-    This funcation handles the case where a file is submitted which
+    This function handles the case where a file is submitted which
     does not pass correctness checks. To avoid losing work, the file
     will be emailed to the user as an attachment.
 
