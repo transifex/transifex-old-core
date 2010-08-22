@@ -14,7 +14,7 @@ class Release(models.Model):
     small) on a particular date, for which makes sense to track
     translations across the whole release.
     
-    Examples of Releases is GNOME 2.26, Fedora 10, PackageKit 0.3 etc.
+    Examples of Releases is GNOME 2.26, Fedora 10, PackageKit 0.3, etc.
     """
 
     slug = models.SlugField(_('Slug'), max_length=30,

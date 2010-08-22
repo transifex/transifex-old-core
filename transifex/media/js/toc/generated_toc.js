@@ -14,7 +14,7 @@
     the same element as it itself is contained in (or all headings on the
     page if you did not provide a generated-toc container). To override this,
     provide a "highest heading" value by adding class="generate_from_h3"
-    (or h2, h4, etc) to the container. (If unspecified, this will display all
+    (or h2, h4, etc.) to the container. (If unspecified, this will display all
     headings, as if class="generate_from_h1" was specified.)
     
     The TOC defaults to operating only on headings contained within the same
@@ -90,7 +90,7 @@ generated_toc = {
     }
     
     // get headings. We can't say 
-    // getElementsByTagName("h1" or "h2" or "h3"), etc, so get all
+    // getElementsByTagName("h1" or "h2" or "h3"), etc., so get all
     // elements and filter them ourselves
     // need to use .all here because IE doesn't support gEBTN('*')
     nodes = top_node.all ? top_node.all : top_node.getElementsByTagName('*');

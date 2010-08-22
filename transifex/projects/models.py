@@ -530,7 +530,7 @@ class Release(models.Model):
     small) on a particular date, for which makes sense to track
     translations across the whole release.
     
-    Examples of Releases is Transifex 1.0, GNOME 2.26, Fedora 10 etc.
+    Examples of Releases is Transifex 1.0, GNOME 2.26, Fedora 10, etc.
     """
 
     slug = models.SlugField(_('Slug'), max_length=30,

@@ -16,7 +16,7 @@ class BrowserMixinBase:
     Implement Filesystem-based type-agnostic browser functionality.
 
     This mixin class provides methods for reading and saving
-    files, creating diffs etc. that can be used directly in 
+    files, creating diffs, etc. that can be used directly in
     any directory in the filesystem.
 
     """
@@ -141,7 +141,7 @@ class BrowserMixin(BrowserMixinBase):
     Implement VCS-type-agnostic browser functionality.
 
     This mixin class provides methods for reading and saving
-    files, from the server filesystem, creating diffs etc.
+    files, from the server filesystem, creating diffs, etc.
     It is inherited by the type-specific classes, and its
     methods are common to all types which use a checkout
     directory on the local file system.
