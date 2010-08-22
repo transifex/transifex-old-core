@@ -45,20 +45,20 @@ class BaseTestCase(TestCase):
        
         #we need to remove the caching middlewares because they interfere with
         #the annonymous client.
-        list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+        list_middle_c = list(settings.MIDDLEWARE_CLASSES)
         try:
-            list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
+            list_middle_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
         except ValueError:
             pass
         try:
-            list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
+            list_middle_c.remove('django.middleware.cache.UpdateCacheMiddleware')
         except ValueError:
             pass
         try:
-            list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
+            list_middle_c.remove('external.csrf.middleware.CsrfMiddleware')
         except ValueError:
             pass
-        settings.MIDDLEWARE_CLASSES = list_middl_c
+        settings.MIDDLEWARE_CLASSES = list_middle_c
 
     def setUp(self, skip_stats = False, create_teams=True):
         """
