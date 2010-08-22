@@ -109,9 +109,9 @@ class ValidRootUri(CharField):
 
     def get_allowed_prefixes(self):
         """
-        Concatenate the allowed prefixes from the settings var.
+        Returns the allowed prefixes from the settings var.
         
-        This concanates the allowed prefixes into a list and return that list.
+        This joins the allowed prefixes into a list and returns that list.
         If the self.repotype is set then we add to the list only the 
         ALLOWED_REPOSITORY_PREFIXES['all'] and the 
         ALLOWED_REPOSITORY_PREFIXES['self.reporype'] members. Otherwise we 
