@@ -19,7 +19,7 @@ def as_table(rows, header=True, vdelim=" ", border="=", padding=0, justify="left
                 'left'   : str.ljust}[justify.lower()]
     result = ""
 
-    # Calculate column widhts (longest item in each col
+    # Calculate column widths (longest item in each col
     # plus "padding" nr of spaces on both sides)
     cols = map(lambda *row: [elem or ' ' for elem in row], *rows)
     colWidths = [max([len(str(item))+2*padding for item in col]) for col in cols]
