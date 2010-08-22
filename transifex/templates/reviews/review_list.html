@@ -68,10 +68,10 @@
       <td>
         <span>{{ review.score }}</span>
         {% if perms.reviews.add_poreviewrequest or perms.reviews.change_poreviewrequest or can_submit_file %}
-        <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
+        <form action="{% url review_like review.id %}" method="post" style="display:inline;float:right">
             <input type="image" src="{{ STATIC_URL }}images/icons/thumb_down.png" name="dislike" value="dislike" style="border:0">
         </form>
-        <form action="{% url review_like review.id %}" method="post" style="diplay:inline;float:right">
+        <form action="{% url review_like review.id %}" method="post" style="display:inline;float:right">
             <input type="image" src="{{ STATIC_URL }}images/icons/thumb_up.png" name="like" value="like" style="border:0">
         </form>
         {% endif %}
