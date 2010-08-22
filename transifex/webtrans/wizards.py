@@ -203,7 +203,7 @@ class TransFormWizard(SessionWizard):
         else:
             initial = None
 
-        # Get po_entries for the chuck in a specific possition (step)
+        # Get po_entries for the chuck in a specific position (step)
         po_entries = specific_chunk(self.po_entries_list, step, self.ENTRIES_PER_PAGE)
 
         # Return the form instance initialized with the data populated, in case
