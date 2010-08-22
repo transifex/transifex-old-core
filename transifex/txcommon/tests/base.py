@@ -44,7 +44,7 @@ class BaseTestCase(TestCase):
         super(BaseTestCase, self).__init__(*args, **kwargs)
        
         #we need to remove the caching middlewares because they interfere with
-        #the annonymous client.
+        #the anonymous client.
         list_middle_c = list(settings.MIDDLEWARE_CLASSES)
         try:
             list_middle_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
