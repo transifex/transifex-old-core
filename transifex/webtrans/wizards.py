@@ -405,7 +405,7 @@ class TransFormWizard(SessionWizard):
 
     def done(self, request):
         """
-        Method responsible for handling the final submittion of the wizard.
+        Method responsible for handling the final submission of the wizard.
         """
         from projects.views.component import component_submit_file
 
