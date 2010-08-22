@@ -114,7 +114,7 @@ class ValidRootUri(CharField):
         This joins the allowed prefixes into a list and returns that list.
         If the self.repotype is set then we add to the list only the 
         ALLOWED_REPOSITORY_PREFIXES['all'] and the 
-        ALLOWED_REPOSITORY_PREFIXES['self.reporype'] members. Otherwise we 
+        ALLOWED_REPOSITORY_PREFIXES['self.repotype'] members. Otherwise we
         return a list with all the members of the ALLOWED_REPOSITORY_PREFIXES.
         """
 
