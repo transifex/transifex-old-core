@@ -7,7 +7,7 @@ from txcommon.decorators import one_perm_required_or_403
 # Feeds
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
-    Override default feed, using custom (including inexistent) slug.
+    Override default feed, using custom (including nonexistent) slug.
     
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.
@@ -26,7 +26,7 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 # This is used for the feeds of a specific project
 def project_feed(request, slug=None, param='', feed_dict=None):
     """
-    Override default feed, using custom (including inexistent) slug.
+    Override default feed, using custom (including nonexistent) slug.
     
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.

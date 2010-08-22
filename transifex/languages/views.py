@@ -13,7 +13,7 @@ from projects.models import Project, Component, Release
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
-    Override default feed, using custom (including inexistent) slug.
+    Override default feed, using custom (including nonexistent) slug.
     
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.
