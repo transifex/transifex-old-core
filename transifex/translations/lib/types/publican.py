@@ -16,7 +16,7 @@ class PublicanManager(POTManager):
         Return the index position of the 'pot' dir in the file_set.
 
         Example: pot/manual/file.pot -> ['pot', 'manual', 'file.pot']
-                 It retuns 0 as the index position.
+                 It returns 0 as the index position.
 
         Have a 'pot' dir name in the file_set is mandatory.
 
