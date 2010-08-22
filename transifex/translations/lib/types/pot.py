@@ -78,7 +78,7 @@ class POTManager(TransManagerMixin):
     Parameter:
     full_name: Name used for identifying set of msgmerged files related to POT/PO
                files found in `path`.
-    path: Diretiry base where the POT/PO files can be found.
+    path: Directory base where the POT/PO files can be found.
     source_language: The code of the source language. Usually it's English (en).
     file_filter: Regex for find the POT/PO under `path`.
 
@@ -105,7 +105,7 @@ class POTManager(TransManagerMixin):
                 return m.group('lang')
 
     def guess_po_dir(self):
-        """Guess the po/ diretory to run intltool."""
+        """Guess the po/ directory to run intltool."""
         for filename in self.get_files(self.file_filter):
             # FIXME: It seems intltool-based projects can survive without a
             # POTFILES.in file. It must identify it in another way.
@@ -372,7 +372,7 @@ class POTManager(TransManagerMixin):
 
     def msgmerge(self, pofile, potfile):
         """
-        Merge two files and save the output at the static diretory.
+        Merge two files and save the output at the static directory.
 
         In case of error, copy the file (pofile) to the destination without 
         merging it.
