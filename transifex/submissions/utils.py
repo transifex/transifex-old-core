@@ -54,7 +54,7 @@ def msgfmt_error_send_mail(component, user, submitted_file, attachments,
     mail.send()
 
 def submit_by_email(component, attachments, sender):
-    """Send email with attachement to all maintainers of a project."""
+    """Send email with attachment to all maintainers of a project."""
 
     context = Context({'component': component.name,
         'project': component.project.name,
@@ -83,7 +83,7 @@ def submit_by_email(component, attachments, sender):
 
 def decide_encoding(chunk):
     """
-    Return the actual encoding of the attachement/chuck and its mimetype.
+    Return the actual encoding of the attachment/chuck and its mimetype.
 
     Usually a po file contains a line in the following format
     "Content-Type: <MIMETYPE>; charset=<ENCODING>\n"
@@ -117,18 +117,18 @@ def decide_encoding(chunk):
 
 def create_attachment(filename, chunk):
     """
-    Create the actual attachement.
+    Create the actual attachment.
 
-    Firstly it calls decide_encoding to find the attachement/chunks encoding.
-    Then it creates an attachement based on the files encoding/mimetype and
+    Firstly it calls decide_encoding to find the attachment/chunks encoding.
+    Then it creates an attachment based on the files encoding/mimetype and
     the MIMEBase object to attach to the actual mail.
 
     Keyword arguments:
-    filename -- The filename for the attachement.
+    filename -- The filename for the attachment.
     chunk -- The actual data that we want to transmit. Usually a po file data.
 
     Returns:
-        object MIMEBase -- An attachement object
+        object MIMEBase -- An attachment object
     """
     encoding, mimetype = decide_encoding(chunk)
     encoding = encoding or settings.DEFAULT_CHARSET
