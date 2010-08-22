@@ -84,12 +84,12 @@ class Tarball(Unit):
 
     @need_browser
     def get_files(self, file_filter):
-        """Abstration for the tarball.browser.get_files."""
+        """Abstraction for the tarball.browser.get_files."""
         return self.browser.get_files(file_filter)
 
     @need_browser
     def teardown(self):
-        """Abstration for the vcsunit.browser.teardown_repo."""
+        """Abstraction for the vcsunit.browser.teardown_repo."""
         try:
             logger.debug("Tearing down repo for vcsunit '%s'" % self.name)
             self.browser.teardown_repo()
@@ -99,7 +99,7 @@ class Tarball(Unit):
 
     @need_browser
     def _rename_repo(self, new_name):
-        """Abstration for the vcsunit.browser.rename_repo."""
+        """Abstraction for the vcsunit.browser.rename_repo."""
         logger.debug("Renaming repo of vcsunit '%s' to %s" % (self.name,
                                                            new_name))
         self.browser.rename_repo(new_name)

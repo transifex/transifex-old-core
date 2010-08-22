@@ -216,11 +216,11 @@ class POTHandler:
         return self.tm.get_file_contents(filename, is_msgmerged)
 
     def get_po_entries(self, filename):
-        """Abstration for getting a polib.POFile with the entries of filename."""
+        """Abstraction for getting a polib.POFile with the entries of filename."""
         return self.tm.get_po_entries(filename)
 
     def get_source_file(self):
-        """Abstration for getting source files."""
+        """Abstraction for getting source files."""
         return self.tm.get_source_file()
 
     def clean_stats(self):
