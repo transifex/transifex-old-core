@@ -159,7 +159,7 @@ def project_delete_permission_request(request, project_slug, permission_pk):
     """
     project, permission=_get_project_and_permission(project_slug, permission_pk)
 
-    # It's necessary to distinguinsh between maintainer and normal users that
+    # It's necessary to distinguish between maintainer and normal users that
     # did the request
     if request.user.id==permission.user.id:
         notice_type = 'project_submit_access_request_withdrawn'
