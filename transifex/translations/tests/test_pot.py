@@ -43,8 +43,8 @@ class POTTestCaseBase(unittest.TestCase):
 
 class POTTestCase(POTTestCaseBase):
 
-    def test_calcule_stats(self):
-        """Test that tm.browser.calcule_stats works properly."""
+    def test_calculate_file_stats(self):
+        """Test that tm.browser.calculate_file_stats works properly."""
         self.component.trans.set_stats()
         pofiles = self.component.trans.get_stats()
         for pofile in pofiles:
