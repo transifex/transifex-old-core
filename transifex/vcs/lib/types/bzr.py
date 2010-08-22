@@ -102,7 +102,7 @@ class BzrBrowser(BrowserMixin):
         """
         try:
             # Remove any pending changes (left over from a submit that
-            # encoutnered an error, for instance).
+            # encountered an error, for instance).
             self.work_tree.revert(backups=False)
             # Removes all unknown files.  This is important as we don't
             # want to import files that were left over from another run by mistake.
