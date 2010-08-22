@@ -225,8 +225,8 @@ class TestLocking(BaseTestCase):
             self.assertTrue(lock.can_unlock(self.user['team_member']))
             self.assertTrue(lock.can_unlock(self.user['maintainer']))
 
-        # No need to actually delete locks because can_unlock is only contraint
-        #for delete_by
+        # No need to actually delete locks because can_unlock is the only
+        # constraint for delete_by
         
         # Now sleep and check lock validness again
         logger.debug("Sleeping for %i seconds" % settings.LOCKS_LIFETIME)
