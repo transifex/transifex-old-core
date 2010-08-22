@@ -95,7 +95,7 @@ class POTManager(TransManagerMixin):
     def guess_language(self, filename):
         """Guess a language from the filename.
         
-        A number of regexxes will be applied, and the first one which matches
+        A number of regexes will be applied, and the first one which matches
         is the winner.
         """
 
