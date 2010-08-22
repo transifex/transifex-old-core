@@ -119,7 +119,7 @@ def project_access_control_edit(request, project_slug):
             else:
                 # TODO: Send notification for these projects, telling the 
                 # maintainers that the outsource project is not accepting 
-                # outsouring anymore
+                # outsourcing anymore
                 for p in project.project_set.all():
                     p.outsource=None
                     p.save()
