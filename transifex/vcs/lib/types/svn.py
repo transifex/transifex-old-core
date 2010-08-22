@@ -132,7 +132,7 @@ class SvnBrowser(BrowserMixin):
         """
         Authentication for SVN repositories.
 
-        Used primarly for https:// repos, which require a username and 
+        Used primarily for https:// repos, which require a username and
         password for write operations, taken from the configuration settings.
         """
         domain = domain_from_hostname(self.root)
