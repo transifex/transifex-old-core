@@ -9,7 +9,7 @@ def handle_exception_mailing(request, exception):
     exc_info = sys.exc_info()
     subject, message = exception_email(request, exc_info)
     if not settings.DEBUG:
-        logger.debug('Seding handled exception to admins.')
+        logger.debug('Sending handled exception to admins.')
         mail_admins(('%s - %s') % (subject, exception.message), message, 
             fail_silently=True)
 
