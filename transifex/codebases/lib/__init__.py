@@ -106,7 +106,7 @@ class BrowserMixinBase:
         """
         Wrapper around os.walk() function.
 
-        The only differense is that the root returned is relative
+        The only difference is that the root returned is relative
         to the sresource path.
 
         """
