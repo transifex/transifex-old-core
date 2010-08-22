@@ -124,7 +124,7 @@ class POTManager(TransManagerMixin):
                 yield filename
 
     def get_lang_files(self, lang):
-        """Return a list with the PO filenames for a specificy language."""
+        """Return a list with the PO filenames for a specific language."""
         for filename in self.get_po_files():
             if self.guess_language(filename) == lang:
                 yield filename
@@ -317,7 +317,7 @@ class POTManager(TransManagerMixin):
 
     def calculate_file_stats(self, filename, source_file, try_to_merge):
         """
-        Return the stats of a specificy file copying it to the static directory.
+        Return the stats of a specific file copying it to the static directory.
 
         If `try_to_merge` is set to True, the stats are calculated after merging
         the PO file with the related POT.

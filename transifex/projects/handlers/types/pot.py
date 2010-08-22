@@ -44,7 +44,7 @@ class POTHandler:
         return self.tm
 
     def set_file_stats(self, filename, is_msgmerged=True, is_pot=False):
-        """Set the statistics of a specificy file for an object."""
+        """Set the statistics of a specific file for an object."""
 
         ctype = ContentType.objects.get_for_model(self.component)
         s, created = POFile.objects.get_or_create(object_id=self.component.id,
@@ -136,7 +136,7 @@ class POTHandler:
         self.set_stats_base(is_msgmerged, is_pot=False)
 
     def set_lang_stats(self, lang_code, is_msgmerged=True):
-        """Set stats for a specificy language."""
+        """Set stats for a specific language."""
         for filename in self.tm.get_lang_files(lang_code):
             self.set_file_stats(filename, is_msgmerged, False)
 
