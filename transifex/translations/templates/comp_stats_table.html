@@ -60,7 +60,7 @@
            <a class="i16 view nodecoration_icon" title="{% trans "View " %}{{stat.filename}}" href="{{file_view_url}}"></a>
            <a class="i16 get_file nodecoration_icon" title="{% trans "Download for viewing " %}{{stat.filename}}" href="{{file_raw_url}}"></a>
 
-           {% comment %}Temporarily hooks are disabled here, until we improve the compontent detail view{% endcomment %}
+           {% comment %}Temporarily hooks are disabled here, until we improve the component detail view{% endcomment %}
            {% load locks_tags %}
            {% pofile_lock stat %}
            {% comment %}{% hook "comp_stats_table.html" extra_buttons %}{% endcomment %}
