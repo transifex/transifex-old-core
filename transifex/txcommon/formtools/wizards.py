@@ -85,7 +85,7 @@ class SessionWizard(object):
 
     def save_step(self, step):
         """
-        Save 'step' in a fashion reversable by 'saved_step'.
+        Save 'step' in a fashion reversible by 'saved_step'.
         Called just before page 'step' is rendered.
         """
         self._storage['step'] = step
