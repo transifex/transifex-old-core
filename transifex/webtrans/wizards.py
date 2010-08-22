@@ -117,10 +117,10 @@ class TransFormWizard(SessionWizard):
         """
         This method acts like a view.
 
-        It was necessary to change a bit the normal behavior of this method,
-        due the fact we only want to validate step forms displayed to the users 
-        and, also, to be able to submit the form without pass throught all the 
-        steps.
+        It was necessary to change the normal behavior of this method a bit,
+        due to the fact that we only want to validate step forms displayed to
+        the users and, also, to be able to submit the form without passing
+        through all the steps.
 
         """
         self.init(request, *args, **kwargs)
