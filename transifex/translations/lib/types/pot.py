@@ -427,7 +427,7 @@ class POTManager(TransManagerMixin):
         return True
 
     def copy_file_to_static_dir(self, filename):
-        """Copy a file to the statc msgmerge directory."""
+        """Copy a file to the static msgmerge directory."""
         import shutil
         dest = os.path.join(self.msgmerge_path, filename)
 
