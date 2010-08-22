@@ -66,7 +66,7 @@ def cached_property(func):
 
 class DefaultProjectManager(models.Manager):
     """
-    This is the defautl manager of the project model (asigned to objects field).
+    This is the default manager of the project model (asigned to objects field).
     """
 
     def watched_by(self, user):
