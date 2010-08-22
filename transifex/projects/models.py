@@ -227,7 +227,7 @@ class Project(models.Model):
 
     @property
     def blacklist_vcsunits(self):
-        """Return all the vcsunits that arent allowed to be used."""
+        """Return all the vcsunits that aren't allowed to be used."""
         return VcsUnit.objects.exclude(
             component__id__in=self.component_set.all().values('id'))
 
