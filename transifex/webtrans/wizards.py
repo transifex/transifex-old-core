@@ -353,7 +353,7 @@ class TransFormWizard(SessionWizard):
         """
         Called to render a specific step.
         You may pass 'form' manually in case you want a form that has been error-checked.
-        If you don't give 'form', it will be retreived from storage.
+        If you don't give 'form', it will be retrieved from storage.
         """
         # Get filter settings from the form and re-filter the po_entries_list
         # in case a filter has changed.

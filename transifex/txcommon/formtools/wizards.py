@@ -170,7 +170,7 @@ class SessionWizard(object):
         """
         Called to render a specific step.
         You may pass 'form' manually in case you want a form that has been error-checked.
-        If you don't give 'form', it will be retreived from storage.
+        If you don't give 'form', it will be retrieved from storage.
         """
         self.save_step(step)
         self.commit_storage(request)
