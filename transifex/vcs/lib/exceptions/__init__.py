@@ -13,7 +13,7 @@ class BaseVCSError(Exception):
         original_exception -- Object/String related to the original exception.
     """
     # Some global settings
-    message = "Gereric VCS error"
+    message = "Generic VCS error"
     user_message = _("Your request could not be completed. The admins have "
         "been notified to take a closer look at it. Please try again in a "
         "few minutes")
