@@ -23,7 +23,7 @@ from txcommon.log import logger
 
 def permission_denied(request, template_name=None, extra_context={}, *args, 
     **kwargs):
-    """Wrapper to allow non-declarated key arguments."""
+    """Wrapper to allow undeclared key arguments."""
     from authority.views import permission_denied
     return permission_denied(request, template_name, extra_context)
 
