@@ -65,7 +65,7 @@ class TarballBrowser(BrowserMixin):
                     if (info.name.startswith('../') or
                         info.name.startswith('/') or
                         ('/../' in info.name)):
-                        raise BrowserError('Exploitive tarball found: '
+                        raise BrowserError('Found tarball with potential exploit: '
                             '%s' % filename)
                     tarball.extract(info, path)
             finally:
