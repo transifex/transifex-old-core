@@ -14,7 +14,7 @@ class SessionWizard(object):
         """
         'key' is the name where data will be stored in the session. Should be unique.
         'form_list' should be a list of Form classes, not instances.
-        'initial' may be a list of dicts or a dict of dicts maping step to initial data.
+        'initial' may be a list of dicts or a dict of dicts mapping step to initial data.
         """
         self.key = key
         self.form_list = form_list
