@@ -98,7 +98,7 @@ class ValidRootUri(CharField):
         Set the repotype variable with the type of the repository.
 
         This is called by vcs/forms.py to setup the type of the repository (hg,
-        git, etc.), and its used in @get_allowed prefixes to print the abailable
+        git, etc.), and its used in @get_allowed prefixes to print the available
         prefixes allowed in unit.root mask.
         """
 
