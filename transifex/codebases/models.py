@@ -91,7 +91,7 @@ class Unit(models.Model):
 
     def promote(self):
         '''
-        Returns a descendent model that refers to this codebase
+        Returns a descendant model that refers to this codebase
         '''
         for cls in Unit.__subclasses__():
             if self.type in cls.unit_types:
@@ -102,7 +102,7 @@ class Unit(models.Model):
     @classmethod
     def bootstrap(cls, unit):
         '''
-        Creates a descendent from a Unit and returns it, saving if a
+        Creates a descendant from a Unit and returns it, saving if a
         new Unit descendant is created
         '''
         try:
@@ -120,7 +120,7 @@ class Unit(models.Model):
     def bootstrap_extra(cls, unit):
         '''
         Extra initialization after bootstrapping
-        Descendents should override as necessary
+        Descendants should override as necessary
         '''
         pass
 
