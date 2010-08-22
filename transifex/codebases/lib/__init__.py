@@ -113,7 +113,7 @@ class BrowserMixinBase:
         for root, dirs, files in os.walk(path or self.path):
             # remove sresource path to create relative path
             relative_root = root.split(path or self.path, 1)[1]
-            # the first characher is '/' we need to remove it
+            # the first character is '/' we need to remove it
             relative_root = relative_root[1:]
             yield relative_root, dirs, files
 
