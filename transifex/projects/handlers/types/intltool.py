@@ -8,7 +8,7 @@ from notification import models as notification
 
 class IntltoolHandler(pot.POTHandler):
     """
-    POTHandler abstraction layer, hence specific to the projects app.
+    POTHandler abstraction layer, hence specific to the project's app.
     
     You can use this higher-level object to interact with a
     component's statistics that use intltool instead of meddling with 
