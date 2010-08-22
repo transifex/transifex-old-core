@@ -46,7 +46,7 @@ def _get_label(msgid_list):
 
 class TranslationForm(forms.Form):
     """
-    Return a form created dynamicaly using a list of PO files entries.
+    Return a form created dynamically using a list of PO files entries.
 
     ``po_entries`` is a list of polib.POEntry objects.
 
