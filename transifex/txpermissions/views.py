@@ -53,7 +53,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
     This view is a centralized place for adding permissions/requests for any 
     kind of object through the whole Transifex.
     
-    Following the upstrem django-authority app, all the entries are considered 
+    Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
     
     For the extra_context, this view expect a key called 'notice' that MUST 
@@ -120,7 +120,7 @@ def approve_permission_request(request, requested_permission, extra_context={}):
     This view is a centralized place for approving permission requests for any 
     kind of object through the whole Transifex.
     
-    Following the upstrem django-authority app, all the entries are considered 
+    Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
     """
     requested_permission.approve(request.user)
@@ -142,7 +142,7 @@ def delete_permission_or_request(request, permission, approved, extra_context={}
     This view is a centralized place for deleting permission/requests for any 
     kind of object through the whole Transifex.
     
-    Following the upstrem django-authority app, all the entries are considered 
+    Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
     """
     next = request.POST.get('next', '/')
