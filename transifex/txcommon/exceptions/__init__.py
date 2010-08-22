@@ -4,7 +4,7 @@ from django.core.mail import mail_admins
 from django.conf import settings
 from txcommon.log import logger
 
-def handle_exception_mainling(request, exception):
+def handle_exception_mailing(request, exception):
     """Handle an exception if in production mode."""
     exc_info = sys.exc_info()
     subject, message = exception_email(request, exc_info)

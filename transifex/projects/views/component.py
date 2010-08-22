@@ -38,7 +38,7 @@ from translations.models import POFile
 from txcommon import notifications as txnotification
 
 from txcommon.decorators import one_perm_required_or_403
-from txcommon.exceptions import handle_exception_mainling
+from txcommon.exceptions import handle_exception_mailing
 from txcommon.forms import unit_sub_forms
 from txcommon.log import logger
 from txcommon.models import exclusive_fields, get_profile_or_user
@@ -292,7 +292,7 @@ def component_set_stats(request, project_slug, component_slug):
 
         except BaseVCSError, e:
             if e.notify_admins:
-                handle_exception_mainling(request, e)
+                handle_exception_mailing(request, e)
             request.user.message_set.create(message=e.get_user_message())
 
     else:
@@ -543,10 +543,10 @@ def component_submit_file(request, project_slug, component_slug,
             request.user.message_set.create(message=str(err))
         except BaseVCSError, e:
             if e.notify_admins:
-                handle_exception_mainling(request, e)
+                handle_exception_mailing(request, e)
             request.user.message_set.create(message=e.get_user_message())
         except StandardError, e:
-            logger.debug("Error submiting translation file %s"
+            logger.debug("Error submitting translation file %s"
                          " for %s component: %s" % (filename,
                          component.full_name, str(e)))
             request.user.message_set.create(message = _(
