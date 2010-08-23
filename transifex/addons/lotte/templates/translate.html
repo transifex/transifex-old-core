@@ -281,7 +281,7 @@
             }
         });
 
-        /* move up in the trans boxes */
+        /* move to the next page */
         shortcut.add('Alt+l', function(evt) {
             if ( stringset.current_box ) {
                 stringset.current_box.blur();
@@ -290,7 +290,7 @@
         },{
             'type':'keydown',
         });
-        /* move down in the trans boxes */
+        /* move to the previous page */
         shortcut.add('Alt+j', function(evt) {
             if ( stringset.current_box ) {
                 stringset.current_box.blur();
@@ -299,24 +299,24 @@
         },{
             'type':'keydown',
         });
-        /* move to the next page */
+        /* move up in the trans boxes */
         shortcut.add('Alt+i', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.details):last-child>td:nth-child(2)>textarea.default_translation').focus();
+                $("#stringset_table").find('tr:not(.metatr):last-child').find('textarea.default_translation').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().prev('tr:not(.details)').find('td:nth-child(2)>textarea.default_translation').focus();
+                stringset.current_box.parents('.trans').parent().prevAll(':not(.metatr):first').find('textarea.default_translation').focus();
             }
         },{
             'type':'keydown',
         });
-        /* move to the previous page */
+        /* move down in the trans boxes */
         shortcut.add('Alt+k', function(evt) {
             if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.details):nth-child(1)>td:nth-child(2)>textarea.default_translation').focus();
+                $("#stringset_table").find('tr:not(.metatr):nth-child(1)').find('textarea.default_translation').focus();
             } else { 
                 stringset.current_box.blur();
-                stringset.current_box.parent().parent().next('tr:not(.details)').find('td:nth-child(2)>textarea.default_translation').focus();
+                stringset.current_box.parents('.trans').parent().nextAll(':not(.metatr):first').find('textarea.default_translation').focus();
             }
         },{
             'type':'keydown',
@@ -326,7 +326,7 @@
             if ( ! stringset.current_box ) {
                 return false;
             }
-            stringset.current_box.val(stringset.current_box.parent().prev().find(".source_string").html());
+            stringset.current_box.val(stringset.current_box.parents('.trans').prev().find(".source_string").html());
         });
 
 
