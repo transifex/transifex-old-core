@@ -216,8 +216,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var new_class = this_stringset.strings[id].flagString();
             
             /* Apply the new class to the default string and all its siblings! */
-            textarea.siblings('textarea').removeClass("fuzzy translated untranslated").addClass(new_class);
-            textarea.removeClass("fuzzy translated untranslated").addClass(new_class);
+            textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass(new_class);
 
             /* Toggle per string save button */
             button_save = $("span#save_"+id);
@@ -236,14 +235,13 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             if(textarea.hasClass('default_translation')){
               id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }else{
-              id = parseInt(textarea.siblings('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+              id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
             string = this_stringset.strings[id];
             string.translate(textarea.val(), textarea.prev('span.rule').text());
             if (string.modified) {
                 // Automatically set edited textareas to fuzzy
-                textarea.removeClass("fuzzy translated untranslated").addClass("fuzzy");
-                textarea.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
+                textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
 				textarea.parents('tr').find('span#save_' + id).show();
 				textarea.parents('tr').find('span#undo_' + id).show();
             }
