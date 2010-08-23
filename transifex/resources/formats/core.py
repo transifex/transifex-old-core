@@ -230,6 +230,11 @@ class Handler(object):
         Saves parsed file contents to the database. duh
         """
         self._pre_save2db(is_source, user, overwrite_translations)
+        if is_source:
+            qs = SourceEntity.objects.filter(
+                    resource = self.resource)
+            original_sources = list(qs)
+
 
         try:
             strings_added = 0
@@ -242,6 +247,8 @@ class Handler(object):
                         context = j.context or "None",
                         resource = self.resource
                     )
+                    if is_source:
+                        original_sources.remove(se)
                 except SourceEntity.DoesNotExist:
                     # Skip creation of sourceentity object for non-source files.
                     if not is_source:
@@ -293,6 +300,8 @@ class Handler(object):
                 t.content = self.template
                 t.save()
                 self.resource.save()
+                for se in original_sources:
+                    se.delete()
             transaction.commit()
 
             self._post_save2db(is_source , user, overwrite_translations)
