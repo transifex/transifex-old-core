@@ -542,6 +542,13 @@
   </h2>
 {% endblock %}
 
+{% block content_header_sec %}
+  {% url search_translations as search_translations %}
+  <p class="i16 view" style="margin: 0;"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (opens up in new tab/window)" %}">
+    {% trans "Search translations" %}</a>
+  </p>
+{% endblock %}
+
 {% block content %}
 
 
