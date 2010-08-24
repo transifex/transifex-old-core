@@ -4,6 +4,7 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load avatars %}
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access Control" %}{% endblock %}
 
@@ -39,11 +40,11 @@
 <h4>{% trans "Pending requests:" %}</h4>
 <ul>
 {% for perm in all_permission_requests|dictsort:"user.username" %}
-    <li class="i16 user">
-        <a class="name" href="{% url profile_public perm.user.username %}">{{ perm.user }}</a>
-        {% if can_submit_file %}
-          <span>- {{perm.user.email|mungify}}</span>
-        {% endif %}
+    <li>
+            <img class="border" src="{% avatar 16 perm.user %}" style="vertical-align:middle"/>
+        <a class="name" href="{% url profile_public perm.user.username %}">
+            {{ perm.user }}
+        </a>
         {% txpermission_request_approve_form project perm %} 
         {% txpermission_request_delete_form project perm %}
     </li>
@@ -60,10 +61,10 @@
 <ul>
 {% for perm in all_permissions|dictsort:"user.username" %}
     <li>
-        <a class="name" href="{% url profile_public perm.user.username %}">{{ perm.user }}</a> 
-        {% if can_submit_file %}
-          <span>- {{perm.user.email|mungify}}</span>
-        {% endif %}
+        <img class="border" src="{% avatar 16 perm.user %}" style="vertical-align:middle"/>
+        <a class="name" href="{% url profile_public perm.user.username %}">
+            {{ perm.user }}
+        </a> 
         {% txpermission_delete_form project perm %}
     </li>
 {% endfor %}

@@ -4,6 +4,7 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load avatars %}
 {% load addons %}
 {% load statistics_resources %}
 
@@ -67,10 +68,13 @@
       <th class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</th>
       <td>
         {% for c in coordinators|slice:"0:6" %}
+          <img class="border" src="{% avatar 16 c %}" style="vertical-align:middle"/>
           {% if c.first_name and c.last_name %}
-            {{ c.first_name }} {{ c.last_name }} ({{c.email|mungify:c.username}})
+            {{ c.first_name }} {{ c.last_name }} 
+            (<a href="{% url profile_public c.username %}">{{ c.username }}</a>)
           {% else %}
-            {{c.email|mungify:c.username}}{% endif %}{% if not forloop.last %},{% endif %}
+            <a href="{% url profile_public c.username %}">{{ c.username }}</a>
+          {% endif %}{% if not forloop.last %},{% endif %}
         {% endfor %}
       </td>
     </tr>
@@ -96,12 +100,11 @@
 <h3>{% trans "People waiting for team membership approving:" %}</h3>
 <ul>
 {% for access_request in team_access_requests|dictsort:"user.username" %}
-    <li class="i16 team_user_request ">
-        <a class="name notice" href="{% url profile_public access_request.user.username %}">{{ access_request.user }}</a>
-        {% if can_submit_file %}
-          <span>- {{m.user.email|mungify}}</span>
-        {% endif %}
-        
+    <li>
+        <img class="border" src="{% avatar 16 access_request.user %}" style="vertical-align:middle"/>
+        <a href="{% url profile_public access_request.user.username %}">
+            {{ access_request.user }}
+        </a>
         {% if is_coordinator %}
         <form class="microform" method="post" action="{% url team_join_approve access_request.team.project.slug access_request.team.language.code access_request.user.username %}">
             <input name="team_join_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
@@ -198,11 +201,11 @@
 <h3>{% trans "Team Members:" %}</h3>
 <ul>
 {% for m in members|dictsort:"username" %}
-    <li class="i16 user">
-        <a class="name" href="{% url profile_public m.username %}">{{ m }}</a>
-        {% if can_submit_file %}
-          <span>- {{m.email|mungify}}</span>
-        {% endif %}
+    <li>
+        <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
+        <a href="{% url profile_public m.username %}">
+            {{ m }}
+        </a>
         {% ifequal request.user.pk m.pk %}
         <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">
             <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
