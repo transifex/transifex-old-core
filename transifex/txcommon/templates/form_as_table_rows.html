@@ -1,5 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
+{% load helptext_tags %}
+
 {% if form %}
     {% if form.non_field_errors %}
         <ul class="fielderrors">{{ form.non_field_errors }}</ul>
@@ -18,7 +20,14 @@
                 <p class="fieldp">{{ field }}</p>
                 {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
             </td>
-            <td><p class="helptext">{{ field.help_text }}</p></td>
+            <td>
+                <p class="helptext">
+                    {{ field.help_text }}
+                    {% if helptext_ext %}
+                        {% print_helptext field.name %}
+                    {% endif %}
+                </p>
+            </td>
             </tr>
         {% endif %}
     {% endfor %}

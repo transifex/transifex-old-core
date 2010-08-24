@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load helptext_tags %}
+
+{% register_helptext "Projects" %}
+<h3>{% trans "Project" %}</h3>
+<p>
+{% blocktrans %}
+Project is the atomic structure that has meaning in terms of translation.
+Each project can have more than one associated repository (i.e. one for
+each branch, like development tip and stable tip) in order to allow people
+work in a more grouped manner.
+{% endblocktrans %}
+</p>
+{% endregister_helptext %}

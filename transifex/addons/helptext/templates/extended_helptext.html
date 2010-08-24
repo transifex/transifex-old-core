@@ -1,0 +1,33 @@
+{% load i18n %}
+{% if extra_helptext %}
+{% if icon %}
+<a class="inline" href="#{{ code_name }}" title="Help Page">
+    <img src="{{ STATIC_URL }}images/icons/help.png" style="border:0px">
+</a>
+{% else %}
+(<a class="inline" href="#{{ code_name }}" title="Help">{% trans "...more" %}</a>)
+{% endif %}
+<div style="display:none">
+    <div id="{{ code_name }}" style="width:560px">
+        <div style="padding-bottom:5px;
+            padding-left:15px;
+            padding-right:15px;
+            padding-top:5px;
+            text-align:justify;">
+        <p> {{ extra_helptext }} </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script type="text/javascript">
+    $(document).ready(
+        function (){
+            /* FancyBox Using custom settings */ 
+            $("a.inline").fancybox({ 
+                'hideOnContentClick': false, 
+                'frameHeight':300,
+            });
+        }
+    );
+</script>

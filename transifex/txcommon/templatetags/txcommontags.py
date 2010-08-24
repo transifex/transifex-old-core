@@ -207,12 +207,14 @@ def counter(parser, token):
 
 # Forms
 
-@register.inclusion_tag("form_as_table_rows.html")
-def form_as_table_rows(form, id=None):
+@register.inclusion_tag("form_as_table_rows.html", takes_context=True)
+def form_as_table_rows(context, form, id=None):
     """
     Create a form using HTML table rows.
     """
-    return {"form": form, "id": id}
+    context['form'] = form
+    context['id'] = id
+    return context
 
 
 # Email Munger by cootetom

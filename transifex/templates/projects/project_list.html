@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load pagination_tags %}
+{% load helptext_tags %}
 
 {% block body_class %}{{ block.super }} project_list{% endblock %}
 
@@ -14,9 +15,31 @@
 {% block breadcrumb %}{% homelink %} &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}
-<h2 class="pagetitle">{% if tag %}{% blocktrans %}Projects with tag '{{ tag }}'{% endblocktrans %} <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
-{% else %}{% trans "Projects on Transifex" %} {% render_metacount project_list _("projects") %}</h2>
-{% endif %}
+{% include "helptext/project_list.html" %}
+<h2 class="pagetitle">
+    {% if tag %}
+        {% trans "Projects" %}
+        <sup class="entry_metalink">
+            {% if helptext_ext %}
+                {% print_helptext "Projects" "yes" %}
+            {% endif %}
+        </sup>
+
+        {% blocktrans %}
+            Projects with tag '{{ tag }}'
+        {% endblocktrans %}
+            <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
+    {% else %}
+        {% trans "Projects" %}
+        <sup class="entry_metalink">
+            {% if helptext_ext %}
+                {% print_helptext "Projects" "yes" %}
+            {% endif %}
+        </sup>
+        {% trans "on Transifex" %}
+        {% render_metacount project_list _("projects") %}
+    {% endif %}
+</h2>
 {% endblock %}
 
 {% block content_header_sec %}
