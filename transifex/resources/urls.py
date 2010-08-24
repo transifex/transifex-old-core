@@ -6,9 +6,6 @@ from resources.views import *
 
 # General URLs:
 urlpatterns = patterns('',
-    # Search strings
-    url(r'^search_translations/$', search_translation, name='search_translation'),
-
     # Project resources list
     url(PROJECT_URL+r'resources/(?P<offset>\d+)$',
         project_resources, name='project_resources'),
