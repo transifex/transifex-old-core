@@ -7,7 +7,7 @@ from txcommon.tests.base import BaseTestCase
 class TestTimeline(BaseTestCase):
 
     def setUp(self):
-        super(TestTimeline, self).setUp(skip_stats=True)
+        super(TestTimeline, self).setUp()
 
         # Sanity checks
         self.assertTrue( Project.objects.count() >= 1, msg = "Base test case didn't create any projects" )
