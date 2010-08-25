@@ -1,27 +1,22 @@
 # -*- coding: utf-8 -*-
 import os
-from django.contrib.auth import models
-from django.contrib.contenttypes.models import ContentType
 from django.core import management
 from django.conf import settings
-from django.db import IntegrityError
 from django.db.models.loading import get_model
-from django.contrib.auth.models import User, Group
 from django.test import TestCase
 from django.test.client import Client
+from django.contrib.auth.models import User, Group, Permission as AuthPermission
+from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from txcommon.notifications import NOTICE_TYPES
 
-from vcs.tests import test_git
-
 # Load models
+Language = get_model('languages', 'Language')
+Permission = get_model('authority', 'Permission')
 Project = get_model('projects', 'Project')
 Component = get_model('projects', 'Component')
 Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
-Language = get_model('languages', 'Language')
-Permission = get_model('authority', 'Permission')
-POFile = get_model('translations', 'POFile')
 
 USER_ROLES = [
     'anonymous',
@@ -30,76 +25,70 @@ USER_ROLES = [
     'writer',
     'team_coordinator',
     'team_member']
+PASSWORD = '123412341234'
+
+
+def deactivate_caching_middleware():
+    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    try:
+        list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
+    except ValueError:
+        pass
+    try:
+        list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
+    except ValueError:
+        pass
+
+
+def deactivate_csrf_middleware():
+    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    try:
+        list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
+    except ValueError:
+        pass
+    settings.MIDDLEWARE_CLASSES = list_middl_c
+
 
 class BaseTestCase(TestCase):
-    """
-    Creates a sample set of object such as project, component, release, team,
-    users, permission, etc. and does a checkout calculating the po files
-    statistics.
-    """
-    # Use the vcs app git test repo
-    root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
+    """Provide a solid test case for all tests to inherit from."""
 
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
        
-        #we need to remove the caching middlewares because they interfere with
-        #the annonymous client.
-        list_middl_c = list(settings.MIDDLEWARE_CLASSES)
-        try:
-            list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
-        except ValueError:
-            pass
-        try:
-            list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
-        except ValueError:
-            pass
-        try:
-            list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
-        except ValueError:
-            pass
-        settings.MIDDLEWARE_CLASSES = list_middl_c
+        # Remove the caching middlewares because they interfere with the
+        # annonymous client.
+        #FIXME: This should not happen, since it diverges away the test suite
+        # from the actual deployment.
+        deactivate_caching_middleware()
+        deactivate_csrf_middleware()
 
-    def setUp(self, skip_stats=True, create_teams=True):
-        """
-        Set up project, component and vcsunit. Insert POFile objects.
-        """
+    def setUp(self, create_teams=True):
+        """Set up project, component and vcsunit. Insert POFile objects."""
 
-        # Run management commands
-        management.call_command('txcreatelanguages')
+        # Run basic management commands
+        # TODO: Investigate the use of a fixture for increased speed.
+        management.call_command('txlanguages')
         autodiscover_notifications()
         management.call_command('txcreatenoticetypes')
 
-        # Add group 'registered'
-        registered, created = Group.objects.get_or_create(name = "registered")
-
-        # Set proper permission to the 'registered' group
+        # Add group 'registered' and set proper permissions
+        # FIXME: Should go in a fixture.
+        registered, created = Group.objects.get_or_create(name="registered")
         registered.permissions.add(
-            models.Permission.objects.get_or_create(
+            AuthPermission.objects.get_or_create(
                 codename='add_project', name='Can add project',
                 content_type=ContentType.objects.get_for_model(Project))[0])
 
         self.user = {}
         self.client = {}
         self.client['anonymous'] = Client()
-        resp = self.client['anonymous'].get('/')
-        self.assertEquals(resp.status_code, 200)
-        prefix = 'test_suite'
-        password = '123412341234'
+
+        # Create users and respective clients
         for nick in USER_ROLES:
             if nick != 'anonymous':
-                try:
-                    user = User.objects.create_user('%s_%s' % (prefix, nick),
-                        '%s_%s@localhost' % (prefix, nick), password)
-                except IntegrityError:
-                    user = User.objects.get(username='%s_%s' % (prefix, nick))
-                user.groups.add(registered)
-                self.user[nick] = user
-
-                client = Client()
-                self.assertTrue(client.login(
-                    username = '%s_%s' % (prefix, nick), password = password))
-                self.client[nick] = client
+                self.user[nick] = User.objects.create_user(nick, PASSWORD)
+                self.user[nick].groups.add(registered)
+                self.client[nick] = Client()
 
         # Create a project, a component/vcsunit a release, and a pt_BR team
         self.project, created = Project.objects.get_or_create(
@@ -109,7 +98,10 @@ class BaseTestCase(TestCase):
         self.component, created = Component.objects.get_or_create(
             slug='test_component', project=self.project, i18n_type='POT',
             file_filter='po/.*')
-        self.component.set_unit(self.root_url, 'git', 'master')
+
+        from vcs.tests import test_git
+        root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
+        self.component.set_unit(root_url, 'git', 'master')
 
         self.release = Release.objects.get_or_create(slug="r1", name="r1",
             project=self.project)[0]
@@ -129,27 +121,14 @@ class BaseTestCase(TestCase):
         self.permission.save()
 
 
-
-        if not skip_stats:
-            # Do a repo checkout and calculate the po file stats
-            self.component.prepare()
-            self.component.trans.set_stats()
- 
-            # Fetch pofiles
-            self.pofiles = POFile.objects.filter(component = self.component)
-            self.assertNotEqual(self.pofiles, None)
-        else:
-            self.pofiles = None          
-
     def tearDown(self):
         self.project.delete()
         for nick, user in self.user.iteritems():
             user.delete()
 
+    # Custom assertions
     def assertNoticeTypeExistence(self, noticetype_label):
-        """
-        Test if noticetype was added
-        """
+        """Assert that a specific noticetype was created."""
         found = False
         for n in NOTICE_TYPES:
              if n["label"] == noticetype_label:
@@ -178,3 +157,24 @@ class BaseTestCase(TestCase):
                 self.assertEquals(page.status_code, expected_code,
                     "Status code for page '%s' was %s instead of %s" %
                     (page_url, page.status_code, expected_code))
+
+
+class BaseTestCaseTests(BaseTestCase):
+    """Test the base test case itself."""
+
+    def test_basetest_users(self):
+        """Test that basic users can function or login successfully."""
+
+        client = Client()
+        for role in USER_ROLES:
+            # All users should be able to see the homepage
+            resp = self.client[role].get('/')
+            self.assertEquals(resp.status_code, 200)
+            login_success = client.login(username=role, password=PASSWORD)
+            if role == "anonymous":
+                self.assertFalse(login_success,
+                    "Anonymous user should not be able to login.")
+            else:
+                self.assertFalse(login_success,
+                    "Logged-in users should be able to login.")
+
