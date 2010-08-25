@@ -4,6 +4,7 @@ from django.conf import settings
 from lotte.views import *
 from projects.urls import PROJECT_URL
 from resources.urls import RESOURCE_URL
+from resources.views import clone_language
 
 
 # Project-language URLs
@@ -27,7 +28,7 @@ urlpatterns += patterns('',
     # Resource-specific Lotte
     url(RESOURCE_LANG_URL+'$', translate, name='translate_resource'),
     url(RESOURCE_LANG_URL+'view/$', view_strings, name='view_strings'),
-#    url(RESOURCE_URL+r'l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
+    url(RESOURCE_URL+r'l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
     url(RESOURCE_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
     url(RESOURCE_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
     url(RESOURCE_LANG_URL+'exit/$', exit, name='exit_lotte'),

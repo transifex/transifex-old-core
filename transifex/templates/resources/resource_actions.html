@@ -6,6 +6,7 @@
 {% load locks_tags %}
 {% load upload_manager_tags %}
 {% load watches_tags %}
+{% load txcommontags %}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -75,8 +76,18 @@
           {% endif %}
           {% ifnotequal resource.source_language target_language %}
           <li>
-            <span class="i16 clone disabled">{% trans "Clone to new language" %}</span>
-            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+            <span class="i16 clone">
+            <a class="language_chooser_trigger" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
+            </span>
+            <div class="language_chooser" style="visibility:hidden;margin-top:4px">
+              <select style="margin-left:24px">
+                <option value="" selected="selected">---------</option>
+              {% for language in languages %}
+                <option {% if language.id|in_list:disabled_languages_ids %}disabled="disabled"{% endif %} value="{{ language.code }}">{{ language.name }}</option>
+              {% endfor %}
+              </select>
+              <a class="i16 action buttonized">Go</a>
+            </div>
           </li>
           {% endifnotequal %}
         </ul>
@@ -93,7 +104,9 @@
           </li>
           <li>
             {% if can_submit_translation %}
+                <div class="upload_action_wrapper" style="padding:0.5em 0">
                 {% upload_resource_translation_button request resource target_language %}
+                </div>
             {% endif %}
           </li>
           {% endifnotequal %}

@@ -148,11 +148,18 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     # Get the team if exists to use it for permissions and links
     team = Team.objects.get_or_none(project, target_lang_code)
 
+    disabled_languages_ids = Translation.objects.filter(
+        resource = resource).values_list(
+            'language', flat=True).distinct()
+    languages = Language.objects.filter()
+
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
       'resource' : resource,
       'target_language' : target_language,
-      'team' : team},
+      'team' : team,
+      'languages': languages,
+      'disabled_languages_ids': disabled_languages_ids},
     context_instance = RequestContext(request))
 
 
@@ -198,10 +205,11 @@ def clone_language(request, project_slug=None, resource_slug=None,
         slug = resource_slug,
         project__slug = project_slug
     )
-    # get the strings which will be cloned
+    # get the strings which will be cloned (Only the default - rule=5 - for now)
     strings = Translation.objects.filter(
                 resource = resource,
-                language__code = source_lang_code)
+                language__code = source_lang_code,
+                rule=5)
 
     target_lang = Language.objects.get(code=target_lang_code)
 
@@ -212,8 +220,8 @@ def clone_language(request, project_slug=None, resource_slug=None,
                     language = target_lang,
                     string = s.string,
                     source_entity = s.source_entity,
-                    number = s.number)
-    return HttpResponseRedirect(reverse('translate', args=[project_slug,
+                    rule = s.rule)
+    return HttpResponseRedirect(reverse('translate_resource', args=[project_slug,
                                 resource_slug, target_lang_code]),)
 
 

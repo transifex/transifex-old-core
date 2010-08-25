@@ -160,6 +160,20 @@ Projects |
                 'hideOnContentClick': false,
                 'onComplete':function() {
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                    $("a.language_chooser_trigger").toggle(function(){
+                        $("div.language_chooser").css({'visibility':'visible'});
+                    },function(){
+                        $("div.language_chooser").css({'visibility':'hidden'});
+                    });
+                    $("div.language_chooser a").click( function(){
+                        var target_lang_code = $("div.language_chooser select").val();
+                        if ( target_lang_code != "" ) {
+                            request_url = window.location+'l/{{ language.code }}/clone/'+target_lang_code+'/';
+                            window.location = request_url;
+                        } else {
+                            alert("Please select a target language first and then click Go.");
+                        }
+                    });
                 },
                 'titleShow': true,
                 'titlePosition': 'outside',
