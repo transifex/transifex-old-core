@@ -130,10 +130,15 @@ class CoreViewsTest(ViewsBaseTest):
             language=self.language) >1)
 
         # Delete Translations
-        resp = self.client['maintainer'].post(reverse(
-            'resource_translations_delete',
-            args=[self.project.slug, self.resource.slug,self.language.code]),
-            follow=True)
+        delete_url = reverse('resource_translations_delete',
+            args=[self.project.slug, self.resource.slug,self.language.code])
+        resp = self.client['maintainer'].get(delete_url)
         self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource_translations_confirm_delete.html')
+
+        resp = self.client['maintainer'].post(delete_url, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource.html')
         self.assertEqual(Translation.objects.filter(resource=self.resource,
             language = self.language).count(), 0)
+
