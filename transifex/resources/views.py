@@ -249,7 +249,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
                                     args=[resource.project.slug, resource.slug]),)
     else:
         return render_to_response(
-            'resource_translations_confirm_delete.html',
+            'resources/resource_translations_confirm_delete.html',
             {'resource': resource,
              'language': language,
              'is_source_language': is_source_language},
