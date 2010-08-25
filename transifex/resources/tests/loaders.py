@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 from languages.models import Language
-from languages.management.commands import txcreatelanguages
+from languages.management.commands import txlanguages
 from projects.models import Project
 from resources.models import SourceEntity, Resource, TranslationString
 
@@ -36,7 +36,7 @@ class LoadingGettextTests(TestCase):
 
     def setUp(self):
         # Fill in the Test DB with all the languages.
-        command = txcreatelanguages.Command()
+        command = txlanguages.Command()
         command.run_from_argv(argv=["", ""])
         
         # Create a sample user

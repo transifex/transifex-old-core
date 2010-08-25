@@ -16,7 +16,7 @@ def create_languages(app, created_models, verbosity, **kwargs):
                 confirm = raw_input('Please enter either "yes" or "no": ')
                 continue
             if confirm == 'yes':
-                call_command("txcreatelanguages", interactive=True)
+                call_command("txlanguages", interactive=True)
             break
 
 # South's migrate does not accept a --noinput flag. Because we want to be able
