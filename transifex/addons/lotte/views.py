@@ -505,25 +505,18 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
 # FIXME: Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
-def entity_details_snippet(request, entity_id, lang_code="en"):
-    """Return a template snippet with entity details."""
-    #####
-    #FIXME: Move this code + last_translator template code to a template tag.
+def translation_details_snippet(request, entity_id, lang_code):
+    """Return a template snippet with entity & translation details."""
     source_entity = get_object_or_404(SourceEntity, pk=entity_id)
-    try:
-        last_translation = Translation.objects.filter(
-            source_entity=source_entity, language__code=lang_code
-            ).order_by('-last_update')[0]
-    except IndexError:
-        last_translation = None
-    ####
+    language = get_object_or_404(Language, code=lang_code)
+    translation = source_entity.get_translation(language.code)
     
     return list_detail.object_detail(request,
         queryset=SourceEntity.objects.all(),
         object_id=entity_id,
-        template_name="lotte_details.html",
+        template_name="lotte_details_snippet.html",
         template_object_name='source_entity',
-        extra_context={"last_translation" : last_translation})
+        extra_context={"translation" : translation})
 
 # Restrict access only to :
 # 1)project maintainers

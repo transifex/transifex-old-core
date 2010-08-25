@@ -36,6 +36,6 @@ urlpatterns += patterns('',
 # General URLs
 
 urlpatterns += patterns('',
-    url('^entities/(?P<entity_id>\d+)/details_snippet/$',
-        entity_details_snippet, name='entity_details_snippet'),
+    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[-_@\w]+)/details_snippet/$',
+        translation_details_snippet, name='translation_details_snippet'),
 )

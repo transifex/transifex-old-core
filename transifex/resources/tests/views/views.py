@@ -14,17 +14,6 @@ except ImportError:
 class CoreViewsTest(ViewsBaseTest):
     """Test basic view function"""
 
-    def test_translate(self):
-        """
-        Test main view for lotte.
-        """
-        # Check page status
-        resp = self.client['maintainer'].get(reverse(
-            'translate_resource', args=[
-                self.project.slug, self.resource.slug, self.language.code]))
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'translate.html')
-
     def test_stringset_handling(self):
         """
         Test AJAX stringset handler.
@@ -121,16 +110,6 @@ class CoreViewsTest(ViewsBaseTest):
 
         source_trans.delete()
 
-    def test_get_details(self):
-        """
-        Tranlsation details view
-        """
-        resp = self.client['maintainer'].post(reverse('entity_details_snippet',
-            args=[self.source_entity.id]))
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'lotte_details.html')
-        self.assertTrue(self.source_entity.occurrences in resp.content)
-        self.assertTrue(self.source_entity.string in resp.content)
 
     def test_delete_resource_translations(self):
         """
