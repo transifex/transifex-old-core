@@ -5,14 +5,14 @@ from django.conf import settings
 from django.db.models.loading import get_model
 from django.test import TestCase
 from django.test.client import Client
-from django.contrib.auth.models import User, Group, Permission as AuthPermission
+from django.contrib.auth.models import User, Group, Permission as DjPermission
 from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from txcommon.notifications import NOTICE_TYPES
 
 # Load models
 Language = get_model('languages', 'Language')
-Permission = get_model('authority', 'Permission')
+AuPermission = get_model('authority', 'Permission')
 Project = get_model('projects', 'Project')
 Component = get_model('projects', 'Component')
 Release = get_model('releases', 'Release')
@@ -75,27 +75,31 @@ class BaseTestCase(TestCase):
         # FIXME: Should go in a fixture.
         registered, created = Group.objects.get_or_create(name="registered")
         registered.permissions.add(
-            AuthPermission.objects.get_or_create(
+            DjPermission.objects.get_or_create(
                 codename='add_project', name='Can add project',
                 content_type=ContentType.objects.get_for_model(Project))[0])
 
         self.user = {}
         self.client = {}
-        self.client['anonymous'] = Client()
 
-        # Create users and respective clients
+        # Create users, respective clients and login users
         for nick in USER_ROLES:
+            self.client[nick] = Client()
             if nick != 'anonymous':
-                self.user[nick] = User.objects.create_user(nick, PASSWORD)
+                # Create respective users
+                self.user[nick] = User.objects.create_user(
+                    nick, '%s@localhost' % nick, PASSWORD)
                 self.user[nick].groups.add(registered)
-                self.client[nick] = Client()
+                # Login non-anonymous personas
+                self.client[nick].login(username=nick, password=PASSWORD)
+                self.assertTrue(self.user[nick].is_authenticated())
 
         # Create a project, a component/vcsunit a release, and a pt_BR team
-        self.project, created = Project.objects.get_or_create(
+        self.project = Project.objects.create(
             slug="test_project", name="Test Project")
         self.project.maintainers.add(self.user['maintainer'])
 
-        self.component, created = Component.objects.get_or_create(
+        self.component = Component.objects.create(
             slug='test_component', project=self.project, i18n_type='POT',
             file_filter='po/.*')
 
@@ -115,10 +119,10 @@ class BaseTestCase(TestCase):
             self.team.members.add(self.user['team_member'])
 
         # Add django-authority permission for writer
-        self.permission = Permission(codename='project_perm.submit_file', 
+        self.permission = AuPermission.objects.create(
+            codename='project_perm.submit_file', 
             approved=True, user=self.user['writer'], 
             content_object=self.project, creator=self.user['maintainer'])
-        self.permission.save()
 
 
     def tearDown(self):
@@ -163,18 +167,9 @@ class BaseTestCaseTests(BaseTestCase):
     """Test the base test case itself."""
 
     def test_basetest_users(self):
-        """Test that basic users can function or login successfully."""
-
-        client = Client()
+        """Test that basic users can function normally."""
         for role in USER_ROLES:
             # All users should be able to see the homepage
             resp = self.client[role].get('/')
             self.assertEquals(resp.status_code, 200)
-            login_success = client.login(username=role, password=PASSWORD)
-            if role == "anonymous":
-                self.assertFalse(login_success,
-                    "Anonymous user should not be able to login.")
-            else:
-                self.assertFalse(login_success,
-                    "Logged-in users should be able to login.")
 
