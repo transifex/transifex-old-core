@@ -14,7 +14,6 @@ POFile = get_model('translations', 'POFile')
 Team = get_model('teams', 'Team')
 Language = get_model('languages', 'Language')
 POFileLock = get_model('locks', 'POFileLock')
-POFileLockError = get_app('locks').POFileLockError
 
 # These Languages and POFiles should exist:
 TEAM_LANG_CODES = ['en', 'es', 'fr']
@@ -206,7 +205,7 @@ class TestLocking(BaseTestCase):
                 POFileLock.objects.create_update(pofile,
                     self.user['team_member'])
                 logger.debug("Locked: %s" % pofile)
-            except POFileLockError:
+            except:
                 self.assertFalse( pofile.language and pofile.language.code in
                     TEAM_LANG_CODES )
 
