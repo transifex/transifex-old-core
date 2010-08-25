@@ -14,39 +14,9 @@
 
 {% block content_main %}
 
- {% with 450 as barwidth %}
-    <div class="stats" style='padding-top:1em;float:right;width:{{ barwidth|add:"2" }}px;'>
-        {% stats_bar_actions language language.code barwidth %}
-        <div class="stats_string_comp" title="{% trans "Trans:" %}{% translated language language.code %} {% trans "Untrans:" %}{% untranslated language language.code %}" >
-         <span class='trans_detail'>{% trans "Translated strings: " %}{% translated language language.code %}, {% trans "Untranslated strings: " %}{% untranslated language language.code %}</span>
-        </div> 
-    </div>
-    <span style="font-size:24px;color:#8f8f8f;float:right;padding-top:14px;padding-right:10px"> {% trans_percent language language.code %}% </span>
-    <div style="padding-top:1em;">
-        <em>Total statistics for translated strings in all project resources:</em>
-    </div>
- {% endwith %}
-
- {% for project in project_list %}
-  {% with project.releases.all as releases %}
-  <h3>{% blocktrans %}{{ project }} Releases{% endblocktrans %}
-  {% render_metacount releases _("releases") %}
-  </h3>
-
-  {% if releases %}
-  <div class="release_list">
-  {% url project_detail project.slug as project_url %}
-  <p class="explanation">{% blocktrans %}The <a href="{{ project_url }}">{{ project }}</a> project includes the following groups of shipped components:{% endblocktrans %}</p>
-  <ul class="simple bigthings">
-  {% for release in releases %}
-    <li><p class="i16 release"><a href="{% url release_language_detail project.slug release.slug language.code %}">{{ release.name }}</a>
-    {% if release.description %}<span class="description">– {{ release.description }}</span>{% endif %}</p></li>
-  {% endfor %}
-  </ul>
-  </div>
-  {% endif %}
-  {% endwith %}
-
- {% endfor %}
+ <dl>
+   <dt>Language name:</dt>
+   <dd>{{ language.name }}</dd>
+ </dl>
 
 {% endblock %}

@@ -90,20 +90,14 @@ def last_translation(parser, token):
 
 @register.simple_tag
 def trans_percent(obj, lang_code=None):
-    if isinstance(obj, Language):
-        return obj.trans_percent()
     return obj.trans_percent(lang_code)
 
 @register.simple_tag
 def translated(obj, lang_code=None):
-    if isinstance(obj, Language):
-        return obj.num_translated()
     return obj.num_translated(lang_code)
 
 @register.simple_tag
 def untranslated(obj, lang_code=None):
-    if isinstance(obj, Language):
-        return obj.num_untranslated()
     return obj.num_untranslated(lang_code)
 
 @register.inclusion_tag("resources/stats_bar_simple.html")

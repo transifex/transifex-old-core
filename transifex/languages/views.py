@@ -30,13 +30,9 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 def language_detail(request, slug, *args, **kwargs):
     language = get_object_or_404(Language, code__iexact=slug)
-    release_queryset = Release.objects.all().values('id').query
-    project_list = Project.objects.filter(
-        releases__id__in=release_queryset).order_by('name').distinct()
         
     return list_detail.object_detail(
         request,
         object_id=language.id,
-        extra_context = {'project_list': project_list},
         *args, **kwargs
     )
