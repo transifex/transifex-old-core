@@ -128,12 +128,25 @@
                   "fnRender": function(oObj){
                     var clean_array = array_escape({"key":oObj.aData[1], "source_dict":oObj.aData[2]});
                     var source_divs = '';
-                    for(rule in clean_array["source_dict"]["source_strings"]){
-                        if(rule=='other')
-                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + html_escape(clean_array["source_dict"]["source_strings"]["other"]) + '</div>'
-                        else
-                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][rule]) + '</p>'
+                    var plurals_counter = 0;
+                    var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other']
+                    for(rule in plural_types){
+                        if(plural_types[rule] in clean_array["source_dict"]["source_strings"]){
+                            if(plural_types[rule]=='other'){
+                              source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">';
+                              if(plurals_counter>0)
+                                source_divs += '<span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;'
+                              source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
+                            }else
+                              source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                            plurals_counter++;
+                        }
                     }
+
+                    var plural_indicator = '';
+                    if(plurals_counter>1)
+                        plural_indicator = '<div class="plural_indicator">Pluralized Translations</div>';
+
                     for(lang in clean_array["source_dict"]["similar_lang_strings"]){
                       lang_strings = "";
                       for(rule in clean_array["source_dict"]["similar_lang_strings"][lang]){
@@ -152,8 +165,9 @@
                     if(oObj.aData[4] > 0)
                         suggestions_num = ' ('+oObj.aData[4]+')';
 
-                    return '<div class="source_string_wrapper" style="position:relative;height:100%">'
-                           + '<div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
+                    return plural_indicator
+                           + '<div class="source_string_wrapper" style="position:relative;height:100%">'
+                           + ' <div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
                            + source_divs
                            + ' <div class="row_tabs">'
                            + '  <ul>'
@@ -171,13 +185,32 @@
                 { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
                   "fnRender": function(oObj){
                       var clean_array = array_escape({"translations":oObj.aData[3]});
-                    var textareas = '';
-                      for(rule in clean_array["translations"]){
-                          if(rule=='other'){
-                            textareas += '<div style="position:relative"><span class="rule" style="display:none">'+rule+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%;position:relative" title="Translation (plural rule: other)">' + clean_array["translations"][rule] + '</textarea>'
-                            textareas += '</div>';
-                          }else{
-                            textareas += '<span class="rule" style="display:none">'+rule+'</span><textarea class="translation" style="width:95%" title="Translation (plural rule: '+rule+')">' + clean_array["translations"][rule] + '</textarea>'
+                      var textareas = '';
+                      var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other']
+                      var plurals_counter = 0;
+                      for(rule in plural_types){
+                          if(plural_types[rule] in clean_array["translations"]){
+                              if(plural_types[rule]=='other'){
+                                textareas += '<div style="position:relative"><span class="rule" style="display:none">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%;position:relative" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                if(plurals_counter>0)
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
+                                textareas += '</div>';
+                              }else{
+                                textareas += '<div style="position:relative"><span class="rule" style="display:none">'+plural_types[rule]+'</span><textarea class="translation" style="width:95%" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                if(plural_types[rule]=='zero'){
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
+                                }else if(plural_types[rule]=='one'){
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' item (equation: {{ target_language.rule_one }})">'+plural_types[rule]+'</span>';
+                                }else if(plural_types[rule]=='two'){
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_two }})">'+plural_types[rule]+'</span>';
+                                }else if(plural_types[rule]=='few'){
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_few }})">'+plural_types[rule]+'</span>';
+                                }else if(plural_types[rule]=='many'){
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_many }})">'+plural_types[rule]+'</span>';
+                                }
+                                textareas += '</div>';
+                              }
+                              plurals_counter++;
                           }
                       }
 

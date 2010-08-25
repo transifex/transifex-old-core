@@ -87,7 +87,17 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     translated_strings = Translation.objects.filter(
         resource__in = resources,
         language = target_language,
+        source_entity__pluralized=False,
         rule = 5).exclude(string="").count()
+
+    # Include counting of pluralized entities
+    for pluralized_entity in SourceEntity.objects.filter(resource__in = resources,
+                                                         pluralized=True):
+        plurals_translated = Translation.objects.filter(
+            language=target_language,
+            source_entity=pluralized_entity).count()
+        if plurals_translated == len(target_language.get_pluralrules()):
+            translated_strings += 1
 
     if len(resources) > 1:
         translation_resource = None
