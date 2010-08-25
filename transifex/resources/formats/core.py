@@ -248,7 +248,12 @@ class Handler(object):
                         resource = self.resource
                     )
                     if is_source:
-                        original_sources.remove(se)
+                        try:
+                            original_sources.remove(se)
+                        except ValueError:
+                            # When we have plurals, we can't delete the se
+                            # everytime, so we just pass
+                            pass
                 except SourceEntity.DoesNotExist:
                     # Skip creation of sourceentity object for non-source files.
                     if not is_source:

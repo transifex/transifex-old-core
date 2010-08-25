@@ -14,6 +14,7 @@ from storage.models import StorageFile
 from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from django.db import transaction
+from transifex.api.utils import BAD_REQUEST
 from uuid import uuid4
 
 
@@ -75,7 +76,7 @@ class StorageHandler(BaseHandler):
                 sf.save() # Save the change
                 logger.debug("Changed language of file %s (%s) to %s" % (sf.uuid, sf.name, lang_code))
                 return rc.ALL_OK
-            return rc.BAD_REQUEST # Unknown API call
+            return BAD_REQUEST("Unsupported request") # Unknown API call
         elif "multipart/form-data" in request.content_type: # Do file upload
             files=[]
             retval = None
@@ -102,8 +103,9 @@ class StorageHandler(BaseHandler):
                         logger.error("Weird! Selected language code (%s) does "
                             "not match with any language in the database." 
                             % lang_code)
-                sf.update_props()
+
                 try:
+                    sf.update_props()
                     sf.file_check()
                     sf.save()
 
@@ -129,8 +131,7 @@ class StorageHandler(BaseHandler):
 
                     logger.debug(str(e))
                     retval=dict(status='Error', message=message)
-                    break
-
+                    return BAD_REQUEST("Could not import file: %s" % str(e))
             if not retval:
                 retval=dict(status='Created', files=files,
                     message=_("File uploaded successfully."))
@@ -141,4 +142,4 @@ class StorageHandler(BaseHandler):
             return HttpResponse(simplejson.dumps(retval),
                     mimetype='text/plain', status=status)
         else: # Unknown content type/API call
-            return rc.BAD_REQUEST
+            return BAD_REQUEST("Unsupported request")

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="fi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.0">
 <context>
     <name>Kuvasin</name>
     <message>
@@ -16,15 +14,12 @@
     <message numerus="yes">
         <location filename="kuvasin.cpp" line="140"/>
         <source>%n FILES PROCESSED.</source>
-        <translation>
-            <numerusform>Yksi (%n) tiedosto siirretty.</numerusform>
-            <numerusform>%n tiedostoa siirretty.</numerusform>
-        </translation>
+        <translation><numerusform>Yksi (%n) tiedosto siirretty.</numerusform><numerusform>%n tiedostoa siirretty.</numerusform></translation>
     </message>
     <message>
         <location filename="kuvasin.cpp" line="397"/>
-        <source>COPYING &apos;%1&apos; AS &apos;%2&apos; TO &apos;%3&apos;.</source>
-        <translation>Kopioidaan &apos;%1&apos; nimellä &apos;%2&apos; kansioon &apos;%3&apos;.</translation>
+        <source>COPYING '%1' AS '%2' TO '%3'.</source>
+        <translation>Kopioidaan '%1' nimellä '%2' kansioon '%3'.</translation>
     </message>
     <message>
         <location filename="kuvasin.cpp" line="491"/>
@@ -33,8 +28,8 @@
     </message>
     <message>
         <location filename="kuvasin.cpp" line="373"/>
-        <source>TARGET DIR &apos;%1&apos; CREATION FAILED.</source>
-        <translation>Kohdekansiota &apos;%1&apos; ei voitu luoda.</translation>
+        <source>TARGET DIR '%1' CREATION FAILED.</source>
+        <translation>Kohdekansiota '%1' ei voitu luoda.</translation>
     </message>
     <message>
         <location filename="kuvasin.cpp" line="35"/>
@@ -79,12 +74,12 @@
     </message>
     <message>
         <location filename="kuvasin.cpp" line="425"/>
-        <source>COPY FAILED FOR &apos;%1&apos;.</source>
+        <source>COPY FAILED FOR '%1'.</source>
         <translation>Kopiointi epäonnistui (%1).</translation>
     </message>
     <message>
         <location filename="kuvasin.cpp" line="455"/>
-        <source>DEL FAILED FOR &apos;%1&apos;.</source>
+        <source>DEL FAILED FOR '%1'.</source>
         <translation>Alkuperäisen poisto epäonnistui (%1).</translation>
     </message>
 </context>
@@ -97,15 +92,10 @@
         <translation>Kuvasin</translation>
     </message>
     <message>
-        <location filename="kuvasin.ui" line="147"/>
-        <location filename="ui_kuvasin.h" line="257"/>
-        <source>S&amp;ETTINGS</source>
-        <translation>As&amp;etukset</translation>
-    </message>
-    <message>
         <location filename="kuvasin.ui" line="32"/>
         <location filename="ui_kuvasin.h" line="245"/>
         <source>LABEL SOURCE FOLDER.</source>
+        <oldsource>LABEL SOURCE FOLDER</oldsource>
         <translation>Tipauta lähdekansio(t)/
 -tiedosto(t) allaolevaan
 kameraikoniin.</translation>
@@ -114,6 +104,7 @@ kameraikoniin.</translation>
         <location filename="kuvasin.ui" line="45"/>
         <location filename="ui_kuvasin.h" line="246"/>
         <source>LABEL TARGET FOLDER.</source>
+        <oldsource>LABEL TARGET FOLDER</oldsource>
         <translation>Tipauta kohdekansio
 allaolevaan kansioikoniin.</translation>
     </message>
@@ -238,6 +229,12 @@ kansioista mikäli tässä on rasti.</translation>
         <translation>Tästä listasta voi valita ohjelman käyttöliittymän kieli.</translation>
     </message>
     <message>
+        <location filename="kuvasin.ui" line="147"/>
+        <location filename="ui_kuvasin.h" line="257"/>
+        <source>S&amp;ETTINGS</source>
+        <translation>As&amp;etukset</translation>
+    </message>
+    <message>
         <location filename="kuvasin.ui" line="193"/>
         <location filename="ui_kuvasin.h" line="262"/>
         <source>GOOD EXTENSIONS LIST</source>
@@ -254,20 +251,20 @@ kansioista mikäli tässä on rasti.</translation>
     <message>
         <location filename="qlabeldroptarget.cpp" line="46"/>
         <source>SINGLE ITEM ONLY, PLEASE.</source>
-        <extracomment>Multiple items are being dragged over this widget, show a note that it won&apos;t be accepted.</extracomment>
+        <extracomment>Multiple items are being dragged over this widget, show a note that it won't be accepted.</extracomment>
         <translation>Tämä tipautusalue vastaanottaa yhden objektin kerrallaan.</translation>
     </message>
     <message>
         <location filename="qlabeldroptarget.cpp" line="68"/>
-        <source>MISMATCH: FOLDER &apos;%1&apos;.</source>
+        <source>MISMATCH: FOLDER '%1'.</source>
         <extracomment>Widget accepts only files, and now it is being offered a directory.</extracomment>
-        <translation>Tämä tipautusalue hyväksyy vain tiedostoja. &apos;%1&apos; on kansio.</translation>
+        <translation>Tämä tipautusalue hyväksyy vain tiedostoja. '%1' on kansio.</translation>
     </message>
     <message>
         <location filename="qlabeldroptarget.cpp" line="78"/>
-        <source>MISMATCH: FILE &apos;%1&apos;.</source>
+        <source>MISMATCH: FILE '%1'.</source>
         <extracomment>Widget accepts only directories, and now it is being offered a file.</extracomment>
-        <translation>Tämä tipautusalue hyväksyy vain kansoita. &apos;%1&apos; on tiedosto.</translation>
+        <translation>Tämä tipautusalue hyväksyy vain kansoita. '%1' on tiedosto.</translation>
     </message>
 </context>
 </TS>

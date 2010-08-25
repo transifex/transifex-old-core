@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.utils import simplejson
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
@@ -24,6 +24,7 @@ from storage.models import StorageFile
 from teams.models import Team
 from txcommon.log import logger
 from txcommon.decorators import one_perm_required_or_403
+from transifex.api.utils import BAD_REQUEST
 from uuid import uuid4
 
 # Temporary
@@ -67,7 +68,7 @@ class ProjectHandler(BaseHandler):
             try:
                 p, created = Project.objects.get_or_create(**data)
             except:
-                return rc.BAD_REQUEST
+                return BAD_REQUEST("Project not found")
 
             if created:
                 # Owner
@@ -94,7 +95,7 @@ class ProjectHandler(BaseHandler):
 
             return rc.CREATED
         else:
-            return rc.BAD_REQUEST
+            return BAD_REQUEST("Unsupported request")
 
     @method_decorator(one_perm_required_or_403(pr_project_add_change,
         (Project, 'slug__exact', 'project_slug')))
@@ -112,7 +113,7 @@ class ProjectHandler(BaseHandler):
                 try:
                     p = Project.objects.get(slug=project_slug)
                 except Project.DoesNotExist:
-                    return rc.BAD_REQUEST
+                    return BAD_REQUEST("Project not found")
                 try:
                     for key,value in data.items():
                         setattr(p, key,value)
@@ -137,12 +138,12 @@ class ProjectHandler(BaseHandler):
                                 # maybe fail when wrong user is given?
                                 pass
                     p.save()
-                except:
-                    return rc.BAD_REQUEST
+                except Exception, e:
+                    return BAD_REQUEST("Error parsing request data: %s" % e)
 
                 return rc.ALL_OK
 
-        return rc.BAD_REQUEST
+        return BAD_REQUEST("Unsupported request")
 
 
     @method_decorator(one_perm_required_or_403(pr_project_delete,
@@ -203,7 +204,8 @@ class ProjectResourceHandler(BaseHandler):
                 i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
                 if not i18n_type:
 #                    request.user.message_set.create(message=_("Error: We couldn't find a suitable localization method for this file."))
-                    return rc.BAD_REQUEST
+                    return BAD_REQUEST("File type not supported.")
+
                 resource.i18n_type = i18n_type
                 resource.save()
 
@@ -215,13 +217,15 @@ class ProjectResourceHandler(BaseHandler):
                 parser = storagefile.find_parser()
                 fhandler = parser(filename=storagefile.get_storage_path())
                 fhandler.bind_resource(resource)
-                fhandler.parse_file(True)
+
                 try:
+                    fhandler.contents_check(fhandler.filename)
+                    fhandler.parse_file(True)
                     strings_added, strings_updated = fhandler.save2db(True)
-                except:
+                except Exception, e:
 #                   request.user.message_set.create(message=_("Error importing"
 #                       " file."))
-                    return rc.BAD_REQUEST
+                    return BAD_REQUEST("Could not import file: %s" % e)
                 else:
                     messages = []
                     if strings_added > 0:
@@ -262,9 +266,9 @@ class ProjectResourceHandler(BaseHandler):
                     mimetype='text/plain')
 
             else:
-                return rc.BAD_REQUEST
+                return BAD_REQUEST("Request data missing.")
         else:
-            return rc.BAD_REQUEST
+            return BAD_REQUEST("Unsupported request")
 
     def update(self, request, project_slug, resource_slug, language_code=None):
         """
@@ -306,8 +310,7 @@ class ProjectResourceHandler(BaseHandler):
                 except:
                     request.user.message_set.create(message=_("Error importing"
                        " file."))
-                    return rc.BAD_REQUEST
-
+                    return BAD_REQUEST("File type unsupported")
                 else:
                     messages = []
                     if strings_added > 0:
@@ -353,6 +356,6 @@ class ProjectResourceHandler(BaseHandler):
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='application/json')
             else:
-                return rc.BAD_REQUEST
+                return BAD_REQUEST("Missing request data.")
         else:
-            return rc.BAD_REQUEST
+            return BAD_REQUEST("Unsupported request")
