@@ -17,28 +17,14 @@
 {% block content_title %}
 {% include "helptext/project_list.html" %}
 <h2 class="pagetitle">
-    {% if tag %}
-        {% trans "Projects" %}
-        <sup class="entry_metalink">
-            {% if helptext_ext %}
-                {% print_helptext "Projects" "yes" %}
-            {% endif %}
-        </sup>
-
-        {% blocktrans %}
-            Projects with tag '{{ tag }}'
-        {% endblocktrans %}
-            <sup class="entry_metalink">{{ project_list.count }}</sup></h2>
-    {% else %}
-        {% trans "Projects" %}
-        <sup class="entry_metalink">
-            {% if helptext_ext %}
-                {% print_helptext "Projects" "yes" %}
-            {% endif %}
-        </sup>
-        {% trans "on Transifex" %}
-        {% render_metacount project_list _("projects") %}
-    {% endif %}
+    {% trans "Projects" %}
+    <sup class="entry_metalink">
+        {% if helptext_ext %}
+            {% print_helptext "Projects" "yes" %}
+        {% endif %}
+    </sup>
+    {% trans "on Transifex" %}
+    {% render_metacount project_list _("projects") %}
 </h2>
 {% endblock %}
 
@@ -51,7 +37,11 @@
 {% endblock %}
 
 {% block content_sec %}
-  <a class="simlink" href="{% url project_latest_feed %}" title="Projects feed"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" /></a>
+  <p>
+    <a class="simlink rss_feed" href="{% url project_latest_feed %}" title="{% trans "Projects feed" %}">
+      <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{{ STATIC_URL }}images/icons/feed.png" />
+    </a>
+  </p>
 {% endblock %}
 
 {% block content_main %}
