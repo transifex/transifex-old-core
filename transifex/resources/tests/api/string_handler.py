@@ -6,6 +6,7 @@ from django.test.client import Client
 from resources.models import Resource, Translation, SourceEntity
 from resources.tests.api.base import APIBaseTests
 from resources.tests.api.utils import create_auth_string
+from txcommon.tests.base import PASSWORD
 
 class StringHandlerTests(APIBaseTests):
     """Tests for the StringHandler API."""
@@ -26,10 +27,8 @@ class StringHandlerTests(APIBaseTests):
 
 
         # User info for authentication
-        prefix = 'test_suite'
-        password = '123412341234'
-        nick = 'maintainer'
-        username = '%s_%s' % (prefix, nick)
+        username = 'maintainer'
+        password = PASSWORD
 
         auth_string = create_auth_string(username, password)
         client = Client()
@@ -61,15 +60,12 @@ class StringHandlerTests(APIBaseTests):
         """ Test POST method."""
 
         # User info for authentication
-        prefix = 'test_suite'
-        password = '123412341234'
-        nick = 'maintainer'
-        username = '%s_%s' % (prefix, nick)
+        password = PASSWORD
+        username = 'maintainer'
 
         response = self.client['maintainer'].post(self.resource_handler_url,
             self.data, 'application/json')
-
-        self.assertEquals(response.content, 'Authorization Required')
+        self.assertEquals(response.status_code, 400)
 
         auth_string = create_auth_string(username, password)
         client = Client()
@@ -99,8 +95,8 @@ class StringHandlerTests(APIBaseTests):
         # Regular user should not be able to post.
         # TODO: Fix permissions and then uncomment the following
 
-        #nick = 'registered'
-        #username = '%s_%s' % (prefix, nick)
+        #username = 'registered'
+        #password = PASSWORD
         #auth_string = create_auth_string(username, password)
         #resp = self.client['maintainer'].post(self.resource_project_url,json.dumps(self.data),
         #                                    content_type='application/json',
@@ -117,14 +113,12 @@ class StringHandlerTests(APIBaseTests):
         # http://code.djangoproject.com/ticket/11371
 
         # User info for authentication
-        prefix = 'test_suite'
-        password = '123412341234'
-        nick = 'maintainer'
-        username = '%s_%s' % (prefix, nick)
+        username = 'maintainer'
+        password = PASSWORD
 
         response = self.client['maintainer'].post(self.resource_handler_url,
             self.data, 'application/json')
-        self.assertEquals(response.content, 'Authorization Required')
+        self.assertEqual(response.status_code, 400)
 
         # Create auth headers
         auth_string = create_auth_string(username, password)
