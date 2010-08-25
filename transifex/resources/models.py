@@ -15,9 +15,9 @@ from django.contrib.auth.models import User
 from languages.models import Language
 from projects.models import Project
 from storage.models import StorageFile
+from txcommon.db.models import CompressedTextField
 from txcommon.log import logger
 
-from resources.fields import CompressedTextField
 from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 
 
