@@ -267,7 +267,7 @@ def action_logging(user, object_list, action_type, message=None, context=None):
         context = {'component': object}
         action_logging(request.user, [object], al , context=context):
     """
-    if not settings.ACTIONLOG_ENABLED:
+    if not getattr(settings, 'ACTIONLOG_ENABLED', None):
         return
 
     if context is None:
