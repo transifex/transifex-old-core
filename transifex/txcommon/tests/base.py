@@ -53,6 +53,8 @@ def deactivate_csrf_middleware():
 class BaseTestCase(TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
+    fixtures = ["sample_data", "sample_users", "sample_site", "sample_languages"]
+    
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
        
@@ -62,20 +64,13 @@ class BaseTestCase(TestCase):
         # annonymous client.
         deactivate_caching_middleware()
         deactivate_csrf_middleware()
-
+        # Disable actionlog, wich in turn disables noticetype requirement.
+        settings.ACTIONLOG_ENABLED = False
 
     def setUp(self):
         """Set up a sample set of base objects for inherited tests."""
 
-        # Run basic management commands
-        # TODO: Investigate the use of a fixture for increased speed.
-        management.call_command('txlanguages')
-        autodiscover_notifications()
-        management.call_command('txcreatenoticetypes')
-
-        # Add group 'registered' and set proper permissions
-        # FIXME: Should go in a fixture.
-        registered, created = Group.objects.get_or_create(name="registered")
+        registered = Group.objects.get(name="registered")
         registered.permissions.add(
             DjPermission.objects.get_or_create(
                 codename='add_project', name='Can add project',
