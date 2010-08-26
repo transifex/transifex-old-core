@@ -1845,9 +1845,9 @@ msgstr "Editer %(component_name)s"
 
 #: templates/projects/component_form.html:13
 #: templates/projects/component_form.html:84
-#, fuzzy, python-format
+#, python-format
 msgid "Edit Component '%(component_name)s'"
-msgstr "Editer %(component_name)s"
+msgstr "Editer '%(component_name)s'"
 
 #: templates/projects/component_form.html:82
 #, python-format
@@ -2084,14 +2084,12 @@ msgid "You have the following choices to manage how people can have submission a
 msgstr "Vous avez les choix suivants pour décider comment les personnes peuvent avoir les accès de soumission à votre projet:"
 
 #: templates/projects/project_form_access_control.html:58
-#, fuzzy
 msgid "Go to the project writers page."
-msgstr "Aller à la page de ce projet"
+msgstr "Aller à la page des écrivains du projet."
 
 #: templates/projects/project_form_access_control.html:62
-#, fuzzy
 msgid "Save Access Control Settings"
-msgstr "Contrôle d'accès"
+msgstr "Sauvegarder les paramètres de contrôle des accès."
 
 #: templates/projects/project_form_base.html:14
 #, python-format
@@ -2108,9 +2106,8 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Edition de <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/projects/project_form_permissions.html:26
-#, fuzzy
 msgid "Give write access to a translator to send translations to your project independent of a translation team."
-msgstr "Donne le droit à un traducteur d'envoyer des traductions pour votre projet."
+msgstr "Donne le droit à un traducteur d'envoyer des traductions pour votre projet indépendamment d'une équipe de traduction."
 
 #: templates/projects/project_form_permissions.html:39
 msgid "Pending requests:"
@@ -2188,13 +2185,13 @@ msgid "Say goodbye to <em>%(release_name)s</em>?"
 msgstr "Dire adieu à <em>%(release_name)s</em> ?"
 
 #: templates/projects/release_confirm_delete.html:19
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
 msgstr ""
 "\n"
-"  Êtes vous sûr de vouloir supprimer définitivement l'équipe '%(lang_name)s' appartenant à %(project_name)s ?\n"
+"  Etes vous sur de vouloir supprimer définitivement la parution '%(release_name)s' correspondant au projet %(project_name)s?\n"
 
 #: templates/projects/release_detail.html:69
 msgid "Release date:"
@@ -2209,14 +2206,12 @@ msgid "Devel freeze:"
 msgstr "Développement gelé: "
 
 #: templates/projects/release_detail.html:82
-#, fuzzy
 msgid "Components:"
-msgstr "composant"
+msgstr "Composants:"
 
 #: templates/projects/release_detail.html:86
-#, fuzzy
 msgid "Click here to show or hide the component list"
-msgstr "Cliquer ici pour montrer ou cacher les fichiers sources"
+msgstr "Cliquer ici pour montrer ou cacher la liste des composants"
 
 #: templates/projects/release_detail.html:87
 #, python-format
@@ -2252,14 +2247,14 @@ msgid "Edit <em>%(release_name)s</em> release"
 msgstr "Éditer la publication <em>%(release_name)s</em>"
 
 #: templates/projects/release_form.html:28
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
 "      "
 msgstr ""
 "\n"
-"        Édition de <a href=\"%(release_url)s\">%(release_name)s</a>\n"
+"        Edition de la parution '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
 "      "
 
 #: templates/projects/release_form.html:46
@@ -2267,18 +2262,17 @@ msgid "Save release"
 msgstr "Enregistrer la publication"
 
 #: templates/projects/release_language_detail.html:26
-#, fuzzy, python-format
+#, python-format
 msgid "Release '%(release_name)s"
-msgstr "Supprimer %(release_name)s"
+msgstr "Parution %(release_name)s"
 
 #: templates/projects/release_language_detail.html:38
 msgid "Project/Component statistics"
 msgstr "Statistiques Projet/Composant"
 
 #: templates/projects/release_language_detail.html:59
-#, fuzzy
 msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
-msgstr "Transifex a recherché des projets contenant des traductions pour cette langue mais n'a pu en trouver. Etes-vous intéressé par soumettre votre travail à la place ?"
+msgstr "Transifex a recherché des projets contenant des fichiers de traductions pour cette langue et parution, mais n'a pu en trouver. Essayez de soumettre un fichier et re-vérifiez."
 
 #: templates/projects/release_language_detail.html:60
 #, python-format
@@ -2295,29 +2289,25 @@ msgid "The following components will be included in %(release_name)s, but there 
 msgstr "Le composant suivant sera inclu dans %(release_name)s, mais il n'y a pour le moment pas de traduction envoyées pour le %(language_name)s."
 
 #: templates/projects/release_list.html:13
-#, fuzzy
 msgid "Project Releases"
-msgstr "Projet supprimé"
+msgstr "Parutions des projets."
 
 #: templates/projects/release_list.html:28
-#, fuzzy, python-format
+#, python-format
 msgid "No releases are registered for this project yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
-msgstr "Aucune publication n'est pour le moment enregistrée pour cette collection. Pourquoi ne pas en <a href=\"%(release_create)s\">ajouter une</a> ?"
+msgstr "Aucune parution enregistrée pour ce projet actuellement Pourquoi pas <a href=\"%(release_create)s\">en ajouter une</a>?"
 
 #: templates/reviews/review_form.html:10
-#, fuzzy
 msgid "Submit"
-msgstr "Envoyer à"
+msgstr "Envoi"
 
 #: templates/reviews/review_list.html:26
-#, fuzzy
 msgid "Translation Review Requests"
-msgstr "Fichiers de traduction"
+msgstr "Demande de relecture de traduction"
 
 #: templates/reviews/review_list.html:30
-#, fuzzy
 msgid "Open Requests"
-msgstr "Refuser la requête"
+msgstr "Ouvrir une requête"
 
 #: templates/reviews/review_list.html:38
 #, python-format
@@ -2329,9 +2319,8 @@ msgid "Who and when"
 msgstr "Qui et quand"
 
 #: templates/reviews/review_list.html:48
-#, fuzzy
 msgid "See profile"
-msgstr "Supprimer le profil"
+msgstr "Voir le profil"
 
 #: templates/reviews/review_list.html:49
 #, python-format
@@ -2345,19 +2334,16 @@ msgstr ""
 "      "
 
 #: templates/reviews/review_list.html:55
-#, fuzzy
 msgid "Translation Language"
-msgstr "Traduction"
+msgstr "Langage de traduction"
 
 #: templates/reviews/review_list.html:58
-#, fuzzy
 msgid "Go to language page"
-msgstr "Aller à la page d'accueil"
+msgstr "Aller à la page du langage"
 
 #: templates/reviews/review_list.html:65
-#, fuzzy
 msgid "File target"
-msgstr "Filtrer les résultats"
+msgstr "Fichier cible"
 
 #: templates/reviews/review_list.html:66
 msgid "Download the version sent for review"
@@ -2368,9 +2354,8 @@ msgid "Score"
 msgstr "Score"
 
 #: templates/reviews/review_list.html:83
-#, fuzzy
 msgid "Status"
-msgstr "Contactez-nous"
+msgstr "Statut"
 
 #: templates/reviews/review_list.html:93
 msgid "Close Review"
