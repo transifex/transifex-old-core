@@ -2345,6 +2345,9 @@ msgid ""
 "        %(time_since)s ago\n"
 "      "
 msgstr ""
+"\n"
+"        depuis %(time_since)s \n"
+"      "
 
 #: templates/reviews/review_list.html:55
 #, fuzzy
@@ -2637,6 +2640,10 @@ msgid ""
 "            In order to send translations here you'll need to join a team of '%(outsource_project)s'.\n"
 "        "
 msgstr ""
+"\n"
+"            Ce projet n'a pas sa propre équipe, mais a choisi de réutiliser les équipes du projet.'<a href=%(outsource_url)s>%(outsource_project)s</a>'.\n"
+"            Pour pouvoir envoyer des traductions ici vous aurez besoin de rejoindre une équipe du projet '%(outsource_project)s'.\n"
+"        "
 
 #: templates/teams/team_off.html:22
 msgid ""
@@ -3881,8 +3888,9 @@ msgid "Commit to the repository failed."
 msgstr "L'engagement au dépôt a échoué."
 
 #: vcs/lib/exceptions/__init__.py:72
+#, fuzzy
 msgid "Pushing to the remote repository failed."
-msgstr ""
+msgstr "Pushing to the remote repository failed."
 
 #: vcs/lib/exceptions/__init__.py:78
 msgid "Given file does not have a revision. The admins have been notified to take a closer look at it."
