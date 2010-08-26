@@ -1,6 +1,6 @@
-from resources.tests.views.base import ViewsBaseTest
+from txcommon.tests.base import BaseTestCase
 
-class MemoryViewsTests(ViewsBaseTest):
+class MemoryViewsTests(BaseTestCase):
 
     def setUp(self):
         super(MemoryViewsTests, self).setUp()

@@ -14,9 +14,10 @@ from txcommon.notifications import NOTICE_TYPES
 Language = get_model('languages', 'Language')
 AuPermission = get_model('authority', 'Permission')
 Project = get_model('projects', 'Project')
-Component = get_model('projects', 'Component')
+Resource = get_model('resources', 'Resource')
 Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
+SourceEntity = get_model('resources', 'SourceEntity')
 
 USER_ROLES = [
     'anonymous',
@@ -55,15 +56,16 @@ class BaseTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
        
-        # Remove the caching middlewares because they interfere with the
-        # annonymous client.
         #FIXME: This should not happen, since it diverges away the test suite
         # from the actual deployment.
+        # Remove the caching middlewares because they interfere with the
+        # annonymous client.
         deactivate_caching_middleware()
         deactivate_csrf_middleware()
 
-    def setUp(self, create_teams=True):
-        """Set up project, component and vcsunit. Insert POFile objects."""
+
+    def setUp(self):
+        """Set up a sample set of base objects for inherited tests."""
 
         # Run basic management commands
         # TODO: Investigate the use of a fixture for increased speed.
@@ -94,29 +96,10 @@ class BaseTestCase(TestCase):
                 self.client[nick].login(username=nick, password=PASSWORD)
                 self.assertTrue(self.user[nick].is_authenticated())
 
-        # Create a project, a component/vcsunit a release, and a pt_BR team
+        # Create projects
         self.project = Project.objects.create(
             slug="test_project", name="Test Project")
         self.project.maintainers.add(self.user['maintainer'])
-
-        self.component = Component.objects.create(
-            slug='test_component', project=self.project, i18n_type='POT',
-            file_filter='po/.*')
-
-        from vcs.tests import test_git
-        root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
-        self.component.set_unit(root_url, 'git', 'master')
-
-        self.release = Release.objects.get_or_create(slug="r1", name="r1",
-            project=self.project)[0]
-#       self.release.components.add(self.component)
-
-        self.language = Language.objects.get(code='pt_BR')
-        if create_teams:
-            self.team = Team.objects.get_or_create(language=self.language,
-                project=self.project, creator=self.user['maintainer'])[0]
-            self.team.coordinators.add(self.user['team_coordinator'])
-            self.team.members.add(self.user['team_member'])
 
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
@@ -124,9 +107,32 @@ class BaseTestCase(TestCase):
             approved=True, user=self.user['writer'], 
             content_object=self.project, creator=self.user['maintainer'])
 
+        # Create languages and teams
+        self.language = Language.objects.get(code='pt_BR')
+        self.language_en = Language.objects.get(code='en_US')
+        self.team = Team.objects.get_or_create(language=self.language,
+            project=self.project, creator=self.user['maintainer'])[0]
+        self.team.coordinators.add(self.user['team_coordinator'])
+        self.team.members.add(self.user['team_member'])
+
+        # Create a resources
+        self.resource = Resource(slug="foo", name="foo",
+            project=self.project, source_language=self.language_en)
+        self.resource.save()
+        self.source_entity = SourceEntity.objects.create(string='String1',
+            context='Context1', occurrences='Occurrences1', resource=self.resource)
+
+        # Create a release
+        self.release = Release.objects.create(slug="releaseslug1",
+            name="Release1", project=self.project)
+        self.release.resources.add(self.resource)
+
 
     def tearDown(self):
         self.project.delete()
+        self.resource.delete()
+        self.team.delete()
+        self.source_entity.delete()
         for nick, user in self.user.iteritems():
             user.delete()
 

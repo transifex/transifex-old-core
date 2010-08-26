@@ -4,14 +4,14 @@ from django.core import serializers
 from django.test.client import Client
 from languages.models import Language
 from resources.models import Resource
-from resources.tests.views.base import ViewsBaseTest
+from txcommon.tests.base import BaseTestCase
 
 try:
     import json
 except ImportError:
     import simplejson as json
 
-class PermissionsTest(ViewsBaseTest):
+class PermissionsTest(BaseTestCase):
     """Test view permissions"""
 
     def seUp(self):

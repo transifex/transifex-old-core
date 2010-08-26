@@ -27,7 +27,7 @@ class TestLocking(BaseTestCase):
         self.assertFalse('external.csrf.middleware.CsrfMiddleware' in
             settings.MIDDLEWARE_CLASSES, msg = 'Locking test doesn\'t '
             'work with CSRF Middleware enabled')
-        super(TestLocking, self).setUp(create_teams=False)
+        super(TestLocking, self).setUp()
         self.assertNoticeTypeExistence("project_resource_language_lock_expiring")
         
         # Set settings for testcase

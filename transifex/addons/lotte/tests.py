@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
-from resources.tests.views.base import ViewsBaseTest
+from txcommon.tests.base import BaseTestCase
 
-class LotteViewsTests(ViewsBaseTest):
+class LotteViewsTests(BaseTestCase):
 
     def setUp(self):
         super(LotteViewsTests, self).setUp()
