@@ -13,13 +13,10 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.paginate.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/tx.lotte.js"></script>
-  <link media="screen" href="{{ STATIC_URL }}css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}css/jquery.paginate.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
-      {% if WEBTRANS_SUGGESTIONS %}
-        google.load("language", "1");
-    {% endif %}
+    google.load("language", "1");
   </script>
 {% endblock %}
 
@@ -53,7 +50,6 @@
 
         pull_url = '{% url string_resource_push project.slug resource.slug %}?languages={{target_language.code}},{{request.LANGUAGE_CODE}}';
 
-        {% if WEBTRANS_SUGGESTIONS %}
         google.setOnLoadCallback(function() {
 
             source_lang = '{{ resource.source_language.code }}';
@@ -77,7 +73,6 @@
                     }
                 }
             }
-        {% endif %}
 
           $.ajax({
             contentType : 'application/json', /* Workaround for django-piston */
@@ -109,9 +104,7 @@
             }
           });
 
-      {% if WEBTRANS_SUGGESTIONS %}
         });
-      {% endif %}
 
     });
 
@@ -174,9 +167,7 @@
       <th>{% trans "#" %}</th>
       <th>{% trans "Source String" %}</th>
       <th>{% trans "Translation" %}</th>
-    {% if WEBTRANS_SUGGESTIONS %}      
       <th class="suggest_container" style="padding-left: 20px;"><abbr title="{% trans "Auto-translate" %}">{% trans "AT" %}</abbr></th>
-    {% endif %}
       <th style="width:48px;">&nbsp;</th>
     </tr>
    </thead>
@@ -212,11 +203,9 @@
             +"<\/span>";
         </script>
     </td>
-   {% if WEBTRANS_SUGGESTIONS %}    
     <td class="notes suggest_container" style="vertical-align:middle;padding-left: 20px;">
       <a class="i16 action nodecoration_icon suggest" href="#" title="{% trans "Auto-suggest translation" %}"></a>
     </td>
-   {% endif %}
      <td class="notes" style="vertical-align:middle;padding-left: 20px;">
        <span class="i16 save buttonized_simple" id="save_{{row}}" style="display:none;"></span>
      </td>

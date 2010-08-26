@@ -20,7 +20,6 @@
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 {% block extra_head %}
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
@@ -30,9 +29,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/footpanel.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
-      {% if WEBTRANS_SUGGESTIONS %}
-        google.load("language", "1");
-    {% endif %}
+    google.load("language", "1");
   </script>
 
 <script type="text/javascript">
@@ -59,8 +56,6 @@
     var entity_suggestions_urlp_tmpl = "{% url entity_suggestions_snippet 1111111111 target_language.code %}";
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
-
-    {% if WEBTRANS_SUGGESTIONS %}
 
     function unique(a){
         /* Drop duplicated entries from an array (list) */
@@ -102,8 +97,6 @@
             is_supported_source_lang = false;
             is_supported_lang = false;
         }
-    {% endif %}
-
 
     /* document ready. do stuff */
     $(document).ready(function(){
@@ -554,9 +547,7 @@
 
     });
 
-    {% if WEBTRANS_SUGGESTIONS %}
     });
-    {% endif %}
 
 </script>
 

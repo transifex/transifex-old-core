@@ -17,7 +17,6 @@ from projects.views.team import *
 from projects.views.release import *
 
 from txcommon.decorators import one_perm_required_or_403
-from webtrans.wizards import TransFormWizard
 
 from transifex.urls import PROJECTS_URL
 
@@ -317,14 +316,3 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     url('', include('resources.urls')),
 )
-
-#TODO: Make this setting work throughout the applications
-if getattr(settings, 'ENABLE_WEBTRANS', True):
-    urlpatterns += patterns('',
-        url(
-            regex = (COMPONENT_URL+r''
-                    'edit/(?P<filename>[_\./\-@\w]+)/$'),
-            # It needs to pass through both 'login_required'
-            view = login_required(TransFormWizard(key=None, form_list=[])),
-            name = 'component_edit_file',),
-        )

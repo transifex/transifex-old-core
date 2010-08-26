@@ -1,8 +1,0 @@
-{% load i18n %}
-{% for label in msgid_list %}
-    {% if forloop.first %}
-    <p class="msgid">{{ label }}</p>
-    {% else %}
-    <p class="msgid_plural">{{ label }}</p>
-    {% endif %}
-{% endfor %}
