@@ -1,7 +1,6 @@
 import re
 
 from codebases.forms import UnitForm
-from tarball.forms import TarballSubForm
 from vcs.forms import VcsUnitSubForm
 
 def unit_sub_forms(unit, post_request=None, blacklist_qs=None,):
@@ -22,7 +21,7 @@ def unit_sub_forms(unit, post_request=None, blacklist_qs=None,):
     else: 
         unit_instance = unit
 
-    _subforms = [VcsUnitSubForm, TarballSubForm]
+    _subforms = [VcsUnitSubForm]
     _formd = {False: None, True: unit_instance}
 
     ret = [

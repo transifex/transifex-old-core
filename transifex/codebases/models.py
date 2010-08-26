@@ -5,7 +5,7 @@ codebases used by Transifex. The following definitions are used:
 resource:
   A file within a codebase
 codebase:
-  A collection of files (VCS repo, tarball, etc.) that contains
+  A collection of files (VCS repo, etc.) that contains
   resources, some or all of which are to be translated
 """
 import operator
@@ -23,7 +23,7 @@ UNIT_CHOICES.sort(key=operator.itemgetter(0))
 
 class Unit(models.Model):
     """
-    An abstract codebase; a VCS repo, tarball, or some other piece of
+    An abstract codebase; a VCS repo, or some other piece of
     code.
 
     The following methods should be implemented by children:

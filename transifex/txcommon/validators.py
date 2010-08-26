@@ -24,24 +24,6 @@ class ValidRegexField(CharField):
             raise ValidationError(_('Enter a valid regular expression.'))
 
 
-class ValidTarBallUrl(CharField):
-    def __init__(self, max_length=None, min_length=None, *args, **kwargs):
-        super(ValidTarBallUrl, self).__init__(max_length, min_length, *args,
-            **kwargs)
-
-    def clean(self, value):
-        value = super(ValidTarBallUrl, self).clean(value)
-        if (value.startswith('http://') or value.startswith('ftp://')):
-            if value.endswith('tar.gz') or value.endswith('.tgz'):
-                return value
-            else:
-                raise ValidationError(_('The root url does not point to a '
-                                        '.tar.gz or .tgz file'))
-        else:
-            raise ValidationError(_('The root url must start with http:// or '
-                                    'ftp://'))
-        return value
-
 class ValidRootUri(CharField):
     """
     Create a charfield validator that forbids anything that doesn't start with
