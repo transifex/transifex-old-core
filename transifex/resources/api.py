@@ -26,7 +26,7 @@ class ResourceHandler(BaseHandler):
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Resource
-    fields = ('slug', 'name', 'created',)
+    fields = ('slug', 'name', 'created', 'available_languages')
     exclude = ()
 
     def read(self, request, project_slug, resource_slug=None):
