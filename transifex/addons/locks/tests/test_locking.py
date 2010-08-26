@@ -16,11 +16,8 @@ Language = get_model('languages', 'Language')
 POFileLock = get_model('locks', 'POFileLock')
 
 # These Languages and POFiles should exist:
-TEAM_LANG_CODES = ['en', 'es', 'fr']
+TEAM_LANG_CODES = ['en_US', 'pt_BR', 'el']
 
-# To invoke IPython shell during runtime you can use following piece of code:
-# from IPython.Shell import IPShellEmbed
-# IPShellEmbed()()
 
 class TestLocking(BaseTestCase):
     def setUp(self):
@@ -41,13 +38,10 @@ class TestLocking(BaseTestCase):
         # Create teams
         for code in TEAM_LANG_CODES:
             logger.debug("Trying to create team for: %s" % code)
-            team = Team()
-            team.creator = self.user['maintainer']
-            team.language = Language.objects.get(code=code)
-            team.project = self.project
-            team.save()
+            language, created = Language.objects.get_or_create(code=code)
+            team, created = self.project.team_set.get_or_create(
+                language=language, creator=self.user['maintainer'])
             team.members.add(self.user['team_member'])
-            team.save()
 
         # Select first POFile
         self.pofile = self.pofiles.get(language_code = TEAM_LANG_CODES[0])
