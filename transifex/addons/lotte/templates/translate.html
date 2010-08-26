@@ -186,7 +186,7 @@
                   "fnRender": function(oObj){
                       var clean_array = array_escape({"translations":oObj.aData[3]});
                       var textareas = '';
-                      var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other']
+                      var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other'];
                       var plurals_counter = 0;
                       for(rule in plural_types){
                           if(plural_types[rule] in clean_array["translations"]){
@@ -215,6 +215,7 @@
                       }
 
                       return textareas
+                      + '<div class="error_notes"></div>'
                       + '<div class="lotte-actions" style="overflow:hidden;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
                       + '<p style="position:relative;right:-90px"><a class="i16 action buttonized suggest">auto translate</a></p>'
                       + '<p style="position:relative;right:-79px"><a class="i16 next buttonized copy_source">copy source</a></p>'

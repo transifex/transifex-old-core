@@ -157,34 +157,54 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 type: "POST",
                 contentType: "application/json",
                 async: false,
-                success: function(){
+                success: function(data, textStatus){ // jquery 1.4 includes xmlhtttpreq
+
+                    var json_response_dict = JSON.parse(data);
+
                     // Update the object classes, and the overall statistics
                     if(ts) { 
-                        ts.modified = false;
-                        if (ts.isUntranslated()) {
-                            stringset.translated -= 1;
-                            stringset.untranslated += 1;
-                        } else if (ts.checkVar(ts.previous)) { 
-                            stringset.translated += 1;
-                            stringset.untranslated -= 1;
+                        var status_code = json_response_dict[ts.id]['status'];
+                        if (status_code == 200){
+                            ts.modified = false;
+                            if (ts.isUntranslated()) {
+                                stringset.translated -= 1;
+                                stringset.untranslated += 1;
+                            } else if (ts.checkVar(ts.previous)) { 
+                                stringset.translated += 1;
+                                stringset.untranslated -= 1;
+                            }
+                            // Deep copy of the array
+                            ts.previous = jQuery.extend(true, {}, ts.translated_strings);
+                            
+                            // Hide the error div if it is visible
+                            this_stringset.current_box.parents('td.trans').find('div.error_notes').hide();
+                        }else{ // Handle the error
+                            this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
+                            this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
                         }
-                        // Deep copy of the array
-                        ts.previous = jQuery.extend(true, {}, ts.translated_strings);
                     } else {
                         /* For save_all button */
                         for (j=0; j<this_stringset.strings.length; j++) {
                             if (this_stringset.strings[j].modified) {
-                                if ( this_stringset.strings[j].isUntranslated()) {
-                                    stringset.translated -= 1;
-                                    stringset.untranslated += 1;
-                                } else if ( this_stringset.strings[j].checkVar(
-                                    this_stringset.strings[j].previous)) {
-                                    stringset.translated += 1;
-                                    stringset.untranslated -= 1;
+                                if(json_response_dict[this_stringset.strings[j].id]['status'] == 200){
+                                    if ( this_stringset.strings[j].isUntranslated()) {
+                                        stringset.translated -= 1;
+                                        stringset.untranslated += 1;
+                                    } else if ( this_stringset.strings[j].checkVar(
+                                        this_stringset.strings[j].previous)) {
+                                        stringset.translated += 1;
+                                        stringset.untranslated -= 1;
+                                    }
+                                    this_stringset.strings[j].modified = false;
+                                    // Deep copy of the array
+                                    this_stringset.strings[j].previous =  jQuery.extend(true, {}, this_stringset.strings[j].translated_strings);
+
+                                    // Hide the error div if it is visible
+                                    $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').hide();
+                                }else{ // Handle the error
+                                    $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').text(json_response_dict[this_stringset.strings[j].id]['message']);
+                                    $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').show();
                                 }
-                                this_stringset.strings[j].modified = false;
-                                // Deep copy of the array
-                                this_stringset.strings[j].previous =  jQuery.extend(true, {}, this_stringset.strings[j].translated_strings);
                             }
                         }
                     }

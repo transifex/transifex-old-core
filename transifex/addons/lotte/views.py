@@ -453,6 +453,11 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     except Language.DoesNotExist:
         raise Http404
 
+    # This dictionary will hold the results of the save operation and will map 
+    # status code for each translation pushed, to indicate the result on each 
+    # translation push separately.
+    push_response_dict = {}
+
     # Form the strings dictionary, get as Json object
     # The fields are the following:
     # id-> source_entity id
@@ -461,13 +466,34 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     # occurrence-> occurrence (not yet well supported)
     # Iterate through all the row data that have been sent.
     for row in strings:
+        source_id = int(row['id'])
         try:
-            source_string = Translation.objects.get(id=int(row['id']))
+            source_string = Translation.objects.get(id=source_id,
+                resource__project=project)
         except Translation.DoesNotExist:
             # TODO: Log or inform here
+            push_response_dict[source_id] = { 'status':500,
+                 'message':"Source string cannot be identified in the DB"}
             # If the source_string cannot be identified in the DB then go to next
             # translation pair.
             continue
+
+        # If the translated source string is pluralized check that all the 
+        # source language supported rules have been filled in, else return error
+        # and donot save the translations.
+        if source_string.source_entity.pluralized:
+            error_flag = False
+            for rule in target_language.get_pluralrules():
+                if rule in row['translations'] and row['translations'][rule] != "":
+                    continue
+                else:
+                    error_flag = True
+            if error_flag:
+                push_response_dict[source_id] = { 'status':500,
+                    'message':("All the plural translations must be filled in, "
+                               "in order to be saved!")}
+                # Skip the save as we hit on an error.
+                continue
 
         for rule, string in row['translations'].items():
             try:
@@ -486,6 +512,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     translation_string.string = string
                     translation_string.user = request.user
                     translation_string.save()
+                push_response_dict[source_id] = { 'status':200,
+                     'message':"Translation updated successfully in the DB"}
             except Translation.DoesNotExist:
                 # Only create new if the translation string sent, is not empty!
                 if string != "":
@@ -496,12 +524,21 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         rule = target_language.get_rule_num_from_name(rule),
                         string = string,
                         user = request.user) # Save the sender as last committer
+                    push_response_dict[source_id] = { 'status':200,
+                         'message':"New translation stored successfully in the DB"}
+                else:
+                    push_response_dict[source_id] = { 'status':500,
+                         'message':"The translation string is empty"}
             # catch-all. if we don't save we _MUST_ inform the user
             except:
                 # TODO: Log or inform here
-                pass
+                push_response_dict[source_id] = { 'status':500,
+                    'message':"Error occured on translation saving procedure."}
 
-    return HttpResponse(status=200)
+    json_dict = simplejson.dumps(push_response_dict)
+    return HttpResponse(json_dict, mimetype='application/json')
+
+
 
 # FIXME: Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
