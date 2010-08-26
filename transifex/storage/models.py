@@ -119,6 +119,7 @@ class StorageFile(models.Model):
         self.mime_type = parser.mime_type
 
         fpo = parser(filename = self.get_storage_path() )
+        fpo.set_language(self.language)
         fpo.parse_file()
 
         stringset = fpo.stringset

@@ -217,6 +217,7 @@ class ProjectResourceHandler(BaseHandler):
                 parser = storagefile.find_parser()
                 fhandler = parser(filename=storagefile.get_storage_path())
                 fhandler.bind_resource(resource)
+                fhandler.set_language(storagefile.language)
 
                 try:
                     fhandler.contents_check(fhandler.filename)
@@ -303,13 +304,15 @@ class ProjectResourceHandler(BaseHandler):
                 fhandler = parser(filename=storagefile.get_storage_path())
                 fhandler.set_language(language)
                 fhandler.bind_resource(resource)
-                fhandler.parse_file()
+                fhandler.contents_check(fhandler.filename)
+
 
                 try:
+                    fhandler.parse_file()
                     strings_added, strings_updated = fhandler.save2db()
                 except:
-                    request.user.message_set.create(message=_("Error importing"
-                       " file."))
+                    #request.user.message_set.create(message=_("Error importing"
+                    #   " file."))
                     return BAD_REQUEST("File type unsupported")
                 else:
                     messages = []
@@ -317,8 +320,8 @@ class ProjectResourceHandler(BaseHandler):
                         messages.append(_("%i strings added") % strings_added)
                     if strings_updated > 0:
                         messages.append(_("%i strings updated") % strings_updated)
-                    request.user.message_set.create(
-                        message=",".join(messages))
+                    #request.user.message_set.create(
+                    #    message=",".join(messages))
 
                 retval= {
                     'strings_added':strings_added,

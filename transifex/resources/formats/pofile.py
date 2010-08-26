@@ -273,6 +273,7 @@ class POHandler(Handler):
 #        self.compiled = po
 #        return po
 #
+    @need_language
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
         """
@@ -289,7 +290,7 @@ class POHandler(Handler):
         if lang_rules:
             nplural = len(lang_rules)
         else:
-            nplural = None
+            nplural = self.language.get_pluralrules_numbers()
 
         pofile = polib.pofile(self.filename)
 
@@ -301,9 +302,6 @@ class POHandler(Handler):
             if "fuzzy" in  entry.flags:
                 entry.msgstr = ""
 
-            # pass empty strings for non source files
-            if not ispot and entry.msgstr in ["", None]:
-                continue
 
             if entry.msgid_plural:
                 pluralized = True
@@ -318,7 +316,7 @@ class POHandler(Handler):
                     nplural_file = len(message_keys)
                     messages = []
                     if nplural:
-                        if nplural != nplural_file:
+                        if len(nplural) != nplural_file:
                             logger.error("Passed plural rules has nplurals=%s"
                                 ", but '%s' file has nplurals=%s. String '%s'"
                                 "skipped." % (nplural, self.filename, nplural_file,
@@ -328,13 +326,16 @@ class POHandler(Handler):
                         same_nplural = False
 
                     if not same_nplural:
-                        plural_keys = message_keys
-                    else:
-                        plural_keys = lang_rules
+                        # Skip half translated plurals
+                        continue
+                        # plural_keys = message_keys
 
-                    for n, rule in enumerate(plural_keys):
-                        messages.append((rule, entry.msgstr_plural['%s' % n]))
+                    for n, key in enumerate(message_keys):
+                        messages.append((nplural[n], entry.msgstr_plural['%s' % n]))
             else:
+                # pass empty strings for non source files
+                if not ispot and entry.msgstr in ["", None]:
+                    continue
                 # Not pluralized, so no plural rules. Use 5 as 'other'.
                 if ispot:
                     messages = [(5, entry.msgid)]

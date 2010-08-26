@@ -71,6 +71,7 @@ class LinguistHandler(Handler):
                 source = _getElementByTagName(message, "source")
                 translation = _getElementByTagName(message, "translation")
                 numerusforms = message.getElementsByTagName('numerusform')
+                translation.childNodes  = []
 
                 plurals = Translation.objects.filter(
                     resource = self.resource,
@@ -78,15 +79,12 @@ class LinguistHandler(Handler):
                     source_entity__string = source.firstChild.toxml())
                 plural_keys = {}
                 # last rule excluding other(5)
-                last_rule = language.get_pluralrules_numbers()[-2]
+                lang_rules = language.get_pluralrules_numbers()
                 # Initialize all plural rules up to the last
-                for p in range(0,last_rule):
+                for p,n in enumerate(lang_rules):
                     plural_keys[p] = ""
-                plural_nodes = translation.childNodes[:]
-                for node in plural_nodes:
-                    translation.removeChild(node)
-                for p in plurals:
-                    plural_keys[p.rule] =  p.string
+                for p,n in enumerate(plurals):
+                    plural_keys[p] = n.string
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.keys():
                     e = doc.createElement("numerusform")
@@ -95,6 +93,7 @@ class LinguistHandler(Handler):
 
         self.compiled_template = doc.toxml()
 
+    @need_language
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
         """
@@ -109,7 +108,7 @@ class LinguistHandler(Handler):
         if lang_rules:
             nplural = len(lang_rules)
         else:
-            nplural = None
+            nplural = self.language.get_pluralrules_numbers()
 
         doc = xml.dom.minidom.parseString(buf)
         if doc.doctype.name != "TS":
@@ -172,25 +171,10 @@ class LinguistHandler(Handler):
                     if pluralized:
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
-                            plural_keys = [n for n, f in enumerate(numerusforms)]
-                            # If we want to support many source languages we
-                            # need to find a way to handle plural mapping. One
-                            # way to do it is to store a dict for each lang
-                            # with a mapping of each number range(0,5) goes to
-                            # which plural form. For english it'd be something
-                            # like {'0':'1', '1': '5'}
-                            # XXX: Temp solution for english lang
-                            pl_map = {0:1, 1: 5}
-                            for n, rule in enumerate(plural_keys):
+                            for n,f  in enumerate(numerusforms):
                                 nf=numerusforms[n].firstChild
                                 if nf:
-                                    messages.append((pl_map[rule], nf.toxml()))
-
-                            # What was this?
-#                            msgid_plural = _getElementByTagName(message,
-#                                "extra-po-msgid_plural")
-#                            messages.insert(0, (1,
-#                                msgid_plural.firstChild.toxml()))
+                                    messages.append((nplural[n], nf.toxml()))
                         except LinguistParseError:
                             pass
 
@@ -201,7 +185,7 @@ class LinguistHandler(Handler):
                         numerusforms = translation.getElementsByTagName('numerusform')
                         if nplural:
                             nplural_file = len(numerusforms)
-                            if nplural != nplural_file:
+                            if len(nplural) != nplural_file:
                                 logger.error("Passed plural rules has nplurals=%s"
                                     ", but '%s' file has nplurals=%s. String '%s'"
                                     "skipped." % (nplural, self.filename,
@@ -211,14 +195,13 @@ class LinguistHandler(Handler):
                             same_nplural = False
 
                         if not same_nplural:
-                            plural_keys = [n for n, f in enumerate(numerusforms)]
-                        else:
-                            plural_keys = lang_rules
+                            # If we're missing plurals, skip them altogether
+                            continue
 
-                        for n, rule in enumerate(plural_keys):
+                        for n,f  in enumerate(numerusforms):
                             nf=numerusforms[n].firstChild
                             if nf:
-                                messages.append((rule, nf.toxml()))
+                                messages.append((nplural[n], nf.toxml()))
 
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
