@@ -15,7 +15,7 @@ class StatusCodesTest(BaseTestCase):
             200: [
                 ('/projects/p/%s/resource/%s/' %
                     (self.project.slug, self.resource.slug)),
-                ('/projects/p/%s/resource/%s/l/en/view/' %
+                ('/projects/p/%s/resource/%s/l/en-US/view/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             404: [
