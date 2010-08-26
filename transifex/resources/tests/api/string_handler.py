@@ -14,10 +14,9 @@ class StringHandlerTests(APIBaseTests):
         super(StringHandlerTests, self).setUp()
         self.resource = Resource.objects.create(name="test", slug="test",
             project=self.project,
-            source_language=self.language)
+            source_language=self.language_en)
         self.resource_handler_url = reverse('string_resource_push',
             args=[self.project.slug, self.resource.slug])
-
 
     def tearDown(self):
         self.resource.delete()
@@ -44,13 +43,13 @@ class StringHandlerTests(APIBaseTests):
         # Check that we got all translation strings
         self.assertEqual(len(json_data['strings']),
                             Translation.objects.filter(
-                            resource__slug = self.resource,
-                            language__code = self.data['language']).count())
+                            resource = self.resource,
+                            language = self.resource.source_language).count())
 
-        self.assertTrue(self.data['language'] in response.content)
+        self.assertTrue(self.resource.source_language.code in response.content)
         for t in Translation.objects.filter(
                         resource__slug = self.resource,
-                        language__code = self.data['language']):
+                        language__code = self.resource.source_language):
             self.assertTrue(t.string in response.content)
             self.assertTrue(t.source_entity.context in response.content)
 
@@ -78,17 +77,17 @@ class StringHandlerTests(APIBaseTests):
 
         # Check if resource was created
         self.assertEqual(Resource.objects.filter(project = self.project,
-                            slug = self.data['resource']).count(), 1)
+                            slug = self.resource.slug).count(), 1)
 
         # Check source entities
         self.assertEqual(SourceEntity.objects.filter(
-                            resource__slug = self.data['resource']).count(),
+                            resource__slug = self.resource.slug).count(),
                             len(self.data['strings']))
 
         # Check that all strings are there
         self.assertEqual(Translation.objects.filter(
-                            resource__slug = self.data['resource'],
-                            language__code = self.data['language']).count(),
+                            resource = self.resource,
+                            language = self.resource.source_language).count(),
                             len(self.data['strings']))
 
 
@@ -103,8 +102,6 @@ class StringHandlerTests(APIBaseTests):
         #                                    HTTP_AUTHORIZATION=auth_string)
         #self.assertEqual(resp.status_code, 403)
 
-        Resource.objects.get(project = self.project,
-                            slug = self.data['resource']).delete()
 
     def test_api_put(self):
         """ Test PUT method."""
@@ -125,7 +122,7 @@ class StringHandlerTests(APIBaseTests):
         client = Client()
 
         handler_url = reverse('string_resource_push',
-            args=[self.project.slug, self.data['resource']])
+            args=[self.project.slug, self.resource.slug])
 
         # Create the resource and source entities
         resp = client.post(self.resource_handler_url,json.dumps(self.data),
@@ -133,21 +130,22 @@ class StringHandlerTests(APIBaseTests):
                                 HTTP_AUTHORIZATION=auth_string)
         self.assertEqual(resp.status_code, 201)
 
+        self.resource_string_handler_url = reverse('string_resource_pullfrom',
+            args=[self.project.slug, self.resource.slug, self.language.code])
+
 
         # Create the new translation strings
-        resp = client.put(self.resource_handler_url,json.dumps(self.trans),
+        resp = client.put(self.resource_string_handler_url,json.dumps(self.trans),
                                 content_type='application/json',
                                 HTTP_AUTHORIZATION=auth_string)
         self.assertEqual(resp.status_code, 200)
 
         # Check that all strings are in the db
         self.assertEqual(Translation.objects.filter(
-                            resource__slug = self.trans['resource'],
-                            language__code = self.trans['language']).count(),
+                            resource__slug = self.resource.slug,
+                            language__code = self.language.code).count(),
                             len(self.trans['strings']))
 
-        Resource.objects.get(project = self.project,
-                            slug = self.data['resource']).delete()
 
     def test_api_delete(self):
         """ Test DELETE method."""
