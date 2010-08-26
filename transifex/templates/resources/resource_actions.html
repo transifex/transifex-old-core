@@ -136,9 +136,11 @@
           </li>
         </ul>
   </div>
+  {% ifnotequal resource.source_language target_language %}
   {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
   <div class="first_level footer_action">
     <a class="i16 delete" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
   <div>
   {% endif %}
+  {% endifnotequal %}
 </div>
