@@ -192,7 +192,10 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
         slug = resource_slug,
         project__slug = project_slug
     )
-    target_language = Language.objects.by_code_or_alias(lang_code)
+    try:
+        target_language = Language.objects.by_code_or_alias(lang_code)
+    except Language.DoesNotExist:
+        raise Http404
 
     total_strings = Translation.objects.filter(
                         resource = translation_resource,
