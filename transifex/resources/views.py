@@ -205,13 +205,19 @@ def clone_language(request, project_slug=None, resource_slug=None,
         slug = resource_slug,
         project__slug = project_slug
     )
-    # get the strings which will be cloned (Only the default - rule=5 - for now)
+
+    source_lang = get_object_or_404(Language, code=source_lang_code)
+    target_lang = get_object_or_404(Language, code=target_lang_code)
+
+    # get the strings which will be cloned
     strings = Translation.objects.filter(
                 resource = resource,
-                language__code = source_lang_code,
-                rule=5)
+                language = source_lang)
 
-    target_lang = Language.objects.get(code=target_lang_code)
+    # If the language we want to create, has the same plural rules with the 
+    # source, we also copy the pluralized translations!
+    if not source_lang.get_pluralrules() == target_lang.get_pluralrules():
+        strings = strings.exclude(source_entity__pluralized = True)
 
     # clone them in new translation
     for s in strings:
