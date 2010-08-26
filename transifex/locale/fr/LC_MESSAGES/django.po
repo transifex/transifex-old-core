@@ -2362,34 +2362,28 @@ msgid "Close Review"
 msgstr "Fermer requête"
 
 #: templates/reviews/review_list.html:96
-#, fuzzy
 msgid "Accept and submit translation"
-msgstr "Soumettre des traductions"
+msgstr "Accepter et envoyer des traductions"
 
 #: templates/reviews/review_list.html:96
-#, fuzzy
 msgid "Accept"
-msgstr "Compte"
+msgstr "Accepter"
 
 #: templates/reviews/review_list.html:97
-#, fuzzy
 msgid "Reject translation"
-msgstr "Soumettre des traductions"
+msgstr "Rejeter des traductions"
 
 #: templates/reviews/review_list.html:97
-#, fuzzy
 msgid "Reject"
-msgstr "projet"
+msgstr "Rejeter"
 
 #: templates/reviews/review_list.html:113
-#, fuzzy
 msgid "No open requests!"
-msgstr "Refuser la requête"
+msgstr "Aucune requête ouverte!"
 
 #: templates/reviews/review_list.html:117
-#, fuzzy
 msgid "Closed Requests"
-msgstr "Demandes en attente :"
+msgstr "Demandes résolues"
 
 #: templates/reviews/review_list.html:123
 msgid "ID"
@@ -2404,29 +2398,24 @@ msgid "Time Since"
 msgstr "Temps depuis"
 
 #: templates/reviews/review_list.html:127
-#, fuzzy
 msgid "Resolution"
-msgstr "collection"
+msgstr "Résolution"
 
 #: templates/reviews/review_list.html:128
-#, fuzzy
 msgid "Attachment"
 msgstr "Attachement"
 
 #: templates/reviews/review_list.html:129
-#, fuzzy
 msgid "Actions"
-msgstr "Action"
+msgstr "Actions"
 
 #: templates/reviews/review_list.html:153
-#, fuzzy
 msgid "Reopen review request"
-msgstr "Accepter la requête"
+msgstr "Rouvrir "
 
 #: templates/reviews/review_list.html:165
-#, fuzzy
 msgid "No closed requests!"
-msgstr "requêtes d'accès à l'équipe"
+msgstr "Aucune requête ouverte!"
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2474,13 +2463,12 @@ msgid "Change notifications associated to your account"
 msgstr "Modifiez les notifications associées à votre compte"
 
 #: templates/simpleauth/signin.html:10
-#, fuzzy
 msgid ""
 "\n"
 "<p>Please sign in with your email or screen name.<br />\n"
 msgstr ""
 "\n"
-"<p>Merci de vous identifier avec votre email, nom d'utilisateur ou en utilisant votre URL OpenID.<br />\n"
+"<p>Veuillez vous connecter avec votre e-mail ou votre login<br />\n"
 
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
@@ -2497,9 +2485,8 @@ msgstr ""
 "  Êtes vous sûr de vouloir supprimer définitivement l'équipe '%(lang_name)s' appartenant à %(project_name)s ?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-#, fuzzy
 msgid "Teams"
-msgstr "Équipes :"
+msgstr "Équipes"
 
 #: templates/teams/team_detail.html:22
 #, python-format
@@ -2557,9 +2544,8 @@ msgid "Delete team"
 msgstr "Supprimer l'équipe"
 
 #: templates/teams/team_form.html:10
-#, fuzzy
 msgid "Add Team"
-msgstr "Équipe"
+msgstr "Ajouter une équipe"
 
 #: templates/teams/team_form.html:19
 #, python-format
@@ -2595,9 +2581,8 @@ msgid "No translation team created yet. :("
 msgstr "Aucune équipe de traduction créee pour l'instant. :("
 
 #: templates/teams/team_list.html:92
-#, fuzzy
 msgid "Request a new translation team for this project"
-msgstr "N'importe qui peut envoyer des traductions pour ce projet?"
+msgstr "Demander une nouvelle équipe de traduction pour ce projet"
 
 #: templates/teams/team_list.html:92
 msgid "Request a new team"
@@ -2608,9 +2593,8 @@ msgid "Request team"
 msgstr "Requête d'équipe"
 
 #: templates/teams/team_off.html:12
-#, fuzzy
 msgid "This project is not using Translation Teams"
-msgstr "Équipes de traduction de %(project_name)s"
+msgstr "Ce projet n'utilise pas d'équipes de traduction."
 
 #: templates/teams/team_off.html:17
 #, python-format
@@ -2775,14 +2759,12 @@ msgid "Your e-mail was already validated"
 msgstr "Votre courriel a déjà été validé"
 
 #: templates/userprofile/account/login.html:5
-#, fuzzy
 msgid "User sign in"
-msgstr "Connexion"
+msgstr "Connexion utilisateur"
 
 #: templates/userprofile/account/login.html:19
-#, fuzzy
 msgid "Enter your username and password to sign in."
-msgstr "Effacez votre nom d'utilisateur ainsi que toute vos données du site web"
+msgstr "Entrez votre nom d'utilisateur et mot de passe pour vous connecter"
 
 #: templates/userprofile/account/login.html:36
 msgid "Utilities"
@@ -2834,9 +2816,8 @@ msgid "Password change successful"
 msgstr "Mot de passe changé avec succès"
 
 #: templates/userprofile/account/password_change_done.html:14
-#, fuzzy
 msgid "Password changed."
-msgstr "Mofication du mot de passe"
+msgstr "Mot de passe modifié"
 
 #: templates/userprofile/account/password_expired.html:4
 msgid "Password key expired"
@@ -3121,12 +3102,15 @@ msgstr[1] ""
 
 #: templates/userprofile/profile/public.html:115
 #: templates/userprofile/profile/public.html:142
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project\n"
 "                "
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr ""
+"\n"
+"                L'équipe <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> du projet <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> \n"
+"                "
 
 #: templates/userprofile/profile/public.html:131
 msgid ""
