@@ -21,7 +21,6 @@ PROJECTS_URL = '^projects/'
 urlpatterns += patterns('',
     url(r'^$', 'txcommon.views.index', name='transifex.home'),
     url(PROJECTS_URL, include('projects.urls')),
-    url(r'^reviews/', include('reviews.urls')),
     url(r'^search/$', 'txcommon.views.search', name='search'),
     url(r'^%s/doc/' % panel_url, include('django.contrib.admindocs.urls')),
     url(r'^%s/' % panel_url, include(admin.site.urls)),

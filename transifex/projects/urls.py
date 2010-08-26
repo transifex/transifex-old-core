@@ -312,17 +312,6 @@ urlpatterns += patterns('',
         name = 'team_request_deny',),
 )
 
-# Reviews
-urlpatterns += patterns('',
-    url(
-        regex = COMPONENT_URL+r'reviews/$',
-        view = review_list,
-        name = 'review_list',),
-    url(
-        regex = COMPONENT_URL+r'reviews/(?P<id>\d+)/modify/$',
-        view = review_modify,
-        name = 'review_modify',),
-)
 
 # Resources
 urlpatterns += patterns('',

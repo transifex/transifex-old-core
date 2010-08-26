@@ -134,8 +134,7 @@ class TransFormWizard(SessionWizard):
                 args=(project_slug, component_slug,)))
 
         check = ProjectPermission(request.user)
-        if not check.submit_file(self.pofile) and \
-            not request.user.has_perm('reviews.add_poreviewrequest'):
+        if not check.submit_file(self.pofile):
             return permission_denied(request)
 
         step = self.current_step(request)
