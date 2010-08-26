@@ -8,7 +8,7 @@ class MemoryViewsTests(BaseTestCase):
         self.URL_PREFIX = '/search_translations/'
 
     def testAnonymousPagesStatusCode(self):
-        pages = {400: [(self.URL_PREFIX),],}
+        pages = {302: [(self.URL_PREFIX),],}
         self.assert_url_statuses(pages, self.client["anonymous"])
 
     def test_memory_search(self):
