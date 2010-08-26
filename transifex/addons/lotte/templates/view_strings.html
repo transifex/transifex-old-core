@@ -45,11 +45,20 @@
                   "fnRender": function(oObj){
                     var clean_array = array_escape({"source_dict":oObj.aData[2]});
                     var source_divs = '';
-                    for(rule in clean_array["source_dict"]["source_strings"]){
-                        if(rule=='other')
-                          source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">' + html_escape(clean_array["source_dict"]["source_strings"]["other"]) + '</div>'
-                        else
-                          source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][rule]) + '</p>'
+                    var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other'];
+                    var plurals_counter = 0;
+                    for(rule in plural_types){
+                        if(plural_types[rule] in clean_array["source_dict"]["source_strings"]){
+                            if(plural_types[rule]=='other'){
+                              source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">';
+                              if(plurals_counter>0)
+                                  source_divs += '<span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;';
+                              source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>';
+                            }else{
+                              source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>';
+                            }
+                            plurals_counter++;
+                        }
                     }
                     return source_divs;
 
@@ -59,14 +68,23 @@
                   "fnRender": function(oObj){
                     var clean_array = array_escape({"translations":oObj.aData[3]});
                     var translation_containers = '';
-                      for(rule in clean_array["translations"]){
-                          if(rule=='other')
-                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><div class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">' + html_escape(clean_array["translations"][rule]) + '</div>'
-                          else
-                            translation_containers += '<span class="rule" style="display:none">'+rule+'</span><p class="translation" style="width:95%" title="Translation"><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["translations"][rule]) + '</p>'
-                      }
+                    var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other'];
+                    var plurals_counter = 0;
+                    for(rule in plural_types){
+                        if(plural_types[rule] in clean_array["translations"]){
+                            if(plural_types[rule]=='other'){
+                              translation_containers += '<span class="rule" style="display:none">'+plural_types[rule]+'</span><div class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%" title="Translation">';
+                              if(plurals_counter>0)
+                                  translation_containers += '<span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;';
+                              translation_containers += html_escape(clean_array["translations"][plural_types[rule]]) + '</div>';
+                            }else{
+                              translation_containers += '<span class="rule" style="display:none">'+plural_types[rule]+'</span><p class="translation" style="width:95%" title="Translation"><span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["translations"][plural_types[rule]]) + '</p>'
+                            }
+                            plurals_counter++;
+                        }
+                    }
 
-                      return translation_containers;
+                    return translation_containers;
                   }
                 },
                 { "bVisible":false, "bSortable": false, },
