@@ -294,7 +294,6 @@ msgstr "Suivre :"
 
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
-#, fuzzy
 msgid "My Timeline"
 msgstr "Ma ligne de temps"
 
@@ -305,7 +304,6 @@ msgstr "Ma ligne de temps"
 #: templates/projects/project_timeline.html:12
 #: templates/projects/project_timeline.html:14
 #: templates/txcommon/user_timeline.html:12
-#, fuzzy
 msgid "Timeline"
 msgstr "Ligne de temps"
 
@@ -359,14 +357,16 @@ msgstr "Description"
 #: addons/timeline/templates/timeline/timeline_user.html:23
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 " %(project_name)s Timeline\n"
 " "
 msgstr ""
 "\n"
-" Editer %(project_name)s \n"
+" Ligne de temps de %(project_name)s\n"
+"\r\n"
+"\t"
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -1122,12 +1122,10 @@ msgid "Review Requests"
 msgstr "Requêtes de relecture:"
 
 #: reviews/models.py:89
-#, fuzzy
 msgid "-created_on"
 msgstr "-created_on"
 
 #: reviews/models.py:90
-#, fuzzy
 msgid "created_on"
 msgstr "created_on"
 
@@ -1600,64 +1598,64 @@ msgid "Requested access to submit files to the project <a href=\"%(project_url)s
 msgstr "Accès demandé pour soumettre les fichiers au projet <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> revoked"
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "L'utilisateur <a href=\"%(user_url)s\">%(user_request)s</a> a eu des accès révoqués pour soummetre des fichiers au projet <a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_team_added/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "<a href=\"%(team_url)s\"> L'équipe de traduction %(team_name)s </a> a été ajoutée au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_changed/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project was changed."
-msgstr "Le composant <a href=\"%(component_url)s\">%(component_name)s</a> du projet <a href=\"%(project_url)s\">%(project_name)s</a> a été modifié"
+msgstr "L' <a href=\"%(team_url)s\"> équipe de traduction %(team_name)s </a> du projet <a href=\"%(project_url)s\">%(project_name)s</a> a changé."
 
 #: templates/notification/project_team_deleted/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "L' <a href=\"%(team_url)s\">équipe de traduction pour %(team_name)s </a> a été supprimé du projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_approved/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
-msgstr "Le fichier source (POT) pose certains problèmes et ne peut pas être créé/mis à jour pour le composant <a href=\"%(component_url)s\">%(component_name)s</a> du projet <a href=\"%(project_url)s\">%(project_name)s</a>."
+msgstr "L'utilisateur <a href=\"%(user_url)s\">%(user_name)s</a> a été ajouté à l'équipe de traduction <a href=\"%(team_url)s\">%(team_name)s </a> pour le projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
-msgstr "Le fichier source (POT) pose certains problèmes et ne peut pas être créé/mis à jour pour le composant <a href=\"%(component_url)s\">%(component_name)s</a> du projet <a href=\"%(project_url)s\">%(project_name)s</a>."
+msgstr "L'utilisateur dénié de %(performer)s :<a href=\"%(user_url)s\">%(user_name)s</a>a demandé à rejoindre l'équipe de traduction <a href=\"%(team_url)s\">%(team_name)s </a> pour le projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "A demandé à rejoindre l'équipe de traduction <a href=\"%(team_url)s\">%(team_name)s</a> pour le projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "Withdrawn its own request for joining the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "A retiré de lui-même sa demande d'acceptation dans l'équipe de traduction  <a href=\"%(team_url)s\">%(team_name)s </a> pour le projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_left/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "L'utilisateur a quitté l'équipe de traduction <a href=\"%(team_url)s\">%(team_name)s </a> du projet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> project was denied."
-msgstr "Le composant <a href=\"%(component_url)s\">%(component_name)s</a> du projet <a href=\"%(project_url)s\">%(project_name)s</a> a été modifié"
+msgstr "La demande pour créer l'équipe de traduction du projet <a href=\"%(project_url)s\">%(project_name)s</a> pour la langue <a href=\"%(language_url)s\">%(language_name)s</a> a été refusé."
 
 #: templates/notification/project_team_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The creation of a translation team for <a href=\"%(language_url)s\">%(language_name)s</a> was requested for the project <a href=\"%(project_url)s\">%(project_name)s</a>."
-msgstr "Un nouveau composant <a href=\"%(component_url)s\">%(component_name)s</a> a été ajouté au projet <a href=\"%(project_url)s\">%(project_name)s</a>"
+msgstr "La création d'une équipe de traduction pour la langue <a href=\"%(language_url)s\">%(language_name)s</a> a été demandée pour le projet <a href=\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/user_nudge/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
-msgstr "Le projet <a href=\"%(project_url)s\">%(project)s</a> a été modifié"
+msgstr "L'utilisateur <a href=\"%(performer_url)s\">%(performer)s</a> vous a nungé."
 
 #: templates/projects/component_confirm_delete.html:6
 #: templates/projects/component_confirm_delete.html:10
@@ -1700,9 +1698,8 @@ msgstr "Ce composant permet le stockage des fichiers et publie également les fi
 
 #: templates/projects/component_detail.html:65
 #: templates/projects/project_detail.html:22
-#, fuzzy
 msgid "Private Project"
-msgstr "Derniers projets"
+msgstr "Projets privés"
 
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
@@ -1808,9 +1805,8 @@ msgid "See the translation teams."
 msgstr "Voir les équipes de traduction."
 
 #: templates/projects/component_detail.html:198
-#, fuzzy
 msgid "Translation files reviews"
-msgstr "Fichiers de traduction"
+msgstr "Relecture des fichiers de traduction"
 
 #: templates/projects/component_detail.html:200
 msgid ""
@@ -1824,9 +1820,8 @@ msgstr ""
 
 #: templates/projects/component_detail.html:205
 #: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
-#, fuzzy
 msgid "Reviews"
-msgstr "Aperçu"
+msgstr "Relectures"
 
 #: templates/projects/component_detail.html:207
 #: templates/projects/project_detail.html:114
