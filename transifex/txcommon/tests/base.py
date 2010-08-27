@@ -111,7 +111,7 @@ class BaseTestCase(TestCase):
         self.team.members.add(self.user['team_member'])
 
         # Create a resources
-        self.resource = Resource(slug="foo", name="foo",
+        self.resource = Resource(slug="resource1", name="Resource1",
             project=self.project, source_language=self.language_en)
         self.resource.save()
         self.source_entity = SourceEntity.objects.create(string='String1',

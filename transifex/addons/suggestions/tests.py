@@ -1,10 +1,12 @@
+from django.db import IntegrityError
 from django.core.urlresolvers import reverse
+from txcommon.tests.base import BaseTestCase
+
 try:
     import json
 except ImportError:
     import simplejson as json
 
-from txcommon.tests.base import BaseTestCase
 
 class SuggestionsViewsTests(BaseTestCase):
 
@@ -117,9 +119,11 @@ class SuggestionsModelsTests(BaseTestCase):
         s.vote_up(u)
         self.assertEqual(s.score_rounded, 0)
 
+    def _create_suggestion(self):
+        suggestion = self.entity.suggestions.create(
+            language=self.language, string="Hey!", user=self.user["registered"])
+
     def test_double_suggestion(self):
-        suggestion = self.entity.suggestions.create(
-            language=self.language, string="Hey!", user=self.user["registered"])
-        suggestion = self.entity.suggestions.create(
-            language=self.language, string="Hey!", user=self.user["registered"])
+        self.assertRaises(IntegrityError, self._create_suggestion)
+
 

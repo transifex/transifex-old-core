@@ -91,8 +91,12 @@ def _team_create_update(request, project_slug, language_code=None):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and coordinators
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all()), nt, context)
+                from notification.models import NoticeType
+                try:
+                    notification.send(itertools.chain(project.maintainers.all(), 
+                        team.coordinators.all()), nt, context)
+                except NoticeType.DoesNotExist:
+                    pass
 
             return HttpResponseRedirect(reverse("team_detail",
                                         args=[project.slug, team.language.code]))

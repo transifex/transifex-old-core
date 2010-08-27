@@ -50,6 +50,12 @@ urlpatterns = patterns('',
         name = 'project_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
+    url(
+        regex = '^p/(?P<param>[-\w]+)/resources/feed/$',
+        view = 'projects.views.project_feed',
+        name = 'project_feed',
+        kwargs = {'feed_dict': feeds,
+                  'slug': 'project'}),
 )
 
 

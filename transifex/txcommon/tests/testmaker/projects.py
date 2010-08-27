@@ -15,9 +15,7 @@ class TestmakerAnonymous(TestmakerBase):
     def test__128272158449(self):
         r = self.client.get('/', {})
         self.assertEqual(r.status_code, 200)
-        self.assertTrue(u"id_username" in r.content)
-        self.assertEqual(unicode(r.context["user"]), u"""AnonymousUser""")
-        self.assertEqual(unicode(r.context["signup_url"]), u"""/accounts/register/""")
+        self.assertTrue("id_username" in r.content)
 
 
 class TestmakerLoggedIn(TestmakerBase):
@@ -69,20 +67,20 @@ class TestmakerLoggedIn(TestmakerBase):
         r = self.client.get('/projects/p/example/widgets/', {})
         self.assertEqual(r.status_code, 200)
 
-    def test_projectspexampleresourcetransifexdefaultdjangopochart_128281369682(self):
-        r = self.client.get('/projects/p/example/resource/transifexdefaultdjangopo/chart/', {})
+    def test_projectspexampleresourceresource1chart_128281369682(self):
+        r = self.client.get('/projects/p/example/resource/resource1/chart/', {})
         self.assertEqual(r.status_code, 200)
 
-    def test_projectspexampleresourcetransifexdefaultdjangopochartinc_js_128281369702(self):
-        r = self.client.get('/projects/p/example/resource/transifexdefaultdjangopo/chart/inc_js/', {})
+    def test_projectspexampleresourceresource1chartinc_js_128281369702(self):
+        r = self.client.get('/projects/p/example/resource/resource1/chart/inc_js/', {})
         self.assertEqual(r.status_code, 200)
 
-    def test_projectspexampleresourcetransifexdefaultdjangopochartimage_png_12828136972(self):
-        r = self.client.get('/projects/p/example/resource/transifexdefaultdjangopo/chart/image_png/', {})
+    def test_projectspexampleresourceresource1chartimage_png_12828136972(self):
+        r = self.client.get('/projects/p/example/resource/resource1/chart/image_png/', {})
         self.assertEqual(r.status_code, 302)
 
-    def test_projectspexampleresourcetransifexdefaultdjangopochartjson_128281369791(self):
-        r = self.client.get('/projects/p/example/resource/transifexdefaultdjangopo/chart/json/', {'tqx': 'reqId:0', })
+    def test_projectspexampleresourceresource1chartjson_128281369791(self):
+        r = self.client.get('/projects/p/example/resource/resource1/chart/json/', {'tqx': 'reqId:0', })
         self.assertEqual(r.status_code, 200)
 
     # Teams

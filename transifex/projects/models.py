@@ -96,9 +96,10 @@ class PublicProjectManager(models.Manager):
         return self.order_by('-created')
 
     def open_translations(self):
-        #FIXME: 
-        #return self.filter(component__allows_submission=True).distinct()
-        return self.filter(resource__accept_translations=True).distinct()
+        #FIXME: This should look like this, more or less:
+        #open_resources = Resource.objects.filter(accept_translations=True)
+        #return self.filter(resource__in=open_resources).distinct()
+        return self.all()
 
 
 class Project(models.Model):

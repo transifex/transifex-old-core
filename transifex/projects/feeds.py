@@ -33,12 +33,12 @@ class ProjectFeed(Feed):
         return Project.objects.get(slug__exact=bits[0])
 
     def title(self, obj):
-        return _("%(site_name)s: Components in %(project)s") % {
+        return _("%(site_name)s: Resources in %(project)s") % {
             'site_name': current_site.name,
             'project': obj.name }
 
     def description(self, obj):
-        return _("Latest components in project %s.") % obj.name
+        return _("Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py in project %s.") % obj.name
 
     def link(self, obj):
         if not obj:
@@ -46,7 +46,7 @@ class ProjectFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        return obj.component_set.order_by('-name')[:50]
+        return obj.resources.order_by('-name')[:50]
         
         
 class ReleaseFeed(Feed):
