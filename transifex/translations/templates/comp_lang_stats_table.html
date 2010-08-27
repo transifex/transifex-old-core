@@ -54,7 +54,7 @@
              {% endif %}
            {% endif %}
            {% if request.user.is_authenticated and stat.object.allows_submission %}
-             {% if perms.reviews.add_poreviewrequest or can_submit_file %}
+             {% if can_submit_file %}
                {% pofile_submission stat %}
              {% endif %}
            {% endif %}

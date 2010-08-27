@@ -12,7 +12,6 @@ from projects.views import *
 from projects.views.project import *
 from projects.views.component import *
 from projects.views.permission import *
-from projects.views.review import *
 from projects.views.team import *
 from projects.views.release import *
 

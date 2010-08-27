@@ -98,34 +98,6 @@ NOTICE_TYPES = [
                 "show_to_user": False,
             },
 
-            # Reviews
-
-            {
-                "label": "project_component_file_review_submitted",
-                "display": _("File Review Submitted"),
-                "description": _("when a file of a component is submitted "
-                                 "for review"),
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_component_file_changed",
-                "display": _("Translation File Changed"),
-                "description": _("when a component translation file of a "
-                                 "project is changed"),
-                "default": 2,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_component_potfile_error",
-                "display": _("Translation Source File (POT) has a Problem"),
-                "description": _("when the source file (POT) of a "
-                                 "component that you are a maintainer "
-                                 "has a problem"),
-                "default": 2,
-                "show_to_user": True,
-            },
-
             # Project releases
 
             {

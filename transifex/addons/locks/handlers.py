@@ -52,8 +52,7 @@ def lotte_init_handler(sender, request, resources=None, language=None,
         except LockError, e:
             logger.debug("lock-addon: %s" % str(e))
             request.user.message_set.create(message = _(
-                    "Couldn't lock file, this means that you can "
-                    "send files only for reviewing."))
+                    "Couldn't lock file."))
 
 
 def lotte_done_handler(sender, request, resources=None, language=None,
