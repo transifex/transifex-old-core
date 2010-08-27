@@ -21,7 +21,7 @@ RESOURCE_URL_PARTIAL = PROJECT_URL_PARTIAL + r'resource/(?P<resource_slug>[-\w]+
 RESOURCE_URL = PROJECTS_URL + RESOURCE_URL_PARTIAL
 
 # URL relative to the projects app (no '/projects' prefix)
-RESOURCE_LANG_URL_PARTIAL = RESOURCE_URL_PARTIAL + r'l/(?P<lang_code>[-_@\w]+)/'
+RESOURCE_LANG_URL_PARTIAL = RESOURCE_URL_PARTIAL + r'l/(?P<lang_code>[\-_@\w]+)/'
 # URL which should be used from other addons (full with prefix)
 RESOURCE_LANG_URL = PROJECTS_URL + RESOURCE_LANG_URL_PARTIAL
 
@@ -34,7 +34,7 @@ urlpatterns += patterns('',
     # Resources-Lang
     url(RESOURCE_LANG_URL_PARTIAL+'delete_all/$',
         resource_translations_delete, name='resource_translations_delete'),
-    url(RESOURCE_URL_PARTIAL+r'l/(?P<target_lang_code>[-_@\w]+)/actions/$',
+    url(RESOURCE_URL_PARTIAL+r'l/(?P<target_lang_code>[\-_@\w]+)/actions/$',
         resource_actions, name='resource_actions'),
     url(RESOURCE_LANG_URL_PARTIAL+'download/$',
         get_translation_file, name='download_translation'),

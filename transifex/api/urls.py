@@ -41,7 +41,7 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/strings/$',
         string_handler
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/strings/(?P<target_lang_code>[-_@\w]+)/$',
+        r'^project/(?P<project_slug>[-\w]+)/strings/(?P<target_lang_code>[\-_@\w]+)/$',
         string_handler
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
@@ -58,11 +58,11 @@ urlpatterns = patterns('',
         string_handler,
         name='string_resource_push'
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/strings/(?P<target_lang_code>[-_@\w]+)/$',
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/strings/(?P<target_lang_code>[\-_@\w]+)/$',
         string_handler,
         name='string_resource_pullfrom'
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[-_@\w]+)/$',
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w]+)/$',
         projectresource_handler,
         name='api_resource_storage'
 #    ), url(

@@ -9,7 +9,7 @@ from resources.views import clone_language
 
 # Project-language URLs
 # Prefix example: /projects/p/<project_slug>/l/<lang_code>/
-PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[-_@\w]+)/'
+PROJECT_LANG_URL = PROJECT_URL + r'l/(?P<lang_code>[\-_@\w]+)/'
 
 urlpatterns = patterns('',
     # Project-wide Lotte
@@ -22,13 +22,13 @@ urlpatterns = patterns('',
 
 # Resource-language URLs
 # Prefix example: /projects/p/<project_slug>/resource/<resource_slug>/l/<lang_code>/
-RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[-_@\w]+)/'
+RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[\-_@\w]+)/'
 
 urlpatterns += patterns('',
     # Resource-specific Lotte
     url(RESOURCE_LANG_URL+'$', translate, name='translate_resource'),
     url(RESOURCE_LANG_URL+'view/$', view_strings, name='view_strings'),
-    url(RESOURCE_URL+r'l/(?P<source_lang_code>[-\w]+)/clone/(?P<target_lang_code>[-\w]+)/$', clone_language, name='clone_translate'),
+    url(RESOURCE_URL+r'l/(?P<source_lang_code>[\-_@\w]+)/clone/(?P<target_lang_code>[\-_@\w]+)/$', clone_language, name='clone_translate'),
     url(RESOURCE_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
     url(RESOURCE_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
     url(RESOURCE_LANG_URL+'exit/$', exit, name='exit_lotte'),
@@ -37,6 +37,6 @@ urlpatterns += patterns('',
 # General URLs
 
 urlpatterns += patterns('',
-    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[-_@\w]+)/details_snippet/$',
+    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[\-_@\w]+)/details_snippet/$',
         translation_details_snippet, name='translation_details_snippet'),
 )
