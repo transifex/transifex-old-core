@@ -79,6 +79,7 @@
             <span class="i16 clone">
             <a class="language_chooser_trigger" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
             </span>
+            <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
             <div class="language_chooser" style="visibility:hidden;margin-top:4px">
               <select style="margin-left:24px">
                 <option value="" selected="selected">---------</option>
@@ -99,8 +100,11 @@
           </li>
           {% ifnotequal resource.source_language target_language %}
           <li>
-            <span class="i16 lock disabled">{% trans "Download for translation" %}</span> 
-            <span class="tipsy_enable" title="Available soon :)">(?)</span>
+            <span id="download_for_translation" class="i16 lock {% if lock %}{% ifnotequal request.user lock.owner %} disabled{% endifnotequal %}{% endif %}">
+              <a style="cursor:pointer" {% if lock %}{% ifnotequal request.user lock.owner %}title="Resource cannot be locked"{% endifnotequal %}{% endif %}>{% trans "Download for translation" %}</a>
+            </span>
+            <span class="tipsy_enable" title="Lock the file under your ownership and download it locally to edit it, in one action." style="border:0">(?)</span>
+            <div class="error_notes"></div>
           </li>
           <li>
             {% if can_submit_translation %}

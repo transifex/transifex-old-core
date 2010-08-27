@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
-from django.db.models import Count, Q
+from django.db.models import Count, Q, get_model
 from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
                          HttpResponseForbidden, HttpResponseBadRequest)
 from django.shortcuts import render_to_response, get_object_or_404
@@ -32,7 +32,7 @@ try:
 except:
     import simplejson as json
 
-
+Lock = get_model('locks', 'Lock')
 
 # Restrict access only for private projects 
 # Allow even anonymous access on public projects
@@ -153,13 +153,17 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             'language', flat=True).distinct()
     languages = Language.objects.filter()
 
+    lock = Lock.objects.get_valid(resource, target_language)
+
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
       'resource' : resource,
       'target_language' : target_language,
       'team' : team,
       'languages': languages,
-      'disabled_languages_ids': disabled_languages_ids},
+      'disabled_languages_ids': disabled_languages_ids,
+      'lock': lock,
+      },
     context_instance = RequestContext(request))
 
 
@@ -270,6 +274,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
+#FIXME: Permissions required
 def get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     View to export all translations of a resource for the requested language
@@ -297,3 +302,56 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         i18n_method['file-extensions'].split(', ')[0]))
 
     return response
+
+
+#FIXME: Permissions required
+def lock_and_get_translation_file(request, project_slug, resource_slug, lang_code):
+    """
+    Lock and download the translations file.
+    
+    View to lock a resource for the requested language and as a second step to 
+    download (export+download) the translations in a formatted file.
+    """
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+        slug = resource_slug)
+    language = get_object_or_404(Language, code=lang_code)
+    lock = Lock.objects.get_valid(resource, language)
+    can_lock = Lock.can_lock(resource, language, request.user)
+    response = {}
+
+    if not can_lock:
+        #print_gray_text(You cannot assign this file to you)
+        response['status'] = "FAILED"
+        response['message'] = _("Sorry, you cannot assign this file to you!")
+    else:
+        # User can lock
+        if not lock:
+            try:
+                # Lock the resource now
+                Lock.objects.create_update(resource, language, request.user)
+                response['status'] = 'OK'
+                response['redirect'] = reverse('download_translation',
+                    args=[resource.project.slug, resource.slug, lang_code])
+            except:
+                response['status'] = "FAILED"
+                response['message'] = _("Failed to lock the resource!")
+        else:
+            if lock.owner == request.user:
+                try:
+                    # File already locked by me, so extend the lock period.
+                    Lock.objects.create_update(resource, language, request.user)
+                    response['status'] = 'OK'
+                    response['redirect'] = reverse('download_translation',
+                        args=[resource.project.slug, resource.slug, lang_code])
+                except:
+                    response['status'] = "FAILED"
+                    response['message'] = _("Failed to extend lock period on "
+                                            "the resource!")
+            else:
+                # File locked by someone else:
+                response['status'] = "FAILED"
+                response['message'] = _("You cannot lock it right now! ( Locked "
+                                        "by %s )" % (lock.owner,))
+
+    return HttpResponse(simplejson.dumps(response), mimetype='application/json')
+
