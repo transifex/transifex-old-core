@@ -26,8 +26,6 @@ class TestLocking(BaseTestCase):
             'work with CSRF Middleware enabled')
         super(TestLocking, self).setUp()
         
-        # Disable actionlog, wich in turn disables noticetype requirement.
-        settings.ACTIONLOG_ENABLED = False
         self.assertNoticeTypeExistence("project_resource_language_lock_expiring")
         
         # Set settings for testcase

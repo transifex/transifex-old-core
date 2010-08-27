@@ -38,34 +38,6 @@ pr_project_private_perm = (
     ('granular', 'project_perm.private'),
 )
 
-# Component permissions required
-pr_component_add_change = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.add_component'),
-    ('general',  'projects.change_component'),
-)
-
-pr_component_delete = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.delete_component'),
-)
-
-pr_component_set_stats = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.refresh_stats'),
-)
-
-pr_component_clear_cache = (
-    ('granular', 'project_perm.maintain'),
-    ('general',  'projects.clear_cache'),
-)
-
-pr_component_submit_file = (
-    ('granular', 'project_perm.maintain'),
-    ('granular', 'project_perm.submit_file'),
-    ('general',  'projects.submit_file'),
-)
-
 # Release permissions required
 
 pr_release_add_change = (

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 from languages.models import Language
-from projects.models import Project, Component
+from projects.models import Project
 from releases.models import Release
 from translations.models import POFile
 from txcommon.utils import key_sort

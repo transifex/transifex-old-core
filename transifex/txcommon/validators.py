@@ -5,7 +5,6 @@ from django.db.models import Count
 from django.forms import CharField, ValidationError
 from django.utils.translation import ugettext_lazy as _
 from codebases.models import Unit
-from projects.models import Component
 
 ALLOWED_REPOSITORY_PREFIXES = getattr(settings, 'ALLOWED_REPOSITORY_PREFIXES',
     None)

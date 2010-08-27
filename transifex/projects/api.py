@@ -45,7 +45,7 @@ class ProjectHandler(BaseHandler):
     def read(self, request, project_slug=None):
         """
         Get project details in json format
-        ""
+        """
         if project_slug:
             try:
                 project = Project.objects.get(slug=project_slug)

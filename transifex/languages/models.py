@@ -96,10 +96,6 @@ class Language(models.Model):
     def get_absolute_url(self):
         return ('language_detail', None, { 'slug': self.code })
 
-    @property
-    def components(self):
-        return Component.objects.with_language(self)
-
     def save(self, *args, **kwargs):
         # It's needed to ensure that when we compare this field with the
         # 'contain' action, we will always take the whole alias for a 

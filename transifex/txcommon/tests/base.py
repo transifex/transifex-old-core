@@ -53,7 +53,7 @@ def deactivate_csrf_middleware():
 class BaseTestCase(TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
-    fixtures = ["sample_data", "sample_users", "sample_site", "sample_languages"]
+    fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
     
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
@@ -69,7 +69,6 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         """Set up a sample set of base objects for inherited tests."""
-
         registered = Group.objects.get(name="registered")
         registered.permissions.add(
             DjPermission.objects.get_or_create(

@@ -13,8 +13,6 @@ automatically parses all the sources there, extracts the project names and
 fills the data in the db by creating the appropriate Resources, SourceStrings,
 TranslationStrings.
 
-This command does not use Component and VcsUnit models.
-
 Example:
 
     python manage.py load_from_scratchdir_dummy"""

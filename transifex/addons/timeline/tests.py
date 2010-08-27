@@ -71,7 +71,6 @@ class TestTimeline(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Fetch project overview page
-        
         resp = self.client['maintainer'].get( self.url_project_detail )
         self.assertEqual(resp.status_code, 200)
 
@@ -85,5 +84,4 @@ class TestTimeline(BaseTestCase):
         a = ("View complete action log" in resp.content)
         b = ("None available" in resp.content)
         self.assertTrue( a or b)
-
 

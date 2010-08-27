@@ -7,10 +7,8 @@ from tagging.views import tagged_object_list
 from projects.feeds import LatestProjects, ProjectFeed, ReleaseFeed, \
     ReleaseLanguageFeed
 from projects.models import Project
-from projects.permissions import pr_component_submit_file
 from projects.views import *
 from projects.views.project import *
-from projects.views.component import *
 from projects.views.permission import *
 from projects.views.team import *
 from projects.views.release import *
@@ -52,12 +50,6 @@ urlpatterns = patterns('',
         name = 'project_latest_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'latest'}),
-    url(
-        regex = '^p/(?P<param>[-\w]+)/components/feed/$',
-        view = 'projects.views.project_feed',
-        name = 'project_feed',
-        kwargs = {'feed_dict': feeds,
-                  'slug': 'project'}),
 )
 
 
@@ -135,68 +127,6 @@ urlpatterns += patterns('django.views.generic',
         dict(queryset_or_model=Project, allow_empty=True,
              template_object_name='project'),
         name='project_tag_list'),
-)
-
-# Components
-
-COMPONENT_URL = PROJECT_URL_PARTIAL + r'c/(?P<component_slug>[-\w]+)/'
-
-urlpatterns += patterns('',
-    url(
-        regex = PROJECT_URL_PARTIAL+r'add-component/$',
-        view = component_create_update,
-        name = 'component_create',),
-    url(
-        regex = COMPONENT_URL+r'edit/checkout/$',
-        view = component_create_update,
-        name = 'component_edit',),
-    url(
-        regex = COMPONENT_URL+r'edit/submission/$',
-        view = component_submission_edit,
-        name = 'component_submission_edit',),
-    url(
-        regex = COMPONENT_URL+r'delete/$',
-        view = component_delete,
-        name = 'component_delete',),
-    url(
-        regex = COMPONENT_URL+r'clear_cache/$',
-        view = component_clear_cache,
-        name = 'component_clear_cache',),
-    url(
-        regex = COMPONENT_URL+r'set_stats/$',
-        view = component_set_stats,
-        name = 'component_set_stats',),
-    url(
-        regex = COMPONENT_URL+r'raw/(?P<filename>[_\./\-@\w]+)/$',
-        view = component_file,
-        name = 'component_raw_file',),
-    url(
-        regex = COMPONENT_URL+r'view/(?P<filename>[_\./\-@\w]+)/$',
-        view = component_file,
-        name = 'component_view_file',
-        kwargs = {'view': True },),
-    url(
-        regex = COMPONENT_URL+r'submit/(?P<filename>[_\./\-@\w]+)/$',
-        view = component_submit_file,
-        name = 'component_submit_file',),
-    url(
-        regex = COMPONENT_URL+r'submit/$',
-        view = component_submit_file,
-        name = 'component_submit_new_file',),
-    url(
-        regex = COMPONENT_URL+r'l/(?P<language_code>(.*))/$',
-        view = component_language_detail,
-        name = 'component_language_detail',),
-    url (
-        regex = '^p/(?P<slug>[-\w]+)/component-added/$',
-        view = 'django.views.generic.list_detail.object_detail',
-        kwargs = {'object_list': project_list,
-                  'message': 'Component added.' },
-        name = 'component_created'),
-    url(
-        regex = COMPONENT_URL+r'$',
-        view = component_detail,
-        name = 'component_detail'),
 )
 
 # Releases

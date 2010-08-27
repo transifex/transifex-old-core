@@ -3,7 +3,7 @@ from txcommon.tests.base import BaseTestCase
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test.client import Client
-from projects.models import Project, Component
+from projects.models import Project
 
 class TestCharts(BaseTestCase):
     def test_main(self):

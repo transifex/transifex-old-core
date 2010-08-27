@@ -117,3 +117,9 @@ class SuggestionsModelsTests(BaseTestCase):
         s.vote_up(u)
         self.assertEqual(s.score_rounded, 0)
 
+    def test_double_suggestion(self):
+        suggestion = self.entity.suggestions.create(
+            language=self.language, string="Hey!", user=self.user["registered"])
+        suggestion = self.entity.suggestions.create(
+            language=self.language, string="Hey!", user=self.user["registered"])
+

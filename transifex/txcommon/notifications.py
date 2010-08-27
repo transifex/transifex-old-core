@@ -69,27 +69,6 @@ NOTICE_TYPES = [
                 "show_to_user": True,
             },
             {
-                "label": "project_component_added",
-                "display": _("New Component Added"),
-                "description": _("when a new component is added to a project"),
-                "default": 1,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_component_changed",
-                "display": _("Component Changed"),
-                "description": _("when a component of a project is changed"),
-                "default": 1,
-                "show_to_user": True,
-            },
-            {
-                "label": "project_component_deleted",
-                "display": _("Component Deleted"),
-                "description": _("when a component of a project is deleted"),
-                "default": 1,
-                "show_to_user": True,
-            },
-            {
                 "label": "project_component_file_submitted",
                 "display": _("File Submitted"),
                 "description": _("when a component file of a project "

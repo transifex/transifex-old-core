@@ -132,7 +132,7 @@ class LogEntryManager(models.Manager):
         """
         Return a list of dicts with the ordered top submitters for an object.
 
-        The ``obj`` parameter usually receive a Project, Component, Language 
+        The ``obj`` parameter usually receive a Project, Language 
         or a Team object.
         The ``number`` parameter can be used to set the top number. The default
         value is 10.
@@ -148,7 +148,7 @@ class LogEntryManager(models.Manager):
         Return a list of dicts with the ordered top submitters for the
         entries of the ``obj`` content type.
 
-        The ``obj`` parameter usually receive a Project, Component, Language or
+        The ``obj`` parameter usually receive a Project, Language or
         a Team object, which is used to extract the content type. However, it 
         can also receive a string with 'app_label.model' format.
         The ``number`` parameter can be used to set the top number. The default

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
 from languages.models import Language
-from projects.models import Project, Component
+from projects.models import Project
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
 from releases.models import Release

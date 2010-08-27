@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType        
-from projects.models import Project, Component
+from projects.models import Project
 from translations.models import POFile
 from languages.models import Language
 
