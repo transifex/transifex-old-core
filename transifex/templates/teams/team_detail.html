@@ -127,7 +127,7 @@
 {% endif %}
 
 
-{% with team.project.resource_set.all as resources %}
+{% with team.project.resources.all as resources %}
 <div class="list separate" style="clear:both">
   <h3>{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h3>
  {% if resources %}

@@ -5,14 +5,14 @@
 {% load upload_manager_tags %}
 
 <div id="resources" class="resources separate">
-  {% with project.resource_set.all|slice:":5" as resources %}
+  {% with project.resources.all|slice:":5" as resources %}
   <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
     {% render_metacount resources _("resources") %}
   </h3>
 
   {% if resources %}
   {% with resources|length as viewed %}
-  {% with project.resource_set.all|length as total %}
+  {% with project.resources.all|length as total %}
 
 <script type="text/javascript">
     $(document).ready(function(){

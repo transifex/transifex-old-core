@@ -191,8 +191,7 @@ class Project(models.Model):
         super(Project, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        for c in Component.objects.filter(project=self):
-            c.delete()
+        self.resources.all().delete()
         super(Project, self).delete(*args, **kwargs)
 
     @permalink
@@ -216,7 +215,7 @@ class Project(models.Model):
         2. The strings may be in different source languages!!!
         3. The source strings are not grouped based on the string value.
         """
-        resources = self.resource_set.all()
+        resources = self.resources.all()
         source_strings = []
         for resource in resources:
             source_strings.extend(resource.source_strings)
@@ -230,7 +229,7 @@ class Project(models.Model):
         sc = cache.get(cache_key)
         if not sc:
             sc = SourceEntity.objects.filter(
-                resource__in=self.resource_set.all()).count()
+                resource__in=self.resources.all()).count()
             cache.set(cache_key, sc)
         return sc
 
@@ -250,7 +249,7 @@ class Project(models.Model):
         wc = cache.get(cache_key)
         if not wc:
             wc = 0
-            resources = self.resource_set.all()
+            resources = self.resources.all()
             for resource in resources:
                 wc += resource.wordcount
             cache.set(cache_key, wc)
@@ -263,7 +262,7 @@ class Project(models.Model):
         all Resources in the specific project instance.
         """
         # I put it here due to circular dependency on module
-        resources = self.resource_set.all()
+        resources = self.resources.all()
         languages = Translation.objects.filter(
             resource__in=resources).values_list(
             'language', flat=True).distinct()
@@ -278,9 +277,9 @@ class Project(models.Model):
         """
         # I put it here due to circular dependency on modules
         target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(resource__in=self.resource_set.all(),
+        return SourceEntity.objects.filter(resource__in=self.resources.all(),
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resource_set.all(), rule=5).values_list(
+                resource__in=self.resources.all(), rule=5).values_list(
                     'source_entity', flat=True))
 
     def untranslated_strings(self, language):
@@ -293,9 +292,9 @@ class Project(models.Model):
         # I put it here due to circular dependency on modules
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(
-            resource__in=self.resource_set.all()).exclude(
+            resource__in=self.resources.all()).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resource_set.all(), rule=5).values_list(
+                resource__in=self.resources.all(), rule=5).values_list(
                     'source_entity', flat=True))
 
     def num_translated(self, language):

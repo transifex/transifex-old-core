@@ -39,13 +39,13 @@ class ProjectHandler(BaseHandler):
     #TODO: Choose the fields we want to return
     fields = ('slug', 'name', 'description', 'long_description', 'created',
               'anyone_submit', 'bugtracker', ('owner', ('username', 'email')),
-              ('resource_set', ('slug', 'name',)))
+              ('resources', ('slug', 'name',)))
     exclude = ()
 
     def read(self, request, project_slug=None):
         """
         Get project details in json format
-        """
+        ""
         if project_slug:
             try:
                 project = Project.objects.get(slug=project_slug)

@@ -73,7 +73,7 @@ class Resource(models.Model):
         verbose_name=_('Source Language'), blank=False, null=False,
         help_text=_("The source language of this Resource."))
     project = models.ForeignKey(Project, verbose_name=_('Project'),
-        blank=False, null=True,
+        blank=False, null=True, related_name='resources',
         help_text=_("The project the translation resource belongs to."))
 
     # Managers
