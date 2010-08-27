@@ -7,9 +7,6 @@ def transifex_paths():
     yield s.SCRATCH_DIR
     # Msgmerge dir
     yield s.MSGMERGE_DIR
-    # Repo paths
-    for vcs in s.CODEBASE_CHOICES.keys():
-        yield s.REPO_PATHS[vcs]
     # Log path
     yield s.LOG_PATH
 

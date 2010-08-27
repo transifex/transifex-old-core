@@ -50,7 +50,6 @@ def search(request):
                 Q(component__name = term) |
                 Q(component__slug = term) |
                 Q(component___unit__root__icontains = term) |
-                Q(component___unit__vcsunit__web_frontend__icontains = term) |
                 Q(component___unit__type__icontains = term)
                 )
         results = results.filter(query).distinct()

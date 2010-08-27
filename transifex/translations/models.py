@@ -296,10 +296,6 @@ def suite():
     import doctest
     s = unittest.TestSuite()
 
-    #FIXME: Load tests automatically:
-    #    for vcs_type in settings.VCS_CHOICES:
-    #        vcs_browser = import_to_python('vcs.lib.types' % vcs_type)
-    #        s.addTest(doctest.DocTestSuite(vcs_browser))
     from translations.tests import test_models 
     s.addTest(doctest.DocTestSuite(test_models))
         

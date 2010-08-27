@@ -74,20 +74,6 @@ class ValidRootUri(CharField):
 
         self.blacklist_qs = blacklist_qs
 
-    def set_repo_type(self, type):
-        """
-        Set the repotype variable with the type of the repository.
-
-        This is called by vcs/forms.py to setup the type of the repository (hg,
-        git, etc), and its used in @get_allowed prefixes to print the abailable
-        prefixes allowed in unit.root mask.
-        """
-
-        if type in ALLOWED_REPOSITORY_PREFIXES:
-            self.repotype = type
-        else:
-            self.repotype = None
-
     def get_allowed_prefixes(self):
         """
         Concatenate the allowed prefixes from the settings var.

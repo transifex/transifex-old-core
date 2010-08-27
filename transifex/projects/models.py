@@ -22,7 +22,6 @@ from tagging.fields import TagField
 
 from codebases.models import Unit
 from languages.models import Language
-from vcs.models import VcsUnit
 from tarball.models import Tarball
 from translations.models import POFile
 from txcommon.log import logger, log_model

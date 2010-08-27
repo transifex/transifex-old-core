@@ -20,9 +20,6 @@ def get_browser_class(codebase_type):
     codebase_type -- The type of the codebase, used to decide the class
     to be returned.
 
-    >>> print get_browser_class('hg')
-    vcs.lib.types.hg.HgBrowser
-
     """
     assert codebase_type in settings.CODEBASE_CHOICES, (
         "Codebase type '%s' is not registered as a supported one." %
