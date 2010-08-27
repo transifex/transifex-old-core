@@ -76,12 +76,13 @@ class POHandler(Handler):
     TODO: Switch to Gettext C library
     """
     name = "GNU Gettext *.PO/*.POT handler"
-    mime_type = "application/x-gettext"
+    mime_types = ["application/x-gettext","application/x-po", "text/x-po"]
     format = "GNU Gettext Catalog (*.po, *.pot)"
 
     @classmethod
-    def accept(cls, filename):
-        return filename.endswith(".po") or filename.endswith(".pot")
+    def accept(cls, filename=None, mime=None):
+        return filename.endswith(".po") or filename.endswith(".pot") or\
+            mime in cls.mime_types
 
     @classmethod
     def contents_check(self, filename):
@@ -111,11 +112,6 @@ class POHandler(Handler):
                 raise FileCheckError(_("Uploaded file header doesn't "
                 "have '%s' metadata!") % metadata)
 
-        # Check charset in header (UTF-8)
-        if settings.FILECHECKS['UTF8']:
-            if not "charset=utf-8" in po.metadata["Content-Type"].lower():
-                logger.debug("pofile: Only UTF-8 encoded files are allowed!")
-                raise FileCheckError(_("Only UTF-8 encoded files are allowed!"))
 
         # No translated entires check
 #        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:

@@ -16,6 +16,7 @@ from txcommon.log import logger
 from django.db import transaction
 from transifex.api.utils import BAD_REQUEST
 from uuid import uuid4
+import os
 
 
 class StorageHandler(BaseHandler):
@@ -85,13 +86,11 @@ class StorageHandler(BaseHandler):
                 sf = StorageFile()
                 sf.name = str(submitted_file.name)
                 sf.uuid = str(uuid4())
-                file_size = 0
                 fh = open(sf.get_storage_path(), 'wb')
                 for chunk in submitted_file.chunks():
                     fh.write(chunk)
-                    file_size += len(chunk)
                 fh.close()
-                sf.size = file_size
+                sf.size = os.path.getsize(sf.get_storage_path())
                 # FIXME we should fix this for client calls
                 if not request.user.is_anonymous():
                     sf.user = request.user

@@ -13,6 +13,8 @@ from projects.models import Project
 from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 
+import magic
+
 class StorageFile(models.Model):
     """
     StorageFile refers to a uploaded file. Initially
@@ -77,7 +79,7 @@ class StorageFile(models.Model):
         from resources.models import PARSERS
         parser = None
         for p in PARSERS:
-            if p.accept(self.name):
+            if p.accept(filename=self.name,mime=self.mime_type):
                 parser = p
                 break
 
@@ -111,12 +113,18 @@ class StorageFile(models.Model):
         """
         Try to parse the file and fill in information fields in current model
         """
+
+        m = magic.open(magic.MAGIC_MIME)
+        m.load()
+
+        # guess mimetype and remove charset
+        self.mime_type = m.file(self.get_storage_path()).split(';')[0]
+        self.save()
+
         parser = self.find_parser()
 
         if not parser:
             return
-
-        self.mime_type = parser.mime_type
 
         fpo = parser(filename = self.get_storage_path() )
         fpo.set_language(self.language)

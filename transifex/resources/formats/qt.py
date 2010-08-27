@@ -46,11 +46,11 @@ def _get_attribute(element, key, die = False):
 class LinguistHandler(Handler):
     name = "Qt4 TS parser"
     format = "Qt4 Translation XML files (*.ts)"
-    mime_type = "application/x-linguist"
+    mime_types = "application/x-linguist"
 
     @classmethod
-    def accept(cls, filename):
-        return filename.endswith(".ts")
+    def accept(cls, filename=None, mime=None):
+        return filename.endswith(".ts") or mime in cls.mime_types
 
     @classmethod
     def contents_check(self, filename):

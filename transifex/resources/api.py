@@ -86,7 +86,6 @@ class ResourceHandler(BaseHandler):
         except Project.DoesNotExist:
             return rc.NOT_FOUND
 
-
         if 'application/json' in request.content_type: # we got JSON
             data = getattr(request, 'data', None)
             slang = data.pop('source_language', None)

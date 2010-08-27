@@ -27,6 +27,8 @@ from resources.forms import ResourceForm
 from resources.models import (Translation, Resource, SourceEntity,
                               PARSERS, StorageFile)
 
+from autofetch.forms import URLInfoForm
+from autofetch.models import URLInfo
 try:
     import json
 except:
@@ -98,11 +100,22 @@ def resource_edit(request, project_slug, resource_slug):
     """
     resource = get_object_or_404(Resource, project__slug = project_slug,
                                   slug = resource_slug)
+    try:
+        urlinfo = URLInfo.objects.get(resource = resource)
+    except URLInfo.DoesNotExist:
+        urlinfo = None
 
     if request.method == 'POST':
         resource_form = ResourceForm(request.POST, instance=resource,)
-        if resource_form.is_valid():
+        if urlinfo:
+            url_form = URLInfoForm(request.POST, instance=urlinfo,)
+        else:
+            url_form = URLInfoForm(request.POST,)
+        if resource_form.is_valid() and url_form.is_valid():
             resource_new = resource_form.save()
+            urlinfo = url_form.save(commit=False)
+            urlinfo.resource = resource_new
+            urlinfo.save()
 
             # TODO: (Optional) Put some signal here to denote the udpate.
             post_resource_save.send(sender=None, instance=resource_new,
@@ -123,10 +136,15 @@ def resource_edit(request, project_slug, resource_slug):
         if resource:
             initial_data = {}
 
+        if urlinfo:
+            url_form = URLInfoForm(instance=urlinfo,)
+        else:
+            url_form = URLInfoForm()
         resource_form = ResourceForm(instance=resource)
 
     return render_to_response('resources/resource_form.html', {
         'resource_form': resource_form,
+        'url_form': url_form,
         'resource': resource,
     }, context_instance=RequestContext(request))
 
@@ -302,7 +320,6 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         i18n_method['file-extensions'].split(', ')[0]))
 
     return response
-
 
 #FIXME: Permissions required
 def lock_and_get_translation_file(request, project_slug, resource_slug, lang_code):

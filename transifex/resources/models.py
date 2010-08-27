@@ -314,25 +314,6 @@ class Resource(models.Model):
             transaction.commit()
             return strings_added, strings_updated
 
-    def merge_translation_file(self, translation_file):
-        PARSER_MAPPING[translation_file.mime_type].parse_file(
-            translation_file.get_storage_path(),
-            False,
-            translation_file.language.get_pluralrules_numbers())
-        stringset = PARSER_MAPPING[translation_file.mime_type].stringset
-        return self.merge_stringset(stringset, translation_file.language)
-
-    def merge_source_file(self):
-        fh = PARSER_MAPPING[self.source_file.mime_type](self.source_file.get_storage_path())
-        fh.parse_file(
-            True,
-            self.source_file.language.get_pluralrules_numbers())
-        stringset = fh.stringset
-        return self.merge_stringset(stringset, self.source_file.language,
-             metadata, True)
-
-    # XXX: Obsolete up to here
-
 class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
@@ -570,8 +551,3 @@ from resources.formats.qt import LinguistHandler # Qt4 TS files
 from resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
 
 PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsParser]
-
-# For faster lookup
-PARSER_MAPPING = {}
-for parser in PARSERS:
-    PARSER_MAPPING[parser.mime_type] = parser
