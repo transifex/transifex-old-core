@@ -4,7 +4,6 @@ from django.conf import settings
 from django.db.models import Count
 from django.forms import CharField, ValidationError
 from django.utils.translation import ugettext_lazy as _
-from codebases.models import Unit
 
 ALLOWED_REPOSITORY_PREFIXES = getattr(settings, 'ALLOWED_REPOSITORY_PREFIXES',
     None)
@@ -52,14 +51,9 @@ class ValidRootUri(CharField):
                     str(self.get_allowed_prefixes())))
             cleanedupstring = value[len(self.prefix):]
 
-            if self.blacklist_qs == None:
-                units = (Unit.objects.select_related().filter(root__endswith =
-                cleanedupstring))
-                numofobj = units.aggregate(Count('name'))
-            else:
-                leftobjects = self.blacklist_qs.filter(root__endswith =
-                    cleanedupstring)
-                numofobj = leftobjects.aggregate(Count('name'))
+            leftobjects = self.blacklist_qs.filter(root__endswith =
+                cleanedupstring)
+            numofobj = leftobjects.aggregate(Count('name'))
 
             if numofobj['name__count'] > 0:
                 #TODO here we could show a nice message using leftobjects

@@ -20,9 +20,7 @@ from notification.models import ObservedItem
 import tagging
 from tagging.fields import TagField
 
-from codebases.models import Unit
 from languages.models import Language
-from tarball.models import Tarball
 from translations.models import POFile
 from txcommon.log import logger, log_model
 from txcommon.utils import cached_property
