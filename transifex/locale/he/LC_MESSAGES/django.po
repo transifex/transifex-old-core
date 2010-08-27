@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex 0.6.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-22 10:10+0000\n"
+"POT-Creation-Date: 2010-08-27 17:46+0000\n"
 "PO-Revision-Date: 2009-06-15 10:28+0300\n"
 "Last-Translator: Oron Peled <oron@actcom.co.il>\n"
 "Language-Team: Hebrew Team <fedora-he-list@redhat.com>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.3.1\n"
 
@@ -30,7 +30,8 @@ msgid "log entries"
 msgstr "רשומות יומן"
 
 #: actionlog/templates/object_action_list.html:6
-msgid "Date/time"
+#, fuzzy
+msgid "Date/Time"
 msgstr "תאריך/שעה"
 
 #: actionlog/templates/object_action_list.html:7 teams/models.py:76
@@ -51,32 +52,33 @@ msgid "No history recorded yet."
 msgstr "עדיין אין רשומות היסטוריה"
 
 #: addons/charts/templates/charts/widget_snippet.html:61
-msgid "Image charts"
+#, fuzzy
+msgid "Image Charts"
 msgstr "תרשימי תמונות"
 
 #: addons/charts/templates/charts/widget_snippet.html:65
-#: addons/charts/templates/charts/widget_snippet.html:94
+#: addons/charts/templates/charts/widget_snippet.html:93
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
 msgstr "בטעינה..."
 
 #: addons/charts/templates/charts/widget_snippet.html:68
 msgid ""
-"Display your project's translation statistics on your own website as a simple image.\n"
-"                Perfect for embedding in wiki pages, Trac instances, emails."
+"Display your project's translation statistics on your own website as a "
+"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:69
+msgid "The chart will always report live Transifex numbers."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:70
-msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
-
-#: addons/charts/templates/charts/widget_snippet.html:71
-#: addons/charts/templates/charts/widget_snippet.html:103
+#: addons/charts/templates/charts/widget_snippet.html:101
 msgid "Show code snippet for component:"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:73
-#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/charts/templates/charts/widget_snippet.html:72
+#: addons/charts/templates/charts/widget_snippet.html:103
 #: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
 #: projects/models.py:299 projects/migrations/0001_initial.py:28
 #: projects/migrations/0001_initial.py:50 releases/models.py:41
@@ -85,37 +87,43 @@ msgstr ""
 msgid "Hidden"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:87
-msgid "Interactive charts"
+#: addons/charts/templates/charts/widget_snippet.html:86
+#, fuzzy
+msgid "Interactive Charts"
 msgstr "תרשימים אינטראקטיביים"
 
-#: addons/charts/templates/charts/widget_snippet.html:98
+#: addons/charts/templates/charts/widget_snippet.html:97
 msgid ""
-"Display your project's translation statistics on your own website as interactive chart.\n"
-"                This requires modifications to your homepage's HTML code."
+"Display your project's translation statistics on your own website as an "
+"interactive chart. This requires modifications to your homepage's HTML code."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:101
-msgid "By tweaking the code you can adjust verbosity, dimensions and colors of the chart"
+#: addons/charts/templates/charts/widget_snippet.html:99
+msgid ""
+"You can adjust level of detail, dimensions and colors of the chart by "
+"tweaking the code below."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:121
+#: addons/charts/templates/charts/widget_snippet.html:119
 msgid "Interactive and Image Charts"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:122
+#: addons/charts/templates/charts/widget_snippet.html:120
 msgid ""
-"Sorry, but your project doesn't have any components with up-to-date statistics. \n"
-"You need to have at least one component with statistics to export charts from Transifex."
+"Sorry, but your project doesn't have any components with up-to-date "
+"statistics. You need to have at least one component with statistics to "
+"export charts from Transifex."
 msgstr ""
 
 #: addons/locks/handlers.py:58
-msgid "Couldn't lock file, this means that you can send files only for reviewing."
+msgid ""
+"You will need to send this file for review because you can't lock this file."
 msgstr ""
 
 #: addons/locks/models.py:65
 #, python-format
-msgid "User '%(user)s' has no permission to submit files for or coordinate  '%(pofile)s'"
+msgid ""
+"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
 msgstr ""
 
 #: addons/locks/models.py:77
@@ -129,7 +137,7 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expring"
+msgid "Lock is expiring"
 msgstr ""
 
 #: addons/locks/notifications.py:16
@@ -164,23 +172,18 @@ msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
-msgid ""
-"\n"
-"                Extend lock by %(hours)s hour.\n"
-"            "
-msgid_plural ""
-"\n"
-"                Extend lock by %(hours)s hours.\n"
-"            "
+msgid "Extend lock by %(hours)s hour."
+msgid_plural "Extend lock by %(hours)s hours."
 msgstr[0] ""
 msgstr[1] ""
 
-#: addons/locks/templates/pofile_lock.html:46
-msgid "Lock and download this file to notify others you're working with it."
+#: addons/locks/templates/pofile_lock.html:42
+msgid ""
+"Lock and download this file to notify others that you're working with it."
 msgstr ""
 
-#: addons/locks/templates/pofile_lock.html:51
-msgid "This file is unlocked. Most likely no one is working with it right now."
+#: addons/locks/templates/pofile_lock.html:47
+msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr ""
 
 #: addons/locks/templates/locks/component.html:9
@@ -191,8 +194,8 @@ msgstr ""
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
 msgid ""
-"\n"
-"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> is about to expire on %(expires)s\n"
+"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
+"a> is about to expire on %(expires)s"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:35
@@ -200,32 +203,36 @@ msgid "You are only allowed to upload PO files (*.po)!"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:39
-msgid "You have submitted empty file!"
+msgid "You submitted an empty file!"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:48
-msgid "Uploaded file contains DOS newlines (\\r)!"
+msgid ""
+"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
+"(\\r\\n)!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:59
+#: addons/presubmit_checks/handlers.py:60
 #, python-format
-msgid "Uploaded file header doesn't have '%s' field!"
+msgid "Uploaded file header is missing the '%s' field!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:65
-msgid "Only UTF-8 encoded files are allowed!"
+#: addons/presubmit_checks/handlers.py:66
+msgid "File is not encoded using UTF-8!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:69
+#: addons/presubmit_checks/handlers.py:70
 msgid "Uploaded file doesn't contain any translated entries!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:86
+#: addons/presubmit_checks/handlers.py:87
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:90
-msgid "We couldn't send you an email to preserve your work because you haven't registered an email address."
+#: addons/presubmit_checks/handlers.py:91
+msgid ""
+"We couldn't send you an email to preserve your work because you haven't "
+"registered an email address."
 msgstr ""
 
 #: addons/repowatch/models.py:28
@@ -300,30 +307,26 @@ msgid "Go"
 msgstr ""
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:211
+#: templates/timeline.html:24 templates/projects/component_detail.html:209
 #: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:134
+#: templates/teams/team_detail.html:132
 msgid "None available"
 msgstr ""
 
 #: addons/timeline/templates/timeline/timeline_base.html:29
 #: templates/timeline.html:28
 #, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
+msgid "The query returned %(counter)s result"
+msgid_plural "The query returned %(counter)s results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: addons/timeline/templates/timeline/timeline_base.html:44
+#: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:39 languages/migrations/0001_initial.py:14
 #: projects/models.py:152 projects/models.py:278 projects/models.py:541
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/timeline.html:39 templates/notification/notices.html:42
 #: templates/reviews/review_list.html:42
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
@@ -335,10 +338,7 @@ msgstr "תיאור"
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
 #, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
+msgid "%(project_name)s Timeline"
 msgstr ""
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
@@ -360,11 +360,13 @@ msgid "Widgets"
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:48
-msgid "Widgets, buttons, etc"
+msgid "Widgets, buttons, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:49
-msgid "Here are some widgets, buttons and other cool stuff you can add to your homepage!"
+msgid ""
+"Here are some widgets, buttons and other cool stuff you can add to your "
+"homepage!"
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:54
@@ -373,7 +375,7 @@ msgid "Userbars"
 msgstr "משתמש"
 
 #: addons/widgets/templates/project_widgets.html:63
-msgid "You can insert userbars to forums, e-mail signatures etc."
+msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:64
@@ -498,7 +500,8 @@ msgstr ""
 
 #: projects/feeds.py:115
 #, fuzzy, python-format
-msgid "Translation statistics for %(lang)s language against %(release)s release."
+msgid ""
+"Translation statistics for %(lang)s language against %(release)s release."
 msgstr "תרגומים אחרונים לשפה %(language)s בגרסה %(release)s."
 
 #: projects/forms.py:18 txpermissions/forms.py:19
@@ -512,11 +515,13 @@ msgstr ""
 #: projects/forms.py:56
 msgid ""
 "Allow any logged-in user to submit files to my\n"
-"                              project. <a href=\"http://www.youtube.com/watch?v=okd3hLlvvLw\"\n"
-"                              target=\"_blank\">Imagine</a> all the people, \n"
-"                              sharing all the world. Recommended for quick \n"
-"                              translations, and when a pre-commit review \n"
-"                              process is in place, e.g. when contributions are\n"
+"                              project. <a href=\"http://www.youtube.com/"
+"watch?v=okd3hLlvvLw\"\n"
+"                              target=\"_blank\">Imagine</a> all the people,\n"
+"                              sharing all the world. Recommended for quick\n"
+"                              translations, and when a pre-commit review\n"
+"                              process is in place, e.g. when contributions "
+"are\n"
 "                              submitted by email or to a separate branch."
 msgstr ""
 
@@ -526,10 +531,12 @@ msgstr ""
 
 #: projects/forms.py:67
 msgid ""
-"Give access to specific people. Translations \n"
-"                              teams will have access to their language's files\n"
-"                              only, and global writers will have access to all\n"
-"                              translation files. Recommended for most \n"
+"Give access to specific people. Translations\n"
+"                              teams will have access to their language's "
+"files\n"
+"                              only, and global writers will have access to "
+"all\n"
+"                              translation files. Recommended for most\n"
 "                              projects."
 msgstr ""
 
@@ -539,12 +546,14 @@ msgstr ""
 
 #: projects/forms.py:76
 msgid ""
-"Re-use another project's teams and writers by \n"
-"                              trusting access control to that project. If a \n"
-"                              person can contribute to that project, it can \n"
-"                              contribute to this one as well. Recommended for \n"
-"                              non-upstream projects such as distribution \n"
-"                              packages, desktop environment modules, etc."
+"Re-use another project's teams and writers by\n"
+"                              delegating access control to that project. If "
+"a\n"
+"                              person can contribute to that project, it can\n"
+"                              contribute to this one as well. Recommended "
+"for\n"
+"                              non-upstream projects such as distribution\n"
+"                              packages and desktop environment modules."
 msgstr ""
 
 #: projects/forms.py:134 projects/models.py:291
@@ -557,7 +566,9 @@ msgid "Submit to"
 msgstr ""
 
 #: projects/forms.py:152
-msgid "Choose how this component should handle submissions of files.The options here are available based on the component type"
+msgid ""
+"Choose how this component should handle submissions of files.The options "
+"here are available based on the component type"
 msgstr ""
 
 #: projects/forms.py:167
@@ -569,7 +580,9 @@ msgid "Private"
 msgstr ""
 
 #: projects/models.py:144
-msgid "A private project is visible only by you and your team.Moreover, private projects are limited according to billingplans for the user account."
+msgid ""
+"A private project is visible only by you and your team.Moreover, private "
+"projects are limited according to billingplans for the user account."
 msgstr ""
 
 #: projects/models.py:147 projects/models.py:273 projects/models.py:536
@@ -584,7 +597,9 @@ msgstr ""
 
 #: projects/models.py:148 projects/models.py:274 projects/models.py:537
 #: releases/models.py:21
-msgid "A short label to be used in the URL, containing only letters, numbers, underscores or hyphens."
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores or hyphens."
 msgstr ""
 
 #: projects/models.py:151 projects/models.py:277 releases/models.py:24
@@ -790,7 +805,9 @@ msgid "String freeze date"
 msgstr ""
 
 #: projects/models.py:554
-msgid "When the translatable strings will be frozen (no strings can be added/modified which affect translations."
+msgid ""
+"When the translatable strings will be frozen (no strings can be added/"
+"modified which affect translations."
 msgstr ""
 
 #: projects/models.py:556 releases/models.py:36
@@ -799,7 +816,10 @@ msgid "Devel freeze date"
 msgstr ""
 
 #: projects/models.py:558 releases/models.py:37
-msgid "The last date packages from this release can be built from the developers. Translations sent after this date will not be included in the released version."
+msgid ""
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
 
 #: projects/models.py:573
@@ -868,11 +888,15 @@ msgid "The %s was deleted."
 msgstr ""
 
 #: projects/views/component.py:282
-msgid "The file filter of this intltool POT-based component does not  seem to allow the POTFILES.in file. Please fix it."
+msgid ""
+"The file filter of this intltool POT-based component does not  seem to allow "
+"the POTFILES.in file. Please fix it."
 msgstr ""
 
 #: projects/views/component.py:289
-msgid "There is no 'pot' directory named in the set of files of this Publican like component. Maybe its file filter is not allowing access to it."
+msgid ""
+"There is no 'pot' directory named in the set of files of this Publican like "
+"component. Maybe its file filter is not allowing access to it."
 msgstr ""
 
 #: projects/views/component.py:302
@@ -905,7 +929,9 @@ msgstr ""
 
 #: projects/views/component.py:469
 #, python-format
-msgid "You need to be in the '%s' team of this project for being able to send translations to that file target."
+msgid ""
+"You need to be in the '%s' team of this project for being able to send "
+"translations to that file target."
 msgstr ""
 
 #: projects/views/component.py:527
@@ -923,7 +949,7 @@ msgid "%s was deleted."
 msgstr ""
 
 #: projects/views/review.py:66
-msgid "Request closed as Rejected."
+msgid "Request rejected."
 msgstr ""
 
 #: projects/views/review.py:72
@@ -962,7 +988,9 @@ msgstr ""
 
 #: projects/views/team.py:333
 #, python-format
-msgid "You have denied the request of the user '%(user)s' to join the '%(team)s' team."
+msgid ""
+"You have denied the request of the user '%(user)s' to join the '%(team)s' "
+"team."
 msgstr ""
 
 #: projects/views/team.py:378
@@ -1010,7 +1038,9 @@ msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 
 #: releases/models.py:34
-msgid "When the translatable strings will be frozen (no strings which affect translations can be added/modified)."
+msgid ""
+"When the translatable strings will be frozen (no strings which affect "
+"translations can be added/modified)."
 msgstr ""
 
 #: reviews/forms.py:8
@@ -1021,74 +1051,76 @@ msgstr ""
 msgid "Select a translation file for review."
 msgstr ""
 
-#: reviews/models.py:44
+#: reviews/models.py:45
 msgid "Open"
 msgstr ""
 
-#: reviews/models.py:45
+#: reviews/models.py:46
 #, fuzzy
 msgid "Closed"
 msgstr "קוד"
 
-#: reviews/models.py:47
+#: reviews/models.py:48
 msgid "Null"
 msgstr ""
 
-#: reviews/models.py:48
+#: reviews/models.py:49
 msgid "Accepted"
 msgstr ""
 
-#: reviews/models.py:49
+#: reviews/models.py:50
 msgid "Rejected"
 msgstr ""
 
-#: reviews/models.py:54
+#: reviews/models.py:55
 msgid "The review's status (open, closed, etc.)"
 msgstr ""
 
-#: reviews/models.py:56
+#: reviews/models.py:57
 msgid "The review's resolution/closing state."
 msgstr ""
 
-#: reviews/models.py:58
+#: reviews/models.py:59
 msgid "Date and time of creation"
 msgstr ""
 
-#: reviews/models.py:60
+#: reviews/models.py:61
 #, fuzzy
 msgid "Date and time of last update"
 msgstr "הפעם האחרונה שיחידת תרגום זו עודכנה"
 
-#: reviews/models.py:63
+#: reviews/models.py:64
 msgid "The review file name"
 msgstr ""
 
-#: reviews/models.py:65
+#: reviews/models.py:66
 msgid "The path of the target file which will be used on submission"
 msgstr ""
 
-#: reviews/models.py:69
+#: reviews/models.py:70
 msgid "Component"
 msgstr ""
 
-#: reviews/models.py:87
+#: reviews/models.py:88
 msgid "Review Request"
 msgstr ""
 
-#: reviews/models.py:88
+#: reviews/models.py:89
 msgid "Review Requests"
 msgstr ""
 
-#: reviews/models.py:89
+#: reviews/models.py:90
 msgid "-created_on"
 msgstr ""
 
-#: reviews/models.py:90
+#: reviews/models.py:91
 msgid "created_on"
 msgstr ""
 
 #: reviews/views.py:32
-msgid "You can upload a file for review only if it's related to an existing language."
+msgid ""
+"You can upload a file for review only if it's related to an existing "
+"language."
 msgstr ""
 
 #: reviews/views.py:52
@@ -1112,16 +1144,22 @@ msgid "tarballs"
 msgstr ""
 
 #: teams/forms.py:12
-msgid "Coordinators are people that can manage the members of the team, for example. Search for usernames."
+msgid ""
+"Coordinators are people that can manage the members of the team, for "
+"example. Search for usernames."
 msgstr ""
 
 #: teams/forms.py:16
-msgid "Members are actually people that can submit translations. Search for usernames."
+msgid ""
+"Members are actually people that can submit translations. Search for "
+"usernames."
 msgstr ""
 
 #: teams/forms.py:52
 #, python-format
-msgid "You have the user '%s' in both coordinators and members lists. Please drop him/her from one of those lists."
+msgid ""
+"You have the user '%s' in both coordinators and members lists. Please drop "
+"him/her from one of those lists."
 msgstr ""
 
 #: teams/models.py:29 teams/models.py:71
@@ -1129,7 +1167,7 @@ msgid "The project which this team belongs to."
 msgstr ""
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:125
+#: templates/reviews/review_list.html:123
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
@@ -1137,7 +1175,9 @@ msgid "Language"
 msgstr ""
 
 #: teams/models.py:32 teams/models.py:74
-msgid "People in this team will only be able to submit translations files related to the specific language."
+msgid ""
+"People in this team will only be able to submit translations files related "
+"to the specific language."
 msgstr ""
 
 #: teams/models.py:34
@@ -1194,12 +1234,15 @@ msgid "Forbidden access"
 msgstr ""
 
 #: templates/403.html:12
-msgid "Looks like you do not have the necessary permissions for the required action."
+msgid ""
+"Looks like you do not have the necessary permissions for the required action."
 msgstr ""
 
 #: templates/403.html:15 templates/404.html:15
 #, python-format
-msgid "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in case."
+msgid ""
+"Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
+"case."
 msgstr ""
 
 #: templates/404.html:4 templates/404.html.py:7
@@ -1207,7 +1250,9 @@ msgid "Page not found"
 msgstr ""
 
 #: templates/404.html:12
-msgid "Looks like you followed a bad link. If you think it's our fault, please <a href='http://transifex.org/newticket'>let us know</a>."
+msgid ""
+"Looks like you followed a bad link. If you think it's our fault, please <a "
+"href='http://transifex.org/newticket'>let us know</a>."
 msgstr ""
 
 #: templates/500.html:6 templates/500.html.py:21
@@ -1219,7 +1264,9 @@ msgid "We're sorry, but the requested page is currently unavailable."
 msgstr ""
 
 #: templates/500.html:23
-msgid "We're messing around with things internally, and the server had a bit of a hiccup."
+msgid ""
+"We're messing around with things internally, and the server had a bit of a "
+"hiccup."
 msgstr ""
 
 #: templates/500.html:24
@@ -1264,7 +1311,9 @@ msgstr ""
 
 #: templates/base-sample.html:49
 #, python-format
-msgid "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
+msgid ""
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
 
 #: templates/base-sample.html:51
@@ -1303,16 +1352,21 @@ msgid "Feedback"
 msgstr ""
 
 #: templates/base-sample.html:121
-msgid "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community\">Transifex</a>, the Open Translation Platform"
+msgid ""
+"Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
+"\">Transifex</a>, the Open Translation Platform"
 msgstr ""
 
 #: templates/index.html:24
-msgid "Transifex is a service aimed at helping translators keep track of their favorite translation projects."
+msgid ""
+"Transifex is a service aimed at helping translators keep track of their "
+"favorite translation projects."
 msgstr ""
 
 #: templates/index.html:28
 #, python-format
-msgid "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
+msgid ""
+"You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 
 #: templates/search.html:7 templates/search.html.py:9
@@ -1340,12 +1394,16 @@ msgstr ""
 
 #: templates/search.html:51
 #, python-format
-msgid "No projects were found for \"%(q)s\". You may want to change your query a bit."
+msgid ""
+"No projects were found for \"%(q)s\". You may want to change your query a "
+"bit."
 msgstr ""
 
 #: templates/search.html:63
 #, python-format
-msgid "Couldn't find your project? Why don't you go ahead and <a href=\"%(project_create_url)s\">add it</a>?"
+msgid ""
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
 
 #: templates/search_form.html:4
@@ -1366,7 +1424,9 @@ msgid "Let us know what you think!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:10
-msgid "We'd like to make this web service as useful as possible for our users. If you have any feedback to provide, please do so!"
+msgid ""
+"We'd like to make this web service as useful as possible for our users. If "
+"you have any feedback to provide, please do so!"
 msgstr ""
 
 #: templates/contact_form/contact_form.html:22
@@ -1392,7 +1452,9 @@ msgstr ""
 
 #: templates/languages/language_detail.html:24
 #, python-format
-msgid "The <a href=\"%(project_url)s\">%(project)s</a> project includes the following groups of shipped components:"
+msgid ""
+"The <a href=\"%(project_url)s\">%(project)s</a> project includes the "
+"following groups of shipped components:"
 msgstr ""
 
 #: templates/languages/language_list.html:15
@@ -1404,7 +1466,8 @@ msgid "No languages registered yet. :-("
 msgstr ""
 
 #: templates/languages/language_list.html:35
-msgid "Couldn't find your language? Please use the feedback form and let us know!"
+msgid ""
+"Couldn't find your language? Please use the feedback form and let us know!"
 msgstr ""
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
@@ -1438,7 +1501,10 @@ msgid "Notification settings"
 msgstr ""
 
 #: templates/notification/notices.html:88
-msgid "You can receive notifications whenever an event occurs in Transifex. Check the notifications available for you in the list below and choose which events you would like to be notified by email."
+msgid ""
+"You can receive notifications whenever an event occurs in Transifex. Check "
+"the notifications available for you in the list below and choose which "
+"events you would like to be notified by email."
 msgstr ""
 
 #: templates/notification/notices.html:89
@@ -1460,7 +1526,9 @@ msgid "Note"
 msgstr ""
 
 #: templates/notification/notices.html:96
-msgid "You do not have a verified email address to which notices can be sent. You can add one by going to"
+msgid ""
+"You do not have a verified email address to which notices can be sent. You "
+"can add one by going to"
 msgstr ""
 
 #: templates/notification/notices.html:104
@@ -1489,31 +1557,46 @@ msgstr ""
 
 #: templates/notification/project_component_added/notice.html:2
 #, python-format
-msgid "A new component <a href=\"%(component_url)s\">%(component_name)s</a> was added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_component_changed/notice.html:2
 #, python-format
-msgid "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project was changed."
+msgid ""
+"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
-msgid "The component '%(component_name)s' was deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+msgid ""
+"The component '%(component_name)s' was deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
-msgid "The following files in the <a href=\"%(component_url)s\">%(component_name)s</a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project have been updated:"
+msgid ""
+"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
+"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
+"have been updated:"
 msgstr ""
 
 #: templates/notification/project_component_file_review_submitted/notice.html:2
 #, python-format
-msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> was submitted for review to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"was submitted for review to the <a href=\"%(component_url)s\">"
+"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
-msgid "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%(trans_perc)s%)"
+msgid ""
+"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
 msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
@@ -1523,92 +1606,136 @@ msgstr ""
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
-msgid "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+msgid ""
+"was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
+"the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
-msgid "The source file (POT) has some problems and can not be created/updated for the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"The source file (POT) has some problems and can not be created/updated for "
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
-msgid "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> project was generated"
+msgid ""
+"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was generated"
 msgstr ""
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
+"files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> denied"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
+"access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a> denied"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
-msgid "Withdrew own request of access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
+msgid ""
+"Withdrew own request of access to submit files to the project <a href="
+"\"%(project_url)s\">%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
-msgid "Requested access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a>"
+msgid ""
+"Requested access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to submit files to the project <a href=\"%(project_url)s\">%(project)s</a> revoked"
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
+"submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
+"revoked"
 msgstr ""
 
 #: templates/notification/project_team_added/notice.html:2
 #, python-format
-msgid "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added "
+"to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_changed/notice.html:2
 #, python-format
-msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project was changed."
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
 
 #: templates/notification/project_team_deleted/notice.html:2
 #, python-format
-msgid "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+msgid ""
+"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted "
+"from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+msgid ""
+"The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
-msgid "%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+msgid ""
+"%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s "
+"request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
-msgid "Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
+"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
-msgid "Withdrawn its own request for joining the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
+"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_left/notice.html:2
 #, python-format
-msgid "User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgid ""
+"User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</"
+"a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_request_denied/notice.html:2
 #, python-format
-msgid "The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> project was denied."
+msgid ""
+"The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> "
+"translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> "
+"project was denied."
 msgstr ""
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
-msgid "The creation of a translation team for <a href=\"%(language_url)s\">%(language_name)s</a> was requested for the project <a href=\"%(project_url)s\">%(project_name)s</a>."
+msgid ""
+"The creation of a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"\">%(project_name)s</a>."
 msgstr ""
 
 #: templates/notification/user_nudge/notice.html:2
@@ -1627,30 +1754,37 @@ msgstr ""
 msgid "Say goodbye to <em>%(component_name)s</em>?"
 msgstr ""
 
-#: templates/projects/component_confirm_delete.html:19
+#: templates/projects/component_confirm_delete.html:20
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the component '%(component_name)s' which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the component "
+"'%(component_name)s' which belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:24
-#: templates/teams/team_confirm_delete.html:19
+#: templates/projects/release_confirm_delete.html:22
+#: templates/teams/team_confirm_delete.html:17
 msgid "Yes, I'm sure!"
 msgstr ""
 
 #: templates/projects/component_detail.html:30
-msgid "This component supports local storing of submitted files and also sends the files to the maintainers\\' email."
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files to the maintainers\\' email."
 msgstr ""
 
 #: templates/projects/component_detail.html:32
-msgid "This component does not support local storing of submitted files. The submitted files will be sent to the maintainers\\' emails and the statistics will reflect the change once the files are committed upstream."
+msgid ""
+"This component does not support local storing of submitted files. The "
+"submitted files will be sent to the maintainers\\' emails and the statistics "
+"will reflect the change once the files are committed upstream."
 msgstr ""
 
 #: templates/projects/component_detail.html:36
-msgid "This component supports local storing of submitted files and also sends the files direct to the upstream repository."
+msgid ""
+"This component supports local storing of submitted files and also sends the "
+"files direct to the upstream repository."
 msgstr ""
 
 #: templates/projects/component_detail.html:65
@@ -1661,12 +1795,12 @@ msgstr ""
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
 #: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:28
+#: templates/teams/team_detail.html:26
 msgid "Edit"
 msgstr ""
 
 #: templates/projects/component_detail.html:87
-msgid "Source details"
+msgid "Source Details"
 msgstr ""
 
 #: templates/projects/component_detail.html:91
@@ -1706,8 +1840,10 @@ msgid "Allows submissions:"
 msgstr ""
 
 #: templates/projects/component_detail.html:139
-msgid "Translation files"
-msgstr ""
+#: templates/projects/component_lang_detail.html:30
+#, fuzzy
+msgid "Translation Files"
+msgstr "מתורגם:"
 
 #: templates/projects/component_detail.html:144
 msgid "Source file:"
@@ -1759,28 +1895,28 @@ msgstr ""
 
 #: templates/projects/component_detail.html:198
 #, fuzzy
-msgid "Translation files reviews"
+msgid "Translation File Reviews"
 msgstr "מתורגם:"
 
 #: templates/projects/component_detail.html:200
 msgid ""
-"Translators can request a file review from another person, who\n"
-"  can take a look at his work and provide any feedback needed, or simply submit\n"
-"  the file to the upstream project."
+"Translators can request a file review from another person, who can take a "
+"look at his work and provide any feedback needed, or simply submit the file "
+"to the upstream project."
 msgstr ""
 
-#: templates/projects/component_detail.html:205
+#: templates/projects/component_detail.html:203
 #: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr ""
 
-#: templates/projects/component_detail.html:207
+#: templates/projects/component_detail.html:205
 #: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:130
+#: templates/teams/team_detail.html:128
 msgid "History"
 msgstr ""
 
-#: templates/projects/component_detail.html:229
+#: templates/projects/component_detail.html:227
 msgid "Delete component"
 msgstr ""
 
@@ -1818,10 +1954,6 @@ msgstr ""
 msgid "Save component"
 msgstr ""
 
-#: templates/projects/component_lang_detail.html:30
-msgid "translation files"
-msgstr ""
-
 #: templates/projects/component_list.html:10
 #: templates/projects/release_list.html:8
 msgid "Add"
@@ -1851,8 +1983,9 @@ msgstr ""
 
 #: templates/projects/component_list.html:53
 msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
+"<em>Components</em> are smaller, self-contained parts of a larger project "
+"which consist of actual files. Examples of components of a software project "
+"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
@@ -1880,7 +2013,9 @@ msgid "Select the target file:"
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:27
-msgid "The target file is the name of the new file language. It must match the component file filter."
+msgid ""
+"The target file is the name of the new file language. It must match the "
+"component file filter."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:30
@@ -1930,11 +2065,11 @@ msgstr ""
 msgid "Say goodbye to <em>%(project_name)s</em>?"
 msgstr ""
 
-#: templates/projects/project_confirm_delete.html:16
+#: templates/projects/project_confirm_delete.html:17
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered project '%(project_name)s'?\n"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 
 #: templates/projects/project_detail.html:45
@@ -2027,7 +2162,9 @@ msgid "Access Control"
 msgstr ""
 
 #: templates/projects/project_form_access_control.html:18
-msgid "You have the following choices to manage how people can have submission access to your project:"
+msgid ""
+"You have the following choices to manage how people can have submission "
+"access to your project:"
 msgstr ""
 
 #: templates/projects/project_form_access_control.html:58
@@ -2053,7 +2190,9 @@ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr ""
 
 #: templates/projects/project_form_permissions.html:26
-msgid "Give write access to a translator to send translations to your project independent of a translation team."
+msgid ""
+"Give write access to a translator to send translations to your project "
+"independent of a translation team."
 msgstr ""
 
 #: templates/projects/project_form_permissions.html:39
@@ -2097,7 +2236,9 @@ msgstr ""
 
 #: templates/projects/project_list.html:67
 #, python-format
-msgid "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add it</a>!"
+msgid ""
+"Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
+"it</a>!"
 msgstr ""
 
 #: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
@@ -2136,8 +2277,8 @@ msgstr ""
 #: templates/projects/release_confirm_delete.html:19
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the release '%(release_name)s' which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the release '%(release_name)s' "
+"which belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/projects/release_detail.html:69
@@ -2166,8 +2307,9 @@ msgid "This release has %(components_number)s components."
 msgstr ""
 
 #: templates/projects/release_detail.html:103
-msgid "Translation statistics"
-msgstr ""
+#, fuzzy
+msgid "Translation Statistics"
+msgstr "מתורגם:"
 
 #: templates/projects/release_detail.html:110
 msgid "No translations added for this release. :-("
@@ -2195,13 +2337,10 @@ msgstr ""
 
 #: templates/projects/release_form.html:28
 #, python-format
-msgid ""
-"\n"
-"        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
-"      "
+msgid "Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'"
 msgstr ""
 
-#: templates/projects/release_form.html:46
+#: templates/projects/release_form.html:44
 msgid "Save release"
 msgstr ""
 
@@ -2211,16 +2350,21 @@ msgid "Release '%(release_name)s"
 msgstr "שפות ב-%(site_name)s"
 
 #: templates/projects/release_language_detail.html:38
-msgid "Project/Component statistics"
+msgid "Project/Component Statistics"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:59
-msgid "Transifex searched for projects containing translation files for this language and release, but couldn't find any. Try submitting such a file and check again."
+msgid ""
+"Transifex searched for projects containing translation files for this "
+"language and release, but couldn't find any. Try submitting such a file and "
+"check again."
 msgstr ""
 
 #: templates/projects/release_language_detail.html:60
 #, python-format
-msgid "If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let us know</a>."
+msgid ""
+"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
+"us know</a>."
 msgstr ""
 
 #: templates/projects/release_language_detail.html:64
@@ -2229,7 +2373,9 @@ msgstr ""
 
 #: templates/projects/release_language_detail.html:66
 #, python-format
-msgid "The following components will be included in %(release_name)s, but there are no translations sent for %(language_name)s yet."
+msgid ""
+"The following components will be included in %(release_name)s, but there are "
+"no translations sent for %(language_name)s yet."
 msgstr ""
 
 #: templates/projects/release_list.html:13
@@ -2238,7 +2384,9 @@ msgstr ""
 
 #: templates/projects/release_list.html:28
 #, python-format
-msgid "No releases are registered for this project yet. Why don't you <a href=\"%(release_create)s\">add one</a>?"
+msgid ""
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/reviews/review_form.html:10
@@ -2270,96 +2418,93 @@ msgstr ""
 
 #: templates/reviews/review_list.html:49
 #, python-format
-msgid ""
-"\n"
-"        %(time_since)s ago\n"
-"      "
+msgid "%(time_since)s ago"
 msgstr ""
 
-#: templates/reviews/review_list.html:55
+#: templates/reviews/review_list.html:53
 #, fuzzy
 msgid "Translation Language"
 msgstr "מתורגם:"
 
-#: templates/reviews/review_list.html:58
+#: templates/reviews/review_list.html:56
 msgid "Go to language page"
 msgstr ""
 
-#: templates/reviews/review_list.html:65
+#: templates/reviews/review_list.html:63
 msgid "File target"
 msgstr ""
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:64
 msgid "Download the version sent for review"
 msgstr ""
 
-#: templates/reviews/review_list.html:69
+#: templates/reviews/review_list.html:67
 msgid "Score"
 msgstr ""
 
-#: templates/reviews/review_list.html:83
+#: templates/reviews/review_list.html:81
 msgid "Status"
 msgstr ""
 
-#: templates/reviews/review_list.html:93
+#: templates/reviews/review_list.html:91
 msgid "Close Review"
 msgstr ""
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept and submit translation"
 msgstr ""
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept"
 msgstr ""
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 #, fuzzy
 msgid "Reject translation"
 msgstr "מתורגם:"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 msgid "Reject"
 msgstr ""
 
-#: templates/reviews/review_list.html:113
+#: templates/reviews/review_list.html:111
 msgid "No open requests!"
 msgstr ""
 
-#: templates/reviews/review_list.html:117
+#: templates/reviews/review_list.html:115
 msgid "Closed Requests"
 msgstr ""
 
-#: templates/reviews/review_list.html:123
+#: templates/reviews/review_list.html:121
 msgid "ID"
 msgstr ""
 
-#: templates/reviews/review_list.html:124
+#: templates/reviews/review_list.html:122
 msgid "Author"
 msgstr ""
 
-#: templates/reviews/review_list.html:126
+#: templates/reviews/review_list.html:124
 msgid "Time Since"
 msgstr ""
 
-#: templates/reviews/review_list.html:127
+#: templates/reviews/review_list.html:125
 msgid "Resolution"
 msgstr ""
 
-#: templates/reviews/review_list.html:128
+#: templates/reviews/review_list.html:126
 msgid "Attachment"
 msgstr ""
 
-#: templates/reviews/review_list.html:129
+#: templates/reviews/review_list.html:127
 #, fuzzy
 msgid "Actions"
 msgstr "פעולה"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:151
 msgid "Reopen review request"
 msgstr ""
 
-#: templates/reviews/review_list.html:165
+#: templates/reviews/review_list.html:163
 msgid "No closed requests!"
 msgstr ""
 
@@ -2368,7 +2513,8 @@ msgid "Profile settings"
 msgstr ""
 
 #: templates/simpleauth/login_box.html:8
-msgid "Sign in to add or modify projects, work on translations, and other stuff."
+msgid ""
+"Sign in to add or modify projects, work on translations, and other stuff."
 msgstr ""
 
 #: templates/simpleauth/logout.html:9
@@ -2396,7 +2542,9 @@ msgid "Your profile, %(user)s"
 msgstr ""
 
 #: templates/simpleauth/settings.html:15
-msgid "Any settings associated with your account are presented and may be modified here."
+msgid ""
+"Any settings associated with your account are presented and may be modified "
+"here."
 msgstr ""
 
 #: templates/simpleauth/settings.html:23
@@ -2409,9 +2557,7 @@ msgid "Change notifications associated to your account"
 msgstr ""
 
 #: templates/simpleauth/signin.html:10
-msgid ""
-"\n"
-"<p>Please sign in with your email or screen name.<br />\n"
+msgid "<p>Please sign in with your email or screen name.<br />"
 msgstr ""
 
 #: templates/teams/team_confirm_delete.html:9
@@ -2422,8 +2568,8 @@ msgstr ""
 #: templates/teams/team_confirm_delete.html:14
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the '%(lang_name)s' team which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
@@ -2434,53 +2580,53 @@ msgstr "טאמילית"
 #: templates/teams/team_detail.html:22
 #, python-format
 msgid ""
-"\n"
-"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>\n"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
 
-#: templates/teams/team_detail.html:36
+#: templates/teams/team_detail.html:34
 msgid "Mainlist:"
 msgstr ""
 
-#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:57
 msgid "Become a translator:"
 msgstr ""
 
-#: templates/teams/team_detail.html:62
+#: templates/teams/team_detail.html:60
 msgid "Join this Team"
 msgstr ""
 
-#: templates/teams/team_detail.html:73
+#: templates/teams/team_detail.html:71
 msgid "People waiting for team membership approving:"
 msgstr ""
 
-#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr ""
 
-#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr ""
 
-#: templates/teams/team_detail.html:94
+#: templates/teams/team_detail.html:92
 msgid "Withdraw"
 msgstr ""
 
-#: templates/teams/team_detail.html:107
+#: templates/teams/team_detail.html:105
 msgid "Team Members:"
 msgstr ""
 
-#: templates/teams/team_detail.html:117
+#: templates/teams/team_detail.html:115
 msgid "Leave"
 msgstr ""
 
-#: templates/teams/team_detail.html:153
+#: templates/teams/team_detail.html:151
 msgid "Delete team"
 msgstr ""
 
@@ -2500,7 +2646,9 @@ msgid "Translation team details"
 msgstr "מתורגם:"
 
 #: templates/teams/team_form.html:29
-msgid "Please note that notification will not be sent when coordinators or members are added or removed on this page."
+msgid ""
+"Please note that notification will not be sent when coordinators or members "
+"are added or removed on this page."
 msgstr ""
 
 #: templates/teams/team_form.html:40
@@ -2542,17 +2690,16 @@ msgstr ""
 #: templates/teams/team_off.html:17
 #, python-format
 msgid ""
-"\n"
-"            This project does not maintain its own teams, but has chosen to re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'.\n"
-"            In order to send translations here you'll need to join a team of '%(outsource_project)s'.\n"
-"        "
+"This project does not maintain its own teams, but has chosen to re-use the "
+"teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 
-#: templates/teams/team_off.html:22
+#: templates/teams/team_off.html:19
 msgid ""
-"\n"
-"            This project allows translation submission from <em>anyone</em>, and thus no translation teams exist.\n"
-"        "
+"This project allows translation submission from <em>anyone</em>, and thus no "
+"translation teams exist."
 msgstr ""
 
 #: templates/translations/stats_table_filter_box.html:7
@@ -2620,7 +2767,9 @@ msgid "Add a new e-mail address"
 msgstr ""
 
 #: templates/userprofile/account/email_validation.html:23
-msgid "Enter the new e-mail address. An e-mail will be sent to it for testing and confirmation."
+msgid ""
+"Enter the new e-mail address. An e-mail will be sent to it for testing and "
+"confirmation."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:4
@@ -2638,7 +2787,9 @@ msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
-msgid "You can manage the e-mail validation process from the <a href=\"%(profile_overview)s\">overview page</a>."
+msgid ""
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
@@ -2646,7 +2797,9 @@ msgid "E-mail address validated successfully."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:19
-msgid "The key you received via e-mail is no longer valid. Please try the e-mail validation process again."
+msgid ""
+"The key you received via e-mail is no longer valid. Please try the e-mail "
+"validation process again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_processed.html:4
@@ -2655,7 +2808,10 @@ msgid "E-mail change processed"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_processed.html:15
-msgid "An e-mail was sent to the new e-mail address for verification purposes. Please check your e-mail and complete this process by following the instructions specified in the e-mail body."
+msgid ""
+"An e-mail was sent to the new e-mail address for verification purposes. "
+"Please check your e-mail and complete this process by following the "
+"instructions specified in the e-mail body."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:5
@@ -2664,7 +2820,10 @@ msgid "Resend e-mail validation"
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:19
-msgid "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again."
+msgid ""
+"You will not be able to sign in until you have validated your e-mail "
+"address. Enter your registered e-mail address to receive the validation e-"
+"mail again."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_reset.html:26
@@ -2744,7 +2903,9 @@ msgid "Password change"
 msgstr ""
 
 #: templates/userprofile/account/password_change.html:23
-msgid "You can change your password from here. Please enter your new password twice so we can verify you typed it in correctly."
+msgid ""
+"You can change your password from here. Please enter your new password twice "
+"so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/userprofile/account/password_change_done.html:4
@@ -2761,7 +2922,8 @@ msgid "Password key expired"
 msgstr ""
 
 #: templates/userprofile/account/password_expired.html:9
-msgid "The password key you're trying to use is expired. Please, request a new one."
+msgid ""
+"The password key you're trying to use is expired. Please, request a new one."
 msgstr ""
 
 #: templates/userprofile/account/password_reset.html:5
@@ -2777,7 +2939,9 @@ msgstr ""
 
 #: templates/userprofile/account/password_reset.html:20
 #: templates/userprofile/account/password_reset_done.html:17
-msgid "Forgotten your password? Enter your e-mail address, and we'll reset your password and e-mail the new one to you."
+msgid ""
+"Forgotten your password? Enter your e-mail address, and we'll reset your "
+"password and e-mail the new one to you."
 msgstr ""
 
 #: templates/userprofile/account/password_reset.html:27
@@ -2798,7 +2962,9 @@ msgid "Password reset unsuccessful"
 msgstr ""
 
 #: templates/userprofile/account/password_reset_confirm.html:39
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
 msgstr ""
 
 #: templates/userprofile/account/password_reset_done.html:4
@@ -2807,7 +2973,9 @@ msgid "Password reset successful"
 msgstr ""
 
 #: templates/userprofile/account/password_reset_done.html:10
-msgid "We've e-mailed you the instructions to obtain a new password. You should be receiving it shortly."
+msgid ""
+"We've e-mailed you the instructions to obtain a new password. You should be "
+"receiving it shortly."
 msgstr ""
 
 #: templates/userprofile/account/registration.html:4
@@ -2831,12 +2999,16 @@ msgid "Register a new account"
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:12
-msgid "Account created. An activation url was sent to your e-mail address. Please access that url to complete the registration process."
+msgid ""
+"Account created. An activation url was sent to your e-mail address. Please "
+"access that url to complete the registration process."
 msgstr ""
 
 #: templates/userprofile/account/registration_done.html:15
 #, python-format
-msgid "Account created. Go to the <a href=\"%(overview_url)s\">sign in page</a> to authenticate and start using this site."
+msgid ""
+"Account created. Go to the <a href=\"%(overview_url)s\">sign in page</a> to "
+"authenticate and start using this site."
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:4
@@ -2845,13 +3017,13 @@ msgid "Choose the location of your avatar"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:36
-#: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:37
-#: templates/userprofile/avatar/crop.html:42
-msgid "You have several options to select the image you want to use as avatar on your profile."
+msgid ""
+"You have several options to select the image you want to use as avatar on "
+"your profile."
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:50
@@ -2865,7 +3037,9 @@ msgid "Done"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:56
-msgid "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you"
+msgid ""
+"Select an image from a remote URL. Enter the URL in the field below and "
+"we'll retrieve the image for you"
 msgstr ""
 
 #: templates/userprofile/avatar/choose.html:63
@@ -2877,12 +3051,23 @@ msgstr ""
 msgid "Crop &amp; resize the area you want"
 msgstr ""
 
+#: templates/userprofile/avatar/crop.html:41
+msgid "Select an Avatar"
+msgstr ""
+
+#: templates/userprofile/avatar/crop.html:42
+msgid ""
+"There are several ways to select an image to use as your profile's avatar."
+msgstr ""
+
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
 msgstr ""
 
 #: templates/userprofile/profile/delete.html:13
-msgid "Erase all your private data except your username. You can fill in the information again later if you want to."
+msgid ""
+"Erase all your private data except your username. You can fill in the "
+"information again later if you want to."
 msgstr ""
 
 #: templates/userprofile/profile/delete.html:17
@@ -2928,7 +3113,7 @@ msgid "Save"
 msgstr ""
 
 #: templates/userprofile/profile/location.html:40
-msgid "Location information"
+msgid "Location Information"
 msgstr ""
 
 #: templates/userprofile/profile/location.html:41
@@ -3026,35 +3211,22 @@ msgid "LinkedIn"
 msgstr ""
 
 #: templates/userprofile/profile/public.html:104
-msgid ""
-"\n"
-"            Coordinator of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Coordinator of the following teams:\n"
-"        "
+msgid "Coordinator of the following team:"
+msgid_plural "Coordinator of the following teams:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/userprofile/profile/public.html:115
-#: templates/userprofile/profile/public.html:142
+#: templates/userprofile/profile/public.html:111
+#: templates/userprofile/profile/public.html:132
 #, python-format
 msgid ""
-"\n"
-"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project\n"
-"                "
+"<a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a "
+"class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
-#: templates/userprofile/profile/public.html:131
-msgid ""
-"\n"
-"            Member of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Members of the following teams:\n"
-"        "
+#: templates/userprofile/profile/public.html:125
+msgid "Member of the following team:"
+msgid_plural "Members of the following teams:"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -3238,7 +3410,9 @@ msgid "Edit "
 msgstr ""
 
 #: translations/templates/comp_stats_table.html:29
-msgid "See the outsource team for this language. You will be redirected to another project team page."
+msgid ""
+"See the outsource team for this language. You will be redirected to another "
+"project team page."
 msgstr ""
 
 #: translations/templates/comp_stats_table.html:29
@@ -3315,14 +3489,16 @@ msgid "Download "
 msgstr ""
 
 #: txcommon/admin.py:10
-msgid "Required. 30 characters or fewer. Unicode alphanumeric characters only (letters, digits and underscores)."
+msgid ""
+"Required. 30 characters or fewer. Unicode alphanumeric characters only "
+"(letters, digits and underscores)."
 msgstr ""
 
 #: txcommon/admin.py:13
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 
-#: txcommon/i18n.py:19
+#: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr ""
@@ -3411,7 +3587,8 @@ msgid "Submit access request to project withdrawn"
 msgstr ""
 
 #: txcommon/notifications.py:50
-msgid "when a user withdraws the request for access to submit files to a project"
+msgid ""
+"when a user withdraws the request for access to submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:57
@@ -3427,7 +3604,8 @@ msgid "Submit access to project revoked"
 msgstr ""
 
 #: txcommon/notifications.py:66
-msgid "when a maintainer revokes the access of an user to submit files to a project"
+msgid ""
+"when a maintainer revokes the access of an user to submit files to a project"
 msgstr ""
 
 #: txcommon/notifications.py:73
@@ -3483,7 +3661,9 @@ msgid "Translation Source File (POT) has a Problem"
 msgstr ""
 
 #: txcommon/notifications.py:122
-msgid "when the source file (POT) of a component that you are a maintainer has a problem"
+msgid ""
+"when the source file (POT) of a component that you are a maintainer has a "
+"problem"
 msgstr ""
 
 #: txcommon/notifications.py:133
@@ -3563,7 +3743,9 @@ msgid "Team Creation Request Denied"
 msgstr ""
 
 #: txcommon/notifications.py:201
-msgid "when a translation team creation request for a project is denied by a maintainer"
+msgid ""
+"when a translation team creation request for a project is denied by a "
+"maintainer"
 msgstr ""
 
 #: txcommon/notifications.py:208
@@ -3636,11 +3818,14 @@ msgstr ""
 
 #: txcommon/validators.py:69
 #, python-format
-msgid "This is not a valid root URL for this repository type. Valid choices are: %s"
+msgid ""
+"This is not a valid root URL for this repository type. Valid choices are: %s"
 msgstr ""
 
 #: txcommon/validators.py:86
-msgid "This repository already belongs to another project. Please choose a different one."
+msgid ""
+"This repository already belongs to another project. Please choose a "
+"different one."
 msgstr ""
 
 #: txcommon/views.py:109
@@ -3665,7 +3850,9 @@ msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr ""
 
 #: txcommon/templatetags/avatars.py:108
-msgid "You have to provide only the size as             an integer (both sides will be equal) and optionally, the             username."
+msgid ""
+"You have to provide only the size as             an integer (both sides will "
+"be equal) and optionally, the             username."
 msgstr ""
 
 #: txcommon/templatetags/txcommontags.py:136
@@ -3709,7 +3896,7 @@ msgid "Branch"
 msgstr ""
 
 #: vcs/models.py:51
-msgid "A VCS branch this unit is associated with"
+msgid "The VCS branch with which this unit is associated"
 msgstr ""
 
 #: vcs/models.py:52
@@ -3734,7 +3921,9 @@ msgid "vcsunits"
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:17
-msgid "Your request could not be completed. The admins have been notified to take a closer look at it. Please try again in a few minutes"
+msgid ""
+"Your request could not be completed. The admins have been notified to take a "
+"closer look at it. Please try again in a few minutes"
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:40
@@ -3742,7 +3931,9 @@ msgid "Setup of the repository locally could not be done successfully."
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:47
-msgid "The local repository has not been setup yet. Please, first do a check-out of the repository."
+msgid ""
+"The local repository has not been setup yet. Please, first do a check-out of "
+"the repository."
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:54
@@ -3750,7 +3941,9 @@ msgid "Unable to pull data from the remote repository. Is the remote host up?"
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:61
-msgid "Cleanup of the repository failed. The admins have been notified to take a closer look at it."
+msgid ""
+"Cleanup of the repository failed. The admins have been notified to take a "
+"closer look at it."
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:67
@@ -3762,7 +3955,9 @@ msgid "Pushing to the remote repository failed."
 msgstr ""
 
 #: vcs/lib/exceptions/__init__.py:78
-msgid "Given file does not have a revision. The admins have been notified to take a closer look at it."
+msgid ""
+"Given file does not have a revision. The admins have been notified to take a "
+"closer look at it."
 msgstr ""
 
 #: webtrans/fields.py:55
@@ -3779,7 +3974,9 @@ msgid "You can't make submissions for a file locked by someone else."
 msgstr ""
 
 #: webtrans/wizards.py:430
-msgid "Nothing was sent because you haven't changed anything in the translation form."
+msgid ""
+"Nothing was sent because you haven't changed anything in the translation "
+"form."
 msgstr ""
 
 #: webtrans/templates/pagination.html:7

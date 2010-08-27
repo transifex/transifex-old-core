@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-22 10:11+0000\n"
+"POT-Creation-Date: 2010-08-27 17:47+0000\n"
 "PO-Revision-Date: 2010-04-30 08:22+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +31,8 @@ msgid "log entries"
 msgstr "ਲਾਗ ਐਂਟਰੀਆਂ"
 
 #: actionlog/templates/object_action_list.html:6
-msgid "Date/time"
+#, fuzzy
+msgid "Date/Time"
 msgstr "ਮਿਤੀ/ਸਮਾਂ"
 
 #: actionlog/templates/object_action_list.html:7 teams/models.py:76
@@ -51,11 +53,11 @@ msgid "No history recorded yet."
 msgstr "ਹਾਲੇ ਕੋਈ ਅਤੀਤ ਰਿਕਾਰਡ ਨਹੀਂ।"
 
 #: addons/charts/templates/charts/widget_snippet.html:61
-msgid "Image charts"
+msgid "Image Charts"
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:65
-#: addons/charts/templates/charts/widget_snippet.html:94
+#: addons/charts/templates/charts/widget_snippet.html:93
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
 msgstr "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
@@ -63,21 +65,20 @@ msgstr "ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
 #: addons/charts/templates/charts/widget_snippet.html:68
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image.\n"
-"                Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:69
+msgid "The chart will always report live Transifex numbers."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:70
-msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
-
-#: addons/charts/templates/charts/widget_snippet.html:71
-#: addons/charts/templates/charts/widget_snippet.html:103
+#: addons/charts/templates/charts/widget_snippet.html:101
 msgid "Show code snippet for component:"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:73
-#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/charts/templates/charts/widget_snippet.html:72
+#: addons/charts/templates/charts/widget_snippet.html:103
 #: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
 #: projects/models.py:299 projects/migrations/0001_initial.py:28
 #: projects/migrations/0001_initial.py:50 releases/models.py:41
@@ -86,45 +87,42 @@ msgstr ""
 msgid "Hidden"
 msgstr "ਲੁਕਵਾਂ"
 
-#: addons/charts/templates/charts/widget_snippet.html:87
-msgid "Interactive charts"
+#: addons/charts/templates/charts/widget_snippet.html:86
+msgid "Interactive Charts"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:98
+#: addons/charts/templates/charts/widget_snippet.html:97
 msgid ""
-"Display your project's translation statistics on your own website as "
-"interactive chart.\n"
-"                This requires modifications to your homepage's HTML code."
+"Display your project's translation statistics on your own website as an "
+"interactive chart. This requires modifications to your homepage's HTML code."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:101
+#: addons/charts/templates/charts/widget_snippet.html:99
 msgid ""
-"By tweaking the code you can adjust verbosity, dimensions and colors of the "
-"chart"
+"You can adjust level of detail, dimensions and colors of the chart by "
+"tweaking the code below."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:121
+#: addons/charts/templates/charts/widget_snippet.html:119
 msgid "Interactive and Image Charts"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:122
+#: addons/charts/templates/charts/widget_snippet.html:120
 msgid ""
 "Sorry, but your project doesn't have any components with up-to-date "
-"statistics. \n"
-"You need to have at least one component with statistics to export charts "
-"from Transifex."
+"statistics. You need to have at least one component with statistics to "
+"export charts from Transifex."
 msgstr ""
 
 #: addons/locks/handlers.py:58
 msgid ""
-"Couldn't lock file, this means that you can send files only for reviewing."
+"You will need to send this file for review because you can't lock this file."
 msgstr ""
 
 #: addons/locks/models.py:65
 #, python-format
 msgid ""
-"User '%(user)s' has no permission to submit files for or coordinate  '%"
-"(pofile)s'"
+"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
 msgstr ""
 
 #: addons/locks/models.py:77
@@ -138,7 +136,7 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expring"
+msgid "Lock is expiring"
 msgstr ""
 
 #: addons/locks/notifications.py:16
@@ -175,24 +173,20 @@ msgstr "ਟਾਈਮ-ਲਾਈਨ"
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
-msgid ""
-"\n"
-"                Extend lock by %(hours)s hour.\n"
-"            "
-msgid_plural ""
-"\n"
-"                Extend lock by %(hours)s hours.\n"
-"            "
+msgid "Extend lock by %(hours)s hour."
+msgid_plural "Extend lock by %(hours)s hours."
 msgstr[0] ""
 msgstr[1] ""
 
-#: addons/locks/templates/pofile_lock.html:46
+#: addons/locks/templates/pofile_lock.html:42
 #, fuzzy
-msgid "Lock and download this file to notify others you're working with it."
+msgid ""
+"Lock and download this file to notify others that you're working with it."
 msgstr "ਇਹ ਫਾਇਲ ਲਾਕ ਕਰੋ ਤਾਂ ਕਿ ਹੋਰਾਂ ਨੂੰ ਜਾਣਕਾਰੀ ਰਹੇ ਕਿ ਤੁਸੀਂ ਇਸ ਉੱਤੇ ਕੰਮ ਕਰ ਰਹੇ ਹੋ।"
 
-#: addons/locks/templates/pofile_lock.html:51
-msgid "This file is unlocked. Most likely no one is working with it right now."
+#: addons/locks/templates/pofile_lock.html:47
+#, fuzzy
+msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr "ਇਹ ਫਾਇਲ ਅਣ-ਲਾਕ ਹੈ। ਸੰਭਵ ਤੌਰ ਉੱਤੇ ਇਸ ਸਮੇਂ ਕੋਈ ਇਸ ਉੱਤੇ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ ਹੈ।"
 
 #: addons/locks/templates/locks/component.html:9
@@ -203,9 +197,8 @@ msgstr ""
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
 msgid ""
-"\n"
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
-"a> is about to expire on %(expires)s\n"
+"a> is about to expire on %(expires)s"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:35
@@ -213,34 +206,36 @@ msgid "You are only allowed to upload PO files (*.po)!"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:39
-msgid "You have submitted empty file!"
+msgid "You submitted an empty file!"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:48
-msgid "Uploaded file contains DOS newlines (\\r)!"
+msgid ""
+"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
+"(\\r\\n)!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:59
+#: addons/presubmit_checks/handlers.py:60
 #, python-format
-msgid "Uploaded file header doesn't have '%s' field!"
+msgid "Uploaded file header is missing the '%s' field!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:65
-msgid "Only UTF-8 encoded files are allowed!"
+#: addons/presubmit_checks/handlers.py:66
+msgid "File is not encoded using UTF-8!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:69
+#: addons/presubmit_checks/handlers.py:70
 msgid "Uploaded file doesn't contain any translated entries!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:86
+#: addons/presubmit_checks/handlers.py:87
 #, fuzzy
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr ""
 "ਤੁਹਾਡੀ ਫਾਇਲ ਠੀਕ-ਠਾਕ ਜਾਂਚ ਵਿੱਚੋਂ ਪਾਸ ਨਹੀਂ ਹੋ ਸਕੀ (msgfmt -c)। ਤੁਹਾਡੀ ਫਾਇਲ ਨੂੰ ਤੁਹਾਨੂੰ ਈਮੇਲ "
 "ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਕਿ ਤੁਹਾਡੇ ਕੰਮ ਦਾ ਨੁਕਸਾਨ ਨਾ ਹੋ ਜਾਵੇ।"
 
-#: addons/presubmit_checks/handlers.py:90
+#: addons/presubmit_checks/handlers.py:91
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
@@ -319,30 +314,26 @@ msgid "Go"
 msgstr "ਜਾਓ"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:211
+#: templates/timeline.html:24 templates/projects/component_detail.html:209
 #: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:134
+#: templates/teams/team_detail.html:132
 msgid "None available"
 msgstr "ਉਪਲੱਬਧ ਨਹੀਂ"
 
 #: addons/timeline/templates/timeline/timeline_base.html:29
 #: templates/timeline.html:28
 #, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
+msgid "The query returned %(counter)s result"
+msgid_plural "The query returned %(counter)s results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: addons/timeline/templates/timeline/timeline_base.html:44
+#: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:39 languages/migrations/0001_initial.py:14
 #: projects/models.py:152 projects/models.py:278 projects/models.py:541
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/timeline.html:39 templates/notification/notices.html:42
 #: templates/reviews/review_list.html:42
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
@@ -353,11 +344,8 @@ msgstr "ਵੇਰਵਾ"
 #: addons/timeline/templates/timeline/timeline_user.html:23
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
+#, fuzzy, python-format
+msgid "%(project_name)s Timeline"
 msgstr ""
 "\n"
 " %(project_name)s ਸਮਾਂ-ਸੀਮਾ\n"
@@ -382,7 +370,7 @@ msgid "Widgets"
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:48
-msgid "Widgets, buttons, etc"
+msgid "Widgets, buttons, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:49
@@ -397,7 +385,7 @@ msgid "Userbars"
 msgstr "ਯੂਜ਼ਰ"
 
 #: addons/widgets/templates/project_widgets.html:63
-msgid "You can insert userbars to forums, e-mail signatures etc."
+msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:64
@@ -539,10 +527,9 @@ msgid ""
 "Allow any logged-in user to submit files to my\n"
 "                              project. <a href=\"http://www.youtube.com/"
 "watch?v=okd3hLlvvLw\"\n"
-"                              target=\"_blank\">Imagine</a> all the "
-"people, \n"
-"                              sharing all the world. Recommended for quick \n"
-"                              translations, and when a pre-commit review \n"
+"                              target=\"_blank\">Imagine</a> all the people,\n"
+"                              sharing all the world. Recommended for quick\n"
+"                              translations, and when a pre-commit review\n"
 "                              process is in place, e.g. when contributions "
 "are\n"
 "                              submitted by email or to a separate branch."
@@ -554,12 +541,12 @@ msgstr ""
 
 #: projects/forms.py:67
 msgid ""
-"Give access to specific people. Translations \n"
+"Give access to specific people. Translations\n"
 "                              teams will have access to their language's "
 "files\n"
 "                              only, and global writers will have access to "
 "all\n"
-"                              translation files. Recommended for most \n"
+"                              translation files. Recommended for most\n"
 "                              projects."
 msgstr ""
 
@@ -569,15 +556,14 @@ msgstr ""
 
 #: projects/forms.py:76
 msgid ""
-"Re-use another project's teams and writers by \n"
-"                              trusting access control to that project. If "
-"a \n"
-"                              person can contribute to that project, it "
-"can \n"
+"Re-use another project's teams and writers by\n"
+"                              delegating access control to that project. If "
+"a\n"
+"                              person can contribute to that project, it can\n"
 "                              contribute to this one as well. Recommended "
-"for \n"
-"                              non-upstream projects such as distribution \n"
-"                              packages, desktop environment modules, etc."
+"for\n"
+"                              non-upstream projects such as distribution\n"
+"                              packages and desktop environment modules."
 msgstr ""
 
 #: projects/forms.py:134 projects/models.py:291
@@ -976,8 +962,9 @@ msgid "%s was deleted."
 msgstr "%s ਹਟਾਇਆ ਗਿਆ।"
 
 #: projects/views/review.py:66
-msgid "Request closed as Rejected."
-msgstr ""
+#, fuzzy
+msgid "Request rejected."
+msgstr "ਮੰਗ ਮੁੜ-ਖੋਲ੍ਹੀ ਗਈ।"
 
 #: projects/views/review.py:72
 msgid "Request reopened."
@@ -1078,67 +1065,67 @@ msgstr ""
 msgid "Select a translation file for review."
 msgstr "ਪੜਤਾਲ ਲਈ ਅਨੁਵਾਦ ਫਾਇਲ ਚੁਣੋ।"
 
-#: reviews/models.py:44
+#: reviews/models.py:45
 msgid "Open"
 msgstr "ਖੋਲ੍ਹੋ"
 
-#: reviews/models.py:45
+#: reviews/models.py:46
 msgid "Closed"
 msgstr "ਬੰਦ ਹੈ"
 
-#: reviews/models.py:47
+#: reviews/models.py:48
 msgid "Null"
 msgstr "ਨਲ"
 
-#: reviews/models.py:48
+#: reviews/models.py:49
 msgid "Accepted"
 msgstr "ਮਨਜ਼ੂਰ ਹੈ"
 
-#: reviews/models.py:49
+#: reviews/models.py:50
 msgid "Rejected"
 msgstr "ਰੱਦ ਕੀਤੀ"
 
-#: reviews/models.py:54
+#: reviews/models.py:55
 msgid "The review's status (open, closed, etc.)"
 msgstr "ਪੜਤਾਲ ਦੀ ਹਾਲਤ (ਖੁੱਲ੍ਹੀ, ਬੰਦ ਆਦਿ)"
 
-#: reviews/models.py:56
+#: reviews/models.py:57
 msgid "The review's resolution/closing state."
 msgstr "ਪੜਤਾਲ ਦਾ ਹੱਲ਼/ਬੰਦ ਹਾਲਤ।"
 
-#: reviews/models.py:58
+#: reviews/models.py:59
 msgid "Date and time of creation"
 msgstr "ਬਣਾਉਣ ਦੀ ਮਿਤੀ ਤੇ ਸਮਾਂ"
 
-#: reviews/models.py:60
+#: reviews/models.py:61
 msgid "Date and time of last update"
 msgstr "ਆਖਰੀ ਅੱਪਡੇਟ ਦੀ ਮਿਤੀ ਤੇ ਸਮਾਂ"
 
-#: reviews/models.py:63
+#: reviews/models.py:64
 msgid "The review file name"
 msgstr "ਪੜਤਾਲ ਫਾਇਲ ਨਾਂ"
 
-#: reviews/models.py:65
+#: reviews/models.py:66
 msgid "The path of the target file which will be used on submission"
 msgstr ""
 
-#: reviews/models.py:69
+#: reviews/models.py:70
 msgid "Component"
 msgstr "ਭਾਗ"
 
-#: reviews/models.py:87
+#: reviews/models.py:88
 msgid "Review Request"
 msgstr "ਪੜਤਾਲ ਮੰਗ"
 
-#: reviews/models.py:88
+#: reviews/models.py:89
 msgid "Review Requests"
 msgstr "ਪੜਤਾਲ ਮੰਗ"
 
-#: reviews/models.py:89
+#: reviews/models.py:90
 msgid "-created_on"
 msgstr ""
 
-#: reviews/models.py:90
+#: reviews/models.py:91
 msgid "created_on"
 msgstr ""
 
@@ -1192,7 +1179,7 @@ msgid "The project which this team belongs to."
 msgstr ""
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:125
+#: templates/reviews/review_list.html:123
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
@@ -1337,8 +1324,8 @@ msgstr "ਭਾਸ਼ਾਵਾਂ"
 #: templates/base-sample.html:49
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
 "<a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</"
 "a> ਜੀ ਆਇਆਂ ਨੂੰ!"
@@ -1431,8 +1418,8 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
 "ਤੁਹਾਡਾ ਪਰੋਜੈਕਟ ਨਹੀਂ ਲੱਭਿਆ? ਤਾਂ ਤੁਸੀਂ ਇਸ ਨੂੰ <a href=\"%(project_create_url)s\">ਸ਼ਾਮਲ "
 "ਕਿਓ ਨਹੀਂ ਕਰਵਾਉਂਦੇ</a>?"
@@ -1592,8 +1579,8 @@ msgid ""
 "A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
 "added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_changed/notice.html:2
 #, fuzzy, python-format
@@ -1601,17 +1588,17 @@ msgid ""
 "The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_deleted/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"The component '%(component_name)s' was deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project."
+"The component '%(component_name)s' was deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1625,20 +1612,20 @@ msgstr ""
 #, fuzzy, python-format
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">%"
-"(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"was submitted for review to the <a href=\"%(component_url)s\">"
+"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
 "a> project"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "(%(trans_perc)s%)"
 msgstr ""
-"<a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%"
-"(trans_perc)s%) ਲਈ ਫਾਇਲ"
+"<a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%) ਲਈ ਫਾਇਲ"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1651,15 +1638,15 @@ msgid ""
 "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
 "the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
 msgid ""
 "The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
@@ -1682,22 +1669,22 @@ msgstr ""
 #, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
-"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
-"s</a> denied"
+"access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a> denied"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrew own request of access to submit files to the project <a href=\"%"
-"(project_url)s\">%(project)s</a>"
+"Withdrew own request of access to submit files to the project <a href="
+"\"%(project_url)s\">%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"Requested access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
@@ -1714,8 +1701,8 @@ msgid ""
 "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added "
 "to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_changed/notice.html:2
 #, fuzzy, python-format
@@ -1723,8 +1710,8 @@ msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project was changed."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_deleted/notice.html:2
 #, fuzzy, python-format
@@ -1732,8 +1719,8 @@ msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted "
 "from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_join_approved/notice.html:2
 #, fuzzy, python-format
@@ -1742,8 +1729,8 @@ msgid ""
 "the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, fuzzy, python-format
@@ -1752,8 +1739,8 @@ msgid ""
 "request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
@@ -1765,9 +1752,9 @@ msgstr ""
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
-"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project"
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
+"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_left/notice.html:2
@@ -1776,8 +1763,8 @@ msgid ""
 "User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_request_denied/notice.html:2
 #, fuzzy, python-format
@@ -1786,14 +1773,14 @@ msgid ""
 "translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> "
 "project was denied."
 msgstr ""
-"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href=\"%"
-"(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
+"<a href=\"%(project_url)s\">%(project_name)s</a> ਪਰੋਜੈਕਟ ਦੇ <a href="
+"\"%(component_url)s\">%(component_name)s</a> ਵਿੱਚ ਭੇਜਿਆ ਗਿਆ ਹੈ"
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
 msgid ""
-"The creation of a translation team for <a href=\"%(language_url)s\">%"
-"(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"The creation of a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
 "\">%(project_name)s</a>."
 msgstr ""
 
@@ -1813,18 +1800,17 @@ msgstr "%(component_name)s ਹਟਾਓ"
 msgid "Say goodbye to <em>%(component_name)s</em>?"
 msgstr "<em>%(component_name)s</em> ਨੂੰ ਅਲਵਿਦਾ ਆਖਣਾ ਹੈ?"
 
-#: templates/projects/component_confirm_delete.html:19
+#: templates/projects/component_confirm_delete.html:20
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the component '%"
-"(component_name)s' which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the component "
+"'%(component_name)s' which belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:24
-#: templates/teams/team_confirm_delete.html:19
+#: templates/projects/release_confirm_delete.html:22
+#: templates/teams/team_confirm_delete.html:17
 msgid "Yes, I'm sure!"
 msgstr "ਹਾਂ, ਮੈਂ ਚਾਹੁੰਦਾ ਹਾਂ!"
 
@@ -1856,12 +1842,13 @@ msgstr "ਤਾਜ਼ਾ ਪਰੋਜੈਕਟ"
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
 #: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:28
+#: templates/teams/team_detail.html:26
 msgid "Edit"
 msgstr "ਸੋਧ"
 
 #: templates/projects/component_detail.html:87
-msgid "Source details"
+#, fuzzy
+msgid "Source Details"
 msgstr "ਸਰੋਤ ਵੇਰਵਾ"
 
 #: templates/projects/component_detail.html:91
@@ -1901,7 +1888,9 @@ msgid "Allows submissions:"
 msgstr "ਭੇਜਣ ਮਨਜ਼ੂਰ:"
 
 #: templates/projects/component_detail.html:139
-msgid "Translation files"
+#: templates/projects/component_lang_detail.html:30
+#, fuzzy
+msgid "Translation Files"
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ"
 
 #: templates/projects/component_detail.html:144
@@ -1953,29 +1942,29 @@ msgid "See the translation teams."
 msgstr "ਅਨੁਵਾਦ ਟੀਮਾਂ ਵੇਖੋ।"
 
 #: templates/projects/component_detail.html:198
-msgid "Translation files reviews"
+#, fuzzy
+msgid "Translation File Reviews"
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ ਪੜਤਾਲ।"
 
 #: templates/projects/component_detail.html:200
 msgid ""
-"Translators can request a file review from another person, who\n"
-"  can take a look at his work and provide any feedback needed, or simply "
-"submit\n"
-"  the file to the upstream project."
+"Translators can request a file review from another person, who can take a "
+"look at his work and provide any feedback needed, or simply submit the file "
+"to the upstream project."
 msgstr ""
 
-#: templates/projects/component_detail.html:205
+#: templates/projects/component_detail.html:203
 #: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "ਪੜਤਾਲ"
 
-#: templates/projects/component_detail.html:207
+#: templates/projects/component_detail.html:205
 #: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:130
+#: templates/teams/team_detail.html:128
 msgid "History"
 msgstr "ਅਤੀਤ"
 
-#: templates/projects/component_detail.html:229
+#: templates/projects/component_detail.html:227
 msgid "Delete component"
 msgstr "ਭਾਗ ਹਟਾਓ"
 
@@ -2013,10 +2002,6 @@ msgstr "ਭੇਜੋ"
 msgid "Save component"
 msgstr "ਭਾਗ ਸੰਭਾਲੋ"
 
-#: templates/projects/component_lang_detail.html:30
-msgid "translation files"
-msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ"
-
 #: templates/projects/component_list.html:10
 #: templates/projects/release_list.html:8
 msgid "Add"
@@ -2047,9 +2032,8 @@ msgstr "ਸ਼ਾਮਲ ਕਰੋ!"
 #: templates/projects/component_list.html:53
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
-"which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs"
-"\" or development branches like <code>HEAD</code>."
+"which consist of actual files. Examples of components of a software project "
+"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
 
 #: templates/projects/component_submit_new_file.html:6
@@ -2129,12 +2113,11 @@ msgstr "ਹਟਾਓ"
 msgid "Say goodbye to <em>%(project_name)s</em>?"
 msgstr "<em>%(project_name)s</em> ਨੂੰ ਅਲਵਿਦਾ ਕਹਿਣਾ ਹੈ?"
 
-#: templates/projects/project_confirm_delete.html:16
+#: templates/projects/project_confirm_delete.html:17
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?\n"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 
 #: templates/projects/project_detail.html:45
@@ -2342,9 +2325,8 @@ msgstr "ਕੀ <em>%(release_name)s</em> ਨੂੰ ਅਲਵਿਦਾ ਕਹਿ�
 #: templates/projects/release_confirm_delete.html:19
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the release '%(release_name)s' "
+"which belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/projects/release_detail.html:69
@@ -2374,7 +2356,8 @@ msgid "This release has %(components_number)s components."
 msgstr ""
 
 #: templates/projects/release_detail.html:103
-msgid "Translation statistics"
+#, fuzzy
+msgid "Translation Statistics"
 msgstr "ਅਨੁਵਾਦ ਅੰਕੜੇ"
 
 #: templates/projects/release_detail.html:110
@@ -2402,14 +2385,11 @@ msgid "Edit <em>%(release_name)s</em> release"
 msgstr "<em>%(release_name)s</em> ਰੀਲਿਜ਼ ਸੋਧੋ"
 
 #: templates/projects/release_form.html:28
-#, python-format
-msgid ""
-"\n"
-"        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
-"      "
-msgstr ""
+#, fuzzy, python-format
+msgid "Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'"
+msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> ਸੋਧ ਜਾਰੀ"
 
-#: templates/projects/release_form.html:46
+#: templates/projects/release_form.html:44
 msgid "Save release"
 msgstr "ਰੀਲਿਜ਼ ਸੰਭਾਲੋ"
 
@@ -2419,7 +2399,8 @@ msgid "Release '%(release_name)s"
 msgstr "'%(release_name)s ਰੀਲਿਜ਼"
 
 #: templates/projects/release_language_detail.html:38
-msgid "Project/Component statistics"
+#, fuzzy
+msgid "Project/Component Statistics"
 msgstr "ਪਰੋਜੈਕਟ/ਭਾਗ ਅੰਕੜੇ"
 
 #: templates/projects/release_language_detail.html:59
@@ -2456,8 +2437,8 @@ msgstr "ਪਰੋਜੈਕਟ ਰੀਲਿਜ਼"
 #: templates/projects/release_list.html:28
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/reviews/review_form.html:10
@@ -2486,97 +2467,94 @@ msgid "See profile"
 msgstr "ਪਰੋਫਾਇਲ ਵੇਖੋ"
 
 #: templates/reviews/review_list.html:49
-#, python-format
-msgid ""
-"\n"
-"        %(time_since)s ago\n"
-"      "
+#, fuzzy, python-format
+msgid "%(time_since)s ago"
 msgstr ""
 "\n"
 "        %(time_since)s ਪਹਿਲਾਂ\n"
 "      "
 
-#: templates/reviews/review_list.html:55
+#: templates/reviews/review_list.html:53
 msgid "Translation Language"
 msgstr "ਅਨੁਵਾਦ ਭਾਸ਼ਾ"
 
-#: templates/reviews/review_list.html:58
+#: templates/reviews/review_list.html:56
 msgid "Go to language page"
 msgstr "ਭਾਸ਼ਾ ਪੇਜ਼ ਉੱਤੇ ਜਾਓ"
 
-#: templates/reviews/review_list.html:65
+#: templates/reviews/review_list.html:63
 msgid "File target"
 msgstr "ਟਾਰਗੇਟ ਫਾਇਲ"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:64
 msgid "Download the version sent for review"
 msgstr ""
 
-#: templates/reviews/review_list.html:69
+#: templates/reviews/review_list.html:67
 msgid "Score"
 msgstr "ਸਕੋਰ"
 
-#: templates/reviews/review_list.html:83
+#: templates/reviews/review_list.html:81
 msgid "Status"
 msgstr "ਹਾਲਤ"
 
-#: templates/reviews/review_list.html:93
+#: templates/reviews/review_list.html:91
 msgid "Close Review"
 msgstr "ਝਲਕ ਬੰਦ ਕਰੋ"
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept and submit translation"
 msgstr "ਮਨਜ਼ੂਰ ਅਤੇ ਅਨੁਵਾਦ ਭੇਜੋ"
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept"
 msgstr "ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 msgid "Reject translation"
 msgstr "ਅਨੁਵਾਦ ਨਾ-ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 msgid "Reject"
 msgstr "ਨਾ-ਮਨਜ਼ੂਰ"
 
-#: templates/reviews/review_list.html:113
+#: templates/reviews/review_list.html:111
 msgid "No open requests!"
 msgstr ""
 
-#: templates/reviews/review_list.html:117
+#: templates/reviews/review_list.html:115
 msgid "Closed Requests"
 msgstr ""
 
-#: templates/reviews/review_list.html:123
+#: templates/reviews/review_list.html:121
 msgid "ID"
 msgstr "ID"
 
-#: templates/reviews/review_list.html:124
+#: templates/reviews/review_list.html:122
 msgid "Author"
 msgstr "ਲੇਖਕ"
 
-#: templates/reviews/review_list.html:126
+#: templates/reviews/review_list.html:124
 msgid "Time Since"
 msgstr "ਸਮਾਂ ਜਦੋਂ ਤੋਂ"
 
-#: templates/reviews/review_list.html:127
+#: templates/reviews/review_list.html:125
 msgid "Resolution"
 msgstr "ਹੱਲ਼"
 
-#: templates/reviews/review_list.html:128
+#: templates/reviews/review_list.html:126
 msgid "Attachment"
 msgstr "ਅਟੈਚਮੈਂਟ"
 
-#: templates/reviews/review_list.html:129
+#: templates/reviews/review_list.html:127
 msgid "Actions"
 msgstr "ਐਕਸ਼ਨ"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:151
 msgid "Reopen review request"
 msgstr ""
 
-#: templates/reviews/review_list.html:165
+#: templates/reviews/review_list.html:163
 msgid "No closed requests!"
 msgstr ""
 
@@ -2629,9 +2607,8 @@ msgid "Change notifications associated to your account"
 msgstr "ਆਪਣੇ ਅਕਾਊਂਟ ਨਾਲ ਸਬੰਧਿਤ ਨੋਟੀਫਿਕੇਸ਼ਨ ਬਦਲੋ"
 
 #: templates/simpleauth/signin.html:10
-msgid ""
-"\n"
-"<p>Please sign in with your email or screen name.<br />\n"
+#, fuzzy
+msgid "<p>Please sign in with your email or screen name.<br />"
 msgstr ""
 "\n"
 "<p>ਆਪਣੇ ਈਮੇਲ ਜਾਂ ਸਕਰੀਨ ਨਾਂ ਰਾਹੀਂ ਸਾਈਨ ਇਨ ਕਰੋ ਜੀ।<br />\n"
@@ -2644,9 +2621,8 @@ msgstr "<em>%(lang_name)s</em> ਟੀਮ ਨੂੰ ਅਲਵਿਦਾ ਕਹਿ�
 #: templates/teams/team_confirm_delete.html:14
 #, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?"
 msgstr ""
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
@@ -2655,59 +2631,58 @@ msgid "Teams"
 msgstr "ਟੀਮਾਂ:"
 
 #: templates/teams/team_detail.html:22
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
 "\n"
-"  ਅਨੁਵਾਦ ਟੀਮਾਂ - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"  ਅਨੁਵਾਦ ਟੀਮਾਂ - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:36
+#: templates/teams/team_detail.html:34
 msgid "Mainlist:"
 msgstr "ਮੁੱਖ-ਲਿਸਟ:"
 
-#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "ਮੋਢੀ:"
 msgstr[1] ""
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:57
 msgid "Become a translator:"
 msgstr "ਅਨੁਵਾਦਕ ਬਣੋ:"
 
-#: templates/teams/team_detail.html:62
+#: templates/teams/team_detail.html:60
 msgid "Join this Team"
 msgstr "ਇਹ ਟੀਮ ਜੁਆਇੰਨ ਕਰੋ"
 
-#: templates/teams/team_detail.html:73
+#: templates/teams/team_detail.html:71
 msgid "People waiting for team membership approving:"
 msgstr "ਲੋਕ ਟੀਮ ਮੈਂਬਰੀ ਮਨਜ਼ੂਰ ਕਰਨ ਦੀ ਉਡੀਕ ਕਰ ਰਹੇ ਹਨ:"
 
-#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "ਮਨਜ਼ੂਰ"
 
-#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "ਇਨਕਾਰ"
 
-#: templates/teams/team_detail.html:94
+#: templates/teams/team_detail.html:92
 msgid "Withdraw"
 msgstr "ਵਾਪਸ ਲਵੋ"
 
-#: templates/teams/team_detail.html:107
+#: templates/teams/team_detail.html:105
 msgid "Team Members:"
 msgstr "ਟੀਮ ਮੈਂਬਰ:"
 
-#: templates/teams/team_detail.html:117
+#: templates/teams/team_detail.html:115
 msgid "Leave"
 msgstr "ਛੱਡੋ"
 
-#: templates/teams/team_detail.html:153
+#: templates/teams/team_detail.html:151
 msgid "Delete team"
 msgstr "ਟੀਮ ਹਟਾਓ"
 
@@ -2771,21 +2746,16 @@ msgstr "%(project_name)s ਅਨੁਵਾਦ ਟੀਮਾਂ"
 #: templates/teams/team_off.html:17
 #, python-format
 msgid ""
-"\n"
-"            This project does not maintain its own teams, but has chosen to "
-"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
-"s</a>'.\n"
-"            In order to send translations here you'll need to join a team of "
-"'%(outsource_project)s'.\n"
-"        "
+"This project does not maintain its own teams, but has chosen to re-use the "
+"teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 
-#: templates/teams/team_off.html:22
+#: templates/teams/team_off.html:19
 msgid ""
-"\n"
-"            This project allows translation submission from <em>anyone</em>, "
-"and thus no translation teams exist.\n"
-"        "
+"This project allows translation submission from <em>anyone</em>, and thus no "
+"translation teams exist."
 msgstr ""
 
 #: templates/translations/stats_table_filter_box.html:7
@@ -2873,8 +2843,8 @@ msgstr "ਈਮੇਲ ਜਾਂਚ ਕਾਰਵਾਈ"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
@@ -3111,12 +3081,10 @@ msgid "Choose the location of your avatar"
 msgstr "ਆਪਣੇ ਅਵਤਾਰ ਲਈ ਟਿਕਾਣਾ ਚੁਣੋ"
 
 #: templates/userprofile/avatar/choose.html:36
-#: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr "ਅਵਤਾਰ ਚੋਣ ਪੇਜ਼"
 
 #: templates/userprofile/avatar/choose.html:37
-#: templates/userprofile/avatar/crop.html:42
 msgid ""
 "You have several options to select the image you want to use as avatar on "
 "your profile."
@@ -3146,6 +3114,15 @@ msgstr "ਪਿਕਾਸਾ ਵੈੱਬ ਉੱਤੇ ਲੱਭੋ"
 #: templates/userprofile/avatar/crop.html:19
 msgid "Crop &amp; resize the area you want"
 msgstr "ਜਿਵੇਂ ਤੁਸੀਂ ਚਾਹੁੰਦੇ ਹੋ, ਏਰੀਏ ਨੂੰ ਕਰੋਪ ਅਤੇ ਮੁੜ ਅਕਾਰ ਦਿਓ"
+
+#: templates/userprofile/avatar/crop.html:41
+msgid "Select an Avatar"
+msgstr ""
+
+#: templates/userprofile/avatar/crop.html:42
+msgid ""
+"There are several ways to select an image to use as your profile's avatar."
+msgstr ""
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
@@ -3197,7 +3174,8 @@ msgid "Save"
 msgstr "ਸੰਭਾਲੋ"
 
 #: templates/userprofile/profile/location.html:40
-msgid "Location information"
+#, fuzzy
+msgid "Location Information"
 msgstr "ਟਿਕਾਣਾ ਜਾਣਕਾਰੀ"
 
 #: templates/userprofile/profile/location.html:41
@@ -3292,14 +3270,9 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: templates/userprofile/profile/public.html:104
-msgid ""
-"\n"
-"            Coordinator of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Coordinator of the following teams:\n"
-"        "
+#, fuzzy
+msgid "Coordinator of the following team:"
+msgid_plural "Coordinator of the following teams:"
 msgstr[0] ""
 "\n"
 "            ਅੱਗੇ ਦਿੱਤੀ ਟੀਮ ਦਾ ਮੋਢੀ ਹੈ:\n"
@@ -3309,30 +3282,22 @@ msgstr[1] ""
 "            ਅੱਗੇ ਦਿੱਤੀਆਂ ਟੀਮਾਂ ਦਾ ਮੋਢੀ ਹੈ:\n"
 "        "
 
-#: templates/userprofile/profile/public.html:115
-#: templates/userprofile/profile/public.html:142
-#, python-format
+#: templates/userprofile/profile/public.html:111
+#: templates/userprofile/profile/public.html:132
+#, fuzzy, python-format
 msgid ""
-"\n"
-"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
-"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
-"project\n"
-"                "
+"<a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a "
+"class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "\n"
 "                <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</"
 "a> ਪਰੋਜੈਕਟ ਲਈ <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> ਟੀਮ\n"
 "                "
 
-#: templates/userprofile/profile/public.html:131
-msgid ""
-"\n"
-"            Member of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Members of the following teams:\n"
-"        "
+#: templates/userprofile/profile/public.html:125
+#, fuzzy
+msgid "Member of the following team:"
+msgid_plural "Members of the following teams:"
 msgstr[0] ""
 "\n"
 "            ਅੱਗੇ ਦਿੱਤੀ ਟੀਮ ਦਾ ਮੈਂਬਰ ਹੈ:\n"
@@ -3605,7 +3570,7 @@ msgstr ""
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 
-#: txcommon/i18n.py:19
+#: txcommon/i18n.py:18
 #, fuzzy, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "LINGUAS ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ: %s"
@@ -4005,7 +3970,7 @@ msgid "Branch"
 msgstr "ਬਰਾਂਚ"
 
 #: vcs/models.py:51
-msgid "A VCS branch this unit is associated with"
+msgid "The VCS branch with which this unit is associated"
 msgstr ""
 
 #: vcs/models.py:52
@@ -4095,6 +4060,9 @@ msgstr "ਪਿੱਛੇ"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "ਅੱਗੇ"
+
+#~ msgid "translation files"
+#~ msgstr "ਅਨੁਵਾਦ ਫਾਇਲਾਂ"
 
 #~ msgid "The password has been changed successfully."
 #~ msgstr "ਪਾਸਵਰਡ ਠੀਕ ਤਰ੍ਹਾਂ ਬਦਲਿਆ ਜਾ ਚੁੱਕਿਆ ਹੈ।"

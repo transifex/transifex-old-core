@@ -5,15 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-22 10:10+0000\n"
+"POT-Creation-Date: 2010-08-27 17:47+0000\n"
 "PO-Revision-Date: 2010-06-13 21:44+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <trans-pl@lists.fedoraproject.org>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: actionlog/filters.py:12
 msgid "Search for a username or leave it blank"
@@ -28,7 +29,8 @@ msgid "log entries"
 msgstr "wpisy dziennika"
 
 #: actionlog/templates/object_action_list.html:6
-msgid "Date/time"
+#, fuzzy
+msgid "Date/Time"
 msgstr "Data/czas"
 
 #: actionlog/templates/object_action_list.html:7 teams/models.py:76
@@ -49,36 +51,38 @@ msgid "No history recorded yet."
 msgstr "Nie zarejestrowano jeszcze historii."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
-msgid "Image charts"
+#, fuzzy
+msgid "Image Charts"
 msgstr "Wykresy"
 
 #: addons/charts/templates/charts/widget_snippet.html:65
-#: addons/charts/templates/charts/widget_snippet.html:94
+#: addons/charts/templates/charts/widget_snippet.html:93
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
 msgstr "Wczytywanie..."
 
 #: addons/charts/templates/charts/widget_snippet.html:68
+#, fuzzy
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image.\n"
-"                Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
 msgstr ""
 "Wyświetla statystyki tłumaczenia na innych stronach jako prosty obraz.\n"
 "                Doskonałe do umieszczania na stronach WWW, stronach Trac i "
 "wiadomościach e-mail."
 
-#: addons/charts/templates/charts/widget_snippet.html:70
-msgid "The chart will always reflect your live Transifex numbers."
+#: addons/charts/templates/charts/widget_snippet.html:69
+#, fuzzy
+msgid "The chart will always report live Transifex numbers."
 msgstr "Wykres zawsze wyświetla liczby z systemu Transifex na żywo."
 
-#: addons/charts/templates/charts/widget_snippet.html:71
-#: addons/charts/templates/charts/widget_snippet.html:103
+#: addons/charts/templates/charts/widget_snippet.html:70
+#: addons/charts/templates/charts/widget_snippet.html:101
 msgid "Show code snippet for component:"
 msgstr "Wyświetlanie kodu dla składnika:"
 
-#: addons/charts/templates/charts/widget_snippet.html:73
-#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/charts/templates/charts/widget_snippet.html:72
+#: addons/charts/templates/charts/widget_snippet.html:103
 #: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
 #: projects/models.py:299 projects/migrations/0001_initial.py:28
 #: projects/migrations/0001_initial.py:50 releases/models.py:41
@@ -87,37 +91,39 @@ msgstr "Wyświetlanie kodu dla składnika:"
 msgid "Hidden"
 msgstr "Ukryte"
 
-#: addons/charts/templates/charts/widget_snippet.html:87
-msgid "Interactive charts"
+#: addons/charts/templates/charts/widget_snippet.html:86
+#, fuzzy
+msgid "Interactive Charts"
 msgstr "Wykresy interaktywne"
 
-#: addons/charts/templates/charts/widget_snippet.html:98
+#: addons/charts/templates/charts/widget_snippet.html:97
+#, fuzzy
 msgid ""
-"Display your project's translation statistics on your own website as "
-"interactive chart.\n"
-"                This requires modifications to your homepage's HTML code."
+"Display your project's translation statistics on your own website as an "
+"interactive chart. This requires modifications to your homepage's HTML code."
 msgstr ""
 "Wyświetla statystyki tłumaczenia na innych stronach jako interaktywny "
 "wykres.\n"
 "                Wymagane są modyfikacje w kodzie HTML strony."
 
-#: addons/charts/templates/charts/widget_snippet.html:101
+#: addons/charts/templates/charts/widget_snippet.html:99
+#, fuzzy
 msgid ""
-"By tweaking the code you can adjust verbosity, dimensions and colors of the "
-"chart"
+"You can adjust level of detail, dimensions and colors of the chart by "
+"tweaking the code below."
 msgstr ""
 "Zmieniając kod można dostosować ilość informacji, wymiary i kolory wykresu"
 
-#: addons/charts/templates/charts/widget_snippet.html:121
+#: addons/charts/templates/charts/widget_snippet.html:119
 msgid "Interactive and Image Charts"
 msgstr "Wykresy interaktywne i proste"
 
-#: addons/charts/templates/charts/widget_snippet.html:122
+#: addons/charts/templates/charts/widget_snippet.html:120
+#, fuzzy
 msgid ""
 "Sorry, but your project doesn't have any components with up-to-date "
-"statistics. \n"
-"You need to have at least one component with statistics to export charts "
-"from Transifex."
+"statistics. You need to have at least one component with statistics to "
+"export charts from Transifex."
 msgstr ""
 "Projekt nie posiada żadnych składników z aktualnymi statystykami. \n"
 "Wymagany jest co najmniej jeden składnik ze statystykami, aby eksportować "
@@ -125,16 +131,13 @@ msgstr ""
 
 #: addons/locks/handlers.py:58
 msgid ""
-"Couldn't lock file, this means that you can send files only for reviewing."
+"You will need to send this file for review because you can't lock this file."
 msgstr ""
-"Nie można zablokować pliku, co oznacza, że można wysyłać pliki tylko do "
-"recenzji."
 
 #: addons/locks/models.py:65
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"User '%(user)s' has no permission to submit files for or coordinate  '%"
-"(pofile)s'"
+"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
 msgstr ""
 "Użytkownik \"%(user)s\" nie posiada uprawnień do wysyłania plików lub "
 "koordynowania \"%(pofile)s\""
@@ -143,8 +146,8 @@ msgstr ""
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
-"Użytkownik \"%(user)s\" posiada maksymalną dozwoloną liczbę blokad (%(locks)"
-"i)."
+"Użytkownik \"%(user)s\" posiada maksymalną dozwoloną liczbę blokad "
+"(%(locks)i)."
 
 #: addons/locks/models.py:158
 #, python-format
@@ -152,7 +155,8 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr "Użytkownik \"%(user)s\" nie może usunąć blokady \"%(lock)s\""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expring"
+#, fuzzy
+msgid "Lock is expiring"
 msgstr "Blokada wygasa"
 
 #: addons/locks/notifications.py:16
@@ -187,15 +191,9 @@ msgid "Time left:"
 msgstr "Pozostały czas:"
 
 #: addons/locks/templates/pofile_lock.html:32
-#, python-format
-msgid ""
-"\n"
-"                Extend lock by %(hours)s hour.\n"
-"            "
-msgid_plural ""
-"\n"
-"                Extend lock by %(hours)s hours.\n"
-"            "
+#, fuzzy, python-format
+msgid "Extend lock by %(hours)s hour."
+msgid_plural "Extend lock by %(hours)s hours."
 msgstr[0] ""
 "\n"
 "                Przedłuża blokadę o %(hours)s godzinę.\n"
@@ -209,14 +207,17 @@ msgstr[2] ""
 "                Przedłuża blokadę o %(hours)s godzin.\n"
 "            "
 
-#: addons/locks/templates/pofile_lock.html:46
-msgid "Lock and download this file to notify others you're working with it."
+#: addons/locks/templates/pofile_lock.html:42
+#, fuzzy
+msgid ""
+"Lock and download this file to notify others that you're working with it."
 msgstr ""
 "Można zablokować i pobrać ten plik, aby powiadomić innych, że nad nim "
 "pracujesz."
 
-#: addons/locks/templates/pofile_lock.html:51
-msgid "This file is unlocked. Most likely no one is working with it right now."
+#: addons/locks/templates/pofile_lock.html:47
+#, fuzzy
+msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr ""
 "Ten plik jest odblokowany. Najprawdopodobniej nikt teraz nad nim nie pracuje."
 
@@ -226,11 +227,10 @@ msgid "This file is locked by someone else."
 msgstr "Ten plik został zablokowany przez kogoś innego."
 
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
-"a> is about to expire on %(expires)s\n"
+"a> is about to expire on %(expires)s"
 msgstr ""
 "\n"
 "Blokada <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> "
@@ -241,31 +241,35 @@ msgid "You are only allowed to upload PO files (*.po)!"
 msgstr "Można wysyłać tylko pliki PO (*.po)."
 
 #: addons/presubmit_checks/handlers.py:39
-msgid "You have submitted empty file!"
+#, fuzzy
+msgid "You submitted an empty file!"
 msgstr "Wysłano pusty plik."
 
 #: addons/presubmit_checks/handlers.py:48
-msgid "Uploaded file contains DOS newlines (\\r)!"
+#, fuzzy
+msgid ""
+"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
+"(\\r\\n)!"
 msgstr "Wysłano plik zawierające znaki końca wiersza systemu DOS (\\r)."
 
-#: addons/presubmit_checks/handlers.py:59
-#, python-format
-msgid "Uploaded file header doesn't have '%s' field!"
+#: addons/presubmit_checks/handlers.py:60
+#, fuzzy, python-format
+msgid "Uploaded file header is missing the '%s' field!"
 msgstr "Nagłówek wysłanego pliku nie posiada pola \"%s\"."
 
-#: addons/presubmit_checks/handlers.py:65
-msgid "Only UTF-8 encoded files are allowed!"
-msgstr "Dozwolone są pliki zakodowane w UTF-8."
+#: addons/presubmit_checks/handlers.py:66
+msgid "File is not encoded using UTF-8!"
+msgstr ""
 
-#: addons/presubmit_checks/handlers.py:69
+#: addons/presubmit_checks/handlers.py:70
 msgid "Uploaded file doesn't contain any translated entries!"
 msgstr "Wysłany plik nie zawiera żadnych przetłumaczonych wpisów."
 
-#: addons/presubmit_checks/handlers.py:86
+#: addons/presubmit_checks/handlers.py:87
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr "Plik został wysłany na adres e-mail, aby uniknąć utraty pracy."
 
-#: addons/presubmit_checks/handlers.py:90
+#: addons/presubmit_checks/handlers.py:91
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
@@ -345,21 +349,17 @@ msgid "Go"
 msgstr "Przejdź"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:211
+#: templates/timeline.html:24 templates/projects/component_detail.html:209
 #: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:134
+#: templates/teams/team_detail.html:132
 msgid "None available"
 msgstr "Brak dostępnych"
 
 #: addons/timeline/templates/timeline/timeline_base.html:29
 #: templates/timeline.html:28
-#, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
+#, fuzzy, python-format
+msgid "The query returned %(counter)s result"
+msgid_plural "The query returned %(counter)s results"
 msgstr[0] ""
 "\n"
 "  Zapytanie zwróciło %(counter)s wynik\n"
@@ -370,12 +370,12 @@ msgstr[2] ""
 "\n"
 "  Zapytanie zwróciło %(counter)s wyników\n"
 
-#: addons/timeline/templates/timeline/timeline_base.html:44
+#: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:39 languages/migrations/0001_initial.py:14
 #: projects/models.py:152 projects/models.py:278 projects/models.py:541
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/timeline.html:39 templates/notification/notices.html:42
 #: templates/reviews/review_list.html:42
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
@@ -386,11 +386,8 @@ msgstr "Opis"
 #: addons/timeline/templates/timeline/timeline_user.html:23
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
+#, fuzzy, python-format
+msgid "%(project_name)s Timeline"
 msgstr ""
 "\n"
 " Oś czasu projektu %(project_name)s\n"
@@ -415,7 +412,8 @@ msgid "Widgets"
 msgstr "Widgety"
 
 #: addons/widgets/templates/project_widgets.html:48
-msgid "Widgets, buttons, etc"
+#, fuzzy
+msgid "Widgets, buttons, etc."
 msgstr "Widgety, przyciski itp."
 
 #: addons/widgets/templates/project_widgets.html:49
@@ -431,7 +429,8 @@ msgid "Userbars"
 msgstr "Paski użytkownika"
 
 #: addons/widgets/templates/project_widgets.html:63
-msgid "You can insert userbars to forums, e-mail signatures etc."
+#, fuzzy
+msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 "Można umieścić pasek użytkownika na forach, podpisach wiadomości e-mail itp."
 
@@ -572,14 +571,14 @@ msgid "Free for all"
 msgstr "Dostęp dla wszystkich"
 
 #: projects/forms.py:56
+#, fuzzy
 msgid ""
 "Allow any logged-in user to submit files to my\n"
 "                              project. <a href=\"http://www.youtube.com/"
 "watch?v=okd3hLlvvLw\"\n"
-"                              target=\"_blank\">Imagine</a> all the "
-"people, \n"
-"                              sharing all the world. Recommended for quick \n"
-"                              translations, and when a pre-commit review \n"
+"                              target=\"_blank\">Imagine</a> all the people,\n"
+"                              sharing all the world. Recommended for quick\n"
+"                              translations, and when a pre-commit review\n"
 "                              process is in place, e.g. when contributions "
 "are\n"
 "                              submitted by email or to a separate branch."
@@ -600,13 +599,14 @@ msgid "Limited access"
 msgstr "Ograniczony dostęp"
 
 #: projects/forms.py:67
+#, fuzzy
 msgid ""
-"Give access to specific people. Translations \n"
+"Give access to specific people. Translations\n"
 "                              teams will have access to their language's "
 "files\n"
 "                              only, and global writers will have access to "
 "all\n"
-"                              translation files. Recommended for most \n"
+"                              translation files. Recommended for most\n"
 "                              projects."
 msgstr ""
 "Udostępnia projekt konkretnym osobom. Zespoły \n"
@@ -620,16 +620,16 @@ msgid "Outsourced access"
 msgstr "Dostęp z zewnątrz"
 
 #: projects/forms.py:76
+#, fuzzy
 msgid ""
-"Re-use another project's teams and writers by \n"
-"                              trusting access control to that project. If "
-"a \n"
-"                              person can contribute to that project, it "
-"can \n"
+"Re-use another project's teams and writers by\n"
+"                              delegating access control to that project. If "
+"a\n"
+"                              person can contribute to that project, it can\n"
 "                              contribute to this one as well. Recommended "
-"for \n"
-"                              non-upstream projects such as distribution \n"
-"                              packages, desktop environment modules, etc."
+"for\n"
+"                              non-upstream projects such as distribution\n"
+"                              packages and desktop environment modules."
 msgstr ""
 "Używa zespołów i tłumaczy innego projektu, \n"
 "                              powierzając mu kontrolę dostępu nad \n"
@@ -1049,8 +1049,9 @@ msgid "%s was deleted."
 msgstr "%s zostało usunięte."
 
 #: projects/views/review.py:66
-msgid "Request closed as Rejected."
-msgstr "Zamknięto żądanie jako odrzucone."
+#, fuzzy
+msgid "Request rejected."
+msgstr "Ponownie otwarto żądanie."
 
 #: projects/views/review.py:72
 msgid "Request reopened."
@@ -1156,67 +1157,67 @@ msgstr "Można napisać krótki tekst do żądania recenzji."
 msgid "Select a translation file for review."
 msgstr "Proszę wybrać plik tłumaczenia do recenzji."
 
-#: reviews/models.py:44
+#: reviews/models.py:45
 msgid "Open"
 msgstr "Otwarta"
 
-#: reviews/models.py:45
+#: reviews/models.py:46
 msgid "Closed"
 msgstr "Zamknięta"
 
-#: reviews/models.py:47
+#: reviews/models.py:48
 msgid "Null"
 msgstr "Pusta"
 
-#: reviews/models.py:48
+#: reviews/models.py:49
 msgid "Accepted"
 msgstr "Zaakceptowana"
 
-#: reviews/models.py:49
+#: reviews/models.py:50
 msgid "Rejected"
 msgstr "Odrzucona"
 
-#: reviews/models.py:54
+#: reviews/models.py:55
 msgid "The review's status (open, closed, etc.)"
 msgstr "Stan recenzji (otwarta, zamknięta itp.)"
 
-#: reviews/models.py:56
+#: reviews/models.py:57
 msgid "The review's resolution/closing state."
 msgstr "Stan rozwiązania/zamknięcia."
 
-#: reviews/models.py:58
+#: reviews/models.py:59
 msgid "Date and time of creation"
 msgstr "Data i czas utworzenia"
 
-#: reviews/models.py:60
+#: reviews/models.py:61
 msgid "Date and time of last update"
 msgstr "Data i czas ostatniej aktualizacji"
 
-#: reviews/models.py:63
+#: reviews/models.py:64
 msgid "The review file name"
 msgstr "Nazwa pliku recenzji"
 
-#: reviews/models.py:65
+#: reviews/models.py:66
 msgid "The path of the target file which will be used on submission"
 msgstr "Ścieżka do pliku docelowego, który zostanie użyty do wysłania"
 
-#: reviews/models.py:69
+#: reviews/models.py:70
 msgid "Component"
 msgstr "Składnik"
 
-#: reviews/models.py:87
+#: reviews/models.py:88
 msgid "Review Request"
 msgstr "Żądanie recenzji"
 
-#: reviews/models.py:88
+#: reviews/models.py:89
 msgid "Review Requests"
 msgstr "Żądania recenzji"
 
-#: reviews/models.py:89
+#: reviews/models.py:90
 msgid "-created_on"
 msgstr "-utworzone_o"
 
-#: reviews/models.py:90
+#: reviews/models.py:91
 msgid "created_on"
 msgstr "utworzone_o"
 
@@ -1278,7 +1279,7 @@ msgid "The project which this team belongs to."
 msgstr "Projekt, do którego należy ten zespół."
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:125
+#: templates/reviews/review_list.html:123
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
@@ -1428,11 +1429,11 @@ msgstr "Języki"
 #: templates/base-sample.html:49
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
-"Witaj, <a title=\"Ustawienia profilu\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Witaj, <a title=\"Ustawienia profilu\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 
 #: templates/base-sample.html:51
 msgid "Sign out from the website"
@@ -1528,8 +1529,8 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
 "Nie można odnaleźć projektu? Śmiało sam <a href=\"%(project_create_url)s"
 "\">go dodaj</a>."
@@ -1715,11 +1716,11 @@ msgstr ""
 #: templates/notification/project_component_deleted/notice.html:2
 #, python-format
 msgid ""
-"The component '%(component_name)s' was deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project."
+"The component '%(component_name)s' was deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"Składnik \"%(component_name)s\" został usunięty z projektu <a href=\"%"
-"(project_url)s\">%(project_name)s</a>."
+"Składnik \"%(component_name)s\" został usunięty z projektu <a href="
+"\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1728,29 +1729,30 @@ msgid ""
 "a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
 "have been updated:"
 msgstr ""
-"Następujące pliki w składniku <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a> zostały "
-"zaktualizowane:"
+"Następujące pliki w składniku <a href=\"%(component_url)s\">"
+"%(component_name)s</a> projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a> zostały zaktualizowane:"
 
 #: templates/notification/project_component_file_review_submitted/notice.html:2
 #, python-format
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">%"
-"(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"was submitted for review to the <a href=\"%(component_url)s\">"
+"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
 "a> project"
 msgstr ""
 "Plik dla <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"został wysłany do recenzji do <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
+"został wysłany do recenzji do <a href=\"%(component_url)s\">"
+"%(component_name)s</a> projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a>."
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
 "(%(trans_perc)s%)"
 msgstr ""
-"Plik dla <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> (%"
-"(trans_perc)s%)"
+"Plik dla <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
+"(%(trans_perc)s%)"
 
 #: templates/notification/project_component_file_submitted/notice.html:2
 #, python-format
@@ -1763,19 +1765,21 @@ msgid ""
 "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
 "the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"został wysłany do składnika <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>."
+"został wysłany do składnika <a href=\"%(component_url)s\">"
+"%(component_name)s</a> projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a>."
 
 #: templates/notification/project_component_potfile_error/notice.html:2
 #, python-format
 msgid ""
 "The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Plik źródłowy (POT) ma kilka problemów i nie może zostać utworzony/"
-"zaktualizowany dla składnika <a href=\"%(component_url)s\">%(component_name)"
-"s</a> projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
+"zaktualizowany dla składnika <a href=\"%(component_url)s\">"
+"%(component_name)s</a> projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
@@ -1783,8 +1787,8 @@ msgid ""
 "The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
 "project was generated"
 msgstr ""
-"Utworzono tygodniowy raport dla projektu <a href=\"%(project_url)s\">%"
-"(project_name)s</a>"
+"Utworzono tygodniowy raport dla projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1799,8 +1803,8 @@ msgstr ""
 #, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
-"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
-"s</a> denied"
+"access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a> denied"
 msgstr ""
 "Żądanie użytkownika <a href=\"%(user_url)s\">%(user_request)s</a> dostępu do "
 "wysyłania plików do projektu <a href=\"%(project_url)s\">%(project)s</a> "
@@ -1809,20 +1813,20 @@ msgstr ""
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrew own request of access to submit files to the project <a href=\"%"
-"(project_url)s\">%(project)s</a>"
+"Withdrew own request of access to submit files to the project <a href="
+"\"%(project_url)s\">%(project)s</a>"
 msgstr ""
-"Wycofano własne żądanie dostępu do wysyłania plików do projektu <a href=\"%"
-"(project_url)s\">%(project)s</a>"
+"Wycofano własne żądanie dostępu do wysyłania plików do projektu <a href="
+"\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"Requested access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
-"Żądany dostęp do wysyłania plików do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a><a href=\"%(project_url)s\">%(project)s</a>"
+"Żądany dostęp do wysyłania plików do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a><a href=\"%(project_url)s\">%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
@@ -1896,13 +1900,13 @@ msgstr ""
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
-"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project"
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
+"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project"
 msgstr ""
-"Wycofanie własnego żądania dołączenia do <a href=\"%(team_url)s\">%"
-"(team_name)s zespołu tłumaczenia</a> projektu <a href=\"%(project_url)s\">%"
-"(project_name)s</a>"
+"Wycofanie własnego żądania dołączenia do <a href=\"%(team_url)s\">"
+"%(team_name)s zespołu tłumaczenia</a> projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
 
 #: templates/notification/project_team_left/notice.html:2
 #, python-format
@@ -1921,18 +1925,18 @@ msgid ""
 "project was denied."
 msgstr ""
 "Żądanie utworzenia zespołu tłumaczenia dla języka <a href=\"%(language_url)s"
-"\">%(language_name)s</a> dla projektu <a href=\"%(project_url)s\">%"
-"(project_name)s</a> zostało odrzucone."
+"\">%(language_name)s</a> dla projektu <a href=\"%(project_url)s\">"
+"%(project_name)s</a> zostało odrzucone."
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
 msgid ""
-"The creation of a translation team for <a href=\"%(language_url)s\">%"
-"(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"The creation of a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
 "\">%(project_name)s</a>."
 msgstr ""
-"Utworzenie zespołu tłumaczenia dla języka <a href=\"%(language_url)s\">%"
-"(language_name)s</a> zostało zażądane dla projektu <a href=\"%(project_url)s"
+"Utworzenie zespołu tłumaczenia dla języka <a href=\"%(language_url)s\">"
+"%(language_name)s</a> zostało zażądane dla projektu <a href=\"%(project_url)s"
 "\">%(project_name)s</a>"
 
 #: templates/notification/user_nudge/notice.html:2
@@ -1952,21 +1956,20 @@ msgstr "Usuń %(component_name)s"
 msgid "Say goodbye to <em>%(component_name)s</em>?"
 msgstr "Pożegnać <em>%(component_name)s</em>?"
 
-#: templates/projects/component_confirm_delete.html:19
-#, python-format
+#: templates/projects/component_confirm_delete.html:20
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the component '%"
-"(component_name)s' which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the component "
+"'%(component_name)s' which belongs to %(project_name)s?"
 msgstr ""
 "\n"
-"  Na pewno trwale usunąć składnik \"%(component_name)s\" należący do %"
-"(project_name)s?\n"
+"  Na pewno trwale usunąć składnik \"%(component_name)s\" należący do "
+"%(project_name)s?\n"
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:24
-#: templates/teams/team_confirm_delete.html:19
+#: templates/projects/release_confirm_delete.html:22
+#: templates/teams/team_confirm_delete.html:17
 msgid "Yes, I'm sure!"
 msgstr "Tak, na pewno."
 
@@ -2004,12 +2007,13 @@ msgstr "Prywatny projekt"
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
 #: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:28
+#: templates/teams/team_detail.html:26
 msgid "Edit"
 msgstr "Edycja"
 
 #: templates/projects/component_detail.html:87
-msgid "Source details"
+#, fuzzy
+msgid "Source Details"
 msgstr "Szczegóły źródła"
 
 #: templates/projects/component_detail.html:91
@@ -2050,7 +2054,9 @@ msgid "Allows submissions:"
 msgstr "Umożliwienie wysyłanie plików:"
 
 #: templates/projects/component_detail.html:139
-msgid "Translation files"
+#: templates/projects/component_lang_detail.html:30
+#, fuzzy
+msgid "Translation Files"
 msgstr "Pliki tłumaczenia"
 
 #: templates/projects/component_detail.html:144
@@ -2105,32 +2111,33 @@ msgid "See the translation teams."
 msgstr "Wyświetl zespoły tłumaczenia."
 
 #: templates/projects/component_detail.html:198
-msgid "Translation files reviews"
+#, fuzzy
+msgid "Translation File Reviews"
 msgstr "Recenzje plików tłumaczeń"
 
 #: templates/projects/component_detail.html:200
+#, fuzzy
 msgid ""
-"Translators can request a file review from another person, who\n"
-"  can take a look at his work and provide any feedback needed, or simply "
-"submit\n"
-"  the file to the upstream project."
+"Translators can request a file review from another person, who can take a "
+"look at his work and provide any feedback needed, or simply submit the file "
+"to the upstream project."
 msgstr ""
 "Tłumacze mogą żądać recenzji pliki od innej osoby, która może\n"
 "  przejrzeć jego pracę i dostarczyć wymaganą opinię lub po prostu\n"
 "  wysłać plik do oryginalnego projektu."
 
-#: templates/projects/component_detail.html:205
+#: templates/projects/component_detail.html:203
 #: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 msgid "Reviews"
 msgstr "Recenzje"
 
-#: templates/projects/component_detail.html:207
+#: templates/projects/component_detail.html:205
 #: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:130
+#: templates/teams/team_detail.html:128
 msgid "History"
 msgstr "Historia"
 
-#: templates/projects/component_detail.html:229
+#: templates/projects/component_detail.html:227
 msgid "Delete component"
 msgstr "Usuń składnik"
 
@@ -2168,10 +2175,6 @@ msgstr "Wysyłanie"
 msgid "Save component"
 msgstr "Zapisz składnik"
 
-#: templates/projects/component_lang_detail.html:30
-msgid "translation files"
-msgstr "pliki tłumaczenia"
-
 #: templates/projects/component_list.html:10
 #: templates/projects/release_list.html:8
 msgid "Add"
@@ -2201,11 +2204,11 @@ msgid "Add one!"
 msgstr "Dodaj składnik."
 
 #: templates/projects/component_list.html:53
+#, fuzzy
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
-"which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs"
-"\" or development branches like <code>HEAD</code>."
+"which consist of actual files. Examples of components of a software project "
+"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
 "<em>Składniki</em> są mniejszymi, samodzielnymi częściami większego "
 "projektu, które składają się z właściwych plików.\n"
@@ -2291,12 +2294,11 @@ msgstr "Usuń"
 msgid "Say goodbye to <em>%(project_name)s</em>?"
 msgstr "Pożegnać <em>%(project_name)s</em>?"
 
-#: templates/projects/project_confirm_delete.html:16
-#, python-format
+#: templates/projects/project_confirm_delete.html:17
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?\n"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 "\n"
 "  Na pewno trwale usunąć zarejestrowany projekt \"%(project_name)s\"?\n"
@@ -2510,15 +2512,14 @@ msgid "Say goodbye to <em>%(release_name)s</em>?"
 msgstr "Pożegnać wydanie <em>%(release_name)s</em>?"
 
 #: templates/projects/release_confirm_delete.html:19
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the release '%(release_name)s' "
+"which belongs to %(project_name)s?"
 msgstr ""
 "\n"
-"  Na pewno trwale usunąć wydanie \"%(release_name)s\" należące do projektu %"
-"(project_name)s?\n"
+"  Na pewno trwale usunąć wydanie \"%(release_name)s\" należące do projektu "
+"%(project_name)s?\n"
 
 #: templates/projects/release_detail.html:69
 msgid "Release date:"
@@ -2546,7 +2547,8 @@ msgid "This release has %(components_number)s components."
 msgstr "To wydanie zawiera %(components_number)s składników."
 
 #: templates/projects/release_detail.html:103
-msgid "Translation statistics"
+#, fuzzy
+msgid "Translation Statistics"
 msgstr "Statystyki tłumaczenia"
 
 #: templates/projects/release_detail.html:110
@@ -2574,18 +2576,15 @@ msgid "Edit <em>%(release_name)s</em> release"
 msgstr "Zmodyfikuj wydanie <em>%(release_name)s</em>"
 
 #: templates/projects/release_form.html:28
-#, python-format
-msgid ""
-"\n"
-"        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
-"      "
+#, fuzzy, python-format
+msgid "Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'"
 msgstr ""
 "\n"
-"        Modyfikowanie wydania \"<a href=\"%(release_url)s\">%(release_name)"
-"s</a>\"\n"
+"        Modyfikowanie wydania \"<a href=\"%(release_url)s\">"
+"%(release_name)s</a>\"\n"
 "      "
 
-#: templates/projects/release_form.html:46
+#: templates/projects/release_form.html:44
 msgid "Save release"
 msgstr "Zapisz wydanie"
 
@@ -2595,7 +2594,8 @@ msgid "Release '%(release_name)s"
 msgstr "Wydanie \"%(release_name)s\""
 
 #: templates/projects/release_language_detail.html:38
-msgid "Project/Component statistics"
+#, fuzzy
+msgid "Project/Component Statistics"
 msgstr "Statystyki projektów/składników"
 
 #: templates/projects/release_language_detail.html:59
@@ -2637,8 +2637,8 @@ msgstr "Wydania projektu"
 #: templates/projects/release_list.html:28
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 "Nie zarejestrowano jeszcze żadnych wydań dla tego projektu. Dlaczego sam nie "
 "dodasz <a href=\"%(release_create)s\">wydania</a>?"
@@ -2669,97 +2669,94 @@ msgid "See profile"
 msgstr "Zobacz profil"
 
 #: templates/reviews/review_list.html:49
-#, python-format
-msgid ""
-"\n"
-"        %(time_since)s ago\n"
-"      "
+#, fuzzy, python-format
+msgid "%(time_since)s ago"
 msgstr ""
 "\n"
 "        %(time_since)s temu\n"
 "      "
 
-#: templates/reviews/review_list.html:55
+#: templates/reviews/review_list.html:53
 msgid "Translation Language"
 msgstr "Język tłumaczenia"
 
-#: templates/reviews/review_list.html:58
+#: templates/reviews/review_list.html:56
 msgid "Go to language page"
 msgstr "Przejdź na stronę języka"
 
-#: templates/reviews/review_list.html:65
+#: templates/reviews/review_list.html:63
 msgid "File target"
 msgstr "Plik docelowy"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:64
 msgid "Download the version sent for review"
 msgstr "Pobierz wersję wysłaną do recenzji"
 
-#: templates/reviews/review_list.html:69
+#: templates/reviews/review_list.html:67
 msgid "Score"
 msgstr "Oceń"
 
-#: templates/reviews/review_list.html:83
+#: templates/reviews/review_list.html:81
 msgid "Status"
 msgstr "Stan"
 
-#: templates/reviews/review_list.html:93
+#: templates/reviews/review_list.html:91
 msgid "Close Review"
 msgstr "Zamknij recenzję"
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept and submit translation"
 msgstr "Zaakceptuj i wyślij tłumaczenie"
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 msgid "Accept"
 msgstr "Zaakceptuj"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 msgid "Reject translation"
 msgstr "Odrzuć tłumaczenie"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 msgid "Reject"
 msgstr "Odrzuć"
 
-#: templates/reviews/review_list.html:113
+#: templates/reviews/review_list.html:111
 msgid "No open requests!"
 msgstr "Brak otwartych żądań."
 
-#: templates/reviews/review_list.html:117
+#: templates/reviews/review_list.html:115
 msgid "Closed Requests"
 msgstr "Zamknięte żądania"
 
-#: templates/reviews/review_list.html:123
+#: templates/reviews/review_list.html:121
 msgid "ID"
 msgstr "Identyfikator"
 
-#: templates/reviews/review_list.html:124
+#: templates/reviews/review_list.html:122
 msgid "Author"
 msgstr "Autor"
 
-#: templates/reviews/review_list.html:126
+#: templates/reviews/review_list.html:124
 msgid "Time Since"
 msgstr "Czas od"
 
-#: templates/reviews/review_list.html:127
+#: templates/reviews/review_list.html:125
 msgid "Resolution"
 msgstr "Rozwiązanie"
 
-#: templates/reviews/review_list.html:128
+#: templates/reviews/review_list.html:126
 msgid "Attachment"
 msgstr "Załącznik"
 
-#: templates/reviews/review_list.html:129
+#: templates/reviews/review_list.html:127
 msgid "Actions"
 msgstr "Czynności"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:151
 msgid "Reopen review request"
 msgstr "Ponownie otwórz żądanie recenzji"
 
-#: templates/reviews/review_list.html:165
+#: templates/reviews/review_list.html:163
 msgid "No closed requests!"
 msgstr "Brak zamkniętych żądań."
 
@@ -2816,9 +2813,8 @@ msgid "Change notifications associated to your account"
 msgstr "Zmień powiadomienia powiązane z kontem"
 
 #: templates/simpleauth/signin.html:10
-msgid ""
-"\n"
-"<p>Please sign in with your email or screen name.<br />\n"
+#, fuzzy
+msgid "<p>Please sign in with your email or screen name.<br />"
 msgstr ""
 "\n"
 "<p>Proszę się zalogować za pomocą adresu e-mail lub nazwy użytkownika.<br /"
@@ -2830,75 +2826,73 @@ msgid "Say goodbye to <em>%(lang_name)s</em> team?"
 msgstr "Pożegnać zespół <em>%(lang_name)s</em>?"
 
 #: templates/teams/team_confirm_delete.html:14
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?"
 msgstr ""
 "\n"
-"  Na pewno trwale usunąć zespół \"%(lang_name)s\" należący do projektu %"
-"(project_name)s?\n"
+"  Na pewno trwale usunąć zespół \"%(lang_name)s\" należący do projektu "
+"%(project_name)s?\n"
 
 #: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
 msgid "Teams"
 msgstr "Zespoły"
 
 #: templates/teams/team_detail.html:22
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
 "\n"
-"  Zespoły tłumaczenia - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"  Zespoły tłumaczenia - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:36
+#: templates/teams/team_detail.html:34
 msgid "Mainlist:"
 msgstr "Główna lista:"
 
-#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Koordynator:"
 msgstr[1] "Koordynatorzy:"
 msgstr[2] "Koordynatorzy:"
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:57
 msgid "Become a translator:"
 msgstr "Zostań tłumaczem:"
 
-#: templates/teams/team_detail.html:62
+#: templates/teams/team_detail.html:60
 msgid "Join this Team"
 msgstr "Dołącz do tego zespołu"
 
-#: templates/teams/team_detail.html:73
+#: templates/teams/team_detail.html:71
 msgid "People waiting for team membership approving:"
 msgstr "Osoby oczekujące na zaakceptowanie członkostwa w zespole:"
 
-#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
 msgid "Approve"
 msgstr "Zaakceptuj"
 
-#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr "Odrzuć"
 
-#: templates/teams/team_detail.html:94
+#: templates/teams/team_detail.html:92
 msgid "Withdraw"
 msgstr "Wycofaj"
 
-#: templates/teams/team_detail.html:107
+#: templates/teams/team_detail.html:105
 msgid "Team Members:"
 msgstr "Członkowie zespołu:"
 
-#: templates/teams/team_detail.html:117
+#: templates/teams/team_detail.html:115
 msgid "Leave"
 msgstr "Opuść"
 
-#: templates/teams/team_detail.html:153
+#: templates/teams/team_detail.html:151
 msgid "Delete team"
 msgstr "Usuń zespół"
 
@@ -2960,30 +2954,26 @@ msgid "This project is not using Translation Teams"
 msgstr "Ten projekt nie używa zespołów tłumaczenia"
 
 #: templates/teams/team_off.html:17
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"\n"
-"            This project does not maintain its own teams, but has chosen to "
-"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
-"s</a>'.\n"
-"            In order to send translations here you'll need to join a team of "
-"'%(outsource_project)s'.\n"
-"        "
+"This project does not maintain its own teams, but has chosen to re-use the "
+"teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 "\n"
 "            Ten projekt nie zarządza swoimi własnymi zespołami, ale wybrał "
-"powierzenie tłumaczenia projektowi \"<a href=%(outsource_url)s>%"
-"(outsource_project)s</a>\".\n"
-"            Aby wysyłać tłumaczenia, należy dołączyć do zespołu \"%"
-"(outsource_project)s\".\n"
+"powierzenie tłumaczenia projektowi \"<a href=%(outsource_url)s>"
+"%(outsource_project)s</a>\".\n"
+"            Aby wysyłać tłumaczenia, należy dołączyć do zespołu "
+"\"%(outsource_project)s\".\n"
 "        "
 
-#: templates/teams/team_off.html:22
+#: templates/teams/team_off.html:19
+#, fuzzy
 msgid ""
-"\n"
-"            This project allows translation submission from <em>anyone</em>, "
-"and thus no translation teams exist.\n"
-"        "
+"This project allows translation submission from <em>anyone</em>, and thus no "
+"translation teams exist."
 msgstr ""
 "\n"
 "            Ten projekt umożliwia wysyłanie tłumaczeń <em>każdemu</em>, "
@@ -3077,11 +3067,11 @@ msgstr "Proces sprawdzenia adresu e-mail"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
-"Można zarządzać procesem sprawdzenia adresu e-mail ze <a href=\"%"
-"(profile_overview)s\"strony przeglądu</a>."
+"Można zarządzać procesem sprawdzenia adresu e-mail ze <a href="
+"\"%(profile_overview)s\"strony przeglądu</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -3330,12 +3320,10 @@ msgid "Choose the location of your avatar"
 msgstr "Proszę wybrać położenie awatara"
 
 #: templates/userprofile/avatar/choose.html:36
-#: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr "Strona wyboru awatara"
 
 #: templates/userprofile/avatar/choose.html:37
-#: templates/userprofile/avatar/crop.html:42
 msgid ""
 "You have several options to select the image you want to use as avatar on "
 "your profile."
@@ -3370,6 +3358,18 @@ msgstr "Wyszukanie na Picasa Web"
 msgid "Crop &amp; resize the area you want"
 msgstr ""
 "Proszę przyciąć i zmienić rozmiar obszaru, który ma zostać wykorzystany"
+
+#: templates/userprofile/avatar/crop.html:41
+msgid "Select an Avatar"
+msgstr ""
+
+#: templates/userprofile/avatar/crop.html:42
+#, fuzzy
+msgid ""
+"There are several ways to select an image to use as your profile's avatar."
+msgstr ""
+"Istnieje kilka opcji wyboru obrazu, który ma zostać użyty jako awatar w "
+"profilu."
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
@@ -3423,7 +3423,8 @@ msgid "Save"
 msgstr "Zapisz"
 
 #: templates/userprofile/profile/location.html:40
-msgid "Location information"
+#, fuzzy
+msgid "Location Information"
 msgstr "Informacje o położeniu"
 
 #: templates/userprofile/profile/location.html:41
@@ -3518,14 +3519,9 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: templates/userprofile/profile/public.html:104
-msgid ""
-"\n"
-"            Coordinator of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Coordinator of the following teams:\n"
-"        "
+#, fuzzy
+msgid "Coordinator of the following team:"
+msgid_plural "Coordinator of the following teams:"
 msgstr[0] ""
 "\n"
 "            Koordynator poniższego zespołu:\n"
@@ -3539,31 +3535,23 @@ msgstr[2] ""
 "            Koordynator następujących zespołów:\n"
 "        "
 
-#: templates/userprofile/profile/public.html:115
-#: templates/userprofile/profile/public.html:142
-#, python-format
+#: templates/userprofile/profile/public.html:111
+#: templates/userprofile/profile/public.html:132
+#, fuzzy, python-format
 msgid ""
-"\n"
-"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
-"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
-"project\n"
-"                "
+"<a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a "
+"class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "\n"
-"                Zespół <a class=\"name\" href=\"%(team_url)s\">%(team_name)"
-"s</a> projektu <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</"
-"a>\n"
+"                Zespół <a class=\"name\" href=\"%(team_url)s\">"
+"%(team_name)s</a> projektu <a class=\"name\" href=\"%(project_url)s\">"
+"%(project_name)s</a>\n"
 "                "
 
-#: templates/userprofile/profile/public.html:131
-msgid ""
-"\n"
-"            Member of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Members of the following teams:\n"
-"        "
+#: templates/userprofile/profile/public.html:125
+#, fuzzy
+msgid "Member of the following team:"
+msgid_plural "Members of the following teams:"
 msgstr[0] ""
 "\n"
 "            Członek poniższego zespołu:\n"
@@ -3842,7 +3830,7 @@ msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 "Ta wartość może zawierać tylko litery, liczby i podkreślniki w unikodzie."
 
-#: txcommon/i18n.py:19
+#: txcommon/i18n.py:18
 #, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "Nie można otworzyć pliku LINGUAS (%(file)s): %(exc)s"
@@ -4256,7 +4244,8 @@ msgid "Branch"
 msgstr "Gałąź"
 
 #: vcs/models.py:51
-msgid "A VCS branch this unit is associated with"
+#, fuzzy
+msgid "The VCS branch with which this unit is associated"
 msgstr "Gałąź VCS, z którą ta jednostka jest powiązania"
 
 #: vcs/models.py:52
@@ -4356,3 +4345,18 @@ msgstr "Wstecz"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Dalej"
+
+#~ msgid ""
+#~ "Couldn't lock file, this means that you can send files only for reviewing."
+#~ msgstr ""
+#~ "Nie można zablokować pliku, co oznacza, że można wysyłać pliki tylko do "
+#~ "recenzji."
+
+#~ msgid "Only UTF-8 encoded files are allowed!"
+#~ msgstr "Dozwolone są pliki zakodowane w UTF-8."
+
+#~ msgid "Request closed as Rejected."
+#~ msgstr "Zamknięto żądanie jako odrzucone."
+
+#~ msgid "translation files"
+#~ msgstr "pliki tłumaczenia"
