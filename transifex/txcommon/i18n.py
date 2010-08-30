@@ -8,6 +8,8 @@ def available_languages(localedir):
     """Return available languages in the LINGUAS file."""
     available_languages = []
     linguas_file = os.path.join(localedir, 'LINGUAS')
+    if not os.path.exists(linguas_file):
+        raise EnvironmentError("The file 'locale/LINGUAS' cannot be read.")
     try:
         linguas = codecs.open(linguas_file, 'r')
         for lang in linguas.readlines():
