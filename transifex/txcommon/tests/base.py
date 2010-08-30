@@ -105,6 +105,7 @@ class BaseTestCase(TestCase):
         # Create languages and teams
         self.language = Language.objects.get(code='pt_BR')
         self.language_en = Language.objects.get(code='en_US')
+        self.language_ar = Language.objects.get(code='ar')
         self.team = Team.objects.get_or_create(language=self.language,
             project=self.project, creator=self.user['maintainer'])[0]
         self.team.coordinators.add(self.user['team_coordinator'])
@@ -117,6 +118,12 @@ class BaseTestCase(TestCase):
         self.source_entity = SourceEntity.objects.create(string='String1',
             context='Context1', occurrences='Occurrences1', resource=self.resource)
 
+        # Create pluralized source entity
+        self.source_entity_plural = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource,
+            pluralized=True)
+
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
             name="Release1", project=self.project)
@@ -128,6 +135,7 @@ class BaseTestCase(TestCase):
         self.resource.delete()
         self.team.delete()
         self.source_entity.delete()
+        self.source_entity_plural.delete()
         for nick, user in self.user.iteritems():
             user.delete()
 
