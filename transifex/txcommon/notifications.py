@@ -255,7 +255,7 @@ NOTICE_TYPES = [
     ]
 
 
-# Overwritting this function temporarily, until the upstream patch
+# Overwriting this function temporarily, until the upstream patch
 # http://github.com/jezdez/django-notification/commit/a8eb0980d2f37b799ff55dbc3a386c97ad479f99
 # be accepted on http://github.com/pinax/django-notification
 def send_observation_notices_for(observed, signal='post_save', extra_context=None):
