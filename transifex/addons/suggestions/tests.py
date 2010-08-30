@@ -4,10 +4,9 @@ try:
 except ImportError:
     import simplejson as json
 
-from resources.tests.views.base import ViewsBaseTest
+from txcommon.tests.base import BaseTestCase
 
-
-class SuggestionsViewsTests(ViewsBaseTest):
+class SuggestionsViewsTests(BaseTestCase):
 
     def setUp(self):
         super(SuggestionsViewsTests, self).setUp()
@@ -93,7 +92,7 @@ class SuggestionsViewsTests(ViewsBaseTest):
 
 
 
-class SuggestionsModelsTests(ViewsBaseTest):
+class SuggestionsModelsTests(BaseTestCase):
 
     def setUp(self):
         super(SuggestionsModelsTests, self).setUp()

@@ -2,10 +2,10 @@
 from django.test.client import Client
 from languages.models import Language
 from resources.models import Resource
-from resources.tests.views.base import ViewsBaseTest
+from txcommon.tests.base import BaseTestCase
 
 
-class StatusCodesTest(ViewsBaseTest):
+class StatusCodesTest(BaseTestCase):
     """Test that all app URLs return correct status code."""
     # TODO: Fill in the urls
 
@@ -15,7 +15,7 @@ class StatusCodesTest(ViewsBaseTest):
             200: [
                 ('/projects/p/%s/resource/%s/' %
                     (self.project.slug, self.resource.slug)),
-                ('/projects/p/%s/resource/%s/l/en/view/' %
+                ('/projects/p/%s/resource/%s/l/en-US/view/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             404: [

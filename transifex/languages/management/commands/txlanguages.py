@@ -11,7 +11,7 @@ from django.core.management.base import (BaseCommand, LabelCommand, CommandError
 from django.conf import settings
 from languages.models import Language
 
-_DEFAULT_FIXTURE = 'languages/fixtures/sample_languages.json'
+_DEFAULT_FIXTURE = 'languages/fixtures/all_languages.json'
 
 _help_text = ('Create, Update, or Export the default languages.\n'
         '\t--export [filename] for export to stdout or to the filename '

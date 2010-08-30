@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -*-
 import os
-from django.contrib.auth import models
-from django.contrib.contenttypes.models import ContentType
 from django.core import management
 from django.conf import settings
-from django.db import IntegrityError
 from django.db.models.loading import get_model
-from django.contrib.auth.models import User, Group
 from django.test import TestCase
 from django.test.client import Client
+from django.contrib.auth.models import User, Group, Permission as DjPermission
+from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from txcommon.notifications import NOTICE_TYPES
 
-from vcs.tests import test_git
-
 # Load models
+Language = get_model('languages', 'Language')
+AuPermission = get_model('authority', 'Permission')
 Project = get_model('projects', 'Project')
-Component = get_model('projects', 'Component')
+Resource = get_model('resources', 'Resource')
 Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
-Language = get_model('languages', 'Language')
-Permission = get_model('authority', 'Permission')
-POFile = get_model('translations', 'POFile')
+SourceEntity = get_model('resources', 'SourceEntity')
 
 USER_ROLES = [
     'anonymous',
@@ -30,126 +26,114 @@ USER_ROLES = [
     'writer',
     'team_coordinator',
     'team_member']
+PASSWORD = '123412341234'
+
+
+def deactivate_caching_middleware():
+    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    try:
+        list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
+    except ValueError:
+        pass
+    try:
+        list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
+    except ValueError:
+        pass
+
+
+def deactivate_csrf_middleware():
+    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    try:
+        list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
+    except ValueError:
+        pass
+    settings.MIDDLEWARE_CLASSES = list_middl_c
+
 
 class BaseTestCase(TestCase):
-    """
-    Creates a sample set of object such as project, component, release, team,
-    users, permission, etc. and does a checkout calculating the po files
-    statistics.
-    """
-    # Use the vcs app git test repo
-    root_url = '%s/test_repo/git' % os.path.split(test_git.__file__)[0]
+    """Provide a solid test case for all tests to inherit from."""
 
+    fixtures = ["sample_data", "sample_users", "sample_site", "sample_languages"]
+    
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
        
-        #we need to remove the caching middlewares because they interfere with
-        #the annonymous client.
-        list_middl_c = list(settings.MIDDLEWARE_CLASSES)
-        try:
-            list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
-        except ValueError:
-            pass
-        try:
-            list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
-        except ValueError:
-            pass
-        try:
-            list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
-        except ValueError:
-            pass
-        settings.MIDDLEWARE_CLASSES = list_middl_c
+        #FIXME: This should not happen, since it diverges away the test suite
+        # from the actual deployment.
+        # Remove the caching middlewares because they interfere with the
+        # annonymous client.
+        deactivate_caching_middleware()
+        deactivate_csrf_middleware()
+        # Disable actionlog, wich in turn disables noticetype requirement.
+        settings.ACTIONLOG_ENABLED = False
 
-    def setUp(self, skip_stats=True, create_teams=True):
-        """
-        Set up project, component and vcsunit. Insert POFile objects.
-        """
+    def setUp(self):
+        """Set up a sample set of base objects for inherited tests."""
 
-        # Run management commands
-        management.call_command('txcreatelanguages')
-        autodiscover_notifications()
-        management.call_command('txcreatenoticetypes')
-
-        # Add group 'registered'
-        registered, created = Group.objects.get_or_create(name = "registered")
-
-        # Set proper permission to the 'registered' group
+        registered = Group.objects.get(name="registered")
         registered.permissions.add(
-            models.Permission.objects.get_or_create(
+            DjPermission.objects.get_or_create(
                 codename='add_project', name='Can add project',
                 content_type=ContentType.objects.get_for_model(Project))[0])
 
         self.user = {}
         self.client = {}
-        self.client['anonymous'] = Client()
-        resp = self.client['anonymous'].get('/')
-        self.assertEquals(resp.status_code, 200)
-        prefix = 'test_suite'
-        password = '123412341234'
+
+        # Create users, respective clients and login users
         for nick in USER_ROLES:
+            self.client[nick] = Client()
             if nick != 'anonymous':
-                try:
-                    user = User.objects.create_user('%s_%s' % (prefix, nick),
-                        '%s_%s@localhost' % (prefix, nick), password)
-                except IntegrityError:
-                    user = User.objects.get(username='%s_%s' % (prefix, nick))
-                user.groups.add(registered)
-                self.user[nick] = user
+                # Create respective users
+                self.user[nick] = User.objects.create_user(
+                    nick, '%s@localhost' % nick, PASSWORD)
+                self.user[nick].groups.add(registered)
+                # Login non-anonymous personas
+                self.client[nick].login(username=nick, password=PASSWORD)
+                self.assertTrue(self.user[nick].is_authenticated())
 
-                client = Client()
-                self.assertTrue(client.login(
-                    username = '%s_%s' % (prefix, nick), password = password))
-                self.client[nick] = client
-
-        # Create a project, a component/vcsunit a release, and a pt_BR team
-        self.project, created = Project.objects.get_or_create(
+        # Create projects
+        self.project = Project.objects.create(
             slug="test_project", name="Test Project")
         self.project.maintainers.add(self.user['maintainer'])
 
-        self.component, created = Component.objects.get_or_create(
-            slug='test_component', project=self.project, i18n_type='POT',
-            file_filter='po/.*')
-        self.component.set_unit(self.root_url, 'git', 'master')
-
-        self.release = Release.objects.get_or_create(slug="r1", name="r1",
-            project=self.project)[0]
-#       self.release.components.add(self.component)
-
-        self.language = Language.objects.get(code='pt_BR')
-        if create_teams:
-            self.team = Team.objects.get_or_create(language=self.language,
-                project=self.project, creator=self.user['maintainer'])[0]
-            self.team.coordinators.add(self.user['team_coordinator'])
-            self.team.members.add(self.user['team_member'])
-
         # Add django-authority permission for writer
-        self.permission = Permission(codename='project_perm.submit_file', 
+        self.permission = AuPermission.objects.create(
+            codename='project_perm.submit_file', 
             approved=True, user=self.user['writer'], 
             content_object=self.project, creator=self.user['maintainer'])
-        self.permission.save()
 
+        # Create languages and teams
+        self.language = Language.objects.get(code='pt_BR')
+        self.language_en = Language.objects.get(code='en_US')
+        self.team = Team.objects.get_or_create(language=self.language,
+            project=self.project, creator=self.user['maintainer'])[0]
+        self.team.coordinators.add(self.user['team_coordinator'])
+        self.team.members.add(self.user['team_member'])
 
+        # Create a resources
+        self.resource = Resource(slug="foo", name="foo",
+            project=self.project, source_language=self.language_en)
+        self.resource.save()
+        self.source_entity = SourceEntity.objects.create(string='String1',
+            context='Context1', occurrences='Occurrences1', resource=self.resource)
 
-        if not skip_stats:
-            # Do a repo checkout and calculate the po file stats
-            self.component.prepare()
-            self.component.trans.set_stats()
- 
-            # Fetch pofiles
-            self.pofiles = POFile.objects.filter(component = self.component)
-            self.assertNotEqual(self.pofiles, None)
-        else:
-            self.pofiles = None          
+        # Create a release
+        self.release = Release.objects.create(slug="releaseslug1",
+            name="Release1", project=self.project)
+        self.release.resources.add(self.resource)
+
 
     def tearDown(self):
         self.project.delete()
+        self.resource.delete()
+        self.team.delete()
+        self.source_entity.delete()
         for nick, user in self.user.iteritems():
             user.delete()
 
+    # Custom assertions
     def assertNoticeTypeExistence(self, noticetype_label):
-        """
-        Test if noticetype was added
-        """
+        """Assert that a specific noticetype was created."""
         found = False
         for n in NOTICE_TYPES:
              if n["label"] == noticetype_label:
@@ -178,3 +162,15 @@ class BaseTestCase(TestCase):
                 self.assertEquals(page.status_code, expected_code,
                     "Status code for page '%s' was %s instead of %s" %
                     (page_url, page.status_code, expected_code))
+
+
+class BaseTestCaseTests(BaseTestCase):
+    """Test the base test case itself."""
+
+    def test_basetest_users(self):
+        """Test that basic users can function normally."""
+        for role in USER_ROLES:
+            # All users should be able to see the homepage
+            resp = self.client[role].get('/')
+            self.assertEquals(resp.status_code, 200)
+

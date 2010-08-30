@@ -14,22 +14,21 @@ POFile = get_model('translations', 'POFile')
 Team = get_model('teams', 'Team')
 Language = get_model('languages', 'Language')
 POFileLock = get_model('locks', 'POFileLock')
-POFileLockError = get_app('locks').POFileLockError
 
 # These Languages and POFiles should exist:
-TEAM_LANG_CODES = ['en', 'es', 'fr']
+TEAM_LANG_CODES = ['en_US', 'pt_BR', 'el']
 
-# To invoke IPython shell during runtime you can use following piece of code:
-# from IPython.Shell import IPShellEmbed
-# IPShellEmbed()()
 
 class TestLocking(BaseTestCase):
     def setUp(self):
         self.assertFalse('external.csrf.middleware.CsrfMiddleware' in
             settings.MIDDLEWARE_CLASSES, msg = 'Locking test doesn\'t '
             'work with CSRF Middleware enabled')
-        super(TestLocking, self).setUp(create_teams=False)
-        self.assertNoticeTypeExistence("project_component_file_lock_expiring")
+        super(TestLocking, self).setUp()
+        
+        # Disable actionlog, wich in turn disables noticetype requirement.
+        settings.ACTIONLOG_ENABLED = False
+        self.assertNoticeTypeExistence("project_resource_language_lock_expiring")
         
         # Set settings for testcase
         settings.LOCKS_PER_USER = 3
@@ -39,13 +38,10 @@ class TestLocking(BaseTestCase):
         # Create teams
         for code in TEAM_LANG_CODES:
             logger.debug("Trying to create team for: %s" % code)
-            team = Team()
-            team.creator = self.user['maintainer']
-            team.language = Language.objects.get(code=code)
-            team.project = self.project
-            team.save()
+            language, created = Language.objects.get_or_create(code=code)
+            team, created = self.project.team_set.get_or_create(
+                language=language, creator=self.user['maintainer'])
             team.members.add(self.user['team_member'])
-            team.save()
 
         # Select first POFile
         self.pofile = self.pofiles.get(language_code = TEAM_LANG_CODES[0])
@@ -206,7 +202,7 @@ class TestLocking(BaseTestCase):
                 POFileLock.objects.create_update(pofile,
                     self.user['team_member'])
                 logger.debug("Locked: %s" % pofile)
-            except POFileLockError:
+            except:
                 self.assertFalse( pofile.language and pofile.language.code in
                     TEAM_LANG_CODES )
 

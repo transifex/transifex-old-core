@@ -30,7 +30,7 @@ urlpatterns += patterns('django.views.generic',
     ),
     url(
         name = 'language_detail',
-        regex = '^l/(?P<slug>[-_@\w]+)/$',
+        regex = '^l/(?P<slug>[\-_@\w]+)/$',
         view = language_detail,
         kwargs = {'slug_field': 'code',
                   "template_object_name" : "language",
