@@ -12,6 +12,7 @@ class TestStaticfiles(unittest.TestCase):
     def tearDown(self):
         pass
 
+    #FIXME: Why test the configuration of django_staticfiles in the locks app?
     def test_staticfiles(self):
         """
         Test whether django-staticfiles is properly configured.
