@@ -97,22 +97,22 @@ def convert_url_roles(url_with_roles_as_key):
 
     url_with_roles_as_key = {
         '(301, )':[
-            'GET:/projects/p/test_project/access/pm/add',
+            'GET:/projects/p/project1/access/pm/add',
         ],
         '(200, {}, "Translation Teams Off")':[
-            'GET:/projects/p/test_project/teams/',
+            'GET:/projects/p/project1/teams/',
         ],
     }
 
     Output:
-        {'GET:/projects/p/test_project/access/pm/add': {
+        {'GET:/projects/p/project1/access/pm/add': {
             'anonymous': (301,),
             'maintainer': (301,),
             'registered': (301,),
             'team_coordinator': (301,),
             'team_member': (301,),
             'writer': (301,)},
-        'GET:/projects/p/test_project/teams/': {
+        'GET:/projects/p/project1/teams/': {
             'anonymous': (200, {}, 'Translation Teams Off'),
             'maintainer': (200, {}, 'Translation Teams Off'),
             'registered': (200, {}, 'Translation Teams Off'),

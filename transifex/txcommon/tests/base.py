@@ -96,8 +96,9 @@ class BaseTestCase(TestCase):
                 self.assertTrue(self.user[nick].is_authenticated())
 
         # Create projects
-        self.project = Project.objects.create(
-            slug="test_project", name="Test Project")
+        #self.project = Project.objects.create(
+        #    slug="project1", name="Test Project")
+        self.project = Project.objects.get(slug='project1')
         self.project.maintainers.add(self.user['maintainer'])
 
         # Add django-authority permission for writer
@@ -116,9 +117,8 @@ class BaseTestCase(TestCase):
         self.team.members.add(self.user['team_member'])
 
         # Create a resources
-        self.resource = Resource(slug="resource1", name="Resource1",
+        self.resource = Resource.objects.create(slug="resource1", name="Resource1",
             project=self.project, source_language=self.language_en)
-        self.resource.save()
         self.source_entity = SourceEntity.objects.create(string='String1',
             context='Context1', occurrences='Occurrences1', resource=self.resource)
 
