@@ -12,7 +12,6 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from projects.models import Project
 from releases.models import Release
-from txcommon.validators import ValidRegexField
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
