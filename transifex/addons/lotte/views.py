@@ -492,9 +492,17 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 else:
                     error_flag = True
             if error_flag:
+                error_flag = False
+                # Check also if all of them are "". If yes, delete all the plurals!
+                for rule in target_language.get_pluralrules():
+                    if rule in row['translations'] and row['translations'][rule] == "":
+                        continue
+                    else:
+                        error_flag = True
+            if error_flag:
                 push_response_dict[source_id] = { 'status':500,
                     'message':("All the plural translations must be filled in, "
-                               "in order to be saved!")}
+                               "or left empty, in order to be saved!")}
                 # Skip the save as we hit on an error.
                 continue
 
