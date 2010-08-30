@@ -74,7 +74,7 @@ class ResXmlParser(Parser):
                 meta[key] = value
             else:
                 raise ResXmlParseError("Malformed 'resheader' element")
-        print meta
+        #print meta
 
 #        for data in root.getElementsByTagName("data")
 #            source_entity = get_attribute(data, "name")

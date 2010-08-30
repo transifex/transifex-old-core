@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 from django.dispatch import Signal
 from django.core.management.base import BaseCommand
 from optparse import make_option
@@ -26,7 +27,8 @@ class Command(BaseCommand):
                 inst.send(None)
                 return
             else:
-                print "Couldn't find signal definition",
+                sys.stderr.write("Couldn't find signal definition.\n")
         else:
-            print "No interval specified"
-        print "Valid signals are:", ", ".join([i[len(prefix):] for i in dir(signals) if i.startswith(prefix)])
+            sys.stderr.write("No interval specified.\n")
+        signal_list = [i[len(prefix):] for i in dir(signals) if i.startswith(prefix)]
+        sys.stdout.write("Valid signals are:", ", ".join(signal_list))

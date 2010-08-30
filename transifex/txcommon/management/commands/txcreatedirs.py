@@ -1,4 +1,4 @@
-import os
+import os, sys
 from django.core.management.base import NoArgsCommand
 
 def transifex_paths():
@@ -21,7 +21,7 @@ class Command(NoArgsCommand):
         for path in transifex_paths():
             try:
                 os.makedirs(path)
-                print "Creating %s" % path
+                sys.stdout.write("Creating %s" % path)
             except OSError, e:
-                print "Error creating %s: %s" % (path, e.strerror)
+                sys.stdout.write("Error creating %s: %s" % (path, e.strerror))
 

@@ -80,7 +80,7 @@ def export_lang(filename=None, verbose=False):
         if storefile:
             storefile.close()
     else:
-        print data
+        sys.stdout.write(data)
 
 def import_lang(filename=None, verbose=False):
     """
@@ -104,10 +104,10 @@ def import_lang(filename=None, verbose=False):
     try:
         datafile = open(filename, 'r')
     except IOError:
-        print 'Cannot open ', filename
+        sys.stderr.write('Cannot open %s' % filename)
         return
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        sys.stderr.write("Unexpected error: %s" % sys.exc_info()[0])
         return
 
     data = simplejson.load(datafile)
@@ -124,9 +124,9 @@ def fill_the_database_verbose(data):
         fields = obj['fields']
         lang, created = Language.objects.get_or_create(code=fields['code'])
         if created:
-            print 'Creating %s language (%s)' % (fields['name'], fields['code'])
+            sys.stdout.write('Creating %s language (%s)' % (fields['name'], fields['code']))
         else:
-            print 'Updating %s language (%s)' % (fields['name'], fields['code'])
+            sys.stdout.write('Updating %s language (%s)' % (fields['name'], fields['code']))
         fill_language_data(lang, fields)
 
 def fill_the_database_silently(data):

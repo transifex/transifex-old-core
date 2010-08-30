@@ -230,19 +230,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     stringset.
     """
 
-#    if settings.DEBUG:
-#       print 'iDisplayStart: %s' % request.POST.get('iDisplayStart','')
-#       print 'iDisplayLength: %s' % request.POST.get('iDisplayLength','')
-#       print 'sSearch: "%s"' % request.POST.get('sSearch','')
-#       print 'bEscapeRegex: %s' % request.POST.get('bEscapeRegex','')
-#       print 'iColumns: %s' % request.POST.get('iColumns','')
-#       print 'iSortingCols: %s' % request.POST.get('iSortingCols','')
-#       print 'iSortCol_0: %s' % request.POST.get('iSortCol_0','')
-#       print 'sSortDir_0: %s' % request.POST.get('sSortDir_0','')
-#       print 'iSortCol_1: %s' % request.POST.get('iSortCol_1','')
-#       print 'sSortDir_1: %s' % request.POST.get('sSortDir_1','')
-#       print 'sEcho: %s' % request.POST.get('sEcho','')
-
     resources = []
     if resource_slug:
         try:
