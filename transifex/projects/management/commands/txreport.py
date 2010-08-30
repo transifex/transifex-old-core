@@ -45,7 +45,7 @@ class Command(LabelCommand):
             projects = Project.objects.filter(slug__in=list(args[1:]))
 
         if not projects:
-            raise CommandError("No project fould with the given slug(s).")
+            raise CommandError("No project found with the given slug(s).")
         else:
             self.projects = projects
             self.report_type = args[0]

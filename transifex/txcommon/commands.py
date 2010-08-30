@@ -33,8 +33,9 @@ def python_to_args(**kwargs):
 
 
 class CommandError(StandardError):
-    def __init__(self, command, status, stderr=None):
+    def __init__(self, command, status, stderr=None, stdout=None):
         self.stderr = stderr
+        self.stdout = stdout
         self.status = status
         self.command = command
 
@@ -129,8 +130,9 @@ def run_command(command, *args, **kw):
         stderr_value = stderr_value.rstrip()
 
     if with_exceptions and status != 0:
+        logger.debug('stdout: %s' % stdout_value)
         logger.error(stderr_value)
-        raise CommandError(command, status, stderr_value)
+        raise CommandError(command, status, stderr_value, stdout_value)
 
     # Allow access to the command's status code
     if with_extended_output:

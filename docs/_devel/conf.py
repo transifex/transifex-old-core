@@ -60,7 +60,7 @@ today_fmt = '%B %d, %Y'
 # for source files.
 #exclude_dirs = []
 
-# If true, '()' will be appended to :func: etc. cross-reference text.
+# If true, '()' will be appended to :func:, etc. cross-reference text.
 add_function_parentheses = True
 
 # If true, the current module name will be prepended to all description

@@ -31,7 +31,7 @@ class RadioFieldRenderer(widgets.RadioFieldRenderer):
         """
         Return the string 'selected' if both values are equal.
 
-        This is used to set a class attr on the selected radio buttom.
+        This is used to set a class attr on the selected radio button.
         """
         if v==v2:
             return 'selected'

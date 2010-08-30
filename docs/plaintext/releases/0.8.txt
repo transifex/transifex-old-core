@@ -48,8 +48,8 @@ A note about Transifex.net
 --------------------------
 
 Transifex 0.8 is a release of the open-source, community-powered Transifex
-flavor. It is suitable for very large proejcts with their own existing
-translation community, such as the Fedora Project, the GNOME Desktop etc.
+flavor. It is suitable for very large projects with their own existing
+translation community, such as the Fedora Project, the GNOME Desktop, etc.
 
 Transifex is also offered as another flavor: Software-as-a-Service, at
 www.transifex.net_, ready to serve your translations with a few clicks.
@@ -57,7 +57,7 @@ Transifex.net is a one-stop, batteries-included hosted service serving
 independent projects and businesses which don't want to worry about deploying
 their own Tx instance.
 
-Tranisfex.net is managed by Indifex_, the company sponsoring the development
+Transifex.net is managed by Indifex_, the company sponsoring the development
 of Transifex itself.
 
 .. figure:: ../../screenshots/transifex.net/frontpage.png
@@ -213,7 +213,7 @@ model structure:
 
 With Transifex 0.8, the 'big-picture' projects which used to be mounted under
 'collections' will be a top-level Project, enjoying the multitude of features
-existing there, such as teams etc.  This allows Transifex, for example, to ship
+existing there, such as teams, etc.  This allows Transifex, for example, to ship
 a new version and include translation statistics of its dependencies, such as
 the ``django-profile`` upstream app. In short, Projects get benefited from the
 collections features, and big-picture projects (which used to be named
@@ -232,7 +232,7 @@ projects as Projects:
   Project. It's just a Project which ships releases which depend on other
   Projects too. This way, both Transifex and Moblin are software projects.
 - All projects now enjoy the same features: maintainers, feeds, teams, language
-  coordinators etc.
+  coordinators, etc.
 - Users can find what they want easier: they just search for their favorite
   project and start translating it right away.
 
@@ -334,7 +334,7 @@ settings, otherwise it is disabled automatically.
 
     Hello john, this is Transifex at http://www.transifex.net/.
  
-    The user 'guest' has nugded you.
+    The user 'guest' has nudged you.
      
     Please, visit Transifex at http://www.transifex.net/accounts/profile/guest/
     in order to see the guest's profile page.
@@ -347,7 +347,7 @@ Various improvements and bugfixes
 Lotte Improvements
 ::::::::::::::::::
 
-- Filtering results based on the status (transalted, fuzzy, untransalted) is
+- Filtering results based on the status (translated, fuzzy, untranslated) is
   back! w00t!
 
 .. image:: ../../screenshots/0.8/lotte-filtering.png
@@ -398,7 +398,7 @@ UI Improvements
   visible and accessible.
 - Also provide a link to the user's profile page instead of just the email
   address on the Access Control page.
-- Better navigation (tabs, breadcrumbs, etc) for Project log page.
+- Better navigation (tabs, breadcrumbs, etc.) for Project log page.
 
 .. image:: ../../screenshots/0.8/tabs.png
    :class: shot2 alcenter
@@ -429,7 +429,7 @@ Under-the-hood Improvements
   migration ``post_syncdb`` signal.
 - New exception type 'MsgfmtCheckError' for syntax check errors in PO files,
   making error handling and reporting more fine-grained for such errors.
-- Splitted project/(permissions|views).py into smaller files
+- Split project/(permissions|views).py into smaller files
 - Accepting unicode usernames on the Django admin panel, an important feature
   for Tx instances that use non-default authentication backends.
 - Various Mercurial backend improvements including future compatibility, speed
@@ -450,7 +450,7 @@ Under-the-hood Improvements
 - New config file holding methods, and -local file for overrides.
 - Don't try to msgmerge if there is no related POT file
 - Renamed setting file ``90-local.conf`` to a ``*.sample``.
-- Splitted component edit form into two views
+- Split component edit form into two views
 - Added support for Khmer language (#497)
 - Docs directory structure overhaul.
 
@@ -466,7 +466,7 @@ Efficiency Improvements
 - Limit statistics statistics re-calculation only to the submitted file instead
   of the whole language, improving efficiency in projects with multiple files
   per language.
-- Make local Subversion opearations faster by avoiding running update when not
+- Make local Subversion operations faster by avoiding running update when not
   needed.
 - Created get_top_translators templatetag. Hooked up get_top_translators
   templatetag on the index page
@@ -498,7 +498,7 @@ Bugfixes
 - Do not try to msgmerge component without POT files -- raise an exception.
 - Use 'run_command' instead of 'commands' lib in TransManager.
 - Also calculate stats for files sent to tarball components.
-- Make VCS backends should behaive exactly like the VCS do in an update (#347).
+- Make VCS backends should behave exactly like the VCS do in an update (#347).
 - Lotte: Ensure users have permissions when editing files.
 - Ensure only the correct files are committed during a submission (#357).
 - Fix locking icon in Safari and Chrome (fixes #331).
@@ -539,7 +539,7 @@ Cleanups
 - Eliminated duplicated code from vcs and tarball apps. Tarball units now use
   the same signature with the VCS unit.
 - Moved get_browser_object func from vcs and tarball to codebases
-- Splitted BrowserMixin class to BrowserMixinBase and BrowserMixin and put
+- Split BrowserMixin class to BrowserMixinBase and BrowserMixin and put
   at a central place in the codebases app.
 - Added alternative path support for BrowserMixinBase methods
 - Unified ``run_command`` handlers into ``txcommon.commands``.

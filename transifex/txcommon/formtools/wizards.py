@@ -14,7 +14,7 @@ class SessionWizard(object):
         """
         'key' is the name where data will be stored in the session. Should be unique.
         'form_list' should be a list of Form classes, not instances.
-        'initial' may be a list of dicts or a dict of dicts maping step to initial data.
+        'initial' may be a list of dicts or a dict of dicts mapping step to initial data.
         """
         self.key = key
         self.form_list = form_list
@@ -86,7 +86,7 @@ class SessionWizard(object):
 
     def save_step(self, step):
         """
-        Save 'step' in a fashion reversable by 'saved_step'.
+        Save 'step' in a fashion reversible by 'saved_step'.
         Called just before page 'step' is rendered.
         """
         self._storage['step'] = step
@@ -171,7 +171,7 @@ class SessionWizard(object):
         """
         Called to render a specific step.
         You may pass 'form' manually in case you want a form that has been error-checked.
-        If you don't give 'form', it will be retreived from storage.
+        If you don't give 'form', it will be retrieved from storage.
         """
         self.save_step(step)
         self.commit_storage(request)

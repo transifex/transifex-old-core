@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-22 10:10+0000\n"
+"POT-Creation-Date: 2010-08-27 17:47+0000\n"
 "PO-Revision-Date: 2009-12-04 11:38+0100\n"
 "Last-Translator: Pavol Šimo <palo.simo@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,7 +32,8 @@ msgid "log entries"
 msgstr "záznamy v logu"
 
 #: actionlog/templates/object_action_list.html:6
-msgid "Date/time"
+#, fuzzy
+msgid "Date/Time"
 msgstr "Dátum/čas"
 
 #: actionlog/templates/object_action_list.html:7 teams/models.py:76
@@ -52,11 +54,11 @@ msgid "No history recorded yet."
 msgstr "Zatiaľ bez histórie."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
-msgid "Image charts"
+msgid "Image Charts"
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:65
-#: addons/charts/templates/charts/widget_snippet.html:94
+#: addons/charts/templates/charts/widget_snippet.html:93
 #: templates/userprofile/profile/location.html:22
 msgid "Loading..."
 msgstr "Načítanie..."
@@ -64,21 +66,20 @@ msgstr "Načítanie..."
 #: addons/charts/templates/charts/widget_snippet.html:68
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image.\n"
-"                Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+msgstr ""
+
+#: addons/charts/templates/charts/widget_snippet.html:69
+msgid "The chart will always report live Transifex numbers."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:70
-msgid "The chart will always reflect your live Transifex numbers."
-msgstr ""
-
-#: addons/charts/templates/charts/widget_snippet.html:71
-#: addons/charts/templates/charts/widget_snippet.html:103
+#: addons/charts/templates/charts/widget_snippet.html:101
 msgid "Show code snippet for component:"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:73
-#: addons/charts/templates/charts/widget_snippet.html:105
+#: addons/charts/templates/charts/widget_snippet.html:72
+#: addons/charts/templates/charts/widget_snippet.html:103
 #: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
 #: projects/models.py:299 projects/migrations/0001_initial.py:28
 #: projects/migrations/0001_initial.py:50 releases/models.py:41
@@ -87,45 +88,42 @@ msgstr ""
 msgid "Hidden"
 msgstr "Skrytý"
 
-#: addons/charts/templates/charts/widget_snippet.html:87
-msgid "Interactive charts"
+#: addons/charts/templates/charts/widget_snippet.html:86
+msgid "Interactive Charts"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:98
+#: addons/charts/templates/charts/widget_snippet.html:97
 msgid ""
-"Display your project's translation statistics on your own website as "
-"interactive chart.\n"
-"                This requires modifications to your homepage's HTML code."
+"Display your project's translation statistics on your own website as an "
+"interactive chart. This requires modifications to your homepage's HTML code."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:101
+#: addons/charts/templates/charts/widget_snippet.html:99
 msgid ""
-"By tweaking the code you can adjust verbosity, dimensions and colors of the "
-"chart"
+"You can adjust level of detail, dimensions and colors of the chart by "
+"tweaking the code below."
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:121
+#: addons/charts/templates/charts/widget_snippet.html:119
 msgid "Interactive and Image Charts"
 msgstr ""
 
-#: addons/charts/templates/charts/widget_snippet.html:122
+#: addons/charts/templates/charts/widget_snippet.html:120
 msgid ""
 "Sorry, but your project doesn't have any components with up-to-date "
-"statistics. \n"
-"You need to have at least one component with statistics to export charts "
-"from Transifex."
+"statistics. You need to have at least one component with statistics to "
+"export charts from Transifex."
 msgstr ""
 
 #: addons/locks/handlers.py:58
 msgid ""
-"Couldn't lock file, this means that you can send files only for reviewing."
+"You will need to send this file for review because you can't lock this file."
 msgstr ""
 
 #: addons/locks/models.py:65
 #, python-format
 msgid ""
-"User '%(user)s' has no permission to submit files for or coordinate  '%"
-"(pofile)s'"
+"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
 msgstr ""
 
 #: addons/locks/models.py:77
@@ -139,7 +137,7 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expring"
+msgid "Lock is expiring"
 msgstr ""
 
 #: addons/locks/notifications.py:16
@@ -175,25 +173,21 @@ msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:32
 #, python-format
-msgid ""
-"\n"
-"                Extend lock by %(hours)s hour.\n"
-"            "
-msgid_plural ""
-"\n"
-"                Extend lock by %(hours)s hours.\n"
-"            "
+msgid "Extend lock by %(hours)s hour."
+msgid_plural "Extend lock by %(hours)s hours."
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: addons/locks/templates/pofile_lock.html:46
+#: addons/locks/templates/pofile_lock.html:42
 #, fuzzy
-msgid "Lock and download this file to notify others you're working with it."
+msgid ""
+"Lock and download this file to notify others that you're working with it."
 msgstr "Uzamknúť tento súbor, aby ostatní vedeli, že na ňom pracujete."
 
-#: addons/locks/templates/pofile_lock.html:51
-msgid "This file is unlocked. Most likely no one is working with it right now."
+#: addons/locks/templates/pofile_lock.html:47
+#, fuzzy
+msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr ""
 "Tento súbor nie je uzamknutý. Pravdepodobne na ňom teraz nikto nepracuje."
 
@@ -205,9 +199,8 @@ msgstr "Tento súbor je uzamknutý niekým iným."
 #: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
 #, python-format
 msgid ""
-"\n"
 "A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
-"a> is about to expire on %(expires)s\n"
+"a> is about to expire on %(expires)s"
 msgstr ""
 
 #: addons/presubmit_checks/handlers.py:35
@@ -215,34 +208,38 @@ msgid "You are only allowed to upload PO files (*.po)!"
 msgstr "Máte povolenie odosielať iba súbory PO (*.po)!"
 
 #: addons/presubmit_checks/handlers.py:39
-msgid "You have submitted empty file!"
+#, fuzzy
+msgid "You submitted an empty file!"
 msgstr "Odoslali ste prázdny súbor!"
 
 #: addons/presubmit_checks/handlers.py:48
-msgid "Uploaded file contains DOS newlines (\\r)!"
+#, fuzzy
+msgid ""
+"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
+"(\\r\\n)!"
 msgstr "Odoslaný súbor obsahuje DOS zalomenia riadkov (\\r)!"
 
-#: addons/presubmit_checks/handlers.py:59
+#: addons/presubmit_checks/handlers.py:60
 #, python-format
-msgid "Uploaded file header doesn't have '%s' field!"
+msgid "Uploaded file header is missing the '%s' field!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:65
-msgid "Only UTF-8 encoded files are allowed!"
-msgstr "Iba súbory kódované pomocou UTF-8 sú povolené!"
+#: addons/presubmit_checks/handlers.py:66
+msgid "File is not encoded using UTF-8!"
+msgstr ""
 
-#: addons/presubmit_checks/handlers.py:69
+#: addons/presubmit_checks/handlers.py:70
 msgid "Uploaded file doesn't contain any translated entries!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:86
+#: addons/presubmit_checks/handlers.py:87
 #, fuzzy
 msgid "Your file was sent via e-mail to you to avoid any loss of work."
 msgstr ""
 "Váš súbor neprešiel kontrolami správnosti (msgfmt -c). Prosím, pre "
 "zobrazenie chýb spustite tento príkaz na vašom systéme."
 
-#: addons/presubmit_checks/handlers.py:90
+#: addons/presubmit_checks/handlers.py:91
 msgid ""
 "We couldn't send you an email to preserve your work because you haven't "
 "registered an email address."
@@ -321,31 +318,27 @@ msgid "Go"
 msgstr ""
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:211
+#: templates/timeline.html:24 templates/projects/component_detail.html:209
 #: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:134
+#: templates/teams/team_detail.html:132
 msgid "None available"
 msgstr "Žiadna dostupná"
 
 #: addons/timeline/templates/timeline/timeline_base.html:29
 #: templates/timeline.html:28
 #, python-format
-msgid ""
-"\n"
-"  The query returned %(counter)s result\n"
-msgid_plural ""
-"\n"
-"  The query returned %(counter)s results\n"
+msgid "The query returned %(counter)s result"
+msgid_plural "The query returned %(counter)s results"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: addons/timeline/templates/timeline/timeline_base.html:44
+#: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:39 languages/migrations/0001_initial.py:14
 #: projects/models.py:152 projects/models.py:278 projects/models.py:541
 #: projects/migrations/0001_initial.py:20
 #: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:43 templates/notification/notices.html:42
+#: templates/timeline.html:39 templates/notification/notices.html:42
 #: templates/reviews/review_list.html:42
 #: txcollections/migrations/0001_initial.py:14
 #: txcollections/migrations/0001_initial.py:34
@@ -356,12 +349,9 @@ msgstr "Popis"
 #: addons/timeline/templates/timeline/timeline_user.html:23
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, python-format
-msgid ""
-"\n"
-" %(project_name)s Timeline\n"
-" "
-msgstr ""
+#, fuzzy, python-format
+msgid "%(project_name)s Timeline"
+msgstr "Upraviť %(project_name)s"
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -382,7 +372,7 @@ msgid "Widgets"
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:48
-msgid "Widgets, buttons, etc"
+msgid "Widgets, buttons, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:49
@@ -397,7 +387,7 @@ msgid "Userbars"
 msgstr "Používateľ"
 
 #: addons/widgets/templates/project_widgets.html:63
-msgid "You can insert userbars to forums, e-mail signatures etc."
+msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 
 #: addons/widgets/templates/project_widgets.html:64
@@ -542,10 +532,9 @@ msgid ""
 "Allow any logged-in user to submit files to my\n"
 "                              project. <a href=\"http://www.youtube.com/"
 "watch?v=okd3hLlvvLw\"\n"
-"                              target=\"_blank\">Imagine</a> all the "
-"people, \n"
-"                              sharing all the world. Recommended for quick \n"
-"                              translations, and when a pre-commit review \n"
+"                              target=\"_blank\">Imagine</a> all the people,\n"
+"                              sharing all the world. Recommended for quick\n"
+"                              translations, and when a pre-commit review\n"
 "                              process is in place, e.g. when contributions "
 "are\n"
 "                              submitted by email or to a separate branch."
@@ -558,12 +547,12 @@ msgstr "Prístup zakázaný"
 
 #: projects/forms.py:67
 msgid ""
-"Give access to specific people. Translations \n"
+"Give access to specific people. Translations\n"
 "                              teams will have access to their language's "
 "files\n"
 "                              only, and global writers will have access to "
 "all\n"
-"                              translation files. Recommended for most \n"
+"                              translation files. Recommended for most\n"
 "                              projects."
 msgstr ""
 
@@ -574,15 +563,14 @@ msgstr "Prístup zakázaný"
 
 #: projects/forms.py:76
 msgid ""
-"Re-use another project's teams and writers by \n"
-"                              trusting access control to that project. If "
-"a \n"
-"                              person can contribute to that project, it "
-"can \n"
+"Re-use another project's teams and writers by\n"
+"                              delegating access control to that project. If "
+"a\n"
+"                              person can contribute to that project, it can\n"
 "                              contribute to this one as well. Recommended "
-"for \n"
-"                              non-upstream projects such as distribution \n"
-"                              packages, desktop environment modules, etc."
+"for\n"
+"                              non-upstream projects such as distribution\n"
+"                              packages and desktop environment modules."
 msgstr ""
 
 #: projects/forms.py:134 projects/models.py:291
@@ -1005,8 +993,9 @@ msgid "%s was deleted."
 msgstr "%s bol zmazaný."
 
 #: projects/views/review.py:66
-msgid "Request closed as Rejected."
-msgstr ""
+#, fuzzy
+msgid "Request rejected."
+msgstr "Požiadať o prístup"
 
 #: projects/views/review.py:72
 #, fuzzy
@@ -1113,72 +1102,72 @@ msgstr ""
 msgid "Select a translation file for review."
 msgstr "Pridať preložiteľný súbor"
 
-#: reviews/models.py:44
+#: reviews/models.py:45
 msgid "Open"
 msgstr ""
 
-#: reviews/models.py:45
+#: reviews/models.py:46
 #, fuzzy
 msgid "Closed"
 msgstr "Kód"
 
-#: reviews/models.py:47
+#: reviews/models.py:48
 msgid "Null"
 msgstr ""
 
-#: reviews/models.py:48
+#: reviews/models.py:49
 msgid "Accepted"
 msgstr ""
 
-#: reviews/models.py:49
+#: reviews/models.py:50
 msgid "Rejected"
 msgstr ""
 
-#: reviews/models.py:54
+#: reviews/models.py:55
 msgid "The review's status (open, closed, etc.)"
 msgstr ""
 
-#: reviews/models.py:56
+#: reviews/models.py:57
 msgid "The review's resolution/closing state."
 msgstr ""
 
-#: reviews/models.py:58
+#: reviews/models.py:59
 msgid "Date and time of creation"
 msgstr ""
 
-#: reviews/models.py:60
+#: reviews/models.py:61
 #, fuzzy
 msgid "Date and time of last update"
 msgstr "Štatistiky aktualizované v čase pred:"
 
-#: reviews/models.py:63
+#: reviews/models.py:64
 msgid "The review file name"
 msgstr ""
 
-#: reviews/models.py:65
+#: reviews/models.py:66
 msgid "The path of the target file which will be used on submission"
 msgstr ""
 
-#: reviews/models.py:69
+#: reviews/models.py:70
 #, fuzzy
 msgid "Component"
 msgstr "komponent"
 
-#: reviews/models.py:87
+#: reviews/models.py:88
 #, fuzzy
 msgid "Review Request"
 msgstr "Schváliť požiadavku"
 
-#: reviews/models.py:88
+#: reviews/models.py:89
 #, fuzzy
 msgid "Review Requests"
 msgstr "Čakajúce požiadavky:"
 
-#: reviews/models.py:89
+#: reviews/models.py:90
 msgid "-created_on"
 msgstr ""
 
-#: reviews/models.py:90
+#: reviews/models.py:91
 msgid "created_on"
 msgstr ""
 
@@ -1233,7 +1222,7 @@ msgid "The project which this team belongs to."
 msgstr ""
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:125
+#: templates/reviews/review_list.html:123
 #: translations/templates/comp_stats_table.html:15
 #: translations/templates/project_stats_table.html:7
 #: translations/templates/release_stats_table.html:7
@@ -1387,11 +1376,11 @@ msgstr "Jazyky"
 #: templates/base-sample.html:49
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
-"Vitajte <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Vitajte <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 
 #: templates/base-sample.html:51
 msgid "Sign out from the website"
@@ -1485,8 +1474,8 @@ msgstr ""
 #: templates/search.html:63
 #, fuzzy, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
 "Nenašli ste svoj projekt? Pokračujte a <a href=\"%(project_create)s"
 "\">pridajte ho</a>!"
@@ -1673,11 +1662,11 @@ msgstr ""
 #: templates/notification/project_component_deleted/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"The component '%(component_name)s' was deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project."
+"The component '%(component_name)s' was deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"Súčasť '%(component_name)s' bola odstránená z projektu <a href=\"%"
-"(project_url)s\">%(project_name)s</a>"
+"Súčasť '%(component_name)s' bola odstránená z projektu <a href="
+"\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_component_file_changed/notice.html:2
 #, python-format
@@ -1693,8 +1682,8 @@ msgstr ""
 #, fuzzy, python-format
 msgid ""
 "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">%"
-"(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"was submitted for review to the <a href=\"%(component_url)s\">"
+"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
 "a> project"
 msgstr ""
 "bol odoslaný do súčasti <a href=\"%(component_url)s\">%(component_name)s</a> "
@@ -1726,8 +1715,8 @@ msgstr ""
 #, fuzzy, python-format
 msgid ""
 "The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "V zdrojovom súbore (POT) sú problémy a nemohol byť vytvorený/aktualizovaný "
 "pre súčasť <a href=\"%(component_url)s\">%(component_name)s</a> projektu <a "
@@ -1747,37 +1736,37 @@ msgid ""
 "files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
 msgstr ""
 "Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol schválený "
-"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
-"access to submit files to the project <a href=\"%(project_url)s\">%(project)"
-"s</a> denied"
+"access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a> denied"
 msgstr ""
 "Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zamietnutý "
-"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"Withdrew own request of access to submit files to the project <a href=\"%"
-"(project_url)s\">%(project)s</a>"
+"Withdrew own request of access to submit files to the project <a href="
+"\"%(project_url)s\">%(project)s</a>"
 msgstr ""
-"Vlastná požiadavka na prístup k odosielanie súborov do projektu <a href=\"%"
-"(project_url)s\"%(project)s</a> bola stiahnutá"
+"Vlastná požiadavka na prístup k odosielanie súborov do projektu <a href="
+"\"%(project_url)s\"%(project)s</a> bola stiahnutá"
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested access to submit files to the project <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"Requested access to submit files to the project <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
-"Bol vyžiadaný prístup na odosielanie súborov do projektu <a href=\"%"
-"(project_url)s\"%(project)s</a>"
+"Bol vyžiadaný prístup na odosielanie súborov do projektu <a href="
+"\"%(project_url)s\"%(project)s</a>"
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
@@ -1787,8 +1776,8 @@ msgid ""
 "revoked"
 msgstr ""
 "Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zrušený "
-"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_team_added/notice.html:2
 #, fuzzy, python-format
@@ -1825,8 +1814,8 @@ msgid ""
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zrušený "
-"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, fuzzy, python-format
@@ -1836,8 +1825,8 @@ msgid ""
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "Používateľovi <a href=\"%(user_url)s\">%(user_request)s</a> bol zrušený "
-"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"prístup na odosielanie súborov do projektu <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, fuzzy, python-format
@@ -1851,9 +1840,9 @@ msgstr ""
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"Withdrawn its own request for joining the <a href=\"%(team_url)s\">%"
-"(team_name)s translation team</a> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project"
+"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
+"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project"
 msgstr ""
 "bol odoslaný do súčasti <a href=\"%(component_url)s\">%(component_name)s</a> "
 "projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
@@ -1880,8 +1869,8 @@ msgstr ""
 #: templates/notification/project_team_requested/notice.html:2
 #, fuzzy, python-format
 msgid ""
-"The creation of a translation team for <a href=\"%(language_url)s\">%"
-"(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"The creation of a translation team for <a href=\"%(language_url)s\">"
+"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
 "\">%(project_name)s</a>."
 msgstr ""
 "Nová súčasť <a href=\"%(component_url)s\">%(component_name)s</a> bola "
@@ -1903,12 +1892,11 @@ msgstr "Odstrániť %(component_name)s"
 msgid "Say goodbye to <em>%(component_name)s</em>?"
 msgstr "Dať zbohom súčasti <em>%(component_name)s</em>?"
 
-#: templates/projects/component_confirm_delete.html:19
-#, python-format
+#: templates/projects/component_confirm_delete.html:20
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the component '%"
-"(component_name)s' which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the component "
+"'%(component_name)s' which belongs to %(project_name)s?"
 msgstr ""
 "\n"
 "  Ste si istý, že chcete nadobro odstrániť súčasť '%(component_name)s', "
@@ -1916,8 +1904,8 @@ msgstr ""
 
 #: templates/projects/component_confirm_delete.html:24
 #: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:24
-#: templates/teams/team_confirm_delete.html:19
+#: templates/projects/release_confirm_delete.html:22
+#: templates/teams/team_confirm_delete.html:17
 msgid "Yes, I'm sure!"
 msgstr "Áno, som si istý!"
 
@@ -1956,13 +1944,13 @@ msgstr "Najnovšie projekty"
 #: templates/projects/component_detail.html:82
 #: templates/projects/project_detail.html:39
 #: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:28
+#: templates/teams/team_detail.html:26
 msgid "Edit"
 msgstr "Upraviť"
 
 #: templates/projects/component_detail.html:87
 #, fuzzy
-msgid "Source details"
+msgid "Source Details"
 msgstr "Zdrojový súbor:"
 
 #: templates/projects/component_detail.html:91
@@ -2004,7 +1992,9 @@ msgid "Allows submissions:"
 msgstr "Povoľuje príspevky:"
 
 #: templates/projects/component_detail.html:139
-msgid "Translation files"
+#: templates/projects/component_lang_detail.html:30
+#, fuzzy
+msgid "Translation Files"
 msgstr "Preložiteľné súbory"
 
 #: templates/projects/component_detail.html:144
@@ -2059,30 +2049,29 @@ msgstr "Odoslať preklady"
 
 #: templates/projects/component_detail.html:198
 #, fuzzy
-msgid "Translation files reviews"
+msgid "Translation File Reviews"
 msgstr "Preložiteľné súbory"
 
 #: templates/projects/component_detail.html:200
 msgid ""
-"Translators can request a file review from another person, who\n"
-"  can take a look at his work and provide any feedback needed, or simply "
-"submit\n"
-"  the file to the upstream project."
+"Translators can request a file review from another person, who can take a "
+"look at his work and provide any feedback needed, or simply submit the file "
+"to the upstream project."
 msgstr ""
 
-#: templates/projects/component_detail.html:205
+#: templates/projects/component_detail.html:203
 #: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
 #, fuzzy
 msgid "Reviews"
 msgstr "Náhľad"
 
-#: templates/projects/component_detail.html:207
+#: templates/projects/component_detail.html:205
 #: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:130
+#: templates/teams/team_detail.html:128
 msgid "History"
 msgstr "História"
 
-#: templates/projects/component_detail.html:229
+#: templates/projects/component_detail.html:227
 msgid "Delete component"
 msgstr "Odstrániť súčasť"
 
@@ -2120,10 +2109,6 @@ msgstr "Prispievanie"
 msgid "Save component"
 msgstr "Uložiť súčasť"
 
-#: templates/projects/component_lang_detail.html:30
-msgid "translation files"
-msgstr "preložiteľné súbory"
-
 #: templates/projects/component_list.html:10
 #: templates/projects/release_list.html:8
 msgid "Add"
@@ -2153,11 +2138,11 @@ msgid "Add one!"
 msgstr "Pridať nejakú!"
 
 #: templates/projects/component_list.html:53
+#, fuzzy
 msgid ""
 "<em>Components</em> are smaller, self-contained parts of a larger project "
-"which consist of actual files.\n"
-"    Examples of components of a software project could be \"UI\" and \"Docs"
-"\" or development branches like <code>HEAD</code>."
+"which consist of actual files. Examples of components of a software project "
+"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
 msgstr ""
 "<em>Súčasti</em> sú menšie, samoobsahujúce časti väčšieho projektu, ktoré sa "
 "skladajú zo skutočných súborov.\n"
@@ -2245,16 +2230,15 @@ msgstr "Odstrániť"
 msgid "Say goodbye to <em>%(project_name)s</em>?"
 msgstr "Dať zbohom projektu <em>%(project_name)s</em>?"
 
-#: templates/projects/project_confirm_delete.html:16
-#, python-format
+#: templates/projects/project_confirm_delete.html:17
+#, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?\n"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 "\n"
-"  Ste si istý, že chcete nadobro odstrániť zaregistrovaný projekt '%"
-"(project_name)s'?\n"
+"  Ste si istý, že chcete nadobro odstrániť zaregistrovaný projekt "
+"'%(project_name)s'?\n"
 
 #: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
@@ -2470,9 +2454,8 @@ msgstr "Dať zbohom vydaniu <em>%(release_name)s</em>?"
 #: templates/projects/release_confirm_delete.html:19
 #, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the release '%(release_name)s' "
+"which belongs to %(project_name)s?"
 msgstr ""
 "\n"
 "  Ste si istý, že chcete nadobro odstrániť súčasť '%(component_name)s', "
@@ -2506,7 +2489,8 @@ msgid "This release has %(components_number)s components."
 msgstr ""
 
 #: templates/projects/release_detail.html:103
-msgid "Translation statistics"
+#, fuzzy
+msgid "Translation Statistics"
 msgstr "Štatistiky prekladov"
 
 #: templates/projects/release_detail.html:110
@@ -2535,16 +2519,10 @@ msgstr "Upraviť vydanie <em>%(release_name)s</em>"
 
 #: templates/projects/release_form.html:28
 #, fuzzy, python-format
-msgid ""
-"\n"
-"        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'\n"
-"      "
-msgstr ""
-"\n"
-"        Úprava vydania <a href=\"%(release_url)s\">%(release_name)s</a>\n"
-"      "
+msgid "Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'"
+msgstr "Úprava vydania <a·href=\"%(release_url)s\">%(release_name)s</a>"
 
-#: templates/projects/release_form.html:46
+#: templates/projects/release_form.html:44
 msgid "Save release"
 msgstr "Uložiť vydanie"
 
@@ -2554,7 +2532,8 @@ msgid "Release '%(release_name)s"
 msgstr "Odstrániť %(release_name)s"
 
 #: templates/projects/release_language_detail.html:38
-msgid "Project/Component statistics"
+#, fuzzy
+msgid "Project/Component Statistics"
 msgstr "Štatistiky projektov/súčastí"
 
 #: templates/projects/release_language_detail.html:59
@@ -2598,8 +2577,8 @@ msgstr "Projekt vo vydaní"
 #: templates/projects/release_list.html:28
 #, fuzzy, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 "Žiadne vydanie zatiaľ nie je pre túto zbierku zaregistrované. Prečo <a href="
 "\"%(release_create)s\">nepridáte nejaké</a>?"
@@ -2635,106 +2614,103 @@ msgstr "Odstrániť profil"
 
 #: templates/reviews/review_list.html:49
 #, python-format
-msgid ""
-"\n"
-"        %(time_since)s ago\n"
-"      "
+msgid "%(time_since)s ago"
 msgstr ""
 
-#: templates/reviews/review_list.html:55
+#: templates/reviews/review_list.html:53
 #, fuzzy
 msgid "Translation Language"
 msgstr "Preložiteľný súbor zmenený"
 
-#: templates/reviews/review_list.html:58
+#: templates/reviews/review_list.html:56
 #, fuzzy
 msgid "Go to language page"
 msgstr "Návrat na úvodnú stránku"
 
-#: templates/reviews/review_list.html:65
+#: templates/reviews/review_list.html:63
 #, fuzzy
 msgid "File target"
 msgstr "Výsledky vyhľadávania"
 
-#: templates/reviews/review_list.html:66
+#: templates/reviews/review_list.html:64
 msgid "Download the version sent for review"
 msgstr ""
 
-#: templates/reviews/review_list.html:69
+#: templates/reviews/review_list.html:67
 msgid "Score"
 msgstr ""
 
-#: templates/reviews/review_list.html:83
+#: templates/reviews/review_list.html:81
 #, fuzzy
 msgid "Status"
 msgstr "Kontaktujte nás"
 
-#: templates/reviews/review_list.html:93
+#: templates/reviews/review_list.html:91
 msgid "Close Review"
 msgstr ""
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 #, fuzzy
 msgid "Accept and submit translation"
 msgstr "Odoslať preklady"
 
-#: templates/reviews/review_list.html:96
+#: templates/reviews/review_list.html:94
 #, fuzzy
 msgid "Accept"
 msgstr "Účet"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 #, fuzzy
 msgid "Reject translation"
 msgstr "Odoslať preklady"
 
-#: templates/reviews/review_list.html:97
+#: templates/reviews/review_list.html:95
 #, fuzzy
 msgid "Reject"
 msgstr "projekt"
 
-#: templates/reviews/review_list.html:113
+#: templates/reviews/review_list.html:111
 #, fuzzy
 msgid "No open requests!"
 msgstr "Zamietnuť požiadavku"
 
-#: templates/reviews/review_list.html:117
+#: templates/reviews/review_list.html:115
 #, fuzzy
 msgid "Closed Requests"
 msgstr "Čakajúce požiadavky:"
 
-#: templates/reviews/review_list.html:123
+#: templates/reviews/review_list.html:121
 msgid "ID"
 msgstr ""
 
-#: templates/reviews/review_list.html:124
+#: templates/reviews/review_list.html:122
 msgid "Author"
 msgstr ""
 
-#: templates/reviews/review_list.html:126
+#: templates/reviews/review_list.html:124
 msgid "Time Since"
 msgstr ""
 
-#: templates/reviews/review_list.html:127
+#: templates/reviews/review_list.html:125
 #, fuzzy
 msgid "Resolution"
 msgstr "zbierka"
 
-#: templates/reviews/review_list.html:128
+#: templates/reviews/review_list.html:126
 msgid "Attachment"
 msgstr ""
 
-#: templates/reviews/review_list.html:129
+#: templates/reviews/review_list.html:127
 #, fuzzy
 msgid "Actions"
 msgstr "Akcia"
 
-#: templates/reviews/review_list.html:153
+#: templates/reviews/review_list.html:151
 #, fuzzy
 msgid "Reopen review request"
 msgstr "Schváliť požiadavku"
 
-#: templates/reviews/review_list.html:165
+#: templates/reviews/review_list.html:163
 #, fuzzy
 msgid "No closed requests!"
 msgstr "Čakajúce požiadavky:"
@@ -2789,9 +2765,8 @@ msgid "Change notifications associated to your account"
 msgstr "Oznámenia o zmenách spojených s vašim účtom"
 
 #: templates/simpleauth/signin.html:10
-msgid ""
-"\n"
-"<p>Please sign in with your email or screen name.<br />\n"
+#, fuzzy
+msgid "<p>Please sign in with your email or screen name.<br />"
 msgstr ""
 "\n"
 "<p>Prosím, prihláste sa pomocou svojho emailu alebo používateľského mena."
@@ -2805,9 +2780,8 @@ msgstr "Dať zbohom vydaniu <em>%(release_name)s</em>?"
 #: templates/teams/team_confirm_delete.html:14
 #, fuzzy, python-format
 msgid ""
-"\n"
-"  Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?\n"
+"Are you sure you want to permanently delete the '%(lang_name)s' team which "
+"belongs to %(project_name)s?"
 msgstr ""
 "\n"
 "  Ste si istý, že chcete nadobro odstrániť súčasť '%(component_name)s', "
@@ -2821,59 +2795,58 @@ msgstr "Štítky:"
 #: templates/teams/team_detail.html:22
 #, python-format
 msgid ""
-"\n"
-"  Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>\n"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
 
-#: templates/teams/team_detail.html:36
+#: templates/teams/team_detail.html:34
 #, fuzzy
 msgid "Mainlist:"
 msgstr "Správcovia"
 
-#: templates/teams/team_detail.html:44 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: templates/teams/team_detail.html:59
+#: templates/teams/team_detail.html:57
 msgid "Become a translator:"
 msgstr "Staňte sa prekladateľom:"
 
-#: templates/teams/team_detail.html:62
+#: templates/teams/team_detail.html:60
 msgid "Join this Team"
 msgstr ""
 
-#: templates/teams/team_detail.html:73
+#: templates/teams/team_detail.html:71
 msgid "People waiting for team membership approving:"
 msgstr ""
 
-#: templates/teams/team_detail.html:84 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
 #, fuzzy
 msgid "Approve"
 msgstr "Schváliť požiadavku"
 
-#: templates/teams/team_detail.html:88 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
 msgid "Deny"
 msgstr ""
 
-#: templates/teams/team_detail.html:94
+#: templates/teams/team_detail.html:92
 #, fuzzy
 msgid "Withdraw"
 msgstr "Stiahnuť požiadavku"
 
-#: templates/teams/team_detail.html:107
+#: templates/teams/team_detail.html:105
 msgid "Team Members:"
 msgstr ""
 
-#: templates/teams/team_detail.html:117
+#: templates/teams/team_detail.html:115
 #, fuzzy
 msgid "Leave"
 msgstr "Uložiť"
 
-#: templates/teams/team_detail.html:153
+#: templates/teams/team_detail.html:151
 #, fuzzy
 msgid "Delete team"
 msgstr "Odstrániť vydanie"
@@ -2944,21 +2917,16 @@ msgstr ""
 #: templates/teams/team_off.html:17
 #, python-format
 msgid ""
-"\n"
-"            This project does not maintain its own teams, but has chosen to "
-"re-use the teams of project '<a href=%(outsource_url)s>%(outsource_project)"
-"s</a>'.\n"
-"            In order to send translations here you'll need to join a team of "
-"'%(outsource_project)s'.\n"
-"        "
+"This project does not maintain its own teams, but has chosen to re-use the "
+"teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 
-#: templates/teams/team_off.html:22
+#: templates/teams/team_off.html:19
 msgid ""
-"\n"
-"            This project allows translation submission from <em>anyone</em>, "
-"and thus no translation teams exist.\n"
-"        "
+"This project allows translation submission from <em>anyone</em>, and thus no "
+"translation teams exist."
 msgstr ""
 
 #: templates/translations/stats_table_filter_box.html:7
@@ -3050,11 +3018,11 @@ msgstr "Proces overenia e-mailovej adresy"
 #: templates/userprofile/account/email_validation_done.html:13
 #, fuzzy, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
-"Viesť proces overenia e-mailovej adresy môžete zo <a href=\"%"
-"(profile_overview)s\">stránky náhľadu</a>."
+"Viesť proces overenia e-mailovej adresy môžete zo <a href="
+"\"%(profile_overview)s\">stránky náhľadu</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -3315,12 +3283,10 @@ msgid "Choose the location of your avatar"
 msgstr "Zvoľte si umiestnenie vášho zosobnenia"
 
 #: templates/userprofile/avatar/choose.html:36
-#: templates/userprofile/avatar/crop.html:41
 msgid "Avatar selection page"
 msgstr "Stránka voľby avatara"
 
 #: templates/userprofile/avatar/choose.html:37
-#: templates/userprofile/avatar/crop.html:42
 #, fuzzy
 msgid ""
 "You have several options to select the image you want to use as avatar on "
@@ -3356,6 +3322,18 @@ msgstr "Vyhľadať na Picasa Web"
 #: templates/userprofile/avatar/crop.html:19
 msgid "Crop &amp; resize the area you want"
 msgstr "Orezanie a zmena veľkosti požadovanej oblasti"
+
+#: templates/userprofile/avatar/crop.html:41
+msgid "Select an Avatar"
+msgstr ""
+
+#: templates/userprofile/avatar/crop.html:42
+#, fuzzy
+msgid ""
+"There are several ways to select an image to use as your profile's avatar."
+msgstr ""
+"Na zvolenie vami žiadaného obrázka pre avatar vo vašom profile máte niekoľko "
+"možností."
 
 #: templates/userprofile/profile/delete.html:4
 msgid "Delete personal information"
@@ -3410,7 +3388,8 @@ msgid "Save"
 msgstr "Uložiť"
 
 #: templates/userprofile/profile/location.html:40
-msgid "Location information"
+#, fuzzy
+msgid "Location Information"
 msgstr "Informácie o umiestnení"
 
 #: templates/userprofile/profile/location.html:41
@@ -3507,40 +3486,25 @@ msgid "LinkedIn"
 msgstr "LinkedIn"
 
 #: templates/userprofile/profile/public.html:104
-msgid ""
-"\n"
-"            Coordinator of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Coordinator of the following teams:\n"
-"        "
+msgid "Coordinator of the following team:"
+msgid_plural "Coordinator of the following teams:"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: templates/userprofile/profile/public.html:115
-#: templates/userprofile/profile/public.html:142
+#: templates/userprofile/profile/public.html:111
+#: templates/userprofile/profile/public.html:132
 #, fuzzy, python-format
 msgid ""
-"\n"
-"                <a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> "
-"team of the <a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> "
-"project\n"
-"                "
+"<a class=\"name\" href=\"%(team_url)s\">%(team_name)s</a> team of the <a "
+"class=\"name\" href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "bol odoslaný do súčasti <a href=\"%(component_url)s\">%(component_name)s</a> "
 "projektu <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/userprofile/profile/public.html:131
-msgid ""
-"\n"
-"            Member of the following team:\n"
-"        "
-msgid_plural ""
-"\n"
-"            Members of the following teams:\n"
-"        "
+#: templates/userprofile/profile/public.html:125
+msgid "Member of the following team:"
+msgid_plural "Members of the following teams:"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -3825,7 +3789,7 @@ msgstr ""
 "Krátky popisok na použitie v URL, obsahujúci len písmená, číslice, "
 "podtrhovníky alebo spojovníky."
 
-#: txcommon/i18n.py:19
+#: txcommon/i18n.py:18
 #, fuzzy, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "Súbor LINGUAS sa nepodarilo otvoriť: %s"
@@ -4263,7 +4227,8 @@ msgid "Branch"
 msgstr "Vetva"
 
 #: vcs/models.py:51
-msgid "A VCS branch this unit is associated with"
+#, fuzzy
+msgid "The VCS branch with which this unit is associated"
 msgstr "Vetva VCS, s ktorou je spojená táto jednotka"
 
 #: vcs/models.py:52
@@ -4355,6 +4320,23 @@ msgstr "Predchádzajúca"
 #: webtrans/templates/pagination.html:49
 msgid "Next"
 msgstr "Nasledujúca"
+
+#~ msgid "Only UTF-8 encoded files are allowed!"
+#~ msgstr "Iba súbory kódované pomocou UTF-8 sú povolené!"
+
+#~ msgid "translation files"
+#~ msgstr "preložiteľné súbory"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "        Editing Release '<a href=\"%(release_url)s\">%(release_name)s</"
+#~ "a>'\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "        Úprava vydania <a href=\"%(release_url)s\">%(release_name)s</a>\n"
+#~ "      "
 
 #, fuzzy
 #~ msgid ""
@@ -4758,12 +4740,12 @@ msgstr "Nasledujúca"
 
 #~ msgid ""
 #~ "\n"
-#~ "  Are you sure you want to permanently delete the registered collection '%"
-#~ "(collection_name)s'?\n"
+#~ "  Are you sure you want to permanently delete the registered collection "
+#~ "'%(collection_name)s'?\n"
 #~ msgstr ""
 #~ "\n"
-#~ "  Ste si istý, že chcete nadobro odstrániť zaregistrovanú zbierku '%"
-#~ "(collection_name)s'?\n"
+#~ "  Ste si istý, že chcete nadobro odstrániť zaregistrovanú zbierku "
+#~ "'%(collection_name)s'?\n"
 
 #~ msgid "Homepage for %(collection_name)s"
 #~ msgstr "Domovská stránka pre %(collection_name)s"
@@ -4775,11 +4757,12 @@ msgstr "Nasledujúca"
 #~ msgstr "Projekty aktuálne zaregistrované pod touto zbierkou:"
 
 #~ msgid ""
-#~ "No projects are registered for this collection yet. <a href=\"%"
-#~ "(project_list)s\">Find projects</a> and add them to this collection."
+#~ "No projects are registered for this collection yet. <a href="
+#~ "\"%(project_list)s\">Find projects</a> and add them to this collection."
 #~ msgstr ""
-#~ "Zatiaľ nie sú pre túto zbierku zaregistrované žiadne projekty. <a href=\"%"
-#~ "(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tejto zbierky."
+#~ "Zatiaľ nie sú pre túto zbierku zaregistrované žiadne projekty. <a href="
+#~ "\"%(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tejto "
+#~ "zbierky."
 
 #~ msgid "Delete collection"
 #~ msgstr "Odstrániť zbierku"
@@ -4845,12 +4828,12 @@ msgstr "Nasledujúca"
 
 #~ msgid ""
 #~ "\n"
-#~ "  Are you sure you want to permanently delete the registered release '%"
-#~ "(release_name)s'?\n"
+#~ "  Are you sure you want to permanently delete the registered release "
+#~ "'%(release_name)s'?\n"
 #~ msgstr ""
 #~ "\n"
-#~ "  Ste si istý, že chcete nadobro odstrániť zaregistrované vydanie '%"
-#~ "(release_name)s'?\n"
+#~ "  Ste si istý, že chcete nadobro odstrániť zaregistrované vydanie "
+#~ "'%(release_name)s'?\n"
 
 #~ msgid ""
 #~ "Insert the new e-mail address. An e-mail will be send to it for testing "
@@ -5229,14 +5212,12 @@ msgstr "Nasledujúca"
 #~ "No projects are registered for this release yet. <a href=\"%(project_list)"
 #~ "s\">Find projects</a> and add them to this release."
 #~ msgstr ""
-#~ "Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href=\"%"
-#~ "(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tohto vydania."
+#~ "Zatiaľ nie sú pre toto vydanie zaregistrované žiadne projekty. <a href="
+#~ "\"%(project_list)s\">Vyhľadajte projekty</a> a pridajte ich do tohto "
+#~ "vydania."
 
 #~ msgid "Edit <em>%(release_name)s</em>"
 #~ msgstr "Upraviť <em>%(release_name)s</em>"
-
-#~ msgid "Editing <a href=\"%(release_url)s\">%(release_name)s</a>"
-#~ msgstr "Úprava vydania <a·href=\"%(release_url)s\">%(release_name)s</a>"
 
 #~ msgid "Release list"
 #~ msgstr "Zoznam vydaní"

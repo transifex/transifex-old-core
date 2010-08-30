@@ -124,8 +124,8 @@ def restructured_table(column_names, column_ids, object_list, truncate_len=13):
     The format is similar with the one used in restructured text, so it can easily
     be used in formatted text.
     The arguments are the following:
-    column_names : a list or tupple with the title of each column
-    column_id : a list or tupple of all the keys which will be presented from 
+    column_names : a list or tuple with the title of each column
+    column_id : a list or tuple of all the keys which will be presented from
     each object
     object_list : the list of the objects which contain the data to be presented
     truncate_len : the length of the strings in each cell
