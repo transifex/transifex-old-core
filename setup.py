@@ -53,12 +53,12 @@ setup(
         "http://pypi.python.org/simple",
     ],
     setup_requires = [
-        "Django >= 1.1",
+        "Django >= 1.1.2",
         "Pygments >= 0.9",
         "Sphinx >= 0.4.2",
     ],
     install_requires = [
-        "Django >= 1.0",
+        "Django >= 1.1.2",
         "urlgrabber",
         "markdown",
         "userprofile",
@@ -80,6 +80,7 @@ setup(
         "django-threadedcomments >= 0.9",
         "django-staticfiles",
         "pygooglechart",
+        "python-magic",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
