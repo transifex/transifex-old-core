@@ -124,45 +124,6 @@ class LogEntryManager(models.Manager):
         ctype = ContentType.objects.get(model='project')
         return self.filter(user__pk__exact=user.pk, content_type__pk=ctype.pk)
 
-    def all_submissions(self):
-        """Return a queryset with all the submissions entries."""
-        return self.filter(action_type__label='project_component_file_submitted')
-
-    def top_submitters_by_object(self, obj, number=10):
-        """
-        Return a list of dicts with the ordered top submitters for an object.
-
-        The ``obj`` parameter usually receive a Project, Language 
-        or a Team object.
-        The ``number`` parameter can be used to set the top number. The default
-        value is 10.
-        """
-        ctype = ContentType.objects.get_for_model(obj)
-        query = self.all_submissions().filter(content_type__pk=ctype.pk, 
-                                              object_id=obj.pk)
-
-        return _user_counting(query)[:number]
-
-    def top_submitters_by_content_type(self, obj, number=10):
-        """
-        Return a list of dicts with the ordered top submitters for the
-        entries of the ``obj`` content type.
-
-        The ``obj`` parameter usually receive a Project, Language or
-        a Team object, which is used to extract the content type. However, it 
-        can also receive a string with 'app_label.model' format.
-        The ``number`` parameter can be used to set the top number. The default
-        value is 10.
-        """
-        if isinstance(obj, basestring):
-            app_label, model =  obj.split('.')
-            ctype = ContentType.objects.get(app_label=app_label, model=model)
-        else:
-            ctype = ContentType.objects.get_for_model(obj)
-        query = self.all_submissions().filter(content_type__pk=ctype.pk)
-
-        return _user_counting(query)[:number]
-
     def top_submitters_by_project_content_type(self, number=10):
         """
         Return a list of dicts with the ordered top submitters for the
