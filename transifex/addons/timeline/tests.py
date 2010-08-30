@@ -63,7 +63,7 @@ class TestTimeline(BaseTestCase):
         """
 
         # Check user timeline page as regular user
-        resp = self.client['maintainer'].get( self.url_user_timeline )
+        resp = self.client['registered'].get( self.url_user_timeline )
         self.assertEqual(resp.status_code, 200)
 
         # Check project timeline as maintainer
