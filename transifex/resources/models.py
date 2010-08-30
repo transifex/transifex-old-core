@@ -490,8 +490,7 @@ class Translation(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_entity', 'string_hash', 'language', 'resource',
-            'rule'),)
+        unique_together = ('source_entity', 'string_hash', 'language', 'rule')
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
