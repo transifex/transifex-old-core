@@ -67,9 +67,7 @@ def chart_resource_image(request, project_slug, resource_slug):
         raise PermissionDenied
     return HttpResponseRedirect(get_image_url(resource))
 
-def chart_resource_html_js(request, project_slug, resource_slug, template_name=None):
-    if not template_name:
-        raise Http404
+def chart_resource_html_js(request, project_slug, resource_slug, template_name):
     resource = get_object_or_404(Resource, slug=resource_slug,
                                     project__slug=project_slug)
     if resource.project.private:

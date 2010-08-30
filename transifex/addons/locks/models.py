@@ -9,7 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django_addons.errors import AddonError
 from txcommon.log import logger
 from projects.permissions.project import ProjectPermission
-from translations.models import POFile
 
 class LockError(AddonError):
     pass
@@ -93,7 +92,7 @@ class LockManager(models.Manager):
 
 class Lock(models.Model):
     """
-    A lock/hold on a POFile object.
+    A lock/hold a Resource's language.
 
     This usually denotes something that someone is working on and shouldn't
     be touched by others.

@@ -149,7 +149,7 @@ class POHandler(Handler):
         po = polib.pofile("/tmp/%s.tmp" % filename)
         os.unlink("/tmp/%s.tmp" % filename)
 
-        # Update POFile Headers
+        # Update PO file headers
         po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but it's not being used by po

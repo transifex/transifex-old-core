@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.syndication.views import feed
 from django.template import RequestContext
 
-from translations.models import POFile
 from models import Language
 from projects.models import Project
 from releases.models import Release

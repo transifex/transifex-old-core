@@ -178,15 +178,6 @@ urlpatterns += patterns('',
     ),
 )
 
-if getattr(settings, 'ENABLE_COMPRESSED_DOWNLOAD', True):
-    urlpatterns += patterns('',
-        url(
-            name = 'release_language_download',
-            regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w]+)/download_(?P<filetype>[\w]+)/$',
-            view = release_language_download,
-        ),
-)
-
 # Teams
 
 TEAM_URL = PROJECT_URL_PARTIAL + r'team/(?P<language_code>[\-_@\w]+)/'

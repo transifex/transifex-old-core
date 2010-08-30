@@ -21,7 +21,6 @@ import tagging
 from tagging.fields import TagField
 
 from languages.models import Language
-from translations.models import POFile
 from txcommon.log import logger, log_model
 from txcommon.utils import cached_property
 from projects import signals

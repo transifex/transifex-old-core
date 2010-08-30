@@ -89,6 +89,7 @@ class Language(models.Model):
     class Meta:
         verbose_name = _('language')
         verbose_name_plural = _('languages')
+        #FIXME: Remove the 'translations' prefix.
         db_table  = 'translations_language'
         ordering  = ('name',)
 

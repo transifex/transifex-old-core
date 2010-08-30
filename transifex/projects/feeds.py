@@ -8,7 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 from languages.models import Language
 from projects.models import Project
 from releases.models import Release
-from translations.models import POFile
 from txcommon.utils import key_sort
 
 current_site = Site.objects.get_current()
@@ -80,9 +79,8 @@ class ReleaseFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        pofiles = [p for p in POFile.objects.by_release_total(obj)]
-        pofiles_sorted = key_sort(pofiles, 'language.name', '-trans_perc')
-        return pofiles_sorted[:200]
+        #FIXME: Broke with happix migration
+        return []
 
     def item_link(self, obj):
         return obj.object.get_absolute_url()
@@ -123,10 +121,8 @@ class ReleaseLanguageFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        pofiles = [p for p in POFile.objects.by_language_and_release_total(
-            self.language, obj)]
-        pofiles_sorted = key_sort(pofiles, 'language.name', '-trans_perc')
-        return pofiles_sorted[:200]
+        #FIXME: Broke with happix migration
+        return []
 
     def item_link(self, obj):
         return obj.object.get_absolute_url()

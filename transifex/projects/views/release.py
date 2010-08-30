@@ -13,7 +13,6 @@ from projects.models import Project
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
 from releases.models import Release
-from translations.models import POFile
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -101,31 +100,3 @@ def release_delete(request, project_slug, release_slug):
         return render_to_response('projects/release_confirm_delete.html',
                                   {'release': release,},
                                   context_instance=RequestContext(request))
-
-
-def release_language_download(request, project_slug, release_slug, 
-        language_code, filetype):
-    """
-    Download a compressed file of all files for a release-language.
-    
-    DEPRECATED: String Level won't implement it, at least not it this way.
-    """
-    language = get_object_or_404(Language, code__iexact=language_code)
-    project = get_object_or_404(Project, slug__exact=project_slug)
-    release = get_object_or_404(Release, slug__exact=release_slug,
-        project__id=project.pk)
-    pofile_list = POFile.objects.by_language_and_release_total(language, release)
-
-    filename = '%s.%s_%s' % (project.slug, release.slug, language.code)
-    from translations.util.compressed import POCompressedArchive
-    try:
-        archive = POCompressedArchive(pofile_list, filename, filetype)
-        response = HttpResponse(file(archive.file_path).read())
-        response['Content-Disposition'] = 'attachment; filename=%s' % archive.filename
-        response['Content-Type'] = archive.content_type
-        archive.cleanup()
-    except NotImplementedError:
-        raise Http404
-    return response
-
-

@@ -10,7 +10,7 @@ register = Library()
 
 @register.inclusion_tag('lock_resource_action.html', takes_context=True)
 def lock_resource_action(context, resource, language):
-    """Display a lock with the status of the POFileLock for that POFile."""
+    """Display a lock with the status of the object lock."""
     request = context['request']
     user = request.user
     lock = Lock.objects.get_valid(resource, language)

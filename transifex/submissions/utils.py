@@ -12,7 +12,6 @@ from django.core.mail import EmailMessage
 from django.template import loader, Context
 from django.contrib.sites.models import Site
 from transifex.txcommon.log import logger
-from transifex.translations.lib.types.pot import run_msgfmt_check
 from submissions import SubmitError
 
 DEFAULT_MIME_TYPE = 'text/plain'
@@ -42,7 +41,7 @@ def msgfmt_error_send_mail(component, user, submitted_file, attachments,
         'error_message': "",
         })
 
-    res = run_msgfmt_check(submitted_file, with_exceptions=False)
+    #res = run_msgfmt_check(submitted_file, with_exceptions=False)
     context['error_message'] = ("%s\n" % res['stderr'].replace('<stdin>',
                                                                filename))
     subject = loader.get_template('subject_error.tmpl').render(context)

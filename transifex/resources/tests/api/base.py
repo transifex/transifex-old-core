@@ -1,28 +1,30 @@
 # -*- coding: utf-8 -*-
 import os
+from django.conf import settings
 from languages.models import Language
 from txcommon.tests.base import BaseTestCase
 from resources.formats.pofile import POHandler
 from resources.models import Resource
 from resources.tests.api.utils import ORIGINAL, TRANSLATION
 
+
+
+
 class APIBaseTests(BaseTestCase):
     """Tests for the ResourceHandler API."""
     def setUp(self):
         self.current_path = os.path.split(__file__)[0]
         super(APIBaseTests, self).setUp()
-        self.language_en = Language.objects.get(code='en_US')
-        self.resource = Resource(slug="json", name="json",
-            project=self.project, source_language=self.language_en)
-        self.resource.save()
 
         # Opening JSON data for pushing through the API
         self.data = ORIGINAL
         self.trans = TRANSLATION
-        self.pofile_path = '%s/../lib/pofile' % self.current_path
+        self.pofile_path = os.path.join(
+            settings.PROJECT_PATH, 'resources/tests/lib/pofile')
 
         # Loading POT (en_US) into the resource
         handler = POHandler('%s/tests.pot' % self.pofile_path)
+        handler.set_language(self.language_en)
         handler.parse_file(is_source=True)
         handler.bind_resource(self.resource)
         handler.save2db(is_source=True)

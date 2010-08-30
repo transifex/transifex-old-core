@@ -7,7 +7,6 @@ import authority
 from authority.permissions import BasePermission
 from projects.models import Project
 from teams.models import Team
-from translations.models import POFile
 from txcommon.log import logger
 
 
@@ -16,7 +15,7 @@ def _check_outsource_project(obj):
     Check if the project, which the obj passed by parameter belongs to, has
     outsourced the access control to another project.
 
-    The parameter 'obj' can be a Project, Team or POFile instance.
+    The parameter 'obj' can be a Project, Team instance, etc.
 
     Return a tuple '(project, team)'. The 'team' might be None.
     """
@@ -29,14 +28,6 @@ def _check_outsource_project(obj):
     elif isinstance(obj, Team):
         team = obj
         project = team.project
-    # TODO: Remove it once String Level is in place as a whole
-    elif isinstance(obj, POFile):
-        if obj.object.project.outsource:
-            project = obj.object.project.outsource
-        else:
-            project = obj.object.project
-        team = Team.objects.get_or_none(project, obj.language_code)
-
     return (project, team)
 
 class ProjectPermission(BasePermission):
