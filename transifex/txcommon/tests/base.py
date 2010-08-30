@@ -68,7 +68,12 @@ class BaseTestCase(TestCase):
         settings.ACTIONLOG_ENABLED = False
 
     def setUp(self):
-        """Set up a sample set of base objects for inherited tests."""
+        """Set up a sample set of base objects for inherited tests.
+        
+        If you are inheriting the class and overriding setUp, don't forget to
+        call super().
+        """
+
         registered = Group.objects.get(name="registered")
         registered.permissions.add(
             DjPermission.objects.get_or_create(
