@@ -407,7 +407,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 var a=$(this), str=a.html();
                 a.removeClass("action");
                 a.addClass("action_go");
+                var plural_orig = $('.msg .source_string .plural_title', a.parents('tr'));
                 var orig=$('.msg .source_string', a.parents('tr')).html();
+                if(plural_orig.length > 0)
+                  orig = orig.substring(orig.indexOf('</span>')+7);
                 var trans=$('textarea.default_translation', a.parents('tr'));
                 orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
                 google.language.translate(orig, source_lang, target_lang, function(result) {
@@ -440,7 +443,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         // 2. Copy source string
         $('.lotte-actions a.copy_source').click(function() {
             var a=$(this);
+            var plural_orig = $('.msg .source_string .plural_title', a.parents('tr'));
             var orig=$('.msg .source_string', a.parents('tr')).html();
+            if(plural_orig.length > 0)
+              orig = orig.substring(orig.indexOf('</span>')+7);
             var trans=$('textarea.default_translation', a.parents('tr'));
             trans.val(orig);
             /* Mark the translated field as modified */
