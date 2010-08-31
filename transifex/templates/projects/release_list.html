@@ -2,7 +2,7 @@
 {% load i18n %}
 {% url release_create project_slug=project.slug as release_create %}
 
-{% with project.releases_set.all as releases %}
+{% with project.releases.all as releases %}
 
 {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
 <div id="releases" class="releases separate">
