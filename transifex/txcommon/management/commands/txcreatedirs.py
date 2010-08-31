@@ -3,6 +3,10 @@ from django.core.management.base import NoArgsCommand
 
 def transifex_paths():
     from django.conf import settings as s
+    # Scratch dir
+    yield s.SCRATCH_DIR
+    # Msgmerge dir
+    yield s.MSGMERGE_DIR
     # Log path
     yield s.LOG_PATH
 
