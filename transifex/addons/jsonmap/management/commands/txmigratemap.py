@@ -71,7 +71,8 @@ class Command(BaseCommand):
                                 project = project)
 
                         if created:
-                            resource.name = r['source_file']
+                            resource.name = '%s - %s' % (jsonmap.slug, 
+                                r['source_file'])
 
                         source_file = os.path.join(path, r['source_file'])
                         resource.i18n_type = get_i18n_type_from_file(source_file)
