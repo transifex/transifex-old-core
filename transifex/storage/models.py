@@ -114,11 +114,9 @@ class StorageFile(models.Model):
         Try to parse the file and fill in information fields in current model
         """
 
-        m = magic.open(magic.MAGIC_MIME)
-        m.load()
-
+        m = magic.Magic(mime=True)
         # guess mimetype and remove charset
-        self.mime_type = m.file(self.get_storage_path()).split(';')[0]
+        self.mime_type = m.from_file(self.get_storage_path())
         self.save()
 
         parser = self.find_parser()
