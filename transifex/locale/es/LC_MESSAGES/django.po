@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex.0-7-x.django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-27 17:48+0000\n"
+"POT-Creation-Date: 2010-08-31 18:51+0000\n"
 "PO-Revision-Date: 2010-07-24 12:37-0300\n"
 "Last-Translator: Héctor Daniel Cabrera <logan@fedoraproject.org>\n"
 "Language-Team: Fedora Spanish <trans-es@lists.fedoraproject.org>\n"
@@ -26,11 +26,11 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Busque un nombre de usuario o déjelo en blanco"
 
-#: actionlog/models.py:204
+#: actionlog/models.py:166
 msgid "log entry"
 msgstr "entrada de registro"
 
-#: actionlog/models.py:205
+#: actionlog/models.py:167
 msgid "log entries"
 msgstr "entradas de registro"
 
@@ -39,8 +39,9 @@ msgstr "entradas de registro"
 msgid "Date/Time"
 msgstr "Fecha/Hora"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:76
-#: teams/models.py:112 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7
+#: addons/suggestions/models.py:44 addons/suggestions/models.py:110
+#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
 msgstr "Usuario"
 
@@ -55,6 +56,41 @@ msgstr "FORMATO_FECHAHORA"
 #: actionlog/templates/object_action_list.html:22
 msgid "No history recorded yet."
 msgstr "Todavía no hay registro histórico."
+
+#: addons/autofetch/models.py:19
+#, fuzzy
+msgid "Source file URL"
+msgstr "Archivo fuente:"
+
+#: addons/autofetch/models.py:21
+msgid ""
+"A URL pointing to the source file of this resource which can be used for "
+"auto updating."
+msgstr ""
+
+#: addons/autofetch/models.py:23
+msgid "Auto update source file"
+msgstr ""
+
+#: addons/autofetch/models.py:24
+msgid ""
+"A boolean field representing whether we should periodically pull and merge "
+"the source file for the given URL."
+msgstr ""
+
+#: addons/autofetch/models.py:29 resources/models.py:363
+#: resources/models.py:478
+msgid "Resource"
+msgstr ""
+
+#: addons/autofetch/models.py:31
+#, fuzzy
+msgid "The translation resource."
+msgstr "Ver los equipos de traducción."
+
+#: addons/autofetch/models.py:34
+msgid "url handler"
+msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 #, fuzzy
@@ -85,16 +121,13 @@ msgstr "El gráfico siempre reflejará sus números activos en Transifex"
 
 #: addons/charts/templates/charts/widget_snippet.html:70
 #: addons/charts/templates/charts/widget_snippet.html:101
-msgid "Show code snippet for component:"
-msgstr "Mostrar fragmento de código para el componente:"
+#, fuzzy
+msgid "Show code snippet for resource:"
+msgstr "Mostrar indicador de código para la barra de usuario:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
-#: projects/models.py:299 projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
-#: txcollections/migrations/0001_initial.py:23
-#: txcollections/migrations/0001_initial.py:41
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:142
 msgid "Hidden"
 msgstr "Oculto"
 
@@ -130,36 +163,46 @@ msgstr "Gráficos de imagen e interactivos"
 #: addons/charts/templates/charts/widget_snippet.html:120
 #, fuzzy
 msgid ""
-"Sorry, but your project doesn't have any components with up-to-date "
-"statistics. You need to have at least one component with statistics to "
-"export charts from Transifex."
+"Sorry, but your project doesn't have any resources with up-to-date "
+"statistics. You need to have at least one resource with statistics to export "
+"charts from Transifex."
 msgstr ""
 "Lo sentimos, pero su proyecto no posee ningún componente con estadísticas "
 "actualizadas. \n"
 "Necesita tener por lo menos un componente con estadísticas para exportar "
 "gráficos desde Transifex."
 
-#: addons/locks/handlers.py:58
-msgid ""
-"You will need to send this file for review because you can't lock this file."
+#: addons/helptext/templates/extended_helptext.html:8
+msgid "...more"
 msgstr ""
 
-#: addons/locks/models.py:65
+#: addons/locks/handlers.py:55
+#, fuzzy
+msgid "Couldn't lock file."
+msgstr "Haga clic sobre él para desbloquear el archivo."
+
+#: addons/locks/models.py:55
 #, fuzzy, python-format
 msgid ""
-"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
+"User '%(user)s' has no permission to submit translations for '%(resourse)s' "
+"to '%(language)s'."
 msgstr ""
 "El usuario '%(user)s' no está autorizado a enviar archivos hacia, o "
 "coordinar '%(pofile)s'"
 
-#: addons/locks/models.py:77
+#: addons/locks/models.py:67
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
 "El usuario '%(user)s' ya ha alcanzado el máximo permitido de bloqueos "
 "%(locks)i"
 
-#: addons/locks/models.py:158
+#: addons/locks/models.py:76
+#, python-format
+msgid "This resource language is already locked by '%s'"
+msgstr ""
+
+#: addons/locks/models.py:160
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr "El usuario '%(user)s' no tiene permitido eliminar bloqueo '%(lock)s'"
@@ -170,36 +213,56 @@ msgid "Lock is expiring"
 msgstr "El bloqueo está expirando"
 
 #: addons/locks/notifications.py:16
-msgid "when a lock for file is expiring"
+#, fuzzy
+msgid "when a lock for translation resource is expiring"
 msgstr "cuando el bloqueo de algún archivo está expirando"
 
-#: addons/locks/views.py:42
-msgid "Lock removed."
+#: addons/locks/views.py:43
+#, fuzzy
+msgid "Lock created."
 msgstr "Candado removido."
 
-#: addons/locks/views.py:47 addons/locks/views.py:78
-#: projects/views/component.py:556
+#: addons/locks/views.py:50 addons/locks/views.py:86
 msgid "Sorry, but you need to send a POST request."
 msgstr "Lo sentimos, pero usted tendrá que enviar una solicitud POST."
 
-#: addons/locks/views.py:72
-msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr "Candado creado. Por favor no olvide removerlo cuando haya terminado."
+#: addons/locks/views.py:78
+msgid "Lock removed."
+msgstr "Candado removido."
 
-#: addons/locks/templates/pofile_lock.html:20
-#, python-format
-msgid "This file is locked by user '%(owner)s'."
-msgstr "Este archivo ha sido bloqueado por el usuario '%(owner)s'. "
-
-#: addons/locks/templates/pofile_lock.html:22
-msgid "Click on it to unlock the file."
+#: addons/locks/views.py:80
+#, fuzzy
+msgid "You don't have permission to unlock this file."
 msgstr "Haga clic sobre él para desbloquear el archivo."
 
-#: addons/locks/templates/pofile_lock.html:24
-msgid "Time left:"
-msgstr "Tiempo restante:"
+#: addons/locks/views.py:83
+msgid "Unlock failed. Lock doesn't exist."
+msgstr ""
 
-#: addons/locks/templates/pofile_lock.html:32
+#: addons/locks/templates/lock_resource_action.html:16
+msgid "This translation has been locked by you."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:18
+#, fuzzy, python-format
+msgid "This translation has been locked by user '%(owner)s'."
+msgstr "Este archivo ha sido bloqueado por el usuario '%(owner)s'. "
+
+#: addons/locks/templates/lock_resource_action.html:20
+#, python-format
+msgid "(%(lock_expires)s left)"
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:22
+msgid "unlock"
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:27
+msgid "Click to renew your lock for a fresh period of time."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:28
+#: addons/locks/templates/pofile_lock.html:31
 #, fuzzy, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
@@ -212,7 +275,43 @@ msgstr[1] ""
 "                Extender bloqueo por %(hours)s horas.\n"
 "            "
 
-#: addons/locks/templates/pofile_lock.html:42
+#: addons/locks/templates/lock_resource_action.html:37
+#, fuzzy
+msgid "Lock this translation to notify others you're working with it."
+msgstr ""
+"Bloquear y descargar este archivo para notificar a otros que estás "
+"trabajando con él."
+
+#: addons/locks/templates/lock_resource_action.html:41
+#, fuzzy
+msgid ""
+"This translation is unlocked. Most likely no one is working on it right now."
+msgstr ""
+"Este archivo está desbloqueado. Lo más probable sea que actualmente nadie se "
+"encuentre trabajando en él."
+
+#: addons/locks/templates/lock_resource_action.html:56
+msgid "Creating lock..."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:78
+msgid "Removing lock..."
+msgstr ""
+
+#: addons/locks/templates/pofile_lock.html:19
+#, python-format
+msgid "This file is locked by user '%(owner)s'."
+msgstr "Este archivo ha sido bloqueado por el usuario '%(owner)s'. "
+
+#: addons/locks/templates/pofile_lock.html:21
+msgid "Click on it to unlock the file."
+msgstr "Haga clic sobre él para desbloquear el archivo."
+
+#: addons/locks/templates/pofile_lock.html:23
+msgid "Time left:"
+msgstr "Tiempo restante:"
+
+#: addons/locks/templates/pofile_lock.html:41
 #, fuzzy
 msgid ""
 "Lock and download this file to notify others that you're working with it."
@@ -220,116 +319,260 @@ msgstr ""
 "Bloquear y descargar este archivo para notificar a otros que estás "
 "trabajando con él."
 
-#: addons/locks/templates/pofile_lock.html:47
+#: addons/locks/templates/pofile_lock.html:46
 #, fuzzy
 msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr ""
 "Este archivo está desbloqueado. Lo más probable sea que actualmente nadie se "
 "encuentre trabajando en él."
 
-#: addons/locks/templates/locks/component.html:9
-#: translations/templates/component_submit.html:31
-msgid "This file is locked by someone else."
-msgstr "Este archivo ya está bloqueado por alguien más."
-
-#: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
+#: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
 #, fuzzy, python-format
 msgid ""
-"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
-"a> is about to expire on %(expires)s"
+"\n"
+"A lock for <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s "
+"in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 "\n"
 "Un bloqueo para <a href=\"http://%(current_site)s%(component_url)s\">"
 "%(pofile)s</a> está a punto de expirar en %(expires)s\n"
 
-#: addons/presubmit_checks/handlers.py:35
-msgid "You are only allowed to upload PO files (*.po)!"
-msgstr "¡Sólo está autorizado para subir archivos PO (*.po)!"
-
-#: addons/presubmit_checks/handlers.py:39
-#, fuzzy
-msgid "You submitted an empty file!"
-msgstr "¡Ha enviado un archivo vacío!"
-
-#: addons/presubmit_checks/handlers.py:48
-#, fuzzy
+#: addons/lotte/views.py:75
 msgid ""
-"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
-"(\\r\\n)!"
-msgstr "¡El archivo que ha subido contiene líneas DOS (\\r)!"
+"This project has more than one source languages and as a result you can not "
+"translate all resources at the same time."
+msgstr ""
 
-#: addons/presubmit_checks/handlers.py:60
+#: addons/lotte/templates/filters_menu_resources.html:23
+#: addons/lotte/templates/filters_menu_users.html:23
+msgid "No active contributor!"
+msgstr ""
+
+#: addons/lotte/templates/lotte_details_snippet.html:8
+#, fuzzy
+msgid "Last Translation:"
+msgstr "Traducción"
+
+#: addons/lotte/templates/lotte_details_snippet.html:12
 #, fuzzy, python-format
-msgid "Uploaded file header is missing the '%s' field!"
-msgstr "¡El encabezado del archivo subido no contiene un campo '%s'!"
+msgid "by %(user)s"
+msgstr "Llamar la atención de %(user)s "
 
-#: addons/presubmit_checks/handlers.py:66
-msgid "File is not encoded using UTF-8!"
+#: addons/lotte/templates/lotte_details_snippet.html:22
+msgid "Key"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:70
-msgid "Uploaded file doesn't contain any translated entries!"
-msgstr "¡El archivo subido no contiene ninguna entrada traducida!"
+#: addons/lotte/templates/lotte_details_snippet.html:22
+#, fuzzy
+msgid "String ID:"
+msgstr "Cadena congelada:"
 
-#: addons/presubmit_checks/handlers.py:87
-msgid "Your file was sent via e-mail to you to avoid any loss of work."
-msgstr ""
-"Su archivo ha sido enviado por correo electrónico a la dirección que ha "
-"registrado para evitar perder algún dato. "
+#: addons/lotte/templates/lotte_details_snippet.html:23
+#: addons/timeline/templates/timeline/timeline_base.html:40
+#: languages/models.py:52 languages/migrations/0001_initial.py:14
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:127
+#: releases/models.py:36 templates/timeline.html:39
+#: templates/helptext/project_form_helptext.html:26
+#: templates/notification/notices.html:42
+msgid "Description"
+msgstr "Descripción"
 
-#: addons/presubmit_checks/handlers.py:91
+#: addons/lotte/templates/lotte_details_snippet.html:23
+#, fuzzy
+msgid "Description:"
+msgstr "Descripción"
+
+#: addons/lotte/templates/lotte_details_snippet.html:24
+#, fuzzy
+msgid "Occurences"
+msgstr "Ocurrencias"
+
+#: addons/lotte/templates/lotte_details_snippet.html:24
+#, fuzzy
+msgid "Occurrences:"
+msgstr "Ocurrencias"
+
+#: addons/lotte/templates/more_languages.html:27
+#, fuzzy
+msgid "No active languages!"
+msgstr "Idioma nativo"
+
+#: addons/lotte/templates/translate.html:9 templates/base-sample.html:54
+#: templates/projects/base.html:6 templates/projects/project_list.html:15
+#: templates/resources/resource_form.html:10
+msgid "Projects"
+msgstr "Proyectos"
+
+#: addons/lotte/templates/translate.html:567
 msgid ""
-"We couldn't send you an email to preserve your work because you haven't "
-"registered an email address."
+"Search in Transifex memory for existing translations (opens up in new tab/"
+"window)"
 msgstr ""
-"No pudimos enviarle un correo para poder conservar su trabajo, ya que no ha "
-"registrado ninguna dirección de correo electrónico."
 
-#: addons/repowatch/models.py:28
-#, python-format
-msgid "Unable to add watch for path %r"
-msgstr "No se puede agregar la función monitorear para la ruta %r"
+#: addons/lotte/templates/translate.html:568
+#, fuzzy
+msgid "Search translations"
+msgstr "Rechazar traducción"
 
-#: addons/repowatch/models.py:99
-msgid "watch"
-msgstr "monitorear"
+#: addons/lotte/templates/translate.html:640
+#: addons/lotte/templates/view_strings.html:185 resources/models.py:466
+msgid "Source String"
+msgstr "Cadena Fuente"
 
-#: addons/repowatch/models.py:100
-msgid "watches"
-msgstr "monitoreos"
+#: addons/lotte/templates/translate.html:641
+#: addons/lotte/templates/view_strings.html:186
+#: addons/trans_memory/templates/search_translation.html:48
+msgid "Translation"
+msgstr "Traducción"
 
-#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
-msgid "Must use POST to activate"
-msgstr "Se debe utilizar POST para activar"
+#: addons/lotte/templates/translate.html:649
+#, fuzzy
+msgid "Save all"
+msgstr "Guardar equipo"
 
-#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
-msgid "Notification is not enabled"
-msgstr "La notificación no está habilitada"
+#: addons/lotte/templates/translate.html:652
+#: templates/resources/resource_actions.html:146
+#, fuzzy
+msgid "Delete translations"
+msgstr "Rechazar traducción"
 
-#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
-msgid "Watch it"
-msgstr "Monitorearlo"
+#: addons/lotte/templates/translate.html:654
+msgid "Save and Exit"
+msgstr ""
 
-#: addons/repowatch/views.py:65
-msgid "Stop watching"
-msgstr "Dejar de monitorear"
+#: addons/lotte/templates/translate.html:668
+#, fuzzy
+msgid "Verbose editing"
+msgstr "Edición detallada:"
 
-#: addons/repowatch/views.py:100
-msgid "Watch this project"
-msgstr "Monitorear este proyecto"
+#: addons/lotte/templates/translate.html:672
+#, fuzzy
+msgid "Auto save"
+msgstr "Auto-traducir"
 
-#: addons/repowatch/views.py:113
-msgid "Stop watching this project"
-msgstr "Dejar de monitorear este proyecto"
+#: addons/suggestions/models.py:19 resources/models.py:327
+#: resources/models.py:447
+#, fuzzy
+msgid "String"
+msgstr "Cadena Fuente"
 
-#: addons/repowatch/templates/watch_toggle.html:5
-msgid "Stop watching it"
-msgstr "Dejar monitorearlo"
+#: addons/suggestions/models.py:20
+msgid "The actual string content of suggestion."
+msgstr ""
 
-#: addons/repowatch/templates/repowatch/project_detail.html:8
-#: templates/projects/project_detail.html:52
-msgid "Watch:"
-msgstr "Monitorear:"
+#: addons/suggestions/models.py:21 resources/models.py:329
+#: resources/models.py:449
+msgid "String Hash"
+msgstr ""
+
+#: addons/suggestions/models.py:23
+msgid "The hash of the suggestion string used for indexing"
+msgstr ""
+
+#: addons/suggestions/models.py:24
+#, fuzzy
+msgid "Score Value"
+msgstr "Puntaje"
+
+#: addons/suggestions/models.py:25
+msgid ""
+"A value which indicates the relevance of this suggestionto the translation "
+"of the source string."
+msgstr ""
+
+#: addons/suggestions/models.py:34
+#, fuzzy
+msgid "Source Entity"
+msgstr "Cadena Fuente"
+
+#: addons/suggestions/models.py:36
+msgid "The source entity which is being translated by thissuggestion instance."
+msgstr ""
+
+#: addons/suggestions/models.py:40 resources/models.py:473
+#, fuzzy
+msgid "Target Language"
+msgstr "Idioma Nativo"
+
+#: addons/suggestions/models.py:41
+#, fuzzy
+msgid "The language in which this suggestion string belongs to."
+msgstr "El proyecto al que pertenece este equipo."
+
+#: addons/suggestions/models.py:45
+msgid "The user who committed the specific suggestion."
+msgstr ""
+
+#: addons/suggestions/models.py:52
+#, fuzzy
+msgid "suggestion"
+msgstr "Resolución"
+
+#: addons/suggestions/models.py:53
+msgid "suggestions"
+msgstr ""
+
+#: addons/suggestions/models.py:106
+#, fuzzy
+msgid "Suggestion"
+msgstr "Resolución"
+
+#: addons/suggestions/models.py:108
+#, fuzzy
+msgid "The suggestion which is being voted."
+msgstr "El proyecto al que pertenece este equipo."
+
+#: addons/suggestions/models.py:112
+#, fuzzy
+msgid "The user who voted the specific suggestion."
+msgstr "El usuario al que le pertenece este proyecto."
+
+#: addons/suggestions/models.py:123
+msgid "vote"
+msgstr ""
+
+#: addons/suggestions/models.py:124
+msgid "votes"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:187
+#, fuzzy
+msgid "User Suggestions"
+msgstr "Registro de usuario"
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:201
+msgid "Vote up for this translation suggestion (click again to undo)."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:203
+msgid ""
+"The score of the suggestion, indicating its popularity among translators."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:205
+msgid "Vote down for this translation suggestion (click again to undo)."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:210
+msgid "This is the currently accepted translation."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:212
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:215
+msgid "Use this!"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:223
+msgid "New Suggestion"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:227
+msgid "You!"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:233
+msgid "Send suggestion!"
+msgstr ""
 
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
@@ -357,9 +600,8 @@ msgid "Go"
 msgstr "Ir"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:209
-#: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:132
+#: templates/timeline.html:24 templates/projects/project_detail.html:132
+#: templates/teams/team_detail.html:228
 msgid "None available"
 msgstr "Ninguno disponible"
 
@@ -374,18 +616,6 @@ msgstr[0] ""
 msgstr[1] ""
 "\n"
 "  La cnsulta devolvió %(counter)s resultados\n"
-
-#: addons/timeline/templates/timeline/timeline_base.html:40
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:152 projects/models.py:278 projects/models.py:541
-#: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:39 templates/notification/notices.html:42
-#: templates/reviews/review_list.html:42
-#: txcollections/migrations/0001_initial.py:14
-#: txcollections/migrations/0001_initial.py:34
-msgid "Description"
-msgstr "Descripción"
 
 #: addons/timeline/templates/timeline/timeline_project.html:23
 #: addons/timeline/templates/timeline/timeline_user.html:23
@@ -410,18 +640,110 @@ msgstr ""
 msgid "Profile"
 msgstr "Perfil"
 
+#: addons/trans_memory/templates/search_translation.html:9
+#: addons/trans_memory/templates/search_translation.html:15
+#, fuzzy
+msgid "Search Translations"
+msgstr "Traducciones"
+
+#: addons/trans_memory/templates/search_translation.html:36
+#, python-format
+msgid "%(source_language)s &rarr; %(translation_language)s"
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation.html:47
+#, fuzzy
+msgid "Source string"
+msgstr "Cadena Fuente"
+
+#: addons/trans_memory/templates/search_translation.html:56
+#: templates/userprofile/profile/location.html:26
+msgid "Location:"
+msgstr "Ubicación:"
+
+#: addons/trans_memory/templates/search_translation.html:68
+msgid "Tough luck! No translations obtained."
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation_form.html:7
+#, fuzzy
+msgid "Search for a string:"
+msgstr "Buscar el nombre de un usuario"
+
+#: addons/trans_memory/templates/search_translation_form.html:11
+msgid "From:"
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation_form.html:13
+#, fuzzy
+msgid "To:"
+msgstr "Total:"
+
+#: addons/trans_memory/templates/search_translation_form.html:38
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/userprofile/avatar/choose.html:66
+msgid "Search"
+msgstr "Buscar"
+
+#: addons/watches/models.py:29
+msgid "Resource to watch."
+msgstr ""
+
+#: addons/watches/models.py:31
+#, fuzzy
+msgid "Language of the translation."
+msgstr "Ver los equipos de traducción."
+
+#: addons/watches/models.py:42
+#, fuzzy
+msgid "translation watch"
+msgstr "Estadísticas de traducción"
+
+#: addons/watches/models.py:43
+#, fuzzy
+msgid "translation watches"
+msgstr "archivos de traducción"
+
+#: addons/watches/views.py:28 addons/watches/views.py:93
+msgid "Must use POST to activate"
+msgstr "Se debe utilizar POST para activar"
+
+#: addons/watches/views.py:31 addons/watches/views.py:96
+msgid "Notification is not enabled"
+msgstr "La notificación no está habilitada"
+
+#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:6
+msgid "Watch it"
+msgstr "Monitorearlo"
+
+#: addons/watches/views.py:72
+msgid "Stop watching"
+msgstr "Dejar de monitorear"
+
+#: addons/watches/views.py:106
+msgid "Watch this project"
+msgstr "Monitorear este proyecto"
+
+#: addons/watches/views.py:119
+msgid "Stop watching this project"
+msgstr "Dejar de monitorear este proyecto"
+
+#: addons/watches/templates/watch_toggle.html:6
+msgid "Stop watching it"
+msgstr "Dejar monitorearlo"
+
 #: addons/widgets/templates/project_widgets.html:12
 #: addons/widgets/templates/project_widgets.html:14
 #: addons/widgets/templates/widgets/project.html:7
 msgid "Widgets"
 msgstr "Widgets"
 
-#: addons/widgets/templates/project_widgets.html:48
+#: addons/widgets/templates/project_widgets.html:22
 #, fuzzy
 msgid "Widgets, buttons, etc."
 msgstr "Widgets, botones, etc."
 
-#: addons/widgets/templates/project_widgets.html:49
+#: addons/widgets/templates/project_widgets.html:23
 msgid ""
 "Here are some widgets, buttons and other cool stuff you can add to your "
 "homepage!"
@@ -429,104 +751,113 @@ msgstr ""
 "¡Aquí tiene algunos widgets, botones y demás elementos agradables que puede "
 "agregar a su página principal!"
 
-#: addons/widgets/templates/project_widgets.html:54
+#: addons/widgets/templates/project_widgets.html:28
 msgid "Userbars"
 msgstr "Barras de usuario"
 
-#: addons/widgets/templates/project_widgets.html:63
+#: addons/widgets/templates/project_widgets.html:37
 #, fuzzy
 msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 "Puede insertar barras de usuarios en los foros, firmas de correo "
 "electrónico, etc."
 
-#: addons/widgets/templates/project_widgets.html:64
+#: addons/widgets/templates/project_widgets.html:38
 msgid "Show code snippet for userbar:"
 msgstr "Mostrar indicador de código para la barra de usuario:"
 
-#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
-#: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:150 projects/models.py:276 projects/models.py:539
-#: projects/migrations/0001_initial.py:31
-#: projects/migrations/0001_initial.py:53 releases/models.py:23
-#: templates/userprofile/profile/public.html:60
-#: txcollections/migrations/0001_initial.py:27
-#: txcollections/migrations/0001_initial.py:44
-msgid "Name"
-msgstr "Nombre"
-
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
-msgid "Root"
-msgstr "Root"
-
-#: codebases/models.py:38
-msgid "The URL of the codebase"
-msgstr "La URL de base de códigos"
-
-#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
-msgid "Type"
-msgstr "Tipo"
-
-#: codebases/models.py:41
-#, python-format
-msgid "The codebase type (%s)"
-msgstr "El tipo de base de códigos (%s)"
-
-#: codebases/models.py:44
-msgid "The last time this unit was updated"
-msgstr "La última vez que esta unidad fue actualizada"
-
-#: codebases/models.py:53
-msgid "unit"
-msgstr "unidad"
-
-#: codebases/models.py:54
-msgid "units"
-msgstr "unidades"
-
-#: languages/feeds.py:14
+#: languages/feeds.py:13
 #, python-format
 msgid "Languages on %(site_name)s"
 msgstr "Idiomas en %(site_name)s"
 
-#: languages/feeds.py:17
+#: languages/feeds.py:16
 #, python-format
 msgid "The languages spoken on %s."
 msgstr "Los idomas hablados en %s."
 
-#: languages/models.py:40 languages/migrations/0001_initial.py:13
+#: languages/models.py:50 languages/migrations/0001_initial.py:19
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:125
+#: releases/models.py:34 resources/models.py:50
+#: templates/helptext/project_form_helptext.html:16
+#: templates/projects/release_language_detail.html:58
+#: templates/teams/team_detail.html:137
+#: templates/userprofile/profile/public.html:60
+msgid "Name"
+msgstr "Nombre"
+
+#: languages/models.py:53 languages/migrations/0001_initial.py:13
+#: languages/migrations/0002_added_rules_f.py:79
 msgid "Code"
 msgstr "Código"
 
-#: languages/models.py:43 languages/migrations/0001_initial.py:12
+#: languages/models.py:56 languages/migrations/0001_initial.py:12
+#: languages/migrations/0002_added_rules_f.py:76
 msgid "Code aliases"
 msgstr "Código alias"
 
-#: languages/models.py:46 languages/migrations/0001_initial.py:17
+#: languages/models.py:59 languages/migrations/0001_initial.py:17
+#: languages/migrations/0002_added_rules_f.py:91
 msgid "Special Chars"
 msgstr "Caracteres Especiales"
 
-#: languages/models.py:47
+#: languages/models.py:60
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 "Ingresar caracteres especiales que puedan ser difíciles de teclear para los "
 "usuarios"
 
-#: languages/models.py:50 languages/migrations/0001_initial.py:16
+#: languages/models.py:63 languages/migrations/0001_initial.py:16
+#: languages/migrations/0002_added_rules_f.py:88
 msgid "Number of Plurals"
 msgstr "Número de Plurales"
 
-#: languages/models.py:52 languages/migrations/0001_initial.py:15
+#: languages/models.py:65 languages/migrations/0001_initial.py:15
+#: languages/migrations/0002_added_rules_f.py:85
 msgid "Plural Equation"
 msgstr "Ecuación Plural"
 
-#: languages/models.py:63
+#: languages/models.py:69
+msgid "Rule zero"
+msgstr ""
+
+#: languages/models.py:71
+msgid "Rule one"
+msgstr ""
+
+#: languages/models.py:73
+msgid "Rule two"
+msgstr ""
+
+#: languages/models.py:75
+msgid "Rule few"
+msgstr ""
+
+#: languages/models.py:77
+msgid "Rule many"
+msgstr ""
+
+#: languages/models.py:79
+msgid "Rule other"
+msgstr ""
+
+#: languages/models.py:90
 msgid "language"
 msgstr "idioma"
 
-#: languages/models.py:64 templates/languages/language_list.html:15
+#: languages/models.py:91 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "idiomas"
+
+#: projects/api.py:233 projects/api.py:320
+#, python-format
+msgid "%i strings added"
+msgstr ""
+
+#: projects/api.py:235 projects/api.py:322
+#, fuzzy, python-format
+msgid "%i strings updated"
+msgstr "Última actualización de Estadísticas:"
 
 #: projects/feeds.py:16
 #, python-format
@@ -539,14 +870,16 @@ msgstr ""
 "Actualizaciones de los cambios y adiciones a los proyectos registrados."
 
 #: projects/feeds.py:35
-#, python-format
-msgid "%(site_name)s: Components in %(project)s"
+#, fuzzy, python-format
+msgid "%(site_name)s: Resources in %(project)s"
 msgstr "%(site_name)s: Componentes en %(project)s"
 
 #: projects/feeds.py:40
 #, python-format
-msgid "Latest components in project %s."
-msgstr "Últimos componentes en el proyecto %s."
+msgid ""
+"Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py "
+"in project %s."
+msgstr ""
 
 #: projects/feeds.py:67
 #, python-format
@@ -559,12 +892,12 @@ msgid "Translation statistics for all languages against %s release."
 msgstr ""
 "Estadísticas de traducción de todos los idiomas en esté lanzamiento %s."
 
-#: projects/feeds.py:108
+#: projects/feeds.py:107
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
 msgstr "%(site_name)s: %(project)s :: lanzamiento %(release)s :: %(lang)s"
 
-#: projects/feeds.py:115
+#: projects/feeds.py:114
 #, python-format
 msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
@@ -661,32 +994,16 @@ msgstr ""
 "                              distribución, módulos de entornos de "
 "escritorio, etc."
 
-#: projects/forms.py:134 projects/models.py:291
-msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
-msgstr "Una expresión regular para filtrar archivos expuestos. Ej: 'po/.*'"
+#: projects/forms.py:134
+#, fuzzy
+msgid "Search for a resource"
+msgstr "Buscar el nombre de un usuario"
 
-#: projects/forms.py:151 projects/models.py:296
-#: projects/migrations/0002_release_06_07.py:15
-msgid "Submit to"
-msgstr "Enviar a"
-
-#: projects/forms.py:152
-msgid ""
-"Choose how this component should handle submissions of files.The options "
-"here are available based on the component type"
-msgstr ""
-"Seleccionar cómo este componente debe manejar envíos de archivos. Las "
-"opciones aquí están disponibles basadas en el tipo de componente "
-
-#: projects/forms.py:167
-msgid "Search for a component"
-msgstr "Buscar un componente"
-
-#: projects/models.py:143
+#: projects/models.py:118
 msgid "Private"
 msgstr "Privado"
 
-#: projects/models.py:144
+#: projects/models.py:119
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
@@ -695,18 +1012,12 @@ msgstr ""
 "los proyectos privados están limitados de acuerdo a categorías de "
 "facturación en la cuenta del usuario."
 
-#: projects/models.py:147 projects/models.py:273 projects/models.py:536
-#: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:38 releases/models.py:20
-#: txcollections/migrations/0001_initial.py:13
-#: txcollections/migrations/0001_initial.py:33
-#: txcollections/migrations/0002_release_06_07.py:12
-#: txcollections/migrations/0002_release_06_07.py:18
+#: projects/models.py:122 releases/models.py:31 resources/models.py:54
+#: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slug"
 
-#: projects/models.py:148 projects/models.py:274 projects/models.py:537
-#: releases/models.py:21
+#: projects/models.py:123 releases/models.py:32 resources/models.py:55
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -714,265 +1025,124 @@ msgstr ""
 "Una breve etiqueta que se utilizará en la URL, la cual sólo contiene letras, "
 "números, guiones o subrayado."
 
-#: projects/models.py:151 projects/models.py:277 releases/models.py:24
+#: projects/models.py:126
 msgid "A short name or very short description."
 msgstr "Un nombre o descripción corta."
 
-#: projects/models.py:153 projects/models.py:279
+#: projects/models.py:128
 msgid "A sentence or two describing the object (optional)."
 msgstr "Una frase o dos describiendo el objeto (opcional)."
 
-#: projects/models.py:154 projects/models.py:280 projects/models.py:544
-#: projects/migrations/0001_initial.py:30
-#: projects/migrations/0001_initial.py:45 releases/models.py:27
-#: txcollections/migrations/0001_initial.py:25
-#: txcollections/migrations/0001_initial.py:43
+#: projects/models.py:129 releases/models.py:39
+#: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Descripción larga"
 
-#: projects/models.py:156 projects/models.py:282
+#: projects/models.py:131
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Una descripción extensa (opcional). Use la sintaxis de Markdown."
 
-#: projects/models.py:157 projects/migrations/0001_initial.py:29
-#: txcollections/migrations/0001_initial.py:42
+#: projects/models.py:132 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Página Principal"
 
-#: projects/models.py:158 projects/migrations/0001_initial.py:18
+#: projects/models.py:133
 msgid "Feed"
 msgstr "Suscripción"
 
-#: projects/models.py:159
+#: projects/models.py:134
 msgid "An RSS feed with updates to the project."
 msgstr "Una suscripción RSS con actualizaciones del proyecto."
 
-#: projects/models.py:160 projects/migrations/0001_initial.py:27
+#: projects/models.py:135
 msgid "Bug tracker"
 msgstr "Rastreador de errores"
 
-#: projects/models.py:161
+#: projects/models.py:136
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 "La URL para el sitio web de rastreo de errores y tickets (Bugzilla, Trac, "
 "etc.)"
 
-#: projects/models.py:163
-#: projects/migrations/0003_add_anyone_submit_field.py:12
+#: projects/models.py:138
 msgid "Anyone can submit"
 msgstr "Cualquiera puede enviar"
 
-#: projects/models.py:165
+#: projects/models.py:140
 msgid "Can anyone submit files to this project?"
 msgstr "¿Alguien puede enviar archivos a este proyecto?"
 
-#: projects/models.py:168 projects/models.py:300 releases/models.py:42
+#: projects/models.py:143
 msgid "Hide this object from the list view?"
 msgstr "¿Ocultar este objeto de la vista de lista?"
 
-#: projects/models.py:169 projects/models.py:301
-#: projects/migrations/0001_initial.py:24
-#: projects/migrations/0001_initial.py:41 releases/models.py:43
-#: txcollections/migrations/0001_initial.py:17
-#: txcollections/migrations/0001_initial.py:38
+#: projects/models.py:144
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: projects/models.py:170 projects/models.py:302 releases/models.py:44
+#: projects/models.py:145
 msgid "Enable this object or disable its use?"
 msgstr "¿Activar o desactivar el uso de este objeto?"
 
-#: projects/models.py:174 projects/migrations/0001_initial.py:23
+#: projects/models.py:149 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: projects/models.py:177
+#: projects/models.py:152 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Encargados del proyecto"
 
-#: projects/models.py:181
+#: projects/models.py:156
 msgid "Outsource project"
 msgstr "Proyecto externo"
 
-#: projects/models.py:182
+#: projects/models.py:157
 msgid "Project that owns the access control of this project."
 msgstr "El proyecto que posee el control de acceso a este proyecto."
 
-#: projects/models.py:185
+#: projects/models.py:160 storage/models.py:45
 msgid "Owner"
 msgstr "Dueño"
 
-#: projects/models.py:186
+#: projects/models.py:161
 msgid "The user who owns this project."
 msgstr "El usuario al que le pertenece este proyecto."
 
-#: projects/models.py:189 projects/models.py:311 projects/models.py:566
-#: projects/migrations/0001_initial.py:22
-#: projects/migrations/0001_initial.py:47 releases/models.py:49
-#: txcollections/migrations/0001_initial.py:22
-#: txcollections/migrations/0001_initial.py:36
+#: projects/models.py:164 releases/models.py:61
 msgid "HTML Description"
 msgstr "Descripción HTML"
 
-#: projects/models.py:191 projects/models.py:313 projects/models.py:568
-#: releases/models.py:50
+#: projects/models.py:166 releases/models.py:63
 msgid "Description in HTML."
 msgstr "Descripción en HTML."
 
-#: projects/models.py:201
+#: projects/models.py:176
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Proyecto: %s>"
 
-#: projects/models.py:204
+#: projects/models.py:179
 msgid "project"
 msgstr "proyecto"
 
-#: projects/models.py:205 templates/projects/project_list.html:18
+#: projects/models.py:180 templates/projects/project_list.html:21
 msgid "projects"
 msgstr "proyectos"
 
-#: projects/models.py:283 projects/migrations/0001_initial.py:52
-msgid "Source language"
-msgstr "Idioma Fuente"
-
-#: projects/models.py:284
-msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
-msgstr "El idioma fuente de este componente, ej. 'en', 'pt_BR', 'el'."
-
-#: projects/models.py:286 projects/migrations/0001_initial.py:42
-msgid "I18n type"
-msgstr "Tipo I18n"
-
-#: projects/models.py:288
-#, python-format
-msgid "The type of i18n support for the source code (%s)"
-msgstr "El tipo de soporte i18n para el código fuente (%s)"
-
-#: projects/models.py:290 projects/migrations/0001_initial.py:43
-msgid "File filter"
-msgstr "Filtro de archivo"
-
-#: projects/models.py:293 projects/migrations/0001_initial.py:51
-msgid "Allows submission"
-msgstr "Permite envío"
-
-#: projects/models.py:295
-msgid "Does this module repository allow write access?"
-msgstr "¿Este repositorio de módulo permite acceso de escritura?"
-
-#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
-msgid "Calculate statistics?"
-msgstr "¿Calcular estadísticas?"
-
-#: projects/models.py:306
-msgid "Should statistics be calculated for this component?"
-msgstr "¿Se deben calcular las estadísticas para este componente?"
-
-#: projects/models.py:316 projects/models.py:571
-#: projects/migrations/0001_initial.py:46 teams/models.py:27
-#: teams/models.py:69
-msgid "Project"
-msgstr "Proyecto"
-
-#: projects/models.py:317 projects/migrations/0001_initial.py:37
-msgid "Unit"
-msgstr "Unidad"
-
-#: projects/models.py:338
-#, python-format
-msgid "<Component: %s>"
-msgstr "<Componente: %s>"
-
-#: projects/models.py:342
-msgid "component"
-msgstr "componente"
-
-#: projects/models.py:343 templates/projects/component_list.html:16
-msgid "components"
-msgstr "componente"
-
-#: projects/models.py:540
-msgid "A string like a name or very short description."
-msgstr "Una cadena como un nombre, o una descripción muy breve."
-
-#: projects/models.py:543 releases/models.py:26
-msgid "A sentence or two describing the object."
-msgstr "Una frase o dos describiendo el objeto."
-
-#: projects/models.py:546 releases/models.py:28
-msgid "Use Markdown syntax."
-msgstr "Usar sintaxis Markdown."
-
-#: projects/models.py:549 releases/models.py:31
-#: txcollections/migrations/0001_initial.py:16
-msgid "Release date"
-msgstr "Fecha de lanzamiento"
-
-#: projects/models.py:551 releases/models.py:32
-msgid "When this release will be available."
-msgstr "Cuándo esta versión estará disponible."
-
-#: projects/models.py:552 releases/models.py:33
-#: txcollections/migrations/0001_initial.py:21
-msgid "String freeze date"
-msgstr "Fecha de congelamiento de cadena"
-
-#: projects/models.py:554
-msgid ""
-"When the translatable strings will be frozen (no strings can be added/"
-"modified which affect translations."
-msgstr ""
-"Cuando las cadenas traducibles sean congeladas (no se pueden agregar o "
-"modificar cadenas que afecten las  traducciones)."
-
-#: projects/models.py:556 releases/models.py:36
-#: txcollections/migrations/0001_initial.py:26
-msgid "Devel freeze date"
-msgstr "Fecha de congelamiento del desarrollo"
-
-#: projects/models.py:558 releases/models.py:37
-msgid ""
-"The last date packages from this release can be built from the developers. "
-"Translations sent after this date will not be included in the released "
-"version."
-msgstr ""
-"La última fecha en que los paquetes de este lanzamiento se pueden crear "
-"desde los desarrolladores. Las traducciones enviadas después de esta fecha "
-"no serán incluidas en esta versión."
-
-#: projects/models.py:573
-msgid "Components"
-msgstr "Componentes"
-
-#: projects/models.py:580
-#, python-format
-msgid "<Release: %(rel)s (Project %(proj)s)>"
-msgstr "<Lanzamiento: %(rel)s (Project %(proj)s)>"
-
-#: projects/models.py:598 releases/models.py:54
-msgid "release"
-msgstr "lanzamiento"
-
-#: projects/models.py:599 releases/models.py:55
-#: templates/languages/language_detail.html:18
-#: templates/projects/release_list.html:14
-msgid "releases"
-msgstr "lanzamientos"
-
-#: projects/permissions/project.py:50
+#: projects/permissions/project.py:44
 msgid "Is allowed to maintain this project"
 msgstr "Está permitido mantener este proyecto"
 
-#: projects/permissions/project.py:64
+#: projects/permissions/project.py:57
 msgid "Is allowed to coordinate a team project"
 msgstr "Está permitido coordinar un proyecto en equipo"
 
-#: projects/permissions/project.py:103
-msgid "Is allowed to submit file to this project"
+#: projects/permissions/project.py:100
+#, fuzzy
+msgid "Is allowed to submit translations to this project"
 msgstr "Está permitido enviar archivo a este proyecto"
 
-#: projects/permissions/project.py:117
+#: projects/permissions/project.py:121
 msgid "Is allowed to browse this private project"
 msgstr "Tiene permitido navegar este proyecto privado"
 
@@ -983,11 +1153,6 @@ msgstr "Traducido:"
 
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
 msgid "Fuzzy:"
 msgstr "Difuso:"
 
@@ -1001,119 +1166,47 @@ msgstr "Sin Traducir:"
 msgid "Total:"
 msgstr "Total:"
 
-#: projects/views/component.py:246 projects/views/project.py:148
-#, python-format
-msgid "The %s was deleted."
+#: projects/views/project.py:154
+#, fuzzy, python-format
+msgid "The project '%s' was deleted."
 msgstr "El %s fue eliminado."
 
-#: projects/views/component.py:282
-msgid ""
-"The file filter of this intltool POT-based component does not  seem to allow "
-"the POTFILES.in file. Please fix it."
-msgstr ""
-"El filtro de archivo de este componente basado en intltool POT no parece "
-"aceptar los POTFILES. en archivo. Por favor corríjalo."
+#: projects/views/release.py:87
+#, fuzzy, python-format
+msgid "The release '%s' was deleted."
+msgstr "El %s fue eliminado."
 
-#: projects/views/component.py:289
-msgid ""
-"There is no 'pot' directory named in the set of files of this Publican like "
-"component. Maybe its file filter is not allowing access to it."
-msgstr ""
-"No hay directorio 'pot' en el conjunto de archivos de este componente "
-"Publican. Quizás su filtro de archivo no está permitiendo acceso a éste."
+#: projects/views/team.py:186
+#, fuzzy, python-format
+msgid "The team '%s' was deleted."
+msgstr "El %s fue eliminado."
 
-#: projects/views/component.py:302
-msgid "This component is not configured for statistics calculation."
-msgstr ""
-"Este componente no está configurado para realizar cálculos estadísticos."
-
-#: projects/views/component.py:388
-msgid "This component does  not allow write access."
-msgstr "Este componente no permite acceso a escritura."
-
-#: projects/views/component.py:396
-msgid "Please select a file from your system to be uploaded."
-msgstr "Por favor, seleccione un archivo de su sistema para ser cargado."
-
-#: projects/views/component.py:404
-msgid "Please enter a target to upload the file."
-msgstr "Por favor ingrese un destino para cargar el archivo."
-
-#: projects/views/component.py:409
-msgid "Please enter only ONE target to upload the file."
-msgstr "Por favor ingrese sólo UN destino para cargar el archivo."
-
-#: projects/views/component.py:420
-msgid "The target file does not match the component file filter"
-msgstr "El archivo destino no coincide con el filtro de archivo del componente"
-
-#: projects/views/component.py:428
-msgid "Enter a commit message"
-msgstr "Entrar un mensaje de envío"
-
-#: projects/views/component.py:469
-#, python-format
-msgid ""
-"You need to be in the '%s' team of this project for being able to send "
-"translations to that file target."
-msgstr ""
-"Necesita estar en el equipo '%s' de este proyecto para poder enviar "
-"traducciones de este archivo."
-
-#: projects/views/component.py:527
-#, python-format
-msgid "File submitted successfully: %s"
-msgstr "Archivo enviado satisfactoriamente: %s"
-
-#: projects/views/component.py:553
-msgid "Sorry, your file could not be sent because of an error."
-msgstr "Lo sentimos, no se pudo enviar el archivo debido a un error."
-
-#: projects/views/release.py:94
-#, python-format
-msgid "%s was deleted."
-msgstr "%s fue eliminado."
-
-#: projects/views/review.py:66
-#, fuzzy
-msgid "Request rejected."
-msgstr "Petición reabierta."
-
-#: projects/views/review.py:72
-msgid "Request reopened."
-msgstr "Petición reabierta."
-
-#: projects/views/team.py:182
-#, python-format
-msgid "The '%s' team was deleted."
-msgstr "El equipo %s fue eliminado."
-
-#: projects/views/team.py:222
+#: projects/views/team.py:226
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "Ya estás en el equipo '%s'."
 
-#: projects/views/team.py:227
+#: projects/views/team.py:231
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "Has añadido una solicitud para unirte al equipo '%s'."
 
-#: projects/views/team.py:250
+#: projects/views/team.py:254
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "Tienes una solicitud pendiente para unirte al equipo '%s'."
 
-#: projects/views/team.py:278
+#: projects/views/team.py:282
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "El usuario '%(user)s' ya está en el equipo '%(team)s'."
 
-#: projects/views/team.py:285
+#: projects/views/team.py:289
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "Has añadido a '%(user)s' al equipo '%(team)s'."
 
-#: projects/views/team.py:333
+#: projects/views/team.py:337
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
@@ -1122,162 +1215,417 @@ msgstr ""
 "Has negado la solicitud del usuario '%(user)s' para unirse al equipo "
 "'%(team)s'"
 
-#: projects/views/team.py:378
+#: projects/views/team.py:382
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "Has retirado tu solicitud para unirte al equipo '%s'."
 
-#: projects/views/team.py:421
+#: projects/views/team.py:425
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "Has dejado el equipo '%s'."
 
-#: projects/views/team.py:442
+#: projects/views/team.py:446
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "No estás en el equipo '%s'."
 
-#: projects/views/team.py:465
+#: projects/views/team.py:469
 msgid "Please, select a language before submit the form."
 msgstr "Por favor, seleccione un idioma antes de enviar el formulario."
 
-#: projects/views/team.py:478
+#: projects/views/team.py:482
 #, python-format
 msgid "'%s' team already exist."
 msgstr "El equipo '%s' ya existe."
 
-#: projects/views/team.py:484
+#: projects/views/team.py:488
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "Ya existe una solicitud para crear el equipo '%s'."
 
-#: projects/views/team.py:492
+#: projects/views/team.py:496
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "Has solicitado la creación del equipo '%s'."
 
-#: projects/views/team.py:538
+#: projects/views/team.py:542
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Has aprobado la solicitud de creación del equipo '%(team)s' hecha por "
 "'%(user)s'."
 
-#: projects/views/team.py:581
+#: projects/views/team.py:585
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Has rechazado la solicitud de creación del equipo '%(team)s' hecha por "
 "'%(user)s'."
 
-#: releases/models.py:34
+#: releases/models.py:35
+msgid "A string like a name or very short description."
+msgstr "Una cadena como un nombre, o una descripción muy breve."
+
+#: releases/models.py:38
+msgid "A sentence or two describing the object."
+msgstr "Una frase o dos describiendo el objeto."
+
+#: releases/models.py:41
+msgid "Use Markdown syntax."
+msgstr "Usar sintaxis Markdown."
+
+#: releases/models.py:44
+msgid "Release date"
+msgstr "Fecha de lanzamiento"
+
+#: releases/models.py:46
+msgid "When this release will be available."
+msgstr "Cuándo esta versión estará disponible."
+
+#: releases/models.py:47
+msgid "String freeze date"
+msgstr "Fecha de congelamiento de cadena"
+
+#: releases/models.py:49
 msgid ""
-"When the translatable strings will be frozen (no strings which affect "
-"translations can be added/modified)."
+"When the translatable strings will be frozen (no strings can be added/"
+"modified which affect translations."
 msgstr ""
 "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o "
 "modificar cadenas que afecten las  traducciones)."
 
-#: reviews/forms.py:8
-msgid "Write a short blurb for your review request."
-msgstr "Escriba un breve comentario acerca de la revisión de su petición."
+#: releases/models.py:51
+msgid "Devel freeze date"
+msgstr "Fecha de congelamiento del desarrollo"
 
-#: reviews/forms.py:10
-msgid "Select a translation file for review."
-msgstr "Elegir un archivo de traducción para revisión."
-
-#: reviews/models.py:45
-msgid "Open"
-msgstr "Abierto"
-
-#: reviews/models.py:46
-msgid "Closed"
-msgstr "Cerrado"
-
-#: reviews/models.py:48
-msgid "Null"
-msgstr "Inválido"
-
-#: reviews/models.py:49
-msgid "Accepted"
-msgstr "Aceptado"
-
-#: reviews/models.py:50
-msgid "Rejected"
-msgstr "Rechazado"
-
-#: reviews/models.py:55
-msgid "The review's status (open, closed, etc.)"
-msgstr "El estado de la revisión (abierto, cerrado, etc)"
-
-#: reviews/models.py:57
-msgid "The review's resolution/closing state."
-msgstr "La estado de resolución/cancelación de su revisión."
-
-#: reviews/models.py:59
-msgid "Date and time of creation"
-msgstr "Fecha y hora de creación"
-
-#: reviews/models.py:61
-msgid "Date and time of last update"
-msgstr "Fecha y hora de la última actualización"
-
-#: reviews/models.py:64
-msgid "The review file name"
-msgstr "El nombre del archivo de revisión"
-
-#: reviews/models.py:66
-msgid "The path of the target file which will be used on submission"
-msgstr ""
-"La ruta del archivo de destino que será utilizado para la presentación "
-
-#: reviews/models.py:70
-msgid "Component"
-msgstr "Componente"
-
-#: reviews/models.py:88
-msgid "Review Request"
-msgstr "Petición de revisión"
-
-#: reviews/models.py:89
-msgid "Review Requests"
-msgstr "Peticionesn de revisión"
-
-#: reviews/models.py:90
-msgid "-created_on"
-msgstr "-created_on"
-
-#: reviews/models.py:91
-msgid "created_on"
-msgstr "created_on"
-
-#: reviews/views.py:32
+#: releases/models.py:53
 msgid ""
-"You can upload a file for review only if it's related to an existing "
-"language."
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
-"Sólo puede subir un archivo para revisión, si es que está relacionado con un "
-"idioma existente."
+"La última fecha en que los paquetes de este lanzamiento se pueden crear "
+"desde los desarrolladores. Las traducciones enviadas después de esta fecha "
+"no serán incluidas en esta versión."
 
-#: reviews/views.py:52
-msgid "Your file was successfully placed for reviewing."
-msgstr "Su archivo ha sido recibido exitosamente para una revisión."
+#: releases/models.py:66 resources/models.py:77 teams/models.py:27
+#: teams/models.py:69 templates/helptext/project_list.html:5
+msgid "Project"
+msgstr "Proyecto"
 
-#: tarball/forms.py:16
-msgid "Tarball URL"
-msgstr "URL del tarball"
+#: releases/models.py:69
+msgid "Resources"
+msgstr ""
 
-#: tarball/forms.py:17
-msgid "A URL from which the tarball is accessible."
-msgstr "Una URL desde donde puede accederse al tarball."
+#: releases/models.py:76
+#, python-format
+msgid "<Release: %(rel)s (Project %(proj)s)>"
+msgstr "<Lanzamiento: %(rel)s (Project %(proj)s)>"
 
-#: tarball/models.py:33
-msgid "tarball"
-msgstr "tarball"
+#: releases/models.py:173
+msgid "release"
+msgstr "lanzamiento"
 
-#: tarball/models.py:34
-msgid "tarballs"
-msgstr "tarballs"
+#: releases/models.py:174 templates/projects/release_list.html:16
+#: templates/projects/release_list.html:22
+msgid "releases"
+msgstr "lanzamientos"
+
+#: resources/forms.py:20 resources/forms.py:40
+#, fuzzy
+msgid "Resource file"
+msgstr "Archivo fuente:"
+
+#: resources/forms.py:21
+msgid ""
+"Choose the source language for the resource and then select a file from your "
+"file system to be used as an extracting point of strings to be translated."
+msgstr ""
+
+#: resources/forms.py:41
+msgid ""
+"Select a file from your file system to be used too fill translations for "
+"this resource."
+msgstr ""
+
+#: resources/models.py:51
+msgid "A descriptive name unique inside the project."
+msgstr ""
+
+#: resources/models.py:63
+#, fuzzy
+msgid "Source file"
+msgstr "Archivo fuente:"
+
+#: resources/models.py:65
+msgid "A local file used to extract the strings to be translated."
+msgstr ""
+
+#: resources/models.py:67
+msgid "I18n type"
+msgstr "Tipo I18n"
+
+#: resources/models.py:69
+#, fuzzy, python-format
+msgid "The type of i18n method used in this resource (%s)"
+msgstr "El tipo de soporte i18n para el código fuente (%s)"
+
+#: resources/models.py:75
+#, fuzzy
+msgid "Source Language"
+msgstr "Idioma Fuente"
+
+#: resources/models.py:76
+msgid "The source language of this Resource."
+msgstr ""
+
+#: resources/models.py:79
+#, fuzzy
+msgid "The project the translation resource belongs to."
+msgstr "El proyecto al que pertenece este equipo."
+
+#: resources/models.py:92
+msgid "resource"
+msgstr ""
+
+#: resources/models.py:93 templates/projects/resource_list.html:10
+msgid "resources"
+msgstr ""
+
+#: resources/models.py:328
+msgid "The actual string content of source string."
+msgstr ""
+
+#: resources/models.py:331 resources/models.py:451
+msgid "The hash of the translation string used for indexing"
+msgstr ""
+
+#: resources/models.py:332
+msgid "Context"
+msgstr "Contexto"
+
+#: resources/models.py:334
+msgid ""
+"A description of the source string. This field specifiesthe context of the "
+"source string inside the resource."
+msgstr ""
+
+#: resources/models.py:336 templates/userprofile/profile/location.html:27
+msgid "Position"
+msgstr "Posición"
+
+#: resources/models.py:337
+msgid ""
+"The position of the source string in the Resource.For example, the specific "
+"position of msgid field in a po template (.pot) file in gettext."
+msgstr ""
+
+#: resources/models.py:341
+msgid "Occurrences"
+msgstr "Ocurrencias"
+
+#: resources/models.py:343
+msgid "The occurrences of the source string in the project code."
+msgstr ""
+
+#: resources/models.py:344 resources/models.py:349
+msgid "Flags"
+msgstr ""
+
+#: resources/models.py:346
+msgid ""
+"The flags which mark the source string. For example, ifthere is a python "
+"formatted string this is marked as \"#, python-format\" in gettext."
+msgstr ""
+
+#: resources/models.py:351
+msgid "The comment of the developer."
+msgstr ""
+
+#: resources/models.py:353
+msgid "Pluralized"
+msgstr ""
+
+#: resources/models.py:355
+msgid "Identify if the entity is pluralized ot not."
+msgstr ""
+
+#: resources/models.py:365 resources/models.py:480
+msgid "The translation resource which owns the source string."
+msgstr ""
+
+#: resources/models.py:372
+#, fuzzy
+msgid "source string"
+msgstr "Cadena Fuente"
+
+#: resources/models.py:373
+#, fuzzy
+msgid "source strings"
+msgstr "Cadena Fuente"
+
+#: resources/models.py:448
+msgid "The actual string content of translation."
+msgstr ""
+
+#: resources/models.py:452
+#, fuzzy
+msgid "Plural rule"
+msgstr "Ecuación Plural"
+
+#: resources/models.py:454
+msgid ""
+"Number related to the plural rule of the translation. It's 0=zero, 1=one, "
+"2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
+"pluralized, the rule must be 5 (other)."
+msgstr ""
+
+#: resources/models.py:469
+msgid ""
+"The source string which is being translated by thistranslation string "
+"instance."
+msgstr ""
+
+#: resources/models.py:474 storage/models.py:33
+#, fuzzy
+msgid "The language in which this translation string belongs to."
+msgstr "El proyecto al que pertenece este equipo."
+
+#: resources/models.py:483
+#, fuzzy
+msgid "Committer"
+msgstr "Twitter"
+
+#: resources/models.py:484
+msgid "The user who committed the specific translation."
+msgstr ""
+
+#: resources/models.py:495
+#, fuzzy
+msgid "translation string"
+msgstr "archivos de traducción"
+
+#: resources/models.py:496
+#, fuzzy
+msgid "translation strings"
+msgstr "archivos de traducción"
+
+#: resources/models.py:529
+msgid "This is the actual content of the template"
+msgstr ""
+
+#: resources/models.py:533
+msgid ""
+"This is the template of the imported source file which is used to export "
+"translation files from the db to the user."
+msgstr ""
+
+#: resources/models.py:537
+msgid "Template"
+msgstr ""
+
+#: resources/models.py:538
+msgid "Templates"
+msgstr ""
+
+#: resources/views.py:85
+#, fuzzy, python-format
+msgid "The translation resource '%s' was deleted."
+msgstr "cuando un equipo de traducción de un proyecto es eliminado"
+
+#: resources/views.py:289
+#, fuzzy, python-format
+msgid ""
+"The translations of language %(lang)s for the resource %(resource)s were "
+"deleted successfully."
+msgstr "Ultima traducción para idioma %(language)s en lanzamiento %(release)s."
+
+#: resources/views.py:337
+#, fuzzy
+msgid "Error compiling translation file."
+msgstr "Agregar archivo de traducción"
+
+#: resources/views.py:382
+msgid "Sorry, you cannot assign this file to you!"
+msgstr ""
+
+#: resources/views.py:394
+msgid "Failed to lock the resource!"
+msgstr ""
+
+#: resources/views.py:405
+msgid "Failed to extend lock period on the resource!"
+msgstr ""
+
+#: resources/views.py:410
+#, python-format
+msgid "You cannot lock it right now! ( Locked by %s )"
+msgstr ""
+
+#: resources/formats/pofile.py:71
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+"Su archivo no pasa la verificación de exactitud (msgfmt -c). Por favor "
+"ejecute este comando en su sistema para ver los errores."
+
+#: resources/formats/pofile.py:106
+#, fuzzy
+msgid "Uploaded file contains DOS newlines (\\r)!"
+msgstr "¡El archivo que ha subido contiene líneas DOS (\\r)!"
+
+#: resources/formats/pofile.py:115
+#, fuzzy, python-format
+msgid "Uploaded file header doesn't have '%s' metadata!"
+msgstr "¡El encabezado del archivo subido no contiene un campo '%s'!"
+
+#: storage/api.py:119
+msgid "A strange error happened."
+msgstr ""
+
+#: storage/api.py:136
+#, fuzzy
+msgid "File uploaded successfully."
+msgstr "Archivo enviado satisfactoriamente: %s"
+
+#: storage/models.py:24
+msgid "File size in bytes"
+msgstr ""
+
+#: storage/models.py:32
+msgid "Source language"
+msgstr "Idioma Fuente"
+
+#: storage/models.py:41
+msgid "Bound to any object"
+msgstr ""
+
+#: storage/models.py:42
+msgid ""
+"Wether this file is bound to a project/translation resource, otherwise show "
+"in the upload box"
+msgstr ""
+
+#: storage/models.py:46
+#, fuzzy
+msgid "The user who uploaded the specific file."
+msgstr "El usuario al que le pertenece este proyecto."
+
+#: storage/models.py:49
+msgid "Total number of strings"
+msgstr ""
+
+#: storage/models.py:100
+msgid ""
+"File you are trying to upload does not seem to belong to a known i18n format."
+msgstr ""
+
+#: storage/models.py:106
+#, fuzzy
+msgid "You have uploaded an empty file!"
+msgstr "¡Ha enviado un archivo vacío!"
 
 #: teams/forms.py:12
 msgid ""
@@ -1308,10 +1656,8 @@ msgid "The project which this team belongs to."
 msgstr "El proyecto al que pertenece este equipo."
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:123
-#: translations/templates/comp_stats_table.html:15
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
+#: templates/projects/release_detail.html:123
+#: templates/resources/resource.html:114
 msgid "Language"
 msgstr "Idioma"
 
@@ -1432,34 +1778,29 @@ msgstr "Bienvenido a Transifex"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:36 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:49 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Ir a la página de inicio"
 
-#: templates/base-sample.html:37
+#: templates/base-sample.html:50
 msgid "Go to start page"
 msgstr "Ir a la página inicial"
 
-#: templates/base-sample.html:41
+#: templates/base-sample.html:54
 msgid "The projects being served"
 msgstr "Los proyectos que se sirve"
 
-#: templates/base-sample.html:41 templates/projects/base.html:6
-#: templates/projects/project_list.html:14
-msgid "Projects"
-msgstr "Proyectos"
-
-#: templates/base-sample.html:42
+#: templates/base-sample.html:55
 msgid "The languages our service serves"
 msgstr "Los idiomas que nuestro servicio sirve"
 
-#: templates/base-sample.html:42 templates/languages/base.html:5
+#: templates/base-sample.html:55 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Idiomas"
 
-#: templates/base-sample.html:49
+#: templates/base-sample.html:62
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
@@ -1468,15 +1809,15 @@ msgstr ""
 "¡Bienvenido <a title=\"Profile settings\" href=\"%(user_profile)s\">"
 "%(user_username)s</a>!"
 
-#: templates/base-sample.html:51
+#: templates/base-sample.html:64
 msgid "Sign out from the website"
 msgstr "Salir del sitio web"
 
-#: templates/base-sample.html:51
+#: templates/base-sample.html:64
 msgid "Sign out"
 msgstr "Salir"
 
-#: templates/base-sample.html:54 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:67 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1486,24 +1827,29 @@ msgstr "Salir"
 msgid "Sign in"
 msgstr "Ingresar"
 
-#: templates/base-sample.html:57
+#: templates/base-sample.html:70
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Registro"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
+#, fuzzy
+msgid "Learn more about Transifex"
+msgstr "Idiomas en Transifex"
+
+#: templates/base-sample.html:132
 msgid "About"
 msgstr "Acerca de"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
 msgid "Drops us a line"
 msgstr "Dejenos una línea"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
 msgid "Feedback"
 msgstr "Comentarios"
 
-#: templates/base-sample.html:121
+#: templates/base-sample.html:134
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -1526,12 +1872,6 @@ msgid ""
 msgstr ""
 "También podría navegar a través de <a href=\"%(project_list)s\">todos los "
 "proyectos</a>."
-
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:66
-msgid "Search"
-msgstr "Buscar"
 
 #: templates/search.html:9
 msgid "Results"
@@ -1572,6 +1912,11 @@ msgstr ""
 msgid "Find projects by name, description, etc."
 msgstr "Encontrar proyectos por nombre, descripción, etc."
 
+#: templates/search_form.html:6 templates/search_form_plain.html:5
+#, fuzzy
+msgid "Search Projects"
+msgstr "Buscar proyectos"
+
 #: templates/admin/base_site.html:10
 msgid "Transifex administration"
 msgstr "Administración de Transifex"
@@ -1609,19 +1954,109 @@ msgstr "¡Gracias!"
 msgid "Thank you for your feedback."
 msgstr "¡Gracias por sus comentarios!"
 
-#: templates/languages/language_detail.html:17
-#, python-format
-msgid "%(project)s Releases"
-msgstr "Lanzamientos de %(project)s"
-
-#: templates/languages/language_detail.html:24
-#, python-format
+#: templates/helptext/project_form_helptext.html:7
 msgid ""
-"The <a href=\"%(project_url)s\">%(project)s</a> project includes the "
-"following groups of shipped components:"
+"\n"
+"The slug is a short word, summarizing and uniquely defining a project.\n"
+"Slug should be self-explainable, but it is most important to be unique.\n"
+"Its main purpose is to be part of a reference URL for the specific object.\n"
 msgstr ""
-"El proyecto <a href=\"%(project_url)s\">%(project)s</a> contiene los "
-"siguientes grupos de componentes distribuidos:"
+
+#: templates/helptext/project_form_helptext.html:18
+msgid ""
+"\n"
+"The name is a short name for the project. This is the \"codename\" of the\n"
+"project. E.g. this would be \"Transifex\" for transifex project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:28
+msgid ""
+"\n"
+"The description must be one or two sentences length. This is a short\n"
+"summary about the project. It is an optional field for the project form.\n"
+"E.g. Transifex description : \"An open translation platform.\"\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:39
+msgid ""
+"\n"
+"The long description field should contain an extensive description of\n"
+"the project. E.g. Transifex long description : \"Transifex is web system\n"
+" for managing translations from various distributed repositories.\"\n"
+"Caution! <a href=\"http://en.wikipedia.org/wiki/Markdown\">Markdown </a>\n"
+"syntax should be used.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:52
+#, fuzzy
+msgid ""
+"\n"
+"Type in the url of the project's home page.\n"
+msgstr "Ir a la página del escritor de este proyecto."
+
+#: templates/helptext/project_form_helptext.html:59
+#, fuzzy
+msgid "RSS Feed"
+msgstr "Suscripción"
+
+#: templates/helptext/project_form_helptext.html:61
+msgid ""
+"\n"
+"This is the projects feed name. By following feed url, other users,\n"
+"which are interested in translation news, can be synchronized with updates\n"
+"on the project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:70
+#, fuzzy
+msgid "Bug Tracker"
+msgstr "Rastreador de errores"
+
+#: templates/helptext/project_form_helptext.html:72
+msgid ""
+"\n"
+"This field should contain the url for the maintenance, tracking system of\n"
+"the project. For example, the bug tracker url of transifex is:\n"
+"http://www.transifex.org/\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:83
+msgid ""
+"\n"
+"Tags are keywords that annotate an object. Tags separated by whitespaces\n"
+"should be used to help searching for the specific project. They are also\n"
+"a compact description of a project. For example, Transifex has the "
+"following\n"
+"tags: i18n l10n translations.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:95
+msgid ""
+"\n"
+"Maintainers are the people responsible for the administration of the "
+"project.\n"
+"They have permissions to edit the project and to add translators. They can\n"
+"also add, edit remove resources of a project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:102
+msgid ""
+"\n"
+"This field is ajax powered so it is possible to type only a few characters\n"
+"and be redirected to the wishing username. Type the preferred username and\n"
+"will be appeared above to be added. If you want to remove a maintainer "
+"remove\n"
+"him from the list under the text box.\n"
+msgstr ""
+
+#: templates/helptext/project_list.html:7
+msgid ""
+"\n"
+"Project is the atomic structure that has meaning in terms of translation.\n"
+"Each project can have more than one associated repository (i.e. one for\n"
+"each branch, like development tip and stable tip) in order to allow people\n"
+"work in a more grouped manner.\n"
+msgstr ""
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1693,7 +2128,6 @@ msgid "Account"
 msgstr "Cuenta"
 
 #: templates/notification/notices.html:95
-#: templates/projects/component_detail.html:129
 msgid "Note"
 msgstr "Nota"
 
@@ -1732,90 +2166,6 @@ msgid "The project <a href=\"%(project_url)s\">%(project)s</a> was changed."
 msgstr ""
 "El proyecto <a href=\"%(project_url)s\">%(project)s</a> ha sido modificado."
 
-#: templates/notification/project_component_added/notice.html:2
-#, python-format
-msgid ""
-"A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
-"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"Un nuevo componente <a href=\"%(component_url)s\">%(component_name)s</a> ha "
-"sido agregado al proyecto <a href=\"%(project_url)s\">%(project_name)s</a>"
-
-#: templates/notification/project_component_changed/notice.html:2
-#, python-format
-msgid ""
-"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
-"href=\"%(project_url)s\">%(project_name)s</a> project was changed."
-msgstr ""
-"El componente <a href=\"%(component_url)s\">%(component_name)s</a> del "
-"proyecto <a href=\"%(project_url)s\">%(project_name)s</a> ha sido modificado."
-
-#: templates/notification/project_component_deleted/notice.html:2
-#, python-format
-msgid ""
-"The component '%(component_name)s' was deleted from the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project."
-msgstr ""
-"El componente '%(component_name)s' ha sido borrado del proyecto <a href="
-"\"%(project_url)s\">%(project_name)s</a>. "
-
-#: templates/notification/project_component_file_changed/notice.html:2
-#, python-format
-msgid ""
-"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
-"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
-"have been updated:"
-msgstr ""
-"Los siguientes archivos en el componente <a href=\"%(component_url)s\">"
-"%(component_name)s</a> del proyecto <a href=\"%(project_url)s\">"
-"%(project_name)s</a> han sido actualizados:"
-
-#: templates/notification/project_component_file_review_submitted/notice.html:2
-#, python-format
-msgid ""
-"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">"
-"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
-"a> project"
-msgstr ""
-"Un archivo del idioma <a href=\"%(lang_url)s\" title=\"%(filename)s\">"
-"%(lang_name)s</a> ha sido enviado para revisar el componente <a href="
-"\"%(component_url)s\">%(component_name)s</a> del proyecto <a href="
-"\"%(project_url)s\">%(project_name)s</a>"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-msgid ""
-"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"(%(trans_perc)s%)"
-msgstr ""
-"Un archivo para <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(nombre(s)"
-"_idioma)s</a> (%(trans_perc)s%)"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-#, python-format
-msgid "A file called '%(filename)s'"
-msgstr "Un archivo llamado '%(filename)s'"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-#, python-format
-msgid ""
-"was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
-"the <a href=\"%(project_url)s\">%(project_name)s</a> project."
-msgstr ""
-"ha sido enviado al <a href=\"%(component_url)s\">%(component_name)s</a> del "
-"proyecto <a href=\"%(project_url)s\">%(project_name)s</a>."
-
-#: templates/notification/project_component_potfile_error/notice.html:2
-#, python-format
-msgid ""
-"The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"El archivo fuente (POT) tiene algunos problemas y no puede ser creado/"
-"actualizado para el <a href=\"%(component_url)s\">%(component_name)s</a> del "
-"proyecto <a href=\"%(project_url)s\">%(project_name)s</a>"
-
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
@@ -1824,6 +2174,56 @@ msgid ""
 msgstr ""
 "Ha sido generado el reporte semanal del proyecto <a href=\"%(project_url)s\">"
 "%(project_name)s</a>"
+
+#: templates/notification/project_resource_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new resource <a href=\"%(resource_url)s\">%(resource_name)s</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Un nuevo componente <a href=\"%(component_url)s\">%(component_name)s</a> ha "
+"sido agregado al proyecto <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_resource_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The resource <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"El componente <a href=\"%(component_url)s\">%(component_name)s</a> del "
+"proyecto <a href=\"%(project_url)s\">%(project_name)s</a> ha sido modificado."
+
+#: templates/notification/project_resource_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The resource '%(resource_name)s' has been deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"El componente '%(component_name)s' ha sido borrado del proyecto <a href="
+"\"%(project_url)s\">%(project_name)s</a>. "
+
+#: templates/notification/project_resource_translated/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
+"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Un archivo del idioma <a href=\"%(lang_url)s\" title=\"%(filename)s\">"
+"%(lang_name)s</a> ha sido enviado para revisar el componente <a href="
+"\"%(component_url)s\">%(component_name)s</a> del proyecto <a href="
+"\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_resource_translation_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(language_url)s\">%(language_name)s</a> translation of the "
+"project <a href=\"%(project_url)s\">%(project_name)s</a>, resource <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> has been modified."
+msgstr ""
+"Ha sido negada la petición para crear un equipo de traducción de <a href="
+"\"%(language_url)s\">%(language_name)s</a> para el proyecto <a href="
+"\"%(project_url)s\">%(project_name)s</a>."
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1983,334 +2383,6 @@ msgstr ""
 "El usuario <a href=\"%(performer_url)s\">%(performer)s</a> está llamando su "
 "atención"
 
-#: templates/projects/component_confirm_delete.html:6
-#: templates/projects/component_confirm_delete.html:10
-#, python-format
-msgid "Delete %(component_name)s"
-msgstr "Eliminar %(component_name)s"
-
-#: templates/projects/component_confirm_delete.html:14
-#, python-format
-msgid "Say goodbye to <em>%(component_name)s</em>?"
-msgstr "¿Decir adiós a <em>%(component_name)s</em>?"
-
-#: templates/projects/component_confirm_delete.html:20
-#, fuzzy, python-format
-msgid ""
-"Are you sure you want to permanently delete the component "
-"'%(component_name)s' which belongs to %(project_name)s?"
-msgstr ""
-"\n"
-" ¿Esta seguro que desea eliminar permanentemente el componente "
-"'%(component_name)s' perteneciente a %(project_name)s?\n"
-
-#: templates/projects/component_confirm_delete.html:24
-#: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:22
-#: templates/teams/team_confirm_delete.html:17
-msgid "Yes, I'm sure!"
-msgstr "¡Si, estoy seguro!"
-
-#: templates/projects/component_detail.html:30
-msgid ""
-"This component supports local storing of submitted files and also sends the "
-"files to the maintainers\\' email."
-msgstr ""
-"Este componente soporta almacenamiento local de archivos enviados y también "
-"envía los archivos al correo electrónico de las personas encargadas\\'."
-
-#: templates/projects/component_detail.html:32
-msgid ""
-"This component does not support local storing of submitted files. The "
-"submitted files will be sent to the maintainers\\' emails and the statistics "
-"will reflect the change once the files are committed upstream."
-msgstr ""
-"Este componente no soporta almacenamiento local de archivos enviados. Los "
-"archivos enviados serán enviados a los correos electrónicos de los encargados"
-"\\' y las estadísticas reflejarán el cambio una vez que los archivos sean "
-"enviados a la línea de desarrollo principal."
-
-#: templates/projects/component_detail.html:36
-msgid ""
-"This component supports local storing of submitted files and also sends the "
-"files direct to the upstream repository."
-msgstr ""
-"Este componente soporta almacenamiento local de archivos enviados y también "
-"envía los archivos directamente al repositorio de la línea principal de "
-"desarrollo."
-
-#: templates/projects/component_detail.html:65
-#: templates/projects/project_detail.html:22
-msgid "Private Project"
-msgstr "Proyectoo privado"
-
-#: templates/projects/component_detail.html:82
-#: templates/projects/project_detail.html:39
-#: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:26
-msgid "Edit"
-msgstr "Modificar"
-
-#: templates/projects/component_detail.html:87
-#, fuzzy
-msgid "Source Details"
-msgstr "Detalles de origen"
-
-#: templates/projects/component_detail.html:91
-msgid "Repository:"
-msgstr "Repositorio:"
-
-#: templates/projects/component_detail.html:94
-#: templates/projects/component_detail.html:96
-msgid "Link to a web front-end for the source code"
-msgstr "Enlace hacia una interfaz de red del código fuente"
-
-#: templates/projects/component_detail.html:94
-#: templates/projects/component_detail.html:96
-msgid "web"
-msgstr "red"
-
-#: templates/projects/component_detail.html:102
-msgid "Branch:"
-msgstr "Rama:"
-
-#: templates/projects/component_detail.html:107
-msgid "File filter:"
-msgstr "Filtro de archivo:"
-
-#: templates/projects/component_detail.html:111
-msgid "i18n method:"
-msgstr "Método de internacionalización:"
-
-#: templates/projects/component_detail.html:117
-msgid "Release:"
-msgid_plural "Releases:"
-msgstr[0] "Lanzamiento:"
-msgstr[1] "Lanzamientos:"
-
-#: templates/projects/component_detail.html:125
-msgid "Allows submissions:"
-msgstr "Permite entregas:"
-
-#: templates/projects/component_detail.html:139
-#: templates/projects/component_lang_detail.html:30
-#, fuzzy
-msgid "Translation Files"
-msgstr "Archivos de traducción"
-
-#: templates/projects/component_detail.html:144
-msgid "Source file:"
-msgstr "Archivo fuente:"
-
-#: templates/projects/component_detail.html:151
-msgid "Statistics last updated:"
-msgstr "Última actualización de Estadísticas:"
-
-#: templates/projects/component_detail.html:153
-msgid "ago"
-msgstr "atrás"
-
-#: templates/projects/component_detail.html:154
-msgid "Component not yet pulled from source repository."
-msgstr "Componente no extraido de repositorio fuente."
-
-#: templates/projects/component_detail.html:157
-msgid "Refresh and re-calculate statistics. This action may take some time."
-msgstr ""
-"Actualizar y re-calcular estadísticas. Esta acción puede tardar un poco."
-
-#: templates/projects/component_detail.html:157
-msgid "Refresh cache"
-msgstr "Refrescar cache"
-
-#: templates/projects/component_detail.html:162
-msgid "Reset Transifex's local data for a clean pull"
-msgstr "Reconfigurar datos locales de Transifex para una extracción limpia"
-
-#: templates/projects/component_detail.html:162
-msgid "Clear cache"
-msgstr "Limpiar cache"
-
-#: templates/projects/component_detail.html:165
-msgid "Any locally modified data will be overwritten with fresh copies."
-msgstr "Cualquier información modificada será sobrescrita con copias frescas."
-
-#: templates/projects/component_detail.html:165
-msgid "warning"
-msgstr "advertencia"
-
-#: templates/projects/component_detail.html:172
-msgid "Teams:"
-msgstr "Equipos:"
-
-#: templates/projects/component_detail.html:174
-msgid "See the translation teams."
-msgstr "Ver los equipos de traducción."
-
-#: templates/projects/component_detail.html:198
-#, fuzzy
-msgid "Translation File Reviews"
-msgstr "Revisiones de archivos de traducción"
-
-#: templates/projects/component_detail.html:200
-#, fuzzy
-msgid ""
-"Translators can request a file review from another person, who can take a "
-"look at his work and provide any feedback needed, or simply submit the file "
-"to the upstream project."
-msgstr ""
-"Los traductores pueden solicitar que alguna otra persona revise un archivo,\n"
-"  quien a su vez podrá realizar algún tipo de comentario cuando sea "
-"necesario,\n"
-"  o directamente enviar el archivo al proyecto."
-
-#: templates/projects/component_detail.html:203
-#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
-msgid "Reviews"
-msgstr "Revisiones"
-
-#: templates/projects/component_detail.html:205
-#: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:128
-msgid "History"
-msgstr "Historial"
-
-#: templates/projects/component_detail.html:227
-msgid "Delete component"
-msgstr "Borrar componente"
-
-#: templates/projects/component_form.html:7
-#: templates/projects/component_form.html:12
-msgid "Add a component"
-msgstr "Agregar componente"
-
-#: templates/projects/component_form.html:8
-#, python-format
-msgid "Edit %(component_name)s"
-msgstr "Modificar %(component_name)s"
-
-#: templates/projects/component_form.html:13
-#: templates/projects/component_form.html:84
-#, python-format
-msgid "Edit Component '%(component_name)s'"
-msgstr "Modificar componente '%(component_name)s'"
-
-#: templates/projects/component_form.html:82
-#, python-format
-msgid "New component for %(project_name)s"
-msgstr "Nuevo componente para %(project_name)s"
-
-#: templates/projects/component_form.html:103
-msgid "Checkout"
-msgstr "Control"
-
-#: templates/projects/component_form.html:107
-msgid "Submission"
-msgstr "Entrega"
-
-#: templates/projects/component_form.html:123
-#: templates/projects/component_form.html:133
-msgid "Save component"
-msgstr "Guardar componente"
-
-#: templates/projects/component_list.html:10
-#: templates/projects/release_list.html:8
-msgid "Add"
-msgstr "Agregar"
-
-#: templates/projects/component_list.html:15
-msgid "Project Component"
-msgid_plural "Project Components"
-msgstr[0] "Componente de Proyecto"
-msgstr[1] "Componentes de Proyecto"
-
-#: templates/projects/component_list.html:26
-msgid "edit"
-msgstr "modificar"
-
-#: templates/projects/component_list.html:29
-msgid "del"
-msgstr "eliminar"
-
-#: templates/projects/component_list.html:45
-msgid "No components are registered for this project yet."
-msgstr "Todavia no hay componentes registrados para este proyecto."
-
-#: templates/projects/component_list.html:47
-msgid "Add one!"
-msgstr "¡Agregar uno!"
-
-#: templates/projects/component_list.html:53
-#, fuzzy
-msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project "
-"which consist of actual files. Examples of components of a software project "
-"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
-msgstr ""
-"<em>Componentes</em> son más pequeños, las partes independientes de un "
-"proyecto más grandeque los archivos reales.\n"
-"    Ejemplos de componentes de un proyecto de software podrían ser \"UI\" y "
-"\"Docs\" o ramas como <code>HEAD</code>."
-
-#: templates/projects/component_submit_new_file.html:6
-msgid "Send a new translation for this component."
-msgstr "Enviar una nueva traducción para este componente."
-
-#: templates/projects/component_submit_new_file.html:6
-msgid "Add a new translation"
-msgstr "Agregar nueva traducción"
-
-#: templates/projects/component_submit_new_file.html:9
-msgid "Add a translation file"
-msgstr "Agregar archivo de traducción"
-
-#: templates/projects/component_submit_new_file.html:13
-msgid "Local file:"
-msgstr "Archivo local:"
-
-#: templates/projects/component_submit_new_file.html:15
-msgid "The translation file to be uploaded for the new language."
-msgstr "El archivo de traducción a ser actualizado para el nuevo idioma."
-
-#: templates/projects/component_submit_new_file.html:18
-msgid "Select the target file:"
-msgstr "Seleccionar el archivo de destino:"
-
-#: templates/projects/component_submit_new_file.html:27
-msgid ""
-"The target file is the name of the new file language. It must match the "
-"component file filter."
-msgstr ""
-"El archivo de destino es el nombre del nuevo archivo de idioma. Debe "
-"coincidir con componente de filtro de archivo."
-
-#: templates/projects/component_submit_new_file.html:30
-msgid "or enter it here:"
-msgstr "o ingréselo aquí:"
-
-#: templates/projects/component_submit_new_file.html:32
-msgid "Example: "
-msgstr "Ejemplo:"
-
-#: templates/projects/component_submit_new_file.html:35
-msgid "Commit message:"
-msgstr "Enviar mensaje:"
-
-#: templates/projects/component_submit_new_file.html:37
-msgid "Example: Updates to Brazilian Portuguese translation"
-msgstr "Ejemplo: Actualizaciones a traducción de Portugués brasileño"
-
-#: templates/projects/component_submit_new_file.html:43
-#: translations/templates/component_submit.html:14
-msgid "Send"
-msgstr "Enviar"
-
-#: templates/projects/component_submit_new_file.html:45
-#: templates/webtrans/transfile_edit.html:137
-#: translations/templates/component_submit.html:20
-msgid "Send for Review"
-msgstr "Enviar para revisión"
-
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
 msgid "Delete %(project_name)s"
@@ -2341,14 +2413,37 @@ msgstr ""
 "  ¿Está seguro de que quiere borrar permanentemente el proyecto registrado "
 "'%(project_name)s'?\n"
 
+#: templates/projects/project_confirm_delete.html:21
+#: templates/projects/release_confirm_delete.html:22
+#: templates/resources/resource_confirm_delete.html:19
+#: templates/resources/resource_translations_confirm_delete.html:31
+#: templates/teams/team_confirm_delete.html:17
+msgid "Yes, I'm sure!"
+msgstr "¡Si, estoy seguro!"
+
+#: templates/projects/project_detail.html:22
+#: templates/resources/resource.html:75
+msgid "Private Project"
+msgstr "Proyectoo privado"
+
+#: templates/projects/project_detail.html:39
+#: templates/projects/release_detail.html:67
+#: templates/resources/resource.html:84 templates/teams/team_detail.html:52
+msgid "Edit"
+msgstr "Modificar"
+
 #: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:60
+#: templates/projects/release_detail.html:74
 msgid "Details"
 msgstr "Detalles"
 
+#: templates/projects/project_detail.html:52
+msgid "Watch:"
+msgstr "Monitorear:"
+
 #: templates/projects/project_detail.html:60
-#: templates/projects/release_detail.html:64
+#: templates/projects/release_detail.html:78
 msgid "Homepage:"
 msgstr "Página Principal:"
 
@@ -2367,7 +2462,7 @@ msgid "Bug tracker for %(project_name)s"
 msgstr "Rastreador de errores para %(project_name)s"
 
 #: templates/projects/project_detail.html:72
-#: templates/projects/project_list.html:46
+#: templates/projects/project_list.html:53
 msgid "Tags:"
 msgstr "Etiquetas:"
 
@@ -2377,15 +2472,25 @@ msgid_plural "Maintainers:"
 msgstr[0] "Encargado del proyecto"
 msgstr[1] "Encargados del proyecto"
 
-#: templates/projects/project_detail.html:96
+#: templates/projects/project_detail.html:101
+#, fuzzy
+msgid "Number of Languages: "
+msgstr "Número de Plurales"
+
+#: templates/projects/project_detail.html:109
 msgid "External links:"
 msgstr "Enlaces externos:"
 
-#: templates/projects/project_detail.html:98
+#: templates/projects/project_detail.html:111
 msgid "Screenshots"
 msgstr "Capturas de Pantalla"
 
-#: templates/projects/project_detail.html:144
+#: templates/projects/project_detail.html:127
+#: templates/resources/resource.html:255 templates/teams/team_detail.html:224
+msgid "History"
+msgstr "Historial"
+
+#: templates/projects/project_detail.html:154
 msgid "Delete project"
 msgstr "Eliminar proyecto"
 
@@ -2416,7 +2521,7 @@ msgstr "Agregar los detalles de su proyecto"
 msgid "Edit the details of your project"
 msgstr "Editar los detalles de su proyecto"
 
-#: templates/projects/project_form.html:50
+#: templates/projects/project_form.html:52
 msgid "Save project"
 msgstr "Guardar proyecto"
 
@@ -2424,9 +2529,9 @@ msgstr "Guardar proyecto"
 #: templates/projects/project_form_access_control.html:10
 #: templates/projects/project_form_access_control.html:16
 #: templates/projects/project_form_base.html:90
-#: templates/projects/project_form_permissions.html:8
-#: templates/projects/project_form_permissions.html:15
-#: templates/projects/project_menu.html:65
+#: templates/projects/project_form_permissions.html:9
+#: templates/projects/project_form_permissions.html:16
+#: templates/projects/project_menu.html:66
 msgid "Access Control"
 msgstr "Control de Acceso"
 
@@ -2460,7 +2565,7 @@ msgstr "Control de acceso será habilitado una vez haya sido creado el proyecto"
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Modificando <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form_permissions.html:26
+#: templates/projects/project_form_permissions.html:27
 msgid ""
 "Give write access to a translator to send translations to your project "
 "independent of a translation team."
@@ -2468,11 +2573,11 @@ msgstr ""
 "Otorgar acceso de escritura a un traductor para enviar traducciones a su "
 "proyecto, independientemente de algún equipo de traducción."
 
-#: templates/projects/project_form_permissions.html:39
+#: templates/projects/project_form_permissions.html:40
 msgid "Pending requests:"
 msgstr "Solicitudes pendientes:"
 
-#: templates/projects/project_form_permissions.html:59
+#: templates/projects/project_form_permissions.html:60
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with access to submit files:"
 msgstr "Los usuarios a quienes se les ha otorgado acceso para enviar archivos:"
@@ -2481,33 +2586,37 @@ msgstr "Los usuarios a quienes se les ha otorgado acceso para enviar archivos:"
 msgid "Latest Projects"
 msgstr "Últimos Proyectos"
 
-#: templates/projects/project_list.html:8
+#: templates/projects/project_list.html:9
 msgid "Project list"
 msgstr "Lista de proyecto"
 
-#: templates/projects/project_list.html:17
-#, python-format
-msgid "Projects with tag '%(tag)s'"
-msgstr "Proyectos con etiqueta '%(tag)s'"
-
-#: templates/projects/project_list.html:18
+#: templates/projects/project_list.html:20
 msgid "Projects on Transifex"
 msgstr "Proyectos en Transifex"
 
-#: templates/projects/project_list.html:25
+#: templates/projects/project_list.html:28
 msgid "Add a new project"
 msgstr "Agregar nuevo proyecto"
 
-#: templates/projects/project_list.html:54
+#: templates/projects/project_list.html:35
+#, fuzzy
+msgid "Projects feed"
+msgstr "Proyecto Eliminado"
+
+#: templates/projects/project_list.html:36
+msgid "Subscribe to this feed"
+msgstr ""
+
+#: templates/projects/project_list.html:61
 msgid "No projects registered yet. :-("
 msgstr "Todavía no hay proyectos registrados. :-("
 
-#: templates/projects/project_list.html:57
+#: templates/projects/project_list.html:64
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr "¿Por qué usted no <a href=\"%(project_create)s\"> añade uno</a>?"
 
-#: templates/projects/project_list.html:67
+#: templates/projects/project_list.html:74
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2516,25 +2625,15 @@ msgstr ""
 "¿No pudo hallar su proyecto? Prosiga y <a href=\"%(project_create)s\">"
 "¡añádalo</a>!"
 
-#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
-msgid "Overview"
+#: templates/projects/project_menu.html:59
+#, fuzzy
+msgid "Project Overview"
 msgstr "Vista Previa"
 
-#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
-#: templates/teams/team_list.html.py:26
-msgid "Translation Teams"
-msgstr "Equipos de traducción"
-
-#: templates/projects/project_top_translators.html:4
-msgid "Top Translators"
-msgstr "Mejores traductores"
-
-#: templates/projects/project_top_translators.html:7
-#, python-format
-msgid "%(number)s submission"
-msgid_plural "%(number)s submissions"
-msgstr[0] "%(number)s presentación"
-msgstr[1] "%(number)s presentaciones"
+#: templates/projects/project_menu.html:73 templates/teams/team_detail.html:38
+#: templates/teams/team_list.html:22
+msgid "Teams"
+msgstr "Equipos"
 
 #: templates/projects/release_confirm_delete.html:6
 #: templates/projects/release_confirm_delete.html:10
@@ -2557,41 +2656,83 @@ msgstr ""
 "  ¿Está seguro de querer eliminar permanentemente el lanzamiento al equipo "
 "'%(release_name)s' perteneciente al proyecto %(project_name)s?\n"
 
-#: templates/projects/release_detail.html:69
+#: templates/projects/release_detail.html:83
 msgid "Release date:"
 msgstr "Fecha de Lanzamiento:"
 
-#: templates/projects/release_detail.html:73
+#: templates/projects/release_detail.html:87
 msgid "String freeze:"
 msgstr "Cadena congelada:"
 
-#: templates/projects/release_detail.html:77
+#: templates/projects/release_detail.html:91
 msgid "Devel freeze:"
 msgstr "Desarrollo congelado:"
 
-#: templates/projects/release_detail.html:82
-msgid "Components:"
-msgstr "Componentes:"
+#: templates/projects/release_detail.html:96
+msgid "Resources:"
+msgstr ""
 
-#: templates/projects/release_detail.html:86
-msgid "Click here to show or hide the component list"
-msgstr "Haga clic aquí para mostrar u ocultar la lista de los componentes"
+#: templates/projects/release_detail.html:100
+#, fuzzy
+msgid "Click here to show or hide the resource list"
+msgstr "Haga clic para mostrar u ocultar los archivos fuente"
 
-#: templates/projects/release_detail.html:87
-#, python-format
-msgid "This release has %(components_number)s components."
+#: templates/projects/release_detail.html:101
+#, fuzzy, python-format
+msgid "This release has %(resources_number)s resourses."
 msgstr "Este lanzamiento posee %(components_number)s componentes."
 
-#: templates/projects/release_detail.html:103
+#: templates/projects/release_detail.html:117
 #, fuzzy
 msgid "Translation Statistics"
 msgstr "Estadísticas de traducción"
 
-#: templates/projects/release_detail.html:110
-msgid "No translations added for this release. :-("
-msgstr "No se han agregado traducciones a este lanzamiento. :-("
+#: templates/projects/release_detail.html:124
+#: templates/projects/release_language_detail.html:59
+#: templates/resources/resource.html:115 templates/teams/team_detail.html:138
+#, fuzzy
+msgid "Completion"
+msgstr "Colecciones"
 
-#: templates/projects/release_detail.html:121
+#: templates/projects/release_detail.html:125
+#, fuzzy
+msgid "Last Translation"
+msgstr "Traducción"
+
+#: templates/projects/release_detail.html:130
+#: templates/projects/release_language_detail.html:65
+#: templates/resources/resource.html:121 templates/teams/team_detail.html:144
+#, fuzzy
+msgid "click for translation"
+msgstr "Rechazar traducción"
+
+#: templates/projects/release_detail.html:136
+#: templates/projects/release_language_detail.html:71
+#: templates/resources/resource.html:130
+#: templates/resources/resource_actions.html:53
+#: templates/teams/team_detail.html:150
+#, fuzzy
+msgid "Translated: "
+msgstr "Traducido:"
+
+#: templates/projects/release_detail.html:136
+#: templates/projects/release_language_detail.html:71
+#: templates/resources/resource.html:130
+#: templates/resources/resource_actions.html:53
+#: templates/teams/team_detail.html:150
+#, fuzzy
+msgid "Untranslated: "
+msgstr "Sin Traducir:"
+
+#: templates/projects/release_detail.html:155
+#: templates/projects/resource_list.html:135
+#: templates/resources/resource.html:149
+#: templates/resources/resource_list_more.html:27
+#, fuzzy
+msgid "no translations yet"
+msgstr "archivos de traducción"
+
+#: templates/projects/release_detail.html:180
 msgid "Delete release"
 msgstr "Lanzamiento eliminado"
 
@@ -2624,53 +2765,50 @@ msgstr ""
 msgid "Save release"
 msgstr "Guardar lanzamiento"
 
-#: templates/projects/release_language_detail.html:26
+#: templates/projects/release_language_detail.html:41
 #, python-format
 msgid "Release '%(release_name)s"
 msgstr "Lanzamiento '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:38
-#, fuzzy
-msgid "Project/Component Statistics"
-msgstr "Estadísticas de Proyecto/Componente"
-
-#: templates/projects/release_language_detail.html:59
-msgid ""
-"Transifex searched for projects containing translation files for this "
-"language and release, but couldn't find any. Try submitting such a file and "
-"check again."
-msgstr ""
-"Transifex buscó proyectos que contengan archivos de traducción para este "
-"idioma y lanzamiento, pero no halló ninguno. En su lugar, intente enviar ese "
-"archivo y verifique nuevamente."
+#: templates/projects/release_language_detail.html:53
+msgid "Resource under this Release"
+msgid_plural "Resources under this Release"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/projects/release_language_detail.html:60
-#, python-format
-msgid ""
-"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
-"us know</a>."
+#: templates/resources/resource.html:116 templates/teams/team_detail.html:139
+msgid "Last Updated"
 msgstr ""
-"Si piensa que esto no debe suceder, por favor <a href=\"%(contact_form)s"
-"\">háganoslo saber</a>."
 
-#: templates/projects/release_language_detail.html:64
-msgid "Untranslated Components"
-msgstr "Componentes Sin Traducir"
-
-#: templates/projects/release_language_detail.html:66
-#, python-format
-msgid ""
-"The following components will be included in %(release_name)s, but there are "
-"no translations sent for %(language_name)s yet."
+#: templates/projects/release_language_detail.html:90
+#: templates/teams/team_detail.html:169
+msgid "no activity yet"
 msgstr ""
-"Los siguientes componentes se incluirán en %(release_name)s, pero aún no hay "
-"traducciones enviadas a %(language_name)s."
 
-#: templates/projects/release_list.html:13
+#: templates/projects/release_language_detail.html:107
+#: templates/resources/resource.html:207 templates/teams/team_detail.html:186
+#, fuzzy
+msgid "Translation Details"
+msgstr "Detalles del equipo de traducción"
+
+#: templates/projects/release_language_detail.html:114
+#: templates/projects/resource_list.html:184
+#: templates/teams/team_detail.html:193
+#, fuzzy
+msgid "No resources are registered for this project yet."
+msgstr "Todavia no hay componentes registrados para este proyecto."
+
+#: templates/projects/release_list.html:12
+msgid "Add"
+msgstr "Agregar"
+
+#: templates/projects/release_list.html:15
+#: templates/projects/release_list.html:21
 msgid "Project Releases"
 msgstr "Lanzamientos de proyecto"
 
-#: templates/projects/release_list.html:28
+#: templates/projects/release_list.html:38
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href="
@@ -2679,122 +2817,263 @@ msgstr ""
 "Aún no existen registrados lanzamientos para este proyecto. ¿Por qué no <a "
 "href=\"%(release_create)s\">agrega uno</a>?"
 
-#: templates/reviews/review_form.html:10
-msgid "Submit"
-msgstr "Enviar"
+#: templates/projects/resource_list.html:9
+#, fuzzy
+msgid "Project Resource"
+msgid_plural "Project Resources"
+msgstr[0] "Lanzamientos de proyecto"
+msgstr[1] "Lanzamientos de proyecto"
 
-#: templates/reviews/review_list.html:26
-msgid "Translation Review Requests"
-msgstr "Peticiones de revisión de traducción"
+#: templates/projects/resource_list.html:122
+#: templates/resources/resource_list_more.html:14
+msgid "edit"
+msgstr "modificar"
 
-#: templates/reviews/review_list.html:30
-msgid "Open Requests"
-msgstr "Peticiones abiertas"
+#: templates/projects/resource_list.html:123
+#: templates/resources/resource_list_more.html:15
+msgid "del"
+msgstr "eliminar"
 
-#: templates/reviews/review_list.html:38
-#, python-format
-msgid "Review Request #%(review_id)s "
-msgstr "Peticiones de revisión #%(review_id)s "
-
-#: templates/reviews/review_list.html:46
-msgid "Who and when"
-msgstr "Quién y cuándo"
-
-#: templates/reviews/review_list.html:48
-msgid "See profile"
-msgstr "Ver prefil"
-
-#: templates/reviews/review_list.html:49
-#, fuzzy, python-format
-msgid "%(time_since)s ago"
+#: templates/projects/resource_list.html:145
+msgid "showing"
 msgstr ""
-"\n"
-"        hace %(time_since)s\n"
-"      "
 
-#: templates/reviews/review_list.html:53
-msgid "Translation Language"
-msgstr "Idioma de traducción"
+#: templates/projects/resource_list.html:145
+#, fuzzy
+msgid "out of"
+msgstr "Acerca de usted mismo"
 
-#: templates/reviews/review_list.html:56
-msgid "Go to language page"
+#: templates/projects/resource_list.html:149
+msgid "show more"
+msgstr ""
+
+#: templates/projects/resource_list.html:151
+msgid "show all"
+msgstr ""
+
+#: templates/projects/resource_list.html:175
+#, fuzzy
+msgid "Translate All"
+msgstr "Traducido"
+
+#: templates/projects/resource_list.html:188
+msgid ""
+"A <em>Resource</em> is mapped to master file and it's translated versions.\n"
+"    For example Resource could be bound to nano.pot and de.po, it.po, fi.po, "
+"etc."
+msgstr ""
+
+#: templates/resources/resource.html:90
+#, fuzzy
+msgid "Translation Resource details"
+msgstr "Detalles del equipo de traducción"
+
+#: templates/resources/resource.html:93
+#, fuzzy
+msgid "Source Language:"
+msgstr "Idioma Fuente"
+
+#: templates/resources/resource.html:99
+#, fuzzy
+msgid "Total Strings:"
+msgstr "Total:"
+
+#: templates/resources/resource.html:102
+#, fuzzy
+msgid "words"
+msgstr "Contraseña"
+
+#: templates/resources/resource.html:108
+#, fuzzy
+msgid "Available translations"
+msgstr "Agregar nueva traducción"
+
+#: templates/resources/resource.html:184
+msgid "Trying to lock resource..."
+msgstr ""
+
+#: templates/resources/resource.html:248
+#, fuzzy
+msgid "Translate Resource"
+msgstr "Traducido"
+
+#: templates/resources/resource.html:259
+#, fuzzy
+msgid "No actions recorded yet :)"
+msgstr "Todavía no hay registro histórico."
+
+#: templates/resources/resource.html:276
+#, fuzzy
+msgid "Delete translation resource"
+msgstr "Ver los equipos de traducción."
+
+#: templates/resources/resource_actions.html:23
+#, python-format
+msgid " Total:&nbsp;%(entities_count)s strings,"
+msgstr ""
+
+#: templates/resources/resource_actions.html:24
+#, python-format
+msgid " %(wordcount)s words"
+msgstr ""
+
+#: templates/resources/resource_actions.html:38
+msgid ""
+" \n"
+"        <span title=\"You cannot translate the source language strings."
+"\">This is the Source Language</span>\n"
+"        "
+msgstr ""
+
+#: templates/resources/resource_actions.html:43
+#: templates/resources/resource_actions.html:46
+#, fuzzy
+msgid "Translate Now"
+msgstr "Traducido"
+
+#: templates/resources/resource_actions.html:46
+#, python-format
+msgid "To translate, you need to be a member of the %(lang_name)s team."
+msgstr ""
+
+#: templates/resources/resource_actions.html:61
+msgid "remaining strings"
+msgstr ""
+
+#: templates/resources/resource_actions.html:69
+msgid "View strings online"
+msgstr ""
+
+#: templates/resources/resource_actions.html:74
+#, fuzzy
+msgid "Visit language team"
 msgstr "Ir a la página del idioma"
 
-#: templates/reviews/review_list.html:63
-msgid "File target"
-msgstr "Archivo elegido"
+#: templates/resources/resource_actions.html:80
+#, fuzzy
+msgid "Clone to new language"
+msgstr "Ir a la página del idioma"
 
-#: templates/reviews/review_list.html:64
-msgid "Download the version sent for review"
-msgstr "Descargar la versión enviada para revisión"
+#: templates/resources/resource_actions.html:98
+#, fuzzy
+msgid "Download for viewing"
+msgstr "Descargar para observar"
 
-#: templates/reviews/review_list.html:67
-msgid "Score"
-msgstr "Puntaje"
+#: templates/resources/resource_actions.html:104
+#, fuzzy
+msgid "Download for translation"
+msgstr "Descargar para observar"
 
-#: templates/reviews/review_list.html:81
-msgid "Status"
-msgstr "Estado"
+#: templates/resources/resource_actions.html:129
+#, fuzzy
+msgid "Translation last updated "
+msgstr "Idioma de traducción"
 
-#: templates/reviews/review_list.html:91
-msgid "Close Review"
-msgstr "Cerrar revisión"
+#: templates/resources/resource_actions.html:131
+msgid "by"
+msgstr ""
 
-#: templates/reviews/review_list.html:94
-msgid "Accept and submit translation"
-msgstr "Aceptar y enviar traducciones"
+#: templates/resources/resource_actions.html:137
+#, fuzzy
+msgid "No translation yet"
+msgstr "archivos de traducción"
 
-#: templates/reviews/review_list.html:94
-msgid "Accept"
-msgstr "Aceptar"
+#: templates/resources/resource_confirm_delete.html:4
+#, fuzzy, python-format
+msgid "Delete %(resource_name)s"
+msgstr "Eliminar %(release_name)s"
 
-#: templates/reviews/review_list.html:95
-msgid "Reject translation"
-msgstr "Rechazar traducción"
+#: templates/resources/resource_confirm_delete.html:6
+#, fuzzy, python-format
+msgid "Delete <em>%(resource_name)s</em>"
+msgstr "Eliminar <em>%(release_name)s</em>"
 
-#: templates/reviews/review_list.html:95
-msgid "Reject"
-msgstr "Rechazar"
+#: templates/resources/resource_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(resource_name)s</em>?"
+msgstr "¿Decir adiós a <em>%(release_name)s</em>?"
 
-#: templates/reviews/review_list.html:111
-msgid "No open requests!"
-msgstr "¡No existen peticiones abiertas!"
+#: templates/resources/resource_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the translation resource "
+"'%(resource_name)s'?\n"
+msgstr ""
+"\n"
+"  ¿Está seguro de que desea borrar permanentemente el lanzamiento registrado "
+"'%(release_name)s'?\n"
 
-#: templates/reviews/review_list.html:115
-msgid "Closed Requests"
-msgstr "Solicitudes cerradas"
+#: templates/resources/resource_form.html:22
+#, fuzzy, python-format
+msgid "Edit %(resource_name)s"
+msgstr "Modificar %(release_name)s"
 
-#: templates/reviews/review_list.html:121
-msgid "ID"
-msgstr "ID"
+#: templates/resources/resource_form.html:29
+#, fuzzy
+msgid "Edit the details of the translation resource"
+msgstr "Editar los detalles de su proyecto"
 
-#: templates/reviews/review_list.html:122
-msgid "Author"
-msgstr "Autor"
+#: templates/resources/resource_form.html:40
+#, fuzzy
+msgid "Save translation resource"
+msgstr "Ver los equipos de traducción."
 
-#: templates/reviews/review_list.html:124
-msgid "Time Since"
-msgstr "Tiempo desde"
+#: templates/resources/resource_translations_confirm_delete.html:6
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Delete translations for %(language_name)s of %(resource_name)s resource.\n"
+msgstr "Ultima traducción para idioma %(language)s en lanzamiento %(release)s."
 
-#: templates/reviews/review_list.html:125
-msgid "Resolution"
-msgstr "Resolución"
+#: templates/resources/resource_translations_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Delete <em>%(language_name)s</em>\n"
+msgstr "Eliminar <em>%(release_name)s</em>"
 
-#: templates/reviews/review_list.html:126
-msgid "Attachment"
-msgstr "Adjunto"
+#: templates/resources/resource_translations_confirm_delete.html:20
+#, fuzzy, python-format
+msgid ""
+"\n"
+"    Say goodbye to all translations for <em>%(language_name)s</em>?"
+msgstr "¿Despedirse del equipo <em>%(lang_name)s</em> team?"
 
-#: templates/reviews/review_list.html:127
-msgid "Actions"
-msgstr "Acciones"
+#: templates/resources/resource_translations_confirm_delete.html:26
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the translations for "
+"'%(language_name)s' of '%(resource_name)s'?\n"
+msgstr ""
+"\n"
+"  ¿Está seguro de que desea borrar permanentemente el lanzamiento registrado "
+"'%(release_name)s'?\n"
 
-#: templates/reviews/review_list.html:151
-msgid "Reopen review request"
-msgstr "Reabrir petición de revisión"
+#: templates/resources/upload_create_resource_form.html:16
+#, python-format
+msgid "Extracting strings from '%(resource_name)s'. This might take a while..."
+msgstr ""
 
-#: templates/reviews/review_list.html:163
-msgid "No closed requests!"
-msgstr "¡No existen peticiones cerradas!"
+#: templates/resources/upload_create_resource_form.html:49
+msgid "Create resource to be translated"
+msgstr ""
+
+#: templates/resources/upload_create_resource_form.html:51
+msgid ""
+"Upload a local file to be used as the source file of the resource. It's "
+"equivalent to the POT file for the GNU's gettext method."
+msgstr ""
+
+#: templates/resources/upload_create_resource_form.html:58
+#, fuzzy
+msgid "Create Resource"
+msgstr "Cree su cuenta"
+
+#: templates/resources/upload_resource_translation_button.html:21
+msgid "Adding translations. This might take a while..."
+msgstr ""
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2856,6 +3135,11 @@ msgstr ""
 "<p>Por favor regístrese con su dirección de correo electrónico, o con su "
 "nombre de pantalla.<br />\n"
 
+#: templates/storage/storagefilewidget.html:16
+#, fuzzy
+msgid "Upload file"
+msgstr "Archivo local:"
+
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
@@ -2871,11 +3155,7 @@ msgstr ""
 "  ¿Está seguro de querer eliminar permanentemente al equipo '%(lang_name)s' "
 "perteneciente al proyecto %(project_name)s?\n"
 
-#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-msgid "Teams"
-msgstr "Equipos"
-
-#: templates/teams/team_detail.html:22
+#: templates/teams/team_detail.html:48
 #, fuzzy, python-format
 msgid ""
 "Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
@@ -2885,49 +3165,56 @@ msgstr ""
 "  Equipos de traducción - %(language_name)s <sup class=\"entry_metalink\">"
 "%(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:34
+#: templates/teams/team_detail.html:60
 msgid "Mainlist:"
 msgstr "Lista principal:"
 
-#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:68 templates/teams/team_list.html:79
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Coordinador:"
 msgstr[1] "Coordinadores:"
 
-#: templates/teams/team_detail.html:57
+#: templates/teams/team_detail.html:86
 msgid "Become a translator:"
 msgstr "Conviértase en traductor:"
 
-#: templates/teams/team_detail.html:60
+#: templates/teams/team_detail.html:89
 msgid "Join this Team"
 msgstr "Unirse a este equipo"
 
-#: templates/teams/team_detail.html:71
+#: templates/teams/team_detail.html:100
 msgid "People waiting for team membership approving:"
 msgstr "Personas esperando aprobación de pertenencia a un equipo:"
 
-#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:110 templates/teams/team_list.html:53
 msgid "Approve"
 msgstr "Aprobar"
 
-#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:114 templates/teams/team_list.html:57
 msgid "Deny"
 msgstr "Negar"
 
-#: templates/teams/team_detail.html:92
+#: templates/teams/team_detail.html:120
 msgid "Withdraw"
 msgstr "Retirar"
 
-#: templates/teams/team_detail.html:105
+#: templates/teams/team_detail.html:132
+#, fuzzy
+msgid "Team Translating Resource"
+msgid_plural "Team Translating Resources:"
+msgstr[0] "Se solicitó la creación de un equipo"
+msgstr[1] "Se solicitó la creación de un equipo"
+
+#: templates/teams/team_detail.html:201
 msgid "Team Members:"
 msgstr "Miembros del equipo:"
 
-#: templates/teams/team_detail.html:115
+#: templates/teams/team_detail.html:211
 msgid "Leave"
 msgstr "Abandonar"
 
-#: templates/teams/team_detail.html:151
+#: templates/teams/team_detail.html:247
 msgid "Delete team"
 msgstr "Eliminar equipo"
 
@@ -2956,31 +3243,36 @@ msgstr ""
 msgid "Save team"
 msgstr "Guardar equipo"
 
-#: templates/teams/team_list.html:30
+#: templates/teams/team_list.html:20 templates/teams/team_list.html.py:29
+msgid "Translation Teams"
+msgstr "Equipos de traducción"
+
+#: templates/teams/team_list.html:33
 msgid "Add a new team"
 msgstr "Agregar nuevo equipo"
 
-#: templates/teams/team_list.html:41
+#: templates/teams/team_list.html:44
 msgid "List of team requests:"
 msgstr "Listado de peticiones de equipo:"
 
-#: templates/teams/team_list.html:71
+#: templates/teams/team_list.html:74
 msgid "List of available teams:"
 msgstr "Listado de equipos disponibles:"
 
-#: templates/teams/team_list.html:87
-msgid "No translation team created yet. :("
+#: templates/teams/team_list.html:93
+#, fuzzy
+msgid "No translation team has been created yet. Why don't you start one?"
 msgstr "Aún no se ha creado un equipo de traducción. :("
 
-#: templates/teams/team_list.html:92
+#: templates/teams/team_list.html:98
 msgid "Request a new translation team for this project"
 msgstr "Solicitar un nuevo equipo de traducción para este proyecto"
 
-#: templates/teams/team_list.html:92
+#: templates/teams/team_list.html:98
 msgid "Request a new team"
 msgstr "Solicitar un nuevo equipo"
 
-#: templates/teams/team_list.html:102
+#: templates/teams/team_list.html:108
 msgid "Request team"
 msgstr "Solicitar equipo"
 
@@ -3016,10 +3308,6 @@ msgstr ""
 "traducción.\n"
 "        "
 
-#: templates/translations/stats_table_filter_box.html:7
-msgid "Show completed"
-msgstr "Mostrar lo que está completo"
-
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr "Dar acceso a un traductor para enviar traducciones a su proyecto"
@@ -3047,6 +3335,10 @@ msgstr "Retirar solicitud"
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
 msgstr "Solicitud denegada"
+
+#: templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "Vista Previa"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
@@ -3449,14 +3741,6 @@ msgstr "Auto-descubrir ubicación"
 msgid "Country"
 msgstr "País"
 
-#: templates/userprofile/profile/location.html:26
-msgid "Location:"
-msgstr "Ubicación:"
-
-#: templates/userprofile/profile/location.html:27
-msgid "Position"
-msgstr "Posición"
-
 #: templates/userprofile/profile/location.html:35
 #: templates/userprofile/profile/personal.html:36
 msgid "Save"
@@ -3548,12 +3832,12 @@ msgstr "Idioma nativo"
 msgid "Blog/Site"
 msgstr "Blog/Sitio web"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:38
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3597,259 +3881,6 @@ msgstr[1] ""
 "            Miembro de los siguientes equipos:\n"
 "        "
 
-#: templates/webtrans/comments.html:3
-msgid "Context"
-msgstr "Contexto"
-
-#: templates/webtrans/comments.html:4
-msgid "Developer comments"
-msgstr "Comentarios del desarrollador"
-
-#: templates/webtrans/comments.html:5
-msgid "Occurrences"
-msgstr "Ocurrencias"
-
-#: templates/webtrans/transfile_edit.html:36
-#, python-format
-msgid "%(component_name)s"
-msgstr "%(component_name)s"
-
-#: templates/webtrans/transfile_edit.html:37
-#, python-format
-msgid "Translate '%(filename)s'"
-msgstr "Traducir '%(filename)s'"
-
-#: templates/webtrans/transfile_edit.html:46
-#: templates/webtrans/transfile_edit.html:51
-#, python-format
-msgid "Translate '<code>%(filename)s</code>'"
-msgstr "Traducir '<code>%(filename)s</code>'"
-
-#: templates/webtrans/transfile_edit.html:60
-msgid "Current status for this page"
-msgstr "Estado actaul de esta página"
-
-#: templates/webtrans/transfile_edit.html:64
-msgid "Settings"
-msgstr "Configuraciones"
-
-#: templates/webtrans/transfile_edit.html:67
-msgid "Verbose editing:"
-msgstr "Edición detallada:"
-
-#: templates/webtrans/transfile_edit.html:74
-msgid "Filter"
-msgstr "Filtrar"
-
-#: templates/webtrans/transfile_edit.html:75
-msgid "Clear"
-msgstr "Limpiar"
-
-#: templates/webtrans/transfile_edit.html:80
-msgid "Translated"
-msgstr "Traducido"
-
-#: templates/webtrans/transfile_edit.html:86
-msgid "Fuzzy"
-msgstr "Provisorio"
-
-#: templates/webtrans/transfile_edit.html:92
-msgid "Untranslated"
-msgstr "Sin traducir"
-
-#: templates/webtrans/transfile_edit.html:98
-msgid "Total"
-msgstr "Total"
-
-#: templates/webtrans/transfile_edit.html:115
-msgid "#"
-msgstr "#"
-
-#: templates/webtrans/transfile_edit.html:116
-msgid "Source String"
-msgstr "Cadena Fuente"
-
-#: templates/webtrans/transfile_edit.html:118
-msgid "Translation"
-msgstr "Traducción"
-
-#: templates/webtrans/transfile_edit.html:120
-msgid "Auto-translate"
-msgstr "Auto-traducir"
-
-#: templates/webtrans/transfile_edit.html:120
-msgid "AT"
-msgstr "AT"
-
-#: templates/webtrans/transfile_edit.html:122
-msgid "Fuzzy?"
-msgstr "Difuso?"
-
-#: templates/webtrans/transfile_edit.html:135
-msgid "Submit translations"
-msgstr "Enviar traducciones"
-
-#: templates/webtrans/transfile_form.html:14
-msgid "Copy source string"
-msgstr "Copiar cadena fuente"
-
-#: templates/webtrans/transfile_form.html:23
-msgid "Auto-suggest translation"
-msgstr "Auto-sugerir traducción"
-
-#: translations/models.py:248
-msgid "PO file"
-msgstr "Archivo PO"
-
-#: translations/models.py:249
-msgid "PO files"
-msgstr "Archivos PO"
-
-#: translations/templates/comp_lang_stats_table.html:14
-msgid "Files"
-msgstr "Archivos"
-
-#: translations/templates/comp_lang_stats_table.html:15
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/lang_stats_table.html:15
-#: translations/templates/release_stats_table.html:8
-msgid "Translations"
-msgstr "Traducciones"
-
-#: translations/templates/comp_lang_stats_table.html:16
-#: translations/templates/comp_stats_table.html:17
-#: translations/templates/lang_stats_table.html:16
-msgid "Options"
-msgstr "Opciones"
-
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:40
-#: translations/templates/lang_stats_table.html:28
-msgid "There is at least one file broken here."
-msgstr "Aquí hay, por lo menos, un archivo dañado."
-
-#: translations/templates/comp_lang_stats_table.html:29
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:30
-msgid "This PO file is broken. The web editor is disabled for it."
-msgstr ""
-"Este archivo PO está dañado. Se ha deshabilitado el editor web para él."
-
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
-msgid "Trans:"
-msgstr "Traducido:"
-
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
-msgid "Untrans:"
-msgstr "Sin Traducir:"
-
-#: translations/templates/comp_lang_stats_table.html:43
-#: translations/templates/comp_stats_table.html:60
-#: translations/templates/lang_stats_table.html:48
-#: translations/templates/source_files.html:18
-msgid "View "
-msgstr "Ver"
-
-#: translations/templates/comp_lang_stats_table.html:44
-#: translations/templates/comp_stats_table.html:61
-#: translations/templates/lang_stats_table.html:49
-msgid "Download for viewing "
-msgstr "Descargar para observar"
-
-#: translations/templates/comp_lang_stats_table.html:59
-#: translations/templates/comp_stats_table.html:76
-#: translations/templates/lang_stats_table.html:64
-msgid "Edit "
-msgstr "Modificar"
-
-#: translations/templates/comp_stats_table.html:29
-msgid ""
-"See the outsource team for this language. You will be redirected to another "
-"project team page."
-msgstr ""
-"Consulte el equipo externo correspondiente a este idioma. Será "
-"redireccionado a la página del equipo de un proyecto diferente."
-
-#: translations/templates/comp_stats_table.html:29
-msgid "See the team for this language"
-msgstr "Ver el equipo de este idioma"
-
-#: translations/templates/comp_stats_table.html:29
-#: translations/templates/comp_stats_table.html:31
-msgid "See statistics for this language"
-msgstr "Ver estadísticas para este idioma"
-
-#: translations/templates/comp_stats_table.html:31
-msgid "No team for this language"
-msgstr "No existe un equipo para este idioma"
-
-#: translations/templates/comp_stats_table.html:36
-msgid "There are no languages registered matching this code"
-msgstr "No existen idiomas registrado coincidentes con este código"
-
-#: translations/templates/comp_stats_table.html:55
-#: translations/templates/lang_stats_table.html:43
-msgid "Click here to see the multiple files for"
-msgstr "Haga clic aquí para ver los archivos múltiples para"
-
-#: translations/templates/component_submit.html:6
-#, python-format
-msgid "Submit a translation for %(pofile_filename)s"
-msgstr "Envíe una traducción para %(pofile_filename)s"
-
-#: translations/templates/component_submit.html:10
-msgid "Submit file"
-msgstr "Enviar archivo"
-
-#: translations/templates/lang_stats_table.html:14
-msgid "Project/Component"
-msgstr "Proyecto/Componente"
-
-#: translations/templates/lang_stats_table.html:24
-msgid "Go to this project page"
-msgstr "Ir a la página de este proyecto"
-
-#: translations/templates/lang_stats_table.html:25
-msgid "Go to this component page"
-msgstr "Ir a la página de este componente"
-
-#: translations/templates/release_stats_table.html:16
-msgid "See the detailed statistics for this language"
-msgstr "Ver los detalles de estadísticas para este idioma"
-
-#: translations/templates/release_stats_table.html:19
-msgid "There are no languages registered matching this file"
-msgstr "No existen idiomas registrados que coincidan con este archivo"
-
-#: translations/templates/release_stats_table.html:22
-msgid "There is at least one file with problems for this language."
-msgstr "Existe por lo menos un archivo con problemas en este idioma."
-
-#: translations/templates/source_files.html:5
-msgid "Click here to show or hide the source files"
-msgstr "Haga clic para mostrar u ocultar los archivos fuente"
-
-#: translations/templates/source_files.html:5
-#, python-format
-msgid "This component has %(sources_number)s source files"
-msgstr "Este componente tiene %(sources_number)s archivos fuente"
-
-#: translations/templates/source_files.html:13
-msgid "entries"
-msgstr "entradas"
-
-#: translations/templates/source_files.html:19
-msgid "Download "
-msgstr "Descargar"
-
 #: txcommon/admin.py:10
 msgid ""
 "Required. 30 characters or fewer. Unicode alphanumeric characters only "
@@ -3863,44 +3894,44 @@ msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr ""
 "Este valor debe contener solamente letras unicode, números o guiones bajos."
 
-#: txcommon/i18n.py:18
+#: txcommon/i18n.py:20
 #, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "El archivo LINGUAS (%(file)s) no se pudo abrir: %(exc)s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:13
 msgid "Female"
 msgstr "Femenino"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:13
 msgid "Male"
 msgstr "Masculino"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Nombre"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:32 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Apellido"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Idioma Nativo"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Acerca de usted mismo"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:40
 msgid "Short description of yourself (140 chars)."
 msgstr "Descripción corta de usted mismo (140 caracteres)."
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:41 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "¿En busca de trabajo?"
 
@@ -3979,145 +4010,84 @@ msgstr ""
 "cuando el encargado de un proyecto revoca el acceso de un usuario para "
 "enviar traducciones a ese proyecto"
 
-#: txcommon/notifications.py:73
-msgid "New Component Added"
-msgstr "Nuevo Componente Agregado"
-
-#: txcommon/notifications.py:74
-msgid "when a new component is added to a project"
-msgstr "cuando un nuevo componente es agregado al proyecto"
-
-#: txcommon/notifications.py:80
-msgid "Component Changed"
-msgstr "Componente Modificado"
-
-#: txcommon/notifications.py:81
-msgid "when a component of a project is changed"
-msgstr "cuando un componente del proyecto es modificado"
-
-#: txcommon/notifications.py:87
-msgid "Component Deleted"
-msgstr "Componente Eliminado"
-
-#: txcommon/notifications.py:88
-msgid "when a component of a project is deleted"
-msgstr "cuando un componente del proyecto es eliminado"
-
-#: txcommon/notifications.py:94
-msgid "File Submitted"
-msgstr "Archivo Enviado"
-
-#: txcommon/notifications.py:95
-msgid "when a component file of a project is submitted"
-msgstr "cuando un archivo de componente de un proyecto es enviado"
-
-#: txcommon/notifications.py:105
-msgid "File Review Submitted"
-msgstr "Archivo de revisión enviado"
-
-#: txcommon/notifications.py:106
-msgid "when a file of a component is submitted for review"
-msgstr "cuando un archivo de un componente es enviado para revisión"
-
-#: txcommon/notifications.py:113
-msgid "Translation File Changed"
-msgstr "Archivo de Traducción Modificado"
-
-#: txcommon/notifications.py:114
-msgid "when a component translation file of a project is changed"
-msgstr ""
-"cuando un componente de archivo de traducción del proyecto es modificado"
-
-#: txcommon/notifications.py:121
-msgid "Translation Source File (POT) has a Problem"
-msgstr "Archivo Fuente de Traducción (POT) tiene un problema"
-
-#: txcommon/notifications.py:122
-msgid ""
-"when the source file (POT) of a component that you are a maintainer has a "
-"problem"
-msgstr ""
-"cuando el archivo fuente (POT) del componente que usted mantiene tenga un "
-"problema"
-
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:76
 msgid "New Release Added for a Watched Project"
 msgstr "Nuevo lanzamiento agregado para un proyecto monitoreado"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:77
 msgid "when a new release is added to a project"
 msgstr "cuando un nuevo lanzamiento es agregado a un proyecto"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:83
 msgid "Release Changed"
 msgstr "Lanzamiento Modificado"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:84
 msgid "when a release of a project is changed"
 msgstr "cuando es modificado un lanzamiento de un proyecto"
 
-#: txcommon/notifications.py:146
+#: txcommon/notifications.py:89
 msgid "Release Deleted"
 msgstr "Lanzamiento Eliminado"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:90
 msgid "when a release of a project is deleted"
 msgstr "cuando un lanzamiento de un proyecto es eliminado"
 
-#: txcommon/notifications.py:152
+#: txcommon/notifications.py:95
 msgid "Release Added to a Project"
 msgstr "Lanzamiento agregado a un proyecto"
 
-#: txcommon/notifications.py:153
+#: txcommon/notifications.py:96
 msgid "when a release is added to a project"
 msgstr "cuando un lanzamiento es agregado a un proyecto"
 
-#: txcommon/notifications.py:158
+#: txcommon/notifications.py:101
 msgid "Release Deleted from a Project"
 msgstr "Lanzamiento eliminado de un proyecto"
 
-#: txcommon/notifications.py:159
+#: txcommon/notifications.py:102
 msgid "when a release is deleted from a project"
 msgstr "cuando un lanzamiento es eliminado de un proyecto"
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:111
 msgid "New Team Added"
 msgstr "Se ha agregado un nuevo equipo"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:112
 msgid "when a new translation team is added to a project"
 msgstr "cuando un nuevo equipo de traducción es agregado a un proyecto"
 
-#: txcommon/notifications.py:176
+#: txcommon/notifications.py:119
 msgid "Team Changed"
 msgstr "Equipo Modificado"
 
-#: txcommon/notifications.py:177
+#: txcommon/notifications.py:120
 msgid "when a translation team of a project is changed"
 msgstr "cuando un equipo de traducción de un proyecto es modificado"
 
-#: txcommon/notifications.py:184
+#: txcommon/notifications.py:127
 msgid "Team Deleted"
 msgstr "Equipo Eliminado"
 
-#: txcommon/notifications.py:185
+#: txcommon/notifications.py:128
 msgid "when a translation team of a project is deleted"
 msgstr "cuando un equipo de traducción de un proyecto es eliminado"
 
-#: txcommon/notifications.py:192
+#: txcommon/notifications.py:135
 msgid "Team Creation Requested"
 msgstr "Se solicitó la creación de un equipo"
 
-#: txcommon/notifications.py:193
+#: txcommon/notifications.py:136
 msgid "when a translation team creation is requested for a project"
 msgstr ""
 "cuando se solicita la creación de un equipo de traducción para un proyecto"
 
-#: txcommon/notifications.py:200
+#: txcommon/notifications.py:143
 msgid "Team Creation Request Denied"
 msgstr "Se rechazó la solicitud de creación de un equipo"
 
-#: txcommon/notifications.py:201
+#: txcommon/notifications.py:144
 msgid ""
 "when a translation team creation request for a project is denied by a "
 "maintainer"
@@ -4125,116 +4095,138 @@ msgstr ""
 "cuando la solicitud de creación de un equipo de traducción para un proyecto "
 "es rechazada por un encargado"
 
-#: txcommon/notifications.py:208
+#: txcommon/notifications.py:151
 msgid "Team User Joining Requested"
 msgstr "Se solicitó la unión de un usuario al equipo"
 
-#: txcommon/notifications.py:209
+#: txcommon/notifications.py:152
 msgid "when a user requests to join a project translation team"
 msgstr ""
 "cuando un usuario solicita unirse a un equipo de traducción de un proyecto"
 
-#: txcommon/notifications.py:216
+#: txcommon/notifications.py:159
 msgid "Team User Joining Approved"
 msgstr "Se aprobó la solicitud de unión de un usuario al equipo"
 
-#: txcommon/notifications.py:217
+#: txcommon/notifications.py:160
 msgid "when a user is approved as a member of a project translation team"
 msgstr ""
 "cuando un usuario es aprobado como miembro de un equipo de traducción de un "
 "proyecto"
 
-#: txcommon/notifications.py:224
+#: txcommon/notifications.py:167
 msgid "Team User Joining Denied"
 msgstr "Se rechazó la solicitud de unión de un usuario al equipo"
 
-#: txcommon/notifications.py:225
+#: txcommon/notifications.py:168
 msgid "when a user is denied as a member of a project translation team"
 msgstr ""
 "cuando se rechaza a un usuario como miembro de un equipo de traducción de un "
 "proyecto"
 
-#: txcommon/notifications.py:232
+#: txcommon/notifications.py:175
 msgid "Team User Joining Withdrawn"
 msgstr "Se canceló la solicitud de unión al equipo"
 
-#: txcommon/notifications.py:233
+#: txcommon/notifications.py:176
 msgid "when a user decides not to join a project translation team"
 msgstr ""
 "cuando un usuario decide no unirse a un equipo de traducción de un proyecto"
 
-#: txcommon/notifications.py:240
+#: txcommon/notifications.py:183
 msgid "Team User Left"
 msgstr "El miembro abandonó el equipo"
 
-#: txcommon/notifications.py:241
+#: txcommon/notifications.py:184
 msgid "when a user leaves a project translation team"
 msgstr "cuando un usuario abandona un equipo de traducción de un proyecto"
 
-#: txcommon/notifications.py:251
+#: txcommon/notifications.py:194
 msgid "Weekly project report for maintainers"
 msgstr "Reporte semanal para los encargados"
 
-#: txcommon/notifications.py:252
+#: txcommon/notifications.py:195
 msgid "when you receive the weekly report of projects that you maintain."
 msgstr ""
 "cuando recibe el reporte semanal de proyectos que lo tienen como encargado"
 
-#: txcommon/notifications.py:259
+#: txcommon/notifications.py:202
 msgid "User Nudge"
 msgstr "Llamar la atención"
 
-#: txcommon/notifications.py:260
+#: txcommon/notifications.py:203
 msgid "when a user nudges you"
 msgstr "cuando un usuario trata de obtener su atención"
 
-#: txcommon/validators.py:24
-msgid "Enter a valid regular expression."
-msgstr "Ingrese una expresión regular válida."
-
-#: txcommon/validators.py:38
-msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr "La URL de root no apunta a un archivo .tar.gz o tgz"
-
-#: txcommon/validators.py:41
-msgid "The root url must start with http:// or ftp://"
-msgstr "La URL de root debe empezar por http:// o ftp://"
-
-#: txcommon/validators.py:69
-#, python-format
-msgid ""
-"This is not a valid root URL for this repository type. Valid choices are: %s"
+#: txcommon/notifications.py:212
+msgid "Resource Added"
 msgstr ""
-"Esta no es una URL raíz válida para este tipo de repositorio. Las opciones "
-"válidas son: %s"
 
-#: txcommon/validators.py:86
-msgid ""
-"This repository already belongs to another project. Please choose a "
-"different one."
-msgstr ""
-"Este repositorio ya pertenece a otro proyecto. Por favor, elija uno diferente"
+#: txcommon/notifications.py:213
+#, fuzzy
+msgid "when a new resource is added to a project"
+msgstr "cuando un nuevo lanzamiento es agregado a un proyecto"
 
-#: txcommon/views.py:109
+#: txcommon/notifications.py:219
+#, fuzzy
+msgid "Resource Changed"
+msgstr "Lanzamiento Modificado"
+
+#: txcommon/notifications.py:220
+#, fuzzy
+msgid "when a resource of a project is changed"
+msgstr "cuando es modificado un lanzamiento de un proyecto"
+
+#: txcommon/notifications.py:226
+#, fuzzy
+msgid "Resource Deleted"
+msgstr "Lanzamiento Eliminado"
+
+#: txcommon/notifications.py:227
+#, fuzzy
+msgid "when a resource of a project is deleted"
+msgstr "cuando un lanzamiento de un proyecto es eliminado"
+
+#: txcommon/notifications.py:233
+#, fuzzy
+msgid "Resource Translated"
+msgstr "Traducido"
+
+#: txcommon/notifications.py:234
+#, fuzzy
+msgid "when a translation is sent to a project resource"
+msgstr "cuando un equipo de traducción de un proyecto es modificado"
+
+#: txcommon/notifications.py:241
+#, fuzzy
+msgid "Resource Translation Changed"
+msgstr "Archivo de Traducción Modificado"
+
+#: txcommon/notifications.py:242
+#, fuzzy
+msgid "when a resource translation you are watching changes"
+msgstr "cuando un equipo de traducción de un proyecto es modificado"
+
+#: txcommon/views.py:103
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr ""
 "No puede volver a llamar la atención del mismo usuario en un espacio de "
 "tiempo corto."
 
-#: txcommon/views.py:112
+#: txcommon/views.py:106
 msgid "You can't nudge yourself."
 msgstr "No puede llamarse la atención a usted mismo"
 
-#: txcommon/views.py:119
+#: txcommon/views.py:113
 #, python-format
 msgid "You have nudged '%s'."
 msgstr "Están llamando su atención '%s'."
 
-#: txcommon/db/models.py:27
+#: txcommon/db/models.py:42
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Entre 0 o más enteros en paréntesis separados por comas."
 
-#: txcommon/db/models.py:29
+#: txcommon/db/models.py:44
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Debe ingresar al menos un par de paréntesis sin contenido."
 
@@ -4246,7 +4238,7 @@ msgstr ""
 "Solamente tiene que indicar el tamaño como              un entero (ambos "
 "lados serán iguales), y opcionalmente, el              nombre de usuario."
 
-#: txcommon/templatetags/txcommontags.py:136
+#: txcommon/templatetags/txcommontags.py:79
 msgid "Home"
 msgstr "Inicio"
 
@@ -4270,131 +4262,936 @@ msgstr "Usted quitó el permiso."
 msgid "You removed the permission request."
 msgstr "Usted quitó la solicitud de permiso."
 
-#: vcs/forms.py:18
-msgid "Repo URL root"
-msgstr "URL raíz del repositorio"
+#~ msgid "Show code snippet for component:"
+#~ msgstr "Mostrar fragmento de código para el componente:"
 
-#: vcs/forms.py:19 vcs/forms.py:43
-msgid "The URL of the versioning system repository/branch."
-msgstr "La URL del repositorio/rama de versiones de sistema."
+#~ msgid "Lock created. Please don't forget to remove it when you're done."
+#~ msgstr ""
+#~ "Candado creado. Por favor no olvide removerlo cuando haya terminado."
 
-#: vcs/forms.py:61
-msgid "This type of repository does not accept branches"
-msgstr "Este tipo de repositorio no acepta ramificaciones (branches)"
+#~ msgid "This file is locked by someone else."
+#~ msgstr "Este archivo ya está bloqueado por alguien más."
 
-#: vcs/models.py:50
-msgid "Branch"
-msgstr "Rama"
+#~ msgid "You are only allowed to upload PO files (*.po)!"
+#~ msgstr "¡Sólo está autorizado para subir archivos PO (*.po)!"
 
-#: vcs/models.py:51
+#~ msgid "Uploaded file doesn't contain any translated entries!"
+#~ msgstr "¡El archivo subido no contiene ninguna entrada traducida!"
+
+#~ msgid "Your file was sent via e-mail to you to avoid any loss of work."
+#~ msgstr ""
+#~ "Su archivo ha sido enviado por correo electrónico a la dirección que ha "
+#~ "registrado para evitar perder algún dato. "
+
+#~ msgid ""
+#~ "We couldn't send you an email to preserve your work because you haven't "
+#~ "registered an email address."
+#~ msgstr ""
+#~ "No pudimos enviarle un correo para poder conservar su trabajo, ya que no "
+#~ "ha registrado ninguna dirección de correo electrónico."
+
+#~ msgid "Unable to add watch for path %r"
+#~ msgstr "No se puede agregar la función monitorear para la ruta %r"
+
+#~ msgid "watch"
+#~ msgstr "monitorear"
+
+#~ msgid "watches"
+#~ msgstr "monitoreos"
+
+#~ msgid "Root"
+#~ msgstr "Root"
+
+#~ msgid "The URL of the codebase"
+#~ msgstr "La URL de base de códigos"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "The codebase type (%s)"
+#~ msgstr "El tipo de base de códigos (%s)"
+
+#~ msgid "The last time this unit was updated"
+#~ msgstr "La última vez que esta unidad fue actualizada"
+
+#~ msgid "unit"
+#~ msgstr "unidad"
+
+#~ msgid "units"
+#~ msgstr "unidades"
+
+#~ msgid "Latest components in project %s."
+#~ msgstr "Últimos componentes en el proyecto %s."
+
+#~ msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
+#~ msgstr "Una expresión regular para filtrar archivos expuestos. Ej: 'po/.*'"
+
+#~ msgid "Submit to"
+#~ msgstr "Enviar a"
+
+#~ msgid ""
+#~ "Choose how this component should handle submissions of files.The options "
+#~ "here are available based on the component type"
+#~ msgstr ""
+#~ "Seleccionar cómo este componente debe manejar envíos de archivos. Las "
+#~ "opciones aquí están disponibles basadas en el tipo de componente "
+
+#~ msgid "Search for a component"
+#~ msgstr "Buscar un componente"
+
+#~ msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
+#~ msgstr "El idioma fuente de este componente, ej. 'en', 'pt_BR', 'el'."
+
+#~ msgid "File filter"
+#~ msgstr "Filtro de archivo"
+
+#~ msgid "Allows submission"
+#~ msgstr "Permite envío"
+
+#~ msgid "Does this module repository allow write access?"
+#~ msgstr "¿Este repositorio de módulo permite acceso de escritura?"
+
+#~ msgid "Calculate statistics?"
+#~ msgstr "¿Calcular estadísticas?"
+
+#~ msgid "Should statistics be calculated for this component?"
+#~ msgstr "¿Se deben calcular las estadísticas para este componente?"
+
+#~ msgid "Unit"
+#~ msgstr "Unidad"
+
+#~ msgid "<Component: %s>"
+#~ msgstr "<Componente: %s>"
+
+#~ msgid "component"
+#~ msgstr "componente"
+
+#~ msgid "components"
+#~ msgstr "componente"
+
+#~ msgid "Components"
+#~ msgstr "Componentes"
+
+#~ msgid ""
+#~ "The file filter of this intltool POT-based component does not  seem to "
+#~ "allow the POTFILES.in file. Please fix it."
+#~ msgstr ""
+#~ "El filtro de archivo de este componente basado en intltool POT no parece "
+#~ "aceptar los POTFILES. en archivo. Por favor corríjalo."
+
+#~ msgid ""
+#~ "There is no 'pot' directory named in the set of files of this Publican "
+#~ "like component. Maybe its file filter is not allowing access to it."
+#~ msgstr ""
+#~ "No hay directorio 'pot' en el conjunto de archivos de este componente "
+#~ "Publican. Quizás su filtro de archivo no está permitiendo acceso a éste."
+
+#~ msgid "This component is not configured for statistics calculation."
+#~ msgstr ""
+#~ "Este componente no está configurado para realizar cálculos estadísticos."
+
+#~ msgid "This component does  not allow write access."
+#~ msgstr "Este componente no permite acceso a escritura."
+
+#~ msgid "Please select a file from your system to be uploaded."
+#~ msgstr "Por favor, seleccione un archivo de su sistema para ser cargado."
+
+#~ msgid "Please enter a target to upload the file."
+#~ msgstr "Por favor ingrese un destino para cargar el archivo."
+
+#~ msgid "Please enter only ONE target to upload the file."
+#~ msgstr "Por favor ingrese sólo UN destino para cargar el archivo."
+
+#~ msgid "The target file does not match the component file filter"
+#~ msgstr ""
+#~ "El archivo destino no coincide con el filtro de archivo del componente"
+
+#~ msgid "Enter a commit message"
+#~ msgstr "Entrar un mensaje de envío"
+
+#~ msgid ""
+#~ "You need to be in the '%s' team of this project for being able to send "
+#~ "translations to that file target."
+#~ msgstr ""
+#~ "Necesita estar en el equipo '%s' de este proyecto para poder enviar "
+#~ "traducciones de este archivo."
+
+#~ msgid "Sorry, your file could not be sent because of an error."
+#~ msgstr "Lo sentimos, no se pudo enviar el archivo debido a un error."
+
+#~ msgid "%s was deleted."
+#~ msgstr "%s fue eliminado."
+
 #, fuzzy
-msgid "The VCS branch with which this unit is associated"
-msgstr "Una rama VCS esta unidad está asociada con"
+#~ msgid "Request rejected."
+#~ msgstr "Petición reabierta."
 
-#: vcs/models.py:52
-msgid "Web frontend"
-msgstr "Interfaz web"
+#~ msgid "Request reopened."
+#~ msgstr "Petición reabierta."
 
-#: vcs/models.py:54
-msgid "A URL to the project's web front-end"
-msgstr "Una URL para la interfaz de red de proyecto"
+#~ msgid "The '%s' team was deleted."
+#~ msgstr "El equipo %s fue eliminado."
 
-#: vcs/models.py:60
-#, python-format
-msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr "<VcsUnit: %(name)s (%(type)s)>"
+#~ msgid ""
+#~ "When the translatable strings will be frozen (no strings which affect "
+#~ "translations can be added/modified)."
+#~ msgstr ""
+#~ "Cuando las cadenas traducibles sean congeladas (no se pueden agregar o "
+#~ "modificar cadenas que afecten las  traducciones)."
 
-#: vcs/models.py:63
-msgid "vcsunit"
-msgstr "vcsunit"
+#~ msgid "Write a short blurb for your review request."
+#~ msgstr "Escriba un breve comentario acerca de la revisión de su petición."
 
-#: vcs/models.py:64
-msgid "vcsunits"
-msgstr "vcsunits"
+#~ msgid "Select a translation file for review."
+#~ msgstr "Elegir un archivo de traducción para revisión."
 
-#: vcs/lib/exceptions/__init__.py:17
-msgid ""
-"Your request could not be completed. The admins have been notified to take a "
-"closer look at it. Please try again in a few minutes"
-msgstr ""
-"Su petición no puede ser completada. Los administradores han sido "
-"notificados para revisar mejor esta situación. Por favor intente nuevamente "
-"en unos pocos minutos."
+#~ msgid "Open"
+#~ msgstr "Abierto"
 
-#: vcs/lib/exceptions/__init__.py:40
-msgid "Setup of the repository locally could not be done successfully."
-msgstr ""
-"La configuración en forma local del repositorio no puedo realizarse "
-"satisfactoriamente."
+#~ msgid "Closed"
+#~ msgstr "Cerrado"
 
-#: vcs/lib/exceptions/__init__.py:47
-msgid ""
-"The local repository has not been setup yet. Please, first do a check-out of "
-"the repository."
-msgstr ""
-"El repositorio local todavía no ha sido configurado. Por favor, primero "
-"verifíquelo."
+#~ msgid "Null"
+#~ msgstr "Inválido"
 
-#: vcs/lib/exceptions/__init__.py:54
-msgid "Unable to pull data from the remote repository. Is the remote host up?"
-msgstr ""
-"No es posible obtener datos desde el repositorio remoto. ¿El equipo remoto "
-"se encuentra activo?"
+#~ msgid "Accepted"
+#~ msgstr "Aceptado"
 
-#: vcs/lib/exceptions/__init__.py:61
-msgid ""
-"Cleanup of the repository failed. The admins have been notified to take a "
-"closer look at it."
-msgstr ""
-"Ha fallado la limpieza del repositorio. Los administradores han sido "
-"notificados para observar mejor esta situación."
+#~ msgid "Rejected"
+#~ msgstr "Rechazado"
 
-#: vcs/lib/exceptions/__init__.py:67
-msgid "Commit to the repository failed."
-msgstr "El envío hacia el repositorio ha fallado."
+#~ msgid "The review's status (open, closed, etc.)"
+#~ msgstr "El estado de la revisión (abierto, cerrado, etc)"
 
-#: vcs/lib/exceptions/__init__.py:72
-msgid "Pushing to the remote repository failed."
-msgstr "El envío hacia el repositorio remoto ha fallado."
+#~ msgid "The review's resolution/closing state."
+#~ msgstr "La estado de resolución/cancelación de su revisión."
 
-#: vcs/lib/exceptions/__init__.py:78
-msgid ""
-"Given file does not have a revision. The admins have been notified to take a "
-"closer look at it."
-msgstr ""
-"El archivo ofrecido no posee una revisión. Los administradores han sido "
-"notificados para observar mejor esta situación."
+#~ msgid "Date and time of creation"
+#~ msgstr "Fecha y hora de creación"
 
-#: webtrans/fields.py:55
-#, python-format
-msgid "The %s fields should be filled."
-msgstr "Los campos %s deberían ser completados."
+#~ msgid "Date and time of last update"
+#~ msgstr "Fecha y hora de la última actualización"
 
-#: webtrans/wizards.py:130
-msgid "The PO file is broken and can't be opened by Lotte."
-msgstr "Este archivo PO está dañado y no puede ser abierto por Lotte."
+#~ msgid "The review file name"
+#~ msgstr "El nombre del archivo de revisión"
 
-#: webtrans/wizards.py:424
-msgid "You can't make submissions for a file locked by someone else."
-msgstr ""
-"No puede enviar traducciones de un archivo que se encuentre bloqueado por "
-"otro usuario."
+#~ msgid "The path of the target file which will be used on submission"
+#~ msgstr ""
+#~ "La ruta del archivo de destino que será utilizado para la presentación "
 
-#: webtrans/wizards.py:430
-msgid ""
-"Nothing was sent because you haven't changed anything in the translation "
-"form."
-msgstr ""
-"No ha sido enviado nada ya que nada se modificado en el formulario de "
-"traducción."
+#~ msgid "Component"
+#~ msgstr "Componente"
 
-#: webtrans/templates/pagination.html:7
-msgid "Previous"
-msgstr "Previo"
+#~ msgid "Review Request"
+#~ msgstr "Petición de revisión"
 
-#: webtrans/templates/pagination.html:49
-msgid "Next"
-msgstr "Siguiente"
+#~ msgid "Review Requests"
+#~ msgstr "Peticionesn de revisión"
+
+#~ msgid "-created_on"
+#~ msgstr "-created_on"
+
+#~ msgid "created_on"
+#~ msgstr "created_on"
+
+#~ msgid ""
+#~ "You can upload a file for review only if it's related to an existing "
+#~ "language."
+#~ msgstr ""
+#~ "Sólo puede subir un archivo para revisión, si es que está relacionado con "
+#~ "un idioma existente."
+
+#~ msgid "Your file was successfully placed for reviewing."
+#~ msgstr "Su archivo ha sido recibido exitosamente para una revisión."
+
+#~ msgid "Tarball URL"
+#~ msgstr "URL del tarball"
+
+#~ msgid "A URL from which the tarball is accessible."
+#~ msgstr "Una URL desde donde puede accederse al tarball."
+
+#~ msgid "tarball"
+#~ msgstr "tarball"
+
+#~ msgid "tarballs"
+#~ msgstr "tarballs"
+
+#~ msgid "%(project)s Releases"
+#~ msgstr "Lanzamientos de %(project)s"
+
+#~ msgid ""
+#~ "The <a href=\"%(project_url)s\">%(project)s</a> project includes the "
+#~ "following groups of shipped components:"
+#~ msgstr ""
+#~ "El proyecto <a href=\"%(project_url)s\">%(project)s</a> contiene los "
+#~ "siguientes grupos de componentes distribuidos:"
+
+#~ msgid ""
+#~ "The following files in the <a href=\"%(component_url)s\">"
+#~ "%(component_name)s</a> component of the <a href=\"%(project_url)s\">"
+#~ "%(project_name)s</a> project have been updated:"
+#~ msgstr ""
+#~ "Los siguientes archivos en el componente <a href=\"%(component_url)s\">"
+#~ "%(component_name)s</a> del proyecto <a href=\"%(project_url)s\">"
+#~ "%(project_name)s</a> han sido actualizados:"
+
+#~ msgid ""
+#~ "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</"
+#~ "a> (%(trans_perc)s%)"
+#~ msgstr ""
+#~ "Un archivo para <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(nombre"
+#~ "(s)_idioma)s</a> (%(trans_perc)s%)"
+
+#~ msgid "A file called '%(filename)s'"
+#~ msgstr "Un archivo llamado '%(filename)s'"
+
+#~ msgid ""
+#~ "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> "
+#~ "of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+#~ msgstr ""
+#~ "ha sido enviado al <a href=\"%(component_url)s\">%(component_name)s</a> "
+#~ "del proyecto <a href=\"%(project_url)s\">%(project_name)s</a>."
+
+#~ msgid ""
+#~ "The source file (POT) has some problems and can not be created/updated "
+#~ "for the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+#~ "href=\"%(project_url)s\">%(project_name)s</a> project"
+#~ msgstr ""
+#~ "El archivo fuente (POT) tiene algunos problemas y no puede ser creado/"
+#~ "actualizado para el <a href=\"%(component_url)s\">%(component_name)s</a> "
+#~ "del proyecto <a href=\"%(project_url)s\">%(project_name)s</a>"
+
+#~ msgid "Delete %(component_name)s"
+#~ msgstr "Eliminar %(component_name)s"
+
+#~ msgid "Say goodbye to <em>%(component_name)s</em>?"
+#~ msgstr "¿Decir adiós a <em>%(component_name)s</em>?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to permanently delete the component "
+#~ "'%(component_name)s' which belongs to %(project_name)s?"
+#~ msgstr ""
+#~ "\n"
+#~ " ¿Esta seguro que desea eliminar permanentemente el componente "
+#~ "'%(component_name)s' perteneciente a %(project_name)s?\n"
+
+#~ msgid ""
+#~ "This component supports local storing of submitted files and also sends "
+#~ "the files to the maintainers\\' email."
+#~ msgstr ""
+#~ "Este componente soporta almacenamiento local de archivos enviados y "
+#~ "también envía los archivos al correo electrónico de las personas "
+#~ "encargadas\\'."
+
+#~ msgid ""
+#~ "This component does not support local storing of submitted files. The "
+#~ "submitted files will be sent to the maintainers\\' emails and the "
+#~ "statistics will reflect the change once the files are committed upstream."
+#~ msgstr ""
+#~ "Este componente no soporta almacenamiento local de archivos enviados. Los "
+#~ "archivos enviados serán enviados a los correos electrónicos de los "
+#~ "encargados\\' y las estadísticas reflejarán el cambio una vez que los "
+#~ "archivos sean enviados a la línea de desarrollo principal."
+
+#~ msgid ""
+#~ "This component supports local storing of submitted files and also sends "
+#~ "the files direct to the upstream repository."
+#~ msgstr ""
+#~ "Este componente soporta almacenamiento local de archivos enviados y "
+#~ "también envía los archivos directamente al repositorio de la línea "
+#~ "principal de desarrollo."
+
+#, fuzzy
+#~ msgid "Source Details"
+#~ msgstr "Detalles de origen"
+
+#~ msgid "Repository:"
+#~ msgstr "Repositorio:"
+
+#~ msgid "Link to a web front-end for the source code"
+#~ msgstr "Enlace hacia una interfaz de red del código fuente"
+
+#~ msgid "web"
+#~ msgstr "red"
+
+#~ msgid "Branch:"
+#~ msgstr "Rama:"
+
+#~ msgid "File filter:"
+#~ msgstr "Filtro de archivo:"
+
+#~ msgid "i18n method:"
+#~ msgstr "Método de internacionalización:"
+
+#~ msgid "Release:"
+#~ msgid_plural "Releases:"
+#~ msgstr[0] "Lanzamiento:"
+#~ msgstr[1] "Lanzamientos:"
+
+#~ msgid "Allows submissions:"
+#~ msgstr "Permite entregas:"
+
+#, fuzzy
+#~ msgid "Translation Files"
+#~ msgstr "Archivos de traducción"
+
+#~ msgid "ago"
+#~ msgstr "atrás"
+
+#~ msgid "Component not yet pulled from source repository."
+#~ msgstr "Componente no extraido de repositorio fuente."
+
+#~ msgid "Refresh and re-calculate statistics. This action may take some time."
+#~ msgstr ""
+#~ "Actualizar y re-calcular estadísticas. Esta acción puede tardar un poco."
+
+#~ msgid "Refresh cache"
+#~ msgstr "Refrescar cache"
+
+#~ msgid "Reset Transifex's local data for a clean pull"
+#~ msgstr "Reconfigurar datos locales de Transifex para una extracción limpia"
+
+#~ msgid "Clear cache"
+#~ msgstr "Limpiar cache"
+
+#~ msgid "Any locally modified data will be overwritten with fresh copies."
+#~ msgstr ""
+#~ "Cualquier información modificada será sobrescrita con copias frescas."
+
+#~ msgid "warning"
+#~ msgstr "advertencia"
+
+#~ msgid "Teams:"
+#~ msgstr "Equipos:"
+
+#, fuzzy
+#~ msgid "Translation File Reviews"
+#~ msgstr "Revisiones de archivos de traducción"
+
+#, fuzzy
+#~ msgid ""
+#~ "Translators can request a file review from another person, who can take a "
+#~ "look at his work and provide any feedback needed, or simply submit the "
+#~ "file to the upstream project."
+#~ msgstr ""
+#~ "Los traductores pueden solicitar que alguna otra persona revise un "
+#~ "archivo,\n"
+#~ "  quien a su vez podrá realizar algún tipo de comentario cuando sea "
+#~ "necesario,\n"
+#~ "  o directamente enviar el archivo al proyecto."
+
+#~ msgid "Reviews"
+#~ msgstr "Revisiones"
+
+#~ msgid "Delete component"
+#~ msgstr "Borrar componente"
+
+#~ msgid "Add a component"
+#~ msgstr "Agregar componente"
+
+#~ msgid "Edit %(component_name)s"
+#~ msgstr "Modificar %(component_name)s"
+
+#~ msgid "Edit Component '%(component_name)s'"
+#~ msgstr "Modificar componente '%(component_name)s'"
+
+#~ msgid "New component for %(project_name)s"
+#~ msgstr "Nuevo componente para %(project_name)s"
+
+#~ msgid "Checkout"
+#~ msgstr "Control"
+
+#~ msgid "Submission"
+#~ msgstr "Entrega"
+
+#~ msgid "Save component"
+#~ msgstr "Guardar componente"
+
+#~ msgid "Project Component"
+#~ msgid_plural "Project Components"
+#~ msgstr[0] "Componente de Proyecto"
+#~ msgstr[1] "Componentes de Proyecto"
+
+#~ msgid "Add one!"
+#~ msgstr "¡Agregar uno!"
+
+#, fuzzy
+#~ msgid ""
+#~ "<em>Components</em> are smaller, self-contained parts of a larger project "
+#~ "which consist of actual files. Examples of components of a software "
+#~ "project could be \"UI\" and \"Docs\" or development branches like "
+#~ "<code>HEAD</code>."
+#~ msgstr ""
+#~ "<em>Componentes</em> son más pequeños, las partes independientes de un "
+#~ "proyecto más grandeque los archivos reales.\n"
+#~ "    Ejemplos de componentes de un proyecto de software podrían ser \"UI\" "
+#~ "y \"Docs\" o ramas como <code>HEAD</code>."
+
+#~ msgid "Send a new translation for this component."
+#~ msgstr "Enviar una nueva traducción para este componente."
+
+#~ msgid "The translation file to be uploaded for the new language."
+#~ msgstr "El archivo de traducción a ser actualizado para el nuevo idioma."
+
+#~ msgid "Select the target file:"
+#~ msgstr "Seleccionar el archivo de destino:"
+
+#~ msgid ""
+#~ "The target file is the name of the new file language. It must match the "
+#~ "component file filter."
+#~ msgstr ""
+#~ "El archivo de destino es el nombre del nuevo archivo de idioma. Debe "
+#~ "coincidir con componente de filtro de archivo."
+
+#~ msgid "or enter it here:"
+#~ msgstr "o ingréselo aquí:"
+
+#~ msgid "Example: "
+#~ msgstr "Ejemplo:"
+
+#~ msgid "Commit message:"
+#~ msgstr "Enviar mensaje:"
+
+#~ msgid "Example: Updates to Brazilian Portuguese translation"
+#~ msgstr "Ejemplo: Actualizaciones a traducción de Portugués brasileño"
+
+#~ msgid "Send"
+#~ msgstr "Enviar"
+
+#~ msgid "Send for Review"
+#~ msgstr "Enviar para revisión"
+
+#~ msgid "Projects with tag '%(tag)s'"
+#~ msgstr "Proyectos con etiqueta '%(tag)s'"
+
+#~ msgid "Top Translators"
+#~ msgstr "Mejores traductores"
+
+#~ msgid "%(number)s submission"
+#~ msgid_plural "%(number)s submissions"
+#~ msgstr[0] "%(number)s presentación"
+#~ msgstr[1] "%(number)s presentaciones"
+
+#~ msgid "Components:"
+#~ msgstr "Componentes:"
+
+#~ msgid "Click here to show or hide the component list"
+#~ msgstr "Haga clic aquí para mostrar u ocultar la lista de los componentes"
+
+#~ msgid "No translations added for this release. :-("
+#~ msgstr "No se han agregado traducciones a este lanzamiento. :-("
+
+#, fuzzy
+#~ msgid "Project/Component Statistics"
+#~ msgstr "Estadísticas de Proyecto/Componente"
+
+#~ msgid ""
+#~ "Transifex searched for projects containing translation files for this "
+#~ "language and release, but couldn't find any. Try submitting such a file "
+#~ "and check again."
+#~ msgstr ""
+#~ "Transifex buscó proyectos que contengan archivos de traducción para este "
+#~ "idioma y lanzamiento, pero no halló ninguno. En su lugar, intente enviar "
+#~ "ese archivo y verifique nuevamente."
+
+#~ msgid ""
+#~ "If you think this shouldn't happen, please <a href=\"%(contact_form)s"
+#~ "\">let us know</a>."
+#~ msgstr ""
+#~ "Si piensa que esto no debe suceder, por favor <a href=\"%(contact_form)s"
+#~ "\">háganoslo saber</a>."
+
+#~ msgid "Untranslated Components"
+#~ msgstr "Componentes Sin Traducir"
+
+#~ msgid ""
+#~ "The following components will be included in %(release_name)s, but there "
+#~ "are no translations sent for %(language_name)s yet."
+#~ msgstr ""
+#~ "Los siguientes componentes se incluirán en %(release_name)s, pero aún no "
+#~ "hay traducciones enviadas a %(language_name)s."
+
+#~ msgid "Submit"
+#~ msgstr "Enviar"
+
+#~ msgid "Translation Review Requests"
+#~ msgstr "Peticiones de revisión de traducción"
+
+#~ msgid "Open Requests"
+#~ msgstr "Peticiones abiertas"
+
+#~ msgid "Review Request #%(review_id)s "
+#~ msgstr "Peticiones de revisión #%(review_id)s "
+
+#~ msgid "Who and when"
+#~ msgstr "Quién y cuándo"
+
+#~ msgid "See profile"
+#~ msgstr "Ver prefil"
+
+#, fuzzy
+#~ msgid "%(time_since)s ago"
+#~ msgstr ""
+#~ "\n"
+#~ "        hace %(time_since)s\n"
+#~ "      "
+
+#~ msgid "File target"
+#~ msgstr "Archivo elegido"
+
+#~ msgid "Download the version sent for review"
+#~ msgstr "Descargar la versión enviada para revisión"
+
+#~ msgid "Status"
+#~ msgstr "Estado"
+
+#~ msgid "Close Review"
+#~ msgstr "Cerrar revisión"
+
+#~ msgid "Accept and submit translation"
+#~ msgstr "Aceptar y enviar traducciones"
+
+#~ msgid "Accept"
+#~ msgstr "Aceptar"
+
+#~ msgid "Reject"
+#~ msgstr "Rechazar"
+
+#~ msgid "No open requests!"
+#~ msgstr "¡No existen peticiones abiertas!"
+
+#~ msgid "Closed Requests"
+#~ msgstr "Solicitudes cerradas"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
+
+#~ msgid "Time Since"
+#~ msgstr "Tiempo desde"
+
+#~ msgid "Attachment"
+#~ msgstr "Adjunto"
+
+#~ msgid "Actions"
+#~ msgstr "Acciones"
+
+#~ msgid "Reopen review request"
+#~ msgstr "Reabrir petición de revisión"
+
+#~ msgid "No closed requests!"
+#~ msgstr "¡No existen peticiones cerradas!"
+
+#~ msgid "Show completed"
+#~ msgstr "Mostrar lo que está completo"
+
+#~ msgid "Developer comments"
+#~ msgstr "Comentarios del desarrollador"
+
+#~ msgid "%(component_name)s"
+#~ msgstr "%(component_name)s"
+
+#~ msgid "Translate '%(filename)s'"
+#~ msgstr "Traducir '%(filename)s'"
+
+#~ msgid "Translate '<code>%(filename)s</code>'"
+#~ msgstr "Traducir '<code>%(filename)s</code>'"
+
+#~ msgid "Current status for this page"
+#~ msgstr "Estado actaul de esta página"
+
+#~ msgid "Settings"
+#~ msgstr "Configuraciones"
+
+#~ msgid "Filter"
+#~ msgstr "Filtrar"
+
+#~ msgid "Clear"
+#~ msgstr "Limpiar"
+
+#~ msgid "Fuzzy"
+#~ msgstr "Provisorio"
+
+#~ msgid "Untranslated"
+#~ msgstr "Sin traducir"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "AT"
+#~ msgstr "AT"
+
+#~ msgid "Fuzzy?"
+#~ msgstr "Difuso?"
+
+#~ msgid "Submit translations"
+#~ msgstr "Enviar traducciones"
+
+#~ msgid "Copy source string"
+#~ msgstr "Copiar cadena fuente"
+
+#~ msgid "Auto-suggest translation"
+#~ msgstr "Auto-sugerir traducción"
+
+#~ msgid "PO file"
+#~ msgstr "Archivo PO"
+
+#~ msgid "PO files"
+#~ msgstr "Archivos PO"
+
+#~ msgid "Files"
+#~ msgstr "Archivos"
+
+#~ msgid "Options"
+#~ msgstr "Opciones"
+
+#~ msgid "There is at least one file broken here."
+#~ msgstr "Aquí hay, por lo menos, un archivo dañado."
+
+#~ msgid "This PO file is broken. The web editor is disabled for it."
+#~ msgstr ""
+#~ "Este archivo PO está dañado. Se ha deshabilitado el editor web para él."
+
+#~ msgid "Trans:"
+#~ msgstr "Traducido:"
+
+#~ msgid "Untrans:"
+#~ msgstr "Sin Traducir:"
+
+#~ msgid "View "
+#~ msgstr "Ver"
+
+#~ msgid "Edit "
+#~ msgstr "Modificar"
+
+#~ msgid ""
+#~ "See the outsource team for this language. You will be redirected to "
+#~ "another project team page."
+#~ msgstr ""
+#~ "Consulte el equipo externo correspondiente a este idioma. Será "
+#~ "redireccionado a la página del equipo de un proyecto diferente."
+
+#~ msgid "See the team for this language"
+#~ msgstr "Ver el equipo de este idioma"
+
+#~ msgid "See statistics for this language"
+#~ msgstr "Ver estadísticas para este idioma"
+
+#~ msgid "No team for this language"
+#~ msgstr "No existe un equipo para este idioma"
+
+#~ msgid "There are no languages registered matching this code"
+#~ msgstr "No existen idiomas registrado coincidentes con este código"
+
+#~ msgid "Click here to see the multiple files for"
+#~ msgstr "Haga clic aquí para ver los archivos múltiples para"
+
+#~ msgid "Submit a translation for %(pofile_filename)s"
+#~ msgstr "Envíe una traducción para %(pofile_filename)s"
+
+#~ msgid "Submit file"
+#~ msgstr "Enviar archivo"
+
+#~ msgid "Project/Component"
+#~ msgstr "Proyecto/Componente"
+
+#~ msgid "Go to this project page"
+#~ msgstr "Ir a la página de este proyecto"
+
+#~ msgid "Go to this component page"
+#~ msgstr "Ir a la página de este componente"
+
+#~ msgid "See the detailed statistics for this language"
+#~ msgstr "Ver los detalles de estadísticas para este idioma"
+
+#~ msgid "There are no languages registered matching this file"
+#~ msgstr "No existen idiomas registrados que coincidan con este archivo"
+
+#~ msgid "There is at least one file with problems for this language."
+#~ msgstr "Existe por lo menos un archivo con problemas en este idioma."
+
+#~ msgid "This component has %(sources_number)s source files"
+#~ msgstr "Este componente tiene %(sources_number)s archivos fuente"
+
+#~ msgid "entries"
+#~ msgstr "entradas"
+
+#~ msgid "Download "
+#~ msgstr "Descargar"
+
+#~ msgid "New Component Added"
+#~ msgstr "Nuevo Componente Agregado"
+
+#~ msgid "when a new component is added to a project"
+#~ msgstr "cuando un nuevo componente es agregado al proyecto"
+
+#~ msgid "Component Changed"
+#~ msgstr "Componente Modificado"
+
+#~ msgid "when a component of a project is changed"
+#~ msgstr "cuando un componente del proyecto es modificado"
+
+#~ msgid "Component Deleted"
+#~ msgstr "Componente Eliminado"
+
+#~ msgid "when a component of a project is deleted"
+#~ msgstr "cuando un componente del proyecto es eliminado"
+
+#~ msgid "File Submitted"
+#~ msgstr "Archivo Enviado"
+
+#~ msgid "when a component file of a project is submitted"
+#~ msgstr "cuando un archivo de componente de un proyecto es enviado"
+
+#~ msgid "File Review Submitted"
+#~ msgstr "Archivo de revisión enviado"
+
+#~ msgid "when a file of a component is submitted for review"
+#~ msgstr "cuando un archivo de un componente es enviado para revisión"
+
+#~ msgid "when a component translation file of a project is changed"
+#~ msgstr ""
+#~ "cuando un componente de archivo de traducción del proyecto es modificado"
+
+#~ msgid "Translation Source File (POT) has a Problem"
+#~ msgstr "Archivo Fuente de Traducción (POT) tiene un problema"
+
+#~ msgid ""
+#~ "when the source file (POT) of a component that you are a maintainer has a "
+#~ "problem"
+#~ msgstr ""
+#~ "cuando el archivo fuente (POT) del componente que usted mantiene tenga un "
+#~ "problema"
+
+#~ msgid "Enter a valid regular expression."
+#~ msgstr "Ingrese una expresión regular válida."
+
+#~ msgid "The root url does not point to a .tar.gz or .tgz file"
+#~ msgstr "La URL de root no apunta a un archivo .tar.gz o tgz"
+
+#~ msgid "The root url must start with http:// or ftp://"
+#~ msgstr "La URL de root debe empezar por http:// o ftp://"
+
+#~ msgid ""
+#~ "This is not a valid root URL for this repository type. Valid choices are: "
+#~ "%s"
+#~ msgstr ""
+#~ "Esta no es una URL raíz válida para este tipo de repositorio. Las "
+#~ "opciones válidas son: %s"
+
+#~ msgid ""
+#~ "This repository already belongs to another project. Please choose a "
+#~ "different one."
+#~ msgstr ""
+#~ "Este repositorio ya pertenece a otro proyecto. Por favor, elija uno "
+#~ "diferente"
+
+#~ msgid "Repo URL root"
+#~ msgstr "URL raíz del repositorio"
+
+#~ msgid "The URL of the versioning system repository/branch."
+#~ msgstr "La URL del repositorio/rama de versiones de sistema."
+
+#~ msgid "This type of repository does not accept branches"
+#~ msgstr "Este tipo de repositorio no acepta ramificaciones (branches)"
+
+#~ msgid "Branch"
+#~ msgstr "Rama"
+
+#, fuzzy
+#~ msgid "The VCS branch with which this unit is associated"
+#~ msgstr "Una rama VCS esta unidad está asociada con"
+
+#~ msgid "Web frontend"
+#~ msgstr "Interfaz web"
+
+#~ msgid "A URL to the project's web front-end"
+#~ msgstr "Una URL para la interfaz de red de proyecto"
+
+#~ msgid "<VcsUnit: %(name)s (%(type)s)>"
+#~ msgstr "<VcsUnit: %(name)s (%(type)s)>"
+
+#~ msgid "vcsunit"
+#~ msgstr "vcsunit"
+
+#~ msgid "vcsunits"
+#~ msgstr "vcsunits"
+
+#~ msgid ""
+#~ "Your request could not be completed. The admins have been notified to "
+#~ "take a closer look at it. Please try again in a few minutes"
+#~ msgstr ""
+#~ "Su petición no puede ser completada. Los administradores han sido "
+#~ "notificados para revisar mejor esta situación. Por favor intente "
+#~ "nuevamente en unos pocos minutos."
+
+#~ msgid "Setup of the repository locally could not be done successfully."
+#~ msgstr ""
+#~ "La configuración en forma local del repositorio no puedo realizarse "
+#~ "satisfactoriamente."
+
+#~ msgid ""
+#~ "The local repository has not been setup yet. Please, first do a check-out "
+#~ "of the repository."
+#~ msgstr ""
+#~ "El repositorio local todavía no ha sido configurado. Por favor, primero "
+#~ "verifíquelo."
+
+#~ msgid ""
+#~ "Unable to pull data from the remote repository. Is the remote host up?"
+#~ msgstr ""
+#~ "No es posible obtener datos desde el repositorio remoto. ¿El equipo "
+#~ "remoto se encuentra activo?"
+
+#~ msgid ""
+#~ "Cleanup of the repository failed. The admins have been notified to take a "
+#~ "closer look at it."
+#~ msgstr ""
+#~ "Ha fallado la limpieza del repositorio. Los administradores han sido "
+#~ "notificados para observar mejor esta situación."
+
+#~ msgid "Commit to the repository failed."
+#~ msgstr "El envío hacia el repositorio ha fallado."
+
+#~ msgid "Pushing to the remote repository failed."
+#~ msgstr "El envío hacia el repositorio remoto ha fallado."
+
+#~ msgid ""
+#~ "Given file does not have a revision. The admins have been notified to "
+#~ "take a closer look at it."
+#~ msgstr ""
+#~ "El archivo ofrecido no posee una revisión. Los administradores han sido "
+#~ "notificados para observar mejor esta situación."
+
+#~ msgid "The %s fields should be filled."
+#~ msgstr "Los campos %s deberían ser completados."
+
+#~ msgid "The PO file is broken and can't be opened by Lotte."
+#~ msgstr "Este archivo PO está dañado y no puede ser abierto por Lotte."
+
+#~ msgid "You can't make submissions for a file locked by someone else."
+#~ msgstr ""
+#~ "No puede enviar traducciones de un archivo que se encuentre bloqueado por "
+#~ "otro usuario."
+
+#~ msgid ""
+#~ "Nothing was sent because you haven't changed anything in the translation "
+#~ "form."
+#~ msgstr ""
+#~ "No ha sido enviado nada ya que nada se modificado en el formulario de "
+#~ "traducción."
+
+#~ msgid "Previous"
+#~ msgstr "Previo"
+
+#~ msgid "Next"
+#~ msgstr "Siguiente"
 
 #~ msgid ""
 #~ "Couldn't lock file, this means that you can send files only for reviewing."
@@ -4407,9 +5204,6 @@ msgstr "Siguiente"
 
 #~ msgid "Request closed as Rejected."
 #~ msgstr "La petición se ha cerrado dado que fue rechazada."
-
-#~ msgid "translation files"
-#~ msgstr "archivos de traducción"
 
 #~ msgid ""
 #~ "The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for "
@@ -4801,14 +5595,6 @@ msgstr "Siguiente"
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: lanzamiento %(release)s"
 
-#~ msgid ""
-#~ "Latest translations for %(language)s language in %(release)s release."
-#~ msgstr ""
-#~ "Ultima traducción para idioma %(language)s en lanzamiento %(release)s."
-
-#~ msgid "Collections"
-#~ msgstr "Colecciones"
-
 #~ msgid "Releases"
 #~ msgstr "Lanzamientos"
 
@@ -4912,18 +5698,6 @@ msgstr "Siguiente"
 #~ msgstr ""
 #~ "¿No pudo encontrar su colección? Prosiga y <a href=\"%(collection_create)s"
 #~ "\">¡añádala</a>!"
-
-#~ msgid "Delete <em>%(release_name)s</em>"
-#~ msgstr "Eliminar <em>%(release_name)s</em>"
-
-#~ msgid ""
-#~ "\n"
-#~ "  Are you sure you want to permanently delete the registered release "
-#~ "'%(release_name)s'?\n"
-#~ msgstr ""
-#~ "\n"
-#~ "  ¿Está seguro de que desea borrar permanentemente el lanzamiento "
-#~ "registrado '%(release_name)s'?\n"
 
 #~ msgid ""
 #~ "Insert the new e-mail address. An e-mail will be send to it for testing "
@@ -5035,9 +5809,6 @@ msgstr "Siguiente"
 
 #~ msgid "Email"
 #~ msgstr "Correo electrónico"
-
-#~ msgid "Password"
-#~ msgstr "Contraseña"
 
 #~ msgid "Change OpenID"
 #~ msgstr "Cambiar OpenID"
@@ -5199,9 +5970,6 @@ msgstr "Siguiente"
 #~ msgid "Join us"
 #~ msgstr "Únase a nosotros"
 
-#~ msgid "Create your account"
-#~ msgstr "Cree su cuenta"
-
 #~ msgid ""
 #~ "\n"
 #~ "<p>There are two ways to join: with an email and screen name or with an "
@@ -5240,13 +6008,6 @@ msgstr "Siguiente"
 
 #~ msgid "(not calculated)"
 #~ msgstr "(no calculado)"
-
-#~ msgid ""
-#~ "Your file does not pass by the check for correctness (msgfmt -c). Please "
-#~ "run this command on your system to see the errors."
-#~ msgstr ""
-#~ "Su archivo no pasa la verificación de exactitud (msgfmt -c). Por favor "
-#~ "ejecute este comando en su sistema para ver los errores."
 
 #~ msgid "Sorry, an error is causing troubles to send your file."
 #~ msgstr ""

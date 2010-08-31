@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-27 17:47+0000\n"
+"POT-Creation-Date: 2010-08-31 18:50+0000\n"
 "PO-Revision-Date: 2010-07-20 13:34+0200\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <besnik@programeshqip.org>\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Kërkoni për një emër përdoruesi ose lëreni bosh"
 
-#: actionlog/models.py:204
+#: actionlog/models.py:166
 msgid "log entry"
 msgstr "zë regjistrimi"
 
-#: actionlog/models.py:205
+#: actionlog/models.py:167
 msgid "log entries"
 msgstr "zëra regjistrimi"
 
@@ -34,8 +34,9 @@ msgstr "zëra regjistrimi"
 msgid "Date/Time"
 msgstr "Datë/kohë"
 
-#: actionlog/templates/object_action_list.html:7 teams/models.py:76
-#: teams/models.py:112 txpermissions/forms.py:18
+#: actionlog/templates/object_action_list.html:7
+#: addons/suggestions/models.py:44 addons/suggestions/models.py:110
+#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
 msgid "User"
 msgstr "Përdorues"
 
@@ -50,6 +51,42 @@ msgstr "DATETIME_FORMAT"
 #: actionlog/templates/object_action_list.html:22
 msgid "No history recorded yet."
 msgstr "Ende pa regjistrim historiku."
+
+#: addons/autofetch/models.py:19
+#, fuzzy
+msgid "Source file URL"
+msgstr "Kartelë burim:"
+
+#: addons/autofetch/models.py:21
+msgid ""
+"A URL pointing to the source file of this resource which can be used for "
+"auto updating."
+msgstr ""
+
+#: addons/autofetch/models.py:23
+msgid "Auto update source file"
+msgstr ""
+
+#: addons/autofetch/models.py:24
+msgid ""
+"A boolean field representing whether we should periodically pull and merge "
+"the source file for the given URL."
+msgstr ""
+
+#: addons/autofetch/models.py:29 resources/models.py:363
+#: resources/models.py:478
+#, fuzzy
+msgid "Resource"
+msgstr "<b>Burime</b>"
+
+#: addons/autofetch/models.py:31
+#, fuzzy
+msgid "The translation resource."
+msgstr "Shihni ekipet e përkthimit."
+
+#: addons/autofetch/models.py:34
+msgid "url handler"
+msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 #, fuzzy
@@ -79,16 +116,13 @@ msgstr "Grafiku do të pasqyrojë përherë numrat nga Transifex."
 
 #: addons/charts/templates/charts/widget_snippet.html:70
 #: addons/charts/templates/charts/widget_snippet.html:101
-msgid "Show code snippet for component:"
+#, fuzzy
+msgid "Show code snippet for resource:"
 msgstr "Shfa copëza kodi për përbërësin:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:66 projects/models.py:167
-#: projects/models.py:299 projects/migrations/0001_initial.py:28
-#: projects/migrations/0001_initial.py:50 releases/models.py:41
-#: txcollections/migrations/0001_initial.py:23
-#: txcollections/migrations/0001_initial.py:41
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:142
 msgid "Hidden"
 msgstr "Padukshëm"
 
@@ -123,36 +157,46 @@ msgstr "Grafikë Ndërveprues dhe Pamorë"
 #: addons/charts/templates/charts/widget_snippet.html:120
 #, fuzzy
 msgid ""
-"Sorry, but your project doesn't have any components with up-to-date "
-"statistics. You need to have at least one component with statistics to "
-"export charts from Transifex."
+"Sorry, but your project doesn't have any resources with up-to-date "
+"statistics. You need to have at least one resource with statistics to export "
+"charts from Transifex."
 msgstr ""
 "Na ndjeni, por projekti juaj nuk ka ende ndonjë përbërës me statistika të "
 "përditësuara. \n"
 "Ju duhet të paktën një përbërës me statistika, që të eksportohen grafikë nga "
 "Transifex-i."
 
-#: addons/locks/handlers.py:58
-msgid ""
-"You will need to send this file for review because you can't lock this file."
+#: addons/helptext/templates/extended_helptext.html:8
+msgid "...more"
 msgstr ""
 
-#: addons/locks/models.py:65
+#: addons/locks/handlers.py:55
+#, fuzzy
+msgid "Couldn't lock file."
+msgstr "Që ta zhbllokoni kartelën, klikoni mbi të."
+
+#: addons/locks/models.py:55
 #, fuzzy, python-format
 msgid ""
-"User '%(user)s' does not have permission to submit files for '%(pofile)s'."
+"User '%(user)s' has no permission to submit translations for '%(resourse)s' "
+"to '%(language)s'."
 msgstr ""
 "Përdoruesi '%(user)s' nuk ka leje për parashtrim kartelash ose për "
 "bashkërendim të  '%(pofile)s'"
 
-#: addons/locks/models.py:77
+#: addons/locks/models.py:67
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr ""
 "Përdoruesi '%(user)s' ka përdorur tashmë maksimumin e %(locks)i kyçjeve të "
 "lejuara."
 
-#: addons/locks/models.py:158
+#: addons/locks/models.py:76
+#, python-format
+msgid "This resource language is already locked by '%s'"
+msgstr ""
+
+#: addons/locks/models.py:160
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr "Përdoruesit '%(user)s' nuk i lejohet të heqë kyçjen '%(lock)s'"
@@ -163,37 +207,56 @@ msgid "Lock is expiring"
 msgstr "Kyçja po skadon"
 
 #: addons/locks/notifications.py:16
-msgid "when a lock for file is expiring"
+#, fuzzy
+msgid "when a lock for translation resource is expiring"
 msgstr "kur kyçja e një kartele po skadon"
 
-#: addons/locks/views.py:42
-msgid "Lock removed."
+#: addons/locks/views.py:43
+#, fuzzy
+msgid "Lock created."
 msgstr "Kyçja iu hoq"
 
-#: addons/locks/views.py:47 addons/locks/views.py:78
-#: projects/views/component.py:556
+#: addons/locks/views.py:50 addons/locks/views.py:86
 msgid "Sorry, but you need to send a POST request."
 msgstr "Na ndjeni, por lypset të dërgoni një kërkesë POST."
 
-#: addons/locks/views.py:72
-msgid "Lock created. Please don't forget to remove it when you're done."
-msgstr ""
-"Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
+#: addons/locks/views.py:78
+msgid "Lock removed."
+msgstr "Kyçja iu hoq"
 
-#: addons/locks/templates/pofile_lock.html:20
-#, fuzzy, python-format
-msgid "This file is locked by user '%(owner)s'."
-msgstr "Kjo kartelë është kyçur nga përdoruesi '%(owner)s'."
-
-#: addons/locks/templates/pofile_lock.html:22
-msgid "Click on it to unlock the file."
+#: addons/locks/views.py:80
+#, fuzzy
+msgid "You don't have permission to unlock this file."
 msgstr "Që ta zhbllokoni kartelën, klikoni mbi të."
 
-#: addons/locks/templates/pofile_lock.html:24
-msgid "Time left:"
-msgstr "Kohë e mbetur:"
+#: addons/locks/views.py:83
+msgid "Unlock failed. Lock doesn't exist."
+msgstr ""
 
-#: addons/locks/templates/pofile_lock.html:32
+#: addons/locks/templates/lock_resource_action.html:16
+msgid "This translation has been locked by you."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:18
+#, fuzzy, python-format
+msgid "This translation has been locked by user '%(owner)s'."
+msgstr "Kjo kartelë është kyçur nga përdoruesi '%(owner)s'."
+
+#: addons/locks/templates/lock_resource_action.html:20
+#, python-format
+msgid "(%(lock_expires)s left)"
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:22
+msgid "unlock"
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:27
+msgid "Click to renew your lock for a fresh period of time."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:28
+#: addons/locks/templates/pofile_lock.html:31
 #, fuzzy, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
@@ -206,7 +269,43 @@ msgstr[1] ""
 "                Zgjate kyçjen edhe për %(hours)s orë.\n"
 "            "
 
-#: addons/locks/templates/pofile_lock.html:42
+#: addons/locks/templates/lock_resource_action.html:37
+#, fuzzy
+msgid "Lock this translation to notify others you're working with it."
+msgstr ""
+"Kyçeni dhe shkarkojeni këtë kartelë, që të njoftoni të tjerët se po merreni "
+"me të."
+
+#: addons/locks/templates/lock_resource_action.html:41
+#, fuzzy
+msgid ""
+"This translation is unlocked. Most likely no one is working on it right now."
+msgstr ""
+"Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të "
+"hëpërhë."
+
+#: addons/locks/templates/lock_resource_action.html:56
+msgid "Creating lock..."
+msgstr ""
+
+#: addons/locks/templates/lock_resource_action.html:78
+msgid "Removing lock..."
+msgstr ""
+
+#: addons/locks/templates/pofile_lock.html:19
+#, fuzzy, python-format
+msgid "This file is locked by user '%(owner)s'."
+msgstr "Kjo kartelë është kyçur nga përdoruesi '%(owner)s'."
+
+#: addons/locks/templates/pofile_lock.html:21
+msgid "Click on it to unlock the file."
+msgstr "Që ta zhbllokoni kartelën, klikoni mbi të."
+
+#: addons/locks/templates/pofile_lock.html:23
+msgid "Time left:"
+msgstr "Kohë e mbetur:"
+
+#: addons/locks/templates/pofile_lock.html:41
 #, fuzzy
 msgid ""
 "Lock and download this file to notify others that you're working with it."
@@ -214,114 +313,259 @@ msgstr ""
 "Kyçeni dhe shkarkojeni këtë kartelë, që të njoftoni të tjerët se po merreni "
 "me të."
 
-#: addons/locks/templates/pofile_lock.html:47
+#: addons/locks/templates/pofile_lock.html:46
 #, fuzzy
 msgid "This file is unlocked. Most likely no one is working on it right now."
 msgstr ""
 "Kjo kartelë është e pakyçur. Ka shumë gjasa që nuk po punon kush me të "
 "hëpërhë."
 
-#: addons/locks/templates/locks/component.html:9
-#: translations/templates/component_submit.html:31
-msgid "This file is locked by someone else."
-msgstr "Kjo kartelë është kyçur nga dikush tjetër."
-
-#: addons/locks/templates/notification/project_component_file_lock_expiring/notice.html:3
+#: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
 #, python-format
 msgid ""
-"A lock for <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</"
-"a> is about to expire on %(expires)s"
+"\n"
+"A lock for <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s "
+"in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:35
-msgid "You are only allowed to upload PO files (*.po)!"
-msgstr "Ju lejohet të ngarkoni vetëm kartela PO (*.po)!"
-
-#: addons/presubmit_checks/handlers.py:39
-#, fuzzy
-msgid "You submitted an empty file!"
-msgstr "Parashtruat një kartelë të zbrazët!"
-
-#: addons/presubmit_checks/handlers.py:48
-#, fuzzy
+#: addons/lotte/views.py:75
 msgid ""
-"Uploaded file contains Mac line endings (\\r) or possibly DOS line endings "
-"(\\r\\n)!"
-msgstr "Kartela e ngarkuar përmban shenja DOS për rreshta të rinj (\\r)!"
-
-#: addons/presubmit_checks/handlers.py:60
-#, python-format
-msgid "Uploaded file header is missing the '%s' field!"
+"This project has more than one source languages and as a result you can not "
+"translate all resources at the same time."
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:66
-msgid "File is not encoded using UTF-8!"
+#: addons/lotte/templates/filters_menu_resources.html:23
+#: addons/lotte/templates/filters_menu_users.html:23
+msgid "No active contributor!"
 msgstr ""
 
-#: addons/presubmit_checks/handlers.py:70
-msgid "Uploaded file doesn't contain any translated entries!"
-msgstr "Kartela e ngarkuar nuk përmban ndonjë zë të përkthyer!"
-
-#: addons/presubmit_checks/handlers.py:87
+#: addons/lotte/templates/lotte_details_snippet.html:8
 #, fuzzy
-msgid "Your file was sent via e-mail to you to avoid any loss of work."
-msgstr ""
-"Kartela ju është dërguar me e-mail, për të shmangur humbjen e ndonjë "
-"kontributi."
+msgid "Last Translation:"
+msgstr "Përkthim"
 
-#: addons/presubmit_checks/handlers.py:91
+#: addons/lotte/templates/lotte_details_snippet.html:12
+#, fuzzy, python-format
+msgid "by %(user)s"
+msgstr "Cyte %(user)s "
+
+#: addons/lotte/templates/lotte_details_snippet.html:22
+#, fuzzy
+msgid "Key"
+msgstr "Kyç:"
+
+#: addons/lotte/templates/lotte_details_snippet.html:22
+#, fuzzy
+msgid "String ID:"
+msgstr "Ngrirje vargjesh:"
+
+#: addons/lotte/templates/lotte_details_snippet.html:23
+#: addons/timeline/templates/timeline/timeline_base.html:40
+#: languages/models.py:52 languages/migrations/0001_initial.py:14
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:127
+#: releases/models.py:36 templates/timeline.html:39
+#: templates/helptext/project_form_helptext.html:26
+#: templates/notification/notices.html:42
+msgid "Description"
+msgstr "Përshkrim"
+
+#: addons/lotte/templates/lotte_details_snippet.html:23
+#, fuzzy
+msgid "Description:"
+msgstr "Përshkrim"
+
+#: addons/lotte/templates/lotte_details_snippet.html:24
+#, fuzzy
+msgid "Occurences"
+msgstr "Hasje"
+
+#: addons/lotte/templates/lotte_details_snippet.html:24
+#, fuzzy
+msgid "Occurrences:"
+msgstr "Hasje"
+
+#: addons/lotte/templates/more_languages.html:27
+#, fuzzy
+msgid "No active languages!"
+msgstr "Gjuha mëmë"
+
+#: addons/lotte/templates/translate.html:9 templates/base-sample.html:54
+#: templates/projects/base.html:6 templates/projects/project_list.html:15
+#: templates/resources/resource_form.html:10
+msgid "Projects"
+msgstr "Projekte"
+
+#: addons/lotte/templates/translate.html:567
 msgid ""
-"We couldn't send you an email to preserve your work because you haven't "
-"registered an email address."
+"Search in Transifex memory for existing translations (opens up in new tab/"
+"window)"
 msgstr ""
-"Nuk mundëm t'ju dërgojmë një email që të ruhej puna juaj, ngaqë nuk keni "
-"regjistruar ndonjë adresë email."
 
-#: addons/repowatch/models.py:28
-#, python-format
-msgid "Unable to add watch for path %r"
-msgstr "I pazoti të shtojë mbikqyrje për shtegun %r"
+#: addons/lotte/templates/translate.html:568
+#, fuzzy
+msgid "Search translations"
+msgstr "Hidhe tej përkthimin"
 
-#: addons/repowatch/models.py:99
-msgid "watch"
-msgstr "mbikqyrje"
+#: addons/lotte/templates/translate.html:640
+#: addons/lotte/templates/view_strings.html:185 resources/models.py:466
+msgid "Source String"
+msgstr "Varg Burim"
 
-#: addons/repowatch/models.py:100
-msgid "watches"
-msgstr "mbikqyrje"
+#: addons/lotte/templates/translate.html:641
+#: addons/lotte/templates/view_strings.html:186
+#: addons/trans_memory/templates/search_translation.html:48
+msgid "Translation"
+msgstr "Përkthim"
 
-#: addons/repowatch/views.py:25 addons/repowatch/views.py:84
-msgid "Must use POST to activate"
-msgstr "Duhet përdorur POST për aktivizimin"
+#: addons/lotte/templates/translate.html:649
+#, fuzzy
+msgid "Save all"
+msgstr "Ruaje ekipin"
 
-#: addons/repowatch/views.py:28 addons/repowatch/views.py:87
-msgid "Notification is not enabled"
-msgstr "Njoftimet nuk janë aktivizuar"
+#: addons/lotte/templates/translate.html:652
+#: templates/resources/resource_actions.html:146
+#, fuzzy
+msgid "Delete translations"
+msgstr "Hidhe tej përkthimin"
 
-#: addons/repowatch/views.py:53 addons/repowatch/templates/watch_toggle.html:5
-msgid "Watch it"
-msgstr "Ndiqe!"
+#: addons/lotte/templates/translate.html:654
+msgid "Save and Exit"
+msgstr ""
 
-#: addons/repowatch/views.py:65
-msgid "Stop watching"
-msgstr "Resht së mbikëqyrurindjekuri"
+#: addons/lotte/templates/translate.html:668
+#, fuzzy
+msgid "Verbose editing"
+msgstr "Përpunim fjalaman:"
 
-#: addons/repowatch/views.py:100
-msgid "Watch this project"
-msgstr "Ndiqe këtë projekt"
+#: addons/lotte/templates/translate.html:672
+#, fuzzy
+msgid "Auto save"
+msgstr "Vetëpërktheje"
 
-#: addons/repowatch/views.py:113
-msgid "Stop watching this project"
-msgstr "Ndal së vëzhguari këtë projekt"
+#: addons/suggestions/models.py:19 resources/models.py:327
+#: resources/models.py:447
+#, fuzzy
+msgid "String"
+msgstr "Varg Burim"
 
-#: addons/repowatch/templates/watch_toggle.html:5
-msgid "Stop watching it"
-msgstr "Resht së ndjekuri"
+#: addons/suggestions/models.py:20
+msgid "The actual string content of suggestion."
+msgstr ""
 
-#: addons/repowatch/templates/repowatch/project_detail.html:8
-#: templates/projects/project_detail.html:52
-msgid "Watch:"
-msgstr "Ndiq:"
+#: addons/suggestions/models.py:21 resources/models.py:329
+#: resources/models.py:449
+msgid "String Hash"
+msgstr ""
+
+#: addons/suggestions/models.py:23
+msgid "The hash of the suggestion string used for indexing"
+msgstr ""
+
+#: addons/suggestions/models.py:24
+#, fuzzy
+msgid "Score Value"
+msgstr "Pikë"
+
+#: addons/suggestions/models.py:25
+msgid ""
+"A value which indicates the relevance of this suggestionto the translation "
+"of the source string."
+msgstr ""
+
+#: addons/suggestions/models.py:34
+#, fuzzy
+msgid "Source Entity"
+msgstr "Varg Burim"
+
+#: addons/suggestions/models.py:36
+msgid "The source entity which is being translated by thissuggestion instance."
+msgstr ""
+
+#: addons/suggestions/models.py:40 resources/models.py:473
+#, fuzzy
+msgid "Target Language"
+msgstr "Gjuha Mëmë"
+
+#: addons/suggestions/models.py:41
+#, fuzzy
+msgid "The language in which this suggestion string belongs to."
+msgstr "Projekti te i cili ky ekip merr pjesë."
+
+#: addons/suggestions/models.py:45
+msgid "The user who committed the specific suggestion."
+msgstr ""
+
+#: addons/suggestions/models.py:52
+#, fuzzy
+msgid "suggestion"
+msgstr "Zgjidhje"
+
+#: addons/suggestions/models.py:53
+msgid "suggestions"
+msgstr ""
+
+#: addons/suggestions/models.py:106
+#, fuzzy
+msgid "Suggestion"
+msgstr "Zgjidhje"
+
+#: addons/suggestions/models.py:108
+#, fuzzy
+msgid "The suggestion which is being voted."
+msgstr "Projekti te i cili ky ekip merr pjesë."
+
+#: addons/suggestions/models.py:112
+#, fuzzy
+msgid "The user who voted the specific suggestion."
+msgstr "Përdoruesi që zotëron këtë projekt."
+
+#: addons/suggestions/models.py:123
+msgid "vote"
+msgstr ""
+
+#: addons/suggestions/models.py:124
+msgid "votes"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:187
+#, fuzzy
+msgid "User Suggestions"
+msgstr "Regjistrim përdoruesi"
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:201
+msgid "Vote up for this translation suggestion (click again to undo)."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:203
+msgid ""
+"The score of the suggestion, indicating its popularity among translators."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:205
+msgid "Vote down for this translation suggestion (click again to undo)."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:210
+msgid "This is the currently accepted translation."
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:212
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:215
+msgid "Use this!"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:223
+msgid "New Suggestion"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:227
+msgid "You!"
+msgstr ""
+
+#: addons/suggestions/templates/lotte_suggestions_snippet.html:233
+#, fuzzy
+msgid "Send suggestion!"
+msgstr "rregullim vendor"
 
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
@@ -349,9 +593,8 @@ msgid "Go"
 msgstr "Shko tek"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/projects/component_detail.html:209
-#: templates/projects/project_detail.html:119
-#: templates/teams/team_detail.html:132
+#: templates/timeline.html:24 templates/projects/project_detail.html:132
+#: templates/teams/team_detail.html:228
 msgid "None available"
 msgstr "Asnjë i passhëm"
 
@@ -366,18 +609,6 @@ msgstr[0] ""
 msgstr[1] ""
 "\n"
 "    Kërkimi gjeti %(counter)s përfundime\n"
-
-#: addons/timeline/templates/timeline/timeline_base.html:40
-#: languages/models.py:39 languages/migrations/0001_initial.py:14
-#: projects/models.py:152 projects/models.py:278 projects/models.py:541
-#: projects/migrations/0001_initial.py:20
-#: projects/migrations/0001_initial.py:39 releases/models.py:25
-#: templates/timeline.html:39 templates/notification/notices.html:42
-#: templates/reviews/review_list.html:42
-#: txcollections/migrations/0001_initial.py:14
-#: txcollections/migrations/0001_initial.py:34
-msgid "Description"
-msgstr "Përshkrim"
 
 #: addons/timeline/templates/timeline/timeline_project.html:23
 #: addons/timeline/templates/timeline/timeline_user.html:23
@@ -402,18 +633,110 @@ msgstr ""
 msgid "Profile"
 msgstr "Profil"
 
+#: addons/trans_memory/templates/search_translation.html:9
+#: addons/trans_memory/templates/search_translation.html:15
+#, fuzzy
+msgid "Search Translations"
+msgstr "Përkthime"
+
+#: addons/trans_memory/templates/search_translation.html:36
+#, python-format
+msgid "%(source_language)s &rarr; %(translation_language)s"
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation.html:47
+#, fuzzy
+msgid "Source string"
+msgstr "Varg Burim"
+
+#: addons/trans_memory/templates/search_translation.html:56
+#: templates/userprofile/profile/location.html:26
+msgid "Location:"
+msgstr "Vend:"
+
+#: addons/trans_memory/templates/search_translation.html:68
+msgid "Tough luck! No translations obtained."
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation_form.html:7
+#, fuzzy
+msgid "Search for a string:"
+msgstr "Kërkoni për një emër  përdoruesi"
+
+#: addons/trans_memory/templates/search_translation_form.html:11
+msgid "From:"
+msgstr ""
+
+#: addons/trans_memory/templates/search_translation_form.html:13
+#, fuzzy
+msgid "To:"
+msgstr "Gjithsej:"
+
+#: addons/trans_memory/templates/search_translation_form.html:38
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/userprofile/avatar/choose.html:66
+msgid "Search"
+msgstr "Kërko"
+
+#: addons/watches/models.py:29
+msgid "Resource to watch."
+msgstr ""
+
+#: addons/watches/models.py:31
+#, fuzzy
+msgid "Language of the translation."
+msgstr "Shihni ekipet e përkthimit."
+
+#: addons/watches/models.py:42
+#, fuzzy
+msgid "translation watch"
+msgstr "Statistika përkthimi"
+
+#: addons/watches/models.py:43
+#, fuzzy
+msgid "translation watches"
+msgstr "Kartela përkthimi"
+
+#: addons/watches/views.py:28 addons/watches/views.py:93
+msgid "Must use POST to activate"
+msgstr "Duhet përdorur POST për aktivizimin"
+
+#: addons/watches/views.py:31 addons/watches/views.py:96
+msgid "Notification is not enabled"
+msgstr "Njoftimet nuk janë aktivizuar"
+
+#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:6
+msgid "Watch it"
+msgstr "Ndiqe!"
+
+#: addons/watches/views.py:72
+msgid "Stop watching"
+msgstr "Resht së mbikëqyrurindjekuri"
+
+#: addons/watches/views.py:106
+msgid "Watch this project"
+msgstr "Ndiqe këtë projekt"
+
+#: addons/watches/views.py:119
+msgid "Stop watching this project"
+msgstr "Ndal së vëzhguari këtë projekt"
+
+#: addons/watches/templates/watch_toggle.html:6
+msgid "Stop watching it"
+msgstr "Resht së ndjekuri"
+
 #: addons/widgets/templates/project_widgets.html:12
 #: addons/widgets/templates/project_widgets.html:14
 #: addons/widgets/templates/widgets/project.html:7
 msgid "Widgets"
 msgstr "Widget-e"
 
-#: addons/widgets/templates/project_widgets.html:48
+#: addons/widgets/templates/project_widgets.html:22
 #, fuzzy
 msgid "Widgets, buttons, etc."
 msgstr "Widget-e, butona, etj"
 
-#: addons/widgets/templates/project_widgets.html:49
+#: addons/widgets/templates/project_widgets.html:23
 msgid ""
 "Here are some widgets, buttons and other cool stuff you can add to your "
 "homepage!"
@@ -421,101 +744,111 @@ msgstr ""
 "Ja disa nga widget-et, butonat dhe të tjera gjëra të lezetshme që mund t'i "
 "shtoni te faqja juaj!"
 
-#: addons/widgets/templates/project_widgets.html:54
+#: addons/widgets/templates/project_widgets.html:28
 msgid "Userbars"
 msgstr ""
 
-#: addons/widgets/templates/project_widgets.html:63
+#: addons/widgets/templates/project_widgets.html:37
 msgid "You can insert userbars to forums, e-mail signatures, etc."
 msgstr ""
 
-#: addons/widgets/templates/project_widgets.html:64
+#: addons/widgets/templates/project_widgets.html:38
 msgid "Show code snippet for userbar:"
 msgstr ""
 
-#: codebases/models.py:36 codebases/migrations/0001_initial.py:12
-#: languages/models.py:37 languages/migrations/0001_initial.py:19
-#: projects/models.py:150 projects/models.py:276 projects/models.py:539
-#: projects/migrations/0001_initial.py:31
-#: projects/migrations/0001_initial.py:53 releases/models.py:23
-#: templates/userprofile/profile/public.html:60
-#: txcollections/migrations/0001_initial.py:27
-#: txcollections/migrations/0001_initial.py:44
-msgid "Name"
-msgstr "Emër"
-
-#: codebases/models.py:37 codebases/migrations/0001_initial.py:15
-msgid "Root"
-msgstr "Rrënjë"
-
-#: codebases/models.py:38
-msgid "The URL of the codebase"
-msgstr "URL-ja e kodit bazë"
-
-#: codebases/models.py:39 codebases/migrations/0001_initial.py:17
-msgid "Type"
-msgstr "Lloj"
-
-#: codebases/models.py:41
-#, python-format
-msgid "The codebase type (%s)"
-msgstr "Lloj kodi bazë (%s)"
-
-#: codebases/models.py:44
-msgid "The last time this unit was updated"
-msgstr "Hera e fundit që kjo njësi qe përditësuar"
-
-#: codebases/models.py:53
-msgid "unit"
-msgstr "njësi"
-
-#: codebases/models.py:54
-msgid "units"
-msgstr "njësi"
-
-#: languages/feeds.py:14
+#: languages/feeds.py:13
 #, python-format
 msgid "Languages on %(site_name)s"
 msgstr "Gjuhë te %(site_name)s"
 
-#: languages/feeds.py:17
+#: languages/feeds.py:16
 #, python-format
 msgid "The languages spoken on %s."
 msgstr "Gjuhë të folura te %s."
 
-#: languages/models.py:40 languages/migrations/0001_initial.py:13
+#: languages/models.py:50 languages/migrations/0001_initial.py:19
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:125
+#: releases/models.py:34 resources/models.py:50
+#: templates/helptext/project_form_helptext.html:16
+#: templates/projects/release_language_detail.html:58
+#: templates/teams/team_detail.html:137
+#: templates/userprofile/profile/public.html:60
+msgid "Name"
+msgstr "Emër"
+
+#: languages/models.py:53 languages/migrations/0001_initial.py:13
+#: languages/migrations/0002_added_rules_f.py:79
 msgid "Code"
 msgstr "Kod"
 
-#: languages/models.py:43 languages/migrations/0001_initial.py:12
+#: languages/models.py:56 languages/migrations/0001_initial.py:12
+#: languages/migrations/0002_added_rules_f.py:76
 msgid "Code aliases"
 msgstr "Aliase kodi"
 
-#: languages/models.py:46 languages/migrations/0001_initial.py:17
+#: languages/models.py:59 languages/migrations/0001_initial.py:17
+#: languages/migrations/0002_added_rules_f.py:91
 msgid "Special Chars"
 msgstr "Shenja Speciale"
 
-#: languages/models.py:47
+#: languages/models.py:60
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 "Jepni çfarëdo shenje speciale të cilat përdoruesit mund t'i kishin të "
 "vështira për shtypje"
 
-#: languages/models.py:50 languages/migrations/0001_initial.py:16
+#: languages/models.py:63 languages/migrations/0001_initial.py:16
+#: languages/migrations/0002_added_rules_f.py:88
 msgid "Number of Plurals"
 msgstr "Numër Shumësi"
 
-#: languages/models.py:52 languages/migrations/0001_initial.py:15
+#: languages/models.py:65 languages/migrations/0001_initial.py:15
+#: languages/migrations/0002_added_rules_f.py:85
 msgid "Plural Equation"
 msgstr "Ekuacion Shumësi"
 
-#: languages/models.py:63
+#: languages/models.py:69
+msgid "Rule zero"
+msgstr ""
+
+#: languages/models.py:71
+#, fuzzy
+msgid "Rule one"
+msgstr "Emër mundësuesi:"
+
+#: languages/models.py:73
+msgid "Rule two"
+msgstr ""
+
+#: languages/models.py:75
+msgid "Rule few"
+msgstr ""
+
+#: languages/models.py:77
+msgid "Rule many"
+msgstr ""
+
+#: languages/models.py:79
+msgid "Rule other"
+msgstr ""
+
+#: languages/models.py:90
 msgid "language"
 msgstr "gjuhë"
 
-#: languages/models.py:64 templates/languages/language_list.html:15
+#: languages/models.py:91 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "gjuhë"
+
+#: projects/api.py:233 projects/api.py:320
+#, python-format
+msgid "%i strings added"
+msgstr ""
+
+#: projects/api.py:235 projects/api.py:322
+#, fuzzy, python-format
+msgid "%i strings updated"
+msgstr "Statistika të përditësuara së fundi më:"
 
 #: projects/feeds.py:16
 #, python-format
@@ -527,14 +860,16 @@ msgid "Updates on changes and additions to registered projects."
 msgstr "Përditësime mbi ndryshime dhe shtesa te projektet e regjistruara."
 
 #: projects/feeds.py:35
-#, python-format
-msgid "%(site_name)s: Components in %(project)s"
+#, fuzzy, python-format
+msgid "%(site_name)s: Resources in %(project)s"
 msgstr "%(site_name)s: Përbërës në %(project)s"
 
 #: projects/feeds.py:40
 #, python-format
-msgid "Latest components in project %s."
-msgstr "Përbërësit më të fundit te projekti %s."
+msgid ""
+"Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py "
+"in project %s."
+msgstr ""
 
 #: projects/feeds.py:67
 #, python-format
@@ -546,13 +881,13 @@ msgstr "%(site_name)s: %(project)s :: hedhje në qarkullim %(release)s"
 msgid "Translation statistics for all languages against %s release."
 msgstr "Statistika përkthimesh për të gjuhët përkundrejt qarkullimit %s."
 
-#: projects/feeds.py:108
+#: projects/feeds.py:107
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
 msgstr ""
 "%(site_name)s: %(project)s :: hedhje në qarkullim %(release)s :: %(lang)s"
 
-#: projects/feeds.py:115
+#: projects/feeds.py:114
 #, python-format
 msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
@@ -642,33 +977,16 @@ msgstr ""
 "                              shpërndarje paketash, module mjedisesh "
 "desktopi, etj."
 
-#: projects/forms.py:134 projects/models.py:291
-msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
-msgstr ""
-"Një shprehje e rregullt për filtrim të kartelave të paraqitura. Psh: 'po/.*'"
+#: projects/forms.py:134
+#, fuzzy
+msgid "Search for a resource"
+msgstr "Kërkoni për një emër  përdoruesi"
 
-#: projects/forms.py:151 projects/models.py:296
-#: projects/migrations/0002_release_06_07.py:15
-msgid "Submit to"
-msgstr "Parashtro te"
-
-#: projects/forms.py:152
-msgid ""
-"Choose how this component should handle submissions of files.The options "
-"here are available based on the component type"
-msgstr ""
-"Zgjidhni se si duhet t'i trajtojë kjo përbërëse parashtrimet e kartelave."
-"Mundësitë e këtushme janë të passhme mbi bazën e llojit të përbërëses"
-
-#: projects/forms.py:167
-msgid "Search for a component"
-msgstr "Kërkoni për një përbërës"
-
-#: projects/models.py:143
+#: projects/models.py:118
 msgid "Private"
 msgstr "Privat"
 
-#: projects/models.py:144
+#: projects/models.py:119
 #, fuzzy
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
@@ -678,18 +996,12 @@ msgstr ""
 "tepër, projektet private janë të kufizuar në përputhje me billingplans për "
 "llogarinë e përdoruesit."
 
-#: projects/models.py:147 projects/models.py:273 projects/models.py:536
-#: projects/migrations/0001_initial.py:19
-#: projects/migrations/0001_initial.py:38 releases/models.py:20
-#: txcollections/migrations/0001_initial.py:13
-#: txcollections/migrations/0001_initial.py:33
-#: txcollections/migrations/0002_release_06_07.py:12
-#: txcollections/migrations/0002_release_06_07.py:18
+#: projects/models.py:122 releases/models.py:31 resources/models.py:54
+#: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Identifikues"
 
-#: projects/models.py:148 projects/models.py:274 projects/models.py:537
-#: releases/models.py:21
+#: projects/models.py:123 releases/models.py:32 resources/models.py:55
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -697,265 +1009,124 @@ msgstr ""
 "Një etiketë e vockël për përdorim te URL-ja, vetëm me shkronja, numra, "
 "nënvija ose vija ndarëse."
 
-#: projects/models.py:151 projects/models.py:277 releases/models.py:24
+#: projects/models.py:126
 msgid "A short name or very short description."
 msgstr "Një emër të shkurtër ose një përshkrim shumë të shkurtër."
 
-#: projects/models.py:153 projects/models.py:279
+#: projects/models.py:128
 msgid "A sentence or two describing the object (optional)."
 msgstr "Një a dy fraza që përshkruajnë objektin (opsionale)."
 
-#: projects/models.py:154 projects/models.py:280 projects/models.py:544
-#: projects/migrations/0001_initial.py:30
-#: projects/migrations/0001_initial.py:45 releases/models.py:27
-#: txcollections/migrations/0001_initial.py:25
-#: txcollections/migrations/0001_initial.py:43
+#: projects/models.py:129 releases/models.py:39
+#: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Përshkrim i gjatë"
 
-#: projects/models.py:156 projects/models.py:282
+#: projects/models.py:131
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Përshkrim më i gjatë (opsional). Përdorni sintaksë Markdown."
 
-#: projects/models.py:157 projects/migrations/0001_initial.py:29
-#: txcollections/migrations/0001_initial.py:42
+#: projects/models.py:132 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Faqe Hyrëse"
 
-#: projects/models.py:158 projects/migrations/0001_initial.py:18
+#: projects/models.py:133
 msgid "Feed"
 msgstr "Prurje"
 
-#: projects/models.py:159
+#: projects/models.py:134
 msgid "An RSS feed with updates to the project."
 msgstr "Një prurje RSS me përditësime te projekti."
 
-#: projects/models.py:160 projects/migrations/0001_initial.py:27
+#: projects/models.py:135
 msgid "Bug tracker"
 msgstr "Gjurmes të metash"
 
-#: projects/models.py:161
+#: projects/models.py:136
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)URL-ja "
 "për sistemin e ndjekjes së të metave (Bugzilla, Trac, etj.)"
 
-#: projects/models.py:163
-#: projects/migrations/0003_add_anyone_submit_field.py:12
+#: projects/models.py:138
 msgid "Anyone can submit"
 msgstr "Mund të parashtrojë kushdo"
 
-#: projects/models.py:165
+#: projects/models.py:140
 msgid "Can anyone submit files to this project?"
 msgstr "A mundet gjithkush të parashtrojë kartela për këtë projekt?"
 
-#: projects/models.py:168 projects/models.py:300 releases/models.py:42
+#: projects/models.py:143
 msgid "Hide this object from the list view?"
 msgstr "Të fshihet ky objek prej shfaqjes si listë?"
 
-#: projects/models.py:169 projects/models.py:301
-#: projects/migrations/0001_initial.py:24
-#: projects/migrations/0001_initial.py:41 releases/models.py:43
-#: txcollections/migrations/0001_initial.py:17
-#: txcollections/migrations/0001_initial.py:38
+#: projects/models.py:144
 msgid "Enabled"
 msgstr "Veprues"
 
-#: projects/models.py:170 projects/models.py:302 releases/models.py:44
+#: projects/models.py:145
 msgid "Enable this object or disable its use?"
 msgstr "Të aktivizohet ky objekt apo të çaktivizohet përdorimi i tij?"
 
-#: projects/models.py:174 projects/migrations/0001_initial.py:23
+#: projects/models.py:149 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Etiketa"
 
-#: projects/models.py:177
+#: projects/models.py:152 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Mirëmbajtësa"
 
-#: projects/models.py:181
+#: projects/models.py:156
 msgid "Outsource project"
 msgstr ""
 
-#: projects/models.py:182
+#: projects/models.py:157
 msgid "Project that owns the access control of this project."
 msgstr "Projekti që zotëron kontroll hyrje për këtë projekt."
 
-#: projects/models.py:185
+#: projects/models.py:160 storage/models.py:45
 msgid "Owner"
 msgstr "Pronar"
 
-#: projects/models.py:186
+#: projects/models.py:161
 msgid "The user who owns this project."
 msgstr "Përdoruesi që zotëron këtë projekt."
 
-#: projects/models.py:189 projects/models.py:311 projects/models.py:566
-#: projects/migrations/0001_initial.py:22
-#: projects/migrations/0001_initial.py:47 releases/models.py:49
-#: txcollections/migrations/0001_initial.py:22
-#: txcollections/migrations/0001_initial.py:36
+#: projects/models.py:164 releases/models.py:61
 msgid "HTML Description"
 msgstr "Përshkrim HTML"
 
-#: projects/models.py:191 projects/models.py:313 projects/models.py:568
-#: releases/models.py:50
+#: projects/models.py:166 releases/models.py:63
 msgid "Description in HTML."
 msgstr "Përshkrim në HTML."
 
-#: projects/models.py:201
+#: projects/models.py:176
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Projekt: %s>"
 
-#: projects/models.py:204
+#: projects/models.py:179
 msgid "project"
 msgstr "projekt"
 
-#: projects/models.py:205 templates/projects/project_list.html:18
+#: projects/models.py:180 templates/projects/project_list.html:21
 msgid "projects"
 msgstr "projekte"
 
-#: projects/models.py:283 projects/migrations/0001_initial.py:52
-msgid "Source language"
-msgstr "Gjuhë burimi"
-
-#: projects/models.py:284
-msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
-msgstr "Gjuha burim për këtë përbërëse (p.sh., 'en', 'pt_BR', 'el')."
-
-#: projects/models.py:286 projects/migrations/0001_initial.py:42
-msgid "I18n type"
-msgstr "lloj I18n"
-
-#: projects/models.py:288
-#, python-format
-msgid "The type of i18n support for the source code (%s)"
-msgstr "Lloji i mbulimit i18n për kodin burim (%s)"
-
-#: projects/models.py:290 projects/migrations/0001_initial.py:43
-msgid "File filter"
-msgstr "Filtër kartele"
-
-#: projects/models.py:293 projects/migrations/0001_initial.py:51
-msgid "Allows submission"
-msgstr "Lejo parashtrime"
-
-#: projects/models.py:295
-msgid "Does this module repository allow write access?"
-msgstr "A lejon kjo depo moduli hyrje për shkrim?"
-
-#: projects/models.py:305 projects/migrations/0002_release_06_07.py:12
-msgid "Calculate statistics?"
-msgstr "Të llogariten statistikat?"
-
-#: projects/models.py:306
-msgid "Should statistics be calculated for this component?"
-msgstr "A duhen llogaritur statistikat për këtë përbërëse?"
-
-#: projects/models.py:316 projects/models.py:571
-#: projects/migrations/0001_initial.py:46 teams/models.py:27
-#: teams/models.py:69
-msgid "Project"
-msgstr "Projekt"
-
-#: projects/models.py:317 projects/migrations/0001_initial.py:37
-msgid "Unit"
-msgstr "Njësi"
-
-#: projects/models.py:338
-#, python-format
-msgid "<Component: %s>"
-msgstr "<Përbërës: %s>"
-
-#: projects/models.py:342
-msgid "component"
-msgstr "përbërës"
-
-#: projects/models.py:343 templates/projects/component_list.html:16
-msgid "components"
-msgstr "përbërës"
-
-#: projects/models.py:540
-msgid "A string like a name or very short description."
-msgstr "Një varg si punë emri ose një përshkrim shumë të shkurtër."
-
-#: projects/models.py:543 releases/models.py:26
-msgid "A sentence or two describing the object."
-msgstr "Një a dy togfjalësha përshkrimi për objektin."
-
-#: projects/models.py:546 releases/models.py:28
-msgid "Use Markdown syntax."
-msgstr "Përdor sintaksë Markdown"
-
-#: projects/models.py:549 releases/models.py:31
-#: txcollections/migrations/0001_initial.py:16
-msgid "Release date"
-msgstr "Datë qarkullimi"
-
-#: projects/models.py:551 releases/models.py:32
-msgid "When this release will be available."
-msgstr "Kur ky qarkullim të jetë i passhëm."
-
-#: projects/models.py:552 releases/models.py:33
-#: txcollections/migrations/0001_initial.py:21
-msgid "String freeze date"
-msgstr "Datë ngrirje e vargjeve"
-
-#: projects/models.py:554
-msgid ""
-"When the translatable strings will be frozen (no strings can be added/"
-"modified which affect translations."
-msgstr ""
-"Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
-"vargje që prekin përkthimin)."
-
-#: projects/models.py:556 releases/models.py:36
-#: txcollections/migrations/0001_initial.py:26
-msgid "Devel freeze date"
-msgstr "Datë ngrirjeje zhvillimi"
-
-#: projects/models.py:558 releases/models.py:37
-msgid ""
-"The last date packages from this release can be built from the developers. "
-"Translations sent after this date will not be included in the released "
-"version."
-msgstr ""
-"Paketat e datës së fundit prej këtij qarkullimi mund të montohen nga "
-"zhvilluesit. Përkthimet e dërguara pas kësaj date nuk do të përfshihen në "
-"versionin e qarkulluar."
-
-#: projects/models.py:573
-msgid "Components"
-msgstr "Përbërësa"
-
-#: projects/models.py:580
-#, python-format
-msgid "<Release: %(rel)s (Project %(proj)s)>"
-msgstr "<Hedhje në Qarkullim: %(rel)s (Projekt %(proj)s)>"
-
-#: projects/models.py:598 releases/models.py:54
-msgid "release"
-msgstr "qarkullim"
-
-#: projects/models.py:599 releases/models.py:55
-#: templates/languages/language_detail.html:18
-#: templates/projects/release_list.html:14
-msgid "releases"
-msgstr "qarkullime"
-
-#: projects/permissions/project.py:50
+#: projects/permissions/project.py:44
 msgid "Is allowed to maintain this project"
 msgstr "Lejohet ta mirëmbajë këtë projekt"
 
-#: projects/permissions/project.py:64
+#: projects/permissions/project.py:57
 msgid "Is allowed to coordinate a team project"
 msgstr "I lejohet të bashkërendojë projekte ekipi"
 
-#: projects/permissions/project.py:103
-msgid "Is allowed to submit file to this project"
+#: projects/permissions/project.py:100
+#, fuzzy
+msgid "Is allowed to submit translations to this project"
 msgstr "I lejohet të parashtrojë kartelë te ky projekt"
 
-#: projects/permissions/project.py:117
+#: projects/permissions/project.py:121
 msgid "Is allowed to browse this private project"
 msgstr "Lejohet ta shfletojë këtë projekt privat"
 
@@ -966,11 +1137,6 @@ msgstr "E përkthyer:"
 
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
 msgid "Fuzzy:"
 msgstr "I turbullt:"
 
@@ -984,118 +1150,47 @@ msgstr "E papërkthyer:"
 msgid "Total:"
 msgstr "Gjithsej:"
 
-#: projects/views/component.py:246 projects/views/project.py:148
-#, python-format
-msgid "The %s was deleted."
+#: projects/views/project.py:154
+#, fuzzy, python-format
+msgid "The project '%s' was deleted."
 msgstr "%s u fshi."
 
-#: projects/views/component.py:282
-msgid ""
-"The file filter of this intltool POT-based component does not  seem to allow "
-"the POTFILES.in file. Please fix it."
-msgstr ""
-"Filtri i kartelave i kësaj përbërëse intltool me bazë POT nuk duket se lejon "
-"kartelë POTFILES.in. Ju lutem ndreqeni."
+#: projects/views/release.py:87
+#, fuzzy, python-format
+msgid "The release '%s' was deleted."
+msgstr "%s u fshi."
 
-#: projects/views/component.py:289
-msgid ""
-"There is no 'pot' directory named in the set of files of this Publican like "
-"component. Maybe its file filter is not allowing access to it."
-msgstr ""
-"Në këtë grup kartelash të kësaj përbërëse tip Publican nuk ka drejtori 'pot' "
-"të emërtuar. Ndoshta filtri i saj i kartelave nuk po lejon hyrje në të."
+#: projects/views/team.py:186
+#, fuzzy, python-format
+msgid "The team '%s' was deleted."
+msgstr "%s u fshi."
 
-#: projects/views/component.py:302
-msgid "This component is not configured for statistics calculation."
-msgstr "Kjo përbërëse nuk është formësuar për llogaritje statistikash."
-
-#: projects/views/component.py:388
-msgid "This component does  not allow write access."
-msgstr "Kjo përbërëse nuk lejon hyrje për shkrim."
-
-#: projects/views/component.py:396
-msgid "Please select a file from your system to be uploaded."
-msgstr "Ju lutem përzgjidhni prej sistemit tuaj një kartelë për ta ngarkuar.  "
-
-#: projects/views/component.py:404
-msgid "Please enter a target to upload the file."
-msgstr "Ju lutem përzgjidhni një objektiv ku të ngarkohet kartela."
-
-#: projects/views/component.py:409
-msgid "Please enter only ONE target to upload the file."
-msgstr "Ju lutem përzgjidhni vetëm NJË objektiv ku të ngarkohet kartela."
-
-#: projects/views/component.py:420
-msgid "The target file does not match the component file filter"
-msgstr "Kartela në fjalë nuk përputhet me filtrin për kartelën e përbërësit"
-
-#: projects/views/component.py:428
-msgid "Enter a commit message"
-msgstr "Jepni një mesazh parashtrimi"
-
-#: projects/views/component.py:469
-#, python-format
-msgid ""
-"You need to be in the '%s' team of this project for being able to send "
-"translations to that file target."
-msgstr ""
-"Lypset të jeni te ekipi '%s' i këtij projekti, që të jeni në gjendje të "
-"dërgoni përkthime për atë kartelë."
-
-#: projects/views/component.py:527
-#, python-format
-msgid "File submitted successfully: %s"
-msgstr "Kartela u parashtrua me sukses: %s"
-
-#: projects/views/component.py:553
-msgid "Sorry, your file could not be sent because of an error."
-msgstr "Na ndjeni, kartela juaj nuk u dërgua dot për shkak të një gabimi."
-
-#: projects/views/release.py:94
-#, python-format
-msgid "%s was deleted."
-msgstr "%s qe fshirë."
-
-#: projects/views/review.py:66
-#, fuzzy
-msgid "Request rejected."
-msgstr "Kërkesa u rihap."
-
-#: projects/views/review.py:72
-msgid "Request reopened."
-msgstr "Kërkesa u rihap."
-
-#: projects/views/team.py:182
-#, python-format
-msgid "The '%s' team was deleted."
-msgstr "Ekipi '%s' është fshirë."
-
-#: projects/views/team.py:222
+#: projects/views/team.py:226
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "Jeni tashmë te ekipi '%s'."
 
-#: projects/views/team.py:227
+#: projects/views/team.py:231
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "Keni shtuar një kërkesë për anëtarësim te ekipi '%s'."
 
-#: projects/views/team.py:250
+#: projects/views/team.py:254
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "Keni tashmë në pritje një kërkesë për anëtarësim te ekipi '%s'."
 
-#: projects/views/team.py:278
+#: projects/views/team.py:282
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "Përdoruesi '%(user)s' gjendet tashmë te ekipi '%(team)s'."
 
-#: projects/views/team.py:285
+#: projects/views/team.py:289
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "E keni shtuar '%(user)s' te ekipi '%(team)s'."
 
-#: projects/views/team.py:333
+#: projects/views/team.py:337
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
@@ -1104,160 +1199,419 @@ msgstr ""
 "Keni hedhur poshtë kërkesën e përdoruesit '%(user)s' për t'u anëtarësuar te "
 "ekipi '%(team)s'."
 
-#: projects/views/team.py:378
+#: projects/views/team.py:382
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "E keni tërhequr kërkesën tuaj për t'iu anëtarësuar ekipit '%s'."
 
-#: projects/views/team.py:421
+#: projects/views/team.py:425
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "Ikët prej ekipit '%s'."
 
-#: projects/views/team.py:442
+#: projects/views/team.py:446
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "Nuk jeni te ekipi '%s'."
 
-#: projects/views/team.py:465
+#: projects/views/team.py:469
 msgid "Please, select a language before submit the form."
 msgstr "Ju lutem, përzgjidhni një gjuhë përpara se të prashtroni formularin."
 
-#: projects/views/team.py:478
+#: projects/views/team.py:482
 #, python-format
 msgid "'%s' team already exist."
 msgstr "Ka tashmë një ekip '%s'."
 
-#: projects/views/team.py:484
+#: projects/views/team.py:488
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "Ka tashmë një kërkesë për krijimin e ekipit '%s'."
 
-#: projects/views/team.py:492
+#: projects/views/team.py:496
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "Keni kërkuar krijimin e ekipit '%s'."
 
-#: projects/views/team.py:538
+#: projects/views/team.py:542
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Ia keni pranuar përdoruesit '%(user)s' kërkesën për në ekipin '%(team)s'."
 
-#: projects/views/team.py:581
+#: projects/views/team.py:585
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "I keni mohuar përdoruesit '%(user)s' kërkesën për në ekipin '%(team)s'."
 
-#: releases/models.py:34
+#: releases/models.py:35
+msgid "A string like a name or very short description."
+msgstr "Një varg si punë emri ose një përshkrim shumë të shkurtër."
+
+#: releases/models.py:38
+msgid "A sentence or two describing the object."
+msgstr "Një a dy togfjalësha përshkrimi për objektin."
+
+#: releases/models.py:41
+msgid "Use Markdown syntax."
+msgstr "Përdor sintaksë Markdown"
+
+#: releases/models.py:44
+msgid "Release date"
+msgstr "Datë qarkullimi"
+
+#: releases/models.py:46
+msgid "When this release will be available."
+msgstr "Kur ky qarkullim të jetë i passhëm."
+
+#: releases/models.py:47
+msgid "String freeze date"
+msgstr "Datë ngrirje e vargjeve"
+
+#: releases/models.py:49
 msgid ""
-"When the translatable strings will be frozen (no strings which affect "
-"translations can be added/modified)."
+"When the translatable strings will be frozen (no strings can be added/"
+"modified which affect translations."
 msgstr ""
 "Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
-"vargje që prekin përkthimin."
+"vargje që prekin përkthimin)."
 
-#: reviews/forms.py:8
-msgid "Write a short blurb for your review request."
-msgstr "Shkruani dy fjalë për kërkesën tuaj për shqyrtim"
+#: releases/models.py:51
+msgid "Devel freeze date"
+msgstr "Datë ngrirjeje zhvillimi"
 
-#: reviews/forms.py:10
-msgid "Select a translation file for review."
-msgstr "Përzgjidhni një kartelë përkthimi për shqyrtim"
-
-#: reviews/models.py:45
-msgid "Open"
-msgstr "Hap"
-
-#: reviews/models.py:46
-msgid "Closed"
-msgstr "Mbyllur"
-
-#: reviews/models.py:48
-msgid "Null"
-msgstr "Nul"
-
-#: reviews/models.py:49
-msgid "Accepted"
-msgstr "U pranua"
-
-#: reviews/models.py:50
-msgid "Rejected"
-msgstr "U hodh poshtë"
-
-#: reviews/models.py:55
-msgid "The review's status (open, closed, etc.)"
-msgstr "Gjendja e shqyrtimit (i hapur, i mbyllur, etj.)"
-
-#: reviews/models.py:57
-msgid "The review's resolution/closing state."
-msgstr "Gjendje zgjidhjeje/mbylljeje shqyrtimi."
-
-#: reviews/models.py:59
-msgid "Date and time of creation"
-msgstr "Datë dhe kohë e krijimit"
-
-#: reviews/models.py:61
-msgid "Date and time of last update"
-msgstr "Datë dhe kohë e përditësimit të fundit"
-
-#: reviews/models.py:64
-msgid "The review file name"
-msgstr "Emri i kartelës për shqyrtim"
-
-#: reviews/models.py:66
-msgid "The path of the target file which will be used on submission"
-msgstr "Shtegu për te kartela objektiv që do të përdoret gjatë parashtrimesh"
-
-#: reviews/models.py:70
-msgid "Component"
-msgstr "Përbërës"
-
-#: reviews/models.py:88
-msgid "Review Request"
-msgstr "Kërkesë Shqyrtimi"
-
-#: reviews/models.py:89
-msgid "Review Requests"
-msgstr "Kërkesa Shqyrtimesh"
-
-#: reviews/models.py:90
-msgid "-created_on"
-msgstr "-krijuar_më"
-
-#: reviews/models.py:91
-msgid "created_on"
-msgstr "krijuar_më"
-
-#: reviews/views.py:32
+#: releases/models.py:53
 msgid ""
-"You can upload a file for review only if it's related to an existing "
-"language."
+"The last date packages from this release can be built from the developers. "
+"Translations sent after this date will not be included in the released "
+"version."
 msgstr ""
-"Një kartelë mund ta ngarkoni për shqyrtim vetëm nëse lidhet me një gjuhë të "
-"pranishme."
+"Paketat e datës së fundit prej këtij qarkullimi mund të montohen nga "
+"zhvilluesit. Përkthimet e dërguara pas kësaj date nuk do të përfshihen në "
+"versionin e qarkulluar."
 
-#: reviews/views.py:52
+#: releases/models.py:66 resources/models.py:77 teams/models.py:27
+#: teams/models.py:69 templates/helptext/project_list.html:5
+msgid "Project"
+msgstr "Projekt"
+
+#: releases/models.py:69
 #, fuzzy
-msgid "Your file was successfully placed for reviewing."
-msgstr "Kartela juaj u depozitua me sukses për shqyrtim."
+msgid "Resources"
+msgstr "<b>Burime</b>"
 
-#: tarball/forms.py:16
-msgid "Tarball URL"
-msgstr "URL \"Tarball\"-i"
+#: releases/models.py:76
+#, python-format
+msgid "<Release: %(rel)s (Project %(proj)s)>"
+msgstr "<Hedhje në Qarkullim: %(rel)s (Projekt %(proj)s)>"
 
-#: tarball/forms.py:17
-msgid "A URL from which the tarball is accessible."
-msgstr "Një URL prej së cilës mund të merret \"tarball\"-i."
+#: releases/models.py:173
+msgid "release"
+msgstr "qarkullim"
 
-#: tarball/models.py:33
-msgid "tarball"
-msgstr "\"tarball\""
+#: releases/models.py:174 templates/projects/release_list.html:16
+#: templates/projects/release_list.html:22
+msgid "releases"
+msgstr "qarkullime"
 
-#: tarball/models.py:34
-msgid "tarballs"
-msgstr "\"tarballs\""
+#: resources/forms.py:20 resources/forms.py:40
+#, fuzzy
+msgid "Resource file"
+msgstr "Kartelë burim:"
+
+#: resources/forms.py:21
+msgid ""
+"Choose the source language for the resource and then select a file from your "
+"file system to be used as an extracting point of strings to be translated."
+msgstr ""
+
+#: resources/forms.py:41
+msgid ""
+"Select a file from your file system to be used too fill translations for "
+"this resource."
+msgstr ""
+
+#: resources/models.py:51
+msgid "A descriptive name unique inside the project."
+msgstr ""
+
+#: resources/models.py:63
+#, fuzzy
+msgid "Source file"
+msgstr "Kartelë burim:"
+
+#: resources/models.py:65
+msgid "A local file used to extract the strings to be translated."
+msgstr ""
+
+#: resources/models.py:67
+msgid "I18n type"
+msgstr "lloj I18n"
+
+#: resources/models.py:69
+#, fuzzy, python-format
+msgid "The type of i18n method used in this resource (%s)"
+msgstr "Lloji i mbulimit i18n për kodin burim (%s)"
+
+#: resources/models.py:75
+#, fuzzy
+msgid "Source Language"
+msgstr "Gjuhë burimi"
+
+#: resources/models.py:76
+msgid "The source language of this Resource."
+msgstr ""
+
+#: resources/models.py:79
+#, fuzzy
+msgid "The project the translation resource belongs to."
+msgstr "Projekti te i cili ky ekip merr pjesë."
+
+#: resources/models.py:92
+msgid "resource"
+msgstr ""
+
+#: resources/models.py:93 templates/projects/resource_list.html:10
+#, fuzzy
+msgid "resources"
+msgstr "<b>Burime</b>"
+
+#: resources/models.py:328
+msgid "The actual string content of source string."
+msgstr ""
+
+#: resources/models.py:331 resources/models.py:451
+msgid "The hash of the translation string used for indexing"
+msgstr ""
+
+#: resources/models.py:332
+msgid "Context"
+msgstr "Kontekst"
+
+#: resources/models.py:334
+msgid ""
+"A description of the source string. This field specifiesthe context of the "
+"source string inside the resource."
+msgstr ""
+
+#: resources/models.py:336 templates/userprofile/profile/location.html:27
+msgid "Position"
+msgstr "Vendndodhje"
+
+#: resources/models.py:337
+msgid ""
+"The position of the source string in the Resource.For example, the specific "
+"position of msgid field in a po template (.pot) file in gettext."
+msgstr ""
+
+#: resources/models.py:341
+#, fuzzy
+msgid "Occurrences"
+msgstr "Hasje"
+
+#: resources/models.py:343
+msgid "The occurrences of the source string in the project code."
+msgstr ""
+
+#: resources/models.py:344 resources/models.py:349
+msgid "Flags"
+msgstr ""
+
+#: resources/models.py:346
+msgid ""
+"The flags which mark the source string. For example, ifthere is a python "
+"formatted string this is marked as \"#, python-format\" in gettext."
+msgstr ""
+
+#: resources/models.py:351
+msgid "The comment of the developer."
+msgstr ""
+
+#: resources/models.py:353
+msgid "Pluralized"
+msgstr ""
+
+#: resources/models.py:355
+msgid "Identify if the entity is pluralized ot not."
+msgstr ""
+
+#: resources/models.py:365 resources/models.py:480
+msgid "The translation resource which owns the source string."
+msgstr ""
+
+#: resources/models.py:372
+#, fuzzy
+msgid "source string"
+msgstr "Varg Burim"
+
+#: resources/models.py:373
+#, fuzzy
+msgid "source strings"
+msgstr "Varg Burim"
+
+#: resources/models.py:448
+msgid "The actual string content of translation."
+msgstr ""
+
+#: resources/models.py:452
+#, fuzzy
+msgid "Plural rule"
+msgstr "Ekuacion Shumësi"
+
+#: resources/models.py:454
+msgid ""
+"Number related to the plural rule of the translation. It's 0=zero, 1=one, "
+"2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
+"pluralized, the rule must be 5 (other)."
+msgstr ""
+
+#: resources/models.py:469
+msgid ""
+"The source string which is being translated by thistranslation string "
+"instance."
+msgstr ""
+
+#: resources/models.py:474 storage/models.py:33
+#, fuzzy
+msgid "The language in which this translation string belongs to."
+msgstr "Projekti te i cili ky ekip merr pjesë."
+
+#: resources/models.py:483
+#, fuzzy
+msgid "Committer"
+msgstr "Twitter"
+
+#: resources/models.py:484
+msgid "The user who committed the specific translation."
+msgstr ""
+
+#: resources/models.py:495
+#, fuzzy
+msgid "translation string"
+msgstr "Kartela përkthimi"
+
+#: resources/models.py:496
+#, fuzzy
+msgid "translation strings"
+msgstr "Kartela përkthimi"
+
+#: resources/models.py:529
+msgid "This is the actual content of the template"
+msgstr ""
+
+#: resources/models.py:533
+msgid ""
+"This is the template of the imported source file which is used to export "
+"translation files from the db to the user."
+msgstr ""
+
+#: resources/models.py:537
+msgid "Template"
+msgstr ""
+
+#: resources/models.py:538
+msgid "Templates"
+msgstr ""
+
+#: resources/views.py:85
+#, fuzzy, python-format
+msgid "The translation resource '%s' was deleted."
+msgstr "kur fshihet ekipi i përkthimit të një projekti"
+
+#: resources/views.py:289
+#, fuzzy, python-format
+msgid ""
+"The translations of language %(lang)s for the resource %(resource)s were "
+"deleted successfully."
+msgstr ""
+"Përkthimet më të fundit për gjuhën %(language)s te qarkullimi %(release)s."
+
+#: resources/views.py:337
+#, fuzzy
+msgid "Error compiling translation file."
+msgstr "Shto kartelë përkthimi"
+
+#: resources/views.py:382
+msgid "Sorry, you cannot assign this file to you!"
+msgstr ""
+
+#: resources/views.py:394
+msgid "Failed to lock the resource!"
+msgstr ""
+
+#: resources/views.py:405
+msgid "Failed to extend lock period on the resource!"
+msgstr ""
+
+#: resources/views.py:410
+#, python-format
+msgid "You cannot lock it right now! ( Locked by %s )"
+msgstr ""
+
+#: resources/formats/pofile.py:71
+msgid ""
+"Your file does not pass by the check for correctness (msgfmt -c). Please run "
+"this command on your system to see the errors."
+msgstr ""
+"Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, xhirojeni "
+"këtë urdhër në sistemin tuaj që të shihni gabimet."
+
+#: resources/formats/pofile.py:106
+#, fuzzy
+msgid "Uploaded file contains DOS newlines (\\r)!"
+msgstr "Kartela e ngarkuar përmban shenja DOS për rreshta të rinj (\\r)!"
+
+#: resources/formats/pofile.py:115
+#, python-format
+msgid "Uploaded file header doesn't have '%s' metadata!"
+msgstr ""
+
+#: storage/api.py:119
+msgid "A strange error happened."
+msgstr ""
+
+#: storage/api.py:136
+#, fuzzy
+msgid "File uploaded successfully."
+msgstr "Kartela u parashtrua me sukses: %s"
+
+#: storage/models.py:24
+msgid "File size in bytes"
+msgstr ""
+
+#: storage/models.py:32
+msgid "Source language"
+msgstr "Gjuhë burimi"
+
+#: storage/models.py:41
+msgid "Bound to any object"
+msgstr ""
+
+#: storage/models.py:42
+msgid ""
+"Wether this file is bound to a project/translation resource, otherwise show "
+"in the upload box"
+msgstr ""
+
+#: storage/models.py:46
+#, fuzzy
+msgid "The user who uploaded the specific file."
+msgstr "Përdoruesi që zotëron këtë projekt."
+
+#: storage/models.py:49
+msgid "Total number of strings"
+msgstr ""
+
+#: storage/models.py:100
+msgid ""
+"File you are trying to upload does not seem to belong to a known i18n format."
+msgstr ""
+
+#: storage/models.py:106
+#, fuzzy
+msgid "You have uploaded an empty file!"
+msgstr "Parashtruat një kartelë të zbrazët!"
 
 #: teams/forms.py:12
 msgid ""
@@ -1289,10 +1643,8 @@ msgid "The project which this team belongs to."
 msgstr "Projekti te i cili ky ekip merr pjesë."
 
 #: teams/models.py:30 teams/models.py:72
-#: templates/reviews/review_list.html:123
-#: translations/templates/comp_stats_table.html:15
-#: translations/templates/project_stats_table.html:7
-#: translations/templates/release_stats_table.html:7
+#: templates/projects/release_detail.html:123
+#: templates/resources/resource.html:114
 msgid "Language"
 msgstr "Gjuhë"
 
@@ -1410,34 +1762,29 @@ msgstr "Mirë se vini te Transifex"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:36 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:49 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Shko te faqja hyrëse"
 
-#: templates/base-sample.html:37
+#: templates/base-sample.html:50
 msgid "Go to start page"
 msgstr "Shko te faqja kryesore"
 
-#: templates/base-sample.html:41
+#: templates/base-sample.html:54
 msgid "The projects being served"
 msgstr "Projektet që shërbehen"
 
-#: templates/base-sample.html:41 templates/projects/base.html:6
-#: templates/projects/project_list.html:14
-msgid "Projects"
-msgstr "Projekte"
-
-#: templates/base-sample.html:42
+#: templates/base-sample.html:55
 msgid "The languages our service serves"
 msgstr "Gjuhët në të cilat punon shërbimi ynë"
 
-#: templates/base-sample.html:42 templates/languages/base.html:5
+#: templates/base-sample.html:55 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Gjuhë"
 
-#: templates/base-sample.html:49
+#: templates/base-sample.html:62
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
@@ -1446,15 +1793,15 @@ msgstr ""
 "Mirë se vini <a title=\"Profile settings\" href=\"%(user_profile)s\">"
 "%(user_username)s</a>!"
 
-#: templates/base-sample.html:51
+#: templates/base-sample.html:64
 msgid "Sign out from the website"
 msgstr "Dilni prej \"site\"-it web"
 
-#: templates/base-sample.html:51
+#: templates/base-sample.html:64
 msgid "Sign out"
 msgstr "Çnënshkruani"
 
-#: templates/base-sample.html:54 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:67 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1464,24 +1811,29 @@ msgstr "Çnënshkruani"
 msgid "Sign in"
 msgstr "Nënshkruani"
 
-#: templates/base-sample.html:57
+#: templates/base-sample.html:70
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Regjistrohuni"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
+#, fuzzy
+msgid "Learn more about Transifex"
+msgstr "Gjuhë në Transifex"
+
+#: templates/base-sample.html:132
 msgid "About"
 msgstr "Rreth"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
 msgid "Drops us a line"
 msgstr "Na shkruani dy fjalë"
 
-#: templates/base-sample.html:119
+#: templates/base-sample.html:132
 msgid "Feedback"
 msgstr "Përshtypje"
 
-#: templates/base-sample.html:121
+#: templates/base-sample.html:134
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -1505,12 +1857,6 @@ msgid ""
 msgstr ""
 "Mundeni po ashtu të shfletoni nëpër <a href=\"%(project_list)s\">tërë "
 "projektet</a>."
-
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6 templates/search_form_plain.html:5
-#: templates/userprofile/avatar/choose.html:66
-msgid "Search"
-msgstr "Kërko"
 
 #: templates/search.html:9
 msgid "Results"
@@ -1551,6 +1897,11 @@ msgstr ""
 msgid "Find projects by name, description, etc."
 msgstr "Gjeni projekte sipas emrash, përshkrimi, etj"
 
+#: templates/search_form.html:6 templates/search_form_plain.html:5
+#, fuzzy
+msgid "Search Projects"
+msgstr "Kërko te projektet"
+
 #: templates/admin/base_site.html:10
 msgid "Transifex administration"
 msgstr "Administrim Transifex-i"
@@ -1589,19 +1940,109 @@ msgstr "Faleminderit!"
 msgid "Thank you for your feedback."
 msgstr "Faleminderit për përshtypjet tuaja."
 
-#: templates/languages/language_detail.html:17
-#, python-format
-msgid "%(project)s Releases"
-msgstr "Hedhje në qarkullim nga %(project)s"
-
-#: templates/languages/language_detail.html:24
-#, python-format
+#: templates/helptext/project_form_helptext.html:7
 msgid ""
-"The <a href=\"%(project_url)s\">%(project)s</a> project includes the "
-"following groups of shipped components:"
+"\n"
+"The slug is a short word, summarizing and uniquely defining a project.\n"
+"Slug should be self-explainable, but it is most important to be unique.\n"
+"Its main purpose is to be part of a reference URL for the specific object.\n"
 msgstr ""
-"Projekti <a href=\"%(project_url)s\">%(project)s</a> përfshin grupet vijues "
-"të përbërësve të hedhur në qarkullim:"
+
+#: templates/helptext/project_form_helptext.html:18
+msgid ""
+"\n"
+"The name is a short name for the project. This is the \"codename\" of the\n"
+"project. E.g. this would be \"Transifex\" for transifex project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:28
+msgid ""
+"\n"
+"The description must be one or two sentences length. This is a short\n"
+"summary about the project. It is an optional field for the project form.\n"
+"E.g. Transifex description : \"An open translation platform.\"\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:39
+msgid ""
+"\n"
+"The long description field should contain an extensive description of\n"
+"the project. E.g. Transifex long description : \"Transifex is web system\n"
+" for managing translations from various distributed repositories.\"\n"
+"Caution! <a href=\"http://en.wikipedia.org/wiki/Markdown\">Markdown </a>\n"
+"syntax should be used.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:52
+#, fuzzy
+msgid ""
+"\n"
+"Type in the url of the project's home page.\n"
+msgstr "Shko te faqja e shkruesve të këtij projekti."
+
+#: templates/helptext/project_form_helptext.html:59
+#, fuzzy
+msgid "RSS Feed"
+msgstr "Prurje"
+
+#: templates/helptext/project_form_helptext.html:61
+msgid ""
+"\n"
+"This is the projects feed name. By following feed url, other users,\n"
+"which are interested in translation news, can be synchronized with updates\n"
+"on the project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:70
+#, fuzzy
+msgid "Bug Tracker"
+msgstr "Gjurmes të metash"
+
+#: templates/helptext/project_form_helptext.html:72
+msgid ""
+"\n"
+"This field should contain the url for the maintenance, tracking system of\n"
+"the project. For example, the bug tracker url of transifex is:\n"
+"http://www.transifex.org/\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:83
+msgid ""
+"\n"
+"Tags are keywords that annotate an object. Tags separated by whitespaces\n"
+"should be used to help searching for the specific project. They are also\n"
+"a compact description of a project. For example, Transifex has the "
+"following\n"
+"tags: i18n l10n translations.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:95
+msgid ""
+"\n"
+"Maintainers are the people responsible for the administration of the "
+"project.\n"
+"They have permissions to edit the project and to add translators. They can\n"
+"also add, edit remove resources of a project.\n"
+msgstr ""
+
+#: templates/helptext/project_form_helptext.html:102
+msgid ""
+"\n"
+"This field is ajax powered so it is possible to type only a few characters\n"
+"and be redirected to the wishing username. Type the preferred username and\n"
+"will be appeared above to be added. If you want to remove a maintainer "
+"remove\n"
+"him from the list under the text box.\n"
+msgstr ""
+
+#: templates/helptext/project_list.html:7
+msgid ""
+"\n"
+"Project is the atomic structure that has meaning in terms of translation.\n"
+"Each project can have more than one associated repository (i.e. one for\n"
+"each branch, like development tip and stable tip) in order to allow people\n"
+"work in a more grouped manner.\n"
+msgstr ""
 
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
@@ -1672,7 +2113,6 @@ msgid "Account"
 msgstr "Llogari"
 
 #: templates/notification/notices.html:95
-#: templates/projects/component_detail.html:129
 msgid "Note"
 msgstr "Shënim"
 
@@ -1709,91 +2149,6 @@ msgstr ""
 msgid "The project <a href=\"%(project_url)s\">%(project)s</a> was changed."
 msgstr "Është ndryshuar projekti <a href=\"%(project_url)s\">%(project)s</a>"
 
-#: templates/notification/project_component_added/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"A new component <a href=\"%(component_url)s\">%(component_name)s</a> was "
-"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">"
-"%(component_name)s</a> te projekti <a href=\"%(project_url)s\">"
-"%(project_name)s</a>"
-
-#: templates/notification/project_component_changed/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The component <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
-"href=\"%(project_url)s\">%(project_name)s</a> project was changed."
-msgstr ""
-"Përbërësi <a href=\"%(component_url)s\">%(component_name)s</a> i projektit "
-"<a href=\"%(project_url)s\">%(project_name)s</a> ka ndryshuar"
-
-#: templates/notification/project_component_deleted/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"The component '%(component_name)s' was deleted from the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project."
-msgstr ""
-"Përbërësi '%(component_name)s' është fshirë prej projektit <a href="
-"\"%(project_url)s\">%(project_name)s</a>"
-
-#: templates/notification/project_component_file_changed/notice.html:2
-#, python-format
-msgid ""
-"The following files in the <a href=\"%(component_url)s\">%(component_name)s</"
-"a> component of the <a href=\"%(project_url)s\">%(project_name)s</a> project "
-"have been updated:"
-msgstr ""
-"Janë përditësuar kartelat vijuese te përbërësi <a href=\"%(component_url)s\">"
-"%(component_name)s</a> i projektit <a href=\"%(project_url)s\">"
-"%(project_name)s</a>:"
-
-#: templates/notification/project_component_file_review_submitted/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"was submitted for review to the <a href=\"%(component_url)s\">"
-"%(component_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
-"a> project"
-msgstr ""
-"Është parashtruar për shqyrtim një kartelë për <a href=\"%(lang_url)s\" "
-"title=\"%(filename)s\">%(lang_name)s</a> te <a href=\"%(component_url)s\">"
-"%(component_name)s</a> e projektit <a href=\"%(project_url)s\">"
-"%(project_name)s</a>"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-msgid ""
-"A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</a> "
-"(%(trans_perc)s%)"
-msgstr ""
-"Është parashtruar kartelë për <a href=\"%(lang_url)s\" title=\"%(filename)s"
-"\">%(lang_name)s</a> (%(trans_perc)s%)"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-#, python-format
-msgid "A file called '%(filename)s'"
-msgstr "Një kartelë e quajtur '%(filename)s'"
-
-#: templates/notification/project_component_file_submitted/notice.html:2
-#, fuzzy, python-format
-msgid ""
-"was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> of "
-"the <a href=\"%(project_url)s\">%(project_name)s</a> project."
-msgstr ""
-"te <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a href="
-"\"%(project_url)s\">%(project_name)s</a>"
-
-#: templates/notification/project_component_potfile_error/notice.html:2
-#, python-format
-msgid ""
-"The source file (POT) has some problems and can not be created/updated for "
-"the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project"
-msgstr ""
-"Kartela burim (POT) te <a href=\"%(component_url)s\">%(component_name)s</a> "
-"e projektit<a href=\"%(project_url)s\">%(project_name)s</a> ka ca probleme "
-"dhe nuk mund të krijohet/përditësohet"
-
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
@@ -1802,6 +2157,57 @@ msgid ""
 msgstr ""
 "U prodhua raporti javor për projektin <a href=\"%(project_url)s\">"
 "%(project_name)s</a>"
+
+#: templates/notification/project_resource_added/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A new resource <a href=\"%(resource_url)s\">%(resource_name)s</a> has been "
+"added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Është shtuar një përbërëse e re <a href=\"%(component_url)s\">"
+"%(component_name)s</a> te projekti <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
+
+#: templates/notification/project_resource_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The resource <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project has been changed"
+msgstr ""
+"Përbërësi <a href=\"%(component_url)s\">%(component_name)s</a> i projektit "
+"<a href=\"%(project_url)s\">%(project_name)s</a> ka ndryshuar"
+
+#: templates/notification/project_resource_deleted/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The resource '%(resource_name)s' has been deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Përbërësi '%(component_name)s' është fshirë prej projektit <a href="
+"\"%(project_url)s\">%(project_name)s</a>"
+
+#: templates/notification/project_resource_translated/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
+"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
+msgstr ""
+"Është parashtruar për shqyrtim një kartelë për <a href=\"%(lang_url)s\" "
+"title=\"%(filename)s\">%(lang_name)s</a> te <a href=\"%(component_url)s\">"
+"%(component_name)s</a> e projektit <a href=\"%(project_url)s\">"
+"%(project_name)s</a>"
+
+#: templates/notification/project_resource_translation_changed/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"The <a href=\"%(language_url)s\">%(language_name)s</a> translation of the "
+"project <a href=\"%(project_url)s\">%(project_name)s</a>, resource <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> has been modified."
+msgstr ""
+"Kërkesa për krijimin e një ekipi përkthimi në <a href=\"%(language_url)s\">"
+"%(language_name)s</a> te projektit <a href=\"%(project_url)s\">"
+"%(project_name)s</a> nuk është pranuar"
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -1959,334 +2365,6 @@ msgstr ""
 msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
 msgstr "Ju ka cytur përdoruesi <a href=\"%(performer_url)s\">%(performer)s</a>"
 
-#: templates/projects/component_confirm_delete.html:6
-#: templates/projects/component_confirm_delete.html:10
-#, python-format
-msgid "Delete %(component_name)s"
-msgstr "Fshije %(component_name)s"
-
-#: templates/projects/component_confirm_delete.html:14
-#, python-format
-msgid "Say goodbye to <em>%(component_name)s</em>?"
-msgstr "T'i thuhet mirupafshim <em>%(component_name)s</em>?"
-
-#: templates/projects/component_confirm_delete.html:20
-#, fuzzy, python-format
-msgid ""
-"Are you sure you want to permanently delete the component "
-"'%(component_name)s' which belongs to %(project_name)s?"
-msgstr ""
-"\n"
-"  Jeni i sigurt se doni të fshihet përgjithmonë përbërësja "
-"'%(component_name)s' që i përket %(project_name)s?\n"
-
-#: templates/projects/component_confirm_delete.html:24
-#: templates/projects/project_confirm_delete.html:21
-#: templates/projects/release_confirm_delete.html:22
-#: templates/teams/team_confirm_delete.html:17
-msgid "Yes, I'm sure!"
-msgstr "Po, jam i sigurt!"
-
-#: templates/projects/component_detail.html:30
-msgid ""
-"This component supports local storing of submitted files and also sends the "
-"files to the maintainers\\' email."
-msgstr ""
-"Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i "
-"dërgon gjithashtu kartelat te email-i i mirëmbajtësit."
-
-#: templates/projects/component_detail.html:32
-msgid ""
-"This component does not support local storing of submitted files. The "
-"submitted files will be sent to the maintainers\\' emails and the statistics "
-"will reflect the change once the files are committed upstream."
-msgstr ""
-"Ky përbërës nuk e mbulon depozitimin vendor të kartelave të parashtruara. "
-"Kartelat e parashtruara do të dërgohen te email-et e mirëmbajtësve dhe "
-"statistikat do ta pasqyrojnë ndryshimin sapo kartelat të jenë parashtruar në "
-"projekt."
-
-#: templates/projects/component_detail.html:36
-msgid ""
-"This component supports local storing of submitted files and also sends the "
-"files direct to the upstream repository."
-msgstr ""
-"Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe i "
-"dërgon gjithashtu kartelat drejt e te depoja kryesore."
-
-#: templates/projects/component_detail.html:65
-#: templates/projects/project_detail.html:22
-msgid "Private Project"
-msgstr "Projekt Privat"
-
-#: templates/projects/component_detail.html:82
-#: templates/projects/project_detail.html:39
-#: templates/projects/release_detail.html:53
-#: templates/teams/team_detail.html:26
-msgid "Edit"
-msgstr "Përpunoni"
-
-#: templates/projects/component_detail.html:87
-#, fuzzy
-msgid "Source Details"
-msgstr "Hollësi burimi"
-
-#: templates/projects/component_detail.html:91
-msgid "Repository:"
-msgstr "Depo:"
-
-#: templates/projects/component_detail.html:94
-#: templates/projects/component_detail.html:96
-msgid "Link to a web front-end for the source code"
-msgstr "Lidhje te një prani në web për kodin burim"
-
-#: templates/projects/component_detail.html:94
-#: templates/projects/component_detail.html:96
-msgid "web"
-msgstr "web"
-
-#: templates/projects/component_detail.html:102
-msgid "Branch:"
-msgstr "Degë:"
-
-#: templates/projects/component_detail.html:107
-msgid "File filter:"
-msgstr "Filtër kartele:"
-
-#: templates/projects/component_detail.html:111
-msgid "i18n method:"
-msgstr ""
-
-#: templates/projects/component_detail.html:117
-msgid "Release:"
-msgid_plural "Releases:"
-msgstr[0] "Qarkullim:"
-msgstr[1] "Qarkullime:"
-
-#: templates/projects/component_detail.html:125
-msgid "Allows submissions:"
-msgstr "Lejo parashtrime:"
-
-#: templates/projects/component_detail.html:139
-#: templates/projects/component_lang_detail.html:30
-#, fuzzy
-msgid "Translation Files"
-msgstr "Kartela përkthimi"
-
-#: templates/projects/component_detail.html:144
-msgid "Source file:"
-msgstr "Kartelë burim:"
-
-#: templates/projects/component_detail.html:151
-msgid "Statistics last updated:"
-msgstr "Statistika të përditësuara së fundi më:"
-
-#: templates/projects/component_detail.html:153
-msgid "ago"
-msgstr "më parë"
-
-#: templates/projects/component_detail.html:154
-msgid "Component not yet pulled from source repository."
-msgstr "Përbërëse ende e patërhequr prej depos burim."
-
-#: templates/projects/component_detail.html:157
-msgid "Refresh and re-calculate statistics. This action may take some time."
-msgstr "Rifreskoje dhe rillogarit statistikat. Ky veprim mund të hajë ca kohë."
-
-#: templates/projects/component_detail.html:157
-msgid "Refresh cache"
-msgstr "Rifresko fshehtinën"
-
-#: templates/projects/component_detail.html:162
-msgid "Reset Transifex's local data for a clean pull"
-msgstr "Ricakto të dhënat vendore të Transifex-it për një tërheqje të pastër"
-
-#: templates/projects/component_detail.html:162
-msgid "Clear cache"
-msgstr "Pastro fshehtinën"
-
-#: templates/projects/component_detail.html:165
-msgid "Any locally modified data will be overwritten with fresh copies."
-msgstr ""
-"Çfarëdo të dhënash të ndryshuara lokalisht do të mbishkruhen me kopje të "
-"freskëta."
-
-#: templates/projects/component_detail.html:165
-msgid "warning"
-msgstr "sinjalizim"
-
-#: templates/projects/component_detail.html:172
-msgid "Teams:"
-msgstr "Ekipe:"
-
-#: templates/projects/component_detail.html:174
-msgid "See the translation teams."
-msgstr "Shihni ekipet e përkthimit."
-
-#: templates/projects/component_detail.html:198
-#, fuzzy
-msgid "Translation File Reviews"
-msgstr "Shqyrtime kartelash përkthimi"
-
-#: templates/projects/component_detail.html:200
-#, fuzzy
-msgid ""
-"Translators can request a file review from another person, who can take a "
-"look at his work and provide any feedback needed, or simply submit the file "
-"to the upstream project."
-msgstr ""
-"Përkthyesit mund të kërkojnë shqyrtim kartele nga një person tjetër, i cili\n"
-"  mund t'i hedhë një sy punës së tij dhe të japë përshtypjet e tij, ose "
-"thjesht\n"
-"  ta parashtrojëkartelën te projekti."
-
-#: templates/projects/component_detail.html:203
-#: templates/reviews/review_list.html:20 templates/reviews/review_list.html:22
-msgid "Reviews"
-msgstr "Shqyrtime"
-
-#: templates/projects/component_detail.html:205
-#: templates/projects/project_detail.html:114
-#: templates/teams/team_detail.html:128
-msgid "History"
-msgstr "Historik"
-
-#: templates/projects/component_detail.html:227
-msgid "Delete component"
-msgstr "Fshije përbërësin"
-
-#: templates/projects/component_form.html:7
-#: templates/projects/component_form.html:12
-msgid "Add a component"
-msgstr "Shtoni një përbërës"
-
-#: templates/projects/component_form.html:8
-#, python-format
-msgid "Edit %(component_name)s"
-msgstr "Përpunoni %(component_name)s"
-
-#: templates/projects/component_form.html:13
-#: templates/projects/component_form.html:84
-#, python-format
-msgid "Edit Component '%(component_name)s'"
-msgstr "Përpunoni Përbërësen '%(component_name)s'"
-
-#: templates/projects/component_form.html:82
-#, python-format
-msgid "New component for %(project_name)s"
-msgstr "Përbërës i ri për %(project_name)s"
-
-#: templates/projects/component_form.html:103
-msgid "Checkout"
-msgstr "Marrje"
-
-#: templates/projects/component_form.html:107
-msgid "Submission"
-msgstr "Parashtrim"
-
-#: templates/projects/component_form.html:123
-#: templates/projects/component_form.html:133
-msgid "Save component"
-msgstr "Ruaje përbërësin"
-
-#: templates/projects/component_list.html:10
-#: templates/projects/release_list.html:8
-msgid "Add"
-msgstr "Shto"
-
-#: templates/projects/component_list.html:15
-msgid "Project Component"
-msgid_plural "Project Components"
-msgstr[0] "Përbërës Projekti"
-msgstr[1] "Përbërësa Projekti"
-
-#: templates/projects/component_list.html:26
-msgid "edit"
-msgstr "përpunojeni"
-
-#: templates/projects/component_list.html:29
-msgid "del"
-msgstr "del"
-
-#: templates/projects/component_list.html:45
-msgid "No components are registered for this project yet."
-msgstr "Ende nuk ka përbërësa të regjistruar për këtë projekt."
-
-#: templates/projects/component_list.html:47
-msgid "Add one!"
-msgstr "Shtoni një!"
-
-#: templates/projects/component_list.html:53
-#, fuzzy
-msgid ""
-"<em>Components</em> are smaller, self-contained parts of a larger project "
-"which consist of actual files. Examples of components of a software project "
-"could be \"UI\" and \"Docs\" or development branches like <code>HEAD</code>."
-msgstr ""
-"<em>Përbërësit</em> janë pjesë më të vogla, të mëvetëshme, të një projekti "
-"më të madh, që përmbajnë kartelat reale.\n"
-"    Shembuj përbërësish të një projekti \"software\" mund të ishin \"UI\" "
-"dhe \"Docs\" ose degë zhvillimi si <code>HEAD</code>."
-
-#: templates/projects/component_submit_new_file.html:6
-msgid "Send a new translation for this component."
-msgstr "Dërgoni një përkthim të ri për këtë përbërëse."
-
-#: templates/projects/component_submit_new_file.html:6
-msgid "Add a new translation"
-msgstr "Shto përkthim të ri"
-
-#: templates/projects/component_submit_new_file.html:9
-msgid "Add a translation file"
-msgstr "Shto kartelë përkthimi"
-
-#: templates/projects/component_submit_new_file.html:13
-msgid "Local file:"
-msgstr "Kartelë vendore:"
-
-#: templates/projects/component_submit_new_file.html:15
-msgid "The translation file to be uploaded for the new language."
-msgstr "Kartela e përkthimit që duhet ngarkuar për gjuhën e re."
-
-#: templates/projects/component_submit_new_file.html:18
-msgid "Select the target file:"
-msgstr "Përzgjidhni kartelën objektiv:"
-
-#: templates/projects/component_submit_new_file.html:27
-msgid ""
-"The target file is the name of the new file language. It must match the "
-"component file filter."
-msgstr ""
-"Kartela objektiv është emri i kartelës së re gjuhësore. Duhet të përputhet "
-"me filtrin e kartelave të përbërëses."
-
-#: templates/projects/component_submit_new_file.html:30
-msgid "or enter it here:"
-msgstr "ose jepeni këtu:"
-
-#: templates/projects/component_submit_new_file.html:32
-msgid "Example: "
-msgstr "Shembull:"
-
-#: templates/projects/component_submit_new_file.html:35
-msgid "Commit message:"
-msgstr "Mesazh dërgimi:"
-
-#: templates/projects/component_submit_new_file.html:37
-msgid "Example: Updates to Brazilian Portuguese translation"
-msgstr "Shembull: Përditësime për përkthimin në Portugezçe Braziliane"
-
-#: templates/projects/component_submit_new_file.html:43
-#: translations/templates/component_submit.html:14
-msgid "Send"
-msgstr "Dërgoje"
-
-#: templates/projects/component_submit_new_file.html:45
-#: templates/webtrans/transfile_edit.html:137
-#: translations/templates/component_submit.html:20
-msgid "Send for Review"
-msgstr "Dërgojeni për Shqyrtim"
-
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
 msgid "Delete %(project_name)s"
@@ -2317,14 +2395,37 @@ msgstr ""
 "  Jeni i sigurt që doni të fshihet përgjithmonë projekti i regjistruar "
 "'%(project_name)s'?\n"
 
+#: templates/projects/project_confirm_delete.html:21
+#: templates/projects/release_confirm_delete.html:22
+#: templates/resources/resource_confirm_delete.html:19
+#: templates/resources/resource_translations_confirm_delete.html:31
+#: templates/teams/team_confirm_delete.html:17
+msgid "Yes, I'm sure!"
+msgstr "Po, jam i sigurt!"
+
+#: templates/projects/project_detail.html:22
+#: templates/resources/resource.html:75
+msgid "Private Project"
+msgstr "Projekt Privat"
+
+#: templates/projects/project_detail.html:39
+#: templates/projects/release_detail.html:67
+#: templates/resources/resource.html:84 templates/teams/team_detail.html:52
+msgid "Edit"
+msgstr "Përpunoni"
+
 #: templates/projects/project_detail.html:45
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:60
+#: templates/projects/release_detail.html:74
 msgid "Details"
 msgstr "Hollësi"
 
+#: templates/projects/project_detail.html:52
+msgid "Watch:"
+msgstr "Ndiq:"
+
 #: templates/projects/project_detail.html:60
-#: templates/projects/release_detail.html:64
+#: templates/projects/release_detail.html:78
 msgid "Homepage:"
 msgstr "Faqe Hyrëse:"
 
@@ -2343,7 +2444,7 @@ msgid "Bug tracker for %(project_name)s"
 msgstr "Gjurmues të metash për %(project_name)s"
 
 #: templates/projects/project_detail.html:72
-#: templates/projects/project_list.html:46
+#: templates/projects/project_list.html:53
 msgid "Tags:"
 msgstr "Etiketa:"
 
@@ -2353,15 +2454,25 @@ msgid_plural "Maintainers:"
 msgstr[0] "Mirëmbajtës:"
 msgstr[1] "Mirëmbajtësa:"
 
-#: templates/projects/project_detail.html:96
+#: templates/projects/project_detail.html:101
+#, fuzzy
+msgid "Number of Languages: "
+msgstr "Numër Shumësi"
+
+#: templates/projects/project_detail.html:109
 msgid "External links:"
 msgstr "Lidhje të jashtme:"
 
-#: templates/projects/project_detail.html:98
+#: templates/projects/project_detail.html:111
 msgid "Screenshots"
 msgstr "Foto ekrani"
 
-#: templates/projects/project_detail.html:144
+#: templates/projects/project_detail.html:127
+#: templates/resources/resource.html:255 templates/teams/team_detail.html:224
+msgid "History"
+msgstr "Historik"
+
+#: templates/projects/project_detail.html:154
 msgid "Delete project"
 msgstr "Fshije projektin"
 
@@ -2392,7 +2503,7 @@ msgstr "Shtoni hollësitë e projektit tuaj"
 msgid "Edit the details of your project"
 msgstr "Përpunoni hollësitë e projektit tuaj"
 
-#: templates/projects/project_form.html:50
+#: templates/projects/project_form.html:52
 msgid "Save project"
 msgstr "Ruaje projektin"
 
@@ -2400,9 +2511,9 @@ msgstr "Ruaje projektin"
 #: templates/projects/project_form_access_control.html:10
 #: templates/projects/project_form_access_control.html:16
 #: templates/projects/project_form_base.html:90
-#: templates/projects/project_form_permissions.html:8
-#: templates/projects/project_form_permissions.html:15
-#: templates/projects/project_menu.html:65
+#: templates/projects/project_form_permissions.html:9
+#: templates/projects/project_form_permissions.html:16
+#: templates/projects/project_menu.html:66
 msgid "Access Control"
 msgstr "Kontroll Hyrjesh"
 
@@ -2436,7 +2547,7 @@ msgstr "Kontrolli i hyrjeve do të aktivizohet sapo të krijohet projekti"
 msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
 msgstr "Po përpunohet <a href=\"%(project_url)s\">%(project_name)s</a>"
 
-#: templates/projects/project_form_permissions.html:26
+#: templates/projects/project_form_permissions.html:27
 msgid ""
 "Give write access to a translator to send translations to your project "
 "independent of a translation team."
@@ -2444,11 +2555,11 @@ msgstr ""
 "Lejojini një përkthyesi hyrje për shkrim, që të dërgojë përkthime te "
 "projekti juaj pavarësisht nga ekipi i përkthimit."
 
-#: templates/projects/project_form_permissions.html:39
+#: templates/projects/project_form_permissions.html:40
 msgid "Pending requests:"
 msgstr "Kërkesa në pritje të shqyrtimit:"
 
-#: templates/projects/project_form_permissions.html:59
+#: templates/projects/project_form_permissions.html:60
 #: templates/txpermissions/base_permission_form.html:18
 msgid "Users with access to submit files:"
 msgstr "Përdoruesa me hyrje parashtrimi kartelash:"
@@ -2457,33 +2568,37 @@ msgstr "Përdoruesa me hyrje parashtrimi kartelash:"
 msgid "Latest Projects"
 msgstr "Projektet më të Fundit"
 
-#: templates/projects/project_list.html:8
+#: templates/projects/project_list.html:9
 msgid "Project list"
 msgstr "Listë projektesh"
 
-#: templates/projects/project_list.html:17
-#, python-format
-msgid "Projects with tag '%(tag)s'"
-msgstr "Projekte me etiketën '%(tag)s'"
-
-#: templates/projects/project_list.html:18
+#: templates/projects/project_list.html:20
 msgid "Projects on Transifex"
 msgstr "Projekte në Transifex"
 
-#: templates/projects/project_list.html:25
+#: templates/projects/project_list.html:28
 msgid "Add a new project"
 msgstr "Shtoni një projekt të ri"
 
-#: templates/projects/project_list.html:54
+#: templates/projects/project_list.html:35
+#, fuzzy
+msgid "Projects feed"
+msgstr "Projekti u Fshi"
+
+#: templates/projects/project_list.html:36
+msgid "Subscribe to this feed"
+msgstr ""
+
+#: templates/projects/project_list.html:61
 msgid "No projects registered yet. :-("
 msgstr "Ende pa projekte të regjistruar. :-("
 
-#: templates/projects/project_list.html:57
+#: templates/projects/project_list.html:64
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr "Pse nuk <a href=\"%(project_create)s\">shtoni një të tillë</a>?"
 
-#: templates/projects/project_list.html:67
+#: templates/projects/project_list.html:74
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2492,25 +2607,15 @@ msgstr ""
 "S'e gjetët projektin tuaj? Ecni më tej dhe <a href=\"%(project_create)s"
 "\">shtojeni vetë</a>!"
 
-#: templates/projects/project_menu.html:58 templates/userprofile/menu.html:5
-msgid "Overview"
+#: templates/projects/project_menu.html:59
+#, fuzzy
+msgid "Project Overview"
 msgstr "Përmbledhje"
 
-#: templates/projects/project_menu.html:72 templates/teams/team_list.html:17
-#: templates/teams/team_list.html.py:26
-msgid "Translation Teams"
-msgstr "Ekipe Përkthimi"
-
-#: templates/projects/project_top_translators.html:4
-msgid "Top Translators"
-msgstr "Përkthyesat Kryesues"
-
-#: templates/projects/project_top_translators.html:7
-#, python-format
-msgid "%(number)s submission"
-msgid_plural "%(number)s submissions"
-msgstr[0] "%(number)s parashtrim"
-msgstr[1] "%(number)s parashtrime"
+#: templates/projects/project_menu.html:73 templates/teams/team_detail.html:38
+#: templates/teams/team_list.html:22
+msgid "Teams"
+msgstr "Ekipe"
 
 #: templates/projects/release_confirm_delete.html:6
 #: templates/projects/release_confirm_delete.html:10
@@ -2533,41 +2638,84 @@ msgstr ""
 "  Jeni të sigurt se doni të fshihet përgjithmonë hedhja në qarkullim "
 "'%(release_name)s' qëi përket %(project_name)s?\n"
 
-#: templates/projects/release_detail.html:69
+#: templates/projects/release_detail.html:83
 msgid "Release date:"
 msgstr "Datë qarkullimi:"
 
-#: templates/projects/release_detail.html:73
+#: templates/projects/release_detail.html:87
 msgid "String freeze:"
 msgstr "Ngrirje vargjesh:"
 
-#: templates/projects/release_detail.html:77
+#: templates/projects/release_detail.html:91
 msgid "Devel freeze:"
 msgstr "Ngrirje zhvillimi:"
 
-#: templates/projects/release_detail.html:82
-msgid "Components:"
-msgstr "Përbërës:"
+#: templates/projects/release_detail.html:96
+#, fuzzy
+msgid "Resources:"
+msgstr "<b>Burime</b>"
 
-#: templates/projects/release_detail.html:86
-msgid "Click here to show or hide the component list"
-msgstr "Për shfaqje ose fshehje të listës së përbërësve, klikoni këtu"
+#: templates/projects/release_detail.html:100
+#, fuzzy
+msgid "Click here to show or hide the resource list"
+msgstr "Për shfaqje ose fshehjeje të kartelave burim, klikoni këtu"
 
-#: templates/projects/release_detail.html:87
-#, python-format
-msgid "This release has %(components_number)s components."
+#: templates/projects/release_detail.html:101
+#, fuzzy, python-format
+msgid "This release has %(resources_number)s resourses."
 msgstr "Ky version ka %(components_number)s përbërësa."
 
-#: templates/projects/release_detail.html:103
+#: templates/projects/release_detail.html:117
 #, fuzzy
 msgid "Translation Statistics"
 msgstr "Statistika përkthimi"
 
-#: templates/projects/release_detail.html:110
-msgid "No translations added for this release. :-("
-msgstr "Pa përkthime të shtuara për këtë qarkullim. :-("
+#: templates/projects/release_detail.html:124
+#: templates/projects/release_language_detail.html:59
+#: templates/resources/resource.html:115 templates/teams/team_detail.html:138
+#, fuzzy
+msgid "Completion"
+msgstr "Koleksione"
 
-#: templates/projects/release_detail.html:121
+#: templates/projects/release_detail.html:125
+#, fuzzy
+msgid "Last Translation"
+msgstr "Përkthim"
+
+#: templates/projects/release_detail.html:130
+#: templates/projects/release_language_detail.html:65
+#: templates/resources/resource.html:121 templates/teams/team_detail.html:144
+#, fuzzy
+msgid "click for translation"
+msgstr "Hidhe tej përkthimin"
+
+#: templates/projects/release_detail.html:136
+#: templates/projects/release_language_detail.html:71
+#: templates/resources/resource.html:130
+#: templates/resources/resource_actions.html:53
+#: templates/teams/team_detail.html:150
+#, fuzzy
+msgid "Translated: "
+msgstr "E përkthyer:"
+
+#: templates/projects/release_detail.html:136
+#: templates/projects/release_language_detail.html:71
+#: templates/resources/resource.html:130
+#: templates/resources/resource_actions.html:53
+#: templates/teams/team_detail.html:150
+#, fuzzy
+msgid "Untranslated: "
+msgstr "E papërkthyer:"
+
+#: templates/projects/release_detail.html:155
+#: templates/projects/resource_list.html:135
+#: templates/resources/resource.html:149
+#: templates/resources/resource_list_more.html:27
+#, fuzzy
+msgid "no translations yet"
+msgstr "Kartela përkthimi"
+
+#: templates/projects/release_detail.html:180
 msgid "Delete release"
 msgstr "Fshije qarkullimin"
 
@@ -2600,53 +2748,51 @@ msgstr ""
 msgid "Save release"
 msgstr "Ruaje qarkullimin"
 
-#: templates/projects/release_language_detail.html:26
+#: templates/projects/release_language_detail.html:41
 #, python-format
 msgid "Release '%(release_name)s"
 msgstr "Hedhja në Qarkullim '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:38
-#, fuzzy
-msgid "Project/Component Statistics"
-msgstr "Statistika projekti/përbërëseje"
-
-#: templates/projects/release_language_detail.html:59
-msgid ""
-"Transifex searched for projects containing translation files for this "
-"language and release, but couldn't find any. Try submitting such a file and "
-"check again."
-msgstr ""
-"Transifex-i kërkoi për projekte që përmbajnë kartela përkthimi për këtë "
-"gjuhë dhe version, por nuk gjeti gjë. Provoni ta parashtroni një kartelë të "
-"tillë dhe kontrolloni sërish."
+#: templates/projects/release_language_detail.html:53
+msgid "Resource under this Release"
+msgid_plural "Resources under this Release"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/projects/release_language_detail.html:60
-#, python-format
-msgid ""
-"If you think this shouldn't happen, please <a href=\"%(contact_form)s\">let "
-"us know</a>."
+#: templates/resources/resource.html:116 templates/teams/team_detail.html:139
+msgid "Last Updated"
 msgstr ""
-"Nëse mendoni se kjo nuk do të duhej të kish ndodhur, ju lutem <a href="
-"\"%(contact_form)s\">na e njoftoni</a>."
 
-#: templates/projects/release_language_detail.html:64
-msgid "Untranslated Components"
-msgstr "Përbërësa të Papërkthyer"
+#: templates/projects/release_language_detail.html:90
+#: templates/teams/team_detail.html:169
+#, fuzzy
+msgid "no activity yet"
+msgstr "joveprues"
 
-#: templates/projects/release_language_detail.html:66
-#, python-format
-msgid ""
-"The following components will be included in %(release_name)s, but there are "
-"no translations sent for %(language_name)s yet."
-msgstr ""
-"Përbërësit vijues do të përfshihen te %(release_name)s, por nuk ka ende "
-"përkthime të dërguara për %(language_name)s."
+#: templates/projects/release_language_detail.html:107
+#: templates/resources/resource.html:207 templates/teams/team_detail.html:186
+#, fuzzy
+msgid "Translation Details"
+msgstr "Hollësi ekipi të përkthimit"
 
-#: templates/projects/release_list.html:13
+#: templates/projects/release_language_detail.html:114
+#: templates/projects/resource_list.html:184
+#: templates/teams/team_detail.html:193
+#, fuzzy
+msgid "No resources are registered for this project yet."
+msgstr "Ende nuk ka përbërësa të regjistruar për këtë projekt."
+
+#: templates/projects/release_list.html:12
+msgid "Add"
+msgstr "Shto"
+
+#: templates/projects/release_list.html:15
+#: templates/projects/release_list.html:21
 msgid "Project Releases"
 msgstr "Hedhje në Qarkullim të Projektit"
 
-#: templates/projects/release_list.html:28
+#: templates/projects/release_list.html:38
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href="
@@ -2655,122 +2801,264 @@ msgstr ""
 "Ende nuk ka të regjistruar hedhje në qarkullim për këtë projekt. Pse nuk  <a "
 "href=\"%(release_create)s\">shtoni një të tillë</a>?"
 
-#: templates/reviews/review_form.html:10
-msgid "Submit"
-msgstr "Parashtroje"
+#: templates/projects/resource_list.html:9
+#, fuzzy
+msgid "Project Resource"
+msgid_plural "Project Resources"
+msgstr[0] "Hedhje në Qarkullim të Projektit"
+msgstr[1] "Hedhje në Qarkullim të Projektit"
 
-#: templates/reviews/review_list.html:26
-msgid "Translation Review Requests"
-msgstr "Kërkesa Shqyrtimi Përkthimi"
+#: templates/projects/resource_list.html:122
+#: templates/resources/resource_list_more.html:14
+msgid "edit"
+msgstr "përpunojeni"
 
-#: templates/reviews/review_list.html:30
-msgid "Open Requests"
-msgstr "Kërkesa të Hapura"
+#: templates/projects/resource_list.html:123
+#: templates/resources/resource_list_more.html:15
+msgid "del"
+msgstr "del"
 
-#: templates/reviews/review_list.html:38
-#, python-format
-msgid "Review Request #%(review_id)s "
-msgstr "Kërkesë Shqyrtimi #%(review_id)s "
-
-#: templates/reviews/review_list.html:46
-msgid "Who and when"
-msgstr "Kush dhe kur"
-
-#: templates/reviews/review_list.html:48
-msgid "See profile"
-msgstr "Shiheni profilin"
-
-#: templates/reviews/review_list.html:49
-#, fuzzy, python-format
-msgid "%(time_since)s ago"
+#: templates/projects/resource_list.html:145
+msgid "showing"
 msgstr ""
-"\n"
-"        %(time_since)s më parë\n"
-"      "
 
-#: templates/reviews/review_list.html:53
-msgid "Translation Language"
-msgstr "Gjuhë Përkthimi"
+#: templates/projects/resource_list.html:145
+#, fuzzy
+msgid "out of"
+msgstr "Rreth vetes suaj"
 
-#: templates/reviews/review_list.html:56
-msgid "Go to language page"
+#: templates/projects/resource_list.html:149
+msgid "show more"
+msgstr ""
+
+#: templates/projects/resource_list.html:151
+msgid "show all"
+msgstr ""
+
+#: templates/projects/resource_list.html:175
+#, fuzzy
+msgid "Translate All"
+msgstr "I përkthyer"
+
+#: templates/projects/resource_list.html:188
+msgid ""
+"A <em>Resource</em> is mapped to master file and it's translated versions.\n"
+"    For example Resource could be bound to nano.pot and de.po, it.po, fi.po, "
+"etc."
+msgstr ""
+
+#: templates/resources/resource.html:90
+#, fuzzy
+msgid "Translation Resource details"
+msgstr "Hollësi ekipi të përkthimit"
+
+#: templates/resources/resource.html:93
+#, fuzzy
+msgid "Source Language:"
+msgstr "Gjuhë burimi"
+
+#: templates/resources/resource.html:99
+#, fuzzy
+msgid "Total Strings:"
+msgstr "Gjithsej:"
+
+#: templates/resources/resource.html:102
+#, fuzzy
+msgid "words"
+msgstr "Fjalëkalim"
+
+#: templates/resources/resource.html:108
+#, fuzzy
+msgid "Available translations"
+msgstr "Shto përkthim të ri"
+
+#: templates/resources/resource.html:184
+msgid "Trying to lock resource..."
+msgstr ""
+
+#: templates/resources/resource.html:248
+#, fuzzy
+msgid "Translate Resource"
+msgstr "I përkthyer"
+
+#: templates/resources/resource.html:259
+#, fuzzy
+msgid "No actions recorded yet :)"
+msgstr "Ende pa regjistrim historiku."
+
+#: templates/resources/resource.html:276
+#, fuzzy
+msgid "Delete translation resource"
+msgstr "Shihni ekipet e përkthimit."
+
+#: templates/resources/resource_actions.html:23
+#, python-format
+msgid " Total:&nbsp;%(entities_count)s strings,"
+msgstr ""
+
+#: templates/resources/resource_actions.html:24
+#, python-format
+msgid " %(wordcount)s words"
+msgstr ""
+
+#: templates/resources/resource_actions.html:38
+msgid ""
+" \n"
+"        <span title=\"You cannot translate the source language strings."
+"\">This is the Source Language</span>\n"
+"        "
+msgstr ""
+
+#: templates/resources/resource_actions.html:43
+#: templates/resources/resource_actions.html:46
+#, fuzzy
+msgid "Translate Now"
+msgstr "I përkthyer"
+
+#: templates/resources/resource_actions.html:46
+#, python-format
+msgid "To translate, you need to be a member of the %(lang_name)s team."
+msgstr ""
+
+#: templates/resources/resource_actions.html:61
+msgid "remaining strings"
+msgstr ""
+
+#: templates/resources/resource_actions.html:69
+msgid "View strings online"
+msgstr ""
+
+#: templates/resources/resource_actions.html:74
+#, fuzzy
+msgid "Visit language team"
 msgstr "Shkoni te faqja e gjuhëve"
 
-#: templates/reviews/review_list.html:63
-msgid "File target"
-msgstr "Objektiv kartele"
+#: templates/resources/resource_actions.html:80
+#, fuzzy
+msgid "Clone to new language"
+msgstr "Shkoni te faqja e gjuhëve"
 
-#: templates/reviews/review_list.html:64
-msgid "Download the version sent for review"
-msgstr "Shkarkoni versionin e dërguar për shqyrtim"
+#: templates/resources/resource_actions.html:98
+#, fuzzy
+msgid "Download for viewing"
+msgstr "Shkarkojeni për parje"
 
-#: templates/reviews/review_list.html:67
-msgid "Score"
-msgstr "Pikë"
+#: templates/resources/resource_actions.html:104
+#, fuzzy
+msgid "Download for translation"
+msgstr "Shkarkojeni për parje"
 
-#: templates/reviews/review_list.html:81
-msgid "Status"
-msgstr "Gjendje"
+#: templates/resources/resource_actions.html:129
+#, fuzzy
+msgid "Translation last updated "
+msgstr "Gjuhë Përkthimi"
 
-#: templates/reviews/review_list.html:91
-msgid "Close Review"
-msgstr "Mbylle Shqyrtimin"
+#: templates/resources/resource_actions.html:131
+msgid "by"
+msgstr ""
 
-#: templates/reviews/review_list.html:94
-msgid "Accept and submit translation"
-msgstr "Pranoje dhe parashtroje përkthimin"
+#: templates/resources/resource_actions.html:137
+#, fuzzy
+msgid "No translation yet"
+msgstr "Kartela përkthimi"
 
-#: templates/reviews/review_list.html:94
-msgid "Accept"
-msgstr "Pranoje"
+#: templates/resources/resource_confirm_delete.html:4
+#, fuzzy, python-format
+msgid "Delete %(resource_name)s"
+msgstr "Fshije %(release_name)s"
 
-#: templates/reviews/review_list.html:95
-msgid "Reject translation"
-msgstr "Hidhe tej përkthimin"
+#: templates/resources/resource_confirm_delete.html:6
+#, fuzzy, python-format
+msgid "Delete <em>%(resource_name)s</em>"
+msgstr "Fshije <em>%(release_name)s</em>"
 
-#: templates/reviews/review_list.html:95
-msgid "Reject"
-msgstr "Hidhe tej"
+#: templates/resources/resource_confirm_delete.html:9
+#, fuzzy, python-format
+msgid "Say goodbye to <em>%(resource_name)s</em>?"
+msgstr "T'i thuhet mirupafshim <em>%(release_name)s</em>?"
 
-#: templates/reviews/review_list.html:111
-msgid "No open requests!"
-msgstr "Nuk ka kërkesa të hapura!"
+#: templates/resources/resource_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the translation resource "
+"'%(resource_name)s'?\n"
+msgstr ""
+"\n"
+"  Jeni i sigurt se doni të fshihet përgjithmonë qarkullimi i regjistruar "
+"'%(release_name)s'?\n"
 
-#: templates/reviews/review_list.html:115
-msgid "Closed Requests"
-msgstr "Kërkesa të Mbyllura"
+#: templates/resources/resource_form.html:22
+#, fuzzy, python-format
+msgid "Edit %(resource_name)s"
+msgstr "Përpunoni %(release_name)s"
 
-#: templates/reviews/review_list.html:121
-msgid "ID"
-msgstr "ID"
+#: templates/resources/resource_form.html:29
+#, fuzzy
+msgid "Edit the details of the translation resource"
+msgstr "Përpunoni hollësitë e projektit tuaj"
 
-#: templates/reviews/review_list.html:122
-msgid "Author"
-msgstr "Autor"
+#: templates/resources/resource_form.html:40
+#, fuzzy
+msgid "Save translation resource"
+msgstr "Shihni ekipet e përkthimit."
 
-#: templates/reviews/review_list.html:124
-msgid "Time Since"
-msgstr "Kohë Që Prej"
+#: templates/resources/resource_translations_confirm_delete.html:6
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Delete translations for %(language_name)s of %(resource_name)s resource.\n"
+msgstr ""
+"Përkthimet më të fundit për gjuhën %(language)s te qarkullimi %(release)s."
 
-#: templates/reviews/review_list.html:125
-msgid "Resolution"
-msgstr "Zgjidhje"
+#: templates/resources/resource_translations_confirm_delete.html:14
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Delete <em>%(language_name)s</em>\n"
+msgstr "Fshije <em>%(release_name)s</em>"
 
-#: templates/reviews/review_list.html:126
-msgid "Attachment"
-msgstr "Bashkangjitje"
+#: templates/resources/resource_translations_confirm_delete.html:20
+#, fuzzy, python-format
+msgid ""
+"\n"
+"    Say goodbye to all translations for <em>%(language_name)s</em>?"
+msgstr "T'i thuhet lamtumirë ekipit <em>%(lang_name)s</em>?"
 
-#: templates/reviews/review_list.html:127
-msgid "Actions"
-msgstr "Veprime"
+#: templates/resources/resource_translations_confirm_delete.html:26
+#, fuzzy, python-format
+msgid ""
+"\n"
+"  Are you sure you want to permanently delete the translations for "
+"'%(language_name)s' of '%(resource_name)s'?\n"
+msgstr ""
+"\n"
+"  Jeni i sigurt se doni të fshihet përgjithmonë qarkullimi i regjistruar "
+"'%(release_name)s'?\n"
 
-#: templates/reviews/review_list.html:151
-msgid "Reopen review request"
-msgstr "Rihape kërkesën për shqyrtim"
+#: templates/resources/upload_create_resource_form.html:16
+#, python-format
+msgid "Extracting strings from '%(resource_name)s'. This might take a while..."
+msgstr ""
 
-#: templates/reviews/review_list.html:163
-msgid "No closed requests!"
-msgstr "Nuk ka kërkesa të mbyllura!"
+#: templates/resources/upload_create_resource_form.html:49
+msgid "Create resource to be translated"
+msgstr ""
+
+#: templates/resources/upload_create_resource_form.html:51
+msgid ""
+"Upload a local file to be used as the source file of the resource. It's "
+"equivalent to the POT file for the GNU's gettext method."
+msgstr ""
+
+#: templates/resources/upload_create_resource_form.html:58
+#, fuzzy
+msgid "Create Resource"
+msgstr "Krijo Pajisje"
+
+#: templates/resources/upload_resource_translation_button.html:21
+msgid "Adding translations. This might take a while..."
+msgstr ""
 
 #: templates/simpleauth/base_profile.html:10
 msgid "Profile settings"
@@ -2831,6 +3119,11 @@ msgstr ""
 "\n"
 "<p>Ju lutem, hyni me email-in ose emrin tuaj të ekranit.<br />\n"
 
+#: templates/storage/storagefilewidget.html:16
+#, fuzzy
+msgid "Upload file"
+msgstr "Kartelë vendore:"
+
 #: templates/teams/team_confirm_delete.html:9
 #, python-format
 msgid "Say goodbye to <em>%(lang_name)s</em> team?"
@@ -2846,11 +3139,7 @@ msgstr ""
 "  Jeni i sigurt se doni të fshihet përgjithmonë ekipi '%(lang_name)s' që bën "
 "pjese te %(project_name)s?\n"
 
-#: templates/teams/team_detail.html:12 templates/teams/team_list.html:19
-msgid "Teams"
-msgstr "Ekipe"
-
-#: templates/teams/team_detail.html:22
+#: templates/teams/team_detail.html:48
 #, fuzzy, python-format
 msgid ""
 "Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
@@ -2860,49 +3149,56 @@ msgstr ""
 "  Ekipe Përkthimi - %(language_name)s <sup class=\"entry_metalink\">"
 "%(language_code)s</sup>\n"
 
-#: templates/teams/team_detail.html:34
+#: templates/teams/team_detail.html:60
 msgid "Mainlist:"
 msgstr "Lista kryesore:"
 
-#: templates/teams/team_detail.html:42 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:68 templates/teams/team_list.html:79
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Bashkërendues"
 msgstr[1] "Bashkërenduesa"
 
-#: templates/teams/team_detail.html:57
+#: templates/teams/team_detail.html:86
 msgid "Become a translator:"
 msgstr "Bëhuni përkthyes:"
 
-#: templates/teams/team_detail.html:60
+#: templates/teams/team_detail.html:89
 msgid "Join this Team"
 msgstr "Bashkojuni këtij Ekipi"
 
-#: templates/teams/team_detail.html:71
+#: templates/teams/team_detail.html:100
 msgid "People waiting for team membership approving:"
 msgstr "Persona në pritje të miratimit të anëtarësisë në ekip:"
 
-#: templates/teams/team_detail.html:82 templates/teams/team_list.html:50
+#: templates/teams/team_detail.html:110 templates/teams/team_list.html:53
 msgid "Approve"
 msgstr "Miratoje"
 
-#: templates/teams/team_detail.html:86 templates/teams/team_list.html:54
+#: templates/teams/team_detail.html:114 templates/teams/team_list.html:57
 msgid "Deny"
 msgstr "Mohoje"
 
-#: templates/teams/team_detail.html:92
+#: templates/teams/team_detail.html:120
 msgid "Withdraw"
 msgstr "Tërhiqeni"
 
-#: templates/teams/team_detail.html:105
+#: templates/teams/team_detail.html:132
+#, fuzzy
+msgid "Team Translating Resource"
+msgid_plural "Team Translating Resources:"
+msgstr[0] "U kërkua Krijim Ekipi"
+msgstr[1] "U kërkua Krijim Ekipi"
+
+#: templates/teams/team_detail.html:201
 msgid "Team Members:"
 msgstr "Anëtarë Ekipi:"
 
-#: templates/teams/team_detail.html:115
+#: templates/teams/team_detail.html:211
 msgid "Leave"
 msgstr "Dil"
 
-#: templates/teams/team_detail.html:151
+#: templates/teams/team_detail.html:247
 msgid "Delete team"
 msgstr "Fshije ekipin"
 
@@ -2931,31 +3227,36 @@ msgstr ""
 msgid "Save team"
 msgstr "Ruaje ekipin"
 
-#: templates/teams/team_list.html:30
+#: templates/teams/team_list.html:20 templates/teams/team_list.html.py:29
+msgid "Translation Teams"
+msgstr "Ekipe Përkthimi"
+
+#: templates/teams/team_list.html:33
 msgid "Add a new team"
 msgstr "Shtoni një ekip të ri"
 
-#: templates/teams/team_list.html:41
+#: templates/teams/team_list.html:44
 msgid "List of team requests:"
 msgstr "Listë kërkesash për ekip:"
 
-#: templates/teams/team_list.html:71
+#: templates/teams/team_list.html:74
 msgid "List of available teams:"
 msgstr "Listë ekipesh të tanishëm:"
 
-#: templates/teams/team_list.html:87
-msgid "No translation team created yet. :("
+#: templates/teams/team_list.html:93
+#, fuzzy
+msgid "No translation team has been created yet. Why don't you start one?"
 msgstr "Nuk ka ende ekip të krijuar. :("
 
-#: templates/teams/team_list.html:92
+#: templates/teams/team_list.html:98
 msgid "Request a new translation team for this project"
 msgstr "Kërkoni një ekip të ri përkthimi për këtë projekt"
 
-#: templates/teams/team_list.html:92
+#: templates/teams/team_list.html:98
 msgid "Request a new team"
 msgstr "Kërkoni një ekip të ri"
 
-#: templates/teams/team_list.html:102
+#: templates/teams/team_list.html:108
 msgid "Request team"
 msgstr "Kërkoni një ekip"
 
@@ -2990,10 +3291,6 @@ msgstr ""
 "ndaj edhe nuk ka ekipe përkthimi.\n"
 "        "
 
-#: templates/translations/stats_table_filter_box.html:7
-msgid "Show completed"
-msgstr "Shfaq të plotësuarit"
-
 #: templates/txpermissions/base_permission_form.html:8
 msgid "Give access to a translator to send translations to your project"
 msgstr "Lejojini hyrje një përkthyesi të dërgojë përkthime te projekti juaj"
@@ -3021,6 +3318,10 @@ msgstr "Tërhiqeni kërkesën"
 #: templates/txpermissions/permission_request_delete_form.html:8
 msgid "Deny request"
 msgstr "Mohojani kërkesën"
+
+#: templates/userprofile/menu.html:5
+msgid "Overview"
+msgstr "Përmbledhje"
 
 #: templates/userprofile/menu.html:6
 msgid "Personal information"
@@ -3428,14 +3729,6 @@ msgstr "Vetëzbulo vendin"
 msgid "Country"
 msgstr "Vend"
 
-#: templates/userprofile/profile/location.html:26
-msgid "Location:"
-msgstr "Vend:"
-
-#: templates/userprofile/profile/location.html:27
-msgid "Position"
-msgstr "Vendndodhje"
-
 #: templates/userprofile/profile/location.html:35
 #: templates/userprofile/profile/personal.html:36
 msgid "Save"
@@ -3527,12 +3820,12 @@ msgstr "Gjuha mëmë"
 msgid "Blog/Site"
 msgstr "Blog/Site"
 
-#: templates/userprofile/profile/public.html:78 txcommon/models.py:37
+#: templates/userprofile/profile/public.html:78 txcommon/models.py:38
 #: txcommon/migrations/0002_release_06_07.py:23
 msgid "Twitter"
 msgstr "Twitter"
 
-#: templates/userprofile/profile/public.html:84 txcommon/models.py:36
+#: templates/userprofile/profile/public.html:84 txcommon/models.py:37
 #: txcommon/migrations/0002_release_06_07.py:30
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -3576,261 +3869,6 @@ msgstr[1] ""
 "            Anëtarë të ekipeve vijuese:\n"
 "        "
 
-#: templates/webtrans/comments.html:3
-msgid "Context"
-msgstr "Kontekst"
-
-#: templates/webtrans/comments.html:4
-msgid "Developer comments"
-msgstr "Komente zhvilluesi"
-
-#: templates/webtrans/comments.html:5
-#, fuzzy
-msgid "Occurrences"
-msgstr "Hasje"
-
-#: templates/webtrans/transfile_edit.html:36
-#, python-format
-msgid "%(component_name)s"
-msgstr "%(component_name)s"
-
-#: templates/webtrans/transfile_edit.html:37
-#, python-format
-msgid "Translate '%(filename)s'"
-msgstr "Përktheni '%(filename)s'"
-
-#: templates/webtrans/transfile_edit.html:46
-#: templates/webtrans/transfile_edit.html:51
-#, python-format
-msgid "Translate '<code>%(filename)s</code>'"
-msgstr "Përktheni '<code>%(filename)s</code>'"
-
-#: templates/webtrans/transfile_edit.html:60
-msgid "Current status for this page"
-msgstr "Gjendje e tanishme për këtë faqe"
-
-#: templates/webtrans/transfile_edit.html:64
-msgid "Settings"
-msgstr "Rregullime"
-
-#: templates/webtrans/transfile_edit.html:67
-msgid "Verbose editing:"
-msgstr "Përpunim fjalaman:"
-
-#: templates/webtrans/transfile_edit.html:74
-msgid "Filter"
-msgstr "Filtër"
-
-#: templates/webtrans/transfile_edit.html:75
-msgid "Clear"
-msgstr "Pastroje"
-
-#: templates/webtrans/transfile_edit.html:80
-msgid "Translated"
-msgstr "I përkthyer"
-
-#: templates/webtrans/transfile_edit.html:86
-msgid "Fuzzy"
-msgstr "I turbullt"
-
-#: templates/webtrans/transfile_edit.html:92
-msgid "Untranslated"
-msgstr "E papërkthyer"
-
-#: templates/webtrans/transfile_edit.html:98
-msgid "Total"
-msgstr "Gjithsej"
-
-#: templates/webtrans/transfile_edit.html:115
-msgid "#"
-msgstr "#"
-
-#: templates/webtrans/transfile_edit.html:116
-msgid "Source String"
-msgstr "Varg Burim"
-
-#: templates/webtrans/transfile_edit.html:118
-msgid "Translation"
-msgstr "Përkthim"
-
-#: templates/webtrans/transfile_edit.html:120
-msgid "Auto-translate"
-msgstr "Vetëpërktheje"
-
-#: templates/webtrans/transfile_edit.html:120
-msgid "AT"
-msgstr "TE"
-
-#: templates/webtrans/transfile_edit.html:122
-msgid "Fuzzy?"
-msgstr "I turbullt?"
-
-#: templates/webtrans/transfile_edit.html:135
-msgid "Submit translations"
-msgstr "Parashtroni përkthime"
-
-#: templates/webtrans/transfile_form.html:14
-msgid "Copy source string"
-msgstr "Kopjo vargun burim"
-
-#: templates/webtrans/transfile_form.html:23
-msgid "Auto-suggest translation"
-msgstr "Përkthim me vetëkëshillim"
-
-#: translations/models.py:248
-msgid "PO file"
-msgstr "Kartelë PO"
-
-#: translations/models.py:249
-msgid "PO files"
-msgstr "Kartela PO"
-
-#: translations/templates/comp_lang_stats_table.html:14
-msgid "Files"
-msgstr "Kartela"
-
-#: translations/templates/comp_lang_stats_table.html:15
-#: translations/templates/comp_stats_table.html:16
-#: translations/templates/lang_stats_table.html:15
-#: translations/templates/release_stats_table.html:8
-msgid "Translations"
-msgstr "Përkthime"
-
-#: translations/templates/comp_lang_stats_table.html:16
-#: translations/templates/comp_stats_table.html:17
-#: translations/templates/lang_stats_table.html:16
-msgid "Options"
-msgstr "Mundësi"
-
-#: translations/templates/comp_lang_stats_table.html:27
-#: translations/templates/comp_stats_table.html:40
-#: translations/templates/lang_stats_table.html:28
-msgid "There is at least one file broken here."
-msgstr ""
-
-#: translations/templates/comp_lang_stats_table.html:29
-#: translations/templates/comp_stats_table.html:42
-#: translations/templates/lang_stats_table.html:30
-msgid "This PO file is broken. The web editor is disabled for it."
-msgstr ""
-
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
-msgid "Trans:"
-msgstr "Përkth:"
-
-#: translations/templates/comp_lang_stats_table.html:35
-#: translations/templates/comp_stats_table.html:48
-#: translations/templates/lang_stats_table.html:36
-#: translations/templates/project_stats_table.html:20
-#: translations/templates/release_stats_table.html:27
-msgid "Untrans:"
-msgstr "Papërkth:"
-
-#: translations/templates/comp_lang_stats_table.html:43
-#: translations/templates/comp_stats_table.html:60
-#: translations/templates/lang_stats_table.html:48
-#: translations/templates/source_files.html:18
-msgid "View "
-msgstr "Shiheni"
-
-#: translations/templates/comp_lang_stats_table.html:44
-#: translations/templates/comp_stats_table.html:61
-#: translations/templates/lang_stats_table.html:49
-msgid "Download for viewing "
-msgstr "Shkarkojeni për parje"
-
-#: translations/templates/comp_lang_stats_table.html:59
-#: translations/templates/comp_stats_table.html:76
-#: translations/templates/lang_stats_table.html:64
-msgid "Edit "
-msgstr "Përpunojeni"
-
-#: translations/templates/comp_stats_table.html:29
-#, fuzzy
-msgid ""
-"See the outsource team for this language. You will be redirected to another "
-"project team page."
-msgstr ""
-"Shihni ekipin outsource për këtë gjuhë. Do të ridrejtoheni për te faqja e "
-"ekipit të një tjetër projekti."
-
-#: translations/templates/comp_stats_table.html:29
-msgid "See the team for this language"
-msgstr "Shihni ekipin për këtë gjuhë"
-
-#: translations/templates/comp_stats_table.html:29
-#: translations/templates/comp_stats_table.html:31
-msgid "See statistics for this language"
-msgstr "Shihni statistikat për këtë gjuhë"
-
-#: translations/templates/comp_stats_table.html:31
-msgid "No team for this language"
-msgstr "Nuk ka ekip për këtë gjuhë"
-
-#: translations/templates/comp_stats_table.html:36
-msgid "There are no languages registered matching this code"
-msgstr "Nuk ka gjuhë të regjistruara që përputhen me këtë kod"
-
-#: translations/templates/comp_stats_table.html:55
-#: translations/templates/lang_stats_table.html:43
-msgid "Click here to see the multiple files for"
-msgstr "Klikoni këtu për të parë kartela shumëfishe të"
-
-#: translations/templates/component_submit.html:6
-#, python-format
-msgid "Submit a translation for %(pofile_filename)s"
-msgstr "Parashtroni një përkthim për %(pofile_filename)s"
-
-#: translations/templates/component_submit.html:10
-msgid "Submit file"
-msgstr "Parashtroje kartelën"
-
-#: translations/templates/lang_stats_table.html:14
-msgid "Project/Component"
-msgstr "Projekt/Përbërës"
-
-#: translations/templates/lang_stats_table.html:24
-msgid "Go to this project page"
-msgstr "Shko te faqja e këtij projekti"
-
-#: translations/templates/lang_stats_table.html:25
-msgid "Go to this component page"
-msgstr "Shko te faqja e këtij përbërësi"
-
-#: translations/templates/release_stats_table.html:16
-msgid "See the detailed statistics for this language"
-msgstr "Shihni statistika të hollësishme për këtë gjuhë"
-
-#: translations/templates/release_stats_table.html:19
-msgid "There are no languages registered matching this file"
-msgstr "Nuk ka gjuhë të regjistruara me përputhje për këtë kartelë"
-
-#: translations/templates/release_stats_table.html:22
-#, fuzzy
-msgid "There is at least one file with problems for this language."
-msgstr "Kartela e përkthimit që duhet ngarkuar për gjuhën e re."
-
-#: translations/templates/source_files.html:5
-msgid "Click here to show or hide the source files"
-msgstr "Për shfaqje ose fshehjeje të kartelave burim, klikoni këtu"
-
-#: translations/templates/source_files.html:5
-#, python-format
-msgid "This component has %(sources_number)s source files"
-msgstr "Ky përbër ka %(sources_number)s kartela burim"
-
-#: translations/templates/source_files.html:13
-msgid "entries"
-msgstr "zëra"
-
-#: translations/templates/source_files.html:19
-msgid "Download "
-msgstr "Shkarkojeni"
-
 #: txcommon/admin.py:10
 msgid ""
 "Required. 30 characters or fewer. Unicode alphanumeric characters only "
@@ -3843,44 +3881,44 @@ msgstr ""
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr "Kjo vlerë duhet të përmbajë vetëm shkronja unikod, numra dhe nënvija."
 
-#: txcommon/i18n.py:18
+#: txcommon/i18n.py:20
 #, python-format
 msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
 msgstr "Nuk u hap dot kartela LINGUAS (%(file)s): %(exc)s"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:13
 msgid "Female"
 msgstr "Femër"
 
-#: txcommon/models.py:12
+#: txcommon/models.py:13
 msgid "Male"
 msgstr "Mashkull"
 
-#: txcommon/models.py:30 txcommon/migrations/0002_release_06_07.py:21
+#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:21
 msgid "First name"
 msgstr "Emër"
 
-#: txcommon/models.py:31 txcommon/migrations/0002_release_06_07.py:20
+#: txcommon/models.py:32 txcommon/migrations/0002_release_06_07.py:20
 msgid "Surname"
 msgstr "Mbiemër"
 
-#: txcommon/models.py:34 txcommon/migrations/0002_release_06_07.py:24
+#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:24
 msgid "Native Language"
 msgstr "Gjuha Mëmë"
 
-#: txcommon/models.py:35 txcommon/migrations/0002_release_06_07.py:27
+#: txcommon/models.py:36 txcommon/migrations/0002_release_06_07.py:27
 msgid "Blog"
 msgstr "Blog"
 
-#: txcommon/models.py:38 txcommon/migrations/0002_release_06_07.py:19
+#: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
 msgstr "Rreth vetes suaj"
 
-#: txcommon/models.py:39
+#: txcommon/models.py:40
 msgid "Short description of yourself (140 chars)."
 msgstr "Përshkrim i shkurtër i vetvetes (140 shenja)."
 
-#: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:18
+#: txcommon/models.py:41 txcommon/migrations/0002_release_06_07.py:18
 msgid "Looking for work?"
 msgstr "Kërkoni punë?"
 
@@ -3961,143 +3999,84 @@ msgstr ""
 "kur një përgjegjës i heq një përdoruesi hyrjen për parashtrim kartelash te "
 "një projekt"
 
-#: txcommon/notifications.py:73
-msgid "New Component Added"
-msgstr "U shtua Përbërës i Ri"
-
-#: txcommon/notifications.py:74
-msgid "when a new component is added to a project"
-msgstr "kur te një projekt shtohet përbërës i ri"
-
-#: txcommon/notifications.py:80
-msgid "Component Changed"
-msgstr "Përbërësi Ndryshoi"
-
-#: txcommon/notifications.py:81
-msgid "when a component of a project is changed"
-msgstr "kur ndryshohet një përbërës projekti"
-
-#: txcommon/notifications.py:87
-msgid "Component Deleted"
-msgstr "Përbërësi u Fshi"
-
-#: txcommon/notifications.py:88
-msgid "when a component of a project is deleted"
-msgstr "kur fshihet një përbërës projekti"
-
-#: txcommon/notifications.py:94
-msgid "File Submitted"
-msgstr "Kartela u Parashtrua"
-
-#: txcommon/notifications.py:95
-msgid "when a component file of a project is submitted"
-msgstr "kur parashtrohet një kartelë përbërësi projekti"
-
-#: txcommon/notifications.py:105
-msgid "File Review Submitted"
-msgstr "U parashtrua Shqyrtim Kartele"
-
-#: txcommon/notifications.py:106
-msgid "when a file of a component is submitted for review"
-msgstr "kur një kartelë e një përbërësi parashtrohet për shqyrtim"
-
-#: txcommon/notifications.py:113
-msgid "Translation File Changed"
-msgstr "Kartela e Përkthimit Ndryshoi"
-
-#: txcommon/notifications.py:114
-msgid "when a component translation file of a project is changed"
-msgstr "kur ndryshohet përkthimi i një kartele përbërësi projekti"
-
-#: txcommon/notifications.py:121
-msgid "Translation Source File (POT) has a Problem"
-msgstr "Kartela Burim e Përkthimit (POT) ka një Problem"
-
-#: txcommon/notifications.py:122
-msgid ""
-"when the source file (POT) of a component that you are a maintainer has a "
-"problem"
-msgstr ""
-"kur ka problem kartela burim (POT) e një përbërësi të cilin e mirëmbani ju"
-
-#: txcommon/notifications.py:133
+#: txcommon/notifications.py:76
 msgid "New Release Added for a Watched Project"
 msgstr "U shtua Hedhje në Qarkullim për një Projekt të Vëzhguar"
 
-#: txcommon/notifications.py:134
+#: txcommon/notifications.py:77
 msgid "when a new release is added to a project"
 msgstr "kur shtohet qarkullim i ri te një projekt"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:83
 msgid "Release Changed"
 msgstr "Qarkullimi Ndryshoi"
 
-#: txcommon/notifications.py:141
+#: txcommon/notifications.py:84
 msgid "when a release of a project is changed"
 msgstr "kur një hedhje në qarkullim e një projekti ndryshohet"
 
-#: txcommon/notifications.py:146
+#: txcommon/notifications.py:89
 msgid "Release Deleted"
 msgstr "Qarkullimi u Fshi"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:90
 msgid "when a release of a project is deleted"
 msgstr "kur një hedhje në qarkullim e një projekti fshihet"
 
-#: txcommon/notifications.py:152
+#: txcommon/notifications.py:95
 msgid "Release Added to a Project"
 msgstr "U shtua Hedhje në Qarkullim te një Projekt"
 
-#: txcommon/notifications.py:153
+#: txcommon/notifications.py:96
 msgid "when a release is added to a project"
 msgstr "kur një projekti i shotehet një hedhje në qarkullim"
 
-#: txcommon/notifications.py:158
+#: txcommon/notifications.py:101
 msgid "Release Deleted from a Project"
 msgstr "U fshi Hedhje në Qarkullim prej një Projekti"
 
-#: txcommon/notifications.py:159
+#: txcommon/notifications.py:102
 msgid "when a release is deleted from a project"
 msgstr "kur një hedhje në qarkullim fshihet nga një projekt"
 
-#: txcommon/notifications.py:168
+#: txcommon/notifications.py:111
 msgid "New Team Added"
 msgstr "U shtua Ekip i Ri"
 
-#: txcommon/notifications.py:169
+#: txcommon/notifications.py:112
 msgid "when a new translation team is added to a project"
 msgstr "kur te një projekt shtohet ekip i ri përkthimi"
 
-#: txcommon/notifications.py:176
+#: txcommon/notifications.py:119
 msgid "Team Changed"
 msgstr "Ekipi Ndryshoi"
 
-#: txcommon/notifications.py:177
+#: txcommon/notifications.py:120
 msgid "when a translation team of a project is changed"
 msgstr "kur ndryshohet ekipi i përkthimit të një projekti"
 
-#: txcommon/notifications.py:184
+#: txcommon/notifications.py:127
 msgid "Team Deleted"
 msgstr "Ekipi u Fshi"
 
-#: txcommon/notifications.py:185
+#: txcommon/notifications.py:128
 msgid "when a translation team of a project is deleted"
 msgstr "kur fshihet ekipi i përkthimit të një projekti"
 
-#: txcommon/notifications.py:192
+#: txcommon/notifications.py:135
 msgid "Team Creation Requested"
 msgstr "U kërkua Krijim Ekipi"
 
-#: txcommon/notifications.py:193
+#: txcommon/notifications.py:136
 #, fuzzy
 msgid "when a translation team creation is requested for a project"
 msgstr "kur kërkohet krijimi i një ekipi përkthimi për një projekt"
 
-#: txcommon/notifications.py:200
+#: txcommon/notifications.py:143
 msgid "Team Creation Request Denied"
 msgstr "Nuk u Pranua Kërkesa për Krijim Ekipi"
 
-#: txcommon/notifications.py:201
+#: txcommon/notifications.py:144
 #, fuzzy
 msgid ""
 "when a translation team creation request for a project is denied by a "
@@ -4106,120 +4085,141 @@ msgstr ""
 "kur një kërkesë krijimi ekipi përkthimi për një projekt hidhet poshtë nga "
 "një përgjegjës"
 
-#: txcommon/notifications.py:208
+#: txcommon/notifications.py:151
 msgid "Team User Joining Requested"
 msgstr "U kërkua Anëtarësim Përdoruesi në Ekip"
 
-#: txcommon/notifications.py:209
+#: txcommon/notifications.py:152
 #, fuzzy
 msgid "when a user requests to join a project translation team"
 msgstr ""
 "kur një përdorues kërkon anëtarësim te një ekip përkthimi te një projekt"
 
-#: txcommon/notifications.py:216
+#: txcommon/notifications.py:159
 msgid "Team User Joining Approved"
 msgstr "U pranua Anëtarësim Përdoruesi në Ekip"
 
-#: txcommon/notifications.py:217
+#: txcommon/notifications.py:160
 #, fuzzy
 msgid "when a user is approved as a member of a project translation team"
 msgstr ""
 "kur një përdoruesi i miratohet anëtarësia te një ekip përkthimi te një "
 "projekti"
 
-#: txcommon/notifications.py:224
+#: txcommon/notifications.py:167
 msgid "Team User Joining Denied"
 msgstr "Nuk u Pranua Anëtarësim Përdoruesi në Ekip"
 
-#: txcommon/notifications.py:225
+#: txcommon/notifications.py:168
 #, fuzzy
 msgid "when a user is denied as a member of a project translation team"
 msgstr ""
 "kur një përdoruesi nuk i miratohet anëtarësimi në një ekip përkthimi te një "
 "projekt"
 
-#: txcommon/notifications.py:232
+#: txcommon/notifications.py:175
 msgid "Team User Joining Withdrawn"
 msgstr "U tërhoq Kërkesa për Anëtarësim Përdoruesi në Ekip"
 
-#: txcommon/notifications.py:233
+#: txcommon/notifications.py:176
 #, fuzzy
 msgid "when a user decides not to join a project translation team"
 msgstr ""
 "kur një përdorues kërkon anëtarësim te një ekip përkthimi te një projekt"
 
-#: txcommon/notifications.py:240
+#: txcommon/notifications.py:183
 msgid "Team User Left"
 msgstr "Anëtar Ekipi u Larguat dhe emri i vërtetë nuk mund të lihen bosh."
 
-#: txcommon/notifications.py:241
+#: txcommon/notifications.py:184
 #, fuzzy
 msgid "when a user leaves a project translation team"
 msgstr "kur një përdorues braktis ekipin e përkthimit të një projekti"
 
-#: txcommon/notifications.py:251
+#: txcommon/notifications.py:194
 msgid "Weekly project report for maintainers"
 msgstr "Raport javor për përgjegjësit"
 
-#: txcommon/notifications.py:252
+#: txcommon/notifications.py:195
 msgid "when you receive the weekly report of projects that you maintain."
 msgstr "kur merrni raportin javor të projekteve që mirëmbani"
 
-#: txcommon/notifications.py:259
+#: txcommon/notifications.py:202
 msgid "User Nudge"
 msgstr "Cytje Përdoruesi"
 
-#: txcommon/notifications.py:260
+#: txcommon/notifications.py:203
 #, fuzzy
 msgid "when a user nudges you"
 msgstr "kur një përdorues ju cyt"
 
-#: txcommon/validators.py:24
-msgid "Enter a valid regular expression."
-msgstr "Jepni një shprehje të rregullt të vlefshme"
-
-#: txcommon/validators.py:38
-msgid "The root url does not point to a .tar.gz or .tgz file"
-msgstr "Url-ja rrënjë nuk shpie te ndonjë kartelë .tar.gz ose .tgz"
-
-#: txcommon/validators.py:41
-msgid "The root url must start with http:// or ftp://"
-msgstr "Url-ja rrënjë duhet të fillojë me http:// or ftp://"
-
-#: txcommon/validators.py:69
-#, python-format
-msgid ""
-"This is not a valid root URL for this repository type. Valid choices are: %s"
+#: txcommon/notifications.py:212
+msgid "Resource Added"
 msgstr ""
-"Kjo nuk është URL rrënjë e vlefshme për këtë lloj depoje. Mundësi të "
-"vlefshme janë: %s"
 
-#: txcommon/validators.py:86
-msgid ""
-"This repository already belongs to another project. Please choose a "
-"different one."
-msgstr ""
-"Kjo depo bën pjesë tashmë në një projekt tjetër. Ju lute, zgjidhni një "
-"tjetër."
+#: txcommon/notifications.py:213
+#, fuzzy
+msgid "when a new resource is added to a project"
+msgstr "kur shtohet qarkullim i ri te një projekt"
 
-#: txcommon/views.py:109
+#: txcommon/notifications.py:219
+#, fuzzy
+msgid "Resource Changed"
+msgstr "Qarkullimi Ndryshoi"
+
+#: txcommon/notifications.py:220
+#, fuzzy
+msgid "when a resource of a project is changed"
+msgstr "kur një hedhje në qarkullim e një projekti ndryshohet"
+
+#: txcommon/notifications.py:226
+#, fuzzy
+msgid "Resource Deleted"
+msgstr "Qarkullimi u Fshi"
+
+#: txcommon/notifications.py:227
+#, fuzzy
+msgid "when a resource of a project is deleted"
+msgstr "kur një hedhje në qarkullim e një projekti fshihet"
+
+#: txcommon/notifications.py:233
+#, fuzzy
+msgid "Resource Translated"
+msgstr "I përkthyer"
+
+#: txcommon/notifications.py:234
+#, fuzzy
+msgid "when a translation is sent to a project resource"
+msgstr "kur ndryshohet ekipi i përkthimit të një projekti"
+
+#: txcommon/notifications.py:241
+#, fuzzy
+msgid "Resource Translation Changed"
+msgstr "Kartela e Përkthimit Ndryshoi"
+
+#: txcommon/notifications.py:242
+#, fuzzy
+msgid "when a resource translation you are watching changes"
+msgstr "kur ndryshohet ekipi i përkthimit të një projekti"
+
+#: txcommon/views.py:103
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr "Nuk mund të cysni sërish një përdorues brenda një kohe të shkurtër."
 
-#: txcommon/views.py:112
+#: txcommon/views.py:106
 msgid "You can't nudge yourself."
 msgstr "Nuk mund të cysni vetev."
 
-#: txcommon/views.py:119
+#: txcommon/views.py:113
 #, python-format
 msgid "You have nudged '%s'."
 msgstr "Cytët '%s'."
 
-#: txcommon/db/models.py:27
+#: txcommon/db/models.py:42
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "Jepni në kllapa 0 ose më tepër numra të plotë të ndarë me presje."
 
-#: txcommon/db/models.py:29
+#: txcommon/db/models.py:44
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "Duhet të jepni e pakta një çift kllapash që nuk përmbajnë gjë."
 
@@ -4231,7 +4231,7 @@ msgstr ""
 "Mbetet të jepni vetëm madhësinë si             një numër i plotë (njësoj të "
 "dyja anët) dhe në daçi, emrin e përdoruesit             ."
 
-#: txcommon/templatetags/txcommontags.py:136
+#: txcommon/templatetags/txcommontags.py:79
 msgid "Home"
 msgstr "Hyrje"
 
@@ -4255,125 +4255,919 @@ msgstr "E hoqët lejen"
 msgid "You removed the permission request."
 msgstr "E hoqët kërkesën për leje."
 
-#: vcs/forms.py:18
-msgid "Repo URL root"
-msgstr "Rrënjë URL-je e Depos"
+#~ msgid "Lock created. Please don't forget to remove it when you're done."
+#~ msgstr ""
+#~ "Dryni u krijua. Ju lutem, mos harroni ta hiqni pasi të keni mbaruar punë."
 
-#: vcs/forms.py:19 vcs/forms.py:43
-msgid "The URL of the versioning system repository/branch."
-msgstr "URL-ja për te depoja/dega e sistemit të ruajtjes së versioneve."
+#~ msgid "This file is locked by someone else."
+#~ msgstr "Kjo kartelë është kyçur nga dikush tjetër."
 
-#: vcs/forms.py:61
-msgid "This type of repository does not accept branches"
-msgstr "Kjo lloj depoje nuk pranon degë"
+#~ msgid "You are only allowed to upload PO files (*.po)!"
+#~ msgstr "Ju lejohet të ngarkoni vetëm kartela PO (*.po)!"
 
-#: vcs/models.py:50
-msgid "Branch"
-msgstr "Degë"
+#~ msgid "Uploaded file doesn't contain any translated entries!"
+#~ msgstr "Kartela e ngarkuar nuk përmban ndonjë zë të përkthyer!"
 
-#: vcs/models.py:51
 #, fuzzy
-msgid "The VCS branch with which this unit is associated"
-msgstr "Degë VCS me të cilën është përshoqëruar kjo njësi"
+#~ msgid "Your file was sent via e-mail to you to avoid any loss of work."
+#~ msgstr ""
+#~ "Kartela ju është dërguar me e-mail, për të shmangur humbjen e ndonjë "
+#~ "kontributi."
 
-#: vcs/models.py:52
-msgid "Web frontend"
-msgstr "\"Web frontend\""
+#~ msgid ""
+#~ "We couldn't send you an email to preserve your work because you haven't "
+#~ "registered an email address."
+#~ msgstr ""
+#~ "Nuk mundëm t'ju dërgojmë një email që të ruhej puna juaj, ngaqë nuk keni "
+#~ "regjistruar ndonjë adresë email."
 
-#: vcs/models.py:54
-msgid "A URL to the project's web front-end"
-msgstr "URL për te prania web e projektit"
+#~ msgid "Unable to add watch for path %r"
+#~ msgstr "I pazoti të shtojë mbikqyrje për shtegun %r"
 
-#: vcs/models.py:60
-#, python-format
-msgid "<VcsUnit: %(name)s (%(type)s)>"
-msgstr "<VcsUnit: %(name)s (%(type)s)>"
+#~ msgid "watch"
+#~ msgstr "mbikqyrje"
 
-#: vcs/models.py:63
-msgid "vcsunit"
-msgstr "njësi vcs"
+#~ msgid "watches"
+#~ msgstr "mbikqyrje"
 
-#: vcs/models.py:64
-msgid "vcsunits"
-msgstr "njësi vcs"
+#~ msgid "Root"
+#~ msgstr "Rrënjë"
 
-#: vcs/lib/exceptions/__init__.py:17
-msgid ""
-"Your request could not be completed. The admins have been notified to take a "
-"closer look at it. Please try again in a few minutes"
-msgstr ""
-"Kërkesa juaj nuk mund të plotësohej dot. U njoftuan përgjegjësit që ta "
-"shohin nga afër. Ju lutem, riprovoni pas pak minutash"
+#~ msgid "The URL of the codebase"
+#~ msgstr "URL-ja e kodit bazë"
 
-#: vcs/lib/exceptions/__init__.py:40
-msgid "Setup of the repository locally could not be done successfully."
-msgstr "Nuk u krye dot me sukses rregullimi i një depoje vendore."
+#~ msgid "Type"
+#~ msgstr "Lloj"
 
-#: vcs/lib/exceptions/__init__.py:47
-msgid ""
-"The local repository has not been setup yet. Please, first do a check-out of "
-"the repository."
-msgstr ""
-"Ende nuk u rregullua depoja vendore. Ju lutem, së pari bëni një shkarkim të "
-"depos nga burimi."
+#~ msgid "The codebase type (%s)"
+#~ msgstr "Lloj kodi bazë (%s)"
 
-#: vcs/lib/exceptions/__init__.py:54
-msgid "Unable to pull data from the remote repository. Is the remote host up?"
-msgstr ""
-"I pazoti të marrë të dhëna prej depos së largët. A është në punë streha e "
-"largët?"
+#~ msgid "The last time this unit was updated"
+#~ msgstr "Hera e fundit që kjo njësi qe përditësuar"
 
-#: vcs/lib/exceptions/__init__.py:61
-msgid ""
-"Cleanup of the repository failed. The admins have been notified to take a "
-"closer look at it."
-msgstr ""
-"Pastrimi i depos dështoi. U njoftuan përgjegjësit që ta shohin nga afër."
+#~ msgid "unit"
+#~ msgstr "njësi"
 
-#: vcs/lib/exceptions/__init__.py:67
-msgid "Commit to the repository failed."
-msgstr "Depozitimi te depoja dështoi."
+#~ msgid "units"
+#~ msgstr "njësi"
 
-#: vcs/lib/exceptions/__init__.py:72
-msgid "Pushing to the remote repository failed."
-msgstr "Hedhja te depoja e largët dështoi."
+#~ msgid "Latest components in project %s."
+#~ msgstr "Përbërësit më të fundit te projekti %s."
 
-#: vcs/lib/exceptions/__init__.py:78
-msgid ""
-"Given file does not have a revision. The admins have been notified to take a "
-"closer look at it."
-msgstr ""
-"Kartela e dhënë nuk ka numër rishikimi. U njoftuan përgjegjësit që ta shohin "
-"nga afër."
+#~ msgid "A regular expression to filter the exposed files. Eg: 'po/.*'"
+#~ msgstr ""
+#~ "Një shprehje e rregullt për filtrim të kartelave të paraqitura. Psh: 'po/."
+#~ "*'"
 
-#: webtrans/fields.py:55
-#, python-format
-msgid "The %s fields should be filled."
-msgstr "Fushat %s duhen plotësuar."
+#~ msgid "Submit to"
+#~ msgstr "Parashtro te"
 
-#: webtrans/wizards.py:130
-msgid "The PO file is broken and can't be opened by Lotte."
-msgstr ""
+#~ msgid ""
+#~ "Choose how this component should handle submissions of files.The options "
+#~ "here are available based on the component type"
+#~ msgstr ""
+#~ "Zgjidhni se si duhet t'i trajtojë kjo përbërëse parashtrimet e kartelave."
+#~ "Mundësitë e këtushme janë të passhme mbi bazën e llojit të përbërëses"
 
-#: webtrans/wizards.py:424
+#~ msgid "Search for a component"
+#~ msgstr "Kërkoni për një përbërës"
+
+#~ msgid "The source language for this component (e.g., 'en', 'pt_BR', 'el')."
+#~ msgstr "Gjuha burim për këtë përbërëse (p.sh., 'en', 'pt_BR', 'el')."
+
+#~ msgid "File filter"
+#~ msgstr "Filtër kartele"
+
+#~ msgid "Allows submission"
+#~ msgstr "Lejo parashtrime"
+
+#~ msgid "Does this module repository allow write access?"
+#~ msgstr "A lejon kjo depo moduli hyrje për shkrim?"
+
+#~ msgid "Calculate statistics?"
+#~ msgstr "Të llogariten statistikat?"
+
+#~ msgid "Should statistics be calculated for this component?"
+#~ msgstr "A duhen llogaritur statistikat për këtë përbërëse?"
+
+#~ msgid "Unit"
+#~ msgstr "Njësi"
+
+#~ msgid "<Component: %s>"
+#~ msgstr "<Përbërës: %s>"
+
+#~ msgid "component"
+#~ msgstr "përbërës"
+
+#~ msgid "components"
+#~ msgstr "përbërës"
+
+#~ msgid "Components"
+#~ msgstr "Përbërësa"
+
+#~ msgid ""
+#~ "The file filter of this intltool POT-based component does not  seem to "
+#~ "allow the POTFILES.in file. Please fix it."
+#~ msgstr ""
+#~ "Filtri i kartelave i kësaj përbërëse intltool me bazë POT nuk duket se "
+#~ "lejon kartelë POTFILES.in. Ju lutem ndreqeni."
+
+#~ msgid ""
+#~ "There is no 'pot' directory named in the set of files of this Publican "
+#~ "like component. Maybe its file filter is not allowing access to it."
+#~ msgstr ""
+#~ "Në këtë grup kartelash të kësaj përbërëse tip Publican nuk ka drejtori "
+#~ "'pot' të emërtuar. Ndoshta filtri i saj i kartelave nuk po lejon hyrje në "
+#~ "të."
+
+#~ msgid "This component is not configured for statistics calculation."
+#~ msgstr "Kjo përbërëse nuk është formësuar për llogaritje statistikash."
+
+#~ msgid "This component does  not allow write access."
+#~ msgstr "Kjo përbërëse nuk lejon hyrje për shkrim."
+
+#~ msgid "Please select a file from your system to be uploaded."
+#~ msgstr ""
+#~ "Ju lutem përzgjidhni prej sistemit tuaj një kartelë për ta ngarkuar.  "
+
+#~ msgid "Please enter a target to upload the file."
+#~ msgstr "Ju lutem përzgjidhni një objektiv ku të ngarkohet kartela."
+
+#~ msgid "Please enter only ONE target to upload the file."
+#~ msgstr "Ju lutem përzgjidhni vetëm NJË objektiv ku të ngarkohet kartela."
+
+#~ msgid "The target file does not match the component file filter"
+#~ msgstr "Kartela në fjalë nuk përputhet me filtrin për kartelën e përbërësit"
+
+#~ msgid "Enter a commit message"
+#~ msgstr "Jepni një mesazh parashtrimi"
+
+#~ msgid ""
+#~ "You need to be in the '%s' team of this project for being able to send "
+#~ "translations to that file target."
+#~ msgstr ""
+#~ "Lypset të jeni te ekipi '%s' i këtij projekti, që të jeni në gjendje të "
+#~ "dërgoni përkthime për atë kartelë."
+
+#~ msgid "Sorry, your file could not be sent because of an error."
+#~ msgstr "Na ndjeni, kartela juaj nuk u dërgua dot për shkak të një gabimi."
+
+#~ msgid "%s was deleted."
+#~ msgstr "%s qe fshirë."
+
 #, fuzzy
-msgid "You can't make submissions for a file locked by someone else."
-msgstr "Kjo kartelë është kyçur nga dikush tjetër."
+#~ msgid "Request rejected."
+#~ msgstr "Kërkesa u rihap."
 
-#: webtrans/wizards.py:430
-msgid ""
-"Nothing was sent because you haven't changed anything in the translation "
-"form."
-msgstr ""
-"Nuk u dërgua gjë, ngaqë nuk keni ndryshuar gjë te formulari i përkthimit."
+#~ msgid "Request reopened."
+#~ msgstr "Kërkesa u rihap."
 
-#: webtrans/templates/pagination.html:7
-msgid "Previous"
-msgstr "E mëparshmja"
+#~ msgid "The '%s' team was deleted."
+#~ msgstr "Ekipi '%s' është fshirë."
 
-#: webtrans/templates/pagination.html:49
-msgid "Next"
-msgstr "Pasuesja"
+#~ msgid ""
+#~ "When the translatable strings will be frozen (no strings which affect "
+#~ "translations can be added/modified)."
+#~ msgstr ""
+#~ "Kur të ngrihen vargjet e përkthyeshme (nuk mund të shtohen/ndryshohen më "
+#~ "vargje që prekin përkthimin."
+
+#~ msgid "Write a short blurb for your review request."
+#~ msgstr "Shkruani dy fjalë për kërkesën tuaj për shqyrtim"
+
+#~ msgid "Select a translation file for review."
+#~ msgstr "Përzgjidhni një kartelë përkthimi për shqyrtim"
+
+#~ msgid "Open"
+#~ msgstr "Hap"
+
+#~ msgid "Closed"
+#~ msgstr "Mbyllur"
+
+#~ msgid "Null"
+#~ msgstr "Nul"
+
+#~ msgid "Accepted"
+#~ msgstr "U pranua"
+
+#~ msgid "Rejected"
+#~ msgstr "U hodh poshtë"
+
+#~ msgid "The review's status (open, closed, etc.)"
+#~ msgstr "Gjendja e shqyrtimit (i hapur, i mbyllur, etj.)"
+
+#~ msgid "The review's resolution/closing state."
+#~ msgstr "Gjendje zgjidhjeje/mbylljeje shqyrtimi."
+
+#~ msgid "Date and time of creation"
+#~ msgstr "Datë dhe kohë e krijimit"
+
+#~ msgid "Date and time of last update"
+#~ msgstr "Datë dhe kohë e përditësimit të fundit"
+
+#~ msgid "The review file name"
+#~ msgstr "Emri i kartelës për shqyrtim"
+
+#~ msgid "The path of the target file which will be used on submission"
+#~ msgstr ""
+#~ "Shtegu për te kartela objektiv që do të përdoret gjatë parashtrimesh"
+
+#~ msgid "Component"
+#~ msgstr "Përbërës"
+
+#~ msgid "Review Request"
+#~ msgstr "Kërkesë Shqyrtimi"
+
+#~ msgid "Review Requests"
+#~ msgstr "Kërkesa Shqyrtimesh"
+
+#~ msgid "-created_on"
+#~ msgstr "-krijuar_më"
+
+#~ msgid "created_on"
+#~ msgstr "krijuar_më"
+
+#~ msgid ""
+#~ "You can upload a file for review only if it's related to an existing "
+#~ "language."
+#~ msgstr ""
+#~ "Një kartelë mund ta ngarkoni për shqyrtim vetëm nëse lidhet me një gjuhë "
+#~ "të pranishme."
+
+#, fuzzy
+#~ msgid "Your file was successfully placed for reviewing."
+#~ msgstr "Kartela juaj u depozitua me sukses për shqyrtim."
+
+#~ msgid "Tarball URL"
+#~ msgstr "URL \"Tarball\"-i"
+
+#~ msgid "A URL from which the tarball is accessible."
+#~ msgstr "Një URL prej së cilës mund të merret \"tarball\"-i."
+
+#~ msgid "tarball"
+#~ msgstr "\"tarball\""
+
+#~ msgid "tarballs"
+#~ msgstr "\"tarballs\""
+
+#~ msgid "%(project)s Releases"
+#~ msgstr "Hedhje në qarkullim nga %(project)s"
+
+#~ msgid ""
+#~ "The <a href=\"%(project_url)s\">%(project)s</a> project includes the "
+#~ "following groups of shipped components:"
+#~ msgstr ""
+#~ "Projekti <a href=\"%(project_url)s\">%(project)s</a> përfshin grupet "
+#~ "vijues të përbërësve të hedhur në qarkullim:"
+
+#~ msgid ""
+#~ "The following files in the <a href=\"%(component_url)s\">"
+#~ "%(component_name)s</a> component of the <a href=\"%(project_url)s\">"
+#~ "%(project_name)s</a> project have been updated:"
+#~ msgstr ""
+#~ "Janë përditësuar kartelat vijuese te përbërësi <a href=\"%(component_url)s"
+#~ "\">%(component_name)s</a> i projektit <a href=\"%(project_url)s\">"
+#~ "%(project_name)s</a>:"
+
+#~ msgid ""
+#~ "A file for <a href=\"%(lang_url)s\" title=\"%(filename)s\">%(lang_name)s</"
+#~ "a> (%(trans_perc)s%)"
+#~ msgstr ""
+#~ "Është parashtruar kartelë për <a href=\"%(lang_url)s\" title=\"%(filename)"
+#~ "s\">%(lang_name)s</a> (%(trans_perc)s%)"
+
+#~ msgid "A file called '%(filename)s'"
+#~ msgstr "Një kartelë e quajtur '%(filename)s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "was submitted to the <a href=\"%(component_url)s\">%(component_name)s</a> "
+#~ "of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+#~ msgstr ""
+#~ "te <a href=\"%(component_url)s\">%(component_name)s</a> i projektit <a "
+#~ "href=\"%(project_url)s\">%(project_name)s</a>"
+
+#~ msgid ""
+#~ "The source file (POT) has some problems and can not be created/updated "
+#~ "for the <a href=\"%(component_url)s\">%(component_name)s</a> of the <a "
+#~ "href=\"%(project_url)s\">%(project_name)s</a> project"
+#~ msgstr ""
+#~ "Kartela burim (POT) te <a href=\"%(component_url)s\">%(component_name)s</"
+#~ "a> e projektit<a href=\"%(project_url)s\">%(project_name)s</a> ka ca "
+#~ "probleme dhe nuk mund të krijohet/përditësohet"
+
+#~ msgid "Delete %(component_name)s"
+#~ msgstr "Fshije %(component_name)s"
+
+#~ msgid "Say goodbye to <em>%(component_name)s</em>?"
+#~ msgstr "T'i thuhet mirupafshim <em>%(component_name)s</em>?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to permanently delete the component "
+#~ "'%(component_name)s' which belongs to %(project_name)s?"
+#~ msgstr ""
+#~ "\n"
+#~ "  Jeni i sigurt se doni të fshihet përgjithmonë përbërësja "
+#~ "'%(component_name)s' që i përket %(project_name)s?\n"
+
+#~ msgid ""
+#~ "This component supports local storing of submitted files and also sends "
+#~ "the files to the maintainers\\' email."
+#~ msgstr ""
+#~ "Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe "
+#~ "i dërgon gjithashtu kartelat te email-i i mirëmbajtësit."
+
+#~ msgid ""
+#~ "This component does not support local storing of submitted files. The "
+#~ "submitted files will be sent to the maintainers\\' emails and the "
+#~ "statistics will reflect the change once the files are committed upstream."
+#~ msgstr ""
+#~ "Ky përbërës nuk e mbulon depozitimin vendor të kartelave të parashtruara. "
+#~ "Kartelat e parashtruara do të dërgohen te email-et e mirëmbajtësve dhe "
+#~ "statistikat do ta pasqyrojnë ndryshimin sapo kartelat të jenë parashtruar "
+#~ "në projekt."
+
+#~ msgid ""
+#~ "This component supports local storing of submitted files and also sends "
+#~ "the files direct to the upstream repository."
+#~ msgstr ""
+#~ "Ky përbërës e mbulon depozitimin vendor të kartelave të parashtruara dhe "
+#~ "i dërgon gjithashtu kartelat drejt e te depoja kryesore."
+
+#, fuzzy
+#~ msgid "Source Details"
+#~ msgstr "Hollësi burimi"
+
+#~ msgid "Repository:"
+#~ msgstr "Depo:"
+
+#~ msgid "Link to a web front-end for the source code"
+#~ msgstr "Lidhje te një prani në web për kodin burim"
+
+#~ msgid "web"
+#~ msgstr "web"
+
+#~ msgid "Branch:"
+#~ msgstr "Degë:"
+
+#~ msgid "File filter:"
+#~ msgstr "Filtër kartele:"
+
+#~ msgid "Release:"
+#~ msgid_plural "Releases:"
+#~ msgstr[0] "Qarkullim:"
+#~ msgstr[1] "Qarkullime:"
+
+#~ msgid "Allows submissions:"
+#~ msgstr "Lejo parashtrime:"
+
+#, fuzzy
+#~ msgid "Translation Files"
+#~ msgstr "Kartela përkthimi"
+
+#~ msgid "ago"
+#~ msgstr "më parë"
+
+#~ msgid "Component not yet pulled from source repository."
+#~ msgstr "Përbërëse ende e patërhequr prej depos burim."
+
+#~ msgid "Refresh and re-calculate statistics. This action may take some time."
+#~ msgstr ""
+#~ "Rifreskoje dhe rillogarit statistikat. Ky veprim mund të hajë ca kohë."
+
+#~ msgid "Refresh cache"
+#~ msgstr "Rifresko fshehtinën"
+
+#~ msgid "Reset Transifex's local data for a clean pull"
+#~ msgstr ""
+#~ "Ricakto të dhënat vendore të Transifex-it për një tërheqje të pastër"
+
+#~ msgid "Clear cache"
+#~ msgstr "Pastro fshehtinën"
+
+#~ msgid "Any locally modified data will be overwritten with fresh copies."
+#~ msgstr ""
+#~ "Çfarëdo të dhënash të ndryshuara lokalisht do të mbishkruhen me kopje të "
+#~ "freskëta."
+
+#~ msgid "warning"
+#~ msgstr "sinjalizim"
+
+#~ msgid "Teams:"
+#~ msgstr "Ekipe:"
+
+#, fuzzy
+#~ msgid "Translation File Reviews"
+#~ msgstr "Shqyrtime kartelash përkthimi"
+
+#, fuzzy
+#~ msgid ""
+#~ "Translators can request a file review from another person, who can take a "
+#~ "look at his work and provide any feedback needed, or simply submit the "
+#~ "file to the upstream project."
+#~ msgstr ""
+#~ "Përkthyesit mund të kërkojnë shqyrtim kartele nga një person tjetër, i "
+#~ "cili\n"
+#~ "  mund t'i hedhë një sy punës së tij dhe të japë përshtypjet e tij, ose "
+#~ "thjesht\n"
+#~ "  ta parashtrojëkartelën te projekti."
+
+#~ msgid "Reviews"
+#~ msgstr "Shqyrtime"
+
+#~ msgid "Delete component"
+#~ msgstr "Fshije përbërësin"
+
+#~ msgid "Add a component"
+#~ msgstr "Shtoni një përbërës"
+
+#~ msgid "Edit %(component_name)s"
+#~ msgstr "Përpunoni %(component_name)s"
+
+#~ msgid "Edit Component '%(component_name)s'"
+#~ msgstr "Përpunoni Përbërësen '%(component_name)s'"
+
+#~ msgid "New component for %(project_name)s"
+#~ msgstr "Përbërës i ri për %(project_name)s"
+
+#~ msgid "Checkout"
+#~ msgstr "Marrje"
+
+#~ msgid "Submission"
+#~ msgstr "Parashtrim"
+
+#~ msgid "Save component"
+#~ msgstr "Ruaje përbërësin"
+
+#~ msgid "Project Component"
+#~ msgid_plural "Project Components"
+#~ msgstr[0] "Përbërës Projekti"
+#~ msgstr[1] "Përbërësa Projekti"
+
+#~ msgid "Add one!"
+#~ msgstr "Shtoni një!"
+
+#, fuzzy
+#~ msgid ""
+#~ "<em>Components</em> are smaller, self-contained parts of a larger project "
+#~ "which consist of actual files. Examples of components of a software "
+#~ "project could be \"UI\" and \"Docs\" or development branches like "
+#~ "<code>HEAD</code>."
+#~ msgstr ""
+#~ "<em>Përbërësit</em> janë pjesë më të vogla, të mëvetëshme, të një "
+#~ "projekti më të madh, që përmbajnë kartelat reale.\n"
+#~ "    Shembuj përbërësish të një projekti \"software\" mund të ishin \"UI\" "
+#~ "dhe \"Docs\" ose degë zhvillimi si <code>HEAD</code>."
+
+#~ msgid "Send a new translation for this component."
+#~ msgstr "Dërgoni një përkthim të ri për këtë përbërëse."
+
+#~ msgid "The translation file to be uploaded for the new language."
+#~ msgstr "Kartela e përkthimit që duhet ngarkuar për gjuhën e re."
+
+#~ msgid "Select the target file:"
+#~ msgstr "Përzgjidhni kartelën objektiv:"
+
+#~ msgid ""
+#~ "The target file is the name of the new file language. It must match the "
+#~ "component file filter."
+#~ msgstr ""
+#~ "Kartela objektiv është emri i kartelës së re gjuhësore. Duhet të "
+#~ "përputhet me filtrin e kartelave të përbërëses."
+
+#~ msgid "or enter it here:"
+#~ msgstr "ose jepeni këtu:"
+
+#~ msgid "Example: "
+#~ msgstr "Shembull:"
+
+#~ msgid "Commit message:"
+#~ msgstr "Mesazh dërgimi:"
+
+#~ msgid "Example: Updates to Brazilian Portuguese translation"
+#~ msgstr "Shembull: Përditësime për përkthimin në Portugezçe Braziliane"
+
+#~ msgid "Send"
+#~ msgstr "Dërgoje"
+
+#~ msgid "Send for Review"
+#~ msgstr "Dërgojeni për Shqyrtim"
+
+#~ msgid "Projects with tag '%(tag)s'"
+#~ msgstr "Projekte me etiketën '%(tag)s'"
+
+#~ msgid "Top Translators"
+#~ msgstr "Përkthyesat Kryesues"
+
+#~ msgid "%(number)s submission"
+#~ msgid_plural "%(number)s submissions"
+#~ msgstr[0] "%(number)s parashtrim"
+#~ msgstr[1] "%(number)s parashtrime"
+
+#~ msgid "Components:"
+#~ msgstr "Përbërës:"
+
+#~ msgid "Click here to show or hide the component list"
+#~ msgstr "Për shfaqje ose fshehje të listës së përbërësve, klikoni këtu"
+
+#~ msgid "No translations added for this release. :-("
+#~ msgstr "Pa përkthime të shtuara për këtë qarkullim. :-("
+
+#, fuzzy
+#~ msgid "Project/Component Statistics"
+#~ msgstr "Statistika projekti/përbërëseje"
+
+#~ msgid ""
+#~ "Transifex searched for projects containing translation files for this "
+#~ "language and release, but couldn't find any. Try submitting such a file "
+#~ "and check again."
+#~ msgstr ""
+#~ "Transifex-i kërkoi për projekte që përmbajnë kartela përkthimi për këtë "
+#~ "gjuhë dhe version, por nuk gjeti gjë. Provoni ta parashtroni një kartelë "
+#~ "të tillë dhe kontrolloni sërish."
+
+#~ msgid ""
+#~ "If you think this shouldn't happen, please <a href=\"%(contact_form)s"
+#~ "\">let us know</a>."
+#~ msgstr ""
+#~ "Nëse mendoni se kjo nuk do të duhej të kish ndodhur, ju lutem <a href="
+#~ "\"%(contact_form)s\">na e njoftoni</a>."
+
+#~ msgid "Untranslated Components"
+#~ msgstr "Përbërësa të Papërkthyer"
+
+#~ msgid ""
+#~ "The following components will be included in %(release_name)s, but there "
+#~ "are no translations sent for %(language_name)s yet."
+#~ msgstr ""
+#~ "Përbërësit vijues do të përfshihen te %(release_name)s, por nuk ka ende "
+#~ "përkthime të dërguara për %(language_name)s."
+
+#~ msgid "Submit"
+#~ msgstr "Parashtroje"
+
+#~ msgid "Translation Review Requests"
+#~ msgstr "Kërkesa Shqyrtimi Përkthimi"
+
+#~ msgid "Open Requests"
+#~ msgstr "Kërkesa të Hapura"
+
+#~ msgid "Review Request #%(review_id)s "
+#~ msgstr "Kërkesë Shqyrtimi #%(review_id)s "
+
+#~ msgid "Who and when"
+#~ msgstr "Kush dhe kur"
+
+#~ msgid "See profile"
+#~ msgstr "Shiheni profilin"
+
+#, fuzzy
+#~ msgid "%(time_since)s ago"
+#~ msgstr ""
+#~ "\n"
+#~ "        %(time_since)s më parë\n"
+#~ "      "
+
+#~ msgid "File target"
+#~ msgstr "Objektiv kartele"
+
+#~ msgid "Download the version sent for review"
+#~ msgstr "Shkarkoni versionin e dërguar për shqyrtim"
+
+#~ msgid "Status"
+#~ msgstr "Gjendje"
+
+#~ msgid "Close Review"
+#~ msgstr "Mbylle Shqyrtimin"
+
+#~ msgid "Accept and submit translation"
+#~ msgstr "Pranoje dhe parashtroje përkthimin"
+
+#~ msgid "Accept"
+#~ msgstr "Pranoje"
+
+#~ msgid "Reject"
+#~ msgstr "Hidhe tej"
+
+#~ msgid "No open requests!"
+#~ msgstr "Nuk ka kërkesa të hapura!"
+
+#~ msgid "Closed Requests"
+#~ msgstr "Kërkesa të Mbyllura"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Author"
+#~ msgstr "Autor"
+
+#~ msgid "Time Since"
+#~ msgstr "Kohë Që Prej"
+
+#~ msgid "Attachment"
+#~ msgstr "Bashkangjitje"
+
+#~ msgid "Actions"
+#~ msgstr "Veprime"
+
+#~ msgid "Reopen review request"
+#~ msgstr "Rihape kërkesën për shqyrtim"
+
+#~ msgid "No closed requests!"
+#~ msgstr "Nuk ka kërkesa të mbyllura!"
+
+#~ msgid "Show completed"
+#~ msgstr "Shfaq të plotësuarit"
+
+#~ msgid "Developer comments"
+#~ msgstr "Komente zhvilluesi"
+
+#~ msgid "%(component_name)s"
+#~ msgstr "%(component_name)s"
+
+#~ msgid "Translate '%(filename)s'"
+#~ msgstr "Përktheni '%(filename)s'"
+
+#~ msgid "Translate '<code>%(filename)s</code>'"
+#~ msgstr "Përktheni '<code>%(filename)s</code>'"
+
+#~ msgid "Current status for this page"
+#~ msgstr "Gjendje e tanishme për këtë faqe"
+
+#~ msgid "Settings"
+#~ msgstr "Rregullime"
+
+#~ msgid "Filter"
+#~ msgstr "Filtër"
+
+#~ msgid "Clear"
+#~ msgstr "Pastroje"
+
+#~ msgid "Fuzzy"
+#~ msgstr "I turbullt"
+
+#~ msgid "Untranslated"
+#~ msgstr "E papërkthyer"
+
+#~ msgid "Total"
+#~ msgstr "Gjithsej"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "AT"
+#~ msgstr "TE"
+
+#~ msgid "Fuzzy?"
+#~ msgstr "I turbullt?"
+
+#~ msgid "Submit translations"
+#~ msgstr "Parashtroni përkthime"
+
+#~ msgid "Copy source string"
+#~ msgstr "Kopjo vargun burim"
+
+#~ msgid "Auto-suggest translation"
+#~ msgstr "Përkthim me vetëkëshillim"
+
+#~ msgid "PO file"
+#~ msgstr "Kartelë PO"
+
+#~ msgid "PO files"
+#~ msgstr "Kartela PO"
+
+#~ msgid "Files"
+#~ msgstr "Kartela"
+
+#~ msgid "Options"
+#~ msgstr "Mundësi"
+
+#~ msgid "Trans:"
+#~ msgstr "Përkth:"
+
+#~ msgid "Untrans:"
+#~ msgstr "Papërkth:"
+
+#~ msgid "View "
+#~ msgstr "Shiheni"
+
+#~ msgid "Edit "
+#~ msgstr "Përpunojeni"
+
+#, fuzzy
+#~ msgid ""
+#~ "See the outsource team for this language. You will be redirected to "
+#~ "another project team page."
+#~ msgstr ""
+#~ "Shihni ekipin outsource për këtë gjuhë. Do të ridrejtoheni për te faqja e "
+#~ "ekipit të një tjetër projekti."
+
+#~ msgid "See the team for this language"
+#~ msgstr "Shihni ekipin për këtë gjuhë"
+
+#~ msgid "See statistics for this language"
+#~ msgstr "Shihni statistikat për këtë gjuhë"
+
+#~ msgid "No team for this language"
+#~ msgstr "Nuk ka ekip për këtë gjuhë"
+
+#~ msgid "There are no languages registered matching this code"
+#~ msgstr "Nuk ka gjuhë të regjistruara që përputhen me këtë kod"
+
+#~ msgid "Click here to see the multiple files for"
+#~ msgstr "Klikoni këtu për të parë kartela shumëfishe të"
+
+#~ msgid "Submit a translation for %(pofile_filename)s"
+#~ msgstr "Parashtroni një përkthim për %(pofile_filename)s"
+
+#~ msgid "Submit file"
+#~ msgstr "Parashtroje kartelën"
+
+#~ msgid "Project/Component"
+#~ msgstr "Projekt/Përbërës"
+
+#~ msgid "Go to this project page"
+#~ msgstr "Shko te faqja e këtij projekti"
+
+#~ msgid "Go to this component page"
+#~ msgstr "Shko te faqja e këtij përbërësi"
+
+#~ msgid "See the detailed statistics for this language"
+#~ msgstr "Shihni statistika të hollësishme për këtë gjuhë"
+
+#~ msgid "There are no languages registered matching this file"
+#~ msgstr "Nuk ka gjuhë të regjistruara me përputhje për këtë kartelë"
+
+#, fuzzy
+#~ msgid "There is at least one file with problems for this language."
+#~ msgstr "Kartela e përkthimit që duhet ngarkuar për gjuhën e re."
+
+#~ msgid "This component has %(sources_number)s source files"
+#~ msgstr "Ky përbër ka %(sources_number)s kartela burim"
+
+#~ msgid "entries"
+#~ msgstr "zëra"
+
+#~ msgid "Download "
+#~ msgstr "Shkarkojeni"
+
+#~ msgid "New Component Added"
+#~ msgstr "U shtua Përbërës i Ri"
+
+#~ msgid "when a new component is added to a project"
+#~ msgstr "kur te një projekt shtohet përbërës i ri"
+
+#~ msgid "Component Changed"
+#~ msgstr "Përbërësi Ndryshoi"
+
+#~ msgid "when a component of a project is changed"
+#~ msgstr "kur ndryshohet një përbërës projekti"
+
+#~ msgid "Component Deleted"
+#~ msgstr "Përbërësi u Fshi"
+
+#~ msgid "when a component of a project is deleted"
+#~ msgstr "kur fshihet një përbërës projekti"
+
+#~ msgid "File Submitted"
+#~ msgstr "Kartela u Parashtrua"
+
+#~ msgid "when a component file of a project is submitted"
+#~ msgstr "kur parashtrohet një kartelë përbërësi projekti"
+
+#~ msgid "File Review Submitted"
+#~ msgstr "U parashtrua Shqyrtim Kartele"
+
+#~ msgid "when a file of a component is submitted for review"
+#~ msgstr "kur një kartelë e një përbërësi parashtrohet për shqyrtim"
+
+#~ msgid "when a component translation file of a project is changed"
+#~ msgstr "kur ndryshohet përkthimi i një kartele përbërësi projekti"
+
+#~ msgid "Translation Source File (POT) has a Problem"
+#~ msgstr "Kartela Burim e Përkthimit (POT) ka një Problem"
+
+#~ msgid ""
+#~ "when the source file (POT) of a component that you are a maintainer has a "
+#~ "problem"
+#~ msgstr ""
+#~ "kur ka problem kartela burim (POT) e një përbërësi të cilin e mirëmbani ju"
+
+#~ msgid "Enter a valid regular expression."
+#~ msgstr "Jepni një shprehje të rregullt të vlefshme"
+
+#~ msgid "The root url does not point to a .tar.gz or .tgz file"
+#~ msgstr "Url-ja rrënjë nuk shpie te ndonjë kartelë .tar.gz ose .tgz"
+
+#~ msgid "The root url must start with http:// or ftp://"
+#~ msgstr "Url-ja rrënjë duhet të fillojë me http:// or ftp://"
+
+#~ msgid ""
+#~ "This is not a valid root URL for this repository type. Valid choices are: "
+#~ "%s"
+#~ msgstr ""
+#~ "Kjo nuk është URL rrënjë e vlefshme për këtë lloj depoje. Mundësi të "
+#~ "vlefshme janë: %s"
+
+#~ msgid ""
+#~ "This repository already belongs to another project. Please choose a "
+#~ "different one."
+#~ msgstr ""
+#~ "Kjo depo bën pjesë tashmë në një projekt tjetër. Ju lute, zgjidhni një "
+#~ "tjetër."
+
+#~ msgid "Repo URL root"
+#~ msgstr "Rrënjë URL-je e Depos"
+
+#~ msgid "The URL of the versioning system repository/branch."
+#~ msgstr "URL-ja për te depoja/dega e sistemit të ruajtjes së versioneve."
+
+#~ msgid "This type of repository does not accept branches"
+#~ msgstr "Kjo lloj depoje nuk pranon degë"
+
+#~ msgid "Branch"
+#~ msgstr "Degë"
+
+#, fuzzy
+#~ msgid "The VCS branch with which this unit is associated"
+#~ msgstr "Degë VCS me të cilën është përshoqëruar kjo njësi"
+
+#~ msgid "Web frontend"
+#~ msgstr "\"Web frontend\""
+
+#~ msgid "A URL to the project's web front-end"
+#~ msgstr "URL për te prania web e projektit"
+
+#~ msgid "<VcsUnit: %(name)s (%(type)s)>"
+#~ msgstr "<VcsUnit: %(name)s (%(type)s)>"
+
+#~ msgid "vcsunit"
+#~ msgstr "njësi vcs"
+
+#~ msgid "vcsunits"
+#~ msgstr "njësi vcs"
+
+#~ msgid ""
+#~ "Your request could not be completed. The admins have been notified to "
+#~ "take a closer look at it. Please try again in a few minutes"
+#~ msgstr ""
+#~ "Kërkesa juaj nuk mund të plotësohej dot. U njoftuan përgjegjësit që ta "
+#~ "shohin nga afër. Ju lutem, riprovoni pas pak minutash"
+
+#~ msgid "Setup of the repository locally could not be done successfully."
+#~ msgstr "Nuk u krye dot me sukses rregullimi i një depoje vendore."
+
+#~ msgid ""
+#~ "The local repository has not been setup yet. Please, first do a check-out "
+#~ "of the repository."
+#~ msgstr ""
+#~ "Ende nuk u rregullua depoja vendore. Ju lutem, së pari bëni një shkarkim "
+#~ "të depos nga burimi."
+
+#~ msgid ""
+#~ "Unable to pull data from the remote repository. Is the remote host up?"
+#~ msgstr ""
+#~ "I pazoti të marrë të dhëna prej depos së largët. A është në punë streha e "
+#~ "largët?"
+
+#~ msgid ""
+#~ "Cleanup of the repository failed. The admins have been notified to take a "
+#~ "closer look at it."
+#~ msgstr ""
+#~ "Pastrimi i depos dështoi. U njoftuan përgjegjësit që ta shohin nga afër."
+
+#~ msgid "Commit to the repository failed."
+#~ msgstr "Depozitimi te depoja dështoi."
+
+#~ msgid "Pushing to the remote repository failed."
+#~ msgstr "Hedhja te depoja e largët dështoi."
+
+#~ msgid ""
+#~ "Given file does not have a revision. The admins have been notified to "
+#~ "take a closer look at it."
+#~ msgstr ""
+#~ "Kartela e dhënë nuk ka numër rishikimi. U njoftuan përgjegjësit që ta "
+#~ "shohin nga afër."
+
+#~ msgid "The %s fields should be filled."
+#~ msgstr "Fushat %s duhen plotësuar."
+
+#, fuzzy
+#~ msgid "You can't make submissions for a file locked by someone else."
+#~ msgstr "Kjo kartelë është kyçur nga dikush tjetër."
+
+#~ msgid ""
+#~ "Nothing was sent because you haven't changed anything in the translation "
+#~ "form."
+#~ msgstr ""
+#~ "Nuk u dërgua gjë, ngaqë nuk keni ndryshuar gjë te formulari i përkthimit."
+
+#~ msgid "Previous"
+#~ msgstr "E mëparshmja"
+
+#~ msgid "Next"
+#~ msgstr "Pasuesja"
 
 #~ msgid ""
 #~ "Couldn't lock file, this means that you can send files only for reviewing."
@@ -4386,9 +5180,6 @@ msgstr "Pasuesja"
 
 #~ msgid "Request closed as Rejected."
 #~ msgstr "Kërkesa u mbyll si e Hedhur Tej."
-
-#~ msgid "translation files"
-#~ msgstr "Kartela përkthimi"
 
 #~ msgid ""
 #~ "The request of user <a href=\"%(user_url)s\">%(user_name)s</a> for "
@@ -4780,14 +5571,6 @@ msgstr "Pasuesja"
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: qarkullimi %(release)s"
 
-#~ msgid ""
-#~ "Latest translations for %(language)s language in %(release)s release."
-#~ msgstr ""
-#~ "Përkthimet më të fundit për gjuhën %(language)s te qarkullimi %(release)s."
-
-#~ msgid "Collections"
-#~ msgstr "Koleksione"
-
 #~ msgid "Releases"
 #~ msgstr "Qarkullime"
 
@@ -4890,18 +5673,6 @@ msgstr "Pasuesja"
 #~ msgstr ""
 #~ "S'e gjetët koleksionin tuaj? Ecni më tej dhe <a href="
 #~ "\"%(collection_create)s\">shtojeni vetë</a>!"
-
-#~ msgid "Delete <em>%(release_name)s</em>"
-#~ msgstr "Fshije <em>%(release_name)s</em>"
-
-#~ msgid ""
-#~ "\n"
-#~ "  Are you sure you want to permanently delete the registered release "
-#~ "'%(release_name)s'?\n"
-#~ msgstr ""
-#~ "\n"
-#~ "  Jeni i sigurt se doni të fshihet përgjithmonë qarkullimi i regjistruar "
-#~ "'%(release_name)s'?\n"
 
 #~ msgid ""
 #~ "Insert the new e-mail address. An e-mail will be send to it for testing "
@@ -5011,9 +5782,6 @@ msgstr "Pasuesja"
 
 #~ msgid "Email"
 #~ msgstr "Email"
-
-#~ msgid "Password"
-#~ msgstr "Fjalëkalim"
 
 #~ msgid "Change OpenID"
 #~ msgstr "Ndryshoni OpenID-në"
@@ -5218,13 +5986,6 @@ msgstr "Pasuesja"
 #~ msgid "(not calculated)"
 #~ msgstr "(e pallogaritur)"
 
-#~ msgid ""
-#~ "Your file does not pass by the check for correctness (msgfmt -c). Please "
-#~ "run this command on your system to see the errors."
-#~ msgstr ""
-#~ "Kartela juaj nuk e kalon provën e saktësisë (msgfmt -c). Ju lutem, "
-#~ "xhirojeni këtë urdhër në sistemin tuaj që të shihni gabimet."
-
 #~ msgid "Sorry, an error is causing troubles to send your file."
 #~ msgstr "Na ndjeni, një gabim po i hap punë dërgimit të kartelës suaj."
 
@@ -5309,10 +6070,6 @@ msgstr "Pasuesja"
 #, fuzzy
 #~ msgid "Authenticate"
 #~ msgstr "_Mirëfilltësim"
-
-#, fuzzy
-#~ msgid "Module name"
-#~ msgstr "Emër mundësuesi:"
 
 #, fuzzy
 #~ msgid "Modules"
@@ -5637,9 +6394,6 @@ msgstr "Pasuesja"
 #, fuzzy
 #~ msgid "ESSID (network ID):"
 #~ msgstr "ID Jabber i pavlefshëm"
-
-#~ msgid "Key: "
-#~ msgstr "Kyç:"
 
 #, fuzzy
 #~ msgid "encryption disabled"
@@ -5986,9 +6740,6 @@ msgstr "Pasuesja"
 #~ "Gabim në krijim drejtorie!\n"
 #~ "%s"
 
-#~ msgid "inactive"
-#~ msgstr "joveprues"
-
 #, fuzzy
 #~ msgid "%s, Device not specified or alias not a number!"
 #~ msgstr "Nuk keni treguar numër pajisjeje ose numri është i pavlefshëm"
@@ -6172,9 +6923,6 @@ msgstr "Pasuesja"
 #~ msgid "<b>D-channel protocol</b>"
 #~ msgstr "  Protokoll është %s"
 
-#~ msgid "<b>Resources</b>"
-#~ msgstr "<b>Burime</b>"
-
 #~ msgid "<b>Modem properties</b>"
 #~ msgstr "<b>Veti modemi</b>"
 
@@ -6348,10 +7096,6 @@ msgstr "Pasuesja"
 #, fuzzy
 #~ msgid "_Use Callback"
 #~ msgstr "Përdor \"Proxy\""
-
-#, fuzzy
-#~ msgid "Demand setting"
-#~ msgstr "rregullim vendor"
 
 #~ msgid "Enable synchronous PPP for the connection"
 #~ msgstr "Aktivizo për lidhjen PPP të njëkohshme"
@@ -6856,9 +7600,6 @@ msgstr "Pasuesja"
 
 #~ msgid "_Info"
 #~ msgstr "_Të dhëna"
-
-#~ msgid "Create Device"
-#~ msgstr "Krijo Pajisje"
 
 #~ msgid "Select Device"
 #~ msgstr "Përzgjidhni Pajisje"
