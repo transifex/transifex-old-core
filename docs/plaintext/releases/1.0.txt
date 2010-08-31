@@ -1,0 +1,253 @@
+.. _releases-1.0:
+ 
+=======================================
+ Transifex version 1.0.x release notes
+=======================================
+ 
+ 
+Transifex 1.0 (Proteus), Alpha version
+======================================
+ 
+Welcome to Transifex 1.0, codenamed Proteus_.
+ 
+To be Released:
+  October 2010
+
+ 
+Transifex 1.0 'Proteus' is a major production release of Transifex. It is
+targeted for new installations of Transifex and parties willing to upgrade to
+a new major version to take advantage of new features.
+
+Transifex 1.0 represents arguably the single biggest advancement in Transifex
+since its original release. This release got something like a 'heart transplant':
+a brand-new core storage engine was introduced, capable of much more than the
+file-based previous one.
+
+
+Transifex 1.0-alpha
+-------------------
+
+.. warning::
+
+  '''Transifex 1.0-alpha''' is a development preview of Transifex 1.0 and is
+  intended for testing purposes only. Production sites should wait for the final
+  release or at least 1.0-beta.
+
+
+
+Here's a 40k-foot view of the release major features and numbers:
+
+- ...
+
+.. code-block:: bash
+
+    336 changesets recorded
+    38 tickets resolved
+    869 files changed, 68252 insertions(+), 48629 deletions(-)
+
+
+.. figure:: ../../screenshots/1.0/proteus.png
+   :class: alcenter shot
+   
+   Proteus -- Art from the cover to Uncanny X-Men #127, by John Byrne
+
+
+
+What's new in Transifex 1.0
+---------------------------
+
+Let's see what's fresh!
+
+
+New Translation Storage Engine
+::::::::::::::::::::::::::::::
+
+...
+
+
+Support for QT .ts translation format
+:::::::::::::::::::::::::::::::::::::
+
+...
+
+
+Various improvements and bugfixes
+---------------------------------
+
+
+...
+
+
+Under-the-hood Improvements
+:::::::::::::::::::::::::::
+
+- ...
+
+
+Bugfixes
+::::::::
+
+- ...
+
+
+Translations
+------------
+
+- apuasi -- Finnish (fi)
+- Azamat Hackimov -- Russian (ru)
+- Besnik -- Albanian (sq)
+- Cheng-Chia Tseng --Chinese (Taiwan) (zh_TW)
+- Harald Servat -- Catalan (ca)
+- Héctor Daniel Cabrera -- Spanish (Castilian) (es)
+- Linukcs -- French (fr)
+- Péter Sulyok -- Hungarian (hu)
+- Piotr Drąg -- Polish (pl)
+- Sérgio Marques -- Portuguese (pt)
+- Thomas De Rocker -- Dutch (Netherlands) (nl)
+- Yaron Shahrabani -- Hebrew (he)
+- Yuri Chornoivan -- Ukrainian (uk)
+
+
+Getting Transifex 1.0
+---------------------
+
+You can experience Transifex 1.0 live at the upstream instance hosted by
+Indifex, at http://www.transifex.net/. 
+
+Project and community managers who want to deploy Transifex for their 
+own community can get Transifex in a variety of ways. Transifex should be
+easily-installable::
+
+    easy_install transifex
+
+A tarball is available from the following locations:
+
+- The Transifex.org Download section: http://transifex.org/files/
+- The Python Packaging Index (Cheeseshop): http://pypi.python.org/pypi/transifex/
+
+Full information about installing Transifex can be found in the
+:ref:`Installation documentation <intro-install>`.
+
+
+The Transifex Appliance
+:::::::::::::::::::::::
+
+If you want to play with the latest Transifex code, you may want to use our
+development images for the Transifex Appliance. Following the stand-alone,
+"batteries included" model of software appliances, you get a complete
+Transifex system with all dependencies and services pre-configured so that
+you can start experimenting with it right away. Choose from ISO, VMware or EC2
+images, for both x86 and x86_64 architectures to run on a virtual machine,
+dedicated server, or using virtualization software.
+
+.. image:: ../../screenshots/0.7/0.7_appliance_front_page.png
+   :class: shot2 alcenter
+
+Your appliances can be updated using its own web based management system by
+pointing your browser to the appliance's IP using port 8003. Login with the
+credentials 'admin' and 'password'. Make sure to change the password once
+you've successfully logged in.
+
+This appliance version is based on the latest branch of Transifex, where a
+couple of projects have already been created for you to play with. Log in using
+either guest/guest or editor/editor as your user name and password combination
+and tinker to your heart's content!
+
+Make sure to read the documentation and file issues/send us your feedback.
+
+Transifex Appliance web site:
+ http://www.rpath.org/web/project/transifex/
+
+Stable and development images:
+ http://www.rpath.org/web/project/transifex/releases
+
+
+Upgrading to this version
+-------------------------
+
+To upgrade the code, update your package distribution as usual:
+
+- If you installed from your package distribution, check if there's been a
+  package upgrade and go for it.
+- If you used ``easy_install``, run ``easy_install -U`` to upgrade.
+- Fresh tarballs are available, if you installed from a release zipfile.
+- Finally, if you're of the daredevil kind and feed straight from the source,
+  ``hg pull`` followed by an ``hg update <version>`` should do the trick for you.
+
+
+Dependencies
+::::::::::::
+
+One extra dependency was *added* since the last major version:
+
+- python-magic
+
+One dependency is *no longer* required starting from this version:
+
+- mercurial
+
+Instructions on how to install the dependencies can be found at the
+:ref:`Installation docs <intro-install>`. You'll need to complete this step
+before actually doing the database migration.
+
+
+Migration
+:::::::::
+
+.. warning::
+
+  Due to the totally different storage engine, Transifex 1.0 requires a number
+  of steps to fully migrate your projects.
+
+  (Section incomplete)
+
+
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. To upgrade the database from a clean
+schema of the previous version, is run the following::
+
+    ./manage.py syncdb
+    ./manage.py migrate
+
+Finally, re-build and setup the necessary extra files::
+
+    ./manage.py build_static
+    cd transifex/site_media/
+
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Andreas Loupasakis
+- Diego Búrigo Zacarão
+- Dimitris Glezos
+- Seraphim Mellos
+- timeless
+- Sarah Kerrigan and Zeratul
+
+For a list of our awesome translators, refer to the `Translations`_ section.
+
+A big "Thanks" goes to `Mozilla`_ for their support in this release.
+
+
+Transifex 1.0 Development Releases
+==================================
+
+- Alpha: 1 September 2010
+- Beta: TBA
+- Final: TBA
+
+Please refer to the full `Transifex 1.0 changelog`_ for more information on
+what has changed between the development releases and final one.
+
+
+.. _Transifex.net: http://www.transifex.net/
+.. _www.transifex.net: http://www.transifex.net/
+.. _Indifex: http://www.indifex.com/
+.. _Mozilla: http://www.mozilla.org/
+.. _Proteus: http://en.wikipedia.org/wiki/Proteus_(Comics)
+.. _Transifex 1.0 changelog: http://code.transifex.org/1.0.x/shortlog
+
