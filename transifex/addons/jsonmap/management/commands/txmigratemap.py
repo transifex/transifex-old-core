@@ -68,8 +68,10 @@ class Command(BaseCommand):
                         resource, created = Resource.objects.get_or_create(
                                 slug = resource_slug,
                                 source_language = language,
-                                project = project,
-                                name = resource_slug)
+                                project = project)
+
+                        if created:
+                            resource.name = r['source_file']
 
                         source_file = os.path.join(path, r['source_file'])
                         resource.i18n_type = get_i18n_type_from_file(source_file)
@@ -111,6 +113,6 @@ class Command(BaseCommand):
                                         (translation_file, str(e))
                 else:
                     logger.debug("Mapping '%s' does have canched files at "
-                        "%s." % path)
+                        "%s." % (jsonmap, path))
 
 
