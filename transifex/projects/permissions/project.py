@@ -36,7 +36,7 @@ class ProjectPermission(BasePermission):
     checks = ('maintain', 'coordinate_team', 'submit_file', 
         'submit_translations')
 
-    def maintain(self, project=None, component=None):
+    def maintain(self, project=None):
         if project:
             if project.maintainers.filter(id=self.user.id):
                 return True

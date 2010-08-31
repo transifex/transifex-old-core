@@ -38,7 +38,7 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
         response={}
         try:
             lock = Lock.objects.create_update(resource, language, request.user)
-            #cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
+            #cache.delete(TFC_CACHING_PREFIX +'.resource.'+resource.full_name)
             response['status'] = "OK"
             response['message'] = _("Lock created.")
             response['timeuntil'] = timeuntil(lock.expires)
@@ -73,7 +73,7 @@ def resource_language_unlock(request, project_slug, resource_slug,
         if lock:
             try:
                 lock.delete_by_user(request.user)
-                #cache.delete(TFC_CACHING_PREFIX +'.component.'+component.full_name)
+                #cache.delete(TFC_CACHING_PREFIX +'.resource.'+resource.full_name)
                 response['status'] = "OK"
                 response['message'] = _("Lock removed.")
             except LockError, e:

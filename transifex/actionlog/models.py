@@ -193,12 +193,12 @@ class LogEntry(models.Model):
         
         Useful for presenting an image signifying an action type. Example::
         >>> from notification.models import  NoticeType
-        >>> nt = NoticeType(label='project_component_added')
+        >>> nt = NoticeType(label='project_added')
         >>> zlog = LogEntry(action_type=nt)
         >>> nt
-        <NoticeType: project_component_added>
+        <NoticeType: project_added>
         >>> zlog.action_type
-        <NoticeType: project_component_added>
+        <NoticeType: project_added>
         >>> zlog.action_type_short
         'added'
         """
@@ -224,8 +224,8 @@ def action_logging(user, object_list, action_type, message=None, context=None):
 
     Usage::
 
-        al = 'project_component_added'
-        context = {'component': object}
+        al = 'project_added'
+        context = {'project': object}
         action_logging(request.user, [object], al , context=context):
     """
     if not getattr(settings, 'ACTIONLOG_ENABLED', None):

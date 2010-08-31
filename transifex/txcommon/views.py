@@ -45,12 +45,7 @@ def search(request):
                 Q(homepage__icontains=term) |
                 Q(slug__icontains = term) |
                 Q(feed__icontains=term) |
-                Q(long_description__icontains=term) |
-                Q(component__long_description = term) |
-                Q(component__name = term) |
-                Q(component__slug = term) |
-                Q(component___unit__root__icontains = term) |
-                Q(component___unit__type__icontains = term)
+                Q(long_description__icontains=term)
                 )
         results = results.filter(query).distinct()
     else:

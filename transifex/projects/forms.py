@@ -131,7 +131,7 @@ class ProjectAccessControlForm(forms.ModelForm):
 class ReleaseForm(forms.ModelForm):
 
     resources = AutoCompleteSelectMultipleField('resources', required=True,
-        help_text=_('Search for a component'))
+        help_text=_('Search for a resource'))
 
     class Meta:
         model = Release

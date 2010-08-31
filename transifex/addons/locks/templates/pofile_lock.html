@@ -2,8 +2,8 @@
 {% load permissions %}
 {% load locks_tags %}
 {% load txcommontags %}
-{% url component_file_unlock pofile.object.project.slug pofile.object.slug pofile.filename as url_unlock %}
-{% url component_file_lock pofile.object.project.slug pofile.object.slug pofile.filename as url_lock %}
+{% url resource_file_unlock pofile.object.project.slug pofile.object.slug pofile.filename as url_unlock %}
+{% url resource_file_lock pofile.object.project.slug pofile.object.slug pofile.filename as url_lock %}
 {% with pofile.locks.get.owner as owner %}
 {% with forloop.counter as pofile_id %}
 {% get_permission "project_perm.maintain" for request.user and pofile.object.project as "is_maintainer" %}

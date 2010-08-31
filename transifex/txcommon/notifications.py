@@ -68,14 +68,6 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
-            {
-                "label": "project_component_file_submitted",
-                "display": _("File Submitted"),
-                "description": _("when a component file of a project "
-                                 "is submitted"),
-                "default": 2,
-                "show_to_user": False,
-            },
 
             # Project releases
 

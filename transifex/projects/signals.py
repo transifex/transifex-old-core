@@ -18,19 +18,19 @@ pre_submit_translation = Signal(providing_args=['instance'])
 post_submit_translation = Signal(providing_args=['request', 'resource', 'language', 'modified'])
 
 # This is obsolete:
-sig_refresh_cache = Signal(providing_args=["component"])
+sig_refresh_cache = Signal(providing_args=["resource"])
 pre_refresh_cache = sig_refresh_cache
-post_refresh_cache = Signal(providing_args=["component"])
+post_refresh_cache = Signal(providing_args=["resource"])
 
 # This is obsolete:
-sig_clear_cache = Signal(providing_args=["component"])
+sig_clear_cache = Signal(providing_args=["resource"])
 pre_clear_cache = sig_clear_cache
-post_clear_cache = Signal(providing_args=["component"])
+post_clear_cache = Signal(providing_args=["resource"])
 
 # These are obsolete:
-sig_submit_file_post = Signal(providing_args=["component"])
+sig_submit_file_post = Signal(providing_args=["resource"])
 sig_submit_file = sig_submit_file_post
-sig_submit_file_pre  = Signal(providing_args=['filename', 'component', 'user',
+sig_submit_file_pre  = Signal(providing_args=['filename', 'resource', 'user',
     'stream', 'file_dict'])
 
 post_submit_file = sig_submit_file_post

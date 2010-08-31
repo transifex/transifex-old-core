@@ -21,7 +21,7 @@ from txcommon.log import logger, log_model
 class Release(models.Model):
 
     """
-    A release of a project, as in 'a set of specific components'.
+    A release of a project, as in 'a set of specific resources'.
     
     Represents the packaging and releasing of a software project (big or
     small) on a particular date, for which makes sense to track

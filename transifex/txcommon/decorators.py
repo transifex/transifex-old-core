@@ -113,12 +113,12 @@ def one_perm_required(perms, *model_lookups, **kwargs):
     
       @one_perm_required_or_403(pr_set_stats, 
           (Project, 'slug__contains', 'project_slug'))
-      def component_set_stats(request, project_slug, component_slug):
+      def set_stats(request, project_slug, resource_slug):
           bla bla bla
         
     In the example above the decorator checks for the `maintain` permission
     for a Project object, taking the project_slug from the view 
-    `component_set_stats`. If the user IS NOT a maintainer of that project, the
+    `set_stats`. If the user IS NOT a maintainer of that project, the
     second and general permission is checked.
     
     If at least one of the permissions checks in the list returns True, the 

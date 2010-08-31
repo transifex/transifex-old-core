@@ -99,10 +99,7 @@ def project_toggle_watch(request, project_slug):
     url = reverse('project_toggle_watch', args=(project_slug,))
 
     project_signals = ['project_changed',
-                       'project_deleted',
-                       'project_component_added',
-                       'project_component_changed',
-                       'project_component_deleted']
+                       'project_deleted',]
     try:
         result = {
             'style': 'watch_add',

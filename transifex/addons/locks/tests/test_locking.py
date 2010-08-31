@@ -47,11 +47,11 @@ class TestLocking(BaseTestCase):
         # Generate URLs
         url_args = [self.pofile.object.project.slug,
             self.pofile.object.slug, self.pofile.filename]
-        self.url_lock = reverse('component_file_lock', args=url_args)
-        self.url_unlock = reverse('component_file_unlock', args=url_args)
-        self.url_component = reverse('component_detail', args=url_args[:2])
-        self.url_submit = reverse('component_submit_file', args=url_args)
-        self.url_start_lotte = reverse('component_edit_file', args=url_args)
+        self.url_lock = reverse('resource_file_lock', args=url_args)
+        self.url_unlock = reverse('resource_file_unlock', args=url_args)
+        self.url_resource = reverse('resource_detail', args=url_args[:2])
+        self.url_submit = reverse('resource_submit_file', args=url_args)
+        self.url_start_lotte = reverse('resource_edit_file', args=url_args)
 
         # Sanity checks
         self.assertEqual( POFileLock.objects.all().count(), 0)
@@ -68,11 +68,11 @@ class TestLocking(BaseTestCase):
 
     def test_submission(self):
         def get_file_handle(pof):
-            return open(self.component.trans.tm.get_file_path(pof.filename))
+            return open(self.resource.trans.tm.get_file_path(pof.filename))
 
         # Enable submission        
-        self.component.allows_submission = True
-        self.component.save()
+        self.resource.allows_submission = True
+        self.resource.save()
 
         # Try to submit file as translator: should succeed
         resp = self.client['team_member'].post(self.url_submit, {'submitted_file':
@@ -147,7 +147,7 @@ class TestLocking(BaseTestCase):
                     logger.debug("Trying to lock as: %s (Should succeed) ..." % locker_nick)
                     self.assertEqual( resp.status_code, 200 )
                     url, code = resp.redirect_chain[0]
-                    self.assertTrue( self.url_component in url )
+                    self.assertTrue( self.url_resource in url )
                     self.assertEqual( code, 302 )
                     self.assertEqual( POFileLock.objects.valid().count(), 1)
                     lock = POFileLock.objects.valid().get()
@@ -245,5 +245,5 @@ class TestLocking(BaseTestCase):
         management.call_command('cron', interval='daily')
         self.assertEqual(POFileLock.objects.all().count(), 0)
 
-        self.pofiles = POFile.objects.filter(component = self.component)
+        self.pofiles = POFile.objects.filter(resource = self.resource)
         pofile = self.pofiles[0]

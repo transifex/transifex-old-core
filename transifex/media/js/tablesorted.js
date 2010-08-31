@@ -48,6 +48,7 @@ $(document).ready(function(){
         }
     });
 
+    // FIXME: If this is not used, remove it.
     // ordering for Component stats table
         // Just enable sorting for the stats column if there are stats
         if (typeof calcstats == "undefined" || calcstats == true){
@@ -72,6 +73,7 @@ $(document).ready(function(){
             }
         });
 
+    // FIXME: If this is not used, remove it.
     // ordering for Component Multifile Language stats table
     $("#stats_comp_lang").tablesorter({
         widgets: ['zebra'],
