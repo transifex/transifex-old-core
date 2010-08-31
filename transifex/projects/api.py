@@ -310,10 +310,10 @@ class ProjectResourceHandler(BaseHandler):
                 try:
                     fhandler.parse_file()
                     strings_added, strings_updated = fhandler.save2db()
-                except:
+                except Exception, e:
                     #request.user.message_set.create(message=_("Error importing"
                     #   " file."))
-                    return BAD_REQUEST("File type unsupported")
+                    return BAD_REQUEST("Error importing file: %s" % e)
                 else:
                     messages = []
                     if strings_added > 0:

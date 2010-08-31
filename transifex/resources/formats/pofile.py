@@ -19,16 +19,19 @@ from txcommon.log import logger
 from teams.models import Team
 
 from resources.formats.decorators import *
+from suggestions.models import Suggestion
 
 #class ResXmlParseError(ParseError):
     #pass
 
 #class ResXmlCompileError(CompileError):
     #pass
+
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Storage = get_model('storage', 'StorageFile')
+
 
 
 def get_po_contents(pofile):
@@ -276,6 +279,7 @@ class POHandler(Handler):
         Parse a PO file and create a stringset with all PO entries in the file.
         """
         stringset = StringSet()
+        suggestions = StringSet()
         # For .pot files the msgid entry must be used as the translation for
         # the related language.
         if self.filename.endswith(".pot") or is_source:
@@ -293,11 +297,18 @@ class POHandler(Handler):
         for entry in pofile:
             pluralized = False
             same_nplural = True
-            
-            # treat fuzzy translation as nonexistent
-            if "fuzzy" in  entry.flags:
-                entry.msgstr = ""
 
+            # treat fuzzy translation as nonexistent
+            if "fuzzy" in entry.flags:
+                if not ispot and not entry.msgid_plural:
+                    suggestion = GenericTranslation(entry.msgid, entry.msgstr,
+                        context=entry.msgctxt,
+                        occurrences=', '.join(
+                            [':'.join([i for i in t ]) for t in
+                            entry.occurrences]))
+                    suggestions.strings.append(suggestion)
+
+                continue
 
             if entry.msgid_plural:
                 pluralized = True
@@ -366,7 +377,33 @@ class POHandler(Handler):
             self.template =  get_po_contents(pofile)
 
         self.stringset = stringset
+        self.suggestions = suggestions
         return pofile
+
+    def _post_save2db(self, *args, **kwargs):
+        """
+        Handle fuzzy strings for PO files after saving translations.
+        """
+
+
+        for j in self.suggestions.strings:
+            # Check SE existence
+            try:
+                se = SourceEntity.objects.get(
+                    string = j.source_entity,
+                    context = j.context or "None",
+                    resource = self.resource
+                )
+            except SourceEntity.DoesNotExist:
+                continue
+            
+            tr, created = Suggestion.objects.get_or_create(
+                string = j.translation,
+                source_entity = se,
+                language = self.language
+            )
+
+    
 
     @need_compiled
     def save2file(self, filename):

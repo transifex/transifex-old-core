@@ -307,9 +307,11 @@ class Handler(object):
                 self.resource.save()
                 for se in original_sources:
                     se.delete()
-            transaction.commit()
+
 
             self._post_save2db(is_source , user, overwrite_translations)
+            transaction.commit()
+            
             return strings_added, strings_updated
 
     @need_compiled
