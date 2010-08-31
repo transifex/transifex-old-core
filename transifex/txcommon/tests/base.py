@@ -118,7 +118,8 @@ class BaseTestCase(TestCase):
 
         # Create a resources
         self.resource = Resource.objects.create(slug="resource1", name="Resource1",
-            project=self.project, source_language=self.language_en)
+            project=self.project, source_language=self.language_en,
+            i18n_type='PO')
         self.source_entity = SourceEntity.objects.create(string='String1',
             context='Context1', occurrences='Occurrences1', resource=self.resource)
 
