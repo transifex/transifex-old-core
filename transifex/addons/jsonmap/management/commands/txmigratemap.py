@@ -99,12 +99,11 @@ class Command(BaseCommand):
                             language = Language.objects.by_code_or_alias_or_none(code)
                             if language:
                                 translation_file = os.path.join(path, f['file'])
-                                fhandler = POHandler(filename=translation_file)
-                                fhandler.set_language(language)
-                                fhandler.bind_resource(resource)
-                                fhandler.contents_check(fhandler.filename)
-
                                 try:
+                                    fhandler = POHandler(filename=translation_file)
+                                    fhandler.set_language(language)
+                                    fhandler.bind_resource(resource)
+                                    fhandler.contents_check(fhandler.filename)
                                     fhandler.parse_file()
                                     strings_added, strings_updated = fhandler.save2db()
                                 except Exception, e:
