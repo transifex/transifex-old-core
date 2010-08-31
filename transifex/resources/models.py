@@ -171,11 +171,11 @@ class Resource(models.Model):
         if language:
             if not isinstance(language, Language):
                 language = Language.objects.by_code_or_alias(language)
-            t = Translation.objects.filter(resource=self,
-                    language=language, rule=5).order_by('-last_update')
+            t = Translation.objects.select_related('user').filter(
+                resource=self, language=language).order_by('-last_update')
         else:
-            t = Translation.objects.filter(resource=self,
-                                           rule=5).order_by('-last_update')
+            t = Translation.objects.select_related('user').filter(
+                resource=self).order_by('-last_update')
         if t:
             return t[0]
         return None

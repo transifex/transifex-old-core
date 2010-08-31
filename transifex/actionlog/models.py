@@ -88,7 +88,7 @@ def _distinct_action_time(query):
     """
     pks = query.values('action_time').annotate(
         id=models.Max('id')).order_by().values_list('id', flat=True)
-    return LogEntry.objects.filter(pk__in=pks)
+    return LogEntry.objects.select_related('user').filter(pk__in=pks)
 
 
 class LogEntryManager(models.Manager):

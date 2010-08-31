@@ -41,6 +41,7 @@ def project_timeline(request, project_slug, *args, **kwargs):
     f = LogEntryFilter(request.GET, queryset=log_entries)
     # The template needs both these variables. The first is used in filtering,
     # the second is used for pagination and sorting.
-    kwargs.setdefault('extra_context', {}).update({'f': f,
-                                                   'actionlog': f.qs})
+    kwargs.setdefault('extra_context', {}).update(
+        {'f': f,
+         'actionlog': f.qs.select_related('action_type', 'user')})
     return list_detail.object_detail(request, slug=project_slug, *args, **kwargs)
