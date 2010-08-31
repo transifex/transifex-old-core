@@ -12,9 +12,7 @@ from django.db.models import permalink
 from django.utils.html import escape
 
 from languages.models import Language
-
-Translation = get_model('resources', 'Translation')
-SourceEntity = get_model('resources', 'SourceEntity')
+from resources.models import Translation, SourceEntity
 
 from txcommon.log import logger, log_model
 
@@ -122,7 +120,7 @@ class Release(models.Model):
         this Release.
         """
         language_ids = Translation.objects.filter(
-            resource__releases=self).values_list(
+            resource__in=self.resources.all).values_list(
             'language', flat=True).distinct()
         return Language.objects.filter(id__in=language_ids).distinct()
 
