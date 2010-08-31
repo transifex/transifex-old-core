@@ -167,15 +167,3 @@ class Language(models.Model):
             rules.append(4)
         rules.append(5)
         return rules
-
-
-def suite():
-    """Define this application's testing suite for Django's test runner."""
-     
-    import unittest
-    import doctest
-    from languages.tests import test_models 
-
-    s = unittest.TestSuite()
-    s.addTest(doctest.DocTestSuite(test_models))
-    return s
