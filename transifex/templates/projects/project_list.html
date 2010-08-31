@@ -17,13 +17,7 @@
 {% block content_title %}
 {% include "helptext/project_list.html" %}
 <h2 class="pagetitle">
-    {% trans "Projects" %}
-    <sup class="entry_metalink">
-        {% if helptext_ext %}
-            {% print_helptext "Projects" "yes" %}
-        {% endif %}
-    </sup>
-    {% trans "on Transifex" %}
+    {% trans "Projects on Transifex" %}
     {% render_metacount project_list _("projects") %}
 </h2>
 {% endblock %}
