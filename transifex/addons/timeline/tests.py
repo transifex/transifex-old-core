@@ -11,13 +11,12 @@ class TestTimeline(BaseTestCase):
 
         # Sanity checks
         self.assertTrue( Project.objects.count() >= 1, msg = "Base test case didn't create any projects" )
-        project = Project.objects.all()[0]
 
         # Generate timeline URLs
         self.url_user_timeline = reverse("user_timeline")
         self.url_user_profile = reverse("profile_overview")
-        self.url_project_timeline = reverse('project_timeline', args=[project.slug])
-        self.url_project_detail = reverse('project_detail', args=[project.slug])
+        self.url_project_timeline = reverse('project_timeline', args=[self.project.slug])
+        self.url_project_detail = reverse('project_detail', args=[self.project.slug])
 
 
     def test_anon(self):

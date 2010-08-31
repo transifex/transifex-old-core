@@ -14,7 +14,6 @@ from resources.models import SourceEntity
 
 from authority.views import permission_denied
 
-# FIXME: Permission checking
 # Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
 def entity_suggestions_snippet(request, entity_id, lang_code):
