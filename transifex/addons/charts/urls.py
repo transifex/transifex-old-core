@@ -14,7 +14,7 @@ urlpatterns = patterns('',
         regex = '^projects/p/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/chart/inc_js/$',
         view = chart_resource_html_js,
         name = 'chart_resource_js',
-        kwargs = {"template_name": "resource_chart.js"}),
+        kwargs = {"template_name": "resource_chart_js.html"}),
 
     # Serve HTML code which loads JS data
     url(
