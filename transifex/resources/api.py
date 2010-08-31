@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from uuid import uuid4
 from django.db import transaction
+from django.conf import settings
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.utils.encoding import smart_unicode
 
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.utils import rc
@@ -17,7 +20,7 @@ from storage.models import StorageFile
 
 from resources.decorators import method_decorator
 from resources.models import Resource, SourceEntity, Translation
-
+from resources.views import _compile_translation_template
 
 class ResourceHandler(BaseHandler):
     """
@@ -224,6 +227,36 @@ class AnonymousStringHandler(AnonymousBaseHandler):
         '''
         return _create_stringset(request, project_slug, resource_slug, target_lang_code)
 
+
+class FileHandler(BaseHandler):
+    allowed_methods = ('GET')
+
+    
+    @method_decorator(one_perm_required_or_403(pr_project_private_perm,
+        (Project, 'slug__exact', 'project_slug')))
+    def read(self, request, project_slug, resource_slug=None, language_code=None):
+        """
+        
+        """
+        try:
+            resource = Resource.objects.get( project__slug = project_slug, slug = resource_slug)
+            language = Language.objects.get( code=language_code)
+        except (Resource.DoesNotExist, Language.DoesNotExist), e:
+            BAD_REQUEST("%s" % e )
+
+        try:
+            template = _compile_translation_template(resource, language)
+        except Exception, e:
+            BAD_REQUEST("Error compiling the translation file: %s" %e )
+
+        i18n_method = settings.I18N_METHODS[resource.i18n_type]
+        response = HttpResponse(template,
+        mimetype=i18n_method['mimetype'])
+        response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
+        smart_unicode(resource.name), language.code,
+        i18n_method['file-extensions'].split(', ')[0]))
+
+        return response
 
 class StringHandler(BaseHandler):
     allowed_methods = ('GET', 'POST','PUT')

@@ -9,7 +9,7 @@ from api.authentication import CustomHttpBasicAuthentication
 
 from languages.api import LanguageHandler
 from projects.api import ProjectHandler, ProjectResourceHandler
-from resources.api import (ResourceHandler, StringHandler)
+from resources.api import (ResourceHandler, StringHandler, FileHandler)
 from storage.api import StorageHandler
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
@@ -18,6 +18,7 @@ resource_handler = Resource(ResourceHandler, authentication=auth)
 storage_handler = Resource(StorageHandler, authentication=auth)
 project_handler = Resource(ProjectHandler, authentication=auth)
 projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
+translationfile_handler = Resource(FileHandler, authentication=auth)
 string_handler = Resource(StringHandler, authentication=auth)
 #projectstring_handler = Resource(ProjectStringHandler)
 
@@ -65,6 +66,10 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w]+)/$',
         projectresource_handler,
         name='api_resource_storage'
+    ), url(
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w]+)/file/$',
+        translationfile_handler,
+        name='api_translation_file'
 #    ), url(
 #        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<target_lang_code>[-\w]+)/(?P<source_lang_code>[-\w]+)/$',
 #        strings_handler,

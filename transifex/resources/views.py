@@ -304,6 +304,17 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
+def _compile_translation_template(resource=None, language=None):
+    """
+    Given a resource and a language we create the translation file
+    """
+    parser = get_i18n_handler_from_type(resource.i18n_type)
+    handler = parser(resource = resource, language = language)
+    handler.compile()
+
+    return handler.compiled_template
+
+
 # Restrict access only for private projects 
 # DONT allow anonymous access
 @login_required
@@ -319,10 +330,9 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         slug = resource_slug)
 
     language = get_object_or_404(Language, code=lang_code)
-    parser = get_i18n_handler_from_type(resource.i18n_type)
-    handler = parser(resource = resource, language = language)
+
     try:
-        handler.compile()
+        template = _compile_translation_template(resource, language)
     except:
         request.user.message_set.create(message=_("Error compiling translation file."))
         return HttpResponseRedirect(reverse('resource_detail',
