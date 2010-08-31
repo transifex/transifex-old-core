@@ -22,7 +22,7 @@ from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from projects.signals import post_resource_save, post_resource_delete
 from teams.models import Team
-from txcommon.decorators import one_perm_required_or_403, one_perm_required
+from txcommon.decorators import one_perm_required_or_403
 
 from resources.forms import ResourceForm
 from resources.models import (Translation, Resource, SourceEntity,
@@ -306,8 +306,9 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 
 # Restrict access only for private projects 
 # DONT allow anonymous access
-@one_perm_required(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'), redirect_to_login=True)
+@login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
 def get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     View to export all translations of a resource for the requested language

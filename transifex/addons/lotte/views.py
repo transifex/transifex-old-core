@@ -536,12 +536,17 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     return HttpResponse(json_dict, mimetype='application/json')
 
 
-
-# FIXME: Restrict access only for private projects since this is used to fetch stuff
+# Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
 def translation_details_snippet(request, entity_id, lang_code):
     """Return a template snippet with entity & translation details."""
+
     source_entity = get_object_or_404(SourceEntity, pk=entity_id)
+
+    check = ProjectPermission(request.user)
+    if not check.private(source_entity.resource.project):
+        return permission_denied(request)
+
     language = get_object_or_404(Language, code=lang_code)
     translation = source_entity.get_translation(language.code)
     
