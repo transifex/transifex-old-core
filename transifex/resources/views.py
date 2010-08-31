@@ -19,9 +19,10 @@ from resources.formats import get_i18n_handler_from_type
 from languages.models import Language
 from projects.models import Project
 from projects.permissions import *
+from projects.permissions.project import ProjectPermission
 from projects.signals import post_resource_save, post_resource_delete
 from teams.models import Team
-from txcommon.decorators import one_perm_required_or_403
+from txcommon.decorators import one_perm_required_or_403, one_perm_required
 
 from resources.forms import ResourceForm
 from resources.models import (Translation, Resource, SourceEntity,
@@ -213,7 +214,12 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     context_instance = RequestContext(request))
 
 
-#FIXME: Permissions
+# Restrict access only to : (The checks are done in the view's body)
+# 1)those belonging to the specific language team (coordinators or members)
+# 2)project maintainers
+# 3)global submitters (perms given through access control tab)
+# 4)superusers
+@login_required
 def clone_language(request, project_slug=None, resource_slug=None,
             source_lang_code=None, target_lang_code=None):
     '''
@@ -223,10 +229,16 @@ def clone_language(request, project_slug=None, resource_slug=None,
     The user is redirected to the online editor for the target language.
     '''
 
-    resource = Resource.objects.get(
-        slug = resource_slug,
-        project__slug = project_slug
-    )
+    # Permissions handling
+    # Project should always be available
+    project = get_object_or_404(Project, slug=project_slug)
+    team = Team.objects.get_or_none(project, target_lang_code)
+    check = ProjectPermission(request.user)
+    if not check.submit_file(team or project):
+        return permission_denied(request)
+
+    resource = get_object_or_404(Resource, slug = resource_slug,
+                                 project__slug = project_slug)
 
     source_lang = get_object_or_404(Language, code=source_lang_code)
     target_lang = get_object_or_404(Language, code=target_lang_code)
@@ -292,7 +304,10 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-#FIXME: Permissions required
+# Restrict access only for private projects 
+# DONT allow anonymous access
+@one_perm_required(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), redirect_to_login=True)
 def get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     View to export all translations of a resource for the requested language
@@ -321,7 +336,12 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
 
     return response
 
-#FIXME: Permissions required
+# Restrict access only to : (The checks are done in the view's body)
+# 1)those belonging to the specific language team (coordinators or members)
+# 2)project maintainers
+# 3)global submitters (perms given through access control tab)
+# 4)superusers
+@login_required
 def lock_and_get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     Lock and download the translations file.
@@ -329,6 +349,15 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
     View to lock a resource for the requested language and as a second step to 
     download (export+download) the translations in a formatted file.
     """
+
+    # Permissions handling
+    # Project should always be available
+    project = get_object_or_404(Project, slug=project_slug)
+    team = Team.objects.get_or_none(project, lang_code)
+    check = ProjectPermission(request.user)
+    if not check.submit_file(team or project):
+        return permission_denied(request)
+
     resource = get_object_or_404(Resource, project__slug = project_slug,
         slug = resource_slug)
     language = get_object_or_404(Language, code=lang_code)
