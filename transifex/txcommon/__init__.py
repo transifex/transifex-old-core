@@ -1,6 +1,6 @@
 import os
 
-version_info = (1, 0, 0, 'devel')
+version_info = (1, 0, 0, 'alpha')
 
 _verpart = ''
 if version_info[3] != 'final':
