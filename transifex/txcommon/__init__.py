@@ -1,5 +1,4 @@
 import os
-from mercurial import hg, ui
 
 version_info = (1, 0, 0, 'devel')
 
@@ -10,6 +9,7 @@ if version_info[3] != 'final':
 version = '.'.join(str(v) for v in version_info[:3]) + _verpart
 
 try:
+    from mercurial import hg, ui
     # Take the revision of the updated/working none/changeset
     revision = 'r%s' % hg.repository(ui.ui(),
         __file__.split('/transifex/txcommon')[0])[None].parents()[0].rev()
