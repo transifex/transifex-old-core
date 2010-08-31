@@ -142,3 +142,19 @@ class CoreViewsTest(BaseTestCase):
         self.assertEqual(Translation.objects.filter(resource=self.resource,
             language = self.language).count(), 0)
 
+class ReleasesViewsTest(BaseTestCase):
+    
+    def setUp(self, *args, **kwargs):
+        super(ReleasesViewsTest, self).setUp(*args, **kwargs)
+        self.release = self.project.releases.create(slug='release1', name='Release1')
+        self.release.resources.add(self.resource)
+
+    def test_release_detail_page(self):
+        url = reverse('release_detail',
+            args=[self.project.slug, self.release.slug])
+        resp = self.client['registered'].get(url)
+        self.assertContains(resp, "This release has 1 resourses", status_code=200)
+
+        # FIXME: Check if the correct language appears in the table.
+        # self.assertContains(resp, "Portuguese", status_code=200)
+        raise NotImplementedError('Test if the table has the correct languages.')
