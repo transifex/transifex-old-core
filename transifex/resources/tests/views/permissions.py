@@ -160,7 +160,7 @@ class PermissionsTest(BaseTestCase):
         # Check download file perms
         resp = self.client['registered'].get(reverse('download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code]))
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
 
 
     def test_team_member(self):
@@ -246,7 +246,7 @@ class PermissionsTest(BaseTestCase):
         # Check download file perms
         resp = self.client['team_member'].get(reverse('download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code]))
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
 
 
     def test_maintainer(self):
@@ -315,4 +315,4 @@ class PermissionsTest(BaseTestCase):
         # Check download file perms
         resp = self.client['maintainer'].get(reverse('download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code]))
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
