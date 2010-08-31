@@ -105,10 +105,9 @@ class Release(models.Model):
             if isinstance(language, str):
                 language = Language.objects.by_code_or_alias(language)
             t = Translation.objects.filter(resource__releases=self,
-                language=language, rule=5).order_by('-last_update')
+                language=language).order_by('-last_update')
         else:
-            t = Translation.objects.filter(resource__releases=self,
-                rule=5).order_by('-last_update')
+            t = Translation.objects.filter(resource__releases=self).order_by('-last_update')
         if t:
             return t[0]
         return None
