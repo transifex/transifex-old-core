@@ -246,7 +246,7 @@ class LinguistHandler(Handler):
 
 
             if is_source:
-                self.template = doc.toxml()
+                self.template = str(doc.toxml())
 
 
             self.stringset=stringset

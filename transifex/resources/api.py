@@ -22,6 +22,8 @@ from resources.decorators import method_decorator
 from resources.models import Resource, SourceEntity, Translation
 from resources.views import _compile_translation_template
 
+from transifex.api.utils import BAD_REQUEST
+
 class ResourceHandler(BaseHandler):
     """
     Resource Handler for CRUD operations.
@@ -250,8 +252,7 @@ class FileHandler(BaseHandler):
             BAD_REQUEST("Error compiling the translation file: %s" %e )
 
         i18n_method = settings.I18N_METHODS[resource.i18n_type]
-        response = HttpResponse(template,
-        mimetype=i18n_method['mimetype'])
+        response = HttpResponse(template, mimetype=i18n_method['mimetype'])
         response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
         smart_unicode(resource.name), language.code,
         i18n_method['file-extensions'].split(', ')[0]))

@@ -10,6 +10,7 @@ from django.utils.text import compress_string
 from django.utils.translation import ugettext_lazy as _
 from south.modelsinspector import add_introspection_rules
 
+import cPickle as pickle
 
 def uncompress_string(s):
     """Helper function to reverse django.utils.text.compress_string."""
@@ -81,26 +82,23 @@ class CompressedTextField(models.TextField):
     Transparently compress data before hitting the db and uncompress after
     fetching.
     """
+    __metaclass__ = models.SubfieldBase
 
-    def get_db_prep_save(self, value):
+    def get_db_prep_value(self, value):
         if value is not None:
-            value = base64.encodestring(compress_string(value))
-        return models.TextField.get_db_prep_save(self, value)
-
-    def _get_val_from_obj(self, obj):
-        if obj.id:
-            # We need to do the decoding because blog/bytea in the db screws
-            # the encoding
-            return uncompress_string(
-                base64.decodestring(getattr(obj,self.attname)))
-        else:
-            return self.get_default()
+            value = base64.encodestring(compress_string(pickle.dumps(value)))
+        return value
 
     def to_python(self, value):
-        if value is not None:
-            value = uncompress_string(
-                base64.decodestring(getattr(obj,self.attname)))
-        return models.TextField.to_python(self, value)
+        if value is None: return
+        if isinstance(value, str): return value
+        try:
+            value = pickle.loads(uncompress_string(base64.decodestring(value)))
+        except:
+            # if we can't unpickle it it's not pickled. probably we got a
+            # normal string. pass
+            pass
+        return value
 
     def post_init(self, instance=None, **kwargs):
         value = self._get_val_from_obj(instance)
@@ -110,6 +108,11 @@ class CompressedTextField(models.TextField):
     def contribute_to_class(self, cls, name):
         super(CompressedTextField, self).contribute_to_class(cls, name)
         models.signals.post_init.connect(self.post_init, sender=cls)
+
+ 
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return value
 
     def get_internal_type(self):
         return "TextField"
