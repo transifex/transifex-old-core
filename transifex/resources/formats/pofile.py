@@ -150,6 +150,7 @@ class POHandler(Handler):
         file = open("/tmp/%s.tmp" % filename, 'w')
         file.write(template)
         file.flush()
+        file.close()
         po = polib.pofile("/tmp/%s.tmp" % filename)
         os.unlink("/tmp/%s.tmp" % filename)
 

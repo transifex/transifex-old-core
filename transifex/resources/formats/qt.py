@@ -99,8 +99,9 @@ class LinguistHandler(Handler):
         """
         Parses QT file and exports all entries as GenericTranslations.
         """
-        buf = fh = open(self.filename, "ru").read()
-
+        fh = open(self.filename, "ru")
+        buf = fh.read()
+        fh.close()
 
         def clj(s, w):
             return s[:w].replace("\n", " ").ljust(w)
