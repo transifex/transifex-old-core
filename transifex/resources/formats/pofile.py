@@ -46,6 +46,7 @@ def get_po_contents(pofile):
     file = open("/tmp/%s.tmp" % filename, 'r')
     file.seek(0)
     content = file.read()
+    file.close()
     os.unlink("/tmp/%s.tmp" % filename)
 
     return content
