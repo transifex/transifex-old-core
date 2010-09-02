@@ -123,7 +123,6 @@ class Command(BaseCommand):
                         'source_file': source_file.filename,
                         'source_lang': "en", 
                         'resource_slug': r_slug,
-                        '_repo_path': c.unit.browser.path,
                         '_allows_submission': c.allows_submission,
                     })
 
