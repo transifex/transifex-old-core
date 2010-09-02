@@ -339,7 +339,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
             args=[resource.project.slug, resource.slug]),)
 
     i18n_method = settings.I18N_METHODS[resource.i18n_type]
-    response = HttpResponse(handler.compiled_template,
+    response = HttpResponse(template,
         mimetype=i18n_method['mimetype'])
     response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
         smart_unicode(resource.name), language.code,

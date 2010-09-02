@@ -244,12 +244,12 @@ class FileHandler(BaseHandler):
             resource = Resource.objects.get( project__slug = project_slug, slug = resource_slug)
             language = Language.objects.get( code=language_code)
         except (Resource.DoesNotExist, Language.DoesNotExist), e:
-            BAD_REQUEST("%s" % e )
+            return BAD_REQUEST("%s" % e )
 
         try:
             template = _compile_translation_template(resource, language)
         except Exception, e:
-            BAD_REQUEST("Error compiling the translation file: %s" %e )
+            return BAD_REQUEST("Error compiling the translation file: %s" %e )
 
         i18n_method = settings.I18N_METHODS[resource.i18n_type]
         response = HttpResponse(template, mimetype=i18n_method['mimetype'])
