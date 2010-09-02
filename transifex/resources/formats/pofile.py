@@ -182,9 +182,9 @@ class POHandler(Handler):
                     source_entity__string = entry.msgid)
                 plural_keys = {}
                 # last rule excluding other(5)
-                last_rule = language.get_pluralrules_numbers()[-2]
+                lang_rules = language.get_pluralrules_numbers()
                 # Initialize all plural rules up to the last
-                for p in range(0,last_rule):
+                for p,n in enumerate(lang_rules):
                     plural_keys[p] = ""
                 for n,p in enumerate(plurals):
                     plural_keys[n] =  p.string
