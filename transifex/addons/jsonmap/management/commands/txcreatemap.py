@@ -124,6 +124,7 @@ class Command(BaseCommand):
                         'source_lang': "en", 
                         'resource_slug': r_slug,
                         '_repo_path': c.unit.browser.path,
+                        '_allows_submission': c.allows_submission,
                     })
 
                     # Temp var to associate translation files with the 
