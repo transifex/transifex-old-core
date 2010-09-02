@@ -65,3 +65,6 @@ pr_resource_add_change=(
 pr_resource_delete=(
     ("granular", "project_perm.maintain"),
     ("general",  "resources.delete_resource"),)
+
+pr_resource_priority=(
+    ("granular", "project_perm.maintain"),)
