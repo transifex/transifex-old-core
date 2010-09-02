@@ -113,7 +113,7 @@ class Command(BaseCommand):
                                     print "Could not import file '%s': %s" % \
                                         (translation_file, str(e))
                 else:
-                    logger.debug("Mapping '%s' does have canched files at "
-                        "%s." % (jsonmap, path))
+                    logger.debug("Mapping '%s' does not have cached files "
+                        "under %s." % (jsonmap, path))
 
 
