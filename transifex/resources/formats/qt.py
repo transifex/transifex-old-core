@@ -74,7 +74,7 @@ class LinguistHandler(Handler):
                 translation.childNodes  = []
 
                 plurals = Translation.objects.filter(
-                    resource = self.resource,
+                    source_entity__resource = self.resource,
                     language = language,
                     source_entity__string = source.firstChild.toxml())
                 plural_keys = {}

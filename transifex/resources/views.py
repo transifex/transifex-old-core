@@ -168,7 +168,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     team = Team.objects.get_or_none(project, target_lang_code)
 
     disabled_languages_ids = Translation.objects.filter(
-        resource = resource).values_list(
+        source_entity__resource = resource).values_list(
             'language', flat=True).distinct()
     languages = Language.objects.filter()
 
@@ -245,7 +245,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
 
     # get the strings which will be cloned
     strings = Translation.objects.filter(
-                resource = resource,
+                source_entity__resource = resource,
                 language = source_lang)
 
     # If the language we want to create, has the same plural rules with the 
@@ -256,7 +256,6 @@ def clone_language(request, project_slug=None, resource_slug=None,
     # clone them in new translation
     for s in strings:
         Translation.objects.get_or_create(
-                    resource = resource,
                     language = target_lang,
                     string = s.string,
                     source_entity = s.source_entity,
@@ -283,7 +282,8 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
         is_source_language = True
 
     if request.method == 'POST':
-        Translation.objects.filter(resource=resource, language=language).delete()
+        Translation.objects.filter(source_entity__resource=resource, 
+            language=language).delete()
 
         request.user.message_set.create(
             message=_("The translations of language %(lang)s for the resource "

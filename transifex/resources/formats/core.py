@@ -192,7 +192,7 @@ class Handler(object):
             # Find translation for string
             try:
                 trans = Translation.objects.get(
-                    resource = self.resource,
+                    source_entity__resource = self.resource,
                     source_entity=string,
                     language = language,
                     rule=5)
@@ -277,7 +277,6 @@ class Handler(object):
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = self.language,
-                    resource = self.resource,
                     rule = j.rule,
                     defaults = {
                         'string' : j.translation,

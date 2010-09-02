@@ -86,7 +86,7 @@ class QTFile(BaseTestCase):
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 43)
 
         # Check that all source translations are there
-        self.assertEqual(len( Translation.objects.filter(resource=r,
+        self.assertEqual(len( Translation.objects.filter(source_entity__resource=r,
             language=l)), 44)
 
         # Import and save the finish translation
@@ -101,7 +101,7 @@ class QTFile(BaseTestCase):
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 43)
 
         # Check that all translations are there
-        self.assertEqual( len(Translation.objects.filter(resource=r,
+        self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 44)
 
         r.delete()

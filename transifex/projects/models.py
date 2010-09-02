@@ -256,7 +256,7 @@ class Project(models.Model):
         # I put it here due to circular dependency on module
         resources = self.resources.all()
         languages = Translation.objects.filter(
-            resource__in=resources).values_list(
+            rsource_entity__resource__in=resources).values_list(
             'language', flat=True).distinct()
         # The distinct() below is not important ... I put it just to be sure.
         return Language.objects.filter(id__in=languages).distinct()
@@ -271,8 +271,8 @@ class Project(models.Model):
         target_language = Language.objects.by_code_or_alias(language)
         return SourceEntity.objects.filter(resource__in=self.resources.all(),
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resources.all(), rule=5).values_list(
-                    'source_entity', flat=True))
+                source_entity__resource__in=self.resources.all(),
+                rule=5).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
         """
@@ -286,8 +286,8 @@ class Project(models.Model):
         return SourceEntity.objects.filter(
             resource__in=self.resources.all()).exclude(
             id__in=Translation.objects.filter(language=target_language,
-                resource__in=self.resources.all(), rule=5).values_list(
-                    'source_entity', flat=True))
+                source_entity__resource__in=self.resources.all(), 
+                rule=5).values_list('source_entity', flat=True))
 
     def num_translated(self, language):
         """

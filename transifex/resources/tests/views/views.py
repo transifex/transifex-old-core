@@ -79,7 +79,7 @@ class CoreViewsTest(BaseTestCase):
         """
         # Create primary language translation. This is needed to push
         # additional translations
-        source_trans = Translation(resource=self.resource,
+        source_trans = Translation(
             source_entity=self.source_entity,
             language = self.language,
             string="foobar")
@@ -95,7 +95,7 @@ class CoreViewsTest(BaseTestCase):
             json.dumps({'strings':[{'id':self.source_entity.id,'translations':{'other':trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(Translation.objects.filter(resource=self.resource,
+        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language__code = trans_lang, string=trans).count(), 1)
 
         # Update existing translation
@@ -105,8 +105,8 @@ class CoreViewsTest(BaseTestCase):
                 'translations':{'other':new_trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(Translation.objects.filter(resource=self.resource,
-            language__code = trans_lang, string=new_trans).count(), 1)
+        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
+            language__code=trans_lang, string=new_trans).count(), 1)
 
         source_trans.delete()
 
@@ -123,10 +123,10 @@ class CoreViewsTest(BaseTestCase):
                 'translations': { 'other': trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(Translation.objects.filter(resource=self.resource,
+        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language = self.language, string =trans).count(), 0)
 
-        self.assertTrue(Translation.objects.filter(resource=self.resource,
+        self.assertTrue(Translation.objects.filter(source_entity__resource=self.resource,
             language=self.language) >1)
 
         # Delete Translations
@@ -139,7 +139,7 @@ class CoreViewsTest(BaseTestCase):
         resp = self.client['maintainer'].post(delete_url, follow=True)
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'resources/resource.html')
-        self.assertEqual(Translation.objects.filter(resource=self.resource,
+        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language = self.language).count(), 0)
 
 class ReleasesViewsTest(BaseTestCase):

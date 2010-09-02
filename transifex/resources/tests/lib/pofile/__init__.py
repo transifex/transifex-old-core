@@ -109,7 +109,7 @@ class POFile(BaseTestCase):
 
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
 
-        self.assertEqual( len(Translation.objects.filter(resource=r,
+        self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 4)
 
         handler.bind_file('%s/ar.po' % os.path.split(__file__)[0])
@@ -121,7 +121,7 @@ class POFile(BaseTestCase):
 
         self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
 
-        self.assertEqual( len(Translation.objects.filter(resource=r,
+        self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 8)
 
         r.delete()

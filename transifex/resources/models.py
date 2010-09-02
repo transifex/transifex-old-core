@@ -113,7 +113,7 @@ class Resource(models.Model):
     @property
     def source_strings(self):
         """Return the source language translations, including plurals."""
-        return Translation.objects.filter(resource=self,
+        return Translation.objects.filter(source_entity__resource=self,
                                            language=self.source_language)
 
     @property
@@ -172,10 +172,11 @@ class Resource(models.Model):
             if not isinstance(language, Language):
                 language = Language.objects.by_code_or_alias(language)
             t = Translation.objects.select_related('user').filter(
-                resource=self, language=language).order_by('-last_update')
+                source_entity__resource=self, 
+                language=language).order_by('-last_update')
         else:
             t = Translation.objects.select_related('user').filter(
-                resource=self).order_by('-last_update')
+                source_entity__resource=self).order_by('-last_update')
         if t:
             return t[0]
         return None
@@ -186,7 +187,8 @@ class Resource(models.Model):
         Return the languages with at least one Translation of a SourceEntity for
         this Resource.
         """
-        languages = Translation.objects.filter(resource=self).values_list(
+        languages = Translation.objects.filter(
+            source_entity__resource=self).values_list(
             'language', flat=True).distinct()
         return Language.objects.filter(id__in=languages).distinct()
 
@@ -201,7 +203,8 @@ class Resource(models.Model):
 
         return SourceEntity.objects.filter(resource=self,
             id__in=Translation.objects.filter(language=language,
-                resource=self, rule=5).values_list('source_entity', flat=True))
+                source_entity__resource=self, rule=5
+                ).values_list('source_entity', flat=True))
 
     def untranslated_strings(self, language):
         """
@@ -215,7 +218,8 @@ class Resource(models.Model):
 
         return SourceEntity.objects.filter(resource=self).exclude(
             id__in=Translation.objects.filter(language=language,
-                resource=self, rule=5).values_list('source_entity', flat=True))
+                source_entity__resource=self, rule=5
+                ).values_list('source_entity', flat=True))
 
     def num_translated(self, language):
         """
@@ -288,7 +292,6 @@ class Resource(models.Model):
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = target_language,
-                    resource = self,
                     rule = j.rule,
                     defaults = {
                         'string' : j.translation,
@@ -473,12 +476,6 @@ class Translation(models.Model):
         verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string belongs to."))
 
-    # Foreign Keys
-    # A source string must always belong to a resource
-    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False,
-        help_text=_("The translation resource which owns the source string."))
-
     user = models.ForeignKey(User,
         verbose_name=_('Committer'), blank=False, null=True,
         help_text=_("The user who committed the specific translation."))
@@ -490,7 +487,7 @@ class Translation(models.Model):
         return self.string
 
     class Meta:
-        unique_together = (('source_entity', 'string_hash', 'language', 'resource',
+        unique_together = (('source_entity', 'string_hash', 'language', 
             'rule'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')

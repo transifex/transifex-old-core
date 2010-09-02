@@ -205,10 +205,10 @@ def _create_stringset(request, project_slug, resource_slug, target_lang_code):
             'translations':{}}
 
         if not qstrings:
-            translated_strings = Translation.objects.filter(resource = translation_resource)
+            translated_strings = Translation.objects.filter(source_entity__resource=translation_resource)
         else:
             translated_strings = Translation.objects.filter(
-                                            resource = translation_resource,
+                                            source_entity__resource = translation_resource,
                                             source_entity__string__iregex=qstrings['string__iregex'])
 
         if target_langs:
@@ -360,8 +360,8 @@ class StringHandler(BaseHandler):
                 rule = s.get('rule', 5)
                 try:
                     ts = Translation.objects.get(language=lang, source_entity=ss,
-                                                 resource=translation_resource,
-                                                 rule=rule)
+                        source_entity__resource=translation_resource,
+                        rule=rule)
                     # For a existing Translation delete the value if we get a '' or None value
                     if s.get('value'):
                         ts.string = s.get('value')
@@ -375,7 +375,6 @@ class StringHandler(BaseHandler):
                     if s.get('value'):
                         ts = Translation.objects.create(language=lang,
                                 source_entity=ss,
-                                resource=translation_resource,
                                 string=s.get('value'),
                                 user=committer,
                                 rule=rule)
@@ -457,7 +456,6 @@ class StringHandler(BaseHandler):
                                         language=lang,
                                         rule=s.get('rule',5),
                                         source_entity=obj,
-                                        resource=translation_resource,
                                         user=committer)
                     ts.string = s.get('string')
                     ts.save()

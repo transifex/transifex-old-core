@@ -104,10 +104,11 @@ class Release(models.Model):
         if language:
             if isinstance(language, str):
                 language = Language.objects.by_code_or_alias(language)
-            t = Translation.objects.filter(resource__releases=self,
-                language=language).order_by('-last_update')
+            t = Translation.objects.filter(source_entity__resource__releases=self,
+                    language=language).order_by('-last_update')
         else:
-            t = Translation.objects.filter(resource__releases=self).order_by('-last_update')
+            t = Translation.objects.filter(source_entity__resource__releases=self
+                    ).order_by('-last_update')
         if t:
             return t[0]
         return None
@@ -119,7 +120,7 @@ class Release(models.Model):
         this Release.
         """
         language_ids = Translation.objects.filter(
-            resource__in=self.resources.all).values_list(
+            source_entity__resource__in=self.resources.all).values_list(
             'language', flat=True).distinct()
         return Language.objects.filter(id__in=language_ids).distinct()
 
@@ -131,7 +132,8 @@ class Release(models.Model):
         if not isinstance(language, Language):
             language = Language.objects.by_code_or_alias(language)
 
-        translations = Translation.objects.filter(resource__releases=self,
+        translations = Translation.objects.filter(
+            source_entity__resource__releases=self,
             language=language, rule=5).values_list('source_entity', flat=True)
 
         return len(SourceEntity.objects.filter(id__in=translations))
@@ -144,7 +146,8 @@ class Release(models.Model):
         if not isinstance(language, Language):
             language = Language.objects.by_code_or_alias(language)
 
-        translations = Translation.objects.filter(resource__releases=self,
+        translations = Translation.objects.filter(
+            source_entity__resource__releases=self,
             language=language, rule=5).values_list('source_entity', flat=True)
 
         return len(SourceEntity.objects.filter(

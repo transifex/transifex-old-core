@@ -43,12 +43,12 @@ class StringHandlerTests(APIBaseTests):
         # Check that we got all translation strings
         self.assertEqual(len(json_data['strings']),
                             Translation.objects.filter(
-                            resource = self.resource,
+                            source_entity__resource = self.resource,
                             language = self.resource.source_language).count())
 
         self.assertTrue(self.resource.source_language.code in response.content)
         for t in Translation.objects.filter(
-                        resource__slug = self.resource,
+                        source_entity__resource__slug = self.resource,
                         language__code = self.resource.source_language):
             self.assertTrue(t.string in response.content)
             self.assertTrue(t.source_entity.context in response.content)
@@ -86,7 +86,7 @@ class StringHandlerTests(APIBaseTests):
 
         # Check that all strings are there
         self.assertEqual(Translation.objects.filter(
-                            resource = self.resource,
+                            source_entity__resource = self.resource,
                             language = self.resource.source_language).count(),
                             len(self.data['strings']))
 
@@ -142,7 +142,7 @@ class StringHandlerTests(APIBaseTests):
 
         # Check that all strings are in the db
         self.assertEqual(Translation.objects.filter(
-                            resource__slug = self.resource.slug,
+                            source_entity__resource__slug = self.resource.slug,
                             language__code = self.language.code).count(),
                             len(self.trans['strings']))
 

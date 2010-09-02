@@ -177,7 +177,7 @@ class POHandler(Handler):
         for entry in po:
             if entry.msgid_plural:
                 plurals = Translation.objects.filter(
-                    resource = self.resource,
+                    source_entity__resource = self.resource,
                     language = language,
                     source_entity__string = entry.msgid)
                 plural_keys = {}
@@ -237,7 +237,7 @@ class POHandler(Handler):
 #                trans = Translation.objects.get(
 #                    source_entity = string,
 #                    language = language,
-#                    resource = self.resource,
+#                    source_entity__resource = self.resource,
 #                    rule=5)
 #            except Translation.DoesNotExist:
 #                trans = None
@@ -253,7 +253,7 @@ class POHandler(Handler):
 #                entry.comment = string.developer_comment
 #            if string.pluralized:
 #                plurals = Translation.objects.filter(
-#                    resource = self.resource,
+#                    source_entity__resource = self.resource,
 #                    language = language,
 #                    source_entity = string)
 #                plural_keys = {}

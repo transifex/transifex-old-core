@@ -85,7 +85,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         resource__in = resources).count()
 
     translated_strings = Translation.objects.filter(
-        resource__in = resources,
+        source_entity__resource__in = resources,
         language = target_language,
         source_entity__pluralized=False,
         rule = 5).exclude(string="").count()
@@ -105,7 +105,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         translation_resource = resources[0]
 
     contributors = User.objects.filter(pk__in=Translation.objects.filter(
-        resource__in = resources,
+        source_entity__resource__in = resources,
         language = target_language,
         rule = 5).values_list("user", flat=True))
 
@@ -197,12 +197,12 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
         raise Http404
 
     total_strings = Translation.objects.filter(
-                        resource = translation_resource,
+                        source_entity__resource = translation_resource,
                         language = translation_resource.source_language,
                         rule = 5).count()
 
     translated_strings = Translation.objects.filter(
-                            resource = translation_resource,
+                            source_entity__resource = translation_resource,
                             language = target_language,
                             rule = 5).exclude(string="").count()
 
@@ -242,12 +242,14 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     # Find a way to determine the source language of multiple resources #FIXME
     source_language = resources[0].source_language
-    source_strings = Translation.objects.filter(resource__in = resources,
-                                language = source_language,
-                                rule=5)
+    source_strings = Translation.objects.filter(
+        source_entity__resource__in=resources,
+        language=source_language,
+        rule=5)
 
-    translated_strings = Translation.objects.filter(resource__in = resources,
-                                language__code = lang_code)
+    translated_strings = Translation.objects.filter(
+        source_entity__resource__in=resources,
+        language__code=lang_code)
 
     # These are only the rule=5 (other) translations
     default_translated_strings = translated_strings.filter(rule=5)
@@ -458,7 +460,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
         source_id = int(row['id'])
         try:
             source_string = Translation.objects.get(id=source_id,
-                resource__project=project)
+                source_entity__resource__project=project)
         except Translation.DoesNotExist:
             # TODO: Log or inform here
             push_response_dict[source_id] = { 'status':500,
@@ -498,7 +500,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 translation_string = Translation.objects.get(
                     source_entity = source_string.source_entity,
                     language = target_language,
-                    resource = source_string.resource,
+                    source_entity__resource = source_string.source_entity.resource,
                     rule = target_language.get_rule_num_from_name(rule))
 
                 # FIXME: Maybe we don't want to permit anyone to delete!!!
@@ -517,7 +519,6 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     Translation.objects.create(
                         source_entity = source_string.source_entity,
                         language = target_language,
-                        resource = source_string.resource,
                         rule = target_language.get_rule_num_from_name(rule),
                         string = string,
                         user = request.user) # Save the sender as last committer
