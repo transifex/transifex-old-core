@@ -174,6 +174,13 @@ def resource_actions(request, project_slug=None, resource_slug=None,
 
     lock = Lock.objects.get_valid(resource, target_language)
 
+    # We want the teams to check in which languages user is permitted to translate.
+    user_teams = []
+    if getattr(request, 'user'):
+        user_teams = Team.objects.filter(project=resource.project).filter(
+            Q(coordinators=request.user)|
+            Q(members=request.user)).distinct()
+
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
       'resource' : resource,
@@ -182,6 +189,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
       'languages': languages,
       'disabled_languages_ids': disabled_languages_ids,
       'lock': lock,
+      'user_teams': user_teams
       },
     context_instance = RequestContext(request))
 

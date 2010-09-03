@@ -76,19 +76,39 @@
           {% endif %}
           {% ifnotequal resource.source_language target_language %}
           <li>
-            <span class="i16 clone">
-            <a class="language_chooser_trigger" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
-            </span>
-            <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
-            <div class="language_chooser" style="visibility:hidden;margin-top:4px">
-              <select style="margin-left:24px">
-                <option value="" selected="selected">---------</option>
-              {% for language in languages %}
-                <option {% if language.id|in_list:disabled_languages_ids %}disabled="disabled"{% endif %} value="{{ language.code }}">{{ language.name }}</option>
-              {% endfor %}
-              </select>
-              <a class="i16 action buttonized">Go</a>
-            </div>
+            {% if request.user.is_authenticated %}
+              {% if is_maintainer or request.user.is_superuser or user_teams %}
+              <span class="i16 clone">
+                <a class="language_chooser_trigger" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
+              </span>
+              <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+              <div class="language_chooser" style="visibility:hidden;margin-top:4px">
+                <select style="margin-left:24px">
+                  <option value="" selected="selected">---------</option>
+                {% if is_maintainer or request.user.is_superuser %}
+                  {% for language in languages %}
+                    <option {% if language.id|in_list:disabled_languages_ids %}disabled="disabled"{% endif %} value="{{ language.code }}">{{ language.name }}</option>
+                  {% endfor %}
+                {% else %}
+                  {% for team in user_teams %}
+                    <option {% if team.language.id|in_list:disabled_languages_ids %}disabled="disabled"{% endif %} value="{{ team.language.code }}">{{ team.language.name }}</option>
+                  {% endfor %}
+                {% endif %}
+                </select>
+                <a class="i16 action buttonized">Go</a>
+              </div>
+              {% else %}
+                <span class="i16 clone">
+                  <a class="language_chooser_trigger disabled" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
+                </span>
+                <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+              {% endif %}
+            {% else %}
+              <span class="i16 clone">
+                <a class="language_chooser_trigger disabled" style="cursor:pointer" >{% trans "Clone to new language" %}</a>
+              </span>
+              <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+            {% endif %}
           </li>
           {% endifnotequal %}
         </ul>
