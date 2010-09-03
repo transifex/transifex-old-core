@@ -24,29 +24,31 @@ class LotteViewsTests(BaseTestCase):
 
         # Set some custom translation data
         # Source strings
-        self.source_string_plural1 = self.source_entity_plural.translations.create(resource=self.resource,
-            string="SourceArabicTrans1", language=self.language_en,
+        self.source_string_plural1 = self.source_entity_plural.translations.create(
+            string="SourceArabicTrans1",
+            language=self.language_en,
             user=self.user["maintainer"], rule=1)
-        self.source_string_plural2 = self.source_entity_plural.translations.create(resource=self.resource,
-            string="SourceArabicTrans2", language=self.language_en,
+        self.source_string_plural2 = self.source_entity_plural.translations.create(
+            string="SourceArabicTrans2",
+            language=self.language_en,
             user=self.user["maintainer"], rule=5)
         # Translation strings
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans0", language=self.language_ar,
             user=self.user["maintainer"], rule=0)
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans1", language=self.language_ar,
             user=self.user["maintainer"], rule=1)
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans2", language=self.language_ar,
             user=self.user["maintainer"], rule=2)
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans3", language=self.language_ar,
             user=self.user["maintainer"], rule=3)
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans4", language=self.language_ar,
             user=self.user["maintainer"], rule=4)
-        self.source_entity_plural.translations.create(resource=self.resource,
+        self.source_entity_plural.translations.create(
             string="ArabicTrans5", language=self.language_ar,
             user=self.user["maintainer"], rule=5)
 
@@ -59,7 +61,6 @@ class LotteViewsTests(BaseTestCase):
             args=[self.project.slug, self.resource.slug, self.language_ar.code])
         self.push_translation = reverse('push_translation',
             args=[self.project.slug, self.language_ar.code])
-
 
     def tearDown(self):
         super(LotteViewsTests, self).tearDown()
@@ -79,17 +80,14 @@ class LotteViewsTests(BaseTestCase):
         self.assertContains(resp, self.entity.occurrences)
         self.assertTemplateUsed(resp, 'lotte_details_snippet.html')
 
-
     def test_snippet_translation_data(self):
         """Test the translation details part of the snippet is correct."""
         # Set some custom data
-        self.entity.translations.create(resource=self.resource, string="StringTrans1",
+        self.entity.translations.create(string="StringTrans1",
             language=self.language, user=self.user["team_member"])
         # Test the response contents
         resp = self.client['team_member'].get(self.snippet_url)
         self.assertContains(resp, '0 minutes', status_code=200)
-        self.assertContains(resp, 'alt="'+self.user["team_member"]+'"')
-
 
     def test_translate_view(self):
         """Test the basic response of the main view for lotte."""
@@ -155,22 +153,113 @@ class LotteViewsTests(BaseTestCase):
                                 "other":"",}
                            },]
                }
-        resp1 = self.client['maintainer'].post(self.push_translation, simplejson.dumps(data1), content_type='application/json')
-        self.assertContains(resp1, 'All the plural translations must be filled in', status_code=200)
+        resp1 = self.client['maintainer'].post(self.push_translation,
+            simplejson.dumps(data1), content_type='application/json')
+        self.assertContains(resp1,
+            'All the plural translations must be filled in', status_code=200)
 
-        resp2 = self.client['maintainer'].post(self.push_translation, simplejson.dumps(data2), content_type='application/json')
-        self.assertContains(resp2, 'All the plural translations must be filled in', status_code=200)
+        resp2 = self.client['maintainer'].post(self.push_translation,
+            simplejson.dumps(data2), content_type='application/json')
+        self.assertContains(resp2,
+            'All the plural translations must be filled in', status_code=200)
 
-        resp3 = self.client['maintainer'].post(self.push_translation, simplejson.dumps(data3), content_type='application/json')
-        self.assertContains(resp3, 'Translation updated successfully', status_code=200)
+        resp3 = self.client['maintainer'].post(self.push_translation,
+            simplejson.dumps(data3), content_type='application/json')
+        self.assertContains(resp3, 'Translation updated successfully',
+            status_code=200)
 
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 6)
 
-        resp4 = self.client['maintainer'].post(self.push_translation, simplejson.dumps(data4), content_type='application/json')
-        self.assertContains(resp4, 'Translation updated successfully', status_code=200)
+        resp4 = self.client['maintainer'].post(self.push_translation,
+            simplejson.dumps(data4), content_type='application/json')
+        self.assertContains(resp4, 'Translation updated successfully',
+            status_code=200)
 
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 0)
+
+
+class LotteTemplateTests(BaseTestCase):
+
+    def setUp(self):
+        super(LotteTemplateTests, self).setUp()
+        # URLs
+        self.translate_view_url = reverse('translate_resource',
+            args=[self.project.slug, self.resource.slug, self.language.code])
+        self.translate_content_arabic_url = reverse('stringset_handling',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code])
+
+    def tearDown(self):
+        super(LotteTemplateTests, self).tearDown()
+
+    def test_search_translation_link(self):
+        """Test that search translation link exists and points to search page."""
+
+        # Test the response contents
+        resp = self.client['team_member'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+        self.assertContains(resp, 'Search translations', status_code=200)
+        self.assertContains(resp,
+            'Search in Transifex memory for existing translations (opens up in new tab/window)')
+        self.assertContains(resp, reverse('search_translations'))
+
+    def test_filters(self):
+        """Test that more languages, filter by users, resources appear."""
+
+        # Test the response contents
+        resp = self.client['team_member'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+        self.assertContains(resp, 'More languages', status_code=200)
+        self.assertContains(resp,
+            'Show translations of<br /> the chosen languages')
+        self.assertContains(resp, '<input class="more_languages" type="checkbox"')
+        self.assertContains(resp, 'Filter by users')
+        self.assertContains(resp,
+            'Show only the translations<br />of the chosen users')
+        self.assertContains(resp, 'No active contributor!')
+
+    def test_statistics_div(self):
+        """Test that statistics div appears correctly."""
+
+        # Test the response contents
+        resp = self.client['team_member'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+
+        self.assertContains(resp, 'Translated', status_code=200)
+        self.assertContains(resp, 'Untranslated')
+        self.assertContains(resp, 'Modified')
+        self.assertContains(resp, 'Total')
+        self.assertContains(resp, ('<input id="translated" class="filters" '
+            'type="checkbox"  checked="checked"  name="only_translated"/>'))
+        self.assertContains(resp, ('<input id="untranslated" class="filters" '
+            'type="checkbox" checked="checked" name="only_untranslated"/>'))
+
+    def test_footpanel_div(self):
+        """Check that footpanel html snippet appears correctly."""
+        # Test the response contents
+        resp = self.client['team_member'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+
+        self.assertContains(resp, 'General Settings', status_code=200)
+        self.assertContains(resp, 'Verbose editing')
+        self.assertContains(resp, 'Auto save')
+
+    def test_global_buttons(self):
+        """Check that "Save all", "Delete translations", "Save and Exit" appear."""
+        # Test the response contents
+        resp = self.client['team_member'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+
+        self.assertContains(resp, 'Save all', status_code=200)
+        self.assertContains(resp, 'Save and Exit')
+        # For the team_member "delete" should not appear
+        self.assertNotContains(resp, 'Delete translations')
+
+        # Test the response contents
+        resp = self.client['maintainer'].get(self.translate_view_url)
+        self.assertTemplateUsed(resp, 'translate.html')
+        # For the team_member "delete" should not appear
+        self.assertContains(resp, 'Delete translations')
