@@ -571,7 +571,7 @@
 {% endblock %}
 
 {% block content %}
-
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 <div class="floatright filtermenu-wrapper">
 
@@ -663,7 +663,7 @@
             <a href="#" style="padding-left:24px;
             background-image:url({{ STATIC_URL }}images/icons/generic16.png);
             background-repeat: no-repeat;
-            background-position: 4% 50%" class="settings">General Settings</a>
+            background-position: 4% 50%" class="settings">{% trans "General Settings" %}</a>
             <div class="subpanel">
                 <ul>
                     <li class="verbose">
