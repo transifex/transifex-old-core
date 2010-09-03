@@ -6,9 +6,10 @@ from txcommon.tests.base import BaseTestCase
 
 Translation = get_model('resources', 'Translation')
 
-class LotteViewsTests(BaseTestCase):
 
-    DataTable_params = { 'bEscapeRegex':True, 'bEscapeRegex_0':True, 
+def default_params():
+    """Return the default parameters (in a dict) for the DataTables interaction."""
+    return { 'bEscapeRegex':True, 'bEscapeRegex_0':True, 
         'bEscapeRegex_1':True, 'bEscapeRegex_2':True, 'bEscapeRegex_3':True,
         'bEscapeRegex_4':True, 'bEscapeRegex_5':True, 'bSearchable_0':True,
         'bSearchable_1':True, 'bSearchable_2':True, 'bSearchable_3':True,
@@ -18,9 +19,13 @@ class LotteViewsTests(BaseTestCase):
         'iDisplayLength':10, 'iDisplayStart':0, 'iSortCol_0':0, 'iSortingCols':1,
         'sSortDir_0':'asc'}
 
+class LotteViewsTests(BaseTestCase):
+
     def setUp(self):
         super(LotteViewsTests, self).setUp()
         self.entity = self.resource.entities[0]
+
+        self.DataTable_params = default_params()
 
         # Set some custom translation data
         # Source strings
@@ -118,29 +123,29 @@ class LotteViewsTests(BaseTestCase):
         """Test pushing pluralized translations."""
         data1 = {"strings":[{"id":self.source_string_plural1.id,
                             "translations":{
-                                "zero":"Arabic string zero",
-                                "one":"Arabic string one",
-                                "few":"Arabic string few",
-                                "other":"Arabic string other",}
+                                "zero":"ArabicTrans0",
+                                "one":"ArabicTrans1",
+                                "few":"ArabicTrans3",
+                                "other":"ArabicTrans5",}
                            },]
                }
         data2 = {"strings":[{"id":self.source_string_plural1.id,
                             "translations":{
-                                "zero":"Arabic string zero",
-                                "one":"Arabic string one",
-                                "two":"Arabic string two",
-                                "few":"Arabic string few",
-                                "many":"Arabic string many",}
+                                "zero":"ArabicTrans0",
+                                "one":"ArabicTrans1",
+                                "two":"ArabicTrans2",
+                                "few":"ArabicTrans3",
+                                "many":"ArabicTrans4",}
                            },]
                }
         data3 = {"strings":[{"id":self.source_string_plural1.id,
                             "translations":{
-                                "zero":"Arabic string zero",
-                                "one":"Arabic string one",
-                                "two":"Arabic string two",
-                                "few":"Arabic string few",
-                                "many":"Arabic string many",
-                                "other":"Arabic string other",}
+                                "zero":"ArabicTrans0",
+                                "one":"ArabicTrans1",
+                                "two":"ArabicTrans2",
+                                "few":"ArabicTrans3",
+                                "many":"ArabicTrans4",
+                                "other":"ArabicTrans5",}
                            },]
                }
         data4 = {"strings":[{"id":self.source_string_plural1.id,
@@ -180,6 +185,44 @@ class LotteViewsTests(BaseTestCase):
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 0)
+
+        # We push again the data to return to the setup state.
+        resp5 = self.client['maintainer'].post(self.push_translation,
+            simplejson.dumps(data3), content_type='application/json')
+        self.assertContains(resp3, 'Translation updated successfully',
+            status_code=200)
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity_plural,
+            language=self.language_ar).count(), 6)
+
+    def test_dt_search_string(self):
+        """Test the Datatable's search."""
+        self.DataTable_params["sSearch"] = "ArabicTrans"
+        resp = self.client['maintainer'].post(
+            self.translate_content_arabic_url, self.DataTable_params)
+        self.assertContains(resp, 'ArabicTrans', status_code=200)
+        self.DataTable_params["sSearch"] = "Empty result"
+        resp = self.client['maintainer'].post(
+            self.translate_content_arabic_url, self.DataTable_params)
+        self.assertNotContains(resp, 'ArabicTrans', status_code=200)
+
+    def test_dt_pagination(self):
+        """Test the Datatable's pagination mechanism."""
+        self.DataTable_params["iDisplayStart"] = 0
+        resp = self.client['maintainer'].post(
+            self.translate_content_arabic_url, self.DataTable_params)
+        self.assertContains(resp, 'ArabicTrans', status_code=200)
+
+    def test_dt_show_num_entries(self):
+        """Test the Datatable's show num entries mechanism."""
+        self.DataTable_params["iDisplayLength"] = 20
+        resp = self.client['maintainer'].post(
+            self.translate_content_arabic_url, self.DataTable_params)
+        self.assertContains(resp, 'ArabicTrans', status_code=200)
+
+    def test_filters(self):
+        """Test lotte filters one by one."""
+        pass
 
 
 class LotteTemplateTests(BaseTestCase):
