@@ -512,13 +512,14 @@
             $('#filtermenu_users').hide();
         });
 
+        {% ifnotequal resources|length 1 %}
         /* Bind menu filters for resources */
         $('#filtermenu2 .filtermenu-trigger').toggle(function(){
             $('#filtermenu_resources').show();
         }, function(){
             $('#filtermenu_resources').hide();
         });
-
+        {% endifnotequal %}
 
         $("#settingspanel a:first").click(function() {
             if($(this).next(".subpanel").is(':visible')){ //If subpanel is already active...
@@ -590,6 +591,7 @@
   </div>
   {% include "filters_menu_users.html" %}
 
+  {% ifnotequal resources|length 1 %}
   <div id="filtermenu2" class="filtermenu tipsy_enable" title="Show only the strings which<br />belong to checked resources.">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
@@ -597,6 +599,7 @@
     </a>
   </div>
   {% include "filters_menu_resources.html" %}
+  {% endifnotequal %}
 
 </div>
 
