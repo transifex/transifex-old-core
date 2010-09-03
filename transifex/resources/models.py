@@ -178,13 +178,14 @@ class Resource(models.Model):
 
             if val: return val
 
-            t = Translation.objects.filter(
-                source_entity__resource=self, language=language).order_by('-last_update').select_related('user')
+            t = Translation.objects.filter(source_entity__resource=self,
+                language=language).order_by('-last_update').select_related('user')
 
-            cache.set(ckey, t[0])
+            if t:
+                cache.set(ckey, t[0])
         else:
-            t = Translation.objects.filter(
-                source_entity__resource=self).order_by('-last_update').select_related('user')
+            t = Translation.objects.filter(source_entity__resource=self
+                ).order_by('-last_update').select_related('user')
         if t:
             return t[0]
         return None
