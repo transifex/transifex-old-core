@@ -312,7 +312,7 @@ html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
   left:320px;
 }
 
-#filtermenu2 {
+#filtermenu1 {
   left:160px;
 }
 
@@ -343,6 +343,59 @@ html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
   -moz-background-clip: border;
   -moz-background-origin: padding;
   -moz-background-inline-policy: continuous;"
+}
+
+.filtermenu_wrapper{
+  position: absolute;
+  z-index: 999999;
+  width: 150px;
+  top: 24px; 
+  display: none;
+  background-color:#F5F5F5;
+  border-radius:2px;
+  -moz-border-radius:2px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #CCC;
+  font-size:0.85em;
+  box-shadow: 1px 1px 2px #DDDDDD;
+  -moz-box-shadow: 1px 1px 2px #DDDDDD;
+  -webkit-box-shadow: 1px 1px 2px #DDDDDD;
+  overflow-x:hidden;
+  overflow-y:auto;
+  max-height:150px;
+}
+
+#filtermenu_users{
+  left:160px;
+}
+
+#more_languages_menu{
+  left:320px;
+}
+
+#filtermenu_resources{
+  left:0px;
+}
+
+.filters_list{
+  float:left;
+}
+
+.filters_list ul{
+  list-style:none;
+  padding-left:10px;
+  font-size:11px;
+}
+
+.filters_list ul li{
+  margin:0;
+  vertical-align:bottom;
+}
+
+.filters_list p{
+  padding-left:10px;
+  font-size:11px;
 }
 
 /* Plurals related style */

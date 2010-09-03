@@ -1,19 +1,13 @@
 {% load i18n %}
 {% load truncate %}
 
-<div id="more_languages_menu" class="more_languages_menu_wrapper" style="position: absolute; left:320px; z-index: 999999; width: 150px; top: 24px; display: none; background-color:#F5F5F5; border-radius:2px; -moz-border-radius:2px; border-width: 0px 1px 1px 1px; border-style: solid; border-color: #CCC; font-size:0.85em; box-shadow: 1px 1px 2px #DDDDDD; -moz-box-shadow: 1px 1px 2px #DDDDDD; -webkit-box-shadow: 1px 1px 2px #DDDDDD; overflow-x:hidden; overflow-y:auto; height:150px;">
+<div id="more_languages_menu" class="filtermenu_wrapper">
 
 {% if languages %}
-  <!-- TODO implement the searching at the following lines to function properly
-  <div class="filtermenu_search" style="padding:1em">
-    <input style="width:100px; height:18px; color:#8f8f8f; text-decoration: italic; font-size:11px; padding-top:2px;" type="text" value="search" />
-  </div>
-  -->
-
-  <div class="filters_list" style="float:left">
-    <ul style="list-style:none; padding-left:10px; font-size:11px;">
+  <div class="filters_list">
+    <ul>
     {% for language in languages %}
-      <li><input class="more_languages" type="checkbox" title="{{ language }}" {% ifequal language target_language %}disabled="disabled"{% else %}{% ifequal language resource.source_language %}disabled="disabled"{% endifequal %}{% endifequal %} style="margin:0; vertical-align:bottom;" id="{{ language.id }}" /> 
+      <li title="{{ language }}"><input class="more_languages" type="checkbox" {% ifequal language target_language %}disabled="disabled"{% else %}{% ifequal language resource.source_language %}disabled="disabled"{% endifequal %}{% endifequal %} id="{{ language.id }}" /> 
       <span {% ifequal language target_language %}class="disabled"{% else %}{% ifequal language resource.source_language %}class="disabled"{% endifequal %}{% endifequal %}>
             {{ language.name|truncate_chars_middle:"16" }}
       </span>
@@ -22,10 +16,8 @@
     </ul>
   </div>
 {% else %}
-  <div class="filters_list" style="float:left">
-    <p style="padding-left:10px; font-size:11px;">
-    {% trans "No active languages!" %}
-    </p>
+  <div class="filters_list">
+    <p>{% trans "No active languages!" %}</p>
   </div>
 {% endif %}
 
