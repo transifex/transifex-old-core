@@ -171,12 +171,20 @@ class Resource(models.Model):
         if language:
             if not isinstance(language, Language):
                 language = Language.objects.by_code_or_alias(language)
-            t = Translation.objects.select_related('user').filter(
-                source_entity__resource=self, 
-                language=language).order_by('-last_update')
+
+            ckey = RESOURCES_CACHE_KEYS["lang_last_update"] % (
+                language.code, self.project.slug, self.slug)
+            val = cache.get(ckey)
+
+            if val: return val
+
+            t = Translation.objects.filter(
+                source_entity__resource=self, language=language).order_by('-last_update').select_related('user')
+
+            cache.set(ckey, t[0])
         else:
-            t = Translation.objects.select_related('user').filter(
-                source_entity__resource=self).order_by('-last_update')
+            t = Translation.objects.filter(
+                source_entity__resource=self).order_by('-last_update').select_related('user')
         if t:
             return t[0]
         return None
@@ -187,9 +195,14 @@ class Resource(models.Model):
         Return the languages with at least one Translation of a SourceEntity for
         this Resource.
         """
-        languages = Translation.objects.filter(
-            source_entity__resource=self).values_list(
-            'language', flat=True).distinct()
+        ckey = RESOURCES_CACHE_KEYS["available_langs"] % (
+            self.project.slug, self.slug)
+        val = cache.get(ckey)
+        if val: return val
+
+        languages = Translation.objects.filter(source_entity__resource=self).values_list(
+            'language__id', flat=True)
+        cache.set(ckey, Language.objects.filter(id__in=languages).distinct())
         return Language.objects.filter(id__in=languages).distinct()
 
     def translated_strings(self, language):
@@ -201,10 +214,20 @@ class Resource(models.Model):
         if not isinstance(language, Language):
             language = Language.objects.by_code_or_alias(language)
 
-        return SourceEntity.objects.filter(resource=self,
-            id__in=Translation.objects.filter(language=language,
-                source_entity__resource=self, rule=5
-                ).values_list('source_entity', flat=True))
+        ckey = RESOURCES_CACHE_KEYS["lang_trans"] % (
+            language.code, self.project.slug, self.slug)
+        val = cache.get(ckey)
+
+        if val:
+            return val
+
+        trans = Translation.objects.filter(language=language,
+                source_entity__resource=self, rule=5).values_list('source_entity', flat=True)
+
+        cache.set(RESOURCES_CACHE_KEYS["lang_trans"] % (
+            language.code, self.project.slug, self.slug), trans)
+
+        return trans
 
     def untranslated_strings(self, language):
         """
@@ -217,9 +240,7 @@ class Resource(models.Model):
             language = Language.objects.by_code_or_alias(language)
 
         return SourceEntity.objects.filter(resource=self).exclude(
-            id__in=Translation.objects.filter(language=language,
-                source_entity__resource=self, rule=5
-                ).values_list('source_entity', flat=True))
+            id__in=self.translated_strings(language))
 
     def num_translated(self, language):
         """
@@ -538,8 +559,10 @@ class Template(models.Model):
 
 # Signal registrations
 from resources.handlers import *
-models.signals.post_save.connect(on_save_invalidate_cache, sender=SourceEntity)
-models.signals.post_delete.connect(on_delete_invalidate_cache, sender=SourceEntity)
+models.signals.post_save.connect(on_ss_save_invalidate_cache, sender=SourceEntity)
+models.signals.post_delete.connect(on_ss_delete_invalidate_cache, sender=SourceEntity)
+models.signals.post_save.connect(on_ts_save_invalidate_cache, sender=Translation)
+models.signals.post_delete.connect(on_ts_delete_invalidate_cache, sender=Translation)
 
 
 from resources.formats.qt import LinguistHandler # Qt4 TS files

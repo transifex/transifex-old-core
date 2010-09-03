@@ -45,7 +45,7 @@ def resource_detail(request, project_slug, resource_slug):
     """
     Return the details overview of a project resource.
     """
-    resource = get_object_or_404(Resource, project__slug = project_slug,
+    resource = get_object_or_404(Resource.objects.select_related(), project__slug = project_slug,
                                  slug = resource_slug)
 
     # We want the teams to check in which languages user is permitted to translate.

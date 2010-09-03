@@ -1,5 +1,6 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
+{% load cache %} 
 {% load statistics_resources %}
 {% load permissions %}
 {% load upload_manager_tags %}
@@ -9,8 +10,8 @@
 <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    $(document).ready(function(){
+        $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
         {% if request.user.is_authenticated %}
         $("#new_translation1").click( function (){ 
@@ -46,7 +47,7 @@
             }
         });
 
-	});
+    });
 </script>
 {% endblock %}
 
@@ -86,6 +87,7 @@ Projects |
     </div>
   {% endif %}
 
+
 <div id="resource_details">
   <h3>{% trans "Translation Resource details" %}</h3>
   <table class="definition">
@@ -106,7 +108,6 @@ Projects |
 </div>
 
 <h3>{% trans "Available translations" %}</h3>
-
 <div class="list separate clear">
 <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
@@ -119,6 +120,7 @@ Projects |
   <tbody>
 {% for language in translated_languages %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        {% cache 500 resource_details resource.project.slug resource.slug language.code %}
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
           {% ifequal resource.source_language language %}
@@ -136,6 +138,8 @@ Projects |
           {% endwith %}
         </td>
         <td>
+
+        {% endcache %}
         <span style="border:0">
           {% last_translation_update resource language.code as last_update %}
           {% last_committer resource language.code as last_committer %}
@@ -213,6 +217,8 @@ Projects |
 </table>
 
 </div>
+
+
 
 {% get_permission "project_perm.submit_file" for request.user and resource.project,1 as "can_submit_translation" %}
 {% if can_submit_translation or request.user.is_superuser %}
