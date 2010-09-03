@@ -88,7 +88,7 @@ class LotteViewsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['team_member'].get(self.snippet_url)
         self.assertContains(resp, '0 minutes', status_code=200)
-#        self.assertContains(resp, 'alt="team_member"')
+        self.assertContains(resp, 'alt="'+self.user["team_member"]+'"')
 
 
     def test_translate_view(self):

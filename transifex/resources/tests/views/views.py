@@ -92,7 +92,7 @@ class CoreViewsTest(BaseTestCase):
         # FIXME: Test plurals
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, trans_lang]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translations':{'other':trans}}]}),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{'other':trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
@@ -101,35 +101,43 @@ class CoreViewsTest(BaseTestCase):
         # Update existing translation
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, trans_lang]),
-            json.dumps({'strings':[{'id': self.source_entity.id,
+            json.dumps({'strings':[{'id': source_trans.id,
                 'translations':{'other':new_trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
-            language__code=trans_lang, string=new_trans).count(), 1)
+        translations = Translation.objects.filter(source_entity__resource=self.resource,
+            language__code = trans_lang, string=new_trans)
+        self.assertEqual(translations.count(), 1)
 
         source_trans.delete()
+        translations.delete()
 
 
     def test_delete_resource_translations(self):
         """
         Test resource translation deletion
         """
+        # Create primary language translation. This is needed to push
+        # additional translations
+        source_trans = Translation(source_entity=self.source_entity,
+            language = self.language,
+            string="foobar")
+        source_trans.save()
+
+        trans_lang = 'el'
         trans = "foo"
         # Create new translation
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.language.code]),
-            json.dumps({'strings':[{'id':self.source_entity.id,
+            args=[self.project.slug, trans_lang]),
+            json.dumps({'strings':[{'id':source_trans.id,
                 'translations': { 'other': trans}}]}),
             content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
-            language = self.language, string =trans).count(), 0)
-
-        self.assertTrue(Translation.objects.filter(source_entity__resource=self.resource,
-            language=self.language) >1)
+            language__code = trans_lang, string =trans).count(), 1)
 
         # Delete Translations
+        # Delete source language translations
         delete_url = reverse('resource_translations_delete',
             args=[self.project.slug, self.resource.slug,self.language.code])
         resp = self.client['maintainer'].get(delete_url)
@@ -141,6 +149,19 @@ class CoreViewsTest(BaseTestCase):
         self.assertTemplateUsed(resp, 'resources/resource.html')
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language = self.language).count(), 0)
+
+        # Delete target language translations
+        delete_url_el = reverse('resource_translations_delete',
+            args=[self.project.slug, self.resource.slug, trans_lang])
+        resp = self.client['maintainer'].get(delete_url_el)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource_translations_confirm_delete.html')
+
+        resp = self.client['maintainer'].post(delete_url_el, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
+            language__code = trans_lang).count(), 0)
 
 class ReleasesViewsTest(BaseTestCase):
     

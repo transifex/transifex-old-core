@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.test.client import Client
 from languages.models import Language
-from resources.models import Resource
+from resources.models import Resource, Translation
 from txcommon.tests.base import BaseTestCase
 
 try:
@@ -28,13 +28,21 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
 
+        # Create source language translation. This is needed to push
+        # additional translations
+        source_trans = Translation(source_entity=self.source_entity,
+            language = self.language_en,
+            string="foobar")
+        source_trans.save()
+        trans_lang = self.language.code
         trans = "foo"
         # Create new translation
         resp = self.client['anonymous'].post(reverse('push_translation',
-            args=[self.project.slug, self.language.code,]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            args=[self.project.slug, trans_lang,]),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 302)
+        source_trans.delete()
 
         # Delete Translations
         resp = self.client['anonymous'].post(reverse(
@@ -101,13 +109,21 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 403)
 
+        # Create source language translation. This is needed to push
+        # additional translations
+        source_trans = Translation(source_entity=self.source_entity,
+            language = self.language_en,
+            string="foobar")
+        source_trans.save()
+        trans_lang = self.language.code
         trans = "foo"
         # Create new translation
         resp = self.client['registered'].post(reverse('push_translation',
-            args=[self.project.slug, self.language.code,]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            args=[self.project.slug, trans_lang,]),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 403)
+        source_trans.delete()
 
         # Delete Translations
         resp = self.client['registered'].post(reverse(
@@ -180,20 +196,28 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 403)
 
+        # Create source language translation. This is needed to push
+        # additional translations
+        source_trans = Translation(source_entity=self.source_entity,
+            language = self.language_en,
+            string="foobar")
+        source_trans.save()
+        trans_lang = self.language.code
         trans = "foo"
         # Create new translation
         resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, self.language.code,]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            args=[self.project.slug, trans_lang,]),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
 
         # Create new translation in other team. Expect this to fail
         resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, 'el']),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            args=[self.project.slug, 'ru']),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 403)
+        source_trans.delete()
 
         # Delete Translations
         resp = self.client['team_member'].post(reverse(
@@ -260,13 +284,21 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
 
+        # Create source language translation. This is needed to push
+        # additional translations
+        source_trans = Translation(source_entity=self.source_entity,
+            language = self.language_en,
+            string="foobar")
+        source_trans.save()
+        trans_lang = self.language.code
         trans = "foo"
         # Create new translation
         resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, self.language.code,]),
-            json.dumps({'strings':[{'id':self.source_entity.id,'translation':trans}]}),
+            args=[self.project.slug, trans_lang,]),
+            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
             content_type='application/json' )
         self.assertEqual(resp.status_code, 200)
+        source_trans.delete()
 
         # Delete Translations
         resp = self.client['maintainer'].post(reverse(
