@@ -569,7 +569,7 @@ def delete_translation(request, project_slug=None, resource_slug=None,
     Delete a list of translations according to the post request.
     """
 
-    if not request.POST and request.POST.has_key('to_delete'):
+    if not request.POST:
         return HttpResponseBadRequest()
 
     data = json.loads(request.raw_post_data)
