@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import urllib2
-from json import loads as parse_json, dumps as compile_json
+try:
+    from json import loads as parse_json, dumps as compile_json
+except ImportError:
+    from simplejson import loads as parse_json, dumps as compile_json
 
 
 class Languages:

@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import codecs, copy, json, os, re
+import codecs, copy, os, re
+
+try:
+    import json
+except ImportError:
+    import simplejson as json
 
 from django.db import transaction
 from django.db.models import get_model
@@ -201,7 +206,7 @@ class Handler(object):
 
             # Do the actual replacement in the template
             template = self._do_replace("%s_tr" % string.string_hash.encode('utf-8'),
-                    trans.string.encode('utf-8') if trans else "",template)
+                    trans and trans.string.encode('utf-8') or "", template)
 
         self.compiled_template = template
 

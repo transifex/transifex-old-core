@@ -9,8 +9,8 @@ import xml.dom.minidom
 from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
-from resources.formats.core import (StringSet, ParseError,
-    GenericTranslation, CompileError, Handler, STRICT)
+from resources.formats.core import StringSet, ParseError, \
+    GenericTranslation, CompileError, Handler, STRICT
 from resources.formats.decorators import *
 
 # Resources models

@@ -3,23 +3,23 @@
 """
 GNU Gettext .PO/.POT file handler/compiler
 """
-import os, re, time, uuid
+import os, re, time
 from hashlib import md5
 import polib, datetime
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
-from core import (CompileError, GenericTranslation, Handler, STRICT, StringSet,
-                  ParseError, escape)
 
 from txcommon.commands import run_command, CommandError
 from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from teams.models import Team
-
 from resources.formats.decorators import *
 from suggestions.models import Suggestion
+
+from core import CompileError, GenericTranslation, Handler, STRICT, \
+    StringSet, ParseError, escape
 
 #class ResXmlParseError(ParseError):
     #pass

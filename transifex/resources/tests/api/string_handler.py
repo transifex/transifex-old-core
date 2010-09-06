@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-import json
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 from django.core.urlresolvers import reverse
 from django.db.models import get_model
 from django.test.client import Client

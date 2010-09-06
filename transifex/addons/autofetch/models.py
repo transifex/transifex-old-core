@@ -1,15 +1,11 @@
-from django.core.urlresolvers import reverse
-from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpRequest
 
 from transifex.resources.models import Resource
 
 import os
 import urllib2
 from uuid import uuid4
-import simplejson as json
 
 StorageFile = models.get_model("storage", "StorageFile")
 
