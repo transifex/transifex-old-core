@@ -6,44 +6,19 @@ from languages.models import Language
 from resources.models import Resource, Translation
 from txcommon.tests.base import BaseTestCase
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
+from django.utils import simplejson as json
+
 
 class PermissionsTest(BaseTestCase):
     """Test view permissions"""
 
     def seUp(self):
-        super(ViewsTest, self).setUp()
+        super(PermissionsTest, self).setUp()
 
     def test_anon(self):
         """
         Test anonymous user
         """
-        # Test main lotte page
-        page_url = reverse('translate_resource', args=[
-            self.project.slug, self.resource.slug, self.language.code])
-        resp = self.client['anonymous'].get(page_url)
-        self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
-
-        # Create source language translation. This is needed to push
-        # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
-        trans_lang = self.language.code
-        trans = "foo"
-        # Create new translation
-        resp = self.client['anonymous'].post(reverse('push_translation',
-            args=[self.project.slug, trans_lang,]),
-            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
-            content_type='application/json' )
-        self.assertEqual(resp.status_code, 302)
-        source_trans.delete()
-
         # Delete Translations
         resp = self.client['anonymous'].post(reverse(
             'resource_translations_delete',
@@ -102,29 +77,6 @@ class PermissionsTest(BaseTestCase):
         """
         Test random registered user
         """
-
-        # Test main lotte page
-        page_url = reverse('translate_resource', args=[
-            self.project.slug, self.resource.slug, self.language.code])
-        resp = self.client['registered'].get(page_url)
-        self.assertEqual(resp.status_code, 403)
-
-        # Create source language translation. This is needed to push
-        # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
-        trans_lang = self.language.code
-        trans = "foo"
-        # Create new translation
-        resp = self.client['registered'].post(reverse('push_translation',
-            args=[self.project.slug, trans_lang,]),
-            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
-            content_type='application/json' )
-        self.assertEqual(resp.status_code, 403)
-        source_trans.delete()
-
         # Delete Translations
         resp = self.client['registered'].post(reverse(
             'resource_translations_delete',
@@ -183,42 +135,6 @@ class PermissionsTest(BaseTestCase):
         """
         Test team_member permissions
         """
-
-        # Test main lotte page
-        page_url = reverse('translate_resource', args=[
-            self.project.slug, self.resource.slug, self.language.code])
-        resp = self.client['team_member'].get(page_url)
-        self.assertEqual(resp.status_code, 200)
-
-        # Test main lotte page for other team. This should fail
-        page_url = reverse('translate_resource', args=[
-            self.project.slug, self.resource.slug, 'el'])
-        resp = self.client['team_member'].get(page_url)
-        self.assertEqual(resp.status_code, 403)
-
-        # Create source language translation. This is needed to push
-        # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
-        trans_lang = self.language.code
-        trans = "foo"
-        # Create new translation
-        resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, trans_lang,]),
-            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
-            content_type='application/json' )
-        self.assertEqual(resp.status_code, 200)
-
-        # Create new translation in other team. Expect this to fail
-        resp = self.client['team_member'].post(reverse('push_translation',
-            args=[self.project.slug, 'ru']),
-            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
-            content_type='application/json' )
-        self.assertEqual(resp.status_code, 403)
-        source_trans.delete()
-
         # Delete Translations
         resp = self.client['team_member'].post(reverse(
             'resource_translations_delete',
@@ -277,29 +193,6 @@ class PermissionsTest(BaseTestCase):
         """
         Test maintainer permissions
         """
-
-        # Test main lotte page
-        page_url = reverse('translate_resource', args=[
-            self.project.slug, self.resource.slug, self.language.code])
-        resp = self.client['maintainer'].get(page_url)
-        self.assertEqual(resp.status_code, 200)
-
-        # Create source language translation. This is needed to push
-        # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
-        trans_lang = self.language.code
-        trans = "foo"
-        # Create new translation
-        resp = self.client['maintainer'].post(reverse('push_translation',
-            args=[self.project.slug, trans_lang,]),
-            json.dumps({'strings':[{'id':source_trans.id,'translations':{ 'other': trans}}]}),
-            content_type='application/json' )
-        self.assertEqual(resp.status_code, 200)
-        source_trans.delete()
-
         # Delete Translations
         resp = self.client['maintainer'].post(reverse(
             'resource_translations_delete',
