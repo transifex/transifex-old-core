@@ -91,8 +91,12 @@ class Command(BaseCommand):
                             fhandler.parse_file(True)
                             strings_added, strings_updated = fhandler.save2db(True)
                         except Exception, e:
-                            print "Could not import file '%s': %s" % \
-                                (source_file, str(e))
+                            resource.delete()
+                            print "Resource not created! Could not import " \
+                                "file '%s': %s" % (source_file, str(e))
+                            # Skip adding translations, as the resource 
+                            # wasn't created.
+                            continue
 
                         logger.debug("Inserting translations for '%s' (%s)." 
                             % (resource.slug, project))
