@@ -28,5 +28,18 @@
     {% endif %}
     </span>
     </td>
+    <td class="priority_level" style="width:100px;text-align:center">
+        {% if is_maintainer %}
+            <a id="priority_{{ res.slug }}" class="resource_priority_trigger" style="cursor:pointer">
+            <span class="priority_sort" style="display:none">{{ res.priority.level }}</span>
+            <img src="{{ STATIC_URL }}priorities/images/{{ res.priority.display_level }}.png" style="border:0" title="{{ res.priority.display_level }}"/>
+            </a>
+        {% else %}
+            <span class="priority_sort" style="display:none">{{ res.priority.level }}</span>
+            {% ifnotequal res.priority.level "0" %}
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ res.priority.display_level }}.png" style="border:0" title="{{ res.priority.display_level }}"/>
+            {% endifnotequal %}
+        {% endif %}
+    </td>
 </tr>
 {% endfor %}
