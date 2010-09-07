@@ -7,9 +7,9 @@ from resources.views import *
 # General URLs:
 urlpatterns = patterns('',
     # Project resources list
-    url(PROJECT_URL+r'resources/(?P<offset>\d+)$',
+    url(PROJECT_URL_PARTIAL+r'resources/(?P<offset>\d+)$',
         project_resources, name='project_resources'),
-    url(PROJECT_URL+r'resources/(?P<offset>\d+)/more/$',
+    url(PROJECT_URL_PARTIAL+r'resources/(?P<offset>\d+)/more/$',
         project_resources, name='project_resources_more', kwargs={'more':True}),
 )
 
