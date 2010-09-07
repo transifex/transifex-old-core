@@ -1,4 +1,5 @@
 {% extends "projects/project_detail_childs.html" %}
+{% load cache %}
 {% load markup %}
 {% load i18n %}
 {% load truncate %}
@@ -129,6 +130,8 @@
   <tbody>
 {% for language in release.available_languages %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+
+      {% cache 604800 release_details release.id language.id %}
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
           </td>
@@ -142,6 +145,7 @@
             </div>
           {% endwith %}
         </td>
+	  {% endcache %}
         <td>
         <span style="border:0">
           {% last_translation_update release language as last_update %}

@@ -168,7 +168,7 @@ def project_delete(request, project_slug):
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_detail(request, project_slug):
-    project = get_object_or_404(Project, slug=project_slug)
+    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
 
     if not request.user.is_anonymous():
         user_teams = Team.objects.filter(project=project).filter(

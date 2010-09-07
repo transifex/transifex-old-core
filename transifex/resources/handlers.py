@@ -8,16 +8,30 @@ from actionlog.models import action_logging
 from projects.signals import post_resource_save, post_resource_delete
 from txcommon import notifications as txnotification
 from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
+from teams.models import Team
 
 def on_ss_save_invalidate_cache(sender, instance, created, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     cache.delete(RESOURCES_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
         instance.resource.slug))
     if created:
+        # Number of source strings in resource
         cache.delete(RESOURCES_CACHE_KEYS["source_strings_count"]% (
             instance.resource.project.slug,
             instance.resource.slug))
         for lang in instance.resource.available_languages:
+            team = Team.objects.get_or_none(instance.resource.project, lang)
+            if team:
+                # Template lvl cache for team details
+                invalidate_template_cache("team_details",
+                    team.id, instance.resource.id)
+
+            for rel in instance.resource.project.releases.all():
+                # Template lvl cache for release details
+                invalidate_template_cache("release_details",
+                    rel.id, lang.id)
+
+            # Template lvl cache for resource details
             invalidate_template_cache("resource_details",
                 instance.resource.project.slug, instance.resource.slug,
                  lang.code)
@@ -26,15 +40,32 @@ def on_ss_save_invalidate_cache(sender, instance, created, **kwargs):
 def on_ss_delete_invalidate_cache(sender, instance, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     if instance and instance.resource and instance.resource.project:
+        # Number of words in resource
         cache.delete(RESOURCES_CACHE_KEYS["word_count"] % (instance.resource.project.slug,
             instance.resource.slug))
+        # Number of source entities in resource
         cache.delete(RESOURCES_CACHE_KEYS["source_strings_count"]% (
             instance.resource.project.slug,
             instance.resource.slug))
+
         for lang in instance.resource.available_languages:
+            team = Team.objects.get_or_none(instance.resource.project, lang)
+            if team:
+                # Template lvl cache for team details
+                invalidate_template_cache("team_details",
+                    team.id, instance.resource.id)
+
+            for rel in instance.resource.project.releases.all():
+                # Template lvl cache for release details
+                invalidate_template_cache("release_details",
+                    rel.id, lang.id)
+
+            # Template lvl cache for resource details
             invalidate_template_cache("resource_details",
                 instance.resource.project.slug, instance.resource.slug,
                 lang.code)
+
+            # Resource available languages
             cache.delete(RESOURCES_CACHE_KEYS["lang_trans"] % (
                 lang.code,
                 instance.resource.project.slug,
@@ -49,6 +80,7 @@ def on_ts_save_invalidate_cache(sender, instance, created, **kwargs):
      - Invalidate the translated_strings for this resource/language
      - Invalidate the last_updated property for this language
     """
+    # Update resource available languages
     langs_key = RESOURCES_CACHE_KEYS["available_langs"] % (
         instance.source_entity.resource.project.slug,
         instance.source_entity.resource.slug)
@@ -56,18 +88,32 @@ def on_ts_save_invalidate_cache(sender, instance, created, **kwargs):
     if cache.get(langs_key) and instance.language not in cache.get(langs_key):
         cache.delete(langs_key)
 
+    # Update lant_update for specific language
     cache.set(RESOURCES_CACHE_KEYS["lang_last_update"] % (
             instance.language.code,
             instance.source_entity.resource.project.slug,
             instance.source_entity.resource.slug), instance)
 
     if created:
-        # new translation. Update lang percentage
+        # new translation. Update language percentage
         cache.delete(RESOURCES_CACHE_KEYS["lang_trans"] % (
             instance.language.code,
             instance.source_entity.resource.project.slug,
             instance.source_entity.resource.slug))
 
+        team = Team.objects.get_or_none(instance.source_entity.resource.project,
+            instance.language)
+        if team:
+            # Invalidate team details template cache for this lang
+            invalidate_template_cache("team_details",
+                team.id, instance.source_entity.resource.id)
+
+        for rel in instance.source_entity.resource.project.releases.all():
+            # Invalidate release details template cache for this lang
+            invalidate_template_cache("release_details",
+                rel.id, instance.language.id)
+
+        # Invalidate resource details template cache for this lang
         invalidate_template_cache("resource_details",
             instance.source_entity.resource.project.slug,
             instance.source_entity.resource.slug, instance.language.code)
@@ -81,9 +127,24 @@ def on_ts_delete_invalidate_cache(sender, instance, **kwargs):
      - Invalidate the translated_stings for the resource/language
      - Invalidate the last_updated property for this language
     """
+    # Invalidate resource details template cache for this lang
     invalidate_template_cache("resource_details",
         instance.source_entity.resource.project.slug,
         instance.source_entity.resource.slug, instance.language.code)
+
+    team = Team.objects.get_or_none(instance.source_entity.resource.project,
+        instance.language)
+    if team:
+        # Invalidate team details template cache for this lang
+        invalidate_template_cache("team_details",
+            team.id, instance.source_entity.resource.id)
+
+    for rel in instance.source_entity.resource.project.releases.all():
+        # Invalidate release details template cache for this lang
+        invalidate_template_cache("release_details",
+            rel.id, instance.language.id)
+
+    # Update available langs for this resource
     langs_key = RESOURCES_CACHE_KEYS["available_langs"] % (
         instance.source_entity.resource.project.slug,
         instance.source_entity.resource.slug)
@@ -91,11 +152,13 @@ def on_ts_delete_invalidate_cache(sender, instance, **kwargs):
     if cache.get(langs_key) and instance.language not in cache.get(langs_key):
         cache.delete(langs_key)
 
+    # Update lant_update for specific language
     cache.set(RESOURCES_CACHE_KEYS["lang_last_update"] % (
             instance.language.code,
             instance.source_entity.resource.project.slug,
             instance.source_entity.resource.slug), instance)
 
+    # Update translated percentage for specific language
     cache.delete(RESOURCES_CACHE_KEYS["lang_trans"] % (
             instance.language.code,
             instance.source_entity.resource.project.slug,

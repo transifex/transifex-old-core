@@ -121,7 +121,7 @@ Projects |
   <tbody>
 {% for language in translated_languages %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-        {% cache 500 resource_details resource.project.slug resource.slug language.code %}
+        {% cache 604800 resource_details resource.project.slug resource.slug language.code %}
         <td>
           {{language.name}} <span class="locale">({{ language.code }})</span>
           {% ifequal resource.source_language language %}

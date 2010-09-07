@@ -145,9 +145,9 @@ def team_list(request, project_slug):
 @access_off(team_off)
 def team_detail(request, project_slug, language_code):
 
-    project = get_object_or_404(Project, slug=project_slug)
-    language = get_object_or_404(Language, code=language_code)
-    team = get_object_or_404(Team, project__pk=project.pk,
+    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+    language = get_object_or_404(Language.objects.select_related(), code=language_code)
+    team = get_object_or_404(Team.objects.select_related(), project__pk=project.pk,
         language__pk=language.pk)
 
     team_access_requests = TeamAccessRequest.objects.filter(team__pk=team.pk)

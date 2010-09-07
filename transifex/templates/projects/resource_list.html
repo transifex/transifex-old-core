@@ -150,12 +150,10 @@
           </sup>
         </td>
         <td class="last_updated">
-          {% last_translation_update res as last_update %}
-          {% last_committer res as last_committer %}    
-          <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
-          {% if last_update %}
-              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }}
+          <span class="res_tipsy_enable" style="border:0" title="{% if res.last_committer %}Committed by {{ res.last_committer }}<br/>{% else %}No committers yet{% endif %}">
+          {% if res.last_update %}
+              <span class="origin_format" style="display:none">{{ res.last_update|date:"M d,Y h:i A" }}</span>
+              {{ res.last_update|timesince }}
           {% else %}
               {% trans "no translations yet" %}
           {% endif %}

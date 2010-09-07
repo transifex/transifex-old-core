@@ -1,5 +1,6 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
+{% load cache %}
 {% load pagination_tags %}
 {% load txcommontags %}
 {% load permissions %}
@@ -141,7 +142,9 @@
   </thead>
   <tbody>
   {% for res in resources %}
-    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+
+  <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+  {% cache 604800 team_details team.id res.id %}
         <td>
         {{ res.name }}
         </td>
@@ -155,10 +158,12 @@
             </div>
         {% endwith %}
         </td>
+  {% endcache %}
         <td>
         <span style="border:0">
-          {% last_translation_update res team.language.code as last_update %}
-          {% last_committer res team.language.code as last_committer %}
+
+        {% last_translation_update release language as last_update %}
+        {% last_committer release language as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|timesince }} 
