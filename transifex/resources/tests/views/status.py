@@ -6,7 +6,13 @@ from txcommon.tests.base import BaseTestCase
 
 
 class StatusCodesTest(BaseTestCase):
-    """Test that all app URLs return correct status code."""
+    """Test that all app URLs return correct status code.
+    
+    Moreover, this kind of tests are usefull to list down the urls that are 
+    mounted to the resources app views.
+    TODO: Maybe in the future, we need to refactor the tests according to 
+    request type, e.g. split them to GET and POST sets of URLs.
+    """
     # TODO: Fill in the urls
 
     def setUp(self):
@@ -15,7 +21,27 @@ class StatusCodesTest(BaseTestCase):
             200: [
                 ('/projects/p/%s/resource/%s/' %
                     (self.project.slug, self.resource.slug)),
-                ('/projects/p/%s/resource/%s/l/en-US/view/' %
+                ('/projects/p/%s/resource/%s/l/pt_BR/view/' %
+                    (self.project.slug, self.resource.slug)),
+                ('/projects/p/%s/resources/1' % 
+                    (self.project.slug,)),
+                ('/projects/p/%s/resources/1/more/' % 
+                    (self.project.slug,)),
+                ('/projects/p/%s/resource/%s/l/pt_BR/actions/' %
+                    (self.project.slug, self.resource.slug)),
+                ],
+            302: [
+                ('/projects/p/%s/resource/%s/edit/$' %
+                    (self.project.slug, self.resource.slug)),
+                ('/projects/p/%s/resource/%s/delete/$' %
+                    (self.project.slug, self.resource.slug)),
+                ('/projects/p/%s/resource/%s/l/pt_BR/download/' %
+                    (self.project.slug, self.resource.slug)),
+                ('/projects/p/%s/resource/%s/l/pt_BR/lock_and_download/' %
+                    (self.project.slug, self.resource.slug)),
+                ],
+            403: [
+                ('/projects/p/%s/resource/%s/l/pt_BR/delete_all/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             404: [
