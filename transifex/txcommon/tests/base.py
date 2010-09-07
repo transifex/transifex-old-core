@@ -136,13 +136,7 @@ class BaseTestCase(TestCase):
 
 
     def tearDown(self):
-        self.project.delete()
-        self.resource.delete()
-        self.team.delete()
-        self.source_entity.delete()
-        self.source_entity_plural.delete()
-        for nick, user in self.user.iteritems():
-            user.delete()
+        pass
 
     # Custom assertions
     def assertNoticeTypeExistence(self, noticetype_label):
