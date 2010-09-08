@@ -100,6 +100,8 @@ class BaseTestCase(TestCase):
         #    slug="project1", name="Test Project")
         self.project = Project.objects.get(slug='project1')
         self.project.maintainers.add(self.user['maintainer'])
+        self.project_private = Project.objects.get(slug='project2')
+        self.project_private.maintainers.add(self.user['maintainer'])
 
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
@@ -113,8 +115,12 @@ class BaseTestCase(TestCase):
         self.language_ar = Language.objects.get(code='ar')
         self.team = Team.objects.get_or_create(language=self.language,
             project=self.project, creator=self.user['maintainer'])[0]
+        self.team_private = Team.objects.get_or_create(language=self.language,
+            project=self.project_private, creator=self.user['maintainer'])[0]
         self.team.coordinators.add(self.user['team_coordinator'])
         self.team.members.add(self.user['team_member'])
+        self.team_private.coordinators.add(self.user['team_coordinator'])
+        self.team_private.members.add(self.user['team_member'])
 
         # Create a resources
         self.resource = Resource.objects.create(slug="resource1", name="Resource1",
@@ -122,17 +128,30 @@ class BaseTestCase(TestCase):
             i18n_type='PO')
         self.source_entity = SourceEntity.objects.create(string='String1',
             context='Context1', occurrences='Occurrences1', resource=self.resource)
+        self.resource_private = Resource.objects.create(slug="resource1",
+            name="Resource1", project=self.project_private,
+            source_language=self.language_en, i18n_type='PO')
+        self.source_entity_private = SourceEntity.objects.create(string='String1',
+            context='Context1', occurrences='Occurrences1',
+            resource=self.resource_private)
 
         # Create pluralized source entity
         self.source_entity_plural = SourceEntity.objects.create(
             string='pluralized_String1', context='Context1',
             occurrences='Occurrences1_plural', resource= self.resource,
             pluralized=True)
+        self.source_entity_plural_private = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource_private,
+            pluralized=True)
 
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
             name="Release1", project=self.project)
         self.release.resources.add(self.resource)
+        self.release_private = Release.objects.create(slug="releaseslug2",
+            name="Release2", project=self.project_private)
+        self.release_private.resources.add(self.resource_private)
 
 
     def tearDown(self):
