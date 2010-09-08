@@ -36,6 +36,12 @@ class Command(BaseCommand):
         datadir = options.get('datadir')
         filename = options.get('filename')
 
+        if settings.DEBUG:
+            msg = "You are running this command with DEBUG=True. Please " \
+                "change it to False in order to avoid problems with " \
+                "allocation of memory."
+            raise CommandError(msg)
+
         msg = None
         if len(args) == 0:
             jsonmaps = JSONMap.objects.all()
