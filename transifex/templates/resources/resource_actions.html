@@ -115,14 +115,24 @@
         <ul>
           <li class="top">
             <span class="i16 get_file">
-            <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
+            {% else %}
+                <a class="disabled" style="cursor:pointer" title='{% trans "You must login to be able to download the translations." %}'>{% trans "Download for viewing" %}</a>
+            {% endif %}
 			</span>
           </li>
           {% ifnotequal resource.source_language target_language %}
           <li>
+            {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock {% if lock %}{% ifnotequal request.user lock.owner %} disabled{% endifnotequal %}{% endif %}">
               <a style="cursor:pointer" {% if lock %}{% ifnotequal request.user lock.owner %}title="Resource cannot be locked"{% endifnotequal %}{% endif %}>{% trans "Download for translation" %}</a>
             </span>
+            {% else %}
+            <span id="download_for_translation" class="i16 lock">
+              <a class="disabled" style="cursor:pointer" title='{% trans "You must login to use this action" %}'>{% trans "Download for translation" %}</a>
+            </span>
+            {% endif %}
             <span class="tipsy_enable" title="Lock the file under your ownership and download it locally to edit it, in one action." style="border:0">(?)</span>
             <div class="error_notes"></div>
           </li>
