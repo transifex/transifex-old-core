@@ -4,3 +4,4 @@ from resources.tests.models import *
 from resources.formats import *
 from api import *
 from views import *
+from templates import *
