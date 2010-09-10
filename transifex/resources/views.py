@@ -50,7 +50,7 @@ def resource_detail(request, project_slug, resource_slug):
 
     # We want the teams to check in which languages user is permitted to translate.
     user_teams = []
-    if getattr(request, 'user'):
+    if getattr(request, 'user') and request.user.is_authenticated():
         user_teams = Team.objects.filter(project=resource.project).filter(
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
@@ -178,7 +178,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
 
     # We want the teams to check in which languages user is permitted to translate.
     user_teams = []
-    if getattr(request, 'user'):
+    if getattr(request, 'user') and request.user.is_authenticated():
         user_teams = Team.objects.filter(project=resource.project).filter(
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
