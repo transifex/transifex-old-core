@@ -13,6 +13,8 @@ from projects.models import Project
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
 from releases.models import Release
+from resources.models import SourceEntity
+from resources.stats import ReleaseStatsList
 
 # Temporary
 from txcommon import notifications as txnotification
@@ -54,9 +56,12 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
 def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
                                 project__slug=project_slug)
+    statslist = ReleaseStatsList(release)
+
     return render_to_response('projects/release_detail.html', {
         'release': release,
         'project': release.project,
+        'statslist': statslist,
     }, context_instance=RequestContext(request))
 
 
@@ -66,10 +71,14 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     project = get_object_or_404(Project, slug__exact=project_slug)
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
+
+    stats = ReleaseStatsList(release).resource_stats_for_language(language)
+
     return render_to_response('projects/release_language_detail.html', {
         'project': project,
         'release': release,
         'language': language,
+        'stats': stats,
     }, context_instance=RequestContext(request))
 
 

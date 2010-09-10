@@ -27,6 +27,7 @@ from txcommon.decorators import one_perm_required_or_403
 from resources.forms import ResourceForm
 from resources.models import (Translation, Resource, SourceEntity,
                               PARSERS, StorageFile)
+from resources.stats import ResourceStatsList
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
@@ -55,12 +56,14 @@ def resource_detail(request, project_slug, resource_slug):
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
+    statslist = ResourceStatsList(resource)
+
     return render_to_response("resources/resource.html",
         { 'project' : resource.project,
           'resource' : resource,
           'languages' : Language.objects.order_by('name'),
-          'translated_languages' : resource.available_languages,
-          'user_teams' : user_teams },
+          'user_teams' : user_teams,
+          'statslist': statslist },
         context_instance = RequestContext(request))
 
 
@@ -181,6 +184,8 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
+    stats = ResourceStatsList(resource).stat(target_language)
+
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
       'resource' : resource,
@@ -189,7 +194,8 @@ def resource_actions(request, project_slug=None, resource_slug=None,
       'languages': languages,
       'disabled_languages_ids': disabled_languages_ids,
       'lock': lock,
-      'user_teams': user_teams
+      'user_teams': user_teams,
+      'stats': stats,
       },
     context_instance = RequestContext(request))
 

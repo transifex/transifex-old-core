@@ -99,10 +99,16 @@ Projects |
       </td>
     </tr>
     <tr>
+      <th class="i16 language">{% trans "Number of languages:" %}</th>
+      <td>
+        {{ statslist.available_languages|length }} 
+      </td>
+    </tr>
+    <tr>
       <th class="i16 bricks">{% trans "Total Strings:" %}</th>
       <td>
-        {{ resource.entities_count }} 
-        <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
+        {{ statslist.total_entities }} 
+        <span class="words big_number">({{ statslist.wordcount }} {% trans "words" %})</span>
       </td>
     </tr>
   </table>
@@ -119,22 +125,22 @@ Projects |
    </tr>
   </thead>
   <tbody>
-{% for language in translated_languages %}
+{% for stat in statslist.language_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-        {% cache 604800 resource_details resource.project.slug resource.slug language.code %}
+        {% cache 604800 resource_details resource.project.slug resource.slug stat.language.code %}
         <td>
-          {{language.name}} <span class="locale">({{ language.code }})</span>
-          {% ifequal resource.source_language language %}
+          {{ stat.language.name }} <span class="locale">({{ stat.language.code }})</span>
+          {% ifequal resource.source_language stat.language %}
              <span style="padding-left:1em"><em>source language</em></span>
           {% endifequal %}
         </td>
         <td>
           {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated resource language.code %}<br />{% trans "Untranslated: " %}{% untranslated resource language.code %}">
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{{ stat.num_translated }}<br />{% trans "Untranslated: " %}{{ stat.num_untranslated }}">
                 <div class="stats_string_resource" >
-                    {% trans_percent resource language.code %}% 
+                    {{ stat.trans_percent }}% 
                 </div> 
-                {% stats_bar_simple resource language.code barwidth %}
+                {% stats_bar_simple stat barwidth %}
             </div>
           {% endwith %}
         </td>
@@ -142,8 +148,8 @@ Projects |
 
         {% endcache %}
         <span style="border:0">
-          {% last_translation_update resource language.code as last_update %}
-          {% last_committer resource language.code as last_committer %}
+          {% with stat.last_update as last_update %}
+          {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|timesince }}
@@ -153,6 +159,8 @@ Projects |
           {% else %}
               {% trans "no translations yet" %}
           {% endif %}
+          {% endwith %}
+          {% endwith %}
         </span>
         </td>
     </tr>
@@ -161,7 +169,7 @@ Projects |
            /* FancyBox Using custom settings */ 
            $.fancybox(
                { 
-                'href': '{% url resource_actions resource.project.slug resource.slug language.code %}',
+                'href': '{% url resource_actions resource.project.slug resource.slug stat.language.code %}',
                 'hideOnContentClick': false,
                 'onComplete':function() {
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
@@ -173,7 +181,7 @@ Projects |
                     $("div.language_chooser a").click( function(){
                         var target_lang_code = $("div.language_chooser select").val();
                         if ( target_lang_code != "" ) {
-                            request_url = window.location+'l/{{ language.code }}/clone/'+target_lang_code+'/';
+                            request_url = window.location+'l/{{ stat.language.code }}/clone/'+target_lang_code+'/';
                             window.location = request_url;
                         } else {
                             alert("Please select a target language first and then click Go.");
@@ -182,7 +190,7 @@ Projects |
                     if(!$("#download_for_translation").hasClass('disabled')){
                     $("#download_for_translation").click(function(){
                         $.ajax({
-                            url : '{% url lock_and_download_translation resource.project.slug resource.slug language.code %}',
+                            url : '{% url lock_and_download_translation resource.project.slug resource.slug stat.language.code %}',
                             contentType : 'application/json',
                             type : 'POST',
                             beforeSend: function(){

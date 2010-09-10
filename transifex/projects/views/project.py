@@ -19,7 +19,8 @@ from projects.permissions import *
 from projects import signals
 
 from languages.models import Language
-from resources.models import PARSERS
+from resources.models import PARSERS, SourceEntity
+from resources.stats import ProjectStatsList
 from storage.models import StorageFile
 # Temporary
 from txcommon import notifications as txnotification
@@ -177,6 +178,8 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
+    statslist = ProjectStatsList(project)
+
     return list_detail.object_detail(
         request,
         queryset = Project.objects.all(),
@@ -185,7 +188,8 @@ def project_detail(request, project_slug):
         extra_context= {
           'project_overview': True,
           'user_teams': user_teams,
-          'languages' : Language.objects.all(),
+          'languages': Language.objects.all(),
+          'statslist': statslist,
         })
 
 

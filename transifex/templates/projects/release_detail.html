@@ -128,28 +128,28 @@
    </tr>
   </thead>
   <tbody>
-{% for language in release.available_languages %}
+{% for stat in statslist.language_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
 
-      {% cache 604800 release_details release.id language.id %}
+      {% cache 604800 release_details release.id stat.language.id %}
         <td>
-          {{language.name}} <span class="locale">({{ language.code }})</span>
+          {{ stat.language.name }} <span class="locale">({{ stat.language.code }})</span>
           </td>
         <td>
           {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{% translated release language %}<br />{% trans "Untranslated: " %}{% untranslated release language %}">
+            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{{ stat.num_translated }}<br />{% trans "Untranslated: " %}{{ stat.num_untranslated }}">
                 <div class="stats_string_resource" >
-                    {% trans_percent release language %}% 
+                    {{ stat.trans_percent }}% 
                 </div> 
-                {% stats_bar_simple release language barwidth %}
+                {% stats_bar_simple stat barwidth %}
             </div>
           {% endwith %}
         </td>
 	  {% endcache %}
         <td>
         <span style="border:0">
-          {% last_translation_update release language as last_update %}
-          {% last_committer release language as last_committer %}
+          {% with stat.last_update as last_update %}
+          {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|timesince }}
@@ -159,20 +159,20 @@
           {% else %}
               {% trans "no translations yet" %}
           {% endif %}
+          {% endwith %}
+          {% endwith %}
         </span>
         </td>
     </tr>
     <script>
         $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
-            window.location = '{% url release_language_detail release.project.slug release.slug language.code %}';
+            window.location = '{% url release_language_detail release.project.slug release.slug stat.language.code %}';
         });
     </script>
 {% endfor %}
   </tbody>
 </table>
 </div>
-
-
 
 </div>
 </div>

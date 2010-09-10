@@ -19,6 +19,9 @@ from notification import models as notification
 from projects.models import Project
 from projects.permissions import *
 
+from resources.models import SourceEntity
+from resources.stats import ProjectStatsList
+
 from teams.forms import TeamSimpleForm, TeamRequestSimpleForm
 from teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
@@ -158,12 +161,15 @@ def team_detail(request, project_slug, language_code):
     else:
         user_access_request = None
 
+    statslist = ProjectStatsList(project).resource_stats_for_language(language)
+
     return render_to_response("teams/team_detail.html", 
                               {"project": project,
                                "team": team, 
                                "team_access_requests": team_access_requests,
                                "user_access_request": user_access_request,
-                               "project_team_page": True},
+                               "project_team_page": True,
+                               "statslist": statslist},
                                context_instance=RequestContext(request))
 
 
