@@ -130,7 +130,7 @@ class StorageHandler(BaseHandler):
 
                     logger.debug(str(e))
                     retval=dict(status='Error', message=message)
-                    return BAD_REQUEST("Could not import file: %s" % str(e))
+
             if not retval:
                 retval=dict(status='Created', files=files,
                     message=_("File uploaded successfully."))
