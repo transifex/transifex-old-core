@@ -6,7 +6,7 @@ def transifex_paths():
     # Scratch dir
     yield s.SCRATCH_DIR
     # Msgmerge dir
-    yield s.MSGMERGE_DIR
+    yield s.STORAGE_DIR
     # Log path
     yield s.LOG_PATH
 
