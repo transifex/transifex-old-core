@@ -19,9 +19,8 @@ from projects.permissions import *
 from projects import signals
 
 from languages.models import Language
-from resources.models import PARSERS, SourceEntity
 from resources.stats import ProjectStatsList
-from storage.models import StorageFile
+
 # Temporary
 from txcommon import notifications as txnotification
 

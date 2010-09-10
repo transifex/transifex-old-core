@@ -25,8 +25,7 @@ from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 
 from resources.forms import ResourceForm
-from resources.models import (Translation, Resource, SourceEntity,
-                              PARSERS, StorageFile)
+from resources.models import Translation, Resource
 from resources.stats import ResourceStatsList
 
 from autofetch.forms import URLInfoForm

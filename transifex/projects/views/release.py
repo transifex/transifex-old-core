@@ -13,7 +13,6 @@ from projects.models import Project
 from projects.forms import ReleaseForm
 from projects.permissions import (pr_release_add_change, pr_release_delete)
 from releases.models import Release
-from resources.models import SourceEntity
 from resources.stats import ReleaseStatsList
 
 # Temporary

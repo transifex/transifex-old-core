@@ -18,10 +18,7 @@ from languages.models import Language
 from notification import models as notification
 from projects.models import Project
 from projects.permissions import *
-
-from resources.models import SourceEntity
 from resources.stats import ProjectStatsList
-
 from teams.forms import TeamSimpleForm, TeamRequestSimpleForm
 from teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
