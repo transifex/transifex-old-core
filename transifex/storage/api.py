@@ -28,6 +28,8 @@ class StorageHandler(BaseHandler):
         """
         Deletes file by storage UUID
         """
+        if request.user.is_anonymous():
+            return rc.FORBIDDEN
         try:
             StorageFile.objects.get(uuid=uuid, user=request.user).delete()
         except StorageFile.DoesNotExist:
@@ -53,6 +55,8 @@ class StorageHandler(BaseHandler):
             ...
         ]
         """
+        if request.user.is_anonymous():
+            return rc.FORBIDDEN
         retval = StorageFile.objects.filter(user = request.user, bound=False)
         logger.debug("Returned list of users uploaded files: %s" % retval)
         return retval
@@ -61,6 +65,9 @@ class StorageHandler(BaseHandler):
         """
         API call for uploading a file via POST or updating storage file attributes
         """
+        if request.user.is_anonymous():
+            return rc.FORBIDDEN
+
         if "application/json" in request.content_type: # Do API calls
             if 'language' in request.data.keys() and uuid: # API call for changing language
                 lang_code = request.data['language'] # TODO: Sanitize
@@ -91,9 +98,7 @@ class StorageHandler(BaseHandler):
                     fh.write(chunk)
                 fh.close()
                 sf.size = os.path.getsize(sf.get_storage_path())
-                # FIXME we should fix this for client calls
-                if not request.user.is_anonymous():
-                    sf.user = request.user
+                sf.user = request.user
                 if 'language' in request.data.keys():
                     lang_code = request.data['language']
                     try:
