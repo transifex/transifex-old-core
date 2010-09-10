@@ -63,7 +63,7 @@ setup(
         "markdown",
         "userprofile",
         "httplib2",
-        "polib >= 0.5.1",
+        "polib >= 0.5.3",
         "Pygments >= 0.9",
         "PIL == 1.1.6",
         "contact_form >= 0.3", # hg 97559a887345 or newer

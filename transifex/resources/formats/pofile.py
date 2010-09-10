@@ -38,19 +38,22 @@ def get_po_contents(pofile):
     """
     This function takes a pofile object and returns it's contents
     """
-    #FIXME: The following line could fix the issue. Test it.
-    #return pofile.__str__()
 
-    filename = time.time()
-    pofile.save("/tmp/%s.tmp" % filename)
-    file = open("/tmp/%s.tmp" % filename, 'r')
-    file.seek(0)
-    content = file.read()
-    file.close()
-    os.unlink("/tmp/%s.tmp" % filename)
+    # FIXME: Temporary check until a version greater than polib-0.5.3 is out.
+    # Patch sent to upstream.
+    def charset_exists(charset):
+        """Check whether ``charset`` is valid or not."""
+        import codecs
+        try:
+            codecs.lookup(charset)
+        except LookupError:
+            return False
+        return True
 
-    return content
+    if not charset_exists(pofile.encoding):
+        pofile.encoding = polib.default_encodind
 
+    return pofile.__str__()
 
 def msgfmt_check(po_contents, with_exceptions=True):
     """
@@ -144,15 +147,7 @@ class POHandler(Handler):
             language = self.language
 
         template = self.compiled_template
-
-        # save to a temp dir to load in polib
-        filename = time.time()
-        file = open("/tmp/%s.tmp" % filename, 'w')
-        file.write(template)
-        file.flush()
-        file.close()
-        po = polib.pofile("/tmp/%s.tmp" % filename)
-        os.unlink("/tmp/%s.tmp" % filename)
+        po = polib.pofile(template)
 
         # Update PO file headers
         po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
