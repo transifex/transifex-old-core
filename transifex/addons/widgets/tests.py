@@ -6,9 +6,13 @@ from django.test.client import Client
 from projects.models import Project
 
 class TestCharts(BaseTestCase):
-    def test_main(self):
+    def setUp(self):
         super(TestCharts, self).setUp()
 
+    def tearDown(self):
+        super(TestCharts, self).tearDown()
+
+    def test_main(self):
         # Check if widgets page is available
         resp = self.client['registered'].get(reverse('project_widgets',
             kwargs={'project_slug': self.project.slug}))
