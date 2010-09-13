@@ -3,26 +3,24 @@
 {% load statistics_resources %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-{% for res in resources %}
+{% for  stat in statslist.resource_stats %}
 <tr>
     <td>
-    <a class="res_tipsy_enable" href="{{ res.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ res.entities_count }} <br>Available Languages: {{ res.available_languages|length }}">
-    {{ res.name }}
+    <a class="res_tipsy_enable" href="{{ stat.resource.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.resource.entities_count }} <br>Available Languages: {{ stat.resource.available_languages|length }}">
+      {{ stat.resource.name }}
     </a>
     <sup class="entry_metalink">
-        {% if request.user.is_authenticated and is_maintainer %}
+        {% if is_maintainer or request.user.is_superuser %}
             <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
             , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
         {% endif %}
     </sup>
     </td>
     <td class="last_updated">
-    {% last_translation_update res as last_update %}
-    {% last_committer res as last_committer %}    
-    <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
-    {% if last_update %}
-        <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-        {{ last_update|timesince }}
+    <span class="res_tipsy_enable" style="border:0" title="{% if stat.resource.last_committer %}Committed by {{ stat.resource.last_committer }}<br/>{% else %}No committers yet{% endif %}">
+    {% if stat.resource.last_update %}
+        <span class="origin_format" style="display:none">{{ stat.resource.last_update|date:"M d,Y h:i A" }}</span>
+        {{ stat.resource.last_update|timesince }}
     {% else %}
         {% trans "no translations yet" %}
     {% endif %}
@@ -30,14 +28,14 @@
     </td>
     <td class="priority_level" style="width:100px;text-align:center">
         {% if is_maintainer %}
-            <a id="priority_{{ res.slug }}" class="resource_priority_trigger" style="cursor:pointer">
-            <span class="priority_sort" style="display:none">{{ res.priority.level }}</span>
-            <img src="{{ STATIC_URL }}priorities/images/{{ res.priority.display_level }}.png" style="border:0" title="{{ res.priority.display_level }}"/>
+            <a id="priority_{{ stat.resource.slug }}" class="resource_priority_trigger" style="cursor:pointer">
+            <span class="priority_sort" style="display:none">{{ stat.resource.priority.level }}</span>
+            <img src="{{ STATIC_URL }}priorities/images/{{ stat.resource.priority.display_level }}.png" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
             </a>
         {% else %}
-            <span class="priority_sort" style="display:none">{{ res.priority.level }}</span>
-            {% ifnotequal res.priority.level "0" %}
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ res.priority.display_level }}.png" style="border:0" title="{{ res.priority.display_level }}"/>
+            <span class="priority_sort" style="display:none">{{ stat.resource.priority.level }}</span>
+            {% ifnotequal stat.resource.priority.level "0" %}
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ stat.resource.priority.display_level }}.png" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
             {% endifnotequal %}
         {% endif %}
     </td>
