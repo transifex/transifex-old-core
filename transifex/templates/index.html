@@ -15,7 +15,6 @@
 {% if not request.user.is_authenticated %}
 <div id="login_index">
   <div class="divright">
-  {% url user_changeopenid as user_changeopenid %}
   {% include "simpleauth/login_box.html" %}
   </div>
 </div>
