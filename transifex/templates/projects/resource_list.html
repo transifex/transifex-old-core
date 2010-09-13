@@ -5,14 +5,7 @@
 {% load upload_manager_tags %}
 
 <div id="resources" class="resources separate">
-  {% with project.resources.all|slice:":5" as resources %}
-  <h3>{% blocktrans count resources|length as counter %}Project Resource{% plural %}Project Resources{% endblocktrans %}
-    {% render_metacount resources _("resources") %}
-  </h3>
-
-  {% if resources %}
-  {% with resources|length as viewed %}
-  {% with project.resources.all|length as total %}
+  <h3>{% blocktrans %}Project Resources{% endblocktrans %}</h3>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -30,69 +23,6 @@
                   return parseInt($(".priority_sort", node).text());
               }
             }
-        });
-        // Bind show more, show all events
-        $('#show_more').click(function(){
-            $(this).parent().addClass('i16 action_go');
-            $.get('{% url project_resources_more project.slug viewed %}', function(data) {
-              var tbody = $('table.tablesorter_resource_list tbody');
-              tbody.append(data);
-              var current = $('tr', tbody).length;
-              $('#viewed').text(current)
-              total = parseInt($('#total').text());
-              $('#show_more').parent().removeClass('i16 action_go');
-              if(current >= total){
-                $('#show_actions').hide();
-              }
-              // Rebind the tablesorter js
-              $(".tablesorter_resource_list").tablesorter({
-                  widgets: ['zebra'],
-                  textExtraction: { // Take value inside an object for the columns
-                    0: function(node) {
-                        return $("a", node).text();
-                    },
-                    1: function(node) {
-                        return $("span", node).text();
-                    },
-                    2: function(node) {
-                        return parseInt($(".priority_sort", node).text());
-                    }
-                  }
-              });
-              // Rebind the tipsy
-              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-            });
-        });
-        $('#show_all').click(function(){
-            $(this).parent().addClass('i16 action_go');
-            $.get('{% url project_resources project.slug viewed %}', function(data) {
-              var tbody = $('table.tablesorter_resource_list tbody');
-              tbody.append(data);
-              var current = $('tr', tbody).length;
-              $('#viewed').text(current)
-              total = parseInt($('#total').text());
-              $('#show_all').parent().removeClass('i16 action_go');
-              if(current >= total){
-                $('#show_actions').hide();
-              }
-              // Rebind the tablesorter js
-              $(".tablesorter_resource_list").tablesorter({
-                  widgets: ['zebra'],
-                  textExtraction: { // Take value inside an object for the columns
-                    0: function(node) {
-                        return $("a", node).text();
-                    },
-                    1: function(node) {
-                        return $("span", node).text();
-                    },
-                    2: function(node) {
-                        return parseInt($(".priority_sort", node).text());
-                    }
-                  }
-              });
-              // Rebind the tipsy
-              $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-            });
         });
         {% if request.user.is_authenticated %}
         $("#new_translation1").click( function (){ 
@@ -130,6 +60,8 @@
     });
 </script>
 
+  {% for stat in statslist.resource_stats %}
+  {% if forloop.first %}
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
   <thead>
    <tr>
@@ -139,10 +71,10 @@
    </tr>
   </thead>
   <tbody>
-  {% for stat in statslist.resource_stats %}
+  {% endif %}
     <tr>
         <td>
-          <a class="res_tipsy_enable" href="{{ stat.resource.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.resource.total_entities }}<br/>Available Languages: {{ stat.resource.available_languages|length }}">{{ stat.resource.name }}</a>
+          <a class="res_tipsy_enable" href="{{ stat.resource.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.resource.entities_count }}<br/>Available Languages: {{ stat.resource.available_languages|length }}">{{ stat.resource.name }}</a>
           <sup class="entry_metalink">
              {% if is_maintainer or request.user.is_superuser %}
                <a href="{% url resource_edit project.slug stat.resource.slug %}">{% trans "edit" %}</a>
@@ -174,22 +106,13 @@
             {% endif %}
         </td>
     </tr>
-  {% endfor %}
+  {% if forloop.last %}
   </tbody>
   </table>
-
-  <div style="text-align:center;padding:1em;font-size:85%">
-    <span style="color:#8f8f8f">
-      {% trans "showing" %} <span id="viewed">{{ viewed }}</span> {% trans "out of" %} <span id="total">{{ total }}</span>
-    </span>
-    {% ifnotequal viewed total %}
-    <p id="show_actions">
-        <span><a id="show_more" style="cursor:pointer" >{% trans "show more" %}</a></span>
-        &nbsp;,&nbsp;
-        <span><a id="show_all" style="cursor:pointer" >{% trans "show all" %}</a></span>
-    </p>
-    {% endifnotequal %}
-  </div>
+  {% endif %}
+  {% empty %}
+    <p>{% trans "No resources are registered for this project yet." %}</p>
+  {% endfor %}
 
   {% comment %}
   {% get_permission "project_perm.submit_file" for request.user and project,1 as "can_submit_translation" %}
@@ -215,13 +138,6 @@
   {% endif %}
   {% endcomment %}
 
-  {% endwith %}
-  {% endwith %}
-  {% else %}
-
-  <p>{% trans "No resources are registered for this project yet." %}</p>
-    {% endif %}
-  {% endwith %}
   <p class="i16 tip compact clear">
     {% blocktrans %}A <em>Resource</em> is mapped to master file and it's translated versions.
     For example Resource could be bound to nano.pot and de.po, it.po, fi.po, etc.{% endblocktrans %}
