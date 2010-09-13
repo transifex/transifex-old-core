@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import list_detail
 
 from notification import models as notification
@@ -57,6 +58,7 @@ def search(request):
          'results': results}, 
           context_instance = RequestContext(request))
 
+@csrf_protect
 def index(request):
     num_projects = Project.objects.count()
     num_languages = Language.objects.count()
