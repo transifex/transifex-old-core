@@ -14,13 +14,6 @@ except ImportError:
 class CoreViewsTest(BaseTestCase):
     """Test basic view function"""
 
-    def test_stringset_handling(self):
-        """
-        Test AJAX stringset handler.
-        """
-        #FIXME: Find a way to emulate dataTables in order to test this view
-        pass
-
     def test_resource_details(self):
         """
         Test resource details of a resource.

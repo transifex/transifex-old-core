@@ -26,7 +26,7 @@ from txcommon.decorators import one_perm_required_or_403
 
 from resources.forms import ResourceForm
 from resources.models import Translation, Resource
-from resources.stats import ResourceStatsList
+from resources.stats import ResourceStatsList, ProjectStatsList
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo

@@ -11,8 +11,8 @@
     </a>
     <sup class="entry_metalink">
         {% if is_maintainer or request.user.is_superuser %}
-            <a href="{% url resource_edit project_slug=project.slug resource_slug=res.slug %}">{% trans "edit" %}</a>
-            , <a href="{% url resource_delete project_slug=project.slug resource_slug=res.slug %}">{% trans "del" %}</a>
+            <a href="{% url resource_edit project_slug=project.slug resource_slug=stat.resource.slug %}">{% trans "edit" %}</a>
+            , <a href="{% url resource_delete project_slug=project.slug resource_slug=stat.resource.slug %}">{% trans "del" %}</a>
         {% endif %}
     </sup>
     </td>

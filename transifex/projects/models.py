@@ -99,20 +99,8 @@ class PublicProjectManager(models.Manager):
 
 
 class Project(models.Model):
-
     """
     A project is a group of translatable resources.
-
-    >>> p, created = Project.objects.get_or_create(slug="foo", name="Foo Project")
-    >>> p = Project.objects.get(slug='foo')
-    >>> p
-    <Project: Foo Project>
-    >>> Project.objects.create(slug="foo", name="Foo Project")
-    Traceback (most recent call last):
-        ...
-    IntegrityError: column slug is not unique
-    >>> if created: p.delete()
-
     """
 
     private = models.BooleanField(default=False, verbose_name=_('Private'),
