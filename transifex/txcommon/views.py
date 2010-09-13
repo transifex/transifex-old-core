@@ -60,15 +60,13 @@ def search(request):
 
 @csrf_protect
 def index(request):
-    num_projects = Project.objects.count()
-    num_languages = Language.objects.count()
     return render_to_response("index.html",
         {'form': AuthenticationForm(),
          'next': request.path,
-         'num_projects': num_projects,
-         'num_languages': num_languages,
-         },
-          context_instance = RequestContext(request))
+         'num_projects': Project.objects.count(),
+         'num_languages': Language.objects.count(),
+        },
+        context_instance = RequestContext(request))
 
 
 @login_required
