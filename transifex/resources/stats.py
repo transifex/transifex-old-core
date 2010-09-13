@@ -7,7 +7,7 @@ from resources.models import Resource, Translation, SourceEntity
 class StatsBase():
     """A low-level statistics-holding object to inherit from.
 
-    Requires an iteretable of entities (e.g. a QuerySet).
+    Requires an iterable of entities (e.g. a QuerySet).
     """
 
     def __init__(self, entities):
@@ -29,7 +29,7 @@ class StatsBase():
     @cached_property
     def last_update(self):
         """
-        Return the time of the last translation made, independing on 
+        Return the time of the last translation made, without depending on 
         language.
         """
         lt = self.last_translation
@@ -39,7 +39,7 @@ class StatsBase():
     @cached_property
     def last_committer(self):
         """
-        Return the committer of the last translation made, independing on
+        Return the committer of the last translation made, without depending on
         language.
         """
         lt = self.last_translation
@@ -135,11 +135,10 @@ class StatsList(StatsBase):
         for language in self.available_languages:
             yield self.stat(language=language)
 
-    @cached_property
     def resource_stats(self):
         """Yield a Stat object for each available resource.
 
-        It adds a resource attribute to the releated StatsBase object.
+        It adds a resource attribute to the related StatsBase object.
         """
         resources = Resource.objects.filter(source_entities__in=self.entities
             ).distinct()
@@ -151,7 +150,7 @@ class StatsList(StatsBase):
     def resource_stats_for_language(self, language):
         """Yield a Stat object for each available resource for a given language.
 
-        It adds a resource attribute to the releated Stats object.
+        It adds a resource attribute to the related Stats object.
         """
         resources = Resource.objects.filter(source_entities__in=self.entities
             ).distinct()
@@ -162,7 +161,7 @@ class StatsList(StatsBase):
 
 
 class ResourceStatsList(StatsList):
-    """Wrapper to initialize a StatsList instance based on a reource.
+    """Wrapper to initialize a StatsList instance based on a resource.
 
     #TODO: Override wanted methods to cache theirs results based on the 
     class attrs.
