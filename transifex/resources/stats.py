@@ -1,8 +1,7 @@
+from django.core.cache import cache
 from languages.models import Language
-
-from txcommon.utils import cached_property
 from resources.models import Resource, Translation, SourceEntity
-
+from resources.utils import *
 
 class StatsBase():
     """A low-level statistics-holding object to inherit from.
@@ -10,15 +9,21 @@ class StatsBase():
     Requires an iterable of entities (e.g. a QuerySet).
     """
 
+    # This object is like an identifier for caching. We only cache object
+    # related stats classes, otherwise if we do it for plain querysets, we'd
+    # have to evaluate them everytime. This object can hold a Resource, Project
+    # or Release
+    object = None
+
     def __init__(self, entities):
         self.entities = entities
 
-    @cached_property
+    @stats_cached_property
     def translations(self):
         """Return all translations for the related entities."""
         return Translation.objects.filter(source_entity__in=self.entities)
 
-    @cached_property
+    @stats_cached_property
     def last_translation(self):
         """Return last translation made, independing on language."""
         t = self.translations.select_related('last_update', 'user'
@@ -26,7 +31,7 @@ class StatsBase():
         if t:
             return t[0]
 
-    @cached_property
+    @stats_cached_property
     def last_update(self):
         """
         Return the time of the last translation made, without depending on 
@@ -36,7 +41,7 @@ class StatsBase():
         if lt:
             return lt.last_update
 
-    @cached_property
+    @stats_cached_property
     def last_committer(self):
         """
         Return the committer of the last translation made, without depending on
@@ -46,7 +51,7 @@ class StatsBase():
         if lt:
             return lt.user
 
-    @cached_property
+    @stats_cached_property
     def total_entities(self):
         """
         Return the total number of SourceEntity objects to be translated.
@@ -67,25 +72,25 @@ class Stats(StatsBase):
         self.entities = entities
         self.language = language
 
-    @cached_property
+    @stats_cached_property
     def translations(self):
         return Translation.objects.filter(source_entity__in=self.entities,
             language=self.language)
 
-    @cached_property
+    @stats_cached_property
     def num_translated(self):
         """Return the number of translated entries."""
         trans_ids = self.translations.values_list('source_entity', flat=True)
         return SourceEntity.objects.filter(id__in=trans_ids).values('id').count()
 
-    @cached_property
+    @stats_cached_property
     def num_untranslated(self):
         """Return the number of untranslated entries."""
         trans_ids = self.translations.values_list('source_entity', flat=True)
         return SourceEntity.objects.filter(id__in=self.entities
             ).exclude(id__in=trans_ids).values('id').count()
 
-    @cached_property
+    @stats_cached_property
     def trans_percent(self):
         """Return the percent of translated entries."""
         t = self.num_translated
@@ -94,12 +99,12 @@ class Stats(StatsBase):
         except ZeroDivisionError:
             return 100
 
-    @cached_property
+    @stats_cached_property
     def untrans_percent(self):
         """Return the percent of untranslated entries."""
         return (100 - self.trans_percent)
 
-    @cached_property
+    @stats_cached_property
     def resources(self):
         """Return a list of resources related to the given entities."""
         return Resource.objects.filter(source_entities__in=self.entities
@@ -117,7 +122,7 @@ class StatsList(StatsBase):
         """Return a Stat object for a specific language."""
         return Stats(entities=self.entities, language=language)
 
-    @cached_property
+    @property
     def available_languages(self):
         """
         Return a list of languages with at least one translation for one of 
@@ -126,7 +131,6 @@ class StatsList(StatsBase):
         language_ids = self.translations.values_list('language__id', flat=True)
         return Language.objects.filter(id__in=language_ids).distinct()
 
-    @cached_property
     def language_stats(self):
         """Yield a Stat object for each available language.
 
@@ -144,7 +148,7 @@ class StatsList(StatsBase):
             ).distinct()
         for resource in resources:
             sa = StatsBase(resource.entities)
-            sa.resource = resource
+            sa.object = resource
             yield sa
 
     def resource_stats_for_language(self, language):
@@ -156,7 +160,7 @@ class StatsList(StatsBase):
             ).distinct()
         for resource in resources:
             sa = Stats(resource.entities, language)
-            sa.resource = resource
+            sa.object = resource
             yield sa
 
 
@@ -167,7 +171,7 @@ class ResourceStatsList(StatsList):
     class attrs.
     """
     def __init__(self, resource):
-        self.resource = resource
+        self.object = resource
         self.entities = SourceEntity.objects.filter(resource=resource)
 
     @property
@@ -180,7 +184,7 @@ class ResourceStatsList(StatsList):
         strings!
         """
         wc = 0
-        for ss in self.resource.source_strings:
+        for ss in self.object.source_strings:
             wc += ss.wordcount
         return wc
 
@@ -192,7 +196,7 @@ class ProjectStatsList(StatsList):
     class attrs.
     """
     def __init__(self, project):
-        self.project = project
+        self.object = project
         self.entities = SourceEntity.objects.filter(resource__project=project)
 
 
@@ -203,6 +207,6 @@ class ReleaseStatsList(StatsList):
     class attrs.
     """
     def __init__(self, release):
-        self.release = release
+        self.object = release
         self.entities = SourceEntity.objects.filter(resource__releases=release)
 

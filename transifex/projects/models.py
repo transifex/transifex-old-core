@@ -28,14 +28,6 @@ from projects import signals
 SourceEntity = get_model('resources', 'SourceEntity')
 Translation = get_model('resources', 'Translation')
 
-
-# keys used in cache
-# We put it here to have them all in one place for the specific models!
-PROJECTS_CACHE_KEYS = {
-    "word_count": "wcount.%s",
-    "source_strings_count": "sscount.%s"
-}
-
 class DefaultProjectManager(models.Manager):
     """
     This is the defautl manager of the project model (asigned to objects field).
@@ -183,124 +175,6 @@ class Project(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('project_detail', None, { 'project_slug': self.slug })
-
-    @property
-    def source_strings(self):
-        """
-        Return the list of all the strings, belonging to the Source Language
-        of the Project/Resource.
-        
-        CAUTION! 
-        1. This function returns Translation and not SourceEntity objects!
-        2. The strings may be in different source languages!!!
-        3. The source strings are not grouped based on the string value.
-        """
-        resources = self.resources.all()
-        source_strings = []
-        for resource in resources:
-            source_strings.extend(resource.source_strings)
-        return 
-
-    #TODO: Invalidation for cached value
-    @property
-    def total_entities(self):
-        """Return the total number of source entities to be translated."""
-        cache_key = (PROJECTS_CACHE_KEYS['source_strings_count'] % (self.project.slug,))
-        sc = cache.get(cache_key)
-        if not sc:
-            sc = SourceEntity.objects.filter(
-                resource__in=self.resources.all()).count()
-            cache.set(cache_key, sc)
-        return sc
-
-    # TODO: Invalidation for cached value
-    @property
-    def wordcount(self):
-        """
-        Return the number of words which need translation in this project.
-        
-        The counting of the words uses the Translation objects of the source
-        languages as set of objects.
-        CAUTION: 
-        1. The strings may be in different source languages!!!
-        2. The source strings are not grouped based on the string value.
-        """
-        cache_key = (PROJECTS_CACHE_KEYS['word_count'] % self.project.slug)
-        wc = cache.get(cache_key)
-        if not wc:
-            wc = 0
-            resources = self.resources.all()
-            for resource in resources:
-                wc += resource.wordcount
-            cache.set(cache_key, wc)
-        return wc
-
-    @property
-    def available_languages(self):
-        """
-        Return the languages with at least one Translation of a SourceEntity for
-        all Resources in the specific project instance.
-        """
-        # I put it here due to circular dependency on module
-        resources = self.resources.all()
-        languages = Translation.objects.filter(
-            rsource_entity__resource__in=resources).values_list(
-            'language', flat=True).distinct()
-        # The distinct() below is not important ... I put it just to be sure.
-        return Language.objects.filter(id__in=languages).distinct()
-
-    def translated_strings(self, language):
-        """
-        Return the QuerySet of source entities, translated in this language.
-        
-        This assumes that we DO NOT SAVE empty strings for untranslated entities!
-        """
-        # I put it here due to circular dependency on modules
-        target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(resource__in=self.resources.all(),
-            id__in=Translation.objects.filter(language=target_language,
-                source_entity__resource__in=self.resources.all(),
-                rule=5).values_list('source_entity', flat=True))
-
-    def untranslated_strings(self, language):
-        """
-        Return the QuerySet of source entities which are not yet translated in
-        the specific language.
-        
-        This assumes that we DO NOT SAVE empty strings for untranslated entities!
-        """
-        # I put it here due to circular dependency on modules
-        target_language = Language.objects.by_code_or_alias(language)
-        return SourceEntity.objects.filter(
-            resource__in=self.resources.all()).exclude(
-            id__in=Translation.objects.filter(language=target_language,
-                source_entity__resource__in=self.resources.all(), 
-                rule=5).values_list('source_entity', flat=True))
-
-    def num_translated(self, language):
-        """
-        Return the number of translated strings in all Resources of the project.
-        """
-        return self.translated_strings(language).count()
-
-    def num_untranslated(self, language):
-        """
-        Return the number of untranslated strings in all Resources of the project.
-        """
-        return self.untranslated_strings(language).count()
-
-    def trans_percent(self, language):
-        """Return the percent of untranslated strings in this Resource."""
-        t = self.num_translated(language)
-        try:
-            return (t * 100 / self.total_entities)
-        except ZeroDivisionError:
-            return 100
-
-    def untrans_percent(self, language):
-        """Return the percent of untranslated strings in this Resource."""
-        translated_percent = self.trans_percent(language)
-        return (100 - translated_percent)
 
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
