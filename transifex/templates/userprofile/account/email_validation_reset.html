@@ -19,7 +19,7 @@
   <p>{% trans "You will not be able to sign in until you have validated your e-mail address. Enter your registered e-mail address to receive the validation e-mail again." %}</p>
 
   <div class="generic_form">
-    <form action="{% url email_validation_reset %}" method="post" accept-charset="utf-8">
+    <form action="{% url email_validation_reset %}" method="post" accept-charset="utf-8">{% csrf_token %}
     <table><tbody>
       {% form_as_table_rows form %}
     </tbody></table>

@@ -23,7 +23,7 @@
     <p>{% trans "Enter the new e-mail address. An e-mail will be sent to it for testing and confirmation." %}</p>
 
     <div class="generic_form">
-	<form action="{% url email_validation %}" method="post" accept-charset="utf-8">
+	<form action="{% url email_validation %}" method="post" accept-charset="utf-8">{% csrf_token %}
     <table><tbody>
 	  {% form_as_table_rows form %}
 	</tbody></table>
