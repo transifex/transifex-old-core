@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from projects.models import Project
 from resources.models import Resource
+from resources.stats import ResourceStatsList
 from txcommon.context_processors import site_url_prefix_processor
 
 # For interactive charts:
@@ -25,9 +26,11 @@ def get_image_url(obj):
     labels_right = []
 
     for language in obj.available_languages:
-        trans.append(obj.trans_percent(language))
+        stat = obj.stat(language)
+        t = stat.trans_percent
+        trans.append(t)
         labels_left.append(language.name)
-        labels_right.append("%s%%" % obj.trans_percent(language))
+        labels_right.append("%s%%" % t)
 
     labels_left.reverse()
     labels_right.reverse()
@@ -51,9 +54,11 @@ def get_gviz_json(obj):
                     "trans": ("number", "Translated")}
     data = []
     for language in obj.available_languages:
+        stat = obj.stat(language)
+        trans = stat.trans_percent
         data.append({
             "lang": language.name,
-            "trans":obj.trans_percent(language)})
+            "trans": trans})
     data_table = gviz_api.DataTable(description)
     data_table.LoadData(data)
     return data_table.ToJSonResponse(         
@@ -65,7 +70,7 @@ def chart_resource_image(request, project_slug, resource_slug):
                                     project__slug=project_slug)
     if resource.project.private:
         raise PermissionDenied
-    return HttpResponseRedirect(get_image_url(resource))
+    return HttpResponseRedirect(get_image_url(ResourceStatsList(resource)))
 
 def chart_resource_html_js(request, project_slug, resource_slug, template_name):
     resource = get_object_or_404(Resource, slug=resource_slug,
@@ -82,4 +87,4 @@ def chart_resource_json(request, project_slug, resource_slug):
                                     project__slug=project_slug)
     if resource.project.private:
         raise PermissionDenied
-    return HttpResponse(content = get_gviz_json(resource))
+    return HttpResponse(content = get_gviz_json(ResourceStatsList(resource)))
