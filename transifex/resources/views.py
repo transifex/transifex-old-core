@@ -124,15 +124,6 @@ def resource_edit(request, project_slug, resource_slug):
             post_resource_save.send(sender=None, instance=resource_new,
                 created=False, user=request.user)
 
-            # FIXME: enable the following actionlog
-            # ActionLog & Notification
-#            context = {'resource': resource}
-#            nt = 'resource_changed'
-#            action_logging(request.user, [resource], nt, context=context)
-#            if settings.ENABLE_NOTICES:
-#                txnotification.send_observation_notices_for(resource, 
-#                                    signal=nt, extra_context=context)
-
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[resource.project.slug]),)
     else:
@@ -305,8 +296,6 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
                       "%(resource)s were deleted successfully.") % {
                           'lang': language.name,
                           'resource': resource.name})
-
-        #TODO: Create the specific notice type and update all the other actions.
 
         return HttpResponseRedirect(reverse('resource_detail',
                                     args=[resource.project.slug, resource.slug]),)
