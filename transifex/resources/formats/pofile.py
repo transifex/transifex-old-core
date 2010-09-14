@@ -16,6 +16,7 @@ from txcommon.exceptions import FileCheckError
 from txcommon.log import logger
 from teams.models import Team
 from resources.formats.decorators import *
+from resources.stats import ResourceStatsList
 from suggestions.models import Suggestion
 
 from core import CompileError, GenericTranslation, Handler, STRICT, \
@@ -162,10 +163,12 @@ class POHandler(Handler):
         except Team.DoesNotExist:
             pass
         else:
-            po.metadata['Language-Team'] = ("%s <%s>" % (language.name %
+            po.metadata['Language-Team'] = ("%s <%s>" % (language.name ,
                 team.mainlist))
-        if self.resource.last_committer:
-            u = self.resource.last_committer
+
+        stats = ResourceStatsList(self.resource)
+        if stats.last_committer:
+            u = stats.last_committer
             po.metadata['Last-Translator'] = ("%s <%s>" %
                 (u.get_full_name() or u.username , u.email))
 
