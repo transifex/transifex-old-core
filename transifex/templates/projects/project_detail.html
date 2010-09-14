@@ -7,6 +7,8 @@
 {% load permissions %}
 {% load upload_manager_tags %}
 {% load avatars %}
+{% load tx_action_log %}
+
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
@@ -123,11 +125,10 @@
 </div>
 
 <h3>{% trans 'History' %}</h3>
-{% load tx_action_log %}
 {% get_log 5 as action_log for_object project %}
 {% if not action_log %}
 
-<p>{% trans 'None available' %}</p>
+<p>{% trans 'No history recorded yet.' %}</p>
 
 {% else %}
 
