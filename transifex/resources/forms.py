@@ -10,7 +10,7 @@ class ResourceForm(forms.ModelForm):
 
     class Meta:
         model = Resource
-        exclude = ('project', 'resource_group')
+        exclude = ('project', 'resource_group', 'source_file')
 
 
 class CreateResourceForm(forms.ModelForm):
@@ -29,7 +29,7 @@ class CreateResourceForm(forms.ModelForm):
 
 class ResourceTranslationForm(forms.Form):
     """
-    Form to to be used for creating/getting StorageFile object id on the fky,
+    Form to to be used for creating/getting StorageFile object id on the fly,
     using StorageFileField.
     """
     def __init__(self, *args, **kwargs):
@@ -38,5 +38,5 @@ class ResourceTranslationForm(forms.Form):
 
         self.fields['resource_translation'] = StorageFileField(
             label=_('Resource file'),
-            help_text=_("Select a file from your file system to be used too "
+            help_text=_("Select a file from your file system to be used to "
                 "fill translations for this resource."), language=language)
