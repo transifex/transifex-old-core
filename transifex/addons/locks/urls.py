@@ -12,5 +12,10 @@ urlpatterns = patterns('',
         regex = r'^projects/p/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<language_code>[\-_@\w]+)/unlock/$',
         view = resource_language_unlock,
         name = 'resource_language_unlock',),
+    # We exploit the create_update to do the extend lock action with the same view as lock creation.
+    url(
+        regex = r'^projects/p/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/l/(?P<language_code>[\-_@\w]+)/extend/$',
+        view = resource_language_lock,
+        name = 'resource_language_extend',),
 )
 
