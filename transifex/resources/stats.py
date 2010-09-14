@@ -137,7 +137,9 @@ class StatsList(StatsBase):
         Useful to render a table of available languages and their statistics.
         """
         for language in self.available_languages:
-            yield self.stat(language=language)
+            sa = self.stat(language=language)
+            sa.object = self.object
+            yield sa
 
     def resource_stats(self):
         """Yield a Stat object for each available resource.

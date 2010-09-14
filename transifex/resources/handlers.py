@@ -13,9 +13,14 @@ from teams.models import Team
 
 def on_ss_save_invalidate_cache(sender, instance, created, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
+    invalidate_object_cache(instance.resource)
+
+    invalidate_object_cache(instance.resource.project)
+
+    for rel in instance.resource.project.releases.all():
+        invalidate_object_cache(rel)
 
     if created:
-        invalidate_object_cache(instance.resource)
         # Number of source strings in resource
         for lang in instance.resource.available_languages:
             team = Team.objects.get_or_none(instance.resource.project, lang.code)
@@ -39,6 +44,10 @@ def on_ss_delete_invalidate_cache(sender, instance, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     if instance and instance.resource and instance.resource.project:
         invalidate_object_cache(instance.resource)
+        invalidate_object_cache(instance.resource.project)
+
+        for rel in instance.resource.project.releases.all():
+            invalidate_object_cache(rel)
 
         for lang in instance.resource.available_languages:
             team = Team.objects.get_or_none(instance.resource.project, lang.code)
@@ -66,10 +75,14 @@ def on_ts_save_invalidate_cache(sender, instance, created, **kwargs):
      - Invalidate the translated_strings for this resource/language
      - Invalidate the last_updated property for this language
     """
+    invalidate_object_cache(instance.source_entity.resource,
+        instance.language)
+    invalidate_object_cache(instance.source_entity.resource.project, instance.language)
+
+    for rel in instance.source_entity.resource.project.releases.all():
+        invalidate_object_cache(rel, instance.language)
 
     if created:
-        invalidate_object_cache(instance.source_entity.resource)
-
         team = Team.objects.get_or_none(instance.source_entity.resource.project,
             instance.language.code)
         if team:
@@ -96,7 +109,16 @@ def on_ts_delete_invalidate_cache(sender, instance, **kwargs):
      - Invalidate the translated_stings for the resource/language
      - Invalidate the last_updated property for this language
     """
-    invalidate_object_cache(instance.source_entity.resource)
+    invalidate_object_cache(instance.source_entity.resource, instance.language)
+    invalidate_object_cache(instance.source_entity.resource.project, instance.language)
+
+    for rel in instance.source_entity.resource.project.releases.all():
+        invalidate_object_cache(rel, instance.language)
+
+    # Invalidate resource details template cache for this lang
+    invalidate_template_cache("resource_details",
+        instance.source_entity.resource.project.slug,
+        instance.source_entity.resource.slug, instance.language.code)
 
     team = Team.objects.get_or_none(instance.source_entity.resource.project,
         instance.language.code)

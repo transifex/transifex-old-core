@@ -30,12 +30,18 @@ def stats_cached_property(func):
     def cached_func(self):
         if not self.object:
             return func(self)
-        key = 'cached_property_%s_%s_%s' % \
-            (key_from_instance(self.object), func.__module__, func.__name__)
+
+        if hasattr(self, "language") and self.language:
+            key = 'cached_property_%s_%s_%s_%s' % \
+                (key_from_instance(self.object), func.__module__,
+                func.__name__, self.language.code )
+        else:
+            key = 'cached_property_%s_%s_%s' % \
+                (key_from_instance(self.object), func.__module__, func.__name__)
         return cache.get(key) or cache_set(key, func(self))
     return property(cached_func)
 
-def invalidate_object_cache(object):
+def invalidate_object_cache(object, language=None):
     """
     Invalidate all cached properties of a specific object's stats. The only
     properties that are actually invalidated are those who belong to a Stats
@@ -49,10 +55,14 @@ def invalidate_object_cache(object):
     from resources.stats import Stats, StatsBase
 
     keys = []
-    for c in [Stats, StatsBase]:
+    for name, type in inspect.getmembers(StatsBase):
+        if type.__class__.__name__ == "property":
+            keys.append("_".join([Stats.__module__, name]))
+
+    if language:
         for name, type in inspect.getmembers(Stats):
             if type.__class__.__name__ == "property":
-                keys.append("_".join([c.__module__, name]))
+                keys.append("_".join([StatsBase.__module__, name, language.code]))
 
     for key in keys:
         cache.delete("cached_property_%s_%s" % (key_from_instance(object), key))
