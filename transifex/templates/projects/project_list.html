@@ -51,7 +51,7 @@
        {% if resources %}
         <span class="i16 resource compact">{% trans "Resources:" %}
           {% for resource in resources %}
-            <a class="resource" title="{% firstof resource.description|escape resource.name|escape %}" href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+            <a class="resource" title='Go to resource "{{ resource.name }}"' href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
             {% if not forloop.last %},{% endif %} 
           {% endfor %}
         </span>
