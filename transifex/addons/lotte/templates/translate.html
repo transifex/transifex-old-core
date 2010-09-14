@@ -564,7 +564,7 @@
   </p>
 {% endblock %}
 
-{% block content %}
+{% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 <div class="floatright filtermenu-wrapper">
