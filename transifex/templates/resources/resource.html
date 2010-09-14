@@ -187,7 +187,7 @@ Projects |
                             alert("Please select a target language first and then click Go.");
                         }
                     });
-                    if(!$("#download_for_translation").hasClass('disabled')){
+                    if(!$("#download_for_translation a").hasClass('disabled')){
                     $("#download_for_translation").click(function(){
                         $.ajax({
                             url : '{% url lock_and_download_translation resource.project.slug resource.slug stat.language.code %}',

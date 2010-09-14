@@ -125,8 +125,8 @@
           {% ifnotequal resource.source_language target_language %}
           <li>
             {% if request.user.is_authenticated %}
-            <span id="download_for_translation" class="i16 lock {% if lock %}{% ifnotequal request.user lock.owner %} disabled{% endifnotequal %}{% endif %}">
-              <a style="cursor:pointer" {% if lock %}{% ifnotequal request.user lock.owner %}title="Resource cannot be locked"{% endifnotequal %}{% endif %}>{% trans "Download for translation" %}</a>
+            <span id="download_for_translation" class="i16 lock">
+              <a style="cursor:pointer" {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="Resource cannot be locked"{% endifnotequal %}{% endif %}>{% trans "Download for translation" %}</a>
             </span>
             {% else %}
             <span id="download_for_translation" class="i16 lock">
