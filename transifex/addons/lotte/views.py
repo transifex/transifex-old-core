@@ -312,7 +312,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
 
     # for items displayed
-    dlength = int(request.POST.get('iDisplayLength','10'))
+    dlength = int(request.POST.get('iDisplayLength','25'))
     dstart = int(request.POST.get('iDisplayStart','0'))
     # for statistics
     total = source_strings.count()
