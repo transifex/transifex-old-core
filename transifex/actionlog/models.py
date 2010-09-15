@@ -8,6 +8,7 @@ from django.utils.encoding import smart_unicode, force_unicode
 from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
+from txcommon.log import logger
 
 Project = models.get_model('projects', 'Project')
 
@@ -23,10 +24,11 @@ def _get_formatted_message(label, context):
     activate(settings.LANGUAGE_CODE)
 
     c = Context(context)
+    template = 'notification/%s/notice.html' % label
     try:
-        msg = loader.get_template('notification/%s/notice.html' % label).render(c)
+        msg = loader.get_template(template).render(c)
     except TemplateDoesNotExist:
-        #TODO: Maybe send an alert to the admins
+        logger.error("Template '%s' doesn't exist." % template)
         msg = None
 
     # Reset environment to original language
