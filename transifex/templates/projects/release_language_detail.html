@@ -64,7 +64,7 @@
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
-        {{ stat.resource.name }}
+        {{ stat.object.name }}
         </td>
         <td>
         {% with 200 as barwidth %}
@@ -99,7 +99,7 @@
            /* FancyBox Using custom settings */ 
            $.fancybox(
                { 
-                'href': '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}',
+                'href': '{% url resource_actions stat.object.project.slug stat.object.slug language.code %}',
                 'hideOnContentClick': false,
                 'onComplete':function() {
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
