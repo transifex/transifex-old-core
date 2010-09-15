@@ -20,6 +20,7 @@ from storage.models import StorageFile
 
 from resources.decorators import method_decorator
 from resources.models import Resource, SourceEntity, Translation
+from resources.stats import ResourceStatsList
 from resources.views import _compile_translation_template
 
 from transifex.api.utils import BAD_REQUEST
@@ -229,16 +230,51 @@ class AnonymousStringHandler(AnonymousBaseHandler):
         '''
         return _create_stringset(request, project_slug, resource_slug, target_lang_code)
 
+class StatsHandler(BaseHandler):
+    allowed_methods = ('GET')
+
+    def read(self, request, project_slug, resource_slug, lang_code=None):
+        """
+        This is an API handler to display translation statistics for individual
+        resources.
+        """
+        try:
+            resource = Resource.objects.get( project__slug = project_slug,
+                slug= resource_slug)
+        except Resource.DoesNotExist:
+            return BAD_REQUEST("Unkown resource %s" % resource_slug)
+
+        language = None
+        if lang_code:
+            try:
+                language = Language.objects.by_code_or_alias(lang_code)
+            except Language.DoesNotExist:
+                return BAD_REQUEST("Unknown language %s" % lang_code)
+
+
+        stats = ResourceStatsList(resource)
+        # TODO: If we're gonna use this as a generic stats generator, we should
+        # include more info in the json.
+        if language:
+            retval = {}
+            for stat in stats.resource_stats_for_language(language): 
+                retval.update({stat.language.code:{"completed": "%s%%" % stat.trans_percent,
+                    "translated_entities": stat.num_translated}})
+        else:
+            retval = []
+            for stat in stats.language_stats():
+                retval.append({stat.language.code:{"completed": "%s%%" % stat.trans_percent,
+                    "translated_entities": stat.num_translated}})
+        return retval
 
 class FileHandler(BaseHandler):
     allowed_methods = ('GET')
 
-    
     @method_decorator(one_perm_required_or_403(pr_project_private_perm,
         (Project, 'slug__exact', 'project_slug')))
     def read(self, request, project_slug, resource_slug=None, language_code=None):
         """
-        
+        API Handler to export translation files from the database
         """
         try:
             resource = Resource.objects.get( project__slug = project_slug, slug = resource_slug)
