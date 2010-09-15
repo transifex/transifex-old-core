@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from languages.models import Language
 from projects.models import Project
 from releases.models import Release
+from resources.stats import ReleaseStatsList
 from txcommon.utils import key_sort
 
 current_site = Site.objects.get_current()
@@ -79,8 +80,8 @@ class ReleaseFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        #FIXME: Broke with happix migration
-        return []
+        statslist=ReleaseStatsList(self.release)
+        return statslist.language_stats()
 
     def item_link(self, obj):
         return obj.object.get_absolute_url()
@@ -121,8 +122,8 @@ class ReleaseLanguageFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        #FIXME: Broke with happix migration
-        return []
+        statslist=ReleaseStatsList(self.release)
+        return statslist.resource_stats_for_language(self.language)
 
     def item_link(self, obj):
         return obj.object.get_absolute_url()
