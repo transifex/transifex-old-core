@@ -123,7 +123,7 @@
   {% endfor %}
 
   {% comment %}
-  {% get_permission "project_perm.submit_file" for request.user and project,1 as "can_submit_translation" %}
+  {% get_permission "project_perm.submit_translations" for request.user and project,1 as "can_submit_translation" %}
   {% if can_submit_translation or request.user.is_superuser %}
   <div id="new_translation_box1">
       <select name="translation_languages" class="language">

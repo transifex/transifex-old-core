@@ -105,7 +105,7 @@ class BaseTestCase(TestCase):
 
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
-            codename='project_perm.submit_file', 
+            codename='project_perm.submit_translations', 
             approved=True, user=self.user['writer'], 
             content_object=self.project, creator=self.user['maintainer'])
 

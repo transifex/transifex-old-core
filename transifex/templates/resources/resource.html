@@ -229,7 +229,7 @@ Projects |
 
 
 
-{% get_permission "project_perm.submit_file" for request.user and resource.project,1 as "can_submit_translation" %}
+{% get_permission "project_perm.submit_translations" for request.user and resource.project,1 as "can_submit_translation" %}
 {% if can_submit_translation or request.user.is_superuser %}
 
 <p class="i16 tip" style="font-size:85%">

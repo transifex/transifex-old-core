@@ -26,12 +26,3 @@ post_refresh_cache = Signal(providing_args=["resource"])
 sig_clear_cache = Signal(providing_args=["resource"])
 pre_clear_cache = sig_clear_cache
 post_clear_cache = Signal(providing_args=["resource"])
-
-# These are obsolete:
-sig_submit_file_post = Signal(providing_args=["resource"])
-sig_submit_file = sig_submit_file_post
-sig_submit_file_pre  = Signal(providing_args=['filename', 'resource', 'user',
-    'stream', 'file_dict'])
-
-post_submit_file = sig_submit_file_post
-pre_submit_file = sig_submit_file_pre

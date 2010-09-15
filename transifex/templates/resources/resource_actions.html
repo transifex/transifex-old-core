@@ -28,10 +28,10 @@
     <span class="translate_button_wrapper">
     {% if team %}
       {% comment %} This permission is provided only if team is available{% endcomment %}
-      {% get_permission "project_perm.submit_file" for request.user and team as "can_submit_translation" %}
+      {% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translation" %}
     {% else %}
       {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate Now" {% endcomment %}
-      {% get_permission "project_perm.submit_file" for request.user and project as "can_submit_translation" %}
+      {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translation" %}
     {% endif %}
 
       {% ifequal resource.source_language target_language %}

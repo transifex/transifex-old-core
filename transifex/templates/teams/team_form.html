@@ -11,7 +11,7 @@
 
 {% block content_main %}
 {% with team.language as language %}
-{% get_permission "project_perm.submit_file" for request.user and project as "can_submit_file" %}
+{% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 
 <div class="obj_bigdetails">

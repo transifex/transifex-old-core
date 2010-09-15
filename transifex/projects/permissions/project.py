@@ -33,8 +33,7 @@ def _check_outsource_project(obj):
 class ProjectPermission(BasePermission):
 
     label = 'project_perm'
-    checks = ('maintain', 'coordinate_team', 'submit_file', 
-        'submit_translations')
+    checks = ('maintain', 'coordinate_team', 'submit_translations')
 
     def maintain(self, project=None):
         if project:
@@ -56,7 +55,6 @@ class ProjectPermission(BasePermission):
         return False
     coordinate_team.short_description = _("Is allowed to coordinate a "
         "team project")
-
 
     def submit_translations(self, obj, any_team=False):
         """
@@ -82,7 +80,7 @@ class ProjectPermission(BasePermission):
                 if self.maintain(project):
                     return True
                 #Writers
-                perm = '%s.submit_file' % self.label
+                perm = '%s.submit_translations' % self.label
                 if self.has_perm(perm, project):
                     return True
                 if team:
@@ -99,10 +97,6 @@ class ProjectPermission(BasePermission):
         return False
     submit_translations.short_description = _("Is allowed to submit "
         "translations to this project")
-
-    # Backward compatibility
-    # TODO: Remove it once String Level is in place as a whole
-    submit_file = submit_translations
 
     def private(self, project=None):
         """Test if a user has access to a private project."""

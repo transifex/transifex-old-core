@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block content_main %}
-{% get_permission "project_perm.submit_file" for request.user and team as "can_submit_file" %}
+{% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translations" %}
 {% get_permission "project_perm.coordinate_team" for request.user and project,team.language as "is_coordinator" %}
 
 <div class="obj_bigdetails">
@@ -82,7 +82,7 @@
     {% endif %}
     {% endwith %}
 
-    {% if request.user.is_authenticated and not perms.projects.submit_file and not can_submit_file and not user_access_request %}
+    {% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
     <tr>
       <th class="i16 user">{% trans "Become a translator:" %}</th>
       <td>
