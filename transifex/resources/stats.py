@@ -3,7 +3,7 @@ from languages.models import Language
 from resources.models import Resource, Translation, SourceEntity
 from resources.utils import *
 
-class StatsBase():
+class StatsBase:
     """A low-level statistics-holding object to inherit from.
 
     Requires an iterable of entities (e.g. a QuerySet).
