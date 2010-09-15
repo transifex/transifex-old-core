@@ -203,7 +203,6 @@ class ProjectResourceHandler(BaseHandler):
                 # update i18n_type
                 i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
                 if not i18n_type:
-#                    request.user.message_set.create(message=_("Error: We couldn't find a suitable localization method for this file."))
                     return BAD_REQUEST("File type not supported.")
 
                 resource.i18n_type = i18n_type
@@ -224,8 +223,6 @@ class ProjectResourceHandler(BaseHandler):
                     fhandler.parse_file(True)
                     strings_added, strings_updated = fhandler.save2db(True)
                 except Exception, e:
-#                   request.user.message_set.create(message=_("Error importing"
-#                       " file."))
                     return BAD_REQUEST("Could not import file: %s" % e)
                 else:
                     messages = []
@@ -233,10 +230,6 @@ class ProjectResourceHandler(BaseHandler):
                         messages.append(_("%i strings added") % strings_added)
                     if strings_updated > 0:
                         messages.append(_("%i strings updated") % strings_updated)
-#FIXME: Show this only if the user is logged in etc, not when strings are pushed
-#from the CLI.
-#                    request.user.message_set.create(
-#                        message=",".join(messages))
                 retval= {
                     'strings_added': strings_added,
                     'strings_updated': strings_updated,
@@ -311,8 +304,6 @@ class ProjectResourceHandler(BaseHandler):
                     fhandler.parse_file()
                     strings_added, strings_updated = fhandler.save2db()
                 except Exception, e:
-                    #request.user.message_set.create(message=_("Error importing"
-                    #   " file."))
                     return BAD_REQUEST("Error importing file: %s" % e)
                 else:
                     messages = []
@@ -320,9 +311,6 @@ class ProjectResourceHandler(BaseHandler):
                         messages.append(_("%i strings added") % strings_added)
                     if strings_updated > 0:
                         messages.append(_("%i strings updated") % strings_updated)
-                    #request.user.message_set.create(
-                    #    message=",".join(messages))
-
                 retval= {
                     'strings_added':strings_added,
                     'strings_updated':strings_updated,
