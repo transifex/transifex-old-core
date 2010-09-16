@@ -221,15 +221,16 @@ class POHandler(Handler):
 
             # treat fuzzy translation as nonexistent
             if "fuzzy" in entry.flags:
-                if not ispot and not entry.msgid_plural:
-                    suggestion = GenericTranslation(entry.msgid, entry.msgstr,
-                        context=entry.msgctxt,
-                        occurrences=', '.join(
-                            [':'.join([i for i in t ]) for t in
-                            entry.occurrences]))
-                    suggestions.strings.append(suggestion)
+                if not ispot:
+                    if not entry.msgid_plural:
+                        suggestion = GenericTranslation(entry.msgid, entry.msgstr,
+                            context=entry.msgctxt,
+                            occurrences=', '.join(
+                                [':'.join([i for i in t ]) for t in
+                                entry.occurrences]))
+                        suggestions.strings.append(suggestion)
 
-                continue
+                    continue
 
             if entry.msgid_plural:
                 pluralized = True
@@ -323,8 +324,6 @@ class POHandler(Handler):
                 source_entity = se,
                 language = self.language
             )
-
-    
 
     @need_compiled
     def save2file(self, filename):
