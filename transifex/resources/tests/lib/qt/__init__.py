@@ -46,11 +46,6 @@ class QTFile(BaseTestCase):
 
         for s in self.stringset.strings:
 
-            # Testing if source entity and translation are NOT the same
-            # XXX: This is not madatory. For example OK could be OK in finnish
-            # as well
-            #self.assertNotEqual(s.source_entity, s.translation)
-
             # Testing plural number
             if s.source_entity == '%n FILES PROCESSED.' and s.pluralized:
                 nplurals += 1
