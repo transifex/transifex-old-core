@@ -11,126 +11,37 @@ from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 from resources.utils import invalidate_object_cache
 from teams.models import Team
 
-def on_ss_save_invalidate_cache(sender, instance, created, **kwargs):
+def invalidate_stats_cache(resource, language=None, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
-    invalidate_object_cache(instance.resource)
+    invalidate_object_cache(resource, language)
 
-    invalidate_object_cache(instance.resource.project)
+    invalidate_object_cache(resource.project, language)
 
-    for rel in instance.resource.project.releases.all():
-        invalidate_object_cache(rel)
+    for rel in resource.project.releases.all():
+        invalidate_object_cache(rel, language)
 
-    if created:
-        # Number of source strings in resource
-        for lang in instance.resource.available_languages:
-            team = Team.objects.get_or_none(instance.resource.project, lang.code)
-            if team:
-                # Template lvl cache for team details
-                invalidate_template_cache("team_details",
-                    team.id, instance.resource.id)
+    if not language:
+        langs = resource.available_languages
+    else:
+        langs = [language]
 
-            for rel in instance.resource.project.releases.all():
-                # Template lvl cache for release details
-                invalidate_template_cache("release_details",
-                    rel.id, lang.id)
-
-            # Template lvl cache for resource details
-            invalidate_template_cache("resource_details",
-                instance.resource.project.slug, instance.resource.slug,
-                 lang.code)
-
-
-def on_ss_delete_invalidate_cache(sender, instance, **kwargs):
-    """Invalidate cache keys related to the SourceEntity updates"""
-    if instance and instance.resource and instance.resource.project:
-        invalidate_object_cache(instance.resource)
-        invalidate_object_cache(instance.resource.project)
-
-        for rel in instance.resource.project.releases.all():
-            invalidate_object_cache(rel)
-
-        for lang in instance.resource.available_languages:
-            team = Team.objects.get_or_none(instance.resource.project, lang.code)
-            if team:
-                # Template lvl cache for team details
-                invalidate_template_cache("team_details",
-                    team.id, instance.resource.id)
-
-            for rel in instance.resource.project.releases.all():
-                # Template lvl cache for release details
-                invalidate_template_cache("release_details",
-                    rel.id, lang.id)
-
-            # Template lvl cache for resource details
-            invalidate_template_cache("resource_details",
-                instance.resource.project.slug, instance.resource.slug,
-                lang.code)
-
-def on_ts_save_invalidate_cache(sender, instance, created, **kwargs):
-    """
-    Invalidation for Translation save()
-
-    Here we handle the following:
-     - Invalidate the teplate level cache for the Translation language
-     - Invalidate the translated_strings for this resource/language
-     - Invalidate the last_updated property for this language
-    """
-    invalidate_object_cache(instance.source_entity.resource,
-        instance.language)
-    invalidate_object_cache(instance.source_entity.resource.project, instance.language)
-
-    for rel in instance.source_entity.resource.project.releases.all():
-        invalidate_object_cache(rel, instance.language)
-
-    if created:
-        team = Team.objects.get_or_none(instance.source_entity.resource.project,
-            instance.language.code)
+    # Number of source strings in resource
+    for lang in langs:
+        team = Team.objects.get_or_none(resource.project, lang.code)
         if team:
-            # Invalidate team details template cache for this lang
+            # Template lvl cache for team details
             invalidate_template_cache("team_details",
-                team.id, instance.source_entity.resource.id)
+                team.id, resource.id)
 
-        for rel in instance.source_entity.resource.project.releases.all():
-            # Invalidate release details template cache for this lang
+        for rel in resource.project.releases.all():
+            # Template lvl cache for release details
             invalidate_template_cache("release_details",
-                rel.id, instance.language.id)
+                rel.id, lang.id)
 
-        # Invalidate resource details template cache for this lang
+        # Template lvl cache for resource details
         invalidate_template_cache("resource_details",
-            instance.source_entity.resource.project.slug,
-            instance.source_entity.resource.slug, instance.language.code)
-
-def on_ts_delete_invalidate_cache(sender, instance, **kwargs):
-    """
-    Invalidation for Translation delete()
-
-    Here we handle the following:
-     - Invalidate the template level cache for the resource/language
-     - Invalidate the translated_stings for the resource/language
-     - Invalidate the last_updated property for this language
-    """
-    invalidate_object_cache(instance.source_entity.resource, instance.language)
-    invalidate_object_cache(instance.source_entity.resource.project, instance.language)
-
-    for rel in instance.source_entity.resource.project.releases.all():
-        invalidate_object_cache(rel, instance.language)
-
-    # Invalidate resource details template cache for this lang
-    invalidate_template_cache("resource_details",
-        instance.source_entity.resource.project.slug,
-        instance.source_entity.resource.slug, instance.language.code)
-
-    team = Team.objects.get_or_none(instance.source_entity.resource.project,
-        instance.language.code)
-    if team:
-        # Invalidate team details template cache for this lang
-        invalidate_template_cache("team_details",
-            team.id, instance.source_entity.resource.id)
-
-    for rel in instance.source_entity.resource.project.releases.all():
-        # Invalidate release details template cache for this lang
-        invalidate_template_cache("release_details",
-            rel.id, instance.language.id)
+            resource.project.slug, resource.slug,
+             lang.code)
 
 def invalidate_template_cache(fragment_name, *variables):
     """

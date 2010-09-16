@@ -12,6 +12,7 @@ from django.db.models import get_model
 from txcommon.log import logger
 from languages.models import Language
 from resources.formats.decorators import *
+from resources.handlers import invalidate_stats_cache
 
 """
 STRICT flag is used to switch between two parsing modes:
@@ -211,6 +212,7 @@ class Handler(object):
         self.compiled_template = template
 
         self._post_compile(language)
+        invalidate_stats_cache(self.resource, language)
 
     def _pre_save2db(self, *args, **kwargs):
         """
@@ -315,7 +317,7 @@ class Handler(object):
 
             self._post_save2db(is_source , user, overwrite_translations)
             transaction.commit()
-            
+
             return strings_added, strings_updated
 
     @need_compiled

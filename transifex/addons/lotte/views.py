@@ -21,6 +21,7 @@ from projects.models import Project
 from projects.permissions import *
 from projects.permissions.project import ProjectPermission
 from resources.models import (Translation, Resource, SourceEntity)
+from resources.handlers import invalidate_stats_cache
 from teams.models import Team
 from txcommon.decorators import one_perm_required_or_403
 
@@ -507,10 +508,13 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 # If an empty string has been issued then we delete the translation.
                 if string == "":
                     translation_string.delete()
+                    invalidate_stats_cache(source_string.source_entity.resource,target_language)
                 else:
                     translation_string.string = string
                     translation_string.user = request.user
                     translation_string.save()
+
+
                 push_response_dict[source_id] = { 'status':200,
                      'message':"Translation updated successfully in the DB"}
             except Translation.DoesNotExist:
@@ -522,6 +526,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         rule = target_language.get_rule_num_from_name(rule),
                         string = string,
                         user = request.user) # Save the sender as last committer
+                    invalidate_stats_cache(source_string.source_entity.resource,target_language)
                     push_response_dict[source_id] = { 'status':200,
                          'message':"New translation stored successfully in the DB"}
                 else:
@@ -574,16 +579,20 @@ def delete_translation(request, project_slug=None, resource_slug=None,
 
     data = json.loads(request.raw_post_data)
     to_delete = data["to_delete"]
-
+    resource = get_object_or_404(Resource, slug=resource_slug)
+    language = get_object_or_404(Language, code=lang_code)
     ids = []
     # Ensure that there are no empty '' ids
     for se_id in to_delete:
         if se_id:
             ids.append(se_id)
 
+
     try:
-        Translation.objects.filter(source_entity__pk__in=ids,
-                                   language__code=lang_code).delete();
+        translations = Translation.objects.filter(source_entity__pk__in=ids,
+                                   language=language)
+
+        translations.delete()
 #        request.user.message_set.create(
 #            message=_("Translations deleted successfully!"))
     except:
@@ -591,4 +600,5 @@ def delete_translation(request, project_slug=None, resource_slug=None,
 #            message=_("Translations did not delete due to some error!"))
         raise Http404
 
+    ts_invalidate_cache(resource, language)
     return HttpResponse(status=200)

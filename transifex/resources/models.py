@@ -346,15 +346,6 @@ class Template(models.Model):
         verbose_name_plural = _('Templates')
         ordering = ['resource']
 
-
-# Signal registrations
-from resources.handlers import *
-models.signals.post_save.connect(on_ss_save_invalidate_cache, sender=SourceEntity)
-models.signals.post_delete.connect(on_ss_delete_invalidate_cache, sender=SourceEntity)
-models.signals.post_save.connect(on_ts_save_invalidate_cache, sender=Translation)
-models.signals.post_delete.connect(on_ts_delete_invalidate_cache, sender=Translation)
-
-
 from resources.formats.qt import LinguistHandler # Qt4 TS files
 #from resources.formats.java import JavaPropertiesParser # Java .properties
 #from resources.formats.apple import AppleStringsParser # Apple .strings

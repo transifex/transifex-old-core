@@ -27,6 +27,7 @@ from txcommon.decorators import one_perm_required_or_403
 from resources.forms import ResourceForm
 from resources.models import Translation, Resource
 from resources.stats import ResourceStatsList, ProjectStatsList
+from resources.handlers import invalidate_stats_cache
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
@@ -86,6 +87,7 @@ def resource_delete(request, project_slug, resource_slug):
         request.user.message_set.create(
             message=_("The translation resource '%s' was deleted.") % resource_.name)
 
+        invalidate_stats_cache(resource_)
         return HttpResponseRedirect(reverse('project_detail',
                                     args=[resource.project.slug]),)
     else:
@@ -266,6 +268,8 @@ def clone_language(request, project_slug=None, resource_slug=None,
                     string = s.string,
                     source_entity = s.source_entity,
                     rule = s.rule)
+
+    invalidate_stats_cache(resource, target_lang)
     return HttpResponseRedirect(reverse('translate_resource', args=[project_slug,
                                 resource_slug, target_lang_code]),)
 
@@ -296,7 +300,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
                       "%(resource)s were deleted successfully.") % {
                           'lang': language.name,
                           'resource': resource.name})
-
+        invalidate_stats_cache(resource, language)
         return HttpResponseRedirect(reverse('resource_detail',
                                     args=[resource.project.slug, resource.slug]),)
     else:
