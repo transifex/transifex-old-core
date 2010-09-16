@@ -1,5 +1,55 @@
 /* Edit translation files */
 
+#stringset_table {
+  width:100%;
+}
+
+.plural_title {
+  color:#B65D0E;
+}
+
+.similar_lang_title {
+  margin-bottom:-1em;
+  font-size:0.85em;
+}
+
+div.source_string_wrapper {
+  position:relative;
+  height:100%;
+}
+
+div.translation_wrapper {
+  position:relative;
+}
+
+textarea.translation {
+  width:95%;
+}
+
+textarea.default_translation {
+  position:relative;
+}
+
+div.lotte-actions {
+  overflow:hidden;
+  top:-1000px;
+  left:-1000px;
+  position:absolute;
+  text-align:right;
+  white-space:nowrap;
+}
+
+div.lotte-actions #auto_translate_wrapper{
+  position:relative;
+  right:-90px;
+}
+
+div.lotte-actions #copy_source_wrapper{
+  position:relative;
+  right:-79px;
+}
+
+/****** LEGACY CODE ******/
 table.trans_web_edit { width: 100%; }
 
 table.trans_web_edit textarea {
@@ -74,6 +124,14 @@ table.trans_web_edit td.trans textarea.untranslated{
   border-left: 2px solid #d64a05;
 }
 
+table.trans_web_edit tr.odd th,
+table.trans_web_edit tr.odd td {
+  border-top: 1px solid #eee;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eee;
+}
+/****** LEGACY CODE END ******/
+
 table.stats_totals th {
   padding-left: 0.5em;
 }
@@ -104,13 +162,6 @@ span.untranslated {
   margin: 0;
   padding-top: 3px;
   padding-right: 5px;
-}
-
-table.trans_web_edit tr.odd th,
-table.trans_web_edit tr.odd td {
-  border-top: 1px solid #eee;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #eee;
 }
 
 code.ph {
@@ -216,6 +267,14 @@ ul.contexts li {
 	position: relative;
 	font-weight: bold;
 }
+
+#footpanel a.settings {
+  padding-left:24px;
+  background-image:url(../images/icons/generic16.png);
+  background-repeat: no-repeat;
+  background-position: 4% 50%;
+}
+
 html #footpanel ul li a:hover{	background-color: #fff; }
 html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
 	background-color: #fff;
@@ -432,4 +491,30 @@ div.error_notes {
   font-size:80%;
   color:#C53333;
   text-align: right;
+}
+
+
+/* Lotte details styles */
+div.lotte_details_wrapper ul.details_right {
+  display: block;
+  float:right;
+  padding-right:1em;
+}
+
+div.lotte_details_wrapper ul.details_right li{
+  margin-top:0;
+}
+
+div.lotte_details_wrapper ul.details_right li img{
+  vertical-align: text-bottom;
+}
+
+div.lotte_details_wrapper ul.details_left {
+  display: block;
+  float: left;
+  min-width: 350px;
+}
+
+div.lotte_details_wrapper ul.details_left li.key{
+  margin-top:0;
 }

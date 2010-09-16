@@ -2,24 +2,24 @@
 {% load avatars %}
 {% load resources_common_tags %}
 
-<div>
+<div class="lotte_details_wrapper">
 {% if translation %}
-<ul class="simple contexts " style="display: block; float:right;padding-right:1em">
-    <li title="Last Translation" style="margin-top:0"><label>{% trans "Last Translation:" %}</label> 
+<ul class="simple contexts details_right">
+    <li title="Last Translation"><label>{% trans "Last Translation:" %}</label> 
       {% if translation.last_update %}<span>{{ translation.last_update|timesince }}</span>{% endif %}
       {% if translation.user %}
         <span>
           <a href="{% url profile_public translation.user.username %}">{% blocktrans with translation.user as user %}by {{ user }}{% endblocktrans %}</a>
         </span>
         &nbsp;
-        <img class="border top" alt="{{ translation.user }}" src="{% avatar 16 translation.user %}"  style="vertical-align: text-bottom"/>
+        <img class="border top" alt="{{ translation.user }}" src="{% avatar 16 translation.user %}"/>
       {% endif %}
   </li>
 </ul>
 {% endif %}
 
-<ul class="simple contexts" style="display: block; float: left; min-width: 350px;">
-  <li title="{% trans "Key" %}" class="i16 key" style="margin-top:0"><label>{% trans "String ID:" %}</label> <span>{{ source_entity.string }}</span></li>
+<ul class="simple contexts details_left">
+  <li title="{% trans "Key" %}" class="i16 key"><label>{% trans "String ID:" %}</label> <span>{{ source_entity.string }}</span></li>
   <li title="{% trans "Description" %}" class="i16 tag"><label>{% trans "Description:" %}</label> <span>{% if source_entity.context %}{{ source_entity.context }}{% else %}-{% endif %}</span></li>
   <li title="{% trans "Occurences" %}" class="i16 file_search"><label>{% trans "Occurrences:" %}</label> <span>{% if source_entity.occurrences %}{{ source_entity.occurrences }}{% else %}-{% endif %}</span></li>
 </ul>

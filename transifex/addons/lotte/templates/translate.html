@@ -124,10 +124,10 @@
                             if(plural_types[rule]=='other'){
                               source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">';
                               if(plurals_counter>0)
-                                source_divs += '<span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;'
+                                source_divs += '<span class="plural_title">'+plural_types[rule]+':</span>&nbsp;'
                               source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
                             }else
-                              source_divs += '<p title="Source string"><span class="plural_title" style="color:#B65D0E">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                              source_divs += '<p title="Source string"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
                             plurals_counter++;
                         }
                     }
@@ -142,10 +142,10 @@
                         if(rule=='other')
                           lang_strings += '<p>' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                         else
-                          lang_strings += '<p><span class="plural_title" style="color:#B65D0E">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
+                          lang_strings += '<p><span class="plural_title">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                       }
                       if(!lang_strings==""){
-                        source_divs += '<h3 class="similar_lang_title" style="margin-bottom:-1em;font-size:0.85em">In '+lang+':</h3>';
+                        source_divs += '<h3 class="similar_lang_title">In '+lang+':</h3>';
                         source_divs += lang_strings;
                       }
                     }
@@ -155,8 +155,8 @@
                         suggestions_num = ' ('+oObj.aData[4]+')';
 
                     return plural_indicator
-                           + '<div class="source_string_wrapper" style="position:relative;height:100%">'
-                           + ' <div class="source_entity" id="sourceentity_'+ oObj.iDataRow +'" style="display:none"><span title="Key">'+ clean_array["key"] +'</span></div>'
+                           + '<div class="source_string_wrapper">'
+                           + ' <div class="source_entity nodisplay" id="sourceentity_'+ oObj.iDataRow +'" ><span title="Key">'+ clean_array["key"] +'</span></div>'
                            + source_divs
                            + ' <div class="row_tabs">'
                            + '  <ul>'
@@ -180,12 +180,12 @@
                       for(rule in plural_types){
                           if(plural_types[rule] in clean_array["translations"]){
                               if(plural_types[rule]=='other'){
-                                textareas += '<div style="position:relative"><span class="rule" style="display:none">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" style="width:95%;position:relative" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
                                 if(plurals_counter>0)
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
                                 textareas += '</div>';
                               }else{
-                                textareas += '<div style="position:relative"><span class="rule" style="display:none">'+plural_types[rule]+'</span><textarea class="translation" style="width:95%" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
                                 if(plural_types[rule]=='zero'){
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='one'){
@@ -205,9 +205,9 @@
 
                       return textareas
                       + '<div class="error_notes"></div>'
-                      + '<div class="lotte-actions" style="overflow:hidden;top:-1000px;left:-1000px;position:absolute;text-align:right;white-space:nowrap;">'
-                      + '<p style="position:relative;right:-90px"><a class="i16 action buttonized suggest">auto translate</a></p>'
-                      + '<p style="position:relative;right:-79px"><a class="i16 next buttonized copy_source">copy source</a></p>'
+                      + '<div class="lotte-actions">'
+                      + '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">auto translate</a></p>'
+                      + '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">copy source</a></p>'
                       + '</div>';
                     }
                 },
@@ -560,7 +560,7 @@
 
 {% block content_header_sec %}
   {% url search_translations as search_translations %}
-  <p class="i16 view" style="margin: 0;"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (opens up in new tab/window)" %}">
+  <p class="i16 view nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (opens up in new tab/window)" %}">
     {% trans "Search translations" %}</a>
   </p>
 {% endblock %}
@@ -630,7 +630,7 @@
 
 
 
-<table id='stringset_table' style='width:100%'>
+<table id='stringset_table'>
     <thead>
         <tr>
         <th></th>
@@ -655,10 +655,7 @@
 <div id="footpanel">
     <ul id="mainpanel">
         <li id="settingspanel">
-            <a href="#" style="padding-left:24px;
-            background-image:url({{ STATIC_URL }}images/icons/generic16.png);
-            background-repeat: no-repeat;
-            background-position: 4% 50%" class="settings">{% trans "General Settings" %}</a>
+            <a href="#" class="settings">{% trans "General Settings" %}</a>
             <div class="subpanel">
                 <ul>
                     <li class="verbose">

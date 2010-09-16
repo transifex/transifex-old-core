@@ -4,6 +4,10 @@
 {% load search_filters %}
 {% load resources_common_tags %}
 
+{% block extracss %}
+<link media="screen" href="{{ STATIC_URL }}trans_memory/css/search_translation.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block breadcrumb %}{% endblock %}
 
 {% block title %}{{ block.super }} | {% trans "Search Translations" %}{% endblock %}
@@ -12,7 +16,7 @@
 
 {% block content_title %}
   <h2 class="pagetitle">
-    {% trans "Search Translations" %} {% if translations.count %}<sup style="color:#666;font-size:0.7em">({{ translations.count }})</sup> {% endif %}
+    {% trans "Search Translations" %} {% if translations.count %}<sup>({{ translations.count }})</sup> {% endif %}
   </h2>
 {% endblock %}
   
@@ -32,12 +36,12 @@
       {% with translation.language as translation_language %}
 
       {% ifchanged translation_language %}
-        <h3 style="border-top: 3px solid #eee; padding-top: 0.5em;">
+        <h3>
           {% blocktrans with source_language as source_language %}{{ source_language }} &rarr; {{ translation_language }}{% endblocktrans %}
         </h3>
       {% endifchanged %}
 
-      <div class="entry" style="margin-bottom: 2.5em;">
+      <div class="entry">
         {% with translation.source_entity as source_entity %}
 
         {% highlight terms as source_highlighted %}
@@ -45,7 +49,7 @@
         {% endhighlight %}
         
         <p class="i16 text" title="{% trans "Source string" %}">{{ source_highlighted.highlighted }}</p>
-        <p class="i16 comment" style="margin-top: 0.5em;" title="{% trans "Translation" %}">{{ translation.string }}</p>
+        <p class="i16 comment" title="{% trans "Translation" %}">{{ translation.string }}</p>
 
         {% if source_entity.description %}
         <p class="long_description"><span>{% trans "Description:"</span>{{ source_entity.string }}</p>

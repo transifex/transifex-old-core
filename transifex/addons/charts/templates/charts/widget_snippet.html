@@ -62,9 +62,9 @@
 <div>
     <table class="widget">
         <tr>
-            <td style="text-align: center;"><div id="chart-image-div">{% blocktrans %}Loading...{% endblocktrans %}</div></td>
+            <td class="loading"><div id="chart-image-div">{% blocktrans %}Loading...{% endblocktrans %}</div></td>
 
-            <td style="vertical-align:top;">
+            <td class="code_details">
                 <p>{% blocktrans %}Display your project's translation statistics on your own website as a simple image. Perfect for embedding in wiki pages, Trac instances, emails.{% endblocktrans %}</p>
                 <p>{% blocktrans %}The chart will always report live Transifex numbers.{% endblocktrans %}</p>
                 <p>{% blocktrans %}Show code snippet for resource:{% endblocktrans %}
@@ -88,12 +88,12 @@
 <div>
     <table class="widget">
         <tr>
-            <td style="align: center;">
+            <td class="loading">
                 <iframe src="{% url chart_resource_html project.slug default_resource.slug %}"
-                  id="chart-interactive-iframe" style="width: 100%; height:300px; overflow:hidden;">{% blocktrans %}Loading...{% endblocktrans %}</iframe>
+                  id="chart-interactive-iframe">{% blocktrans %}Loading...{% endblocktrans %}</iframe>
             </td>
 
-            <td style="vertical-align:top;">
+            <td class="code_details">
                 <p>{% blocktrans %}Display your project's translation statistics on your own website as an interactive chart. This requires modifications to your homepage's HTML code.{% endblocktrans %}</p>
 
                 <p>{% blocktrans %}You can adjust level of detail, dimensions and colors of the chart by tweaking the code below.{% endblocktrans %}</p>
