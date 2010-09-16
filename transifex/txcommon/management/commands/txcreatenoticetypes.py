@@ -12,11 +12,10 @@ class Command(NoArgsCommand):
     help = ('Create or Update the notice types used in the ActionLog and '
            'Notification apps')
 
-    requires_model_validation = False
+    requires_model_validation = True
     can_import_settings = False
 
     def handle_noargs(self, **options):
-        #FIXME: These don't seem to be working for now.
-        #self.stdout.write("Creating or updating notice types")
+        self.stdout.write("Creating or updating notice types\n")
         create_notice_types()
-        #self.stdout.write("Default set of notice types initialized successfully.")
+        self.stdout.write("Default set of notice types initialized successfully.\n")
