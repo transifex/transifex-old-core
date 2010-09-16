@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 
 from piston.handler import BaseHandler
-from piston.utils import rc
+from piston.utils import rc, throttle
 
 from actionlog.models import action_logging
 from languages.models import Language
@@ -175,6 +175,7 @@ class ProjectResourceHandler(BaseHandler):
 
     allowed_methods = ('POST', 'PUT')
 
+    @throttle(100, 60*60)
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
     def create(self, request, project_slug):

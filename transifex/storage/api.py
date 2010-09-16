@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from piston.handler import BaseHandler
-from piston.utils import rc
+from piston.utils import rc, throttle
 from django.http import HttpResponse
 from django.template.defaultfilters import slugify
 from django.utils import simplejson
@@ -61,6 +61,7 @@ class StorageHandler(BaseHandler):
         logger.debug("Returned list of users uploaded files: %s" % retval)
         return retval
 
+    @throttle(100, 60*60)
     def create(self, request, uuid=None):
         """
         API call for uploading a file via POST or updating storage file attributes

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.utils.encoding import smart_unicode
 
 from piston.handler import BaseHandler, AnonymousBaseHandler
-from piston.utils import rc
+from piston.utils import rc, throttle
 
 from txcommon.decorators import one_perm_required_or_403
 from txcommon.log import logger
@@ -270,6 +270,7 @@ class StatsHandler(BaseHandler):
 class FileHandler(BaseHandler):
     allowed_methods = ('GET')
 
+    @throttle(100, 60*60)
     @method_decorator(one_perm_required_or_403(pr_project_private_perm,
         (Project, 'slug__exact', 'project_slug')))
     def read(self, request, project_slug, resource_slug=None, language_code=None):
