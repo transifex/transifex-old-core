@@ -1,13 +1,10 @@
 .. _releases-1.0:
  
-=======================================
- Transifex version 1.0.x release notes
-=======================================
+============================================================
+ Transifex version 1.0 (Proteus) Beta (development version)
+============================================================
  
- 
-Transifex 1.0 (Proteus) Beta (development version)
-===================================================
- 
+
 Welcome to Transifex 1.0, codenamed Proteus_.
  
 To be Released:
@@ -23,9 +20,6 @@ since its original release. This release got something like a 'heart transplant'
 a brand-new core storage engine was introduced, capable of much more than the
 file-based previous one.
 
-
-Transifex 1.0-beta
--------------------
 
 .. warning::
 
@@ -52,36 +46,113 @@ Here's a 40k-foot view of the release major features and numbers:
    Proteus -- Art from the cover to Uncanny X-Men #127, by John Byrne
 
 
-
 What's new in Transifex 1.0
----------------------------
+===========================
+
 
 Let's see what's fresh!
 
 
-New Translation Storage Engine
-::::::::::::::::::::::::::::::
+Brand New Translation Storage Engine
+------------------------------------
 
 ...
+
+## Resources
+- Renamed happix app to resources.
+- Replaced libtransifex with resources.formats.
+
+
+
+More file formats
+-----------------
+
+Exporters
+---------
+
+- PO headers auto-updated
+- Keyboard shortcuts in Lotte.
 
 
 Support for QT .ts translation format
 :::::::::::::::::::::::::::::::::::::
 
 ...
+- Converted POST methods to GET.
+
+
+Suggestions
+-----------
+
+Better Caching
+--------------
+
+HAPPIX_CACHE_KEYS
+
+
+Fancybox
+--------
+
+Translation Memory
+------------------
+
+Mounted translation search under /projects/search_translations/
+
+
+Application Programmable Interface
+==================================
+
+- Auth
 
 
 Various improvements and bugfixes
----------------------------------
+=================================
 
 
 ...
 
+Better English!
+---------------
+
+
+
+UI
+==
+
+Replaced tooltip tags with tipsy.
+- AJAX in Lotte
+Displaying user avatar in a bunch of places
+Migrated helptext addon
+
+- First part of clone language implementation.
+
+
+Lotte
+-----
+
+- last translator.
+
+
+
 
 Under-the-hood Improvements
-:::::::::::::::::::::::::::
+===========================
 
 - ...
+- Added Turkmen and Uzbek languages.
+- Added plural rules for new languages
+Overhaul of URL definition mechanism in resources et al apps.
+
+
+Support for Django 1.2
+----------------------
+
+Login CSRF check in Django 1.2
+
+
+Test suite
+----------
+
 
 
 Bugfixes
@@ -90,8 +161,16 @@ Bugfixes
 - ...
 
 
+Notable changes since Transifex 0.9
+===================================
+
+- Permanently removed txcreatelanguages since we aren't using it.
+- Stripped language detail page even more.
+
+
+
 Translations
-------------
+============
 
 - apuasi -- Finnish (fi)
 - Azamat Hackimov -- Russian (ru)
@@ -109,7 +188,7 @@ Translations
 
 
 Getting Transifex 1.0
----------------------
+=====================
 
 You can experience Transifex 1.0 live at the upstream instance hosted by
 Indifex, at http://www.transifex.net/. 
@@ -130,7 +209,7 @@ Full information about installing Transifex can be found in the
 
 
 The Transifex Appliance
-:::::::::::::::::::::::
+-----------------------
 
 If you want to play with the latest Transifex code, you may want to use our
 development images for the Transifex Appliance. Following the stand-alone,
@@ -163,7 +242,7 @@ Stable and development images:
 
 
 Upgrading to this version
--------------------------
+=========================
 
 To upgrade the code, update your package distribution as usual:
 
@@ -176,7 +255,7 @@ To upgrade the code, update your package distribution as usual:
 
 
 Dependencies
-::::::::::::
+------------
 
 The following extra dependencies was *added* since the last major version:
 
@@ -193,7 +272,7 @@ before actually doing the database migration.
 
 
 Migration
-:::::::::
+---------
 
 .. warning::
 
@@ -216,9 +295,15 @@ Finally, re-build and setup the necessary extra files::
     cd transifex/site_media/
 
 
+Configuration Settings
+----------------------
+
+- Removed unused TRANSLATION_STATE_CHOICES
+
+
 
 Contributors
-------------
+============
 
 The following people have contributed to this release, with one way or another:
 
