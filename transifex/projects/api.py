@@ -224,7 +224,9 @@ class ProjectResourceHandler(BaseHandler):
                     fhandler.parse_file(True)
                     strings_added, strings_updated = fhandler.save2db(True)
                 except Exception, e:
-                    return BAD_REQUEST("Could not import file: %s" % e)
+                    resource.delete()
+                    return BAD_REQUEST("Resource not created. Could not "
+                        "import file: %s" % e)
                 else:
                     messages = []
                     if strings_added > 0:
