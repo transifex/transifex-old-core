@@ -17,7 +17,7 @@ except ImportError:
 gravatar = False
 if hasattr(settings, "ENABLE_GRAVATAR"):
     if getattr(settings, "ENABLE_GRAVATAR"):
-        from django.templatetags.gravatar_tags import gravatar_for_user
+        from gravatar.templatetags.gravatar_tags import gravatar_for_user
         gravatar = True
 
 # from PythonMagick import Image

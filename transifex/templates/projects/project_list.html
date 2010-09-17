@@ -48,14 +48,14 @@
       <p class="description">{{ project.description }}</p>
       <p>
        {% with project.resources.all|slice:"0:4" as resources %}
-       {% if resources %}
         <span class="i16 resource compact">{% trans "Resources:" %}
           {% for resource in resources %}
             <a class="resource" title='Go to resource "{{ resource.name }}"' href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
-            {% if not forloop.last %},{% endif %} 
+            {% if not forloop.last %},{% endif %}
+          {% empty %}
+			{% trans "No resources in this project." %}
           {% endfor %}
         </span>
-       {% endif %}
        {% endwith %}
       {% if project.tags %}| <span class="i16 tag compact">{% trans "Tags:" %} {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}</span>{% endif %}
       </p>
@@ -65,7 +65,7 @@
   <div class="pagination bottom">{% paginate %}</div>
   </div>
   {% if not project_list %}
-  <p>{% trans "No projects registered yet. :-(" %}</p>
+  <p>{% trans "Bummer. No projects could be found." %}</p>
     {% if request.user.is_authenticated and perms.projects.add_project %}
   {% url project_create as project_create %}
   <p>{% blocktrans %}Why don't you <a href="{{ project_create }}">add one</a>?{% endblocktrans %}</p>
