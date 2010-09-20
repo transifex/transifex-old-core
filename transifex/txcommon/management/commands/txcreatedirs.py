@@ -12,16 +12,16 @@ def transifex_paths():
 
 
 class Command(NoArgsCommand):
-    help = 'Create scratchdir vcs directories'
+    help = 'Create required directories'
 
-    requires_model_validation = False
+    requires_model_validation = True
     can_import_settings = True
 
     def handle_noargs(self, **options):
         for path in transifex_paths():
             try:
                 os.makedirs(path)
-                sys.stdout.write("Creating %s" % path)
+                sys.stdout.write("Creating %s\n" % path)
             except OSError, e:
-                sys.stdout.write("Error creating %s: %s" % (path, e.strerror))
+                sys.stdout.write("Error creating %s: %s\n" % (path, e.strerror))
 
