@@ -5,7 +5,7 @@
 {% with project.releases.all as releases %}
 
 {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
-<div id="releases" class="releases separate">
+  <div id="releases" class="releases separate">
   <div class="editlinks">
     {# <p><a class="simlink" href="{% url release_feed param=release.slug %}" title="Release feed"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" /></a></p> #}
       {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
@@ -15,16 +15,7 @@
   <h3>{% blocktrans %}Project Releases{% endblocktrans %}
   {% render_metacount releases _("releases") %}
   </h3>
-{% else %}
   {% if releases %}
-  <div id="releases" class="releases separate">
-  <h3>{% blocktrans %}Project Releases{% endblocktrans %}
-  {% render_metacount releases _("releases") %}
-  </h3>
-  {% endif %}
-{% endif %}
-  
-{% if releases %}
   <div class="release_list">
   <ul class="simple bigthings">
   {% for release in releases %}
@@ -34,11 +25,27 @@
   </ul>
   </div>
   {% else %}
-    {% if request.user.is_authenticated and perms.projects.pr_release_add_change %}
-      <p class="i16 tip">{% blocktrans %}No releases are registered for this project yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
-    {% endif %}
+    <p class="i16 tip">{% blocktrans %}No releases are registered for this project yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
   {% endif %}
-</div>
+  </div>
 
+{% else %}
+  {% if releases %}
+  <div id="releases" class="releases separate">
+  <h3>{% blocktrans %}Project Releases{% endblocktrans %}
+  {% render_metacount releases _("releases") %}
+  </h3>
+  <div class="release_list">
+  <ul class="simple bigthings">
+  {% for release in releases %}
+    <li><p class="i16 release"><a href="{{ release.get_absolute_url }}">{{ release.name }}</a>
+    {% if release.description %}<span class="description">– {{ release.description }}</span>{% endif %}</p></li>
+  {% endfor %}
+  </ul>
+  </div>
+  </div>
+  {% endif %}
+
+{% endif %}
 {% endwith %}
 
