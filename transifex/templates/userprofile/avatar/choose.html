@@ -59,18 +59,18 @@
 				</p>
 			</li>
 			{% if AVATAR_WEBSEARCH %}
-  		<li>
-    		<label for="id_search">{% trans "Search on Picasa Web" %}</label>
-    		<p>
-      		<input type="text" name="keyword" id="id_search" value="{{ keyword }}" />
-      		<input type="submit" value="{% trans "Search" %}"/>
-    		</p>
+      		<li>
+        		<label for="id_search">{% trans "Search on Picasa Web" %}</label>
+        		<p>
+          		<input type="text" name="keyword" id="id_search" value="{{ keyword }}" />
+          		<input type="submit" value="{% trans "Search" %}"/>
+        		</p>
 
-    		<div class="photos">
-      		{% for thumb,url in images.items %}
-      		<a href="{{ url }}"><img alt="photo{{ forloop.counter }}" src="{{ thumb }}" /></a>
-      		{% endfor %}
-    		</div>
+        		<div class="photos">
+          		{% for thumb,url in images.items %}
+          		<a href="{{ url }}"><img alt="photo{{ forloop.counter }}" src="{{ thumb }}" /></a>
+          		{% endfor %}
+        		</div>
 			</li>
 			{% endif %}
 			</ul>
