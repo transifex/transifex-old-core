@@ -5,17 +5,12 @@ String Level models.
 
 import datetime, sys
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
-
 from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
-
+from django.utils import simplejson as json
 from django.contrib.auth.models import User
 
 from languages.models import Language

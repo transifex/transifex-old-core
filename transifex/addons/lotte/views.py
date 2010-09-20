@@ -32,11 +32,6 @@ Suggestion = get_model('suggestions', 'Suggestion')
 
 from signals import lotte_init, lotte_done
 
-try:
-    import json
-except:
-    import simplejson as json
-
 # Restrict access only to : (The checks are done in the view's body)
 # 1)those belonging to the specific language team (coordinators or members)
 # 2)project maintainers
@@ -437,7 +432,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     if not request.POST:
         return HttpResponseBadRequest()
 
-    data = json.loads(request.raw_post_data)
+    data = simplejson.loads(request.raw_post_data)
     strings = data["strings"]
 
     try:
@@ -577,7 +572,7 @@ def delete_translation(request, project_slug=None, resource_slug=None,
     if not request.POST:
         return HttpResponseBadRequest()
 
-    data = json.loads(request.raw_post_data)
+    data = simplejson.loads(request.raw_post_data)
     to_delete = data["to_delete"]
     resource = get_object_or_404(Resource, slug=resource_slug)
     language = get_object_or_404(Language, code=lang_code)

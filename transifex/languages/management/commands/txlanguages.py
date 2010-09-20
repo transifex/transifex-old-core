@@ -5,7 +5,7 @@ File containing the necessary mechanics for the txlanguages management command.
 from optparse import make_option, OptionParser
 import os.path
 import sys
-import simplejson
+from django.utils import simplejson
 from django.core import serializers
 from django.core.management.base import (BaseCommand, LabelCommand, CommandError)
 from django.conf import settings

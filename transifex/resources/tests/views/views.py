@@ -2,14 +2,10 @@
 from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.test.client import Client
+from django.utils import simplejson as json
 from languages.models import Language
 from resources.models import Resource, Translation
 from txcommon.tests.base import BaseTestCase
-
-try:
-    import json
-except ImportError:
-    import simplejson as json
 
 class CoreViewsTest(BaseTestCase):
     """Test basic view function"""

@@ -1,11 +1,8 @@
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse
+from django.utils import simplejson as json
 from txcommon.tests.base import BaseTestCase
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
 
 
 class SuggestionsViewsTests(BaseTestCase):
@@ -15,7 +12,6 @@ class SuggestionsViewsTests(BaseTestCase):
         self.entity = self.resource.entities[0]
         self.URL_PREFIX = '/entities/%s/lang/%s/' % (self.entity.id,
                                                      self.language.code)
-
     def testAnonymousPagesStatusCode(self):
         #TODO: Why is the following 302 instead of 200?
         pages = {302: [(self.URL_PREFIX + 'snippet'),],

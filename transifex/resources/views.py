@@ -31,10 +31,6 @@ from resources.handlers import invalidate_stats_cache
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
-try:
-    import json
-except:
-    import simplejson as json
 
 Lock = get_model('locks', 'Lock')
 
