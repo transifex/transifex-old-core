@@ -13,7 +13,7 @@ from jsonmap.models import JSONMap
 
 lock = threading.Lock()
 
-class MigrationWorker( threading.Thread ):
+class MigrationWorker(threading.Thread):
 
     def __init__(self, generator):
         self.generator = generator
@@ -28,6 +28,7 @@ class MigrationWorker( threading.Thread ):
         from languages.models import Language
         from projects.models import Project
         from resources.models import Resource
+        from releases.models import Release
 
         while True:
             lock.acquire()
@@ -65,9 +66,16 @@ class MigrationWorker( threading.Thread ):
                                 source_language = language,
                                 project = project)
 
-                        if created:
-                            resource.name = '%s - %s' % (jsonmap.slug, 
-                                r['source_file'])
+                        # Naming resource
+                        resource.name = '%s - %s' % (jsonmap.slug, 
+                            r['source_file'])
+
+                        # Associating related releases
+                        for rl in r['_releases']:
+                            release = Release.objects.filter(
+                                project__slug=rl[0], slug=rl[1])
+                            if release:
+                                resource.releases.add(release[0])
 
                         source_file = os.path.join(path, r['source_file'])
                         resource.i18n_type = get_i18n_type_from_file(source_file)
