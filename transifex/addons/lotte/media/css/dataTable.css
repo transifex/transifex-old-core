@@ -235,7 +235,8 @@ table.display tr.even.gradeU {
 
 .dataTables_wrapper table tbody td{
   min-height: 70px;
-  height: 70px;
+  height: 100%;
+  overflow: visible; /* TODO: Discuss about this!*/
 }
 
 .dataTables_wrapper table tbody tr.metatr td{
@@ -608,5 +609,6 @@ textarea.untranslated{
 }
 
 .source_string {
+  overflow:visible;
   text-shadow: 1px 1px 0px #fff;
 }
