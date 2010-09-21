@@ -124,6 +124,8 @@ class Command(BaseCommand):
                         'source_lang': "en", 
                         'resource_slug': r_slug,
                         '_allows_submission': c.allows_submission,
+                        '_releases': list(c.releases.all().values_list(
+                            'project__slug','slug'))
                     })
 
                     # Temp var to associate translation files with the 
