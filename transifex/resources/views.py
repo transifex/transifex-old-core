@@ -172,7 +172,11 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
-    stats = ResourceStatsList(resource).stat(target_language)
+    statslist = ResourceStatsList(resource)
+    #FIXME: Wordcount is expensive and isn't being cached
+    # Find a way to handle this before enabling it
+    wordcount = statslist.wordcount
+    stats = statslist.stat(target_language)
 
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
@@ -184,6 +188,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
       'lock': lock,
       'user_teams': user_teams,
       'stats': stats,
+      'wordcount': wordcount,
       },
     context_instance = RequestContext(request))
 

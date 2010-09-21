@@ -186,8 +186,11 @@ class ResourceStatsList(StatsList):
         strings!
         """
         wc = 0
-        for ss in self.object.source_strings:
-            wc += ss.wordcount
+        source_trans = Translation.objects.filter(source_entity__id__in=
+            self.entities)
+        for t in source_trans:
+            if t:
+                wc += t.wordcount
         return wc
 
 

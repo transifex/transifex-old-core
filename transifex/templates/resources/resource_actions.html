@@ -20,8 +20,8 @@
       {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
-        {% blocktrans with stats.total_entries as total_entries %} Total:&nbsp;{{ total_entries }} strings,{% endblocktrans %}
-        {% blocktrans with stats.words as wordcount %} {{ wordcount }} words{% endblocktrans %}
+             {% blocktrans with stats.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}
+        {{ wordcount }} words
     </div>
   </div>
   <div class="first_level">
@@ -48,6 +48,7 @@
     {% endifequal %}
 
     </span>
+
     <div class="stats_wrapper">
       {% with 300 as barwidth %}
       <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.num_translated }}<br />{% trans "Untranslated: " %}{{ stats.num_untranslated }}">
@@ -153,8 +154,8 @@
           {% endifnotequal %}
           <li>
             <span class="i16 clock">
-              {% with stat.last_update as last_update %}
-              {% with stat.last_committer as last_committer %}
+              {% with stats.last_update as last_update %}
+              {% with stats.last_committer as last_committer %}
               {% if last_update %}
                 {% blocktrans %}Translation last updated {% endblocktrans %}
                 {% if last_committer %}
