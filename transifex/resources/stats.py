@@ -34,7 +34,7 @@ class StatsBase:
     @stats_cached_property
     def last_update(self):
         """
-        Return the time of the last translation made, without depending on 
+        Return the time of the last translation made, without depending on
         language.
         """
         lt = self.last_translation
@@ -57,6 +57,24 @@ class StatsBase:
         Return the total number of SourceEntity objects to be translated.
         """
         return self.entities.values('id').count()
+
+    @stats_cached_property
+    def wordcount(self):
+        """
+        Return the number of words which need translation in this resource.
+
+        The counting of the words uses the Translation objects of the SOURCE
+        LANGUAGE as set of objects. This function does not count the plural 
+        strings!
+        """
+        wc = 0
+        source_trans = Translation.objects.filter(source_entity__id__in=
+            self.entities)
+        for t in source_trans:
+            if t:
+                wc += t.wordcount
+        return wc
+
 
 
 class Stats(StatsBase):
@@ -175,23 +193,6 @@ class ResourceStatsList(StatsList):
     def __init__(self, resource):
         self.object = resource
         self.entities = SourceEntity.objects.filter(resource=resource)
-
-    @property
-    def wordcount(self):
-        """
-        Return the number of words which need translation in this resource.
-
-        The counting of the words uses the Translation objects of the SOURCE
-        LANGUAGE as set of objects. This function does not count the plural 
-        strings!
-        """
-        wc = 0
-        source_trans = Translation.objects.filter(source_entity__id__in=
-            self.entities)
-        for t in source_trans:
-            if t:
-                wc += t.wordcount
-        return wc
 
 
 class ProjectStatsList(StatsList):
