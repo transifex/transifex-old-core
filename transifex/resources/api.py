@@ -46,7 +46,7 @@ class ResourceHandler(BaseHandler):
                 return rc.NOT_FOUND
             return resource
         else:
-            return Resource.objects.all()
+            return Resource.objects.filter(project__slug=project_slug)
 
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
