@@ -65,6 +65,9 @@ class LinguistHandler(Handler):
             language = self.language
 
         doc = xml.dom.minidom.parseString(self.compiled_template)
+        root = doc.documentElement
+        root.attributes["language"] = language.code
+
         for message in doc.getElementsByTagName("message"):
             if message.attributes.has_key("numerus") and \
                 message.attributes['numerus'].value=='yes':
