@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import get_model
 from django import template
@@ -31,4 +32,5 @@ def watch_toggle(context, obj, language=None):
     user = context['request'].user
     obj.is_watched = obj.is_watched(user)
     context['obj'] = obj
+    context['ENABLE_NOTICES'] = settings.ENABLE_NOTICES
     return context

@@ -1,8 +1,9 @@
 {% load i18n %}
 {% load watches_tags %}
+{% if ENABLE_NOTICES and request.user.is_authenticated %}
 <script type="text/javascript" src="{{ STATIC_URL }}watches/js/watch_toggle.js"></script>
 <span id="watch-{% if obj.is_project %}project{% endif %}{% if obj.is_resource %}resource-{{ obj.id }}{% endif %}" 
       class="i16 nodecoration_icon submit_button buttonized_simple {% if obj.is_watched %}watch_remove{% else %}watch_add{% endif %}" 
       title="{% if obj.is_watched %}{% trans 'Stop watching it' %}{% else %}{% trans 'Watch it' %}{% endif %}"
       onClick="watch_toggle(this, '{{ obj.toggle_watch_url }}')"></span>
-
+{% endif %}
