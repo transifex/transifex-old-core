@@ -238,16 +238,17 @@ def clone_language(request, project_slug=None, resource_slug=None,
     The user is redirected to the online editor for the target language.
     '''
 
+    resource = get_object_or_404(Resource, slug=resource_slug,
+                                 project__slug=project_slug)
+
     # Permissions handling
     # Project should always be available
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, target_lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project):
+    if not check.submit_translations(team or project) and not \
+        resource.accept_translations:
         return permission_denied(request)
-
-    resource = get_object_or_404(Resource, slug = resource_slug,
-                                 project__slug = project_slug)
 
     source_lang = get_object_or_404(Language, code=source_lang_code)
     target_lang = get_object_or_404(Language, code=target_lang_code)
@@ -370,16 +371,18 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
     download (export+download) the translations in a formatted file.
     """
 
+    resource = get_object_or_404(Resource, project__slug = project_slug,
+        slug = resource_slug)
+
     # Permissions handling
     # Project should always be available
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project):
+    if not check.submit_translations(team or project) and not \
+        resource.accept_translations:
         return permission_denied(request)
 
-    resource = get_object_or_404(Resource, project__slug = project_slug,
-        slug = resource_slug)
     language = get_object_or_404(Language, code=lang_code)
     lock = Lock.objects.get_valid(resource, language)
     can_lock = Lock.can_lock(resource, language, request.user)

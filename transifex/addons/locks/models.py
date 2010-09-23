@@ -148,9 +148,11 @@ class Lock(models.Model):
         CAUTION: It does not perform lock counting check!
         """
         perm = ProjectPermission(user)
-        return perm.submit_translations(resource.project, language) or \
-            perm.coordinate_team(project=resource.project, 
-            language=language)
+        if resource.accept_translations and (
+            perm.submit_translations(resource.project, language) or
+            perm.coordinate_team(project=resource.project, language=language)):
+            return True
+        return False
 
     def delete_by_user(self, user, *args, **kwargs):
         """

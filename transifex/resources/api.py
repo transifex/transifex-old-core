@@ -361,6 +361,9 @@ class StringHandler(BaseHandler):
         except Resource.DoesNotExist:
             return rc.NOT_FOUND
 
+        if not translation_resource.accept_translations:
+            return rc.FORBIDDEN
+
         if 'application/json' in request.content_type: # we got JSON strings
             data = getattr(request, 'data',None)
 
@@ -467,6 +470,9 @@ class StringHandler(BaseHandler):
                                             project = translation_project)
             except Resource.DoesNotExist:
                 return rc.NOT_FOUND
+
+            if not translation_resource.accept_translations:
+                return rc.FORBIDDEN
 
             # get lang
             try:

@@ -69,8 +69,11 @@ class Resource(models.Model):
         choices=((k,settings.I18N_METHODS[k]['description']) for k,v in settings.I18N_METHODS.items()),
         help_text=_("The type of i18n method used in this resource (%s)" %
                     ', '.join(settings.TRANS_CHOICES.keys())))
-    #FIXME: Add accept_translations BoolField.
-    
+
+    accept_translations = models.BooleanField(_('Accepting translations?'),
+        blank=False, null=False, default=True,
+        help_text=_('Is this resource accepting submissions of translations?'))
+
     # Foreign Keys
     source_language = models.ForeignKey(Language,
         verbose_name=_('Source Language'), blank=False, null=False,

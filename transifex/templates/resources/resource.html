@@ -111,6 +111,16 @@ Projects |
         <span class="words big_number">({{ statslist.wordcount }} {% trans "words" %})</span>
       </td>
     </tr>
+    <tr>
+      <th class="i16 allow_file">{% trans "Accepting Translations?" %}</th>
+      <td>
+        {% if resource.accept_translations %}
+            <span class="i16 tick_circle"/>
+        {% else %}
+            <span class="i16 stop"/>
+        {% endif %}
+      </td>
+    </tr>
   </table>
 </div>
 
@@ -229,7 +239,7 @@ Projects |
 
 
 {% get_permission "project_perm.submit_translations" for request.user and resource.project,1 as "can_submit_translation" %}
-{% if can_submit_translation or request.user.is_superuser %}
+{% if can_submit_translation and resource.accept_translations %}
 
 <p class="i16 tip" style="font-size:85%">
 If you cannot see your language, click the button below to translate.

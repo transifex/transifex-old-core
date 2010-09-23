@@ -273,20 +273,21 @@ class ProjectResourceHandler(BaseHandler):
         """
         try:
             project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist:
+            resource = Resource.objects.get(slug=resource_slug, 
+                project=project)
+        except (Project.DoesNotExist, Resource.DoesNotExist):
             return rc.NOT_FOUND
 
         # Permissions handling
         team = Team.objects.get_or_none(project, language_code)
         check = ProjectPermission(request.user)
-        if not check.submit_translations(team or project):
+        if not check.submit_translations(team or project) and not \
+            resource.accept_translations:
             return rc.FORBIDDEN
 
         if "application/json" in request.content_type:
             if "uuid" in request.data:
                 uuid = request.data['uuid']
-                resource = Resource.objects.get(slug=resource_slug,
-                    project=project)
                 storagefile = StorageFile.objects.get(uuid=uuid)
                 language = storagefile.language
 

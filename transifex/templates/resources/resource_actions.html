@@ -39,7 +39,7 @@
         <span title="You cannot translate the source language strings.">This is the Source Language</span>
         {% endblocktrans %}
       {% else %}
-        {% if can_submit_translation or request.user.is_superuser %}
+        {% if can_submit_translation and resource.accept_translations %}
           <a class="i16 tick buttonized2" id="translate_now" href="{% url translate_resource project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
         {% else %}
           <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
@@ -77,8 +77,8 @@
           {% endif %}
           {% ifnotequal resource.source_language target_language %}
           <li>
-            {% if request.user.is_authenticated %}
-              {% if is_maintainer or request.user.is_superuser or user_teams %}
+            {% if request.user.is_authenticated and resource.accept_translations %}
+              {% if is_maintainer or user_teams %}
               <span class="i16 clone">
                 <a class="language_chooser_trigger" href="#" >{% trans "Clone to new language" %}</a>
               </span>
@@ -127,7 +127,7 @@
           <li>
             {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock">
-              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="Resource cannot be locked" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
+              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="Resource cannot be locked" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
             </span>
             {% else %}
             <span id="download_for_translation" class="i16 lock">
@@ -138,7 +138,7 @@
             <div class="error_notes"></div>
           </li>
           <li>
-            {% if can_submit_translation %}
+            {% if can_submit_translation and resource.accept_translations %}
                 <div class="upload_action_wrapper" style="padding:0.5em 0">
                 {% upload_resource_translation_button request resource target_language %}
                 </div>
@@ -149,6 +149,11 @@
   </div>
   <div class="first_level last_update">
         <ul>
+          <li>
+            {% if not resource.accept_translations %}
+                <span class="i16 stop red">{% trans "This resource currently is not accepting translations." %}</span>
+            {% endif %}
+          </li>
           {% ifnotequal resource.source_language target_language %}
             {% lock_resource_action resource target_language %}
           {% endifnotequal %}

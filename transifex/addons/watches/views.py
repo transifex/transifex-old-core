@@ -39,7 +39,8 @@ def resource_translation_toggle_watch(request, project_slug, resource_slug, lang
     check = ProjectPermission(request.user)
     if not check.submit_translations(team or project) and not \
         request.user.has_perm('watches.add_translationwatch') and not \
-        request.user.has_perm('watches.delete_translationwatch'):
+        request.user.has_perm('watches.delete_translationwatch') and not \
+        resource.accept_translations:
         return permission_denied(request)
 
     url = reverse('resource_translation_toggle_watch', args=(project_slug,

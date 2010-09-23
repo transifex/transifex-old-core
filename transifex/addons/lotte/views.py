@@ -54,19 +54,14 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     resources = []
     if resource_slug:
-        try:
-            resources = [ Resource.objects.get(
-                slug = resource_slug,
-                project = project
-            ) ]
-        except Resource.DoesNotExist:
-            raise Http404
+        resource_list = [get_object_or_404(Resource, slug=resource_slug, 
+            project=project)]
     else:
-        resources = Resource.objects.filter(project = project)
+        resource_list = Resource.objects.filter(project=project)
 
         # Return a page explaining that the project has multiple source langs and
         # cannot be translated as a whole.
-        if resources.values('source_language').distinct().count() > 1:
+        if resource_list.values('source_language').distinct().count() > 1:
             request.user.message_set.create(
                 message=_("This project has more than one source languages and as a "
                           "result you can not translate all resources at the "
@@ -74,6 +69,15 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project_slug]),)
+
+    # Filter resources that are not accepting translations
+    for resource in resource_list:
+        if resource.accept_translations:
+            resources.append(resource)
+
+    # If no resource accepting translations, raise a 403
+    if not resources:
+        return permission_denied(request)
 
     target_language = Language.objects.by_code_or_alias_or_404(lang_code)
 
@@ -464,6 +468,11 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             # If the source_string cannot be identified in the DB then go to next
             # translation pair.
             continue
+
+        if not source_string.resource.accept_translations:
+            push_response_dict[source_id] = { 'status':500,
+                 'message':"The resource of this source string is not " \
+                 "accepting translations." }
 
         # If the translated source string is pluralized check that all the 
         # source language supported rules have been filled in, else return error

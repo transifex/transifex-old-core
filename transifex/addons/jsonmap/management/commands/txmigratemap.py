@@ -70,6 +70,9 @@ class MigrationWorker(threading.Thread):
                         resource.name = '%s - %s' % (jsonmap.slug, 
                             r['source_file'])
 
+                        # accept_translations setting
+                        resource.accept_translations = r['_allows_submission']
+
                         # Associating related releases
                         for rl in r['_releases']:
                             release = Release.objects.filter(
