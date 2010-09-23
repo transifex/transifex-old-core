@@ -48,17 +48,12 @@ class Resource(models.Model):
     A resource is always related to a project.
     """
 
-    name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
-        help_text=_("A descriptive name unique inside the project."))
-
     # Short identifier to be used in the API URLs
     slug = models.SlugField(_('Slug'), max_length=50,
         help_text=_("A short label to be used in the URL, containing only "
                     "letters, numbers, underscores or hyphens."))
-
-    # Timestamps
-    created = models.DateTimeField(auto_now_add=True, editable=False)
-    last_update = models.DateTimeField(auto_now=True, editable=False)
+    name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
+        help_text=_("A descriptive name unique inside the project."))
 
     # i18n related fields
     source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
@@ -73,6 +68,10 @@ class Resource(models.Model):
     accept_translations = models.BooleanField(_('Accepting translations?'),
         blank=False, null=False, default=True,
         help_text=_('Is this resource accepting submissions of translations?'))
+
+    # Timestamps
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+    last_update = models.DateTimeField(auto_now=True, editable=False)
 
     # Foreign Keys
     source_language = models.ForeignKey(Language,
