@@ -469,7 +469,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             # translation pair.
             continue
 
-        if not source_string.resource.accept_translations:
+        if not source_string.source_entity.resource.accept_translations:
             push_response_dict[source_id] = { 'status':500,
                  'message':"The resource of this source string is not " \
                  "accepting translations." }
