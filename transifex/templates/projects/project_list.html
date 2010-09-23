@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load txcommontags %}
 {% load pagination_tags %}
-{% load helptext_tags %}
 
 {% block body_class %}{{ block.super }} project_list{% endblock %}
 
@@ -15,7 +14,6 @@
 {% block breadcrumb %}{% homelink %} &raquo; {% trans "Projects" %}{% endblock %}
 
 {% block content_title %}
-{% include "helptext/project_list.html" %}
 <h2 class="pagetitle">
     {% trans "Projects on Transifex" %}
     {% render_metacount project_list _("projects") %}
