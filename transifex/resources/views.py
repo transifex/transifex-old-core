@@ -118,12 +118,11 @@ def resource_edit(request, project_slug, resource_slug):
             urlinfo.resource = resource_new
             urlinfo.save()
 
-            # TODO: (Optional) Put some signal here to denote the udpate.
             post_resource_save.send(sender=None, instance=resource_new,
                 created=False, user=request.user)
 
-            return HttpResponseRedirect(reverse('project_detail',
-                                        args=[resource.project.slug]),)
+            return HttpResponseRedirect(reverse('resource_detail',
+                args=[resource.project.slug, resource.slug]))
     else:
         if resource:
             initial_data = {}
