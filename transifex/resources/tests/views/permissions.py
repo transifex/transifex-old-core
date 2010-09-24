@@ -404,6 +404,19 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['team_member'].post(page_url ,follow=True)
         self.assertEqual(resp.status_code, 403)
 
+        # Check lock and get translation file perms for resource not accepting
+        # traslations.
+        self.resource.accept_translations = False
+        self.resource.save()
+        page_url = reverse('lock_and_download_translation',
+            args=[self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['team_member'].get(page_url)
+        self.assertEqual(resp.status_code, 403)
+        resp = self.client['team_member'].post(page_url)
+        self.assertEqual(resp.status_code, 403)
+        self.resource.accept_translations = True
+        self.resource.save()
+
         # Check lock and get translation file perms
         page_url = reverse('lock_and_download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
@@ -553,6 +566,19 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
         resp = self.client['maintainer'].post(page_url ,follow=True)
         self.assertEqual(resp.status_code, 200)
+
+        # Check lock and get translation file perms for resource not accepting
+        # traslations.
+        self.resource.accept_translations = False
+        self.resource.save()
+        page_url = reverse('lock_and_download_translation',
+            args=[self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['team_member'].get(page_url)
+        self.assertEqual(resp.status_code, 403)
+        resp = self.client['team_member'].post(page_url)
+        self.assertEqual(resp.status_code, 403)
+        self.resource.accept_translations = True
+        self.resource.save()
 
         # Check lock and get translation file perms
         page_url = reverse('lock_and_download_translation',
