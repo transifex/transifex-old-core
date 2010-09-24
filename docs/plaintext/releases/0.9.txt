@@ -527,6 +527,36 @@ A big "Thanks" goes to the `MeeGo Project`_, Intel and Nokia for their support
 in this release.
 
 
+Transifex 0.9.1
+===============
+
+Released:
+  24 September 2010
+  
+This release includes an important command called 'txcreatemap', which is
+necessary to upgrade to 1.0::
+
+    $ ./manage.py txcreatemap --help
+    Usage: ./manage.py txcreatemap [options] <project_slug project_slug ...>
+    
+        Create a JSON formatted mapping of the POT files and theirs translations
+        (PO) for projects, converting components into resources. Each project
+        component has it own mapping which is stored in the database within the
+        ``jsonmap.models.JSONMap`` model.
+    
+        This mapping can be used by the CLI app of Transifex as the ``.tx/txdata``
+        file content in the remote repository.
+    
+        Project slugs can be passed by argument to map specific projects. If no
+        argument is passed the mapping will happen for all the projects in the
+        database.
+    
+        This mapping is used to migrate versions <= 0.9.x to the 1.0 version of
+        Transifex.
+
+
+
+
 Transifex 0.9 Development Releases
 ==================================
 
