@@ -217,10 +217,10 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
 
     statslist = ProjectStatsList(project)
 
-    return render_to_response("resources/resource_list_more.html",
-    { 'project' : project,
-      'statslist' : statslist,},
-    context_instance = RequestContext(request))
+    return render_to_response("resources/resource_list_more.html", { 
+        'project': project,
+        'statslist': statslist},
+        context_instance = RequestContext(request))
 
 
 # Restrict access only to : (The checks are done in the view's body)
