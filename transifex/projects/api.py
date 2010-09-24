@@ -281,7 +281,7 @@ class ProjectResourceHandler(BaseHandler):
         # Permissions handling
         team = Team.objects.get_or_none(project, language_code)
         check = ProjectPermission(request.user)
-        if not check.submit_translations(team or project) and not \
+        if not check.submit_translations(team or project) or not \
             resource.accept_translations:
             return rc.FORBIDDEN
 

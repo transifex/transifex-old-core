@@ -246,7 +246,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, target_lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project) and not \
+    if not check.submit_translations(team or project) or not \
         resource.accept_translations:
         return permission_denied(request)
 
@@ -379,7 +379,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project) and not \
+    if not check.submit_translations(team or project) or not \
         resource.accept_translations:
         return permission_denied(request)
 
