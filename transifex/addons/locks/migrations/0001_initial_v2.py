@@ -5,7 +5,12 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
+    depends_on = (
+        ("resources", "0001_initial"),
+        ("languages", "0001_initial"),
+    )
+
     def forwards(self, orm):
         
         # Adding model 'Lock'
