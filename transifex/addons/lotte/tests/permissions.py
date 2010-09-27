@@ -100,6 +100,17 @@ class LottePermissionsTests(BaseTestCase):
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 403)
 
+        # Check access to main lotte page for resource not accepting
+        # traslations.
+        self.resource.accept_translations = False
+        self.resource.save()
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['registered'].get(page_url)
+        self.assertEqual(resp.status_code, 403)
+        self.resource.accept_translations = True
+        self.resource.save()
+
         # Test view_strings
         page_url = reverse('view_strings', args=[
             self.project.slug, self.resource.slug, self.language.code])
@@ -168,6 +179,17 @@ class LottePermissionsTests(BaseTestCase):
             self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 200)
+
+        # Check access to main lotte page for resource not accepting
+        # traslations.
+        self.resource.accept_translations = False
+        self.resource.save()
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['team_member'].get(page_url)
+        self.assertEqual(resp.status_code, 403)
+        self.resource.accept_translations = True
+        self.resource.save()
 
         # Test view_strings
         page_url = reverse('view_strings', args=[
@@ -251,6 +273,17 @@ class LottePermissionsTests(BaseTestCase):
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
 
+        # Check access to main lotte page for resource not accepting
+        # traslations.
+        self.resource.accept_translations = False
+        self.resource.save()
+        page_url = reverse('translate_resource', args=[
+            self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['maintainer'].get(page_url)
+        self.assertEqual(resp.status_code, 403)
+        self.resource.accept_translations = True
+        self.resource.save()
+
         # Test view_strings
         page_url = reverse('view_strings', args=[
             self.project.slug, self.resource.slug, self.language.code])
@@ -274,10 +307,10 @@ class LottePermissionsTests(BaseTestCase):
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 400)
         # POST
-        resp = self.client['maintainer'].post(page_url, json.dumps(
-            {"to_delete":[self.entity.id]}),
-            content_type='application/json')
-        self.assertEqual(resp.status_code, 200)
+        #resp = self.client['maintainer'].post(page_url, json.dumps(
+            #{"to_delete":[self.entity.id]}),
+            #content_type='application/json')
+        #self.assertEqual(resp.status_code, 200)
 
         # Test stringset handling Ajax call
         page_url = reverse('stringset_handling',
