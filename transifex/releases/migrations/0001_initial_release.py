@@ -13,6 +13,7 @@ class Migration(SchemaMigration):
 
     depends_on = (
         ("projects", "0001_initial"),
+        ("resources", "0001_initial"),
         ("releases", "0001_initial"),
     )
 
