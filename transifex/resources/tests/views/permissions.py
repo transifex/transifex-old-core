@@ -573,9 +573,9 @@ class PermissionsTest(BaseTestCase):
         self.resource.save()
         page_url = reverse('lock_and_download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
-        resp = self.client['team_member'].get(page_url)
+        resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 403)
-        resp = self.client['team_member'].post(page_url)
+        resp = self.client['maintainer'].post(page_url)
         self.assertEqual(resp.status_code, 403)
         self.resource.accept_translations = True
         self.resource.save()
