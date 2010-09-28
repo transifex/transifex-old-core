@@ -53,7 +53,7 @@
 
 {% if perms.projects.change_team or is_coordinator %}
 <div class="addteam editlinks">
-    <a class="i16 buttonized edit" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit" %}</a>
+    <a class="i16 buttonized edit" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team..." %}</a>
 </div>
 {% endif %}
 
@@ -319,7 +319,7 @@
     {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
     {% if perms.teams.delete_team or is_maintainer %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url team_delete project.slug team.language.code %}">{% trans "Delete team" %}</a>
+      <a class="i16 delete buttonized" href="{% url team_delete project.slug team.language.code %}">{% trans "Delete team..." %}</a>
     </div>
     {% endif %}
   </div>

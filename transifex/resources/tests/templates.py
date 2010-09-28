@@ -105,33 +105,21 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test the response contents
         resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        self.assertContains(resp,
-                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
-                            (self.project.slug, self.resource.slug),
-                            status_code=200)
+        self.assertNotContains(resp, 'Edit resource...', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
             resp = self.client[user].get(self.urls['resource'])
-            self.assertNotContains(resp,
-                                '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
-                                (self.project.slug, self.resource.slug),
-                                status_code=200)
+            self.assertNotContains(resp, 'Edit resource...', status_code=200)
 
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
         resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        self.assertContains(resp,
-                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
-                            (self.project.slug, self.resource.slug),
-                            status_code=200)
+        self.assertContains(resp, 'Delete resource...', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
             resp = self.client[user].get(self.urls['resource'])
-            self.assertNotContains(resp,
-                                '<a class="i16 delete buttonized" href="/projects/p/%s/resource/%s/delete">Delete translation resource</a>' %
-                                (self.project.slug, self.resource.slug),
-                                status_code=200)
+        self.assertNotContains(resp, 'Delete resource...', status_code=200)
 
     def test_disabled_visit_team_resource_actions(self):
         """Test that languages with no team or existing translations don't have
