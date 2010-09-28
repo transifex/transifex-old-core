@@ -151,6 +151,7 @@ class POHandler(Handler):
         po = polib.pofile(template)
 
         # Update PO file headers
+        po.metadata['Project-Id-Version'] = self.resource.project.name
         po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but it's not being used by po
