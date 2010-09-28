@@ -69,17 +69,17 @@ class ResourceHandler(BaseHandler):
                 pass
 
             if not source_language:
-                return rc.BAD_REQUEST
+                return BAD_REQUEST("No source language was specified.")
 
             try:
                 Resource.objects.get_or_create(project=project,
                     source_language=source_language, **data)
             except:
-                return rc.BAD_REQUEST
+                return BAD_REQUEST("The json you provided is misformatted.")
 
             return rc.CREATED
         else:
-            return rc.BAD_REQUEST
+            return BAD_REQUEST("The request data need to be in json encoding.")
 
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
@@ -105,7 +105,7 @@ class ResourceHandler(BaseHandler):
                 try:
                     resource = Resource.objects.get(slug=resource_slug)
                 except Resource.DoesNotExist:
-                    return rc.BAD_REQUEST
+                    return BAD_REQUEST("Request %s does not exist" % resource_slug)
                 try:
                     for key,value in data.items():
                         setattr(resource, key,value)
@@ -117,7 +117,7 @@ class ResourceHandler(BaseHandler):
 
                 return rc.ALL_OK
 
-        return rc.BAD_REQUEST
+        return BAD_REQUEST("The request data need to be in json encoding.")
 
 
     @method_decorator(one_perm_required_or_403(pr_resource_delete,
@@ -140,85 +140,6 @@ class ResourceHandler(BaseHandler):
             return rc.DELETED
         else:
             return rc.BAD_REQUEST
-
-############################
-# Resource String Handlers #
-############################
-
-def _create_stringset(request, project_slug, resource_slug, target_lang_code):
-    '''
-    Helper function to create json stringset for a project/resource for one or
-    multiple languages.
-    '''
-    try:
-        if resource_slug:
-            resources = [Resource.objects.get(project__slug=project_slug,slug=resource_slug)]
-        elif "resources" in request.GET:
-            resources = []
-            for resource_slug in request.GET["resources"].split(","):
-                resources.append(Resource.objects.get(slug=resource_slug))
-        else:
-            resources = Resource.objects.filter(project__slug=project_slug)
-    except Resource.DoesNotExist:
-        return rc.NOT_FOUND
-
-    # Getting language codes from the request
-    lang_codes = []
-    if target_lang_code:
-        lang_codes.append(target_lang_code)
-    elif "languages" in request.GET:
-        lang_codes.extend([l for l in request.GET["languages"].split(",")])
-
-    # Finding the respective Language objects in the database
-    target_langs = []
-    for lang_code in lang_codes:
-        try:
-            target_langs.append(Language.objects.by_code_or_alias(lang_code))
-        except Language.DoesNotExist:
-            logger.info("No language found for code '%s'." % lang_code)
-
-    # If any language is found
-    if not target_langs and lang_codes:
-        return rc.NOT_FOUND
-
-    # handle string search
-    #
-    # FIXME: currently it supports case insensitive search. Maybe it should
-    # look for exact matches only? Also, there are issues in case insensitive
-    # searches in sqlite and UTF8 charsets according to this
-    # http://docs.findjango.com/ref/databases.html#sqlite-string-matching
-    qstrings = {}
-    # user requested specific strings?
-    if "strings" in request.GET:
-        qstrings = {
-            'string__iregex': eval('r\'('+'|'.join(request.GET['strings'].split(',')) + ')\'')
-        }
-
-    retval = []
-    for translation_resource in resources:
-        strings = {}
-        for ss in SourceEntity.objects.filter(resource=translation_resource,**qstrings):
-            if not ss.id in strings:
-                strings[ss.id] = {
-            'id':ss.id,
-            'original_string':ss.string,
-            'context':ss.context,
-            'translations':{}}
-
-        if not qstrings:
-            translated_strings = Translation.objects.filter(source_entity__resource=translation_resource)
-        else:
-            translated_strings = Translation.objects.filter(
-                                            source_entity__resource = translation_resource,
-                                            source_entity__string__iregex=qstrings['string__iregex'])
-
-        if target_langs:
-            translated_strings = translated_strings.filter(language__in = target_langs)
-        for ts in translated_strings.select_related('source_entity','language'):
-            strings[ts.source_entity.id]['translations'][ts.language.code] = ts.string
-
-        retval.append({'resource':translation_resource.slug,'strings':strings.values()})
-    return retval
 
 
 class StatsHandler(BaseHandler):
