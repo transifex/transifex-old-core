@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from transifex.resources.models import Resource
 
 import os
-import urllib2
+import urllib2, urlparse
 from uuid import uuid4
 
 StorageFile = models.get_model("storage", "StorageFile")
@@ -38,10 +38,19 @@ class URLInfo(models.Model):
         Fetch source file from remote url and import it, updating existing
         entries.
         """
+        parts = urlparse.urlsplit(self.source_file_url)
+        filename = parts.path.split('/')[-1]
+        try:
+            file = urllib2.urlopen(self.source_file_url)
+        except:
+            logger.error("Could not pull source file for resource %s.%s (%s)" %
+                ( self.resource.project.slug, self.resource.project,
+                  self.source_file_url ))
+            raise
 
-        file = urllib2.urlopen(self.source_file_url)
         sf = StorageFile()
         sf.uuid = str(uuid4())
+        sf.name = filename
         fh = open(sf.get_storage_path(), 'wb')
         fh.write(file.read())
         fh.flush()
@@ -51,16 +60,21 @@ class URLInfo(models.Model):
         sf.language = self.resource.source_language
 
         sf.update_props()
-        sf.file_check()
         sf.save()
 
-        parser = sf.find_parser()
-        language = sf.language
-        fhandler = parser(filename=sf.get_storage_path())
-        fhandler.set_language(language)
-        fhandler.bind_resource(self.resource)
-        fhandler.contents_check(fhandler.filename)
-        fhandler.parse_file()
-        strings_added, strings_updated = fhandler.save2db()
+        try:
+            parser = sf.find_parser()
+            language = sf.language
+            fhandler = parser(filename=sf.get_storage_path())
+            fhandler.set_language(language)
+            fhandler.bind_resource(self.resource)
+            fhandler.contents_check(fhandler.filename)
+            fhandler.parse_file(is_source=True)
+            strings_added, strings_updated = fhandler.save2db(is_source=True)
+        except Exception,e:
+            logger.error("Error import source file for resource %s.%s (%s)" %
+                ( self.resource.project.slug, self.resource.project,
+                  self.source_file_url))
+            raise
 
         return strings_added, strings_updated

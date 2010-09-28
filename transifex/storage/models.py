@@ -127,6 +127,7 @@ class StorageFile(models.Model):
 
         fpo = parser(filename = self.get_storage_path() )
         fpo.set_language(self.language)
+        fpo.contents_check(self.get_storage_path())
         fpo.parse_file()
 
         stringset = fpo.stringset

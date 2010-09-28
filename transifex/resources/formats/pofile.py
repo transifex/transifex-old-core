@@ -84,7 +84,7 @@ class POHandler(Handler):
     TODO: Switch to Gettext C library
     """
     name = "GNU Gettext *.PO/*.POT handler"
-    mime_types = ["application/x-gettext","application/x-po", "text/x-po"]
+    mime_types = ["application/x-gettext", "application/x-po", "text/x-po"]
     format = "GNU Gettext Catalog (*.po, *.pot)"
 
     @classmethod
