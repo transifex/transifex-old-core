@@ -72,6 +72,8 @@ def resource_delete(request, project_slug, resource_slug):
     resource = get_object_or_404(Resource, project__slug = project_slug,
                                  slug = resource_slug)
     if request.method == 'POST':
+        xhr = request.GET.has_key('xhr')
+        
         import copy
         resource_ = copy.copy(resource)
         resource.delete()
@@ -84,6 +86,11 @@ def resource_delete(request, project_slug, resource_slug):
             message=_("The translation resource '%s' was deleted.") % resource_.name)
 
         invalidate_stats_cache(resource_)
+        
+        if xhr:
+            response_dict = {'status': 200}
+            return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
+
         return HttpResponseRedirect(reverse('project_detail',
                                     args=[resource.project.slug]),)
     else:
