@@ -2,7 +2,27 @@
 from django.contrib import admin
 from resources.models import *
 
-admin.site.register(Translation)
-admin.site.register(SourceEntity)
-admin.site.register(Resource)
-admin.site.register(Template)
+class ResourceAdmin(admin.ModelAdmin):
+    search_fields = ['slug', 'name', 'project__name', 'source_language__name']
+    list_display = ['name', 'project', 'source_language']
+
+class SourceEntityAdmin(admin.ModelAdmin):
+    search_fields = ['string', 'string_hash', 'context', 'occurrences']
+    list_display = ['string', 'context', 'resource']
+
+class TranslationAdmin(admin.ModelAdmin):
+    search_fields = ['string', 'string_hash', 'language__name', 
+        'source_entity__string']
+    list_display = ['source_entity', 'string', 'language']
+    list_display_links = ['string']
+
+class TemplateAdmin(admin.ModelAdmin):
+    search_fields = ['resource__name', 'resource__project__name', 
+        'resource__source_language__name']
+    list_display = ['resource']
+
+
+admin.site.register(Resource, ResourceAdmin)
+admin.site.register(SourceEntity, SourceEntityAdmin)
+admin.site.register(Translation, TranslationAdmin)
+admin.site.register(Template, TemplateAdmin)
