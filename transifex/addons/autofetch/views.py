@@ -15,20 +15,20 @@ def fetch_url(request, project_slug, resource_slug):
     """
     Trigger the fetching of the source file url and then update the resource.
     """
-
-#    if not request.POST:
-#        return HttpResponseBadRequest()
-
     response_dict = {}
     try:
         urlinfo = URLInfo.objects.get(resource__slug=resource_slug)
         urlinfo.update_source_file()
     except URLInfo.DoesNotExist:
         response_dict = { 'status':404,
-                          'message':_("URL not set for this resource.")}
+                          'message':_("URL not set for this resource."),
+                          'redirect_url':reverse('resource_detail',
+                                                 args=[project_slug,])}
     except:
         response_dict = { 'status':500,
-                          'message':_("Error updating source file.")}
+                          'message':_("Error updating source file."),
+                          'redirect_url':reverse('project_detail',
+                                                 args=[project_slug,])}
     else:
         response_dict = { 'status':200,
                           'message':_("Source file updated successfully."),
