@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex 0.6.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 23:28+0000\n"
+"POT-Creation-Date: 2010-09-29 16:55+0000\n"
 "PO-Revision-Date: 2009-06-15 10:28+0300\n"
 "Last-Translator: Oron Peled <oron@actcom.co.il>\n"
 "Language-Team: Hebrew Team <fedora-he-list@redhat.com>\n"
-"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.3.1\n"
 
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "חיפוש אחר שם משתמש או להשאיר ריק"
 
-#: actionlog/models.py:166
+#: actionlog/models.py:167
 msgid "log entry"
 msgstr "רשומת יומן"
 
-#: actionlog/models.py:167
+#: actionlog/models.py:168
 msgid "log entries"
 msgstr "רשומות יומן"
 
@@ -49,7 +49,7 @@ msgid "DATETIME_FORMAT"
 msgstr ""
 
 #: actionlog/templates/object_action_list.html:22
-#: templates/projects/project_detail.html:131
+#: templates/projects/project_detail.html:130
 msgid "No history recorded yet."
 msgstr "עדיין אין רשומות היסטוריה"
 
@@ -73,7 +73,7 @@ msgid ""
 "the source file for the given URL."
 msgstr ""
 
-#: addons/autofetch/models.py:25 resources/models.py:178
+#: addons/autofetch/models.py:25 resources/models.py:175
 msgid "Resource"
 msgstr ""
 
@@ -84,6 +84,18 @@ msgstr "מתורגם:"
 
 #: addons/autofetch/models.py:30
 msgid "url handler"
+msgstr ""
+
+#: addons/autofetch/views.py:28
+msgid "URL not set for this resource."
+msgstr ""
+
+#: addons/autofetch/views.py:31
+msgid "Error updating source file."
+msgstr ""
+
+#: addons/autofetch/views.py:34
+msgid "Source file updated successfully."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:61
@@ -171,7 +183,7 @@ msgstr ""
 msgid "This resource language is already locked by '%s'"
 msgstr ""
 
-#: addons/locks/models.py:160
+#: addons/locks/models.py:162
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
@@ -285,7 +297,7 @@ msgid ""
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 
-#: addons/lotte/views.py:75
+#: addons/lotte/views.py:66
 msgid ""
 "This project has more than one source languages and as a result you can not "
 "translate all resources at the same time."
@@ -344,7 +356,7 @@ msgstr "שפה"
 
 #: addons/lotte/templates/translate.html:8
 #: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:54
-#: templates/projects/base.html:6 templates/projects/project_list.html:15
+#: templates/projects/base.html:6 templates/projects/project_list.html:14
 #: templates/resources/resource_form.html:10
 msgid "Projects"
 msgstr ""
@@ -367,13 +379,13 @@ msgid "Search translations"
 msgstr "מתורגם:"
 
 #: addons/lotte/templates/translate.html:638
-#: addons/lotte/templates/view_strings.html:188 resources/models.py:281
+#: addons/lotte/templates/view_strings.html:188 resources/models.py:278
 msgid "Source String"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:639
 #: addons/lotte/templates/view_strings.html:189
-#: addons/trans_memory/templates/search_translation.html:48
+#: addons/trans_memory/templates/search_translation.html:52
 #, fuzzy
 msgid "Translation"
 msgstr "מתורגם:"
@@ -383,7 +395,7 @@ msgid "Save all"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:650
-#: templates/resources/resource_actions.html:178
+#: templates/resources/resource_actions.html:184
 #, fuzzy
 msgid "Delete translations"
 msgstr "מתורגם:"
@@ -392,16 +404,16 @@ msgstr "מתורגם:"
 msgid "Save and Exit"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:661
+#: addons/lotte/templates/translate.html:658
 #, fuzzy
 msgid "General Settings"
 msgstr "סך־הכל:"
 
-#: addons/lotte/templates/translate.html:666
+#: addons/lotte/templates/translate.html:663
 msgid "Verbose editing"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:670
+#: addons/lotte/templates/translate.html:667
 #, fuzzy
 msgid "Auto save"
 msgstr "לא מתורגם:"
@@ -428,8 +440,8 @@ msgstr ""
 msgid "resource priorities"
 msgstr ""
 
-#: addons/suggestions/models.py:19 resources/models.py:142
-#: resources/models.py:262
+#: addons/suggestions/models.py:19 resources/models.py:139
+#: resources/models.py:259
 msgid "String"
 msgstr ""
 
@@ -437,8 +449,8 @@ msgstr ""
 msgid "The actual string content of suggestion."
 msgstr ""
 
-#: addons/suggestions/models.py:21 resources/models.py:144
-#: resources/models.py:264
+#: addons/suggestions/models.py:21 resources/models.py:141
+#: resources/models.py:261
 msgid "String Hash"
 msgstr ""
 
@@ -464,7 +476,7 @@ msgstr ""
 msgid "The source entity which is being translated by thissuggestion instance."
 msgstr ""
 
-#: addons/suggestions/models.py:40 resources/models.py:288
+#: addons/suggestions/models.py:40 resources/models.py:285
 #, fuzzy
 msgid "Target Language"
 msgstr "שפה"
@@ -601,28 +613,28 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: addons/trans_memory/templates/search_translation.html:9
-#: addons/trans_memory/templates/search_translation.html:15
+#: addons/trans_memory/templates/search_translation.html:13
+#: addons/trans_memory/templates/search_translation.html:19
 #, fuzzy
 msgid "Search Translations"
 msgstr "מתורגם:"
 
-#: addons/trans_memory/templates/search_translation.html:36
+#: addons/trans_memory/templates/search_translation.html:40
 #, python-format
 msgid "%(source_language)s &rarr; %(translation_language)s"
 msgstr ""
 
-#: addons/trans_memory/templates/search_translation.html:47
+#: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr ""
 
-#: addons/trans_memory/templates/search_translation.html:56
+#: addons/trans_memory/templates/search_translation.html:60
 #: templates/userprofile/profile/location.html:26
 #, fuzzy
 msgid "Location:"
 msgstr "פעולה"
 
-#: addons/trans_memory/templates/search_translation.html:68
+#: addons/trans_memory/templates/search_translation.html:72
 msgid "Tough luck! No translations obtained."
 msgstr ""
 
@@ -672,7 +684,7 @@ msgstr ""
 msgid "Notification is not enabled"
 msgstr ""
 
-#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:6
+#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:7
 msgid "Watch it"
 msgstr ""
 
@@ -688,7 +700,7 @@ msgstr ""
 msgid "Stop watching this project"
 msgstr ""
 
-#: addons/watches/templates/watch_toggle.html:6
+#: addons/watches/templates/watch_toggle.html:7
 msgid "Stop watching it"
 msgstr ""
 
@@ -733,7 +745,7 @@ msgstr "השפות המדוברות ב-%s."
 
 #: languages/models.py:50 languages/migrations/0001_initial.py:19
 #: languages/migrations/0002_added_rules_f.py:94 projects/models.py:105
-#: releases/models.py:34 resources/models.py:56
+#: releases/models.py:34 resources/models.py:55
 #: templates/helptext/project_form_helptext.html:16
 #: templates/projects/release_language_detail.html:58
 #: templates/teams/team_detail.html:137
@@ -802,53 +814,53 @@ msgstr "שפה"
 msgid "languages"
 msgstr "שפות"
 
-#: projects/api.py:233 projects/api.py:320
+#: projects/api.py:233 projects/api.py:315
 #, python-format
 msgid "%i strings added"
 msgstr ""
 
-#: projects/api.py:235 projects/api.py:322
+#: projects/api.py:235 projects/api.py:317
 #, python-format
 msgid "%i strings updated"
 msgstr ""
 
-#: projects/feeds.py:16
+#: projects/feeds.py:17
 #, python-format
 msgid "Latest projects on %(site_name)s"
 msgstr "הפרויקטים האחרונים ב-%(site_name)s"
 
-#: projects/feeds.py:19
+#: projects/feeds.py:20
 msgid "Updates on changes and additions to registered projects."
 msgstr ""
 
-#: projects/feeds.py:35
+#: projects/feeds.py:36
 #, python-format
 msgid "%(site_name)s: Resources in %(project)s"
 msgstr ""
 
-#: projects/feeds.py:40
+#: projects/feeds.py:41
 #, python-format
 msgid ""
 "Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py "
 "in project %s."
 msgstr ""
 
-#: projects/feeds.py:67
+#: projects/feeds.py:68
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release"
 msgstr ""
 
-#: projects/feeds.py:73
+#: projects/feeds.py:74
 #, python-format
 msgid "Translation statistics for all languages against %s release."
 msgstr ""
 
-#: projects/feeds.py:107
+#: projects/feeds.py:108
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
 msgstr ""
 
-#: projects/feeds.py:114
+#: projects/feeds.py:115
 #, fuzzy, python-format
 msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
@@ -921,12 +933,12 @@ msgid ""
 "projects are limited according to billingplans for the user account."
 msgstr ""
 
-#: projects/models.py:102 releases/models.py:31 resources/models.py:60
+#: projects/models.py:102 releases/models.py:31 resources/models.py:52
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:103 releases/models.py:32 resources/models.py:61
+#: projects/models.py:103 releases/models.py:32 resources/models.py:53
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -1030,23 +1042,23 @@ msgstr ""
 msgid "project"
 msgstr ""
 
-#: projects/models.py:160 templates/projects/project_list.html:21
+#: projects/models.py:160 templates/projects/project_list.html:19
 msgid "projects"
 msgstr ""
 
-#: projects/permissions/project.py:44
+#: projects/permissions/project.py:43
 msgid "Is allowed to maintain this project"
 msgstr ""
 
-#: projects/permissions/project.py:57
+#: projects/permissions/project.py:56
 msgid "Is allowed to coordinate a team project"
 msgstr ""
 
-#: projects/permissions/project.py:100
+#: projects/permissions/project.py:98
 msgid "Is allowed to submit translations to this project"
 msgstr ""
 
-#: projects/permissions/project.py:121
+#: projects/permissions/project.py:115
 msgid "Is allowed to browse this private project"
 msgstr ""
 
@@ -1057,16 +1069,11 @@ msgstr "מתורגם:"
 
 #: projects/templates/feeds/release_description.html:5
 #: projects/templates/feeds/release_language_description.html:5
-msgid "Fuzzy:"
-msgstr "לא ברור:"
-
-#: projects/templates/feeds/release_description.html:6
-#: projects/templates/feeds/release_language_description.html:6
 msgid "Untranslated:"
 msgstr "לא מתורגם:"
 
-#: projects/templates/feeds/release_description.html:7
-#: projects/templates/feeds/release_language_description.html:7
+#: projects/templates/feeds/release_description.html:6
+#: projects/templates/feeds/release_language_description.html:6
 msgid "Total:"
 msgstr "סך־הכל:"
 
@@ -1202,8 +1209,8 @@ msgid ""
 "version."
 msgstr ""
 
-#: releases/models.py:66 resources/models.py:83 teams/models.py:27
-#: teams/models.py:69 templates/helptext/project_list.html:5
+#: releases/models.py:66 resources/models.py:80 teams/models.py:27
+#: teams/models.py:69
 msgid "Project"
 msgstr ""
 
@@ -1221,7 +1228,7 @@ msgid "release"
 msgstr ""
 
 #: releases/models.py:88 templates/projects/release_list.html:16
-#: templates/projects/release_list.html:22
+#: templates/projects/release_list.html:36
 msgid "releases"
 msgstr ""
 
@@ -1241,210 +1248,219 @@ msgid ""
 "resource."
 msgstr ""
 
-#: resources/models.py:57
+#: resources/models.py:56
 msgid "A descriptive name unique inside the project."
 msgstr ""
 
-#: resources/models.py:69
+#: resources/models.py:59
 msgid "Source file"
 msgstr ""
 
-#: resources/models.py:71
+#: resources/models.py:61
 msgid "A local file used to extract the strings to be translated."
 msgstr ""
 
-#: resources/models.py:73
+#: resources/models.py:63
 msgid "I18n type"
 msgstr ""
 
-#: resources/models.py:75
+#: resources/models.py:65
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr ""
 
-#: resources/models.py:81
+#: resources/models.py:68
+#, fuzzy
+msgid "Accepting translations?"
+msgstr "מתורגם:"
+
+#: resources/models.py:70
+msgid "Is this resource accepting submissions of translations?"
+msgstr ""
+
+#: resources/models.py:78
 #, fuzzy
 msgid "Source Language"
 msgstr "שפה"
 
-#: resources/models.py:82
+#: resources/models.py:79
 msgid "The source language of this Resource."
 msgstr ""
 
-#: resources/models.py:85
+#: resources/models.py:82
 msgid "The project the translation resource belongs to."
 msgstr ""
 
-#: resources/models.py:98
+#: resources/models.py:95
 msgid "resource"
 msgstr ""
 
-#: resources/models.py:99
+#: resources/models.py:96
 msgid "resources"
 msgstr ""
 
-#: resources/models.py:143
+#: resources/models.py:140
 msgid "The actual string content of source string."
 msgstr ""
 
-#: resources/models.py:146 resources/models.py:266
+#: resources/models.py:143 resources/models.py:263
 msgid "The hash of the translation string used for indexing"
 msgstr ""
 
-#: resources/models.py:147
+#: resources/models.py:144
 msgid "Context"
 msgstr ""
 
-#: resources/models.py:149
+#: resources/models.py:146
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr ""
 
-#: resources/models.py:151 templates/userprofile/profile/location.html:27
+#: resources/models.py:148 templates/userprofile/profile/location.html:27
 #, fuzzy
 msgid "Position"
 msgstr "תיאור"
 
-#: resources/models.py:152
+#: resources/models.py:149
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
 
-#: resources/models.py:156
+#: resources/models.py:153
 msgid "Occurrences"
 msgstr ""
 
-#: resources/models.py:158
+#: resources/models.py:155
 msgid "The occurrences of the source string in the project code."
 msgstr ""
 
-#: resources/models.py:159 resources/models.py:164
+#: resources/models.py:156 resources/models.py:161
 msgid "Flags"
 msgstr ""
 
-#: resources/models.py:161
+#: resources/models.py:158
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr ""
 
-#: resources/models.py:166
+#: resources/models.py:163
 msgid "The comment of the developer."
 msgstr ""
 
-#: resources/models.py:168
+#: resources/models.py:165
 msgid "Pluralized"
 msgstr ""
 
-#: resources/models.py:170
+#: resources/models.py:167
 msgid "Identify if the entity is pluralized ot not."
 msgstr ""
 
-#: resources/models.py:180
+#: resources/models.py:177
 msgid "The translation resource which owns the source string."
 msgstr ""
 
-#: resources/models.py:187
+#: resources/models.py:184
 msgid "source string"
 msgstr ""
 
-#: resources/models.py:188
+#: resources/models.py:185
 msgid "source strings"
 msgstr ""
 
-#: resources/models.py:263
+#: resources/models.py:260
 msgid "The actual string content of translation."
 msgstr ""
 
-#: resources/models.py:267
+#: resources/models.py:264
 #, fuzzy
 msgid "Plural rule"
 msgstr "משוואת צורות הרבים"
 
-#: resources/models.py:269
+#: resources/models.py:266
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
 "pluralized, the rule must be 5 (other)."
 msgstr ""
 
-#: resources/models.py:284
+#: resources/models.py:281
 msgid ""
 "The source string which is being translated by thistranslation string "
 "instance."
 msgstr ""
 
-#: resources/models.py:289 storage/models.py:33
+#: resources/models.py:286 storage/models.py:33
 msgid "The language in which this translation string belongs to."
 msgstr ""
 
-#: resources/models.py:292
+#: resources/models.py:289
 msgid "Committer"
 msgstr ""
 
-#: resources/models.py:293
+#: resources/models.py:290
 msgid "The user who committed the specific translation."
 msgstr ""
 
-#: resources/models.py:303
+#: resources/models.py:300
 #, fuzzy
 msgid "translation string"
 msgstr "מתורגם:"
 
-#: resources/models.py:304
+#: resources/models.py:301
 #, fuzzy
 msgid "translation strings"
 msgstr "מתורגם:"
 
-#: resources/models.py:337
+#: resources/models.py:334
 msgid "This is the actual content of the template"
 msgstr ""
 
-#: resources/models.py:341
+#: resources/models.py:338
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:345
+#: resources/models.py:342
 msgid "Template"
 msgstr ""
 
-#: resources/models.py:346
+#: resources/models.py:343
 msgid "Templates"
 msgstr ""
 
-#: resources/views.py:87
+#: resources/views.py:84
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr ""
 
-#: resources/views.py:295
+#: resources/views.py:300
 #, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
 msgstr ""
 
-#: resources/views.py:341
+#: resources/views.py:346
 msgid "Error compiling translation file."
 msgstr ""
 
-#: resources/views.py:386
+#: resources/views.py:393
 msgid "Sorry, you cannot assign this file to you!"
 msgstr ""
 
-#: resources/views.py:398
+#: resources/views.py:405
 msgid "Failed to lock the resource!"
 msgstr ""
 
-#: resources/views.py:409
+#: resources/views.py:416
 msgid "Failed to extend lock period on the resource!"
 msgstr ""
 
-#: resources/views.py:414
+#: resources/views.py:421
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
 msgstr ""
@@ -1464,11 +1480,11 @@ msgstr ""
 msgid "Uploaded file header doesn't have '%s' metadata!"
 msgstr ""
 
-#: storage/api.py:124
+#: storage/api.py:127
 msgid "A strange error happened."
 msgstr ""
 
-#: storage/api.py:141
+#: storage/api.py:144
 msgid "File uploaded successfully."
 msgstr ""
 
@@ -1532,7 +1548,7 @@ msgstr ""
 
 #: teams/models.py:30 teams/models.py:72
 #: templates/projects/release_detail.html:125
-#: templates/resources/resource.html:122
+#: templates/resources/resource.html:132
 msgid "Language"
 msgstr ""
 
@@ -1669,8 +1685,8 @@ msgstr ""
 #: templates/base-sample.html:62
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
-"%(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
+"(user_username)s</a>!"
 msgstr ""
 
 #: templates/base-sample.html:64
@@ -1757,8 +1773,8 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href="
-"\"%(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href=\"%"
+"(project_create_url)s\">add it</a>?"
 msgstr ""
 
 #: templates/search_form.html:4
@@ -1896,15 +1912,6 @@ msgid ""
 "him from the list under the text box.\n"
 msgstr ""
 
-#: templates/helptext/project_list.html:7
-msgid ""
-"\n"
-"Project is the atomic structure that has meaning in terms of translation.\n"
-"Each project can have more than one associated repository (i.e. one for\n"
-"each branch, like development tip and stable tip) in order to allow people\n"
-"work in a more grouped manner.\n"
-msgstr ""
-
 #: templates/languages/language_list.html:15
 msgid "Languages on Transifex"
 msgstr ""
@@ -1994,19 +2001,24 @@ msgstr ""
 
 #: templates/notification/project_added/notice.html:2
 #, python-format
-msgid "A new project <a href=\"%(project_url)s\">%(project)s</a> was added."
+msgid ""
+"A new <span class=\"notice_subject\">project</span> <a href=\"%(project_url)s"
+"\">%(project)s</a> was <span class=\"notice_action\">added</span>."
 msgstr ""
 
 #: templates/notification/project_changed/notice.html:2
 #, python-format
-msgid "The project <a href=\"%(project_url)s\">%(project)s</a> was changed."
+msgid ""
+"The <span class=\"notice_subject\">project</span> <a href=\"%(project_url)s"
+"\">%(project)s</a> was <span class=\"notice_action\">changed</span>."
 msgstr ""
 
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
-"The weekly report of the <a href=\"%(project_url)s\">%(project_name)s</a> "
-"project was generated"
+"The <span class=\"notice_subject\">weekly report</span> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project was <span class="
+"\"notice_subject\">generated</span>"
 msgstr ""
 
 #: templates/notification/project_resource_added/notice.html:2
@@ -2026,16 +2038,16 @@ msgstr ""
 #: templates/notification/project_resource_deleted/notice.html:2
 #, python-format
 msgid ""
-"The resource '%(resource_name)s' has been deleted from the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project"
+"The resource '%(resource_name)s' has been deleted from the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_resource_translated/notice.html:2
 #, python-format
 msgid ""
 "A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
-"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project"
+"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_resource_translation_changed/notice.html:2
@@ -2049,65 +2061,76 @@ msgstr ""
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
 msgid ""
-"The user <a href=\"%(user_url)s\">%(user_request)s</a> had access to submit "
-"files to the project <a href=\"%(project_url)s\">%(project)s</a> granted"
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had <span class="
+"\"notice_subject\">access to submit translations</span> to the project <a "
+"href=\"%(project_url)s\">%(project)s</a> <span class=\"notice_action"
+"\">granted</span>"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_denied/notice.html:2
 #, python-format
 msgid ""
-"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its request of "
-"access to submit files to the project <a href=\"%(project_url)s\">"
-"%(project)s</a> denied"
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its <span class="
+"\"notice_subject\">request</span> of access to submit translations to the "
+"project <a href=\"%(project_url)s\">%(project)s</a> <span class="
+"\"notice_action\">denied</span>"
 msgstr ""
 
 #: templates/notification/project_submit_access_request_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrew own request of access to submit files to the project <a href="
-"\"%(project_url)s\">%(project)s</a>"
+"<span class=\"notice_action\">Withdrew</span> own <span class="
+"\"notice_subject\">request</span> of access to submit translations to the "
+"<span class=\"notice_action\">project</span> <a href=\"%(project_url)s\">%"
+"(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested access to submit files to the project <a href=\"%(project_url)s\">"
-"%(project)s</a>"
+"<span class=\"notice_action\">Requested</span> <span class=\"notice_subject"
+"\">access to submit translations</span> to the <span class=\"notice_action"
+"\">project</span> <a href=\"%(project_url)s\">%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_revoked/notice.html:2
 #, python-format
 msgid ""
-"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its access to "
-"submit files to the project <a href=\"%(project_url)s\">%(project)s</a> "
-"revoked"
+"The user <a href=\"%(user_url)s\">%(user_request)s</a> had its <span class="
+"\"notice_subject\">access to submit translations</span> to the project <a "
+"href=\"%(project_url)s\">%(project)s</a> <span class=\"notice_action"
+"\">revoked</span>."
 msgstr ""
 
 #: templates/notification/project_team_added/notice.html:2
 #, python-format
 msgid ""
-"A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was added "
-"to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+"A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was <span "
+"class=\"notice_action\">added</span> to the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_changed/notice.html:2
 #, python-format
 msgid ""
-"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
-"href=\"%(project_url)s\">%(project_name)s</a> project was changed."
+"The <a href=\"%(team_url)s\">%(team_name)s</a> translation <span class="
+"\"notice_subject\">team</span> of the <a href=\"%(project_url)s\">%"
+"(project_name)s</a> project was <span class=\"notice_action\">changed</span>."
 msgstr ""
 
 #: templates/notification/project_team_deleted/notice.html:2
 #, python-format
 msgid ""
-"The <a href=\"%(team_url)s\">%(team_name)s translation team</a> was deleted "
-"from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
+"The <a href=\"%(team_url)s\">%(team_name)s</a> translation <span class="
+"\"notice_subject\">team</span> was <span class=\"notice_action\">deleted</"
+"span> from the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
 msgid ""
-"The user <a href=\"%(user_url)s\">%(user_name)s</a> was added as member to "
+"The <span class=\"notice_subject\">user</span> <a href=\"%(user_url)s\">%"
+"(user_name)s</a> was <span class=\"notice_action\">added</span> as member to "
 "the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
@@ -2115,52 +2138,59 @@ msgstr ""
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
 msgid ""
-"%(performer)s denied user <a href=\"%(user_url)s\">%(user_name)s</a>'s "
-"request to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
+"%(performer)s <span class=\"notice_action\">denied</span> user <a href=\"%"
+"(user_url)s\">%(user_name)s</a>'s <span class=\"notice_subject\">request</"
+"span> to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
 msgid ""
-"Requested to join the <a href=\"%(team_url)s\">%(team_name)s translation "
-"team</a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
+"<span class=\"notice_action\">Requested</span> to join the <a href=\"%"
+"(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
 msgid ""
-"Withdrawn its own request for joining the <a href=\"%(team_url)s\">"
-"%(team_name)s translation team</a> of the <a href=\"%(project_url)s\">"
-"%(project_name)s</a> project"
+"<span class=\"notice_action\">Withdrawn</span> its own request for joining "
+"the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_left/notice.html:2
 #, python-format
 msgid ""
-"User has left the <a href=\"%(team_url)s\">%(team_name)s translation team</"
+"<span class=\"notice_subject\">User</span> has <span class=\"notice_action"
+"\">left</span> the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_request_denied/notice.html:2
 #, python-format
 msgid ""
-"The request to create a <a href=\"%(language_url)s\">%(language_name)s</a> "
-"translation team for the <a href=\"%(project_url)s\">%(project_name)s</a> "
-"project was denied."
+"The <span class=\"notice_subject\">request</span> to create a <a href=\"%"
+"(language_url)s\">%(language_name)s</a> translation team for the <a href=\"%"
+"(project_url)s\">%(project_name)s</a> project was <span class=\"notice_action"
+"\">denied</span>."
 msgstr ""
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
 msgid ""
-"The creation of a translation team for <a href=\"%(language_url)s\">"
-"%(language_name)s</a> was requested for the project <a href=\"%(project_url)s"
+"The creation of a translation <span class=\"notice_subject\">team</span> for "
+"<a href=\"%(language_url)s\">%(language_name)s</a> was <span class="
+"\"notice_action\">requested</span> for the project <a href=\"%(project_url)s"
 "\">%(project_name)s</a>."
 msgstr ""
 
 #: templates/notification/user_nudge/notice.html:2
 #, python-format
-msgid "The user <a href=\"%(performer_url)s\">%(performer)s</a> has nudged you"
+msgid ""
+"The <span class=\"notice_subject\">user</span> <a href=\"%(performer_url)s\">"
+"%(performer)s</a> has <span class=\"notice_subject\">nudged</span> you"
 msgstr ""
 
 #: templates/projects/project_confirm_delete.html:4
@@ -2186,8 +2216,8 @@ msgstr ""
 #: templates/projects/project_confirm_delete.html:17
 #, python-format
 msgid ""
-"Are you sure you want to permanently delete the registered project "
-"'%(project_name)s'?"
+"Are you sure you want to permanently delete the registered project '%"
+"(project_name)s'?"
 msgstr ""
 
 #: templates/projects/project_confirm_delete.html:21
@@ -2239,7 +2269,7 @@ msgid "Bug tracker for %(project_name)s"
 msgstr ""
 
 #: templates/projects/project_detail.html:74
-#: templates/projects/project_list.html:60
+#: templates/projects/project_list.html:58
 msgid "Tags:"
 msgstr ""
 
@@ -2254,20 +2284,20 @@ msgstr[1] ""
 msgid "Number of Languages: "
 msgstr "מספר צורות הרבים"
 
-#: templates/projects/project_detail.html:109
+#: templates/projects/project_detail.html:108
 msgid "External links:"
 msgstr ""
 
-#: templates/projects/project_detail.html:111
+#: templates/projects/project_detail.html:110
 msgid "Screenshots"
 msgstr ""
 
-#: templates/projects/project_detail.html:127
-#: templates/resources/resource.html:270 templates/teams/team_detail.html:269
+#: templates/projects/project_detail.html:126
+#: templates/resources/resource.html:279 templates/teams/team_detail.html:269
 msgid "History"
 msgstr ""
 
-#: templates/projects/project_detail.html:153
+#: templates/projects/project_detail.html:152
 msgid "Delete project"
 msgstr ""
 
@@ -2359,41 +2389,45 @@ msgstr ""
 msgid "Latest Projects"
 msgstr ""
 
-#: templates/projects/project_list.html:9
+#: templates/projects/project_list.html:8
 msgid "Project list"
 msgstr ""
 
-#: templates/projects/project_list.html:20
+#: templates/projects/project_list.html:18
 msgid "Projects on Transifex"
 msgstr ""
 
-#: templates/projects/project_list.html:28
+#: templates/projects/project_list.html:26
 msgid "Add a new project"
 msgstr ""
 
-#: templates/projects/project_list.html:35
+#: templates/projects/project_list.html:33
 msgid "Projects feed"
 msgstr ""
 
-#: templates/projects/project_list.html:36
+#: templates/projects/project_list.html:34
 msgid "Subscribe to this feed"
 msgstr ""
 
-#: templates/projects/project_list.html:52
+#: templates/projects/project_list.html:49
 #: templates/projects/release_detail.html:98
 msgid "Resources:"
 msgstr ""
 
-#: templates/projects/project_list.html:68
-msgid "No projects registered yet. :-("
+#: templates/projects/project_list.html:54
+msgid "No resources in this project."
 msgstr ""
 
-#: templates/projects/project_list.html:71
+#: templates/projects/project_list.html:66
+msgid "Bummer. No projects could be found."
+msgstr ""
+
+#: templates/projects/project_list.html:69
 #, python-format
 msgid "Why don't you <a href=\"%(project_create)s\">add one</a>?"
 msgstr ""
 
-#: templates/projects/project_list.html:81
+#: templates/projects/project_list.html:79
 #, python-format
 msgid ""
 "Couldn't find your project? Go ahead and <a href=\"%(project_create)s\">add "
@@ -2456,7 +2490,7 @@ msgstr "מתורגם:"
 
 #: templates/projects/release_detail.html:126
 #: templates/projects/release_language_detail.html:59
-#: templates/resources/resource.html:123 templates/teams/team_detail.html:138
+#: templates/resources/resource.html:133 templates/teams/team_detail.html:138
 msgid "Completion"
 msgstr ""
 
@@ -2467,15 +2501,15 @@ msgstr "מתורגם:"
 
 #: templates/projects/release_detail.html:132
 #: templates/projects/release_language_detail.html:65
-#: templates/resources/resource.html:129 templates/teams/team_detail.html:145
+#: templates/resources/resource.html:139 templates/teams/team_detail.html:145
 #, fuzzy
 msgid "click for translation"
 msgstr "מתורגם:"
 
 #: templates/projects/release_detail.html:140
 #: templates/projects/release_language_detail.html:71
-#: templates/resources/resource.html:139
-#: templates/resources/resource_actions.html:53
+#: templates/resources/resource.html:149
+#: templates/resources/resource_actions.html:54
 #: templates/teams/team_detail.html:152
 #, fuzzy
 msgid "Translated: "
@@ -2483,8 +2517,8 @@ msgstr "מתורגם:"
 
 #: templates/projects/release_detail.html:140
 #: templates/projects/release_language_detail.html:71
-#: templates/resources/resource.html:139
-#: templates/resources/resource_actions.html:53
+#: templates/resources/resource.html:149
+#: templates/resources/resource_actions.html:54
 #: templates/teams/team_detail.html:152
 #, fuzzy
 msgid "Untranslated: "
@@ -2492,7 +2526,7 @@ msgstr "לא מתורגם:"
 
 #: templates/projects/release_detail.html:160
 #: templates/projects/resource_list.html:94
-#: templates/resources/resource.html:160
+#: templates/resources/resource.html:169
 #: templates/resources/resource_list_more.html:25
 #, fuzzy
 msgid "no translations yet"
@@ -2539,7 +2573,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/projects/release_language_detail.html:60
-#: templates/resources/resource.html:124 templates/teams/team_detail.html:139
+#: templates/resources/resource.html:134 templates/teams/team_detail.html:139
 msgid "Last Updated"
 msgstr ""
 
@@ -2549,7 +2583,7 @@ msgid "no activity yet"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:109
-#: templates/resources/resource.html:220 templates/teams/team_detail.html:232
+#: templates/resources/resource.html:229 templates/teams/team_detail.html:232
 #, fuzzy
 msgid "Translation Details"
 msgstr "מתורגם:"
@@ -2563,15 +2597,15 @@ msgid "Add"
 msgstr ""
 
 #: templates/projects/release_list.html:15
-#: templates/projects/release_list.html:21
+#: templates/projects/release_list.html:35
 msgid "Project Releases"
 msgstr ""
 
-#: templates/projects/release_list.html:38
+#: templates/projects/release_list.html:28
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href="
-"\"%(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href=\"%"
+"(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/projects/resource_list.html:8
@@ -2630,38 +2664,38 @@ msgstr "סך־הכל:"
 msgid "words"
 msgstr ""
 
-#: templates/resources/resource.html:117
+#: templates/resources/resource.html:115
+#, fuzzy
+msgid "Accepting Translations?"
+msgstr "מתורגם:"
+
+#: templates/resources/resource.html:127
 #, fuzzy
 msgid "Available translations"
 msgstr "מתורגם:"
 
-#: templates/resources/resource.html:197 templates/teams/team_detail.html:209
+#: templates/resources/resource.html:206 templates/teams/team_detail.html:209
 msgid "Trying to lock resource..."
 msgstr ""
 
-#: templates/resources/resource.html:263
+#: templates/resources/resource.html:272
 #, fuzzy
-msgid "Translate Resource"
+msgid "Add Translation"
 msgstr "מתורגם:"
 
-#: templates/resources/resource.html:274
+#: templates/resources/resource.html:283
 #, fuzzy
 msgid "No actions recorded yet :)"
 msgstr "עדיין אין רשומות היסטוריה"
 
-#: templates/resources/resource.html:291
+#: templates/resources/resource.html:300
 #, fuzzy
 msgid "Delete translation resource"
 msgstr "מתורגם:"
 
 #: templates/resources/resource_actions.html:23
 #, python-format
-msgid " Total:&nbsp;%(total_entries)s strings,"
-msgstr ""
-
-#: templates/resources/resource_actions.html:24
-#, python-format
-msgid " %(wordcount)s words"
+msgid " Total:&nbsp;%(total_entities)s strings,"
 msgstr ""
 
 #: templates/resources/resource_actions.html:38
@@ -2683,53 +2717,57 @@ msgstr "מתורגם:"
 msgid "To translate, you need to be a member of the %(lang_name)s team."
 msgstr ""
 
-#: templates/resources/resource_actions.html:61
+#: templates/resources/resource_actions.html:62
 msgid "remaining strings"
 msgstr ""
 
-#: templates/resources/resource_actions.html:69
+#: templates/resources/resource_actions.html:70
 msgid "View strings online"
 msgstr ""
 
-#: templates/resources/resource_actions.html:74
+#: templates/resources/resource_actions.html:75
 msgid "Visit language team"
 msgstr ""
 
-#: templates/resources/resource_actions.html:82
-#: templates/resources/resource_actions.html:102
-#: templates/resources/resource_actions.html:108
+#: templates/resources/resource_actions.html:83
+#: templates/resources/resource_actions.html:103
+#: templates/resources/resource_actions.html:109
 #, fuzzy
 msgid "Clone to new language"
 msgstr "שפה"
 
-#: templates/resources/resource_actions.html:119
-#: templates/resources/resource_actions.html:121
+#: templates/resources/resource_actions.html:120
+#: templates/resources/resource_actions.html:122
 msgid "Download for viewing"
 msgstr ""
 
-#: templates/resources/resource_actions.html:121
+#: templates/resources/resource_actions.html:122
 msgid "You must login to be able to download the translations."
 msgstr ""
 
-#: templates/resources/resource_actions.html:129
-#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions.html:130
+#: templates/resources/resource_actions.html:134
 msgid "Download for translation"
 msgstr ""
 
-#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions.html:134
 msgid "You must login to use this action"
 msgstr ""
 
-#: templates/resources/resource_actions.html:159
+#: templates/resources/resource_actions.html:154
+msgid "This resource currently is not accepting translations."
+msgstr ""
+
+#: templates/resources/resource_actions.html:165
 #, fuzzy
 msgid "Translation last updated "
 msgstr "מתורגם:"
 
-#: templates/resources/resource_actions.html:161
+#: templates/resources/resource_actions.html:167
 msgid "by"
 msgstr ""
 
-#: templates/resources/resource_actions.html:167
+#: templates/resources/resource_actions.html:173
 #, fuzzy
 msgid "No translation yet"
 msgstr "מתורגם:"
@@ -2753,8 +2791,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translation resource "
-"'%(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translation resource '%"
+"(resource_name)s'?\n"
 msgstr ""
 
 #: templates/resources/resource_form.html:22
@@ -2796,8 +2834,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translations for "
-"'%(language_name)s' of '%(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translations for '%"
+"(language_name)s' of '%(resource_name)s'?\n"
 msgstr ""
 
 #: templates/resources/upload_create_resource_form.html:16
@@ -2805,17 +2843,17 @@ msgstr ""
 msgid "Extracting strings from '%(resource_name)s'. This might take a while..."
 msgstr ""
 
-#: templates/resources/upload_create_resource_form.html:49
+#: templates/resources/upload_create_resource_form.html:51
 msgid "Create resource to be translated"
 msgstr ""
 
-#: templates/resources/upload_create_resource_form.html:51
+#: templates/resources/upload_create_resource_form.html:53
 msgid ""
 "Upload a local file to be used as the source file of the resource. It's "
 "equivalent to the POT file for the GNU's gettext method."
 msgstr ""
 
-#: templates/resources/upload_create_resource_form.html:58
+#: templates/resources/upload_create_resource_form.html:60
 msgid "Create Resource"
 msgstr ""
 
@@ -2894,8 +2932,8 @@ msgstr ""
 #: templates/teams/team_detail.html:49
 #, python-format
 msgid ""
-"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
-"%(language_code)s</sup>"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
+"(language_code)s</sup>"
 msgstr ""
 
 #: templates/teams/team_detail.html:61
@@ -3018,8 +3056,8 @@ msgstr ""
 msgid ""
 "This project does not maintain its own teams, but has chosen to re-use the "
 "teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
-"order to send translations here you'll need to join a team of "
-"'%(outsource_project)s'."
+"order to send translations here you'll need to join a team of '%"
+"(outsource_project)s'."
 msgstr ""
 
 #: templates/teams/team_off.html:19
@@ -3114,8 +3152,8 @@ msgstr ""
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href="
-"\"%(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href=\"%"
+"(profile_overview)s\">overview page</a>."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
@@ -3896,6 +3934,13 @@ msgstr ""
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr ""
+
+#~ msgid "Fuzzy:"
+#~ msgstr "לא ברור:"
+
+#, fuzzy
+#~ msgid "Translate Resource"
+#~ msgstr "מתורגם:"
 
 #~ msgid "Root"
 #~ msgstr "שורש"
