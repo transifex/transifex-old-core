@@ -32,6 +32,7 @@
 {% endblock %}
 
 {% block content_main %}
+{% include "helptext/project_form_helptext.html" %}
 <h3>
 {% if not project %}
     {% trans "Add the details of your project" %}
@@ -39,8 +40,6 @@
     {% trans "Edit the details of your project" %}
 {% endif %}
 </h3>
-
-{% include "helptext/project_form_helptext.html" %}
 
 <div class="project_create generic_form">
   <form action='' method='post'>

@@ -55,6 +55,7 @@
       <td>
         {% watch_toggle project %}
     </td>
+    </tr>
       {% endif %}
     {% endif %}
     {% if project.homepage %}
@@ -99,9 +100,6 @@
     {% endif %}
     {% endwith %}
 
-    <tr>
-      <th class="i16 language" title="only for resources">{% blocktrans %}Number of Languages: {% endblocktrans %}</th>
-    </tr>
 
 {% comment %}
     <tr>
@@ -115,10 +113,10 @@
   </table>
 </div>
 
-  {% hook "project.html" overview_top %}
-
-
 {% include "projects/resource_list.html" %}
+
+{% hook "project.html" overview_top %}
+
 {% include "projects/release_list.html" %}
 
 </div>
