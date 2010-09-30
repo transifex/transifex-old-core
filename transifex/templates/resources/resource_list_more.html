@@ -6,7 +6,7 @@
 {% for  stat in statslist.resource_stats %}
 <tr>
     <td>
-    <a class="res_tipsy_enable" href="{{ stat.object.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.object.entities_count }} <br>Available Languages: {{ stat.object.available_languages|length }}">
+    <a class="res_tipsy_enable" href="{{ stat.object.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.entities_count }} <br>Available Languages: {{ stat.available_languages|length }}">
       {{ stat.object.name }}
     </a>
     <sup class="entry_metalink">

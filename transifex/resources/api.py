@@ -42,6 +42,8 @@ class ResourceHandler(BaseHandler):
         if resource_slug:
             try:
                 resource = Resource.objects.get(slug=resource_slug)
+                res_stats = ResourceStatsList(resource).resource_stats().next()
+                setattr(resource, 'available_languages', res_stats.available_languages)
             except Resource.DoesNotExist:
                 return rc.NOT_FOUND
             return resource

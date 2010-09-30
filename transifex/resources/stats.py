@@ -19,6 +19,15 @@ class StatsBase:
         self.entities = entities
 
     @stats_cached_property
+    def available_languages(self):
+        """
+        Return a list of languages with at least one translation for one of
+        the given entities.
+        """
+        language_ids = self.translations.values_list('language__id', flat=True)
+        return Language.objects.filter(id__in=language_ids).distinct()
+
+    @stats_cached_property
     def translations(self):
         """Return all translations for the related entities."""
         return Translation.objects.filter(source_entity__in=self.entities)
@@ -140,14 +149,6 @@ class StatsList(StatsBase):
         """Return a Stat object for a specific language."""
         return Stats(entities=self.entities, language=language)
 
-    @property
-    def available_languages(self):
-        """
-        Return a list of languages with at least one translation for one of 
-        the given entities.
-        """
-        language_ids = self.translations.values_list('language__id', flat=True)
-        return Language.objects.filter(id__in=language_ids).distinct()
 
     def language_stats(self):
         """Yield a Stat object for each available language.

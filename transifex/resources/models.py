@@ -117,17 +117,6 @@ class Resource(models.Model):
         """Return the resource's translation entities."""
         return SourceEntity.objects.filter(resource=self)
 
-    @property
-    def available_languages(self):
-        """
-        Return the languages with at least one Translation of a SourceEntity
-        for this Resource.
-        """
-        languages = Translation.objects.filter(source_entity__resource=self).values_list(
-            'language__id', flat=True)
-        return Language.objects.filter(id__in=languages).distinct()
-
-
 class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.

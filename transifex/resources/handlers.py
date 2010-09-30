@@ -9,6 +9,7 @@ from projects.signals import post_resource_save, post_resource_delete
 from txcommon import notifications as txnotification
 from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 from resources.utils import invalidate_object_cache
+from resources.stats import ResourceStatsList
 from teams.models import Team
 
 def invalidate_stats_cache(resource, language=None, **kwargs):
@@ -21,7 +22,8 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
         invalidate_object_cache(rel, language)
 
     if not language:
-        langs = resource.available_languages
+        stats = ResourceStatsList(resource)
+        langs = stats.available_languages
     else:
         langs = [language]
 

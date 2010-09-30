@@ -74,7 +74,7 @@
   {% endif %}
     <tr>
         <td>
-          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="Total Strings: {{ stat.total_entities }}<br/>Available Languages: {{ stat.object.available_languages|length }}">{{ stat.object.name }}</a>
+          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="Total Strings: {{ stat.total_entities }}<br/>Available Languages: {{ stat.available_languages|length }}">{{ stat.object.name }}</a>
           <sup class="entry_metalink">
              {% if is_maintainer or request.user.is_superuser %}
                <a href="{% url resource_edit project.slug stat.object.slug %}">{% trans "edit" %}</a>
