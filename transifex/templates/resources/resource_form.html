@@ -37,8 +37,27 @@ Edit {{resource}}
         {% form_as_table_rows url_form %}
         </tbody>
     </table>
+	<br />
+	{% blocktrans %}
+	<div class="message">
+		<p>To enable automatic "fetching" of your source language strings by
+		Transifex, enter a URL to your source file (e.g. POT file). Refer to 
+		<a href="http://help.transifex.net/user-guide/projects.html#projects-and-resources">the documentation</a> 
+		for more information.</p>
+
+		<p><b>Warning</b>: Transifex will overwrite the existing source strings
+		and translations with the ones found in the linked file. This may lead
+		to <b>loss of translations</b>, so make sure the URL links to the
+		correct file before submitting the form.
+		</p> 
+		</blink>
+	</div>
+	{% endblocktrans %}
+	<br />
     <p class="submit"><input type="submit" class="i16 submit" value="{% trans "Save translation resource" %}" /></p>
   </form>
+
+
 </div>
 {% endblock %}
 

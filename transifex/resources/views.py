@@ -120,8 +120,19 @@ def resource_edit(request, project_slug, resource_slug):
         else:
             url_form = URLInfoForm(request.POST,)
         if resource_form.is_valid() and url_form.is_valid():
-            resource_new = resource_form.save()
             urlinfo = url_form.save(commit=False)
+            try:
+                urlinfo.update_source_file(fake=True)
+            except Exception, e:
+                url_form._errors['source_file_url'] = _("The URL you provided"
+                    " doesn't link to valid file.")
+                return render_to_response('resources/resource_form.html', {
+                    'resource_form': resource_form,
+                    'url_form': url_form,
+                    'resource': resource,
+                }, context_instance=RequestContext(request))
+            resource_new = resource_form.save()
+
             urlinfo.resource = resource_new
             urlinfo.save()
 

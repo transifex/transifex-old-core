@@ -33,7 +33,7 @@ class URLInfo(models.Model):
     def __unicode__(self):
         return "%s.%s" % (self.resource.project.slug, self.resource.slug)
 
-    def update_source_file(self):
+    def update_source_file(self, fake=False):
         """
         Fetch source file from remote url and import it, updating existing
         entries.
@@ -70,7 +70,9 @@ class URLInfo(models.Model):
             fhandler.bind_resource(self.resource)
             fhandler.contents_check(fhandler.filename)
             fhandler.parse_file(is_source=True)
-            strings_added, strings_updated = fhandler.save2db(is_source=True)
+            strings_added, strings_updated = 0, 0
+            if not fake:
+                strings_added, strings_updated = fhandler.save2db(is_source=True)
         except Exception,e:
             logger.error("Error import source file for resource %s.%s (%s)" %
                 ( self.resource.project.slug, self.resource.project,
