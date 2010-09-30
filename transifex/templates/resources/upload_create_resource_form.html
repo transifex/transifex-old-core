@@ -50,14 +50,43 @@ $(document).ready(function(){
   <fieldset style="margin-top: 1em;">
   <legend>{% trans "Create resource to be translated" %}</legend>
 
-  <p class="i16 tip compact clear">{% trans "Upload a local file to be used as the source file of the resource. It's equivalent to the POT file for the GNU's gettext method." %}</p>
+  <p class="helptext clear">
+  {% blocktrans %}
+  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
+  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
+  {% endblocktrans %}
+  </p>
 
-  <table>
+  <table style="padding:0 1em">
   <tbody>
-    {% form_as_table_rows create_resource_form %}
+    {% comment %}
+    Overridden form_as_table_rows in order to better customize it. 
+    {% endcomment %}
+    {% if create_resource_form %}
+        {% if create_resource_form.non_field_errors %}
+            <ul class="fielderrors">{{ create_resource_form.non_field_errors }}</ul>
+        {% endif %}
+        {% for field in create_resource_form %}
+            {% if field.is_hidden %}
+                {{ field }}
+                {% if field.errors %}
+                   <p class="fieldp">{{ field }}</p>
+                   <p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>
+                {% endif %}
+            {% else %}
+                <tr{% if id %} id="sub_{{ id }}{{ forloop.counter}}" style="display:none"{% endif %}>
+                <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
+                <td>
+                    <p class="fieldp">{{ field }}</p>
+                    {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
+                </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
   </tbody>
   </table>
-  <p class="submit"><input type="submit" class="i16 submit" name="create_resource" value="{% trans "Create Resource" %}" /></p>
+  <p class="submit" style="text-align:center"><input type="submit" class="i16 submit" name="create_resource" value="{% trans "Create Resource" %}" /></p>
 
   </fieldset>
  </form>
