@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from languages.models import Language
+from projects.models import Project
 from resources.models import Resource, Translation, SourceEntity
 from resources.utils import *
 
@@ -20,6 +21,31 @@ class StatsBase:
 
     @stats_cached_property
     def available_languages(self):
+        """Return a list of available languages.
+
+        The list of languages includes the languages with at least one
+        translation for one of the given entities. If ``object`` is an
+        instance of ``Project`` or ``Resource`` the list will also contain
+        the languages used in the related project teams of the given object.
+        """
+        language_ids = self.translations.values_list('language__id', flat=True)
+        team_lang_ids = None
+
+        if isinstance(self.object, Project):
+            team_lang_ids = self.object.team_set.values_list(
+                'language__id', flat=True)
+        elif isinstance(self.object, Resource):
+            team_lang_ids = self.object.project.team_set.values_list(
+                'language__id', flat=True)
+
+        # Extending list of language_ids as necessary.
+        if team_lang_ids:
+            language_ids = set(list(language_ids) + list(team_lang_ids))
+
+        return Language.objects.filter(id__in=language_ids).distinct()
+
+    @stats_cached_property
+    def available_languages_without_teams(self):
         """
         Return a list of languages with at least one translation for one of
         the given entities.
@@ -186,33 +212,23 @@ class StatsList(StatsBase):
 
 
 class ResourceStatsList(StatsList):
-    """Wrapper to initialize a StatsList instance based on a resource.
+    """Wrapper to initialize a StatsList instance based on a resource."""
 
-    #TODO: Override wanted methods to cache theirs results based on the 
-    class attrs.
-    """
     def __init__(self, resource):
         self.object = resource
         self.entities = SourceEntity.objects.filter(resource=resource)
 
 
 class ProjectStatsList(StatsList):
-    """Wrapper to initialize a StatsList instance based on a project.
 
-    #TODO: Override wanted methods to cache theirs results based on the 
-    class attrs.
-    """
+    """Wrapper to initialize a StatsList instance based on a project."""
     def __init__(self, project):
         self.object = project
         self.entities = SourceEntity.objects.filter(resource__project=project)
 
 
 class ReleaseStatsList(StatsList):
-    """Wrapper to initialize a StatsList instance based on a release.
-
-    #TODO: Override wanted methods to cache theirs results based on the 
-    class attrs.
-    """
+    """Wrapper to initialize a StatsList instance based on a release."""
     def __init__(self, release):
         self.object = release
         self.entities = SourceEntity.objects.filter(resource__releases=release)
