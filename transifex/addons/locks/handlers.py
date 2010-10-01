@@ -51,8 +51,8 @@ def lotte_init_handler(sender, request, resources=None, language=None,
             logger.debug("lock-addon: Lock acquired/extended: '%s'" % lock)
         except LockError, e:
             logger.debug("lock-addon: %s" % str(e))
-            request.user.message_set.create(message = _(
-                    "Couldn't lock file."))
+            request.user.message_set.create(message = _("This translation is "
+                "locked by someone else."))
 
 
 def lotte_done_handler(sender, request, resources=None, language=None,
