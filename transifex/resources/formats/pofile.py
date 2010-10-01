@@ -303,29 +303,6 @@ class POHandler(Handler):
         self.suggestions = suggestions
         return pofile
 
-    def _post_save2db(self, *args, **kwargs):
-        """
-        Handle fuzzy strings for PO files after saving translations.
-        """
-
-
-        for j in self.suggestions.strings:
-            # Check SE existence
-            try:
-                se = SourceEntity.objects.get(
-                    string = j.source_entity,
-                    context = j.context or "None",
-                    resource = self.resource
-                )
-            except SourceEntity.DoesNotExist:
-                continue
-            
-            tr, created = Suggestion.objects.get_or_create(
-                string = j.translation,
-                source_entity = se,
-                language = self.language
-            )
-
     @need_compiled
     def save2file(self, filename):
         """

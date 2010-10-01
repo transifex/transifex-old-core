@@ -7,6 +7,7 @@ from django.db import transaction
 from django.db.models import get_model
 from txcommon.log import logger
 from languages.models import Language
+from suggestions.models import Suggestion
 from resources.formats.decorators import *
 from resources.handlers import invalidate_stats_cache
 
@@ -208,7 +209,7 @@ class Handler(object):
         self.compiled_template = template
 
         self._post_compile(language)
-        invalidate_stats_cache(self.resource, language)
+
 
     def _pre_save2db(self, *args, **kwargs):
         """
@@ -310,9 +311,28 @@ class Handler(object):
                 for se in original_sources:
                     se.delete()
 
+            for j in self.suggestions.strings:
+                # Check SE existence
+                try:
+                    se = SourceEntity.objects.get(
+                        string = j.source_entity,
+                        context = j.context or "None",
+                        resource = self.resource
+                    )
+                except SourceEntity.DoesNotExist:
+                    continue
+
+                tr, created = Suggestion.objects.get_or_create(
+                    string = j.translation,
+                    source_entity = se,
+                    language = self.language
+                )
 
             self._post_save2db(is_source , user, overwrite_translations)
             transaction.commit()
+
+            # Invalidate cache after saving file
+            invalidate_stats_cache(self.resource)
 
             return strings_added, strings_updated
 
