@@ -132,7 +132,7 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test the response contents
         for user in ['team_member', 'maintainer']:
             resp = self.client[user].get(self.resource_detail_url)
-            self.assertTemplateUsed(resp, 'resources/resource.html')
+            self.assertTemplateUsed(resp, 'resources/resource_detail.html')
             self.assertContains(resp,
                                 '<a id="new_translation1" class="buttonized i16 add">Translate Resource</a>',
                                 status_code=200)
@@ -147,7 +147,7 @@ class ResourcesTemplateTests(BaseTestCase):
         """Test that resource edit button is rendered correctly in details."""
         # Test the response contents
         resp = self.client['maintainer'].get(self.resource_detail_url)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
                             (self.project.slug, self.resource.slug),
@@ -163,7 +163,7 @@ class ResourcesTemplateTests(BaseTestCase):
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
         resp = self.client['maintainer'].get(self.resource_detail_url)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
                             (self.project.slug, self.resource.slug),

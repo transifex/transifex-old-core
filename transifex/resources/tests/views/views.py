@@ -19,7 +19,7 @@ class CoreViewsTest(BaseTestCase):
         resp = self.client['maintainer'].get(reverse('resource_detail',
             args=[self.project.slug, self.resource.slug]))
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
 
         # response.context[-1] holds our extra_context. maybe we should check
         # some of these to make sure they're there?
@@ -135,7 +135,7 @@ class CoreViewsTest(BaseTestCase):
 
         resp = self.client['maintainer'].post(delete_url, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language = self.language).count(), 0)
 
@@ -148,7 +148,7 @@ class CoreViewsTest(BaseTestCase):
 
         resp = self.client['maintainer'].post(delete_url_el, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language__code = trans_lang).count(), 0)
 

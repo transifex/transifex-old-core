@@ -54,7 +54,7 @@ def resource_detail(request, project_slug, resource_slug):
 
     statslist = ResourceStatsList(resource)
 
-    return render_to_response("resources/resource.html",
+    return render_to_response("resources/resource_detail.html",
         { 'project' : resource.project,
           'resource' : resource,
           'languages' : Language.objects.order_by('name'),
