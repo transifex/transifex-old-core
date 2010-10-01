@@ -81,6 +81,22 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     target_language = Language.objects.by_code_or_alias_or_404(lang_code)
 
+    # If it is an attempt to edit the source language, redirect the user to 
+    # resource_detail and show him a message explaining the reason.
+    if target_language == resources[0].source_language:
+        request.user.message_set.create(
+                message=_("The source language cannot be edited, cause this would"
+                          " result in translation mismatching! If you want to "
+                          "update the source strings consider using the command"
+                          " line client of transifex."))
+        if resource_slug:
+            return HttpResponseRedirect(reverse('resource_detail',
+                                                args=[project_slug,
+                                                      resource_slug]),)
+        else:
+            return HttpResponseRedirect(reverse('project_detail',
+                                                args=[project_slug]),)
+
     total_strings = SourceEntity.objects.filter(
         resource__in = resources).count()
 
