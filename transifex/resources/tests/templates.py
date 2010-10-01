@@ -192,14 +192,14 @@ class ResourcesTemplateTests(BaseTestCase):
                             '<span class="i16 team"><a class="disabled" title="There is no project team for this language.">Visit language team</a></span>')
 
     def test_resource_details_team_and_zero_percent(self):
-        """Test that languges with teams and 0% are presented."""
+        """Test that languages with teams and 0% are presented."""
         self.project.team_set.filter(language=self.language).delete()
         url = reverse('resource_detail',
                       args=[self.project.slug, self.resource.slug])
         resp = self.client['anonymous'].get(url)
         self.assertNotContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Do not show 0% languages if there is no respective team.")
-        self.assertNotContains(resp, "0%")
+        self.assertNotContains(resp, '<div class="stats_string_resource"> 0% </div>')
 
         # Test with a new team.
         t = Team.objects.create(language=self.language_ar, project=self.project,
@@ -207,5 +207,5 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Show a 0% language if there is a respective team.")
-        self.assertContains(resp, "0%")
+        self.assertContains(resp, '<div class="stats_string_resource"> 0% </div>')
 
