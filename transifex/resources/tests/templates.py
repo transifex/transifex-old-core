@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from txcommon.tests.base import BaseTestCase
+from languages.models import Language
 from resources.models import SourceEntity
-
+from teams.models import Team
+from txcommon.tests.base import BaseTestCase
 
 class ResourcesTemplateTests(BaseTestCase):
 
@@ -174,3 +175,33 @@ class ResourcesTemplateTests(BaseTestCase):
                                 '<a class="i16 delete buttonized" href="/projects/p/%s/resource/%s/delete">Delete translation resource</a>' %
                                 (self.project.slug, self.resource.slug),
                                 status_code=200)
+
+    def test_disabled_visit_team_resource_actions(self):
+        """Test that visit language team link is correctly disabled.
+        
+        This is applied only for languages in the project that there is no 
+        corresponding team.
+        """
+        # We chose Arabic language which has not corresponding project team.
+        resp = self.client['maintainer'].get(reverse('resource_actions',
+            args=[self.project.slug, self.resource.slug,
+                  self.language_ar.code]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource_actions.html')
+        self.assertContains(resp,
+                            '<span class="i16 team"><a class="disabled" title="There is no project team for this language.">Visit language team</a></span>')
+
+    def test_language_rows_resource_details(self):
+        """Test that all languages which have corresponding teams are returned."""
+        # Check details page
+        resp = self.client['maintainer'].get(reverse('resource_detail',
+            args=[self.project.slug, self.resource.slug]))
+        self.assertEqual(resp.status_code, 200)
+        l,created = Language.objects.get_or_create(code='zh_CN',
+                                           defaults={"name":"Chinese"})
+        t = Team.objects.create(language=l, project=self.project,
+                                creator=self.user['maintainer'])
+        t.coordinators.add(self.user['maintainer'])
+        self.assertContains(resp, l.name)
+        # Ensure that we have 0% translated strings!
+        self.assertContains(resp, "0%")
