@@ -70,12 +70,9 @@
             <a href="{% url view_strings resource.project.slug resource.slug target_language.code %}">{% trans "View strings online" %}</a>
             </span>
           </li>
-          {% if team %}
           <li>
-            <span class="i16 team"><a href="{% url team_detail project.slug target_language.code %}">{% trans "Visit language team" %}</a></span>
+            <span class="i16 team"><a {% if team %} href="{% url team_detail project.slug target_language.code %}"{% else %}class="disabled" title="There is no project team for this language."{% endif %}>{% trans "Visit language team" %}</a></span>
           </li>
-          {% endif %}
-          {% ifnotequal resource.source_language target_language %}
           <li>
             {% if request.user.is_authenticated and resource.accept_translations %}
               {% if is_maintainer or user_teams %}
@@ -111,7 +108,6 @@
               <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
             {% endif %}
           </li>
-          {% endifnotequal %}
         </ul>
         <ul>
           <li class="top">

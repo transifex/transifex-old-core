@@ -129,11 +129,12 @@
   </thead>
   <tbody>
 {% for stat in statslist.language_stats %}
-    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+    <tr id="stat_row_{{forloop.counter}}" class="nocursor">
 
       {% cache 604800 release_details release.id stat.language.id %}
         <td>
-          {{ stat.language.name }} <span class="locale">({{ stat.language.code }})</span>
+          {{ stat.language.name }} 
+          <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.language.code %}">{{ stat.language.code }}</a>)</span>
           </td>
         <td>
           {% with 200 as barwidth %}
@@ -164,11 +165,6 @@
         </span>
         </td>
     </tr>
-    <script>
-        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
-            window.location = '{% url release_language_detail release.project.slug release.slug stat.language.code %}';
-        });
-    </script>
 {% endfor %}
   </tbody>
 </table>
