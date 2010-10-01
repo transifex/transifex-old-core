@@ -191,17 +191,21 @@ class ResourcesTemplateTests(BaseTestCase):
         self.assertContains(resp,
                             '<span class="i16 team"><a class="disabled" title="There is no project team for this language.">Visit language team</a></span>')
 
-    def test_language_rows_resource_details(self):
-        """Test that all languages which have corresponding teams are returned."""
-        # Check details page
-        resp = self.client['maintainer'].get(reverse('resource_detail',
-            args=[self.project.slug, self.resource.slug]))
-        self.assertEqual(resp.status_code, 200)
-        l,created = Language.objects.get_or_create(code='zh_CN',
-                                           defaults={"name":"Chinese"})
-        t = Team.objects.create(language=l, project=self.project,
+    def test_resource_details_team_and_zero_percent(self):
+        """Test that languges with teams and 0% are presented."""
+        self.project.team_set.filter(language=self.language).delete()
+        url = reverse('resource_detail',
+                      args=[self.project.slug, self.resource.slug])
+        resp = self.client['anonymous'].get(url)
+        self.assertNotContains(resp, self.language_ar.name, status_code=200,
+            msg_prefix="Do not show 0% languages if there is no respective team.")
+        self.assertNotContains(resp, "0%")
+
+        # Test with a new team.
+        t = Team.objects.create(language=self.language_ar, project=self.project,
                                 creator=self.user['maintainer'])
-        t.coordinators.add(self.user['maintainer'])
-        self.assertContains(resp, l.name)
-        # Ensure that we have 0% translated strings!
+        resp = self.client['anonymous'].get(url)
+        self.assertContains(resp, self.language_ar.name, status_code=200,
+            msg_prefix="Show a 0% language if there is a respective team.")
         self.assertContains(resp, "0%")
+
