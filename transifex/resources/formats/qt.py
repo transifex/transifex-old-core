@@ -169,12 +169,19 @@ class LinguistHandler(Handler):
                 else:
                     sourceString = None # WTF?
 
+                # Check whether the message is using logical id
+                if message.attributes.has_key("id"):
+                    sourceStringText = sourceString
+                    sourceString = message.attributes['id'].value
+                else:
+                    sourceStringText = None
+
                 same_nplural = True
                 obsolete, fuzzy = False, False
                 messages = []
 
                 if is_source:
-                    messages = [(5, sourceString)]
+                    messages = [(5, sourceStringText or sourceString)]
                     if pluralized:
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
