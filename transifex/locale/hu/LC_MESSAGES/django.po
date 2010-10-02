@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: transifex mainline\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-29 16:55+0000\n"
-"PO-Revision-Date: 2010-10-01 08:29+0200\n"
+"PO-Revision-Date: 2010-10-02 10:01+0200\n"
 "Last-Translator: Nikolas Slivka <snicore@gmail.com>\n"
 "Language-Team: Hungarian <fedora-trans-hu@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -174,18 +174,17 @@ msgid "...more"
 msgstr "…még"
 
 #: addons/locks/handlers.py:55
-#, fuzzy
 msgid "Couldn't lock file."
-msgstr "Kattintson, hogy kilakatolja."
+msgstr "Nem sikerült lelakatolni."
 
 #: addons/locks/models.py:55
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "User '%(user)s' has no permission to submit translations for '%(resourse)s' "
 "to '%(language)s'."
 msgstr ""
-"„%(user)s” használónak nincs engedélye fájlokat beküldeni illetve "
-"„%(pofile)s” fájlt igazgatni"
+"„%(user)s” használónak nincs engedélye fordításokat beküldeni „%(resourse)s” "
+"erőforráshoz „%(language)s” nyelvből."
 
 #: addons/locks/models.py:67
 #, python-format
@@ -196,7 +195,7 @@ msgstr ""
 #: addons/locks/models.py:76
 #, python-format
 msgid "This resource language is already locked by '%s'"
-msgstr ""
+msgstr "Az erőforrás nyelvét „%s” már lelakatolta."
 
 #: addons/locks/models.py:162
 #, python-format
@@ -204,19 +203,16 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr "„%(user)s” használó nem távolíthatja el „%(lock)s” lakatot"
 
 #: addons/locks/notifications.py:15
-#, fuzzy
 msgid "Lock is expiring"
-msgstr "A lakat lejár"
+msgstr "Lejáró lakat"
 
 #: addons/locks/notifications.py:16
-#, fuzzy
 msgid "when a lock for translation resource is expiring"
-msgstr "amikor egy fájl lakatja lejár"
+msgstr "amikor egy erőforrás lakatja lejár"
 
 #: addons/locks/views.py:43
-#, fuzzy
 msgid "Lock created."
-msgstr "Lakat leszedve."
+msgstr "Lelakatoltuk."
 
 #: addons/locks/views.py:50 addons/locks/views.py:86
 msgid "Sorry, but you need to send a POST request."
@@ -227,72 +223,63 @@ msgid "Lock removed."
 msgstr "Lakat leszedve."
 
 #: addons/locks/views.py:80
-#, fuzzy
 msgid "You don't have permission to unlock this file."
-msgstr "Kattintson, hogy kilakatolja."
+msgstr "Önnek nincs engedélye kilakatolni e fájlt."
 
 #: addons/locks/views.py:83
 msgid "Unlock failed. Lock doesn't exist."
-msgstr ""
+msgstr "Nem sikerült kilakatolni. Nincs lakat."
 
 #: addons/locks/templates/lock_resource_action.html:17
 msgid "This translation has been locked by you."
-msgstr ""
+msgstr "E fordítást ön lakatolta le."
 
 #: addons/locks/templates/lock_resource_action.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "This translation has been locked by user '%(owner)s'."
-msgstr "E fájlt „%(owner)s” használó lelakatolta."
+msgstr "E fájlt „%(owner)s” használó lakatolta le."
 
 #: addons/locks/templates/lock_resource_action.html:21
 #, python-format
 msgid "(%(lock_expires)s left)"
-msgstr ""
+msgstr "(maradt %(lock_expires)s)"
 
 #: addons/locks/templates/lock_resource_action.html:23
 msgid "unlock"
-msgstr ""
+msgstr "kilakatol"
 
 #: addons/locks/templates/lock_resource_action.html:28
 msgid "Click to renew your lock for a fresh period of time."
-msgstr ""
+msgstr "A lakat megújításáért ide kell kattintani."
 
 #: addons/locks/templates/lock_resource_action.html:29
 #: addons/locks/templates/pofile_lock.html:31
-#, fuzzy, python-format
+#, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
-msgstr[0] ""
-"\n"
-"                Lakatot hosszabbít %(hours)s órával.\n"
-"            "
-msgstr[1] ""
-"\n"
-"                Lakatot hosszabbít %(hours)s órával.\n"
-"            "
+msgstr[0] "Lakatot hosszabbít %(hours)s órával."
+msgstr[1] "Lakatot hosszabbít %(hours)s órával."
 
 #: addons/locks/templates/lock_resource_action.html:38
-#, fuzzy
 msgid "Lock this translation to notify others you're working with it."
-msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: dolgozik rajta."
+msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: ön dolgozik rajta."
 
 #: addons/locks/templates/lock_resource_action.html:42
-#, fuzzy
 msgid ""
 "This translation is unlocked. Most likely no one is working on it right now."
-msgstr "A fájl nincs lelakatolva. Valószínű, hogy most nem dolgoznak rajta."
+msgstr "Szabad fordítani. Valószínű, hogy most nem dolgoznak rajta."
 
 #: addons/locks/templates/lock_resource_action.html:56
 msgid "Creating lock..."
-msgstr ""
+msgstr "Lakatolok…"
 
 #: addons/locks/templates/lock_resource_action.html:78
 msgid "Removing lock..."
-msgstr ""
+msgstr "Leveszem a lakatot…"
 
 #: addons/locks/templates/lock_resource_action.html:101
 msgid "Extending lock..."
-msgstr ""
+msgstr "Lakatot hosszabbítok…"
 
 #: addons/locks/templates/pofile_lock.html:19
 #, python-format
@@ -308,56 +295,55 @@ msgid "Time left:"
 msgstr "Maradt még"
 
 #: addons/locks/templates/pofile_lock.html:41
-#, fuzzy
 msgid ""
 "Lock and download this file to notify others that you're working with it."
-msgstr "Lakatolja le a fájlt, hogy jelezze másoknak: dolgozik rajta."
+msgstr ""
+"Lakatolja és töltse le e fájlt, hogy jelezze másoknak: ön dolgozik rajta."
 
 #: addons/locks/templates/pofile_lock.html:46
-#, fuzzy
 msgid "This file is unlocked. Most likely no one is working on it right now."
-msgstr "A fájl nincs lelakatolva. Valószínű, hogy most nem dolgoznak rajta."
+msgstr "E fájl szabad. Valószínű, hogy most nem dolgoznak rajta."
 
 #: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "A lock for <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s "
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 "\n"
-"Lakat <a href=\"http://%(current_site)s%(component_url)s\">%(pofile)s</a> "
-"fájlon lejár %(expires)s\n"
+"<a href=\"http://%(current_site)s%(resource_url)s\">%(language)s "
+"%(resource)s</a> lakat lejárta: %(expires)s\n"
 
 #: addons/lotte/views.py:66
 msgid ""
 "This project has more than one source languages and as a result you can not "
 "translate all resources at the same time."
 msgstr ""
+"E tervnek egynél több forrás nyelve van, és emiatt nem fordíthatja mindet "
+"egyidejűleg."
 
 #: addons/lotte/templates/filters_menu_resources.html:16
 #: addons/lotte/templates/filters_menu_users.html:16
 msgid "No active contributor!"
-msgstr ""
+msgstr "Nincs tevékeny hozzájáruló!"
 
 #: addons/lotte/templates/lotte_details_snippet.html:8
-#, fuzzy
 msgid "Last Translation:"
-msgstr "Fordítás"
+msgstr "Utoljára fordította:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:12
-#, fuzzy, python-format
+#, python-format
 msgid "by %(user)s"
-msgstr "Noszogatja %(user)s használót"
+msgstr "%(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
 msgid "Key"
-msgstr ""
+msgstr "Kulcs"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#, fuzzy
 msgid "String ID:"
-msgstr "Szöveg befagyasztás:"
+msgstr "Szöveg az:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
@@ -367,27 +353,23 @@ msgstr "Szöveg befagyasztás:"
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
 msgid "Description"
-msgstr "Leírás"
+msgstr "Jellemzés"
 
 #: addons/lotte/templates/lotte_details_snippet.html:23
-#, fuzzy
 msgid "Description:"
-msgstr "Leírás"
+msgstr "Jellemzés:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#, fuzzy
 msgid "Occurences"
 msgstr "Előfordulások"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#, fuzzy
 msgid "Occurrences:"
-msgstr "Előfordulások"
+msgstr "Előfordulások:"
 
 #: addons/lotte/templates/more_languages.html:20
-#, fuzzy
 msgid "No active languages!"
-msgstr "Anyanyelv"
+msgstr "Nincs tevékeny nyelv!"
 
 #: addons/lotte/templates/translate.html:8
 #: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:54
@@ -398,20 +380,21 @@ msgstr "Tervek"
 
 #: addons/lotte/templates/translate.html:11
 #: addons/lotte/templates/view_strings.html:10
-#, fuzzy, python-format
+#, python-format
 msgid "Translate to %(lang)s"
-msgstr "„%(filename)s” fájlt fordítja"
+msgstr "%(lang)s nyelvre fordít"
 
 #: addons/lotte/templates/translate.html:563
 msgid ""
 "Search in Transifex memory for existing translations (opens up in new tab/"
 "window)"
 msgstr ""
+"Transifex emlékezetében keres meglévő fordításokat (új fülön/ablakban nyílik "
+"meg)"
 
 #: addons/lotte/templates/translate.html:564
-#, fuzzy
 msgid "Search translations"
-msgstr "Fordítás elutasítása"
+msgstr "Fordítást keres"
 
 #: addons/lotte/templates/translate.html:638
 #: addons/lotte/templates/view_strings.html:188 resources/models.py:278
@@ -425,81 +408,72 @@ msgid "Translation"
 msgstr "Fordítás"
 
 #: addons/lotte/templates/translate.html:647
-#, fuzzy
 msgid "Save all"
-msgstr "Csapat mentése"
+msgstr "Mindent ment"
 
 #: addons/lotte/templates/translate.html:650
 #: templates/resources/resource_actions.html:184
-#, fuzzy
 msgid "Delete translations"
-msgstr "Fordítás elutasítása"
+msgstr "Fordításokat töröl"
 
 #: addons/lotte/templates/translate.html:652
 msgid "Save and Exit"
-msgstr ""
+msgstr "Ment és kilép"
 
 #: addons/lotte/templates/translate.html:658
-#, fuzzy
 msgid "General Settings"
-msgstr "Beállítások"
+msgstr "Általános beállítás"
 
 #: addons/lotte/templates/translate.html:663
-#, fuzzy
 msgid "Verbose editing"
-msgstr "Részletes szerkesztés"
+msgstr "Beszédes szerkesztés"
 
 #: addons/lotte/templates/translate.html:667
-#, fuzzy
 msgid "Auto save"
-msgstr "Önműködő fordítás"
+msgstr "Önműködő mentés"
 
 #: addons/priorities/models.py:19
-#, fuzzy
 msgid "The resource which owns this priority instance."
-msgstr "A használó, aki birtokolja e tervet."
+msgstr "Ez elsőbbségi példányt birtokló erőforrás."
 
 #: addons/priorities/models.py:20
 msgid "Priority Levels"
-msgstr ""
+msgstr "Elsőbbség szintjei"
 
 #: addons/priorities/models.py:22
 msgid ""
 "The priority levels, indicating the importance of completing translations "
 "for the resource."
 msgstr ""
+"Elsőbbség szintjei: az erőforrás fordításai befejezésének fontosságát jelzi."
 
 #: addons/priorities/models.py:36
-#, fuzzy
 msgid "resource priority"
-msgstr "Tervet kiszervez"
+msgstr "erőforrás elsőbbsége"
 
 #: addons/priorities/models.py:37
-#, fuzzy
 msgid "resource priorities"
-msgstr "Forrás fájl:"
+msgstr "erőforrás elsőbbségei"
 
 #: addons/suggestions/models.py:19 resources/models.py:139
 #: resources/models.py:259
-#, fuzzy
 msgid "String"
-msgstr "Forrás szöveg"
+msgstr "Szöveg"
 
 #: addons/suggestions/models.py:20
 msgid "The actual string content of suggestion."
-msgstr ""
+msgstr "Javaslat tényleges szöveg tartalma."
 
 #: addons/suggestions/models.py:21 resources/models.py:141
 #: resources/models.py:261
 msgid "String Hash"
-msgstr ""
+msgstr "Szöveg számosítva"
 
 #: addons/suggestions/models.py:23
 msgid "The hash of the suggestion string used for indexing"
-msgstr ""
+msgstr "A javaslat szövegét jelölő számérték"
 
 #: addons/suggestions/models.py:24
-#, fuzzy
 msgid "Score Value"
 msgstr "Pontszám"
 
@@ -507,101 +481,93 @@ msgstr "Pontszám"
 msgid ""
 "A value which indicates the relevance of this suggestionto the translation "
 "of the source string."
-msgstr ""
+msgstr "Érték, ami jelzi, hogy a javaslat mennyire illik a forrásszöveghez."
 
 #: addons/suggestions/models.py:34
-#, fuzzy
 msgid "Source Entity"
-msgstr "Forrás szöveg"
+msgstr "Forrás"
 
 #: addons/suggestions/models.py:36
 msgid "The source entity which is being translated by thissuggestion instance."
-msgstr ""
+msgstr "A forrás, amit e javaslat példánya fordít."
 
 #: addons/suggestions/models.py:40 resources/models.py:285
-#, fuzzy
 msgid "Target Language"
-msgstr "Anyanyelv"
+msgstr "Célnyelv"
 
 #: addons/suggestions/models.py:41
-#, fuzzy
 msgid "The language in which this suggestion string belongs to."
-msgstr "A terv, amihez e csapat tartozik."
+msgstr "Nyelv, amihez e javaslat tartozik."
 
 #: addons/suggestions/models.py:45
 msgid "The user who committed the specific suggestion."
-msgstr ""
+msgstr "A javaslatot beküldő személy."
 
 #: addons/suggestions/models.py:52
-#, fuzzy
 msgid "suggestion"
-msgstr "Felbontás"
+msgstr "javaslat"
 
 #: addons/suggestions/models.py:53
 msgid "suggestions"
-msgstr ""
+msgstr "javaslatok"
 
 #: addons/suggestions/models.py:106
-#, fuzzy
 msgid "Suggestion"
-msgstr "Felbontás"
+msgstr "Javaslat"
 
 #: addons/suggestions/models.py:108
-#, fuzzy
 msgid "The suggestion which is being voted."
-msgstr "A terv, amihez e csapat tartozik."
+msgstr "A megszavazandó javaslat."
 
 #: addons/suggestions/models.py:112
-#, fuzzy
 msgid "The user who voted the specific suggestion."
-msgstr "A használó, aki birtokolja e tervet."
+msgstr "A javaslatra szavazó személy."
 
 #: addons/suggestions/models.py:123
 msgid "vote"
-msgstr ""
+msgstr "szavazat"
 
 #: addons/suggestions/models.py:124
 msgid "votes"
-msgstr ""
+msgstr "szavazatok"
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:187
-#, fuzzy
 msgid "User Suggestions"
-msgstr "Használó beiratkozás"
+msgstr "Használók javaslatai"
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:201
 msgid "Vote up for this translation suggestion (click again to undo)."
-msgstr ""
+msgstr "E javaslatot felszavazza (újra kattintva visszavonhatja)."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:203
 msgid ""
 "The score of the suggestion, indicating its popularity among translators."
-msgstr ""
+msgstr "Javaslat pontszáma. Jelzi a fordítók közötti népszerűséget."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:205
 msgid "Vote down for this translation suggestion (click again to undo)."
-msgstr ""
+msgstr "E javaslatot leszavazza (újra kattintva visszavonhatja)."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:210
 msgid "This is the currently accepted translation."
-msgstr ""
+msgstr "Ez a jelenleg elfogadott fordítás."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:212
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:215
 msgid "Use this!"
-msgstr ""
+msgstr "Használja ezt!"
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:223
 msgid "New Suggestion"
-msgstr ""
+msgstr "Új javaslat"
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:227
 msgid "You!"
-msgstr ""
+msgstr "Ön!"
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:233
 msgid "Send suggestion!"
-msgstr ""
+msgstr "Küldje be javaslatát!"
 
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
@@ -635,26 +601,19 @@ msgstr "Nincs rendelkezésre álló"
 
 #: addons/timeline/templates/timeline/timeline_base.html:29
 #: templates/timeline.html:28
-#, fuzzy, python-format
+#, python-format
 msgid "The query returned %(counter)s result"
 msgid_plural "The query returned %(counter)s results"
-msgstr[0] ""
-"\n"
-"  A lekérdezés %(counter)s eredményt adott\n"
-msgstr[1] ""
-"\n"
-"  A lekérdezés %(counter)s eredményt adott\n"
+msgstr[0] "A lekérdezés %(counter)s eredményt adott"
+msgstr[1] "A lekérdezés %(counter)s eredményt adott"
 
 #: addons/timeline/templates/timeline/timeline_project.html:23
 #: addons/timeline/templates/timeline/timeline_user.html:23
 #: templates/projects/project_timeline.html:20
 #: templates/txcommon/user_timeline.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "%(project_name)s Timeline"
-msgstr ""
-"\n"
-" %(project_name)s Időzítés\n"
-" "
+msgstr "%(project_name)s Időzítése"
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -670,17 +629,15 @@ msgstr "Adatok"
 
 #: addons/trans_memory/templates/search_translation.html:13
 #: addons/trans_memory/templates/search_translation.html:19
-#, fuzzy
 msgid "Search Translations"
-msgstr "Fordítások"
+msgstr "Fordítást keres"
 
 #: addons/trans_memory/templates/search_translation.html:40
 #, python-format
 msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr ""
+msgstr "%(source_language)s &rarr; %(translation_language)s"
 
 #: addons/trans_memory/templates/search_translation.html:51
-#, fuzzy
 msgid "Source string"
 msgstr "Forrás szöveg"
 
@@ -691,21 +648,19 @@ msgstr "Hely:"
 
 #: addons/trans_memory/templates/search_translation.html:72
 msgid "Tough luck! No translations obtained."
-msgstr ""
+msgstr "Balszerencse! Nincs fordítás."
 
 #: addons/trans_memory/templates/search_translation_form.html:7
-#, fuzzy
 msgid "Search for a string:"
-msgstr "Használó nevére keres"
+msgstr "Szöveget keres:"
 
 #: addons/trans_memory/templates/search_translation_form.html:11
 msgid "From:"
-msgstr ""
+msgstr "Innen:"
 
 #: addons/trans_memory/templates/search_translation_form.html:13
-#, fuzzy
 msgid "To:"
-msgstr "Összesen:"
+msgstr "Idáig:"
 
 #: addons/trans_memory/templates/search_translation_form.html:38
 #: templates/search.html:7 templates/search.html.py:9
@@ -715,22 +670,19 @@ msgstr "Keres"
 
 #: addons/watches/models.py:28
 msgid "Resource to watch."
-msgstr ""
+msgstr "Figyelendő erőforrás."
 
 #: addons/watches/models.py:30
-#, fuzzy
 msgid "Language of the translation."
-msgstr "Lássuk a fordító csapatokat."
+msgstr "Fordítás nyelve."
 
 #: addons/watches/models.py:41
-#, fuzzy
 msgid "translation watch"
-msgstr "Fordítás statisztikák"
+msgstr "figyelt fordítás"
 
 #: addons/watches/models.py:42
-#, fuzzy
 msgid "translation watches"
-msgstr "fordítás fájlok"
+msgstr "figyelt fordítások"
 
 #: addons/watches/views.py:28 addons/watches/views.py:93
 msgid "Must use POST to activate"
@@ -767,7 +719,6 @@ msgid "Widgets"
 msgstr "Kütyük"
 
 #: addons/widgets/templates/project_widgets.html:22
-#, fuzzy
 msgid "Widgets, buttons, etc."
 msgstr "Kütyük, gombok, stb."
 
@@ -782,9 +733,8 @@ msgid "Userbars"
 msgstr "Használósor"
 
 #: addons/widgets/templates/project_widgets.html:37
-#, fuzzy
 msgid "You can insert userbars to forums, e-mail signatures, etc."
-msgstr "Használósort tehet fórumokba, levélaláírásokba, stb."
+msgstr "Használósort tehet fórumokba, eküldemények aláírásaiba, stb."
 
 #: addons/widgets/templates/project_widgets.html:38
 msgid "Show code snippet for userbar:"
@@ -841,27 +791,27 @@ msgstr "Többes egyenlet"
 
 #: languages/models.py:69
 msgid "Rule zero"
-msgstr ""
+msgstr "Nulla szabálya"
 
 #: languages/models.py:71
 msgid "Rule one"
-msgstr ""
+msgstr "Egy szabálya"
 
 #: languages/models.py:73
 msgid "Rule two"
-msgstr ""
+msgstr "Kettő szabálya"
 
 #: languages/models.py:75
 msgid "Rule few"
-msgstr ""
+msgstr "Kevés szabálya"
 
 #: languages/models.py:77
 msgid "Rule many"
-msgstr ""
+msgstr "Sok szabálya"
 
 #: languages/models.py:79
 msgid "Rule other"
-msgstr ""
+msgstr "Más szabálya"
 
 #: languages/models.py:90
 msgid "language"
@@ -874,12 +824,12 @@ msgstr "nyelvek"
 #: projects/api.py:233 projects/api.py:315
 #, python-format
 msgid "%i strings added"
-msgstr ""
+msgstr "%i szöveget adott hozzá"
 
 #: projects/api.py:235 projects/api.py:317
-#, fuzzy, python-format
+#, python-format
 msgid "%i strings updated"
-msgstr "Statisztikák utoljára frissítve:"
+msgstr "%i szöveget időszerűsített"
 
 #: projects/feeds.py:17
 #, python-format
