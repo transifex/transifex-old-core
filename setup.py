@@ -9,7 +9,6 @@ from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py as _build_py
 
 from transifex.txcommon import version
-from django.conf import settings
 
 readme_file = open(u'README')
 long_description = readme_file.read()
@@ -25,7 +24,7 @@ package_data = {
 def buildlanguages():
     import django.core.management.commands.compilemessages as c
     oldpath = os.getcwd()
-    os.chdir(os.path.join(settings.PROJECT_PATH, 'locale'))
+    os.chdir(os.path.join('transifex/locale'))
     c.compile_messages()
     os.chdir(oldpath)
 
