@@ -26,3 +26,10 @@ post_refresh_cache = Signal(providing_args=["resource"])
 sig_clear_cache = Signal(providing_args=["resource"])
 pre_clear_cache = sig_clear_cache
 post_clear_cache = Signal(providing_args=["resource"])
+
+# Signals used by cla addon:
+pre_team_request = Signal(providing_args=['project', 'user'])
+pre_team_join = Signal(providing_args=['project', 'user'])
+cla_create = Signal(providing_args=['project', 'license_text', 'requester'])
+project_access_control_form_start = Signal(providing_args=['instance', 'project'])
+class ClaNotSignedError(Exception): pass

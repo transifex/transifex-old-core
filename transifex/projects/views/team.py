@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db import transaction
+from django.dispatch import Signal
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -18,6 +19,7 @@ from languages.models import Language
 from notification import models as notification
 from projects.models import Project
 from projects.permissions import *
+from projects.signals import pre_team_request, pre_team_join, ClaNotSignedError
 from resources.stats import ProjectStatsList
 from teams.forms import TeamSimpleForm, TeamRequestSimpleForm
 from teams.models import Team, TeamAccessRequest, TeamRequest
@@ -26,6 +28,7 @@ from txcommon import notifications as txnotification
 
 from txcommon.decorators import one_perm_required_or_403, access_off
 from txcommon.log import logger
+
 
 def team_off(request, project, *args, **kwargs):
     """
@@ -139,7 +142,7 @@ def team_list(request, project_slug):
     return render_to_response("teams/team_list.html", 
                               {"project": project,
                               "team_request_form": team_request_form,
-                               "project_team_page": True},
+                               "project_team_page": True, },
                                context_instance=RequestContext(request))
 
 @access_off(team_off)
@@ -166,7 +169,7 @@ def team_detail(request, project_slug, language_code):
                                "team_access_requests": team_access_requests,
                                "user_access_request": user_access_request,
                                "project_team_page": True,
-                               "statslist": statslist},
+                               "statslist": statslist, },
                                context_instance=RequestContext(request))
 
 
@@ -228,6 +231,12 @@ def team_join_request(request, project_slug, language_code):
             request.user.message_set.create(message=_(
                 "You are in the '%s' team already.") % team.language.name)
         try:
+            # send pre_team_join signal
+            cla_sign = 'cla_sign' in request.POST and request.POST['cla_sign']
+            cla_sign = cla_sign and True
+            pre_team_join.send(sender='join_team_view', project=project,
+                               user=request.user, cla_sign=cla_sign)
+
             access_request = TeamAccessRequest(team=team, user=request.user)
             access_request.save()
             request.user.message_set.create(message=_(
@@ -256,6 +265,11 @@ def team_join_request(request, project_slug, language_code):
             request.user.message_set.create(message=_(
                 "You already have a pending request to join the '%s' team."
                 ) % team.language.name)
+        except ClaNotSignedError, e:
+            request.user.message_set.create(message=_(
+                "You need to sign the Contribution License Agreement for this "\
+                "project before you join a translation team"
+            ))
 
     return HttpResponseRedirect(reverse("team_detail", 
                                         args=[project_slug, language_code]))
@@ -492,6 +506,15 @@ def team_request(request, project_slug):
                     % team_request.language.name)
             except TeamRequest.DoesNotExist:
                 try:
+                    # send pre_team_request signal
+                    cla_sign = 'cla_sign' in request.POST and \
+                            request.POST['cla_sign']
+                    cla_sign = cla_sign and True
+                    pre_team_request.send(sender='request_team_view',
+                                          project=project,
+                                          user=request.user,
+                                          cla_sign=cla_sign)
+
                     team_request = TeamRequest(project=project, 
                         language=language, user=request.user)
                     team_request.save()
@@ -517,6 +540,12 @@ def team_request(request, project_slug):
                 except IntegrityError, e:
                     transaction.rollback()
                     logger.error("Something weird happened: %s" % str(e))
+                except ClaNotSignedError, e:
+                    request.user.message_set.create(message=_(
+                        "You need to sign the Contribution License Agreement "\
+                        "for this project before you submit a team creation "\
+                        "request."
+                    ))
 
     return HttpResponseRedirect(reverse("team_list", args=[project_slug,]))
 
