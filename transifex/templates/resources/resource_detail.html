@@ -25,7 +25,7 @@
                 
                 window.location = request_url;
             } else {
-                alert("Please select a target language first and then click Go.");
+                alert('{% trans "Please select a target language first." %}');
             }
         });
         {% endif %}
@@ -61,7 +61,7 @@
 
 {% block title %}
 {{ block.super }} |
-Projects |
+{% trans "Projects" %} |
 {{project}}
 {{resource}}
 {% endblock %}
@@ -139,9 +139,10 @@ Projects |
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         {% cache 604800 resource_details resource.project.slug resource.slug stat.language.code %}
         <td>
-          {{ stat.language.name }} <span class="locale">({{ stat.language.code }})</span>
+          <span class="clickable">{{ stat.language.name }}</span> 
+          <span class="locale">({{ stat.language.code }})</span>
           {% ifequal resource.source_language stat.language %}
-             <span style="padding-left:1em"><em>source language</em></span>
+             <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
           {% endifequal %}
         </td>
         <td>
@@ -193,7 +194,7 @@ Projects |
                             request_url = window.location+'l/{{ stat.language.code }}/clone/'+target_lang_code+'/';
                             window.location = request_url;
                         } else {
-                            alert("Please select a target language first and then click Go.");
+                            alert('{% trans "Please select a target language first." %}');
                         }
                     });
                     if(!$("#download_for_translation a").hasClass('disabled')){
@@ -242,8 +243,7 @@ Projects |
 {% if can_submit_translation and resource.accept_translations %}
 
 <p class="i16 tip" style="font-size:85%">
-If you cannot see your language, click the button below to translate.
-<span class="note">( You must belong to a language team of this project, to be able to translate! )</span>
+{% blocktrans %}If you cannot see your language, click the button below to translate.<span class="note">( You must belong to a language team of this project, to be able to translate! )</span>{% endblocktrans %}
 </p>
 
 <div id="new_translation_box1">
@@ -253,7 +253,7 @@ If you cannot see your language, click the button below to translate.
     The change should respect the below permissions!!!
 
     <select name="translation_languages" class="language">
-        <option value="">Select Language</option>
+        <option value="">{% trans "Select Language" %}</option>
         {% if is_maintainer or request.user.is_superuser %}
           {% for language in languages %}
               <option value="{{ language.code }}">{{ language.name }}</option>

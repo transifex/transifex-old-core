@@ -129,6 +129,14 @@ def project_access_control_edit(request, project_slug):
                 for p in project.project_set.all():
                     p.outsource=None
                     p.save()
+            if 'limited_access' == access_control :
+                # send signal to save CLA
+                signals.cla_create.send(
+                    sender='project_access_control_edit_view',
+                    project=project,
+                    license_text=access_control_form.cleaned_data['cla_license_text'],
+                    requester=request.user
+                )
             project.save()
             return HttpResponseRedirect(request.POST['next'])
     else:

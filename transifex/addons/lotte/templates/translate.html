@@ -97,6 +97,23 @@
     $(document).ready(function(){
 
         oTable = $('#stringset_table').dataTable({
+            "oLanguage": {
+                "sProcessing":   '{% trans "Processing..." %}',
+                "sLengthMenu":   '{% trans "Show _MENU_ entries" %}',
+                "sZeroRecords":  '{% trans "No matching records found" %}',
+                "sInfo":         '{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}',
+                "sInfoEmpty":    '{% trans "Showing 0 to 0 of 0 entries" %}',
+                "sInfoFiltered": '{% trans "(filtered from _MAX_ total entries)" %}',
+                "sInfoPostFix":  "",
+                "sSearch":       '{% trans "Search:" %}',
+                "sUrl":          "",
+                "oPaginate": {
+                        "sFirst":    '{% trans "First" %}',
+                        "sPrevious": '{% trans "Previous" %}',
+                        "sNext":     '{% trans "Next" %}',
+                        "sLast":     '{% trans "Last" %}'
+                }
+            },
             "bJQueryUI": false,
             "sPaginationType": "full_numbers",
             "aaSorting": [[ 0, "asc" ]],
@@ -122,12 +139,12 @@
                     for(rule in plural_types){
                         if(plural_types[rule] in clean_array["source_dict"]["source_strings"]){
                             if(plural_types[rule]=='other'){
-                              source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="Source string">';
+                              source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="{% trans "Source string" %}">';
                               if(plurals_counter>0)
                                 source_divs += '<span class="plural_title">'+plural_types[rule]+':</span>&nbsp;'
                               source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
                             }else
-                              source_divs += '<p title="Source string"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                              source_divs += '<p title="{% trans "Source string" %}"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
                             plurals_counter++;
                         }
                     }
@@ -156,15 +173,15 @@
 
                     return '<div class="source_string_wrapper">'
                            + plural_indicator
-                           + ' <div class="source_entity nodisplay" id="sourceentity_'+ oObj.iDataRow +'" ><span title="Key">'+ clean_array["key"] +'</span></div>'
+                           + ' <div class="source_entity nodisplay" id="sourceentity_'+ oObj.iDataRow +'" ><span title="{% trans "Key" %}">'+ clean_array["key"] +'</span></div>'
                            + source_divs
                            + ' <div class="row_tabs">'
                            + '  <ul>'
                            + '    <li>'
-                           + '     <a class="tabs_trigger show_details" href="#">details</a>'
+                           + '     <a class="tabs_trigger show_details" href="#">{% trans "details" %}</a>'
                            + '    </li>'
                            + '    <li>'
-                           + '     <a class="tabs_trigger show_suggestions" href="#">suggestions'+suggestions_num+'</a>'
+                           + '     <a class="tabs_trigger show_suggestions" href="#">{% trans "suggestions" %}'+suggestions_num+'</a>'
                            + '    </li>'
                            + '  </ul>'
                            + ' </div>'
@@ -180,22 +197,22 @@
                       for(rule in plural_types){
                           if(plural_types[rule] in clean_array["translations"]){
                               if(plural_types[rule]=='other'){
-                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" title="{% trans "Fill in a new translation" %}">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
                                 if(plurals_counter>0)
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})" %}">'+plural_types[rule]+'</span>';
                                 textareas += '</div>';
                               }else{
-                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation" title="Fill in a new translation">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation" title="{% trans "Fill in a new translation" %}">' + clean_array["translations"][plural_types[rule]] + '</textarea>';
                                 if(plural_types[rule]=='zero'){
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})" %}">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='one'){
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' item (equation: {{ target_language.rule_one }})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' item (equation: {{ target_language.rule_one }})" %}">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='two'){
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_two }})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_two }})" %}">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='few'){
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_few }})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_few }})" %}">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='many'){
-                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_many }})">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_many }})" %}">'+plural_types[rule]+'</span>';
                                 }
                                 textareas += '</div>';
                               }
@@ -206,8 +223,8 @@
                       return textareas
                       + '<div class="error_notes"></div>'
                       + '<div class="lotte-actions">'
-                      + '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">auto translate</a></p>'
-                      + '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">copy source</a></p>'
+                      + '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">{% trans "auto translate" %}</a></p>'
+                      + '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">{% trans "copy source" %}</a></p>'
                       + '</div>';
                     }
                 },
@@ -216,7 +233,7 @@
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
-              $("div#notification-container div").html("Loading strings...");
+              $("div#notification-container div").html('{% trans "Loading strings..." %}');
               $("div#notification-container").fadeIn("slow");
               if (filter_var) {
                 aoData.push( { "name" : "filters", "value": filter_var});
@@ -367,11 +384,11 @@
                 stringset.unbindSaveButton();
                 stringset.bindBlurTextArea();
                 stringset.push();
-                alert("Auto-save translation text has been enabled");
+                alert('{% trans "Auto-save translation text has been enabled" %}');
             } else { 
                 stringset.unbindBlurTextArea();
                 stringset.bindSaveButton();
-                alert("Auto-save translation text has been disabled");
+                alert('{% trans "Auto-save translation text has been disabled" %}');
             }
         });
 
@@ -389,8 +406,8 @@
                 to_delete.push( $("span#sourceid_"+j).text() );
             }
             if(to_delete.length == 0){
-                alert('No translations to delete in this page!');
-            }else if(confirm('This action will delete all '+ to_delete.length +' translations in this page? Are you sure, you want to proceed?')){
+                alert('{% trans "No translations to delete in this page!" %}');
+            }else if(confirm('{% trans "This action will delete all '+ to_delete.length +' translations in this page? Are you sure, you want to proceed?" %}')){
                 {% if resource %}
                 var delete_url = '{% url delete_translation project.slug resource.slug target_language.code %}';
                 {% else %}
@@ -570,27 +587,27 @@
 
 <div class="floatright filtermenu-wrapper">
 
-  <div id="filtermenu0" class="filtermenu tipsy_enable" title="Show translations of<br /> the chosen languages">
+  <div id="filtermenu0" class="filtermenu tipsy_enable" title="{% trans "Show translations of<br /> the chosen languages" %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
-    <span class="filtermenu-title">More languages</span>
+    <span class="filtermenu-title">{% trans "More languages" %}</span>
     </a>
   </div>
   {% include "more_languages.html" %}
 
-  <div id="filtermenu1" class="filtermenu tipsy_enable" title="Show only the translations<br />of the chosen users">
+  <div id="filtermenu1" class="filtermenu tipsy_enable" title="{% trans "Show only the translations<br />of the chosen users" %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
-    <span class="filtermenu-title">Filter by users</span>
+    <span class="filtermenu-title">{% trans "Filter by users" %}</span>
     </a>
   </div>
   {% include "filters_menu_users.html" %}
 
   {% ifnotequal resources|length 1 %}
-  <div id="filtermenu2" class="filtermenu tipsy_enable" title="Show only the strings which<br />belong to checked resources.">
+  <div id="filtermenu2" class="filtermenu tipsy_enable" title="{% trans "Show only the strings which<br />belong to checked resources." %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
-    <span class="filtermenu-title">Filter by resources</span>
+    <span class="filtermenu-title">{% trans "Filter by resources" %}</span>
     </a>
   </div>
   {% include "filters_menu_resources.html" %}
@@ -602,7 +619,7 @@
   <input id="filter_entries" type="hidden" name="filter_entries"/>
   {% with untranslated_strings|add:translated_strings as total_strings %}
   <tr>
-    <th class="translated">Translated</th>
+    <th class="translated">{% trans "Translated" %}</th>
 
       <td id="total_translated">{{ translated_strings }}</td>
       <td id="total_translated_perc">?</td>
@@ -610,19 +627,19 @@
   </tr>
 
   <tr>
-    <th class="untranslated">Untranslated</th>
+    <th class="untranslated">{% trans "Untranslated" %}</th>
       <td id="total_untranslated">{{ untranslated_strings }} </td>
       <td id="total_untranslated_perc">?</td>
 
       <td><input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/></td>
   </tr>
   <tr>
-    <th class="fuzzy">Modified</th>
+    <th class="fuzzy">{% trans "Modified" %}</th>
       <td id="total_fuzzy">0</td>
       <td id="total_fuzzy_perc">0.00%</td>
   </tr>
   <tr class="last">
-    <th>Total</th>
+    <th>{% trans "Total" %}</th>
       <td id="total_sum">{{ total_strings }}</td>
   </tr>
   {% endwith %}

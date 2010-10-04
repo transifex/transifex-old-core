@@ -19,7 +19,7 @@ class StatsBase:
     def __init__(self, entities):
         self.entities = entities
 
-    @stats_cached_property
+    @property
     def available_languages(self):
         """Return a list of available languages.
 
@@ -28,7 +28,8 @@ class StatsBase:
         instance of ``Project`` or ``Resource`` the list will also contain
         the languages used in the related project teams of the given object.
         """
-        language_ids = self.translations.values_list('language__id', flat=True)
+        language_ids = self.available_languages_without_teams.values_list('id', flat=True)
+
         team_lang_ids = None
 
         if isinstance(self.object, Project):

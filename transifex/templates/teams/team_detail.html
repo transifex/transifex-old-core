@@ -134,7 +134,7 @@
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span class="i16 comment">{% trans "Name" %}</span></th>
+    <th><span class="i16 comment">{% trans "Resource" %}</span></th>
     <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
    </tr>
@@ -145,7 +145,7 @@
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
   {% cache 604800 team_details team.id stat.object.id %}
         <td>
-        {{ stat.object.name }}
+          <span class="clickable">{{ stat.object.name }}</span>
         </td>
         <td>
         {% with 200 as barwidth %}

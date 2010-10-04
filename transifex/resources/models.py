@@ -62,8 +62,8 @@ class Resource(models.Model):
                     "translated."))
     i18n_type = models.CharField(_('I18n type'), max_length=20,
         choices=((k,settings.I18N_METHODS[k]['description']) for k,v in settings.I18N_METHODS.items()),
-        help_text=_("The type of i18n method used in this resource (%s)" %
-                    ', '.join(settings.TRANS_CHOICES.keys())))
+        help_text=_("The type of i18n method used in this resource (%s)") %
+                    ', '.join(settings.TRANS_CHOICES.keys()))
 
     accept_translations = models.BooleanField(_('Accepting translations?'),
         blank=False, null=False, default=True,

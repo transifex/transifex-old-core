@@ -81,6 +81,22 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     target_language = Language.objects.by_code_or_alias_or_404(lang_code)
 
+    # If it is an attempt to edit the source language, redirect the user to 
+    # resource_detail and show him a message explaining the reason.
+    if target_language == resources[0].source_language:
+        request.user.message_set.create(
+                message=_("The source language cannot be edited, cause this would"
+                          " result in translation mismatching! If you want to "
+                          "update the source strings consider using the command"
+                          " line client of transifex."))
+        if resource_slug:
+            return HttpResponseRedirect(reverse('resource_detail',
+                                                args=[project_slug,
+                                                      resource_slug]),)
+        else:
+            return HttpResponseRedirect(reverse('project_detail',
+                                                args=[project_slug]),)
+
     total_strings = SourceEntity.objects.filter(
         resource__in = resources).count()
 
@@ -332,8 +348,8 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 _get_strings(translated_strings, lang_code, s.source_entity),
                 Suggestion.objects.filter(source_entity=s.source_entity, language__code=lang_code).count(),
                 # save buttons and hidden context
-                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="Save the specific change"></span>'
-                 '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="Undo to initial text"></span>'
+                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="' + _("Save the specific change") + '"></span>'
+                 '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="' + _("Undo to initial text") + '"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + escape(str(s.source_entity.context)) + '</span>'
                  '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
@@ -464,15 +480,15 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
         except Translation.DoesNotExist:
             # TODO: Log or inform here
             push_response_dict[source_id] = { 'status':500,
-                 'message':"Source string cannot be identified in the DB"}
+                 'message':_("Source string cannot be identified in the DB")}
             # If the source_string cannot be identified in the DB then go to next
             # translation pair.
             continue
 
         if not source_string.source_entity.resource.accept_translations:
             push_response_dict[source_id] = { 'status':500,
-                 'message':"The resource of this source string is not " \
-                 "accepting translations." }
+                 'message':_("The resource of this source string is not "
+                    "accepting translations.") }
 
         # If the translated source string is pluralized check that all the 
         # source language supported rules have been filled in, else return error
@@ -494,8 +510,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         error_flag = True
             if error_flag:
                 push_response_dict[source_id] = { 'status':500,
-                    'message':("All the plural translations must be filled in, "
-                               "or left empty, in order to be saved!")}
+                    'message':(_("All the plural translations must be filled in, "
+                               "or left empty, in order to be saved!"))}
                 # Skip the save as we hit on an error.
                 continue
 
@@ -520,7 +536,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
 
                 push_response_dict[source_id] = { 'status':200,
-                     'message':"Translation updated successfully in the DB"}
+                     'message':_("Translation updated successfully in the DB")}
             except Translation.DoesNotExist:
                 # Only create new if the translation string sent, is not empty!
                 if string != "":
@@ -532,15 +548,15 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         user = request.user) # Save the sender as last committer
                     invalidate_stats_cache(source_string.source_entity.resource,target_language)
                     push_response_dict[source_id] = { 'status':200,
-                         'message':"New translation stored successfully in the DB"}
+                         'message':_("New translation stored successfully in the DB")}
                 else:
                     push_response_dict[source_id] = { 'status':500,
-                         'message':"The translation string is empty"}
+                         'message':_("The translation string is empty")}
             # catch-all. if we don't save we _MUST_ inform the user
             except:
                 # TODO: Log or inform here
                 push_response_dict[source_id] = { 'status':500,
-                    'message':"Error occured on translation saving procedure."}
+                    'message':_("Error occured on translation saving procedure.")}
 
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')

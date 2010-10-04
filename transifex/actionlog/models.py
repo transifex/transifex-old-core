@@ -148,15 +148,15 @@ class LogEntryManager(models.Manager):
 
 class LogEntry(models.Model):
     """A Entry in an object's log."""
-    user = models.ForeignKey(User, blank=True, null=True, 
-                             related_name="tx_user_action")
+    user = models.ForeignKey(User, verbose_name=_('User'), blank=True,
+        null=True, related_name="tx_user_action")
 
     object_id = models.IntegerField(blank=True, null=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
                                      related_name="tx_object")
 
-    action_type = models.ForeignKey(NoticeType)
-    action_time = models.DateTimeField()
+    action_type = models.ForeignKey(NoticeType, verbose_name=_('Action type'))
+    action_time = models.DateTimeField(_('Action time'))
     object_name = models.CharField(blank=True, max_length=200)
     message = models.TextField(blank=True, null=True)
 

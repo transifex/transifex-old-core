@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.forms import widgets
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
@@ -11,6 +12,7 @@ from django.utils.safestring import mark_safe
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from projects.models import Project
+from projects.signals import project_access_control_form_start
 from releases.models import Release
 
 class ProjectForm(forms.ModelForm):
@@ -126,7 +128,8 @@ class ProjectAccessControlForm(forms.ModelForm):
         # Filtering project list
         projects = self.fields["outsource"].queryset.exclude(slug=project.slug)
         self.fields["outsource"].queryset = projects
-
+        project_access_control_form_start.send(sender=ProjectAccessControlForm,
+                                               instance=self, project=project)
 
 class ReleaseForm(forms.ModelForm):
 

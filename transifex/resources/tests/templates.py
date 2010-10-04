@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from txcommon.tests.base import BaseTestCase
+from languages.models import Language
 from resources.models import SourceEntity
-
+from teams.models import Team
+from txcommon.tests.base import BaseTestCase
 
 class ResourcesTemplateTests(BaseTestCase):
 
@@ -131,7 +132,7 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test the response contents
         for user in ['team_member', 'maintainer']:
             resp = self.client[user].get(self.resource_detail_url)
-            self.assertTemplateUsed(resp, 'resources/resource.html')
+            self.assertTemplateUsed(resp, 'resources/resource_detail.html')
             self.assertContains(resp,
                                 '<a id="new_translation1" class="buttonized i16 add">Translate Resource</a>',
                                 status_code=200)
@@ -146,7 +147,7 @@ class ResourcesTemplateTests(BaseTestCase):
         """Test that resource edit button is rendered correctly in details."""
         # Test the response contents
         resp = self.client['maintainer'].get(self.resource_detail_url)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
                             (self.project.slug, self.resource.slug),
@@ -162,7 +163,7 @@ class ResourcesTemplateTests(BaseTestCase):
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
         resp = self.client['maintainer'].get(self.resource_detail_url)
-        self.assertTemplateUsed(resp, 'resources/resource.html')
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
                             (self.project.slug, self.resource.slug),
@@ -174,3 +175,37 @@ class ResourcesTemplateTests(BaseTestCase):
                                 '<a class="i16 delete buttonized" href="/projects/p/%s/resource/%s/delete">Delete translation resource</a>' %
                                 (self.project.slug, self.resource.slug),
                                 status_code=200)
+
+    def test_disabled_visit_team_resource_actions(self):
+        """Test that visit language team link is correctly disabled.
+        
+        This is applied only for languages in the project that there is no 
+        corresponding team.
+        """
+        # We chose Arabic language which has not corresponding project team.
+        resp = self.client['maintainer'].get(reverse('resource_actions',
+            args=[self.project.slug, self.resource.slug,
+                  self.language_ar.code]))
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, 'resources/resource_actions.html')
+        self.assertContains(resp,
+                            '<span class="i16 team"><a class="disabled" title="There is no project team for this language.">Visit language team</a></span>')
+
+    def test_resource_details_team_and_zero_percent(self):
+        """Test that languages with teams and 0% are presented."""
+        self.project.team_set.filter(language=self.language).delete()
+        url = reverse('resource_detail',
+                      args=[self.project.slug, self.resource.slug])
+        resp = self.client['anonymous'].get(url)
+        self.assertNotContains(resp, self.language_ar.name, status_code=200,
+            msg_prefix="Do not show 0% languages if there is no respective team.")
+        self.assertNotContains(resp, '<div class="stats_string_resource"> 0% </div>')
+
+        # Test with a new team.
+        t = Team.objects.create(language=self.language_ar, project=self.project,
+                                creator=self.user['maintainer'])
+        resp = self.client['anonymous'].get(url)
+        self.assertContains(resp, self.language_ar.name, status_code=200,
+            msg_prefix="Show a 0% language if there is a respective team.")
+        self.assertContains(resp, '<div class="stats_string_resource"> 0% </div>')
+

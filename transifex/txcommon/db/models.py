@@ -91,7 +91,6 @@ class CompressedTextField(models.TextField):
 
     def to_python(self, value):
         if value is None: return
-        if isinstance(value, str): return value
         try:
             value = pickle.loads(uncompress_string(base64.decodestring(value)))
         except:
@@ -109,7 +108,7 @@ class CompressedTextField(models.TextField):
         super(CompressedTextField, self).contribute_to_class(cls, name)
         models.signals.post_init.connect(self.post_init, sender=cls)
 
- 
+
     def value_to_string(self, obj):
         value = self._get_val_from_obj(obj)
         return value

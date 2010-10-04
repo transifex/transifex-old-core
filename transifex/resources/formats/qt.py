@@ -11,6 +11,7 @@ from django.db.models import get_model
 from txcommon.log import logger
 from resources.formats.core import StringSet, ParseError, \
     GenericTranslation, CompileError, Handler, STRICT
+from suggestions.models import Suggestion
 from resources.formats.decorators import *
 
 # Resources models
@@ -122,15 +123,16 @@ class LinguistHandler(Handler):
             raise LinguistParseError("Root element is not 'TS'")
 
         stringset = StringSet()
+        suggestions = StringSet()
         # This needed to be commented out due the 'is_source' parameter.
-        # When is_source=True we return the value of the <source> node as the 
+        # When is_source=True we return the value of the <source> node as the
         # translation for the given file, instead of the <translation> node(s).
         #stringset.target_language = language
         #language = get_attribute(root, "language", die = STRICT)
 
         i = 1
         # There can be many <message> elements, they might have
-        # 'encoding' or 'numerus' = 'yes' | 'no' attributes 
+        # 'encoding' or 'numerus' = 'yes' | 'no' attributes
         # if 'numerus' = 'yes' then 'translation' element contains 'numerusform' elements
         for context in root.getElementsByTagName("context"):
             context_name_element = _getElementByTagName(context, "name")
@@ -141,7 +143,8 @@ class LinguistHandler(Handler):
 
             for message in context.getElementsByTagName("message"):
                 occurrences = []
-                # NB! There can be zero to many <location> elements, but all 
+
+                # NB! There can be zero to many <location> elements, but all
                 # of them must have 'filename' and 'line' attributes
                 for location in message.getElementsByTagName("location"):
                     if location.attributes.has_key("filename") and \
@@ -166,12 +169,19 @@ class LinguistHandler(Handler):
                 else:
                     sourceString = None # WTF?
 
+                # Check whether the message is using logical id
+                if message.attributes.has_key("id"):
+                    sourceStringText = sourceString
+                    sourceString = message.attributes['id'].value
+                else:
+                    sourceStringText = None
+
                 same_nplural = True
                 obsolete, fuzzy = False, False
                 messages = []
 
                 if is_source:
-                    messages = [(5, sourceString)]
+                    messages = [(5, sourceStringText or sourceString)]
                     if pluralized:
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
@@ -183,6 +193,21 @@ class LinguistHandler(Handler):
                             pass
 
                 elif translation and translation.firstChild:
+                    if translation.attributes.has_key("type"):
+                        status = translation.attributes["type"].value.lower()
+                        if status in ["unfinished", "obsolete"] and\
+                          not pluralized:
+                            suggestion = GenericTranslation(sourceString,
+                                translation.firstChild.toxml(),
+                                context=context_name,
+                                occurrences= ";".join(occurrences))
+                            suggestions.strings.append(suggestion)
+                        else:
+                            logger.error("Element 'translation' attribute "\
+                                "'type' isn't either 'unfinished' or 'obsolete'")
+
+                        continue
+
                     if not pluralized:
                         messages = [(5, translation.firstChild.toxml())]
                     else:
@@ -207,16 +232,6 @@ class LinguistHandler(Handler):
                             if nf:
                                 messages.append((nplural[n], nf.toxml()))
 
-                    if translation.attributes.has_key("type"):
-                        status = translation.attributes["type"].value.lower()
-                        if status in ["unfinished", "obsolete"]:
-                            if status == 'unfinished':
-                                fuzzy = True
-                            else:
-                                obsolete = True
-                        else:
-                            raise LinguistParseError("Element 'translation' attribute "\
-                                "'type' isn't either 'unfinished' or 'obsolete'")
                     # NB! If <translation> doesn't have type attribute, it means that string is finished
 
                 if sourceString and messages:
@@ -252,5 +267,6 @@ class LinguistHandler(Handler):
                 self.template = str(doc.toxml())
 
 
+            self.suggestions = suggestions
             self.stringset=stringset
         return
