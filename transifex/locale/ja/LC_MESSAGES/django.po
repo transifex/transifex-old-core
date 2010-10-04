@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-29 16:53+0000\n"
+"POT-Creation-Date: 2010-10-04 19:51+0000\n"
 "PO-Revision-Date: 2010-03-02 13:55+0900\n"
 "Last-Translator: Noriko Mizumoto <noriko@fedoraproject.org>\n"
 "Language-Team: Japanese <fedora-trans-ja@redhat.com>\n"
@@ -23,6 +23,22 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "ユーザ名を検索する、もしくは空のままに残す"
 
+#: actionlog/models.py:151 actionlog/templates/object_action_list.html:7
+#: addons/suggestions/models.py:44 addons/suggestions/models.py:110
+#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
+msgid "User"
+msgstr "ユーザー"
+
+#: actionlog/models.py:158
+#, fuzzy
+msgid "Action type"
+msgstr "動作"
+
+#: actionlog/models.py:159
+#, fuzzy
+msgid "Action time"
+msgstr "動作"
+
 #: actionlog/models.py:167
 msgid "log entry"
 msgstr "ログエントリ"
@@ -36,12 +52,6 @@ msgstr "ログのエントリ"
 msgid "Date/Time"
 msgstr "日付／時刻"
 
-#: actionlog/templates/object_action_list.html:7
-#: addons/suggestions/models.py:44 addons/suggestions/models.py:110
-#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
-msgid "User"
-msgstr "ユーザー"
-
 #: actionlog/templates/object_action_list.html:8
 msgid "Action"
 msgstr "動作"
@@ -51,7 +61,7 @@ msgid "DATETIME_FORMAT"
 msgstr "DATETIME_FORMAT"
 
 #: actionlog/templates/object_action_list.html:22
-#: templates/projects/project_detail.html:130
+#: templates/projects/project_detail.html:128
 msgid "No history recorded yet."
 msgstr "履歴の記録はまだありません。"
 
@@ -76,7 +86,9 @@ msgid ""
 "the source file for the given URL."
 msgstr ""
 
-#: addons/autofetch/models.py:25 resources/models.py:175
+#: addons/autofetch/models.py:25 resources/models.py:164
+#: templates/projects/release_language_detail.html:58
+#: templates/teams/team_detail.html:137
 msgid "Resource"
 msgstr ""
 
@@ -89,11 +101,11 @@ msgstr "翻訳のサブミット"
 msgid "url handler"
 msgstr ""
 
-#: addons/autofetch/views.py:28
+#: addons/autofetch/views.py:24
 msgid "URL not set for this resource."
 msgstr ""
 
-#: addons/autofetch/views.py:31
+#: addons/autofetch/views.py:29
 #, fuzzy
 msgid "Error updating source file."
 msgstr "翻訳ファイルの追加"
@@ -165,10 +177,10 @@ msgstr ""
 msgid "...more"
 msgstr ""
 
-#: addons/locks/handlers.py:55
+#: addons/locks/handlers.py:54
 #, fuzzy
-msgid "Couldn't lock file."
-msgstr "ファイルをアップロードするターゲットを入力してください。"
+msgid "This translation is locked by someone else."
+msgstr "プロジェクトのコンポーネントが削除される場合"
 
 #: addons/locks/models.py:55
 #, python-format
@@ -322,6 +334,54 @@ msgid ""
 "translate all resources at the same time."
 msgstr ""
 
+#: addons/lotte/views.py:88
+msgid ""
+"The source language cannot be edited, cause this would result in translation "
+"mismatching! If you want to update the source strings consider using the "
+"command line client of transifex."
+msgstr ""
+
+#: addons/lotte/views.py:351
+msgid "Save the specific change"
+msgstr ""
+
+#: addons/lotte/views.py:352
+msgid "Undo to initial text"
+msgstr ""
+
+#: addons/lotte/views.py:483
+msgid "Source string cannot be identified in the DB"
+msgstr ""
+
+#: addons/lotte/views.py:490
+msgid "The resource of this source string is not accepting translations."
+msgstr ""
+
+#: addons/lotte/views.py:513
+msgid ""
+"All the plural translations must be filled in, or left empty, in order to be "
+"saved!"
+msgstr ""
+
+#: addons/lotte/views.py:539
+#, fuzzy
+msgid "Translation updated successfully in the DB"
+msgstr "ファイルを正常にサブミットしました: %s"
+
+#: addons/lotte/views.py:551
+msgid "New translation stored successfully in the DB"
+msgstr ""
+
+#: addons/lotte/views.py:554
+#, fuzzy
+msgid "The translation string is empty"
+msgstr "翻訳ファイル"
+
+#: addons/lotte/views.py:559
+#, fuzzy
+msgid "Error occured on translation saving procedure."
+msgstr "翻訳ファイルの追加"
+
 #: addons/lotte/templates/filters_menu_resources.html:16
 #: addons/lotte/templates/filters_menu_users.html:16
 msgid "No active contributor!"
@@ -338,6 +398,7 @@ msgid "by %(user)s"
 msgstr ""
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
+#: addons/lotte/templates/translate.html:176
 msgid "Key"
 msgstr ""
 
@@ -379,6 +440,7 @@ msgstr "母国語"
 #: addons/lotte/templates/translate.html:8
 #: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:54
 #: templates/projects/base.html:6 templates/projects/project_list.html:14
+#: templates/resources/resource_detail.html:64
 #: templates/resources/resource_form.html:10
 msgid "Projects"
 msgstr "プロジェクト"
@@ -389,53 +451,256 @@ msgstr "プロジェクト"
 msgid "Translate to %(lang)s"
 msgstr "'%(filename)s' を翻訳する"
 
-#: addons/lotte/templates/translate.html:563
+#: addons/lotte/templates/translate.html:101
+#: addons/lotte/templates/view_strings.html:37
+#, fuzzy
+msgid "Processing..."
+msgstr "ローディング中"
+
+#: addons/lotte/templates/translate.html:102
+#: addons/lotte/templates/view_strings.html:38
+#, fuzzy
+msgid "Show _MENU_ entries"
+msgstr "ログのエントリ"
+
+#: addons/lotte/templates/translate.html:103
+#: addons/lotte/templates/view_strings.html:39
+msgid "No matching records found"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:104
+#: addons/lotte/templates/view_strings.html:40
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:105
+#: addons/lotte/templates/view_strings.html:41
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:106
+#: addons/lotte/templates/view_strings.html:42
+msgid "(filtered from _MAX_ total entries)"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:108
+#: addons/lotte/templates/view_strings.html:44
+#, fuzzy
+msgid "Search:"
+msgstr "検索"
+
+#: addons/lotte/templates/translate.html:111
+#: addons/lotte/templates/view_strings.html:47
+#, fuzzy
+msgid "First"
+msgstr "ファーストネーム"
+
+#: addons/lotte/templates/translate.html:112
+#: addons/lotte/templates/view_strings.html:48
+msgid "Previous"
+msgstr "前へ"
+
+#: addons/lotte/templates/translate.html:113
+#: addons/lotte/templates/view_strings.html:49
+msgid "Next"
+msgstr "次へ"
+
+#: addons/lotte/templates/translate.html:114
+#: addons/lotte/templates/view_strings.html:50
+#, fuzzy
+msgid "Last"
+msgstr "ラテン語"
+
+#: addons/lotte/templates/translate.html:142
+#: addons/lotte/templates/translate.html:147
+#: addons/trans_memory/templates/search_translation.html:51
+#, fuzzy
+msgid "Source string"
+msgstr "ソースの文字列"
+
+#: addons/lotte/templates/translate.html:181
+#, fuzzy
+msgid "details"
+msgstr "詳細"
+
+#: addons/lotte/templates/translate.html:184 addons/suggestions/models.py:53
+msgid "suggestions"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:200
+#: addons/lotte/templates/translate.html:205
+#, fuzzy
+msgid "Fill in a new translation"
+msgstr "新しい翻訳の追加"
+
+#: addons/lotte/templates/translate.html:202
+msgid ""
+"Translation plural form for '+plural_types[rule]+' items (equation: "
+"{{ target_language.rule_other}})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:207
+msgid ""
+"Translation plural form for '+plural_types[rule]+' items (equation: "
+"{{ target_language.rule_zero }})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:209
+msgid ""
+"Translation plural form for '+plural_types[rule]+' item (equation: "
+"{{ target_language.rule_one }})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:211
+msgid ""
+"Translation plural form for '+plural_types[rule]+' items (equation: "
+"{{ target_language.rule_two }})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:213
+msgid ""
+"Translation plural form for '+plural_types[rule]+' items (equation: "
+"{{ target_language.rule_few }})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:215
+msgid ""
+"Translation plural form for '+plural_types[rule]+' items (equation: "
+"{{ target_language.rule_many }})"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:226
+#, fuzzy
+msgid "auto translate"
+msgstr "未翻訳:"
+
+#: addons/lotte/templates/translate.html:227
+#, fuzzy
+msgid "copy source"
+msgstr "ソースの文字列"
+
+#: addons/lotte/templates/translate.html:236
+#: addons/lotte/templates/view_strings.html:115
+#, fuzzy
+msgid "Loading strings..."
+msgstr "ローディング中"
+
+#: addons/lotte/templates/translate.html:387
+msgid "Auto-save translation text has been enabled"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:391
+msgid "Auto-save translation text has been disabled"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:409
+#, fuzzy
+msgid "No translations to delete in this page!"
+msgstr "このリリースに追加された翻訳はありません。 :-("
+
+#: addons/lotte/templates/translate.html:410
+msgid ""
+"This action will delete all '+ to_delete.length +' translations in this "
+"page? Are you sure, you want to proceed?"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:580
 msgid ""
 "Search in Transifex memory for existing translations (opens up in new tab/"
 "window)"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:564
+#: addons/lotte/templates/translate.html:581
 #, fuzzy
 msgid "Search translations"
 msgstr "翻訳のサブミット"
 
-#: addons/lotte/templates/translate.html:638
-#: addons/lotte/templates/view_strings.html:188 resources/models.py:278
+#: addons/lotte/templates/translate.html:590
+#, fuzzy
+msgid "Show translations of<br /> the chosen languages"
+msgstr "アップロードする新しい言語の翻訳ファイルです。"
+
+#: addons/lotte/templates/translate.html:593
+#, fuzzy
+msgid "More languages"
+msgstr "ソース言語"
+
+#: addons/lotte/templates/translate.html:598
+msgid "Show only the translations<br />of the chosen users"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:601
+#, fuzzy
+msgid "Filter by users"
+msgstr "結果の検索"
+
+#: addons/lotte/templates/translate.html:607
+msgid "Show only the strings which<br />belong to checked resources."
+msgstr ""
+
+#: addons/lotte/templates/translate.html:610
+#, fuzzy
+msgid "Filter by resources"
+msgstr "結果の検索"
+
+#: addons/lotte/templates/translate.html:622
+#: addons/lotte/templates/view_strings.html:177
+#, fuzzy
+msgid "Translated"
+msgstr "翻訳済み:"
+
+#: addons/lotte/templates/translate.html:630
+#: addons/lotte/templates/view_strings.html:185
+#, fuzzy
+msgid "Untranslated"
+msgstr "未翻訳:"
+
+#: addons/lotte/templates/translate.html:637
+msgid "Modified"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:642
+#: addons/lotte/templates/view_strings.html:192
+#, fuzzy
+msgid "Total"
+msgstr "合計:"
+
+#: addons/lotte/templates/translate.html:655
+#: addons/lotte/templates/view_strings.html:205 resources/models.py:267
 msgid "Source String"
 msgstr "ソースの文字列"
 
-#: addons/lotte/templates/translate.html:639
-#: addons/lotte/templates/view_strings.html:189
+#: addons/lotte/templates/translate.html:656
+#: addons/lotte/templates/view_strings.html:206
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "翻訳"
 
-#: addons/lotte/templates/translate.html:647
+#: addons/lotte/templates/translate.html:664
 #, fuzzy
 msgid "Save all"
 msgstr "リリースの保存"
 
-#: addons/lotte/templates/translate.html:650
-#: templates/resources/resource_actions.html:184
+#: addons/lotte/templates/translate.html:667
+#: templates/resources/resource_actions.html:179
 #, fuzzy
 msgid "Delete translations"
 msgstr "翻訳のサブミット"
 
-#: addons/lotte/templates/translate.html:652
+#: addons/lotte/templates/translate.html:669
 msgid "Save and Exit"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:658
+#: addons/lotte/templates/translate.html:675
 #, fuzzy
 msgid "General Settings"
 msgstr "プロフィールの設定"
 
-#: addons/lotte/templates/translate.html:663
+#: addons/lotte/templates/translate.html:680
 msgid "Verbose editing"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:667
+#: addons/lotte/templates/translate.html:684
 #, fuzzy
 msgid "Auto save"
 msgstr "自動翻訳"
@@ -464,8 +729,8 @@ msgstr "プロジェクトの削除"
 msgid "resource priorities"
 msgstr "ソースファイル:"
 
-#: addons/suggestions/models.py:19 resources/models.py:139
-#: resources/models.py:259
+#: addons/suggestions/models.py:19 resources/models.py:128
+#: resources/models.py:248
 #, fuzzy
 msgid "String"
 msgstr "ソースの文字列"
@@ -474,8 +739,8 @@ msgstr "ソースの文字列"
 msgid "The actual string content of suggestion."
 msgstr ""
 
-#: addons/suggestions/models.py:21 resources/models.py:141
-#: resources/models.py:261
+#: addons/suggestions/models.py:21 resources/models.py:130
+#: resources/models.py:250
 msgid "String Hash"
 msgstr ""
 
@@ -502,7 +767,7 @@ msgstr "ソースの文字列"
 msgid "The source entity which is being translated by thissuggestion instance."
 msgstr ""
 
-#: addons/suggestions/models.py:40 resources/models.py:285
+#: addons/suggestions/models.py:40 resources/models.py:274
 #, fuzzy
 msgid "Target Language"
 msgstr "母国語"
@@ -519,10 +784,6 @@ msgstr ""
 #, fuzzy
 msgid "suggestion"
 msgstr "コレクション"
-
-#: addons/suggestions/models.py:53
-msgid "suggestions"
-msgstr ""
 
 #: addons/suggestions/models.py:106
 #, fuzzy
@@ -606,7 +867,7 @@ msgid "Filter results"
 msgstr "結果の検索"
 
 #: addons/timeline/templates/timeline/timeline_base.html:18
-#: templates/timeline.html:17
+#: templates/timeline.html:17 templates/resources/resource_actions.html:95
 msgid "Go"
 msgstr ""
 
@@ -652,11 +913,6 @@ msgstr "翻訳"
 #, python-format
 msgid "%(source_language)s &rarr; %(translation_language)s"
 msgstr ""
-
-#: addons/trans_memory/templates/search_translation.html:51
-#, fuzzy
-msgid "Source string"
-msgstr "ソースの文字列"
 
 #: addons/trans_memory/templates/search_translation.html:60
 #: templates/userprofile/profile/location.html:26
@@ -780,8 +1036,6 @@ msgstr "%s で話されている言語"
 #: languages/migrations/0002_added_rules_f.py:94 projects/models.py:105
 #: releases/models.py:34 resources/models.py:55
 #: templates/helptext/project_form_helptext.html:16
-#: templates/projects/release_language_detail.html:58
-#: templates/teams/team_detail.html:137
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
 msgstr "名前"
@@ -899,15 +1153,15 @@ msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "%s リリースに対する全言語の翻訳統計になります。"
 
-#: projects/forms.py:18 txpermissions/forms.py:19
+#: projects/forms.py:20 txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "ユーザ名を検索"
 
-#: projects/forms.py:55
+#: projects/forms.py:57
 msgid "Free for all"
 msgstr ""
 
-#: projects/forms.py:56
+#: projects/forms.py:58
 msgid ""
 "Allow any logged-in user to submit files to my\n"
 "                              project. <a href=\"http://www.youtube.com/"
@@ -920,12 +1174,12 @@ msgid ""
 "                              submitted by email or to a separate branch."
 msgstr ""
 
-#: projects/forms.py:66
+#: projects/forms.py:68
 #, fuzzy
 msgid "Limited access"
 msgstr "禁止されているアクセス"
 
-#: projects/forms.py:67
+#: projects/forms.py:69
 msgid ""
 "Give access to specific people. Translations\n"
 "                              teams will have access to their language's "
@@ -936,12 +1190,12 @@ msgid ""
 "                              projects."
 msgstr ""
 
-#: projects/forms.py:75
+#: projects/forms.py:77
 #, fuzzy
 msgid "Outsourced access"
 msgstr "禁止されているアクセス"
 
-#: projects/forms.py:76
+#: projects/forms.py:78
 msgid ""
 "Re-use another project's teams and writers by\n"
 "                              delegating access control to that project. If "
@@ -953,7 +1207,7 @@ msgid ""
 "                              packages and desktop environment modules."
 msgstr ""
 
-#: projects/forms.py:134
+#: projects/forms.py:137
 #, fuzzy
 msgid "Search for a resource"
 msgstr "ユーザ名を検索"
@@ -1121,7 +1375,7 @@ msgstr "未翻訳:"
 msgid "Total:"
 msgstr "合計:"
 
-#: projects/views/project.py:154
+#: projects/views/project.py:162
 #, fuzzy, python-format
 msgid "The project '%s' was deleted."
 msgstr "%s は削除されました。"
@@ -1131,37 +1385,46 @@ msgstr "%s は削除されました。"
 msgid "The release '%s' was deleted."
 msgstr "%s は削除されました。"
 
-#: projects/views/team.py:189
+#: projects/views/team.py:192
 #, fuzzy, python-format
 msgid "The team '%s' was deleted."
 msgstr "%s は削除されました。"
 
-#: projects/views/team.py:229
+#: projects/views/team.py:232
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "あなたはすでに '%s' チームの一員です。"
 
-#: projects/views/team.py:234
+#: projects/views/team.py:243
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr ""
 
-#: projects/views/team.py:257
+#: projects/views/team.py:266
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "すでに '%s' チームへの参加要請を出しています。"
 
-#: projects/views/team.py:285
+#: projects/views/team.py:270
+#, fuzzy
+msgid ""
+"You need to sign the Contribution License Agreement for this project before "
+"you join a translation team"
+msgstr ""
+"指定ファイルに翻訳内容を送信するにはこのプロジェクトの '%s' チームに所属して"
+"いなければなりません。"
+
+#: projects/views/team.py:299
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "'%(user)s' はすでに '%(team)s' チームの一員です。"
 
-#: projects/views/team.py:292
+#: projects/views/team.py:306
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "'%(user)s' を '%(team)s' チームの一員に加えました。"
 
-#: projects/views/team.py:340
+#: projects/views/team.py:354
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
@@ -1169,46 +1432,52 @@ msgid ""
 msgstr ""
 "ユーザー '%(user)s' によって '%(team)s' チームへの参加を拒否されました。"
 
-#: projects/views/team.py:385
+#: projects/views/team.py:399
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "'%s' チームへの参加要請を取り消しました。"
 
-#: projects/views/team.py:428
+#: projects/views/team.py:442
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "'%s' チームから去りました。"
 
-#: projects/views/team.py:449
+#: projects/views/team.py:463
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "あなたは '%s' チームの一員ではありません。"
 
-#: projects/views/team.py:472
+#: projects/views/team.py:486
 msgid "Please, select a language before submit the form."
 msgstr "送信前に言語を選択して下さい。"
 
-#: projects/views/team.py:485
+#: projects/views/team.py:499
 #, python-format
 msgid "'%s' team already exist."
 msgstr "すでに '%s' チームは存在します。"
 
-#: projects/views/team.py:491
+#: projects/views/team.py:505
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr ""
 
-#: projects/views/team.py:499
+#: projects/views/team.py:522
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr ""
 
 #: projects/views/team.py:545
+msgid ""
+"You need to sign the Contribution License Agreement for this project before "
+"you submit a team creation request."
+msgstr ""
+
+#: projects/views/team.py:574
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 
-#: projects/views/team.py:588
+#: projects/views/team.py:617
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr ""
@@ -1351,172 +1620,176 @@ msgstr ""
 msgid "resources"
 msgstr ""
 
-#: resources/models.py:140
+#: resources/models.py:129
 msgid "The actual string content of source string."
 msgstr ""
 
-#: resources/models.py:143 resources/models.py:263
+#: resources/models.py:132 resources/models.py:252
 msgid "The hash of the translation string used for indexing"
 msgstr ""
 
-#: resources/models.py:144
+#: resources/models.py:133
 msgid "Context"
 msgstr ""
 
-#: resources/models.py:146
+#: resources/models.py:135
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr ""
 
-#: resources/models.py:148 templates/userprofile/profile/location.html:27
+#: resources/models.py:137 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "ポジション"
 
-#: resources/models.py:149
+#: resources/models.py:138
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
 
-#: resources/models.py:153
+#: resources/models.py:142
 #, fuzzy
 msgid "Occurrences"
 msgstr "発生"
 
-#: resources/models.py:155
+#: resources/models.py:144
 msgid "The occurrences of the source string in the project code."
 msgstr ""
 
-#: resources/models.py:156 resources/models.py:161
+#: resources/models.py:145 resources/models.py:150
 msgid "Flags"
 msgstr ""
 
-#: resources/models.py:158
+#: resources/models.py:147
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr ""
 
-#: resources/models.py:163
+#: resources/models.py:152
 msgid "The comment of the developer."
 msgstr ""
 
-#: resources/models.py:165
+#: resources/models.py:154
 msgid "Pluralized"
 msgstr ""
 
-#: resources/models.py:167
+#: resources/models.py:156
 msgid "Identify if the entity is pluralized ot not."
 msgstr ""
 
-#: resources/models.py:177
+#: resources/models.py:166
 msgid "The translation resource which owns the source string."
 msgstr ""
 
-#: resources/models.py:184
+#: resources/models.py:173
 #, fuzzy
 msgid "source string"
 msgstr "ソースの文字列"
 
-#: resources/models.py:185
+#: resources/models.py:174
 #, fuzzy
 msgid "source strings"
 msgstr "ソースの文字列"
 
-#: resources/models.py:260
+#: resources/models.py:249
 msgid "The actual string content of translation."
 msgstr ""
 
-#: resources/models.py:264
+#: resources/models.py:253
 #, fuzzy
 msgid "Plural rule"
 msgstr "複数式"
 
-#: resources/models.py:266
+#: resources/models.py:255
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
 "pluralized, the rule must be 5 (other)."
 msgstr ""
 
-#: resources/models.py:281
+#: resources/models.py:270
 msgid ""
 "The source string which is being translated by thistranslation string "
 "instance."
 msgstr ""
 
-#: resources/models.py:286 storage/models.py:33
+#: resources/models.py:275 storage/models.py:33
 msgid "The language in which this translation string belongs to."
 msgstr ""
 
-#: resources/models.py:289
+#: resources/models.py:278
 #, fuzzy
 msgid "Committer"
 msgstr "Twitter"
 
-#: resources/models.py:290
+#: resources/models.py:279
 msgid "The user who committed the specific translation."
 msgstr ""
 
-#: resources/models.py:300
+#: resources/models.py:289
 #, fuzzy
 msgid "translation string"
 msgstr "翻訳ファイル"
 
-#: resources/models.py:301
+#: resources/models.py:290
 #, fuzzy
 msgid "translation strings"
 msgstr "翻訳ファイル"
 
-#: resources/models.py:334
+#: resources/models.py:323
 msgid "This is the actual content of the template"
 msgstr ""
 
-#: resources/models.py:338
+#: resources/models.py:327
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:342
+#: resources/models.py:331
 msgid "Template"
 msgstr ""
 
-#: resources/models.py:343
+#: resources/models.py:332
 msgid "Templates"
 msgstr ""
 
-#: resources/views.py:84
+#: resources/views.py:86
 #, fuzzy, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "プロジェクトのコンポーネントが削除される場合"
 
-#: resources/views.py:300
+#: resources/views.py:127
+msgid "The URL you provided doesn't link to valid file."
+msgstr ""
+
+#: resources/views.py:318
 #, fuzzy, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
 msgstr "%(release)s リリースでの %(language)s 言語の最新の翻訳"
 
-#: resources/views.py:346
+#: resources/views.py:364
 #, fuzzy
 msgid "Error compiling translation file."
 msgstr "翻訳ファイルの追加"
 
-#: resources/views.py:393
+#: resources/views.py:411
 msgid "Sorry, you cannot assign this file to you!"
 msgstr ""
 
-#: resources/views.py:405
+#: resources/views.py:423
 msgid "Failed to lock the resource!"
 msgstr ""
 
-#: resources/views.py:416
+#: resources/views.py:434
 msgid "Failed to extend lock period on the resource!"
 msgstr ""
 
-#: resources/views.py:421
+#: resources/views.py:439
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
 msgstr ""
@@ -1607,7 +1880,7 @@ msgstr ""
 
 #: teams/models.py:30 teams/models.py:72
 #: templates/projects/release_detail.html:125
-#: templates/resources/resource.html:132
+#: templates/resources/resource_detail.html:132
 msgid "Language"
 msgstr "言語"
 
@@ -2366,14 +2639,15 @@ msgid "Yes, I'm sure!"
 msgstr "はい、 構いません!"
 
 #: templates/projects/project_detail.html:24
-#: templates/resources/resource.html:77
+#: templates/resources/resource_detail.html:77
 #, fuzzy
 msgid "Private Project"
 msgstr "最新のプロジェクト"
 
 #: templates/projects/project_detail.html:41
 #: templates/projects/release_detail.html:69
-#: templates/resources/resource.html:86 templates/teams/team_detail.html:53
+#: templates/resources/resource_detail.html:86
+#: templates/teams/team_detail.html:53
 msgid "Edit"
 msgstr "編集"
 
@@ -2387,55 +2661,51 @@ msgstr "詳細"
 msgid "Watch:"
 msgstr "監視:"
 
-#: templates/projects/project_detail.html:62
+#: templates/projects/project_detail.html:63
 #: templates/projects/release_detail.html:80
 msgid "Homepage:"
 msgstr "ホームページ:"
 
-#: templates/projects/project_detail.html:63
+#: templates/projects/project_detail.html:64
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "%(project_name)s のホームページ"
 
-#: templates/projects/project_detail.html:68
+#: templates/projects/project_detail.html:69
 msgid "Bug tracker:"
 msgstr "バグトラッカー:"
 
-#: templates/projects/project_detail.html:69
+#: templates/projects/project_detail.html:70
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s のバグトラッカー"
 
-#: templates/projects/project_detail.html:74
+#: templates/projects/project_detail.html:75
 #: templates/projects/project_list.html:58
 msgid "Tags:"
 msgstr "タグ:"
 
-#: templates/projects/project_detail.html:83
+#: templates/projects/project_detail.html:84
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_detail.html:103
-#, fuzzy
-msgid "Number of Languages: "
-msgstr "複数の数"
-
-#: templates/projects/project_detail.html:108
+#: templates/projects/project_detail.html:106
 msgid "External links:"
 msgstr "外部リンク:"
 
-#: templates/projects/project_detail.html:110
+#: templates/projects/project_detail.html:108
 msgid "Screenshots"
 msgstr "スクリーンショット"
 
-#: templates/projects/project_detail.html:126
-#: templates/resources/resource.html:279 templates/teams/team_detail.html:269
+#: templates/projects/project_detail.html:124
+#: templates/resources/resource_detail.html:279
+#: templates/teams/team_detail.html:269
 msgid "History"
 msgstr "履歴"
 
-#: templates/projects/project_detail.html:152
+#: templates/projects/project_detail.html:150
 msgid "Delete project"
 msgstr "プロジェクトの削除"
 
@@ -2459,15 +2729,15 @@ msgstr "%(project_name)s の編集"
 msgid "New project"
 msgstr "プロジェクトの保存"
 
-#: templates/projects/project_form.html:37
+#: templates/projects/project_form.html:38
 msgid "Add the details of your project"
 msgstr ""
 
-#: templates/projects/project_form.html:39
+#: templates/projects/project_form.html:40
 msgid "Edit the details of your project"
 msgstr ""
 
-#: templates/projects/project_form.html:52
+#: templates/projects/project_form.html:51
 msgid "Save project"
 msgstr "プロジェクトの保存"
 
@@ -2642,7 +2912,8 @@ msgstr "翻訳統計値"
 
 #: templates/projects/release_detail.html:126
 #: templates/projects/release_language_detail.html:59
-#: templates/resources/resource.html:133 templates/teams/team_detail.html:138
+#: templates/resources/resource_detail.html:133
+#: templates/teams/team_detail.html:138
 #, fuzzy
 msgid "Completion"
 msgstr "コレクション"
@@ -2652,40 +2923,33 @@ msgstr "コレクション"
 msgid "Last Translation"
 msgstr "翻訳"
 
-#: templates/projects/release_detail.html:132
-#: templates/projects/release_language_detail.html:65
-#: templates/resources/resource.html:139 templates/teams/team_detail.html:145
-#, fuzzy
-msgid "click for translation"
-msgstr "翻訳のサブミット"
-
-#: templates/projects/release_detail.html:140
+#: templates/projects/release_detail.html:141
 #: templates/projects/release_language_detail.html:71
-#: templates/resources/resource.html:149
-#: templates/resources/resource_actions.html:54
+#: templates/resources/resource_actions.html:53
+#: templates/resources/resource_detail.html:150
 #: templates/teams/team_detail.html:152
 #, fuzzy
 msgid "Translated: "
 msgstr "翻訳済み:"
 
-#: templates/projects/release_detail.html:140
+#: templates/projects/release_detail.html:141
 #: templates/projects/release_language_detail.html:71
-#: templates/resources/resource.html:149
-#: templates/resources/resource_actions.html:54
+#: templates/resources/resource_actions.html:53
+#: templates/resources/resource_detail.html:150
 #: templates/teams/team_detail.html:152
 #, fuzzy
 msgid "Untranslated: "
 msgstr "未翻訳:"
 
-#: templates/projects/release_detail.html:160
+#: templates/projects/release_detail.html:161
 #: templates/projects/resource_list.html:94
-#: templates/resources/resource.html:169
+#: templates/resources/resource_detail.html:170
 #: templates/resources/resource_list_more.html:25
 #, fuzzy
 msgid "no translations yet"
 msgstr "翻訳ファイル"
 
-#: templates/projects/release_detail.html:185
+#: templates/projects/release_detail.html:181
 msgid "Delete release"
 msgstr "リリースの削除"
 
@@ -2728,9 +2992,18 @@ msgid_plural "Resources under this Release"
 msgstr[0] ""
 
 #: templates/projects/release_language_detail.html:60
-#: templates/resources/resource.html:134 templates/teams/team_detail.html:139
+#: templates/projects/resource_list.html:69
+#: templates/resources/resource_detail.html:134
+#: templates/teams/team_detail.html:139
 msgid "Last Updated"
 msgstr ""
+
+#: templates/projects/release_language_detail.html:65
+#: templates/resources/resource_detail.html:139
+#: templates/teams/team_detail.html:145
+#, fuzzy
+msgid "click for translation"
+msgstr "翻訳のサブミット"
 
 #: templates/projects/release_language_detail.html:90
 #: templates/teams/team_detail.html:172
@@ -2738,7 +3011,8 @@ msgid "no activity yet"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:109
-#: templates/resources/resource.html:229 templates/teams/team_detail.html:232
+#: templates/resources/resource_detail.html:230
+#: templates/teams/team_detail.html:232
 #, fuzzy
 msgid "Translation Details"
 msgstr "翻訳統計値"
@@ -2772,6 +3046,24 @@ msgstr ""
 msgid "Project Resources"
 msgstr "プロジェクトが削除されました"
 
+#: templates/projects/resource_list.html:68
+#, fuzzy
+msgid "Resource Name"
+msgstr "ソースファイル:"
+
+#: templates/projects/resource_list.html:70
+msgid "Click the flags to modify the importance of a resource."
+msgstr ""
+
+#: templates/projects/resource_list.html:70
+msgid "Importance"
+msgstr ""
+
+#: templates/projects/resource_list.html:77
+#, python-format
+msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
+msgstr ""
+
 #: templates/projects/resource_list.html:80
 #: templates/resources/resource_list_more.html:14
 msgid "edit"
@@ -2782,84 +3074,39 @@ msgstr "編集"
 msgid "del"
 msgstr "削除"
 
+#: templates/projects/resource_list.html:87
+#, python-format
+msgid "Committed by %(last_committer)s"
+msgstr ""
+
+#: templates/projects/resource_list.html:87
+#, fuzzy
+msgid "No committers yet"
+msgstr "Twitter"
+
 #: templates/projects/resource_list.html:122
 #: templates/teams/team_detail.html:239
 #, fuzzy
 msgid "No resources are registered for this project yet."
 msgstr "このプロジェクトに対して登録されたコンポーネントはまだありません。"
 
+#: templates/projects/resource_list.html:130
+#: templates/resources/resource_detail.html:256
+#, fuzzy
+msgid "Select Language"
+msgstr "母国語"
+
 #: templates/projects/resource_list.html:144
 #, fuzzy
 msgid "Translate All"
 msgstr "翻訳済み:"
 
-#: templates/projects/resource_list.html:150
-msgid ""
-"A <em>Resource</em> is mapped to master file and it's translated versions.\n"
-"    For example Resource could be bound to nano.pot and de.po, it.po, fi.po, "
-"etc."
-msgstr ""
-
-#: templates/resources/resource.html:93
-#, fuzzy
-msgid "Translation Resource details"
-msgstr "翻訳統計値"
-
-#: templates/resources/resource.html:96
-#, fuzzy
-msgid "Source Language:"
-msgstr "ソース言語"
-
-#: templates/resources/resource.html:102
-#, fuzzy
-msgid "Number of languages:"
-msgstr "複数の数"
-
-#: templates/resources/resource.html:108
-#, fuzzy
-msgid "Total Strings:"
-msgstr "合計:"
-
-#: templates/resources/resource.html:111
-#, fuzzy
-msgid "words"
-msgstr "パスワード"
-
-#: templates/resources/resource.html:115
-#, fuzzy
-msgid "Accepting Translations?"
-msgstr "翻訳のサブミット"
-
-#: templates/resources/resource.html:127
-#, fuzzy
-msgid "Available translations"
-msgstr "新しい翻訳の追加"
-
-#: templates/resources/resource.html:206 templates/teams/team_detail.html:209
-msgid "Trying to lock resource..."
-msgstr ""
-
-#: templates/resources/resource.html:272
-#, fuzzy
-msgid "Add Translation"
-msgstr "翻訳"
-
-#: templates/resources/resource.html:283
-#, fuzzy
-msgid "No actions recorded yet :)"
-msgstr "履歴の記録はまだありません。"
-
-#: templates/resources/resource.html:300
-#, fuzzy
-msgid "Delete translation resource"
-msgstr "翻訳のサブミット"
-
 #: templates/resources/resource_actions.html:23
 #, python-format
-msgid " Total:&nbsp;%(total_entities)s strings,"
+msgid " Total:&nbsp;%(total_entities)s strings, %(wordcount)s words"
 msgstr ""
 
-#: templates/resources/resource_actions.html:38
+#: templates/resources/resource_actions.html:37
 msgid ""
 " \n"
 "        <span title=\"You cannot translate the source language strings."
@@ -2867,71 +3114,91 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/resources/resource_actions.html:43
-#: templates/resources/resource_actions.html:46
+#: templates/resources/resource_actions.html:42
+#: templates/resources/resource_actions.html:45
 #, fuzzy
 msgid "Translate Now"
 msgstr "翻訳済み:"
 
-#: templates/resources/resource_actions.html:46
+#: templates/resources/resource_actions.html:45
 #, python-format
 msgid "To translate, you need to be a member of the %(lang_name)s team."
 msgstr ""
 
-#: templates/resources/resource_actions.html:62
+#: templates/resources/resource_actions.html:61
 msgid "remaining strings"
 msgstr ""
 
-#: templates/resources/resource_actions.html:70
+#: templates/resources/resource_actions.html:69
 msgid "View strings online"
 msgstr ""
 
-#: templates/resources/resource_actions.html:75
+#: templates/resources/resource_actions.html:73
 #, fuzzy
 msgid "Visit language team"
 msgstr "スタートページに行く"
 
-#: templates/resources/resource_actions.html:83
-#: templates/resources/resource_actions.html:103
-#: templates/resources/resource_actions.html:109
+#: templates/resources/resource_actions.html:79
+#: templates/resources/resource_actions.html:99
+#: templates/resources/resource_actions.html:105
 #, fuzzy
 msgid "Clone to new language"
 msgstr "スタートページに行く"
 
-#: templates/resources/resource_actions.html:120
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:81
+#: templates/resources/resource_actions.html:101
+#: templates/resources/resource_actions.html:107
+msgid ""
+"Copy all the translations from this language to a new (chosen) language in "
+"the specific resource. This will copy the pluralized translations too, if "
+"and only if the two languages have exactly the same plural rules."
+msgstr ""
+
+#: templates/resources/resource_actions.html:115
+#: templates/resources/resource_actions.html:117
 #, fuzzy
 msgid "Download for viewing"
 msgstr "ダウンロード"
 
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:117
 msgid "You must login to be able to download the translations."
 msgstr ""
 
-#: templates/resources/resource_actions.html:130
-#: templates/resources/resource_actions.html:134
+#: templates/resources/resource_actions.html:125
+#, fuzzy
+msgid "Resource cannot be locked"
+msgstr "翻訳済み:"
+
+#: templates/resources/resource_actions.html:125
+#: templates/resources/resource_actions.html:129
 #, fuzzy
 msgid "Download for translation"
 msgstr "ダウンロード"
 
-#: templates/resources/resource_actions.html:134
+#: templates/resources/resource_actions.html:129
 msgid "You must login to use this action"
 msgstr ""
 
-#: templates/resources/resource_actions.html:154
+#: templates/resources/resource_actions.html:132
+msgid ""
+"Lock the file under your ownership and download it locally to edit it, in "
+"one action."
+msgstr ""
+
+#: templates/resources/resource_actions.html:149
 msgid "This resource currently is not accepting translations."
 msgstr ""
 
-#: templates/resources/resource_actions.html:165
+#: templates/resources/resource_actions.html:160
 #, fuzzy
 msgid "Translation last updated "
 msgstr "翻訳ファイルが変更されました"
 
-#: templates/resources/resource_actions.html:167
+#: templates/resources/resource_actions.html:162
 msgid "by"
 msgstr ""
 
-#: templates/resources/resource_actions.html:173
+#: templates/resources/resource_actions.html:168
 #, fuzzy
 msgid "No translation yet"
 msgstr "翻訳ファイル"
@@ -2961,6 +3228,79 @@ msgstr ""
 "\n"
 "  登録されている '%(release_name)s' を本当に永久削除しますか?\n"
 
+#: templates/resources/resource_detail.html:28
+#: templates/resources/resource_detail.html:197
+#, fuzzy
+msgid "Please select a target language first."
+msgstr "送信前に言語を選択して下さい。"
+
+#: templates/resources/resource_detail.html:93
+#, fuzzy
+msgid "Translation Resource details"
+msgstr "翻訳統計値"
+
+#: templates/resources/resource_detail.html:96
+#, fuzzy
+msgid "Source Language:"
+msgstr "ソース言語"
+
+#: templates/resources/resource_detail.html:102
+#, fuzzy
+msgid "Number of languages:"
+msgstr "複数の数"
+
+#: templates/resources/resource_detail.html:108
+#, fuzzy
+msgid "Total Strings:"
+msgstr "合計:"
+
+#: templates/resources/resource_detail.html:111
+#, fuzzy
+msgid "words"
+msgstr "パスワード"
+
+#: templates/resources/resource_detail.html:115
+#, fuzzy
+msgid "Accepting Translations?"
+msgstr "翻訳のサブミット"
+
+#: templates/resources/resource_detail.html:127
+#, fuzzy
+msgid "Available translations"
+msgstr "新しい翻訳の追加"
+
+#: templates/resources/resource_detail.html:145
+#, fuzzy
+msgid "source language"
+msgstr "ソース言語"
+
+#: templates/resources/resource_detail.html:207
+#: templates/teams/team_detail.html:209
+msgid "Trying to lock resource..."
+msgstr ""
+
+#: templates/resources/resource_detail.html:246
+msgid ""
+"If you cannot see your language, click the button below to translate.<span "
+"class=\"note\">( You must belong to a language team of this project, to be "
+"able to translate! )</span>"
+msgstr ""
+
+#: templates/resources/resource_detail.html:272
+#, fuzzy
+msgid "Add Translation"
+msgstr "翻訳"
+
+#: templates/resources/resource_detail.html:283
+#, fuzzy
+msgid "No actions recorded yet :)"
+msgstr "履歴の記録はまだありません。"
+
+#: templates/resources/resource_detail.html:300
+#, fuzzy
+msgid "Delete translation resource"
+msgstr "翻訳のサブミット"
+
 #: templates/resources/resource_form.html:22
 #, fuzzy, python-format
 msgid "Edit %(resource_name)s"
@@ -2971,7 +3311,27 @@ msgstr "%(release_name)s の編集"
 msgid "Edit the details of the translation resource"
 msgstr "翻訳のサブミット"
 
-#: templates/resources/resource_form.html:40
+#: templates/resources/resource_form.html:41
+msgid ""
+"\n"
+"\t<div class=\"message\">\n"
+"\t\t<p>To enable automatic \"fetching\" of your source language strings by\n"
+"\t\tTransifex, enter a URL to your source file (e.g. POT file). Refer to \n"
+"\t\t<a href=\"http://help.transifex.net/user-guide/projects.html#projects-"
+"and-resources\">the documentation</a> \n"
+"\t\tfor more information.</p>\n"
+"\n"
+"\t\t<p><b>Warning</b>: Transifex will overwrite the existing source strings\n"
+"\t\tand translations with the ones found in the linked file. This may lead\n"
+"\t\tto <b>loss of translations</b>, so make sure the URL links to the\n"
+"\t\tcorrect file before submitting the form.\n"
+"\t\t</p> \n"
+"\t\t</blink>\n"
+"\t</div>\n"
+"\t"
+msgstr ""
+
+#: templates/resources/resource_form.html:57
 #, fuzzy
 msgid "Save translation resource"
 msgstr "翻訳のサブミット"
@@ -3012,20 +3372,34 @@ msgstr ""
 msgid "Extracting strings from '%(resource_name)s'. This might take a while..."
 msgstr ""
 
+#: templates/resources/upload_create_resource_form.html:44
+#, fuzzy
+msgid "Create New Resource"
+msgstr "アカウントの作成"
+
 #: templates/resources/upload_create_resource_form.html:51
 msgid "Create resource to be translated"
 msgstr ""
 
-#: templates/resources/upload_create_resource_form.html:53
+#: templates/resources/upload_create_resource_form.html:54
 msgid ""
-"Upload a local file to be used as the source file of the resource. It's "
-"equivalent to the POT file for the GNU's gettext method."
+"\n"
+"  Create a resource by selecting a source language and uploading a source "
+"translation file from your workstation, such as an English POT file.\n"
+"  Transifex will analyze the file, extract the strings from inside it, and "
+"create your resource based on these.\n"
+"  "
 msgstr ""
 
-#: templates/resources/upload_create_resource_form.html:60
+#: templates/resources/upload_create_resource_form.html:89
 #, fuzzy
 msgid "Create Resource"
 msgstr "アカウントの作成"
+
+#: templates/resources/upload_resource_translation_button.html:7
+#, fuzzy
+msgid "Translate Online"
+msgstr "翻訳済み:"
 
 #: templates/resources/upload_resource_translation_button.html:21
 msgid "Adding translations. This might take a while..."
@@ -4204,6 +4578,14 @@ msgstr "権限を削除しました。"
 msgid "You removed the permission request."
 msgstr "権限リクエストを削除しました。"
 
+#, fuzzy
+#~ msgid "Couldn't lock file."
+#~ msgstr "ファイルをアップロードするターゲットを入力してください。"
+
+#, fuzzy
+#~ msgid "Number of Languages: "
+#~ msgstr "複数の数"
+
 #~ msgid "Fuzzy:"
 #~ msgstr "ファジー:"
 
@@ -4355,14 +4737,6 @@ msgstr "権限リクエストを削除しました。"
 
 #~ msgid "Enter a commit message"
 #~ msgstr "コミットのメッセージを入力"
-
-#, fuzzy
-#~ msgid ""
-#~ "You need to be in the '%s' team of this project for being able to send "
-#~ "translations to that file target."
-#~ msgstr ""
-#~ "指定ファイルに翻訳内容を送信するにはこのプロジェクトの '%s' チームに所属し"
-#~ "ていなければなりません。"
 
 #~ msgid "Sorry, your file could not be sent because of an error."
 #~ msgstr "残念ながらエラーが原因でファイルを送信できませんでした。"
@@ -4618,10 +4992,6 @@ msgstr "権限リクエストを削除しました。"
 #~ msgid "Send a new translation for this component."
 #~ msgstr "このコンポーネントの新しい翻訳を送信します。"
 
-#, fuzzy
-#~ msgid "The translation file to be uploaded for the new language."
-#~ msgstr "アップロードする新しい言語の翻訳ファイルです。"
-
 #~ msgid "Select the target file:"
 #~ msgstr "ターゲットファイルを選択する:"
 
@@ -4667,9 +5037,6 @@ msgstr "権限リクエストを削除しました。"
 #, fuzzy
 #~ msgid "Click here to show or hide the component list"
 #~ msgstr "ここをクリックしてソースファイルを表示するまたは非表示にします"
-
-#~ msgid "No translations added for this release. :-("
-#~ msgstr "このリリースに追加された翻訳はありません。 :-("
 
 #, fuzzy
 #~ msgid "Project/Component Statistics"
@@ -4773,14 +5140,6 @@ msgstr "権限リクエストを削除しました。"
 #~ msgid "Fuzzy"
 #~ msgstr "ファジー:"
 
-#, fuzzy
-#~ msgid "Untranslated"
-#~ msgstr "未翻訳:"
-
-#, fuzzy
-#~ msgid "Total"
-#~ msgstr "合計:"
-
 #~ msgid "#"
 #~ msgstr "#"
 
@@ -4792,10 +5151,6 @@ msgstr "権限リクエストを削除しました。"
 
 #~ msgid "Submit translations"
 #~ msgstr "翻訳のサブミット"
-
-#, fuzzy
-#~ msgid "Copy source string"
-#~ msgstr "ソースの文字列"
 
 #~ msgid "Auto-suggest translation"
 #~ msgstr "自動提案の翻訳"
@@ -4978,12 +5333,6 @@ msgstr "権限リクエストを削除しました。"
 #, fuzzy
 #~ msgid "The %s fields should be filled."
 #~ msgstr "%s は削除されました。"
-
-#~ msgid "Previous"
-#~ msgstr "前へ"
-
-#~ msgid "Next"
-#~ msgstr "次へ"
 
 #~ msgid "Request closed as Rejected."
 #~ msgstr "リクエストは拒否されました。"
@@ -5183,9 +5532,6 @@ msgstr "権限リクエストを削除しました。"
 
 #~ msgid "Kirgyz"
 #~ msgstr "キルギス語"
-
-#~ msgid "Latin"
-#~ msgstr "ラテン語"
 
 #~ msgid "Lao"
 #~ msgstr "ラオ語"
