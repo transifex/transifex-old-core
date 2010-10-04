@@ -20,8 +20,7 @@
       {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
-             {% blocktrans with stats.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings,{% endblocktrans %}
-        {{ wordcount }} words
+             {% blocktrans with stats.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}
     </div>
   </div>
   <div class="first_level">
@@ -79,7 +78,7 @@
               <span class="i16 clone">
                 <a class="language_chooser_trigger" href="#" >{% trans "Clone to new language" %}</a>
               </span>
-              <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+              <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
               <div class="language_chooser" style="visibility:hidden;margin-top:4px">
                 <select style="margin-left:24px">
                   <option value="" selected="selected">---------</option>
@@ -93,19 +92,19 @@
                   {% endfor %}
                 {% endif %}
                 </select>
-                <a class="i16 action buttonized">Go</a>
+                <a class="i16 action buttonized">{% trans "Go" %}</a>
               </div>
               {% else %}
                 <span class="i16 clone">
                   <a class="language_chooser_trigger disabled">{% trans "Clone to new language" %}</a>
                 </span>
-                <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+                <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
               {% endif %}
             {% else %}
               <span class="i16 clone">
                 <a class="language_chooser_trigger disabled">{% trans "Clone to new language" %}</a>
               </span>
-              <span class="tipsy_enable" title="Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." style="border:0">(?)</span>
+              <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
             {% endif %}
           </li>
         </ul>
@@ -123,14 +122,14 @@
           <li>
             {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock">
-              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="Resource cannot be locked" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
+              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="{% trans "Resource cannot be locked" %}" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
             </span>
             {% else %}
             <span id="download_for_translation" class="i16 lock">
               <a class="disabled" title='{% trans "You must login to use this action" %}'>{% trans "Download for translation" %}</a>
             </span>
             {% endif %}
-            <span class="tipsy_enable" title="Lock the file under your ownership and download it locally to edit it, in one action." style="border:0">(?)</span>
+            <span class="tipsy_enable" title="{% trans "Lock the file under your ownership and download it locally to edit it, in one action." %}" style="border:0">(?)</span>
             <div class="error_notes"></div>
           </li>
           <li>

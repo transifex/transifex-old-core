@@ -33,6 +33,23 @@
     $(document).ready(function(){
 
         oTable = $('#stringset_table').dataTable({
+            "oLanguage": {
+                "sProcessing":   '{% trans "Processing..." %}',
+                "sLengthMenu":   '{% trans "Show _MENU_ entries" %}',
+                "sZeroRecords":  '{% trans "No matching records found" %}',
+                "sInfo":         '{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}',
+                "sInfoEmpty":    '{% trans "Showing 0 to 0 of 0 entries" %}',
+                "sInfoFiltered": '{% trans "(filtered from _MAX_ total entries)" %}',
+                "sInfoPostFix":  "",
+                "sSearch":       '{% trans "Search:" %}',
+                "sUrl":          "",
+                "oPaginate": {
+                        "sFirst":    '{% trans "First" %}',
+                        "sPrevious": '{% trans "Previous" %}',
+                        "sNext":     '{% trans "Next" %}',
+                        "sLast":     '{% trans "Last" %}'
+                }
+            },
             "bJQueryUI": false,
             "sPaginationType": "full_numbers",
             "aaSorting": [[ 0, "asc" ]],
@@ -95,7 +112,7 @@
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
-              $("div#notification-container div").html("Loading strings...");
+              $("div#notification-container div").html('{% trans "Loading strings..." %}');
               $("div#notification-container").fadeIn("slow");
               if ( filter_var) {
                 aoData.push( { "name" : "filters", "value": filter_var});
@@ -157,7 +174,7 @@
   <input id="filter_entries" type="hidden" name="filter_entries"/>
   {% with untranslated_strings|add:translated_strings as total_strings %}
   <tr>
-    <th class="translated">Translated</th>
+    <th class="translated">{% trans "Translated" %}</th>
 
       <td id="total_translated">{{ translated_strings }}</td>
       <td id="total_translated_perc">?</td>
@@ -165,14 +182,14 @@
   </tr>
 
   <tr>
-    <th class="untranslated">Untranslated</th>
+    <th class="untranslated">{% trans "Untranslated" %}</th>
       <td id="total_untranslated">{{ untranslated_strings }} </td>
       <td id="total_untranslated_perc">?</td>
 
       <td><input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/></td>
   </tr>
   <tr class="last">
-    <th>Total</th>
+    <th>{% trans "Total" %}</th>
       <td id="total_sum">{{ total_strings }}</td>
   </tr>
   {% endwith %}

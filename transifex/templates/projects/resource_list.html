@@ -65,16 +65,16 @@
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
   <thead>
    <tr>
-    <th><span class="i16 tag">Resource Name</span</th>
-    <th><span class="i16 clock">Last Updated</span></th>
-    <th><span {% if is_maintainer %}class="res_tipsy_enable" title="Click the flags to modify the importance of a resource." style="border:0" {% endif %}>Importance</span></th>
+    <th><span class="i16 tag">{% trans "Resource Name" %}</span</th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+    <th><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" style="border:0" {% endif %}>{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>
   {% endif %}
     <tr>
         <td>
-          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="Total Strings: {{ stat.total_entities }}<br/>Available Languages: {{ stat.available_languages|length }}">{{ stat.object.name }}</a>
+          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.total_entities as ts and stat.available_languages|length as al %}Total Strings: {{ ts }}<br/>Available Languages: {{ al }}{% endblocktrans %}">{{ stat.object.name }}</a>
           <sup class="entry_metalink">
              {% if is_maintainer or request.user.is_superuser %}
                <a href="{% url resource_edit project.slug stat.object.slug %}">{% trans "edit" %}</a>
@@ -84,7 +84,7 @@
         </td>
         <td class="last_updated">
           {% with stat.last_committer as last_committer %}
-            <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}Committed by {{ last_committer }}<br/>{% else %}No committers yet{% endif %}">
+            <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
           {% endwith %}
           {% with stat.last_update as last_update %}
             {% if last_update %}
@@ -127,7 +127,7 @@
   {% if can_submit_translation or request.user.is_superuser %}
   <div id="new_translation_box1">
       <select name="translation_languages" class="language">
-          <option value="">Select Language</option>
+          <option value="">{% trans "Select Language" %}</option>
           {% if is_maintainer or request.user.is_superuser %}
             {% for language in languages %}
                 <option value="{{ language.code }}">{{ language.name }}</option>

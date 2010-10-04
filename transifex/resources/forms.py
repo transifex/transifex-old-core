@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from languages.models import Language
 from storage.fields import StorageFileField
 from storage.models import StorageFile
