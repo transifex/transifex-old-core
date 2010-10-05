@@ -7,12 +7,18 @@ from projects.models import Project
 from resources.models import Resource
 from resources.stats import ResourceStatsList
 from txcommon.context_processors import site_url_prefix_processor
+from txcommon.utils import key_sort
 
 # For interactive charts:
 import gviz_api
 
 # For image charts:
 from pygooglechart import StackedHorizontalBarChart, Axis
+
+NUM_LANGS = 14
+
+def get_sorted_stats(obj):
+    return key_sort(list(obj.language_stats()), '-num_translated')[:NUM_LANGS]
 
 def get_image_url(obj):
     """
@@ -25,11 +31,11 @@ def get_image_url(obj):
     labels_left = []
     labels_right = []
 
-    for language in obj.available_languages:
-        stat = obj.stat(language)
+    stats = get_sorted_stats(obj)
+    for stat in stats:
         t = stat.trans_percent
         trans.append(t)
-        labels_left.append(language.name)
+        labels_left.append(stat.language.name)
         labels_right.append("%s%%" % t)
 
     labels_left.reverse()
@@ -37,7 +43,7 @@ def get_image_url(obj):
 
     chart = StackedHorizontalBarChart(
         width = 350,
-        height = 14 + 13 * len(obj.available_languages),
+        height = 14 + 13 * len(stats),
         x_range=(0, 100))
     chart.set_bar_width(9)
     chart.set_colours(['78dc7d', 'dae1ee', 'efefef']) # Green, dark gray, light gray
@@ -53,16 +59,14 @@ def get_gviz_json(obj):
     description = { "lang": ("string", "Language"),
                     "trans": ("number", "Translated")}
     data = []
-    for language in obj.available_languages:
-        stat = obj.stat(language)
+    for stat in get_sorted_stats(obj):
         trans = stat.trans_percent
         data.append({
-            "lang": language.name,
+            "lang": stat.language.name,
             "trans": trans})
     data_table = gviz_api.DataTable(description)
     data_table.LoadData(data)
-    return data_table.ToJSonResponse(         
-        columns_order=("lang", "trans"))
+    return data_table.ToJSonResponse(columns_order=("lang", "trans"))
 
 def chart_resource_image(request, project_slug, resource_slug):
 
