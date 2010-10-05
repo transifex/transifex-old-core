@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-04 19:53+0000\n"
+"POT-Creation-Date: 2010-10-05 13:32+0000\n"
 "PO-Revision-Date: 2009-07-19 20:38+0200\n"
 "Last-Translator: Harald Servat <redcrash@gmail.com>\n"
 "Language-Team: Catalan <fedora@softcatala.net>\n"
@@ -78,9 +78,9 @@ msgid "DATETIME_FORMAT"
 msgstr "DATETIME_FORMAT"
 
 #: actionlog/templates/object_action_list.html:22
-#: templates/projects/project_detail.html:128
-msgid "No history recorded yet."
-msgstr "Encara no s'ha registrat cap historial."
+#, fuzzy
+msgid "No changes."
+msgstr "La contrasenya ha canviat."
 
 #: addons/autofetch/models.py:15
 #, fuzzy
@@ -89,18 +89,19 @@ msgstr "Fitxer font:"
 
 #: addons/autofetch/models.py:17
 msgid ""
-"A URL pointing to the source file of this resource which can be used for "
-"auto updating."
+"A URL pointing to the source file of this resource to be used for automatic "
+"updates."
 msgstr ""
 
 #: addons/autofetch/models.py:19
-msgid "Auto update source file"
-msgstr ""
+#, fuzzy
+msgid "Automatically update source file"
+msgstr "Afegiu un fitxer de traducció"
 
 #: addons/autofetch/models.py:20
 msgid ""
-"A boolean field representing whether we should periodically pull and merge "
-"the source file for the given URL."
+"A boolean field indicating whether the file should be automatically updated "
+"by pulling and merging from the given URL."
 msgstr ""
 
 #: addons/autofetch/models.py:25 resources/models.py:164
@@ -145,7 +146,7 @@ msgstr "Carregant..."
 #: addons/charts/templates/charts/widget_snippet.html:68
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, and email."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:69
@@ -222,12 +223,13 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expiring"
-msgstr ""
+#, fuzzy
+msgid "Lock expiration"
+msgstr "Ubicació"
 
 #: addons/locks/notifications.py:16
 #, fuzzy
-msgid "when a lock for translation resource is expiring"
+msgid "when a lock for a translation resource will expire"
 msgstr "quan es modifica un equip de traducció d'un projecte"
 
 #: addons/locks/views.py:43
@@ -253,13 +255,16 @@ msgid "Unlock failed. Lock doesn't exist."
 msgstr ""
 
 #: addons/locks/templates/lock_resource_action.html:17
-msgid "This translation has been locked by you."
-msgstr ""
+#, fuzzy
+msgid "You locked this translation."
+msgstr "Veure els equips de traducció."
 
 #: addons/locks/templates/lock_resource_action.html:19
-#, python-format
-msgid "This translation has been locked by user '%(owner)s'."
+#, fuzzy, python-format
+msgid "User '%(owner)s' locked this translation."
 msgstr ""
+"Aquest fitxer està blocat per l'usuari '%(owner)s', això indica que ell hi "
+"està treballant."
 
 #: addons/locks/templates/lock_resource_action.html:21
 #, python-format
@@ -290,7 +295,7 @@ msgstr "Bloca aquest fitxer per a avisar als altres que hi esteu treballant."
 #: addons/locks/templates/lock_resource_action.html:42
 #, fuzzy
 msgid ""
-"This translation is unlocked. Most likely no one is working on it right now."
+"This translation isn't locked. Most likely no one is working on it right now."
 msgstr ""
 "Aquest fitxer està desblocat. Problablement ningú hi està treballant "
 "actualment."
@@ -308,12 +313,15 @@ msgid "Extending lock..."
 msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:19
-#, python-format
-msgid "This file is locked by user '%(owner)s'."
+#, fuzzy, python-format
+msgid "User '%(owner)s' locked this file."
 msgstr ""
+"Aquest fitxer està blocat per l'usuari '%(owner)s', això indica que ell hi "
+"està treballant."
 
 #: addons/locks/templates/pofile_lock.html:21
-msgid "Click on it to unlock the file."
+#, fuzzy
+msgid "Click file to unlock."
 msgstr "Feu-hi click per a desbloquejar el fitxer."
 
 #: addons/locks/templates/pofile_lock.html:23
@@ -328,7 +336,7 @@ msgstr "Bloca aquest fitxer per a avisar als altres que hi esteu treballant."
 
 #: addons/locks/templates/pofile_lock.html:46
 #, fuzzy
-msgid "This file is unlocked. Most likely no one is working on it right now."
+msgid "This file isn't locked. Most likely no one is working on it right now."
 msgstr ""
 "Aquest fitxer està desblocat. Problablement ningú hi està treballant "
 "actualment."
@@ -349,9 +357,9 @@ msgstr ""
 
 #: addons/lotte/views.py:88
 msgid ""
-"The source language cannot be edited, cause this would result in translation "
-"mismatching! If you want to update the source strings consider using the "
-"command line client of transifex."
+"The source language cannot be edited, because this would result in "
+"translation mismatching! If you want to update the source strings consider "
+"using the command line client of transifex."
 msgstr ""
 
 #: addons/lotte/views.py:351
@@ -373,8 +381,8 @@ msgstr "Aquest equip no usa equips de traducció"
 
 #: addons/lotte/views.py:513
 msgid ""
-"All the plural translations must be filled in, or left empty, in order to be "
-"saved!"
+"Cannot save unless plural translations are either completely filled or "
+"entirely empty!"
 msgstr ""
 
 #: addons/lotte/views.py:539
@@ -393,7 +401,7 @@ msgstr "Fitxers de traducció"
 
 #: addons/lotte/views.py:559
 #, fuzzy
-msgid "Error occured on translation saving procedure."
+msgid "Error occurred while trying to save translation."
 msgstr "Afegiu un fitxer de traducció"
 
 #: addons/lotte/templates/filters_menu_resources.html:16
@@ -437,8 +445,8 @@ msgid "Description:"
 msgstr "Descripció"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#, fuzzy
-msgid "Occurences"
+#: resources/models.py:142
+msgid "Occurrences"
 msgstr "Ocurrències"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
@@ -489,8 +497,9 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:105
 #: addons/lotte/templates/view_strings.html:41
-msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+#, fuzzy
+msgid "Nothing to show"
+msgstr "Sotho septentrional"
 
 #: addons/lotte/templates/translate.html:106
 #: addons/lotte/templates/view_strings.html:42
@@ -600,28 +609,26 @@ msgid "Loading strings..."
 msgstr "Carregant..."
 
 #: addons/lotte/templates/translate.html:387
-msgid "Auto-save translation text has been enabled"
+msgid "Translation text will be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:391
-msgid "Auto-save translation text has been disabled"
+msgid "Translation text will no longer be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:409
-#, fuzzy
-msgid "No translations to delete in this page!"
-msgstr "No s'han afegit traduccions per a aquesta versió. :-("
+msgid "This page does not have any translations (to delete)!"
+msgstr ""
 
 #: addons/lotte/templates/translate.html:410
 msgid ""
 "This action will delete all '+ to_delete.length +' translations in this "
-"page? Are you sure, you want to proceed?"
+"page. Are you sure you want to proceed?"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:580
 msgid ""
-"Search in Transifex memory for existing translations (opens up in new tab/"
-"window)"
+"Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:581
@@ -631,7 +638,7 @@ msgstr "Refusar traducció"
 
 #: addons/lotte/templates/translate.html:590
 #, fuzzy
-msgid "Show translations of<br /> the chosen languages"
+msgid "Show translations in<br /> the selected languages"
 msgstr "El fitxer de traducció d'idiomes per a enviar."
 
 #: addons/lotte/templates/translate.html:593
@@ -640,8 +647,9 @@ msgid "More languages"
 msgstr "Idioma font"
 
 #: addons/lotte/templates/translate.html:598
-msgid "Show only the translations<br />of the chosen users"
-msgstr ""
+#, fuzzy
+msgid "Show only the translations<br /> by the selected users"
+msgstr "El fitxer de traducció d'idiomes per a enviar."
 
 #: addons/lotte/templates/translate.html:601
 #, fuzzy
@@ -649,7 +657,7 @@ msgid "Filter by users"
 msgstr "Resultats del filtre"
 
 #: addons/lotte/templates/translate.html:607
-msgid "Show only the strings which<br />belong to checked resources."
+msgid "Show only the strings from<br /> the selected resources."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:610
@@ -720,7 +728,7 @@ msgstr "Traducció automàtica"
 
 #: addons/priorities/models.py:19
 #, fuzzy
-msgid "The resource which owns this priority instance."
+msgid "The resource associated with this priority."
 msgstr "L'usuari que és propietari aquest projecte."
 
 #: addons/priorities/models.py:20
@@ -769,7 +777,7 @@ msgstr "Puntuació"
 
 #: addons/suggestions/models.py:25
 msgid ""
-"A value which indicates the relevance of this suggestionto the translation "
+"A value which indicates the relevance of this suggestion to the translation "
 "of the source string."
 msgstr ""
 
@@ -779,17 +787,19 @@ msgid "Source Entity"
 msgstr "Cadena original"
 
 #: addons/suggestions/models.py:36
-msgid "The source entity which is being translated by thissuggestion instance."
-msgstr ""
+#, fuzzy
+msgid "The source entity this suggestion instance translates or affects."
+msgstr "Aquest equip no usa equips de traducció"
 
-#: addons/suggestions/models.py:40 resources/models.py:274
+#: addons/suggestions/models.py:40 resources/models.py:273
 #, fuzzy
 msgid "Target Language"
 msgstr "Idioma matern"
 
-#: addons/suggestions/models.py:41
+#: addons/suggestions/models.py:41 resources/models.py:274
+#: storage/models.py:33
 #, fuzzy
-msgid "The language in which this suggestion string belongs to."
+msgid "The language in which this translation string is written."
 msgstr "El projecte al qual pertany aquest equip."
 
 #: addons/suggestions/models.py:45
@@ -808,12 +818,12 @@ msgstr "Resolució"
 
 #: addons/suggestions/models.py:108
 #, fuzzy
-msgid "The suggestion which is being voted."
+msgid "The suggestion about which the user is voting."
 msgstr "El projecte al qual pertany aquest equip."
 
 #: addons/suggestions/models.py:112
 #, fuzzy
-msgid "The user who voted the specific suggestion."
+msgid "The user who voted for the specific suggestion."
 msgstr "L'usuari que és propietari aquest projecte."
 
 #: addons/suggestions/models.py:123
@@ -1630,7 +1640,7 @@ msgstr ""
 
 #: resources/models.py:82
 #, fuzzy
-msgid "The project the translation resource belongs to."
+msgid "The project containing the translation resource."
 msgstr "El projecte al qual pertany aquest equip."
 
 #: resources/models.py:95
@@ -1668,10 +1678,6 @@ msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
-
-#: resources/models.py:142
-msgid "Occurrences"
-msgstr "Ocurrències"
 
 #: resources/models.py:144
 msgid "The occurrences of the source string in the project code."
@@ -1730,50 +1736,44 @@ msgid ""
 msgstr ""
 
 #: resources/models.py:270
-msgid ""
-"The source string which is being translated by thistranslation string "
-"instance."
-msgstr ""
-
-#: resources/models.py:275 storage/models.py:33
 #, fuzzy
-msgid "The language in which this translation string belongs to."
+msgid "The source string this translation string translates."
 msgstr "El projecte al qual pertany aquest equip."
 
-#: resources/models.py:278
+#: resources/models.py:277
 #, fuzzy
 msgid "Committer"
 msgstr "Twitter"
 
-#: resources/models.py:279
+#: resources/models.py:278
 msgid "The user who committed the specific translation."
 msgstr ""
 
-#: resources/models.py:289
+#: resources/models.py:288
 #, fuzzy
 msgid "translation string"
 msgstr "Fitxers de traducció"
 
-#: resources/models.py:290
+#: resources/models.py:289
 #, fuzzy
 msgid "translation strings"
 msgstr "Fitxers de traducció"
 
-#: resources/models.py:323
+#: resources/models.py:322
 msgid "This is the actual content of the template"
 msgstr ""
 
-#: resources/models.py:327
+#: resources/models.py:326
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:331
+#: resources/models.py:330
 msgid "Template"
 msgstr ""
 
-#: resources/models.py:332
+#: resources/models.py:331
 msgid "Templates"
 msgstr ""
 
@@ -1857,7 +1857,7 @@ msgstr ""
 
 #: storage/models.py:42
 msgid ""
-"Wether this file is bound to a project/translation resource, otherwise show "
+"Whether this file is bound to a project/translation resource, otherwise show "
 "in the upload box"
 msgstr ""
 
@@ -1906,7 +1906,8 @@ msgstr ""
 "Elimineu-lo d'una de les dues llistes."
 
 #: teams/models.py:29 teams/models.py:71
-msgid "The project which this team belongs to."
+#, fuzzy
+msgid "The project this team works on."
 msgstr "El projecte al qual pertany aquest equip."
 
 #: teams/models.py:30 teams/models.py:72
@@ -2743,6 +2744,10 @@ msgstr "Captures de pantalla"
 msgid "History"
 msgstr "Historial"
 
+#: templates/projects/project_detail.html:128
+msgid "No history recorded yet."
+msgstr "Encara no s'ha registrat cap historial."
+
 #: templates/projects/project_detail.html:150
 msgid "Delete project"
 msgstr "Suprimeix el projecte"
@@ -2913,7 +2918,7 @@ msgstr "Voleu suprmir <em>%(release_name)s</em>?"
 #, fuzzy, python-format
 msgid ""
 "Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?"
+"which works on %(project_name)s?"
 msgstr ""
 "\n"
 "  Segur que voleu suprimir permanentment el component la versió '%"
@@ -2938,7 +2943,7 @@ msgstr "Feu clic aquí per a mostrar o ocultar els fitxers font"
 
 #: templates/projects/release_detail.html:103
 #, fuzzy, python-format
-msgid "This release has %(resources_number)s resourses."
+msgid "This release has %(resources_number)s resources."
 msgstr "El component té %(sources_number)s fitxers font"
 
 #: templates/projects/release_detail.html:119
@@ -3519,7 +3524,7 @@ msgstr "Voleu dir adeu a l'equip <em>%(lang_name)s</em>?"
 #, fuzzy, python-format
 msgid ""
 "Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?"
+"works on %(project_name)s?"
 msgstr ""
 "\n"
 " Esteu segurs que voleu eliminar l'equip '%(lang_name)s' que pertany al "
@@ -4616,6 +4621,22 @@ msgid "You removed the permission request."
 msgstr "Heu eliminat la petició de permís."
 
 #, fuzzy
+#~ msgid "Error occured on translation saving procedure."
+#~ msgstr "Afegiu un fitxer de traducció"
+
+#, fuzzy
+#~ msgid "Occurences"
+#~ msgstr "Ocurrències"
+
+#, fuzzy
+#~ msgid "No translations to delete in this page!"
+#~ msgstr "No s'han afegit traduccions per a aquesta versió. :-("
+
+#, fuzzy
+#~ msgid "The language in which this suggestion string belongs to."
+#~ msgstr "El projecte al qual pertany aquest equip."
+
+#, fuzzy
 #~ msgid "Couldn't lock file."
 #~ msgstr "Feu-hi click per a desbloquejar el fitxer."
 
@@ -5702,9 +5723,6 @@ msgstr "Heu eliminat la petició de permís."
 #~ msgid "Norwegian"
 #~ msgstr "Noruec"
 
-#~ msgid "Northern Sotho"
-#~ msgstr "Sotho septentrional"
-
 #~ msgid "Oriya"
 #~ msgstr "Oriya"
 
@@ -5834,12 +5852,6 @@ msgstr "Heu eliminat la petició de permís."
 
 #~ msgid "Unlock this file when you are finished working with it."
 #~ msgstr "Desbloqueu aquest fitxer quan hagueu acabat de treballar amb ell."
-
-#~ msgid ""
-#~ "User '%(owner)s' has locked this file indicating he's working with it."
-#~ msgstr ""
-#~ "Aquest fitxer està blocat per l'usuari '%(owner)s', això indica que ell "
-#~ "hi està treballant."
 
 #~ msgid "%(site_name)s: %(language)s :: %(release)s release"
 #~ msgstr "%(site_name)s: %(language)s :: versió %(release)s"

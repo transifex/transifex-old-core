@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-04 19:52+0000\n"
+"POT-Creation-Date: 2010-10-05 13:31+0000\n"
 "PO-Revision-Date: 2009-12-19 08:57+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -61,10 +61,9 @@ msgid "DATETIME_FORMAT"
 msgstr "DATETIME_FORMAT"
 
 #: actionlog/templates/object_action_list.html:22
-#: templates/projects/project_detail.html:128
 #, fuzzy
-msgid "No history recorded yet."
-msgstr "Ingenting här ännu."
+msgid "No changes."
+msgstr "Lösenord:"
 
 #: addons/autofetch/models.py:15
 #, fuzzy
@@ -73,18 +72,19 @@ msgstr "Lokal fil"
 
 #: addons/autofetch/models.py:17
 msgid ""
-"A URL pointing to the source file of this resource which can be used for "
-"auto updating."
+"A URL pointing to the source file of this resource to be used for automatic "
+"updates."
 msgstr ""
 
 #: addons/autofetch/models.py:19
-msgid "Auto update source file"
-msgstr ""
+#, fuzzy
+msgid "Automatically update source file"
+msgstr "Lägg till en översättningsfil"
 
 #: addons/autofetch/models.py:20
 msgid ""
-"A boolean field representing whether we should periodically pull and merge "
-"the source file for the given URL."
+"A boolean field indicating whether the file should be automatically updated "
+"by pulling and merging from the given URL."
 msgstr ""
 
 #: addons/autofetch/models.py:25 resources/models.py:164
@@ -129,7 +129,7 @@ msgstr "Läser in..."
 #: addons/charts/templates/charts/widget_snippet.html:68
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, and email."
 msgstr ""
 
 #: addons/charts/templates/charts/widget_snippet.html:69
@@ -206,12 +206,14 @@ msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr ""
 
 #: addons/locks/notifications.py:15
-msgid "Lock is expiring"
-msgstr ""
+#, fuzzy
+msgid "Lock expiration"
+msgstr "Plats"
 
 #: addons/locks/notifications.py:16
-msgid "when a lock for translation resource is expiring"
-msgstr ""
+#, fuzzy
+msgid "when a lock for a translation resource will expire"
+msgstr "Skicka in översättningar"
 
 #: addons/locks/views.py:43
 #, fuzzy
@@ -236,12 +238,13 @@ msgid "Unlock failed. Lock doesn't exist."
 msgstr ""
 
 #: addons/locks/templates/lock_resource_action.html:17
-msgid "This translation has been locked by you."
-msgstr ""
+#, fuzzy
+msgid "You locked this translation."
+msgstr "Skicka in översättningar"
 
 #: addons/locks/templates/lock_resource_action.html:19
 #, python-format
-msgid "This translation has been locked by user '%(owner)s'."
+msgid "User '%(owner)s' locked this translation."
 msgstr ""
 
 #: addons/locks/templates/lock_resource_action.html:21
@@ -270,9 +273,10 @@ msgid "Lock this translation to notify others you're working with it."
 msgstr ""
 
 #: addons/locks/templates/lock_resource_action.html:42
+#, fuzzy
 msgid ""
-"This translation is unlocked. Most likely no one is working on it right now."
-msgstr ""
+"This translation isn't locked. Most likely no one is working on it right now."
+msgstr "när ett projekt tas bort"
 
 #: addons/locks/templates/lock_resource_action.html:56
 msgid "Creating lock..."
@@ -288,12 +292,12 @@ msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:19
 #, python-format
-msgid "This file is locked by user '%(owner)s'."
+msgid "User '%(owner)s' locked this file."
 msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:21
 #, fuzzy
-msgid "Click on it to unlock the file."
+msgid "Click file to unlock."
 msgstr "Välj ett mål att ladda upp filen till"
 
 #: addons/locks/templates/pofile_lock.html:23
@@ -306,7 +310,7 @@ msgid ""
 msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:46
-msgid "This file is unlocked. Most likely no one is working on it right now."
+msgid "This file isn't locked. Most likely no one is working on it right now."
 msgstr ""
 
 #: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
@@ -325,9 +329,9 @@ msgstr ""
 
 #: addons/lotte/views.py:88
 msgid ""
-"The source language cannot be edited, cause this would result in translation "
-"mismatching! If you want to update the source strings consider using the "
-"command line client of transifex."
+"The source language cannot be edited, because this would result in "
+"translation mismatching! If you want to update the source strings consider "
+"using the command line client of transifex."
 msgstr ""
 
 #: addons/lotte/views.py:351
@@ -349,8 +353,8 @@ msgstr "Här är en lista på de förråd som vi hanterar översättningar för.
 
 #: addons/lotte/views.py:513
 msgid ""
-"All the plural translations must be filled in, or left empty, in order to be "
-"saved!"
+"Cannot save unless plural translations are either completely filled or "
+"entirely empty!"
 msgstr ""
 
 #: addons/lotte/views.py:539
@@ -369,7 +373,7 @@ msgstr "översättningsfiler"
 
 #: addons/lotte/views.py:559
 #, fuzzy
-msgid "Error occured on translation saving procedure."
+msgid "Error occurred while trying to save translation."
 msgstr "Lägg till en översättningsfil"
 
 #: addons/lotte/templates/filters_menu_resources.html:16
@@ -412,8 +416,9 @@ msgid "Description:"
 msgstr "Beskrivning"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
+#: resources/models.py:142
 #, fuzzy
-msgid "Occurences"
+msgid "Occurrences"
 msgstr "Förekomster"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
@@ -464,8 +469,9 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:105
 #: addons/lotte/templates/view_strings.html:41
-msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+#, fuzzy
+msgid "Nothing to show"
+msgstr "Sepedi"
 
 #: addons/lotte/templates/translate.html:106
 #: addons/lotte/templates/view_strings.html:42
@@ -575,27 +581,26 @@ msgid "Loading strings..."
 msgstr "Läser in..."
 
 #: addons/lotte/templates/translate.html:387
-msgid "Auto-save translation text has been enabled"
+msgid "Translation text will be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:391
-msgid "Auto-save translation text has been disabled"
+msgid "Translation text will no longer be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:409
-msgid "No translations to delete in this page!"
+msgid "This page does not have any translations (to delete)!"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:410
 msgid ""
 "This action will delete all '+ to_delete.length +' translations in this "
-"page? Are you sure, you want to proceed?"
+"page. Are you sure you want to proceed?"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:580
 msgid ""
-"Search in Transifex memory for existing translations (opens up in new tab/"
-"window)"
+"Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:581
@@ -605,7 +610,7 @@ msgstr "Skicka in översättningar"
 
 #: addons/lotte/templates/translate.html:590
 #, fuzzy
-msgid "Show translations of<br /> the chosen languages"
+msgid "Show translations in<br /> the selected languages"
 msgstr "Se statistik för detta språk"
 
 #: addons/lotte/templates/translate.html:593
@@ -614,8 +619,9 @@ msgid "More languages"
 msgstr "Källspråk"
 
 #: addons/lotte/templates/translate.html:598
-msgid "Show only the translations<br />of the chosen users"
-msgstr ""
+#, fuzzy
+msgid "Show only the translations<br /> by the selected users"
+msgstr "Se statistik för detta språk"
 
 #: addons/lotte/templates/translate.html:601
 #, fuzzy
@@ -623,7 +629,7 @@ msgid "Filter by users"
 msgstr "Filtrera resultat"
 
 #: addons/lotte/templates/translate.html:607
-msgid "Show only the strings which<br />belong to checked resources."
+msgid "Show only the strings from<br /> the selected resources."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:610
@@ -695,8 +701,9 @@ msgid "Auto save"
 msgstr "Oöversätta"
 
 #: addons/priorities/models.py:19
-msgid "The resource which owns this priority instance."
-msgstr ""
+#, fuzzy
+msgid "The resource associated with this priority."
+msgstr "Sluta bevaka detta projekt"
 
 #: addons/priorities/models.py:20
 msgid "Priority Levels"
@@ -743,7 +750,7 @@ msgstr ""
 
 #: addons/suggestions/models.py:25
 msgid ""
-"A value which indicates the relevance of this suggestionto the translation "
+"A value which indicates the relevance of this suggestion to the translation "
 "of the source string."
 msgstr ""
 
@@ -753,17 +760,19 @@ msgid "Source Entity"
 msgstr "Språk:"
 
 #: addons/suggestions/models.py:36
-msgid "The source entity which is being translated by thissuggestion instance."
-msgstr ""
+#, fuzzy
+msgid "The source entity this suggestion instance translates or affects."
+msgstr "Här är en lista på de förråd som vi hanterar översättningar för."
 
-#: addons/suggestions/models.py:40 resources/models.py:274
+#: addons/suggestions/models.py:40 resources/models.py:273
 #, fuzzy
 msgid "Target Language"
 msgstr "Språk:"
 
-#: addons/suggestions/models.py:41
+#: addons/suggestions/models.py:41 resources/models.py:274
+#: storage/models.py:33
 #, fuzzy
-msgid "The language in which this suggestion string belongs to."
+msgid "The language in which this translation string is written."
 msgstr "Det projekt som denna grupp tillhör."
 
 #: addons/suggestions/models.py:45
@@ -782,11 +791,11 @@ msgstr "Beskrivning"
 
 #: addons/suggestions/models.py:108
 #, fuzzy
-msgid "The suggestion which is being voted."
+msgid "The suggestion about which the user is voting."
 msgstr "Det projekt som denna grupp tillhör."
 
 #: addons/suggestions/models.py:112
-msgid "The user who voted the specific suggestion."
+msgid "The user who voted for the specific suggestion."
 msgstr ""
 
 #: addons/suggestions/models.py:123
@@ -1607,7 +1616,7 @@ msgstr ""
 
 #: resources/models.py:82
 #, fuzzy
-msgid "The project the translation resource belongs to."
+msgid "The project containing the translation resource."
 msgstr "Det projekt som denna grupp tillhör."
 
 #: resources/models.py:95
@@ -1645,11 +1654,6 @@ msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
-
-#: resources/models.py:142
-#, fuzzy
-msgid "Occurrences"
-msgstr "Förekomster"
 
 #: resources/models.py:144
 msgid "The occurrences of the source string in the project code."
@@ -1708,50 +1712,44 @@ msgid ""
 msgstr ""
 
 #: resources/models.py:270
-msgid ""
-"The source string which is being translated by thistranslation string "
-"instance."
-msgstr ""
-
-#: resources/models.py:275 storage/models.py:33
 #, fuzzy
-msgid "The language in which this translation string belongs to."
+msgid "The source string this translation string translates."
 msgstr "Det projekt som denna grupp tillhör."
 
-#: resources/models.py:278
+#: resources/models.py:277
 #, fuzzy
 msgid "Committer"
 msgstr "Twitter"
 
-#: resources/models.py:279
+#: resources/models.py:278
 msgid "The user who committed the specific translation."
 msgstr ""
 
-#: resources/models.py:289
+#: resources/models.py:288
 #, fuzzy
 msgid "translation string"
 msgstr "översättningsfiler"
 
-#: resources/models.py:290
+#: resources/models.py:289
 #, fuzzy
 msgid "translation strings"
 msgstr "översättningsfiler"
 
-#: resources/models.py:323
+#: resources/models.py:322
 msgid "This is the actual content of the template"
 msgstr ""
 
-#: resources/models.py:327
+#: resources/models.py:326
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:331
+#: resources/models.py:330
 msgid "Template"
 msgstr ""
 
-#: resources/models.py:332
+#: resources/models.py:331
 msgid "Templates"
 msgstr ""
 
@@ -1834,7 +1832,7 @@ msgstr ""
 
 #: storage/models.py:42
 msgid ""
-"Wether this file is bound to a project/translation resource, otherwise show "
+"Whether this file is bound to a project/translation resource, otherwise show "
 "in the upload box"
 msgstr ""
 
@@ -1879,7 +1877,8 @@ msgstr ""
 "stryk honom / henne från en av dessa listor."
 
 #: teams/models.py:29 teams/models.py:71
-msgid "The project which this team belongs to."
+#, fuzzy
+msgid "The project this team works on."
 msgstr "Det projekt som denna grupp tillhör."
 
 #: teams/models.py:30 teams/models.py:72
@@ -2717,6 +2716,11 @@ msgstr "Skärmbilder"
 msgid "History"
 msgstr "Historik"
 
+#: templates/projects/project_detail.html:128
+#, fuzzy
+msgid "No history recorded yet."
+msgstr "Ingenting här ännu."
+
 #: templates/projects/project_detail.html:150
 msgid "Delete project"
 msgstr "Ta bort projekt"
@@ -2885,7 +2889,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?"
+"which works on %(project_name)s?"
 msgstr ""
 
 #: templates/projects/release_detail.html:85
@@ -2906,7 +2910,7 @@ msgstr ""
 
 #: templates/projects/release_detail.html:103
 #, python-format
-msgid "This release has %(resources_number)s resourses."
+msgid "This release has %(resources_number)s resources."
 msgstr ""
 
 #: templates/projects/release_detail.html:119
@@ -3468,7 +3472,7 @@ msgstr "Redigera <em>%(collection_name)s</em>"
 #, python-format
 msgid ""
 "Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?"
+"works on %(project_name)s?"
 msgstr ""
 
 #: templates/teams/team_detail.html:49
@@ -4555,6 +4559,18 @@ msgid "You removed the permission request."
 msgstr ""
 
 #, fuzzy
+#~ msgid "Error occured on translation saving procedure."
+#~ msgstr "Lägg till en översättningsfil"
+
+#, fuzzy
+#~ msgid "Occurences"
+#~ msgstr "Förekomster"
+
+#, fuzzy
+#~ msgid "The language in which this suggestion string belongs to."
+#~ msgstr "Det projekt som denna grupp tillhör."
+
+#, fuzzy
 #~ msgid "Couldn't lock file."
 #~ msgstr "Välj ett mål att ladda upp filen till"
 
@@ -5408,9 +5424,6 @@ msgstr ""
 
 #~ msgid "Norwegian"
 #~ msgstr "Norska"
-
-#~ msgid "Northern Sotho"
-#~ msgstr "Sepedi"
 
 #~ msgid "Oriya"
 #~ msgstr "Oriya"

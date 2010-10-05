@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-04 19:51+0000\n"
+"POT-Creation-Date: 2010-10-05 13:30+0000\n"
 "PO-Revision-Date: 2010-07-22 23:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -62,9 +62,9 @@ msgid "DATETIME_FORMAT"
 msgstr "DATETIME_FORMAT"
 
 #: actionlog/templates/object_action_list.html:22
-#: templates/projects/project_detail.html:128
-msgid "No history recorded yet."
-msgstr "Ще немає записів у історії."
+#, fuzzy
+msgid "No changes."
+msgstr "Пароль змінено."
 
 #: addons/autofetch/models.py:15
 #, fuzzy
@@ -73,18 +73,19 @@ msgstr "Первинний файл:"
 
 #: addons/autofetch/models.py:17
 msgid ""
-"A URL pointing to the source file of this resource which can be used for "
-"auto updating."
+"A URL pointing to the source file of this resource to be used for automatic "
+"updates."
 msgstr ""
 
 #: addons/autofetch/models.py:19
-msgid "Auto update source file"
-msgstr ""
+#, fuzzy
+msgid "Automatically update source file"
+msgstr "Додати файл перекладу"
 
 #: addons/autofetch/models.py:20
 msgid ""
-"A boolean field representing whether we should periodically pull and merge "
-"the source file for the given URL."
+"A boolean field indicating whether the file should be automatically updated "
+"by pulling and merging from the given URL."
 msgstr ""
 
 #: addons/autofetch/models.py:25 resources/models.py:164
@@ -132,7 +133,7 @@ msgstr "Завантаження..."
 #, fuzzy
 msgid ""
 "Display your project's translation statistics on your own website as a "
-"simple image. Perfect for embedding in wiki pages, Trac instances, emails."
+"simple image. Perfect for embedding in wiki pages, Trac instances, and email."
 msgstr ""
 "Показ статистичних даних вашого проекту на вашому власному веб-сайті у "
 "форматі простого зображення.\n"
@@ -233,12 +234,12 @@ msgstr "Користувач «%(user)s» не має права вилучат�
 
 #: addons/locks/notifications.py:15
 #, fuzzy
-msgid "Lock is expiring"
+msgid "Lock expiration"
 msgstr "Строк дії блокування вичерпано"
 
 #: addons/locks/notifications.py:16
 #, fuzzy
-msgid "when a lock for translation resource is expiring"
+msgid "when a lock for a translation resource will expire"
 msgstr "термін дії блокування файла"
 
 #: addons/locks/views.py:43
@@ -264,13 +265,15 @@ msgid "Unlock failed. Lock doesn't exist."
 msgstr ""
 
 #: addons/locks/templates/lock_resource_action.html:17
-msgid "This translation has been locked by you."
-msgstr ""
+#, fuzzy
+msgid "You locked this translation."
+msgstr "Переглянути список команд перекладу."
 
 #: addons/locks/templates/lock_resource_action.html:19
 #, fuzzy, python-format
-msgid "This translation has been locked by user '%(owner)s'."
-msgstr "Цей файл заблоковано користувачем «%(owner)s»."
+msgid "User '%(owner)s' locked this translation."
+msgstr ""
+"Користувач «%(owner)s» заблокував цей файл, щоб позначити свою роботу над ним."
 
 #: addons/locks/templates/lock_resource_action.html:21
 #, python-format
@@ -312,7 +315,7 @@ msgstr ""
 #: addons/locks/templates/lock_resource_action.html:42
 #, fuzzy
 msgid ""
-"This translation is unlocked. Most likely no one is working on it right now."
+"This translation isn't locked. Most likely no one is working on it right now."
 msgstr "Цей файл розблоковано. Швидше за все, наразі над ним ніхто не працює."
 
 #: addons/locks/templates/lock_resource_action.html:56
@@ -328,12 +331,14 @@ msgid "Extending lock..."
 msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:19
-#, python-format
-msgid "This file is locked by user '%(owner)s'."
-msgstr "Цей файл заблоковано користувачем «%(owner)s»."
+#, fuzzy, python-format
+msgid "User '%(owner)s' locked this file."
+msgstr ""
+"Користувач «%(owner)s» заблокував цей файл, щоб позначити свою роботу над ним."
 
 #: addons/locks/templates/pofile_lock.html:21
-msgid "Click on it to unlock the file."
+#, fuzzy
+msgid "Click file to unlock."
 msgstr "Натисніть, щоб розблокувати файл."
 
 #: addons/locks/templates/pofile_lock.html:23
@@ -349,7 +354,7 @@ msgstr ""
 
 #: addons/locks/templates/pofile_lock.html:46
 #, fuzzy
-msgid "This file is unlocked. Most likely no one is working on it right now."
+msgid "This file isn't locked. Most likely no one is working on it right now."
 msgstr "Цей файл розблоковано. Швидше за все, наразі над ним ніхто не працює."
 
 #: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
@@ -371,9 +376,9 @@ msgstr ""
 
 #: addons/lotte/views.py:88
 msgid ""
-"The source language cannot be edited, cause this would result in translation "
-"mismatching! If you want to update the source strings consider using the "
-"command line client of transifex."
+"The source language cannot be edited, because this would result in "
+"translation mismatching! If you want to update the source strings consider "
+"using the command line client of transifex."
 msgstr ""
 
 #: addons/lotte/views.py:351
@@ -395,8 +400,8 @@ msgstr "У цьому проекті не використовуються ко�
 
 #: addons/lotte/views.py:513
 msgid ""
-"All the plural translations must be filled in, or left empty, in order to be "
-"saved!"
+"Cannot save unless plural translations are either completely filled or "
+"entirely empty!"
 msgstr ""
 
 #: addons/lotte/views.py:539
@@ -415,7 +420,7 @@ msgstr "файли перекладу"
 
 #: addons/lotte/views.py:559
 #, fuzzy
-msgid "Error occured on translation saving procedure."
+msgid "Error occurred while trying to save translation."
 msgstr "Додати файл перекладу"
 
 #: addons/lotte/templates/filters_menu_resources.html:16
@@ -459,8 +464,8 @@ msgid "Description:"
 msgstr "Опис"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#, fuzzy
-msgid "Occurences"
+#: resources/models.py:142
+msgid "Occurrences"
 msgstr "Збіги"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
@@ -511,8 +516,9 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:105
 #: addons/lotte/templates/view_strings.html:41
-msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+#, fuzzy
+msgid "Nothing to show"
+msgstr "Північний сото"
 
 #: addons/lotte/templates/translate.html:106
 #: addons/lotte/templates/view_strings.html:42
@@ -622,28 +628,26 @@ msgid "Loading strings..."
 msgstr "Завантаження..."
 
 #: addons/lotte/templates/translate.html:387
-msgid "Auto-save translation text has been enabled"
+msgid "Translation text will be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:391
-msgid "Auto-save translation text has been disabled"
+msgid "Translation text will no longer be saved automatically."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:409
-#, fuzzy
-msgid "No translations to delete in this page!"
-msgstr "До цього випуску не було додано жодного перекладу :-(."
+msgid "This page does not have any translations (to delete)!"
+msgstr ""
 
 #: addons/lotte/templates/translate.html:410
 msgid ""
 "This action will delete all '+ to_delete.length +' translations in this "
-"page? Are you sure, you want to proceed?"
+"page. Are you sure you want to proceed?"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:580
 msgid ""
-"Search in Transifex memory for existing translations (opens up in new tab/"
-"window)"
+"Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:581
@@ -653,7 +657,7 @@ msgstr "Відкинути переклад"
 
 #: addons/lotte/templates/translate.html:590
 #, fuzzy
-msgid "Show translations of<br /> the chosen languages"
+msgid "Show translations in<br /> the selected languages"
 msgstr "Файл перекладу, який буде вивантажено для нової мови."
 
 #: addons/lotte/templates/translate.html:593
@@ -662,8 +666,9 @@ msgid "More languages"
 msgstr "Первинна мова"
 
 #: addons/lotte/templates/translate.html:598
-msgid "Show only the translations<br />of the chosen users"
-msgstr ""
+#, fuzzy
+msgid "Show only the translations<br /> by the selected users"
+msgstr "Файл перекладу, який буде вивантажено для нової мови."
 
 #: addons/lotte/templates/translate.html:601
 #, fuzzy
@@ -671,7 +676,7 @@ msgid "Filter by users"
 msgstr "Результати фільтрування"
 
 #: addons/lotte/templates/translate.html:607
-msgid "Show only the strings which<br />belong to checked resources."
+msgid "Show only the strings from<br /> the selected resources."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:610
@@ -742,7 +747,7 @@ msgstr "Автопереклад"
 
 #: addons/priorities/models.py:19
 #, fuzzy
-msgid "The resource which owns this priority instance."
+msgid "The resource associated with this priority."
 msgstr "Користувач, який є власником цього проекту."
 
 #: addons/priorities/models.py:20
@@ -791,7 +796,7 @@ msgstr "Оцінка"
 
 #: addons/suggestions/models.py:25
 msgid ""
-"A value which indicates the relevance of this suggestionto the translation "
+"A value which indicates the relevance of this suggestion to the translation "
 "of the source string."
 msgstr ""
 
@@ -801,17 +806,19 @@ msgid "Source Entity"
 msgstr "Первинний рядок"
 
 #: addons/suggestions/models.py:36
-msgid "The source entity which is being translated by thissuggestion instance."
-msgstr ""
+#, fuzzy
+msgid "The source entity this suggestion instance translates or affects."
+msgstr "У цьому проекті не використовуються команди перекладачів"
 
-#: addons/suggestions/models.py:40 resources/models.py:274
+#: addons/suggestions/models.py:40 resources/models.py:273
 #, fuzzy
 msgid "Target Language"
 msgstr "Рідна мова:"
 
-#: addons/suggestions/models.py:41
+#: addons/suggestions/models.py:41 resources/models.py:274
+#: storage/models.py:33
 #, fuzzy
-msgid "The language in which this suggestion string belongs to."
+msgid "The language in which this translation string is written."
 msgstr "Проект, до якого належить ця команда."
 
 #: addons/suggestions/models.py:45
@@ -830,12 +837,12 @@ msgstr "Розв’язання"
 
 #: addons/suggestions/models.py:108
 #, fuzzy
-msgid "The suggestion which is being voted."
+msgid "The suggestion about which the user is voting."
 msgstr "Проект, до якого належить ця команда."
 
 #: addons/suggestions/models.py:112
 #, fuzzy
-msgid "The user who voted the specific suggestion."
+msgid "The user who voted for the specific suggestion."
 msgstr "Користувач, який є власником цього проекту."
 
 #: addons/suggestions/models.py:123
@@ -1694,7 +1701,7 @@ msgstr ""
 
 #: resources/models.py:82
 #, fuzzy
-msgid "The project the translation resource belongs to."
+msgid "The project containing the translation resource."
 msgstr "Проект, до якого належить ця команда."
 
 #: resources/models.py:95
@@ -1732,10 +1739,6 @@ msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
-
-#: resources/models.py:142
-msgid "Occurrences"
-msgstr "Збіги"
 
 #: resources/models.py:144
 msgid "The occurrences of the source string in the project code."
@@ -1794,50 +1797,44 @@ msgid ""
 msgstr ""
 
 #: resources/models.py:270
-msgid ""
-"The source string which is being translated by thistranslation string "
-"instance."
-msgstr ""
-
-#: resources/models.py:275 storage/models.py:33
 #, fuzzy
-msgid "The language in which this translation string belongs to."
+msgid "The source string this translation string translates."
 msgstr "Проект, до якого належить ця команда."
 
-#: resources/models.py:278
+#: resources/models.py:277
 #, fuzzy
 msgid "Committer"
 msgstr "Twitter"
 
-#: resources/models.py:279
+#: resources/models.py:278
 msgid "The user who committed the specific translation."
 msgstr ""
 
-#: resources/models.py:289
+#: resources/models.py:288
 #, fuzzy
 msgid "translation string"
 msgstr "файли перекладу"
 
-#: resources/models.py:290
+#: resources/models.py:289
 #, fuzzy
 msgid "translation strings"
 msgstr "файли перекладу"
 
-#: resources/models.py:323
+#: resources/models.py:322
 msgid "This is the actual content of the template"
 msgstr ""
 
-#: resources/models.py:327
+#: resources/models.py:326
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:331
+#: resources/models.py:330
 msgid "Template"
 msgstr ""
 
-#: resources/models.py:332
+#: resources/models.py:331
 msgid "Templates"
 msgstr ""
 
@@ -1918,7 +1915,7 @@ msgstr ""
 
 #: storage/models.py:42
 msgid ""
-"Wether this file is bound to a project/translation resource, otherwise show "
+"Whether this file is bound to a project/translation resource, otherwise show "
 "in the upload box"
 msgstr ""
 
@@ -1967,7 +1964,8 @@ msgstr ""
 "учасників. Будь ласка, вилучіть його або її запис з одного зі списків."
 
 #: teams/models.py:29 teams/models.py:71
-msgid "The project which this team belongs to."
+#, fuzzy
+msgid "The project this team works on."
 msgstr "Проект, до якого належить ця команда."
 
 #: teams/models.py:30 teams/models.py:72
@@ -2807,6 +2805,10 @@ msgstr "Знімки вікон"
 msgid "History"
 msgstr "Історія"
 
+#: templates/projects/project_detail.html:128
+msgid "No history recorded yet."
+msgstr "Ще немає записів у історії."
+
 #: templates/projects/project_detail.html:150
 msgid "Delete project"
 msgstr "Вилучити проект"
@@ -2977,7 +2979,7 @@ msgstr "Попрощатися з <em>%(release_name)s</em>?"
 #, fuzzy, python-format
 msgid ""
 "Are you sure you want to permanently delete the release '%(release_name)s' "
-"which belongs to %(project_name)s?"
+"which works on %(project_name)s?"
 msgstr ""
 "\n"
 "  Ви впевнені, що хочете назавжди вилучити випуск «%(release_name)s», що "
@@ -3002,7 +3004,7 @@ msgstr "Натисніть тут, щоб показати чи сховати �
 
 #: templates/projects/release_detail.html:103
 #, fuzzy, python-format
-msgid "This release has %(resources_number)s resourses."
+msgid "This release has %(resources_number)s resources."
 msgstr "У цьому випуску %(components_number)s компонентів."
 
 #: templates/projects/release_detail.html:119
@@ -3581,7 +3583,7 @@ msgstr "Попрощатися з командою <em>%(lang_name)s</em>?"
 #, fuzzy, python-format
 msgid ""
 "Are you sure you want to permanently delete the '%(lang_name)s' team which "
-"belongs to %(project_name)s?"
+"works on %(project_name)s?"
 msgstr ""
 "\n"
 "  Ви впевнені, що хочете назавжди вилучити запис команди «%(lang_name)s», що "
@@ -4691,6 +4693,29 @@ msgstr "Ви вилучили права доступу."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Ви вилучити запит щодо прав доступу."
+
+#, fuzzy
+#~ msgid "This translation has been locked by user '%(owner)s'."
+#~ msgstr "Цей файл заблоковано користувачем «%(owner)s»."
+
+#~ msgid "This file is locked by user '%(owner)s'."
+#~ msgstr "Цей файл заблоковано користувачем «%(owner)s»."
+
+#, fuzzy
+#~ msgid "Error occured on translation saving procedure."
+#~ msgstr "Додати файл перекладу"
+
+#, fuzzy
+#~ msgid "Occurences"
+#~ msgstr "Збіги"
+
+#, fuzzy
+#~ msgid "No translations to delete in this page!"
+#~ msgstr "До цього випуску не було додано жодного перекладу :-(."
+
+#, fuzzy
+#~ msgid "The language in which this suggestion string belongs to."
+#~ msgstr "Проект, до якого належить ця команда."
 
 #, fuzzy
 #~ msgid "Couldn't lock file."
@@ -5851,9 +5876,6 @@ msgstr "Ви вилучити запит щодо прав доступу."
 #~ msgid "Norwegian"
 #~ msgstr "Норвезька"
 
-#~ msgid "Northern Sotho"
-#~ msgstr "Північний сото"
-
 #~ msgid "Oriya"
 #~ msgstr "Орія"
 
@@ -5983,9 +6005,3 @@ msgstr "Ви вилучити запит щодо прав доступу."
 
 #~ msgid "Unlock this file when you are finished working with it."
 #~ msgstr "Розблокувати цей файл після завершення роботи над ним."
-
-#~ msgid ""
-#~ "User '%(owner)s' has locked this file indicating he's working with it."
-#~ msgstr ""
-#~ "Користувач «%(owner)s» заблокував цей файл, щоб позначити свою роботу над "
-#~ "ним."
