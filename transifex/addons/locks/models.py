@@ -156,7 +156,7 @@ class Lock(models.Model):
 
     def delete_by_user(self, user, *args, **kwargs):
         """
-        Delete the instance of Lock whether the 'user' has permisson to do so.
+        Delete the instance of Lock whether the 'user' has permission to do so.
         """
         if not self.can_unlock(user):
             raise LockError(_("User '%(user)s' is not allowed to remove "

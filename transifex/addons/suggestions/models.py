@@ -12,7 +12,7 @@ class Suggestion(models.Model):
     """
     The representation of a suggestion for a translation on a source string.
     
-    More or less it is a duplication of the Translation model with a differrent
+    More or less it is a duplication of the Translation model with a different
     way to determine the unique instances.
     """
 
@@ -23,7 +23,7 @@ class Suggestion(models.Model):
         help_text=_("The hash of the suggestion string used for indexing"))
     score = models.FloatField(_('Score Value'), default=0, blank=True,
         help_text=_("A value which indicates the relevance of this suggestion"
-                    "to the translation of the source string."))
+                    " to the translation of the source string."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -33,12 +33,12 @@ class Suggestion(models.Model):
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source Entity'), blank=False, null=False,
         related_name='suggestions',
-        help_text=_("The source entity which is being translated by this"
-                    "suggestion instance."))
+        help_text=_("The source entity this suggestion instance"
+                    " translates or affects."))
 
     language = models.ForeignKey(Language,
         verbose_name=_('Target Language'), blank=False, null=True,
-        help_text=_("The language in which this suggestion string belongs to."))
+        help_text=_("The language in which this translation string is written."))
 
     user = models.ForeignKey(User,
         verbose_name=_('User'), blank=False, null=True,
@@ -105,11 +105,11 @@ class Vote(models.Model):
     suggestion = models.ForeignKey(Suggestion,
         verbose_name=_('Suggestion'), blank=False, null=False,
         related_name='votes',
-        help_text=_("The suggestion which is being voted."))
+        help_text=_("The suggestion about which the user is voting."))
     user = models.ForeignKey(User,
         verbose_name=_('User'), blank=False, null=False,
         related_name='votes',
-        help_text=_("The user who voted the specific suggestion."))
+        help_text=_("The user who voted for the specific suggestion."))
 
      # False = -1, True = +1
     vote_type = models.BooleanField()

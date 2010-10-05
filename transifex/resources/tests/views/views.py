@@ -30,7 +30,7 @@ class CoreViewsTest(BaseTestCase):
         """
 
         slug=self.resource.slug
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         resp = self.client['maintainer'].post(reverse('resource_delete',
             args=[self.project.slug, self.resource.slug]))
         self.assertEqual(resp.status_code, 302)
@@ -163,7 +163,7 @@ class ReleasesViewsTest(BaseTestCase):
         url = reverse('release_detail',
             args=[self.project.slug, self.release.slug])
         resp = self.client['registered'].get(url)
-        self.assertContains(resp, "This release has 1 resourses", status_code=200)
+        self.assertContains(resp, "This release has 1 resource", status_code=200)
 
         # FIXME: Check if the correct language appears in the table.
         # self.assertContains(resp, "Portuguese", status_code=200)

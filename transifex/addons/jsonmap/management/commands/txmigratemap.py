@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
         make_option('--datadir', '-d', default='.tx', dest='datadir', 
-            help="Directoty for storing tx data. Default '.tx'."),
+            help="Directory for storing tx data. Default '.tx'."),
         make_option('--filename', '-f', default='txdata', dest='filename', 
             help="Filename target for JSON mapping. Default 'txdata'.")
     )

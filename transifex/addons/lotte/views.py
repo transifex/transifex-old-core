@@ -85,7 +85,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     # resource_detail and show him a message explaining the reason.
     if target_language == resources[0].source_language:
         request.user.message_set.create(
-                message=_("The source language cannot be edited, cause this would"
+                message=_("The source language cannot be edited, because this would"
                           " result in translation mismatching! If you want to "
                           "update the source strings consider using the command"
                           " line client of transifex."))
@@ -286,7 +286,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                     ~Q(source_entity__id__in=default_translated_strings.values(
                         'source_entity')))
 
-    # Object filtering (e.g. users, resources etc.)
+    # Object filtering (e.g. users, resources, etc.)
     if request.POST and request.POST.has_key('user_filters'):
         # rsplit is used to remove the trailing ','
         users = request.POST.get('user_filters').rstrip(',').split(',')
@@ -409,7 +409,7 @@ def _get_strings(query, target_lang_code, source_entity):
     target_language = Language.objects.by_code_or_alias(target_lang_code)
     if source_entity.pluralized:
         translations = query.filter(source_entity=source_entity).order_by('rule')
-        # Fill with empty strings to have the UNtranslated entries!
+        # Fill with empty strings to have the Untranslated entries!
         for rule in target_language.get_pluralrules():
             translation_strings[rule] = ""
         for translation in translations:
@@ -510,8 +510,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         error_flag = True
             if error_flag:
                 push_response_dict[source_id] = { 'status':500,
-                    'message':(_("All the plural translations must be filled in, "
-                               "or left empty, in order to be saved!"))}
+                    'message':(_("Cannot save unless plural translations are either "
+                               "completely filled or entirely empty!"))}
                 # Skip the save as we hit on an error.
                 continue
 
@@ -556,7 +556,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             except:
                 # TODO: Log or inform here
                 push_response_dict[source_id] = { 'status':500,
-                    'message':_("Error occured on translation saving procedure.")}
+                    'message':_("Error occurred while trying to save translation.")}
 
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')

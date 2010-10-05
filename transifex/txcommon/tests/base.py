@@ -30,24 +30,24 @@ PASSWORD = '123412341234'
 
 
 def deactivate_caching_middleware():
-    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    list_middle_c = list(settings.MIDDLEWARE_CLASSES)
     try:
-        list_middl_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
+        list_middle_c.remove('django.middleware.cache.FetchFromCacheMiddleware')
     except ValueError:
         pass
     try:
-        list_middl_c.remove('django.middleware.cache.UpdateCacheMiddleware')
+        list_middle_c.remove('django.middleware.cache.UpdateCacheMiddleware')
     except ValueError:
         pass
 
 
 def deactivate_csrf_middleware():
-    list_middl_c = list(settings.MIDDLEWARE_CLASSES)
+    list_middle_c = list(settings.MIDDLEWARE_CLASSES)
     try:
-        list_middl_c.remove('external.csrf.middleware.CsrfMiddleware')
+        list_middle_c.remove('external.csrf.middleware.CsrfMiddleware')
     except ValueError:
         pass
-    settings.MIDDLEWARE_CLASSES = list_middl_c
+    settings.MIDDLEWARE_CLASSES = list_middle_c
 
 
 class BaseTestCase(TestCase):
@@ -61,10 +61,10 @@ class BaseTestCase(TestCase):
         #FIXME: This should not happen, since it diverges away the test suite
         # from the actual deployment.
         # Remove the caching middlewares because they interfere with the
-        # annonymous client.
+        # anonymous client.
         deactivate_caching_middleware()
         deactivate_csrf_middleware()
-        # Disable actionlog, wich in turn disables noticetype requirement.
+        # Disable actionlog, which in turn disables noticetype requirement.
         settings.ACTIONLOG_ENABLED = False
 
     def setUp(self):

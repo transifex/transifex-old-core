@@ -27,7 +27,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 403)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
             args=[self.project.slug, self.resource.slug])
         resp = self.client['anonymous'].get(page_url)
@@ -105,7 +105,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 403)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
             args=[self.project_private.slug, self.resource_private.slug])
         resp = self.client['anonymous'].get(page_url)
@@ -190,7 +190,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['registered'].post(page_url)
         self.assertEqual(resp.status_code, 403)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
             args=[self.project.slug, self.resource.slug])
         resp = self.client['registered'].get(page_url)
@@ -265,7 +265,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['registered'].post(page_url)
         self.assertEqual(resp.status_code, 403)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
             args=[self.project_private.slug, self.resource_private.slug])
         resp = self.client['registered'].get(page_url)
@@ -405,7 +405,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 403)
 
         # Check lock and get translation file perms for resource not accepting
-        # traslations.
+        # translations.
         self.resource.accept_translations = False
         self.resource.save()
         page_url = reverse('lock_and_download_translation',
@@ -568,7 +568,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check lock and get translation file perms for resource not accepting
-        # traslations.
+        # translations.
         self.resource.accept_translations = False
         self.resource.save()
         page_url = reverse('lock_and_download_translation',
@@ -605,7 +605,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['maintainer'].post(page_url ,follow=True)
         self.assertEqual(resp.status_code, 200)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
                            args=[self.project.slug, self.resource.slug])
         resp = self.client['maintainer'].get(page_url)
@@ -685,7 +685,7 @@ class PermissionsTest(BaseTestCase):
         resp = self.client['maintainer'].post(page_url ,follow=True)
         self.assertEqual(resp.status_code, 200)
 
-        # Check if resource gets deleted succesfully
+        # Check if resource gets deleted successfully
         page_url = reverse('resource_delete',
                            args=[self.project_private.slug,
                                  self.resource_private.slug])

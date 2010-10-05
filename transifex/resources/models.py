@@ -36,14 +36,14 @@ class ResourceManager(models.Manager):
 
 class Resource(models.Model):
     """
-    A translatable resource, such as a document, a set of strings etc.
+    A translatable resource, such as a document, a set of strings, etc.
     
     This is roughly equivalent to a POT file, string stream, or some other
     strings grouped together as a single translatable element.
     
     The resource is the rough equivalent to the deprecated 'Component' object,
     but with an important difference: a resource can only have one "source file"
-    wheras the Component was able to encapsulate multiple ones.
+    whereas the Component was able to encapsulate multiple ones.
     
     A resource is always related to a project.
     """
@@ -79,7 +79,7 @@ class Resource(models.Model):
         help_text=_("The source language of this Resource."))
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False, null=True, related_name='resources',
-        help_text=_("The project the translation resource belongs to."))
+        help_text=_("The project containing the translation resource."))
 
     # Managers
     objects = ResourceManager()
@@ -108,7 +108,7 @@ class Resource(models.Model):
         """
         Return a simple string without spaces identifying the resource.
         
-        Can be used instead of __unicode__ to create files on disk, URLs etc.
+        Can be used instead of __unicode__ to create files on disk, URLs, etc.
         """        
         return "%s.%s" % (self.project.slug, self.slug)
 
@@ -199,17 +199,17 @@ class TranslationManager(models.Manager):
         Return the results of searching, based on a specific source string and
         maybe on specific source and/or target language.
         """
-        source_entitys = []
+        source_entities = []
 
-        source_entitys = SourceEntity.objects.filter(string=string,)
+        source_entities = SourceEntity.objects.filter(string=string,)
 
         # If no target language given search on any target language.
         if target_code:
             language = Language.objects.by_code_or_alias(target_code)
             results = self.filter(
-                        source_entity__in=source_entitys, language=language)
+                        source_entity__in=source_entities, language=language)
         else:
-            results = self.filter(source_entity__in=source_entitys)
+            results = self.filter(source_entity__in=source_entities)
         return results
 
     def by_string_and_language(self, string, source_code='en', target_code=None):
@@ -267,12 +267,11 @@ class Translation(models.Model):
         verbose_name=_('Source String'),
         related_name='translations',
         blank=False, null=False,
-        help_text=_("The source string which is being translated by this"
-                    "translation string instance."))
+        help_text=_("The source string this translation string translates."))
 
     language = models.ForeignKey(Language,
         verbose_name=_('Target Language'),blank=False, null=True,
-        help_text=_("The language in which this translation string belongs to."))
+        help_text=_("The language in which this translation string is written."))
 
     user = models.ForeignKey(User,
         verbose_name=_('Committer'), blank=False, null=True,

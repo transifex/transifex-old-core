@@ -12,7 +12,7 @@ from txcommon.log import logger
 
 def _check_outsource_project(obj):
     """
-    Check if the project, which the obj passed by parameter belongs to, has
+    Check if the project, to which the obj passed by parameter belongs, has
     outsourced the access control to another project.
 
     The parameter 'obj' can be a Project, Team instance, etc.

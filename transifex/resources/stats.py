@@ -61,7 +61,7 @@ class StatsBase:
 
     @stats_cached_property
     def last_translation(self):
-        """Return last translation made, independing on language."""
+        """Return last translation made, independent of language."""
         t = self.translations.select_related('last_update', 'user'
             ).order_by('-last_update')[:1]
         if t:
@@ -119,7 +119,7 @@ class Stats(StatsBase):
     Imagine it as a row in a statistics table for a specific language,
     or in the real world, as a translation file (e.g. a specific PO file).
 
-    Requires an iteretable of entities (e.g. a QuerySet) and a language.
+    Requires an iterable of entities (e.g. a QuerySet) and a language.
     """
 
     def __init__(self, entities, language):

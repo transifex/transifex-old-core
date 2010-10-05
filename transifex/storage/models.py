@@ -30,7 +30,7 @@ class StorageFile(models.Model):
     # Foreign Keys
     language = models.ForeignKey(Language,
         verbose_name=_('Source language'),blank=False, null=True,
-        help_text=_("The language in which this translation string belongs to."))
+        help_text=_("The language in which this translation string is written."))
 
     #resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         #blank=False, null=True,
@@ -39,7 +39,7 @@ class StorageFile(models.Model):
 #    project = models.ForeignKey(Project, verbose_name=_('Project'), blank=False, null=True)
 
     bound = models.BooleanField(verbose_name=_('Bound to any object'), default=False,
-        help_text=_('Wether this file is bound to a project/translation resource, otherwise show in the upload box'))
+        help_text=_('Whether this file is bound to a project/translation resource, otherwise show in the upload box'))
 
     user = models.ForeignKey(User,
         verbose_name=_('Owner'), blank=False, null=True,
@@ -53,7 +53,7 @@ class StorageFile(models.Model):
 
     def delete(self, *args, **kwargs):
         """
-        Delete file from filesytem even if object has not been saved yet.
+        Delete file from filesystem even if object has not been saved yet.
         """
         try:
             os.remove(self.get_storage_path())
@@ -69,7 +69,7 @@ class StorageFile(models.Model):
 
     def translatable(self):
         """
-        Wether we could extract any strings -> wether we can translate file
+        Whether we could extract any strings -> whether we can translate file
         """
         return (self.total_strings > 0)
 
@@ -91,7 +91,7 @@ class StorageFile(models.Model):
         Check whether the uploaded file if valid.
 
         Run a number of checks on the StorageFile contents, including specific
-        checks, depending on the i18n format that the file belongs to.
+        checks, depending on the i18n format of the file.
         """
         # Get appropriate parser
         parser = self.find_parser()

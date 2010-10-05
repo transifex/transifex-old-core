@@ -56,7 +56,7 @@ function show_uploadedfile(file, uuid){
 
 function first_select_language(update_language){
     /*
-    Make sure user can see the upload buttom only if a language is aleready selected.
+    Make sure user can see the upload button only if a language is already selected.
     */
     if($("select[name='{{ names.0 }}'] option:selected").val()!=''){
         if($("input[name={{ names.1 }}]").val()!=''){
@@ -71,7 +71,7 @@ function first_select_language(update_language){
                     }),
                     beforeSend: function(){
                     $("div#notification-container div").html(
-                        sprintf("Updading language info for uploaded file."));
+                        sprintf("Updating language info for uploaded file."));
                     $("div#notification-container").fadeIn("fast");
                     },
                     complete : function(xmlhttpreq, textStatus) {

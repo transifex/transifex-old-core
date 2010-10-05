@@ -1,4 +1,4 @@
-def remove_attrs_startwith(dictionay, chars):
+def remove_attrs_startwith(dictionary, chars):
     """
     Remove attributes starting with ``chars`` from ``dictionary`` in place.
     """
@@ -9,9 +9,9 @@ def remove_attrs_startwith(dictionay, chars):
             elif type(v) == dict:
                 remove_attrs_startwith(v, chars)
 
-    for key, val in dictionay.items():
+    for key, val in dictionary.items():
         if key.startswith(chars):
-            dictionay.pop(key)
+            dictionary.pop(key)
         elif type(val) != dict:
             if isinstance(val, (list, tuple)):
                 for_list(val)

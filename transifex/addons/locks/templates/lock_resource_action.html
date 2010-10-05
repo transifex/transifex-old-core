@@ -14,9 +14,9 @@
 {% if is_locked %}
     <li id="locked-{{ lock_html_id }}" class="top lock i16 lock_open image_submit_type">
       {% if is_owner %}
-        {% blocktrans %}This translation has been locked by you.{% endblocktrans %}
+        {% blocktrans %}You locked this translation.{% endblocktrans %}
       {% else %}
-        {% blocktrans %}This translation has been locked by user '{{ owner }}'.{% endblocktrans %}
+        {% blocktrans %}User '{{ owner }}' locked this translation.{% endblocktrans %}
       {% endif %}
       {% blocktrans with lock.expires|timeuntil as lock_expires %}({{ lock_expires }} left){% endblocktrans %}
 
@@ -39,7 +39,7 @@
         </li>
     {% else %}
         <li id="unlocked-nonlockable-{{ lock_html_id }}" class="i16 lock_none top">
-            {% blocktrans %}This translation is unlocked. Most likely no one is working on it right now.{% endblocktrans %}
+            {% blocktrans %}This translation isn't locked. Most likely no one is working on it right now.{% endblocktrans %}
         </li>
     {% endif %}
 {% endif %}

@@ -67,7 +67,7 @@
     function supported_language(code_aliases){
         // Drop spaces in the beginning/end of the string
         code_aliases = code_aliases.replace(/^ /,'').replace(/ $/,'');
-        // Transform codes like 'pt_BR' into 'pt', droping the locale, which is not supported by google translate
+        // Transform codes like 'pt_BR' into 'pt', dropping the locale, which is not supported by google translate
         code_aliases = code_aliases.replace(/\-+[\w]+/,'').replace(/_+[\w]+/,'').replace(/@+[\w]+/,'')
         // Remove duplicated elements
         code_list = unique(code_aliases.split(' '));
@@ -102,7 +102,7 @@
                 "sLengthMenu":   '{% trans "Show _MENU_ entries" %}',
                 "sZeroRecords":  '{% trans "No matching records found" %}',
                 "sInfo":         '{% trans "Showing _START_ to _END_ of _TOTAL_ entries" %}',
-                "sInfoEmpty":    '{% trans "Showing 0 to 0 of 0 entries" %}',
+                "sInfoEmpty":    '{% trans "Nothing to show" %}',
                 "sInfoFiltered": '{% trans "(filtered from _MAX_ total entries)" %}',
                 "sInfoPostFix":  "",
                 "sSearch":       '{% trans "Search:" %}',
@@ -384,11 +384,11 @@
                 stringset.unbindSaveButton();
                 stringset.bindBlurTextArea();
                 stringset.push();
-                alert('{% trans "Auto-save translation text has been enabled" %}');
+                alert('{% trans "Translation text will be saved automatically." %}');
             } else { 
                 stringset.unbindBlurTextArea();
                 stringset.bindSaveButton();
-                alert('{% trans "Auto-save translation text has been disabled" %}');
+                alert('{% trans "Translation text will no longer be saved automatically." %}');
             }
         });
 
@@ -406,8 +406,8 @@
                 to_delete.push( $("span#sourceid_"+j).text() );
             }
             if(to_delete.length == 0){
-                alert('{% trans "No translations to delete in this page!" %}');
-            }else if(confirm('{% trans "This action will delete all '+ to_delete.length +' translations in this page? Are you sure, you want to proceed?" %}')){
+                alert('{% trans "This page does not have any translations (to delete)!" %}');
+            }else if(confirm('{% trans "This action will delete all '+ to_delete.length +' translations in this page. Are you sure you want to proceed?" %}')){
                 {% if resource %}
                 var delete_url = '{% url delete_translation project.slug resource.slug target_language.code %}';
                 {% else %}
@@ -577,7 +577,7 @@
 
 {% block content_header_sec %}
   {% url search_translations as search_translations %}
-  <p class="i16 view nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (opens up in new tab/window)" %}">
+  <p class="i16 view nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">
     {% trans "Search translations" %}</a>
   </p>
 {% endblock %}
@@ -587,7 +587,7 @@
 
 <div class="floatright filtermenu-wrapper">
 
-  <div id="filtermenu0" class="filtermenu tipsy_enable" title="{% trans "Show translations of<br /> the chosen languages" %}">
+  <div id="filtermenu0" class="filtermenu tipsy_enable" title="{% trans "Show translations in<br /> the selected languages" %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
     <span class="filtermenu-title">{% trans "More languages" %}</span>
@@ -595,7 +595,7 @@
   </div>
   {% include "more_languages.html" %}
 
-  <div id="filtermenu1" class="filtermenu tipsy_enable" title="{% trans "Show only the translations<br />of the chosen users" %}">
+  <div id="filtermenu1" class="filtermenu tipsy_enable" title="{% trans "Show only the translations<br /> by the selected users" %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
     <span class="filtermenu-title">{% trans "Filter by users" %}</span>
@@ -604,7 +604,7 @@
   {% include "filters_menu_users.html" %}
 
   {% ifnotequal resources|length 1 %}
-  <div id="filtermenu2" class="filtermenu tipsy_enable" title="{% trans "Show only the strings which<br />belong to checked resources." %}">
+  <div id="filtermenu2" class="filtermenu tipsy_enable" title="{% trans "Show only the strings from<br /> the selected resources." %}">
     <a class="filtermenu-trigger buttonized" href="#">
     <span class="filtermenu-icon"> </span>
     <span class="filtermenu-title">{% trans "Filter by resources" %}</span>

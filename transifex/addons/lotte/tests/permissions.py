@@ -101,7 +101,7 @@ class LottePermissionsTests(BaseTestCase):
         self.assertEqual(resp.status_code, 403)
 
         # Check access to main lotte page for resource not accepting
-        # traslations.
+        # translations.
         self.resource.accept_translations = False
         self.resource.save()
         page_url = reverse('translate_resource', args=[
@@ -181,7 +181,7 @@ class LottePermissionsTests(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check access to main lotte page for resource not accepting
-        # traslations.
+        # translations.
         self.resource.accept_translations = False
         self.resource.save()
         page_url = reverse('translate_resource', args=[
@@ -274,7 +274,7 @@ class LottePermissionsTests(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check access to main lotte page for resource not accepting
-        # traslations.
+        # translations.
         self.resource.accept_translations = False
         self.resource.save()
         page_url = reverse('translate_resource', args=[

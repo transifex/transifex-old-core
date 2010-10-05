@@ -8,7 +8,7 @@ cron_nightly = Signal()
 cron_daily = Signal()
 
 # 06:00:00 || 18:00:00
-cron_bidaily = Signal()
+cron_twicedaily = Signal()
 
 # xx:00:00
 cron_hourly = Signal()

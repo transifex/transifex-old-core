@@ -38,7 +38,7 @@ def search_translations(request):
 
     if search_terms:
         #FIXME: Make searching work with terms, not full strings like now.
-        #The searching should be done with OR for each term etc.
+        #The searching should be done with OR for each term.
         search_dict = {'string': query_string,
                        'source_code': source_language_code}
         if target_language_code:

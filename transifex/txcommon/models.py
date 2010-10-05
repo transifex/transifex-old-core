@@ -14,8 +14,8 @@ GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 
 def get_profile_or_user(user):
     """
-    Return the Profile of the user or the User itself case the app simpleauth
-    is being used instead.
+    Return the Profile of the user or the User itself in the case where
+    the application is using app simpleauth.
 
     ``user`` must be a django.contrib.auth.models.User based instance 
     """

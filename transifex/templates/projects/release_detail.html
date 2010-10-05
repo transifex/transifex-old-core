@@ -100,7 +100,7 @@
         {% with release.resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
         {% with resource_list|length as resources_number %}
         <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
-        {% blocktrans %}This release has {{ resources_number }} resourses.{% endblocktrans %}
+        {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
         <ul id="resource-list" class="simple links" style="display:none;">
           {% for r in resource_list %}

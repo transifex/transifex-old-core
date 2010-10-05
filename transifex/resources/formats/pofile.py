@@ -52,7 +52,7 @@ def get_po_contents(pofile):
         return True
 
     if not charset_exists(pofile.encoding):
-        pofile.encoding = polib.default_encodind
+        pofile.encoding = polib.default_encoding
 
     return pofile.__str__()
 
@@ -103,7 +103,7 @@ class POHandler(Handler):
         if settings.FILECHECKS['POFILE_MSGFMT']:
             msgfmt_check(buf)
 
-        # Check wether file containts DOS newlines '\r' (0x0D)
+        # Check whether file contains DOS newlines '\r' (0x0D)
         # To remove you can run: tr -d '\r' < inputfile > outputfile
         if settings.FILECHECKS.get('DOS_NEWLINES', None):
             if '\r' in buf:
@@ -121,7 +121,7 @@ class POHandler(Handler):
                 "have '%s' metadata!") % metadata)
 
 
-        # No translated entires check
+        # No translated entries check
 #        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
 #            logger.debug("pofile: No translations found!")
 #            raise FileCheckError(_("Uploaded file doesn't contain any "

@@ -158,7 +158,7 @@ class StatsHandler(BaseHandler):
             resource = Resource.objects.get( project__slug = project_slug,
                 slug= resource_slug)
         except Resource.DoesNotExist:
-            return BAD_REQUEST("Unkown resource %s" % resource_slug)
+            return BAD_REQUEST("Unknown resource %s" % resource_slug)
 
         language = None
         if lang_code:

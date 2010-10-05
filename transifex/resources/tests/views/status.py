@@ -8,7 +8,7 @@ from txcommon.tests.base import BaseTestCase
 class StatusCodesTest(BaseTestCase):
     """Test that all app URLs return correct status code.
     
-    Moreover, this kind of tests are usefull to list down the urls that are 
+    Moreover, this kind of tests are useful to list down the urls that are 
     mounted to the resources app views.
     TODO: Maybe in the future, we need to refactor the tests according to 
     request type, e.g. split them to GET and POST sets of URLs.

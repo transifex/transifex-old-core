@@ -16,7 +16,7 @@ class ResourcePriority(models.Model):
     A priority level associated with one Resource item.
     """
     resource = models.OneToOneField(Resource, related_name='priority',
-        help_text=_("The resource which owns this priority instance."))
+        help_text=_("The resource associated with this priority."))
     level = models.CharField(_('Priority Levels'),
         max_length=1, choices=PRIORITY_LEVELS, default='0',
         help_text=_("The priority levels, indicating the importance of "

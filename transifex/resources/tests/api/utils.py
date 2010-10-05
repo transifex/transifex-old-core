@@ -3,7 +3,7 @@ import base64
 
 def create_auth_string(username, password):
     """
-    Initialization for client login since piston doesn't suppport a
+    Initialization for client login since piston doesn't support a
     single signon and we need an explicit auth request.
     """
     credentials = base64.encodestring("%s:%s" % (username, password)).rstrip()

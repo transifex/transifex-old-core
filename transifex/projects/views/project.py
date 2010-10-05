@@ -36,8 +36,8 @@ def _project_create_update(request, project_slug=None,
     Handler for creating and updating a project.
     
     This function helps to eliminate duplication of code between those two 
-    actions, and also allows to apply different permissions checks in the 
-    respectives views.
+    actions, and also allows to apply different permission checks in the 
+    respective views.
     """
 
     if project_slug:

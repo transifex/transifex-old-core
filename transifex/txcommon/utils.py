@@ -60,7 +60,7 @@ def cached_property(func):
 
 def key_sort(l, *keys):
     """
-    Sort an iterable given an arbitary number of keys relative to it
+    Sort an iterable given an arbitrary number of keys relative to it
     and return the result as a list. When a key starts with '-' the
     sorting is reversed.
 

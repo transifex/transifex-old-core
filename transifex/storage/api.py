@@ -79,7 +79,7 @@ class StorageHandler(BaseHandler):
                     else:
                         sf.language = Language.objects.by_code_or_alias(lang_code)
                 except StorageFile.DoesNotExist:
-                    return rc.NOT_FOUND # Transation file does not exist
+                    return rc.NOT_FOUND # Translation file does not exist
                 except Language.DoesNotExist:
                     return rc.NOT_FOUND # Translation file not found
                 sf.save() # Save the change

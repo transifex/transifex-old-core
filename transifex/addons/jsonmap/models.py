@@ -26,7 +26,7 @@ class JSONMap(models.Model):
 
     # ForeignKeys
     project = models.ForeignKey('projects.Project', null=False, blank=False,
-        help_text="Project which the JSON mapping belongs to.")
+        help_text="Project to which the JSON mapping belongs.")
 
     def __unicode__(self):
         return '%s.%s' % (self.project.slug, self.slug)

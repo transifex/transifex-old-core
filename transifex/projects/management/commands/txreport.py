@@ -51,10 +51,10 @@ class Command(LabelCommand):
             self.report_type = args[0]
 
         # Find the function name to be called based on the report_type
-        fuction_report_type = self.report_type.replace('-','_')
+        function_report_type = self.report_type.replace('-','_')
 
-        #Call the related fuction to the wanted report_type
-        self.__getattribute__(fuction_report_type)()
+        #Call the related function to the wanted report_type
+        self.__getattribute__(function_report_type)()
 
     def weekly_maintainers(self):
         for project in self.projects:

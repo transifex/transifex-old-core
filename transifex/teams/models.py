@@ -26,7 +26,7 @@ class Team(models.Model):
     """
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False, null=False,
-        help_text=_("The project which this team belongs to."))
+        help_text=_("The project this team works on."))
     language = models.ForeignKey(Language, verbose_name=_('Language'), 
         blank=False, null=False,
         help_text=_("People in this team will only be able to submit "
@@ -68,7 +68,7 @@ log_model(Team)
 class TeamRequest(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False, null=False,
-        help_text=_("The project which this team belongs to."))
+        help_text=_("The project this team works on."))
     language = models.ForeignKey(Language, verbose_name=_('Language'), 
         blank=False, null=False,
         help_text=_("People in this team will only be able to submit "

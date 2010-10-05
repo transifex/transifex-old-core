@@ -48,8 +48,8 @@ def _team_create_update(request, project_slug, language_code=None):
     Handler for creating and updating a team of a project.
     
     This function helps to eliminate duplication of code between those two 
-    actions, and also allows to apply different permissions checks in the 
-    respectives views.
+    actions, and also allows to apply different permission checks in the 
+    respective views.
     """
     project = get_object_or_404(Project, slug=project_slug)
     team = None

@@ -79,7 +79,7 @@ def escape(st):
 
 class Handler(object):
     """
-    Base class for writting file handlers for all the I18N types.
+    Base class for writing file handlers for all the I18N types.
     """
     default_encoding = "utf-8"
 
@@ -119,7 +119,7 @@ class Handler(object):
         if isinstance(language, Language):
             self.language = language
         else:
-            raise Exception("language neeeds to be of type %s" %
+            raise Exception("language needs to be of type %s" %
                 Language.__class__)
 
 

@@ -106,7 +106,7 @@ class ProjectHandler(BaseHandler):
 
         if 'application/json' in request.content_type: # we got JSON
             data = getattr(request, 'data', None)
-            outsource = mainteners = None
+            outsource = maintainers = None
             outsource = data.pop('outsource', {})
             maintainers = data.pop('maintainers', {})
             if project_slug:

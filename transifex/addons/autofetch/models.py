@@ -15,11 +15,11 @@ class URLInfo(models.Model):
     source_file_url = models.URLField(_('Source file URL'), 
         null=True, blank=True, verify_exists=True,
         help_text=_("A URL pointing to the source file of this resource"\
-            " which can be used for auto updating."))
-    auto_update = models.BooleanField(_("Auto update source file"), 
-        default=False, help_text=_("A boolean field representing whether we"\
-        " should periodically pull and merge the source file for the given"\
-        " URL."))
+            " to be used for automatic updates."))
+    auto_update = models.BooleanField(_("Automatically update source file"), 
+        default=False, help_text=_("A boolean field indicating whether the"\
+        " file should be automatically updated by pulling and merging from"\
+        " the given URL."))
 
     # Foreign keys
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),

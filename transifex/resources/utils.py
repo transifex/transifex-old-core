@@ -12,7 +12,7 @@ def key_from_instance(instance):
 
 def cache_set(key, value):
     """
-    Similar to cache.set only it returns the value as well. Usefull when you
+    Similar to cache.set only it returns the value as well. Useful when you
     want to do something like this:
 
     # return cache.set(key,value)
