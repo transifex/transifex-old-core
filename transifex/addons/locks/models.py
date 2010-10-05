@@ -53,7 +53,7 @@ class LockManager(models.Manager):
         # Permission check
         if not Lock.can_lock(resource, language, user):
             raise LockError(_("User '%(user)s' has no permission to submit "
-               "translations for '%(resourse)s' to '%(language)s'.") % {
+               "translations for '%(resource)s' to '%(language)s'.") % {
                "user" : user, "resource" : resource, "language": language})
 
         now = datetime.now()
