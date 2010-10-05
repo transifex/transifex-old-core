@@ -18,7 +18,7 @@ from pygooglechart import StackedHorizontalBarChart, Axis
 NUM_LANGS = 14
 
 def get_sorted_stats(obj):
-    return key_sort(list(obj.language_stats()), '-num_translated')[:NUM_LANGS]
+    return key_sort(obj.language_stats(), '-num_translated')[:NUM_LANGS]
 
 def get_image_url(obj):
     """
