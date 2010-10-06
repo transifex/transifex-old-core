@@ -73,8 +73,8 @@ def msgfmt_check(po_contents, with_exceptions=True):
             raise CommandError(command, status, stderr)
     except CommandError:
         logger.debug("pofile: The 'msgfmt -c' check failed.")
-        raise FileCheckError, ugettext("Your file does not pass by the check "
-            "for correctness (msgfmt -c). Please run this command on "
+        raise FileCheckError, ugettext("Your file failed a correctness check "
+            "(msgfmt -c). Please run this command on "
             "your system to see the errors.")
 
 
