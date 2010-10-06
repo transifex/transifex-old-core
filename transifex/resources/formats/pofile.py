@@ -37,7 +37,7 @@ Storage = get_model('storage', 'StorageFile')
 
 def get_po_contents(pofile):
     """
-    This function takes a pofile object and returns it's contents
+    This function takes a pofile object and returns its contents
     """
 
     # FIXME: Temporary check until a version greater than polib-0.5.3 is out.
@@ -154,7 +154,7 @@ class POHandler(Handler):
         po.metadata['Project-Id-Version'] = self.resource.project.name
         po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
-        # The following is in the specification but it's not being used by po
+        # The following is in the specification but isn't being used by po
         # files. What should we do?
         po.metadata['Language'] = language.code
 

@@ -55,7 +55,7 @@ class LinguistHandler(Handler):
 
     @classmethod
     def contents_check(self, filename):
-        logger.debug("qt: The 'contents_check' method not implemented!")
+        logger.debug("qt: The 'contents_check' method is not implemented!")
 
     def _post_compile(self, *args, **kwargs):
         """
