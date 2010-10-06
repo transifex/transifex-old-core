@@ -43,7 +43,7 @@ def get_po_contents(pofile):
     # FIXME: Temporary check until a version greater than polib-0.5.3 is out.
     # Patch sent to upstream.
     def charset_exists(charset):
-        """Check whether ``charset`` is valid or not."""
+        """Check whether or not ``charset`` is valid."""
         import codecs
         try:
             codecs.lookup(charset)
