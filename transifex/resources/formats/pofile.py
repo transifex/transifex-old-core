@@ -232,6 +232,11 @@ class POHandler(Handler):
                         suggestions.strings.append(suggestion)
 
                     continue
+                else:
+                    # Drop fuzzy flag from template
+                    entry.flags.remove("fuzzy")
+
+
 
             if entry.msgid_plural:
                 pluralized = True

@@ -182,6 +182,11 @@ class LinguistHandler(Handler):
 
                 if is_source:
                     messages = [(5, sourceStringText or sourceString)]
+                    # remove unfinished/obsolete attrs from template
+                    if translation.attributes.has_key("type"):
+                        status = translation.attributes["type"].value.lower()
+                        if status in ["unfinished", "obsolete"]:
+                            del translation.attributes["type"]
                     if pluralized:
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
