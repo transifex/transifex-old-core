@@ -31,18 +31,19 @@ class StatsBase:
         language_ids = self.available_languages_without_teams.values_list('id', flat=True)
 
         team_lang_ids = None
-
+        project = None
         if isinstance(self.object, Project):
             project = self.object
         elif isinstance(self.object, Resource):
             project = self.object.project
 
-        # Check whether project has outsourced its translation access control
-        if project.outsource:
-            project = project.outsource
+        if project:
+            # Check whether project has outsourced its translation access control
+            if project.outsource:
+                project = project.outsource
 
-        team_lang_ids = project.team_set.values_list(
-            'language__id', flat=True)
+            team_lang_ids = project.team_set.values_list('language__id', 
+                flat=True)
 
         # Extending list of language_ids as necessary.
         if team_lang_ids:
