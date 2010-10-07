@@ -121,6 +121,20 @@
         {% endif %}
       </td>
     </tr>
+    {% with resource.releases.all as releases %}
+    {% if releases %}
+     <tr>
+       <th class="i16 release">{% blocktrans count releases|length as counter %}Release:{% plural %}Releases:{% endblocktrans %}</th>
+       <td class="compact">
+         <ul class="simple links">
+            {% for release in releases %}
+                <li><a class="release" href="{% url release_detail project_slug=release.project.slug release_slug=release.slug %}">{{ release.full_name }}</a></li>
+            {% endfor %}
+        </ul>
+       </td>
+     </tr>
+    {% endif %}
+    {% endwith %}
   </table>
 </div>
 
