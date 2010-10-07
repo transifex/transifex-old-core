@@ -150,6 +150,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 alert("No strings to push");
         } else {
 
+            $("div#notification-container div").html("Saving...");
+            $("div#notification-container").fadeIn("slow");
+
             $.ajax({
                 url: push_url,
                 data: JSON.stringify({strings: to_update}), 
@@ -220,6 +223,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 error: function() {
                     alert("Error saving new translation.");
                 },
+                complete: function(){
+                    setTimeout('$("div#notification-container").fadeOut();',1000);
+                }
             });
         }
         if (typeof callback === 'function')
