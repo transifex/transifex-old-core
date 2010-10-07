@@ -74,6 +74,13 @@ function  array_escape(tab)
   return(tab); 
 }
 
+/**
+  *@desc escape strings appropriately to be used in jQuery selectors
+  *@return escaped string 
+  */
+function jqescape(str) {
+ return str.replace(/[#@;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, '\\$&'); 
+}
 
 $(document).ready(function(){
     
