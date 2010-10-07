@@ -92,7 +92,7 @@ class ResizedThumbnailNode(Node):
             generic, extension = os.path.splitext(filename)
             filename = os.path.join(base, "%s.%s%s" % (generic, self.size, extension))
             # Fallback to Gravatar if enabled
-            if gravatar:
+            if gravatar and user:
                 url = gravatar_for_user(user, self.size)
             else:
                 url = filename.replace(settings.MEDIA_ROOT, settings.MEDIA_URL)
