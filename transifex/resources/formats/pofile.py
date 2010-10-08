@@ -170,9 +170,9 @@ class POHandler(Handler):
             po.metadata['Language-Team'] = ("%s <%s>" % (language.name ,
                 team.mainlist))
 
-        stats = ResourceStatsList(self.resource)
-        if stats.last_committer:
-            u = stats.last_committer
+        stat = ResourceStatsList(self.resource).stat(language)
+        if stat.last_committer:
+            u = stat.last_committer
             po.metadata['Last-Translator'] = ("%s <%s>" %
                 (u.get_full_name() or u.username , u.email))
 
