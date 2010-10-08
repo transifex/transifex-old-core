@@ -158,6 +158,9 @@ class POHandler(Handler):
         # files. What should we do?
         po.metadata['Language'] = language.code
 
+        if 'fuzzy' in po.metadata_is_fuzzy:
+            po.metadata_is_fuzzy.remove('fuzzy')
+
         try:
             team = Team.objects.get(language = language,
                 project = self.resource.project)
