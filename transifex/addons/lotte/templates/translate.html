@@ -17,6 +17,9 @@
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
+  <!--[if IE]>
+    <link media="screen" href="{{ STATIC_URL }}lotte/css/ie.lotte.css" type="text/css" rel="stylesheet"/>
+  <![endif]-->
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
@@ -35,6 +38,8 @@
     var is_supported_lang = null;
     var oTable;
     /* vars for string calcs */
+    var translated;
+    var untranslated;
     var translated_strings = {{ translated_strings }} 
     var untranslated_strings = {{ untranslated_strings }} 
     var total_strings = translated_strings + untranslated_strings;
@@ -259,8 +264,8 @@
                     var push_url = '{% url push_translation project.slug target_language.code %}';
                     if ( stringset ) {    
                         // Modified strings should be saved or dropped on page change.
-                        translated = stringset.translated// - stringset.translated_modified;
-                        untranslated = stringset.untranslated// - stringset.untranslated_modified;
+                        translated = stringset.translated; // - stringset.translated_modified;
+                        untranslated = stringset.untranslated; // - stringset.untranslated_modified;
                     } else { 
                         translated = translated_strings;
                         untranslated = untranslated_strings;

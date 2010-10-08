@@ -21,10 +21,12 @@ div.source_string_wrapper {
 
 div.translation_wrapper {
   position:relative;
+  /* height:100%; Breaks plurals if enabled */
 }
 
 textarea.translation {
   width:95%;
+  height:100%;
 }
 
 textarea.default_translation {
@@ -41,11 +43,13 @@ div.lotte-actions {
 }
 
 div.lotte-actions #auto_translate_wrapper{
+  height:100%;
   position:relative;
   right:-90px;
 }
 
 div.lotte-actions #copy_source_wrapper{
+  height:100%;
   position:relative;
   right:-79px;
 }

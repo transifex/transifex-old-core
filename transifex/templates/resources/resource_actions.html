@@ -50,7 +50,7 @@
 
     <div class="stats_wrapper">
       {% with 300 as barwidth %}
-      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.num_translated }}<br />{% trans "Untranslated: " %}{{ stats.num_untranslated }}">
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.num_translated }},{% trans "Untranslated: " %}{{ stats.num_untranslated }}">
           <div class="stats_string_resource_actions" >
               {{ stats.trans_percent }}% 
           </div> 

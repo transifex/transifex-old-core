@@ -33,6 +33,7 @@
 .dataTables_wrapper {
     font-size:0.85em;
 	min-height: 302px;
+	height: 100%;
 	clear: both;
 	_height: 302px;
 	zoom: 1; /* Feeling sorry for IE */
@@ -234,9 +235,21 @@ table.display tr.even.gradeU {
 }
 
 .dataTables_wrapper table tbody td{
-  min-height: 70px;
+  padding-bottom: 0;
+  padding-top: 0;
+  min-height: 86px;
   height: 100%;
   overflow: visible; /* TODO: Discuss about this!*/
+}
+
+.dataTables_wrapper table tbody td.msg {
+  padding-top: 0.5em;
+/*    color: #3B5998;*/
+  color: #4F4F4F;
+  font-size: 12px;
+  padding-left: 1em;
+  overflow:hidden;
+  vertical-align:top;
 }
 
 .dataTables_wrapper table tbody tr.metatr td{
@@ -283,16 +296,6 @@ thead tr th{
 tbody td.notes{
     text-align:center;
     min-width:60px;
-}
-
-tbody td.msg{
-/*    color: #3B5998;*/
-    color: #4F4F4F;
-    font-size: 12px;
-    padding-left: 1em;
-    padding-top: 4px;
-    overflow:hidden;
-    vertical-align:top;
 }
 
 .dataTables_wrapper table tbody tr.odd:hover,
@@ -612,4 +615,5 @@ textarea.untranslated{
 .source_string {
   overflow:visible;
   text-shadow: 1px 1px 0px #fff;
+  padding-bottom:1.25em;
 }
