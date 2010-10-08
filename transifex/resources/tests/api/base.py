@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 from django.conf import settings
-from languages.models import Language
-from txcommon.tests.base import BaseTestCase
-from resources.formats.pofile import POHandler
-from resources.models import Resource
-from resources.tests.api.utils import ORIGINAL, TRANSLATION
+from transifex.languages.models import Language
+from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.formats.pofile import POHandler
+from transifex.resources.models import Resource
+from transifex.resources.tests.api.utils import ORIGINAL, TRANSLATION
 
 
 

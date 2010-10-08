@@ -1,7 +1,7 @@
 import os
 from django.core.management.base import NoArgsCommand
 from notification import models as notification
-from txcommon.notifications import NOTICE_TYPES
+from transifex.txcommon.notifications import NOTICE_TYPES
 
 def create_notice_types():
     for n in NOTICE_TYPES:

@@ -5,11 +5,11 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from models import Suggestion
-from languages.models import Language
+from transifex.languages.models import Language
 #from projects.models import Project
 #from projects.permissions import *
-from projects.permissions.project import ProjectPermission
-from resources.models import SourceEntity
+from transifex.projects.permissions.project import ProjectPermission
+from transifex.resources.models import SourceEntity
 #from txcommon.decorators import one_perm_required_or_403
 
 from authority.views import permission_denied

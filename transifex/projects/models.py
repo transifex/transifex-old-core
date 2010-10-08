@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 from datetime import datetime
+import tagging
+from tagging.fields import TagField
 import markdown
 
 from django.conf import settings
@@ -17,16 +19,8 @@ from django.utils.html import escape
 
 from authority.models import Permission
 from notification.models import ObservedItem
-import tagging
-from tagging.fields import TagField
 
-from languages.models import Language
-from txcommon.log import logger, log_model
-from txcommon.utils import cached_property
-from projects import signals
-
-SourceEntity = get_model('resources', 'SourceEntity')
-Translation = get_model('resources', 'Translation')
+from transifex.txcommon.log import log_model
 
 class DefaultProjectManager(models.Manager):
     """
@@ -176,6 +170,6 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('project_detail', None, { 'project_slug': self.slug })
 
+
 tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
-

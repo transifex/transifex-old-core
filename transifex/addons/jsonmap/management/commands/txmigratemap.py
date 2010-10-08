@@ -5,8 +5,8 @@ from django.conf import settings
 from django.core.management.base import CommandError, BaseCommand
 from django.db import models
 
-from txcommon.commands import run_command
-from txcommon.log import logger
+from transifex.txcommon.commands import run_command
+from transifex.txcommon.log import logger
 
 from jsonmap.models import JSONMap
 
@@ -27,11 +27,11 @@ class Command(BaseCommand):
 
         # OMG!1! Dirty fix for circular importing issues. Didn't want to dig
         # into it because it's probably not worth, once it's a tmp code.
-        from resources.formats import get_i18n_type_from_file
-        from resources.formats.pofile import POHandler
-        from languages.models import Language
-        from projects.models import Project
-        from resources.models import Resource
+        from transifex.resources.formats import get_i18n_type_from_file
+        from transifex.resources.formats.pofile import POHandler
+        from transifex.languages.models import Language
+        from transifex.projects.models import Project
+        from transifex.resources.models import Resource
 
         datadir = options.get('datadir')
         filename = options.get('filename')

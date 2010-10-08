@@ -4,10 +4,10 @@ from django.template import RequestContext
 
 from django.utils.translation import ugettext as _
 
-from txcommon.decorators import one_perm_required_or_403
-from projects.models import Project
-from projects.permissions import pr_resource_priority
-from resources.models import Resource
+from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.projects.models import Project
+from transifex.projects.permissions import pr_resource_priority
+from transifex.resources.models import Resource
 
 # Allow only maintainers to cycle priority
 @one_perm_required_or_403(pr_resource_priority,

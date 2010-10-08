@@ -1,6 +1,6 @@
 
 from django.db.models import signals, get_model
-from languages import models as lang_app
+#from transifex.languages import models as lang_app
 
 Language = get_model('languages', 'Language')
 

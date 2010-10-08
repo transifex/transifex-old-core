@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from languages.models import Language
-from resources.models import Resource, SourceEntity
+from transifex.languages.models import Language
+from transifex.resources.models import Resource, SourceEntity
 
 class Suggestion(models.Model):
     """

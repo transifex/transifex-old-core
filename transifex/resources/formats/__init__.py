@@ -1,5 +1,5 @@
 from django.conf import settings
-from txcommon import import_to_python
+from transifex.txcommon import import_to_python
 
 def get_i18n_type_from_file(filename):
     """

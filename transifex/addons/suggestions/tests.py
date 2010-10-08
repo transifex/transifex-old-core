@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 

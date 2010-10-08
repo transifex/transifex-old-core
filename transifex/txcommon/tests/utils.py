@@ -1,5 +1,5 @@
-from txcommon.tests.base import USER_ROLES
-from txcommon.log import logger
+from transifex.txcommon.tests.base import USER_ROLES
+from transifex.txcommon.log import logger
 
 def getitem(list, index, default=None):
     """

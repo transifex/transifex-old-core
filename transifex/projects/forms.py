@@ -11,9 +11,9 @@ from django.utils.safestring import mark_safe
 
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from projects.models import Project
-from projects.signals import project_access_control_form_start
-from releases.models import Release
+from transifex.projects.models import Project
+from transifex.projects.signals import project_access_control_form_start
+from transifex.releases.models import Release
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,

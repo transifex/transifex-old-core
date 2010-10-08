@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import *
 from views import *
 
-from resources.urls import RESOURCE_LANG_URL
+from transifex.resources.urls import RESOURCE_LANG_URL
 
 #FIXME: Move this to resource if we agree.
 ENTITY_URL = '^entities/(?P<entity_id>\d+)/'

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group, SiteProfileNotAvailable
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models, transaction
-from txcommon.log import logger
+from transifex.txcommon.log import logger
 
 if not settings.AUTH_PROFILE_MODULE:
     raise SiteProfileNotAvailable

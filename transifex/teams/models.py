@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from languages.models import Language
-from projects.models import Project
-from txcommon.log import log_model
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.txcommon.log import log_model
 
 class TeamManager(models.Manager):
 

@@ -6,8 +6,8 @@ from django.db import models
 from django.utils import simplejson
 from django.utils.translation import ugettext_lazy as _
 
-from txcommon.db.models import CompressedTextField
-from txcommon.log import logger
+from transifex.txcommon.db.models import CompressedTextField
+from transifex.txcommon.log import logger
 
 from jsonmap.utils import remove_attrs_startwith
 

@@ -12,23 +12,23 @@ from piston.handler import BaseHandler
 from piston.utils import rc, throttle
 
 from actionlog.models import action_logging
-from languages.models import Language
-from projects.models import Project
-from projects.permissions import *
-from projects.permissions.project import ProjectPermission
-from projects.signals import post_submit_translation
-from resources.decorators import method_decorator
-from resources.formats import get_i18n_type_from_file, pofile, qt
-from resources.models import * 
-from storage.models import StorageFile
-from teams.models import Team
-from txcommon.log import logger
-from txcommon.decorators import one_perm_required_or_403
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.projects.permissions.project import ProjectPermission
+from transifex.projects.signals import post_submit_translation
+from transifex.resources.decorators import method_decorator
+from transifex.resources.formats import get_i18n_type_from_file, pofile, qt
+from transifex.resources.models import * 
+from transifex.storage.models import StorageFile
+from transifex.teams.models import Team
+from transifex.txcommon.log import logger
+from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.api.utils import BAD_REQUEST
 from uuid import uuid4
 
 # Temporary
-from txcommon import notifications as txnotification
+from transifex.txcommon import notifications as txnotification
 
 class ProjectHandler(BaseHandler):
     """

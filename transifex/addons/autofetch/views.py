@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
-from projects.models import Project
-from projects.permissions import *
-from txcommon.decorators import one_perm_required_or_403
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.txcommon.decorators import one_perm_required_or_403
 from models import URLInfo
 
 @one_perm_required_or_403(pr_resource_add_change,

@@ -12,10 +12,10 @@ from actionlog.models import action_logging
 from authority.models import Permission
 from authority.views import get_next
 from notification import models as notification
-from txpermissions.templatetags.txpermissions import (txadd_url_for_obj,
+from transifex.txpermissions.templatetags.txpermissions import (txadd_url_for_obj,
                                                       txrequest_url_for_obj,
                                                       txurl_for_obj)
-from txpermissions.forms import UserAjaxPermissionForm
+from transifex.txpermissions.forms import UserAjaxPermissionForm
 
 def _send_notice_save_action(request, notice):
     """ 

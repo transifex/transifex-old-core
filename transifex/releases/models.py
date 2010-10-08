@@ -11,10 +11,7 @@ from django.db import models, IntegrityError
 from django.db.models import permalink
 from django.utils.html import escape
 
-from languages.models import Language
-from resources.models import Translation, SourceEntity
-
-from txcommon.log import logger, log_model
+from transifex.txcommon.log import log_model
 
 class Release(models.Model):
 

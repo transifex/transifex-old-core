@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_noop as _
-from txcommon.notifications import NOTICE_TYPES
+from transifex.txcommon.notifications import NOTICE_TYPES
 
 # TODO: Move to signal based architecture
 #       This would make heavy use of underlying database

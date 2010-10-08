@@ -1,8 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext as _
-from languages.models import Language
-from storage.models import StorageFile
-from storage.widgets import StorageFileWidget
+from transifex.languages.models import Language
+from transifex.storage.models import StorageFile
+from transifex.storage.widgets import StorageFileWidget
 
 
 class StorageFileField(forms.MultiValueField):

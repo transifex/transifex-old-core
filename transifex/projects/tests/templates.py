@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 class TemplateTests(BaseTestCase):

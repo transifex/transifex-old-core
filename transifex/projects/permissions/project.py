@@ -5,9 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 
 import authority
 from authority.permissions import BasePermission
-from projects.models import Project
-from teams.models import Team
-from txcommon.log import logger
+from transifex.projects.models import Project
+from transifex.teams.models import Team
+from transifex.txcommon.log import logger
 
 
 def _check_outsource_project(obj):

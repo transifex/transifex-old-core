@@ -1,5 +1,5 @@
 from django.contrib import admin
-from teams.models import Team
+from transifex.teams.models import Team
 
 class TeamAdmin(admin.ModelAdmin):
     search_fields = ['project__name', 'language__name', 

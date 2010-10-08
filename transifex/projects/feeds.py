@@ -5,11 +5,11 @@ from django.contrib.sites.models import Site
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from languages.models import Language
-from projects.models import Project
-from releases.models import Release
-from resources.stats import ReleaseStatsList
-from txcommon.utils import key_sort
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.releases.models import Release
+from transifex.resources.stats import ReleaseStatsList
+from transifex.txcommon.utils import key_sort
 
 current_site = Site.objects.get_current()
 

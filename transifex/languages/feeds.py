@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.syndication.feeds import Feed
 from django.contrib.sites.models import Site
 from models import Language
-from txcommon.utils import key_sort
+from transifex.txcommon.utils import key_sort
 current_site = Site.objects.get_current()
 
 class AllLanguages(Feed):

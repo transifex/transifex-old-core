@@ -16,10 +16,10 @@ from django.views.generic import list_detail
 from notification import models as notification
 
 from actionlog.models import LogEntry, action_logging
-from languages.models import Language
-from projects.models import Project
-from txcommon.filters import LogEntryFilter
-from txcommon.log import logger
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.txcommon.filters import LogEntryFilter
+from transifex.txcommon.log import logger
 
 
 def permission_denied(request, template_name=None, extra_context={}, *args, 

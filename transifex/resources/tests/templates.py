@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from languages.models import Language
-from resources.models import SourceEntity
-from teams.models import Team
-from txcommon.tests.base import BaseTestCase
+from transifex.languages.models import Language
+from transifex.resources.models import SourceEntity
+from transifex.teams.models import Team
+from transifex.txcommon.tests.base import BaseTestCase
 
 class ResourcesTemplateTests(BaseTestCase):
 

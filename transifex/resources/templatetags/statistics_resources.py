@@ -2,7 +2,7 @@ import operator
 
 from django import template
 from django.utils.timesince import timesince
-from languages.models import Language
+from transifex.languages.models import Language
 
 register = template.Library()
 

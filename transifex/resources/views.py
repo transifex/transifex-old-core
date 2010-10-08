@@ -15,19 +15,19 @@ from django.utils.translation import ugettext as _
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
-from resources.formats import get_i18n_handler_from_type
-from languages.models import Language
-from projects.models import Project
-from projects.permissions import *
-from projects.permissions.project import ProjectPermission
-from projects.signals import post_resource_save, post_resource_delete
-from teams.models import Team
-from txcommon.decorators import one_perm_required_or_403
+from transifex.resources.formats import get_i18n_handler_from_type
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.projects.permissions.project import ProjectPermission
+from transifex.projects.signals import post_resource_save, post_resource_delete
+from transifex.teams.models import Team
+from transifex.txcommon.decorators import one_perm_required_or_403
 
-from resources.forms import ResourceForm
-from resources.models import Translation, Resource
-from resources.stats import ResourceStatsList, ProjectStatsList
-from resources.handlers import invalidate_stats_cache
+from transifex.resources.forms import ResourceForm
+from transifex.resources.models import Translation, Resource
+from transifex.resources.stats import ResourceStatsList, ProjectStatsList
+from transifex.resources.handlers import invalidate_stats_cache
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo

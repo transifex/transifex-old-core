@@ -5,12 +5,12 @@ from django.conf import settings
 from django.utils.hashcompat import md5_constructor
 from django.utils.http import urlquote
 from actionlog.models import action_logging
-from projects.signals import post_resource_save, post_resource_delete
-from txcommon import notifications as txnotification
-from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
-from resources.utils import invalidate_object_cache
-from resources.stats import ResourceStatsList
-from teams.models import Team
+from transifex.projects.signals import post_resource_save, post_resource_delete
+from transifex.txcommon import notifications as txnotification
+from transifex.resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
+from transifex.resources.utils import invalidate_object_cache
+from transifex.resources.stats import ResourceStatsList
+from transifex.teams.models import Team
 
 def invalidate_stats_cache(resource, language=None, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""

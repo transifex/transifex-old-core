@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.db.models.loading import get_model
 from django.utils import simplejson as json
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 from utils import *
 
 Translation = get_model('resources', 'Translation')

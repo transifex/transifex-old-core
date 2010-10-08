@@ -4,16 +4,16 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
-from projects.feeds import LatestProjects, ProjectFeed, ReleaseFeed, \
+from transifex.projects.feeds import LatestProjects, ProjectFeed, ReleaseFeed, \
     ReleaseLanguageFeed
-from projects.models import Project
-from projects.views import *
-from projects.views.project import *
-from projects.views.permission import *
-from projects.views.team import *
-from projects.views.release import *
+from transifex.projects.models import Project
+from transifex.projects.views import *
+from transifex.projects.views.project import *
+from transifex.projects.views.permission import *
+from transifex.projects.views.team import *
+from transifex.projects.views.release import *
 
-from txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.decorators import one_perm_required_or_403
 
 from transifex.urls import PROJECTS_URL
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
-from txcommon.tests.base import BaseTestCase
-from languages.models import Language
-from resources.models import Translation
-from projects.models import Project
+from transifex.txcommon.tests.base import BaseTestCase
+from transifex.languages.models import Language
+from transifex.resources.models import Translation
+from transifex.projects.models import Project
 
 
 class ModelTests(BaseTestCase):

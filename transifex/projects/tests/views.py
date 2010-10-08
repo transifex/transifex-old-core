@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 class StatusTests(BaseTestCase):

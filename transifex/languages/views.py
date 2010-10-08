@@ -8,8 +8,8 @@ from django.contrib.syndication.views import feed
 from django.template import RequestContext
 
 from models import Language
-from projects.models import Project
-from releases.models import Release
+from transifex.projects.models import Project
+from transifex.releases.models import Release
 
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """

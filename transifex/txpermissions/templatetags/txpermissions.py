@@ -8,7 +8,7 @@ from authority import permissions, get_check
 from authority.models import Permission
 from authority.templatetags.permissions import ResolverNode, url_for_obj
 
-from projects.permissions.project import ProjectPermission
+from transifex.projects.permissions.project import ProjectPermission
 #FIXME: the module forms cannot be located else
 from transifex.txpermissions.forms import UserAjaxPermissionForm
 

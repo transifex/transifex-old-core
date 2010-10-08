@@ -1,10 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from languages.models import Language
-from storage.fields import StorageFileField
-from storage.models import StorageFile
-from storage.widgets import StorageFileWidget
-from resources.models import Resource
+from transifex.languages.models import Language
+from transifex.storage.fields import StorageFileField
+from transifex.storage.models import StorageFile
+from transifex.storage.widgets import StorageFileWidget
+from transifex.resources.models import Resource
 
 class ResourceForm(forms.ModelForm):
 

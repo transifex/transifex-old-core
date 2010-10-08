@@ -1,8 +1,8 @@
 from django.core.cache import cache
-from languages.models import Language
-from projects.models import Project
-from resources.models import Resource, Translation, SourceEntity
-from resources.utils import *
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.resources.models import Resource, Translation, SourceEntity
+from transifex.resources.utils import *
 
 class StatsBase:
     """A low-level statistics-holding object to inherit from.

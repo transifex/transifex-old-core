@@ -16,17 +16,17 @@ from django.views.generic import list_detail
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
-from languages.models import Language
-from projects.models import Project
-from projects.permissions import *
-from projects.permissions.project import ProjectPermission
-from resources.models import (Translation, Resource, SourceEntity)
-from resources.handlers import invalidate_stats_cache
-from teams.models import Team
-from txcommon.decorators import one_perm_required_or_403
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.projects.permissions.project import ProjectPermission
+from transifex.resources.models import (Translation, Resource, SourceEntity)
+from transifex.resources.handlers import invalidate_stats_cache
+from transifex.teams.models import Team
+from transifex.txcommon.decorators import one_perm_required_or_403
 
 # Temporary
-from txcommon import notifications as txnotification
+from transifex.txcommon import notifications as txnotification
 
 Suggestion = get_model('suggestions', 'Suggestion')
 

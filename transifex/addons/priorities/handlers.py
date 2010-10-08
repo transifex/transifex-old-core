@@ -2,8 +2,8 @@
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
 from models import ResourcePriority
-from resources.models import Resource
-from txcommon.log import logger
+from transifex.resources.models import Resource
+from transifex.txcommon.log import logger
 
 
 def priority_creation(**kwargs):

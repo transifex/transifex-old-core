@@ -2,15 +2,15 @@
 from django.conf.urls.defaults import *
 from piston.resource import Resource
 #from piston.authentication import OAuthAuthentication
-from api.authentication import CustomHttpBasicAuthentication
+from transifex.api.authentication import CustomHttpBasicAuthentication
 
 #TODO: Implement full support for OAUTH and refactor URLs!
 #auth = OAuthAuthentication(realm='Transifex API')
 
-from languages.api import LanguageHandler
-from projects.api import ProjectHandler, ProjectResourceHandler
-from resources.api import (ResourceHandler, FileHandler, StatsHandler)
-from storage.api import StorageHandler
+from transifex.languages.api import LanguageHandler
+from transifex.projects.api import ProjectHandler, ProjectResourceHandler
+from transifex.resources.api import (ResourceHandler, FileHandler, StatsHandler)
+from transifex.storage.api import StorageHandler
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
 

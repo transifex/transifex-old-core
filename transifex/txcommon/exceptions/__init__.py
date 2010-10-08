@@ -2,7 +2,7 @@ import sys
 import traceback
 from django.core.mail import mail_admins
 from django.conf import settings
-from txcommon.log import logger
+from transifex.txcommon.log import logger
 
 class FileCheckError(Exception):
     """Exception for file checks errors"""

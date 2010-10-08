@@ -5,9 +5,9 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType        
-from languages.models import Language
-from projects.models import Project
-from txcommon.tests.base import BaseTestCase
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 JSON_RESPONSE = "google.visualization.Query.setResponse({'version':'0.6', 'reqId':'0', 'status':'OK', 'table': {cols:[{id:'lang',label:'Language',type:'string'},{id:'trans',label:'Translated',type:'number'}],rows:[]}});"

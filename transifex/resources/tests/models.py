@@ -4,8 +4,8 @@ from django.conf import settings
 from django.test import TestCase
 from hashlib import md5
 
-from resources.models import *
-from txcommon.tests.base import BaseTestCase
+from transifex.resources.models import *
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 #from IPython.Shell import IPShellEmbed

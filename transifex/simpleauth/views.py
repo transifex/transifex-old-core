@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
-from simpleauth.util import clean_next
+from transifex.simpleauth.util import clean_next
 
 
 @login_required

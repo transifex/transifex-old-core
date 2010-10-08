@@ -4,10 +4,10 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from languages.models import Language
-from storage.models import StorageFile
-from txcommon.log import logger
-from txcommon.utils import get_url_pattern
+from transifex.languages.models import Language
+from transifex.storage.models import StorageFile
+from transifex.txcommon.log import logger
+from transifex.txcommon.utils import get_url_pattern
 
 class StorageFileWidget(forms.MultiWidget):
     """

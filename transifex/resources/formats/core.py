@@ -5,11 +5,11 @@ from django.utils import simplejson as json
 
 from django.db import transaction
 from django.db.models import get_model
-from txcommon.log import logger
-from languages.models import Language
+from transifex.txcommon.log import logger
+from transifex.languages.models import Language
 from suggestions.models import Suggestion
-from resources.formats.decorators import *
-from resources.handlers import invalidate_stats_cache
+from transifex.resources.formats.decorators import *
+from transifex.resources.handlers import invalidate_stats_cache
 
 """
 STRICT flag is used to switch between two parsing modes:

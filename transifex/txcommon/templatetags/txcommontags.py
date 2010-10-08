@@ -7,8 +7,8 @@ from django.utils.html import conditional_escape
 from django.utils.translation import ugettext as _
 from django.template import Node, NodeList, TemplateSyntaxError
 from actionlog.models import LogEntry
-from projects.models import Project
-import txcommon
+from transifex.projects.models import Project
+from transifex import txcommon
 
 register = template.Library()
 

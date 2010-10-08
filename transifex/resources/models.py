@@ -13,23 +13,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import simplejson as json
 from django.contrib.auth.models import User
 
-from languages.models import Language
-from projects.models import Project
-from storage.models import StorageFile
-from txcommon.db.models import CompressedTextField
-from txcommon.log import logger
-
-from resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
-
-
-# TODO: Parsers need to be somewhat rewritten, currently each one implements
-# parse(buf) function which returns lib.core.StringSet class, and
-# compile(stringset) which returns file buffer.
-#
-# It actually makes more sense to store all uploaded files, parse only the
-# information we are interested in, and during compilation, take the uploaded
-# file as template, and just replace modified parts
-
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.storage.models import StorageFile
+from transifex.txcommon.db.models import CompressedTextField
+from transifex.txcommon.log import logger
 
 class ResourceManager(models.Manager):
     pass
@@ -331,11 +319,11 @@ class Template(models.Model):
         verbose_name_plural = _('Templates')
         ordering = ['resource']
 
-from resources.formats.qt import LinguistHandler # Qt4 TS files
+from transifex.resources.formats.qt import LinguistHandler # Qt4 TS files
 #from resources.formats.java import JavaPropertiesParser # Java .properties
 #from resources.formats.apple import AppleStringsParser # Apple .strings
 #from resources.formats.ruby import YamlParser # Ruby On Rails (broken)
 #from resources.formats.resx import ResXmlParser # Microsoft .NET (not finished)
-from resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
+from transifex.resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
 
 PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsParser]

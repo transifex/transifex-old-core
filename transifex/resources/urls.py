@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
-from projects.urls import PROJECTS_URL, PROJECT_URL, PROJECT_URL_PARTIAL
-from resources.views import *
+from transifex.projects.urls import PROJECTS_URL, PROJECT_URL, PROJECT_URL_PARTIAL
+from transifex.resources.views import *
 
 # General URLs:
 urlpatterns = patterns('',

@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from languages.models import Language
-from resources.models import Translation
+from transifex.languages.models import Language
+from transifex.resources.models import Translation
 
 DEFAULT_LANG_CODE = 'en'
 

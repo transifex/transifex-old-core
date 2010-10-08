@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 
 
 class PrioritiesModelTests(BaseTestCase):

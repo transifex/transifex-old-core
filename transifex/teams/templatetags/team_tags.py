@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
-from teams.models import Team
+from transifex.teams.models import Team
 
 register = template.Library()
 

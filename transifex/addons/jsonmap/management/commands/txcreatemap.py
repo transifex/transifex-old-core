@@ -6,8 +6,8 @@ from django.db.models import Q, get_model
 from django.template.defaultfilters import slugify
 from django.utils import simplejson
 
-from txcommon import version_full as VERSION
-from txcommon.log import logger
+from transifex.txcommon import version_full as VERSION
+from transifex.txcommon.log import logger
 
 from jsonmap.models import JSONMap
 

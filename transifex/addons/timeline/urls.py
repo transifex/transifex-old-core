@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls.defaults import *
-from projects.models import Project
+from transifex.projects.models import Project
 from views import user_timeline, project_timeline
 
-from projects.urls import PROJECT_URL
+from transifex.projects.urls import PROJECT_URL
 
 urlpatterns = patterns('',
     url(

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from storage.models import StorageFile
+from transifex.storage.models import StorageFile
 
 class StorageAdmin(admin.ModelAdmin):
     search_fields = ['name', 'size', 'language__name', 'user__username',

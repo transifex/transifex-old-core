@@ -15,19 +15,19 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 from actionlog.models import action_logging
-from languages.models import Language
+from transifex.languages.models import Language
 from notification import models as notification
-from projects.models import Project
-from projects.permissions import *
-from projects.signals import pre_team_request, pre_team_join, ClaNotSignedError
-from resources.stats import ProjectStatsList
-from teams.forms import TeamSimpleForm, TeamRequestSimpleForm
-from teams.models import Team, TeamAccessRequest, TeamRequest
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.projects.signals import pre_team_request, pre_team_join, ClaNotSignedError
+from transifex.resources.stats import ProjectStatsList
+from transifex.teams.forms import TeamSimpleForm, TeamRequestSimpleForm
+from transifex.teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
-from txcommon import notifications as txnotification
+from transifex.txcommon import notifications as txnotification
 
-from txcommon.decorators import one_perm_required_or_403, access_off
-from txcommon.log import logger
+from transifex.txcommon.decorators import one_perm_required_or_403, access_off
+from transifex.txcommon.log import logger
 
 
 def team_off(request, project, *args, **kwargs):

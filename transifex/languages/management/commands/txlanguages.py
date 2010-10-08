@@ -9,7 +9,7 @@ from django.utils import simplejson
 from django.core import serializers
 from django.core.management.base import (BaseCommand, LabelCommand, CommandError)
 from django.conf import settings
-from languages.models import Language
+from transifex.languages.models import Language
 
 _DEFAULT_FIXTURE = 'languages/fixtures/all_languages.json'
 

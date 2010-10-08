@@ -3,9 +3,9 @@ from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.test.client import Client
 from django.utils import simplejson as json
-from languages.models import Language
-from resources.models import Resource, Translation
-from txcommon.tests.base import BaseTestCase
+from transifex.languages.models import Language
+from transifex.resources.models import Resource, Translation
+from transifex.txcommon.tests.base import BaseTestCase
 
 class CoreViewsTest(BaseTestCase):
     """Test basic view function"""

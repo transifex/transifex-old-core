@@ -5,10 +5,10 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.sites.models import Site
 from notification  import models as notification
-from resources.models import Resource
-from txcommon.log import logger
+from transifex.resources.models import Resource
+from transifex.txcommon.log import logger
 from txcron.signals import cron_daily, cron_hourly
-from projects.signals import pre_submit_translation, post_submit_translation
+from transifex.projects.signals import pre_submit_translation, post_submit_translation
 from lotte.signals import lotte_init, lotte_done
 from models import Lock, LockError
 

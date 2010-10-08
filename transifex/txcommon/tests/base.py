@@ -8,7 +8,7 @@ from django.test.client import Client
 from django.contrib.auth.models import User, Group, Permission as DjPermission
 from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
-from txcommon.notifications import NOTICE_TYPES
+from transifex.txcommon.notifications import NOTICE_TYPES
 
 # Load models
 Language = get_model('languages', 'Language')

@@ -6,7 +6,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth import views as auth_views
 from django.utils.translation import ugettext as _
-from simpleauth.views import login, logout, account_settings, profile_public
+from transifex.simpleauth.views import login, logout, account_settings, profile_public
 
 urlpatterns = patterns('',
     url(r'^login/$', login, name='login'),

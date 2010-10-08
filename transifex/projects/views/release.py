@@ -8,17 +8,17 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
-from languages.models import Language
-from projects.models import Project
-from projects.forms import ReleaseForm
-from projects.permissions import (pr_release_add_change, pr_release_delete)
-from releases.models import Release
-from resources.stats import ReleaseStatsList
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.projects.forms import ReleaseForm
+from transifex.projects.permissions import (pr_release_add_change, pr_release_delete)
+from transifex.releases.models import Release
+from transifex.resources.stats import ReleaseStatsList
 
 # Temporary
-from txcommon import notifications as txnotification
-from txcommon.decorators import one_perm_required_or_403
-from txcommon.log import logger
+from transifex.txcommon import notifications as txnotification
+from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.log import logger
 
 
 ##############################################

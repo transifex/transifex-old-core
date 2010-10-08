@@ -1,5 +1,5 @@
 import time
-from txcommon.log import logger
+from transifex.txcommon.log import logger
 
 class TimeoutException(Exception):
     def __init__(self, command, stderr=None):

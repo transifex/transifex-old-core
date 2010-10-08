@@ -9,18 +9,18 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 from authority.models import Permission
 from authority.views import permission_denied
-from projects.forms import ProjectAccessControlForm
-from projects.models import Project
-from projects.permissions import *
-from projects.permissions.project import ProjectPermission
+from transifex.projects.forms import ProjectAccessControlForm
+from transifex.projects.models import Project
+from transifex.projects.permissions import *
+from transifex.projects.permissions.project import ProjectPermission
 
 # Temporary
-from txcommon import notifications as txnotification
+from transifex.txcommon import notifications as txnotification
 
-from txcommon.decorators import one_perm_required_or_403, access_off
-from txcommon.log import logger
-from txcommon.views import permission_denied
-from txpermissions.views import (add_permission_or_request,
+from transifex.txcommon.decorators import one_perm_required_or_403, access_off
+from transifex.txcommon.log import logger
+from transifex.txcommon.views import permission_denied
+from transifex.txpermissions.views import (add_permission_or_request,
                                  approve_permission_request,
                                  delete_permission_or_request)
 

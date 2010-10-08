@@ -2,11 +2,11 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from locks.models import Lock
-from resources.models import Resource
-from teams.models import Team
-from languages.models import Language
-from txcommon.tests.base import BaseTestCase
-from txcommon.log import logger
+from transifex.resources.models import Resource
+from transifex.teams.models import Team
+from transifex.languages.models import Language
+from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.log import logger
 from notification.models import Notice
 
 # These Languages and POFiles should exist:

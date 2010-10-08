@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from resources.models import *
+from transifex.resources.models import *
 
 class ResourceAdmin(admin.ModelAdmin):
     search_fields = ['slug', 'name', 'project__name', 'source_language__name']

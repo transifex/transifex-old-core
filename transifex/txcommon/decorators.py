@@ -12,8 +12,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from authority import permissions, get_check
-from txcommon.views import permission_denied
-from projects.models import Project
+from transifex.txcommon.views import permission_denied
+from transifex.projects.models import Project
 
 class access_off(object):
     """

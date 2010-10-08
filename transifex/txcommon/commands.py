@@ -1,9 +1,9 @@
 import os
 import subprocess
-from txcommon.log import logger
+from transifex.txcommon.log import logger
 
 from django.core.files.uploadedfile import UploadedFile
-from txcommon.log import logger
+from transifex.txcommon.log import logger
 
 def python_to_args(**kwargs):
     """

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test.client import Client
-from projects.models import Project
+from transifex.projects.models import Project
 
 class TestCharts(BaseTestCase):
     def setUp(self):

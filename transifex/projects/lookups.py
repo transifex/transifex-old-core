@@ -1,5 +1,5 @@
 from django.db.models import Q
-from projects.models import Project
+from transifex.projects.models import Project
 
 class ProjectsLookup(object):
     """A lookup class, used by django-ajax-select app to search Project objects."""

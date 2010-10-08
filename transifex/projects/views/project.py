@@ -13,22 +13,22 @@ from django.contrib.auth.decorators import login_required
 from actionlog.models import action_logging, LogEntry
 from actionlog.filters import LogEntryFilter
 from notification import models as notification
-from projects.models import Project
-from projects.forms import ProjectAccessControlForm, ProjectForm
-from projects.permissions import *
-from projects import signals
+from transifex.projects.models import Project
+from transifex.projects.forms import ProjectAccessControlForm, ProjectForm
+from transifex.projects.permissions import *
+from transifex.projects import signals
 
-from languages.models import Language
-from resources.stats import ProjectStatsList
+from transifex.languages.models import Language
+from transifex.resources.stats import ProjectStatsList
 
 # Temporary
-from txcommon import notifications as txnotification
+from transifex.txcommon import notifications as txnotification
 
-from txcommon.decorators import one_perm_required_or_403
-from txcommon.log import logger
-from txcommon.views import json_result, json_error
+from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.log import logger
+from transifex.txcommon.views import json_result, json_error
 # To calculate user_teams
-from teams.models import Team
+from transifex.teams.models import Team
 
 def _project_create_update(request, project_slug=None,
     template_name='projects/project_form.html'):

@@ -4,9 +4,9 @@ from piston.utils import rc
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from languages.models import Language
-from projects.models import Project
-from txcommon.log import logger
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.txcommon.log import logger
 from django.db import transaction
 from uuid import uuid4
 

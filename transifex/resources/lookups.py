@@ -1,5 +1,5 @@
 from django.db.models import Q
-from resources.models import Resource
+from transifex.resources.models import Resource
 
 class ResourcesLookup(object):
     """

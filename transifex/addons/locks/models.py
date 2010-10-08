@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django_addons.errors import AddonError
-from txcommon.log import logger
-from projects.permissions.project import ProjectPermission
+from transifex.txcommon.log import logger
+from transifex.projects.permissions.project import ProjectPermission
 
 class LockError(AddonError):
     pass

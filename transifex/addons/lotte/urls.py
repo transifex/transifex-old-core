@@ -2,9 +2,9 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from lotte.views import *
-from projects.urls import PROJECT_URL
-from resources.urls import RESOURCE_URL
-from resources.views import clone_language
+from transifex.projects.urls import PROJECT_URL
+from transifex.resources.urls import RESOURCE_URL
+from transifex.resources.views import clone_language
 
 
 # Project-language URLs

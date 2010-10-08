@@ -3,11 +3,11 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from projects.models import Project
-from resources.models import Resource
-from resources.stats import ResourceStatsList
-from txcommon.context_processors import site_url_prefix_processor
-from txcommon.utils import key_sort
+from transifex.projects.models import Project
+from transifex.resources.models import Resource
+from transifex.resources.stats import ResourceStatsList
+from transifex.txcommon.context_processors import site_url_prefix_processor
+from transifex.txcommon.utils import key_sort
 
 # For interactive charts:
 import gviz_api

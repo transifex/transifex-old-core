@@ -1,5 +1,5 @@
 from django.contrib import admin
-from projects.models import Project
+from transifex.projects.models import Project
 from authority.admin import PermissionInline
 
 class ProjectAdmin(admin.ModelAdmin):

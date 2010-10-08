@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from priorities.views import *
-from resources.urls import RESOURCE_URL
+from transifex.resources.urls import RESOURCE_URL
 
 urlpatterns = patterns('',
     # Resource-specific Lotte

@@ -11,17 +11,17 @@ from django.utils.encoding import smart_unicode
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.utils import rc, throttle
 
-from txcommon.decorators import one_perm_required_or_403
-from txcommon.log import logger
-from projects.permissions import *
-from languages.models import Language
-from projects.models import Project
-from storage.models import StorageFile
+from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.log import logger
+from transifex.projects.permissions import *
+from transifex.languages.models import Language
+from transifex.projects.models import Project
+from transifex.storage.models import StorageFile
 
-from resources.decorators import method_decorator
-from resources.models import Resource, SourceEntity, Translation
-from resources.stats import ResourceStatsList
-from resources.views import _compile_translation_template
+from transifex.resources.decorators import method_decorator
+from transifex.resources.models import Resource, SourceEntity, Translation
+from transifex.resources.stats import ResourceStatsList
+from transifex.resources.views import _compile_translation_template
 
 from transifex.api.utils import BAD_REQUEST
 

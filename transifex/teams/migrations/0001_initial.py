@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from teams.models import *
+from transifex.teams.models import *
 
 class Migration:
     

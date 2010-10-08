@@ -11,12 +11,12 @@ from django.db import transaction
 from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from txcommon.commands import run_command, CommandError
-from txcommon.exceptions import FileCheckError
-from txcommon.log import logger
-from teams.models import Team
-from resources.formats.decorators import *
-from resources.stats import ResourceStatsList
+from transifex.txcommon.commands import run_command, CommandError
+from transifex.txcommon.exceptions import FileCheckError
+from transifex.txcommon.log import logger
+from transifex.teams.models import Team
+from transifex.resources.formats.decorators import *
+from transifex.resources.stats import ResourceStatsList
 from suggestions.models import Suggestion
 
 from core import CompileError, GenericTranslation, Handler, STRICT, \

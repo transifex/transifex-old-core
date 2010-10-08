@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from resources.models import Resource
+from transifex.resources.models import Resource
 
 PRIORITY_LEVELS = (
     ('0', 'Normal'),

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.test.client import Client
-from projects.models import Project
-from txcommon.tests.base import BaseTestCase
+from transifex.projects.models import Project
+from transifex.txcommon.tests.base import BaseTestCase
 
 class TestTimeline(BaseTestCase):
 

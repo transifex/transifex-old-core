@@ -2,9 +2,9 @@
 from django.conf import settings
 
 from lotte.signals import lotte_done
-from projects.signals import post_submit_translation
-from txcommon import notifications as txnotification
-from txcommon.log import logger
+from transifex.projects.signals import post_submit_translation
+from transifex.txcommon import notifications as txnotification
+from transifex.txcommon.log import logger
 
 from models import TranslationWatch
 

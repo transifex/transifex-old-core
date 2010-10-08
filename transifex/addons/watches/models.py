@@ -4,12 +4,12 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
-from languages.models import Language
-from resources.models import Resource
-from txcommon.db.models import IntegerTupleField
-from txcommon.log import logger
+from transifex.languages.models import Language
+from transifex.resources.models import Resource
+from transifex.txcommon.db.models import IntegerTupleField
+from transifex.txcommon.log import logger
 
-from projects.models import Project
+from transifex.projects.models import Project
 #Project = get_model('projects', 'Project')
 
 from notification.models import ObservedItem, is_observing

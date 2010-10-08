@@ -2,7 +2,7 @@
 
 from south.db import db
 from django.db import models
-from txcommon.models import *
+from transifex.txcommon.models import *
 from userprofile.countries import CountryField
 
 class Migration:

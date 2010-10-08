@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from releases.models import *
+from transifex.releases.models import *
 
 class Migration:
     

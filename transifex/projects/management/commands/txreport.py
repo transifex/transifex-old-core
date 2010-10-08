@@ -2,8 +2,8 @@ from django.conf import settings
 from django.core.management.base import LabelCommand, CommandError
 from actionlog.models import LogEntry
 from notification import models as notification
-from projects.models import Project
-from txcommon import rst
+from transifex.projects.models import Project
+from transifex.txcommon import rst
 
 _HELP_TEXT = """Generate reports with the statistics and action logs for a period of time, 
 depending on the parameters, and send it by email.

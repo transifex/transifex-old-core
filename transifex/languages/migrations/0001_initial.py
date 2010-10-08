@@ -1,7 +1,7 @@
 
 from south.db import db
 from django.db import models
-from languages.models import *
+from transifex.languages.models import Language
 
 class Migration:
     

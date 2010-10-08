@@ -1,9 +1,9 @@
 import os
 import unittest
-from txcommon.tests.base import BaseTestCase
-from languages.models import Language
-from resources.models import *
-from resources.formats.qt import LinguistHandler
+from transifex.txcommon.tests.base import BaseTestCase
+from transifex.languages.models import Language
+from transifex.resources.models import *
+from transifex.resources.formats.qt import LinguistHandler
 
 class QTFile(BaseTestCase):
     """Suite of tests for the qt lib."""

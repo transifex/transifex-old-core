@@ -8,11 +8,11 @@ from django.shortcuts import get_object_or_404
 from django.utils.timesince import timeuntil
 from django.utils.translation import ugettext as _
 
-from languages.models import Language
+from transifex.languages.models import Language
 from models import Lock, LockError
-from projects.models import Project
-from resources.models import Resource
-from txcommon.decorators import one_perm_required_or_403
+from transifex.projects.models import Project
+from transifex.resources.models import Resource
+from transifex.txcommon.decorators import one_perm_required_or_403
 
 from permissions import pr_resource_language_lock
 
