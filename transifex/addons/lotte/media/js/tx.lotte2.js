@@ -388,9 +388,16 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         $('#stringset_table tr').mouseover(function() {
             // button panel
             var obj = $(this).find('.lotte-actions');
+            var pos;
+
             pos = $(this).find("textarea.default_translation").offset();
             w = obj.width();
-            obj.css({top:pos.top -4, left:pos.left - w -2});
+            // IE8 fix
+            if(jQuery.browser.msie){
+              obj.css({top: 4, left: - w + 4});
+            }else{
+              obj.css({top:pos.top - 4, left:pos.left - w - 2});
+            }
 
             // show bottom tabs 
             var obj2 = $(this).find('.row_tabs');
