@@ -13,6 +13,9 @@ class LanguageManager(models.Manager):
         Return a language that matches either with the code or something
         inside the code_aliases field.
         """
+        if not code:
+            raise Language.DoesNotExist("Language matching query does not "\
+                "exist.")
         return Language.objects.get(
             models.Q(code=code) |
             models.Q(code_aliases__contains=' %s ' % code))
