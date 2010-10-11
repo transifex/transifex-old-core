@@ -6,9 +6,12 @@ Qt4 TS file parser for Python
 from hashlib import md5
 import time
 import xml.dom.minidom
+import xml.parsers.expat
 from django.db import transaction
 from django.db.models import get_model
+from django.utils.translation import ugettext, ugettext_lazy as _
 from transifex.txcommon.log import logger
+from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import StringSet, ParseError, \
     GenericTranslation, CompileError, Handler, STRICT
 from suggestions.models import Suggestion
@@ -55,7 +58,15 @@ class LinguistHandler(Handler):
 
     @classmethod
     def contents_check(self, filename):
-        logger.debug("qt: The 'contents_check' method is not implemented!")
+        """
+        Check file for XML validity. No DTD checking happens here.
+        """
+        try:
+            parser = xml.parsers.expat.ParserCreate()
+            parser.ParseFile(open(filename, "r"))
+        except Exception, e:
+            raise FileCheckError, ugettext("Your file doesn't seem to contain "\
+                "valid xml: %s!" % e )
 
     def _post_compile(self, *args, **kwargs):
         """
@@ -116,8 +127,11 @@ class LinguistHandler(Handler):
             nplural = self.language.get_pluralrules_numbers()
 
         doc = xml.dom.minidom.parseString(buf)
-        if doc.doctype.name != "TS":
-            raise LinguistParseError("Incorrect doctype!")
+        if hasattr(doc, 'doctype') and hasattr(doc.doctype, 'name'):
+            if doc.doctype.name != "TS":
+                raise LinguistParseError("Incorrect doctype!")
+        else:
+            raise LinguistParseError("Uploaded file has no Doctype!")
         root = doc.documentElement
         if root.tagName != "TS":
             raise LinguistParseError("Root element is not 'TS'")
