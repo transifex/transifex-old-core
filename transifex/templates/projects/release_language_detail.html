@@ -101,7 +101,19 @@
                { 
                 'href': '{% url resource_actions stat.object.project.slug stat.object.slug language.code %}',
                 'hideOnContentClick': false,
+                'onStart':function(){
+                    // IE8 fix
+                    if(jQuery.browser.msie) {
+                      $('#fancybox-wrap').css('max-width','716px');
+                      $('#fancybox-inner').css('max-width','716px');
+                      $('#fancybox-outer').css('left','50%');
+                    }
+                },
                 'onComplete':function() {
+                    // IE8 fix
+                    if(jQuery.browser.msie){
+                        $('.fancybox-title-outside').css('max-width','716px');
+                    }
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
                     $("a.language_chooser_trigger").toggle(function(){
                         $("div.language_chooser").css({'visibility':'visible'});
