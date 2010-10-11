@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
+from django.views.decorators.cache import never_cache
 from piston.resource import Resource
 #from piston.authentication import OAuthAuthentication
 from transifex.api.authentication import CustomHttpBasicAuthentication
@@ -31,7 +32,7 @@ urlpatterns = patterns('',
         project_handler,
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/$',
-        project_handler,
+        never_cache(project_handler),
         name='api_project',
      ), url(
         r'^project/(?P<project_slug>[-\w]+)/files/$',
@@ -39,26 +40,26 @@ urlpatterns = patterns('',
         name='api_project_files',
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resources/$',
-        resource_handler
+        never_cache(resource_handler),
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/$',
-        resource_handler,
+        never_cache(resource_handler),
         name='api_resource'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
-        stats_handler,
+        never_cache(stats_handler),
         name='api_resource_stats'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_\w]+)/$',
-        stats_handler,
+        never_cache(stats_handler),
         name='api_resource_stats'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w]+)/$',
-        projectresource_handler,
+        never_cache(projectresource_handler),
         name='api_resource_storage'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w]+)/file/$',
-        translationfile_handler,
+        never_cache(translationfile_handler),
         name='api_translation_file'
     ), url(
         r'^storage/$',
