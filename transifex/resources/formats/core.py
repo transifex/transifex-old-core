@@ -294,6 +294,7 @@ class Handler(object):
                 if not created and overwrite_translations:
                     if tr.string != j.translation:
                         tr.string = j.translation
+                        tr.user = user
                         tr.save()
                         strings_updated += 1
         except Exception, e:

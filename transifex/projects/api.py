@@ -222,7 +222,8 @@ class ProjectResourceHandler(BaseHandler):
                 try:
                     fhandler.contents_check(fhandler.filename)
                     fhandler.parse_file(True)
-                    strings_added, strings_updated = fhandler.save2db(True)
+                    strings_added, strings_updated = fhandler.save2db(True,
+                        user=request.user)
                 except Exception, e:
                     resource.delete()
                     return BAD_REQUEST("Resource not created. Could not "
@@ -306,7 +307,8 @@ class ProjectResourceHandler(BaseHandler):
 
                 try:
                     fhandler.parse_file()
-                    strings_added, strings_updated = fhandler.save2db()
+                    strings_added, strings_updated = fhandler.save2db(
+                        user=request.user)
                 except Exception, e:
                     return BAD_REQUEST("Error importing file: %s" % e)
                 else:
