@@ -276,7 +276,7 @@ class Handler(object):
                     )
 
                 # Skip storing empty strings as translations!
-                if not se and not j.translation:
+                if not j.translation:
                     continue
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
