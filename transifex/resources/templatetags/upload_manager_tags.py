@@ -23,7 +23,8 @@ def upload_create_resource_form(request, project, prefix='create_form'):
             resource = create_resource_form.save(commit=False)
         display_form=True
     else:
-        create_resource_form = CreateResourceForm(prefix=prefix)
+        create_resource_form = CreateResourceForm(prefix=prefix, 
+            initial={'source_file':['en', ""]})
         display_form=False
 
     api_project_files = get_url_pattern('api_project_files')
