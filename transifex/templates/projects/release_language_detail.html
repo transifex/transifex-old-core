@@ -103,6 +103,47 @@
                 'hideOnContentClick': false,
                 'onComplete':function() {
                     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                    $("a.language_chooser_trigger").toggle(function(){
+                        $("div.language_chooser").css({'visibility':'visible'});
+                    },function(){
+                        $("div.language_chooser").css({'visibility':'hidden'});
+                    });
+                    $("div.language_chooser a").click( function(){
+                        var target_lang_code = $("div.language_chooser select").val();
+                        if ( target_lang_code != "" ) {
+                            request_url = window.location+'l/{{ language.code }}/clone/'+target_lang_code+'/';
+                            window.location = request_url;
+                        } else {
+                            alert('{% trans "Please select a target language first." %}');
+                        }
+                    });
+                    if(!$("#download_for_translation a").hasClass('disabled')){
+                        $("#download_for_translation").click(function(){
+                            $.ajax({
+                                url : '{% url lock_and_download_translation stat.object.project.slug stat.object.slug language.code %}',
+                                contentType : 'application/json',
+                                type : 'POST',
+                                beforeSend: function(){
+                                $("div#notification-container div").html('{% trans "Trying to lock resource..." %}');
+                                $("div#notification-container").fadeIn("fast");
+                                },
+                                complete : function(xmlhttpreq, textStatus) {
+                                    if (textStatus=='success'){
+                                        response = JSON.parse(xmlhttpreq.responseText);
+                                        if(response['status']=='FAILED'){
+                                            $("#download_for_translation").siblings("div.error_notes").text(response['message']);
+                                            $("#download_for_translation").siblings("div.error_notes").show();
+                                        }else{
+                                            if(response['redirect']){
+                                                window.location = response['redirect'];
+                                            }
+                                        }
+                                        $("div#notification-container").fadeOut("fast");
+                                    }
+                                }
+                            });
+                        });
+                    }
                 },
                 'titleShow': true,
                 'titlePosition': 'outside',
