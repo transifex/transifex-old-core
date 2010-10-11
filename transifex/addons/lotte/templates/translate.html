@@ -496,23 +496,43 @@
         }
 
         /* Bind checkbox change event  for translated/untranslated */
-        $(".filters").change(function() {
-            traverse_filters();
+        // Just a extra check for IE8 (this will be fixed with jQuery 1.4)
+        $(".filters").bind($.browser.msie ? 'propertychange': 'change',
+            function(e) {
+            if (e.type == "change" || (e.type == "propertychange" &&
+                                       window.event.propertyName == "checked")) {
+                traverse_filters();
+            }
         });
 
         /* Bind checkbox change event for user filters*/
-        $(".user_filters").change(function() {
-            traverse_filters();
+        // Just a extra check for IE8 (this will be fixed with jQuery 1.4)
+        $(".user_filters").bind($.browser.msie ? 'propertychange': 'change',
+            function(e) {
+            if (e.type == "change" || (e.type == "propertychange" &&
+                                       window.event.propertyName == "checked")) {
+                traverse_filters();
+            }
         });
 
         /* Bind checkbox change event for resource filters*/
-        $(".resource_filters").change(function() {
-            traverse_filters();
+        // Just a extra check for IE8 (this will be fixed with jQuery 1.4)
+        $(".resource_filters").bind($.browser.msie ? 'propertychange': 'change',
+            function(e) {
+            if (e.type == "change" || (e.type == "propertychange" &&
+                                       window.event.propertyName == "checked")) {
+                traverse_filters();
+            }
         });
 
         /* Bind checkbox change event for more languages*/
-        $(".more_languages").change(function() {
-            traverse_filters();
+        // Just a extra check for IE8 (this will be fixed with jQuery 1.4)
+        $(".more_languages").bind($.browser.msie ? 'propertychange': 'change',
+            function(e) {
+            if (e.type == "change" || (e.type == "propertychange" &&
+                                       window.event.propertyName == "checked")) {
+                traverse_filters();
+            }
         });
 
         /* Bind menu filters for more languages */
