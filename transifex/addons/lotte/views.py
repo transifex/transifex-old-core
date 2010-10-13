@@ -584,7 +584,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 continue
 
             # Check number of printf variables
-            if len(printf_pattern.findall(source_string.string)) != \
+            if strings and len(printf_pattern.findall(source_string.string)) != \
                 len(printf_pattern.findall(string)):
                 push_response_dict[source_id] = { 'status':500,
                     'message':_('The number of arguments seems to differ '
