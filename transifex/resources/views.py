@@ -23,6 +23,7 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.log import logger
 
 from transifex.resources.forms import ResourceForm
 from transifex.resources.models import Translation, Resource
@@ -360,8 +361,10 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
 
     try:
         template = _compile_translation_template(resource, language)
-    except:
+    except Exception, e:
         request.user.message_set.create(message=_("Error compiling translation file."))
+        logger.error("Error compiling '%s' file for '%s': %s" % (language, 
+            resource, str(e)))
         return HttpResponseRedirect(reverse('resource_detail',
             args=[resource.project.slug, resource.slug]),)
 
