@@ -560,11 +560,17 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             w = $('a', this).width();
             $(this).css({right: - w - 14});
             // hover animation
-            $(this).mouseenter(function(){
-                $(this).animate({right:0}, {duration:'fast'});
-            }).mouseleave(function() {
-                w = $('a', this).width();
-                $(this).animate({right: - w - 14}, {duration:'fast'});
+            $(this).hoverIntent({
+                sensitivity: 7,
+                interval: 160,
+                over: function(){
+                    $(this).animate({right:0}, {duration:'fast'});
+                },
+                timeout: 0,
+                out: function() { 
+                    w = $('a', this).width();
+                    $(this).animate({right: - w - 14}, {duration:'fast'});
+                }
             });
         });
 
