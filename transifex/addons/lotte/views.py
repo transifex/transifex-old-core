@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+from polib import escape, unescape
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -516,6 +518,79 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 continue
 
         for rule, string in row['translations'].items():
+            # Check for plural entries if we already have an error for one of
+            # the plural forms
+            if push_response_dict.has_key(source_id) and\
+              push_response_dict[source_id]['status'] == 500:
+                continue
+
+            # Check whether source string and translation start and end
+            # with newlines
+            ss = unescape(source_string.string)
+            tr = unescape(string)
+
+            if string and ss.startswith('\n') != tr.startswith('\n'):
+                if ss.endswith('\n'):
+                    push_response_dict[source_id] = { 'status':500,
+                    'message':_("Translation must start with a newline (\\n)")}
+                else:
+                    push_response_dict[source_id] = { 'status':500,
+                    'message':_("Translation should not start with a newline (\\n)")}
+                continue
+            elif string and ss.endswith('\n') != tr.endswith('\n'):
+                if ss.endswith('\n'):
+                    push_response_dict[source_id] = { 'status':500,
+                    'message':_("Translation must end with a newline (\\n)")}
+                else:
+                    push_response_dict[source_id] = { 'status':500,
+                    'message':_("Translation should not end with a newline (\\n)")}
+                continue
+
+            # Check the numbers inside the string
+            numbers = re.compile("[-+]?[0-9]*\.?[0-9]+")
+            try:
+                for num in numbers.findall(source_string.string):
+                    if string and num not in string:
+                        push_response_dict[source_id] = { 'status':500,
+                            'message':_("Number %s is in the source string but not "\
+                            "in the translation." % num )}
+                        raise StopIteration
+            except StopIteration:
+                continue
+
+            # Check printf variables
+            printf_pattern = re.compile('%((?:(?P<ord>\d+)\$|\((?P<key>\w+)\))'\
+                '?(?P<fullvar>[+#-]*(?:\d+)?(?:\.\d+)?(hh\|h\|l\|ll)?(?P<type>[\w%])))')
+            ss_matches = list(printf_pattern.finditer(source_string.string))
+            tr_matches = list(printf_pattern.finditer(string))
+
+            try:
+                for pattern in ss_matches:
+                    if string and pattern.group(0) not in string:
+                        push_response_dict[source_id] = { 'status':500,
+                            'message':_('The expression \'%s\' is not present '\
+                            'in the translation.' % pattern.group(0) )}
+                        raise StopIteration
+            except StopIteration:
+                continue
+
+            try:
+                for pattern in tr_matches:
+                    if string and pattern.group(0) not in source_string.string:
+                        push_response_dict[source_id] = { 'status':500,
+                            'message':_('The expression \'%s\' is not present '\
+                            'in the source string.' % pattern.group(0) )}
+            except StopIteration:
+                continue
+
+            # Check number of printf variables
+            if len(printf_pattern.findall(source_string.string)) != \
+                len(printf_pattern.findall(string)):
+                push_response_dict[source_id] = { 'status':500,
+                    'message':_('The number of arguments seems to differ '
+                        'between the source string and the translation.')}
+                continue
+
             try:
                 # TODO: Implement get based on context and/or on context too!
                 translation_string = Translation.objects.get(
@@ -530,7 +605,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     translation_string.delete()
                     invalidate_stats_cache(source_string.source_entity.resource,target_language)
                 else:
-                    translation_string.string = string
+                    translation_string.string = unescape(string)
                     translation_string.user = request.user
                     translation_string.save()
 
@@ -544,7 +619,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         source_entity = source_string.source_entity,
                         language = target_language,
                         rule = target_language.get_rule_num_from_name(rule),
-                        string = string,
+                        string = unescape(string),
                         user = request.user) # Save the sender as last committer
                     invalidate_stats_cache(source_string.source_entity.resource,target_language)
                     push_response_dict[source_id] = { 'status':200,
