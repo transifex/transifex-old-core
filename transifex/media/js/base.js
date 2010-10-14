@@ -34,8 +34,7 @@ function html_escape(html)
 {
   var escaped = html;
   escaped = escaped.replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/\n/g, "\\n")
-        .replace(/\t/g, "\\t").replace(/\r/g, "\\r");
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   return(escaped);
 }
 
