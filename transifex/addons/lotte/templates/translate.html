@@ -207,20 +207,20 @@
                               if(plural_types[rule]=='other'){
                                 textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '" title="{% trans "Fill in a new translation" %}">' + html_escape(clean_array["translations"][plural_types[rule]]) + '</textarea>';
                                 if(plurals_counter>0)
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
                                 textareas += '</div>';
                               }else{
                                 textareas += '<div class="translation_wrapper"><span class="rule nodisplay">'+plural_types[rule]+'</span><textarea class="translation" title="{% trans "Fill in a new translation" %}">' + html_escape(clean_array["translations"][plural_types[rule]]) + '</textarea>';
                                 if(plural_types[rule]=='zero'){
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='one'){
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' item (equation: {{ target_language.rule_one }})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' item (equation: {{ target_language.rule_one }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='two'){
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_two }})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_two }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='few'){
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_few }})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_few }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='many'){
-                                    textareas += '<span class="plural_label tag" title="{% trans "Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_many }})" %}">'+plural_types[rule]+'</span>';
+                                    textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_many }})">'+plural_types[rule]+'</span>';
                                 }
                                 textareas += '</div>';
                               }
