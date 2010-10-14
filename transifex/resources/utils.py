@@ -52,7 +52,7 @@ def invalidate_object_cache(object, language=None):
     # are being created don't have the full path of the module. If you need to
     # change this import statement then you NEED to change the
     # stats_cached_property as well.
-    from resources.stats import Stats, StatsBase
+    from transifex.resources.stats import Stats, StatsBase
 
     keys = []
     for name, type in inspect.getmembers(StatsBase):
