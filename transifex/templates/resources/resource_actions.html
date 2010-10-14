@@ -122,7 +122,7 @@
           <li>
             {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock">
-              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title='{% trans "Resource cannot be locked'|escapejs %}" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
+              <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="{% trans "Resource cannot be locked"|escapejs %}" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
             </span>
             {% else %}
             <span id="download_for_translation" class="i16 lock">
