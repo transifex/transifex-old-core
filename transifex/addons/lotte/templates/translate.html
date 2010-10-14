@@ -28,6 +28,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/footpanel.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.hoverIntent.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.whitespaceHighlight.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.textarea-expander.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
     google.load("language", "1");
@@ -329,6 +330,9 @@
 
                 // Highlight source strings.
                 $('.source_string, .source_string_plural').whitespaceHighlight();
+
+                // Auto expanding textareas.
+                $("textarea.translation").TextAreaExpander();
             }
         });
 
