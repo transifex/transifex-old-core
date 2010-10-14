@@ -17,6 +17,7 @@
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
+  <link media="screen" href="{{ STATIC_URL }}lotte/css/jquery.whitespaceHighlight.css" type="text/css" rel="stylesheet"/>
   <!--[if IE]>
     <link media="screen" href="{{ STATIC_URL }}lotte/css/ie.lotte.css" type="text/css" rel="stylesheet"/>
   <![endif]-->
@@ -26,6 +27,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/tx.lotte2.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/footpanel.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.hoverIntent.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.whitespaceHighlight.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript">
     google.load("language", "1");
@@ -324,6 +326,8 @@
                 stringset.toolbar();
 
                 stringset.current_box = null;
+
+                $('.source_string').whitespaceHighlight();
             }
         });
 
