@@ -152,7 +152,7 @@
                                 source_divs += '<span class="plural_title">'+plural_types[rule]+':</span>&nbsp;'
                               source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
                             }else
-                              source_divs += '<p title="{% trans "Source string" %}"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                              source_divs += '<p class="source_string_plural" title="{% trans "Source string" %}"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
                             plurals_counter++;
                         }
                     }
@@ -327,7 +327,8 @@
 
                 stringset.current_box = null;
 
-                $('.source_string').whitespaceHighlight();
+                // Highlight source strings.
+                $('.source_string, .source_string_plural').whitespaceHighlight();
             }
         });
 

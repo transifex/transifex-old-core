@@ -420,7 +420,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 var a=$(this), str=a.html();
                 a.removeClass("action");
                 a.addClass("action_go");
-                var plural_orig = $('.msg .source_string .plural_title', a.parents('tr'));
+                var plural_orig = $('.msg .source_string_plural', a.parents('tr'));
                 var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset");
                 if(plural_orig.length > 0)
                   orig = orig.substring(orig.indexOf('</span>')+7);
@@ -456,7 +456,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         // 2. Copy source string
         $('.lotte-actions a.copy_source').click(function() {
             var a=$(this);
-            var plural_orig = $('.msg .source_string .plural_title', a.parents('tr'));
+            var plural_orig = $('.msg .source_string_plural', a.parents('tr'));
             var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset"); //html();
             if(plural_orig.length > 0)
               orig = orig.substring(orig.indexOf('</span>')+7);

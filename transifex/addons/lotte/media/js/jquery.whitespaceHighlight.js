@@ -22,18 +22,18 @@
                 if(matchedStartSpace){
                     startSpaces = matchedStartSpace[0].replace(
                         new RegExp(/\u00A0|\u0020/g),
-                        '<span class="whitespace space"> </span>');
+                        '<span class="whitespace space" title="Space"> </span>');
                     // left trim
-                    string.replace(reWhiteSpaceStartSpace, "");
+                    string = string.replace(reWhiteSpaceStartSpace, "");
                 }
                 var matchedEndSpace = reWhiteSpaceEndSpace.exec(string);
                 var endSpaces;
                 if(matchedEndSpace){
                     endSpaces = matchedEndSpace[0].replace(
                         new RegExp(/\u00A0|\u0020/g),
-                        '<span class="whitespace space"> </span>');
+                        '<span class="whitespace space" title="Space"> </span>');
                     // right trim
-                    string.replace(reWhiteSpaceEndSpace, "");
+                    string = string.replace(reWhiteSpaceEndSpace, "");
                 }
 
                 // Find the middle space sequences
@@ -79,7 +79,8 @@
                 var obj = $('<div>'+this.html()+'</div>');
                 // Restrict searching in obj context searching
                 $(".whitespace.space", obj).replaceWith(' ');
-                $(".whitespace.newline", obj).replaceWith('\n');
+                // Empty it, as we have included the original new line after span!!!
+                $(".whitespace.newline", obj).replaceWith('');
 
                 // TODO: Reset all the other whitespace chars!!!
 
