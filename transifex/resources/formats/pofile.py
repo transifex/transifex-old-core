@@ -33,7 +33,20 @@ Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Storage = get_model('storage', 'StorageFile')
 
+def escape(st):
+    """
+    Escape special chars and return the given string *st*.
 
+    **Examples**:
+
+    >>> escape('\\t and \\n and \\r and " and \\\\')
+    '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
+    """
+    return st.replace('\\', r'\\\\')\
+             .replace('\n', r'\\n')\
+             .replace('\t', r'\\t')\
+             .replace('\r', r'\\r')\
+             .replace('\"', r'\\"')
 
 def get_po_contents(pofile):
     """
@@ -134,7 +147,7 @@ class POHandler(Handler):
         occurrences of `original` with `replacement`. For pofiles we also want
         to escape all special characters
         """
-        return re.sub(re.escape(original), polib.escape(replacement), text)
+        return re.sub(re.escape(original), escape(replacement), text)
 
 
     @need_compiled
