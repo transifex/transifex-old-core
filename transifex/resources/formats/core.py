@@ -62,21 +62,6 @@ class ParseError(StandardError):
 class CompileError(StandardError):
     pass
 
-def escape(st):
-    """
-    Escape special chars and return the given string *st*.
-
-    **Examples**:
-
-    >>> escape('\\t and \\n and \\r and " and \\\\')
-    '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
-    """
-    return st.replace('\n', r'\\n')\
-             .replace('\t', r'\\t')\
-             .replace('\r', r'\\r')\
-             .replace('\n', r'\\n')\
-             .replace('\"', r'\\"')
-
 class Handler(object):
     """
     Base class for writing file handlers for all the I18N types.
@@ -168,7 +153,7 @@ class Handler(object):
         It just does a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(original, replacement, text)
+        return re.sub(re.escape(original), replacement, text)
 
     @need_resource
     def compile(self, language=None):

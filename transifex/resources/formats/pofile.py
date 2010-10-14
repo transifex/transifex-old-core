@@ -20,7 +20,7 @@ from transifex.resources.stats import ResourceStatsList
 from suggestions.models import Suggestion
 
 from core import CompileError, GenericTranslation, Handler, STRICT, \
-    StringSet, ParseError, escape
+    StringSet, ParseError
 
 #class ResXmlParseError(ParseError):
     #pass
@@ -134,7 +134,7 @@ class POHandler(Handler):
         occurrences of `original` with `replacement`. For pofiles we also want
         to escape all special characters
         """
-        return re.sub(original, escape(replacement), text)
+        return re.sub(re.escape(original), polib.escape(replacement), text)
 
 
     @need_compiled
