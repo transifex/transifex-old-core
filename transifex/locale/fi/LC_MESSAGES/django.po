@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Transifex (.org)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-13 12:26+0000\n"
-"PO-Revision-Date: 2010-10-13 12:30+0000\n"
+"PO-Revision-Date: 2010-10-14 11:37+0000\n"
 "Last-Translator: apuasi <linux.heppu@hotmail.com>\n"
 "Language-Team: Finnish <None>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "Päivä ja aika"
 
 #: actionlog/templates/object_action_list.html:8
 msgid "Action"
-msgstr "Tapahtuma"
+msgstr "Yleisnäkymä"
 
 #: actionlog/templates/object_action_list.html:14
 msgid "DATETIME_FORMAT"
@@ -185,7 +185,7 @@ msgstr "Käyttäjä '%(user)s' on jo käyttänyt sallitun määrän %(locks)i lu
 #: addons/locks/models.py:76
 #, python-format
 msgid "This resource language is already locked by '%s'"
-msgstr "Tämän resurssikäännöksen on jo lukinnut käyttäjä '%s'"
+msgstr "Tämän resurssikielen on jo lukinnut käyttäjä '%s'"
 
 #: addons/locks/models.py:162
 #, python-format
@@ -240,15 +240,15 @@ msgstr "avaa lukko"
 
 #: addons/locks/templates/lock_resource_action.html:28
 msgid "Click to renew your lock for a fresh period of time."
-msgstr "Tili luotu. Mene <a href=\"%(overview_url)s\">kirjautumissivulle</a> tunnistautuaksesi ja alkaaksesi käyttämään sivustoa."
+msgstr "Klikkaa pidentääksesi lukitusaikaa."
 
 #: addons/locks/templates/lock_resource_action.html:29
 #: addons/locks/templates/pofile_lock.html:31
 #, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
-msgstr[0] "Lukitusaikaa pidennettiin %(hours)s tunnilla."
-msgstr[1] "Lukitusaikaa pidennettiin %(hours)s tunnilla."
+msgstr[0] "Pidennä lukitusaikaa %(hours)s tunnilla."
+msgstr[1] "Pidennä lukitusaikaa %(hours)s tunnilla."
 
 #: addons/locks/templates/lock_resource_action.html:38
 msgid "Lock this translation to notify others you're working with it."
@@ -300,15 +300,13 @@ msgid ""
 "A lock for <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s "
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
-"\n"
-"\n"
-"Lukitus sivustolle <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s kielessä %(language)s</a> avautuu %(expires)s kuluttua.\n"
+""
 
 #: addons/lotte/views.py:68
 msgid ""
 "This project has more than one source languages and as a result you can not "
 "translate all resources at the same time."
-msgstr "Tällä projektilla on useampi lähdekieli ja tästä johtuen et voi kääntää kaikkia resursseja yhtäaikaa."
+msgstr "Tällä projektilla on useampi lähdekieli ja tästä johtuen et voi kääntää kaikkia resursseja yhtä aikaa."
 
 #: addons/lotte/views.py:90
 msgid ""
@@ -353,7 +351,7 @@ msgstr ""
 
 #: addons/lotte/views.py:546
 msgid "Translation should not end with a newline (\\n)"
-msgstr ""
+msgstr "Käännöksen tulee päättyä uuteen riviin "
 
 #: addons/lotte/views.py:555
 #, python-format
@@ -399,12 +397,12 @@ msgstr "Ei aktiivista muokkaajaa!"
 
 #: addons/lotte/templates/lotte_details_snippet.html:8
 msgid "Last Translation:"
-msgstr "Viimeksi käännetty"
+msgstr "Viimeisin käännös:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:12
 #, python-format
 msgid "by %(user)s"
-msgstr "sitten, kääntänyt %(user)s."
+msgstr "teki käyttäjä %(user)s."
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
 #: addons/lotte/templates/translate.html:182
@@ -474,7 +472,7 @@ msgstr "Ei hakutuloksia."
 #: addons/lotte/templates/translate.html:110
 #: addons/lotte/templates/view_strings.html:40
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr "Näytetään _START_ kohdetta _END_ yhteensä _TOTAL_ kohteesta"
+msgstr "Näytetään _START_ - _END_ yhteensä _TOTAL_ kohteesta"
 
 #: addons/lotte/templates/translate.html:111
 #: addons/lotte/templates/view_strings.html:41
@@ -523,7 +521,7 @@ msgstr "yksityiskohdat"
 
 #: addons/lotte/templates/translate.html:190 addons/suggestions/models.py:53
 msgid "suggestions"
-msgstr "ehdotusta"
+msgstr "ehdotukset"
 
 #: addons/lotte/templates/translate.html:206
 #: addons/lotte/templates/translate.html:211
@@ -620,7 +618,7 @@ msgstr "Näytä vain valittujen<br /> käyttäjien käännökset."
 
 #: addons/lotte/templates/translate.html:627
 msgid "Filter by users"
-msgstr "Suodata käyttäjien mukaan"
+msgstr "Suodata käyttäjiä"
 
 #: addons/lotte/templates/translate.html:633
 msgid "Show only the strings from<br /> the selected resources."
@@ -628,7 +626,7 @@ msgstr "Näytä vain valittujen<br /> resurssien merkkijonot."
 
 #: addons/lotte/templates/translate.html:636
 msgid "Filter by resources"
-msgstr "Suodata resurssien mukaan"
+msgstr "Suodata resursseja"
 
 #: addons/lotte/templates/translate.html:648
 #: addons/lotte/templates/view_strings.html:177
@@ -799,7 +797,7 @@ msgstr "Äänestä ehdotusta alaspäin (klikkaamalla uudelleen voit perua ääne
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:210
 msgid "This is the currently accepted translation."
-msgstr "Tämä on nykyinn hyväksytty käännös."
+msgstr "Tämä on nykyinen hyväksytty käännös."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:212
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:215
@@ -863,9 +861,7 @@ msgstr[1] "Kysely palasi mukanaan %(counter)s tulosta."
 #, python-format
 msgid "%(project_name)s Timeline"
 msgstr ""
-"\n"
-" Projektin %(project_name)s aikajana\n"
-" "
+""
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -892,7 +888,7 @@ msgstr "%(source_language)s &rarr; %(translation_language)s"
 #: addons/trans_memory/templates/search_translation.html:60
 #: templates/userprofile/profile/location.html:26
 msgid "Location:"
-msgstr "Sijanti:"
+msgstr "Sijainti:"
 
 #: addons/trans_memory/templates/search_translation.html:72
 msgid "Tough luck! No translations obtained."
@@ -930,7 +926,7 @@ msgstr "käännöstarkkailu"
 
 #: addons/watches/models.py:42
 msgid "translation watches"
-msgstr "käännöstarkkailua"
+msgstr "käännöstarkkailut"
 
 #: addons/watches/views.py:28 addons/watches/views.py:93
 msgid "Must use POST to activate"
@@ -1153,7 +1149,7 @@ msgid ""
 "all\n"
 "                              translation files. Recommended for most\n"
 "                              projects."
-msgstr "Myönnä pääsy tietyille henkilöille. Käännösryhmillä on pääsy vain oman kielensä kielitiedostoihin ja projektilaajuisilla koodaajilla on pääsy kaikkiin käännöstiedostoihin. Tätä asetusta suositellaan suurimpaan osaan projeteista."
+msgstr "Myönnä pääsy tietyille henkilöille. Käännösryhmillä on pääsy vain oman kielensä kielitiedostoihin ja projektilaajuisilla koodaajilla on pääsy kaikkiin käännöstiedostoihin. Tätä asetusta suositellaan suurimpaan osaan projekteista."
 
 #: projects/forms.py:77
 msgid "Outsourced access"
@@ -1255,7 +1251,7 @@ msgstr "Salli tai estä kohteen käyttö"
 
 #: projects/models.py:123 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
-msgstr "Tunnisteet"
+msgstr "Avainsanat"
 
 #: projects/models.py:126 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
@@ -1522,7 +1518,7 @@ msgstr "Lähdetiedosto"
 
 #: resources/models.py:49
 msgid "A local file used to extract the strings to be translated."
-msgstr "Paikallista tiedostoa käytetään käänettävien merkkijonojen tuomiseksi."
+msgstr "Paikallista tiedostoa käytetään käännettävien merkkijonojen tuomiseksi."
 
 #: resources/models.py:51
 msgid "I18n type"
@@ -1591,7 +1587,7 @@ msgstr ""
 
 #: resources/models.py:132
 msgid "The occurrences of the source string in the project code."
-msgstr "Kertoo lähdemerkkijonon esiitymisen projektin koodissa."
+msgstr "Kertoo lähdemerkkijonon esiintymisen projektin koodissa."
 
 #: resources/models.py:133 resources/models.py:138
 msgid "Flags"
@@ -1694,7 +1690,7 @@ msgstr ""
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
-msgstr "Käännöksen kielellä %(lang)s resurssissa %(resource)s poistettiin onnistuneesti."
+msgstr "Käännökset kielellä %(lang)s resurssissa %(resource)s poistettiin onnistuneesti."
 
 #: resources/views.py:364
 msgid "Error compiling translation file."
@@ -2114,9 +2110,7 @@ msgid ""
 "\n"
 "Type in the url of the project's home page.\n"
 msgstr ""
-"\n"
-"\n"
-"Syötä projektin kotisivun osoite.\n"
+""
 
 #: templates/helptext/project_form_helptext.html:59
 msgid "RSS Feed"
@@ -2151,9 +2145,7 @@ msgid ""
 "following\n"
 "tags: i18n l10n translations.\n"
 msgstr ""
-"\n"
-"\n"
-"Käännettyä tekstiä ei enää tallenneta automaattisesti.\n"
+""
 
 #: templates/helptext/project_form_helptext.html:95
 msgid ""
@@ -2534,7 +2526,7 @@ msgstr "Projektin %(project_name)s vikailmoitusjärjestelmä"
 #: templates/projects/project_detail.html:75
 #: templates/projects/project_list.html:58
 msgid "Tags:"
-msgstr "Tunnisteet:"
+msgstr "Avainsanat:"
 
 #: templates/projects/project_detail.html:84
 msgid "Maintainer:"
@@ -2558,7 +2550,7 @@ msgstr "Historia"
 
 #: templates/projects/project_detail.html:128
 msgid "No history recorded yet."
-msgstr "Ei käyttöhistoriaa."
+msgstr "Ei historiamerkintöjä toistaiseksi."
 
 #: templates/projects/project_detail.html:150
 msgid "Delete project"
@@ -2738,7 +2730,7 @@ msgstr "Kehityksen takaraja:"
 
 #: templates/projects/release_detail.html:102
 msgid "Click here to show or hide the resource list"
-msgstr "Klikkaa nähdäksesi piilotettu resurssilista."
+msgstr "Näytetään _START_-_END_ yhteensä _TOTAL_ kohteesta"
 
 #: templates/projects/release_detail.html:103
 #, python-format
@@ -2806,7 +2798,7 @@ msgstr "Muokkaa julkaisua <em>%(release_name)s</em>"
 #: templates/projects/release_form.html:28
 #, python-format
 msgid "Editing Release '<a href=\"%(release_url)s\">%(release_name)s</a>'"
-msgstr "Muokataan julkaisua"
+msgstr "Muokataan julkaisua <a href=\"%(release_url)s\">%(release_name)s</a>"
 
 #: templates/projects/release_form.html:44
 msgid "Save release"
@@ -2898,7 +2890,7 @@ msgstr "Merkitys"
 #: templates/projects/resource_list.html:77
 #, python-format
 msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
-msgstr "Merkkijonoja yhteensä: %(ts)s<br/>Saatavilla kielillä: %(al)s"
+msgstr "Merkkijonoja yhteensä: %(ts)s<br/>Saatavilla olevia kieliä: %(al)s"
 
 #: templates/projects/resource_list.html:80
 #: templates/resources/resource_list_more.html:14
@@ -2913,7 +2905,7 @@ msgstr "poista"
 #: templates/projects/resource_list.html:87
 #, python-format
 msgid "Committed by %(last_committer)s"
-msgstr "Lähettänyt käyttäjä "
+msgstr "Lähettänyt käyttäjä %(last_committer)s"
 
 #: templates/projects/resource_list.html:87
 msgid "No committers yet"
@@ -2936,7 +2928,7 @@ msgstr "Käännä kaikki"
 #: templates/resources/resource_actions.html:23
 #, python-format
 msgid " Total:&nbsp;%(total_entities)s strings, %(wordcount)s words"
-msgstr "Yhteensä &amp;nbsp;%(total_entities)s merkkijonoa ja %(wordcount)s sanaa."
+msgstr "Yhteensä &nbsp;%(total_entities)s merkkijonoa ja %(wordcount)s sanaa."
 
 #: templates/resources/resource_actions.html:37
 msgid ""
@@ -2962,7 +2954,7 @@ msgstr "odottavaa merkkijonoa"
 
 #: templates/resources/resource_actions.html:69
 msgid "View strings online"
-msgstr "näytä merkkijonot verkossa"
+msgstr "Näytä merkkijonot verkossa"
 
 #: templates/resources/resource_actions.html:73
 msgid "Visit language team"
@@ -3003,7 +2995,7 @@ msgstr "Lataa käännös"
 
 #: templates/resources/resource_actions.html:129
 msgid "You must login to use this action"
-msgstr "Sinun täytyy kirjatua sisään käyttääksesi tätä toimintoa."
+msgstr "Sinun täytyy kirjautua sisään käyttääksesi tätä toimintoa."
 
 #: templates/resources/resource_actions.html:132
 msgid ""
@@ -3017,7 +3009,7 @@ msgstr "Tämä resurssitiedosto ei hyväksy uusia käännöksiä tällä hetkell
 
 #: templates/resources/resource_actions.html:160
 msgid "Translation last updated "
-msgstr "Käännöksen viimeisin päivitys"
+msgstr "käännöksen viimeisen päivityksen"
 
 #: templates/resources/resource_actions.html:162
 msgid "by"
@@ -3049,9 +3041,7 @@ msgid ""
 "  Are you sure you want to permanently delete the translation resource '%"
 "(resource_name)s'?\n"
 msgstr ""
-"\n"
-"\n"
-"Haluatko varmasti poistaa käännösresurssin '%(resource_name)s' pysyvästi?\n"
+""
 
 #: templates/resources/resource_detail.html:93
 msgid "Translation Resource details"
@@ -3080,8 +3070,8 @@ msgstr "Hyväksyy käännökset?"
 #: templates/resources/resource_detail.html:127
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Julkaisut:"
+msgstr[1] "Julkaisu:"
 
 #: templates/resources/resource_detail.html:141
 msgid "Available translations"
@@ -3113,7 +3103,7 @@ msgstr "Poista käännösresurssi"
 #: templates/resources/resource_form.html:22
 #, python-format
 msgid "Edit %(resource_name)s"
-msgstr "Muokkaa resurssia "
+msgstr "Muokkaa resurssia %(resource_name)s"
 
 #: templates/resources/resource_form.html:29
 msgid "Edit the details of the translation resource"
@@ -3156,9 +3146,7 @@ msgid ""
 "\n"
 "Delete <em>%(language_name)s</em>\n"
 msgstr ""
-"\n"
-"\n"
-"Poista kieli <em>%(language_name)s</em> \n"
+""
 
 #: templates/resources/resource_translations_confirm_delete.html:20
 #, python-format
@@ -3166,9 +3154,6 @@ msgid ""
 "\n"
 "    Say goodbye to all translations for <em>%(language_name)s</em>?"
 msgstr ""
-"\n"
-"\n"
-" Sanotaanko kielen<em>%(language_name)s</em> käännöksille hyvästi?"
 
 #: templates/resources/resource_translations_confirm_delete.html:26
 #, python-format
@@ -3177,9 +3162,7 @@ msgid ""
 "  Are you sure you want to permanently delete the translations for '%"
 "(language_name)s' of '%(resource_name)s'?\n"
 msgstr ""
-"\n"
-"\n"
-"Haluatko varmasti poistaa resurssin %(resource_name)s kielen '%(language_name)s' käännökset pysyvästi?\n"
+""
 
 #: templates/resources/upload_create_resource_form.html:16
 #, python-format
@@ -3266,7 +3249,8 @@ msgstr "Muokkaa käyttäjätiliisi liittyviä ilmoituksia"
 
 #: templates/simpleauth/signin.html:10
 msgid "<p>Please sign in with your email or screen name.<br />"
-msgstr "<p>Kirjaudu sähköpostiosoitteellasi tai käyttäjänimelläsi.<br /> \n"
+msgstr ""
+""
 
 #: templates/storage/storagefilewidget.html:16
 msgid "Upload file"
@@ -3282,7 +3266,7 @@ msgstr "Hyvästelläänkö ryhmä <em>%(lang_name)s</em>?"
 msgid ""
 "Are you sure you want to permanently delete the '%(lang_name)s' team which "
 "works on %(project_name)s?"
-msgstr "Haluatko varmasti poistaa kielen '%(lang_name)s' käännösryhmän, joka työskentelee projektissa "
+msgstr "Haluatko varmasti poistaa kielen '%(lang_name)s' käännösryhmän, joka työskentelee projektissa %(project_name)s?"
 
 #: templates/teams/team_detail.html:49
 #, python-format
