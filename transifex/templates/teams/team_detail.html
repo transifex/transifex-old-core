@@ -218,7 +218,7 @@
                             contentType : 'application/json',
                             type : 'POST',
                             beforeSend: function(){
-                            $("div#notification-container div").html('{% trans "Trying to lock resource..." %}');
+                            $("div#notification-container div").html('{% trans "Trying to lock resource..."|escapejs %}');
                             $("div#notification-container").fadeIn("fast");
                             },
                             complete : function(xmlhttpreq, textStatus) {
@@ -241,7 +241,7 @@
                 },
                 'titleShow': true,
                 'titlePosition': 'outside',
-                'title': '{% trans "Translation Details"%}'
+                'title': '{% trans "Translation Details"|escapejs %}'
            });
         });
     </script>

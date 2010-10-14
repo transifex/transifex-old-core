@@ -126,7 +126,7 @@
                             request_url = window.location+'l/{{ language.code }}/clone/'+target_lang_code+'/';
                             window.location = request_url;
                         } else {
-                            alert('{% trans "Please select a target language first." %}');
+                            alert('{% trans "Please select a target language first."|escapejs %}');
                         }
                     });
                     if(!$("#download_for_translation a").hasClass('disabled')){
@@ -136,7 +136,7 @@
                                 contentType : 'application/json',
                                 type : 'POST',
                                 beforeSend: function(){
-                                $("div#notification-container div").html('{% trans "Trying to lock resource..." %}');
+                                $("div#notification-container div").html('{% trans "Trying to lock resource..."|escapejs %}');
                                 $("div#notification-container").fadeIn("fast");
                                 },
                                 complete : function(xmlhttpreq, textStatus) {
