@@ -45,7 +45,7 @@
   <a class="simlink" href="{% url release_language_feed release.project.slug release.slug language.code %}" title="Statistics feed for this language and release"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" /></a>
 {% endblock %}
 
-{% block content_title %}<h2 class="pagetitle">{{ release.name }}<sup class="entry_metalink">{{ language.name }}</sup></h2>{% endblock %}
+{% block content_title %}<h2 class="pagetitle">Release '{{ release.name }}':&nbsp;{{ language.name }}</h2>{% endblock %}
 
 {% block content_main %}
 
