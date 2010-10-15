@@ -122,6 +122,8 @@ def resource_edit(request, project_slug, resource_slug):
             url_form = URLInfoForm(request.POST,)
         if resource_form.is_valid() and url_form.is_valid():
             urlinfo = url_form.save(commit=False)
+            resource_new = resource_form.save()
+            urlinfo.resource = resource_new
             try:
                 urlinfo.update_source_file(fake=True)
             except Exception, e:
@@ -132,9 +134,7 @@ def resource_edit(request, project_slug, resource_slug):
                     'url_form': url_form,
                     'resource': resource,
                 }, context_instance=RequestContext(request))
-            resource_new = resource_form.save()
 
-            urlinfo.resource = resource_new
             urlinfo.save()
 
             post_resource_save.send(sender=None, instance=resource_new,
