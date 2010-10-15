@@ -64,7 +64,7 @@
                 var matchedNewLine = reWhiteSpaceNewLine.exec(string);
                 // Mark the whitespace chars with <span> tags.
                 string = string.replace(reWhiteSpaceNewLine,
-                    '<span class="whitespace newline" title="New line">&#182;</span>'+matchedNewLine);
+                    '<span class="whitespace newline" title="New line">⏎</span>'+matchedNewLine);
 
                 var matchedOther = reOtherWhiteSpace.exec(string);
                 string = string.replace(reOtherWhiteSpace,
