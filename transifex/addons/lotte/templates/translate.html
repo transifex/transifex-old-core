@@ -150,10 +150,10 @@
                             if(plural_types[rule]=='other'){
                               source_divs += '<div class="source_string" id="sourcestring_'+ oObj.iDataRow +'" title="{% trans "Source string" %}">';
                               if(plurals_counter>0)
-                                source_divs += '<span class="plural_title">'+plural_types[rule]+':</span>&nbsp;'
+                                source_divs += '<span class="plural_title">'+plural_types[rule]+': </span>'
                               source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
                             }else
-                              source_divs += '<p class="source_string_plural" title="{% trans "Source string" %}"><span class="plural_title">'+plural_types[rule]+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                              source_divs += '<p class="source_string_plural" title="{% trans "Source string" %}"><span class="plural_title">'+plural_types[rule]+': </span>' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
                             plurals_counter++;
                         }
                     }
@@ -168,7 +168,7 @@
                         if(rule=='other')
                           lang_strings += '<p>' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                         else
-                          lang_strings += '<p><span class="plural_title">'+rule+':</span>&nbsp;' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
+                          lang_strings += '<p><span class="plural_title">'+rule+': </span>' + html_escape(clean_array["source_dict"]["similar_lang_strings"][lang][rule]) + '</p>'
                       }
                       if(!lang_strings==""){
                         source_divs += '<h3 class="similar_lang_title">In '+lang+':</h3>';
