@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Transifex (.org)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-13 12:26+0000\n"
-"PO-Revision-Date: 2010-10-13 12:33+0000\n"
+"PO-Revision-Date: 2010-10-15 10:15+0000\n"
 "Last-Translator: zerng07 <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <chinese-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -175,7 +175,7 @@ msgstr "此翻譯已被其他人上鎖。"
 msgid ""
 "User '%(user)s' has no permission to submit translations for '%(resource)s' "
 "to '%(language)s'."
-msgstr ""
+msgstr "使用者「%(user)s」沒有得到為「%(resource)s」提交「%(language)s」翻譯的許可。"
 
 #: addons/locks/models.py:67
 #, python-format
@@ -339,40 +339,40 @@ msgstr "無法儲存，除非複數翻譯都已完整填寫或是都留下空白
 
 #: addons/lotte/views.py:535
 msgid "Translation must start with a newline (\\n)"
-msgstr ""
+msgstr "翻譯必須以新列符起頭 (\\n)"
 
 #: addons/lotte/views.py:538
 msgid "Translation should not start with a newline (\\n)"
-msgstr ""
+msgstr "翻譯不應該以新列符起頭 (\\n)"
 
 #: addons/lotte/views.py:543
 msgid "Translation must end with a newline (\\n)"
-msgstr ""
+msgstr "翻譯必須以新列符做結尾 (\\n)"
 
 #: addons/lotte/views.py:546
 msgid "Translation should not end with a newline (\\n)"
-msgstr ""
+msgstr "翻譯不應該以新列符做結尾 (\\n)"
 
 #: addons/lotte/views.py:555
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
-msgstr ""
+msgstr "數目 %s 存在於來源字串，但不存在於翻譯內。"
 
 #: addons/lotte/views.py:571
 #, python-format
 msgid "The expression '%s' is not present in the translation."
-msgstr ""
+msgstr "翻譯內不存在表數「%s」。"
 
 #: addons/lotte/views.py:581
 #, python-format
 msgid "The expression '%s' is not present in the source string."
-msgstr ""
+msgstr "來源字串內不存在表述「%s」。"
 
 #: addons/lotte/views.py:590
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
-msgstr ""
+msgstr "翻譯中引數的數量似乎與來源字串不同。"
 
 #: addons/lotte/views.py:614
 msgid "Translation updated successfully in the DB"
@@ -819,7 +819,7 @@ msgstr "送出建議！"
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr "我的時間軸"
+msgstr "我的時間表"
 
 #: addons/timeline/templates/timeline/project.html:9
 #: addons/timeline/templates/timeline/timeline_project.html:15
@@ -829,7 +829,7 @@ msgstr "我的時間軸"
 #: templates/projects/project_timeline.html:14
 #: templates/txcommon/user_timeline.html:12
 msgid "Timeline"
-msgstr "時間軸"
+msgstr "時間表"
 
 #: addons/timeline/templates/timeline/timeline_base.html:12
 #: templates/timeline.html:11
@@ -859,7 +859,7 @@ msgstr[0] "查詢傳回 %(counter)s 項結果"
 #: templates/txcommon/user_timeline.html:22
 #, python-format
 msgid "%(project_name)s Timeline"
-msgstr "%(project_name)s 時間軸 "
+msgstr "%(project_name)s 時間表"
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -1204,7 +1204,7 @@ msgstr "Slug"
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
-msgstr "用在網址上的簡短標籤，只能包含字母、數字、底線(_)或連字號(-)。"
+msgstr "用在 URL 上的簡短標籤，只能包含字母、數字、底線 (_) 或連字號 (-)。"
 
 #: projects/models.py:100
 msgid "A short name or very short description."
@@ -1241,7 +1241,7 @@ msgstr "程式錯誤追蹤器"
 
 #: projects/models.py:110
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
-msgstr "供軟體臭蟲與 ticket 追蹤系統使用的網址 (Bugzilla、Trac...等)"
+msgstr "供軟體臭蟲與 ticket 追蹤系統使用的 URL (Bugzilla、Trac...等)"
 
 #: projects/models.py:112
 msgid "Anyone can submit"
@@ -1731,7 +1731,7 @@ msgstr "您現在無法將它上鎖！( 已被 %s 上鎖 )"
 msgid ""
 "Your file failed a correctness check (msgfmt -c). Please run this command on "
 "your system to see the errors."
-msgstr ""
+msgstr "您的檔案無法通過正確性檢查 (msgfmt -c)。請在您的系統上執行該指令以查看錯誤資訊。"
 
 #: resources/formats/pofile.py:111
 msgid "Uploaded file contains DOS newlines (\\r)!"
@@ -1745,7 +1745,7 @@ msgstr "上傳的檔案標頭部分沒有「%s」中介資料！"
 #: resources/formats/qt.py:68
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
-msgstr ""
+msgstr "您的檔案似乎未包含有效的 xml：%s！"
 
 #: storage/api.py:128
 msgid "A strange error happened."
@@ -2142,7 +2142,7 @@ msgid ""
 "Type in the url of the project's home page.\n"
 msgstr ""
 "\n"
-"輸入專案主頁的 url。\n"
+"輸入專案主頁的 URL。\n"
 
 #: templates/helptext/project_form_helptext.html:59
 msgid "RSS Feed"
@@ -2172,7 +2172,7 @@ msgid ""
 msgstr ""
 "\n"
 "此欄位應該包含專案其維護用、追蹤用系統的 url。\n"
-"例如 transifex 的程式錯誤追蹤器 url 為：\n"
+"例如 transifex 的程式錯誤追蹤器 URL 為：\n"
 "http://www.transifex.org/\n"
 
 #: templates/helptext/project_form_helptext.html:83
@@ -3001,7 +3001,7 @@ msgstr "若要翻譯，您需要是 %(lang_name)s 團隊的成員。"
 
 #: templates/resources/resource_actions.html:61
 msgid "remaining strings"
-msgstr "剩餘字串"
+msgstr "條剩餘字串"
 
 #: templates/resources/resource_actions.html:69
 msgid "View strings online"
@@ -3060,7 +3060,7 @@ msgstr "本資源目前不接受翻譯。"
 
 #: templates/resources/resource_actions.html:160
 msgid "Translation last updated "
-msgstr "最近翻譯更新於"
+msgstr "最近翻譯更新"
 
 #: templates/resources/resource_actions.html:162
 msgid "by"
@@ -3122,7 +3122,7 @@ msgstr "接受翻譯？"
 #: templates/resources/resource_detail.html:127
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
+msgstr[0] "發行："
 
 #: templates/resources/resource_detail.html:141
 msgid "Available translations"
@@ -3347,7 +3347,7 @@ msgstr "您確定要永久刪除運作於 %(project_name)s 下的「%(lang_name)
 msgid ""
 "Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
 "(language_code)s</sup>"
-msgstr "翻譯團隊- %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>"
+msgstr "翻譯團隊 - %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>"
 
 #: templates/teams/team_detail.html:61
 msgid "Mainlist:"
@@ -3772,7 +3772,7 @@ msgstr "註冊新帳號"
 msgid ""
 "Account created. An activation url was sent to your e-mail address. Please "
 "access that url to complete the registration process."
-msgstr "帳號已建立。帳號啟動網址已經寄送到您的電子郵件位址。請存取該網址來完成註冊程序。"
+msgstr "帳號已建立。帳號啟動 URL 已經寄送到您的電子郵件位址。請存取該網址來完成註冊程序。"
 
 #: templates/userprofile/account/registration_done.html:15
 #, python-format
@@ -3810,7 +3810,7 @@ msgstr "完成"
 msgid ""
 "Select an image from a remote URL. Enter the URL in the field below and "
 "we'll retrieve the image for you"
-msgstr "從遠端網址選取圖片。請在下方欄位輸入網址，我們將會為您擷取圖片"
+msgstr "從遠端 URL 選取圖片。請在下方欄位輸入網址，我們將會為您擷取圖片"
 
 #: templates/userprofile/avatar/choose.html:63
 msgid "Search on Picasa Web"
@@ -4025,7 +4025,7 @@ msgstr "網誌"
 
 #: txcommon/models.py:39 txcommon/migrations/0002_release_06_07.py:19
 msgid "About yourself"
-msgstr "關於你"
+msgstr "關於您"
 
 #: txcommon/models.py:40
 msgid "Short description of yourself (140 chars)."
