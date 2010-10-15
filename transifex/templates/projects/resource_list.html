@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load cache %}
 {% load txcommontags %}
 {% load permissions %}
 {% load statistics_resources %}
@@ -73,6 +74,7 @@
   <tbody>
   {% endif %}
     <tr>
+		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
         <td>
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.total_entities as ts and stat.available_languages|length as al %}Total Strings: {{ ts }}<br/>Available Languages: {{ al }}{% endblocktrans %}">{{ stat.object.name }}</a>
           <sup class="entry_metalink">
@@ -89,13 +91,14 @@
           {% with stat.last_update as last_update %}
             {% if last_update %}
                 <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-                {{ last_update|timesince }}
+                {{ last_update|date:"M d,Y h:i" }}
             {% else %}
                 {% trans "no translations yet" %}
             {% endif %}
           {% endwith %}
           </span>
         </td>
+		{% endcache %}
         <td class="priority_level" style="width:100px;text-align:center">
             {% with stat.object.priority.level as priority_level %}
             {% with stat.object.priority.display_level as display_level %}

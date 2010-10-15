@@ -18,6 +18,7 @@ from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
 from transifex.txcommon.db.models import CompressedTextField
 from transifex.txcommon.log import logger
+from transifex.resources.utils import invalidate_template_cache
 
 class ResourceManager(models.Manager):
     pass
@@ -86,6 +87,29 @@ class Resource(models.Model):
         order_with_respect_to = 'project'
         get_latest_by = 'created'
 
+
+    def save(self, *args, **kwargs):
+        """
+        Do some etxra processing along with the actual save to db.
+        """
+        super(Resource, self).save(*args, **kwargs)
+        invalidate_template_cache("project_resource_details",
+            self.project.slug, self.slug)
+        invalidate_template_cache("resource_details",
+            self.project.slug, self.slug)
+
+    def delete(self, *args, **kwargs):
+        """
+        Do some extra processing along with the actual delete to db.
+        """
+        invalidate_template_cache("project_resource_details",
+            self.project.slug, self.slug)
+        invalidate_template_cache("resource_details",
+            self.project.slug, self.slug)
+        super(Resource, self).delete(*args, **kwargs)
+
+
+
     @models.permalink
     def get_absolute_url(self):
         return ('resource_detail', None,
@@ -95,7 +119,7 @@ class Resource(models.Model):
     def full_name(self):
         """
         Return a simple string without spaces identifying the resource.
-        
+
         Can be used instead of __unicode__ to create files on disk, URLs, etc.
         """        
         return "%s.%s" % (self.project.slug, self.slug)

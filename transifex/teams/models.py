@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.txcommon.log import log_model
+from transifex.resources.utils import invalidate_template_cache
 
 class TeamManager(models.Manager):
 
@@ -61,6 +63,33 @@ class Team(models.Model):
     @property
     def full_name(self):
         return "team.%s.%s" % (self.project.slug, self.language.code)
+
+    def save(self, *args, **kwargs):
+        """
+        Do some extra processing along with the actual save to db.
+        """
+        super(Team, self).save(*args, **kwargs)
+        Resource = get_model('resources', 'Resource')
+        res = Resource.objects.filter(project=self.project)
+        for r in res:
+            invalidate_template_cache("project_resource_details",
+                self.project.slug, r.slug)
+            invalidate_template_cache("resource_details",
+                self.project.slug, r.slug)
+
+    def delete(self, *args, **kwargs):
+        """
+        Do some extra processing along with the actual delete to db.
+        """
+        Resource = get_model('resources', 'Resource')
+        res = Resource.objects.filter(project=self.project)
+        for r in res:
+            invalidate_template_cache("project_resource_details",
+                self.project.slug, r.slug)
+            invalidate_template_cache("resource_details",
+                self.project.slug, r.slug)
+        super(Team, self).delete(*args, **kwargs)
+
 
 log_model(Team)
 

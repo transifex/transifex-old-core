@@ -88,6 +88,7 @@
     </div>
   {% endif %}
 
+{% cache 604800 resource_details resource.project.slug resource.slug LANGUAGE_CODE %}
 
 <div id="resource_details">
   <h3>{% trans "Translation Resource details" %}</h3>
@@ -151,7 +152,7 @@
   <tbody>
 {% for stat in statslist.language_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-        {% cache 604800 resource_details resource.project.slug resource.slug stat.language.code %}
+        {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
         <td>
           <span class="clickable">{{ stat.language.name }}</span> 
           <span class="locale">({{ stat.language.code }})</span>
@@ -176,7 +177,7 @@
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }}
+              {{ last_update|date:"M d,Y h:i" }}
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}
@@ -263,6 +264,7 @@
 
 </div>
 
+{% endcache %}
 
 
 {% get_permission "project_perm.submit_translations" for request.user and resource.project,1 as "can_submit_translation" %}

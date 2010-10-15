@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-from hashlib import md5
-from django.core.cache import cache
 from django.conf import settings
-from django.utils.hashcompat import md5_constructor
-from django.utils.http import urlquote
 from actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
 from transifex.resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
-from transifex.resources.utils import invalidate_object_cache
+from transifex.resources.utils import (invalidate_object_cache,
+    invalidate_template_cache)
 from transifex.resources.stats import ResourceStatsList
 from transifex.teams.models import Team
 
@@ -27,6 +24,13 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
     else:
         langs = [language]
 
+    # Template lvl cache for resource details
+    invalidate_template_cache("resource_details",
+        resource.project.slug, resource.slug)
+
+    invalidate_template_cache("project_resource_details",
+        resource.project.slug, resource.slug)
+
     # Number of source strings in resource
     for lang in langs:
         team = Team.objects.get_or_none(resource.project, lang.code)
@@ -41,25 +45,9 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
                 rel.id, lang.id)
 
         # Template lvl cache for resource details
-        invalidate_template_cache("resource_details",
+        invalidate_template_cache("resource_details_lang",
             resource.project.slug, resource.slug,
              lang.code)
-
-def invalidate_template_cache(fragment_name, *variables):
-    """
-    This function invalidates a template cache named `fragment_name` and with
-    variables which are included in *variables. For example:
-
-    {% cache 500 project_details project.slug %}
-        ...
-    {% endcache %}
-
-    We invalidate this by calling:
-     -  invalidate_template_cache("project_details", project.slug)
-    """
-    args = md5_constructor(u':'.join([urlquote(var) for var in variables]))
-    cache_key = 'template.cache.%s.%s' % (fragment_name, args.hexdigest())
-    cache.delete(cache_key)
 
 def on_resource_save(sender, instance, created, user, **kwargs):
     """
