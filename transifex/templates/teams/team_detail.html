@@ -164,7 +164,7 @@
         {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|date:"M d,Y h:i" }} 
+              {{ last_update|date:"M d, h:ia" }} 
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}

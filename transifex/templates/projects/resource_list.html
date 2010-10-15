@@ -91,7 +91,7 @@
           {% with stat.last_update as last_update %}
             {% if last_update %}
                 <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-                {{ last_update|date:"M d,Y h:i" }}
+                {{ last_update|date:"M d, h:ia" }}
             {% else %}
                 {% trans "no translations yet" %}
             {% endif %}
