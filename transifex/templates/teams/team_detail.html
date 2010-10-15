@@ -143,7 +143,7 @@
   {% for stat in statslist %}
 
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-  {% cache 604800 team_details team.id stat.object.id %}
+  {% cache 604800 team_details team.id stat.object.id LANGUAGE_CODE %}
         <td>
           <span class="clickable">{{ stat.object.name }}</span>
         </td>
@@ -164,7 +164,7 @@
         {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }} 
+              {{ last_update|date:"M d,Y h:i" }} 
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}

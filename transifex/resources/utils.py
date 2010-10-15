@@ -60,12 +60,12 @@ def invalidate_object_cache(object, language=None):
     keys = []
     for name, type in inspect.getmembers(StatsBase):
         if type.__class__.__name__ == "property":
-            keys.append("_".join([Stats.__module__, name]))
+            keys.append("_".join([StatsBase.__module__, name]))
 
     if language:
         for name, type in inspect.getmembers(Stats):
             if type.__class__.__name__ == "property":
-                keys.append("_".join([StatsBase.__module__, name, language.code]))
+                keys.append("_".join([Stats.__module__, name, language.code]))
 
     for key in keys:
         cache.delete("cached_property_%s_%s" % (key_from_instance(object), key))

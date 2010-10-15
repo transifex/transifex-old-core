@@ -131,7 +131,7 @@
 {% for stat in statslist.language_stats %}
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
 
-      {% cache 604800 release_details release.id stat.language.id %}
+      {% cache 604799 release_details release.id stat.language.id LANGUAGE_CODE%}
         <td>
           {{ stat.language.name }} 
           <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.language.code %}">{{ stat.language.code }}</a>)</span>
@@ -146,14 +146,14 @@
             </div>
           {% endwith %}
         </td>
-	  {% endcache %}
+
         <td>
         <span style="border:0">
           {% with stat.last_update as last_update %}
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }}
+              {{ last_update|date:"M d,Y h:i" }}
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}
@@ -164,6 +164,7 @@
           {% endwith %}
         </span>
         </td>
+	  {% endcache %}
     </tr>
 {% endfor %}
   </tbody>
