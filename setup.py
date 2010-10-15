@@ -64,7 +64,7 @@ setup(
         "httplib2",
         "polib >= 0.5.4",
         "Pygments >= 0.9",
-        "PIL == 1.1.6",
+        "PIL >= 1.1.7",
         "contact_form >= 0.3", # hg 97559a887345 or newer
         "django-addons",
         "django-authority",
