@@ -35,6 +35,11 @@
   {% block extracss %}{% endblock %}
   {% block extrajs %}{% endblock %}
   {% block extra_head %}{% endblock %}
+  {% block final_head %}
+    {% ifequal LANGUAGE_DIRECTION 'rtl' %}
+      <link media="screen" href="{{ STATIC_URL }}css/rtl.css" type="text/css" rel="stylesheet" />
+    {% endifequal %}
+  {% endblock %}
   {% hook "base.html" head %}
 </head>
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
