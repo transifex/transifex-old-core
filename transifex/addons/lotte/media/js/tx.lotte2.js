@@ -457,11 +457,11 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         $('.lotte-actions a.copy_source').click(function() {
             var a=$(this);
             var plural_orig = $('.msg .source_string_plural', a.parents('tr'));
-            var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset"); //html();
+            var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset");
             if(plural_orig.length > 0)
               orig = orig.substring(orig.indexOf('</span>')+7);
             var trans=$('textarea.default_translation', a.parents('tr'));
-            trans.val(orig);
+            trans.val(html_unescape(orig));
             /* Mark the translated field as modified */
             id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             string = this_stringset.strings[id];

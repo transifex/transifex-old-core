@@ -32,10 +32,18 @@ function tooltip(targetnode, message){
   */
 function html_escape(html)
 {
-  var escaped = html;
-  escaped = escaped.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+  return html.replace(/&/g, "&amp;").replace(/</g, "&lt;")
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-  return(escaped);
+}
+
+/** 
+  * This function unescapes the html elements found in a string!
+  */
+function html_unescape(html)
+{
+  return html.replace(/\&amp;/g, "&").replace(/\&lt;/g, "<")
+        .replace(/\&gt;/g, ">").replace(/\&quot;/g, "\"");
+
 }
 
 /**
