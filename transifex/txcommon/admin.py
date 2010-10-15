@@ -28,6 +28,8 @@ class UserChangeForm(UserChangeForm):
         regex=u'^\w+$', help_text=help_text, error_message=error_message)
 
 class UserProfileAdmin(UserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'last_login',
+        'date_joined', 'is_active', 'is_staff',)
     form = UserChangeForm
     add_form = UserCreationForm
 
