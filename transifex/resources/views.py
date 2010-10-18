@@ -124,18 +124,29 @@ def resource_edit(request, project_slug, resource_slug):
             urlinfo = url_form.save(commit=False)
             resource_new = resource_form.save()
             urlinfo.resource = resource_new
-            try:
-                urlinfo.update_source_file(fake=True)
-            except Exception, e:
-                url_form._errors['source_file_url'] = _("The URL you provided"
-                    " doesn't link to valid file.")
-                return render_to_response('resources/resource_form.html', {
-                    'resource_form': resource_form,
-                    'url_form': url_form,
-                    'resource': resource,
-                }, context_instance=RequestContext(request))
-
-            urlinfo.save()
+            if urlinfo.source_file_url:
+                try:
+                    urlinfo.update_source_file(fake=True)
+                except Exception, e:
+                    url_form._errors['source_file_url'] = _("The URL you provided"
+                        " doesn't link to valid file.")
+                    return render_to_response('resources/resource_form.html', {
+                        'resource_form': resource_form,
+                        'url_form': url_form,
+                        'resource': resource,
+                    }, context_instance=RequestContext(request))
+                # If we got a URL, save the model instance
+                urlinfo.save()
+            else:
+                if urlinfo.auto_update:
+                    url_form._errors['source_file_url'] = _("You have checked"
+                        " the auto update checkbox but you haven't provided a"
+                        " valid url.")
+                    return render_to_response('resources/resource_form.html', {
+                        'resource_form': resource_form,
+                        'url_form': url_form,
+                        'resource': resource,
+                    }, context_instance=RequestContext(request))
 
             post_resource_save.send(sender=None, instance=resource_new,
                 created=False, user=request.user)
