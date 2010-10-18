@@ -110,7 +110,13 @@ class POHandler(Handler):
 
         # Read the stream to buffer
         po = polib.pofile(filename)
-        buf = get_po_contents(po)
+
+        # get this back once the polib bug has been fixed :
+        # http://bitbucket.org/izi/polib/issue/11/multiline-entries-are-not-getting-updated
+        #buf = get_po_contents(po)
+
+        # Temporary solution
+        buf = open(filename, 'r').read()
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
