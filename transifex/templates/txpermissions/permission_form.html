@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
 {% if form %}
-<form method="post" enctype="multipart/form-data" action="{{ form_url }}" class="add-permission microform">
+<form method="post" enctype="multipart/form-data" action="{{ form_url }}" class="add-permission microform">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
     <table>
         <tbody>

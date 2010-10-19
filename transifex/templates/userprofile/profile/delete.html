@@ -13,7 +13,7 @@
    <p>{% trans "Erase all your private data except your username. You can fill in the information again later if you want to." %}</p>
 
   <div class="generic_form">
-	<form action="{% url profile_delete %}" method="post" enctype="multipart/form-data">
+	<form action="{% url profile_delete %}" method="post" enctype="multipart/form-data">{% csrf_token %}
 		<h3>{% trans "Are you sure?" %}</label></h3>
         <p><input id="remove" class="i16 delete" type="submit" value="{% trans "Delete my data" %}" /></p>
 	</form>

@@ -30,7 +30,7 @@ Edit {{resource}}
 </h3>
 
 <div class="project_create generic_form">
-  <form action='' method='post'>
+  <form action='' method='post'>{% csrf_token %}
     <table>
         <tbody>
         {% form_as_table_rows resource_form %}

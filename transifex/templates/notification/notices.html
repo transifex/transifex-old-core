@@ -98,7 +98,7 @@
         {% endif %}
         {% endwith %}
         
-        <form method="POST" action="">
+        <form method="POST" action="">{% csrf_token %}
             <table class="tablesorter notice_settings">
                 <tr>
                     <th>{% trans "Notification Type" %}</th>

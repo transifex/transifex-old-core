@@ -17,7 +17,7 @@
   {% blocktrans with project.name as project_name %}Are you sure you want to permanently delete the registered project '{{ project_name }}'?{% endblocktrans %}
 </p>
 
-  <form action='' method='post'>
+  <form action='' method='post'>{% csrf_token %}
     <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 

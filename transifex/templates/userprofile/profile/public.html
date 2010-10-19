@@ -46,7 +46,7 @@
             {% url user_nudge profile.user as user_nudge_url %}
             {% if request.user.is_authenticated and user_nudge_url %}
             {% ifnotequal profile.user request.user %}
-            <form action="{{ user_nudge_url }}" class="microform">
+            <form action="{{ user_nudge_url }}" class="microform">{% csrf_token %}
                 <input class="i16 nudge" value="{% blocktrans with profile.user as user %}Nudge {{ user }} {% endblocktrans %}" type="submit">
             </form>
             {% endifnotequal %}

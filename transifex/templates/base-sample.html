@@ -17,7 +17,10 @@
   <link media="screen" href="{{ STATIC_URL }}css/jquery.fancybox-1.3.0.css" type="text/css" rel="stylesheet" />
   {% endblock %}
   {% block basejs %}
-  <script type="text/javascript"> var STATIC_URL = "{{ STATIC_URL }}"; </script>
+  <script type="text/javascript"> 
+    var STATIC_URL = "{{ STATIC_URL }}";
+    var csrf_token = "{% csrf_token %}";
+  </script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.3.2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/json2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
@@ -66,7 +69,7 @@
               {% hook "transifex_base.html" global-usernav %}
               {% url profile_overview as user_profile %} 
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %}&nbsp; | &nbsp;
-              <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform">
+              <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform">{% csrf_token %}
                 <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" />
               </form>
           {% else %}
@@ -79,7 +82,7 @@
       <!--</span> -->
     {% url django.views.i18n.set_language as set_language_url %} &nbsp;
     {% with request.session.django_language as django_language %}
-    <form id="global-language-chooser" class="microform" action="{{ set_language_url }}" method="post">
+    <form id="global-language-chooser" class="microform" action="{{ set_language_url }}" method="post">{% csrf_token %}
         <input name="next" type="hidden" value="{{ request.path }}" />
             <select id="language_switch" name="language">
             {% for lang in LANGUAGES %}

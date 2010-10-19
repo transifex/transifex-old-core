@@ -15,7 +15,7 @@
   Are you sure you want to permanently delete the translation resource '{{ resource_name }}'?
 {% endblocktrans %}</p>
 
-  <form action="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}" method="post">
+  <form action="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}" method="post">{% csrf_token %}
     <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 

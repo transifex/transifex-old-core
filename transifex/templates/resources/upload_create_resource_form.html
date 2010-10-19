@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 <div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}> 
 
- <form action='' method='post' class="microform houdini">
+ <form action='' method='post' class="microform houdini">{% csrf_token %}
   <fieldset style="margin-top: 1em;">
   <legend>{% trans "Create resource to be translated" %}</legend>
 

@@ -49,11 +49,11 @@
         <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
         
         {% if is_maintainer %}
-        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">
+        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
             <input name="team_request_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
         </form>
         
-        <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">
+        <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
             <input name="team_request_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
         </form>
         {% endif %}
@@ -96,7 +96,7 @@
 {% if team_request_form %}
 {% if request.user.is_authenticated and not is_maintainer %}
 <span class="i16 add submit_button buttonized" title="{% trans "Request a new translation team for this project" %}">{% trans "Request a new team" %}</span>
-<form method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission microform submit_form">
+<form method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission microform submit_form">{% csrf_token %}
   <fieldset style="margin-top: 1em;">
    <legend>Request a new translation team</legend>
     <table>

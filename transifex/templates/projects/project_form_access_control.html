@@ -25,7 +25,7 @@
 {% with project_access_control_form as form %}
 
   <div class="separate">
-    <form name="access_control" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">
+    <form name="access_control" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
     <input type="hidden" name="next" value="{{ request.path }}"/>
     <table class="access_control">
         <tbody>

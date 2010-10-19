@@ -42,7 +42,7 @@
     {% if user.get_profile.has_avatar %}<p id="avatardelete" style="text-align: center;"><a href="{{ request.path_info }}delete/" class="delavatar">{% trans "Delete" %}</a></p>{% endif %}
     </div>
     <div class="generic_form">
-	<form action="{% url profile_edit_avatar %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+	<form action="{% url profile_edit_avatar %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">{% csrf_token %}
 		<fieldset>
 			<legend>{% trans "Choose the location of your avatar" %}</legend>
 			<ul>

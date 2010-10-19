@@ -22,7 +22,7 @@
 
 {% if perms.projects.add_team or is_coordinator %}
 
-<form id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">
+<form id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">{% csrf_token %}
  <fieldset style="margin-top: 1em;">
   <legend>{% trans "Translation team details" %}</legend>
     <div class="notice">

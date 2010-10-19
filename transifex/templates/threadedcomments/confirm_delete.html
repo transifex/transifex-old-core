@@ -8,7 +8,7 @@
         <div id="comment_preview">{% auto_transform_markup comment %}</div>
     {% endif %}
     <ul>
-    <form method="POST" action=".">
+    <form method="POST" action=".">{% csrf_token %}
         <li><input type="submit" value="Yes" /></li>
     </form>
     <li><a href="{{ next }}">No</a></li>
