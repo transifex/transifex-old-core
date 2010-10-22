@@ -41,7 +41,10 @@ def stats_cached_property(func):
         else:
             key = 'cached_property_%s_%s_%s' % \
                 (key_from_instance(self.object), func.__module__, func.__name__)
-        return cache.get(key) or cache_set(key, func(self))
+        if cache.has_key(key):
+            return cache.get(key)
+        else:
+            return cache_set(key, func(self))
     return property(cached_func)
 
 def invalidate_object_cache(object, language=None):
