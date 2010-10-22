@@ -162,12 +162,7 @@
         </td>
         <td>
           {% with 200 as barwidth %}
-            <div class="stats tipsy_enable" style='width:{{ barwidth|add:"40" }}px;' title="{% trans "Translated: " %}{{ stat.num_translated }}<br />{% trans "Untranslated: " %}{{ stat.num_untranslated }}">
-                <div class="stats_string_resource" >
-                    {{ stat.trans_percent }}% 
-                </div> 
-                {% stats_bar_simple stat barwidth %}
-            </div>
+            {% stats_bar_simple stat barwidth %}
           {% endwith %}
         </td>
         {% endcache %}
