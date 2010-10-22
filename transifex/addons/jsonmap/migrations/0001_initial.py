@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
         # Adding model 'JSONMap'
         db.create_table('jsonmap_jsonmap', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('slug', self.gf('django.db.models.fields.TextField')(max_length=50)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50)),
             ('content', self.gf('txcommon.db.models.CompressedTextField')(null=False, blank=False)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
