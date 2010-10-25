@@ -20,6 +20,7 @@ from django.utils.html import escape
 from authority.models import Permission
 from notification.models import ObservedItem
 
+from transifex.actionlog.models import LogEntry
 from transifex.txcommon.log import log_model
 
 class DefaultProjectManager(models.Manager):
@@ -138,6 +139,11 @@ class Project(models.Model):
     long_description_html = models.TextField(_('HTML Description'), blank=True, 
         max_length=1000,
         help_text=_('Description in HTML.'), editable=False)
+
+    # Reverse Relation for LogEntry GenericForeignkey
+    # Allows to access LogEntry objects for a given project
+    actionlogs = generic.GenericRelation(LogEntry, 
+        object_id_field="object_id", content_type_field="content_type")
 
     # Managers
     objects = DefaultProjectManager()

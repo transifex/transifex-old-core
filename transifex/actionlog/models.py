@@ -8,10 +8,9 @@ from django.utils.encoding import smart_unicode, force_unicode
 from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
-from transifex.projects.models import Project
 from transifex.txcommon.log import logger
 
-
+Project = models.get_model("projects", "Project")
 
 def _get_formatted_message(label, context):
     """
