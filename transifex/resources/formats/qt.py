@@ -46,6 +46,12 @@ def _get_attribute(element, key, die = False):
     else:
         return None
 
+def _getText(nodelist):
+    rc = []
+    for node in nodelist:
+        rc.append(node.toxml())
+    return ''.join(rc)
+
 
 class LinguistHandler(Handler):
     name = "Qt4 TS parser"
@@ -91,7 +97,7 @@ class LinguistHandler(Handler):
                 plurals = Translation.objects.filter(
                     source_entity__resource = self.resource,
                     language = language,
-                    source_entity__string = source.firstChild.toxml())
+                    source_entity__string = _getText(source.childNodes))
                 plural_keys = {}
                 # last rule excluding other(5)
                 lang_rules = language.get_pluralrules_numbers()
@@ -174,12 +180,14 @@ class LinguistHandler(Handler):
                     message.attributes['numerus'].value=='yes':
                     pluralized = True
 
+
                 source = _getElementByTagName(message, "source")
                 translation = _getElementByTagName(message, "translation")
 
+
                 status = None
                 if source.firstChild:
-                    sourceString = source.firstChild.toxml()
+                    sourceString = _getText(source.childNodes)
                 else:
                     sourceString = None # WTF?
 
@@ -195,6 +203,14 @@ class LinguistHandler(Handler):
                 messages = []
 
                 if is_source:
+                    if translation.attributes.has_key("variants") and \
+                      translation.attributes['variants'].value == 'yes':
+                        logger.error("Source file has unsupported"
+                            " variants.")
+                        raise LinguistParseError("Source file"
+                            " could not be imported: Qt Linguist"
+                            " variants are not supported.")
+
                     messages = [(5, sourceStringText or sourceString)]
                     # remove unfinished/obsolete attrs from template
                     if translation.attributes.has_key("type"):
@@ -205,19 +221,38 @@ class LinguistHandler(Handler):
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
                             for n,f  in enumerate(numerusforms):
-                                nf=numerusforms[n].firstChild
-                                if nf:
-                                    messages.append((nplural[n], nf.toxml()))
+                                if numerusforms[n].attributes.has_key("variants") and \
+                                  numerusforms[n].attributes['variants'].value == 'yes':
+                                    logger.error("Source file has unsupported"
+                                        " variants.")
+                                    raise LinguistParseError("Source file"
+                                        " could not be imported: Qt Linguist"
+                                        " variants are not supported.")
+                            for n,f  in enumerate(numerusforms):
+                                if numerusforms[n].attributes.has_key("variants") and \
+                                  numerusforms[n].attributes['variants'].value == 'yes':
+                                    continue
+                            for n,f  in enumerate(numerusforms):
+                                nf=numerusforms[n]
+                                if nf.firstChild:
+                                    messages.append((nplural[n], _getText(nf.childNodes)))
                         except LinguistParseError:
                             pass
 
                 elif translation and translation.firstChild:
+
+                    # For messages with variants set to 'yes', we skip them
+                    # altogether. We can't support variants at the momment...
+                    if translation.attributes.has_key("variants") and \
+                      translation.attributes['variants'].value == 'yes':
+                        continue
+
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
                         if status in ["unfinished", "obsolete"] and\
                           not pluralized:
                             suggestion = GenericTranslation(sourceString,
-                                translation.firstChild.toxml(),
+                                _getText(translation.childNodes),
                                 context=context_name,
                                 occurrences= ";".join(occurrences))
                             suggestions.strings.append(suggestion)
@@ -228,9 +263,16 @@ class LinguistHandler(Handler):
                         continue
 
                     if not pluralized:
-                        messages = [(5, translation.firstChild.toxml())]
+                        messages = [(5, _getText(translation.childNodes))]
                     else:
                         numerusforms = translation.getElementsByTagName('numerusform')
+                        try:
+                            for n,f  in enumerate(numerusforms):
+                                if numerusforms[n].attributes.has_key("variants") and \
+                                  numerusforms[n].attributes['variants'].value == 'yes':
+                                    raise StopIteration
+                        except StopIteration:
+                            continue
                         if nplural:
                             nplural_file = len(numerusforms)
                             if len(nplural) != nplural_file:
@@ -247,9 +289,9 @@ class LinguistHandler(Handler):
                             continue
 
                         for n,f  in enumerate(numerusforms):
-                            nf=numerusforms[n].firstChild
-                            if nf:
-                                messages.append((nplural[n], nf.toxml()))
+                            nf=numerusforms[n]
+                            if nf.firstChild:
+                                messages.append((nplural[n], _getText(nf.childNodes)))
 
                     # NB! If <translation> doesn't have type attribute, it means that string is finished
 
@@ -271,19 +313,20 @@ class LinguistHandler(Handler):
                                     {'hash': md5(sourceString.encode('utf-8')).hexdigest(),
                                      'key': n})
                     else:
-                        if translation and translation.firstChild:
-                            translation.firstChild.data = ("%(hash)s_tr" % 
-                                {'hash':md5(sourceString.encode('utf-8')).hexdigest()})
-                        else:
-                            if not translation:
-                                translation = doc.createElement("translation")
+                        if not translation:
+                            translation = doc.createElement("translation")
 
-                            translation.appendChild(doc.createTextNode(
-                                ("%(hash)s_tr" % {'hash':md5(sourceString.encode('utf-8')).hexdigest()})))
+                        # Delete all child nodes. This is usefull for xml like
+                        # strings (eg html) where the translation text is split
+                        # in multiple nodes.
+                        translation.childNodes = []
+
+                        translation.appendChild(doc.createTextNode(
+                            ("%(hash)s_tr" % {'hash':md5(sourceString.encode('utf-8')).hexdigest()})))
 
 
             if is_source:
-                self.template = str(doc.toxml())
+                self.template = str(doc.toxml().encode('utf-8'))
 
 
             self.suggestions = suggestions
