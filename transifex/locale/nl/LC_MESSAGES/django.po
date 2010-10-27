@@ -4,11 +4,11 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Transifex (.org)\n"
+"Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 12:26+0000\n"
-"PO-Revision-Date: 2010-10-15 10:13+0000\n"
-"Last-Translator: RockyTDR <>\n"
+"POT-Creation-Date: 2010-10-27 18:50+0000\n"
+"PO-Revision-Date: 2010-10-27 14:48+0000\n"
+"Last-Translator: RockyTDR <thomasderocker@hotmail.com>\n"
 "Language-Team: Dutch (Netherlands) <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,25 +20,25 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Naar een gebruikersnaam zoeken of leeglaten"
 
-#: actionlog/models.py:152 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:151 actionlog/templates/object_action_list.html:7
 #: addons/suggestions/models.py:44 addons/suggestions/models.py:110
-#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
+#: teams/models.py:105 teams/models.py:141 txpermissions/forms.py:18
 msgid "User"
 msgstr "Gebruiker"
 
-#: actionlog/models.py:159
+#: actionlog/models.py:158
 msgid "Action type"
 msgstr "Actietype"
 
-#: actionlog/models.py:160
+#: actionlog/models.py:159
 msgid "Action time"
 msgstr "Actietijd"
 
-#: actionlog/models.py:168
+#: actionlog/models.py:167
 msgid "log entry"
 msgstr "logboekingang"
 
-#: actionlog/models.py:169
+#: actionlog/models.py:168
 msgid "log entries"
 msgstr "logboekingangen"
 
@@ -70,15 +70,15 @@ msgstr "Een link die verwijst naar het bronbestand van deze bron om te gebruiken
 
 #: addons/autofetch/models.py:19
 msgid "Automatically update source file"
-msgstr "Bronbestand automatisch updaten"
+msgstr "Bronbestand automatisch bijwerken"
 
 #: addons/autofetch/models.py:20
 msgid ""
 "A boolean field indicating whether the file should be automatically updated "
 "by pulling and merging from the given URL."
-msgstr "Een booleaans veld dat aantoont of het bestand automatisch geüpdatet moet worden door het te halen en samenvoegen vanaf de gegeven link."
+msgstr "Een booleaans veld dat aantoont of het bestand automatisch bijgewerkt moet worden door het te halen en samenvoegen vanaf de gegeven link."
 
-#: addons/autofetch/models.py:25 resources/models.py:152
+#: addons/autofetch/models.py:25 resources/models.py:178
 #: templates/projects/release_language_detail.html:58
 #: templates/teams/team_detail.html:137
 msgid "Resource"
@@ -102,7 +102,7 @@ msgstr "Fout bij updaten van bronbestand."
 
 #: addons/autofetch/views.py:34
 msgid "Source file updated successfully."
-msgstr "Bronbestand succesvol geüpdatet."
+msgstr "Bronbestand succesvol bijgewerkt."
 
 #: addons/charts/templates/charts/widget_snippet.html:61
 msgid "Image Charts"
@@ -131,7 +131,7 @@ msgstr "Codefragment voor bron weergeven:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:116
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:117
 msgid "Hidden"
 msgstr "Verborgen"
 
@@ -168,7 +168,7 @@ msgstr "...meer"
 
 #: addons/locks/handlers.py:54
 msgid "This translation is locked by someone else."
-msgstr "Deze vertaling werd door iemand anders afgesloten."
+msgstr "Deze vertaling werd door iemand anders vergrendeld."
 
 #: addons/locks/models.py:55
 #, python-format
@@ -180,29 +180,29 @@ msgstr "Gebruiker '%(user)s' heeft geen toestemming om vertalingen in te zenden 
 #: addons/locks/models.py:67
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
-msgstr "Gebruiker '%(user)s' heeft al het maximum aantal slotjes (%(locks)i)."
+msgstr "Gebruiker '%(user)s' heeft al het maximum aantal vergrendelingen (%(locks)i)."
 
 #: addons/locks/models.py:76
 #, python-format
 msgid "This resource language is already locked by '%s'"
-msgstr "Deze brontaal is reeds geblokkeerd door '%s'"
+msgstr "Deze brontaal is reeds vergrendeld door '%s'"
 
 #: addons/locks/models.py:162
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
-msgstr "Gebruiker '%(user)s' heeft geen toestemming om slotje '%(lock)s' te verwijderen"
+msgstr "Gebruiker '%(user)s' heeft geen toestemming om vergrendeling '%(lock)s' te verwijderen"
 
 #: addons/locks/notifications.py:15
 msgid "Lock expiration"
-msgstr "Verval van slotje"
+msgstr "Verval van vergrendeling"
 
 #: addons/locks/notifications.py:16
 msgid "when a lock for a translation resource will expire"
-msgstr "wanneer een slotje voor een vertaalbron vervalt"
+msgstr "wanneer een vergrendeling voor een vertaalbron vervalt"
 
 #: addons/locks/views.py:43
 msgid "Lock created."
-msgstr "Slotje aangemaakt."
+msgstr "Vergrendeling aangemaakt."
 
 #: addons/locks/views.py:50 addons/locks/views.py:86
 msgid "Sorry, but you need to send a POST request."
@@ -214,20 +214,20 @@ msgstr "Vergrendeling verwijderd."
 
 #: addons/locks/views.py:80
 msgid "You don't have permission to unlock this file."
-msgstr "U heeft geen toestemming om dit bestand los te maken."
+msgstr "U heeft geen toestemming om dit bestand te ontgrendelen."
 
 #: addons/locks/views.py:83
 msgid "Unlock failed. Lock doesn't exist."
-msgstr "Losmaken mislukt. Slotje bestaat niet."
+msgstr "Losmaken mislukt. Vergrendeling bestaat niet."
 
 #: addons/locks/templates/lock_resource_action.html:17
 msgid "You locked this translation."
-msgstr "U heeft deze vertaling vastgezet."
+msgstr "U heeft deze vertaling vergrendeld."
 
 #: addons/locks/templates/lock_resource_action.html:19
 #, python-format
 msgid "User '%(owner)s' locked this translation."
-msgstr "Gebruiker '%(owner)s' heeft dit bestand gesloten."
+msgstr "Gebruiker '%(owner)s' heeft dit bestand vergrendeld."
 
 #: addons/locks/templates/lock_resource_action.html:21
 #, python-format
@@ -236,49 +236,49 @@ msgstr "(%(lock_expires)s resterend)"
 
 #: addons/locks/templates/lock_resource_action.html:23
 msgid "unlock"
-msgstr "losmaken"
+msgstr "ontgrendelen"
 
 #: addons/locks/templates/lock_resource_action.html:28
 msgid "Click to renew your lock for a fresh period of time."
-msgstr "Klik hier om uw slotje voor een nieuwe tijdsperiode in te stellen."
+msgstr "Klik hier om uw vergrendeling voor een nieuwe tijdsperiode in te stellen."
 
 #: addons/locks/templates/lock_resource_action.html:29
 #: addons/locks/templates/pofile_lock.html:31
 #, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
-msgstr[0] "Slot verlengen met %(hours)s uur.            "
-msgstr[1] "Slot verlengen met %(hours)s uur.            "
+msgstr[0] "Vergrendeling verlengen met %(hours)s uur.            "
+msgstr[1] "Vergrendeling verlengen met %(hours)s uur.            "
 
 #: addons/locks/templates/lock_resource_action.html:38
 msgid "Lock this translation to notify others you're working with it."
-msgstr "Vertaling op slot doen om anderen te laten zien dat u ermee aan het werken bent."
+msgstr "Vertaling vergrendelen om anderen te laten zien dat u ermee aan het werken bent."
 
 #: addons/locks/templates/lock_resource_action.html:42
 msgid ""
 "This translation isn't locked. Most likely no one is working on it right now."
-msgstr "Dit bestand is niet vastgezet. Er is waarschijnlijk niemand mee aan het werken op dit moment."
+msgstr "Dit bestand is niet vergrendeld. Er is waarschijnlijk niemand mee aan het werken op dit moment."
 
 #: addons/locks/templates/lock_resource_action.html:56
 msgid "Creating lock..."
-msgstr "Slotje aanmaken..."
+msgstr "Vergrendeling aanmaken..."
 
 #: addons/locks/templates/lock_resource_action.html:78
 msgid "Removing lock..."
-msgstr "Slotje verwijderen..."
+msgstr "Vergrendeling verwijderen..."
 
 #: addons/locks/templates/lock_resource_action.html:101
 msgid "Extending lock..."
-msgstr "Slotje verlengen..."
+msgstr "Vergrendeling verlengen..."
 
 #: addons/locks/templates/pofile_lock.html:19
 #, python-format
 msgid "User '%(owner)s' locked this file."
-msgstr "Gebruiker '%(owner)s' heeft dit bestand vastgezet."
+msgstr "Gebruiker '%(owner)s' heeft dit bestand vergrendeld."
 
 #: addons/locks/templates/pofile_lock.html:21
 msgid "Click file to unlock."
-msgstr "Klik op het bestand om los te maken."
+msgstr "Klik op het bestand om te ontgrendelen"
 
 #: addons/locks/templates/pofile_lock.html:23
 msgid "Time left:"
@@ -287,11 +287,11 @@ msgstr "Resterende tijd:"
 #: addons/locks/templates/pofile_lock.html:41
 msgid ""
 "Lock and download this file to notify others that you're working with it."
-msgstr "Bestand vastzetten en downloaden om anderen te laten zien dat u ermee aan het werken bent."
+msgstr "Bestand vergrendelen en downloaden om anderen te laten zien dat u ermee aan het werken bent."
 
 #: addons/locks/templates/pofile_lock.html:46
 msgid "This file isn't locked. Most likely no one is working on it right now."
-msgstr "Dit bestand is niet vastgezet. Er is waarschijnlijk niemand mee aan het werken op dit moment."
+msgstr "Dit bestand is niet ontgrendeld. Er is waarschijnlijk niemand mee aan het werken op dit moment."
 
 #: addons/locks/templates/notification/project_resource_language_lock_expiring/notice.html:3
 #, python-format
@@ -301,7 +301,7 @@ msgid ""
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 "\n"
-"Een slotje voor <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s in %(language)s</a> staat op het punt te vervallen op %(expires)s\n"
+"Een vergrendeling voor <a href=\"http://%(current_site)s%(resource_url)s\">%(resource)s in %(language)s</a> staat op het punt te vervallen op %(expires)s\n"
 
 #: addons/lotte/views.py:68
 msgid ""
@@ -314,7 +314,7 @@ msgid ""
 "The source language cannot be edited, because this would result in "
 "translation mismatching! If you want to update the source strings consider "
 "using the command line client of transifex."
-msgstr "De brontaal kan niet bewerkt worden omdat dit zou resulteren in het niet overeenkomen van vertalingen! Als u de bronteksten wil updaten, overweeg dan gebruik te maken van de opdrachtregelclient van transifex."
+msgstr "De brontaal kan niet bewerkt worden omdat dit zou resulteren in het niet overeenkomen van vertalingen! Als u de bronteksten wil bijwerken, overweeg dan gebruik te maken van de opdrachtregelclient van transifex."
 
 #: addons/lotte/views.py:353
 msgid "Save the specific change"
@@ -385,7 +385,7 @@ msgstr "Het aantal argumenten lijkt te verschillen tussen de brontekst en de ver
 
 #: addons/lotte/views.py:614
 msgid "Translation updated successfully in the DB"
-msgstr "Vertaling succesvol in de database geüpdatet"
+msgstr "Vertaling succesvol in de database bijgewerkt"
 
 #: addons/lotte/views.py:626
 msgid "New translation stored successfully in the DB"
@@ -414,7 +414,7 @@ msgid "by %(user)s"
 msgstr "door %(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:182
+#: addons/lotte/templates/translate.html:185
 msgid "Key"
 msgstr "Toets"
 
@@ -425,8 +425,8 @@ msgstr "String ID:"
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:101
-#: releases/models.py:33 templates/timeline.html:39
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:102
+#: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
 msgid "Description"
@@ -437,7 +437,7 @@ msgid "Description:"
 msgstr "Beschrijving:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#: resources/models.py:130
+#: resources/models.py:156
 msgid "Occurrences"
 msgstr "Gebeurtenissen"
 
@@ -450,7 +450,7 @@ msgid "No active languages!"
 msgstr "Geen actieve talen!"
 
 #: addons/lotte/templates/translate.html:8
-#: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:54
+#: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:63
 #: templates/projects/base.html:6 templates/projects/project_list.html:14
 #: templates/resources/resource_detail.html:64
 #: templates/resources/resource_form.html:10
@@ -463,232 +463,196 @@ msgstr "Projecten"
 msgid "Translate to %(lang)s"
 msgstr "Vertalen naar het %(lang)s"
 
-#: addons/lotte/templates/translate.html:107
+#: addons/lotte/templates/translate.html:110
 #: addons/lotte/templates/view_strings.html:37
 msgid "Processing..."
 msgstr "Verwerken..."
 
-#: addons/lotte/templates/translate.html:108
+#: addons/lotte/templates/translate.html:111
 #: addons/lotte/templates/view_strings.html:38
 msgid "Show _MENU_ entries"
 msgstr "_MENU_-ingangen tonen"
 
-#: addons/lotte/templates/translate.html:109
+#: addons/lotte/templates/translate.html:112
 #: addons/lotte/templates/view_strings.html:39
 msgid "No matching records found"
 msgstr "Geen bijpassende gegevens gevonden"
 
-#: addons/lotte/templates/translate.html:110
+#: addons/lotte/templates/translate.html:113
 #: addons/lotte/templates/view_strings.html:40
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "_START_ tot _END_ van _TOTAL_ resultaten weergegeven"
 
-#: addons/lotte/templates/translate.html:111
+#: addons/lotte/templates/translate.html:114
 #: addons/lotte/templates/view_strings.html:41
 msgid "Nothing to show"
 msgstr "Niets weer te geven"
 
-#: addons/lotte/templates/translate.html:112
+#: addons/lotte/templates/translate.html:115
 #: addons/lotte/templates/view_strings.html:42
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(gefilterd van _MAX_ resultaten in totaal)"
 
-#: addons/lotte/templates/translate.html:114
+#: addons/lotte/templates/translate.html:117
 #: addons/lotte/templates/view_strings.html:44
 msgid "Search:"
 msgstr "Zoeken:"
 
-#: addons/lotte/templates/translate.html:117
+#: addons/lotte/templates/translate.html:120
 #: addons/lotte/templates/view_strings.html:47
 msgid "First"
 msgstr "Eerste"
 
-#: addons/lotte/templates/translate.html:118
+#: addons/lotte/templates/translate.html:121
 #: addons/lotte/templates/view_strings.html:48
 msgid "Previous"
 msgstr "Vorige"
 
-#: addons/lotte/templates/translate.html:119
+#: addons/lotte/templates/translate.html:122
 #: addons/lotte/templates/view_strings.html:49
 msgid "Next"
 msgstr "Volgende"
 
-#: addons/lotte/templates/translate.html:120
+#: addons/lotte/templates/translate.html:123
 #: addons/lotte/templates/view_strings.html:50
 msgid "Last"
 msgstr "Laatste"
 
-#: addons/lotte/templates/translate.html:148
-#: addons/lotte/templates/translate.html:153
+#: addons/lotte/templates/translate.html:151
+#: addons/lotte/templates/translate.html:156
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "Originele tekst"
 
-#: addons/lotte/templates/translate.html:187
+#: addons/lotte/templates/translate.html:190
 msgid "details"
 msgstr "details"
 
-#: addons/lotte/templates/translate.html:190 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:193 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "suggesties"
 
-#: addons/lotte/templates/translate.html:206
-#: addons/lotte/templates/translate.html:211
+#: addons/lotte/templates/translate.html:209
+#: addons/lotte/templates/translate.html:214
 msgid "Fill in a new translation"
 msgstr "Een nieuwe vertaling invullen"
 
-#: addons/lotte/templates/translate.html:208
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_other}})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_other}})"
-
-#: addons/lotte/templates/translate.html:213
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_zero }})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_zero}})"
-
-#: addons/lotte/templates/translate.html:215
-msgid ""
-"Translation plural form for '+plural_types[rule]+' item (equation: "
-"{{ target_language.rule_one }})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_one}})"
-
-#: addons/lotte/templates/translate.html:217
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_two }})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_two}})"
-
-#: addons/lotte/templates/translate.html:219
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_few }})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_weinig}})"
-
-#: addons/lotte/templates/translate.html:221
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_many }})"
-msgstr "Vertalingsmeervoudsvorm voor '+plural_types[rule]+' items (vergelijking: {{ target_language.rule_veel}})"
-
-#: addons/lotte/templates/translate.html:232
+#: addons/lotte/templates/translate.html:235
 msgid "auto translate"
 msgstr "automatisch vertalen"
 
-#: addons/lotte/templates/translate.html:233
+#: addons/lotte/templates/translate.html:236
 msgid "copy source"
 msgstr "bron kopiëren"
 
-#: addons/lotte/templates/translate.html:242
+#: addons/lotte/templates/translate.html:245
 #: addons/lotte/templates/view_strings.html:115
 msgid "Loading strings..."
 msgstr "Strings laden..."
 
-#: addons/lotte/templates/translate.html:393
+#: addons/lotte/templates/translate.html:402
 msgid "Translation text will be saved automatically."
 msgstr "Vertaaltekst zal automatisch opgeslagen worden."
 
-#: addons/lotte/templates/translate.html:397
+#: addons/lotte/templates/translate.html:406
 msgid "Translation text will no longer be saved automatically."
 msgstr "Vertaaltekst zal niet langer automatisch opgeslagen worden."
 
-#: addons/lotte/templates/translate.html:415
+#: addons/lotte/templates/translate.html:424
 msgid "This page does not have any translations (to delete)!"
 msgstr "Deze pagina heeft geen vertalingen (om te wissen)!"
 
-#: addons/lotte/templates/translate.html:416
+#: addons/lotte/templates/translate.html:425
 msgid ""
-"This action will delete all '+ to_delete.length +' translations in this "
-"page. Are you sure you want to proceed?"
-msgstr "Deze actie zal alle vertalingen '+ to_delete.length +' wissen op deze pagina. Bent u zeker dat u wilt verdergaan?"
+"This action will delete all translations in this page. Are you sure you want "
+"to proceed?"
+msgstr ""
 
-#: addons/lotte/templates/translate.html:606
+#: addons/lotte/templates/translate.html:615
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr "Zoek in Transifex-geheugen voor bestaande vertalingen (gebruikt een nieuw venster/tab)"
 
-#: addons/lotte/templates/translate.html:607
+#: addons/lotte/templates/translate.html:616
 msgid "Search translations"
 msgstr "Vertalingen zoeken"
 
-#: addons/lotte/templates/translate.html:616
+#: addons/lotte/templates/translate.html:625
 msgid "Show translations in<br /> the selected languages"
 msgstr "Vertalingen weergeven in<br /> de geselecteerde talen"
 
-#: addons/lotte/templates/translate.html:619
+#: addons/lotte/templates/translate.html:628
 msgid "More languages"
 msgstr "Meer talen"
 
-#: addons/lotte/templates/translate.html:624
+#: addons/lotte/templates/translate.html:633
 msgid "Show only the translations<br /> by the selected users"
 msgstr "Alleen de vertalingen weergeven<br /> van de geselecteerde gebruikers"
 
-#: addons/lotte/templates/translate.html:627
+#: addons/lotte/templates/translate.html:636
 msgid "Filter by users"
 msgstr "Filter op gebruikers"
 
-#: addons/lotte/templates/translate.html:633
+#: addons/lotte/templates/translate.html:642
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "Alleen de strings weergeven van<br /> de geselecteerde bronnen."
 
-#: addons/lotte/templates/translate.html:636
+#: addons/lotte/templates/translate.html:645
 msgid "Filter by resources"
 msgstr "Filter op bronnen"
 
-#: addons/lotte/templates/translate.html:648
+#: addons/lotte/templates/translate.html:657
 #: addons/lotte/templates/view_strings.html:177
 msgid "Translated"
 msgstr "Vertaald"
 
-#: addons/lotte/templates/translate.html:656
+#: addons/lotte/templates/translate.html:665
 #: addons/lotte/templates/view_strings.html:185
 msgid "Untranslated"
 msgstr "Onvertaald"
 
-#: addons/lotte/templates/translate.html:663
+#: addons/lotte/templates/translate.html:672
 msgid "Modified"
 msgstr "Gewijzigd"
 
-#: addons/lotte/templates/translate.html:668
+#: addons/lotte/templates/translate.html:677
 #: addons/lotte/templates/view_strings.html:192
 msgid "Total"
 msgstr "Totaal"
 
-#: addons/lotte/templates/translate.html:681
-#: addons/lotte/templates/view_strings.html:205 resources/models.py:255
+#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/view_strings.html:205 resources/models.py:281
 msgid "Source String"
 msgstr "Originele tekst"
 
-#: addons/lotte/templates/translate.html:682
+#: addons/lotte/templates/translate.html:691
 #: addons/lotte/templates/view_strings.html:206
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "Vertaling"
 
-#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/translate.html:699
 msgid "Save all"
 msgstr "Alles opslaan"
 
-#: addons/lotte/templates/translate.html:693
+#: addons/lotte/templates/translate.html:702
 #: templates/resources/resource_actions.html:179
 msgid "Delete translations"
 msgstr "Vertalingen wissen"
 
-#: addons/lotte/templates/translate.html:695
+#: addons/lotte/templates/translate.html:704
 msgid "Save and Exit"
 msgstr "Opslaan en sluiten"
 
-#: addons/lotte/templates/translate.html:701
+#: addons/lotte/templates/translate.html:710
 msgid "General Settings"
 msgstr "Algemene Instellingen"
 
-#: addons/lotte/templates/translate.html:706
+#: addons/lotte/templates/translate.html:715
 msgid "Verbose editing"
 msgstr "Breedsprakig bewerken"
 
-#: addons/lotte/templates/translate.html:710
+#: addons/lotte/templates/translate.html:719
 msgid "Auto save"
 msgstr "Automatisch opslaan"
 
@@ -714,8 +678,8 @@ msgstr "Bronprioriteit"
 msgid "resource priorities"
 msgstr "Bronprioriteiten"
 
-#: addons/suggestions/models.py:19 resources/models.py:116
-#: resources/models.py:236
+#: addons/suggestions/models.py:19 resources/models.py:142
+#: resources/models.py:262
 msgid "String"
 msgstr "String"
 
@@ -723,8 +687,8 @@ msgstr "String"
 msgid "The actual string content of suggestion."
 msgstr "De eigenlijke tekstinhoud van de suggestie."
 
-#: addons/suggestions/models.py:21 resources/models.py:118
-#: resources/models.py:238
+#: addons/suggestions/models.py:21 resources/models.py:144
+#: resources/models.py:264
 msgid "String Hash"
 msgstr "String hash"
 
@@ -750,11 +714,11 @@ msgstr "Bron-entiteit"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "De bron-entiteit die deze suggestie-instantie vertaalt of beïnvloedt."
 
-#: addons/suggestions/models.py:40 resources/models.py:261
+#: addons/suggestions/models.py:40 resources/models.py:287
 msgid "Target Language"
 msgstr "Doeltaal"
 
-#: addons/suggestions/models.py:41 resources/models.py:262
+#: addons/suggestions/models.py:41 resources/models.py:288
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "De taal waarin deze vertaalstring geschreven is."
@@ -851,7 +815,7 @@ msgid "Go"
 msgstr "Ga"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/teams/team_detail.html:285
+#: templates/timeline.html:24 templates/teams/team_detail.html:280
 msgid "None available"
 msgstr "Geen beschikbaar"
 
@@ -1003,8 +967,8 @@ msgid "The languages spoken on %s."
 msgstr "De talen gesproken op %s."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:99
-#: releases/models.py:31 resources/models.py:43
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:100
+#: releases/models.py:33 resources/models.py:45
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1079,7 +1043,7 @@ msgstr "%i strings toegevoegd"
 #: projects/api.py:236 projects/api.py:319
 #, python-format
 msgid "%i strings updated"
-msgstr "%i strings geüpdatet"
+msgstr "%i strings bijgewerkt"
 
 #: projects/feeds.py:17
 #, python-format
@@ -1197,126 +1161,126 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "Zoeken naar een bron"
 
-#: projects/models.py:92
+#: projects/models.py:93
 msgid "Private"
 msgstr "Privaat"
 
-#: projects/models.py:93
+#: projects/models.py:94
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr "Een privaat project is alleen zichtbaar voor u en uw team. Bovendien zijn private projecten gelimiteerd op het gebied van factureringsplannen voor de gebruikersaccount."
 
-#: projects/models.py:96 releases/models.py:28 resources/models.py:40
+#: projects/models.py:97 releases/models.py:30 resources/models.py:42
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slak"
 
-#: projects/models.py:97 releases/models.py:29 resources/models.py:41
+#: projects/models.py:98 releases/models.py:31 resources/models.py:43
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr "Een kort label dat gebruikt kan worden in de URL, met alleen letters, cijfers, liggende streepjes of streepjes."
 
-#: projects/models.py:100
+#: projects/models.py:101
 msgid "A short name or very short description."
 msgstr "Een korte naam of erg korte beschrijving"
 
-#: projects/models.py:102
+#: projects/models.py:103
 msgid "A sentence or two describing the object (optional)."
 msgstr "Een of twee zinnen die het object beschrijven (optioneel)"
 
-#: projects/models.py:103 releases/models.py:36
+#: projects/models.py:104 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Lange beschrijving"
 
-#: projects/models.py:105
+#: projects/models.py:106
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Een langere beschrijving (optioneel). Gebruik de Markdown-syntax."
 
-#: projects/models.py:106 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:107 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Homepagina"
 
-#: projects/models.py:107
+#: projects/models.py:108
 msgid "Feed"
 msgstr "Feed"
 
-#: projects/models.py:108
-msgid "An RSS feed with updates to the project."
-msgstr "Een RSS-feed met updates op het project."
-
 #: projects/models.py:109
+msgid "An RSS feed with updates to the project."
+msgstr "Een RSS-feed met updates van het project."
+
+#: projects/models.py:110
 msgid "Bug tracker"
 msgstr "Bug tracker"
 
-#: projects/models.py:110
+#: projects/models.py:111
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "De URL voor het bug en ticket tracking systeem (Bugzilla, Trac, etc.)"
 
-#: projects/models.py:112
+#: projects/models.py:113
 msgid "Anyone can submit"
 msgstr "Iedereen kan inzenden"
 
-#: projects/models.py:114
+#: projects/models.py:115
 msgid "Can anyone submit files to this project?"
 msgstr "Kan iedereen bestanden inzenden naar dit project?"
 
-#: projects/models.py:117
+#: projects/models.py:118
 msgid "Hide this object from the list view?"
 msgstr "Dit object verbergen van de lijstweergave?"
 
-#: projects/models.py:118
+#: projects/models.py:119
 msgid "Enabled"
 msgstr "Geactiveerd"
 
-#: projects/models.py:119
+#: projects/models.py:120
 msgid "Enable this object or disable its use?"
 msgstr "Dit object activeren of deactiveren?"
 
-#: projects/models.py:123 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:124 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Tags"
 
-#: projects/models.py:126 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:127 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Maintainers"
 
-#: projects/models.py:130
+#: projects/models.py:131
 msgid "Outsource project"
 msgstr "Project outsourcen"
 
-#: projects/models.py:131
+#: projects/models.py:132
 msgid "Project that owns the access control of this project."
 msgstr "Project dat de toegangscontrole van dit project bezit."
 
-#: projects/models.py:134 storage/models.py:44
+#: projects/models.py:135 storage/models.py:44
 msgid "Owner"
 msgstr "Eigenaar"
 
-#: projects/models.py:135
+#: projects/models.py:136
 msgid "The user who owns this project."
 msgstr "De gebruiker die dit project bezit."
 
-#: projects/models.py:138 releases/models.py:58
+#: projects/models.py:139 releases/models.py:60
 msgid "HTML Description"
 msgstr "HTML Beschrijving"
 
-#: projects/models.py:140 releases/models.py:60
+#: projects/models.py:141 releases/models.py:62
 msgid "Description in HTML."
 msgstr "Beschrijving in HTML."
 
-#: projects/models.py:150
+#: projects/models.py:156
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Project: %s>"
 
-#: projects/models.py:153
+#: projects/models.py:159
 msgid "project"
 msgstr "project"
 
-#: projects/models.py:154 templates/projects/project_list.html:19
+#: projects/models.py:160 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "projecten"
 
@@ -1454,66 +1418,66 @@ msgstr "U heeft het '%(team)s'-team aangevraagd door '%(user)s' goedgekeurd."
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr "U heeft het '%(team)s' dat aangevraagd werd door '%(user)s' geweigerd."
 
-#: releases/models.py:32
+#: releases/models.py:34
 msgid "A string like a name or very short description."
 msgstr "Een string zoals een naam of erg korte beschrijving."
 
-#: releases/models.py:35
+#: releases/models.py:37
 msgid "A sentence or two describing the object."
 msgstr "Één of twee zinnen die het object beschrijven."
 
-#: releases/models.py:38
+#: releases/models.py:40
 msgid "Use Markdown syntax."
 msgstr "Gebruik de Markdown-syntax."
 
-#: releases/models.py:41
+#: releases/models.py:43
 msgid "Release date"
 msgstr "Releasedatum"
 
-#: releases/models.py:43
+#: releases/models.py:45
 msgid "When this release will be available."
 msgstr "Wanneer zal deze release beschikbaar zijn."
 
-#: releases/models.py:44
+#: releases/models.py:46
 msgid "String freeze date"
 msgstr "Datum waarop strings worden bevroren."
 
-#: releases/models.py:46
+#: releases/models.py:48
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
 msgstr "De datum waarop vertaalbare strings bevroren worden (strings kunnen niet meer worden toegevoegd of veranderd als dat de vertalingen beïnvloedt)"
 
-#: releases/models.py:48
+#: releases/models.py:50
 msgid "Devel freeze date"
 msgstr "Datum waarop ontwikkeling wordt bevroren."
 
-#: releases/models.py:50
+#: releases/models.py:52
 msgid ""
 "The last date packages from this release can be built from the developers. "
 "Translations sent after this date will not be included in the released "
 "version."
 msgstr "De laatste datum waarop ontwikkelaars packages uit deze release kunnen bouwen. Vertalingen ingezonden na deze datum zullen niet worden opgenomen in de gereleasede versie."
 
-#: releases/models.py:63 resources/models.py:68 teams/models.py:27
-#: teams/models.py:69
+#: releases/models.py:65 resources/models.py:70 teams/models.py:29
+#: teams/models.py:98
 msgid "Project"
 msgstr "Project"
 
-#: releases/models.py:66
+#: releases/models.py:68
 msgid "Resources"
 msgstr "Bronnen"
 
-#: releases/models.py:73
+#: releases/models.py:75
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<Release: %(rel)s (Project %(proj)s)>"
 
-#: releases/models.py:84
+#: releases/models.py:86
 msgid "release"
 msgstr "release"
 
-#: releases/models.py:85 templates/projects/release_list.html:16
+#: releases/models.py:87 templates/projects/release_list.html:16
 #: templates/projects/release_list.html:36
 msgid "releases"
 msgstr "releases"
@@ -1534,222 +1498,228 @@ msgid ""
 "resource."
 msgstr "Selecteer een bestand van uw bestandssysteem om te gebruiken om vertalingen voor deze bron in te vullen."
 
-#: resources/models.py:44
+#: resources/models.py:46
 msgid "A descriptive name unique inside the project."
 msgstr "Een beschrijvende naam, uniek binnen het project."
 
-#: resources/models.py:47
+#: resources/models.py:49
 msgid "Source file"
 msgstr "Bronbestand"
 
-#: resources/models.py:49
+#: resources/models.py:51
 msgid "A local file used to extract the strings to be translated."
 msgstr "Een lokaal bestand, gebruikt om de te vertalen strings te extraheren."
 
-#: resources/models.py:51
+#: resources/models.py:53
 msgid "I18n type"
 msgstr "I18n type"
 
-#: resources/models.py:53
+#: resources/models.py:55
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "Type vertaalmethode gebruikt in deze bron (%s)"
 
-#: resources/models.py:56
+#: resources/models.py:58
 msgid "Accepting translations?"
 msgstr "Accepteert vertalingen?"
 
-#: resources/models.py:58
+#: resources/models.py:60
 msgid "Is this resource accepting submissions of translations?"
 msgstr "Accepteert deze bron inzendingen van vertalingen?"
 
-#: resources/models.py:66
+#: resources/models.py:68
 msgid "Source Language"
 msgstr "Brontaal"
 
-#: resources/models.py:67
+#: resources/models.py:69
 msgid "The source language of this Resource."
 msgstr "De brontaal van deze bron."
 
-#: resources/models.py:70
+#: resources/models.py:72
 msgid "The project containing the translation resource."
 msgstr "Het project dat de vertaalbron bevat."
 
-#: resources/models.py:83
+#: resources/models.py:85
 msgid "resource"
 msgstr "bron"
 
-#: resources/models.py:84
+#: resources/models.py:86
 msgid "resources"
 msgstr "bronnen"
 
-#: resources/models.py:117
+#: resources/models.py:143
 msgid "The actual string content of source string."
 msgstr "De eigenlijke inhoud van de brontekst."
 
-#: resources/models.py:120 resources/models.py:240
+#: resources/models.py:146 resources/models.py:266
 msgid "The hash of the translation string used for indexing"
 msgstr "De hash van de vertaalstring gebruikt voor indexering"
 
-#: resources/models.py:121
+#: resources/models.py:147
 msgid "Context"
 msgstr "Context"
 
-#: resources/models.py:123
+#: resources/models.py:149
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr "Een beschrijving van de bronstring. Dit veld specificeert de context van de bronstring binnen de bron."
 
-#: resources/models.py:125 templates/userprofile/profile/location.html:27
+#: resources/models.py:151 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "Positie"
 
-#: resources/models.py:126
+#: resources/models.py:152
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr "De positie van de bronstring in de bron. Bijvoorbeeld, de specifieke positie van een msgid-veld in een po-sjabloon (.pot) in gettext."
 
-#: resources/models.py:132
+#: resources/models.py:158
 msgid "The occurrences of the source string in the project code."
 msgstr "De voorkomende gevallen in de bronstring in de projectcode."
 
-#: resources/models.py:133 resources/models.py:138
+#: resources/models.py:159 resources/models.py:164
 msgid "Flags"
 msgstr "Vlaggen"
 
-#: resources/models.py:135
+#: resources/models.py:161
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr "De vlaggen zullen de bronstring markeren. Als er bijvoorbeeld een string in python-formaat aanwezig is, zal dit gemarkeerd worden als \"#, python-format\" in gettext."
 
-#: resources/models.py:140
+#: resources/models.py:166
 msgid "The comment of the developer."
 msgstr "De opmerking van de ontwikkelaar."
 
-#: resources/models.py:142
+#: resources/models.py:168
 msgid "Pluralized"
 msgstr "Meervoud"
 
-#: resources/models.py:144
+#: resources/models.py:170
 msgid "Identify if the entity is pluralized ot not."
 msgstr "Identificeer of de entiteit meervoud is of niet."
 
-#: resources/models.py:154
+#: resources/models.py:180
 msgid "The translation resource which owns the source string."
 msgstr "De vertaalbron die de bronstring bevat."
 
-#: resources/models.py:161
+#: resources/models.py:187
 msgid "source string"
 msgstr "brontekst"
 
-#: resources/models.py:162
+#: resources/models.py:188
 msgid "source strings"
 msgstr "bronteksten"
 
-#: resources/models.py:237
+#: resources/models.py:263
 msgid "The actual string content of translation."
 msgstr "De eigenlijke inhoud van de string die de vertaling bevat."
 
-#: resources/models.py:241
+#: resources/models.py:267
 msgid "Plural rule"
 msgstr "Meervoudsvergelijking"
 
-#: resources/models.py:243
+#: resources/models.py:269
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
 "pluralized, the rule must be 5 (other)."
 msgstr "Nummer gerelateerd aan de meervoudsregel van de vertaling. Dit is 0=nul, 1=een, 2=twee, 3=weinig, 4=veel en 5=ander. Voor vertalingen die hun entiteit niet in het meervoud hebben, moet de regel 5 (ander) zijn."
 
-#: resources/models.py:258
+#: resources/models.py:284
 msgid "The source string this translation string translates."
 msgstr "De brontekst die deze vertaalstring vertaalt."
 
-#: resources/models.py:265
+#: resources/models.py:291
 msgid "Committer"
 msgstr "Inzender"
 
-#: resources/models.py:266
+#: resources/models.py:292
 msgid "The user who committed the specific translation."
 msgstr "De gebruiker die de specifieke vertaling toepaste."
 
-#: resources/models.py:276
+#: resources/models.py:302
 msgid "translation string"
 msgstr "vertaalstring"
 
-#: resources/models.py:277
+#: resources/models.py:303
 msgid "translation strings"
 msgstr "vertaalstrings"
 
-#: resources/models.py:310
+#: resources/models.py:336
 msgid "This is the actual content of the template"
 msgstr "Dit is de eigenlijke inhoud van de sjabloon."
 
-#: resources/models.py:314
+#: resources/models.py:340
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr "Dit is het sjabloon van het geïmporteerde bronbestand dat gebruikt wordt om vertaalbestanden te exporteren van de database naar de gebruiker."
 
-#: resources/models.py:318
+#: resources/models.py:344
 msgid "Template"
 msgstr "Sjabloon"
 
-#: resources/models.py:319
+#: resources/models.py:345
 msgid "Templates"
 msgstr "Sjablonen"
 
-#: resources/views.py:86
+#: resources/views.py:87
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "De vertaalbron '%s' werd verwijderd."
 
-#: resources/views.py:127
+#: resources/views.py:131
 msgid "The URL you provided doesn't link to valid file."
 msgstr "De link die u gaf verwijst niet naar een geldig bestand."
 
-#: resources/views.py:318
+#: resources/views.py:142
+msgid ""
+"You have checked the auto update checkbox but you haven't provided a valid "
+"url."
+msgstr "U heeft \"automatisch bijwerken\" aangevinkt maar u heeft geen geldige link opgegeven."
+
+#: resources/views.py:330
 #, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
 msgstr "De vertalingen van de taal %(lang)s voor de bron %(resource)s werden succesvol gewist."
 
-#: resources/views.py:364
+#: resources/views.py:376
 msgid "Error compiling translation file."
 msgstr "Fout bij het compileren van het vertaalbestand."
 
-#: resources/views.py:411
+#: resources/views.py:425
 msgid "Sorry, you cannot assign this file to you!"
 msgstr "Sorry, u kan dit bestand niet aan uzelf toewijzen!"
 
-#: resources/views.py:423
+#: resources/views.py:437
 msgid "Failed to lock the resource!"
-msgstr "Bron vastzetten mislukt!"
+msgstr "Bron vergrendelen mislukt!"
 
-#: resources/views.py:434
+#: resources/views.py:448
 msgid "Failed to extend lock period on the resource!"
-msgstr "Verlengen van slotje van de bron mislukt!"
+msgstr "Verlengen van vergrendeling van de bron mislukt!"
 
-#: resources/views.py:439
+#: resources/views.py:453
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
-msgstr "U kan het nu niet vastzetten! (Reeds vastgezet door %s)"
+msgstr "U kan het nu niet vergrendelen! (Reeds vergrendeld door %s)"
 
-#: resources/formats/pofile.py:76
+#: resources/formats/pofile.py:89
 msgid ""
 "Your file failed a correctness check (msgfmt -c). Please run this command on "
 "your system to see the errors."
 msgstr "Uw bestand voldeed niet aan een juistheid-check (msgfmt -c). Gelieve dit commando op uw systeem uit te voeren om de fouten weer te geven."
 
-#: resources/formats/pofile.py:111
+#: resources/formats/pofile.py:130
 msgid "Uploaded file contains DOS newlines (\\r)!"
 msgstr "Geüpload bestand bevat DOS-regeleindes "
 
-#: resources/formats/pofile.py:120
+#: resources/formats/pofile.py:139
 #, python-format
 msgid "Uploaded file header doesn't have '%s' metadata!"
 msgstr "De header van het geüploade bestand heeft geen '%s'-veld!"
@@ -1821,67 +1791,67 @@ msgid ""
 "him/her from one of those lists."
 msgstr "Gebruiker '%s' zit in lijst van coördinators en leden. Gelieve hem/haar te verwijderen uit een van deze lijsten."
 
-#: teams/models.py:29 teams/models.py:71
+#: teams/models.py:31 teams/models.py:100
 msgid "The project this team works on."
 msgstr "Het project waar dit team aan werkt."
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:32 teams/models.py:101
 #: templates/projects/release_detail.html:125
-#: templates/resources/resource_detail.html:146
+#: templates/resources/resource_detail.html:147
 msgid "Language"
 msgstr "Taal"
 
-#: teams/models.py:32 teams/models.py:74
+#: teams/models.py:34 teams/models.py:103
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
 msgstr "Mensen in dit team zullen alleen vertalingen kunnen inzenden die verwant zijn aan de specifieke taal."
 
-#: teams/models.py:34
+#: teams/models.py:36
 msgid "Coordinators"
 msgstr "Coördinatoren"
 
-#: teams/models.py:36
+#: teams/models.py:38
 msgid "Members"
 msgstr "Leden"
 
-#: teams/models.py:39
+#: teams/models.py:41
 msgid "Mainlist"
 msgstr "Hoofdlijst"
 
-#: teams/models.py:40
+#: teams/models.py:42
 msgid "The main mailing list of the team."
 msgstr "De hoofd-maillijst van het team."
 
-#: teams/models.py:42
+#: teams/models.py:44
 msgid "creator"
 msgstr "maker"
 
-#: teams/models.py:58
+#: teams/models.py:60
 msgid "team"
 msgstr "team"
 
-#: teams/models.py:59
+#: teams/models.py:61
 msgid "teams"
 msgstr "teams"
 
-#: teams/models.py:91
+#: teams/models.py:120
 msgid "team creation request"
 msgstr "aanvraag om een team aan te maken"
 
-#: teams/models.py:92
+#: teams/models.py:121
 msgid "team creation requests"
 msgstr "aanvragen om een team aan te maken"
 
-#: teams/models.py:110
+#: teams/models.py:139
 msgid "Team"
 msgstr "Team"
 
-#: teams/models.py:127
+#: teams/models.py:156
 msgid "team access request"
 msgstr "aanvraag voor toegang tot een team"
 
-#: teams/models.py:128
+#: teams/models.py:157
 msgid "team access requests"
 msgstr "aanvragen voor toegang tot een team"
 
@@ -1938,44 +1908,44 @@ msgstr "Welkom bij Transifex"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:49 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:58 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Ga naar de startpagina"
 
-#: templates/base-sample.html:50
+#: templates/base-sample.html:59
 msgid "Go to start page"
 msgstr "Ga naar startpagina"
 
-#: templates/base-sample.html:54
+#: templates/base-sample.html:63
 msgid "The projects being served"
 msgstr "De voorgeschotelde projecten"
 
-#: templates/base-sample.html:55
+#: templates/base-sample.html:64
 msgid "The languages our service serves"
 msgstr "De talen die onze dienst behandelt"
 
-#: templates/base-sample.html:55 templates/languages/base.html:5
+#: templates/base-sample.html:64 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Talen"
 
-#: templates/base-sample.html:62
+#: templates/base-sample.html:71
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr "Welkom <a title=\"Profile settings\" href=\"%(user_profile)s\">%(user_username)s</a>!"
 
-#: templates/base-sample.html:64
+#: templates/base-sample.html:73
 msgid "Sign out from the website"
 msgstr "Uitloggen bij de website"
 
-#: templates/base-sample.html:64
+#: templates/base-sample.html:73
 msgid "Sign out"
 msgstr "Uitloggen"
 
-#: templates/base-sample.html:67 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:76 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1985,28 +1955,28 @@ msgstr "Uitloggen"
 msgid "Sign in"
 msgstr "Inloggen"
 
-#: templates/base-sample.html:70
+#: templates/base-sample.html:79
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Registreren"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Learn more about Transifex"
 msgstr "Meer over Transifex"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "About"
 msgstr "Over"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Drops us a line"
 msgstr "Stuur ons een kattebelletje"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Feedback"
 msgstr "Feedback"
 
-#: templates/base-sample.html:134
+#: templates/base-sample.html:145
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -2608,8 +2578,8 @@ msgid "Screenshots"
 msgstr "Screenshots"
 
 #: templates/projects/project_detail.html:124
-#: templates/resources/resource_detail.html:305
-#: templates/teams/team_detail.html:281
+#: templates/resources/resource_detail.html:302
+#: templates/teams/team_detail.html:276
 msgid "History"
 msgstr "Geschiedenis"
 
@@ -2808,7 +2778,7 @@ msgstr "Vertaalstatistieken"
 
 #: templates/projects/release_detail.html:126
 #: templates/projects/release_language_detail.html:59
-#: templates/resources/resource_detail.html:147
+#: templates/resources/resource_detail.html:148
 #: templates/teams/team_detail.html:138
 msgid "Completion"
 msgstr "Voltooiing"
@@ -2817,30 +2787,14 @@ msgstr "Voltooiing"
 msgid "Last Translation"
 msgstr "Laatste vertaling"
 
-#: templates/projects/release_detail.html:141
-#: templates/projects/release_language_detail.html:71
-#: templates/resources/resource_actions.html:53
-#: templates/resources/resource_detail.html:164
-#: templates/teams/team_detail.html:152
-msgid "Translated: "
-msgstr "Vertaald:"
-
-#: templates/projects/release_detail.html:141
-#: templates/projects/release_language_detail.html:71
-#: templates/resources/resource_actions.html:53
-#: templates/resources/resource_detail.html:164
-#: templates/teams/team_detail.html:152
-msgid "Untranslated: "
-msgstr "Niet vertaald:"
-
-#: templates/projects/release_detail.html:161
-#: templates/projects/resource_list.html:94
-#: templates/resources/resource_detail.html:184
+#: templates/projects/release_detail.html:156
+#: templates/projects/resource_list.html:96
+#: templates/resources/resource_detail.html:180
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "nog geen vertalingen"
 
-#: templates/projects/release_detail.html:181
+#: templates/projects/release_detail.html:177
 msgid "Delete release"
 msgstr "Release wissen"
 
@@ -2881,42 +2835,42 @@ msgstr[0] "Bron onder deze release"
 msgstr[1] "Bronnen onder deze release"
 
 #: templates/projects/release_language_detail.html:60
-#: templates/projects/resource_list.html:69
-#: templates/resources/resource_detail.html:148
+#: templates/projects/resource_list.html:70
+#: templates/resources/resource_detail.html:149
 #: templates/teams/team_detail.html:139
 msgid "Last Updated"
-msgstr "Laatst geüpdatet"
+msgstr "Laatst bijgewerkt"
 
 #: templates/projects/release_language_detail.html:65
-#: templates/resources/resource_detail.html:153
+#: templates/resources/resource_detail.html:154
 #: templates/teams/team_detail.html:145
 msgid "click for translation"
 msgstr "klik voor vertaling"
 
-#: templates/projects/release_language_detail.html:90
-#: templates/teams/team_detail.html:172
+#: templates/projects/release_language_detail.html:85
+#: templates/teams/team_detail.html:167
 msgid "no activity yet"
 msgstr "nog geen activiteit"
 
-#: templates/projects/release_language_detail.html:129
+#: templates/projects/release_language_detail.html:124
 #: templates/resources/resource_detail.html:28
-#: templates/resources/resource_detail.html:223
+#: templates/resources/resource_detail.html:219
 msgid "Please select a target language first."
 msgstr "Gelieve eerst een doeltaal te selecteren."
 
-#: templates/projects/release_language_detail.html:139
-#: templates/resources/resource_detail.html:233
-#: templates/teams/team_detail.html:221
+#: templates/projects/release_language_detail.html:134
+#: templates/resources/resource_detail.html:229
+#: templates/teams/team_detail.html:216
 msgid "Trying to lock resource..."
-msgstr "Proberen om bron vast te zetten..."
+msgstr "Proberen om bron te vergrendelen..."
 
-#: templates/projects/release_language_detail.html:162
-#: templates/resources/resource_detail.html:256
-#: templates/teams/team_detail.html:244
+#: templates/projects/release_language_detail.html:157
+#: templates/resources/resource_detail.html:252
+#: templates/teams/team_detail.html:239
 msgid "Translation Details"
 msgstr "Vertaaldetails"
 
-#: templates/projects/release_language_detail.html:169
+#: templates/projects/release_language_detail.html:164
 msgid "No resources are registered for this release yet."
 msgstr "Er zijn nog geen bronnen geregistreerd voor dit project."
 
@@ -2936,57 +2890,57 @@ msgid ""
 "(release_create)s\">add one</a>?"
 msgstr "Er werden voor dit project nog geen releases geregistreerd. Als u wil, kan u er een <a href=\"%(release_create)s\">toevoegen</a>."
 
-#: templates/projects/resource_list.html:8
+#: templates/projects/resource_list.html:9
 msgid "Project Resources"
 msgstr "Projectbronnen"
 
-#: templates/projects/resource_list.html:68
+#: templates/projects/resource_list.html:69
 msgid "Resource Name"
 msgstr "Naam bron:"
 
-#: templates/projects/resource_list.html:70
+#: templates/projects/resource_list.html:71
 msgid "Click the flags to modify the importance of a resource."
 msgstr "Klik op de vlaggen om het belang van een bron te wijzigen."
 
-#: templates/projects/resource_list.html:70
+#: templates/projects/resource_list.html:71
 msgid "Importance"
 msgstr "Belangrijkheid"
 
-#: templates/projects/resource_list.html:77
+#: templates/projects/resource_list.html:79
 #, python-format
 msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
 msgstr "Totaal aantal strings: %(ts)s<br/>Beschikbare talen: %(al)s"
 
-#: templates/projects/resource_list.html:80
+#: templates/projects/resource_list.html:82
 #: templates/resources/resource_list_more.html:14
 msgid "edit"
 msgstr "wijzig"
 
-#: templates/projects/resource_list.html:81
+#: templates/projects/resource_list.html:83
 #: templates/resources/resource_list_more.html:15
 msgid "del"
 msgstr "wissen"
 
-#: templates/projects/resource_list.html:87
+#: templates/projects/resource_list.html:89
 #, python-format
 msgid "Committed by %(last_committer)s"
 msgstr "Toegepast door %(last_committer)s"
 
-#: templates/projects/resource_list.html:87
+#: templates/projects/resource_list.html:89
 msgid "No committers yet"
 msgstr "Nog geen vertalers"
 
-#: templates/projects/resource_list.html:122
-#: templates/teams/team_detail.html:251
+#: templates/projects/resource_list.html:125
+#: templates/teams/team_detail.html:246
 msgid "No resources are registered for this project yet."
 msgstr "Er zijn nog geen bronnen geregistreerd voor dit project."
 
-#: templates/projects/resource_list.html:130
-#: templates/resources/resource_detail.html:282
+#: templates/projects/resource_list.html:133
+#: templates/resources/resource_detail.html:279
 msgid "Select Language"
 msgstr "Taal selecteren"
 
-#: templates/projects/resource_list.html:144
+#: templates/projects/resource_list.html:147
 msgid "Translate All"
 msgstr "Alles vertalen"
 
@@ -3015,6 +2969,16 @@ msgstr "Nu vertalen"
 #, python-format
 msgid "To translate, you need to be a member of the %(lang_name)s team."
 msgstr "Om te vertalen moet u een lid zijn van het %(lang_name)s team."
+
+#: templates/resources/resource_actions.html:53
+#: templates/resources/stats_bar_simple.html:4
+msgid "Translated: "
+msgstr "Vertaald:"
+
+#: templates/resources/resource_actions.html:53
+#: templates/resources/stats_bar_simple.html:4
+msgid "Untranslated: "
+msgstr "Niet vertaald:"
 
 #: templates/resources/resource_actions.html:61
 msgid "remaining strings"
@@ -3054,7 +3018,7 @@ msgstr "U moet inloggen om de vertalingen te kunnen downloaden."
 
 #: templates/resources/resource_actions.html:125
 msgid "Resource cannot be locked"
-msgstr "Bron kan niet vastgezet worden"
+msgstr "Bron kan niet vergrendeld worden"
 
 #: templates/resources/resource_actions.html:125
 #: templates/resources/resource_actions.html:129
@@ -3069,7 +3033,7 @@ msgstr "U moet inloggen om deze actie te gebruiken"
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action."
-msgstr "Blokkeer het bestand onder uw eigendom en download het lokaal om te wijzigen, in een actie."
+msgstr "Het bestand onder uw eigendom vergrendelen en het lokaal downloaden om te bewerken, in één handeling."
 
 #: templates/resources/resource_actions.html:149
 msgid "This resource currently is not accepting translations."
@@ -3112,60 +3076,60 @@ msgstr ""
 "\n"
 "  Bent u zeker dat u de vertaalbron '%(resource_name)s' permanent wilt wissen?\n"
 
-#: templates/resources/resource_detail.html:93
+#: templates/resources/resource_detail.html:94
 msgid "Translation Resource details"
 msgstr "Vertaalbron-details"
 
-#: templates/resources/resource_detail.html:96
+#: templates/resources/resource_detail.html:97
 msgid "Source Language:"
 msgstr "Brontaal:"
 
-#: templates/resources/resource_detail.html:102
+#: templates/resources/resource_detail.html:103
 msgid "Number of languages:"
 msgstr "Aantal talen"
 
-#: templates/resources/resource_detail.html:108
+#: templates/resources/resource_detail.html:109
 msgid "Total Strings:"
 msgstr "Totaal aantal strings:"
 
-#: templates/resources/resource_detail.html:111
+#: templates/resources/resource_detail.html:112
 msgid "words"
 msgstr "woorden"
 
-#: templates/resources/resource_detail.html:115
+#: templates/resources/resource_detail.html:116
 msgid "Accepting Translations?"
 msgstr "Vertalingen accepteren?"
 
-#: templates/resources/resource_detail.html:127
+#: templates/resources/resource_detail.html:128
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Release:"
 msgstr[1] "Releases:"
 
-#: templates/resources/resource_detail.html:141
+#: templates/resources/resource_detail.html:142
 msgid "Available translations"
 msgstr "Beschikbare vertalingen"
 
-#: templates/resources/resource_detail.html:159
+#: templates/resources/resource_detail.html:160
 msgid "source language"
 msgstr "brontaal"
 
-#: templates/resources/resource_detail.html:272
+#: templates/resources/resource_detail.html:269
 msgid ""
 "If you cannot see your language, click the button below to translate.<span "
 "class=\"note\">( You must belong to a language team of this project, to be "
 "able to translate! )</span>"
 msgstr "Als u uw taal niet kan zien, klik dan op onderstaande knop om te vertalen.<span class=\"note\">(U moet lid zijn van een taalteam van dit project om te kunnen vertalen!)</span>"
 
-#: templates/resources/resource_detail.html:298
+#: templates/resources/resource_detail.html:295
 msgid "Add Translation"
 msgstr "Vertaling toevoegen"
 
-#: templates/resources/resource_detail.html:309
+#: templates/resources/resource_detail.html:306
 msgid "No actions recorded yet :)"
 msgstr "Nog geen geschiedenis geregistreerd :)"
 
-#: templates/resources/resource_detail.html:326
+#: templates/resources/resource_detail.html:323
 msgid "Delete translation resource"
 msgstr "Vertaalbron wissen"
 
@@ -3408,15 +3372,15 @@ msgid_plural "Team Translating Resources:"
 msgstr[0] "Team vertaalbron"
 msgstr[1] "Team vertaalbronnen:"
 
-#: templates/teams/team_detail.html:258
+#: templates/teams/team_detail.html:253
 msgid "Team Members:"
 msgstr "Teamleden:"
 
-#: templates/teams/team_detail.html:268
+#: templates/teams/team_detail.html:263
 msgid "Leave"
 msgstr "Verlaten"
 
-#: templates/teams/team_detail.html:304
+#: templates/teams/team_detail.html:299
 msgid "Delete team"
 msgstr "Team wissen"
 

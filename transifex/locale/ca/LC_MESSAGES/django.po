@@ -4,10 +4,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Transifex (.org)\n"
+"Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-13 12:26+0000\n"
-"PO-Revision-Date: 2010-10-15 10:10+0000\n"
+"POT-Creation-Date: 2010-10-27 18:50+0000\n"
+"PO-Revision-Date: 2010-10-27 14:46+0000\n"
 "Last-Translator: redcrash <redcrash@gmail.com>\n"
 "Language-Team: Catalan <None>\n"
 "MIME-Version: 1.0\n"
@@ -20,25 +20,25 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Cercar un nom d'usuari o deixi'l en blanc"
 
-#: actionlog/models.py:152 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:151 actionlog/templates/object_action_list.html:7
 #: addons/suggestions/models.py:44 addons/suggestions/models.py:110
-#: teams/models.py:76 teams/models.py:112 txpermissions/forms.py:18
+#: teams/models.py:105 teams/models.py:141 txpermissions/forms.py:18
 msgid "User"
 msgstr "Usuari"
 
-#: actionlog/models.py:159
+#: actionlog/models.py:158
 msgid "Action type"
 msgstr "Tipus d'acció"
 
-#: actionlog/models.py:160
+#: actionlog/models.py:159
 msgid "Action time"
 msgstr "Moment de l'acció"
 
-#: actionlog/models.py:168
+#: actionlog/models.py:167
 msgid "log entry"
 msgstr "entrada de registre"
 
-#: actionlog/models.py:169
+#: actionlog/models.py:168
 msgid "log entries"
 msgstr "entrades de registre"
 
@@ -78,7 +78,7 @@ msgid ""
 "by pulling and merging from the given URL."
 msgstr "Un camp booleà que indica si el fitxer ha de ser automàticament agafat i unit des de l'adreça donada."
 
-#: addons/autofetch/models.py:25 resources/models.py:152
+#: addons/autofetch/models.py:25 resources/models.py:178
 #: templates/projects/release_language_detail.html:58
 #: templates/teams/team_detail.html:137
 msgid "Resource"
@@ -131,7 +131,7 @@ msgstr "Mostra codi per al recurs:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:116
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:117
 msgid "Hidden"
 msgstr "Ocult"
 
@@ -175,7 +175,7 @@ msgstr "Aquesta traducció s'ha bloquejat per algú altre."
 msgid ""
 "User '%(user)s' has no permission to submit translations for '%(resource)s' "
 "to '%(language)s'."
-msgstr ""
+msgstr "L'usuari '%(user)s' no té permisos per a enviar traduccions al recurs '%(resource)s' del idioma '%(language)s'."
 
 #: addons/locks/models.py:67
 #, python-format
@@ -341,39 +341,47 @@ msgstr "No es pot desar les traduccions del plural mentre no s'hagin traduït co
 #: addons/lotte/views.py:535
 msgid "Translation must start with a newline (\\n)"
 msgstr ""
+"La traducció ha de començar amb una nova línia (\n"
+")."
 
 #: addons/lotte/views.py:538
 msgid "Translation should not start with a newline (\\n)"
 msgstr ""
+"La traducció no ha de començar amb una nova línia (\n"
+")."
 
 #: addons/lotte/views.py:543
 msgid "Translation must end with a newline (\\n)"
 msgstr ""
+"La traducció ha d'acabar amb una nova línia (\n"
+")."
 
 #: addons/lotte/views.py:546
 msgid "Translation should not end with a newline (\\n)"
 msgstr ""
+"La traducció no ha d'acabar amb una nova línia (\n"
+")."
 
 #: addons/lotte/views.py:555
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
-msgstr ""
+msgstr "El nombre %s és a la cadena original però no a la traducció"
 
 #: addons/lotte/views.py:571
 #, python-format
 msgid "The expression '%s' is not present in the translation."
-msgstr ""
+msgstr "L'expressió '%s' no està a la cadena traduïda."
 
 #: addons/lotte/views.py:581
 #, python-format
 msgid "The expression '%s' is not present in the source string."
-msgstr ""
+msgstr "L'expressió '%s' no està a la cadena original."
 
 #: addons/lotte/views.py:590
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
-msgstr ""
+msgstr "El número de paràmetres sembla diferent entre la cadena original i la traducció."
 
 #: addons/lotte/views.py:614
 msgid "Translation updated successfully in the DB"
@@ -406,7 +414,7 @@ msgid "by %(user)s"
 msgstr "per %(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:182
+#: addons/lotte/templates/translate.html:185
 msgid "Key"
 msgstr "Clau"
 
@@ -417,8 +425,8 @@ msgstr "Identificador de cadena:"
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:101
-#: releases/models.py:33 templates/timeline.html:39
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:102
+#: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
 msgid "Description"
@@ -429,7 +437,7 @@ msgid "Description:"
 msgstr "Descripció:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#: resources/models.py:130
+#: resources/models.py:156
 msgid "Occurrences"
 msgstr "Ocurrències"
 
@@ -442,7 +450,7 @@ msgid "No active languages!"
 msgstr "No hi ha idiomes actius!"
 
 #: addons/lotte/templates/translate.html:8
-#: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:54
+#: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:63
 #: templates/projects/base.html:6 templates/projects/project_list.html:14
 #: templates/resources/resource_detail.html:64
 #: templates/resources/resource_form.html:10
@@ -455,232 +463,196 @@ msgstr "Projectes"
 msgid "Translate to %(lang)s"
 msgstr "Traduir a %(lang)s"
 
-#: addons/lotte/templates/translate.html:107
+#: addons/lotte/templates/translate.html:110
 #: addons/lotte/templates/view_strings.html:37
 msgid "Processing..."
 msgstr "Processant..."
 
-#: addons/lotte/templates/translate.html:108
+#: addons/lotte/templates/translate.html:111
 #: addons/lotte/templates/view_strings.html:38
 msgid "Show _MENU_ entries"
 msgstr "Mostra les entrades _MENU_"
 
-#: addons/lotte/templates/translate.html:109
+#: addons/lotte/templates/translate.html:112
 #: addons/lotte/templates/view_strings.html:39
 msgid "No matching records found"
 msgstr "No s'han trobat entrades concordants"
 
-#: addons/lotte/templates/translate.html:110
+#: addons/lotte/templates/translate.html:113
 #: addons/lotte/templates/view_strings.html:40
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "Mostrant entrades _START_ to _END_ de _TOTAL_"
 
-#: addons/lotte/templates/translate.html:111
+#: addons/lotte/templates/translate.html:114
 #: addons/lotte/templates/view_strings.html:41
 msgid "Nothing to show"
 msgstr "No hi ha res per a mostrar"
 
-#: addons/lotte/templates/translate.html:112
+#: addons/lotte/templates/translate.html:115
 #: addons/lotte/templates/view_strings.html:42
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(filtrades de _MAX_ entrades)"
 
-#: addons/lotte/templates/translate.html:114
+#: addons/lotte/templates/translate.html:117
 #: addons/lotte/templates/view_strings.html:44
 msgid "Search:"
 msgstr "Cercar:"
 
-#: addons/lotte/templates/translate.html:117
+#: addons/lotte/templates/translate.html:120
 #: addons/lotte/templates/view_strings.html:47
 msgid "First"
 msgstr "Primer"
 
-#: addons/lotte/templates/translate.html:118
+#: addons/lotte/templates/translate.html:121
 #: addons/lotte/templates/view_strings.html:48
 msgid "Previous"
 msgstr "Anterior"
 
-#: addons/lotte/templates/translate.html:119
+#: addons/lotte/templates/translate.html:122
 #: addons/lotte/templates/view_strings.html:49
 msgid "Next"
 msgstr "Següent"
 
-#: addons/lotte/templates/translate.html:120
+#: addons/lotte/templates/translate.html:123
 #: addons/lotte/templates/view_strings.html:50
 msgid "Last"
 msgstr "Darrer"
 
-#: addons/lotte/templates/translate.html:148
-#: addons/lotte/templates/translate.html:153
+#: addons/lotte/templates/translate.html:151
+#: addons/lotte/templates/translate.html:156
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "Cadena original"
 
-#: addons/lotte/templates/translate.html:187
+#: addons/lotte/templates/translate.html:190
 msgid "details"
 msgstr "detalls"
 
-#: addons/lotte/templates/translate.html:190 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:193 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "suggerències"
 
-#: addons/lotte/templates/translate.html:206
-#: addons/lotte/templates/translate.html:211
+#: addons/lotte/templates/translate.html:209
+#: addons/lotte/templates/translate.html:214
 msgid "Fill in a new translation"
 msgstr "Afegir una nova traducció"
 
-#: addons/lotte/templates/translate.html:208
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_other}})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_other}})"
-
-#: addons/lotte/templates/translate.html:213
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_zero }})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_zero}})"
-
-#: addons/lotte/templates/translate.html:215
-msgid ""
-"Translation plural form for '+plural_types[rule]+' item (equation: "
-"{{ target_language.rule_one }})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_one}})"
-
-#: addons/lotte/templates/translate.html:217
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_two }})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_two}})"
-
-#: addons/lotte/templates/translate.html:219
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_few }})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_few}})"
-
-#: addons/lotte/templates/translate.html:221
-msgid ""
-"Translation plural form for '+plural_types[rule]+' items (equation: "
-"{{ target_language.rule_many }})"
-msgstr "Forma de plural per '+plural_types[rule]+'items (equació :{{target_language.rule_many}})"
-
-#: addons/lotte/templates/translate.html:232
+#: addons/lotte/templates/translate.html:235
 msgid "auto translate"
 msgstr "traducció automàtica"
 
-#: addons/lotte/templates/translate.html:233
+#: addons/lotte/templates/translate.html:236
 msgid "copy source"
 msgstr "copiar origen"
 
-#: addons/lotte/templates/translate.html:242
+#: addons/lotte/templates/translate.html:245
 #: addons/lotte/templates/view_strings.html:115
 msgid "Loading strings..."
 msgstr "Carregant cadenes..."
 
-#: addons/lotte/templates/translate.html:393
+#: addons/lotte/templates/translate.html:402
 msgid "Translation text will be saved automatically."
 msgstr "La traducció es desarà de forma automàtica."
 
-#: addons/lotte/templates/translate.html:397
+#: addons/lotte/templates/translate.html:406
 msgid "Translation text will no longer be saved automatically."
 msgstr "La traducció no es desarà de forma automàtica."
 
-#: addons/lotte/templates/translate.html:415
+#: addons/lotte/templates/translate.html:424
 msgid "This page does not have any translations (to delete)!"
 msgstr "Aquesta pàgina no té traduccions (per a esborrar)!"
 
-#: addons/lotte/templates/translate.html:416
+#: addons/lotte/templates/translate.html:425
 msgid ""
-"This action will delete all '+ to_delete.length +' translations in this "
-"page. Are you sure you want to proceed?"
-msgstr "Aquesta acció esborrarà totes \"+to_delete.length + \"traduccions d'aquesta pàgina. Esteu segur que voleu seguir?"
+"This action will delete all translations in this page. Are you sure you want "
+"to proceed?"
+msgstr ""
 
-#: addons/lotte/templates/translate.html:606
+#: addons/lotte/templates/translate.html:615
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr "Cerca a la memòria de Transifex per a traduccions existents (usa una nova pestanya / finestra)"
 
-#: addons/lotte/templates/translate.html:607
+#: addons/lotte/templates/translate.html:616
 msgid "Search translations"
 msgstr "Cerca traduccions"
 
-#: addons/lotte/templates/translate.html:616
+#: addons/lotte/templates/translate.html:625
 msgid "Show translations in<br /> the selected languages"
 msgstr "Mostra les traduccions en<br />els idiomes seleccionats."
 
-#: addons/lotte/templates/translate.html:619
+#: addons/lotte/templates/translate.html:628
 msgid "More languages"
 msgstr "Més idiomes"
 
-#: addons/lotte/templates/translate.html:624
+#: addons/lotte/templates/translate.html:633
 msgid "Show only the translations<br /> by the selected users"
 msgstr "Només mostra les traduccions<br />dels usuaris seleccionats."
 
-#: addons/lotte/templates/translate.html:627
+#: addons/lotte/templates/translate.html:636
 msgid "Filter by users"
 msgstr "Filtrar per usuaris"
 
-#: addons/lotte/templates/translate.html:633
+#: addons/lotte/templates/translate.html:642
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "Només mostra les traduccions<br />dels recursos seleccionats."
 
-#: addons/lotte/templates/translate.html:636
+#: addons/lotte/templates/translate.html:645
 msgid "Filter by resources"
 msgstr "Filtrar per recursos"
 
-#: addons/lotte/templates/translate.html:648
+#: addons/lotte/templates/translate.html:657
 #: addons/lotte/templates/view_strings.html:177
 msgid "Translated"
 msgstr "Traduït"
 
-#: addons/lotte/templates/translate.html:656
+#: addons/lotte/templates/translate.html:665
 #: addons/lotte/templates/view_strings.html:185
 msgid "Untranslated"
 msgstr "Sense traduir"
 
-#: addons/lotte/templates/translate.html:663
+#: addons/lotte/templates/translate.html:672
 msgid "Modified"
 msgstr "Modificat"
 
-#: addons/lotte/templates/translate.html:668
+#: addons/lotte/templates/translate.html:677
 #: addons/lotte/templates/view_strings.html:192
 msgid "Total"
 msgstr "Total"
 
-#: addons/lotte/templates/translate.html:681
-#: addons/lotte/templates/view_strings.html:205 resources/models.py:255
+#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/view_strings.html:205 resources/models.py:281
 msgid "Source String"
 msgstr "Cadena original"
 
-#: addons/lotte/templates/translate.html:682
+#: addons/lotte/templates/translate.html:691
 #: addons/lotte/templates/view_strings.html:206
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "Traducció"
 
-#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/translate.html:699
 msgid "Save all"
 msgstr "Desa-ho tot"
 
-#: addons/lotte/templates/translate.html:693
+#: addons/lotte/templates/translate.html:702
 #: templates/resources/resource_actions.html:179
 msgid "Delete translations"
 msgstr "Esborrar traduccions"
 
-#: addons/lotte/templates/translate.html:695
+#: addons/lotte/templates/translate.html:704
 msgid "Save and Exit"
 msgstr "Desa i surt"
 
-#: addons/lotte/templates/translate.html:701
+#: addons/lotte/templates/translate.html:710
 msgid "General Settings"
 msgstr "Opcions generals"
 
-#: addons/lotte/templates/translate.html:706
+#: addons/lotte/templates/translate.html:715
 msgid "Verbose editing"
 msgstr "Edició verbosa"
 
-#: addons/lotte/templates/translate.html:710
+#: addons/lotte/templates/translate.html:719
 msgid "Auto save"
 msgstr "Desat automàtic"
 
@@ -706,8 +678,8 @@ msgstr "prioritat del recurs"
 msgid "resource priorities"
 msgstr "prioritats del recurs"
 
-#: addons/suggestions/models.py:19 resources/models.py:116
-#: resources/models.py:236
+#: addons/suggestions/models.py:19 resources/models.py:142
+#: resources/models.py:262
 msgid "String"
 msgstr "Cadena"
 
@@ -715,8 +687,8 @@ msgstr "Cadena"
 msgid "The actual string content of suggestion."
 msgstr "Suggerència de la cadena"
 
-#: addons/suggestions/models.py:21 resources/models.py:118
-#: resources/models.py:238
+#: addons/suggestions/models.py:21 resources/models.py:144
+#: resources/models.py:264
 msgid "String Hash"
 msgstr "Hash de cadenes"
 
@@ -742,11 +714,11 @@ msgstr "Entitat de l'origen"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "L'entitat original sobre la que aquesta suggerència tradueix o afecta."
 
-#: addons/suggestions/models.py:40 resources/models.py:261
+#: addons/suggestions/models.py:40 resources/models.py:287
 msgid "Target Language"
 msgstr "Idioma destí"
 
-#: addons/suggestions/models.py:41 resources/models.py:262
+#: addons/suggestions/models.py:41 resources/models.py:288
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "L'idioma in la que aquesta traducció s'ha escrit."
@@ -843,7 +815,7 @@ msgid "Go"
 msgstr "Vés"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/teams/team_detail.html:285
+#: templates/timeline.html:24 templates/teams/team_detail.html:280
 msgid "None available"
 msgstr "Cap disponible"
 
@@ -995,8 +967,8 @@ msgid "The languages spoken on %s."
 msgstr "Els idiomes parlats a %s."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:99
-#: releases/models.py:31 resources/models.py:43
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:100
+#: releases/models.py:33 resources/models.py:45
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1171,126 +1143,126 @@ msgstr "Reutilitza els equips i escripts d'altres projectes delegant el control 
 msgid "Search for a resource"
 msgstr "Cercar un recurs"
 
-#: projects/models.py:92
+#: projects/models.py:93
 msgid "Private"
 msgstr "Privat"
 
-#: projects/models.py:93
+#: projects/models.py:94
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr "Un projecte privat és visible només per a vostè i el seu equip. A més, els projects privats estan limitats segons plans d'accés per a la conta d'usuari."
 
-#: projects/models.py:96 releases/models.py:28 resources/models.py:40
+#: projects/models.py:97 releases/models.py:30 resources/models.py:42
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slug"
 
-#: projects/models.py:97 releases/models.py:29 resources/models.py:41
+#: projects/models.py:98 releases/models.py:31 resources/models.py:43
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr "Una etiqueta curta que s'utilitzarà a la URL, que només contindrà lletres, números, guions baixos o guions."
 
-#: projects/models.py:100
+#: projects/models.py:101
 msgid "A short name or very short description."
 msgstr "Un nom o una descripció molt curta."
 
-#: projects/models.py:102
+#: projects/models.py:103
 msgid "A sentence or two describing the object (optional)."
 msgstr "Una frase o dos que descrigui l'objecte (opcional)."
 
-#: projects/models.py:103 releases/models.py:36
+#: projects/models.py:104 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Descripció llarga"
 
-#: projects/models.py:105
+#: projects/models.py:106
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Una descripció més llarga (opcional). Utilitza sintaxi Markdown."
 
-#: projects/models.py:106 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:107 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Pàgina web"
 
-#: projects/models.py:107
+#: projects/models.py:108
 msgid "Feed"
 msgstr "Canal"
 
-#: projects/models.py:108
+#: projects/models.py:109
 msgid "An RSS feed with updates to the project."
 msgstr "Un canal RSS amb actualitzacions del projecte."
 
-#: projects/models.py:109
+#: projects/models.py:110
 msgid "Bug tracker"
 msgstr "Seguiment d'errors"
 
-#: projects/models.py:110
+#: projects/models.py:111
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "La URL del sistema de seguiment d'errors i de tiquets (Bugzilla, Trac, etc.)"
 
-#: projects/models.py:112
+#: projects/models.py:113
 msgid "Anyone can submit"
 msgstr "Qualsevol pot enviar"
 
-#: projects/models.py:114
+#: projects/models.py:115
 msgid "Can anyone submit files to this project?"
 msgstr "Qualsevol pot enviar fitxers a aquest projecte?"
 
-#: projects/models.py:117
+#: projects/models.py:118
 msgid "Hide this object from the list view?"
 msgstr "Voleu ocultar aquest objecte de la visualització de llista?"
 
-#: projects/models.py:118
+#: projects/models.py:119
 msgid "Enabled"
 msgstr "Habilitat"
 
-#: projects/models.py:119
+#: projects/models.py:120
 msgid "Enable this object or disable its use?"
 msgstr "Voleu habilitar aquest objecte o inhabilitar-ne l'ús?"
 
-#: projects/models.py:123 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:124 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Etiquetes"
 
-#: projects/models.py:126 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:127 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Mantenidors"
 
-#: projects/models.py:130
+#: projects/models.py:131
 msgid "Outsource project"
 msgstr "Donar accés forani"
 
-#: projects/models.py:131
+#: projects/models.py:132
 msgid "Project that owns the access control of this project."
 msgstr "Projecte que és propietari del control d'accés a aquest projecte."
 
-#: projects/models.py:134 storage/models.py:44
+#: projects/models.py:135 storage/models.py:44
 msgid "Owner"
 msgstr "Propietari"
 
-#: projects/models.py:135
+#: projects/models.py:136
 msgid "The user who owns this project."
 msgstr "L'usuari que és propietari aquest projecte."
 
-#: projects/models.py:138 releases/models.py:58
+#: projects/models.py:139 releases/models.py:60
 msgid "HTML Description"
 msgstr "Descripció HTML"
 
-#: projects/models.py:140 releases/models.py:60
+#: projects/models.py:141 releases/models.py:62
 msgid "Description in HTML."
 msgstr "Descripció en HTML."
 
-#: projects/models.py:150
+#: projects/models.py:156
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Projecte: %s>"
 
-#: projects/models.py:153
+#: projects/models.py:159
 msgid "project"
 msgstr "projecte"
 
-#: projects/models.py:154 templates/projects/project_list.html:19
+#: projects/models.py:160 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "projectes"
 
@@ -1428,66 +1400,66 @@ msgstr "Heu aprovat la petició de l'equip '%(team)s' indicat per '%(user)s'."
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr "Heu denegat la petició de l'equip '%(team)s' indicat per '%(user)s'."
 
-#: releases/models.py:32
+#: releases/models.py:34
 msgid "A string like a name or very short description."
 msgstr "Una cadena, com ara un nom o una descripció molt curta."
 
-#: releases/models.py:35
+#: releases/models.py:37
 msgid "A sentence or two describing the object."
 msgstr "Una frase o dues que descriguin l'objecte."
 
-#: releases/models.py:38
+#: releases/models.py:40
 msgid "Use Markdown syntax."
 msgstr "Utilitza sintaxi Markdown."
 
-#: releases/models.py:41
+#: releases/models.py:43
 msgid "Release date"
 msgstr "Data de l'alliberament"
 
-#: releases/models.py:43
+#: releases/models.py:45
 msgid "When this release will be available."
 msgstr "Quan estarà disponible aquesta versió."
 
-#: releases/models.py:44
+#: releases/models.py:46
 msgid "String freeze date"
 msgstr "Data de congelació de cadenes"
 
-#: releases/models.py:46
+#: releases/models.py:48
 msgid ""
 "When the translatable strings will be frozen (no strings can be added/"
 "modified which affect translations."
 msgstr "Quan es congelen les cadenes (no es poden afegir ni modificar cadenes que puguin afectar a les traduccions)."
 
-#: releases/models.py:48
+#: releases/models.py:50
 msgid "Devel freeze date"
 msgstr "Data de congelació del desenvolupament"
 
-#: releases/models.py:50
+#: releases/models.py:52
 msgid ""
 "The last date packages from this release can be built from the developers. "
 "Translations sent after this date will not be included in the released "
 "version."
 msgstr "La darrera data per a construir paquets per part dels desenvolupadors. Traduccions enviades amb posterioritat no seran incloses en aquesta versió."
 
-#: releases/models.py:63 resources/models.py:68 teams/models.py:27
-#: teams/models.py:69
+#: releases/models.py:65 resources/models.py:70 teams/models.py:29
+#: teams/models.py:98
 msgid "Project"
 msgstr "Projecte"
 
-#: releases/models.py:66
+#: releases/models.py:68
 msgid "Resources"
 msgstr "Recursos"
 
-#: releases/models.py:73
+#: releases/models.py:75
 #, python-format
 msgid "<Release: %(rel)s (Project %(proj)s)>"
 msgstr "<Versió: %(rel)s (Projecte %(proj)s)>"
 
-#: releases/models.py:84
+#: releases/models.py:86
 msgid "release"
 msgstr "versió"
 
-#: releases/models.py:85 templates/projects/release_list.html:16
+#: releases/models.py:87 templates/projects/release_list.html:16
 #: templates/projects/release_list.html:36
 msgid "releases"
 msgstr "versions"
@@ -1508,222 +1480,228 @@ msgid ""
 "resource."
 msgstr "Seleccioneu un fitxer del vostre sistema per a ser usat per omplir les traduccions d'aquest recurs."
 
-#: resources/models.py:44
+#: resources/models.py:46
 msgid "A descriptive name unique inside the project."
 msgstr "Un nom únic i descriptiu dins el projecte."
 
-#: resources/models.py:47
+#: resources/models.py:49
 msgid "Source file"
 msgstr "Fitxer origen"
 
-#: resources/models.py:49
+#: resources/models.py:51
 msgid "A local file used to extract the strings to be translated."
 msgstr "Un fitxer local del qual s'extrauran les cadenes a ser traduïdes."
 
-#: resources/models.py:51
+#: resources/models.py:53
 msgid "I18n type"
 msgstr "Tipus d'i18n"
 
-#: resources/models.py:53
+#: resources/models.py:55
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "El tipus del mètode i18n usat en aquest recurs (%s)"
 
-#: resources/models.py:56
+#: resources/models.py:58
 msgid "Accepting translations?"
 msgstr "Acceptant traduccions?"
 
-#: resources/models.py:58
+#: resources/models.py:60
 msgid "Is this resource accepting submissions of translations?"
 msgstr "Accepta aquest recurs l'enviament de traduccions?"
 
-#: resources/models.py:66
+#: resources/models.py:68
 msgid "Source Language"
 msgstr "Idioma original"
 
-#: resources/models.py:67
+#: resources/models.py:69
 msgid "The source language of this Resource."
 msgstr "Idioma original d'aquest recurs."
 
-#: resources/models.py:70
+#: resources/models.py:72
 msgid "The project containing the translation resource."
 msgstr "El projecte que conté el recurs de traducció."
 
-#: resources/models.py:83
+#: resources/models.py:85
 msgid "resource"
 msgstr "recurs"
 
-#: resources/models.py:84
+#: resources/models.py:86
 msgid "resources"
 msgstr "recursos"
 
-#: resources/models.py:117
+#: resources/models.py:143
 msgid "The actual string content of source string."
 msgstr "El contingut de la cadena actual de la cadena original."
 
-#: resources/models.py:120 resources/models.py:240
+#: resources/models.py:146 resources/models.py:266
 msgid "The hash of the translation string used for indexing"
 msgstr "La hash de la cadena de traducció usada per a la indexació"
 
-#: resources/models.py:121
+#: resources/models.py:147
 msgid "Context"
 msgstr "Context"
 
-#: resources/models.py:123
+#: resources/models.py:149
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr "Una descripció de la cadena original. Aquest camp especifica el context de la cadena original dins el recurs."
 
-#: resources/models.py:125 templates/userprofile/profile/location.html:27
+#: resources/models.py:151 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "Posició"
 
-#: resources/models.py:126
+#: resources/models.py:152
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr "La posició de la cadena original en el recurs. Per exemple, la posició especifica de msgid en el fitxer plantilla (.pot)."
 
-#: resources/models.py:132
+#: resources/models.py:158
 msgid "The occurrences of the source string in the project code."
 msgstr "Les ocurrències de la cadena original en el codi del projecte."
 
-#: resources/models.py:133 resources/models.py:138
+#: resources/models.py:159 resources/models.py:164
 msgid "Flags"
 msgstr "Banderes"
 
-#: resources/models.py:135
+#: resources/models.py:161
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr "Les banderes marquen la cadena original. Per exemple, ifthere és una cadena python amb format que es marga com '#,python-format\" a gettext."
 
-#: resources/models.py:140
+#: resources/models.py:166
 msgid "The comment of the developer."
 msgstr "Comentari del desenvolupador."
 
-#: resources/models.py:142
+#: resources/models.py:168
 msgid "Pluralized"
 msgstr "Pluralitzada"
 
-#: resources/models.py:144
+#: resources/models.py:170
 msgid "Identify if the entity is pluralized ot not."
 msgstr "Identifica si l'entitat és pluralitzada o no"
 
-#: resources/models.py:154
+#: resources/models.py:180
 msgid "The translation resource which owns the source string."
 msgstr "El recurs de traducció que conté la cadena original."
 
-#: resources/models.py:161
+#: resources/models.py:187
 msgid "source string"
 msgstr "cadena original"
 
-#: resources/models.py:162
+#: resources/models.py:188
 msgid "source strings"
 msgstr "cadenes originals"
 
-#: resources/models.py:237
+#: resources/models.py:263
 msgid "The actual string content of translation."
 msgstr "La cadena que conté la traducció."
 
-#: resources/models.py:241
+#: resources/models.py:267
 msgid "Plural rule"
 msgstr "Regla per al plural"
 
-#: resources/models.py:243
+#: resources/models.py:269
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
 "pluralized, the rule must be 5 (other)."
 msgstr "Número relaciona amb la regla del plural. És 0=zero, 1=un, 2=dos, 3=pocs, 4=molts i 5=altres. Per a traduccions que tenen la seva entitat no plural, la regla ha de ser 5 (altres)."
 
-#: resources/models.py:258
+#: resources/models.py:284
 msgid "The source string this translation string translates."
 msgstr "La cadena original que és traduïda per aquesta traducció."
 
-#: resources/models.py:265
+#: resources/models.py:291
 msgid "Committer"
 msgstr "Confirmador"
 
-#: resources/models.py:266
+#: resources/models.py:292
 msgid "The user who committed the specific translation."
 msgstr "L'usuari que ha confirmat aquesta traducció."
 
-#: resources/models.py:276
+#: resources/models.py:302
 msgid "translation string"
 msgstr "cadena traduïda"
 
-#: resources/models.py:277
+#: resources/models.py:303
 msgid "translation strings"
 msgstr "cadenes traduïdes"
 
-#: resources/models.py:310
+#: resources/models.py:336
 msgid "This is the actual content of the template"
 msgstr "Aquest és el contingut actual de la plantilla"
 
-#: resources/models.py:314
+#: resources/models.py:340
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr "Hi ha una plantilla en el fitxer importat que s'usa per a exportar els fitxers de traducció de la base de dades a l'usuari."
 
-#: resources/models.py:318
+#: resources/models.py:344
 msgid "Template"
 msgstr "Plantilla"
 
-#: resources/models.py:319
+#: resources/models.py:345
 msgid "Templates"
 msgstr "Plantilles"
 
-#: resources/views.py:86
+#: resources/views.py:87
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "S'ha esborrat la traducció del recurs '%s'."
 
-#: resources/views.py:127
+#: resources/views.py:131
 msgid "The URL you provided doesn't link to valid file."
 msgstr "L'enllaç que heu proveït no apunta a un fitxer vàlid."
 
-#: resources/views.py:318
+#: resources/views.py:142
+msgid ""
+"You have checked the auto update checkbox but you haven't provided a valid "
+"url."
+msgstr "Heu activat l'auto-actualització però no heu provist cap enllaç vàlid."
+
+#: resources/views.py:330
 #, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
 msgstr "Les traduccions dels idiomes %(lang)s del recurs %(resource)s s'han esborrat de forma correcta."
 
-#: resources/views.py:364
+#: resources/views.py:376
 msgid "Error compiling translation file."
 msgstr "Error compilant el fitxer de traducció."
 
-#: resources/views.py:411
+#: resources/views.py:425
 msgid "Sorry, you cannot assign this file to you!"
 msgstr "Disculpeu, no podeu assignar-vos aquest fitxer!"
 
-#: resources/views.py:423
+#: resources/views.py:437
 msgid "Failed to lock the resource!"
 msgstr "No s'ha pogut bloquejar el recurs!"
 
-#: resources/views.py:434
+#: resources/views.py:448
 msgid "Failed to extend lock period on the resource!"
 msgstr "No s'ha pogut extendre el bloqueig del recurs!"
 
-#: resources/views.py:439
+#: resources/views.py:453
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
 msgstr "No podeu bloquejar el fitxer ara! (està bloquejat per %s)"
 
-#: resources/formats/pofile.py:76
+#: resources/formats/pofile.py:89
 msgid ""
 "Your file failed a correctness check (msgfmt -c). Please run this command on "
 "your system to see the errors."
-msgstr ""
+msgstr "El vostre fitxer no ha passat la comprovació (msgfmt -c). Si us plau executeu aquesta comanda al vostre sistema per a veure els errors."
 
-#: resources/formats/pofile.py:111
+#: resources/formats/pofile.py:130
 msgid "Uploaded file contains DOS newlines (\\r)!"
 msgstr "El fitxer enviat conté línies en format DOS "
 
-#: resources/formats/pofile.py:120
+#: resources/formats/pofile.py:139
 #, python-format
 msgid "Uploaded file header doesn't have '%s' metadata!"
 msgstr "La capçalera del fitxer que heu enviat no conté les metadades '%s'!"
@@ -1731,7 +1709,7 @@ msgstr "La capçalera del fitxer que heu enviat no conté les metadades '%s'!"
 #: resources/formats/qt.py:68
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
-msgstr ""
+msgstr "El vostre fitxer no sembla contenir un XML vàlid: %s!"
 
 #: storage/api.py:128
 msgid "A strange error happened."
@@ -1795,67 +1773,67 @@ msgid ""
 "him/her from one of those lists."
 msgstr "Teniu a l'usuari '%s' tan a la llista de coordinadors com a la de membres. Elimineu-lo d'una de les dues llistes."
 
-#: teams/models.py:29 teams/models.py:71
+#: teams/models.py:31 teams/models.py:100
 msgid "The project this team works on."
 msgstr "El projecte en el qual treballa aquest equip."
 
-#: teams/models.py:30 teams/models.py:72
+#: teams/models.py:32 teams/models.py:101
 #: templates/projects/release_detail.html:125
-#: templates/resources/resource_detail.html:146
+#: templates/resources/resource_detail.html:147
 msgid "Language"
 msgstr "Idioma"
 
-#: teams/models.py:32 teams/models.py:74
+#: teams/models.py:34 teams/models.py:103
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
 msgstr "La gent en aquest equip només podran enviar fitxers amb traduccions a l'idioma especificat."
 
-#: teams/models.py:34
+#: teams/models.py:36
 msgid "Coordinators"
 msgstr "Coordinadors"
 
-#: teams/models.py:36
+#: teams/models.py:38
 msgid "Members"
 msgstr "Membres"
 
-#: teams/models.py:39
+#: teams/models.py:41
 msgid "Mainlist"
 msgstr "Llista principal"
 
-#: teams/models.py:40
+#: teams/models.py:42
 msgid "The main mailing list of the team."
 msgstr "La llista de correu electrònic de l'equip."
 
-#: teams/models.py:42
+#: teams/models.py:44
 msgid "creator"
 msgstr "creador"
 
-#: teams/models.py:58
+#: teams/models.py:60
 msgid "team"
 msgstr "equip"
 
-#: teams/models.py:59
+#: teams/models.py:61
 msgid "teams"
 msgstr "equips"
 
-#: teams/models.py:91
+#: teams/models.py:120
 msgid "team creation request"
 msgstr "petició de creació d'equip"
 
-#: teams/models.py:92
+#: teams/models.py:121
 msgid "team creation requests"
 msgstr "peticions de creació d'equip"
 
-#: teams/models.py:110
+#: teams/models.py:139
 msgid "Team"
 msgstr "Equip"
 
-#: teams/models.py:127
+#: teams/models.py:156
 msgid "team access request"
 msgstr "petició d'accés a l'equip"
 
-#: teams/models.py:128
+#: teams/models.py:157
 msgid "team access requests"
 msgstr "peticions d'accés a l'equip"
 
@@ -1912,44 +1890,44 @@ msgstr "Benvinguts al Transifex"
 msgid "Transifex"
 msgstr "Transifex"
 
-#: templates/base-sample.html:49 txcommon/templates/common_homelink.html:2
+#: templates/base-sample.html:58 txcommon/templates/common_homelink.html:2
 msgid "Go to the start page"
 msgstr "Vés a la pàgina d'inici"
 
-#: templates/base-sample.html:50
+#: templates/base-sample.html:59
 msgid "Go to start page"
 msgstr "Vés a la pàgina d'inici"
 
-#: templates/base-sample.html:54
+#: templates/base-sample.html:63
 msgid "The projects being served"
 msgstr "Els projectes allotjats"
 
-#: templates/base-sample.html:55
+#: templates/base-sample.html:64
 msgid "The languages our service serves"
 msgstr "Els idiomes que servim"
 
-#: templates/base-sample.html:55 templates/languages/base.html:5
+#: templates/base-sample.html:64 templates/languages/base.html:5
 #: templates/languages/language_list.html:7
 #: templates/languages/language_list.html:13
 msgid "Languages"
 msgstr "Idiomes"
 
-#: templates/base-sample.html:62
+#: templates/base-sample.html:71
 #, python-format
 msgid ""
 "Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
 "(user_username)s</a>!"
 msgstr "Benvingut <a title=\"Configuració del perfil\" href=\"%(user_profile)s\">%(user_username)s</a>!"
 
-#: templates/base-sample.html:64
+#: templates/base-sample.html:73
 msgid "Sign out from the website"
 msgstr "Surt de la web"
 
-#: templates/base-sample.html:64
+#: templates/base-sample.html:73
 msgid "Sign out"
 msgstr "Surt"
 
-#: templates/base-sample.html:67 templates/simpleauth/login_box.html:7
+#: templates/base-sample.html:76 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
 #: templates/simpleauth/logout.html.py:5 templates/simpleauth/logout.html:6
 #: templates/simpleauth/signin.html:4 templates/simpleauth/signin.html.py:5
@@ -1959,28 +1937,28 @@ msgstr "Surt"
 msgid "Sign in"
 msgstr "Entra"
 
-#: templates/base-sample.html:70
+#: templates/base-sample.html:79
 #: templates/userprofile/account/includes/registration_form.html:10
 msgid "Register"
 msgstr "Registreu-vos"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Learn more about Transifex"
 msgstr "Saber-ne més de Transifex"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "About"
 msgstr "Quant a"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Drops us a line"
 msgstr "Escriu-nos una línia"
 
-#: templates/base-sample.html:132
+#: templates/base-sample.html:143
 msgid "Feedback"
 msgstr "Resposta"
 
-#: templates/base-sample.html:134
+#: templates/base-sample.html:145
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -2563,8 +2541,8 @@ msgid "Screenshots"
 msgstr "Captures de pantalla"
 
 #: templates/projects/project_detail.html:124
-#: templates/resources/resource_detail.html:305
-#: templates/teams/team_detail.html:281
+#: templates/resources/resource_detail.html:302
+#: templates/teams/team_detail.html:276
 msgid "History"
 msgstr "Historial"
 
@@ -2763,7 +2741,7 @@ msgstr "Estadístiques de traducció"
 
 #: templates/projects/release_detail.html:126
 #: templates/projects/release_language_detail.html:59
-#: templates/resources/resource_detail.html:147
+#: templates/resources/resource_detail.html:148
 #: templates/teams/team_detail.html:138
 msgid "Completion"
 msgstr "Completat"
@@ -2772,30 +2750,14 @@ msgstr "Completat"
 msgid "Last Translation"
 msgstr "Darrera traducció"
 
-#: templates/projects/release_detail.html:141
-#: templates/projects/release_language_detail.html:71
-#: templates/resources/resource_actions.html:53
-#: templates/resources/resource_detail.html:164
-#: templates/teams/team_detail.html:152
-msgid "Translated: "
-msgstr "Traduït:"
-
-#: templates/projects/release_detail.html:141
-#: templates/projects/release_language_detail.html:71
-#: templates/resources/resource_actions.html:53
-#: templates/resources/resource_detail.html:164
-#: templates/teams/team_detail.html:152
-msgid "Untranslated: "
-msgstr "Sense traduir:"
-
-#: templates/projects/release_detail.html:161
-#: templates/projects/resource_list.html:94
-#: templates/resources/resource_detail.html:184
+#: templates/projects/release_detail.html:156
+#: templates/projects/resource_list.html:96
+#: templates/resources/resource_detail.html:180
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "no hi ha traduccions encara"
 
-#: templates/projects/release_detail.html:181
+#: templates/projects/release_detail.html:177
 msgid "Delete release"
 msgstr "Suprimeix versió"
 
@@ -2836,42 +2798,42 @@ msgstr[0] "Recurs dins d'aquesta versió"
 msgstr[1] "Recursos dins d'aquesta versió"
 
 #: templates/projects/release_language_detail.html:60
-#: templates/projects/resource_list.html:69
-#: templates/resources/resource_detail.html:148
+#: templates/projects/resource_list.html:70
+#: templates/resources/resource_detail.html:149
 #: templates/teams/team_detail.html:139
 msgid "Last Updated"
 msgstr "Darrera actualització"
 
 #: templates/projects/release_language_detail.html:65
-#: templates/resources/resource_detail.html:153
+#: templates/resources/resource_detail.html:154
 #: templates/teams/team_detail.html:145
 msgid "click for translation"
 msgstr "cliqueu per a la traducció"
 
-#: templates/projects/release_language_detail.html:90
-#: templates/teams/team_detail.html:172
+#: templates/projects/release_language_detail.html:85
+#: templates/teams/team_detail.html:167
 msgid "no activity yet"
 msgstr "no hi ha activitat encara"
 
-#: templates/projects/release_language_detail.html:129
+#: templates/projects/release_language_detail.html:124
 #: templates/resources/resource_detail.html:28
-#: templates/resources/resource_detail.html:223
+#: templates/resources/resource_detail.html:219
 msgid "Please select a target language first."
 msgstr "Si us plau, seleccioneu l'idioma destí primer."
 
-#: templates/projects/release_language_detail.html:139
-#: templates/resources/resource_detail.html:233
-#: templates/teams/team_detail.html:221
+#: templates/projects/release_language_detail.html:134
+#: templates/resources/resource_detail.html:229
+#: templates/teams/team_detail.html:216
 msgid "Trying to lock resource..."
 msgstr "Intentant bloquejar el recurs..."
 
-#: templates/projects/release_language_detail.html:162
-#: templates/resources/resource_detail.html:256
-#: templates/teams/team_detail.html:244
+#: templates/projects/release_language_detail.html:157
+#: templates/resources/resource_detail.html:252
+#: templates/teams/team_detail.html:239
 msgid "Translation Details"
 msgstr "Detalls de traducció"
 
-#: templates/projects/release_language_detail.html:169
+#: templates/projects/release_language_detail.html:164
 msgid "No resources are registered for this release yet."
 msgstr "No hi ha recursos registrats per a aquesta versió."
 
@@ -2891,57 +2853,57 @@ msgid ""
 "(release_create)s\">add one</a>?"
 msgstr "Encara no s'han registrat versions per a aquest col·lecció. Per què no n'<a href=\"%(release_create)s\">afegiu una</a>?"
 
-#: templates/projects/resource_list.html:8
+#: templates/projects/resource_list.html:9
 msgid "Project Resources"
 msgstr "Recursos del projecte"
 
-#: templates/projects/resource_list.html:68
+#: templates/projects/resource_list.html:69
 msgid "Resource Name"
 msgstr "Nom del recurs"
 
-#: templates/projects/resource_list.html:70
+#: templates/projects/resource_list.html:71
 msgid "Click the flags to modify the importance of a resource."
 msgstr "Feu click a les banderes per a modificar la rellevància del recurs."
 
-#: templates/projects/resource_list.html:70
+#: templates/projects/resource_list.html:71
 msgid "Importance"
 msgstr "Rellevància"
 
-#: templates/projects/resource_list.html:77
+#: templates/projects/resource_list.html:79
 #, python-format
 msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
 msgstr "Total de cadenes: %(ts)s<br/>Idiomes disponibles: %(al)s"
 
-#: templates/projects/resource_list.html:80
+#: templates/projects/resource_list.html:82
 #: templates/resources/resource_list_more.html:14
 msgid "edit"
 msgstr "edita"
 
-#: templates/projects/resource_list.html:81
+#: templates/projects/resource_list.html:83
 #: templates/resources/resource_list_more.html:15
 msgid "del"
 msgstr "suprimeix"
 
-#: templates/projects/resource_list.html:87
+#: templates/projects/resource_list.html:89
 #, python-format
 msgid "Committed by %(last_committer)s"
 msgstr "Enviat per %(last_committer)s"
 
-#: templates/projects/resource_list.html:87
+#: templates/projects/resource_list.html:89
 msgid "No committers yet"
 msgstr "No hi ha confirmadors encara"
 
-#: templates/projects/resource_list.html:122
-#: templates/teams/team_detail.html:251
+#: templates/projects/resource_list.html:125
+#: templates/teams/team_detail.html:246
 msgid "No resources are registered for this project yet."
 msgstr "No hi ha recursos registrats per a aquest projecte."
 
-#: templates/projects/resource_list.html:130
-#: templates/resources/resource_detail.html:282
+#: templates/projects/resource_list.html:133
+#: templates/resources/resource_detail.html:279
 msgid "Select Language"
 msgstr "Seleccionar idioma"
 
-#: templates/projects/resource_list.html:144
+#: templates/projects/resource_list.html:147
 msgid "Translate All"
 msgstr "Traduir-ho tot"
 
@@ -2967,6 +2929,16 @@ msgstr "Traduir ara"
 #, python-format
 msgid "To translate, you need to be a member of the %(lang_name)s team."
 msgstr "Per a traduir heu de ser membre de l'equip %(lang_name)s."
+
+#: templates/resources/resource_actions.html:53
+#: templates/resources/stats_bar_simple.html:4
+msgid "Translated: "
+msgstr "Traduït:"
+
+#: templates/resources/resource_actions.html:53
+#: templates/resources/stats_bar_simple.html:4
+msgid "Untranslated: "
+msgstr "Sense traduir:"
 
 #: templates/resources/resource_actions.html:61
 msgid "remaining strings"
@@ -3064,60 +3036,60 @@ msgstr ""
 "\n"
 "Esteu segurs que voleu esborrar de forma permanent els recursos de traducció de '%(resource_name)s'?\n"
 
-#: templates/resources/resource_detail.html:93
+#: templates/resources/resource_detail.html:94
 msgid "Translation Resource details"
 msgstr "Detalls del recurs de traducció"
 
-#: templates/resources/resource_detail.html:96
+#: templates/resources/resource_detail.html:97
 msgid "Source Language:"
 msgstr "Idioma original:"
 
-#: templates/resources/resource_detail.html:102
+#: templates/resources/resource_detail.html:103
 msgid "Number of languages:"
 msgstr "Número d'idiomes:"
 
-#: templates/resources/resource_detail.html:108
+#: templates/resources/resource_detail.html:109
 msgid "Total Strings:"
 msgstr "Número total de cadenes:"
 
-#: templates/resources/resource_detail.html:111
+#: templates/resources/resource_detail.html:112
 msgid "words"
 msgstr "paraules"
 
-#: templates/resources/resource_detail.html:115
+#: templates/resources/resource_detail.html:116
 msgid "Accepting Translations?"
 msgstr "Accepta traduccions?"
 
-#: templates/resources/resource_detail.html:127
+#: templates/resources/resource_detail.html:128
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Versions:"
+msgstr[1] "Versió:"
 
-#: templates/resources/resource_detail.html:141
+#: templates/resources/resource_detail.html:142
 msgid "Available translations"
 msgstr "Traduccions disponibles"
 
-#: templates/resources/resource_detail.html:159
+#: templates/resources/resource_detail.html:160
 msgid "source language"
 msgstr "idioma original"
 
-#: templates/resources/resource_detail.html:272
+#: templates/resources/resource_detail.html:269
 msgid ""
 "If you cannot see your language, click the button below to translate.<span "
 "class=\"note\">( You must belong to a language team of this project, to be "
 "able to translate! )</span>"
 msgstr "Si no podeu veure el vostre idioma, feu clic al botó de traduir que hi ha a sota. <span class=\"note\">(Heu de pertànyer a l'equip de traducció per a poder traduir!)</span>"
 
-#: templates/resources/resource_detail.html:298
+#: templates/resources/resource_detail.html:295
 msgid "Add Translation"
 msgstr "Afegir traducció"
 
-#: templates/resources/resource_detail.html:309
+#: templates/resources/resource_detail.html:306
 msgid "No actions recorded yet :)"
 msgstr "No s'han desat accions encara :)"
 
-#: templates/resources/resource_detail.html:326
+#: templates/resources/resource_detail.html:323
 msgid "Delete translation resource"
 msgstr "Esborrar un recurs de traducció"
 
@@ -3346,15 +3318,15 @@ msgid_plural "Team Translating Resources:"
 msgstr[0] "Recurs de l'equip de traducció"
 msgstr[1] "Recursos de l'equip de traducció:"
 
-#: templates/teams/team_detail.html:258
+#: templates/teams/team_detail.html:253
 msgid "Team Members:"
 msgstr "Membres de l'equip"
 
-#: templates/teams/team_detail.html:268
+#: templates/teams/team_detail.html:263
 msgid "Leave"
 msgstr "Abandonar"
 
-#: templates/teams/team_detail.html:304
+#: templates/teams/team_detail.html:299
 msgid "Delete team"
 msgstr "Suprimir l'equip"
 
