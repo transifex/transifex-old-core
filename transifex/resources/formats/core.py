@@ -318,7 +318,10 @@ class Handler(object):
             transaction.commit()
 
             # Invalidate cache after saving file
-            invalidate_stats_cache(self.resource)
+            if is_source:
+                invalidate_stats_cache(self.resource)
+            else:
+                invalidate_stats_cache(self.resource, self.language)
 
             return strings_added, strings_updated
 
