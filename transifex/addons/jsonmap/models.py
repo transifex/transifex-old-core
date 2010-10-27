@@ -16,7 +16,7 @@ class JSONMap(models.Model):
     """
     Store the JSON mapping used to among resources and its translation files
     """
-    slug = models.TextField(null=False, blank=False, max_length=50,
+    slug = models.SlugField(null=False, blank=False, max_length=50,
         help_text="Slug for the mapping. Usually the same as the old "
         "component slug.")
     content = CompressedTextField(null=False, blank=False,
