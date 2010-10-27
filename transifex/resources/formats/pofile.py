@@ -171,18 +171,22 @@ class POHandler(Handler):
 
         # Update PO file headers
         po.metadata['Project-Id-Version'] = self.resource.project.name
+        po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
         po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but isn't being used by po
         # files. What should we do?
         po.metadata['Language'] = language.code
 
+        if self.resource.project.bug_tracker:
+            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
+
         if 'fuzzy' in po.metadata_is_fuzzy:
             po.metadata_is_fuzzy.remove('fuzzy')
 
         try:
             team = Team.objects.get(language = language,
-                project = self.resource.project)
+                project = self.resource.project.outsource or self.resource.project)
         except Team.DoesNotExist:
             pass
         else:
