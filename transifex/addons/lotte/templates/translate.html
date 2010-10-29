@@ -179,6 +179,9 @@
                     var suggestions_num = '';
                     if(oObj.aData[4] > 0)
                         suggestions_num = ' ('+oObj.aData[4]+')';
+                    var bold_flag = false;
+                    if(suggestions_num!='' && oObj.aData[3]['other']=='')
+                        bold_flag = true;
 
                     return '<div class="source_string_wrapper">'
                            + plural_indicator
@@ -190,7 +193,7 @@
                            + '     <a class="tabs_trigger show_details" href="#">{% trans "details" %}</a>'
                            + '    </li>'
                            + '    <li>'
-                           + '     <a class="tabs_trigger show_suggestions" href="#">{% trans "suggestions" %}'+suggestions_num+'</a>'
+                           + '     <a class="tabs_trigger show_suggestions" href="#">'+(bold_flag?'<strong>':'')+'{% trans "suggestions" %}'+suggestions_num+(bold_flag?'</strong>':'')+'</a>'
                            + '    </li>'
                            + '  </ul>'
                            + ' </div>'
@@ -381,9 +384,17 @@
             if ( ! stringset.current_box ) {
                 return false;
             }
-            stringset.current_box.val(stringset.current_box.parents('.trans').prev().find(".source_string").html());
+            // Trigger the copy source action
+            stringset.current_box.parents('.trans').find(".copy_source").click();
         });
-
+        /* auto translate */
+        shortcut.add('Alt+t', function(evt) {
+            if ( ! stringset.current_box ) {
+                return false;
+            }
+            // Trigger the auto translate action
+            stringset.current_box.parents('.trans').find(".suggest").click();
+        });
 
         /* SETTINGS togglers */
         $("#toggle_verbose").click( function() {

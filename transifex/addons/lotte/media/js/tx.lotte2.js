@@ -302,8 +302,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 string.translate(undo_value[rule], rule);
                 $(this).next('textarea').focus().val(undo_value[rule]);
             });
-            // Update the color classes now
-            this_stringset.updateColors_Buttons();
+            // Save the new value
+            string.push();
             $(this).hide();
         });
     }
@@ -424,28 +424,33 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset");
                 if(plural_orig.length > 0)
                   orig = orig.substring(orig.indexOf('</span>')+7);
-                var trans=$('textarea.default_translation', a.parents('tr'));
-                orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
-                google.language.translate(orig, source_lang, target_lang, function(result) {
-                    if (!result.error) {
-                        trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
-                        /* Mark the translated field as modified */
-                        id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
-                        string = this_stringset.strings[id];
-                        string.translate(trans.val(), "other");
-                        if (string.modified) {
-                            trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
-                            trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
-                            // TODO: Check for autosave and handle it.
-                            $('tbody tr td.notes span#save_' + id).show();
-                            $('tbody tr td.notes span#undo_' + id).show();
-                            trans.focus();
+                // Get the default (other) translation textarea and corresponding string object
+                var default_textarea = $('textarea.default_translation', a.parents('tr'));
+                // Get the id of current textarea -> binding index
+                var id = parseInt(default_textarea.attr("id").split("_")[1]);
+                var string = this_stringset.strings[id];
+                $('textarea.translation', a.parents('tr')).each(function(){
+                    var trans=$(this);
+                    orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
+                    google.language.translate(orig, source_lang, target_lang, function(result) {
+                        if (!result.error) {
+                            trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
+                            /* Mark the translated field as modified */
+                            string.translate(trans.val(), trans.prev('span.rule').text());
+                            if (string.modified) {
+                                trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                                trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
+                                // TODO: Check for autosave and handle it.
+                                $('tbody tr td.notes span#save_' + id).show();
+                                $('tbody tr td.notes span#undo_' + id).show();
+                                trans.focus();
+                            }
+                        } else {
+                            a.before($('<span class="alert">'+result.error.message+'</span>'));
                         }
-                    } else {
-                        a.before($('<span class="alert">'+result.error.message+'</span>'));
-                    }
-                    a.removeClass("action_go");
-                    a.addClass("action");
+                        a.removeClass("action_go");
+                        a.addClass("action");
+                    });
                 });
                 return false;
             });
@@ -460,20 +465,25 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset");
             if(plural_orig.length > 0)
               orig = orig.substring(orig.indexOf('</span>')+7);
-            var trans=$('textarea.default_translation', a.parents('tr'));
-            trans.val(html_unescape(orig));
-            /* Mark the translated field as modified */
-            id = parseInt(trans.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
-            string = this_stringset.strings[id];
-            string.translate(trans.val(), "other");
-            if (string.modified) {
-                trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
-                trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
-                // TODO: Check for autosave and handle it.
-                $('tbody tr td.notes span#save_' + id).show();
-                $('tbody tr td.notes span#undo_' + id).show();
-                trans.focus();
-            }
+            // Get the default (other) translation textarea and corresponding string object
+            var default_textarea = $('textarea.default_translation', a.parents('tr'));
+            // Get the id of current textarea -> binding index
+            var id = parseInt(default_textarea.attr("id").split("_")[1]);
+            var string = this_stringset.strings[id];
+            $('textarea.translation', a.parents('tr')).each(function(){
+                var trans=$(this);
+                trans.val(html_unescape(orig));
+                /* Mark the translated field as modified */
+                string.translate(trans.val(), trans.prev('span.rule').text());
+                if (string.modified) {
+                    trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
+                    trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
+                    // TODO: Check for autosave and handle it.
+                    $('tbody tr td.notes span#save_' + id).show();
+                    $('tbody tr td.notes span#undo_' + id).show();
+                    trans.focus();
+                }
+            });
         });
 
         // 3 Show details row trigger
