@@ -6,6 +6,7 @@
 {% load upload_manager_tags %}
 
 {% block extra_head %}
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/ui.tabs.outside.css" />
 <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
@@ -47,6 +48,18 @@
               }
             }
         });
+
+        {% if is_maintainer %}
+        var resource_priority_cycle_url = '{% url cycle_resource_priority resource.project.slug resource.slug %}';
+        $("a.resource_priority_trigger").click(function(){
+            $(this).load(resource_priority_cycle_url, function(response, status, xhr) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    alert(msg + xhr.status + " " + xhr.statusText);
+                }
+            });
+        });
+        {% endif %}
 
     });
 </script>
@@ -122,6 +135,24 @@
         {% endif %}
       </td>
     </tr>
+    {% if resource.priority %}
+    {% with resource.priority.level as priority_level %}
+    {% with resource.priority.display_level as display_level %}
+    <tr>
+      <th class="i16 ruby">{% trans "Priority Level" %}</th>
+      <td>
+        {% if is_maintainer %}
+            <a class="resource_priority_trigger" style="cursor:pointer">
+            <img src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" class="noborder" title="{{ display_level }}"/>
+            </a>
+        {% else %}
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" class="noborder" title="{{ display_level }}"/>
+        {% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+    {% endwith %}
+    {% endif %}
     {% with resource.releases.all as releases %}
     {% if releases %}
      <tr>

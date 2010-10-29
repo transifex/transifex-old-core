@@ -68,7 +68,7 @@
    <tr>
     <th><span class="i16 tag">{% trans "Resource Name" %}</span</th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
-    <th><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" style="border:0" {% endif %}>{% trans "Importance" %}</span></th>
+    <th><span {% if is_maintainer %}class="res_tipsy_enable i16 ruby" title="{% trans "Click the flags to modify the importance of a resource." %}" {% else %}class="i16 ruby" {% endif %}style="border:0">{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>

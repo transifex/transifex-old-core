@@ -26,6 +26,9 @@
             },
             2: function(node) {
                 return $(".origin_format", node).text();
+            },
+            3: function(node) {
+                return parseInt($(".priority_sort", node).text());
             }
         }
     });
@@ -137,6 +140,7 @@
     <th><span class="i16 comment">{% trans "Resource" %}</span></th>
     <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+    <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>
@@ -168,6 +172,18 @@
           {% endif %}
           {% endwith %}
           {% endwith %}
+        </span>
+        </td>
+        <td class="priority_level" style="width:100px;text-align:center">
+        <span style="border:0">
+        {% with stat.object.priority.level as priority_level %}
+        {% with stat.object.priority.display_level as display_level %}
+            <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+            {% ifnotequal priority_level "0" %}
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
+            {% endifnotequal %}
+        {% endwith %}
+        {% endwith %}
         </span>
         </td>
     </tr>
