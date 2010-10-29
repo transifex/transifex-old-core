@@ -207,9 +207,8 @@ class LinguistHandler(Handler):
                       translation.attributes['variants'].value == 'yes':
                         logger.error("Source file has unsupported"
                             " variants.")
-                        raise LinguistParseError("Source file"
-                            " could not be imported: Qt Linguist"
-                            " variants are not supported.")
+                        raise LinguistParseError("Qt Linguist variants are"
+                            " not supported yet.")
 
                     messages = [(5, sourceStringText or sourceString)]
                     # remove unfinished/obsolete attrs from template
