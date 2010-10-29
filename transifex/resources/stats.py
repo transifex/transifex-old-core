@@ -1,6 +1,7 @@
 from django.core.cache import cache
 from transifex.languages.models import Language
 from transifex.projects.models import Project
+from transifex.releases.models import Release
 from transifex.resources.models import Resource, Translation, SourceEntity
 from transifex.resources.utils import *
 
@@ -34,7 +35,7 @@ class StatsBase:
         project = None
         if isinstance(self.object, Project):
             project = self.object
-        elif isinstance(self.object, Resource):
+        elif isinstance(self.object, (Resource, Release)):
             project = self.object.project
 
         if project:
