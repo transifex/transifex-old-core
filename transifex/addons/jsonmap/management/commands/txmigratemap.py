@@ -8,8 +8,8 @@ from django.db import models
 from transifex.txcommon.commands import run_command
 from transifex.txcommon.log import logger
 
+from autofetch.models import URLInfo
 from jsonmap.models import JSONMap
-
 
 class Command(BaseCommand):
 
@@ -83,6 +83,9 @@ class Command(BaseCommand):
                         source_file = os.path.join(path, r['source_file'])
                         resource.i18n_type = get_i18n_type_from_file(source_file)
                         resource.save()
+
+                        # Add the autofetch url
+                        resource.url_info.add(URLInfo(source_file_url=r['autofetch_url']))
 
                         logger.debug("Inserting source strings from %s (%s) to "
                             "'%s' (%s)." % (r['source_file'], language.code,
