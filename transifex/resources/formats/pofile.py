@@ -122,14 +122,6 @@ class POHandler(Handler):
         if settings.FILECHECKS['POFILE_MSGFMT']:
             msgfmt_check(buf)
 
-        # Check whether file contains DOS newlines '\r' (0x0D)
-        # To remove you can run: tr -d '\r' < inputfile > outputfile
-        if settings.FILECHECKS.get('DOS_NEWLINES', None):
-            if '\r' in buf:
-                logger.debug("pofile: DOS newlines (\\r) found!")
-                raise FileCheckError(_("Uploaded file contains "
-                    "DOS newlines (\\r)!"))
-
         # Check required header fields 
         required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
         for metadata in required_metadata:
