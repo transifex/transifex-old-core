@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -9,8 +10,6 @@ from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
 from transifex.txcommon.log import logger
-
-Project = models.get_model("projects", "Project")
 
 def _get_formatted_message(label, context):
     """
@@ -115,6 +114,8 @@ class LogEntryManager(models.Manager):
         """
         Return LogEntries for a specific user and his actions on public projects.
         """
+        # Avoiding circular import troubles. get_model didn't make it.
+        from transifex.projects.models import Project
         ctype = ContentType.objects.get(model='project')
         q = self.filter(user__pk__exact=user.pk, content_type=ctype, 
                 object_id__in=Project.objects.filter(private=False))
@@ -149,11 +150,13 @@ class LogEntryManager(models.Manager):
 class LogEntry(models.Model):
     """A Entry in an object's log."""
     user = models.ForeignKey(User, verbose_name=_('User'), blank=True,
-        null=True, related_name="tx_user_action")
+        null=True, related_name="actionlogs")
 
     object_id = models.IntegerField(blank=True, null=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
-                                     related_name="tx_object")
+                                     related_name="actionlogs")
+
+    object = generic.GenericForeignKey('content_type', 'object_id')
 
     action_type = models.ForeignKey(NoticeType, verbose_name=_('Action type'))
     action_time = models.DateTimeField(_('Action time'))
