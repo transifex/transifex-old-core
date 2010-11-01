@@ -58,7 +58,6 @@ setup(
     ],
     install_requires = [
         "Django >= 1.2.3",
-        "urlgrabber",
         "markdown",
         "userprofile",
         "httplib2",
