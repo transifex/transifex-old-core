@@ -37,9 +37,13 @@
 <script type="text/javascript">
 
     /* Global variables */
+
+    /* The instance of the StringSet class which has references to all the objects of the table */
     var stringset = null;
+    /* Flags used for the auto-suggest function */
     var is_supported_source_lang = null;
     var is_supported_lang = null;
+    /* DataTable instance var */
     var oTable;
     /* vars for string calcs */
     var translated;
@@ -58,6 +62,7 @@
     /* FIXME: Find a more clever way to do this resolving. */
     var entity_details_urlp_tmpl = "{% url translation_details_snippet 1111111111 target_language.code %}";
     var entity_suggestions_urlp_tmpl = "{% url entity_suggestions_snippet 1111111111 target_language.code %}";
+    /* Global vars holding the source and target language codes */
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
 
@@ -87,8 +92,9 @@
         }
     }
 
-    target_source_codes = source_lang + ' {{ resource.source_language.code }}';
-    target_codes = target_lang + '{{ target_language.code_aliases }}';
+    // Concatenate the code and aliases to check all of them one by one for availability.
+    target_source_codes = source_lang + ' {{ resource.source_language.code_aliases }}';
+    target_codes = target_lang + ' {{ target_language.code_aliases }}';
 
     google.setOnLoadCallback(function() {
         /* Global variables */
@@ -137,14 +143,20 @@
             "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
             "bAutoWidth": false,
             "aoColumns" : [
+                // Holds the Translation id (hidden)
                 { "bVisible":false },
+                // Holds the SourceEntity string
                 { "bVisible":false, "bSortable": false, },
+                // Holds the source Translation string/s mapped to the plural rules
+                // It may also hold the similar language translations.
                 { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
                   "fnRender": function(oObj){
+                    // Escape recursively all the strings in the array
                     var clean_array = array_escape({"key":oObj.aData[1], "source_dict":oObj.aData[2]});
                     var source_divs = '';
                     var plurals_counter = 0;
                     var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other']
+                    // Provide the necessary html fragment for each plural rule
                     for(rule in plural_types){
                         if(plural_types[rule] in clean_array["source_dict"]["source_strings"]){
                             if(plural_types[rule]=='other'){
@@ -158,10 +170,13 @@
                         }
                     }
 
+                    // If we have pluralized translation row, indicate this with a label.
                     var plural_indicator = '';
                     if(plurals_counter>1)
                         plural_indicator = '<div class="plural_indicator">Pluralized Translations</div>';
 
+                    // Concatenate the similar language translations with the
+                    // html fragment which holds the source strings.
                     for(lang in clean_array["source_dict"]["similar_lang_strings"]){
                       lang_strings = "";
                       for(rule in clean_array["source_dict"]["similar_lang_strings"][lang]){
@@ -176,6 +191,9 @@
                       }
                     }
 
+                    // Provide the amount (number) of suggestions and a
+                    // bold flag to be used in case we have empty translation
+                    // textareas.
                     var suggestions_num = '';
                     if(oObj.aData[4] > 0)
                         suggestions_num = ' ('+oObj.aData[4]+')';
@@ -183,6 +201,8 @@
                     if(suggestions_num!='' && oObj.aData[3]['other']=='')
                         bold_flag = true;
 
+                    // Concatenate the plural indicator, the (hidden) key,
+                    // the source strings and the row tabs.
                     return '<div class="source_string_wrapper">'
                            + plural_indicator
                            + ' <div class="source_entity nodisplay" id="sourceentity_'+ oObj.iDataRow +'" ><span title="{% trans "Key" %}">'+ clean_array["key"] +'</span></div>'
@@ -200,12 +220,15 @@
                            + '</div>';
                   }
                 },
+                // Holds the target Translation string/s mapped to the plural rules
                 { "sClass": "trans", "bSortable": false,  "sWidth": "350px",
                   "fnRender": function(oObj){
+                      // Escape recursively all the strings in the array
                       var clean_array = array_escape({"translations":oObj.aData[3]});
                       var textareas = '';
                       var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other'];
                       var plurals_counter = 0;
+                      // Provide the necessary html fragment for each plural rule
                       for(rule in plural_types){
                           if(plural_types[rule] in clean_array["translations"]){
                               if(plural_types[rule]=='other'){
@@ -232,6 +255,7 @@
                           }
                       }
 
+                      // Concatenate translation textareas with action buttons
                       return textareas
                       + '<div class="error_notes"></div>'
                       + '<div class="lotte-actions">'
@@ -240,13 +264,24 @@
                       + '</div>';
                     }
                 },
+                // Holds the amount of Suggestions provided for this source string/s
                 { "bVisible":false, "bSortable": false, },
+                // Holds an HTML snippet for save, undo buttons and hidden context
                 { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
+              /*
+               * Here we issue the AJAX request to get the table data and
+               * then we create the StringSet object which holds all the 
+               * Translation objects in memory.
+              */
+
+              // Show the loading indicator
               $("div#notification-container div").html('{% trans "Loading strings..."|escapejs %}');
               $("div#notification-container").fadeIn("slow");
+
+              // Add filtering parameters to the POST data dictionary
               if (filter_var) {
                 aoData.push( { "name" : "filters", "value": filter_var});
               }
@@ -260,6 +295,7 @@
                 aoData.push( { "name" : "more_languages", "value": more_languages_values});
               }
 
+              // Issue the actual AJAX request to fetch the data to be rendered.
               $.ajax ( {
                   "dataType": 'json',
                   "type": "POST",
@@ -267,9 +303,16 @@
                   "data": aoData,
                   "complete": function(xmlhttpreq, status) {
 
+                    /*
+                     * When we have the data, create the Stringset instance and
+                     * trigger the fnDrawCallback to render one by one the rows!
+                    */
+
                     var parsed_data = JSON.parse(xmlhttpreq.responseText);
                     var push_url = '{% url push_translation project.slug target_language.code %}';
-                    if ( stringset ) {    
+
+                    // Fill the statistics variable
+                    if ( stringset ) {
                         // Modified strings should be saved or dropped on page change.
                         translated = stringset.translated; // - stringset.translated_modified;
                         untranslated = stringset.untranslated; // - stringset.untranslated_modified;
@@ -277,6 +320,8 @@
                         translated = translated_strings;
                         untranslated = untranslated_strings;
                     }
+
+                    // Create StringSet instance
                     stringset = new StringSet(parsed_data, push_url, '{{resource.source_language}}', '{{target_language.code}}');
                     stringset.translated = translated;
                     stringset.untranslated = untranslated;
@@ -284,7 +329,9 @@
                     // Draw the table
                     fnCallback(parsed_data);
 
+                    // Hide the loading indicator
                     setTimeout('$("div#notification-container").fadeOut();',1000);
+
                     }
                   });
 
@@ -405,6 +452,7 @@
             }
         });
 
+        /* Toggle autosave of textarea value */
         $("#toggle_autosave").click( function() {
             if ($(this).is(":checked")){ 
                 stringset.unbindSaveButton();
@@ -418,13 +466,12 @@
             }
         });
 
+        /* Save at once all the changed translation values */
         $("#save_all_2").click(function(){ stringset.push(); });
 
         {% if is_maintainer or request.user.is_superuser%}
+        /* Delete at once all the translations in this page */
         $("#delete_all_2").click(function(){ delete_these(); });
-        {% endif %}
-
-        {% if is_maintainer or request.user.is_superuser%}
         function delete_these(){
             var to_delete = [];
             for (j=0; j<this_stringset.strings.length; j++) {
@@ -456,6 +503,7 @@
         }
         {% endif %}
 
+        /* Save all the updated translation and exit Lotte */
         $("#save_and_exit").click(function(){
             {% if resource_slug %}
                 {% url exit_lotte resource.project.slug resource_slug target_language.code as url_exit_lotte %}

@@ -344,12 +344,23 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         'iTotalDisplayRecords': total,
         'aaData': [
             [
+                # 1. Translation object's "id"
                 s.id,
+                # 2. SourceEntity object's "string" content
                 s.source_entity.string,
+                # 3. Get all the necessary source strings, including plurals and 
+                # similar langs, all in a dictionary (see also below)
                 _get_source_strings(s, source_language, lang_code, more_languages),
+                # 4. Get all the Translation strings mapped with plural rules 
+                # in a single dictionary (see docstring of function)
                 _get_strings(translated_strings, lang_code, s.source_entity),
+                # 5. A number which indicates the number of Suggestion objects
+                # attached to this row of the table.
                 Suggestion.objects.filter(source_entity=s.source_entity, language__code=lang_code).count(),
-                # save buttons and hidden context
+                # 6. save buttons and hidden context (ready to inject snippet)
+                # It includes the following content, wrapped in span tags:
+                # * SourceEntity object's "context" value
+                # * SourceEntity object's "id" value
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="' + _("Save the specific change") + '"></span>'
                  '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="' + _("Undo to initial text") + '"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + escape(str(s.source_entity.context)) + '</span>'
