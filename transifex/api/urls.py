@@ -12,10 +12,12 @@ from transifex.languages.api import LanguageHandler
 from transifex.projects.api import ProjectHandler, ProjectResourceHandler
 from transifex.resources.api import (ResourceHandler, FileHandler, StatsHandler)
 from transifex.storage.api import StorageHandler
+from transifex.releases.api import ReleaseHandler
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
 resource_handler = Resource(ResourceHandler, authentication=auth)
+release_handler = Resource(ReleaseHandler, authentication=auth)
 storage_handler = Resource(StorageHandler, authentication=auth)
 project_handler = Resource(ProjectHandler, authentication=auth)
 projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
@@ -45,6 +47,10 @@ urlpatterns = patterns('',
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/$',
         never_cache(resource_handler),
         name='api_resource'
+    ), url(
+        r'^project/(?P<project_slug>[-\w]+)/release/(?P<release_slug>[-\w]+)/$',
+        never_cache(release_handler),
+        name='api_release'
     ), url(
         r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
         never_cache(stats_handler),

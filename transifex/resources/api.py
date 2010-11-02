@@ -32,7 +32,8 @@ class ResourceHandler(BaseHandler):
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Resource
-    fields = ('slug', 'name', 'created', 'available_languages')
+    fields = ('slug', 'name', 'created', 'available_languages', 'i18n_type',
+        'source_language')
     exclude = ()
 
     def read(self, request, project_slug, resource_slug=None):
@@ -41,7 +42,7 @@ class ResourceHandler(BaseHandler):
         """
         if resource_slug:
             try:
-                resource = Resource.objects.get(slug=resource_slug, 
+                resource = Resource.objects.get(slug=resource_slug,
                     project__slug=project_slug)
                 res_stats = ResourceStatsList(resource).resource_stats().next()
                 setattr(resource, 'available_languages',
@@ -175,7 +176,8 @@ class StatsHandler(BaseHandler):
             retval = {}
             for stat in stats.resource_stats_for_language(language): 
                 retval.update({stat.language.code:{"completed": "%s%%" % stat.trans_percent,
-                    "translated_entities": stat.num_translated}})
+                    "translated_entities": stat.num_translated, "last_update":
+                    stat.last_update}})
         else:
             retval = []
             for stat in stats.language_stats():
