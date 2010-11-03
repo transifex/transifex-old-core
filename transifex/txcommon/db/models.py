@@ -158,4 +158,4 @@ rules['CompressedTextField'] = [
 ]
 
 for f in rules.keys():
-    add_introspection_rules(rules[f], ["^txcommon\.db\.models\.%s" % f,])
+    add_introspection_rules(rules[f], ["^transifex\.txcommon\.db\.models\.%s" % f])

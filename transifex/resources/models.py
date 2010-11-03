@@ -3,13 +3,14 @@
 String Level models.
 """
 
-import datetime, sys
+import datetime, sys, re
 
 from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
+from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
 from django.contrib.auth.models import User
 
@@ -144,7 +145,7 @@ class SourceEntity(models.Model):
         max_length=32, editable=False,
         help_text=_("The hash of the translation string used for indexing"))
     context = models.CharField(_('Context'), max_length=255,
-        blank=False, null=False,
+        null=False, default="",
         help_text=_("A description of the source string. This field specifies"
                     "the context of the source string inside the resource."))
     position = models.IntegerField(_('Position'), blank=True, null=True,
@@ -193,8 +194,16 @@ class SourceEntity(models.Model):
         """
         Do some exra processing before the actual save to db.
         """
-        # encoding happens to support unicode characters
-        self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
+        context = self.context
+        # This is for sqlite support since None objects are treated as strings
+        # containing 'None'
+        if not context or context == 'None':
+            context = ""
+
+        # Calculate new hash
+        self.string_hash = md5_constructor(':'.join([self.string,
+            context]).encode('utf-8')).hexdigest()
+
         super(SourceEntity, self).save(*args, **kwargs)
 
     def get_translation(self, lang_code, rule=5):

@@ -4,12 +4,12 @@
 GNU Gettext .PO/.POT file handler/compiler
 """
 import os, re, time
-from hashlib import md5
 import polib, datetime
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.hashcompat import md5_constructor
 
 from transifex.txcommon.commands import run_command, CommandError
 from transifex.txcommon.exceptions import FileCheckError
@@ -243,7 +243,7 @@ class POHandler(Handler):
                 if not ispot:
                     if not entry.msgid_plural:
                         suggestion = GenericTranslation(entry.msgid, entry.msgstr,
-                            context=entry.msgctxt,
+                            context=entry.msgctxt or '',
                             occurrences=', '.join(
                                 [':'.join([i for i in t ]) for t in
                                 entry.occurrences]))
@@ -298,7 +298,7 @@ class POHandler(Handler):
             # Add messages with the correct number (plural)
             for number, msgstr in enumerate(messages):
                 translation = GenericTranslation(entry.msgid, msgstr[1],
-                    context=entry.msgctxt,
+                    context=entry.msgctxt or '',
                     occurrences=', '.join(
                         [':'.join([i for i in t ]) for t in entry.occurrences]),
                     rule=msgstr[0], pluralized=pluralized)
@@ -311,12 +311,15 @@ class POHandler(Handler):
                 translation.flags = ', '.join( f for f in entry.flags)
 
             if is_source:
-                entry.msgstr = "%(hash)s_tr" % {'hash': md5(entry.msgid.encode('utf-8')).hexdigest()}
+                entry.msgstr = "%(hash)s_tr" % {'hash':
+                    md5_constructor(':'.join([translation.source_entity,
+                    translation.context]).encode('utf-8')).hexdigest()}
+
                 if entry.msgid_plural:
                     for n, rule in enumerate(plural_keys):
                         entry.msgstr_plural['%s' % n] = ("%(hash)s_pl_%(key)s" %
-                            {'hash':md5(entry.msgid_plural).hexdigest(),
-                            'key': n})
+                            {'hash':md5_constructor(':'.join([translation.source_entity,
+                            translation.context]).encode('utf-8')).hexdigest(), 'key':n})
 
 
         if is_source:

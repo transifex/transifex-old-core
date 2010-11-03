@@ -3,12 +3,12 @@
 """
 Qt4 TS file parser for Python
 """
-from hashlib import md5
 import time
 import xml.dom.minidom
 import xml.parsers.expat
 from django.db import transaction
 from django.db.models import get_model
+from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext, ugettext_lazy as _
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
@@ -180,10 +180,8 @@ class LinguistHandler(Handler):
                     message.attributes['numerus'].value=='yes':
                     pluralized = True
 
-
                 source = _getElementByTagName(message, "source")
                 translation = _getElementByTagName(message, "translation")
-
 
                 status = None
                 if source.firstChild:
@@ -239,7 +237,6 @@ class LinguistHandler(Handler):
                             pass
 
                 elif translation and translation.firstChild:
-
                     # For messages with variants set to 'yes', we skip them
                     # altogether. We can't support variants at the momment...
                     if translation.attributes.has_key("variants") and \
@@ -309,7 +306,8 @@ class LinguistHandler(Handler):
                             numerusforms = translation.getElementsByTagName('numerusform')
                             for n,f in enumerate(numerusforms):
                                 f.firstChild.nodeValue = ("%(hash)s_pl_%(key)s" %
-                                    {'hash': md5(sourceString.encode('utf-8')).hexdigest(),
+                                    {'hash':md5_constructor(':'.join([sourceString,
+                                        context_name]).encode('utf-8')).hexdigest(),
                                      'key': n})
                     else:
                         if not translation:
@@ -321,12 +319,12 @@ class LinguistHandler(Handler):
                         translation.childNodes = []
 
                         translation.appendChild(doc.createTextNode(
-                            ("%(hash)s_tr" % {'hash':md5(sourceString.encode('utf-8')).hexdigest()})))
-
+                            ("%(hash)s_tr" % {'hash':md5_constructor(
+                                ':'.join([sourceString,
+                                context_name]).encode('utf-8')).hexdigest()})))
 
             if is_source:
                 self.template = str(doc.toxml().encode('utf-8'))
-
 
             self.suggestions = suggestions
             self.stringset=stringset
