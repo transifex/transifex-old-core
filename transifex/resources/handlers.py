@@ -5,13 +5,18 @@ from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
 from transifex.resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
 from transifex.resources.utils import (invalidate_object_cache,
-    invalidate_template_cache)
+    invalidate_template_cache, rl_last_update_now)
 from transifex.resources.stats import ResourceStatsList
 from transifex.teams.models import Team
 
 def invalidate_stats_cache(resource, language=None, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     invalidate_object_cache(resource, language)
+
+    if language:
+        rl_last_update_now(resource, language)
+    else:
+        rl_last_update_now(resource, resource.source_language)
 
     invalidate_object_cache(resource.project, language)
 

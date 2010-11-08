@@ -1,3 +1,4 @@
+import datetime
 import inspect
 from django.conf import settings
 from django.core.cache import cache
@@ -22,6 +23,19 @@ def cache_set(key, value):
     """
     cache.set(key, value)
     return value
+
+def rl_last_update_now(resource, language):
+    """
+    This updates the cache value of last_update for a specific language of a
+    resource with datetime.datetime.now(). Usefull when doing stuff that don't
+    alter translation strings so that the last_update time will be updated.
+    Also usefull when deleting translations.
+    """
+
+    cache.set(
+        "cached_property_resources.resource:%(id)s_transifex.resources.stats"
+        "_last_update_%(lang)s" % {'id': resource.id, 'lang': language.code},
+        datetime.datetime.now())
 
 def stats_cached_property(func):
     """
