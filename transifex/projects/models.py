@@ -21,7 +21,7 @@ from authority.models import Permission
 from notification.models import ObservedItem
 
 from transifex.actionlog.models import LogEntry
-from transifex.txcommon.log import log_model
+from transifex.txcommon.log import log_model, logger
 
 class DefaultProjectManager(models.Manager):
     """
@@ -176,6 +176,9 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('project_detail', None, { 'project_slug': self.slug })
 
+try:
+    tagging.register(Project, tag_descriptor_attr='tagsobj')
+except tagging.AlreadyRegistered, e:
+    logger.debug('Tagging: %s' % str(e))
 
-tagging.register(Project, tag_descriptor_attr='tagsobj')
 log_model(Project)
