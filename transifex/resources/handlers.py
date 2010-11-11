@@ -11,7 +11,7 @@ from transifex.teams.models import Team
 
 def invalidate_stats_cache(resource, language=None, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
-    invalidate_object_cache(resource, language)
+    invalidate_object_cache(resource, language or resource.source_language)
 
     if language:
         rl_last_update_now(resource, language)

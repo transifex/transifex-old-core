@@ -115,7 +115,7 @@ def resource_edit(request, project_slug, resource_slug):
         urlinfo = None
 
     if request.method == 'POST':
-        resource_form = ResourceForm(request.POST, instance=resource,)
+        resource_form = ResourceForm(request.POST, request.FILES, instance=resource,)
         if urlinfo:
             url_form = URLInfoForm(request.POST, instance=urlinfo,)
         else:

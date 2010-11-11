@@ -73,10 +73,9 @@ class StorageFile(models.Model):
         return (self.total_strings > 0)
 
     def find_parser(self):
-        # to import the PARSERS.
         #FIXME: Decide whether it's important to have it and find a good way 
         # to import the PARSERS.
-        from resources.models import PARSERS
+        from transifex.resources.models import PARSERS
         parser = None
         for p in PARSERS:
             if p.accept(filename=self.name,mime=self.mime_type):
