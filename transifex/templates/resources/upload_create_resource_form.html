@@ -13,6 +13,7 @@ $(document).ready(function(){
     {% if resource %}
 
         var uuid = '{{ resource.source_file.uuid }}';
+		var resource_slug = '{{resource.slug}}';
         $("div#notification-container div").html("{% blocktrans with resource.source_file.name as resource_name %}Extracting strings from '{{ resource_name }}'. This might take a while...{% endblocktrans %}");
         $("div#notification-container").fadeIn("fast");
 
@@ -21,7 +22,7 @@ $(document).ready(function(){
             url: sprintf('{{ api_project_files }}', '{{ project.slug }}'),
             contentType : 'application/json',
             responseType: "json",
-            data: JSON.stringify({'uuid':uuid}),
+            data: JSON.stringify({'uuid':uuid, 'slug': resource_slug }),
             dataType: 'json',
             success: function(data, textStatus, XMLHttpRequest){
                 window.location = data['redirect'];

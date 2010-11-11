@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.template.defaultfilters import slugify
 from transifex.txcommon.utils import get_url_pattern
 from transifex.resources.forms import CreateResourceForm, ResourceTranslationForm
+from transifex.resources.models import Resource
 
 register = template.Library()
 
@@ -22,10 +24,30 @@ def upload_create_resource_form(request, project, prefix='create_form'):
         if create_resource_form.is_valid():
             resource = create_resource_form.save(commit=False)
         display_form=True
+
+        # If we have a resource in the creation form, check if a we already
+        # have a resource with this slug in the db.
+        if resource:
+            try:
+                Resource.objects.get(
+                    slug = slugify(resource.source_file.name),
+                    project = project
+                )
+            except Resource.DoesNotExist:
+                pass
+            else:
+                # if the resource exists, modify slug in order to force the
+                # creation of a new resource.
+                slug = slugify(resource.source_file.name)
+                identifier = Resource.objects.filter(project=project,
+                    slug__icontains = "%s_" % slug ).count() + 1
+                resource.slug = "%s_%s" % (slug, identifier)
+
     else:
         create_resource_form = CreateResourceForm(prefix=prefix, 
             initial={'source_file':['en', ""]})
         display_form=False
+
 
     api_project_files = get_url_pattern('api_project_files')
     return {
