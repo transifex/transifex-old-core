@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
 
@@ -15,9 +18,14 @@ def get_i18n_type_from_file(filename):
     filename -- The file name. Duh
     """
     i18n_type = None
+    m = magic.Magic(mime=True)
+    # guess mimetype and remove charset
+    mime_type = m.from_file(filename)
+
 
     for type, info in settings.I18N_METHODS.items():
-        if filter(filename.endswith, info['file-extensions'].split(', ')):
+        if filter(filename.endswith, info['file-extensions'].split(', ')) or\
+          mime_type in info['mimetype'].split(', '):
             i18n_type = type
             break
     

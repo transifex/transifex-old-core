@@ -10,6 +10,7 @@ from transifex.languages.models import Language
 from suggestions.models import Suggestion
 from transifex.resources.formats.decorators import *
 from transifex.resources.handlers import invalidate_stats_cache
+from transifex.resources.formats import get_i18n_type_from_file
 
 """
 STRICT flag is used to switch between two parsing modes:
@@ -293,6 +294,7 @@ class Handler(object):
                 t, created = Template.objects.get_or_create(resource = self.resource)
                 t.content = self.template
                 t.save()
+                self.resource.i18n_type = get_i18n_type_from_file(self.filename)
                 self.resource.save()
                 for se in original_sources:
                     se.delete()
@@ -316,6 +318,7 @@ class Handler(object):
 
             self._post_save2db(is_source , user, overwrite_translations)
             transaction.commit()
+
 
             # Invalidate cache after saving file
             if is_source:
