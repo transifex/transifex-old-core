@@ -118,6 +118,11 @@ class POHandler(Handler):
         # Temporary solution
         buf = open(filename, 'r').read()
 
+        # If file is empty, the method hangs so we should bail out.
+        if not buf:
+            logger.error("pofile: File '%s' is empty." % filename)
+            raise FileCheckError("Uploaded file is empty.")
+
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
             msgfmt_check(buf)
@@ -128,8 +133,8 @@ class POHandler(Handler):
             if not metadata in po.metadata:
                 logger.debug("pofile: Required metadata '%s' not found." % 
                     metadata)
-                raise FileCheckError(_("Uploaded file header doesn't "
-                "have '%s' metadata!") % metadata)
+                raise FileCheckError("Uploaded file header doesn't "
+                "have '%s' metadata!" % metadata)
 
 
         # No translated entries check
