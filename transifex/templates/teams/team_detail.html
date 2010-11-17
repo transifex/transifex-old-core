@@ -147,9 +147,9 @@
   {% for stat in statslist %}
 
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-  {% cache 604800 team_details team.id stat.object.id LANGUAGE_CODE %}
+  {% cache 604800 team_details team.id stat.resource.id LANGUAGE_CODE %}
         <td>
-          <span class="clickable">{{ stat.object.name }}</span>
+          <span class="clickable">{{ stat.resource.name }}</span>
         </td>
         <td>
         {% with 200 as barwidth %}
@@ -176,8 +176,8 @@
         </td>
         <td class="priority_level" style="width:100px;text-align:center">
         <span style="border:0">
-        {% with stat.object.priority.level as priority_level %}
-        {% with stat.object.priority.display_level as display_level %}
+        {% with stat.resource.priority.level as priority_level %}
+        {% with stat.resource.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
             <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
         {% endwith %}
@@ -190,7 +190,7 @@
            /* FancyBox Using custom settings */ 
            $.fancybox(
                { 
-                'href': '{% url resource_actions team.project.slug stat.object.slug team.language.code %}',
+                'href': '{% url resource_actions team.project.slug stat.resource.slug team.language.code %}',
                 'hideOnContentClick': false,
                 'onStart':function(){
                     // IE8 fix
@@ -223,7 +223,7 @@
                     if(!$("#download_for_translation").hasClass('disabled')){
                     $("#download_for_translation").click(function(){
                         $.ajax({
-                            url : '{% url lock_and_download_translation project.slug stat.object.slug team.language.code %}',
+                            url : '{% url lock_and_download_translation project.slug stat.resource.slug team.language.code %}',
                             contentType : 'application/json',
                             type : 'POST',
                             beforeSend: function(){

@@ -18,6 +18,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
+from transifex.txcommon.utils import cached_property
 from transifex.txcommon.db.models import CompressedTextField
 from transifex.txcommon.log import logger
 from transifex.resources.utils import (invalidate_template_cache,
@@ -95,7 +96,7 @@ class Resource(models.Model):
         verbose_name_plural = _('resources')
         ordering  = ['name',]
         order_with_respect_to = 'project'
-        get_latest_by = 'created'
+        models.get_latest_by = 'created'
 
 
     def save(self, *args, **kwargs):
@@ -112,12 +113,39 @@ class Resource(models.Model):
         """
         Do some extra processing along with the actual delete to db.
         """
-        invalidate_object_cache(self)
         invalidate_template_cache("project_resource_details",
             self.project.slug, self.slug)
         invalidate_template_cache("resource_details",
             self.project.slug, self.slug)
+        RLStats = models.get_model('rlstats', 'RLStats')
+        RLStats.objects.filter(resource=self).delete()
         super(Resource, self).delete(*args, **kwargs)
+
+    @cached_property
+    def total_entities(self):
+        """
+        Return the total number of SourceEntity objects to be translated.
+        """
+        return SourceEntity.objects.filter(resource=self).values('id').count()
+
+    @cached_property
+    def wordcount(self):
+        """
+        Return the number of words which need translation in this resource.
+
+        The counting of the words uses the Translation objects of the SOURCE
+        LANGUAGE as set of objects. This function does not count the plural 
+        strings!
+        """
+        wc = 0
+        source_trans = Translation.objects.filter(source_entity__id__in=
+            SourceEntity.objects.filter(resource=self).values('id'))
+        for t in source_trans:
+            if t:
+                wc += t.wordcount
+        return wc
+
+
 
 
 

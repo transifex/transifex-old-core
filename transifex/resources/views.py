@@ -86,7 +86,7 @@ def resource_delete(request, project_slug, resource_slug):
         request.user.message_set.create(
             message=_("The translation resource '%s' was deleted.") % resource_.name)
 
-        invalidate_stats_cache(resource_)
+        invalidate_stats_cache(resource_, resource_.source_language)
         
         if xhr:
             response_dict = {'status': 200}
@@ -115,7 +115,7 @@ def resource_edit(request, project_slug, resource_slug):
         urlinfo = None
 
     if request.method == 'POST':
-        resource_form = ResourceForm(request.POST, request.FILES, instance=resource,)
+        resource_form = ResourceForm(request.POST, request.FILES, instance=resource)
         if urlinfo:
             url_form = URLInfoForm(request.POST, instance=urlinfo,)
         else:
@@ -124,6 +124,7 @@ def resource_edit(request, project_slug, resource_slug):
             urlinfo = url_form.save(commit=False)
             resource_new = resource_form.save(user=request.user)
             urlinfo.resource = resource_new
+            invalidate_stats_cache(resource_new, resource_new.source_language, user=request.user)
             if urlinfo.source_file_url:
                 try:
                     urlinfo.update_source_file(fake=True)
@@ -202,10 +203,8 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(members=request.user)).distinct()
 
     statslist = ResourceStatsList(resource)
-    #FIXME: Wordcount is expensive and isn't being cached
-    # Find a way to handle this before enabling it
-    wordcount = statslist.wordcount
-    stats = statslist.stat(target_language)
+    stats = statslist.resource_stats_for_language(target_language).next()
+    wordcount = resource.wordcount
 
     return render_to_response("resources/resource_actions.html",
     { 'project' : project,
@@ -300,7 +299,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
                     source_entity = s.source_entity,
                     rule = s.rule)
 
-    invalidate_stats_cache(resource, target_lang)
+    invalidate_stats_cache(resource, target_lang, user=request.user)
     return HttpResponseRedirect(reverse('translate_resource', args=[project_slug,
                                 resource_slug, target_lang_code]),)
 
@@ -331,7 +330,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
                       "%(resource)s were deleted successfully.") % {
                           'lang': language.name,
                           'resource': resource.name})
-        invalidate_stats_cache(resource, language)
+        invalidate_stats_cache(resource, language, user=request.user)
         return HttpResponseRedirect(reverse('resource_detail',
                                     args=[resource.project.slug, resource.slug]),)
     else:

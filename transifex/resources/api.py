@@ -55,7 +55,7 @@ class ResourceHandler(BaseHandler):
             try:
                 resource = Resource.objects.get(slug=resource_slug,
                     project__slug=project_slug)
-                res_stats = ResourceStatsList(resource).resource_stats().next()
+                res_stats = ResourceStatsList(resource)
                 setattr(resource, 'available_languages',
                     res_stats.available_languages_without_teams)
             except Resource.DoesNotExist:
@@ -185,15 +185,18 @@ class StatsHandler(BaseHandler):
         # include more info in the json.
         if language:
             retval = {}
-            for stat in stats.resource_stats_for_language(language): 
-                retval.update({stat.language.code:{"completed": "%s%%" % stat.trans_percent,
-                    "translated_entities": stat.num_translated, "last_update":
+            for stat in stats.resource_stats_for_language(language):
+                retval.update({stat.language.code:{"completed": "%s%%" %
+                    (100*stat.translated/stat.total_entities),
+                    "translated_entities": stat.translated, "last_update":
                     stat.last_update}})
         else:
             retval = []
             for stat in stats.language_stats():
-                retval.append({stat.language.code:{"completed": "%s%%" % stat.trans_percent,
-                    "translated_entities": stat.num_translated}})
+                retval.append({stat.language.code:{"completed": "%s%%" %
+                    (100*stat.translated/stat.total_entities),
+                    "translated_entities": translated}})
+
         return retval
 
 class FileHandler(BaseHandler):

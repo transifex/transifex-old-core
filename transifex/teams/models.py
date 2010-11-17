@@ -70,8 +70,10 @@ class Team(models.Model):
         """
         super(Team, self).save(*args, **kwargs)
         Resource = get_model('resources', 'Resource')
+        RLStats = get_model('rlstats', 'RLStats')
         res = Resource.objects.filter(project=self.project)
         for r in res:
+            RLStats.objects.get_or_create(resource=r, language=self.language)
             invalidate_template_cache("project_resource_details",
                 self.project.slug, r.slug)
             invalidate_template_cache("resource_details",
@@ -82,8 +84,13 @@ class Team(models.Model):
         Do some extra processing along with the actual delete to db.
         """
         Resource = get_model('resources', 'Resource')
+        RLStats = get_model('rlstats', 'RLStats')
         res = Resource.objects.filter(project=self.project)
         for r in res:
+            # FIXME: Maybe we should delete translations either way?
+            rl, created = RLStats.objects.get_or_create(resource=r, language=self.language)
+            if rl.translated == 0:
+                rl.delete()
             invalidate_template_cache("project_resource_details",
                 self.project.slug, r.slug)
             invalidate_template_cache("resource_details",

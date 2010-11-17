@@ -74,7 +74,7 @@ def stats_bar_simple(stat, width=100):
     the database.
     """
     total = stat.total_entities
-    trans = stat.num_translated
+    trans = stat.translated
 
     try:
         trans_percent = (trans * 100 / total)
@@ -100,8 +100,21 @@ def stats_bar_actions(stat, width=100):
     The object should have attributes trans_percent/untrans_percent.
     Accepts an optional parameter to specify the width of the total bar.
     """
-    return {'untrans_percent': stat.untrans_percent,
-            'trans_percent': stat.trans_percent,
-            'pos': StatBarsPositions([('trans', stat.trans_percent),
-                                      ('untrans', stat.untrans_percent)], width),
+    try:
+        trans_percent = (stat.translated * 100 / stat.total_entities)
+    except ZeroDivisionError:
+        trans_percent = 100
+    untrans_percent = 100 - trans_percent
+    return {'untrans_percent': untrans_percent,
+            'trans_percent': trans_percent,
+            'pos': StatBarsPositions([('trans', trans_percent),
+                                      ('untrans', untrans_percent)], width),
             'width':width}
+
+@register.filter(name='percentage')
+def percentage(fraction, population):
+    try:
+        return "%s%%" % int(((fraction)*100 / (population)) )
+    except ValueError:
+        return ''
+

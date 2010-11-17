@@ -2,6 +2,7 @@ from uuid import uuid4
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from transifex.languages.models import Language
+from transifex.resources.formats import get_i18n_type_from_file
 from transifex.storage.fields import StorageFileField
 from transifex.storage.models import StorageFile
 from transifex.storage.widgets import StorageFileWidget
@@ -9,6 +10,8 @@ from transifex.resources.models import Resource
 from transifex.storage.models import StorageFile
 
 class ResourceForm(forms.ModelForm):
+
+    sourcefile = forms.FileField(label="Source File", required=False)
 
     def __init__(self, *args, **kwargs):
         super(ResourceForm, self).__init__(*args, **kwargs)
@@ -18,7 +21,7 @@ class ResourceForm(forms.ModelForm):
             self.fields['source_language'].required = False
             self.fields['source_language'].widget.attrs['disabled'] = 'disabled'
 
-    sourcefile = forms.FileField(label="Source File", required=False)
+
 
     class Meta:
         model = Resource
@@ -84,7 +87,7 @@ class ResourceForm(forms.ModelForm):
         m = super(ResourceForm, self).save(commit=False)
 
         if commit:
-            m.save()
+
 
             cleaned_data = self.cleaned_data
             file = None
@@ -120,6 +123,16 @@ class ResourceForm(forms.ModelForm):
                     fhandler.save2db(is_source=True, user=user)
                 except:
                     raise
+
+                # Try to set the i18n type. Problem is that we only check
+                # filename instead of mime type. we should probably update the
+                # function to use python magic as well
+                try:
+                    m.i18n_type = get_i18n_type_from_file(file.name)
+                except:
+                    pass
+
+                m.save()
 
         return m
 

@@ -662,7 +662,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     translation_string.user = request.user
                     translation_string.save()
 
-                invalidate_stats_cache(source_string.source_entity.resource, target_language)
+                invalidate_stats_cache(source_string.source_entity.resource,
+                    target_language, user=request.user)
 
                 push_response_dict[source_id] = { 'status':200,
                      'message':_("Translation updated successfully in the DB")}
@@ -675,7 +676,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         rule = target_language.get_rule_num_from_name(rule),
                         string = unescape(string),
                         user = request.user) # Save the sender as last committer
-                    invalidate_stats_cache(source_string.source_entity.resource, target_language)
+                    invalidate_stats_cache(source_string.source_entity.resource,
+                        target_language, user=request.user)
                     push_response_dict[source_id] = { 'status':200,
                          'message':_("New translation stored successfully in the DB")}
                 else:
@@ -751,5 +753,6 @@ def delete_translation(request, project_slug=None, resource_slug=None,
 #            message=_("Translations did not delete due to some error!"))
         raise Http404
 
-    invalidate_stats_cache(resource, language)
+    invalidate_stats_cache(resource, language, user=user)
+
     return HttpResponse(status=200)

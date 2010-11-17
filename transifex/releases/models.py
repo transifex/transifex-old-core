@@ -12,8 +12,7 @@ from django.db.models import permalink
 from django.utils.html import escape
 
 from transifex.txcommon.log import log_model
-from transifex.resources.utils import (invalidate_template_cache,
-    invalidate_object_cache)
+from transifex.resources.utils import invalidate_template_cache
 
 class Release(models.Model):
 
@@ -98,16 +97,9 @@ class Release(models.Model):
 
         from transifex.resources.stats import ReleaseStatsList
 
-        invalidate_object_cache(self)
-
-        stat = ReleaseStatsList(self)
         for lang in stat.available_languages:
-            invalidate_object_cache(self,lang)
             invalidate_template_cache("release_details",
                 self.pk, lang.id)
-
-
-
 
     @permalink
     def get_absolute_url(self):

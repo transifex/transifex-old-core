@@ -67,25 +67,7 @@ def invalidate_object_cache(object, language=None):
     properties that are actually invalidated are those who belong to a Stats
     class. #FIXME: find a better way to handle invalidation for all classes.
     """
-    # !important: If you change the import path to include transifex (eg
-    # transifex.resources.stats) this will BREAK caching since the keys that
-    # are being created don't have the full path of the module. If you need to
-    # change this import statement then you NEED to change the
-    # stats_cached_property as well.
-    from transifex.resources.stats import Stats, StatsBase
-
-    keys = []
-    for name, type in inspect.getmembers(StatsBase):
-        if type.__class__.__name__ == "property":
-            keys.append("_".join([StatsBase.__module__, name]))
-
-    if language:
-        for name, type in inspect.getmembers(Stats):
-            if type.__class__.__name__ == "property":
-                keys.append("_".join([Stats.__module__, name, language.code]))
-
-    for key in keys:
-        cache.delete("cached_property_%s_%s" % (key_from_instance(object), key))
+    return
 
 def invalidate_template_cache(fragment_name, *variables):
     """

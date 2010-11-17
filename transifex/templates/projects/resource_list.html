@@ -74,9 +74,9 @@
   <tbody>
   {% endif %}
     <tr>
-		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
+		{% cache 604800 project_resource_details project.slug stat.resource LANGUAGE_CODE %}
         <td>
-          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.total_entities as ts and stat.available_languages|length as al %}Total Strings: {{ ts }}<br/>Available Languages: {{ al }}{% endblocktrans %}">{{ stat.object.name }}</a>
+          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.resource.slug %}" style="font-weight:bold" title="{% blocktrans with stat.total_entities as ts and stat.available_languages|length as al %}Total Strings: {{ ts }}<br/>Available Languages: {{ al }}{% endblocktrans %}">{{ stat.resource.name }}</a>
         </td>
         <td class="last_updated">
           {% with stat.last_committer as last_committer %}
@@ -94,10 +94,10 @@
         </td>
 		{% endcache %}
         <td class="priority_level" style="width:100px;text-align:center">
-            {% with stat.object.priority.level as priority_level %}
-            {% with stat.object.priority.display_level as display_level %}
+            {% with stat.resource.priority.level as priority_level %}
+            {% with stat.resource.priority.display_level as display_level %}
             {% if is_maintainer %}
-              <a id="priority_{{ stat.object.slug }}" class="resource_priority_trigger" style="cursor:pointer">
+              <a id="priority_{{ stat.resource.slug }}" class="resource_priority_trigger" style="cursor:pointer">
                 <span class="priority_sort" style="display:none">{{ priority_level }}</span>
                 <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
               </a>

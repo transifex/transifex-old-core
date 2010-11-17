@@ -161,7 +161,7 @@ def team_detail(request, project_slug, language_code):
     else:
         user_access_request = None
 
-    statslist = ProjectStatsList(project).resource_stats_for_language(language)
+    statslist = [ stat for stat in ProjectStatsList(project).resource_stats_for_language(language)]
 
     return render_to_response("teams/team_detail.html", 
                               {"project": project,

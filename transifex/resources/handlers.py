@@ -3,28 +3,45 @@ from django.conf import settings
 from actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
-from transifex.resources import CACHE_KEYS as RESOURCES_CACHE_KEYS
+
 from transifex.resources.utils import (invalidate_object_cache,
     invalidate_template_cache, rl_last_update_now)
 from transifex.resources.stats import ResourceStatsList
 from transifex.teams.models import Team
+from transifex.addons.rlstats.models import RLStats
 
-def invalidate_stats_cache(resource, language=None, **kwargs):
-    """Invalidate cache keys related to the SourceEntity updates"""
-    invalidate_object_cache(resource, language or resource.source_language)
+def invalidate_stats_cache(resource, language, **kwargs):
+    """Invalidate cache keys related to the SourceEntity/Translation updates"""
 
     is_source = False
     if not language or language == resource.source_language:
         is_source = True
 
-    rl_last_update_now(resource, language or resource.source_language)
+    if not is_source:
+        # Get or create new RLStat object
+        rl, created = RLStats.objects.get_or_create(resource=resource,
+            language=language)
+        # If it's new it's updated. Otherwise update now.
+        if not created:
+            rl.calculate_translated()
+        rl.update_now( kwargs['user'] if kwargs.has_key('user') else None)
+        # Check to see if the lang has zero translations and is not a team
+        # lang. If yes, delete RLStats object
+        if rl.translated == 0 and rl.language.id not in\
+          rl.resource.project.team_set.all().values_list('language',
+          flat=True):
+            rl.delete()
+    else:
+        rl, created = RLStats.objects.get_or_create(resource=resource,
+            language=language)
+        # Source file was updated. Update all language statistics
+        stats = RLStats.objects.filter(resource=resource)
+        for s in stats:
+            s.calculate_translated()
+            s.update_now( kwargs['user'] if kwargs.has_key('user') else None)
 
-    invalidate_object_cache(resource.project, language)
 
-    for rel in resource.project.releases.all():
-        invalidate_object_cache(rel, language)
-
-    if is_source:
+    if not language:
         stats = ResourceStatsList(resource)
         langs = stats.available_languages
     else:
@@ -39,9 +56,6 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
 
     # Number of source strings in resource
     for lang in langs:
-        if is_source:
-            invalidate_object_cache(resource, lang)
-
         team = Team.objects.get_or_none(resource.project, lang.code)
         if team:
             # Template lvl cache for team details
