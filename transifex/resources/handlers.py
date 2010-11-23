@@ -3,15 +3,16 @@ from django.conf import settings
 from actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
-
-from transifex.resources.utils import (invalidate_object_cache,
-    invalidate_template_cache, rl_last_update_now)
+from transifex.resources.utils import invalidate_template_cache
 from transifex.resources.stats import ResourceStatsList
 from transifex.teams.models import Team
 from transifex.addons.rlstats.models import RLStats
 
 def invalidate_stats_cache(resource, language, **kwargs):
-    """Invalidate cache keys related to the SourceEntity/Translation updates"""
+    """
+    Invalidate template caches and handle the updating of the persistent
+    stats.
+    """
 
     is_source = False
     if not language or language == resource.source_language:
@@ -40,6 +41,14 @@ def invalidate_stats_cache(resource, language, **kwargs):
             s.calculate_translated()
             s.update_now( kwargs['user'] if kwargs.has_key('user') else None)
 
+            if s.translated == 0 and s.language.id not in\
+              s.resource.project.team_set.all().values_list('language',
+              flat=True):
+                s.delete()
+
+        # Update resource wordcount and total entities
+        resource.update_total_entities()
+        resource.update_wordcount()
 
     if not language:
         stats = ResourceStatsList(resource)
@@ -112,6 +121,3 @@ def on_resource_delete(sender, instance, user,**kwargs):
 # Resource signal handlers for logging
 post_resource_save.connect(on_resource_save)
 post_resource_delete.connect(on_resource_delete)
-
-
-

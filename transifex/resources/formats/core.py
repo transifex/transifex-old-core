@@ -326,12 +326,11 @@ class Handler(object):
             self._post_save2db(is_source , user, overwrite_translations)
 
             # Invalidate cache after saving file
-            if is_source:
-                invalidate_stats_cache(self.resource)
-            else:
-                invalidate_stats_cache(self.resource, self.language)
+            invalidate_stats_cache(self.resource, self.language)
+
 
             if strings_added + strings_updated > 0:
+
                 if self.language == self.resource.source_language:
                     nt = 'project_resource_changed'
                 else:

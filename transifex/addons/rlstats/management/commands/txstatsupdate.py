@@ -6,8 +6,6 @@ from django.core.management.base import (BaseCommand, LabelCommand, CommandError
 from django.db.models import get_model
 from django.conf import settings
 
-
-
 class Command(LabelCommand):
     """
     Management Command Class about resource source file updating
@@ -51,7 +49,7 @@ class Command(LabelCommand):
                 ( r.project.slug, r.slug, seq+1, num))
             for lang in Translation.objects.filter(source_entity__resource=r).order_by('language').values('language').distinct():
                 lang = Language.objects.get(id=lang['language'])
-                print "Calculating statisticss for language %s" % lang
+                print "Calculating statistics for language %s" % lang
                 RLStats.objects.get_or_create(resource=r, language=lang)
             for team in Team.objects.filter(project=r.project):
                 lang = team.language

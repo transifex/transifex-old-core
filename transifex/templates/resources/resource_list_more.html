@@ -3,7 +3,7 @@
 {% load statistics_resources %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-{% for  stat in statslist.resource_stats %}
+{% for stat in statslist.resource_stats %}
 <tr>
     <td>
     <a class="tipsy_enable" href="{{ stat.object.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.entities_count }} <br>Available Languages: {{ stat.available_languages|length }}">

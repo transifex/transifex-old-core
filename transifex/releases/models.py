@@ -97,6 +97,8 @@ class Release(models.Model):
 
         from transifex.resources.stats import ReleaseStatsList
 
+        stat = ReleaseStatsList(self)
+
         for lang in stat.available_languages:
             invalidate_template_cache("release_details",
                 self.pk, lang.id)

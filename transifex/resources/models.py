@@ -18,11 +18,9 @@ from django.contrib.auth.models import User, AnonymousUser
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
-from transifex.txcommon.utils import cached_property
 from transifex.txcommon.db.models import CompressedTextField
 from transifex.txcommon.log import logger
-from transifex.resources.utils import (invalidate_template_cache,
-    invalidate_object_cache)
+from transifex.resources.utils import invalidate_template_cache
 
 class ResourceManager(models.Manager):
 
@@ -68,6 +66,14 @@ class Resource(models.Model):
     accept_translations = models.BooleanField(_('Accepting translations?'),
         blank=False, null=False, default=True,
         help_text=_('Is this resource accepting submissions of translations?'))
+    total_entities = models.IntegerField(_('Total source entities'),
+        blank=False, null=False, editable=False, default=0,
+        help_text=_('The number of source strings in this translation'
+            ' resource.'))
+    wordcount = models.IntegerField(_('Number of words in source entities.'),
+        blank=False, null=False, editable=False, default=0,
+        help_text=_('The number of words contained in the source entities in'
+            ' this translation resource.'))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -121,20 +127,23 @@ class Resource(models.Model):
         RLStats.objects.filter(resource=self).delete()
         super(Resource, self).delete(*args, **kwargs)
 
-    @cached_property
-    def total_entities(self):
+    def update_total_entities(self, total_entities=None):
         """
         Return the total number of SourceEntity objects to be translated.
         """
-        return SourceEntity.objects.filter(resource=self).values('id').count()
+        if total_entities:
+            self.total_entities = total_entities
+        else:
+            self.total_entities = SourceEntity.objects.filter(resource=self).values('id').count()
 
-    @cached_property
-    def wordcount(self):
+        self.save()
+
+    def update_wordcount(self):
         """
         Return the number of words which need translation in this resource.
 
         The counting of the words uses the Translation objects of the SOURCE
-        LANGUAGE as set of objects. This function does not count the plural 
+        LANGUAGE as set of objects. This function does not count the plural
         strings!
         """
         wc = 0
@@ -143,11 +152,8 @@ class Resource(models.Model):
         for t in source_trans:
             if t:
                 wc += t.wordcount
-        return wc
-
-
-
-
+        self.wordcount = wc
+        self.save()
 
     @models.permalink
     def get_absolute_url(self):
