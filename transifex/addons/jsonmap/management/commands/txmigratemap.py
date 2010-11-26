@@ -4,6 +4,7 @@ from optparse import make_option
 from django.conf import settings
 from django.core.management.base import CommandError, BaseCommand
 from django.db import models
+from django.utils import simplejson
 
 from transifex.txcommon.commands import run_command
 from transifex.txcommon.log import logger
@@ -14,10 +15,9 @@ from jsonmap.models import JSONMap
 class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
-        make_option('--datadir', '-d', default='.tx', dest='datadir', 
-            help="Directory for storing tx data. Default '.tx'."),
-        make_option('--filename', '-f', default='txdata', dest='filename', 
-            help="Filename target for JSON mapping. Default 'txdata'.")
+        make_option('--force', '-f', action="store_true", default=False, 
+            dest='force', 
+            help="Force re-migration of mappings already migrated."),
     )
 
     args = '<project_slug project_slug ...>'
@@ -33,8 +33,7 @@ class Command(BaseCommand):
         from transifex.projects.models import Project
         from transifex.resources.models import Resource
 
-        datadir = options.get('datadir')
-        filename = options.get('filename')
+        force = options.get('force')
 
         if settings.DEBUG:
             msg = "You are running this command with DEBUG=True. Please " \
@@ -54,7 +53,14 @@ class Command(BaseCommand):
             raise CommandError(msg or "No mapping found in the database.")
 
         for jsonmap in jsonmaps:
-            for r in jsonmap.loads(True)['resources']:
+            jm = jsonmap.loads(True)
+
+            # Check whether the map was already migrated or not
+            if jm['meta'].get('_migrated', None) and not force:
+                logger.debug("Project '%s' was already migrated." % jsonmap.project)
+                continue
+
+            for r in jm['resources']:
                 logger.debug("Pushing resource: %s" % r.get('resource_slug'))
 
                 project = jsonmap.project
@@ -135,4 +141,8 @@ class Command(BaseCommand):
                     logger.debug("Mapping '%s' does not have cached files "
                         "under %s." % (jsonmap, path))
 
+            # Set the jsonmap as migrated
+            jm['meta'].update({'_migrated': True})
+            jsonmap.content = simplejson.dumps(jm, indent=2)
+            jsonmap.save()
 
