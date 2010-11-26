@@ -85,6 +85,12 @@ class Command(BaseCommand):
                         resource.save()
 
                         # Add the autofetch url
+                        if resource.url_info.all():
+                            # We already have a URLInfo for this resource.
+                            # Delete the old and then add the new one...
+                            url = resource.url_info.get()
+                            url.delete()
+
                         resource.url_info.add(URLInfo(source_file_url=r['autofetch_url']))
 
                         logger.debug("Inserting source strings from %s (%s) to "
