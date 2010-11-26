@@ -20,8 +20,11 @@ def get_i18n_type_from_file(filename):
     i18n_type = None
     m = magic.Magic(mime=True)
     # guess mimetype and remove charset
-    mime_type = m.from_file(filename)
-
+    try:
+        mime_type = m.from_file(filename)
+    except IOError:
+        # We don't have the actual file. Depend on the filename only
+        mime_type = None
 
     for type, info in settings.I18N_METHODS.items():
         if filter(filename.endswith, info['file-extensions'].split(', ')) or\
