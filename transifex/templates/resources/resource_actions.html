@@ -41,8 +41,13 @@
         {% if can_submit_translation and resource.accept_translations %}
           <a class="i16 tick buttonized2" id="translate_now" href="{% url translate_resource project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
         {% else %}
-          <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-          title="{% blocktrans with target_language.name as lang_name %}To translate, you need to be a member of the {{ lang_name }} team.{% endblocktrans %}">{% trans "Translate Now" %}</a>
+          {% if not resource.accept_translations %}
+            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+            title="This resource currently is not accepting translations">{% trans "Translate Now" %}</a>
+          {% else %}
+            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+            title="{% blocktrans with target_language.name as lang_name %}To translate, you need to be a member of the {{ lang_name }} team.{% endblocktrans %}">{% trans "Translate Now" %}</a>
+          {% endif %}
         {% endif %}
     {% endifequal %}
 
