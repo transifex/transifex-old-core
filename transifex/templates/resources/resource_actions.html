@@ -43,10 +43,10 @@
         {% else %}
           {% if not resource.accept_translations %}
             <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-            title="This resource currently is not accepting translations">{% trans "Translate Now" %}</a>
+            title="{% trans "This resource is currently not accepting translations" %}">{% trans "Translate Now" %}</a>
           {% else %}
             <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-            title="{% blocktrans with target_language.name as lang_name %}To translate, you need to be a member of the {{ lang_name }} team.{% endblocktrans %}">{% trans "Translate Now" %}</a>
+            title="{% blocktrans with target_language.name as lang_name %}To translate you need to be logged in and a member of the {{ lang_name }} team{% endblocktrans %}">{% trans "Translate Now" %}</a>
           {% endif %}
         {% endif %}
     {% endifequal %}
