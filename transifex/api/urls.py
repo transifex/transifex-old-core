@@ -56,7 +56,7 @@ urlpatterns = patterns('',
         never_cache(stats_handler),
         name='api_resource_stats'
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_\w]+)/$',
+        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_@\w]+)/$',
         never_cache(stats_handler),
         name='api_resource_stats'
     ), url(
