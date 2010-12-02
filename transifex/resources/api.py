@@ -197,7 +197,7 @@ class FileHandler(BaseHandler):
         """
         try:
             resource = Resource.objects.get( project__slug = project_slug, slug = resource_slug)
-            language = Language.objects.get( code=language_code)
+            language = Language.objects.by_code_or_alias( code=language_code)
         except (Resource.DoesNotExist, Language.DoesNotExist), e:
             return BAD_REQUEST("%s" % e )
 
