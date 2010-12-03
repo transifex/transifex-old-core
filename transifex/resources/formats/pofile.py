@@ -167,16 +167,16 @@ class POHandler(Handler):
         po = polib.pofile(template)
 
         # Update PO file headers
-        po.metadata['Project-Id-Version'] = self.resource.project.name
+        po.metadata['Project-Id-Version'] = str(self.resource.project.name)
         po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
-        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
-        po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
+        po.metadata['PO-Revision-Date'] = str(datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000"))
+        po.metadata['Plural-Forms'] = str("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation))
         # The following is in the specification but isn't being used by po
         # files. What should we do?
-        po.metadata['Language'] = language.code
+        po.metadata['Language'] = str(language.code)
 
         if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
+            po.metadata['Report-Msgid-Bugs-To'] = str(self.resource.project.bug_tracker)
 
         if 'fuzzy' in po.metadata_is_fuzzy:
             po.metadata_is_fuzzy.remove('fuzzy')
@@ -187,13 +187,13 @@ class POHandler(Handler):
         except Team.DoesNotExist:
             pass
         else:
-            po.metadata['Language-Team'] = ("%s <%s>" % (language.name ,
+            po.metadata['Language-Team'] = str("%s <%s>" % (language.name ,
                 team.mainlist))
 
         stat = ResourceStatsList(self.resource).stat(language)
         if stat.last_committer:
             u = stat.last_committer
-            po.metadata['Last-Translator'] = ("%s <%s>" %
+            po.metadata['Last-Translator'] = str("%s <%s>" %
                 (u.get_full_name() or u.username , u.email))
 
         for entry in po:
