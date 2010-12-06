@@ -69,7 +69,7 @@ def get_po_contents(pofile):
 
     return pofile.__str__()
 
-def msgfmt_check(po_contents, with_exceptions=True):
+def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """
     Run a `msgfmt -c` on the file contents.
 
@@ -77,7 +77,10 @@ def msgfmt_check(po_contents, with_exceptions=True):
     the command execution returns Error.
     """
     try:
-        command = 'msgfmt -o /dev/null -c -'
+        if ispot:
+            command = 'msgfmt -o /dev/null --check-format --check-domain -'
+        else:
+            command = 'msgfmt -o /dev/null -c -'
         status, stdout, stderr = run_command(command, _input=po_contents,
             with_extended_output=True, with_exceptions=with_exceptions)
         # Not sure why msgfmt sends its output to stderr instead of stdout
@@ -125,7 +128,11 @@ class POHandler(Handler):
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
-            msgfmt_check(buf)
+            if filename.lower().endswith('.pot'):
+                ispot = True
+            else:
+                ispot = False
+            msgfmt_check(buf, ispot)
 
         # Check required header fields 
         required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
