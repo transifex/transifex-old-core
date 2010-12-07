@@ -683,10 +683,12 @@ def delete_translation(request, project_slug=None, resource_slug=None,
     if not request.POST:
         return HttpResponseBadRequest()
 
+    project = get_object_or_404(Project, slug=project_slug)
+
+    resource = get_object_or_404(Resource, slug=resource_slug, project=project)
+    language = get_object_or_404(Language, code=lang_code)
     data = simplejson.loads(request.raw_post_data)
     to_delete = data["to_delete"]
-    resource = get_object_or_404(Resource, slug=resource_slug)
-    language = get_object_or_404(Language, code=lang_code)
     ids = []
     # Ensure that there are no empty '' ids
     for se_id in to_delete:
