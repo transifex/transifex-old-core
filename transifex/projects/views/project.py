@@ -140,7 +140,8 @@ def project_access_control_edit(request, project_slug):
             project.save()
             return HttpResponseRedirect(request.POST['next'])
     else:
-        access_control_form = ProjectAccessControlForm(instance=project)
+        access_control_form = ProjectAccessControlForm(instance=project,
+            user=request.user)
     return render_to_response('projects/project_form_access_control.html', {
         'project_permission': True,
         'project': project,
@@ -189,7 +190,7 @@ def project_detail(request, project_slug):
 
     return list_detail.object_detail(
         request,
-        queryset = Project.objects.all(),
+        queryset = Project.objects.for_user(request.user),
         object_id=project.id,
         template_object_name = 'project',
         extra_context= {

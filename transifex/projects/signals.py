@@ -32,4 +32,5 @@ pre_team_request = Signal(providing_args=['project', 'user'])
 pre_team_join = Signal(providing_args=['project', 'user'])
 cla_create = Signal(providing_args=['project', 'license_text', 'requester'])
 project_access_control_form_start = Signal(providing_args=['instance', 'project'])
+
 class ClaNotSignedError(Exception): pass

@@ -104,6 +104,7 @@ class ProjectAccessControlForm(forms.ModelForm):
         fields = ('access_control', 'outsource')
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super(ProjectAccessControlForm, self).__init__(*args, **kwargs)
         # Changing some field settings based on the project attr and the
         # request.DATA
@@ -126,8 +127,13 @@ class ProjectAccessControlForm(forms.ModelForm):
         self.fields['outsource'].required = outsource_required
 
         # Filtering project list
-        projects = self.fields["outsource"].queryset.exclude(slug=project.slug)
-        self.fields["outsource"].queryset = projects
+
+        if user:
+            self.fields["outsource"].queryset = Project.objects.for_user(
+                user).exclude(slug=project.slug)
+        else:
+            projects = self.fields["outsource"].queryset.exclude(slug=project.slug)
+            self.fields["outsource"].queryset = projects
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
 

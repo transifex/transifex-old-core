@@ -9,10 +9,11 @@ from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models, transaction
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 
 from transifex.languages.models import Language
 from transifex.projects.models import Project
@@ -23,7 +24,25 @@ from transifex.resources.utils import (invalidate_template_cache,
     invalidate_object_cache)
 
 class ResourceManager(models.Manager):
-    pass
+
+    def for_user(self, user):
+        """
+        Filter available resources based on the user doing the query. This
+        checks permissions and filters out private resources that the user
+        doesn't have access to.
+        """
+        if user in [None, AnonymousUser]:
+            resources = Resource.objects.filter(private=False)
+        else:
+            if user.is_superuser:
+                resources = Resource.objects.all()
+            else:
+                resources = Resource.objects.all().exclude(
+                    Q(project__private=True) &
+                    ~Q(project__maintainers__in=[user]))
+
+        return resources
+
 
 class Resource(models.Model):
     """

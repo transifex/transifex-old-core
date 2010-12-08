@@ -9,10 +9,10 @@ from django.conf import settings
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from django.db import models, IntegrityError
-from django.db.models import permalink, get_model
+from django.db.models import permalink, get_model, Q
 from django.dispatch import Signal
 from django.forms import ModelForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.html import escape
@@ -63,6 +63,23 @@ class DefaultProjectManager(models.Manager):
         except ContentType.DoesNotExist:
             pass
         return Permission.objects.filter(user=user, content_type=ct, approved=True)
+
+    def for_user(self, user):
+        """
+        Filter available projects based on the user doing the query. This
+        checks permissions and filters out private projects that the user
+        doesn't have access to.
+        """
+        if user in [None, AnonymousUser()]:
+            projects = Project.objects.filter(private=False)
+        else:
+            if user.is_superuser:
+                projects = Project.objects.all()
+            else:
+                projects = Project.objects.all().exclude(
+                    Q(private=True) & ~Q(maintainers__in=[user]))
+
+        return projects
     
 
 class PublicProjectManager(models.Manager):

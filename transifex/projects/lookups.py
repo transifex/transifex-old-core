@@ -10,7 +10,8 @@ class ProjectsLookup(object):
 
         You also have access to request.user if needed.
         """
-        return Project.objects.filter(Q(slug__istartswith=q) |
+        return Project.objects.for_user(request.user).filter(
+                                      Q(slug__istartswith=q) |
                                       Q(name__istartswith=q))
 
     def format_item(self, project):

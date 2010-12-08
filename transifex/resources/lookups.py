@@ -12,7 +12,8 @@ class ResourcesLookup(object):
 
         You also have access to request.user if needed.
         """
-        return Resource.objects.filter(Q(slug__istartswith=q) |
+        return Resource.objects.for_user(request.user).filter(
+                                        Q(slug__istartswith=q) |
                                         Q(name__istartswith=q) |
                                         Q(project__slug__istartswith=q) |
                                         Q(project__name__istartswith=q))

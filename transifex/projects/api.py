@@ -53,7 +53,7 @@ class ProjectHandler(BaseHandler):
                 return rc.NOT_FOUND
             return project
         else:
-            return Project.objects.all()
+            return Project.objects.for_user(request.user)
 
     @method_decorator(one_perm_required_or_403(pr_project_add))
     def create(self, request,project_slug=None):
