@@ -29,11 +29,22 @@ class ResourceHandler(BaseHandler):
     """
     Resource Handler for CRUD operations.
     """
+    @classmethod
+    def project_slug(cls, sfk):
+        """
+        This is a work around to include the project slug in the resource API
+        details. Trying to work with the normal foreign key field caused some
+        kind of circular dependency in Piston so this field was added as a
+        solution.
+        """
+        if sfk.project:
+            return sfk.project.slug
+        return None
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Resource
     fields = ('slug', 'name', 'created', 'available_languages', 'i18n_type',
-        'source_language')
+        'source_language', 'project_slug')
     exclude = ()
 
     def read(self, request, project_slug, resource_slug=None):

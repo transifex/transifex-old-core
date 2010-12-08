@@ -13,7 +13,7 @@ class ReleaseHandler(BaseHandler):
 
     allowed_methods = ('GET',)
     model = Release
-    fields = ('slug', 'name', 'release_data', ('resources', ('slug', 'name',)))
+    fields = ('slug', 'name', 'release_date', ('resources', ('slug', 'name',)))
     exclude = ()
 
     def read(self, request, project_slug, release_slug=None):
