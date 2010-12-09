@@ -378,5 +378,6 @@ from transifex.resources.formats.qt import LinguistHandler # Qt4 TS files
 #from resources.formats.ruby import YamlParser # Ruby On Rails (broken)
 #from resources.formats.resx import ResXmlParser # Microsoft .NET (not finished)
 from transifex.resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
+from transifex.resources.formats.joomla import INIHandler # GNU Gettext .PO/.POT parser
 
-PARSERS = [POHandler , LinguistHandler ] #, JavaPropertiesParser, AppleStringsParser]
+PARSERS = [POHandler , LinguistHandler, INIHandler ] #, JavaPropertiesParser, AppleStringsParser]

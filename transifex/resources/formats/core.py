@@ -225,7 +225,6 @@ class Handler(object):
                     resource = self.resource)
             original_sources = list(qs)
 
-
         try:
             strings_added = 0
             strings_updated = 0
