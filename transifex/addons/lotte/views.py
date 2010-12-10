@@ -205,7 +205,7 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
     View for observing the translations strings on a specific language.
     """
 
-    translation_resource = Resource.objects.get(
+    translation_resource = get_object_or_404(Resource,
         slug = resource_slug,
         project__slug = project_slug
     )
