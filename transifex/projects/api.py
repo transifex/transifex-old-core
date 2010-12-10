@@ -175,7 +175,7 @@ class ProjectResourceHandler(BaseHandler):
 
     allowed_methods = ('POST', 'PUT')
 
-    @throttle(100, 60*60)
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
     def create(self, request, project_slug):
