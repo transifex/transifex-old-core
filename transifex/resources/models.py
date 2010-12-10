@@ -32,7 +32,7 @@ class ResourceManager(models.Manager):
         doesn't have access to.
         """
         if user in [None, AnonymousUser]:
-            resources = Resource.objects.filter(private=False)
+            resources = Resource.objects.filter(project__private=False)
         else:
             if user.is_superuser:
                 resources = Resource.objects.all()

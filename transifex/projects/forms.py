@@ -132,7 +132,8 @@ class ProjectAccessControlForm(forms.ModelForm):
             self.fields["outsource"].queryset = Project.objects.for_user(
                 user).exclude(slug=project.slug)
         else:
-            projects = self.fields["outsource"].queryset.exclude(slug=project.slug)
+            projects = self.fields["outsource"].queryset.\
+                    exclude(slug=project.slug).exclude(private=True)
             self.fields["outsource"].queryset = projects
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
