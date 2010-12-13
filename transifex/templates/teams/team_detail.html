@@ -179,9 +179,7 @@
         {% with stat.object.priority.level as priority_level %}
         {% with stat.object.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            {% ifnotequal priority_level "0" %}
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
-            {% endifnotequal %}
+            <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
         {% endwith %}
         {% endwith %}
         </span>

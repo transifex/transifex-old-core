@@ -6,7 +6,7 @@
 {% for  stat in statslist.resource_stats %}
 <tr>
     <td>
-    <a class="res_tipsy_enable" href="{{ stat.object.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.entities_count }} <br>Available Languages: {{ stat.available_languages|length }}">
+    <a class="tipsy_enable" href="{{ stat.object.get_absolute_url }}" style="font-weight:bold" title="Total Strings: {{ stat.entities_count }} <br>Available Languages: {{ stat.available_languages|length }}">
       {{ stat.object.name }}
     </a>
     <sup class="entry_metalink">
@@ -17,7 +17,7 @@
     </sup>
     </td>
     <td class="last_updated">
-    <span class="res_tipsy_enable" style="border:0" title="{% if stat.object.last_committer %}Committed by {{ stat.object.last_committer }}<br/>{% else %}No committers yet{% endif %}">
+    <span class="tipsy_enable" style="border:0" title="{% if stat.object.last_committer %}Committed by {{ stat.object.last_committer }}<br/>{% else %}No committers yet{% endif %}">
     {% if stat.object.last_update %}
         <span class="origin_format" style="display:none">{{ stat.object.last_update|date:"M d,Y h:i A" }}</span>
         {{ stat.object.last_update|timesince }}
@@ -34,9 +34,7 @@
             </a>
         {% else %}
             <span class="priority_sort" style="display:none">{{ stat.object.priority.level }}</span>
-            {% ifnotequal stat.object.priority.level "0" %}
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ stat.object.priority.display_level }}.png" style="border:0" title="{{ stat.object.priority.display_level }}"/>
-            {% endifnotequal %}
+            <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ stat.object.priority.display_level }}.png" style="border:0" title="{{ stat.object.priority.display_level }}"/>
         {% endif %}
     </td>
 </tr>

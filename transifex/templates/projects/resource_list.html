@@ -99,13 +99,11 @@
             {% if is_maintainer %}
               <a id="priority_{{ stat.object.slug }}" class="resource_priority_trigger" style="cursor:pointer">
                 <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-                <img src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
+                <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
               </a>
             {% else %}
               <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-              {% ifnotequal priority_level "0" %}
               <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
-              {% endifnotequal %}
             {% endif %}
             {% endwith %}
             {% endwith %}
