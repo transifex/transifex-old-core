@@ -171,7 +171,7 @@ class POHandler(Handler):
             language = self.language
 
         template = self.compiled_template
-        po = polib.pofile(template)
+        po = polib.pofile(unicode(template, 'utf-8'))
 
         # Update PO file headers
         po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
