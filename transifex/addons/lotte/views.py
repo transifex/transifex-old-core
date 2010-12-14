@@ -56,7 +56,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     resources = []
     if resource_slug:
-        resource_list = [get_object_or_404(Resource, slug=resource_slug, 
+        resource_list = [get_object_or_404(Resource, slug=resource_slug,
             project=project)]
     else:
         resource_list = Resource.objects.filter(project=project)
@@ -535,11 +535,54 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
               push_response_dict[source_id]['status'] == 500:
                 continue
 
-            # Check whether source string and translation start and end
-            # with newlines
+
             ss = unescape(source_string.string)
             tr = unescape(string)
 
+            # Check whether the translation sting only contains spaces
+            if tr and len(tr.strip()) == 0:
+                push_response_dict[source_id] = { 'status':500,
+                    'message':_("Translation string only contains whitespaces.")}
+                continue
+
+            # Test that the number of {[()]} appearing in each string are the
+            # same
+            try:
+                for char in '[{()}]':
+                    if tr and ss.count(char) != tr.count(char):
+                        push_response_dict[source_id] = { 'status':500,
+                        'message':_("Translation string doesn't contain the same"
+                        " number of '%s' as the source string." % char )}
+                        raise StopIteration
+            except StopIteration:
+                continue
+
+            # Scan for urls and see if they're in both strings
+            urls = re.compile(r'(\S+?://\S+)')
+            try:
+                for url in urls.findall(ss):
+                    if tr and url not in tr:
+                        push_response_dict[source_id] = { 'status':500,
+                        'message':_("The following url is either missing form the"
+                        " translation os has been translated: '%s'." % url)}
+                        raise StopIteration
+            except StopIteration:
+                continue
+
+            # Scan for urls and see if they're in both strings
+            emails = re.compile("([\w\-\.+]+@[\w\w\-]+\.+[\w\-]+)")
+            try:
+                for email in emails.findall(ss):
+                    if tr and email not in tr:
+                        push_response_dict[source_id] = { 'status':500,
+                        'message':_("The following email is either missing form the"
+                        " translation os has been translated: '%s'." % email)}
+                        raise StopIteration
+            except StopIteration:
+                continue
+
+            # Check whether source string and translation start and end
+            # with newlines
             if string and ss.startswith('\n') != tr.startswith('\n'):
                 if ss.endswith('\n'):
                     push_response_dict[source_id] = { 'status':500,
