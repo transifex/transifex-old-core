@@ -63,7 +63,7 @@ class StorageHandler(BaseHandler):
         logger.debug("Returned list of users uploaded files: %s" % retval)
         return retval
 
-    @throttle(settings.API_THROTTLE_INTERVAL, settings.API_THROTTLE_INTERVAL)
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     def create(self, request, uuid=None):
         """
         API call for uploading a file via POST or updating storage file attributes
