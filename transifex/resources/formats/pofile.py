@@ -194,8 +194,8 @@ class POHandler(Handler):
         except Team.DoesNotExist:
             pass
         else:
-            po.metadata['Language-Team'] = ("%s <%s>" % (language.name ,
-                team.mainlist)).encode("utf-8")
+            po.metadata['Language-Team'] = "%s <%s>" % (language.name ,
+                team.mainlist)
 
         stat = ResourceStatsList(self.resource).stat(language)
         if stat.last_committer:
