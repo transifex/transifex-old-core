@@ -30,7 +30,7 @@ class Team(models.Model):
         blank=False, null=False,
         help_text=_("The project this team works on."))
     language = models.ForeignKey(Language, verbose_name=_('Language'), 
-        blank=False, null=False,
+        blank=False, null=False, related_name='teams',
         help_text=_("People in this team will only be able to submit "
                     "translations files related to the specific language."))
     coordinators = models.ManyToManyField(User, verbose_name=_('Coordinators'), 
