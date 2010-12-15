@@ -56,19 +56,145 @@
 {% block content_main %}
 
 <div class="list separate" style="clear:both">
-  <h3>{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
- {% if stats %}
+  <h3>{% blocktrans count resources|length as counter %}Open resource under this Release{% plural %}Open resources under this Release{% endblocktrans %}</h3>
+ {% if open_stats %}
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
     <th><span class="i16 comment">{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
+    <th style="width:320px"><span class="i16 open_stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
     <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>
-  {% for stat in stats %}
+  {% for stat in open_stats %}
+    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+        <td>
+          <span class="clickable">{{ stat.object.name }}</span>
+        </td>
+        <td>
+        {% with 200 as barwidth %}
+            {% stats_bar_simple stat barwidth %}
+        {% endwith %}
+        </td>
+        <td>
+        <span style="border:0">
+          {% with stat.last_update as last_update %}
+          {% with stat.last_committer as last_committer %}
+          {% if last_update %}
+              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+              {{ last_update|timesince }} 
+              {% if last_committer %}
+              by {{ last_committer }}
+              {% endif %}
+          {% else %}
+              {% trans "no activity yet" %}
+          {% endif %}
+          {% endwith %}
+          {% endwith %}
+        </span>
+        </td>
+        <td class="priority_level" style="width:100px;text-align:center">
+        <span style="border:0">
+        {% with stat.object.priority.level as priority_level %}
+        {% with stat.object.priority.display_level as display_level %}
+            <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+            {% ifnotequal priority_level "0" %}
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
+            {% endifnotequal %}
+        {% endwith %}
+        {% endwith %}
+        </span>
+        </td>
+    </tr>
+    <script>
+        $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
+           /* FancyBox Using custom settings */ 
+           $.fancybox(
+               { 
+                'href': '{% url resource_actions stat.object.project.slug stat.object.slug language.code %}',
+                'hideOnContentClick': false,
+                'onStart':function(){
+                    // IE8 fix
+                    if(jQuery.browser.msie) {
+                      $('#fancybox-wrap').css('max-width','716px');
+                      $('#fancybox-inner').css('max-width','716px');
+                      $('#fancybox-outer').css('left','50%');
+                    }
+                },
+                'onComplete':function() {
+                    // IE8 fix
+                    if(jQuery.browser.msie){
+                        $('.fancybox-title-outside').css('max-width','716px');
+                    }
+                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+                    $("a.language_chooser_trigger").toggle(function(){
+                        $("div.language_chooser").css({'visibility':'visible'});
+                    },function(){
+                        $("div.language_chooser").css({'visibility':'hidden'});
+                    });
+                    $("div.language_chooser a").click( function(){
+                        var target_lang_code = $("div.language_chooser select").val();
+                        if ( target_lang_code != "" ) {
+                            request_url = window.location+'l/{{ language.code }}/clone/'+target_lang_code+'/';
+                            window.location = request_url;
+                        } else {
+                            alert('{% trans "Please select a target language first."|escapejs %}');
+                        }
+                    });
+                    if(!$("#download_for_translation a").hasClass('disabled')){
+                        $("#download_for_translation").click(function(){
+                            $.ajax({
+                                url : '{% url lock_and_download_translation stat.object.project.slug stat.object.slug language.code %}',
+                                contentType : 'application/json',
+                                type : 'POST',
+                                beforeSend: function(){
+                                $("div#notification-container div").html('{% trans "Trying to lock resource..."|escapejs %}');
+                                $("div#notification-container").fadeIn("fast");
+                                },
+                                complete : function(xmlhttpreq, textStatus) {
+                                    if (textStatus=='success'){
+                                        response = JSON.parse(xmlhttpreq.responseText);
+                                        if(response['status']=='FAILED'){
+                                            $("#download_for_translation").siblings("div.error_notes").text(response['message']);
+                                            $("#download_for_translation").siblings("div.error_notes").show();
+                                        }else{
+                                            if(response['redirect']){
+                                                window.location = response['redirect'];
+                                            }
+                                        }
+                                        $("div#notification-container").fadeOut("fast");
+                                    }
+                                }
+                            });
+                        });
+                    }
+                },
+                'titleShow': true,
+                'titlePosition': 'outside',
+                'title': '{% trans "Translation Details"%}'
+           });
+        });
+    </script>
+  {% endfor %}
+  </table>
+ {% else %}
+  <p>{% trans "No resources are registered for this release yet." %}</p>
+ {% endif %}
+  <h3>{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
+ {% if private_stats %}
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <thead>
+  <tr>
+    <th><span class="i16 comment">{% trans "Resource" %}</span></th>
+    <th style="width:320px"><span class="i16 private_stats">{% trans "Completion" %}</span></th>
+    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+    <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for stat in private_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
           <span class="clickable">{{ stat.object.name }}</span>

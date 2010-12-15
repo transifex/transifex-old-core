@@ -234,10 +234,26 @@ class ProjectStatsList(StatsList):
         self.object = project
         self.entities = SourceEntity.objects.filter(resource__project=project)
 
-
 class ReleaseStatsList(StatsList):
     """Wrapper to initialize a StatsList instance based on a release."""
     def __init__(self, release):
         self.object = release
         self.entities = SourceEntity.objects.filter(resource__releases=release)
 
+
+class OpenReleaseStatsList(StatsList):
+    """Wrapper to initialize a StatsList instance based on a release."""
+    def __init__(self, release):
+        self.object = release
+        self.entities = SourceEntity.objects.\
+                        filter(resource__releases=release).\
+                        filter(resource__project__private=False)
+
+class PrivateReleaseStatsList(StatsList):
+    """Wrapper to initialize a StatsList instance based on a release."""
+    def __init__(self, release, user):
+        self.object = release
+        self.entities = SourceEntity.objects.\
+                        filter(resource__releases=release).\
+                        filter(resource__project__maintainers=user).\
+                        filter(resource__project__private=True)

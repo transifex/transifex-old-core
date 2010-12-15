@@ -9,11 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
 from transifex.languages.models import Language
-from transifex.projects.models import Project
 from transifex.projects.forms import ReleaseForm
+from transifex.projects.models import Project
 from transifex.projects.permissions import (pr_release_add_change, pr_release_delete)
 from transifex.releases.models import Release
-from transifex.resources.stats import ReleaseStatsList
+from transifex.resources.models import Resource
+from transifex.resources.stats import ReleaseStatsList, OpenReleaseStatsList,\
+                                      PrivateReleaseStatsList
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -55,11 +57,20 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
 def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
                                 project__slug=project_slug)
+    #TODO: find a way to do this more effectively
+    open_resources = Resource.objects.filter(releases=release).\
+                                      filter(project__private=False)
+    private_resources = Resource.objects.filter(releases=release).\
+                                         filter(project__private=True).\
+                                         filter(project__maintainers=request.user)
+
     statslist = ReleaseStatsList(release)
 
     return render_to_response('projects/release_detail.html', {
         'release': release,
         'project': release.project,
+        'open_resources': open_resources,
+        'private_resources': private_resources,
         'statslist': statslist,
     }, context_instance=RequestContext(request))
 
@@ -71,13 +82,17 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    stats = ReleaseStatsList(release).resource_stats_for_language(language)
+    open_stats = OpenReleaseStatsList(release).\
+                 resource_stats_for_language(language)
+    private_stats = PrivateReleaseStatsList(release, request.user).\
+                    resource_stats_for_language(language)
 
     return render_to_response('projects/release_language_detail.html', {
         'project': project,
         'release': release,
         'language': language,
-        'stats': stats,
+        'open_stats': open_stats,
+        'private_stats': private_stats,
     }, context_instance=RequestContext(request))
 
 
