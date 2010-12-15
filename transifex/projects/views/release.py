@@ -86,10 +86,19 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    open_stats = OpenReleaseStatsList(release).\
+    open_stats_list = OpenReleaseStatsList(release)
+    if open_stats_list.entities:
+        open_stats = OpenReleaseStatsList(release).\
                  resource_stats_for_language(language)
-    private_stats = PrivateReleaseStatsList(release, request.user).\
+    else:
+        open_stats = None
+
+    private_stats_list = PrivateReleaseStatsList(release, request.user)
+    if private_stats_list.entities:
+        private_stats = PrivateReleaseStatsList(release, request.user).\
                     resource_stats_for_language(language)
+    else:
+        private_stats = None
 
     return render_to_response('projects/release_language_detail.html', {
         'project': project,
