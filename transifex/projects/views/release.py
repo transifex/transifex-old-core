@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 
 from actionlog.models import action_logging
 from transifex.languages.models import Language
@@ -60,9 +61,12 @@ def release_detail(request, project_slug, release_slug):
     #TODO: find a way to do this more effectively
     open_resources = Resource.objects.filter(releases=release).\
                                       filter(project__private=False)
-    private_resources = Resource.objects.filter(releases=release).\
-                                         filter(project__private=True).\
-                                         filter(project__maintainers=request.user)
+    if request.user in (None, AnonymousUser()):
+        private_resources = []
+    else:
+        private_resources = Resource.objects.filter(releases=release).\
+            filter(project__private=True).\
+            filter(project__maintainers=request.user)
 
     statslist = ReleaseStatsList(release)
 

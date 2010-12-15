@@ -1,4 +1,5 @@
 from django.core.cache import cache
+from django.contrib.auth.models import AnonymousUser
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.releases.models import Release
@@ -253,7 +254,10 @@ class PrivateReleaseStatsList(StatsList):
     """Wrapper to initialize a StatsList instance based on a release."""
     def __init__(self, release, user):
         self.object = release
-        self.entities = SourceEntity.objects.\
-                        filter(resource__releases=release).\
-                        filter(resource__project__maintainers=user).\
-                        filter(resource__project__private=True)
+        if user in ( None, AnonymousUser()):
+            self.entities = []
+        else:
+            self.entities = SourceEntity.objects.\
+                filter(resource__releases=release).\
+                filter(resource__project__maintainers=user).\
+                filter(resource__project__private=True)
