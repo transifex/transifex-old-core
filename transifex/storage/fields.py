@@ -26,7 +26,7 @@ class StorageFileField(forms.MultiValueField):
         else:
             language_queryset = Language.objects.all()
 
-        language_choices = [(l.code, l.name) for l in language_queryset]
+        language_choices = [(l.code, l) for l in language_queryset]
         storagefile_choices = StorageFile.objects.all()
         # Hard coded fields
         fields = [

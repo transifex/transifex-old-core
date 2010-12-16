@@ -25,7 +25,7 @@ class StorageFileWidget(forms.MultiWidget):
             self.language_choices = kwargs.pop('language_choices', [])
             if not self.language_choices:
                 queryset = Language.objects.all()
-                self.language_choices = [(l.code, l.name) for l in queryset]
+                self.language_choices = [(l.code, l) for l in queryset]
             self.language_choices.insert(0, ("", "---------"))
 
             language_field = forms.Select(attrs=attrs, 
