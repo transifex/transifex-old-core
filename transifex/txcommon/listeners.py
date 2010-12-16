@@ -30,14 +30,15 @@ def add_user_to_registered_group(sender, **kwargs):
         group, created = Group.objects.get_or_create(name='registered')
         user.groups.add(group)
 
-        transaction.commit()
+        sid = transaction.savepoint()
 
         # Create Public Profile
         try:
             profile, created = Profile.objects.get_or_create(user=user)
             profile.save()
-            transaction.commit()
+            transaction.savepoint_commit(sid)
         except:
             logger.debug("User profile not created.")
-            transaction.rollback()
+            transaction.savepoint_rollback(sid)
 
+    transaction.commit()
