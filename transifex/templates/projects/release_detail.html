@@ -97,11 +97,13 @@
       <td>{{ release.develfreeze_date|date:"D d M Y" }}</td>
     </tr>
     <tr class="separator"></tr>
+
+    {% with resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
+    {% with resources|length as resources_number %}
+    {% if resource_list %}
     <tr>
       <th class="resource i16">{% trans "Resources:" %}</th>
       <td>
-        {% with resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
-        {% with resources|length as resources_number %}
         <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
@@ -110,15 +112,18 @@
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
-        {% endwith %}
-        {% endwith %}
       </td>
     </tr>
+    {% endif %}
+    {% endwith %}
+    {% endwith %}
+
+    {% with private_resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
+    {% with private_resources|length as resources_number %}
+    {% if resource_list %}
     <tr>
       <th class="coordinators i16">{% trans "Private Resources:" %}</th>
       <td>
-        {% with private_resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
-        {% with private_resources|length as resources_number %}
         <span id="private-resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} private resources you have access to.{% endblocktrans %}
         </span>
@@ -127,10 +132,11 @@
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
-        {% endwith %}
-        {% endwith %}
       </td>
     </tr>
+    {% endif %}
+    {% endwith %}
+    {% endwith %}
   </table>
 </div>
 

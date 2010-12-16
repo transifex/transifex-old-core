@@ -56,8 +56,8 @@
 {% block content_main %}
 
 <div class="list separate" style="clear:both">
+{% if stats %}
   <h3>{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
- {% if stats %}
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
@@ -179,11 +179,9 @@
     </script>
   {% endfor %}
   </table>
- {% else %}
-  <p>{% trans "No resources are registered for this release yet." %}</p>
  {% endif %}
-  <h3>{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
  {% if private_stats %}
+ <h3>{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
@@ -303,8 +301,6 @@
     </script>
   {% endfor %}
   </table>
- {% else %}
-  <p>{% trans "No resources are registered for this release yet." %}</p>
  {% endif %}
 </div>
 
