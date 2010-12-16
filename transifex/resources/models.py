@@ -31,18 +31,8 @@ class ResourceManager(models.Manager):
         checks permissions and filters out private resources that the user
         doesn't have access to.
         """
-        if user in [None, AnonymousUser]:
-            resources = Resource.objects.filter(project__private=False)
-        else:
-            if user.is_superuser:
-                resources = Resource.objects.all()
-            else:
-                resources = Resource.objects.all().exclude(
-                    Q(project__private=True) &
-                    ~Q(project__maintainers__in=[user]))
-
-        return resources
-
+        return Resource.objects.filter(
+            project__in=Project.objects.for_user(user))
 
 class Resource(models.Model):
     """

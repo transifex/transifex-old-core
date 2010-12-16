@@ -54,9 +54,9 @@ class DefaultProjectManager(models.Manager):
     def translated_by(self, user):
         """
         Retrieve projects being translated by the specific user.
-        
-        The method returns all the projects in which user has been granted 
-        permissions to submit translations.
+
+        The method returns all the projects in which user has been granted
+        permission to submit translations.
         """
         try:
             ct = ContentType.objects.get(name="project")
@@ -77,10 +77,12 @@ class DefaultProjectManager(models.Manager):
                 projects = Project.objects.all()
             else:
                 projects = Project.objects.all().exclude(
-                    Q(private=True) & ~Q(maintainers__in=[user]))
+                    Q(private=True) & ~(Q(maintainers__in=[user]) |
+                    Q(team__coordinators__in=[user]) |
+                    Q(team__members__in=[user]))).distinct()
 
         return projects
-    
+ 
 
 class PublicProjectManager(models.Manager):
     """
