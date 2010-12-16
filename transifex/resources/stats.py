@@ -1,6 +1,5 @@
 from django.core.cache import cache
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Q
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.releases.models import Release
@@ -238,18 +237,14 @@ class ProjectStatsList(StatsList):
 
 class ReleaseStatsList(StatsList):
     """Wrapper to initialize a StatsList instance based on a release."""
-    def __init__(self, release):
+    def __init__(self, release, show_from_private_projects=True):
         self.object = release
-        self.entities = SourceEntity.objects.filter(resource__releases=release)
-
-
-class OpenReleaseStatsList(StatsList):
-    """Wrapper to initialize a StatsList instance based on a release."""
-    def __init__(self, release):
-        self.object = release
-        self.entities = SourceEntity.objects.\
-                        filter(resource__releases=release).\
-                        filter(resource__project__private=False)
+        if show_from_private_projects:
+            self.entities = SourceEntity.objects.filter(resource__releases=release)
+        else:
+            self.entities = SourceEntity.objects.\
+                filter(resource__releases=release).\
+                filter(resource__project__private=False)
 
 class PrivateReleaseStatsList(StatsList):
     """Wrapper to initialize a StatsList instance based on a release."""
@@ -258,10 +253,6 @@ class PrivateReleaseStatsList(StatsList):
         if user in ( None, AnonymousUser()):
             self.entities = []
         else:
-            self.entities = SourceEntity.objects.filter(
-                Q(resource__releases=release) &
-                Q(resource__project__private=True) & (
-                    Q(resource__project__maintainers=user) | 
-                    Q(resource__project__team__members=user)
-                )
+            self.entities = SourceEntity.objects.for_user(user).filter(
+                resource__releases=release, resource__project__private=True
             ).distinct()

@@ -56,19 +56,19 @@
 {% block content_main %}
 
 <div class="list separate" style="clear:both">
-  <h3>{% blocktrans count resources|length as counter %}Open resource under this Release{% plural %}Open resources under this Release{% endblocktrans %}</h3>
- {% if open_stats %}
+  <h3>{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
+ {% if stats %}
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
     <th><span class="i16 comment">{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span class="i16 open_stats">{% trans "Completion" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
     <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>
-  {% for stat in open_stats %}
+  {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
           <span class="clickable">{{ stat.object.name }}</span>

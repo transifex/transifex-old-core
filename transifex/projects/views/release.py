@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -16,8 +15,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions import (pr_release_add_change, pr_release_delete)
 from transifex.releases.models import Release
 from transifex.resources.models import Resource
-from transifex.resources.stats import ReleaseStatsList, OpenReleaseStatsList,\
-                                      PrivateReleaseStatsList
+from transifex.resources.stats import ReleaseStatsList, PrivateReleaseStatsList
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -60,25 +58,20 @@ def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
                                 project__slug=project_slug)
     #TODO: find a way to do this more effectively
-    open_resources = Resource.objects.filter(releases=release).\
+    resources = Resource.objects.filter(releases=release).\
                                       filter(project__private=False)
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
-        private_resources = Resource.objects.filter(
-            Q(releases=release) &
-            Q(project__private=True) & (
-                Q(project__maintainers=request.user) |
-                Q(project__team__members=request.user)
-            )
-        ).distinct()
+        private_resources = Resource.objects.for_user(request.user).filter(
+            releases=release, project__private=True).distinct()
 
     statslist = ReleaseStatsList(release)
 
     return render_to_response('projects/release_detail.html', {
         'release': release,
         'project': release.project,
-        'open_resources': open_resources,
+        'resources': resources,
         'private_resources': private_resources,
         'statslist': statslist,
     }, context_instance=RequestContext(request))
@@ -91,11 +84,11 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    open_stats_list = OpenReleaseStatsList(release)
-    if open_stats_list.entities:
-        open_stats = open_stats_list.resource_stats_for_language(language)
+    stats_list = ReleaseStatsList(release, show_from_private_projects=False)
+    if stats_list.entities:
+        stats = stats_list.resource_stats_for_language(language)
     else:
-        open_stats = None
+        stats = None
 
     private_stats_list = PrivateReleaseStatsList(release, request.user)
     if private_stats_list.entities:
@@ -107,7 +100,7 @@ def release_language_detail(request, project_slug, release_slug, language_code):
         'project': project,
         'release': release,
         'language': language,
-        'open_stats': open_stats,
+        'stats': stats,
         'private_stats': private_stats,
     }, context_instance=RequestContext(request))
 

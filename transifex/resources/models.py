@@ -140,6 +140,17 @@ class Resource(models.Model):
         """Return the resource's translation entities."""
         return SourceEntity.objects.filter(resource=self)
 
+class SourceEntityManager(models.Manager):
+
+    def for_user(self, user):
+        """
+        Filter available source entities based on the user doing the query. This
+        checks permissions and filters out private source entites that the user
+        doesn't have access to.
+        """
+        return SourceEntity.objects.filter(
+            resource__in=Resource.objects.for_user(user))
+
 class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
@@ -187,6 +198,8 @@ class SourceEntity(models.Model):
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
         blank=False, null=False, related_name='source_entities',
         help_text=_("The translation resource which owns the source string."))
+
+    objects = SourceEntityManager()
 
     def __unicode__(self):
         return self.string

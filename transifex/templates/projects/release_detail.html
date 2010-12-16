@@ -31,8 +31,8 @@
         });
 
         // Toggle to resources list
-        $("#open-resource-list-toggler").click(function () {
-            $("#open-resource-list").slideToggle("slow");
+        $("#resource-list-toggler").click(function () {
+            $("#resource-list").slideToggle("slow");
         });
         $("#private-resource-list-toggler").click(function () {
             $("#private-resource-list").slideToggle("slow");
@@ -98,14 +98,14 @@
     </tr>
     <tr class="separator"></tr>
     <tr>
-      <th class="resource i16">{% trans "Open Resources:" %}</th>
+      <th class="resource i16">{% trans "Resources:" %}</th>
       <td>
-        {% with open_resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
-        {% with open_resources|length as resources_number %}
-        <span id="open-resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
-        {% blocktrans %}This release has {{ resources_number }} open resources.{% endblocktrans %}
+        {% with resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
+        {% with resources|length as resources_number %}
+        <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
+        {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
-        <ul id="open-resource-list" class="simple links" style="display:none;">
+        <ul id="resource-list" class="simple links" style="display:none;">
           {% for r in resource_list %}
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
