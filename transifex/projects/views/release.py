@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -64,9 +65,13 @@ def release_detail(request, project_slug, release_slug):
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
-        private_resources = Resource.objects.filter(releases=release).\
-            filter(project__private=True).\
-            filter(project__maintainers=request.user)
+        private_resources = Resource.objects.filter(
+            Q(releases=release) &
+            Q(project__private=True) & (
+                Q(project__maintainers=request.user) |
+                Q(project__team__members=request.user)
+            )
+        ).distinct()
 
     statslist = ReleaseStatsList(release)
 
@@ -88,15 +93,13 @@ def release_language_detail(request, project_slug, release_slug, language_code):
 
     open_stats_list = OpenReleaseStatsList(release)
     if open_stats_list.entities:
-        open_stats = OpenReleaseStatsList(release).\
-                 resource_stats_for_language(language)
+        open_stats = open_stats_list.resource_stats_for_language(language)
     else:
         open_stats = None
 
     private_stats_list = PrivateReleaseStatsList(release, request.user)
     if private_stats_list.entities:
-        private_stats = PrivateReleaseStatsList(release, request.user).\
-                    resource_stats_for_language(language)
+        private_stats = private_stats_list.resource_stats_for_language(language)
     else:
         private_stats = None
 

@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.contrib.auth.models import AnonymousUser
+from django.db.models import Q
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.releases.models import Release
@@ -257,7 +258,10 @@ class PrivateReleaseStatsList(StatsList):
         if user in ( None, AnonymousUser()):
             self.entities = []
         else:
-            self.entities = SourceEntity.objects.\
-                filter(resource__releases=release).\
-                filter(resource__project__maintainers=user).\
-                filter(resource__project__private=True)
+            self.entities = SourceEntity.objects.filter(
+                Q(resource__releases=release) &
+                Q(resource__project__private=True) & (
+                    Q(resource__project__maintainers=user) | 
+                    Q(resource__project__team__members=user)
+                )
+            ).distinct()
