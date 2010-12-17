@@ -80,7 +80,7 @@ class ResourceForm(forms.ModelForm):
 
         return cleaned_data
 
-    def save(self, force_insert=False, force_update=False, commit=True):
+    def save(self, user=None, force_insert=False, force_update=False, commit=True):
         m = super(ResourceForm, self).save(commit=False)
 
         if commit:
@@ -117,7 +117,7 @@ class ResourceForm(forms.ModelForm):
                     fhandler.bind_resource(self.instance)
                     fhandler.contents_check(fhandler.filename)
                     fhandler.parse_file(is_source=True)
-                    fhandler.save2db(is_source=True)
+                    fhandler.save2db(is_source=True, user=user)
                 except:
                     raise
 

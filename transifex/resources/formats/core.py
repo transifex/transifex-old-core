@@ -3,14 +3,22 @@
 import codecs, copy, os, re
 from django.utils import simplejson as json
 
+from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from suggestions.models import Suggestion
+from transifex.actionlog.models import action_logging
+from transifex.resources.stats import ResourceStatsList
 from transifex.resources.formats.decorators import *
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import get_i18n_type_from_file
+
+# Temporary
+from transifex.txcommon import notifications as txnotification
+# Addons
+from watches.models import TranslationWatch
 
 """
 STRICT flag is used to switch between two parsing modes:
@@ -316,8 +324,6 @@ class Handler(object):
                 )
 
             self._post_save2db(is_source , user, overwrite_translations)
-            transaction.commit()
-
 
             # Invalidate cache after saving file
             if is_source:
@@ -325,6 +331,36 @@ class Handler(object):
             else:
                 invalidate_stats_cache(self.resource, self.language)
 
+            if strings_added + strings_updated > 0:
+                if self.language == self.resource.source_language:
+                    nt = 'project_resource_changed'
+                else:
+                    nt = 'project_resource_translated'
+                context = {'project': self.resource.project,
+                            'resource': self.resource,
+                            'language': self.language}
+                object_list = [self.resource.project, self.resource, self.language]
+                # if we got no user, skip the log
+                if user:
+                    action_logging(user, object_list, nt, context=context)
+
+                if settings.ENABLE_NOTICES:
+                    txnotification.send_observation_notices_for(self.resource.project,
+                            signal=nt, extra_context=context)
+
+                    # if language is source language, notify all languages for the change
+                    if self.language == self.resource.source_language:
+                        stats = ResourceStatsList(self.resource)
+                        for l in stats.available_languages:
+                            twatch = TranslationWatch.objects.get_or_create(
+                                resource=self.resource, language=l)[0]
+                            logger.debug("addon-watches: Sending notification"
+                                " for '%s'" % twatch)
+                            txnotification.send_observation_notices_for(twatch,
+                            signal='project_resource_translation_changed',
+                                 extra_context=context)
+
+            transaction.commit()
             return strings_added, strings_updated
 
     @need_compiled

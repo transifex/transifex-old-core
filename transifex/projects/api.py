@@ -11,7 +11,7 @@ from django.template.defaultfilters import slugify
 from piston.handler import BaseHandler
 from piston.utils import rc, throttle
 
-from actionlog.models import action_logging
+from transifex.actionlog.models import action_logging
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
@@ -247,19 +247,6 @@ class ProjectResourceHandler(BaseHandler):
                 storagefile.bound = True
                 storagefile.save()
 
-                # ActionLog & Notification
-                if created:
-                    nt = 'project_resource_added'
-                else:
-                    nt = 'project_resource_changed'
-                context = {'project': project,
-                           'resource': resource}
-                object_list = [project, resource]
-                action_logging(request.user, object_list, nt, context=context)
-                if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(project,
-                            signal=nt, extra_context=context)
-
                 return HttpResponse(simplejson.dumps(retval), 
                     mimetype='text/plain')
 
@@ -335,16 +322,6 @@ class ProjectResourceHandler(BaseHandler):
                 # If any string added/updated
                 if retval['strings_added'] > 0 or retval['strings_updated'] > 0:
                     modified = True
-                    # ActionLog & Notification
-                    nt = 'project_resource_translated'
-                    context = {'project': project,
-                                'resource': resource,
-                                'language': language}
-                    object_list = [project, resource, language]
-                    action_logging(request.user, object_list, nt, context=context)
-                    if settings.ENABLE_NOTICES:
-                        txnotification.send_observation_notices_for(project,
-                                signal=nt, extra_context=context)
                 else:
                     modified=False
 

@@ -122,7 +122,7 @@ def resource_edit(request, project_slug, resource_slug):
             url_form = URLInfoForm(request.POST,)
         if resource_form.is_valid() and url_form.is_valid():
             urlinfo = url_form.save(commit=False)
-            resource_new = resource_form.save()
+            resource_new = resource_form.save(user=request.user)
             urlinfo.resource = resource_new
             if urlinfo.source_file_url:
                 try:
