@@ -182,6 +182,11 @@ class LinguistHandler(Handler):
 
                 source = _getElementByTagName(message, "source")
                 translation = _getElementByTagName(message, "translation")
+                try:
+                    ec_node = _getElementByTagName(message, "extracomment")
+                    extracomment = _getText(ec_node.childNodes)
+                except LinguistParseError:
+                    extracomment = None
 
                 status = None
                 if source.firstChild:
@@ -297,7 +302,7 @@ class LinguistHandler(Handler):
                             msg[1], context = context_name, rule=msg[0],
                             occurrences = ";".join(occurrences), 
                             pluralized=pluralized, fuzzy=fuzzy, 
-                            obsolete=obsolete))
+                            comment=extracomment, obsolete=obsolete))
                 i += 1
 
                 if is_source:
