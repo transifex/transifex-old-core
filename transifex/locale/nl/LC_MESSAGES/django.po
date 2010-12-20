@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-10 12:07+0000\n"
-"PO-Revision-Date: 2010-12-10 11:51+0000\n"
+"POT-Creation-Date: 2010-12-20 23:14+0000\n"
+"PO-Revision-Date: 2010-12-20 20:26+0000\n"
 "Last-Translator: RockyTDR <thomasderocker@hotmail.com>\n"
-"Language-Team: Dutch (Netherlands) <>\n"
+"Language-Team: Dutch <>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: actionlog/filters.py:12
@@ -82,8 +82,9 @@ msgstr ""
 "Een booleaans veld dat aantoont of het bestand automatisch bijgewerkt moet "
 "worden door het te halen en samenvoegen vanaf de gegeven link."
 
-#: addons/autofetch/models.py:25 resources/models.py:197
+#: addons/autofetch/models.py:25 resources/models.py:198
 #: templates/projects/release_language_detail.html:64
+#: templates/projects/release_language_detail.html:186
 #: templates/teams/team_detail.html:140
 msgid "Resource"
 msgstr "Bron"
@@ -138,7 +139,7 @@ msgstr "Codefragment voor bron weergeven:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:134
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:136
 msgid "Hidden"
 msgstr "Verborgen"
 
@@ -330,9 +331,9 @@ msgid ""
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 "\n"
-"Een vergrendeling voor <a href=\"http://%(current_site)s%(resource_url)s\">%"
-"(resource)s in %(language)s</a> staat op het punt te vervallen op %(expires)"
-"s\n"
+"Een vergrendeling voor <a href=\"http://%(current_site)s%(resource_url)s\">"
+"%(resource)s in %(language)s</a> staat op het punt te vervallen op "
+"%(expires)s\n"
 
 #: addons/lotte/views.py:68
 msgid ""
@@ -376,46 +377,72 @@ msgstr ""
 "Kan niet opslaan totdat meervoudsvertalingen ofwel volledig ingevuld zijn "
 "ofwel volledig leeg zijn!"
 
-#: addons/lotte/views.py:546
+#: addons/lotte/views.py:545
+#, fuzzy
+msgid "Translation string only contains whitespaces."
+msgstr "De vertaalstring is leeg"
+
+#: addons/lotte/views.py:554
+#, python-format
+msgid ""
+"Translation string doesn't contain the same number of '%s' as the source "
+"string."
+msgstr ""
+
+#: addons/lotte/views.py:566
+#, fuzzy, python-format
+msgid ""
+"The following url is either missing form the translation os has been "
+"translated: '%s'."
+msgstr "De brontekst die deze vertaalstring vertaalt."
+
+#: addons/lotte/views.py:578
+#, fuzzy, python-format
+msgid ""
+"The following email is either missing form the translation os has been "
+"translated: '%s'."
+msgstr "De brontekst die deze vertaalstring vertaalt."
+
+#: addons/lotte/views.py:589
 msgid "Translation must start with a newline (\\n)"
 msgstr ""
 "De vertaling moet beginnen met een witregel (\n"
 ")"
 
-#: addons/lotte/views.py:549
+#: addons/lotte/views.py:592
 msgid "Translation should not start with a newline (\\n)"
 msgstr ""
 "De vertaling mag niet beginnen met een witregel (\n"
 ")"
 
-#: addons/lotte/views.py:554
+#: addons/lotte/views.py:597
 msgid "Translation must end with a newline (\\n)"
 msgstr ""
 "De vertaling moet eindigen met een witregel (\n"
 ")"
 
-#: addons/lotte/views.py:557
+#: addons/lotte/views.py:600
 msgid "Translation should not end with a newline (\\n)"
 msgstr ""
 "De vertaling mag niet eindigen met een witregel (\n"
 ")"
 
-#: addons/lotte/views.py:566
+#: addons/lotte/views.py:609
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
 msgstr "Nummer %s is in the brontekst maar niet in de vertaling."
 
-#: addons/lotte/views.py:582
+#: addons/lotte/views.py:625
 #, python-format
 msgid "The expression '%s' is not present in the translation."
 msgstr "De uitdrukking '%s' is niet aanwezig in de vertaling."
 
-#: addons/lotte/views.py:592
+#: addons/lotte/views.py:635
 #, python-format
 msgid "The expression '%s' is not present in the source string."
 msgstr "De uitdrukking '%s' is niet aanwezig in de brontekst."
 
-#: addons/lotte/views.py:601
+#: addons/lotte/views.py:644
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
@@ -423,19 +450,19 @@ msgstr ""
 "Het aantal argumenten lijkt te verschillen tussen de brontekst en de "
 "vertaling."
 
-#: addons/lotte/views.py:625
+#: addons/lotte/views.py:668
 msgid "Translation updated successfully in the DB"
 msgstr "Vertaling succesvol in de database bijgewerkt"
 
-#: addons/lotte/views.py:637
+#: addons/lotte/views.py:680
 msgid "New translation stored successfully in the DB"
 msgstr "Nieuwe vertaling succesvol opgeslagen in database"
 
-#: addons/lotte/views.py:640
+#: addons/lotte/views.py:683
 msgid "The translation string is empty"
 msgstr "De vertaalstring is leeg"
 
-#: addons/lotte/views.py:645
+#: addons/lotte/views.py:688
 msgid "Error occurred while trying to save translation."
 msgstr "Er trad een fout op bij het proberen opslaan van de vertaling."
 
@@ -465,7 +492,7 @@ msgstr "String ID:"
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:119
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:121
 #: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
@@ -477,7 +504,7 @@ msgid "Description:"
 msgstr "Beschrijving:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#: resources/models.py:175
+#: resources/models.py:176
 msgid "Occurrences"
 msgstr "Gebeurtenissen"
 
@@ -665,7 +692,7 @@ msgid "Total"
 msgstr "Totaal"
 
 #: addons/lotte/templates/translate.html:749
-#: addons/lotte/templates/view_strings.html:205 resources/models.py:308
+#: addons/lotte/templates/view_strings.html:205 resources/models.py:311
 msgid "Source String"
 msgstr "Originele tekst"
 
@@ -724,8 +751,8 @@ msgstr "Bronprioriteit"
 msgid "resource priorities"
 msgstr "Bronprioriteiten"
 
-#: addons/suggestions/models.py:19 resources/models.py:161
-#: resources/models.py:289
+#: addons/suggestions/models.py:19 resources/models.py:162
+#: resources/models.py:292
 msgid "String"
 msgstr "String"
 
@@ -733,8 +760,8 @@ msgstr "String"
 msgid "The actual string content of suggestion."
 msgstr "De eigenlijke tekstinhoud van de suggestie."
 
-#: addons/suggestions/models.py:21 resources/models.py:163
-#: resources/models.py:291
+#: addons/suggestions/models.py:21 resources/models.py:164
+#: resources/models.py:294
 msgid "String Hash"
 msgstr "String hash"
 
@@ -762,11 +789,11 @@ msgstr "Bron-entiteit"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "De bron-entiteit die deze suggestie-instantie vertaalt of beïnvloedt."
 
-#: addons/suggestions/models.py:40 resources/models.py:314
+#: addons/suggestions/models.py:40 resources/models.py:317
 msgid "Target Language"
 msgstr "Doeltaal"
 
-#: addons/suggestions/models.py:41 resources/models.py:315
+#: addons/suggestions/models.py:41 resources/models.py:318
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "De taal waarin deze vertaalstring geschreven is."
@@ -867,7 +894,7 @@ msgid "Go"
 msgstr "Ga"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/teams/team_detail.html:296
+#: templates/timeline.html:24 templates/teams/team_detail.html:294
 msgid "None available"
 msgstr "Geen beschikbaar"
 
@@ -1022,8 +1049,8 @@ msgid "The languages spoken on %s."
 msgstr "De talen gesproken op %s."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:117
-#: releases/models.py:33 resources/models.py:65
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:119
+#: releases/models.py:33 resources/models.py:55
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1091,12 +1118,12 @@ msgstr "taal"
 msgid "languages"
 msgstr "talen"
 
-#: projects/api.py:234 projects/api.py:317
+#: projects/api.py:234 projects/api.py:305
 #, python-format
 msgid "%i strings added"
 msgstr "%i strings toegevoegd"
 
-#: projects/api.py:236 projects/api.py:319
+#: projects/api.py:236 projects/api.py:307
 #, python-format
 msgid "%i strings updated"
 msgstr "%i strings bijgewerkt"
@@ -1231,11 +1258,11 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "Zoeken naar een bron"
 
-#: projects/models.py:110
+#: projects/models.py:112
 msgid "Private"
 msgstr "Privaat"
 
-#: projects/models.py:111
+#: projects/models.py:113
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
@@ -1244,12 +1271,12 @@ msgstr ""
 "private projecten gelimiteerd op het gebied van factureringsplannen voor de "
 "gebruikersaccount."
 
-#: projects/models.py:114 releases/models.py:30 resources/models.py:62
+#: projects/models.py:116 releases/models.py:30 resources/models.py:52
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slak"
 
-#: projects/models.py:115 releases/models.py:31 resources/models.py:63
+#: projects/models.py:117 releases/models.py:31 resources/models.py:53
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -1257,105 +1284,105 @@ msgstr ""
 "Een kort label dat gebruikt kan worden in de URL, met alleen letters, "
 "cijfers, liggende streepjes of streepjes."
 
-#: projects/models.py:118
+#: projects/models.py:120
 msgid "A short name or very short description."
 msgstr "Een korte naam of erg korte beschrijving"
 
-#: projects/models.py:120
+#: projects/models.py:122
 msgid "A sentence or two describing the object (optional)."
 msgstr "Een of twee zinnen die het object beschrijven (optioneel)"
 
-#: projects/models.py:121 releases/models.py:38
+#: projects/models.py:123 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Lange beschrijving"
 
-#: projects/models.py:123
+#: projects/models.py:125
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Een langere beschrijving (optioneel). Gebruik de Markdown-syntax."
 
-#: projects/models.py:124 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:126 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Homepagina:"
 
-#: projects/models.py:125
+#: projects/models.py:127
 msgid "Feed"
 msgstr "Feed"
 
-#: projects/models.py:126
+#: projects/models.py:128
 msgid "An RSS feed with updates to the project."
 msgstr "Een RSS-feed met updates van het project."
 
-#: projects/models.py:127
+#: projects/models.py:129
 msgid "Bug tracker"
 msgstr "Bug tracker:"
 
-#: projects/models.py:128
+#: projects/models.py:130
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "De URL voor het bug en ticket tracking systeem (Bugzilla, Trac, etc.)"
 
-#: projects/models.py:130
+#: projects/models.py:132
 msgid "Anyone can submit"
 msgstr "Iedereen kan inzenden"
 
-#: projects/models.py:132
+#: projects/models.py:134
 msgid "Can anyone submit files to this project?"
 msgstr "Kan iedereen bestanden inzenden naar dit project?"
 
-#: projects/models.py:135
+#: projects/models.py:137
 msgid "Hide this object from the list view?"
 msgstr "Dit object verbergen van de lijstweergave?"
 
-#: projects/models.py:136
+#: projects/models.py:138
 msgid "Enabled"
 msgstr "Geactiveerd"
 
-#: projects/models.py:137
+#: projects/models.py:139
 msgid "Enable this object or disable its use?"
 msgstr "Dit object activeren of deactiveren?"
 
-#: projects/models.py:141 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:143 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Labels:"
 
-#: projects/models.py:144 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:146 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Maintainers"
 
-#: projects/models.py:148
+#: projects/models.py:150
 msgid "Outsource project"
 msgstr "Project outsourcen"
 
-#: projects/models.py:149
+#: projects/models.py:151
 msgid "Project that owns the access control of this project."
 msgstr "Project dat de toegangscontrole van dit project bezit."
 
-#: projects/models.py:152 storage/models.py:44
+#: projects/models.py:154 storage/models.py:44
 msgid "Owner"
 msgstr "Eigenaar"
 
-#: projects/models.py:153
+#: projects/models.py:155
 msgid "The user who owns this project."
 msgstr "De gebruiker die dit project bezit."
 
-#: projects/models.py:156 releases/models.py:60
+#: projects/models.py:158 releases/models.py:60
 msgid "HTML Description"
 msgstr "HTML Beschrijving"
 
-#: projects/models.py:158 releases/models.py:62
+#: projects/models.py:160 releases/models.py:62
 msgid "Description in HTML."
 msgstr "Beschrijving in HTML."
 
-#: projects/models.py:173
+#: projects/models.py:175
 #, python-format
 msgid "<Project: %s>"
 msgstr "<Project: %s>"
 
-#: projects/models.py:176
+#: projects/models.py:178
 msgid "project"
 msgstr "project"
 
-#: projects/models.py:177 templates/projects/project_list.html:19
+#: projects/models.py:179 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "projecten"
 
@@ -1395,7 +1422,7 @@ msgstr "Totaal:"
 msgid "The project '%s' was deleted."
 msgstr "Het project '%s' werd verwijderd."
 
-#: projects/views/release.py:95
+#: projects/views/release.py:119
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "De release '%s' werd verwijderd."
@@ -1545,7 +1572,7 @@ msgstr ""
 "bouwen. Vertalingen ingezonden na deze datum zullen niet worden opgenomen in "
 "de gereleasede versie."
 
-#: releases/models.py:65 resources/models.py:89 teams/models.py:29
+#: releases/models.py:65 resources/models.py:79 teams/models.py:29
 #: teams/models.py:98
 msgid "Project"
 msgstr "Project"
@@ -1589,68 +1616,68 @@ msgstr ""
 "Selecteer een bestand van uw bestandssysteem om te gebruiken om vertalingen "
 "voor deze bron in te vullen."
 
-#: resources/models.py:66
+#: resources/models.py:56
 msgid "A descriptive name unique inside the project."
 msgstr "Een beschrijvende naam, uniek binnen het project."
 
-#: resources/models.py:69
+#: resources/models.py:59
 msgid "Source file"
 msgstr "Bronbestand"
 
-#: resources/models.py:71
+#: resources/models.py:61
 msgid "A local file used to extract the strings to be translated."
 msgstr "Een lokaal bestand, gebruikt om de te vertalen strings te extraheren."
 
-#: resources/models.py:73
+#: resources/models.py:63
 msgid "I18n type"
 msgstr "I18n type"
 
-#: resources/models.py:75
+#: resources/models.py:65
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "Type vertaalmethode gebruikt in deze bron (%s)"
 
-#: resources/models.py:77
+#: resources/models.py:67
 msgid "Accepting translations?"
 msgstr "Accepteert vertalingen?"
 
-#: resources/models.py:79
+#: resources/models.py:69
 msgid "Is this resource accepting submissions of translations?"
 msgstr "Accepteert deze bron inzendingen van vertalingen?"
 
-#: resources/models.py:87
+#: resources/models.py:77
 msgid "Source Language"
 msgstr "Brontaal:"
 
-#: resources/models.py:88
+#: resources/models.py:78
 msgid "The source language of this Resource."
 msgstr "De brontaal van deze bron."
 
-#: resources/models.py:91
+#: resources/models.py:81
 msgid "The project containing the translation resource."
 msgstr "Het project dat de vertaalbron bevat."
 
-#: resources/models.py:104
+#: resources/models.py:94
 msgid "resource"
 msgstr "bron"
 
-#: resources/models.py:105
+#: resources/models.py:95
 msgid "resources"
 msgstr "bronnen"
 
-#: resources/models.py:162
+#: resources/models.py:163
 msgid "The actual string content of source string."
 msgstr "De eigenlijke inhoud van de brontekst."
 
-#: resources/models.py:165 resources/models.py:293
+#: resources/models.py:166 resources/models.py:296
 msgid "The hash of the translation string used for indexing"
 msgstr "De hash van de vertaalstring gebruikt voor indexering"
 
-#: resources/models.py:166
+#: resources/models.py:167
 msgid "Context"
 msgstr "Context"
 
-#: resources/models.py:168
+#: resources/models.py:169
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
@@ -1658,11 +1685,11 @@ msgstr ""
 "Een beschrijving van de bronstring. Dit veld specificeert de context van de "
 "bronstring binnen de bron."
 
-#: resources/models.py:170 templates/userprofile/profile/location.html:27
+#: resources/models.py:171 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "Positie"
 
-#: resources/models.py:171
+#: resources/models.py:172
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
@@ -1670,15 +1697,15 @@ msgstr ""
 "De positie van de bronstring in de bron. Bijvoorbeeld, de specifieke positie "
 "van een msgid-veld in een po-sjabloon (.pot) in gettext."
 
-#: resources/models.py:177
+#: resources/models.py:178
 msgid "The occurrences of the source string in the project code."
 msgstr "De voorkomende gevallen in de bronstring in de projectcode."
 
-#: resources/models.py:178 resources/models.py:183
+#: resources/models.py:179 resources/models.py:184
 msgid "Flags"
 msgstr "Vlaggen"
 
-#: resources/models.py:180
+#: resources/models.py:181
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
@@ -1687,39 +1714,39 @@ msgstr ""
 "python-formaat aanwezig is, zal dit gemarkeerd worden als \"#, python-format"
 "\" in gettext."
 
-#: resources/models.py:185
+#: resources/models.py:186
 msgid "The comment of the developer."
 msgstr "De opmerking van de ontwikkelaar."
 
-#: resources/models.py:187
+#: resources/models.py:188
 msgid "Pluralized"
 msgstr "Meervoud"
 
-#: resources/models.py:189
+#: resources/models.py:190
 msgid "Identify if the entity is pluralized ot not."
 msgstr "Identificeer of de entiteit meervoud is of niet."
 
-#: resources/models.py:199
+#: resources/models.py:200
 msgid "The translation resource which owns the source string."
 msgstr "De vertaalbron die de bronstring bevat."
 
-#: resources/models.py:206
+#: resources/models.py:209
 msgid "source string"
 msgstr "brontekst"
 
-#: resources/models.py:207
+#: resources/models.py:210
 msgid "source strings"
 msgstr "bronteksten"
 
-#: resources/models.py:290
+#: resources/models.py:293
 msgid "The actual string content of translation."
 msgstr "De eigenlijke inhoud van de string die de vertaling bevat."
 
-#: resources/models.py:294
+#: resources/models.py:297
 msgid "Plural rule"
 msgstr "Meervoudsvergelijking"
 
-#: resources/models.py:296
+#: resources/models.py:299
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
@@ -1729,31 +1756,31 @@ msgstr ""
 "1=een, 2=twee, 3=weinig, 4=veel en 5=ander. Voor vertalingen die hun "
 "entiteit niet in het meervoud hebben, moet de regel 5 (ander) zijn."
 
-#: resources/models.py:311
+#: resources/models.py:314
 msgid "The source string this translation string translates."
 msgstr "De brontekst die deze vertaalstring vertaalt."
 
-#: resources/models.py:318
+#: resources/models.py:321
 msgid "Committer"
 msgstr "Inzender"
 
-#: resources/models.py:319
+#: resources/models.py:322
 msgid "The user who committed the specific translation."
 msgstr "De gebruiker die de specifieke vertaling toepaste."
 
-#: resources/models.py:329
+#: resources/models.py:332
 msgid "translation string"
 msgstr "vertaalstring"
 
-#: resources/models.py:330
+#: resources/models.py:333
 msgid "translation strings"
 msgstr "vertaalstrings"
 
-#: resources/models.py:363
+#: resources/models.py:366
 msgid "This is the actual content of the template"
 msgstr "Dit is de eigenlijke inhoud van de sjabloon."
 
-#: resources/models.py:367
+#: resources/models.py:370
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
@@ -1761,11 +1788,11 @@ msgstr ""
 "Dit is het sjabloon van het geïmporteerde bronbestand dat gebruikt wordt om "
 "vertaalbestanden te exporteren van de database naar de gebruiker."
 
-#: resources/models.py:371
+#: resources/models.py:374
 msgid "Template"
 msgstr "Sjabloon"
 
-#: resources/models.py:372
+#: resources/models.py:375
 msgid "Templates"
 msgstr "Sjablonen"
 
@@ -1829,11 +1856,11 @@ msgstr ""
 msgid "Your file doesn't seem to contain valid xml: %s!"
 msgstr "Uw bestand lijkt geen geldige xml te bevatten: %s!"
 
-#: storage/api.py:128
+#: storage/api.py:129
 msgid "A strange error happened."
 msgstr "Er deed zich een rare fout voor."
 
-#: storage/api.py:145
+#: storage/api.py:146
 msgid "File uploaded successfully."
 msgstr "Bestand succesvol geüpload."
 
@@ -1876,7 +1903,7 @@ msgstr ""
 msgid "You have uploaded an empty file!"
 msgstr "U heeft een leeg bestand ingezonden!"
 
-#: teams/forms.py:12
+#: teams/forms.py:15
 msgid ""
 "Coordinators are people that can manage the members of the team, for "
 "example. Search for usernames."
@@ -1884,7 +1911,7 @@ msgstr ""
 "Coördinatoren zijn personen die bijvoorbeeld de leden van een team kunnen "
 "beheren. Zoek naar gebruikersnamen."
 
-#: teams/forms.py:16
+#: teams/forms.py:19
 msgid ""
 "Members are actually people that can submit translations. Search for "
 "usernames."
@@ -1892,7 +1919,11 @@ msgstr ""
 "Leden zijn eigenlijk mensen die vertalingen kunnen inzenden. Zoek voor "
 "gebruikersnamen."
 
-#: teams/forms.py:52
+#: teams/forms.py:72 teams/forms.py:120
+msgid "Enter a valid value."
+msgstr ""
+
+#: teams/forms.py:84
 #, python-format
 msgid ""
 "You have the user '%s' in both coordinators and members lists. Please drop "
@@ -1906,7 +1937,7 @@ msgid "The project this team works on."
 msgstr "Het project waar dit team aan werkt."
 
 #: teams/models.py:32 teams/models.py:101
-#: templates/projects/release_detail.html:125
+#: templates/projects/release_detail.html:151
 #: templates/resources/resource_detail.html:178
 msgid "Language"
 msgstr "Taal"
@@ -2053,11 +2084,11 @@ msgstr "Talen"
 #: templates/base-sample.html:71
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
-"Welkom <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welkom <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 
 #: templates/base-sample.html:73
 msgid "Sign out from the website"
@@ -2150,11 +2181,11 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
-"Uw project kon niet gevonden worden? Ga gerust verder en <a href=\"%"
-"(project_create_url)s\">voeg het toe</a>."
+"Uw project kon niet gevonden worden? Ga gerust verder en <a href="
+"\"%(project_create_url)s\">voeg het toe</a>."
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -2447,8 +2478,8 @@ msgid ""
 "A new <span class=\"notice_subject\">project</span> <a href=\"%(project_url)s"
 "\">%(project)s</a> was <span class=\"notice_action\">added</span>."
 msgstr ""
-"Een nieuwe <span class=\"notice_subject\">project</span> <a href=\"%"
-"(project_url)s\">%(project)s</a> werd <span class=\"notice_action"
+"Een nieuwe <span class=\"notice_subject\">project</span> <a href="
+"\"%(project_url)s\">%(project)s</a> werd <span class=\"notice_action"
 "\">toegevoegd</span>."
 
 #: templates/notification/project_changed/notice.html:2
@@ -2463,8 +2494,8 @@ msgstr ""
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">weekly report</span> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project was <span class="
+"The <span class=\"notice_subject\">weekly report</span> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project was <span class="
 "\"notice_subject\">generated</span>"
 msgstr ""
 "Het <span class=\"notice_subject\">wekelijkse rapport</span> van het <a href="
@@ -2492,8 +2523,8 @@ msgstr ""
 #: templates/notification/project_resource_deleted/notice.html:2
 #, python-format
 msgid ""
-"The resource '%(resource_name)s' has been deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"The resource '%(resource_name)s' has been deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "De bron '%(resource_name)s' werd verwijderd van het <a href=\"%(project_url)s"
 "\">%(project_name)s</a>-project"
@@ -2502,8 +2533,8 @@ msgstr ""
 #, python-format
 msgid ""
 "A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
-"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "Een vertaling voor <a href=\"%(language_url)s\">%(language_name)s</a> werd "
 "verzonden naar <a href=\"%(resource_url)s\">%(resource_name)s</a> van het <a "
@@ -2517,8 +2548,8 @@ msgid ""
 "\"%(resource_url)s\">%(resource_name)s</a> has been modified."
 msgstr ""
 "De <a href=\"%(language_url)s\">%(language_name)s</a> vertaling van het "
-"project <a href=\"%(project_url)s\">%(project_name)s</a>, bron <a href=\"%"
-"(resource_url)s\">%(resource_name)s</a> werd gewijzigd."
+"project <a href=\"%(project_url)s\">%(project_name)s</a>, bron <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> werd gewijzigd."
 
 #: templates/notification/project_submit_access_granted/notice.html:2
 #, python-format
@@ -2551,8 +2582,8 @@ msgstr ""
 msgid ""
 "<span class=\"notice_action\">Withdrew</span> own <span class="
 "\"notice_subject\">request</span> of access to submit translations to the "
-"<span class=\"notice_action\">project</span> <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"<span class=\"notice_action\">project</span> <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
 "Eigen <span class=\"notice_subject\">aanvraag</span> om vertalingen te "
 "kunnen inzenden naar het <a href=\"%(project_url)s\">%(project)s</a>-<span "
@@ -2587,8 +2618,8 @@ msgstr ""
 #, python-format
 msgid ""
 "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was <span "
-"class=\"notice_action\">added</span> to the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project."
+"class=\"notice_action\">added</span> to the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project."
 msgstr ""
 "Een nieuw <a href=\"%(team_url)s\">%(team_name)s vertaalteam</a> werd <span "
 "class=\"notice_action\">toegevoegd</span> aan het <a href=\"%(project_url)s"
@@ -2598,12 +2629,13 @@ msgstr ""
 #, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s</a> translation <span class="
-"\"notice_subject\">team</span> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project was <span class=\"notice_action\">changed</span>."
+"\"notice_subject\">team</span> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project was <span class=\"notice_action\">changed</"
+"span>."
 msgstr ""
 "Het <a href=\"%(team_url)s\">%(team_name)s</a> vertaal<span class="
-"\"notice_subject\">team</span> van het <a href=\"%(project_url)s\">%"
-"(project_name)s</a>-project werd <span class=\"notice_action\">gewijzigd</"
+"\"notice_subject\">team</span> van het <a href=\"%(project_url)s\">"
+"%(project_name)s</a>-project werd <span class=\"notice_action\">gewijzigd</"
 "span>."
 
 #: templates/notification/project_team_deleted/notice.html:2
@@ -2621,40 +2653,40 @@ msgstr ""
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">user</span> <a href=\"%(user_url)s\">%"
-"(user_name)s</a> was <span class=\"notice_action\">added</span> as member to "
-"the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"The <span class=\"notice_subject\">user</span> <a href=\"%(user_url)s\">"
+"%(user_name)s</a> was <span class=\"notice_action\">added</span> as member "
+"to the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"De <span class=\"notice_subject\">gebruiker</span> <a href=\"%(user_url)s\">%"
-"(user_name)s</a> werd <span class=\"notice_action\">toegevoegd</span> als "
+"De <span class=\"notice_subject\">gebruiker</span> <a href=\"%(user_url)s\">"
+"%(user_name)s</a> werd <span class=\"notice_action\">toegevoegd</span> als "
 "lid aan het <a href=\"%(team_url)s\">%(team_name)s vertaalteam</a> van het "
 "<a href=\"%(project_url)s\">%(project_name)s</a>-project."
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
 msgid ""
-"%(performer)s <span class=\"notice_action\">denied</span> user <a href=\"%"
-"(user_url)s\">%(user_name)s</a>'s <span class=\"notice_subject\">request</"
+"%(performer)s <span class=\"notice_action\">denied</span> user <a href="
+"\"%(user_url)s\">%(user_name)s</a>'s <span class=\"notice_subject\">request</"
 "span> to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 "%(performer)s <span class=\"notice_action\">weigerde</span> de <span class="
-"\"notice_subject\">aanvraag</span> van <a href=\"%(user_url)s\">%(user_name)"
-"s</a> om lid te worden van het <a href=\"%(team_url)s\">%(team_name)s "
-"vertaalteam</a> van het <a href=\"%(project_url)s\">%(project_name)s</a>-"
-"project."
+"\"notice_subject\">aanvraag</span> van <a href=\"%(user_url)s\">"
+"%(user_name)s</a> om lid te worden van het <a href=\"%(team_url)s\">"
+"%(team_name)s vertaalteam</a> van het <a href=\"%(project_url)s\">"
+"%(project_name)s</a>-project."
 
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
 msgid ""
-"<span class=\"notice_action\">Requested</span> to join the <a href=\"%"
-"(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"<span class=\"notice_action\">Requested</span> to join the <a href="
+"\"%(team_url)s\">%(team_name)s translation team</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 "<span class=\"notice_action\">Aangevraagd</span> om lid te worden van het <a "
-"href=\"%(team_url)s\">%(team_name)s vertaalteam</a> van het <a href=\"%"
-"(project_url)s\">%(project_name)s</a>-project"
+"href=\"%(team_url)s\">%(team_name)s vertaalteam</a> van het <a href="
+"\"%(project_url)s\">%(project_name)s</a>-project"
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
@@ -2663,9 +2695,10 @@ msgid ""
 "the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"Eigen aanvraag om lid te worden van het <a href=\"%(team_url)s\">%(team_name)"
-"s vertaalteam</a> van het <a href=\"%(project_url)s\">%(project_name)s</a>-"
-"project <span class=\"notice_action\">teruggetrokken</span>"
+"Eigen aanvraag om lid te worden van het <a href=\"%(team_url)s\">"
+"%(team_name)s vertaalteam</a> van het <a href=\"%(project_url)s\">"
+"%(project_name)s</a>-project <span class=\"notice_action\">teruggetrokken</"
+"span>"
 
 #: templates/notification/project_team_left/notice.html:2
 #, python-format
@@ -2674,22 +2707,23 @@ msgid ""
 "\">left</span> the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"<span class=\"notice_subject\">Gebruiker</span> heeft het <a href=\"%"
-"(team_url)s\">%(team_name)s vertaalteam</a> van het <a href=\"%(project_url)s"
-"\">%(project_name)s</a>-project <span class=\"notice_action\">verlaten</span>"
+"<span class=\"notice_subject\">Gebruiker</span> heeft het <a href="
+"\"%(team_url)s\">%(team_name)s vertaalteam</a> van het <a href="
+"\"%(project_url)s\">%(project_name)s</a>-project <span class=\"notice_action"
+"\">verlaten</span>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">request</span> to create a <a href=\"%"
-"(language_url)s\">%(language_name)s</a> translation team for the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project was <span class=\"notice_action"
-"\">denied</span>."
+"The <span class=\"notice_subject\">request</span> to create a <a href="
+"\"%(language_url)s\">%(language_name)s</a> translation team for the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project was <span class="
+"\"notice_action\">denied</span>."
 msgstr ""
-"De <span class=\"notice_subject\">aanvraag</span> om een <a href=\"%"
-"(language_url)s\">%(language_name)s</a> vertaalteam voor het <a href=\"%"
-"(project_url)s\">%(project_name)s</a>-project aan te maken werd <span class="
-"\"notice_action\">geweigerd</span>."
+"De <span class=\"notice_subject\">aanvraag</span> om een <a href="
+"\"%(language_url)s\">%(language_name)s</a> vertaalteam voor het <a href="
+"\"%(project_url)s\">%(project_name)s</a>-project aan te maken werd <span "
+"class=\"notice_action\">geweigerd</span>."
 
 #: templates/notification/project_team_requested/notice.html:2
 #, python-format
@@ -2710,8 +2744,9 @@ msgid ""
 "The <span class=\"notice_subject\">user</span> <a href=\"%(performer_url)s\">"
 "%(performer)s</a> has <span class=\"notice_subject\">nudged</span> you"
 msgstr ""
-"De <span class=\"notice_subject\">gebruiker</span> <a href=\"%(performer_url)"
-"s\">%(performer)s</a> heeft u <span class=\"notice_subject\">gepord</span>"
+"De <span class=\"notice_subject\">gebruiker</span> <a href="
+"\"%(performer_url)s\">%(performer)s</a> heeft u <span class=\"notice_subject"
+"\">gepord</span>"
 
 #: templates/projects/project_confirm_delete.html:4
 #, python-format
@@ -2736,8 +2771,8 @@ msgstr "Vaarwel zeggen tegen <em>%(project_name)s</em>?"
 #: templates/projects/project_confirm_delete.html:17
 #, python-format
 msgid ""
-"Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 "Bent u zeker dat u het geregistreerde project '%(project_name)s' permanent "
 "wil wissen?"
@@ -2756,7 +2791,7 @@ msgid "Private Project"
 msgstr "Privéproject"
 
 #: templates/projects/project_detail.html:41
-#: templates/projects/release_detail.html:69
+#: templates/projects/release_detail.html:72
 #: templates/resources/resource_detail.html:99
 #: templates/teams/team_detail.html:56
 msgid "Edit"
@@ -2764,7 +2799,7 @@ msgstr "Wijzigen"
 
 #: templates/projects/project_detail.html:47
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:76
+#: templates/projects/release_detail.html:79
 msgid "Details"
 msgstr "Details"
 
@@ -2773,7 +2808,7 @@ msgid "Watch:"
 msgstr "Volgen:"
 
 #: templates/projects/project_detail.html:63
-#: templates/projects/release_detail.html:80
+#: templates/projects/release_detail.html:83
 msgid "Homepage:"
 msgstr "Homepagina:"
 
@@ -2812,7 +2847,7 @@ msgstr "Screenshots"
 
 #: templates/projects/project_detail.html:124
 #: templates/resources/resource_detail.html:333
-#: templates/teams/team_detail.html:292
+#: templates/teams/team_detail.html:290
 msgid "History"
 msgstr "Geschiedenis"
 
@@ -2939,7 +2974,7 @@ msgid "Subscribe to this feed"
 msgstr "Abonneren op deze feed"
 
 #: templates/projects/project_list.html:49
-#: templates/projects/release_detail.html:98
+#: templates/projects/release_detail.html:105
 msgid "Resources:"
 msgstr "Bronnen:"
 
@@ -2991,53 +3026,66 @@ msgid ""
 "Are you sure you want to permanently delete the release '%(release_name)s' "
 "which works on %(project_name)s?"
 msgstr ""
-"Bent u zeker dat u release '%(release_name)s' die behoort aan %(project_name)"
-"s permanent wilt wissen?"
+"Bent u zeker dat u release '%(release_name)s' die behoort aan "
+"%(project_name)s permanent wilt wissen?"
 
-#: templates/projects/release_detail.html:85
+#: templates/projects/release_detail.html:88
 msgid "Release date:"
 msgstr "Datum van release:"
 
-#: templates/projects/release_detail.html:89
+#: templates/projects/release_detail.html:92
 msgid "String freeze:"
 msgstr "String freeze:"
 
-#: templates/projects/release_detail.html:93
+#: templates/projects/release_detail.html:96
 msgid "Devel freeze:"
 msgstr "Ontwikkelingsfreeze:"
 
-#: templates/projects/release_detail.html:102
+#: templates/projects/release_detail.html:107
+#: templates/projects/release_detail.html:127
 msgid "Click here to show or hide the resource list"
 msgstr "Klik hier om de bronlijst weer te geven of te verbergen"
 
-#: templates/projects/release_detail.html:103
+#: templates/projects/release_detail.html:108
 #, python-format
 msgid "This release has %(resources_number)s resources."
 msgstr "Deze release bevat %(resources_number)s bronnen. "
 
-#: templates/projects/release_detail.html:119
+#: templates/projects/release_detail.html:125
+#, fuzzy
+msgid "Private Resources:"
+msgstr "Bron aanmaken"
+
+#: templates/projects/release_detail.html:128
+#, fuzzy, python-format
+msgid ""
+"This release has %(resources_number)s private resources you have access to."
+msgstr "Deze release bevat %(resources_number)s bronnen. "
+
+#: templates/projects/release_detail.html:145
 msgid "Translation Statistics"
 msgstr "Vertaalstatistieken"
 
-#: templates/projects/release_detail.html:126
+#: templates/projects/release_detail.html:152
 #: templates/projects/release_language_detail.html:65
+#: templates/projects/release_language_detail.html:187
 #: templates/resources/resource_detail.html:179
 #: templates/teams/team_detail.html:141
 msgid "Completion"
 msgstr "Voltooiing"
 
-#: templates/projects/release_detail.html:127
+#: templates/projects/release_detail.html:153
 msgid "Last Translation"
 msgstr "Laatste vertaling"
 
-#: templates/projects/release_detail.html:156
+#: templates/projects/release_detail.html:182
 #: templates/projects/resource_list.html:90
 #: templates/resources/resource_detail.html:211
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "nog geen vertalingen"
 
-#: templates/projects/release_detail.html:177
+#: templates/projects/release_detail.html:203
 msgid "Delete release"
 msgstr "Release wissen"
 
@@ -3071,13 +3119,14 @@ msgstr "Release opslaan"
 msgid "Release '%(release_name)s"
 msgstr "Release '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:59
+#: templates/projects/release_language_detail.html:60
 msgid "Resource under this Release"
 msgid_plural "Resources under this Release"
 msgstr[0] "Bron onder deze release"
 msgstr[1] "Bronnen onder deze release"
 
 #: templates/projects/release_language_detail.html:66
+#: templates/projects/release_language_detail.html:188
 #: templates/projects/resource_list.html:70
 #: templates/resources/resource_detail.html:180
 #: templates/teams/team_detail.html:142
@@ -3085,43 +3134,52 @@ msgid "Last Updated"
 msgstr "Laatst bijgewerkt"
 
 #: templates/projects/release_language_detail.html:67
+#: templates/projects/release_language_detail.html:189
 #: templates/projects/resource_list.html:71
 #: templates/teams/team_detail.html:143
 msgid "Importance"
 msgstr "Belangrijkheid"
 
 #: templates/projects/release_language_detail.html:72
+#: templates/projects/release_language_detail.html:194
 #: templates/resources/resource_detail.html:185
 #: templates/teams/team_detail.html:149
 msgid "click for translation"
 msgstr "klik voor vertaling"
 
 #: templates/projects/release_language_detail.html:92
+#: templates/projects/release_language_detail.html:214
 #: templates/teams/team_detail.html:171
 msgid "no activity yet"
 msgstr "nog geen activiteit"
 
-#: templates/projects/release_language_detail.html:143
+#: templates/projects/release_language_detail.html:141
+#: templates/projects/release_language_detail.html:263
 #: templates/resources/resource_detail.html:29
 #: templates/resources/resource_detail.html:250
 msgid "Please select a target language first."
 msgstr "Gelieve eerst een doeltaal te selecteren."
 
-#: templates/projects/release_language_detail.html:153
+#: templates/projects/release_language_detail.html:151
+#: templates/projects/release_language_detail.html:273
 #: templates/resources/resource_detail.html:260
-#: templates/teams/team_detail.html:232
+#: templates/teams/team_detail.html:230
 msgid "Trying to lock resource..."
 msgstr "Proberen om bron te vergrendelen..."
 
-#: templates/projects/release_language_detail.html:176
+#: templates/projects/release_language_detail.html:174
+#: templates/projects/release_language_detail.html:296
 #: templates/resources/resource_detail.html:283
-#: templates/teams/team_detail.html:255
+#: templates/teams/team_detail.html:253
 msgid "Translation Details"
 msgstr "Vertaaldetails"
 
-#: templates/projects/release_language_detail.html:183
-msgid "No resources are registered for this release yet."
-msgstr "Er zijn nog geen bronnen geregistreerd voor dit project."
+#: templates/projects/release_language_detail.html:182
+#, fuzzy
+msgid "Private Resource that you have access to under this Release"
+msgid_plural "Private resources that you have access to under this Release"
+msgstr[0] "Bron onder deze release"
+msgstr[1] "Bronnen onder deze release"
 
 #: templates/projects/release_list.html:11
 msgid "Add"
@@ -3135,8 +3193,8 @@ msgstr "Projectreleases"
 #: templates/projects/release_list.html:26
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 "Er werden voor dit project nog geen releases geregistreerd. Als u wil, kan u "
 "er een <a href=\"%(release_create)s\">toevoegen</a>."
@@ -3167,17 +3225,17 @@ msgstr "Toegepast door %(last_committer)s"
 msgid "No committers yet"
 msgstr "Nog geen vertalers"
 
-#: templates/projects/resource_list.html:119
-#: templates/teams/team_detail.html:262
+#: templates/projects/resource_list.html:117
+#: templates/teams/team_detail.html:260
 msgid "No resources are registered for this project yet."
 msgstr "Er zijn nog geen bronnen geregistreerd voor dit project."
 
-#: templates/projects/resource_list.html:127
+#: templates/projects/resource_list.html:125
 #: templates/resources/resource_detail.html:310
 msgid "Select Language"
 msgstr "Taal selecteren"
 
-#: templates/projects/resource_list.html:141
+#: templates/projects/resource_list.html:139
 msgid "Translate All"
 msgstr "Alles vertalen"
 
@@ -3205,15 +3263,15 @@ msgid "Translate Now"
 msgstr "Nu vertalen"
 
 #: templates/resources/resource_actions.html:46
-#, fuzzy
 msgid "This resource is currently not accepting translations"
-msgstr "Deze bron accepteert op dit moment geen vertalingen."
+msgstr "Deze bron accepteert op dit moment geen vertalingen"
 
 #: templates/resources/resource_actions.html:49
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
-msgstr "Om te vertalen moet u een lid zijn van het %(lang_name)s team."
+msgstr ""
+"Om te vertalen moet u ingelogd zijn en lid zijn van het %(lang_name)s team"
 
 #: templates/resources/resource_actions.html:58
 #: templates/resources/stats_bar_simple.html:4
@@ -3320,8 +3378,8 @@ msgstr "Vaarwel zeggen tegen <em>%(resource_name)s</em>?"
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translation resource '%"
-"(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translation resource "
+"'%(resource_name)s'?\n"
 msgstr ""
 "\n"
 "  Bent u zeker dat u de vertaalbron '%(resource_name)s' permanent wilt "
@@ -3352,9 +3410,8 @@ msgid "Accepting Translations?"
 msgstr "Vertalingen accepteren?"
 
 #: templates/resources/resource_detail.html:142
-#, fuzzy
 msgid "Priority Level"
-msgstr "Prioriteitsniveaus"
+msgstr "Prioriteit"
 
 #: templates/resources/resource_detail.html:159
 msgid "Release:"
@@ -3483,12 +3540,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translations for '%"
-"(language_name)s' of '%(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translations for "
+"'%(language_name)s' of '%(resource_name)s'?\n"
 msgstr ""
 "\n"
-"  Bent u zeker dat u de vertalingen voor '%(language_name)s' van '%"
-"(resource_name)s' permanent wilt verwijderen?\n"
+"  Bent u zeker dat u de vertalingen voor '%(language_name)s' van "
+"'%(resource_name)s' permanent wilt verwijderen?\n"
 
 #: templates/resources/upload_create_resource_form.html:17
 #, python-format
@@ -3609,11 +3666,11 @@ msgstr ""
 #: templates/teams/team_detail.html:52
 #, python-format
 msgid ""
-"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
-"Vertaalteams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>"
+"Vertaalteams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 
 #: templates/teams/team_detail.html:64
 msgid "Mainlist:"
@@ -3655,15 +3712,15 @@ msgid_plural "Team Translating Resources:"
 msgstr[0] "Team vertaalbron"
 msgstr[1] "Team vertaalbronnen:"
 
-#: templates/teams/team_detail.html:269
+#: templates/teams/team_detail.html:267
 msgid "Team Members:"
 msgstr "Teamleden:"
 
-#: templates/teams/team_detail.html:279
+#: templates/teams/team_detail.html:277
 msgid "Leave"
 msgstr "Verlaten"
 
-#: templates/teams/team_detail.html:315
+#: templates/teams/team_detail.html:313
 msgid "Delete team"
 msgstr "Team wissen"
 
@@ -3733,8 +3790,8 @@ msgstr "Dit project gebruikt geen vertaalteams"
 msgid ""
 "This project does not maintain its own teams, but has chosen to re-use the "
 "teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
-"order to send translations here you'll need to join a team of '%"
-"(outsource_project)s'."
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 "Dit project onderhoudt zijn eigen teams niet, maar heeft ervoor gekozen om "
 "de teams van project '<a href=%(outsource_url)s>%(outsource_project)s</a>' "
@@ -3836,11 +3893,11 @@ msgstr "Validatieproces van e-mail"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
-"U kan het validatieproces van uw e-mailadres beheren via de <a href=\"%"
-"(profile_overview)s\">overzichtspagina</a>."
+"U kan het validatieproces van uw e-mailadres beheren via de <a href="
+"\"%(profile_overview)s\">overzichtspagina</a>."
 
 #: templates/userprofile/account/email_validation_done.html:17
 msgid "E-mail address validated successfully."
@@ -4675,8 +4732,5 @@ msgstr "Je hebt een toestemming verwijderd."
 msgid "You removed the permission request."
 msgstr "Je hebt een verzoek om toestemming verwijderd."
 
-#~ msgid "Uploaded file contains DOS newlines (\\r)!"
-#~ msgstr "Geüpload bestand bevat DOS-regeleindes "
-
-#~ msgid "Uploaded file header doesn't have '%s' metadata!"
-#~ msgstr "De header van het geüploade bestand heeft geen '%s'-veld!"
+#~ msgid "No resources are registered for this release yet."
+#~ msgstr "Er zijn nog geen bronnen geregistreerd voor dit project."

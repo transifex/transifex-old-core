@@ -6,14 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-10 12:08+0000\n"
+"POT-Creation-Date: 2010-12-20 23:15+0000\n"
 "PO-Revision-Date: 2010-10-27 14:47+0000\n"
 "Last-Translator: diegobz <diegobz@indifex.com>\n"
 "Language-Team: Gujarati <None>\n"
+"Language: gu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: actionlog/filters.py:12
@@ -78,8 +78,9 @@ msgid ""
 "by pulling and merging from the given URL."
 msgstr ""
 
-#: addons/autofetch/models.py:25 resources/models.py:197
+#: addons/autofetch/models.py:25 resources/models.py:198
 #: templates/projects/release_language_detail.html:64
+#: templates/projects/release_language_detail.html:186
 #: templates/teams/team_detail.html:140
 msgid "Resource"
 msgstr "સ્રોત"
@@ -131,7 +132,7 @@ msgstr "સ્રોત માટે કોડનો સ્નીપેટ બ�
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:134
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:136
 msgid "Hidden"
 msgstr "છુપું"
 
@@ -303,8 +304,8 @@ msgid ""
 "in %(language)s</a> is about to expire on %(expires)s\n"
 msgstr ""
 "\n"
-"&lt;a href=\"http://%(current_site)s%(resource_url)s\"&gt;%(resource)s in %"
-"(language)s&lt;/a&gt; નું તાળું %(expires)s સમયે સમાપ્ત થશે.\n"
+"&lt;a href=\"http://%(current_site)s%(resource_url)s\"&gt;%(resource)s in "
+"%(language)s&lt;/a&gt; નું તાળું %(expires)s સમયે સમાપ્ત થશે.\n"
 
 #: addons/lotte/views.py:68
 msgid ""
@@ -343,56 +344,81 @@ msgid ""
 "entirely empty!"
 msgstr ""
 
-#: addons/lotte/views.py:546
-msgid "Translation must start with a newline (\\n)"
-msgstr ""
-
-#: addons/lotte/views.py:549
-msgid "Translation should not start with a newline (\\n)"
+#: addons/lotte/views.py:545
+msgid "Translation string only contains whitespaces."
 msgstr ""
 
 #: addons/lotte/views.py:554
-msgid "Translation must end with a newline (\\n)"
-msgstr ""
-
-#: addons/lotte/views.py:557
-msgid "Translation should not end with a newline (\\n)"
+#, python-format
+msgid ""
+"Translation string doesn't contain the same number of '%s' as the source "
+"string."
 msgstr ""
 
 #: addons/lotte/views.py:566
 #, python-format
+msgid ""
+"The following url is either missing form the translation os has been "
+"translated: '%s'."
+msgstr ""
+
+#: addons/lotte/views.py:578
+#, python-format
+msgid ""
+"The following email is either missing form the translation os has been "
+"translated: '%s'."
+msgstr ""
+
+#: addons/lotte/views.py:589
+msgid "Translation must start with a newline (\\n)"
+msgstr ""
+
+#: addons/lotte/views.py:592
+msgid "Translation should not start with a newline (\\n)"
+msgstr ""
+
+#: addons/lotte/views.py:597
+msgid "Translation must end with a newline (\\n)"
+msgstr ""
+
+#: addons/lotte/views.py:600
+msgid "Translation should not end with a newline (\\n)"
+msgstr ""
+
+#: addons/lotte/views.py:609
+#, python-format
 msgid "Number %s is in the source string but not in the translation."
 msgstr ""
 
-#: addons/lotte/views.py:582
+#: addons/lotte/views.py:625
 #, python-format
 msgid "The expression '%s' is not present in the translation."
 msgstr ""
 
-#: addons/lotte/views.py:592
+#: addons/lotte/views.py:635
 #, python-format
 msgid "The expression '%s' is not present in the source string."
 msgstr ""
 
-#: addons/lotte/views.py:601
+#: addons/lotte/views.py:644
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
 msgstr ""
 
-#: addons/lotte/views.py:625
+#: addons/lotte/views.py:668
 msgid "Translation updated successfully in the DB"
 msgstr ""
 
-#: addons/lotte/views.py:637
+#: addons/lotte/views.py:680
 msgid "New translation stored successfully in the DB"
 msgstr ""
 
-#: addons/lotte/views.py:640
+#: addons/lotte/views.py:683
 msgid "The translation string is empty"
 msgstr ""
 
-#: addons/lotte/views.py:645
+#: addons/lotte/views.py:688
 msgid "Error occurred while trying to save translation."
 msgstr ""
 
@@ -422,7 +448,7 @@ msgstr "શબ્દમાળા ID:"
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:119
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:121
 #: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
@@ -434,7 +460,7 @@ msgid "Description:"
 msgstr "વર્ણન:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#: resources/models.py:175
+#: resources/models.py:176
 msgid "Occurrences"
 msgstr "વારાઓ"
 
@@ -618,7 +644,7 @@ msgid "Total"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:749
-#: addons/lotte/templates/view_strings.html:205 resources/models.py:308
+#: addons/lotte/templates/view_strings.html:205 resources/models.py:311
 msgid "Source String"
 msgstr "સ્રોત શબ્દમાળા"
 
@@ -675,8 +701,8 @@ msgstr "સ્રોત પ્રાધાન્ય"
 msgid "resource priorities"
 msgstr "સ્રોત પ્રાધાન્ય"
 
-#: addons/suggestions/models.py:19 resources/models.py:161
-#: resources/models.py:289
+#: addons/suggestions/models.py:19 resources/models.py:162
+#: resources/models.py:292
 msgid "String"
 msgstr "શબ્દમાળા"
 
@@ -684,8 +710,8 @@ msgstr "શબ્દમાળા"
 msgid "The actual string content of suggestion."
 msgstr "સૂચનની વાસ્તવિક શબ્દમાળા વિષયસૂચી"
 
-#: addons/suggestions/models.py:21 resources/models.py:163
-#: resources/models.py:291
+#: addons/suggestions/models.py:21 resources/models.py:164
+#: resources/models.py:294
 msgid "String Hash"
 msgstr "શબ્દમાળા હેશ"
 
@@ -711,11 +737,11 @@ msgstr "સ્રોત પ્રવેશ"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr ""
 
-#: addons/suggestions/models.py:40 resources/models.py:314
+#: addons/suggestions/models.py:40 resources/models.py:317
 msgid "Target Language"
 msgstr "લક્ષ્ય ભાષા"
 
-#: addons/suggestions/models.py:41 resources/models.py:315
+#: addons/suggestions/models.py:41 resources/models.py:318
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr ""
@@ -812,7 +838,7 @@ msgid "Go"
 msgstr "જાવ"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/teams/team_detail.html:296
+#: templates/timeline.html:24 templates/teams/team_detail.html:294
 msgid "None available"
 msgstr "કંઈ ઉપલબ્ધ નથી"
 
@@ -965,8 +991,8 @@ msgid "The languages spoken on %s."
 msgstr "%s પર બોલવામાં આવતી ભાષાઓ."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:117
-#: releases/models.py:33 resources/models.py:65
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:119
+#: releases/models.py:33 resources/models.py:55
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1033,12 +1059,12 @@ msgstr "ભાષા"
 msgid "languages"
 msgstr "ભાષાઓ"
 
-#: projects/api.py:234 projects/api.py:317
+#: projects/api.py:234 projects/api.py:305
 #, python-format
 msgid "%i strings added"
 msgstr "%i શબ્દમાળાઓ ઉમેરાઈ"
 
-#: projects/api.py:236 projects/api.py:319
+#: projects/api.py:236 projects/api.py:307
 #, python-format
 msgid "%i strings updated"
 msgstr "%i શબ્દમાળાઓ સુધારાઈ"
@@ -1143,126 +1169,126 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "સ્રોત માટે શોધો"
 
-#: projects/models.py:110
+#: projects/models.py:112
 msgid "Private"
 msgstr "ખાનગી"
 
-#: projects/models.py:111
+#: projects/models.py:113
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
 msgstr ""
 
-#: projects/models.py:114 releases/models.py:30 resources/models.py:62
+#: projects/models.py:116 releases/models.py:30 resources/models.py:52
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr ""
 
-#: projects/models.py:115 releases/models.py:31 resources/models.py:63
+#: projects/models.py:117 releases/models.py:31 resources/models.py:53
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr ""
 
-#: projects/models.py:118
+#: projects/models.py:120
 msgid "A short name or very short description."
 msgstr "ટૂંકુ નામ કે ખૂબ ટૂંકુ વર્ણન."
 
-#: projects/models.py:120
+#: projects/models.py:122
 msgid "A sentence or two describing the object (optional)."
 msgstr "ધ્યેયનું વર્ણન કરતું વાક્ય એક કે બે લીટીમાં (વૈકલ્પિક)."
 
-#: projects/models.py:121 releases/models.py:38
+#: projects/models.py:123 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "લાંબુ વર્ણન"
 
-#: projects/models.py:123
+#: projects/models.py:125
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "લાંબુ વર્ણન (વૈકલ્પિક). માર્કડાઉન વાક્યરચના વાપરો."
 
-#: projects/models.py:124 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:126 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "ઘરપાનું"
 
-#: projects/models.py:125
+#: projects/models.py:127
 msgid "Feed"
 msgstr "ફીડ"
 
-#: projects/models.py:126
+#: projects/models.py:128
 msgid "An RSS feed with updates to the project."
 msgstr "પ્રોજેક્ટના સુધારાઓ સાથેનું RSS ફીડ."
 
-#: projects/models.py:127
+#: projects/models.py:129
 msgid "Bug tracker"
 msgstr "ભૂલ ટ્રેક કરનાર"
 
-#: projects/models.py:128
+#: projects/models.py:130
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "ભૂલ અને ટીકીટો (Bugzilla, Trac, વગેરે) ટ્રેક કરતી સિસ્ટમો માટેની URL."
 
-#: projects/models.py:130
+#: projects/models.py:132
 msgid "Anyone can submit"
 msgstr "કોઈપણ જમા કરી શકે"
 
-#: projects/models.py:132
+#: projects/models.py:134
 msgid "Can anyone submit files to this project?"
 msgstr "શું કોઈપણ આ પ્રોજેક્ટમાં ફાઈલો જમા કરી શકે?"
 
-#: projects/models.py:135
+#: projects/models.py:137
 msgid "Hide this object from the list view?"
 msgstr "શું આ ઓબ્જેક્ટને યાદી દેખાવમાંથી છુપાવવો છે?"
 
-#: projects/models.py:136
+#: projects/models.py:138
 msgid "Enabled"
 msgstr "સક્રિય કરેલ"
 
-#: projects/models.py:137
+#: projects/models.py:139
 msgid "Enable this object or disable its use?"
 msgstr "આ ઓબ્જેક્ટને સક્રિય કરવું છે કે પછી તેનો વપરાશ નિષ્ક્રિય કરવો છે?"
 
-#: projects/models.py:141 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:143 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "ટેગ"
 
-#: projects/models.py:144 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:146 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr ""
 
-#: projects/models.py:148
+#: projects/models.py:150
 msgid "Outsource project"
 msgstr "પ્રોજેક્ટ આઉટસોર્સ કરો"
 
-#: projects/models.py:149
+#: projects/models.py:151
 msgid "Project that owns the access control of this project."
 msgstr "પ્રોજેક્ટ કે જેને આ પ્રોજેક્ટની વપરાશ નિયંત્રણની માલીકિ હોય."
 
-#: projects/models.py:152 storage/models.py:44
+#: projects/models.py:154 storage/models.py:44
 msgid "Owner"
 msgstr "માલિક"
 
-#: projects/models.py:153
+#: projects/models.py:155
 msgid "The user who owns this project."
 msgstr "વપરાશકર્તા કે જેની આ પ્રોજેક્ટની માલિકી છે."
 
-#: projects/models.py:156 releases/models.py:60
+#: projects/models.py:158 releases/models.py:60
 msgid "HTML Description"
 msgstr "HTML વર્ણન"
 
-#: projects/models.py:158 releases/models.py:62
+#: projects/models.py:160 releases/models.py:62
 msgid "Description in HTML."
 msgstr "HTML માં વર્ણન."
 
-#: projects/models.py:173
+#: projects/models.py:175
 #, python-format
 msgid "<Project: %s>"
 msgstr "&lt;પ્રોજેક્ટ: %s&gt;"
 
-#: projects/models.py:176
+#: projects/models.py:178
 msgid "project"
 msgstr "પ્રોજેક્ટ"
 
-#: projects/models.py:177 templates/projects/project_list.html:19
+#: projects/models.py:179 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "પ્રોજેક્ટો"
 
@@ -1302,7 +1328,7 @@ msgstr "કુલ:"
 msgid "The project '%s' was deleted."
 msgstr "પ્રોજેક્ટ '%s' કાઢી નંખાયો હતો."
 
-#: projects/views/release.py:95
+#: projects/views/release.py:119
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "પ્રકાશન '%s' કાઢી નંખાયુ હતું."
@@ -1442,7 +1468,7 @@ msgid ""
 "version."
 msgstr ""
 
-#: releases/models.py:65 resources/models.py:89 teams/models.py:29
+#: releases/models.py:65 resources/models.py:79 teams/models.py:29
 #: teams/models.py:98
 msgid "Project"
 msgstr "પ્રોજેક્ટ"
@@ -1482,171 +1508,171 @@ msgid ""
 msgstr ""
 "તમારી ફાઈલ સિસ્ટમમાંથી આ સ્રોત માટે ભાષાંતરો ભરવા માટે વાપરવાની ફાઈલ પસંદ કરો."
 
-#: resources/models.py:66
+#: resources/models.py:56
 msgid "A descriptive name unique inside the project."
 msgstr "પ્રોજેક્ટમાં વર્ણનાત્મક નામ અનન્ય હોય છે."
 
-#: resources/models.py:69
+#: resources/models.py:59
 msgid "Source file"
 msgstr "સ્રોત ફાઈલ"
 
-#: resources/models.py:71
+#: resources/models.py:61
 msgid "A local file used to extract the strings to be translated."
 msgstr "ભાષાંતર કરવા માટેની શબ્દમાળાઓ બહાર કાઢવા માટે વાપરવામાં આવતી સ્થાનીય ફાઇલ."
 
-#: resources/models.py:73
+#: resources/models.py:63
 msgid "I18n type"
 msgstr "I18n પ્રકાર"
 
-#: resources/models.py:75
+#: resources/models.py:65
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "આ સ્રોત (%s) માં વાપરવાની i18n પદ્ધતિ."
 
-#: resources/models.py:77
+#: resources/models.py:67
 msgid "Accepting translations?"
 msgstr "શું ભાષાંતરો સ્વીકારવામાં આવે છે?"
 
-#: resources/models.py:79
+#: resources/models.py:69
 msgid "Is this resource accepting submissions of translations?"
 msgstr "શું આ સ્રોત ભાષાંતરોને જમા કરવાનું સ્વીકારે છે?"
 
-#: resources/models.py:87
+#: resources/models.py:77
 msgid "Source Language"
 msgstr "સ્રોત ભાષા"
 
-#: resources/models.py:88
+#: resources/models.py:78
 msgid "The source language of this Resource."
 msgstr "આ સ્રોત માટે સ્રોત ભાષા."
 
-#: resources/models.py:91
+#: resources/models.py:81
 msgid "The project containing the translation resource."
 msgstr ""
 
-#: resources/models.py:104
+#: resources/models.py:94
 msgid "resource"
 msgstr "સ્રોત"
 
-#: resources/models.py:105
+#: resources/models.py:95
 msgid "resources"
 msgstr "સ્રોતો"
 
-#: resources/models.py:162
+#: resources/models.py:163
 msgid "The actual string content of source string."
 msgstr "સ્રોત શબ્દમાળાના વાસ્તવિક શબ્દમાળા સમાવિષ્ટો."
 
-#: resources/models.py:165 resources/models.py:293
+#: resources/models.py:166 resources/models.py:296
 msgid "The hash of the translation string used for indexing"
 msgstr "ઈન્ડેક્સીંગ માટે ભાષાંતર શબ્દમાળાની વાપરવામાં આવતી હેશ"
 
-#: resources/models.py:166
+#: resources/models.py:167
 msgid "Context"
 msgstr "સંદર્ભ"
 
-#: resources/models.py:168
+#: resources/models.py:169
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr "સ્રોત શબ્દમાળાનું વર્ણન. આ ક્ષેત્ર સ્રોતની અંદર સ્રોત શબ્દમાળાનો સંદર્ભ સ્પષ્ટ કરે છે."
 
-#: resources/models.py:170 templates/userprofile/profile/location.html:27
+#: resources/models.py:171 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "સ્થાન"
 
-#: resources/models.py:171
+#: resources/models.py:172
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
 msgstr ""
 
-#: resources/models.py:177
+#: resources/models.py:178
 msgid "The occurrences of the source string in the project code."
 msgstr "સ્રોત શબ્દમાળા પ્રોજેક્ટ કોડમાં જેટલી વાર આવે એ."
 
-#: resources/models.py:178 resources/models.py:183
+#: resources/models.py:179 resources/models.py:184
 msgid "Flags"
 msgstr "ફ્લેગ"
 
-#: resources/models.py:180
+#: resources/models.py:181
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr ""
 
-#: resources/models.py:185
+#: resources/models.py:186
 msgid "The comment of the developer."
 msgstr "વિકાસકર્તાની ટિપ્પણી."
 
-#: resources/models.py:187
+#: resources/models.py:188
 msgid "Pluralized"
 msgstr ""
 
-#: resources/models.py:189
+#: resources/models.py:190
 msgid "Identify if the entity is pluralized ot not."
 msgstr ""
 
-#: resources/models.py:199
+#: resources/models.py:200
 msgid "The translation resource which owns the source string."
 msgstr ""
 
-#: resources/models.py:206
+#: resources/models.py:209
 msgid "source string"
 msgstr "સ્રોત શબ્દમાળા"
 
-#: resources/models.py:207
+#: resources/models.py:210
 msgid "source strings"
 msgstr "સ્રોત શબ્દમાળાઓ"
 
-#: resources/models.py:290
+#: resources/models.py:293
 msgid "The actual string content of translation."
 msgstr "ભાષાંતરની વાસ્તવિક શબ્દમાળા વિષયસૂચી."
 
-#: resources/models.py:294
+#: resources/models.py:297
 msgid "Plural rule"
 msgstr "બહુવચન નિયમ"
 
-#: resources/models.py:296
+#: resources/models.py:299
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
 "pluralized, the rule must be 5 (other)."
 msgstr ""
 
-#: resources/models.py:311
+#: resources/models.py:314
 msgid "The source string this translation string translates."
 msgstr ""
 
-#: resources/models.py:318
+#: resources/models.py:321
 msgid "Committer"
 msgstr "જમા કરનાર"
 
-#: resources/models.py:319
+#: resources/models.py:322
 msgid "The user who committed the specific translation."
 msgstr "વપરાશકર્તા કે જેણે ચોક્કસ ભાષાંતર જમા કર્યું છે."
 
-#: resources/models.py:329
+#: resources/models.py:332
 msgid "translation string"
 msgstr "ભાષાંતર શબ્દમાળા"
 
-#: resources/models.py:330
+#: resources/models.py:333
 msgid "translation strings"
 msgstr "ભાષાંતર શબ્દમાળાઓ"
 
-#: resources/models.py:363
+#: resources/models.py:366
 msgid "This is the actual content of the template"
 msgstr "ટેમ્પલેટની આ વાસ્તવિક વિષયસૂચી છે."
 
-#: resources/models.py:367
+#: resources/models.py:370
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr ""
 
-#: resources/models.py:371
+#: resources/models.py:374
 msgid "Template"
 msgstr "ટેમ્પલેટ"
 
-#: resources/models.py:372
+#: resources/models.py:375
 msgid "Templates"
 msgstr "ટેમ્પલેટો"
 
@@ -1704,11 +1730,11 @@ msgstr ""
 msgid "Your file doesn't seem to contain valid xml: %s!"
 msgstr ""
 
-#: storage/api.py:128
+#: storage/api.py:129
 msgid "A strange error happened."
 msgstr "વિચિત્ર ભૂલ ઉદ્ભવી."
 
-#: storage/api.py:145
+#: storage/api.py:146
 msgid "File uploaded successfully."
 msgstr "ફાઈલ સફળતાપૂર્વક અપલોડ થઈ."
 
@@ -1747,19 +1773,23 @@ msgstr ""
 msgid "You have uploaded an empty file!"
 msgstr "તમે ખાલી ફાઈલ અપલોડ કરી છે!"
 
-#: teams/forms.py:12
+#: teams/forms.py:15
 msgid ""
 "Coordinators are people that can manage the members of the team, for "
 "example. Search for usernames."
 msgstr ""
 
-#: teams/forms.py:16
+#: teams/forms.py:19
 msgid ""
 "Members are actually people that can submit translations. Search for "
 "usernames."
 msgstr ""
 
-#: teams/forms.py:52
+#: teams/forms.py:72 teams/forms.py:120
+msgid "Enter a valid value."
+msgstr ""
+
+#: teams/forms.py:84
 #, python-format
 msgid ""
 "You have the user '%s' in both coordinators and members lists. Please drop "
@@ -1771,7 +1801,7 @@ msgid "The project this team works on."
 msgstr ""
 
 #: teams/models.py:32 teams/models.py:101
-#: templates/projects/release_detail.html:125
+#: templates/projects/release_detail.html:151
 #: templates/resources/resource_detail.html:178
 msgid "Language"
 msgstr "ભાષા"
@@ -1908,11 +1938,11 @@ msgstr "ભાષાઓ"
 #: templates/base-sample.html:71
 #, python-format
 msgid ""
-"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">%"
-"(user_username)s</a>!"
+"Welcome <a title=\"Profile settings\" href=\"%(user_profile)s\">"
+"%(user_username)s</a>!"
 msgstr ""
-"સ્વાગત &lt;a title=\"રૂપરેખા સુયોજનો\" href=\"%(user_profile)s\"&gt;%"
-"(user_username)s&lt;/a&gt;!"
+"સ્વાગત &lt;a title=\"રૂપરેખા સુયોજનો\" href=\"%(user_profile)s\"&gt;"
+"%(user_username)s&lt;/a&gt;!"
 
 #: templates/base-sample.html:73
 msgid "Sign out from the website"
@@ -2001,11 +2031,11 @@ msgstr ""
 #: templates/search.html:63
 #, python-format
 msgid ""
-"Couldn't find your project? Why don't you go ahead and <a href=\"%"
-"(project_create_url)s\">add it</a>?"
+"Couldn't find your project? Why don't you go ahead and <a href="
+"\"%(project_create_url)s\">add it</a>?"
 msgstr ""
-"તમારો પ્રોજેક્ટ શોધી શક્યા નહીં? શા માટે તમે આગળ વધતા નથી અને <a href=\"%"
-"(project_create_url)s\">એને ઉમેરતા નથી</a>?"
+"તમારો પ્રોજેક્ટ શોધી શક્યા નહીં? શા માટે તમે આગળ વધતા નથી અને <a href="
+"\"%(project_create_url)s\">એને ઉમેરતા નથી</a>?"
 
 #: templates/search_form.html:4
 msgid "Find projects by name, description, etc."
@@ -2251,8 +2281,8 @@ msgstr ""
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">weekly report</span> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project was <span class="
+"The <span class=\"notice_subject\">weekly report</span> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project was <span class="
 "\"notice_subject\">generated</span>"
 msgstr ""
 "<a href=\"%(project_url)s\">%(project_name)s</a> પ્રોજેક્ટનો <span class="
@@ -2265,8 +2295,8 @@ msgid ""
 "A new resource <a href=\"%(resource_url)s\">%(resource_name)s</a> has been "
 "added to the <a href=\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
-"નવો સ્રોત <a href=\"%(resource_url)s\">%(resource_name)s</a> એ <a href=\"%"
-"(project_url)s\">%(project_name)s</a> પ્રોજેક્ટમાં ઉમેરાઇ ગયો છે"
+"નવો સ્રોત <a href=\"%(resource_url)s\">%(resource_name)s</a> એ <a href="
+"\"%(project_url)s\">%(project_name)s</a> પ્રોજેક્ટમાં ઉમેરાઇ ગયો છે"
 
 #: templates/notification/project_resource_changed/notice.html:2
 #, python-format
@@ -2278,16 +2308,16 @@ msgstr ""
 #: templates/notification/project_resource_deleted/notice.html:2
 #, python-format
 msgid ""
-"The resource '%(resource_name)s' has been deleted from the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"The resource '%(resource_name)s' has been deleted from the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_resource_translated/notice.html:2
 #, python-format
 msgid ""
 "A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
-"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_resource_translation_changed/notice.html:2
@@ -2321,8 +2351,8 @@ msgstr ""
 msgid ""
 "<span class=\"notice_action\">Withdrew</span> own <span class="
 "\"notice_subject\">request</span> of access to submit translations to the "
-"<span class=\"notice_action\">project</span> <a href=\"%(project_url)s\">%"
-"(project)s</a>"
+"<span class=\"notice_action\">project</span> <a href=\"%(project_url)s\">"
+"%(project)s</a>"
 msgstr ""
 
 #: templates/notification/project_submit_access_requested/notice.html:2
@@ -2346,16 +2376,17 @@ msgstr ""
 #, python-format
 msgid ""
 "A new <a href=\"%(team_url)s\">%(team_name)s translation team</a> was <span "
-"class=\"notice_action\">added</span> to the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project."
+"class=\"notice_action\">added</span> to the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_changed/notice.html:2
 #, python-format
 msgid ""
 "The <a href=\"%(team_url)s\">%(team_name)s</a> translation <span class="
-"\"notice_subject\">team</span> of the <a href=\"%(project_url)s\">%"
-"(project_name)s</a> project was <span class=\"notice_action\">changed</span>."
+"\"notice_subject\">team</span> of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project was <span class=\"notice_action\">changed</"
+"span>."
 msgstr ""
 
 #: templates/notification/project_team_deleted/notice.html:2
@@ -2369,17 +2400,17 @@ msgstr ""
 #: templates/notification/project_team_join_approved/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">user</span> <a href=\"%(user_url)s\">%"
-"(user_name)s</a> was <span class=\"notice_action\">added</span> as member to "
-"the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
+"The <span class=\"notice_subject\">user</span> <a href=\"%(user_url)s\">"
+"%(user_name)s</a> was <span class=\"notice_action\">added</span> as member "
+"to the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
 
 #: templates/notification/project_team_join_denied/notice.html:2
 #, python-format
 msgid ""
-"%(performer)s <span class=\"notice_action\">denied</span> user <a href=\"%"
-"(user_url)s\">%(user_name)s</a>'s <span class=\"notice_subject\">request</"
+"%(performer)s <span class=\"notice_action\">denied</span> user <a href="
+"\"%(user_url)s\">%(user_name)s</a>'s <span class=\"notice_subject\">request</"
 "span> to join the <a href=\"%(team_url)s\">%(team_name)s translation team</"
 "a> of the <a href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
@@ -2387,9 +2418,9 @@ msgstr ""
 #: templates/notification/project_team_join_requested/notice.html:2
 #, python-format
 msgid ""
-"<span class=\"notice_action\">Requested</span> to join the <a href=\"%"
-"(team_url)s\">%(team_name)s translation team</a> of the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project"
+"<span class=\"notice_action\">Requested</span> to join the <a href="
+"\"%(team_url)s\">%(team_name)s translation team</a> of the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project"
 msgstr ""
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
@@ -2411,10 +2442,10 @@ msgstr ""
 #: templates/notification/project_team_request_denied/notice.html:2
 #, python-format
 msgid ""
-"The <span class=\"notice_subject\">request</span> to create a <a href=\"%"
-"(language_url)s\">%(language_name)s</a> translation team for the <a href=\"%"
-"(project_url)s\">%(project_name)s</a> project was <span class=\"notice_action"
-"\">denied</span>."
+"The <span class=\"notice_subject\">request</span> to create a <a href="
+"\"%(language_url)s\">%(language_name)s</a> translation team for the <a href="
+"\"%(project_url)s\">%(project_name)s</a> project was <span class="
+"\"notice_action\">denied</span>."
 msgstr ""
 
 #: templates/notification/project_team_requested/notice.html:2
@@ -2456,8 +2487,8 @@ msgstr "&lt;em&gt;%(project_name)s&lt;/em&gt; ને આવજો કહીશ�
 #: templates/projects/project_confirm_delete.html:17
 #, python-format
 msgid ""
-"Are you sure you want to permanently delete the registered project '%"
-"(project_name)s'?"
+"Are you sure you want to permanently delete the registered project "
+"'%(project_name)s'?"
 msgstr ""
 "શું તમે ખરેખર નોંધણી થયેલ પ્રોજેક્ટ '%(project_name)s' ને કાયમ માટે કાઢી નાંખવા માંગો છો?"
 
@@ -2475,7 +2506,7 @@ msgid "Private Project"
 msgstr "ખાનગી પ્રોજેક્ટ"
 
 #: templates/projects/project_detail.html:41
-#: templates/projects/release_detail.html:69
+#: templates/projects/release_detail.html:72
 #: templates/resources/resource_detail.html:99
 #: templates/teams/team_detail.html:56
 msgid "Edit"
@@ -2483,7 +2514,7 @@ msgstr "ફેરફાર"
 
 #: templates/projects/project_detail.html:47
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:76
+#: templates/projects/release_detail.html:79
 msgid "Details"
 msgstr "વિગતો"
 
@@ -2492,7 +2523,7 @@ msgid "Watch:"
 msgstr "નજર રાખો:"
 
 #: templates/projects/project_detail.html:63
-#: templates/projects/release_detail.html:80
+#: templates/projects/release_detail.html:83
 msgid "Homepage:"
 msgstr "ઘરપાનું:"
 
@@ -2531,7 +2562,7 @@ msgstr "સ્ક્રીનશોટ"
 
 #: templates/projects/project_detail.html:124
 #: templates/resources/resource_detail.html:333
-#: templates/teams/team_detail.html:292
+#: templates/teams/team_detail.html:290
 msgid "History"
 msgstr "ઇતિહાસ"
 
@@ -2652,7 +2683,7 @@ msgid "Subscribe to this feed"
 msgstr ""
 
 #: templates/projects/project_list.html:49
-#: templates/projects/release_detail.html:98
+#: templates/projects/release_detail.html:105
 msgid "Resources:"
 msgstr "સ્રોતો:"
 
@@ -2703,50 +2734,63 @@ msgid ""
 "which works on %(project_name)s?"
 msgstr ""
 
-#: templates/projects/release_detail.html:85
+#: templates/projects/release_detail.html:88
 msgid "Release date:"
 msgstr "પ્રકાશન તારીખ:"
 
-#: templates/projects/release_detail.html:89
+#: templates/projects/release_detail.html:92
 msgid "String freeze:"
 msgstr ""
 
-#: templates/projects/release_detail.html:93
+#: templates/projects/release_detail.html:96
 msgid "Devel freeze:"
 msgstr ""
 
-#: templates/projects/release_detail.html:102
+#: templates/projects/release_detail.html:107
+#: templates/projects/release_detail.html:127
 msgid "Click here to show or hide the resource list"
 msgstr "સ્રોત યાદી બતાવવા કે છુપાવવા માટે અહીં ક્લિક કરો"
 
-#: templates/projects/release_detail.html:103
+#: templates/projects/release_detail.html:108
 #, python-format
 msgid "This release has %(resources_number)s resources."
 msgstr ""
 
-#: templates/projects/release_detail.html:119
+#: templates/projects/release_detail.html:125
+#, fuzzy
+msgid "Private Resources:"
+msgstr "સ્રોત બનાવો"
+
+#: templates/projects/release_detail.html:128
+#, python-format
+msgid ""
+"This release has %(resources_number)s private resources you have access to."
+msgstr ""
+
+#: templates/projects/release_detail.html:145
 msgid "Translation Statistics"
 msgstr "ભાષાંતર પરિસ્થિતિ"
 
-#: templates/projects/release_detail.html:126
+#: templates/projects/release_detail.html:152
 #: templates/projects/release_language_detail.html:65
+#: templates/projects/release_language_detail.html:187
 #: templates/resources/resource_detail.html:179
 #: templates/teams/team_detail.html:141
 msgid "Completion"
 msgstr "સમાપ્તિ"
 
-#: templates/projects/release_detail.html:127
+#: templates/projects/release_detail.html:153
 msgid "Last Translation"
 msgstr "છેલ્લું ભાષાંતર"
 
-#: templates/projects/release_detail.html:156
+#: templates/projects/release_detail.html:182
 #: templates/projects/resource_list.html:90
 #: templates/resources/resource_detail.html:211
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "હજુ ભાષાંતરો નથી"
 
-#: templates/projects/release_detail.html:177
+#: templates/projects/release_detail.html:203
 msgid "Delete release"
 msgstr "પ્રકાશન કાઢી નાંખો"
 
@@ -2782,13 +2826,14 @@ msgstr "પ્રકાશન સંગ્રહો"
 msgid "Release '%(release_name)s"
 msgstr "પ્રકાશન '%(release_name)s"
 
-#: templates/projects/release_language_detail.html:59
+#: templates/projects/release_language_detail.html:60
 msgid "Resource under this Release"
 msgid_plural "Resources under this Release"
 msgstr[0] ""
 msgstr[1] ""
 
 #: templates/projects/release_language_detail.html:66
+#: templates/projects/release_language_detail.html:188
 #: templates/projects/resource_list.html:70
 #: templates/resources/resource_detail.html:180
 #: templates/teams/team_detail.html:142
@@ -2796,43 +2841,51 @@ msgid "Last Updated"
 msgstr "છેલ્લે સુધારાયેલ"
 
 #: templates/projects/release_language_detail.html:67
+#: templates/projects/release_language_detail.html:189
 #: templates/projects/resource_list.html:71
 #: templates/teams/team_detail.html:143
 msgid "Importance"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:72
+#: templates/projects/release_language_detail.html:194
 #: templates/resources/resource_detail.html:185
 #: templates/teams/team_detail.html:149
 msgid "click for translation"
 msgstr "ભાષાંતર માટે ક્લિક કરો"
 
 #: templates/projects/release_language_detail.html:92
+#: templates/projects/release_language_detail.html:214
 #: templates/teams/team_detail.html:171
 msgid "no activity yet"
 msgstr "હજુ કોઈ ક્રિયા નથી"
 
-#: templates/projects/release_language_detail.html:143
+#: templates/projects/release_language_detail.html:141
+#: templates/projects/release_language_detail.html:263
 #: templates/resources/resource_detail.html:29
 #: templates/resources/resource_detail.html:250
 msgid "Please select a target language first."
 msgstr ""
 
-#: templates/projects/release_language_detail.html:153
+#: templates/projects/release_language_detail.html:151
+#: templates/projects/release_language_detail.html:273
 #: templates/resources/resource_detail.html:260
-#: templates/teams/team_detail.html:232
+#: templates/teams/team_detail.html:230
 msgid "Trying to lock resource..."
 msgstr ""
 
-#: templates/projects/release_language_detail.html:176
+#: templates/projects/release_language_detail.html:174
+#: templates/projects/release_language_detail.html:296
 #: templates/resources/resource_detail.html:283
-#: templates/teams/team_detail.html:255
+#: templates/teams/team_detail.html:253
 msgid "Translation Details"
 msgstr "ભાષાંતર વિગતો"
 
-#: templates/projects/release_language_detail.html:183
-msgid "No resources are registered for this release yet."
-msgstr "આ પ્રકાશન માટે હજુ કોઈપણ સ્રોતોની નોંધ થઈ નથી."
+#: templates/projects/release_language_detail.html:182
+msgid "Private Resource that you have access to under this Release"
+msgid_plural "Private resources that you have access to under this Release"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/projects/release_list.html:11
 msgid "Add"
@@ -2846,8 +2899,8 @@ msgstr "પ્રોજેક્ટ પ્રકાશનો"
 #: templates/projects/release_list.html:26
 #, python-format
 msgid ""
-"No releases are registered for this project yet. Why don't you <a href=\"%"
-"(release_create)s\">add one</a>?"
+"No releases are registered for this project yet. Why don't you <a href="
+"\"%(release_create)s\">add one</a>?"
 msgstr ""
 
 #: templates/projects/resource_list.html:9
@@ -2876,17 +2929,17 @@ msgstr ""
 msgid "No committers yet"
 msgstr ""
 
-#: templates/projects/resource_list.html:119
-#: templates/teams/team_detail.html:262
+#: templates/projects/resource_list.html:117
+#: templates/teams/team_detail.html:260
 msgid "No resources are registered for this project yet."
 msgstr "આ પ્રોજેક્ટ માટે હજુ સુધી કોઈપણ સ્રોતોની નોંધ થઈ નથી."
 
-#: templates/projects/resource_list.html:127
+#: templates/projects/resource_list.html:125
 #: templates/resources/resource_detail.html:310
 msgid "Select Language"
 msgstr ""
 
-#: templates/projects/resource_list.html:141
+#: templates/projects/resource_list.html:139
 msgid "Translate All"
 msgstr "બધું ભાષાંતરીત કરો"
 
@@ -3020,8 +3073,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translation resource '%"
-"(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translation resource "
+"'%(resource_name)s'?\n"
 msgstr ""
 
 #: templates/resources/resource_detail.html:107
@@ -3152,8 +3205,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"  Are you sure you want to permanently delete the translations for '%"
-"(language_name)s' of '%(resource_name)s'?\n"
+"  Are you sure you want to permanently delete the translations for "
+"'%(language_name)s' of '%(resource_name)s'?\n"
 msgstr ""
 
 #: templates/resources/upload_create_resource_form.html:17
@@ -3262,11 +3315,11 @@ msgstr ""
 #: templates/teams/team_detail.html:52
 #, python-format
 msgid ""
-"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">%"
-"(language_code)s</sup>"
+"Translation Teams - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 msgstr ""
-"ભાષાંતર ટીમ - %(language_name)s <sup class=\"entry_metalink\">%(language_code)"
-"s</sup>"
+"ભાષાંતર ટીમ - %(language_name)s <sup class=\"entry_metalink\">"
+"%(language_code)s</sup>"
 
 #: templates/teams/team_detail.html:64
 msgid "Mainlist:"
@@ -3308,15 +3361,15 @@ msgid_plural "Team Translating Resources:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/teams/team_detail.html:269
+#: templates/teams/team_detail.html:267
 msgid "Team Members:"
 msgstr "ટીમના સભ્યો:"
 
-#: templates/teams/team_detail.html:279
+#: templates/teams/team_detail.html:277
 msgid "Leave"
 msgstr ""
 
-#: templates/teams/team_detail.html:315
+#: templates/teams/team_detail.html:313
 msgid "Delete team"
 msgstr "ટીમ કાઢી નાંખો"
 
@@ -3384,8 +3437,8 @@ msgstr "આ પ્રોજેક્ટ ભાષાંતર ટીમ વા�
 msgid ""
 "This project does not maintain its own teams, but has chosen to re-use the "
 "teams of project '<a href=%(outsource_url)s>%(outsource_project)s</a>'. In "
-"order to send translations here you'll need to join a team of '%"
-"(outsource_project)s'."
+"order to send translations here you'll need to join a team of "
+"'%(outsource_project)s'."
 msgstr ""
 
 #: templates/teams/team_off.html:19
@@ -3479,8 +3532,8 @@ msgstr "ઇ-મેઇલ માન્યતા પ્રક્રિયા"
 #: templates/userprofile/account/email_validation_done.html:13
 #, python-format
 msgid ""
-"You can manage the e-mail validation process from the <a href=\"%"
-"(profile_overview)s\">overview page</a>."
+"You can manage the e-mail validation process from the <a href="
+"\"%(profile_overview)s\">overview page</a>."
 msgstr ""
 
 #: templates/userprofile/account/email_validation_done.html:17
@@ -4256,6 +4309,9 @@ msgstr "તમે પરવાનગી દૂર કરી."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "તમે પરવાનગી અરજી દૂર કરી."
+
+#~ msgid "No resources are registered for this release yet."
+#~ msgstr "આ પ્રકાશન માટે હજુ કોઈપણ સ્રોતોની નોંધ થઈ નથી."
 
 #~ msgid "Uploaded file contains DOS newlines (\\r)!"
 #~ msgstr "અપલોડ થયેલ ફાઈલ DOS નવીલાઈન (\\r) ધરાવે છે!"
