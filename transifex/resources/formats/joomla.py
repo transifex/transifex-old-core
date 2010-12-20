@@ -13,7 +13,7 @@ from transifex.resources.formats.decorators import *
 from core import GenericTranslation, Handler, STRICT, \
     StringSet
 
-class INIHandler(Handler):
+class JoomlaINIHandler(Handler):
     """
     Handler for Joomla's INI translation files.
     """
