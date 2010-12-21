@@ -14,7 +14,8 @@
 {% block extra_head %}
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.fnSetFilteringDaley.js"></script>
 
 <script type="text/javascript">
 
@@ -139,7 +140,7 @@
                 $('#total_translated_perc').html((translated_strings*100.0/total_strings).toFixed(2) + "%");
                 $('#total_untranslated_perc').html((untranslated_strings*100.0/total_strings).toFixed(2) + "%");
             }
-        });
+        }).fnSetFilteringDelay(500);
 
         $(".filters").change(function() {
             filter_var = "";

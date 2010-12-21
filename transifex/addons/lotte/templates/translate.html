@@ -21,7 +21,8 @@
   <!--[if IE]>
     <link media="screen" href="{{ STATIC_URL }}lotte/css/ie.lotte.css" type="text/css" rel="stylesheet"/>
   <![endif]-->
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.fnSetFilteringDaley.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/tx.lotte2.js"></script>
@@ -384,7 +385,7 @@
                 // Auto expanding textareas.
                 $("textarea.translation").TextAreaExpander();
             }
-        });
+        }).fnSetFilteringDelay(500);
 
         /* move to the next page */
         shortcut.add('Alt+l', function(evt) {
