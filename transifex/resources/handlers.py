@@ -13,17 +13,18 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
     """Invalidate cache keys related to the SourceEntity updates"""
     invalidate_object_cache(resource, language or resource.source_language)
 
-    if language:
-        rl_last_update_now(resource, language)
-    else:
-        rl_last_update_now(resource, resource.source_language)
+    is_source = False
+    if not language or language == resource.source_language:
+        is_source = True
+
+    rl_last_update_now(resource, language or resource.source_language)
 
     invalidate_object_cache(resource.project, language)
 
     for rel in resource.project.releases.all():
         invalidate_object_cache(rel, language)
 
-    if not language:
+    if is_source:
         stats = ResourceStatsList(resource)
         langs = stats.available_languages
     else:
@@ -38,6 +39,9 @@ def invalidate_stats_cache(resource, language=None, **kwargs):
 
     # Number of source strings in resource
     for lang in langs:
+        if is_source:
+            invalidate_object_cache(resource, lang)
+
         team = Team.objects.get_or_none(resource.project, lang.code)
         if team:
             # Template lvl cache for team details
