@@ -109,7 +109,20 @@ class Resource(models.Model):
         """
         Do some etxra processing along with the actual save to db.
         """
+        # If object is new (aka created=True)
+        created=False
+        if not self.pk:
+            created=True
+        # Save the object
         super(Resource, self).save(*args, **kwargs)
+        # Create the team language stat objects
+        if created:
+            RLStats = models.get_model('rlstats', 'RLStats')
+            Team = models.get_model('teams', 'Team')
+            for team in Team.objects.filter(project=self.project):
+                lang = team.language
+                RLStats.objects.get_or_create(resource=self, language=lang)
+
         invalidate_template_cache("project_resource_details",
             self.project.slug, self.slug)
         invalidate_template_cache("resource_details",
@@ -119,10 +132,10 @@ class Resource(models.Model):
         """
         Do some extra processing along with the actual delete to db.
         """
-        invalidate_template_cache("project_resource_details",
-            self.project.slug, self.slug)
-        invalidate_template_cache("resource_details",
-            self.project.slug, self.slug)
+        # Import is here to avoid circular imports
+        from transifex.resources.handlers import invalidate_stats_cache
+
+        invalidate_stats_cache(self, self.source_language)
         RLStats = models.get_model('rlstats', 'RLStats')
         RLStats.objects.filter(resource=self).delete()
         super(Resource, self).delete(*args, **kwargs)

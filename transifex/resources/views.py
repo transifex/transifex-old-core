@@ -86,8 +86,6 @@ def resource_delete(request, project_slug, resource_slug):
         request.user.message_set.create(
             message=_("The translation resource '%s' was deleted.") % resource_.name)
 
-        invalidate_stats_cache(resource_, resource_.source_language)
-        
         if xhr:
             response_dict = {'status': 200}
             return HttpResponse(simplejson.dumps(response_dict), mimetype='application/javascript')
