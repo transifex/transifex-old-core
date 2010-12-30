@@ -79,10 +79,10 @@
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}Strings: {{ strings }}<br/>Words: {{ words }}{% endblocktrans %}">{{ stat.object.name }}</a>
         </td>
         <td class="last_updated">
-          {% with stat.object.last_committer as last_committer %}
+          {% with stat.last_committer as last_committer %}
             <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
           {% endwith %}
-          {% with stat.object.last_update as last_update %}
+          {% with stat.last_update as last_update %}
             {% if last_update %}
                 <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
                 {{ last_update|date:"M d, h:ia" }}
