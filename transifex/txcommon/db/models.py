@@ -25,6 +25,48 @@ def uncompress_string(s):
     return ret
 
 
+class ChainerManager(models.Manager):
+    """
+    Custom manager that has the ability to chain its methods to each other or 
+    to standard queryset filters.
+
+    It needs to receive a custom ``django.db.model.query.QuerySet`` in order
+    to be able to chain the methods.
+
+    Example:
+
+    NewsQuerySet(models.query.QuerySet):
+        def live(self):
+            return self.filter(state='published')
+
+        def interesting(self):
+            return self.filter(interesting=True)
+
+    ChainerManager(NewsQuerySet).live().interesting()
+    [<NewsItem: ...>]
+
+    Usually a model will use this manager in the following way:
+
+    NewsItem(models.Model):
+        objects = ChainerManager(NewsQuerySet)
+
+    Reference: http://djangosnippets.org/snippets/562/
+
+    """
+    def __init__(self, qs_class=models.query.QuerySet):
+        super(ChainerManager,self).__init__()
+        self.queryset_class = qs_class
+
+    def get_query_set(self):
+        return self.queryset_class(self.model)
+
+    def __getattr__(self, attr, *args):
+        try:
+            return getattr(self.__class__, attr, *args)
+        except AttributeError:
+            return getattr(self.get_query_set(), attr, *args)
+
+
 class IntegerTupleField(models.CharField):
     """
     A field type for holding a tuple of integers. Stores as a string

@@ -3,7 +3,8 @@
 String Level models.
 """
 
-import datetime, sys, re
+import datetime, sys, re, operator
+from itertools import groupby
 
 from hashlib import md5
 from django.conf import settings
@@ -18,11 +19,63 @@ from django.contrib.auth.models import User, AnonymousUser
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
-from transifex.txcommon.db.models import CompressedTextField
+from transifex.txcommon.db.models import CompressedTextField, ChainerManager
 from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
 
-class ResourceManager(models.Manager):
+
+def _aggregate_rlstats(rlstats_query, grouping_key):
+    """
+    Yield AggregatedRLStats objects resulting from grouped and summed RLStats
+    objects given in the ``rlstats_query``. The grouping happens per language.
+
+    Parameters:
+    rlstats_query: This is the queryset of RLStats to be aggregated
+    """
+
+    class AggregatedRLStats(object):
+        pass
+
+    grouped_rlstats = groupby(rlstats_query.order_by(grouping_key),
+        key=operator.attrgetter(grouping_key))
+
+    for key, rlstats in grouped_rlstats:
+        stats = AggregatedRLStats()
+        # Init attrs
+        stats.translated = 0
+        stats.untranslated = 0
+        stats.translated_perc = 0
+        stats.untranslated_perc = 0
+        stats.last_update = None
+        stats.last_committer = None
+        stats.wordcount = 0
+        stats.total = 0
+        stats.object = key
+        count = 0
+
+        for rl in rlstats:
+            stats.translated += rl.translated
+            stats.untranslated += rl.untranslated
+            stats.translated_perc += rl.translated_perc
+            stats.untranslated_perc += rl.untranslated_perc
+            stats.total += rl.total
+            #FIXME: Add wordcount to RLStats and Translation
+            #stats.wordcount += rl.wordcount
+            count += 1
+
+            if not stats.last_update or rl.last_update > stats.last_update:
+                stats.last_update = rl.last_update
+                stats.last_committer = rl.last_committer if rl.last_committer_id else None
+
+        # Recalculate percentage completion
+        stats.translated_perc = stats.translated_perc / count
+        stats.untranslated_perc = 100 - stats.translated_perc
+
+        stats.number_resources = count
+        yield stats
+
+
+class ResourceQuerySet(models.query.QuerySet):
 
     def for_user(self, user):
         """
@@ -31,6 +84,9 @@ class ResourceManager(models.Manager):
         doesn't have access to.
         """
         return Resource.objects.filter(
+            #FIXME: Adding "Project.objects.for_user(user).values('pk').query"
+            # breaks some queries like
+            # RLStats.objects.private(User.objects.get(username="margie")).count()
             project__in=Project.objects.for_user(user))
 
 class Resource(models.Model):
@@ -88,7 +144,7 @@ class Resource(models.Model):
         help_text=_("The project containing the translation resource."))
 
     # Managers
-    objects = ResourceManager()
+    objects = ChainerManager(ResourceQuerySet)
 
     def __unicode__(self):
         return u'%s (%s)' % (self.slug, self.project)
@@ -117,11 +173,11 @@ class Resource(models.Model):
         super(Resource, self).save(*args, **kwargs)
         # Create the team language stat objects
         if created:
-            RLStats = models.get_model('rlstats', 'RLStats')
             Team = models.get_model('teams', 'Team')
-            for team in Team.objects.filter(project=self.project):
-                lang = team.language
-                RLStats.objects.get_or_create(resource=self, language=lang)
+            for team in Team.objects.select_related('language'
+                ).filter(project=self.project):
+                RLStats.objects.get_or_create(resource=self,
+                    language=team.language)
 
         invalidate_template_cache("project_resource_details",
             self.project.slug, self.slug)
@@ -136,7 +192,6 @@ class Resource(models.Model):
         from transifex.resources.handlers import invalidate_stats_cache
 
         invalidate_stats_cache(self, self.source_language)
-        RLStats = models.get_model('rlstats', 'RLStats')
         RLStats.objects.filter(resource=self).delete()
         super(Resource, self).delete(*args, **kwargs)
 
@@ -186,6 +241,24 @@ class Resource(models.Model):
     def entities(self):
         """Return the resource's translation entities."""
         return SourceEntity.objects.filter(resource=self)
+
+    @property
+    def available_languages(self):
+        """
+        All available languages for the resource. This list includes team 
+        languages that may have 0 translated entries.
+        """
+        return Language.objects.filter(
+            id__in=RLStats.objects.by_resource(self).values('language').query)
+
+    @property
+    def available_languages_without_teams(self):
+        """
+        All languages for the resource that have at least one translation.
+        """
+        return Language.objects.filter(
+            id__in=RLStats.objects.by_resource(self).filter(
+                translated__gt=0).values('language').query)
 
 class SourceEntityManager(models.Manager):
 
@@ -380,7 +453,7 @@ class Translation(models.Model):
         verbose_name_plural = _('translation strings')
         ordering  = ['string',]
         order_with_respect_to = 'source_entity'
-        get_latest_by = 'created'
+        get_latest_by = 'last_update'
 
     def save(self, *args, **kwargs):
         """
@@ -398,6 +471,202 @@ class Translation(models.Model):
         # use None to split at any whitespace regardless of length
         # so for instance double space counts as one space
         return len(self.string.split(None))
+
+
+
+class RLStatsQuerySet(models.query.QuerySet):
+
+    def for_user(self, user):
+        """
+        Return a queryset matching projects plus private projects that the 
+        given user has access to.
+        """
+        return self.filter(
+            resource__in=Resource.objects.for_user(user).values('pk').query).distinct()
+
+    def private(self):
+        """
+        Return a queryset matching only RLStats associated with private 
+        projects. If ``user`` is passed the queryset is filtered by the 
+        private projects that the user has access to.
+        """
+        resources = Resource.objects.filter(project__private=True)
+        return self.filter(resource__in=resources.values('pk').query)
+
+    def public(self):
+        """
+        Return a queryset matching only RLStats associated with non-private 
+        projects.
+        """
+        resources = Resource.objects.filter(project__private=False)
+        return self.filter(resource__in=resources.values('pk').query)
+
+
+    def by_project(self, project):
+        """
+        Return a queryset matching all RLStats associated with a given
+        ``project``.
+        """
+        return self.filter(resource__project=project)
+
+    def by_resource(self, resource):
+        """
+        Return a queryset matching all RLStats associated with a given
+        ``resource``.
+        """
+        return self.filter(resource=resource).order_by('-translated_perc')
+
+    def by_resources(self, resources):
+        """
+        Return a queryset matching all RLStats associated with the given
+        ``resources``.
+        """
+        return self.filter(resource__in=resources)
+
+    def by_language(self, language):
+        """
+        Return a queryset matching RLStats associated with a given ``language``.
+        """
+        return self.filter(language=language)
+
+    def by_release(self, release):
+        """
+        Return a queryset matching RLStats associated with a given ``release``.
+        """
+        return self.filter(resource__in=release.resources.values('pk').query)
+
+    def by_release_and_language(self, release, language):
+        """
+        Return a queryset matching RLStats associated with the given 
+        ``release`` and ``language``.
+
+        """
+        return self.by_language(language).by_resources(
+            release.resources.values('pk').query)
+
+    def by_project_and_language(self, project, language):
+        """
+        Return a queryset matching RLStats associated with the given 
+        ``project`` and ``language``.
+        """
+        return self.by_language(language).by_resources(
+            project.resources.values('pk').query)
+
+    def by_release_aggregated(self, release):
+        """
+        Aggregate stats for a ``release``.
+
+        RLStats from several resources are grouped by language.
+        """
+        return _aggregate_rlstats(self.by_release(release), 'language')
+
+    def by_project_aggregated(self, project):
+        """
+        Aggregate stats for a ``project``.
+
+        RLStats from a project are grouped by resources.
+        """
+        return _aggregate_rlstats(self.by_project(project), 'resource')
+
+
+class RLStats(models.Model):
+    """
+    Resource-Language statistics object.
+    """
+
+    # Fields
+    translated = models.PositiveIntegerField(_("Translated Entities"),
+        blank=False, null=False, default=0, help_text="The number of "
+        "translated entities in a language for a specific resource.")
+    untranslated = models.PositiveIntegerField(_("Untranslated Entities"),
+        blank=False, null=False, default=0, help_text="The number of "
+        "untranslated entities in a language for a specific resource.")
+    last_update = models.DateTimeField(_("Last Update"), auto_now=True,
+        default=None, help_text="The datetime that this language was last "
+        "updated.")
+    last_committer = models.ForeignKey(User, blank=False, null=True,
+        default=None, verbose_name=_('Last Committer'), help_text="The user "
+        "associated with the last change for this language.")
+
+    # Foreign Keys
+    resource = models.ForeignKey(Resource, blank=False, null=False,
+        verbose_name="Resource", help_text="The resource the statistics are "
+        "associated with.")
+    language = models.ForeignKey(Language, blank=False, null=False,
+        verbose_name="Language", help_text="The language these statistics "
+        "refer to.")
+
+    # Normalized fields
+    translated_perc = models.PositiveIntegerField(default=0, editable=False)
+    untranslated_perc = models.PositiveIntegerField(default=0, editable=False)
+
+    #objects = generate_chainer_manager(RLStatsManager)
+    objects = ChainerManager(RLStatsQuerySet)
+
+    def __unicode__(self):
+        return "%s stats for %s" % ( self.resource.slug, self.language.code)
+
+    class Meta:
+        unique_together = ('resource', 'language',)
+        ordering  = ['translation_perc',]
+        order_with_respect_to = 'resource'
+
+    @property
+    def total(self):
+        return self.translated + self.untranslated
+
+    def save(self, *args, **kwargs):
+        self.calculate_translated()
+        self.update_last_translation()
+        self._calculate_perc()
+        super(RLStats, self).save(*args, **kwargs)
+
+    def _calculate_perc(self):
+        """Update normalized percentage statistics fields."""
+        try:
+            total = self.resource.total_entities
+            self.translated_perc = self.translated * 100 / total
+            self.untranslated_perc = 100 - self.translated_perc
+        except ZeroDivisionError:
+            self.translated_perc = 0
+            self.untranslated_perc = 0
+
+    def calculate_translated(self):
+        """
+        Calculate translated/untranslated entities.
+        """
+        total = SourceEntity.objects.values('id').filter(
+            resource=self.resource).count()
+        translated = Translation.objects.values('id').filter(rule=5,
+            language=self.language, source_entity__resource=self.resource
+            ).distinct().count()
+        untranslated = total - translated
+
+        self.untranslated = untranslated
+        self.translated = translated
+
+        return translated, untranslated
+
+    def update_now(self, user=None):
+        """
+        Update the last update and last committer.
+        """
+        self.last_update = datetime.datetime.now()
+        if user:
+            self.last_committer = user
+
+        self.save()
+
+    def update_last_translation(self):
+        lt = Translation.objects.filter(language=self.language,
+            source_entity__resource=self.resource).select_related(
+            'last_update', 'user').order_by('-last_update')[:1]
+        if lt:
+            self.last_update = lt[0].last_update
+            self.last_committer = lt[0].user
+            return lt[0].last_update, lt[0].user
+        return None, None
+
 
 class Template(models.Model):
     """

@@ -26,8 +26,7 @@ from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon.log import logger
 
 from transifex.resources.forms import ResourceForm
-from transifex.resources.models import Translation, Resource
-from transifex.resources.stats import ResourceStatsList, ProjectStatsList
+from transifex.resources.models import Translation, Resource, RLStats
 from transifex.resources.handlers import invalidate_stats_cache
 
 from autofetch.forms import URLInfoForm
@@ -53,7 +52,8 @@ def resource_detail(request, project_slug, resource_slug):
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
-    statslist = ResourceStatsList(resource)
+    statslist = RLStats.objects.select_related('language', 'last_committer'
+        ).by_resource(resource)
 
     return render_to_response("resources/resource_detail.html",
         { 'project' : resource.project,
@@ -179,7 +179,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     Ajax view that returns an fancybox template snippet for resource specific 
     actions.
     """
-    resource = get_object_or_404(Resource, project__slug = project_slug,
+    resource = get_object_or_404(Resource.objects.select_related('project'), project__slug = project_slug,
                                  slug = resource_slug)
     target_language = get_object_or_404(Language, code=target_lang_code)
     project = resource.project
@@ -200,8 +200,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
-    statslist = ResourceStatsList(resource)
-    stats = statslist.resource_stats_for_language(target_language).next()
+    stats = get_object_or_404(RLStats, resource=resource, language=target_language)
     wordcount = resource.wordcount
 
     return render_to_response("resources/resource_actions.html",
@@ -241,7 +240,7 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     if more and (not end_index >= total):
         resources = resources[begin:end_index]
 
-    statslist = ProjectStatsList(project)
+    statslist = RLStats.objects.by_project_aggregated(project)
 
     return render_to_response("resources/resource_list_more.html", { 
         'project': project,

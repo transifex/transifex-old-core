@@ -73,7 +73,7 @@ def stats_bar_simple(stat, width=100):
     We do a bit of calculations ourselfs here to reduce the pressure on
     the database.
     """
-    total = stat.total_entities
+    total = stat.total
     trans = stat.translated
 
     try:
@@ -101,7 +101,7 @@ def stats_bar_actions(stat, width=100):
     Accepts an optional parameter to specify the width of the total bar.
     """
     try:
-        trans_percent = (stat.translated * 100 / stat.total_entities)
+        trans_percent = (stat.translated * 100 / stat.total)
     except ZeroDivisionError:
         trans_percent = 100
     untrans_percent = 100 - trans_percent

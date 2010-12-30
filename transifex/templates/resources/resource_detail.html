@@ -114,7 +114,7 @@
     <tr>
       <th class="i16 language">{% trans "Number of languages:" %}</th>
       <td>
-        {{ statslist.available_languages|length }} 
+        {{ resource.available_languages|length }} 
       </td>
     </tr>
     <tr>
@@ -180,7 +180,7 @@
    </tr>
   </thead>
   <tbody>
-{% for stat in statslist.language_stats %}
+{% for stat in statslist %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
         <td>

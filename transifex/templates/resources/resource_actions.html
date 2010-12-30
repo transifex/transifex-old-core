@@ -20,7 +20,7 @@
       {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
-             {% blocktrans with stats.total_entities as total_entities %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}
+             {% blocktrans with stats.total as total_entities %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}
     </div>
   </div>
   <div class="first_level">
@@ -57,7 +57,7 @@
       {% with 300 as barwidth %}
       <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Untranslated: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions" >
-              {{ stats.translated|percentage:stats.total_entities }} 
+              {{ stats.translated|percentage:stats.total }} 
           </div> 
           {% stats_bar_actions stats barwidth %}
       </div>

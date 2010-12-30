@@ -4,8 +4,7 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from transifex.projects.models import Project
-from transifex.resources.models import Resource
-from transifex.resources.stats import ResourceStatsList
+from transifex.resources.models import Resource, RLStats
 from transifex.txcommon.context_processors import site_url_prefix_processor
 from transifex.txcommon.utils import key_sort
 
@@ -18,7 +17,7 @@ from pygooglechart import StackedHorizontalBarChart, Axis
 NUM_LANGS = 14
 
 def get_sorted_stats(obj):
-    return key_sort(obj.language_stats(), '-num_translated')[:NUM_LANGS]
+    return key_sort(obj, '-translated_perc')[:NUM_LANGS]
 
 def get_image_url(obj):
     """
@@ -33,7 +32,7 @@ def get_image_url(obj):
 
     stats = get_sorted_stats(obj)
     for stat in stats:
-        t = stat.trans_percent
+        t = stat.translated_perc
         trans.append(t)
         labels_left.append(stat.language.name)
         labels_right.append("%s%%" % t)
@@ -60,7 +59,7 @@ def get_gviz_json(obj):
                     "trans": ("number", "Translated")}
     data = []
     for stat in get_sorted_stats(obj):
-        trans = stat.trans_percent
+        trans = stat.translated_perc
         data.append({
             "lang": stat.language.name,
             "trans": trans})
@@ -74,7 +73,7 @@ def chart_resource_image(request, project_slug, resource_slug):
                                     project__slug=project_slug)
     if resource.project.private:
         raise PermissionDenied
-    return HttpResponseRedirect(get_image_url(ResourceStatsList(resource)))
+    return HttpResponseRedirect(get_image_url(RLStats.objects.by_resource(resource)))
 
 def chart_resource_html_js(request, project_slug, resource_slug, template_name):
     resource = get_object_or_404(Resource, slug=resource_slug,
@@ -91,4 +90,4 @@ def chart_resource_json(request, project_slug, resource_slug):
                                     project__slug=project_slug)
     if resource.project.private:
         raise PermissionDenied
-    return HttpResponse(content = get_gviz_json(ResourceStatsList(resource)))
+    return HttpResponse(content = get_gviz_json(RLStats.objects.by_resource(resource)))

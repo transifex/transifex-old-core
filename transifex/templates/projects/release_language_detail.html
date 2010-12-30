@@ -184,7 +184,7 @@
   <thead>
   <tr>
     <th><span class="i16 comment">{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span class="i16 private_stats">{% trans "Completion" %}</span></th>
+    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
     <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
    </tr>
@@ -193,7 +193,7 @@
   {% for stat in private_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
-          <span class="clickable">{{ stat.object.name }}</span>
+          <span class="clickable">{{ stat.resource.name }}</span>
         </td>
         <td>
         {% with 200 as barwidth %}
@@ -219,8 +219,8 @@
         </td>
         <td class="priority_level" style="width:100px;text-align:center">
         <span style="border:0">
-        {% with stat.object.priority.level as priority_level %}
-        {% with stat.object.priority.display_level as display_level %}
+        {% with stat.resource.priority.level as priority_level %}
+        {% with stat.resource.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
             <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
         {% endwith %}
@@ -233,7 +233,7 @@
            /* FancyBox Using custom settings */ 
            $.fancybox(
                { 
-                'href': '{% url resource_actions stat.object.project.slug stat.object.slug language.code %}',
+                'href': '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}',
                 'hideOnContentClick': false,
                 'onStart':function(){
                     // IE8 fix
@@ -266,7 +266,7 @@
                     if(!$("#download_for_translation a").hasClass('disabled')){
                         $("#download_for_translation").click(function(){
                             $.ajax({
-                                url : '{% url lock_and_download_translation stat.object.project.slug stat.object.slug language.code %}',
+                                url : '{% url lock_and_download_translation stat.resource.project.slug stat.resource.slug language.code %}',
                                 contentType : 'application/json',
                                 type : 'POST',
                                 beforeSend: function(){

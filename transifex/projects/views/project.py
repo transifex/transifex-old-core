@@ -19,7 +19,7 @@ from transifex.projects.permissions import *
 from transifex.projects import signals
 
 from transifex.languages.models import Language
-from transifex.resources.stats import ProjectStatsList
+from transifex.resources.models import RLStats
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -186,7 +186,9 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    statslist = ProjectStatsList(project)
+    statslist = RLStats.objects.select_related('resource', 
+        'resource__project', 'last_committer','resource__priority'
+        ).by_project_aggregated(project)
 
     return list_detail.object_detail(
         request,

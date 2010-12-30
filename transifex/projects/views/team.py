@@ -20,7 +20,7 @@ from notification import models as notification
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.signals import pre_team_request, pre_team_join, ClaNotSignedError
-from transifex.resources.stats import ProjectStatsList
+from transifex.resources.models import RLStats
 from transifex.teams.forms import TeamSimpleForm, TeamRequestSimpleForm
 from transifex.teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
@@ -161,7 +161,8 @@ def team_detail(request, project_slug, language_code):
     else:
         user_access_request = None
 
-    statslist = [ stat for stat in ProjectStatsList(project).resource_stats_for_language(language)]
+    statslist = RLStats.objects.select_related('resource',
+        'resource__priority').by_project_and_language(project, language)
 
     return render_to_response("teams/team_detail.html", 
                               {"project": project,

@@ -19,8 +19,7 @@ from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
 
 from transifex.resources.decorators import method_decorator
-from transifex.resources.models import Resource, SourceEntity, Translation
-from transifex.resources.stats import ResourceStatsList
+from transifex.resources.models import Resource, SourceEntity, Translation, RLStats
 from transifex.resources.views import _compile_translation_template
 
 from transifex.api.utils import BAD_REQUEST
@@ -55,9 +54,8 @@ class ResourceHandler(BaseHandler):
             try:
                 resource = Resource.objects.get(slug=resource_slug,
                     project__slug=project_slug)
-                res_stats = ResourceStatsList(resource)
                 setattr(resource, 'available_languages',
-                    res_stats.available_languages_without_teams)
+                    resource.available_languages_without_teams)
             except Resource.DoesNotExist:
                 return rc.NOT_FOUND
             return resource
@@ -180,23 +178,22 @@ class StatsHandler(BaseHandler):
                 return BAD_REQUEST("Unknown language %s" % lang_code)
 
 
-        stats = ResourceStatsList(resource)
+        stats = RLStats.objects.by_resource(resource)
         # TODO: If we're gonna use this as a generic stats generator, we should
         # include more info in the json.
         if language:
             retval = {}
-            for stat in stats.resource_stats_for_language(language):
+            for stat in stats.by_language(language):
                 retval.update({stat.language.code:{"completed": "%s%%" %
-                    (100*stat.translated/stat.total_entities),
+                    (stat.translated_perc),
                     "translated_entities": stat.translated, "last_update":
                     stat.last_update}})
         else:
             retval = []
-            for stat in stats.language_stats():
+            for stat in stats:
                 retval.append({stat.language.code:{"completed": "%s%%" %
-                    (100*stat.translated/stat.total_entities),
-                    "translated_entities": translated}})
-
+                    (stat.translated_perc),
+                    "translated_entities": stat.translated}})
         return retval
 
 class FileHandler(BaseHandler):

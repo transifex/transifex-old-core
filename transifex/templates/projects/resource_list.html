@@ -61,7 +61,7 @@
     });
 </script>
 
-  {% for stat in statslist.resource_stats %}
+  {% for stat in statslist %}
   {% if forloop.first %}
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
   <thead>
@@ -74,15 +74,15 @@
   <tbody>
   {% endif %}
     <tr>
-		{% cache 604800 project_resource_details project.slug stat.resource LANGUAGE_CODE %}
+		{% cache 604800 project_resource_details project.slug stat.object LANGUAGE_CODE %}
         <td>
-          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.resource.slug %}" style="font-weight:bold" title="{% blocktrans with stat.total_entities as ts and stat.available_languages|length as al %}Total Strings: {{ ts }}<br/>Available Languages: {{ al }}{% endblocktrans %}">{{ stat.resource.name }}</a>
+          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}Strings: {{ strings }}<br/>Words: {{ words }}{% endblocktrans %}">{{ stat.object.name }}</a>
         </td>
         <td class="last_updated">
-          {% with stat.last_committer as last_committer %}
+          {% with stat.object.last_committer as last_committer %}
             <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
           {% endwith %}
-          {% with stat.last_update as last_update %}
+          {% with stat.object.last_update as last_update %}
             {% if last_update %}
                 <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
                 {{ last_update|date:"M d, h:ia" }}
@@ -94,10 +94,10 @@
         </td>
 		{% endcache %}
         <td class="priority_level" style="width:100px;text-align:center">
-            {% with stat.resource.priority.level as priority_level %}
-            {% with stat.resource.priority.display_level as display_level %}
+            {% with stat.object.priority.level as priority_level %}
+            {% with stat.object.priority.display_level as display_level %}
             {% if is_maintainer %}
-              <a id="priority_{{ stat.resource.slug }}" class="resource_priority_trigger" style="cursor:pointer">
+              <a id="priority_{{ stat.object.slug }}" class="resource_priority_trigger" style="cursor:pointer">
                 <span class="priority_sort" style="display:none">{{ priority_level }}</span>
                 <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
               </a>

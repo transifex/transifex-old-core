@@ -16,7 +16,7 @@ from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
 from transifex.resources.formats.decorators import *
-from transifex.resources.stats import ResourceStatsList
+from transifex.resources.models import RLStats
 from suggestions.models import Suggestion
 
 from core import CompileError, GenericTranslation, Handler, STRICT, \
@@ -197,9 +197,9 @@ class POHandler(Handler):
             po.metadata['Language-Team'] = "%s <%s>" % (language.name ,
                 team.mainlist)
 
-        stat = ResourceStatsList(self.resource).resource_stats_for_language(language).next()
-        if stat.last_committer:
-            u = stat.last_committer
+        stat = RLStats.objects.by_resource(self.resource).by_language(language)
+        if stat and stat[0].last_committer:
+            u = stat[0].last_committer
             po.metadata['Last-Translator'] = ("%s <%s>" %
                 (u.get_full_name() or u.username , u.email)).encode("utf-8")
 

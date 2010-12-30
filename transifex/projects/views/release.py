@@ -14,8 +14,7 @@ from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
 from transifex.projects.permissions import (pr_release_add_change, pr_release_delete)
 from transifex.releases.models import Release
-from transifex.resources.models import Resource
-from transifex.resources.stats import ReleaseStatsList, PrivateReleaseStatsList
+from transifex.resources.models import Resource, RLStats
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -55,18 +54,20 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
 
 
 def release_detail(request, project_slug, release_slug):
-    release = get_object_or_404(Release, slug=release_slug,
+    release = get_object_or_404(Release.objects.select_related('project'), slug=release_slug,
                                 project__slug=project_slug)
     #TODO: find a way to do this more effectively
-    resources = Resource.objects.filter(releases=release).\
-                                      filter(project__private=False)
+    resources = Resource.objects.filter(releases=release).filter(
+        project__private=False).order_by('project__name')
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
         private_resources = Resource.objects.for_user(request.user).filter(
-            releases=release, project__private=True).distinct()
+            releases=release, project__private=True
+            ).order_by('project__name').distinct()
 
-    statslist = ReleaseStatsList(release)
+    statslist = RLStats.objects.select_related('language', 'last_committer'
+        ).for_user(request.user).by_release_aggregated(release)
 
     return render_to_response('projects/release_detail.html', {
         'release': release,
@@ -84,17 +85,12 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    stats_list = ReleaseStatsList(release, show_from_private_projects=False)
-    if stats_list.entities:
-        stats = stats_list.resource_stats_for_language(language)
-    else:
-        stats = None
+    stats = RLStats.objects.select_related('resource', 
+        'resource__project').public().by_release_and_language(release, language)
 
-    private_stats_list = PrivateReleaseStatsList(release, request.user)
-    if private_stats_list.entities:
-        private_stats = private_stats_list.resource_stats_for_language(language)
-    else:
-        private_stats = None
+    private_stats = RLStats.objects.select_related('resource',
+        'resource__project').for_user(request.user
+            ).private().by_release_and_language(release, language)
 
     return render_to_response('projects/release_language_detail.html', {
         'project': project,

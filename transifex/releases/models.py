@@ -13,6 +13,7 @@ from django.utils.html import escape
 
 from transifex.txcommon.log import log_model
 from transifex.resources.utils import invalidate_template_cache
+from transifex.resources.models import RLStats
 
 class Release(models.Model):
 
@@ -95,13 +96,9 @@ class Release(models.Model):
         created = self.created
         super(Release, self).save(*args, **kwargs)
 
-        from transifex.resources.stats import ReleaseStatsList
-
-        stat = ReleaseStatsList(self)
-
-        for lang in stat.available_languages:
+        for stat in RLStats.objects.by_release_aggregated(self):
             invalidate_template_cache("release_details",
-                self.pk, lang.id)
+                self.pk, stat.object.id)
 
     @permalink
     def get_absolute_url(self):

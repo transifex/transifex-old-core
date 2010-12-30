@@ -4,9 +4,8 @@ from actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
 from transifex.resources.utils import invalidate_template_cache
-from transifex.resources.stats import ResourceStatsList
 from transifex.teams.models import Team
-from transifex.addons.rlstats.models import RLStats
+from transifex.resources.models import RLStats
 
 def invalidate_stats_cache(resource, language, **kwargs):
     """
@@ -51,8 +50,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
         resource.update_wordcount()
 
     if is_source:
-        stats = ResourceStatsList(resource)
-        langs = stats.available_languages
+        langs = resource.available_languages
     else:
         langs = [language]
 

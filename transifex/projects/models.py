@@ -21,9 +21,10 @@ from authority.models import Permission
 from notification.models import ObservedItem
 
 from transifex.actionlog.models import LogEntry
+from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
 
-class DefaultProjectManager(models.Manager):
+class DefaultProjectQuerySet(models.query.QuerySet):
     """
     This is the default manager of the project model (assigned to objects field).
     """
@@ -70,17 +71,15 @@ class DefaultProjectManager(models.Manager):
         checks permissions and filters out private projects that the user
         doesn't have access to.
         """
+        projects = self
         if user in [None, AnonymousUser()]:
-            projects = Project.objects.filter(private=False)
+            projects = projects.filter(private=False)
         else:
-            if user.is_superuser:
-                projects = Project.objects.all()
-            else:
-                projects = Project.objects.all().exclude(
+            if not user.is_superuser:
+                projects = projects.exclude(
                     Q(private=True) & ~(Q(maintainers__in=[user]) |
                     Q(team__coordinators__in=[user]) |
                     Q(team__members__in=[user]))).distinct()
-
         return projects
  
 
@@ -165,7 +164,7 @@ class Project(models.Model):
         object_id_field="object_id", content_type_field="content_type")
 
     # Managers
-    objects = DefaultProjectManager()
+    objects = ChainerManager(DefaultProjectQuerySet)
     public = PublicProjectManager()
 
     def __unicode__(self):

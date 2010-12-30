@@ -10,7 +10,6 @@ from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from suggestions.models import Suggestion
 from transifex.actionlog.models import action_logging
-from transifex.resources.stats import ResourceStatsList
 from transifex.resources.formats.decorators import *
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import get_i18n_type_from_file
@@ -349,8 +348,7 @@ class Handler(object):
 
                     # if language is source language, notify all languages for the change
                     if self.language == self.resource.source_language:
-                        stats = ResourceStatsList(self.resource)
-                        for l in stats.available_languages:
+                        for l in self.resource.available_languages:
                             twatch = TranslationWatch.objects.get_or_create(
                                 resource=self.resource, language=l)[0]
                             logger.debug("addon-watches: Sending notification"

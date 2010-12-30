@@ -98,9 +98,8 @@
     </tr>
     <tr class="separator"></tr>
 
-    {% with resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
     {% with resources|length as resources_number %}
-    {% if resource_list %}
+    {% if resources %}
     <tr>
       <th class="resource i16">{% trans "Resources:" %}</th>
       <td>
@@ -108,7 +107,7 @@
         {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
         <ul id="resource-list" class="simple links" style="display:none;">
-          {% for r in resource_list %}
+          {% for r in resources %}
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
@@ -116,11 +115,9 @@
     </tr>
     {% endif %}
     {% endwith %}
-    {% endwith %}
 
-    {% with private_resources.all|dictsort:"project.slug"|dictsort:"slug" as resource_list %}
     {% with private_resources|length as resources_number %}
-    {% if resource_list %}
+    {% if private_resources %}
     <tr>
       <th class="coordinators i16">{% trans "Private Resources:" %}</th>
       <td>
@@ -128,14 +125,13 @@
         {% blocktrans %}This release has {{ resources_number }} private resources you have access to.{% endblocktrans %}
         </span>
         <ul id="private-resource-list" class="simple links" style="display:none;">
-          {% for r in resource_list %}
+          {% for r in private_resources %}
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
       </td>
     </tr>
     {% endif %}
-    {% endwith %}
     {% endwith %}
   </table>
 </div>
@@ -154,13 +150,13 @@
    </tr>
   </thead>
   <tbody>
-{% for stat in statslist.language_stats %}
+{% for stat in statslist %}
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
 
-      {% cache 604799 release_details release.id stat.language.id LANGUAGE_CODE%}
+      {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td>
-          {{ stat.language.name }} 
-          <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.language.code %}">{{ stat.language.code }}</a>)</span>
+          {{ stat.object.name }} 
+          <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.code }}</a>)</span>
           </td>
         <td>
           {% with 200 as barwidth %}
@@ -197,8 +193,9 @@
 {% endblock %}{# body_main #}
 
 {% block content_footer %}
+  {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   <div id="content_footer_center">
-    {% if request.user.is_authenticated and perms.projects.delete_release %}
+    {% if perms.projects.delete_release or is_maintainer %}
     <div class="deletelink">
       <a class="i16 delete buttonized" href="{% url release_delete release.project.slug release.slug %}">{% trans "Delete release" %}</a>
     </div>

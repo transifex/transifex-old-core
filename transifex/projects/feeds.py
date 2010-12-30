@@ -7,8 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from transifex.languages.models import Language
 from transifex.projects.models import Project
-from transifex.releases.models import Release
-from transifex.resources.stats import ReleaseStatsList
+from transifex.releases.models import Release, RLStats
 from transifex.txcommon.utils import key_sort
 
 current_site = Site.objects.get_current()
@@ -80,11 +79,10 @@ class ReleaseFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        statslist=ReleaseStatsList(self.release)
-        return statslist.language_stats()
+        return RLStats.objects.by_release_aggregated(self.release)
 
     def item_link(self, obj):
-        return obj.object.get_absolute_url()
+        return self.release.get_absolute_url()
 
 
 
@@ -122,9 +120,9 @@ class ReleaseLanguageFeed(Feed):
         return obj.get_absolute_url()
 
     def items(self, obj):
-        statslist=ReleaseStatsList(self.release)
-        return statslist.resource_stats_for_language(self.language)
+        return RLStats.objects.by_release_and_language(self.release,
+            self.language)
 
     def item_link(self, obj):
-        return obj.object.get_absolute_url()
+        return obj.resource.get_absolute_url()
 
