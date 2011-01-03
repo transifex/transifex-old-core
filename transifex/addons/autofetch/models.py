@@ -39,8 +39,6 @@ class URLInfo(models.Model):
         Fetch source file from remote url and import it, updating existing
         entries.
         """
-        parts = urlparse.urlsplit(self.source_file_url)
-        filename = parts.path.split('/')[-1]
         try:
             file = urllib2.urlopen(self.source_file_url)
         except:
@@ -48,6 +46,17 @@ class URLInfo(models.Model):
                 ( self.resource.project.slug, self.resource.project,
                   self.source_file_url ))
             raise
+
+        filename = ''
+        if file.info().has_key('Content-Disposition'):
+                # If the response has Content-Disposition, we take filename from it
+                filename = file.info()['Content-Disposition'].split('filename=')[1]
+                filename = filename.replace('"', '').replace("'", "")
+
+        if filename == '':
+            parts = urlparse.urlsplit(self.source_file_url)
+            #FIXME: This still might end empty
+            filename = parts.path.split('/')[-1]
 
         sf = StorageFile()
         sf.uuid = str(uuid4())
