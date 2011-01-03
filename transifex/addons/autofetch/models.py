@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from transifex.resources.models import Resource
+from transifex.txcommon.log import logger
 
 import os
 import urllib2, urlparse
