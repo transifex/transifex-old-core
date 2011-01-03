@@ -75,9 +75,9 @@ class URLInfo(models.Model):
             if not fake:
                 strings_added, strings_updated = fhandler.save2db(is_source=True)
         except Exception,e:
-            logger.error("Error import source file for resource %s.%s (%s)" %
+            logger.error("Error import source file for resource %s.%s (%s): %s" %
                 ( self.resource.project.slug, self.resource.project,
-                  self.source_file_url))
+                  self.source_file_url, str(e)))
             raise
 
         return strings_added, strings_updated
