@@ -53,11 +53,11 @@ class StorageFileWidget(forms.MultiWidget):
             try:
                 language = Language.objects.by_code_or_alias(value[0])
             except Exception, e:
-                logger.debug('Language not set yet.')
+                pass
             try:
                 storagefile = StorageFile.objects.get(id=int(value[1]))
             except Exception, e:
-                logger.debug('StorageFile not set yet.')
+                pass
 
         # Fields in HTML
         rendered_fields = []
