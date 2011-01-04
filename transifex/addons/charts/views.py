@@ -34,7 +34,7 @@ def get_image_url(obj):
     for stat in stats:
         t = stat.translated_perc
         trans.append(t)
-        labels_left.append(stat.language.name)
+        labels_left.append(stat.language.name.encode('utf-8'))
         labels_right.append("%s%%" % t)
 
     labels_left.reverse()
