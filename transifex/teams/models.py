@@ -21,6 +21,12 @@ class TeamManager(models.Manager):
         except Team.DoesNotExist:
             return None
 
+    def public(self):
+        return self.filter(project__private=False)
+
+    def private(self):
+        return self.filter(project__private=True)
+
 class Team(models.Model):
     """
     A team is a set of people that work together in pro of a project in a 

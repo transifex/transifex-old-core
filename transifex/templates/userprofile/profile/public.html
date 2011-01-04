@@ -96,7 +96,7 @@
 
         {% with profile.user as user %}
 
-        {% with profile.user.team_coordinators.all as teams %}
+        {% with profile.user.team_coordinators.public as teams %}
         {% if teams %}
         {% autopaginate teams 20 %}
         <div class="list">
@@ -117,7 +117,7 @@
         {% endif %}
         {% endwith %}
 
-        {% with profile.user.team_members.all as teams %}
+        {% with profile.user.team_members.public as teams %}
         {% if teams %}
         {% autopaginate teams 20 %}
         <div class="list">
