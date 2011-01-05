@@ -70,7 +70,7 @@ class Team(models.Model):
         """
         super(Team, self).save(*args, **kwargs)
         Resource = get_model('resources', 'Resource')
-        RLStats = get_model('rlstats', 'RLStats')
+        RLStats = get_model('resources', 'RLStats')
         res = Resource.objects.filter(project=self.project)
         for r in res:
             RLStats.objects.get_or_create(resource=r, language=self.language)
