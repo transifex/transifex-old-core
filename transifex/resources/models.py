@@ -10,7 +10,7 @@ from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
@@ -24,7 +24,7 @@ from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
 
 
-def _aggregate_rlstats(rlstats_query, grouping_key):
+def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
     """
     Yield AggregatedRLStats objects resulting from grouped and summed RLStats
     objects given in the ``rlstats_query``. The grouping happens per language.
@@ -70,6 +70,9 @@ def _aggregate_rlstats(rlstats_query, grouping_key):
         # Recalculate percentage completion
         stats.translated_perc = stats.translated_perc / count
         stats.untranslated_perc = 100 - stats.translated_perc
+
+        if total:
+            stats.total=total
 
         stats.number_resources = count
         yield stats
@@ -558,7 +561,10 @@ class RLStatsQuerySet(models.query.QuerySet):
 
         RLStats from several resources are grouped by language.
         """
-        return _aggregate_rlstats(self.by_release(release), 'language')
+        total = Resource.objects.filter(releases=release).aggregate(
+            total=Sum('total_entities'))['total']
+
+        return _aggregate_rlstats(self.by_release(release), 'language', total)
 
     def by_project_aggregated(self, project):
         """
@@ -566,7 +572,10 @@ class RLStatsQuerySet(models.query.QuerySet):
 
         RLStats from a project are grouped by resources.
         """
-        return _aggregate_rlstats(self.by_project(project), 'resource')
+        total = Resource.objects.filter(project=project).aggregate(
+            total=Sum('total_entities'))['total']
+
+        return _aggregate_rlstats(self.by_project(project), 'resource', total)
 
 
 class RLStats(models.Model):
