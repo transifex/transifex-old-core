@@ -50,7 +50,7 @@ class PermissionsTest(BaseTestCase):
 
         # Check the popup
         page_url = reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language_ar.code])
+            args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['anonymous'].post(page_url)
@@ -216,7 +216,7 @@ class PermissionsTest(BaseTestCase):
 
         # Check the popup
         page_url = reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language_ar.code])
+            args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['registered'].post(page_url)
@@ -373,7 +373,7 @@ class PermissionsTest(BaseTestCase):
 
         # Check the popup
         page_url = reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language_ar.code])
+            args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['team_member'].post(page_url)
@@ -472,7 +472,7 @@ class PermissionsTest(BaseTestCase):
         # Check the popup
         page_url = reverse('resource_actions',
             args=[self.project_private.slug, self.resource_private.slug,
-                  self.language_ar.code])
+                  self.language.code])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['team_member'].post(page_url)
@@ -544,7 +544,7 @@ class PermissionsTest(BaseTestCase):
 
         # Check the popup
         page_url = reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language_ar.code])
+            args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['maintainer'].post(page_url)
@@ -635,7 +635,7 @@ class PermissionsTest(BaseTestCase):
         # Check the popup
         page_url = reverse('resource_actions',
             args=[self.project_private.slug, self.resource_private.slug,
-                  self.language_ar.code])
+                  self.language.code])
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
         resp = self.client['maintainer'].post(page_url)

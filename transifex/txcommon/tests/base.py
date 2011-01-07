@@ -153,6 +153,8 @@ class BaseTestCase(TestCase):
             name="Release2", project=self.project_private)
         self.release_private.resources.add(self.resource_private)
 
+        from django.core import management
+        management.call_command('txstatsupdate')
 
     def tearDown(self):
         pass

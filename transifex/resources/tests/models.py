@@ -2,8 +2,8 @@
 from django.db import IntegrityError
 from django.conf import settings
 from django.test import TestCase
+from django.utils.hashcompat import md5_constructor
 from hashlib import md5
-
 from transifex.resources.models import *
 from transifex.txcommon.tests.base import BaseTestCase
 
@@ -65,8 +65,8 @@ class ResourcesModelTests(BaseTestCase):
                                         pluralized=False,
                                         resource=self.resource)
         self.assertTrue(s)
-        self.assertEqual(s.string_hash, 
-                         md5(s.string.encode('utf-8')).hexdigest())
+        self.assertEqual(s.string_hash, md5_constructor(':'.join([s.string,
+            s.context]).encode('utf-8')).hexdigest())
 
     def test_create_translation_string(self):
         """Test TranslationString model creation."""
@@ -76,12 +76,11 @@ class ResourcesModelTests(BaseTestCase):
                                        language=self.language,
                                        user=self.user['registered'])
         self.assertTrue(t)
-        self.assertEqual(t.string_hash, 
-                         md5(t.string.encode('utf-8')).hexdigest())
+        self.assertEqual(t.string_hash, md5(t.string.encode('utf-8')).hexdigest())
 
     def test_utf8_translation_string(self):
         """Test that utf-8 strings are saved correctly.
-        
+
         WARNING! The 'u' character is important to be identified as unicode!
         """
         t = Translation.objects.create(string=u'Αγόρασε μου μια μπύρα :)',
@@ -90,9 +89,7 @@ class ResourcesModelTests(BaseTestCase):
                                language=self.language,
                                user=self.user['registered'])
         self.assertTrue(t)
-        self.assertEqual(t.string_hash, 
-                         md5(t.string.encode('utf-8')).hexdigest())
-        print t.string
+        self.assertEqual(t.string_hash, md5(t.string.encode('utf-8')).hexdigest())
 
     def test_plural_translations(self):
         """Test that plural forms for translations are created correctly."""

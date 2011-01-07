@@ -219,7 +219,8 @@ class Resource(models.Model):
         """
         wc = 0
         source_trans = Translation.objects.filter(source_entity__id__in=
-            SourceEntity.objects.filter(resource=self).values('id'))
+            SourceEntity.objects.filter(resource=self).values('id'),
+            language=self.source_language)
         for t in source_trans:
             if t:
                 wc += t.wordcount

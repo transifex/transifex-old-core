@@ -53,51 +53,19 @@ class ResourcesTemplateTests(BaseTestCase):
                                    (self.resource.slug ,),
                                    status_code=200)
 
-    def test_edit_delete_buttons_per_resource(self):
-        """ Test that edit/delete buttons appear only for maintainer in 
-        resource_list.html"""
-        resp = self.client['maintainer'].get(self.project_detail_url)
-        self.assertTemplateUsed(resp, 'projects/resource_list.html')
-        self.assertContains(resp,
-                            '<a href="%s">edit</a>' % 
-                            (reverse('resource_edit', 
-                                     args=[self.project.slug,
-                                           self.resource.slug]),),
-                            status_code=200)
-        self.assertContains(resp,
-                            '<a href="%s">del</a>' %
-                            (reverse('resource_delete', 
-                                     args=[self.project.slug,
-                                           self.resource.slug])),
-                            status_code=200)
-        # All the other user classes should not see these snippets
-        for user in ['anonymous', 'registered','team_member']:
-            resp = self.client[user].get(self.project_detail_url)
-            self.assertNotContains(resp,
-                                '<a href="%s">edit</a>' % 
-                                (reverse('resource_edit', 
-                                         args=[self.project.slug,
-                                               self.resource.slug]),),
-                                status_code=200)
-            self.assertNotContains(resp,
-                                '<a href="%s">del</a>' %
-                                (reverse('resource_delete', 
-                                         args=[self.project.slug,
-                                               self.resource.slug])),
-                                status_code=200)
-
     def test_available_langs_per_resource(self):
         """ Test that the correct number of resource languages appear in template."""
         self.assertEqual(type(self.resource.available_languages.count()), int)
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
-            resp = self.client[user].get(self.project_detail_url)
-            self.assertContains(resp, 'Available Languages: %s' %
-                                (self.resource.available_languages.count()))
+            resp = self.client[user].get(self.resource_detail_url)
+            self.assertContains(resp, '      <td>\n'\
+                '        %s \n'\
+                '      </td>' % (self.resource.available_languages.count()))
 
     def test_total_strings_per_resource(self):
         """Test that resource.total_entities return the correct amount of
         strings in the resource_list page."""
-        self.assertEqual(self.resource.entities_count, 
+        self.assertEqual(self.resource.total_entities,
                          SourceEntity.objects.filter(
                              resource=self.resource).count())
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
@@ -177,19 +145,13 @@ class ResourcesTemplateTests(BaseTestCase):
                                 status_code=200)
 
     def test_disabled_visit_team_resource_actions(self):
-        """Test that visit language team link is correctly disabled.
-        
-        This is applied only for languages in the project that there is no 
-        corresponding team.
-        """
+        """Test that languages with no team or existing translations don't have
+        an action page."""
         # We chose Arabic language which has not corresponding project team.
         resp = self.client['maintainer'].get(reverse('resource_actions',
             args=[self.project.slug, self.resource.slug,
                   self.language_ar.code]))
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, 'resources/resource_actions.html')
-        self.assertContains(resp,
-                            '<span class="i16 team"><a class="disabled" title="There is no project team for this language.">Visit language team</a></span>')
+        self.assertEqual(resp.status_code, 404)
 
     def test_resource_details_team_and_zero_percent(self):
         """Test that languages with teams and 0% are presented."""

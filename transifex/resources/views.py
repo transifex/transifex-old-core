@@ -240,7 +240,7 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
     if more and (not end_index >= total):
         resources = resources[begin:end_index]
 
-    statslist = RLStats.objects.by_project_aggregated(project)
+    statslist = RLStats.objects.by_resources(resources)
 
     return render_to_response("resources/resource_list_more.html", { 
         'project': project,

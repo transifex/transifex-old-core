@@ -56,7 +56,7 @@ class CoreViewsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'resources/resource_list_more.html')
         for r in Resource.objects.filter(project=self.project)[0:4]:
-            self.assertTrue(r.slug in resp.content)
+            self.assertTrue(r.name in resp.content)
 
     def test_clone_language(self):
         #TODO: complete test case when clone is implemented
@@ -166,5 +166,5 @@ class ReleasesViewsTest(BaseTestCase):
         self.assertContains(resp, "This release has 1 resource", status_code=200)
 
         # FIXME: Check if the correct language appears in the table.
-        # self.assertContains(resp, "Portuguese", status_code=200)
-        raise NotImplementedError('Test if the table has the correct languages.')
+        self.assertContains(resp, "Portuguese", status_code=200)
+        #raise NotImplementedError('Test if the table has the correct languages.')

@@ -115,6 +115,11 @@ def stats_bar_actions(stat, width=100):
 def percentage(fraction, population):
     try:
         return "%s%%" % int(((fraction)*100 / (population)) )
+    except ZeroDivisionError:
+        if population == fraction:
+            return "100%%"
+        else:
+            return ''
     except ValueError:
         return ''
 

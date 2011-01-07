@@ -47,12 +47,34 @@ class Command(LabelCommand):
         for seq, r in enumerate(resources):
             sys.stdout.write("Updating resource %s.%s (%s of %s)\n" %
                 ( r.project.slug, r.slug, seq+1, num))
-            for lang in Translation.objects.filter(source_entity__resource=r).order_by('language').values('language').distinct():
-                lang = Language.objects.get(id=lang['language'])
+
+            # Update resource fields
+            r.update_total_entities()
+            r.update_wordcount()
+
+            # Get a list of the available languages
+            langs = list(Translation.objects.filter(
+                source_entity__resource=r).order_by('language').values_list(
+                'language',flat=True).distinct())
+
+            # Update stats
+            for lang in langs:
+                lang = Language.objects.get(id=lang)
                 print "Calculating statistics for language %s" % lang
                 RLStats.objects.get_or_create(resource=r, language=lang)
             for team in Team.objects.filter(project=r.project):
                 lang = team.language
+                # Add team languages to the existing languages
+                langs.append(lang.id)
                 print "Calculating statistics for team language %s" % lang
                 RLStats.objects.get_or_create(resource=r, language=lang)
 
+            # Add source language to the existing languages
+            langs.append(r.source_language.id)
+
+            # For all existing languages that don't have a translation or
+            # don't have a corresponding team, delete RLStat object
+            rlstats = RLStats.objects.filter(resource=r)
+            for stat in rlstats:
+                if not stat.language.id in langs:
+                    stat.delete()
