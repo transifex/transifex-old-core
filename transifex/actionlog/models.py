@@ -87,7 +87,7 @@ def _distinct_action_time(query):
         highest 'id'.
     """
     pks = query.values('action_time').annotate(
-        id=models.Max('id')).order_by().values_list('id', flat=True)
+        gid=models.Max('id')).order_by().values_list('gid', flat=True)
     return LogEntry.objects.select_related('user').filter(pk__in=pks)
 
 
