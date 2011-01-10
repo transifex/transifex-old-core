@@ -49,9 +49,13 @@ class URLInfo(models.Model):
 
         filename = ''
         if file.info().has_key('Content-Disposition'):
-                # If the response has Content-Disposition, we take filename from it
-                filename = file.info()['Content-Disposition'].split('filename=')[1]
-                filename = filename.replace('"', '').replace("'", "")
+                # If the response has Content-Disposition, we try to take 
+                # filename from it
+                content = file.info()['Content-Disposition']
+                if 'filename' in content:
+                    filename = content.split('filename')[1]
+                    filename = filename.replace('"', '').replace("'", ""
+                        ).replace("=", "").strip()
 
         if filename == '':
             parts = urlparse.urlsplit(self.source_file_url)
