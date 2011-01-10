@@ -20,11 +20,3 @@ class ModelTests(BaseTestCase):
                                                    name="Foo Project")
         new_p = Project(slug="foo", name="Foo Project")
         self.assertRaises(IntegrityError, new_p.save)
-
-    def test_project_number_of_languages(self):
-        """Test project available translated langs."""
-        self.assertEqual(self.project.available_languages,
-            Language.objects.filter(
-                id__in=Translation.objects.filter(
-          source_entity__resource__in=self.project.resources.all()).values_list(
-              'language', flat=True).distinct()).distinct())

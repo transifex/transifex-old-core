@@ -43,7 +43,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             '<span class="priority_sort" style="display:none">%s</span>' %
                             (self.resource.priority.level ,))
         self.assertContains(resp,
-                            '<img src="%spriorities/images/%s.png"' %
+                            '<img class="res_tipsy_enable" src="%spriorities/images/%s.png"' %
                             (settings.STATIC_URL, 
                              self.resource.priority.display_level ))
         for user in ['anonymous', 'registered','team_member']:
@@ -65,13 +65,10 @@ class ResourcesTemplateTests(BaseTestCase):
     def test_total_strings_per_resource(self):
         """Test that resource.total_entities return the correct amount of
         strings in the resource_list page."""
+        self.resource.update_total_entities()
         self.assertEqual(self.resource.total_entities,
                          SourceEntity.objects.filter(
                              resource=self.resource).count())
-        for user in ['anonymous', 'registered','team_member', 'maintainer']:
-            resp = self.client[user].get(self.project_detail_url)
-            self.assertContains(resp, 'title="Total Strings: %s' %
-                                (self.resource.entities_count))
 
     def test_javascript_snippet_cycle_priority(self):
         """Test if we include the ajax triggering js for priority changes."""
@@ -102,14 +99,14 @@ class ResourcesTemplateTests(BaseTestCase):
             resp = self.client[user].get(self.resource_detail_url)
             self.assertTemplateUsed(resp, 'resources/resource_detail.html')
             self.assertContains(resp,
-                                '<a id="new_translation1" class="buttonized i16 add">Translate Resource</a>',
-                                status_code=200)
+                '<a id="start_new_translation" class="i16 buttonized action">'\
+                'Translate Online</a>', status_code=200)
         # The anonymous users and the non-team members must not see the button
         for user in ['anonymous', 'registered']:
             resp = self.client[user].get(self.resource_detail_url)
             self.assertNotContains(resp,
-                                '<a id="new_translation1" class="buttonized i16 add">Translate Resource</a>',
-                                status_code=200)
+                '<a id="start_new_translation" class="i16 buttonized action">'\
+                'Translate Online</a>', status_code=200)
 
     def test_resource_edit_button(self):
         """Test that resource edit button is rendered correctly in details."""
@@ -169,5 +166,6 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Show a 0% language if there is a respective team.")
-        self.assertContains(resp, '<div class="stats_string_resource"> 0% </div>')
+        self.assertContains(resp, '<div class="stats_string_resource">\n'
+            '    0%\n  </div>')
 

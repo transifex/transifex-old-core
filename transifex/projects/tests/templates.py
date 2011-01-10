@@ -13,11 +13,3 @@ class TemplateTests(BaseTestCase):
 
     def tearDown(self):
         super(TemplateTests, self).tearDown()
-
-    def test_project_number_of_languages(self):
-        """Test that project details template contains the project translated langs."""
-        for user in ['anonymous', 'registered','team_member', 'maintainer']:
-            resp = self.client[user].get(self.project_detail_url)
-            self.assertContains(resp,
-                                '<td class="number_of_languages">%s</td>' %
-                                 len(self.project.available_languages))
