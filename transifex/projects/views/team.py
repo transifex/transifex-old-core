@@ -134,6 +134,8 @@ def team_update(request, project_slug, language_code):
 
 
 @access_off(team_off)
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_list(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
@@ -146,6 +148,8 @@ def team_list(request, project_slug):
                                context_instance=RequestContext(request))
 
 @access_off(team_off)
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_detail(request, project_slug, language_code):
 
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
