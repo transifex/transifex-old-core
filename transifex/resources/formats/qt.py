@@ -94,10 +94,18 @@ class LinguistHandler(Handler):
                 numerusforms = message.getElementsByTagName('numerusform')
                 translation.childNodes  = []
 
+                # If we have an id for the message use this as the source
+                # string, otherwise use the actual source string
+                if message.attributes.has_key("id"):
+                    sourceString = message.attributes['id'].value
+                else:
+                    sourceString = _getText(source.childNodes)
+
                 plurals = Translation.objects.filter(
                     source_entity__resource = self.resource,
                     language = language,
-                    source_entity__string = _getText(source.childNodes))
+                    source_entity__string = sourceString)
+
                 plural_keys = {}
                 # last rule excluding other(5)
                 lang_rules = language.get_pluralrules_numbers()
@@ -222,7 +230,7 @@ class LinguistHandler(Handler):
                     if pluralized:
                         try:
                             numerusforms = translation.getElementsByTagName('numerusform')
-                            for n,f  in enumerate(numerusforms):
+                            for n,f in enumerate(numerusforms):
                                 if numerusforms[n].attributes.has_key("variants") and \
                                   numerusforms[n].attributes['variants'].value == 'yes':
                                     logger.error("Source file has unsupported"
@@ -230,14 +238,14 @@ class LinguistHandler(Handler):
                                     raise LinguistParseError("Source file"
                                         " could not be imported: Qt Linguist"
                                         " variants are not supported.")
-                            for n,f  in enumerate(numerusforms):
+                            for n,f in enumerate(numerusforms):
                                 if numerusforms[n].attributes.has_key("variants") and \
                                   numerusforms[n].attributes['variants'].value == 'yes':
                                     continue
-                            for n,f  in enumerate(numerusforms):
+                            for n,f in enumerate(numerusforms):
                                 nf=numerusforms[n]
-                                if nf.firstChild:
-                                    messages.append((nplural[n], _getText(nf.childNodes)))
+                                messages.append((nplural[n], _getText(nf.childNodes)
+                                    or sourceStringText or sourceString ))
                         except LinguistParseError:
                             pass
 
@@ -310,10 +318,10 @@ class LinguistHandler(Handler):
                         message.attributes['numerus'].value=='yes':
                             numerusforms = translation.getElementsByTagName('numerusform')
                             for n,f in enumerate(numerusforms):
-                                f.firstChild.nodeValue = ("%(hash)s_pl_%(key)s" %
+                                f.appendChild(doc.createTextNode("%(hash)s_pl_%(key)s" %
                                     {'hash':md5_constructor(':'.join([sourceString,
                                         context_name]).encode('utf-8')).hexdigest(),
-                                     'key': n})
+                                     'key': n}))
                     else:
                         if not translation:
                             translation = doc.createElement("translation")
