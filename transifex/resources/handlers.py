@@ -46,8 +46,8 @@ def invalidate_stats_cache(resource, language, **kwargs):
                 s.delete()
 
         # Update resource wordcount and total entities
-        resource.update_total_entities()
-        resource.update_wordcount()
+        resource.update_total_entities(save=False)
+        resource.update_wordcount(save=True)
 
     if is_source:
         langs = resource.available_languages

@@ -172,8 +172,13 @@ class Resource(models.Model):
         created=False
         if not self.pk:
             created=True
+
+        # Update total_entries
+        self.update_total_entities(save=False)
+
         # Save the object
         super(Resource, self).save(*args, **kwargs)
+
         # Create the team language stat objects
         if created:
             Team = models.get_model('teams', 'Team')
@@ -198,18 +203,19 @@ class Resource(models.Model):
         RLStats.objects.filter(resource=self).delete()
         super(Resource, self).delete(*args, **kwargs)
 
-    def update_total_entities(self, total_entities=None):
+    def update_total_entities(self, total_entities=None, save=True):
         """
         Return the total number of SourceEntity objects to be translated.
         """
         if total_entities:
             self.total_entities = total_entities
         else:
-            self.total_entities = SourceEntity.objects.filter(resource=self).values('id').count()
+            self.total_entities = SourceEntity.objects.filter(
+                resource=self).values('id').count()
+        if save:
+            self.save()
 
-        self.save()
-
-    def update_wordcount(self):
+    def update_wordcount(self, save=True):
         """
         Return the number of words which need translation in this resource.
 
@@ -225,7 +231,8 @@ class Resource(models.Model):
             if t:
                 wc += t.wordcount
         self.wordcount = wc
-        self.save()
+        if save:
+            self.save()
 
     @models.permalink
     def get_absolute_url(self):
