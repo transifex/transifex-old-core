@@ -166,3 +166,31 @@ class ResourcesModelTests(BaseTestCase):
                                context="menu title",
                                resource=self.resource)
         self.assertRaises(IntegrityError, s_error.save)
+
+class RLStatsModelTests(BaseTestCase):
+    """Test the resources models."""
+
+    def test_rlstats_queries(self):
+        q = RLStats.objects
+
+        self.assertEqual(q.by_project(self.project).count(), 1)
+        self.assertEqual(q.public().by_project(self.project).count(), 1)
+        self.assertEqual(q.private().by_project(self.project).count(), 0)
+
+        self.assertEqual(q.public().by_project(self.project_private).count(), 0)
+        self.assertEqual(q.private().by_project(self.project_private).count(), 1)
+
+        self.assertEqual(q.by_resource(self.resource).count(), 1)
+
+        self.assertEqual(q.for_user(self.user['maintainer']).by_project(self.project).count(), 1)
+        self.assertEqual(q.for_user(self.user['maintainer']).count(), 2)
+        self.assertEqual(q.for_user(self.user['registered']).count(), 1)
+        self.assertEqual(q.for_user(self.user['team_member']).count(), 2)
+
+        self.assertEqual(q.for_user(self.user['registered']).by_project(self.project_private).count(), 0)
+        self.assertEqual(q.for_user(self.user['team_member']).by_project(self.project_private).count(), 1)
+
+        self.assertEqual(q.for_user(self.user['maintainer']).by_release(self.release).count(), 1)
+
+        self.assertEqual(len([f for f in q.for_user(self.user['maintainer']).by_project_aggregated(self.project)]), 1)
+        self.assertEqual(len([f for f in q.for_user(self.user['registered']).by_project_aggregated(self.project_private)]), 0)
