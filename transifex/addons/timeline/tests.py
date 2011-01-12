@@ -79,8 +79,3 @@ class TestTimeline(BaseTestCase):
         # Check whether injected History block is included
         self.assertTrue( "History" in resp.content )
 
-        # Also check it's content
-        a = ("View complete action log" in resp.content)
-        b = ("None available" in resp.content)
-        self.assertTrue( a or b)
-
