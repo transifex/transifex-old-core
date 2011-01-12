@@ -10,9 +10,9 @@ from transifex.projects.models import Project
 from transifex.txcommon.tests.base import BaseTestCase
 
 
-JSON_RESPONSE = "google.visualization.Query.setResponse({'version':'0.6', 'reqId':'0', 'status':'OK', 'table': {cols:[{id:'lang',label:'Language',type:'string'},{id:'trans',label:'Translated',type:'number'}],rows:[]}});"
+JSON_RESPONSE = "google.visualization.Query.setResponse({'version':'0.6', 'reqId':'0', 'status':'OK', 'table': {cols:[{id:'lang',label:'Language',type:'string'},{id:'trans',label:'Translated',type:'number'}],rows:[{c:[{v:'Portuguese (Brazilian)'},{v:0}]}]}});"
 
-REDIRECT_URL = "http://chart.apis.google.com/chart?cht=bhs&chs=350x14&chd=s:&chco=78dc7d,dae1ee,efefef&chxt=y,r&chxl=0:%7C%7C1:%7C&chbh=9"
+REDIRECT_URL = "http://chart.apis.google.com/chart?cht=bhs&chs=350x27&chd=s:A&chco=78dc7d,dae1ee,efefef&chxt=y,r&chxl=0:%7cPortuguese%20%28Brazilian%29%7c1:%7c0%25&chbh=9"
 
 class TestCharts(BaseTestCase):
 
