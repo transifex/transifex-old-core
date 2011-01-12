@@ -498,8 +498,7 @@ class RLStatsQuerySet(models.query.QuerySet):
     def private(self):
         """
         Return a queryset matching only RLStats associated with private 
-        projects. If ``user`` is passed the queryset is filtered by the 
-        private projects that the user has access to.
+        projects.
         """
         resources = Resource.objects.filter(project__private=True)
         return self.filter(resource__in=resources.values('pk').query)
