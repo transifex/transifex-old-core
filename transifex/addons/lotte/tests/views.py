@@ -121,21 +121,21 @@ class LotteViewsTests(BaseTestCase):
                }
         data2 = {"strings":[{"id":self.source_string_plural1.id,
                             "translations":{
-                                "zero":"ArabicTrans0",
-                                "one":"ArabicTrans1",
-                                "two":"ArabicTrans2",
-                                "few":"ArabicTrans3",
-                                "many":"ArabicTrans4",}
+                                "zero":"ArabicTrans0_1",
+                                "one":"ArabicTrans1_1",
+                                "two":"ArabicTrans2_1",
+                                "few":"ArabicTrans3_1",
+                                "many":"ArabicTrans4_1",}
                            },]
                }
         data3 = {"strings":[{"id":self.source_string_plural1.id,
                             "translations":{
-                                "zero":"ArabicTrans0",
-                                "one":"ArabicTrans1",
-                                "two":"ArabicTrans2",
-                                "few":"ArabicTrans3",
-                                "many":"ArabicTrans4",
-                                "other":"ArabicTrans5",}
+                                "zero":"ArabicTrans0_1",
+                                "one":"ArabicTrans1_1",
+                                "two":"ArabicTrans2_1",
+                                "few":"ArabicTrans3_1",
+                                "many":"ArabicTrans4_1",
+                                "other":"ArabicTrans5_1",}
                            },]
                }
         data4 = {"strings":[{"id":self.source_string_plural1.id,
@@ -151,12 +151,12 @@ class LotteViewsTests(BaseTestCase):
         resp1 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data1), content_type='application/json')
         self.assertContains(resp1,
-            'All the plural translations must be filled in', status_code=200)
+            'Cannot save unless plural translations are either', status_code=200)
 
         resp2 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data2), content_type='application/json')
         self.assertContains(resp2,
-            'All the plural translations must be filled in', status_code=200)
+            'Cannot save unless plural translations are either', status_code=200)
 
         resp3 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data3), content_type='application/json')

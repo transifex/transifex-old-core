@@ -29,7 +29,7 @@ class LotteTemplateTests(BaseTestCase):
         self.assertTemplateUsed(resp, 'translate.html')
         self.assertContains(resp, 'Search translations', status_code=200)
         self.assertContains(resp,
-            'Search in Transifex memory for existing translations (opens up in new tab/window)')
+            'Search in Transifex memory for existing translations (uses a new tab/window)')
         self.assertContains(resp, reverse('search_translations'))
 
     def test_filters(self):
@@ -40,11 +40,11 @@ class LotteTemplateTests(BaseTestCase):
         self.assertTemplateUsed(resp, 'translate.html')
         self.assertContains(resp, 'More languages', status_code=200)
         self.assertContains(resp,
-            'Show translations of<br /> the chosen languages')
+            'Show translations in<br /> the selected languages')
         self.assertContains(resp, '<input class="more_languages" type="checkbox"')
         self.assertContains(resp, 'Filter by users')
         self.assertContains(resp,
-            'Show only the translations<br />of the chosen users')
+            'Show only the translations<br /> by the selected users')
         self.assertContains(resp, 'No active contributor!')
 
     def test_statistics_div(self):
