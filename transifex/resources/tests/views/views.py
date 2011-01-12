@@ -20,6 +20,8 @@ class CoreViewsTest(BaseTestCase):
             args=[self.project.slug, self.resource.slug]))
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
+        # Test if RLStats was created automatically
+        self.assertTrue(self.team.language.name.encode('utf-8') in resp.content)
 
         # response.context[-1] holds our extra_context. maybe we should check
         # some of these to make sure they're there?

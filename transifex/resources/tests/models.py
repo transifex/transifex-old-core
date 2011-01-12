@@ -54,6 +54,18 @@ class ResourcesModelTests(BaseTestCase):
                                 project=self.project)
         self.assertTrue(r)
 
+    def test_rlstats_creation(self):
+        """Test the creation o a RLStats for a project team on resource saving."""
+        rls = RLStats.objects.get(resource=self.resource, 
+            language=self.team.language)
+
+        self.assertTrue(rls)
+
+    def test_resource_available_languages(self):
+        """Test available languages for a resource with and without teams."""
+        self.assertEqual(len(self.resource.available_languages), 1)
+        self.assertEqual(len(self.resource.available_languages_without_teams), 0)
+
     def test_create_source_entity(self):
         """Test SourceEntity model creation."""
         s = SourceEntity.objects.create(string='Source Identifier 1',
