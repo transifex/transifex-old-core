@@ -3,7 +3,7 @@ import os
 import unittest
 from django.conf import settings
 from django.db.models.loading import get_app
-from staticfiles.resolvers import resolve, resolve_for_app
+from staticfiles.resolvers import AppDirectoriesResolver
 
 class TestStaticfiles(unittest.TestCase):
     def setUp(self):
@@ -30,6 +30,7 @@ class TestStaticfiles(unittest.TestCase):
             if os.path.exists(ref):
                 break
         path = 'locks/%s' % suffix
-        self.assertEqual(ref, resolve_for_app(get_app('locks'), path, False))
-        self.assertEqual(ref, resolve(path))
+        r=AppDirectoriesResolver()
+        self.assertEqual(ref, r.resolve_for_app(get_app('locks'), path, False))
+        self.assertEqual(ref, r.resolve(path))
 
