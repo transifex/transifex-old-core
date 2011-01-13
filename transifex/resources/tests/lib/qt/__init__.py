@@ -4,6 +4,7 @@ from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.qt import LinguistHandler
+from transifex.addons.suggestions.models import Suggestion
 
 class QTFile(BaseTestCase):
     """Suite of tests for the qt lib."""
@@ -13,6 +14,7 @@ class QTFile(BaseTestCase):
         handler = LinguistHandler('%s/en.ts' %
             os.path.split(__file__)[0])
 
+        handler.set_language(self.resource.source_language)
         handler.parse_file(True)
         self.stringset = handler.stringset
         entities = 0
@@ -38,6 +40,7 @@ class QTFile(BaseTestCase):
         handler = LinguistHandler('%s/fi.ts' %
             os.path.split(__file__)[0])
 
+        handler.set_language(self.language)
         handler.parse_file()
         self.stringset = handler.stringset
 
@@ -64,14 +67,11 @@ class QTFile(BaseTestCase):
         handler = LinguistHandler('%s/en.ts' %
             os.path.split(__file__)[0])
 
+        handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
 
-        l = Language.objects.get(code='en')
-
-        r = Resource.objects.create(
-            slug = 'foo',
-            name = 'foo',
-            source_language = l)
+        r = self.resource
+        l = self.resource.source_language
 
         handler.bind_resource(r)
 
@@ -100,3 +100,49 @@ class QTFile(BaseTestCase):
             language=l)), 44)
 
         r.delete()
+
+    def test_convert_to_suggestions(self):
+        """Test convert to suggestions when importing new source files"""
+
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no suggestions to begin with
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = LinguistHandler('%s/suggestions/en.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # import pt_BR translation
+        handler = LinguistHandler('%s/suggestions/pt_BR.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 8)
+
+        # import source with small modifications
+        handler = LinguistHandler('%s/suggestions/en-diff.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # Make sure that all suggestions were added
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 1)
+
+        # Make sure one string is now untranslated
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 4)

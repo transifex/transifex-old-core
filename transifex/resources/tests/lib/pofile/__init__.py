@@ -5,6 +5,8 @@ from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.pofile import POHandler
 
+from transifex.addons.suggestions.models import Suggestion
+
 class POFile(BaseTestCase):
     """Suite of tests for the pofile lib."""
     def test_pot_parser(self):
@@ -13,6 +15,7 @@ class POFile(BaseTestCase):
         handler = POHandler('%s/tests.pot' % 
             os.path.split(__file__)[0])
 
+        handler.set_language(self.resource.source_language)
         handler.parse_file()
         self.stringset = handler.stringset
         entities = 0
@@ -41,6 +44,8 @@ class POFile(BaseTestCase):
         handler = POHandler('%s/pt_BR.po' % 
             os.path.split(__file__)[0])
 
+
+        handler.set_language(self.language)
         handler.parse_file()
         self.stringset = handler.stringset
 
@@ -64,6 +69,7 @@ class POFile(BaseTestCase):
         handler = POHandler('%s/ar.po' % 
             os.path.split(__file__)[0])
 
+        handler.set_language(self.language_ar)
         handler.parse_file()
         self.stringset = handler.stringset
         nplurals = 0
@@ -89,14 +95,12 @@ class POFile(BaseTestCase):
         handler = POHandler('%s/tests.pot' % 
             os.path.split(__file__)[0]) 
 
-        handler.parse_file(is_source=True)
-
         l = Language.objects.get(code='en_US')
 
-        r = Resource.objects.create(
-            slug = 'foo',
-            name = 'foo',
-            source_language = l)
+        handler.set_language(l)
+        handler.parse_file(is_source=True)
+
+        r = self.resource
 
         handler.bind_resource(r)
 
@@ -120,3 +124,49 @@ class POFile(BaseTestCase):
             language=l)), 8)
 
         r.delete()
+
+    def test_convert_to_suggestions(self):
+        """Test convert to suggestions when importing new source files"""
+
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no suggestions to begin with
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = POHandler('%s/suggestions/tests.pot' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # import pt_BR translation
+        handler = POHandler('%s/suggestions/pt_BR.po' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 4)
+
+        # import source with small modifications
+        handler = POHandler('%s/suggestions/tests-diff.pot' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # Make sure that all suggestions were added
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 1)
+
+        # Make both strings are now untranslated
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)

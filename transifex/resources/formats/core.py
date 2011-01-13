@@ -13,6 +13,7 @@ from transifex.actionlog.models import action_logging
 from transifex.resources.formats.decorators import *
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import get_i18n_type_from_file
+from transifex.resources.formats.string_utils import percent_diff
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -232,6 +233,8 @@ class Handler(object):
                     resource = self.resource)
             original_sources = list(qs)
 
+
+        new_entities = []
         try:
             strings_added = 0
             strings_updated = 0
@@ -266,6 +269,8 @@ class Handler(object):
                         developer_comment = j.comment or "",
                         occurrences = j.occurrences,
                     )
+                    # Add it to list with new entities
+                    new_entities.append(se)
 
                 # Skip storing empty strings as translations!
                 if not j.translation:
@@ -303,6 +308,20 @@ class Handler(object):
                 self.resource.i18n_type = get_i18n_type_from_file(self.filename)
                 self.resource.save()
                 for se in original_sources:
+                    for ne in new_entities:
+                        try:
+                            old_trans = Translation.objects.get(source_entity=se,
+                                language=se.resource.source_language, rule=5)
+                            new_trans = Translation.objects.get(source_entity=ne,
+                                language=se.resource.source_language, rule=5)
+                        except Translation.DoesNotExist:
+                            # Source language translation should always exist
+                            # but just in case...
+                            continue
+                        # find Levenshtein distance
+                        if percent_diff(old_trans.string, new_trans.string) < settings.MAX_STRING_DISTANCE:
+                            convert_to_suggestions(se, ne, user)
+
                     se.delete()
 
             for j in self.suggestions.strings:
@@ -382,6 +401,40 @@ class Handler(object):
 
     def contents_check(self, filename):
         raise Exception("Not Implemented")
+
+
+def convert_to_suggestions(source, dest, user=None, langs=None):
+    """
+    This function takes all translations that belong to source and adds them as
+    suggestion to dest. Both source and dest are SourceEntity objects.
+
+    The langs can contain a list of all languages for which the conversion will
+    take place. Defaults to all available languages.
+    """
+    if langs:
+        translations = Translation.objects.filter(source_entity=source,
+            language__in=langs, rule=5)
+    else:
+        translations = Translation.objects.filter(source_entity=source, rule=5)
+
+    for t in translations:
+        # Skip source language translations
+        if t.language == dest.resource.source_language:
+            continue
+
+        tr, created = Suggestion.objects.get_or_create(
+            string = t.string,
+            source_entity = dest,
+            language = t.language
+        )
+
+        # If the suggestion was created and we have a user assign him as the
+        # one who made the suggestion
+        if created and user:
+            tr.user = user
+            tr.save()
+
+    return
 
 class StringSet:
     """
