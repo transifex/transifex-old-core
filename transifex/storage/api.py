@@ -123,10 +123,13 @@ class StorageHandler(BaseHandler):
                         'name':sf.name})
                 except Exception, e:
                     if isinstance(e, FileCheckError) or isinstance(e, LinguistParseError):
-                        message = str(e)
+                        #FIXME: Custom Exception should use an extra attr for 
+                        # localized string.
+                        message = e.message
                     else:
                         #TODO Send email to admins
                         message = _("A strange error happened.")
+                        logger.debug(str(e))
 
                     # The object is not saved yet, but it removes file from 
                     # the filesystem
@@ -138,7 +141,6 @@ class StorageHandler(BaseHandler):
                     StorageFile.objects.filter(
                         id__in=[f['id'] for f in files]).delete()
 
-                    logger.debug(str(e))
                     retval=dict(status='Error', message=message)
 
             if not retval:
