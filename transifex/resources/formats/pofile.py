@@ -15,7 +15,7 @@ from transifex.txcommon.commands import run_command, CommandError
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
-from transifex.resources.formats.decorators import *
+from transifex.resources.formats.utils.decorators import *
 from transifex.resources.models import RLStats
 from suggestions.models import Suggestion
 

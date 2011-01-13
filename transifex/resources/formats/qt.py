@@ -15,7 +15,7 @@ from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import StringSet, ParseError, \
     GenericTranslation, CompileError, Handler, STRICT
 from suggestions.models import Suggestion
-from transifex.resources.formats.decorators import *
+from transifex.resources.formats.utils.decorators import *
 
 # Resources models
 Resource = get_model('resources', 'Resource')

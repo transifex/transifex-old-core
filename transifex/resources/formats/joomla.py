@@ -8,7 +8,7 @@ import codecs
 from django.utils.hashcompat import md5_constructor
 
 from transifex.txcommon.log import logger
-from transifex.resources.formats.decorators import *
+from transifex.resources.formats.utils.decorators import *
 
 from core import GenericTranslation, Handler, STRICT, \
     StringSet
