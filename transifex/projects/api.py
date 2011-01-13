@@ -190,6 +190,9 @@ class ProjectResourceHandler(BaseHandler):
                 resource_slug = None
                 if "slug" in request.data:
                     resource_slug = request.data['slug']
+                    if len(resource_slug) > 51:
+                        return BAD_REQUEST("Resouce slug is too long "
+                            "(Max. 50 chars).")
 
                 resource, created = Resource.objects.get_or_create(
                         slug = resource_slug or slugify(storagefile.name),
