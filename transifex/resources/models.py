@@ -153,7 +153,7 @@ class Resource(models.Model):
         return u'%s (%s)' % (self.slug, self.project)
 
     def __repr__(self):
-        return "<Resource: %s>" % self.slug
+        return repr(u"<Resource: %s>" % self.slug)
 
     class Meta:
         unique_together = ('slug', 'project',)

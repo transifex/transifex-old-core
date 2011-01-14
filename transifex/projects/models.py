@@ -171,7 +171,7 @@ class Project(models.Model):
         return self.name
 
     def __repr__(self):
-        return _('<Project: %s>') % self.name
+        return repr(u'<Project: %s>' % self.name)
 
     class Meta:
         verbose_name = _('project')
