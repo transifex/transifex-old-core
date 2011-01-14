@@ -149,7 +149,7 @@
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
   {% cache 604800 team_details team.id stat.resource.id LANGUAGE_CODE %}
         <td>
-          <span class="clickable">{{ stat.resource.name }}</span>
+		  <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         </td>
         <td>
         {% with 200 as barwidth %}
