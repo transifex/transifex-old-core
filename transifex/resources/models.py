@@ -501,7 +501,7 @@ class RLStatsQuerySet(models.query.QuerySet):
         projects.
         """
         resources = Resource.objects.filter(project__private=True)
-        return self.filter(resource__in=resources.values('pk').query)
+        return self.filter(resource__in=resources.values('pk').query).distinct()
 
     def public(self):
         """
@@ -509,7 +509,7 @@ class RLStatsQuerySet(models.query.QuerySet):
         projects.
         """
         resources = Resource.objects.filter(project__private=False)
-        return self.filter(resource__in=resources.values('pk').query)
+        return self.filter(resource__in=resources.values('pk').query).distinct()
 
 
     def by_project(self, project):
@@ -517,7 +517,7 @@ class RLStatsQuerySet(models.query.QuerySet):
         Return a queryset matching all RLStats associated with a given
         ``project``.
         """
-        return self.filter(resource__project=project)
+        return self.filter(resource__project=project).distinct()
 
     def by_resource(self, resource):
         """
@@ -531,19 +531,19 @@ class RLStatsQuerySet(models.query.QuerySet):
         Return a queryset matching all RLStats associated with the given
         ``resources``.
         """
-        return self.filter(resource__in=resources)
+        return self.filter(resource__in=resources).distinct()
 
     def by_language(self, language):
         """
         Return a queryset matching RLStats associated with a given ``language``.
         """
-        return self.filter(language=language)
+        return self.filter(language=language).distinct()
 
     def by_release(self, release):
         """
         Return a queryset matching RLStats associated with a given ``release``.
         """
-        return self.filter(resource__in=release.resources.values('pk').query)
+        return self.filter(resource__in=release.resources.values('pk').query).distinct()
 
     def by_release_and_language(self, release, language):
         """
