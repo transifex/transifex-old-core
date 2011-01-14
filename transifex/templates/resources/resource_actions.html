@@ -40,7 +40,7 @@
       {% else %}
         {% if can_submit_translation and resource.accept_translations %}
          {% if stats.lock.valid and stats.lock.owner != request.user %}
-         <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" title="{% trans "This resource is currently locked by someone else" %}" >{% trans "Translate Now" %}</a>
+         <a class="i16 tick buttonized2 buttonized2_warning tipsy_enable" id="translate_now" href="{% url translate_resource project.slug resource.slug target_language.code %}" title="{% trans "This resource is currently locked by someone else" %}" >{% trans "Translate Now" %}</a>
          {% else %}
           <a class="i16 tick buttonized2" id="translate_now" href="{% url translate_resource project.slug resource.slug target_language.code %}">{% trans "Translate Now" %}</a>
          {% endif %}
