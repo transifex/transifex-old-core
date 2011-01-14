@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q, get_model
 from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
                          HttpResponseForbidden, HttpResponseBadRequest)
@@ -52,12 +53,18 @@ def resource_detail(request, project_slug, resource_slug):
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
+    try:
+        autofetch_url = resource.url_info
+    except ObjectDoesNotExist:
+        autofetch_url = None
+
     statslist = RLStats.objects.select_related('language', 'last_committer',
         'lock').by_resource(resource)
 
     return render_to_response("resources/resource_detail.html",
         { 'project' : resource.project,
           'resource' : resource,
+          'autofetch_url': autofetch_url,
           'languages' : Language.objects.order_by('name'),
           'user_teams' : user_teams,
           'statslist': statslist },

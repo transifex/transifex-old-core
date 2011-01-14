@@ -125,6 +125,17 @@
       </td>
     </tr>
     <tr>
+      <th class="i16 merge">{% trans "Auto-update from URL?" %}</th>
+      <td>
+        {% if autofetch_url and autofetch_url.auto_update %} 
+		    <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" /> &nbsp;
+			<span><a href="{{ autofetch_url.source_file_url }}">[link to file]</a></span>
+        {% else %}
+            <img class="noborder" src="{{ STATIC_URL }}images/icons/delete.png" />
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
       <th class="i16 allow_file">{% trans "Accepting Translations?" %}</th>
       <td>
         {% if resource.accept_translations %}
