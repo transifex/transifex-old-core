@@ -13,6 +13,7 @@ from models import Lock, LockError
 from transifex.projects.models import Project
 from transifex.resources.models import Resource
 from transifex.resources.utils import invalidate_template_cache
+from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
 
 from permissions import pr_resource_language_lock
@@ -31,18 +32,22 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
 
     It uses a json response to be used with Ajax requests.
     """
+    response={}
     if request.method == 'POST':
-        resource = get_object_or_404(Resource, slug=resource_slug,
-            project__slug=project_slug)
+        resource = get_object_or_404(Resource.objects.select_related('project'),
+            slug=resource_slug, project__slug=project_slug)
         language = get_object_or_404(Language, code=language_code)
+        team = Team.objects.get_or_none(resource.project, language_code)
 
-        response={}
         try:
             lock = Lock.objects.create_update(resource, language, request.user)
             invalidate_template_cache('resource_details_lang', project_slug,
                 resource_slug, language_code)
             invalidate_template_cache('resource_details', project_slug,
                     resource_slug)
+            if team:
+                invalidate_template_cache('team_details', team.id,
+                    resource.id)
             response['status'] = "OK"
             response['message'] = _("Lock created.")
             response['timeuntil'] = timeuntil(lock.expires)
@@ -67,12 +72,13 @@ def resource_language_unlock(request, project_slug, resource_slug,
 
     It uses a json response to be used with Ajax requests.
     """
+    response={}
     if request.method == 'POST':
-        resource = get_object_or_404(Resource, slug=resource_slug,
-            project__slug=project_slug)
+        resource = get_object_or_404(Resource.objects.select_related('project'),
+            slug=resource_slug, project__slug=project_slug)
         language = get_object_or_404(Language, code=language_code)
+        team = Team.objects.get_or_none(resource.project, language_code)
 
-        response={}
         lock = Lock.objects.get_valid(resource, language)
         if lock:
             try:
@@ -81,6 +87,9 @@ def resource_language_unlock(request, project_slug, resource_slug,
                     resource_slug, language_code)
                 invalidate_template_cache('resource_details', project_slug,
                     resource_slug)
+                if team:
+                    invalidate_template_cache('team_details', team.id,
+                        resource.id)
                 response['status'] = "OK"
                 response['message'] = _("Lock removed.")
             except LockError, e:
