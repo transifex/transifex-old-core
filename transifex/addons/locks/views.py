@@ -12,6 +12,7 @@ from transifex.languages.models import Language
 from models import Lock, LockError
 from transifex.projects.models import Project
 from transifex.resources.models import Resource
+from transifex.resources.utils import invalidate_template_cache
 from transifex.txcommon.decorators import one_perm_required_or_403
 
 from permissions import pr_resource_language_lock
@@ -38,7 +39,10 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
         response={}
         try:
             lock = Lock.objects.create_update(resource, language, request.user)
-            #cache.delete(TFC_CACHING_PREFIX +'.resource.'+resource.full_name)
+            invalidate_template_cache('resource_details_lang', project_slug,
+                resource_slug, language_code)
+            invalidate_template_cache('resource_details', project_slug,
+                    resource_slug)
             response['status'] = "OK"
             response['message'] = _("Lock created.")
             response['timeuntil'] = timeuntil(lock.expires)
@@ -73,7 +77,10 @@ def resource_language_unlock(request, project_slug, resource_slug,
         if lock:
             try:
                 lock.delete_by_user(request.user)
-                #cache.delete(TFC_CACHING_PREFIX +'.resource.'+resource.full_name)
+                invalidate_template_cache('resource_details_lang', project_slug,
+                    resource_slug, language_code)
+                invalidate_template_cache('resource_details', project_slug,
+                    resource_slug)
                 response['status'] = "OK"
                 response['message'] = _("Lock removed.")
             except LockError, e:
