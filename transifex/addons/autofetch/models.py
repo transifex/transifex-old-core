@@ -23,7 +23,7 @@ class URLInfo(models.Model):
         " the given URL."))
 
     # Foreign keys
-    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
+    resource = models.OneToOneField(Resource, verbose_name=_('Resource'),
         blank=False, null=False, related_name='url_info', unique=True,
         help_text=_("The translation resource."))
 

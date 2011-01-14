@@ -132,7 +132,11 @@ class Handler(object):
         """
         if isinstance(resource, Resource):
             self.resource = resource
-            self.compiled_template = self.compiled_template or self.resource.source_file_template
+            try:
+                resource_template = self.resource.source_file_template
+            except Template.DoesNotExist:
+                resource_template = None
+            self.compiled_template = self.compiled_template or resource_template
             self.language = self.language or resource.source_language
         else:
             raise Exception("The specified object is not of the required type")
