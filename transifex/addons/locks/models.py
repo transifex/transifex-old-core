@@ -85,7 +85,8 @@ class LockManager(models.Manager):
             lock.expires = expires
         except Lock.DoesNotExist:
             # Lock didn't exist, create one
-            rlstats = RLStats.objects.get(resource=resource, language=language)
+            rlstats, created = RLStats.objects.get_or_create(resource=resource, 
+                language=language)
             lock = self.create(rlstats=rlstats, owner=user, expires=expires)
         # Set notified flag to False meaning that expiration notification
         # has not been sent about this lock yet
