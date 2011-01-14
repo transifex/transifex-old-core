@@ -89,7 +89,7 @@ def release_language_detail(request, project_slug, release_slug, language_code):
         'resource__project').public().by_release_and_language(release, language)
 
     private_stats = RLStats.objects.select_related('resource',
-        'resource__project').for_user(request.user
+        'resource__project', 'lock').for_user(request.user
             ).private().by_release_and_language(release, language)
 
     return render_to_response('projects/release_language_detail.html', {

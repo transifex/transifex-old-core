@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django_addons.errors import AddonError
 from transifex.txcommon.log import logger
 from transifex.projects.permissions.project import ProjectPermission
+from transifex.resources.models import RLStats
 
 class LockError(AddonError):
     pass
@@ -35,7 +36,8 @@ class LockManager(models.Manager):
         Return valid (not expired) lock for the given resource and language.
         """
         try:
-            return self.valid().get(resource=resource, language=language)
+            return self.valid().get(rlstats__resource=resource, 
+                rlstats__language=language)
         except Lock.DoesNotExist:
             return None
 
@@ -70,7 +72,8 @@ class LockManager(models.Manager):
 
         expires = now + timedelta(seconds=settings.LOCKS_LIFETIME)
         try:
-            lock = self.get(resource=resource, language=language)
+            lock = self.get(rlstats__resource=resource, 
+                rlstats__language=language)
             # The lock is not expired and user is not the owner
             if lock.expires and lock.expires > now and lock.owner != user:
                 raise LockError(_("This resource language is already locked "
@@ -82,8 +85,8 @@ class LockManager(models.Manager):
             lock.expires = expires
         except Lock.DoesNotExist:
             # Lock didn't exist, create one
-            lock = self.create(resource=resource, language=language, 
-                owner=user, expires=expires)
+            rlstats = RLStats.objects.get(resource=resource, language=language)
+            lock = self.create(rlstats=rlstats, owner=user, expires=expires)
         # Set notified flag to False meaning that expiration notification
         # has not been sent about this lock yet
         lock.notified = False
@@ -106,29 +109,25 @@ class Lock(models.Model):
 
     # ForeignKeys
     owner = models.ForeignKey(User)
-    resource = models.ForeignKey('resources.Resource', null=False, blank=False, 
-        related_name='locks')
-    language = models.ForeignKey('languages.Language', null=False, blank=False, 
-        related_name='locks')
+    rlstats = models.OneToOneField('resources.RLStats', null=False, blank=False, 
+        related_name='lock')
 
     # Managers
     objects = LockManager()
 
     def __unicode__(self):
-        return u"%(resource)s (%(language)s:%(owner)s)" % {
-            'resource': self.resource.full_name,
-            'language': self.language.code,
+        return u"%(rlstats)s (%(owner)s)" % {
+            'rlstats': self.rlstats,
             'owner': self.owner}
 
     def __repr__(self):
-        return u"<Lock: %(resource)s (%(language)s:%(owner)s)>" % {
-            'resource': self.resource.full_name,
-            'language': self.language.code,
+        return u"<Lock: %(rlstats)s (%(owner)s)>" % {
+            'rlstats': self.rlstats,
             'owner': self.owner}
 
     class Meta:
         db_table = 'addons_locks_lock'
-        unique_together = ('resource','language',)
+        unique_together = ('rlstats',)
         ordering  = ('-created',)
         get_latest_by = 'created'
 
@@ -138,7 +137,7 @@ class Lock(models.Model):
         """
         perm = ProjectPermission(user)
         return (self.owner == user) or perm.coordinate_team(
-            project=self.resource.project, language=self.language)
+            project=self.rlstats.resource.project, language=self.rlstats.language)
 
     @staticmethod
     def can_lock(resource, language, user):
@@ -162,3 +161,7 @@ class Lock(models.Model):
             raise LockError(_("User '%(user)s' is not allowed to remove "
                 "lock '%(lock)s'") % { "user" : user, "lock" : self})
         return super(Lock, self).delete(*args, **kwargs)
+
+    def valid(self):
+        """Return True if lock is valid. Not expired."""
+        return self.expires >= datetime.now()
