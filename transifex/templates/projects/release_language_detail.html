@@ -71,7 +71,16 @@
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
-		  <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        {% if stat.lock.valid %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+        {% else %}
+          {% if stat.resource.accept_translations %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_green.png" title="{% trans "Accepting translations" %}"/>
+          {% else %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans "Not accepting translations at the moment" %}"/>
+          {% endif %}
+        {% endif %}
         </td>
         <td>
         {% with 200 as barwidth %}
@@ -193,7 +202,16 @@
   {% for stat in private_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
-		  <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        {% if stat.lock.valid %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+        {% else %}
+          {% if stat.resource.accept_translations %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_green.png" title="{% trans "Accepting translations" %}"/>
+          {% else %}
+            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans "Not accepting translations at the moment" %}"/>
+          {% endif %}
+        {% endif %}
         </td>
         <td>
         {% with 200 as barwidth %}
