@@ -67,12 +67,14 @@ class LotteViewsTests(BaseTestCase):
         self.entity.string = "Key1"
         self.entity.context = "Description1"
         self.entity.occurrences = "Occurrences1"
+        self.entity.developer_comment = "Comment1"
         self.entity.save()
         # Test the response contents
         resp = self.client['team_member'].get(self.snippet_url)
         self.assertContains(resp, self.entity.string, status_code=200)
         self.assertContains(resp, self.entity.context)
         self.assertContains(resp, self.entity.occurrences)
+        self.assertContains(resp, self.entity.developer_comment)
         self.assertTemplateUsed(resp, 'lotte_details_snippet.html')
 
     def test_snippet_translation_data(self):
