@@ -3,9 +3,11 @@
 """
 Qt4 TS file parser for Python
 """
+import re
 import time
 import xml.dom.minidom
 import xml.parsers.expat
+from xml.sax.saxutils import escape as xml_escape
 from django.db import transaction
 from django.db.models import get_model
 from django.utils.hashcompat import md5_constructor
@@ -49,7 +51,7 @@ def _get_attribute(element, key, die = False):
 def _getText(nodelist):
     rc = []
     for node in nodelist:
-        rc.append(node.toxml())
+        rc.append(node.data)
     return ''.join(rc)
 
 
@@ -73,6 +75,13 @@ class LinguistHandler(Handler):
         except Exception, e:
             raise FileCheckError, ugettext("Your file doesn't seem to contain "\
                 "valid xml: %s!" % e )
+
+    def _do_replace(self, original, replacement, text):
+        """
+        It just does a search and replace inside `text` and replaces all
+        occurrences of `original` with `replacement`.
+        """
+        return re.sub(re.escape(original), xml_escape(replacement), text)
 
     def _post_compile(self, *args, **kwargs):
         """
