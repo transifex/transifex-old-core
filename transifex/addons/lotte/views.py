@@ -539,78 +539,76 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             ss = unescape(source_string.string)
             tr = unescape(string)
 
-            # Check whether the translation sting only contains spaces
+                    # Check whether the translation sting only contains spaces
             if tr and len(tr.strip()) == 0:
-                push_response_dict[source_id] = { 'status':500,
+                push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation string only contains whitespaces.")}
-                continue
 
             # Test that the number of {[()]} appearing in each string are the
             # same
             try:
                 for char in '[{()}]':
                     if tr and ss.count(char) != tr.count(char):
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                         'message':_("Translation string doesn't contain the same"
                         " number of '%s' as the source string." % char )}
                         raise StopIteration
             except StopIteration:
-                continue
-
+                pass
             # Scan for urls and see if they're in both strings
             urls = re.compile(r'(\S+?://\S+)')
             try:
                 for url in urls.findall(ss):
                     if tr and url not in tr:
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                         'message':_("The following url is either missing form the"
                         " translation os has been translated: '%s'." % url)}
                         raise StopIteration
             except StopIteration:
-                continue
+                pass 
 
             # Scan for urls and see if they're in both strings
             emails = re.compile("([\w\-\.+]+@[\w\w\-]+\.+[\w\-]+)")
             try:
                 for email in emails.findall(ss):
                     if tr and email not in tr:
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                         'message':_("The following email is either missing form the"
                         " translation os has been translated: '%s'." % email)}
                         raise StopIteration
             except StopIteration:
-                continue
+                pass 
 
             # Check whether source string and translation start and end
             # with newlines
             if string and ss.startswith('\n') != tr.startswith('\n'):
                 if ss.endswith('\n'):
-                    push_response_dict[source_id] = { 'status':500,
+                    push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation must start with a newline (\\n)")}
                 else:
-                    push_response_dict[source_id] = { 'status':500,
+                    push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation should not start with a newline (\\n)")}
-                continue
+                pass
             elif string and ss.endswith('\n') != tr.endswith('\n'):
                 if ss.endswith('\n'):
-                    push_response_dict[source_id] = { 'status':500,
+                    push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation must end with a newline (\\n)")}
                 else:
-                    push_response_dict[source_id] = { 'status':500,
+                    push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation should not end with a newline (\\n)")}
-                continue
+                pass
 
             # Check the numbers inside the string
             numbers = re.compile("[-+]?[0-9]*\.?[0-9]+")
             try:
                 for num in numbers.findall(source_string.string):
                     if string and num not in string:
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                             'message':_("Number %s is in the source string but not "\
                             "in the translation." % num )}
                         raise StopIteration
             except StopIteration:
-                continue
+                pass
 
             # Check printf variables
             printf_pattern = re.compile('%((?:(?P<ord>\d+)\$|\((?P<key>\w+)\))'\
@@ -618,10 +616,18 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             ss_matches = list(printf_pattern.finditer(source_string.string))
             tr_matches = list(printf_pattern.finditer(string))
 
+            # Check number of printf variables
+            if string and len(printf_pattern.findall(source_string.string)) != \
+                len(printf_pattern.findall(string)):
+                push_response_dict[source_id] = { 'status':500,
+                    'message':_('The number of arguments seems to differ '
+                        'between the source string and the translation.')}
+                continue
+
             try:
                 for pattern in ss_matches:
                     if string and pattern.group(0) not in string:
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                             'message':_('The expression \'%s\' is not present '\
                             'in the translation.' % pattern.group(0) )}
                         raise StopIteration
@@ -631,19 +637,12 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             try:
                 for pattern in tr_matches:
                     if string and pattern.group(0) not in source_string.string:
-                        push_response_dict[source_id] = { 'status':500,
+                        push_response_dict[source_id] = { 'status':200,
                             'message':_('The expression \'%s\' is not present '\
                             'in the source string.' % pattern.group(0) )}
             except StopIteration:
-                continue
+                pass
 
-            # Check number of printf variables
-            if string and len(printf_pattern.findall(source_string.string)) != \
-                len(printf_pattern.findall(string)):
-                push_response_dict[source_id] = { 'status':500,
-                    'message':_('The number of arguments seems to differ '
-                        'between the source string and the translation.')}
-                continue
 
             try:
                 # TODO: Implement get based on context and/or on context too!
@@ -664,9 +663,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
                 invalidate_stats_cache(source_string.source_entity.resource,
                     target_language, user=request.user)
-
-                push_response_dict[source_id] = { 'status':200,
-                     'message':_("Translation updated successfully in the DB")}
+                if not push_response_dict.has_key(source_id):
+                    push_response_dict[source_id] = { 'status':200}
             except Translation.DoesNotExist:
                 # Only create new if the translation string sent, is not empty!
                 if string != "":
@@ -678,8 +676,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         user = request.user) # Save the sender as last committer
                     invalidate_stats_cache(source_string.source_entity.resource,
                         target_language, user=request.user)
-                    push_response_dict[source_id] = { 'status':200,
-                         'message':_("New translation stored successfully in the DB")}
+                    if not push_response_dict.has_key(source_id):
+                        push_response_dict[source_id] = { 'status':200}
                 else:
                     push_response_dict[source_id] = { 'status':500,
                          'message':_("The translation string is empty")}
@@ -689,6 +687,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 push_response_dict[source_id] = { 'status':500,
                     'message':_("Error occurred while trying to save translation.")}
 
+    print push_response_dict
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')
 

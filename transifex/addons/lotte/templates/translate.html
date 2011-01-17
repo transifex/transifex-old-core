@@ -522,7 +522,7 @@
                         dataType : "json",
                         type: "POST",
                         contentType: "application/json",
-                        complete: function(xmlhttpreq, textStatus) {
+                        success: function(xmlhttpreq, textStatus) {
                             if (textStatus=='success'){
                                 response = JSON.parse(xmlhttpreq.responseText);
                                 window.location = response['redirect'];
