@@ -594,6 +594,9 @@ class RLStats(models.Model):
     translated = models.PositiveIntegerField(_("Translated Entities"),
         blank=False, null=False, default=0, help_text="The number of "
         "translated entities in a language for a specific resource.")
+    translated_wordcount = models.PositiveIntegerField(_("Wordcount for Translated Entities"),
+        blank=False, null=False, default=0, help_text="The number of words "
+        " contained translated entities in a language for a specific resource.")
     untranslated = models.PositiveIntegerField(_("Untranslated Entities"),
         blank=False, null=False, default=0, help_text="The number of "
         "untranslated entities in a language for a specific resource.")
@@ -629,7 +632,11 @@ class RLStats(models.Model):
 
     @property
     def total(self):
-        return self.translated + self.untranslated
+        return self.resource.total_entities
+
+    @property
+    def untranslated_wordcount(self):
+        return self.resource.wordcount - self.translated_wordcount
 
     def save(self, *args, **kwargs):
         self.calculate_translated()
@@ -647,6 +654,20 @@ class RLStats(models.Model):
             self.translated_perc = 0
             self.untranslated_perc = 0
 
+    def calculate_translated_wordcount(self):
+        """Calculate wordcount of translated/untranslated entries"""
+        wc = 0
+        translated = SourceEntity.objects.filter(
+            id__in=Translation.objects.filter(language=self.language,
+            source_entity__resource=self.resource).distinct().values_list(
+            'source_entity', flat=True))
+        source_trans = Translation.objects.filter(source_entity__in=translated,
+            language=self.resource.source_language)
+        for t in source_trans:
+            if t:
+                wc += t.wordcount
+        return wc
+
     def calculate_translated(self):
         """
         Calculate translated/untranslated entities.
@@ -657,9 +678,6 @@ class RLStats(models.Model):
             language=self.language, source_entity__resource=self.resource
             ).distinct().count()
         untranslated = total - translated
-
-        self.untranslated = untranslated
-        self.translated = translated
 
         return translated, untranslated
 
@@ -673,6 +691,26 @@ class RLStats(models.Model):
 
         self.save()
 
+    def update_translated(self, save=True):
+        """
+        Update the translated/untranslated entities
+        """
+        translated, untranslated = self.calculate_translated()
+        self.translated = translated
+        self.untranslated = untranslated
+
+        if save:
+            self.save()
+
+
+    def update_translated_wordcount(self, save=True):
+        """
+        Update the wordcount of the translated entities
+        """
+        self.translated_wordcount = self.calculate_translated_wordcount()
+        if save:
+            self.save()
+
     def update_last_translation(self):
         lt = Translation.objects.filter(language=self.language,
             source_entity__resource=self.resource).select_related(
@@ -682,6 +720,7 @@ class RLStats(models.Model):
             self.last_committer = lt[0].user
             return lt[0].last_update, lt[0].user
         return None, None
+
 
 
 class Template(models.Model):

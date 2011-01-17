@@ -23,7 +23,8 @@ def invalidate_stats_cache(resource, language, **kwargs):
             language=language)
         # If it's new it's updated. Otherwise update now.
         if not created:
-            rl.calculate_translated()
+            rl.update_translated_wordcount(save=False)
+            rl.update_translated()
         rl.update_now( kwargs['user'] if kwargs.has_key('user') else None)
         # Check to see if the lang has zero translations and is not a team
         # lang. If yes, delete RLStats object
@@ -37,7 +38,8 @@ def invalidate_stats_cache(resource, language, **kwargs):
         # Source file was updated. Update all language statistics
         stats = RLStats.objects.filter(resource=resource)
         for s in stats:
-            s.calculate_translated()
+            s.update_translated_wordcount(save=False)
+            s.update_translated()
             s.update_now( kwargs['user'] if kwargs.has_key('user') else None)
 
             if s.translated == 0 and s.language.id not in\
