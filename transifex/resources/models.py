@@ -431,6 +431,9 @@ class Translation(models.Model):
                     "It's 0=zero, 1=one, 2=two, 3=few, 4=many and 5=other. "
                     "For translations that have its entity not pluralized, "
                     "the rule must be 5 (other)."))
+    wordcount = models.PositiveIntegerField(_("Wordcount for this string."),
+        blank=False, null=False, default=0, help_text="The number of words "
+        " contained in this translation string.")
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -472,16 +475,16 @@ class Translation(models.Model):
         """
         # encoding happens to support unicode characters
         self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
+        self._update_wordcount()
         super(Translation, self).save(*args, **kwargs)
 
-    @property
-    def wordcount(self):
+    def _update_wordcount(self):
         """
         Return the number of words for this translation string.
         """
         # use None to split at any whitespace regardless of length
         # so for instance double space counts as one space
-        return len(self.string.split(None))
+        self.wordcount = len(self.string.split(None))
 
 
 
@@ -638,10 +641,9 @@ class RLStats(models.Model):
     def untranslated_wordcount(self):
         return self.resource.wordcount - self.translated_wordcount
 
-    def save(self, *args, **kwargs):
-        self.calculate_translated()
-        self.update_last_translation()
-        self._calculate_perc()
+    def save(self, update=True, *args, **kwargs):
+        if update:
+            self.update(user=None, save=False)
         super(RLStats, self).save(*args, **kwargs)
 
     def _calculate_perc(self):
@@ -654,21 +656,18 @@ class RLStats(models.Model):
             self.translated_perc = 0
             self.untranslated_perc = 0
 
-    def calculate_translated_wordcount(self):
+    def _calculate_translated_wordcount(self):
         """Calculate wordcount of translated/untranslated entries"""
         wc = 0
         translated = SourceEntity.objects.filter(
             id__in=Translation.objects.filter(language=self.language,
             source_entity__resource=self.resource).distinct().values_list(
             'source_entity', flat=True))
-        source_trans = Translation.objects.filter(source_entity__in=translated,
-            language=self.resource.source_language)
-        for t in source_trans:
-            if t:
-                wc += t.wordcount
-        return wc
+        wordcount = Translation.objects.filter(source_entity__in=translated,
+            language=self.resource.source_language).aggregate(Sum('wordcount'))['wordcount__sum']
+        self.translated_wordcount = wordcount or 0
 
-    def calculate_translated(self):
+    def _calculate_translated(self):
         """
         Calculate translated/untranslated entities.
         """
@@ -678,50 +677,27 @@ class RLStats(models.Model):
             language=self.language, source_entity__resource=self.resource
             ).distinct().count()
         untranslated = total - translated
+        self.translated = translated
+        self.untranslated = untranslated
 
-        return translated, untranslated
+    def update(self, user, save=True):
+        """
+        Update the RLStat object
+        """
+        self._calculate_translated()
+        self._calculate_translated_wordcount()
+        self._calculate_perc()
+        self._update_now(user)
+        if save:
+            self.save(update=False)
 
-    def update_now(self, user=None):
+    def _update_now(self, user=None):
         """
         Update the last update and last committer.
         """
         self.last_update = datetime.datetime.now()
         if user:
             self.last_committer = user
-
-        self.save()
-
-    def update_translated(self, save=True):
-        """
-        Update the translated/untranslated entities
-        """
-        translated, untranslated = self.calculate_translated()
-        self.translated = translated
-        self.untranslated = untranslated
-
-        if save:
-            self.save()
-
-
-    def update_translated_wordcount(self, save=True):
-        """
-        Update the wordcount of the translated entities
-        """
-        self.translated_wordcount = self.calculate_translated_wordcount()
-        if save:
-            self.save()
-
-    def update_last_translation(self):
-        lt = Translation.objects.filter(language=self.language,
-            source_entity__resource=self.resource).select_related(
-            'last_update', 'user').order_by('-last_update')[:1]
-        if lt:
-            self.last_update = lt[0].last_update
-            self.last_committer = lt[0].user
-            return lt[0].last_update, lt[0].user
-        return None, None
-
-
 
 class Template(models.Model):
     """

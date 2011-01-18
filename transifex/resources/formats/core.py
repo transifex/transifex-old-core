@@ -348,7 +348,7 @@ class Handler(object):
             self._post_save2db(is_source , user, overwrite_translations)
 
             # Invalidate cache after saving file
-            invalidate_stats_cache(self.resource, self.language)
+            invalidate_stats_cache(self.resource, self.language, user=user)
 
 
             if strings_added + strings_updated > 0:
