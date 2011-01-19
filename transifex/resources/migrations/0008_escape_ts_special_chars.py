@@ -16,10 +16,11 @@ class Migration(DataMigration):
             template = Template.objects.get(resource=r)
             for s in SourceEntity.objects.filter(resource=r):
                 old_hash = s.string_hash
-                s.string = unescape(s.string)
+                s.string = unescape(s.string, {"&apos;": "'", "&quot;": '"'})
                 s.save()
                 for t in Translation.objects.filter(source_entity=s):
-                    t.string = unescape(t.string)
+                    t.string = unescape(t.string,
+                        {"&apos;": "'", "&quot;":'"'})
                     t.save()
 
 
@@ -33,10 +34,10 @@ class Migration(DataMigration):
             template = Template.objects.get(resource=r)
             for s in SourceEntity.objects.filter(resource=r):
                 old_hash = s.string_hash
-                s.string = escape(s.string)
+                s.string = escape(s.string,  {"'": "&apos;", '"': '&quot;'})
                 s.save()
                 for t in Translation.objects.filter(source_entity=s):
-                    t.string = escape(t.string)
+                    t.string = escape(t.string,  {"'": "&apos;", '"': '&quot;'})
                     t.save()
 
                 new_hash = s.string_hash

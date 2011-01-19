@@ -146,3 +146,45 @@ class QTFile(BaseTestCase):
         # Make sure one string is now untranslated
         self.assertEqual(Translation.objects.filter(source_entity__in=
             SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 4)
+
+    def test_special_characters(self):
+        """Test that escaping/unescaping happens correctly"""
+
+        unescaped_string = "& < > \" '"
+        escaped_string = "&amp; &lt; &gt; &quot; &apos;"
+
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no suggestions to begin with
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = LinguistHandler('%s/special_characters/en.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # Make sure that we have all sources in the db
+        self.assertEqual(SourceEntity.objects.filter(
+            resource=self.resource).values('id').count(), 1)
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(),1)
+
+        source = SourceEntity.objects.filter(resource=self.resource)[0]
+        translation = Translation.objects.get(source_entity=source)
+
+        self.assertEqual(source.string, unescaped_string)
+        self.assertEqual(translation.string, unescaped_string)
+
+        handler.compile()
+
+        self.assertTrue(escaped_string in handler.compiled_template)
+        self.assertFalse(unescaped_string in handler.compiled_template)
+
+

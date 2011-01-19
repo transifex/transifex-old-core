@@ -81,8 +81,8 @@ class LinguistHandler(Handler):
         It just does a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(re.escape(original), xml_escape(replacement), text)
-
+        return re.sub(re.escape(original), xml_escape(replacement,
+            {"'": "&apos;", '"': '&quot;'}), text)
     def _post_compile(self, *args, **kwargs):
         """
         """
@@ -126,10 +126,16 @@ class LinguistHandler(Handler):
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.keys():
                     e = doc.createElement("numerusform")
-                    e.appendChild(doc.createTextNode(plural_keys[key]))
+                    e.appendChild(doc.createTextNode(xml_escape(plural_keys[key],
+                        {"'": "&apos;", '"': '&quot;'})))
                     translation.appendChild(e)
 
-        self.compiled_template = doc.toxml()
+        template_text = doc.toxml()
+        esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
+            r"&apos;", template_text)
+        esc_template_text = re.sub("'(?=(?:(?!>).)*<\/translation>)",
+            r"&apos;", esc_template_text)
+        self.compiled_template = esc_template_text
 
     @need_language
     @need_file
@@ -346,7 +352,11 @@ class LinguistHandler(Handler):
                                 context_name]).encode('utf-8')).hexdigest()})))
 
             if is_source:
-                self.template = str(doc.toxml().encode('utf-8'))
+                # Ugly fix to revert single quotes back to the escaped version
+                template_text = doc.toxml().encode('utf-8')
+                esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
+                    r"&apos;", template_text)
+                self.template = str(esc_template_text)
 
             self.suggestions = suggestions
             self.stringset=stringset
