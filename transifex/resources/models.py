@@ -680,14 +680,15 @@ class RLStats(models.Model):
         self.translated = translated
         self.untranslated = untranslated
 
-    def update(self, user, save=True):
+    def update(self, user=None, save=True):
         """
         Update the RLStat object
         """
         self._calculate_translated()
         self._calculate_translated_wordcount()
         self._calculate_perc()
-        self._update_now(user)
+        if user:
+            self._update_now(user)
         if save:
             self.save(update=False)
 
