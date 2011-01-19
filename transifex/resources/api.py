@@ -54,8 +54,6 @@ class ResourceHandler(BaseHandler):
             try:
                 resource = Resource.objects.get(slug=resource_slug,
                     project__slug=project_slug)
-                setattr(resource, 'available_languages',
-                    resource.available_languages_without_teams)
             except Resource.DoesNotExist:
                 return rc.NOT_FOUND
             return resource
