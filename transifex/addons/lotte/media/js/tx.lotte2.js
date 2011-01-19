@@ -133,7 +133,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     // Method for pushing one or more TranslationStrings of this StringSet
     this.push = function(ts, callback) {
-		var messages = false;
+        var messages = false;
         this_stringset = this;
         var to_update = [];
         if (ts) { /* Pushing one TranslationString instance */
@@ -179,14 +179,15 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                             }
                             // Deep copy of the array
                             ts.previous = jQuery.extend(true, {}, ts.translated_strings);
-                            
+
                             // Hide the error div if it is visible
                             if ( json_response_dict[ts.id]['message'] != null ) {
-								messages=true;
-								this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
-								this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
-							} else
-								this_stringset.current_box.parents('td.trans').find('div.error_notes').hide();
+                                messages=true;
+                                this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
+                                this_stringset.current_box.parents('td.trans').find('div.error_notes').addClass('warning_notes');
+                                this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
+                            } else
+                                this_stringset.current_box.parents('td.trans').find('div.error_notes').hide();
                         }else{ // Handle the error
                             this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
                             this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
@@ -208,10 +209,17 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                     // Deep copy of the array
                                     this_stringset.strings[j].previous =  jQuery.extend(true, {}, this_stringset.strings[j].translated_strings);
 
-                                    // Hide the error div if it is visible
-                                    $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').hide();
+                                    if ( json_response_dict[this_stringset.strings[j].id]['message'] != null ) {
+                                        messages=true;
+                                        $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').text(json_response_dict[this_stringset.strings[j].id]['message']);
+                                        $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').addClass('warning_notes');
+                                        $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').show();
+                                    } else {
+                                        // Hide the error div if it is visible
+                                        $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').hide();
+                                    }
                                 }else{ // Handle the error
-									messages=true;
+                                    messages=true;
                                     $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').text(json_response_dict[this_stringset.strings[j].id]['message']);
                                     $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').show();
                                 }
@@ -236,13 +244,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             });
         }
         if (typeof callback === 'function') {
-			if ( ! messages )
-				callback(lotteStatus.updated);
-			else
-				alert("There were a few warnings or errors. Check them out before exiting lotte.");
-		}
+            if ( ! messages )
+                callback(lotteStatus.updated);
+            else
+                alert("There were a few warnings or errors. Check them out before exiting lotte.");
+        }
     }
-
 
     /* Update the color classes for textareas and show/hide save buttons */
     this.updateColors_Buttons = function() {

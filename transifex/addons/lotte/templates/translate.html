@@ -518,14 +518,13 @@
                 function(updated){
                     $.ajax({
                         url: "{{ url_exit_lotte }}",
-                        data: {updated:updated}, 
+                        data: JSON.stringify({updated:updated}),
                         dataType : "json",
                         type: "POST",
                         contentType: "application/json",
-                        success: function(xmlhttpreq, textStatus) {
+                        success: function(data, textStatus) {
                             if (textStatus=='success'){
-                                response = JSON.parse(xmlhttpreq.responseText);
-                                window.location = response['redirect'];
+                                window.location = data['redirect'];
                             }
                         }
                     });
