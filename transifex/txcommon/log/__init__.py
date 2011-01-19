@@ -40,7 +40,7 @@ def log_model(model):
 
     """
 
-    from txcommon.log.receivers import post_save_named, post_delete_named
+    from transifex.txcommon.log.receivers import post_save_named, post_delete_named
     if model:
         #logger.debug("Registered logging for model %s" % model.__name__)
         post_save.connect(post_save_named, sender=model)
