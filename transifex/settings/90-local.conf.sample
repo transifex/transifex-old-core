@@ -6,7 +6,16 @@
 #
 # Copy this file to ``90-local.conf`` to play around. This file will be ignored
 # by Mercurial.
+#
+# Some of the default settings require extra dependencies, such as
+# the excellent tools werkzeug, django-extensions and django-debug-toolbar.
 
+DEBUG = True
+SERVE_MEDIA = True
+ENABLE_NOTICES = True
+NOTIFICATION_QUEUE_ALL = False
+INTERNAL_IPS = ('127.0.0.1',)
+SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')
 
 # Email sending
 EMAIL_HOST = 'localhost'
@@ -17,12 +26,6 @@ EMAIL_PORT = 5870
 # To run your own devel SMTP daemon:
 # ``python -m smtpd -n -c DebuggingServer localhost:5870``
 
-DEBUG = True
-SERVE_MEDIA = True
-ENABLE_NOTICES = True
-NOTIFICATION_QUEUE_ALL = False
-SCRATCH_DIR = '/tmp/tx-scratchdir-temp'
-INTERNAL_IPS = ('127.0.0.1',)
 
 # Django-extensions:
 INSTALLED_APPS += ['django_extensions',]
