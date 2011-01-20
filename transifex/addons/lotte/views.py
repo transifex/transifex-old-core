@@ -687,7 +687,6 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 push_response_dict[source_id] = { 'status':500,
                     'message':_("Error occurred while trying to save translation.")}
 
-    print push_response_dict
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')
 
