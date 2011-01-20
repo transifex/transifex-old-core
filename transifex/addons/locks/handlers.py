@@ -83,9 +83,9 @@ def expiration_notification(sender, **kwargs):
     locks = Lock.objects.expiring()
     nt = 'project_resource_language_lock_expiring'
     for lock in locks:
-        context = { 'resource': lock.resource,
-                    'language': lock.language,
-                    'project' : lock.resource.project,
+        context = { 'resource': lock.rlstats.resource,
+                    'language': lock.rlstats.language,
+                    'project' : lock.rlstats.resource.project,
                     'user': lock.owner,
                     'expires': lock.expires,
                     'current_site' : current_site }
