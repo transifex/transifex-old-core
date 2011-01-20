@@ -24,7 +24,8 @@ package_data = {
 def buildlanguages():
     import django.core.management.commands.compilemessages as c
     oldpath = os.getcwd()
-    os.chdir(os.path.join('transifex/locale'))
+    os.chdir(os.path.join(os.path.dirname(__FILE__), 'transifex',
+        'locale'))
     c.compile_messages()
     os.chdir(oldpath)
 
