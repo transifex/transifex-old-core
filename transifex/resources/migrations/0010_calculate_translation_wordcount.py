@@ -1,20 +1,49 @@
 # encoding: utf-8
+import gc
+import sys
 import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from transifex.resources.models import Translation
+from django.db.transaction import commit_on_success
+
+def queryset_iterator(queryset, chunksize=5000):
+    '''
+    Iterate over a Django Queryset ordered by the primary key
+
+    This method loads a maximum of chunksize (default: 5000) rows in it's
+    memory at the same time while django normally would load all rows in it's
+    memory. Using the iterator() method only causes it to not preload all the
+    classes.
+
+    Note that the implementation of the iterator does not support ordered query
+    sets.
+    '''
+    pk = 0
+    last_pk = queryset.order_by('-pk')[0].pk
+    queryset = queryset.order_by('pk')
+    while pk < last_pk:
+        for row in queryset.filter(pk__gt=pk)[:chunksize]:
+            pk = row.pk
+            yield row
+        gc.collect()
 
 class Migration(DataMigration):
 
+    @commit_on_success
     def forwards(self, orm):
         "Write your forwards methods here."
-        for t in Translation.objects.all():
+        count = 0
+        total = orm.Translation.objects.all().count()
+        for t in queryset_iterator(orm.Translation.objects.all()):
+            sys.stderr.write('\r %d / %d' % (count, total))
             t.save()
+            count += 1
 
 
     def backwards(self, orm):
         "Write your backwards methods here."
+        pass
 
 
     models = {
