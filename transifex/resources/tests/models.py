@@ -37,10 +37,6 @@ class ResourcesModelTests(BaseTestCase):
 
     def setUp(self):
         super(ResourcesModelTests, self).setUp()
-        self.source_entity = SourceEntity.objects.create(
-           string='Source Identifier global for testcase',
-           context='menu option',
-           resource=self.resource)
 
     def tearDown(self):
         super(ResourcesModelTests, self).tearDown()
@@ -167,6 +163,21 @@ class ResourcesModelTests(BaseTestCase):
                                resource=self.resource)
         self.assertRaises(IntegrityError, s_error.save)
 
+
+    def test_wordcounts(self):
+        """Test word counts in the model."""
+        # Manually get the number of words in the English string, just in case
+        words_en = len(self.translation_en.string.split(None))
+ 
+        # Test whether the Translation objects have the same words
+        self.assertEquals(self.translation_en.wordcount, words_en)
+ 
+        # Since this resource only has one translatable string, its wordcount
+        # should match its wordcount.
+        self.assertEquals(self.resource.wordcount,
+                          self.translation_en.wordcount)
+
+
 class RLStatsModelTests(BaseTestCase):
     """Test the resources models."""
 
@@ -194,3 +205,32 @@ class RLStatsModelTests(BaseTestCase):
 
         self.assertEqual(len([f for f in q.for_user(self.user['maintainer']).by_project_aggregated(self.project)]), 1)
         self.assertEqual(len([f for f in q.for_user(self.user['registered']).by_project_aggregated(self.project_private)]), 0)
+
+
+class RLStatsModelWordsTests(BaseTestCase):
+    """Test the word support of the RLStats model."""
+
+    def test_source_lang(self):
+        rls_en = self.resource.rlstats_set.get(language=self.language_en)
+        words_en = len(self.translation_en.string.split(None))
+        self.assertEqual(rls_en.translated_wordcount, words_en)
+
+    def test_fully_translated_lang(self):
+        # With 1 string translated, Arabic should be 100% translated
+        words_ar = len(self.translation_ar.string.split(None))
+        rls_ar = self.resource.rlstats_set.get(language=self.language_ar)
+        self.assertEqual(rls_ar.translated_wordcount, words_ar)
+        self.assertEqual(rls_ar.untranslated_wordcount, 0)
+
+    def test_partially_translated_lang(self):
+        words_ar = len(self.translation_ar.string.split(None))
+        # First, create more entities to have a <100% translation effort.
+        self.create_more_entities()
+        # Translated words should be the same as target language
+        rls_ar = self.resource.rlstats_set.get(language=self.language_ar)
+        self.assertEqual(rls_ar.translated_wordcount, words_ar)
+
+        # The remaining words should be equal to the words of the remaining
+        # untranslated English string; in this case it's just the new string
+        self.assertEqual(rls_ar.untranslated_wordcount, self.translation_en2.wordcount)
+

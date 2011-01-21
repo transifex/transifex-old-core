@@ -122,7 +122,7 @@ class BaseTestCase(TestCase):
         self.team_private.coordinators.add(self.user['team_coordinator'])
         self.team_private.members.add(self.user['team_member'])
 
-        # Create a resources
+        # Create a resource
         self.resource = Resource.objects.create(slug="resource1", name="Resource1",
             project=self.project, source_language=self.language_en,
             i18n_type='PO')
@@ -144,7 +144,21 @@ class BaseTestCase(TestCase):
             string='pluralized_String1', context='Context1',
             occurrences='Occurrences1_plural', resource= self.resource_private,
             pluralized=True)
-
+        
+        # Create one translation
+        self.translation_en = self.source_entity.translations.create(
+            string='Buy me some BEER :)',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_en,
+            user=self.user['registered'])
+        self.translation_ar = self.source_entity.translations.create(
+            string=u'This is supposed to be arabic text! αβγ',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_ar,
+            user=self.user['registered'])
+            
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
             name="Release1", project=self.project)
@@ -158,6 +172,17 @@ class BaseTestCase(TestCase):
 
     def tearDown(self):
         pass
+
+    def create_more_entities(self, total=1):
+        """A method to create more entities for those tests that require them."""
+        self.source_entity2 = SourceEntity.objects.create(string='String2',
+            context='Context1', occurrences='Occurrences1', resource=self.resource)
+        self.translation_en2 = self.source_entity2.translations.create(
+            string='Translation String 2',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_en,
+            user=self.user['registered'])
 
     # Custom assertions
     def assertNoticeTypeExistence(self, noticetype_label):
