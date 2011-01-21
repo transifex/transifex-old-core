@@ -20,6 +20,8 @@ def queryset_iterator(queryset, chunksize=5000):
     sets.
     '''
     pk = 0
+    if not queryset.count():
+        return
     last_pk = queryset.order_by('-pk')[0].pk
     queryset = queryset.order_by('pk')
     while pk < last_pk:
