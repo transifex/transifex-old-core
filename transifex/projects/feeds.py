@@ -37,7 +37,7 @@ class ProjectFeed(Feed):
             'project': obj.name }
 
     def description(self, obj):
-        return _("Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py in project %s.") % obj.name
+        return _("Latest resources in project %s.") % obj.name
 
     def link(self, obj):
         if not obj:
