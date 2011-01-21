@@ -16,6 +16,6 @@ function json_request(type, url, struct, callback) {
         type : type,
         dataType: 'text', /* Workaround for django-piston */
         data: JSON.stringify(struct), /* Workaround for django-piston */
-        complete: fp,
+        complete: fp
     });
 }
