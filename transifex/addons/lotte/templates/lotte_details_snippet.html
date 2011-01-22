@@ -21,7 +21,7 @@
 <ul class="simple contexts details_left">
   <li title="{% trans "Key" %}" class="i16 key"><label>{% trans "String ID:" %}</label> <span>{{ source_entity.string }}</span></li>
   <li title="{% trans "Description" %}" class="i16 tag">{% trans "Description:" %} {% if source_entity.context %}{{ source_entity.context }}{% else %}-{% endif %}</li>
-{% with source_entity.developer_comment as comment %}<li title="{% trans "Comment" %}" class="i16 comment"><span class="label">{% trans "Comment:" %}</span> <span class="label_target">{% if com %}{{ com|truncatewords:"50" }}{% else %}-{% endif %}</span></li>{% endwith %}
+{% with source_entity.developer_comment as comment %}<li title="{% trans "Comment" %}" class="i16 comment"><span class="label">{% trans "Comment:" %}</span> <span class="label_target">{% if comment %}{{ comment|truncatewords:"50" }}{% else %}-{% endif %}</span></li>{% endwith %}
   <li title="{% trans "Occurrences" %}" class="i16 file_search"><label>{% trans "Occurrences:" %}</label> <span>{% if source_entity.occurrences %}{{ source_entity.occurrences }}{% else %}-{% endif %}</span></li>
 </ul>
 
