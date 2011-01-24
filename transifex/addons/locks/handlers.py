@@ -50,7 +50,7 @@ def lotte_init_handler(sender, request, resources=None, language=None,
             lock = Lock.objects.create_update(resource, language, user)
             logger.debug("lock-addon: Lock acquired/extended: '%s'" % lock)
         except LockError, e:
-            logger.debug("lock-addon: %s" % str(e))
+            logger.debug("lock-addon: %s" % e.message)
             request.user.message_set.create(message = _("This translation is "
                 "locked by someone else."))
 
@@ -68,7 +68,7 @@ def lotte_done_handler(sender, request, resources=None, language=None,
             except LockError, e:
                 logger.debug("lock-addon: User '%s' sent translations to a "
                     "resource/language locked by someone else: %s" % 
-                    (user, str(e)))
+                    (user, e.message))
 
 
 def expiration_notification(sender, **kwargs):
