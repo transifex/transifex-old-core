@@ -144,10 +144,11 @@ class ResourcesTemplateTests(BaseTestCase):
     def test_disabled_visit_team_resource_actions(self):
         """Test that languages with no team or existing translations don't have
         an action page."""
-        # We chose Arabic language which has not corresponding project team.
+        # We chose Finnish language which has no corresponding project team.
+        lang = Language.objects.by_code_or_alias('fi')
         resp = self.client['maintainer'].get(reverse('resource_actions',
             args=[self.project.slug, self.resource.slug,
-                  self.language_ar.code]))
+                  lang.code]))
         self.assertEqual(resp.status_code, 404)
 
     def test_resource_details_team_and_zero_percent(self):
@@ -156,7 +157,7 @@ class ResourcesTemplateTests(BaseTestCase):
         url = reverse('resource_detail',
                       args=[self.project.slug, self.resource.slug])
         resp = self.client['anonymous'].get(url)
-        self.assertNotContains(resp, self.language_ar.name, status_code=200,
+        self.assertContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Do not show 0% languages if there is no respective team.")
         self.assertNotContains(resp, '<div class="stats_string_resource"> 0% </div>')
 

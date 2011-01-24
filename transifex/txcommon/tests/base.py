@@ -136,14 +136,14 @@ class BaseTestCase(TestCase):
             resource=self.resource_private)
 
         # Create pluralized source entity
-        self.source_entity_plural = SourceEntity.objects.create(
-            string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= self.resource,
-            pluralized=True)
-        self.source_entity_plural_private = SourceEntity.objects.create(
-            string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= self.resource_private,
-            pluralized=True)
+        #self.source_entity_plural = SourceEntity.objects.create(
+        #    string='pluralized_String1', context='Context1',
+        #    occurrences='Occurrences1_plural', resource= self.resource,
+        #    pluralized=True)
+        #self.source_entity_plural_private = SourceEntity.objects.create(
+        #    string='pluralized_String1', context='Context1',
+        #    occurrences='Occurrences1_plural', resource= self.resource_private,
+        #    pluralized=True)
         
         # Create one translation
         self.translation_en = self.source_entity.translations.create(
@@ -183,6 +183,8 @@ class BaseTestCase(TestCase):
             source_entity=self.source_entity,
             language=self.language_en,
             user=self.user['registered'])
+        self.resource.update_total_entities()
+        self.resource.update_wordcount()
 
     # Custom assertions
     def assertNoticeTypeExistence(self, noticetype_label):
