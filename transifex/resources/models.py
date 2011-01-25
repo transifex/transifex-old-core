@@ -223,13 +223,10 @@ class Resource(models.Model):
         LANGUAGE as set of objects. This function does not count the plural
         strings!
         """
-        wc = 0
-        source_trans = Translation.objects.filter(source_entity__id__in=
+        wc = Translation.objects.filter(source_entity__id__in=
             SourceEntity.objects.filter(resource=self).values('id'),
-            language=self.source_language)
-        for t in source_trans:
-            if t:
-                wc += t.wordcount
+            language=self.source_language).aggregate(
+            Sum('wordcount'))['wordcount__sum'] or 0
         self.wordcount = wc
         if save:
             self.save()
