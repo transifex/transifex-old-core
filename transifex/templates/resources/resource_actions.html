@@ -30,7 +30,7 @@
       {% comment %} This permission is provided only if team is available{% endcomment %}
       {% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translation" %}
     {% else %}
-      {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate Now" {% endcomment %}
+      {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate now" {% endcomment %}
       {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translation" %}
     {% endif %}
 
@@ -53,10 +53,10 @@
         {% else %}
           {% if not resource.accept_translations %}
             <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-            title="{% trans "This resource is currently not accepting translations" %}">{% trans "Translate Now" %}</a>
+            title="{% trans "This resource is currently not accepting translations" %}">{% trans "Translate now" %}</a>
           {% else %}
             <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
-            title="{% blocktrans with target_language.name as lang_name %}To translate you need to be logged in and a member of the {{ lang_name }} team{% endblocktrans %}">{% trans "Translate Now" %}</a>
+            title="{% blocktrans with target_language.name as lang_name %}To translate you need to be logged in and a member of the {{ lang_name }} team{% endblocktrans %}">{% trans "Translate now" %}</a>
           {% endif %}
         {% endif %}
     {% endifequal %}
