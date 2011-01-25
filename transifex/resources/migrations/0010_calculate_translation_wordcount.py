@@ -6,6 +6,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 from django.db.transaction import commit_on_success
+from transifex.resources.models import Translation
 
 def queryset_iterator(queryset, chunksize=5000):
     '''
@@ -36,8 +37,8 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         count = 0
-        total = orm.Translation.objects.all().count()
-        for t in queryset_iterator(orm.Translation.objects.all()):
+        total = Translation.objects.all().count()
+        for t in queryset_iterator(Translation.objects.all()):
             sys.stderr.write('\r %d / %d' % (count, total))
             t.save()
             count += 1
