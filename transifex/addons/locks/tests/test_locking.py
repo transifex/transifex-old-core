@@ -46,5 +46,21 @@ class TestLocking(BaseTestCase):
         self.assertEqual( resp.status_code, 200 )
         self.assertEqual( Lock.objects.valid().count(), 1)
 
+    def test_resource_popup_another_user(self):
+        """Test how another user sees the resource popup."""
+        resp = self.client['maintainer'].post(self.url_lock)
+        resp = self.client['team_member'].post(reverse('resource_actions',
+            args=[self.project.slug, self.resource.slug, self.language.code]))
+        self.assertContains(resp, "User 'maintainer' locked this translation")
+        self.assertContains(resp, "Resource cannot be locked")
+        self.assertContains(resp, "currently locked by 'maintainer'")
+        self.assertNotContains(resp, "unlock")
 
-    # TODO: Fill in the gap.
+    def test_unlock_another_user(self):
+        resp = self.client['maintainer'].post(self.url_lock)
+        for user in ['team_member', 'registered', 'anonymous']:
+            resp = self.client[user].post(self.url_unlock, follow=True)
+            self.assertContains(
+                resp, "You don't have permission", status_code=403,
+                msg_prefix="User class '%s' should not be able to unlock this file" % user)
+
