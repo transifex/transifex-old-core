@@ -12,36 +12,43 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Unescape all strings that are from Qt files"
-        for r in Resource.objects.filter(i18n_type=u'QT'):
-            template = Template.objects.get(resource=r)
-            for s in SourceEntity.objects.filter(resource=r):
+        for r in orm['resources.Resource'].objects.filter(i18n_type=u'QT'):
+            template = orm['resources.Template'].objects.get(resource=r)
+            for s in orm['resources.SourceEntity'].objects.filter(resource=r):
                 old_hash = s.string_hash
                 s.string = unescape(s.string, {"&apos;": "'", "&quot;": '"'})
                 s.save()
-                for t in Translation.objects.filter(source_entity=s):
+                for t in orm['resources.Translation'].objects.filter(source_entity=s):
                     t.string = unescape(t.string,
                         {"&apos;": "'", "&quot;":'"'})
                     t.save()
 
-
                 new_hash = s.string_hash
-                template.content = re.sub(old_hash, new_hash, template.content)
+                if type(template.content) == str:
+                    content = unicode(template.content.decode('utf-8'))
+                else:
+                    content = template.content
+                template.content = re.sub(old_hash, new_hash, content)
             template.save()
 
     def backwards(self, orm):
         "Escape all strings that belong to Qt files."
-        for r in Resource.objects.filter(i18n_type=u'QT'):
-            template = Template.objects.get(resource=r)
-            for s in SourceEntity.objects.filter(resource=r):
+        for r in orm['resources.Resource'].objects.filter(i18n_type=u'QT'):
+            template = orm['resources.Template'].objects.get(resource=r)
+            for s in orm['resources.SourceEntity'].objects.filter(resource=r):
                 old_hash = s.string_hash
                 s.string = escape(s.string,  {"'": "&apos;", '"': '&quot;'})
                 s.save()
-                for t in Translation.objects.filter(source_entity=s):
+                for t in orm['resources.Translation'].objects.filter(source_entity=s):
                     t.string = escape(t.string,  {"'": "&apos;", '"': '&quot;'})
                     t.save()
 
                 new_hash = s.string_hash
-                template.content = re.sub(old_hash, new_hash, template.content)
+                if type(template.content) == str:
+                    content = unicode(template.content.decode('utf-8'))
+                else:
+                    content = template.content
+                template.content = re.sub(old_hash, new_hash, content)
             template.save()
 
 
