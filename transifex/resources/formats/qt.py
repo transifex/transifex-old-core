@@ -83,6 +83,7 @@ class LinguistHandler(Handler):
         """
         return re.sub(re.escape(original), xml_escape(replacement,
             {"'": "&apos;", '"': '&quot;'}), text)
+
     def _post_compile(self, *args, **kwargs):
         """
         """
@@ -113,7 +114,8 @@ class LinguistHandler(Handler):
                 plurals = Translation.objects.filter(
                     source_entity__resource = self.resource,
                     language = language,
-                    source_entity__string = sourceString)
+                    source_entity__string = sourceString
+                ).order_by('rule')
 
                 plural_keys = {}
                 # last rule excluding other(5)
