@@ -41,13 +41,6 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
 
         try:
             lock = Lock.objects.create_update(resource, language, request.user)
-            invalidate_template_cache('resource_details_lang', project_slug,
-                resource_slug, language_code)
-            invalidate_template_cache('resource_details', project_slug,
-                    resource_slug)
-            if team:
-                invalidate_template_cache('team_details', team.id,
-                    resource.id)
             response['status'] = "OK"
             response['message'] = _("Lock created.")
             response['timeuntil'] = timeuntil(lock.expires)
@@ -83,13 +76,6 @@ def resource_language_unlock(request, project_slug, resource_slug,
         if lock:
             try:
                 lock.delete_by_user(request.user)
-                invalidate_template_cache('resource_details_lang', project_slug,
-                    resource_slug, language_code)
-                invalidate_template_cache('resource_details', project_slug,
-                    resource_slug)
-                if team:
-                    invalidate_template_cache('team_details', team.id,
-                        resource.id)
                 response['status'] = "OK"
                 response['message'] = _("Lock removed.")
             except LockError, e:

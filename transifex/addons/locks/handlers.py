@@ -3,9 +3,12 @@ from datetime import datetime
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.db.models.signals import post_save, post_delete
 from django.contrib.sites.models import Site
 from notification  import models as notification
 from transifex.resources.models import Resource
+from transifex.resources.utils import invalidate_template_cache
+from transifex.teams.models import Team
 from transifex.txcommon.log import logger
 from txcron.signals import cron_daily, cron_hourly
 from transifex.projects.signals import pre_submit_translation, post_submit_translation
@@ -103,6 +106,29 @@ def db_cleanup(sender, **kwargs):
         lock.delete()
 
 
+def invalidate_cache(sender, instance, **kwargs):
+    """
+    Invalidate caching on places related to the lock icon in the stats table 
+    row.
+    """
+    logger.debug("lock-addon: Invalidating cache: %s" % instance)
+
+    invalidate_template_cache('resource_details_lang',
+        instance.rlstats.resource.project.slug,
+        instance.rlstats.resource.slug,
+        instance.rlstats.language.code)
+
+    invalidate_template_cache('resource_details',
+        instance.rlstats.resource.project.slug,
+        instance.rlstats.resource.slug)
+
+    team = Team.objects.get_or_none(instance.rlstats.resource.project,
+        instance.rlstats.language.code)
+    if team:
+        invalidate_template_cache('team_details', team.id,
+            instance.rlstats.resource.id)
+
+
 def connect():
     pre_submit_translation.connect(pre_handler, sender=Resource)
     post_submit_translation.connect(post_handler, sender=Resource)
@@ -110,3 +136,5 @@ def connect():
     lotte_done.connect(lotte_done_handler)
     cron_daily.connect(db_cleanup)
     cron_hourly.connect(expiration_notification)
+    post_save.connect(invalidate_cache, sender=Lock)
+    post_delete.connect(invalidate_cache, sender=Lock)
