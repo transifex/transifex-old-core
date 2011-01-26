@@ -208,7 +208,8 @@ class POHandler(Handler):
                 plurals = Translation.objects.filter(
                     source_entity__resource = self.resource,
                     language = language,
-                    source_entity__string = entry.msgid)
+                    source_entity__string = entry.msgid
+                ).order_by('rule')
                 plural_keys = {}
                 # last rule excluding other(5)
                 lang_rules = language.get_pluralrules_numbers()
