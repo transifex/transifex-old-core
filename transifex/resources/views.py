@@ -59,7 +59,7 @@ def resource_detail(request, project_slug, resource_slug):
         autofetch_url = None
 
     statslist = RLStats.objects.select_related('language', 'last_committer',
-        'lock').by_resource(resource)
+        'lock','resource').by_resource(resource)
 
     return render_to_response("resources/resource_detail.html",
         { 'project' : resource.project,
