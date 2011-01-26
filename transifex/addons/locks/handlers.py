@@ -134,7 +134,7 @@ def connect():
     post_submit_translation.connect(post_handler, sender=Resource)
     lotte_init.connect(lotte_init_handler)
     lotte_done.connect(lotte_done_handler)
-    cron_daily.connect(db_cleanup)
+    cron_hourly.connect(db_cleanup)
     cron_hourly.connect(expiration_notification)
     post_save.connect(invalidate_cache, sender=Lock)
     post_delete.connect(invalidate_cache, sender=Lock)
