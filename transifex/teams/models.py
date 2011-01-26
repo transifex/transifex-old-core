@@ -90,7 +90,7 @@ class Team(models.Model):
         Do some extra processing along with the actual delete to db.
         """
         Resource = get_model('resources', 'Resource')
-        RLStats = get_model('rlstats', 'RLStats')
+        RLStats = get_model('resources', 'RLStats')
         res = Resource.objects.filter(project=self.project)
         for r in res:
             # FIXME: Maybe we should delete translations either way?
