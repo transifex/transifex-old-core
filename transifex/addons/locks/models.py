@@ -41,6 +41,16 @@ class LockManager(models.Manager):
         except Lock.DoesNotExist:
             return None
 
+    def get_or_none(self, resource, language):
+        """
+        Return lock for the given resource and language.
+        """
+        try:
+            return self.get(rlstats__resource=resource, 
+                rlstats__language=language)
+        except Lock.DoesNotExist:
+            return None
+
     def create_update(self, resource, language, user):
         """
         Create new or update existing lock object for the given resource and 

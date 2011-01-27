@@ -106,27 +106,28 @@ def db_cleanup(sender, **kwargs):
         lock.delete()
 
 
-def invalidate_cache(sender, instance, **kwargs):
+def invalidate_cache(sender, instance, created=True, **kwargs):
     """
     Invalidate caching on places related to the lock icon in the stats table 
     row.
     """
-    logger.debug("lock-addon: Invalidating cache: %s" % instance)
+    if created:
+        logger.debug("lock-addon: Invalidating cache: %s" % instance)
 
-    invalidate_template_cache('resource_details_lang',
-        instance.rlstats.resource.project.slug,
-        instance.rlstats.resource.slug,
-        instance.rlstats.language.code)
+        invalidate_template_cache('resource_details_lang',
+            instance.rlstats.resource.project.slug,
+            instance.rlstats.resource.slug,
+            instance.rlstats.language.code)
 
-    invalidate_template_cache('resource_details',
-        instance.rlstats.resource.project.slug,
-        instance.rlstats.resource.slug)
+        invalidate_template_cache('resource_details',
+            instance.rlstats.resource.project.slug,
+            instance.rlstats.resource.slug)
 
-    team = Team.objects.get_or_none(instance.rlstats.resource.project,
-        instance.rlstats.language.code)
-    if team:
-        invalidate_template_cache('team_details', team.id,
-            instance.rlstats.resource.id)
+        team = Team.objects.get_or_none(instance.rlstats.resource.project,
+            instance.rlstats.language.code)
+        if team:
+            invalidate_template_cache('team_details', team.id,
+                instance.rlstats.resource.id)
 
 
 def connect():
