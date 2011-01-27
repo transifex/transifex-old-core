@@ -54,13 +54,21 @@ class TestLocking(BaseTestCase):
         self.assertContains(resp, "User 'maintainer' locked this translation")
         self.assertContains(resp, "Resource cannot be locked")
         self.assertContains(resp, "currently locked by 'maintainer'")
-        self.assertNotContains(resp, "unlock")
 
     def test_unlock_another_user(self):
+        """Test if a different user can unlock a resource language."""
         resp = self.client['maintainer'].post(self.url_lock)
-        for user in ['team_member', 'registered', 'anonymous']:
-            resp = self.client[user].post(self.url_unlock, follow=True)
-            self.assertContains(
-                resp, "You don't have permission", status_code=403,
-                msg_prefix="User class '%s' should not be able to unlock this file" % user)
+
+        resp = self.client['team_member'].post(self.url_unlock, follow=True)
+        self.assertContains(resp, 
+            "You don't have permission to unlock this file", status_code=403)
+
+        resp = self.client['registered'].post(self.url_unlock, follow=True)
+        self.assertContains(resp, 
+            "Forbidden access", status_code=403)
+
+        resp = self.client['anonymous'].post(self.url_unlock, follow=True)
+        self.assertContains(resp, 
+            "Enter your username and password to sign in", status_code=200)
+
 
