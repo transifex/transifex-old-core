@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-20 23:15+0000\n"
-"PO-Revision-Date: 2010-12-20 20:25+0000\n"
+"POT-Creation-Date: 2011-01-27 19:50+0000\n"
+"PO-Revision-Date: 2011-01-27 19:36+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <None>\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr "חיפוש אחר שם משתמש או להשאיר ריק"
 
 #: actionlog/models.py:152 actionlog/templates/object_action_list.html:7
 #: addons/suggestions/models.py:44 addons/suggestions/models.py:110
-#: teams/models.py:105 teams/models.py:141 txpermissions/forms.py:18
+#: teams/models.py:118 teams/models.py:154 txpermissions/forms.py:18
 msgid "User"
 msgstr "משתמש"
 
@@ -58,21 +58,21 @@ msgstr "DATETIME_FORMAT"
 msgid "No changes."
 msgstr "אין שינויים."
 
-#: addons/autofetch/models.py:15
+#: addons/autofetch/models.py:16
 msgid "Source file URL"
 msgstr "כתובת קובץ המקור"
 
-#: addons/autofetch/models.py:17
+#: addons/autofetch/models.py:18
 msgid ""
 "A URL pointing to the source file of this resource to be used for automatic "
 "updates."
 msgstr "כתובת המצביע על קובץ המקור למשאב זה שתשמש לעדכונים אוטומטיים."
 
-#: addons/autofetch/models.py:19
+#: addons/autofetch/models.py:20
 msgid "Automatically update source file"
 msgstr "עדכון קובץ המקור אוטומטית"
 
-#: addons/autofetch/models.py:20
+#: addons/autofetch/models.py:21
 msgid ""
 "A boolean field indicating whether the file should be automatically updated "
 "by pulling and merging from the given URL."
@@ -80,18 +80,18 @@ msgstr ""
 "שדה בוליאני המציין האם יש לעדכן את הקובץ אוטומטית על ידי משיכה ומיזוג "
 "מהכתובת הנתונה."
 
-#: addons/autofetch/models.py:25 resources/models.py:198
+#: addons/autofetch/models.py:26 resources/models.py:326
 #: templates/projects/release_language_detail.html:64
-#: templates/projects/release_language_detail.html:186
+#: templates/projects/release_language_detail.html:195
 #: templates/teams/team_detail.html:140
 msgid "Resource"
 msgstr "משאב"
 
-#: addons/autofetch/models.py:27
+#: addons/autofetch/models.py:28
 msgid "The translation resource."
 msgstr "משאב התרגום"
 
-#: addons/autofetch/models.py:30
+#: addons/autofetch/models.py:31
 msgid "url handler"
 msgstr "קידומת לכתובות"
 
@@ -136,7 +136,7 @@ msgstr "הצגת מקטע קוד למשאב:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:136
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:135
 msgid "Hidden"
 msgstr "מוסתר"
 
@@ -174,11 +174,11 @@ msgstr "השלמה"
 msgid "...more"
 msgstr "...עוד"
 
-#: addons/locks/handlers.py:54
+#: addons/locks/handlers.py:57
 msgid "This translation is locked by someone else."
 msgstr "תרגום זה ננעל על ידי מישהו אחר."
 
-#: addons/locks/models.py:55
+#: addons/locks/models.py:67
 #, python-format
 msgid ""
 "User '%(user)s' has no permission to submit translations for '%(resource)s' "
@@ -187,17 +187,17 @@ msgstr ""
 "למשתמש '%(user)s' אין שום הרשאות לשליחת תרגומים למשאב '%(resource)s' בשפה "
 "'%(language)s'."
 
-#: addons/locks/models.py:67
+#: addons/locks/models.py:79
 #, python-format
 msgid "User '%(user)s' already has maximum allowed %(locks)i locks."
 msgstr "למשתמש '%(user)s' כבר יש את מספר הנעילות המרבי (%(locks)i)."
 
-#: addons/locks/models.py:76
+#: addons/locks/models.py:89
 #, python-format
 msgid "This resource language is already locked by '%s'"
 msgstr "שפת משאב זו כבר ננעלה על ידי %s"
 
-#: addons/locks/models.py:162
+#: addons/locks/models.py:172
 #, python-format
 msgid "User '%(user)s' is not allowed to remove lock '%(lock)s'"
 msgstr "המשתמש '%(user)s' אינו מורשה להסיר את הנעילה '%(lock)s'"
@@ -210,23 +210,23 @@ msgstr "תפוגת נעילה"
 msgid "when a lock for a translation resource will expire"
 msgstr "כאשר נעילת משאב תרגום פגה"
 
-#: addons/locks/views.py:43
+#: addons/locks/views.py:45
 msgid "Lock created."
 msgstr "בוצעה נעילה."
 
-#: addons/locks/views.py:50 addons/locks/views.py:86
+#: addons/locks/views.py:52 addons/locks/views.py:88
 msgid "Sorry, but you need to send a POST request."
 msgstr "עליך לשלוח בקשת POST, עמך הסליחה."
 
-#: addons/locks/views.py:78
+#: addons/locks/views.py:80
 msgid "Lock removed."
 msgstr "הנעילה הוסרה."
 
-#: addons/locks/views.py:80
+#: addons/locks/views.py:82
 msgid "You don't have permission to unlock this file."
 msgstr "אין לך הרשאות לשחרר קובץ זה."
 
-#: addons/locks/views.py:83
+#: addons/locks/views.py:85
 msgid "Unlock failed. Lock doesn't exist."
 msgstr "השחרור נכשל. הנעילה לא קיימת."
 
@@ -354,75 +354,66 @@ msgid ""
 msgstr "לא ניתן לשמור אלא אם כן התרגומים ברבים מלאים לחלוטין או ריקים לחלוטין!"
 
 #: addons/lotte/views.py:545
-#, fuzzy
 msgid "Translation string only contains whitespaces."
-msgstr "מחרוזת התרגום ריקה"
+msgstr ""
 
-#: addons/lotte/views.py:554
+#: addons/lotte/views.py:553
 #, python-format
 msgid ""
 "Translation string doesn't contain the same number of '%s' as the source "
 "string."
 msgstr ""
 
-#: addons/lotte/views.py:566
-#, fuzzy, python-format
+#: addons/lotte/views.py:564
+#, python-format
 msgid ""
 "The following url is either missing form the translation os has been "
 "translated: '%s'."
-msgstr "מחרוזת המקור שמחרוזת זו היא התרגום שלה."
+msgstr ""
 
-#: addons/lotte/views.py:578
-#, fuzzy, python-format
+#: addons/lotte/views.py:576
+#, python-format
 msgid ""
 "The following email is either missing form the translation os has been "
 "translated: '%s'."
-msgstr "מחרוזת המקור שמחרוזת זו היא התרגום שלה."
+msgstr ""
 
-#: addons/lotte/views.py:589
+#: addons/lotte/views.py:587
 msgid "Translation must start with a newline (\\n)"
 msgstr "תרגום חייב להתחיל בירידה לשורה חדשה "
 
-#: addons/lotte/views.py:592
+#: addons/lotte/views.py:590
 msgid "Translation should not start with a newline (\\n)"
 msgstr "תרגום לא יכול להתחיל בירידה לשורה חדשה "
 
-#: addons/lotte/views.py:597
+#: addons/lotte/views.py:595
 msgid "Translation must end with a newline (\\n)"
 msgstr "תרגום חייב להסתיים בירידה לשורה חדשה "
 
-#: addons/lotte/views.py:600
+#: addons/lotte/views.py:598
 msgid "Translation should not end with a newline (\\n)"
 msgstr "תרגום לא יכול להסתיים בירידה לשורה חדשה "
 
-#: addons/lotte/views.py:609
+#: addons/lotte/views.py:607
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
 msgstr "המספר %s מופיע במחרוזת המקור אך לא בתרגום.."
 
-#: addons/lotte/views.py:625
-#, python-format
-msgid "The expression '%s' is not present in the translation."
-msgstr "הביטוי '%s' אינו קיים בתרגום."
-
-#: addons/lotte/views.py:635
-#, python-format
-msgid "The expression '%s' is not present in the source string."
-msgstr "הביטוי '%s' אינו קיים במחרוזת המקור."
-
-#: addons/lotte/views.py:644
+#: addons/lotte/views.py:623
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
 msgstr "כפי הנראה מספר הארגומנטים שונה בין מחרוזת המקור והתרגום."
 
-#: addons/lotte/views.py:668
-msgid "Translation updated successfully in the DB"
-msgstr "התרגום עודכן בהצלחה במסד הנתונים"
+#: addons/lotte/views.py:631
+#, python-format
+msgid "The expression '%s' is not present in the translation."
+msgstr "הביטוי '%s' אינו קיים בתרגום."
 
-#: addons/lotte/views.py:680
-msgid "New translation stored successfully in the DB"
-msgstr "תרגום חדש אוחסן בהצלחה במסד הנתונים"
+#: addons/lotte/views.py:641
+#, python-format
+msgid "The expression '%s' is not present in the source string."
+msgstr "הביטוי '%s' אינו קיים במחרוזת המקור."
 
 #: addons/lotte/views.py:683
 msgid "The translation string is empty"
@@ -447,7 +438,7 @@ msgid "by %(user)s"
 msgstr "על ידי %(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:208
+#: addons/lotte/templates/translate.html:209
 msgid "Key"
 msgstr "מפתח"
 
@@ -458,7 +449,7 @@ msgstr "מזהה מחרוזת:"
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
 #: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:121
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:120
 #: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
@@ -470,11 +461,20 @@ msgid "Description:"
 msgstr "תיאור:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:24
-#: resources/models.py:176
+#, fuzzy
+msgid "Comment"
+msgstr "נשלח על ידי"
+
+#: addons/lotte/templates/lotte_details_snippet.html:24
+msgid "Comment:"
+msgstr ""
+
+#: addons/lotte/templates/lotte_details_snippet.html:25
+#: resources/models.py:304
 msgid "Occurrences"
 msgstr "מופעים"
 
-#: addons/lotte/templates/lotte_details_snippet.html:24
+#: addons/lotte/templates/lotte_details_snippet.html:25
 msgid "Occurrences:"
 msgstr "מופעים:"
 
@@ -496,106 +496,106 @@ msgstr "מיזמים"
 msgid "Translate to %(lang)s"
 msgstr "תרגום לשפה %(lang)s"
 
-#: addons/lotte/templates/translate.html:116
-#: addons/lotte/templates/view_strings.html:37
+#: addons/lotte/templates/translate.html:117
+#: addons/lotte/templates/view_strings.html:38
 msgid "Processing..."
 msgstr "בהליכי עיבוד..."
 
-#: addons/lotte/templates/translate.html:117
-#: addons/lotte/templates/view_strings.html:38
+#: addons/lotte/templates/translate.html:118
+#: addons/lotte/templates/view_strings.html:39
 msgid "Show _MENU_ entries"
 msgstr "הצגת _MENU_ רשומות"
 
-#: addons/lotte/templates/translate.html:118
-#: addons/lotte/templates/view_strings.html:39
+#: addons/lotte/templates/translate.html:119
+#: addons/lotte/templates/view_strings.html:40
 msgid "No matching records found"
 msgstr "לא נמצאו רשומות תואמות"
 
-#: addons/lotte/templates/translate.html:119
-#: addons/lotte/templates/view_strings.html:40
+#: addons/lotte/templates/translate.html:120
+#: addons/lotte/templates/view_strings.html:41
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "מוצגות _START_ עד _END_ מתוך _TOTAL_ רשומות"
 
-#: addons/lotte/templates/translate.html:120
-#: addons/lotte/templates/view_strings.html:41
+#: addons/lotte/templates/translate.html:121
+#: addons/lotte/templates/view_strings.html:42
 msgid "Nothing to show"
 msgstr "אין מה להציג"
 
-#: addons/lotte/templates/translate.html:121
-#: addons/lotte/templates/view_strings.html:42
+#: addons/lotte/templates/translate.html:122
+#: addons/lotte/templates/view_strings.html:43
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(סוננו מתוך סך כולל של _MAX_ רשומות)"
 
-#: addons/lotte/templates/translate.html:123
-#: addons/lotte/templates/view_strings.html:44
+#: addons/lotte/templates/translate.html:124
+#: addons/lotte/templates/view_strings.html:45
 msgid "Search:"
 msgstr "חיפוש:"
 
-#: addons/lotte/templates/translate.html:126
-#: addons/lotte/templates/view_strings.html:47
+#: addons/lotte/templates/translate.html:127
+#: addons/lotte/templates/view_strings.html:48
 msgid "First"
 msgstr "הראשון"
 
-#: addons/lotte/templates/translate.html:127
-#: addons/lotte/templates/view_strings.html:48
+#: addons/lotte/templates/translate.html:128
+#: addons/lotte/templates/view_strings.html:49
 msgid "Previous"
 msgstr "הקודם"
 
-#: addons/lotte/templates/translate.html:128
-#: addons/lotte/templates/view_strings.html:49
+#: addons/lotte/templates/translate.html:129
+#: addons/lotte/templates/view_strings.html:50
 msgid "Next"
 msgstr "הבא"
 
-#: addons/lotte/templates/translate.html:129
-#: addons/lotte/templates/view_strings.html:50
+#: addons/lotte/templates/translate.html:130
+#: addons/lotte/templates/view_strings.html:51
 msgid "Last"
 msgstr "האחרון"
 
-#: addons/lotte/templates/translate.html:163
-#: addons/lotte/templates/translate.html:168
+#: addons/lotte/templates/translate.html:164
+#: addons/lotte/templates/translate.html:169
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "מחרוזת המקור"
 
-#: addons/lotte/templates/translate.html:213
+#: addons/lotte/templates/translate.html:214
 msgid "details"
 msgstr "פרטים"
 
-#: addons/lotte/templates/translate.html:216 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:217 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "הצעות"
 
-#: addons/lotte/templates/translate.html:235
-#: addons/lotte/templates/translate.html:240
+#: addons/lotte/templates/translate.html:236
+#: addons/lotte/templates/translate.html:241
 msgid "Fill in a new translation"
 msgstr "מילוי תרגום חדש"
 
-#: addons/lotte/templates/translate.html:262
+#: addons/lotte/templates/translate.html:263
 msgid "auto translate"
 msgstr "תרגום אוטומטי"
 
-#: addons/lotte/templates/translate.html:263
+#: addons/lotte/templates/translate.html:264
 msgid "copy source"
 msgstr "העתקת המקור"
 
-#: addons/lotte/templates/translate.html:281
-#: addons/lotte/templates/view_strings.html:115
+#: addons/lotte/templates/translate.html:282
+#: addons/lotte/templates/view_strings.html:116
 msgid "Loading strings..."
 msgstr "המחרוזות נטענות..."
 
-#: addons/lotte/templates/translate.html:461
+#: addons/lotte/templates/translate.html:462
 msgid "Translation text will be saved automatically."
 msgstr "טקסט התרגום יישמר אוטומטית."
 
-#: addons/lotte/templates/translate.html:465
+#: addons/lotte/templates/translate.html:466
 msgid "Translation text will no longer be saved automatically."
 msgstr "טקסט התרגום לא יישמר עוד אוטומטית."
 
-#: addons/lotte/templates/translate.html:482
+#: addons/lotte/templates/translate.html:483
 msgid "This page does not have any translations (to delete)!"
 msgstr "לעמוד זה אין תרגומים (למחיקה)!"
 
-#: addons/lotte/templates/translate.html:483
+#: addons/lotte/templates/translate.html:484
 msgid ""
 "This action will delete all translations in this page. Are you sure you want "
 "to proceed?"
@@ -636,12 +636,12 @@ msgid "Filter by resources"
 msgstr "סינון לפי משבים"
 
 #: addons/lotte/templates/translate.html:716
-#: addons/lotte/templates/view_strings.html:177
+#: addons/lotte/templates/view_strings.html:178
 msgid "Translated"
 msgstr "תורגמו"
 
 #: addons/lotte/templates/translate.html:724
-#: addons/lotte/templates/view_strings.html:185
+#: addons/lotte/templates/view_strings.html:186
 msgid "Untranslated"
 msgstr "לא תורגמו"
 
@@ -650,17 +650,17 @@ msgid "Modified"
 msgstr "השתנו"
 
 #: addons/lotte/templates/translate.html:736
-#: addons/lotte/templates/view_strings.html:192
+#: addons/lotte/templates/view_strings.html:193
 msgid "Total"
 msgstr "סך הכול"
 
 #: addons/lotte/templates/translate.html:749
-#: addons/lotte/templates/view_strings.html:205 resources/models.py:311
+#: addons/lotte/templates/view_strings.html:206 resources/models.py:442
 msgid "Source String"
 msgstr "מחרוזת המקור"
 
 #: addons/lotte/templates/translate.html:750
-#: addons/lotte/templates/view_strings.html:206
+#: addons/lotte/templates/view_strings.html:207
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "תרגום"
@@ -670,7 +670,7 @@ msgid "Save all"
 msgstr "שמירת הכול"
 
 #: addons/lotte/templates/translate.html:761
-#: templates/resources/resource_actions.html:184
+#: templates/resources/resource_actions.html:194
 msgid "Delete translations"
 msgstr "מחיקת תרגומים"
 
@@ -712,8 +712,8 @@ msgstr "עדיפות המשאב"
 msgid "resource priorities"
 msgstr "עדיפויות משאבים"
 
-#: addons/suggestions/models.py:19 resources/models.py:162
-#: resources/models.py:292
+#: addons/suggestions/models.py:19 resources/models.py:290
+#: resources/models.py:420
 msgid "String"
 msgstr "מחרוזת"
 
@@ -721,8 +721,8 @@ msgstr "מחרוזת"
 msgid "The actual string content of suggestion."
 msgstr "תוכן ההצעה של המחרוזת עצמה."
 
-#: addons/suggestions/models.py:21 resources/models.py:164
-#: resources/models.py:294
+#: addons/suggestions/models.py:21 resources/models.py:292
+#: resources/models.py:422
 msgid "String Hash"
 msgstr "גיבוב מחרוזת"
 
@@ -748,11 +748,11 @@ msgstr "ישות מקור"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "ישות המקור שמופע הצעה זה מתרגם או משפיע עליה."
 
-#: addons/suggestions/models.py:40 resources/models.py:317
+#: addons/suggestions/models.py:40 resources/models.py:448
 msgid "Target Language"
 msgstr "שפת היעד"
 
-#: addons/suggestions/models.py:41 resources/models.py:318
+#: addons/suggestions/models.py:41 resources/models.py:449
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "השפה שבה נכתבות המחרוזות המתורגמות."
@@ -844,12 +844,12 @@ msgid "Filter results"
 msgstr "סינון תוצאות"
 
 #: addons/timeline/templates/timeline/timeline_base.html:18
-#: templates/timeline.html:17 templates/resources/resource_actions.html:100
+#: templates/timeline.html:17 templates/resources/resource_actions.html:110
 msgid "Go"
 msgstr "מעבר"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
-#: templates/timeline.html:24 templates/teams/team_detail.html:294
+#: templates/timeline.html:24 templates/teams/team_detail.html:303
 msgid "None available"
 msgstr "אין"
 
@@ -1003,8 +1003,8 @@ msgid "The languages spoken on %s."
 msgstr "השפות המדוברות ב־%s."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:119
-#: releases/models.py:33 resources/models.py:55
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:118
+#: releases/models.py:33 resources/models.py:113
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1071,55 +1071,51 @@ msgstr "שפה"
 msgid "languages"
 msgstr "שפות"
 
-#: projects/api.py:234 projects/api.py:305
+#: projects/api.py:237 projects/api.py:308
 #, python-format
 msgid "%i strings added"
 msgstr "נוספו %i מחרוזות"
 
-#: projects/api.py:236 projects/api.py:307
+#: projects/api.py:239 projects/api.py:310
 #, python-format
 msgid "%i strings updated"
 msgstr "עודכנו %i מחרוזות"
 
-#: projects/feeds.py:17
+#: projects/feeds.py:16
 #, python-format
 msgid "Latest projects on %(site_name)s"
 msgstr "המיזמים האחרונים באתר %(site_name)s"
 
-#: projects/feeds.py:20
+#: projects/feeds.py:19
 msgid "Updates on changes and additions to registered projects."
 msgstr "עדכונים על השינויים והתוספות למיזמים רשומים."
 
-#: projects/feeds.py:36
+#: projects/feeds.py:35
 #, python-format
 msgid "%(site_name)s: Resources in %(project)s"
 msgstr "%(site_name)s: משאבים תחת %(project)s"
 
-#: projects/feeds.py:41
-#, python-format
-msgid ""
-"Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py "
-"in project %s."
-msgstr ""
-"הקובץ /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views.py "
-"העדכני ביותר במיזם %s."
+#: projects/feeds.py:40
+#, fuzzy, python-format
+msgid "Latest resources in project %s."
+msgstr "למיזם זה אין משאבים."
 
-#: projects/feeds.py:68
+#: projects/feeds.py:67
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release"
 msgstr "%(site_name)s: %(project)s :: משאב %(release)s"
 
-#: projects/feeds.py:74
+#: projects/feeds.py:73
 #, python-format
 msgid "Translation statistics for all languages against %s release."
 msgstr "סטטיסטיקת תרגום לכל השפות מול הפצה %s."
 
-#: projects/feeds.py:108
+#: projects/feeds.py:106
 #, python-format
 msgid "%(site_name)s: %(project)s :: %(release)s release :: %(lang)s"
 msgstr "%(site_name)s: %(project)s :: הפצה %(release)s :: %(lang)s"
 
-#: projects/feeds.py:115
+#: projects/feeds.py:113
 #, python-format
 msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
@@ -1188,11 +1184,11 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "חיפוש משאב"
 
-#: projects/models.py:112
+#: projects/models.py:111
 msgid "Private"
 msgstr "פרטי"
 
-#: projects/models.py:113
+#: projects/models.py:112
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
@@ -1200,12 +1196,12 @@ msgstr ""
 "מיזם פרטי זמין רק לך ולצוות שלך. יתר על כך, מיזמים פרטיים מוגבלים בהתאם "
 "לתכניות החיוב של חשבון המשתמש."
 
-#: projects/models.py:116 releases/models.py:30 resources/models.py:52
+#: projects/models.py:115 releases/models.py:30 resources/models.py:110
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "כינוי"
 
-#: projects/models.py:117 releases/models.py:31 resources/models.py:53
+#: projects/models.py:116 releases/models.py:31 resources/models.py:111
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -1213,105 +1209,100 @@ msgstr ""
 "תווית קצרה שתשמש בתור הכתובת, יכולה להכיל אותיות באנגלית, מספרים, קווים "
 "תחתונים ומקפים (מינוסים) בלבד."
 
-#: projects/models.py:120
+#: projects/models.py:119
 msgid "A short name or very short description."
 msgstr "שם קצר או תיאור קצר מאוד."
 
-#: projects/models.py:122
+#: projects/models.py:121
 msgid "A sentence or two describing the object (optional)."
 msgstr "משפט או שניים המתארים את הפריט (לא מחייב)."
 
-#: projects/models.py:123 releases/models.py:38
+#: projects/models.py:122 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "תיאור ארוך"
 
-#: projects/models.py:125
+#: projects/models.py:124
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "תיאור ארוך יותר (לא מחייב). יש להשתמש בתחביר Markdown."
 
-#: projects/models.py:126 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:125 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "דף הבית:"
 
-#: projects/models.py:127
+#: projects/models.py:126
 msgid "Feed"
 msgstr "ערוץ עדכונים"
 
-#: projects/models.py:128
+#: projects/models.py:127
 msgid "An RSS feed with updates to the project."
 msgstr "ערוץ RSS עם עדכונים למיזם."
 
-#: projects/models.py:129
+#: projects/models.py:128
 msgid "Bug tracker"
 msgstr "עוקב באגים:"
 
-#: projects/models.py:130
+#: projects/models.py:129
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "הכתובת לבאג והכרטיסים במערכת המעקב (באגזילה, Trac וכו׳)"
 
-#: projects/models.py:132
+#: projects/models.py:131
 msgid "Anyone can submit"
 msgstr "כל אחד יכול לשלוח"
 
-#: projects/models.py:134
+#: projects/models.py:133
 msgid "Can anyone submit files to this project?"
 msgstr "האם כולם יכולים לשלוח קבצים למיזם זה?"
 
-#: projects/models.py:137
+#: projects/models.py:136
 msgid "Hide this object from the list view?"
 msgstr "האם להסתיר פריט זה מתצוגת הרשימה?"
 
-#: projects/models.py:138
+#: projects/models.py:137
 msgid "Enabled"
 msgstr "פעיל"
 
-#: projects/models.py:139
+#: projects/models.py:138
 msgid "Enable this object or disable its use?"
 msgstr "האם להפעיל פריט זה או לבטל את השימוש בו?"
 
-#: projects/models.py:143 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:142 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "תגיות"
 
-#: projects/models.py:146 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:145 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "מתחזקים"
 
-#: projects/models.py:150
+#: projects/models.py:149
 msgid "Outsource project"
 msgstr "מיקור חוץ למיזם"
 
-#: projects/models.py:151
+#: projects/models.py:150
 msgid "Project that owns the access control of this project."
 msgstr "מיזם ששולט על הגישה למיזם זה."
 
-#: projects/models.py:154 storage/models.py:44
+#: projects/models.py:153 storage/models.py:44
 msgid "Owner"
 msgstr "בעלים"
 
-#: projects/models.py:155
+#: projects/models.py:154
 msgid "The user who owns this project."
 msgstr "המשתמש שמיזם זה בבעלותו."
 
-#: projects/models.py:158 releases/models.py:60
+#: projects/models.py:157 releases/models.py:60
 msgid "HTML Description"
 msgstr "תיאור HTML"
 
-#: projects/models.py:160 releases/models.py:62
+#: projects/models.py:159 releases/models.py:62
 msgid "Description in HTML."
 msgstr "תיאור ב־HTML."
 
-#: projects/models.py:175
-#, python-format
-msgid "<Project: %s>"
-msgstr "<מיזם: %s>"
-
-#: projects/models.py:178
+#: projects/models.py:177
 msgid "project"
 msgstr "מיזם"
 
-#: projects/models.py:179 templates/projects/project_list.html:19
+#: projects/models.py:178 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "מיזמים"
 
@@ -1351,90 +1342,90 @@ msgstr "סך הכול:"
 msgid "The project '%s' was deleted."
 msgstr "המיזם '%s' נמחק."
 
-#: projects/views/release.py:119
+#: projects/views/release.py:115
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "ההפצה '%s' נמחקה."
 
-#: projects/views/team.py:192
+#: projects/views/team.py:197
 #, python-format
 msgid "The team '%s' was deleted."
 msgstr "הצוות '%s' נמחק."
 
-#: projects/views/team.py:232
+#: projects/views/team.py:237
 #, python-format
 msgid "You are in the '%s' team already."
 msgstr "כבר יש לך חברות בצוות '%s'."
 
-#: projects/views/team.py:243
+#: projects/views/team.py:248
 #, python-format
 msgid "You have added a request for joining the '%s' team."
 msgstr "הוספת בקשה להצטרפות לצוות '%s'."
 
-#: projects/views/team.py:266
+#: projects/views/team.py:271
 #, python-format
 msgid "You already have a pending request to join the '%s' team."
 msgstr "כבר יש לך בקשה ממתינה להצטרף לצוות '%s'."
 
-#: projects/views/team.py:270
+#: projects/views/team.py:275
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
 msgstr ""
 "עליך לחתום על הסכם רישיון תרומה מול מיזם זה לפני שתהיה באפשרותך להצטרף לצוות."
 
-#: projects/views/team.py:299
+#: projects/views/team.py:304
 #, python-format
 msgid "User '%(user)s' is in the '%(team)s' team already."
 msgstr "המשתמש '%(user)s' כבר נמצא בצוות '%(team)s'."
 
-#: projects/views/team.py:306
+#: projects/views/team.py:311
 #, python-format
 msgid "You have added '%(user)s' into the '%(team)s' team."
 msgstr "הוספת את המשתמש '%(user)s' לצוות '%(team)s'"
 
-#: projects/views/team.py:354
+#: projects/views/team.py:359
 #, python-format
 msgid ""
 "You have denied the request of the user '%(user)s' to join the '%(team)s' "
 "team."
 msgstr "דחית את בקשת המשתמש '%(user)s' להצטרף לצוות '%(team)s'."
 
-#: projects/views/team.py:399
+#: projects/views/team.py:404
 #, python-format
 msgid "You have withdrawn your own request to join the '%s' team."
 msgstr "ביטלת את בקשתך להצטרף לצוות '%s'."
 
-#: projects/views/team.py:442
+#: projects/views/team.py:447
 #, python-format
 msgid "You have left the '%s' team."
 msgstr "עזבת את הצוות '%s'."
 
-#: projects/views/team.py:463
+#: projects/views/team.py:468
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "אינך בצוות '%s'."
 
-#: projects/views/team.py:486
+#: projects/views/team.py:491
 msgid "Please, select a language before submit the form."
 msgstr "נא לבחור את השפה בטרם שליחת הטופס."
 
-#: projects/views/team.py:499
+#: projects/views/team.py:504
 #, python-format
 msgid "'%s' team already exist."
 msgstr "הצוות '%s' כבר קיים."
 
-#: projects/views/team.py:505
+#: projects/views/team.py:510
 #, python-format
 msgid "A request for creating the '%s' team already exist."
 msgstr "כבר התקבלה בקשה ליצירת הצוות '%s'."
 
-#: projects/views/team.py:522
+#: projects/views/team.py:527
 #, python-format
 msgid "You have requested the '%s' team creation."
 msgstr "ביקשת ליצור את הצוות '%s'."
 
-#: projects/views/team.py:545
+#: projects/views/team.py:550
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
@@ -1442,12 +1433,12 @@ msgstr ""
 "עליך לחתום על הסכם רישיון התרומה למיזם זה לפני שתהיה באפשרותך להגיש בקשה "
 "ליצירת צוות."
 
-#: projects/views/team.py:574
+#: projects/views/team.py:579
 #, python-format
 msgid "You have approved the '%(team)s' team requested by '%(user)s'."
 msgstr "אישרת את הבקשה לצוות '%(team)s' שהתבקשה על ידי '%(user)s'."
 
-#: projects/views/team.py:617
+#: projects/views/team.py:622
 #, python-format
 msgid "You have denied the '%(team)s' team requested by '%(user)s'."
 msgstr "דחית את הבקשה לצוות '%(team)s' שהתבקשה על ידי '%(user)s'."
@@ -1497,8 +1488,8 @@ msgstr ""
 "התאריך האחרון בו מותר למתכנתים לבנות חבילות להפצה זו. תרגומים שנשלחים לאחר "
 "תאריך זה לא יכללו בגרסה שהופצה."
 
-#: releases/models.py:65 resources/models.py:79 teams/models.py:29
-#: teams/models.py:98
+#: releases/models.py:65 resources/models.py:145 teams/models.py:35
+#: teams/models.py:111
 msgid "Project"
 msgstr "מיזם"
 
@@ -1520,11 +1511,11 @@ msgstr "הפצה"
 msgid "releases"
 msgstr "הפצות"
 
-#: resources/forms.py:131 resources/forms.py:151
+#: resources/forms.py:144 resources/forms.py:164
 msgid "Resource file"
 msgstr "קובץ משאב"
 
-#: resources/forms.py:132
+#: resources/forms.py:145
 msgid ""
 "Choose the source language for the resource and then select a file from your "
 "file system to be used as an extracting point of strings to be translated."
@@ -1532,84 +1523,105 @@ msgstr ""
 "יש לבחור את שפת המקור עבור המשאב ואז לבחור קובץ ממערכת הקבצים שלך שישמש "
 "כנקודת חילוץ למחרוזות לתרגום."
 
-#: resources/forms.py:152
+#: resources/forms.py:165
 msgid ""
 "Select a file from your file system to be used to fill translations for this "
 "resource."
 msgstr "יש לבחור קובץ ממערכת הקבצים שלך שישמש למילוי התרגומים למשאב זה."
 
-#: resources/models.py:56
+#: resources/models.py:114
 msgid "A descriptive name unique inside the project."
 msgstr "שם תיאורי וייחודי למיזם זה."
 
-#: resources/models.py:59
+#: resources/models.py:117
 msgid "Source file"
 msgstr "קובץ מקור"
 
-#: resources/models.py:61
+#: resources/models.py:119
 msgid "A local file used to extract the strings to be translated."
 msgstr "קובץ מקומי המשתמש לחילוץ המחרוזות לתרגום."
 
-#: resources/models.py:63
+#: resources/models.py:121
 msgid "I18n type"
 msgstr "סוג הבינאום"
 
-#: resources/models.py:65
+#: resources/models.py:123
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "סוג שיטת הבינאום המשמשת למשאב זה (%s)"
 
-#: resources/models.py:67
+#: resources/models.py:125
 msgid "Accepting translations?"
 msgstr "מקבל תרגומים?"
 
-#: resources/models.py:69
+#: resources/models.py:127
 msgid "Is this resource accepting submissions of translations?"
 msgstr "האם משאב זה מקבל תרגומים?"
 
-#: resources/models.py:77
+#: resources/models.py:128
+#, fuzzy
+msgid "Total source entities"
+msgstr "פרטי משאב התרגומים"
+
+#: resources/models.py:130
+#, fuzzy
+msgid "The number of source strings in this translation resource."
+msgstr "המיזם שמכיל את משאב התרגום."
+
+#: resources/models.py:132
+msgid "Number of words in source entities."
+msgstr ""
+
+#: resources/models.py:134
+#, fuzzy
+msgid ""
+"The number of words contained in the source entities in this translation "
+"resource."
+msgstr "המיזם שמכיל את משאב התרגום."
+
+#: resources/models.py:143
 msgid "Source Language"
 msgstr "שפת המקור:"
 
-#: resources/models.py:78
+#: resources/models.py:144
 msgid "The source language of this Resource."
 msgstr "שפת המקור למשאב זה."
 
-#: resources/models.py:81
+#: resources/models.py:147
 msgid "The project containing the translation resource."
 msgstr "המיזם שמכיל את משאב התרגום."
 
-#: resources/models.py:94
+#: resources/models.py:160
 msgid "resource"
 msgstr "משאב"
 
-#: resources/models.py:95
+#: resources/models.py:161
 msgid "resources"
 msgstr "משאבים"
 
-#: resources/models.py:163
+#: resources/models.py:291
 msgid "The actual string content of source string."
 msgstr "תוכן המחרוזת עצמה של מחרוזת המקור."
 
-#: resources/models.py:166 resources/models.py:296
+#: resources/models.py:294 resources/models.py:424
 msgid "The hash of the translation string used for indexing"
 msgstr "גיבוב מחרוזת התרגום המשמש לסידור באינדקס"
 
-#: resources/models.py:167
+#: resources/models.py:295
 msgid "Context"
 msgstr "הקשר"
 
-#: resources/models.py:169
+#: resources/models.py:297
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
 msgstr "התיאור של מחרוזת המקור.שדה זה מציין את הקשר מחרוזת המקור במשאב."
 
-#: resources/models.py:171 templates/userprofile/profile/location.html:27
+#: resources/models.py:299 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "מיקום"
 
-#: resources/models.py:172
+#: resources/models.py:300
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
@@ -1617,15 +1629,15 @@ msgstr ""
 "מיקום מחרוזת המקור ביחס למשאב. לדוגמה, המיקום של שדה msgid בקובץ תבנית po ‏(‎."
 "pot) ב־gettext."
 
-#: resources/models.py:178
+#: resources/models.py:306
 msgid "The occurrences of the source string in the project code."
 msgstr "מופעים של מחרוזת המקור בקוד המיזם."
 
-#: resources/models.py:179 resources/models.py:184
+#: resources/models.py:307 resources/models.py:312
 msgid "Flags"
 msgstr "דגלונים"
 
-#: resources/models.py:181
+#: resources/models.py:309
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
@@ -1633,39 +1645,39 @@ msgstr ""
 "הדגלים המסמנים את מחרוזת המקור. לדוגמה, אם יש מחרוזת המיועדת ל־Python מחרוזת "
 "זו מסומנת ב־\"#, python-format\" ב־gettext."
 
-#: resources/models.py:186
+#: resources/models.py:314
 msgid "The comment of the developer."
 msgstr "הערת המתכנת."
 
-#: resources/models.py:188
+#: resources/models.py:316
 msgid "Pluralized"
 msgstr "ברבים"
 
-#: resources/models.py:190
+#: resources/models.py:318
 msgid "Identify if the entity is pluralized ot not."
 msgstr "זיהוי האם הישות היא ברבים או לא."
 
-#: resources/models.py:200
+#: resources/models.py:328
 msgid "The translation resource which owns the source string."
 msgstr "תרגום המשאב שבבעלותו מחרוזת המקור."
 
-#: resources/models.py:209
+#: resources/models.py:337
 msgid "source string"
 msgstr "מחרוזת המקור"
 
-#: resources/models.py:210
+#: resources/models.py:338
 msgid "source strings"
 msgstr "מחרוזות המקור"
 
-#: resources/models.py:293
+#: resources/models.py:421
 msgid "The actual string content of translation."
 msgstr "תוכן המחרוזת עצמה של התרגום."
 
-#: resources/models.py:297
+#: resources/models.py:425
 msgid "Plural rule"
 msgstr "כלל רבים"
 
-#: resources/models.py:299
+#: resources/models.py:427
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
@@ -1674,31 +1686,60 @@ msgstr ""
 "מספר הקשור לכלל הקבצים לתרגום זה. מיוצג כ־0=אפס, 1= אחד, 2= שניים, 3=כמות "
 "קטנה, 4=כמות רבה ו־5=אחר. לתרגומים בהם אין ריבוי על הכלל להיות 5 (אחר)."
 
-#: resources/models.py:314
+#: resources/models.py:431
+#, fuzzy
+msgid "Wordcount for this string."
+msgstr "חיפוש אחר מחרוזת:"
+
+#: resources/models.py:445
 msgid "The source string this translation string translates."
 msgstr "מחרוזת המקור שמחרוזת זו היא התרגום שלה."
 
-#: resources/models.py:321
+#: resources/models.py:452
 msgid "Committer"
 msgstr "נשלח על ידי"
 
-#: resources/models.py:322
+#: resources/models.py:453
 msgid "The user who committed the specific translation."
 msgstr "המשתמש ששלח מחרוזת זו."
 
-#: resources/models.py:332
+#: resources/models.py:463
 msgid "translation string"
 msgstr "מחרוזת לתרגום"
 
-#: resources/models.py:333
+#: resources/models.py:464
 msgid "translation strings"
 msgstr "מחרוזות לתרגום"
 
-#: resources/models.py:366
+#: resources/models.py:594
+#, fuzzy
+msgid "Translated Entities"
+msgstr "תרגום בדפדפן"
+
+#: resources/models.py:597
+msgid "Wordcount for Translated Entities"
+msgstr ""
+
+#: resources/models.py:600
+#, fuzzy
+msgid "Untranslated Entities"
+msgstr "לא מתורגם:"
+
+#: resources/models.py:603
+#, fuzzy
+msgid "Last Update"
+msgstr "עדכון אחרון"
+
+#: resources/models.py:607
+#, fuzzy
+msgid "Last Committer"
+msgstr "נשלח על ידי"
+
+#: resources/models.py:711
 msgid "This is the actual content of the template"
 msgstr "זהו תוכן התבנית עצמו"
 
-#: resources/models.py:370
+#: resources/models.py:715
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
@@ -1706,53 +1747,53 @@ msgstr ""
 "זוהי התבנית של קובץ המקור המיובא שמשמש לייצוא קובצי התרגום ממסד הנתונים "
 "למשתמש."
 
-#: resources/models.py:374
+#: resources/models.py:719
 msgid "Template"
 msgstr "תבנית"
 
-#: resources/models.py:375
+#: resources/models.py:720
 msgid "Templates"
 msgstr "תבניות"
 
-#: resources/views.py:87
+#: resources/views.py:94
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "משאב התרגום '%s' נמחק."
 
-#: resources/views.py:131
+#: resources/views.py:137
 msgid "The URL you provided doesn't link to valid file."
 msgstr "הכתובת שסיפקת אינה מקשר לקובץ תקני."
 
-#: resources/views.py:142
+#: resources/views.py:148
 msgid ""
 "You have checked the auto update checkbox but you haven't provided a valid "
 "url."
 msgstr "סימנת את תיבת העדכון האוטומטי אך לא סיפקת כתובת תקנית."
 
-#: resources/views.py:330
+#: resources/views.py:333
 #, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
 "deleted successfully."
 msgstr "תרגומי השפה %(lang)s למשאב %(resource)s נמחקו בהצלחה."
 
-#: resources/views.py:376
+#: resources/views.py:379
 msgid "Error compiling translation file."
 msgstr "שגיאה בהידור קובץ התרגום."
 
-#: resources/views.py:425
+#: resources/views.py:428
 msgid "Sorry, you cannot assign this file to you!"
 msgstr "לא ניתן להקצות קובץ זה לעצמך, עמך סליחה!"
 
-#: resources/views.py:437
+#: resources/views.py:440
 msgid "Failed to lock the resource!"
 msgstr "אירע כשל בנעילת המשאב!"
 
-#: resources/views.py:448
+#: resources/views.py:451
 msgid "Failed to extend lock period on the resource!"
 msgstr "אירע כשל בהארכת תקופת הנעילה למשאב!"
 
-#: resources/views.py:453
+#: resources/views.py:456
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
 msgstr "לא ניתן לנעול זאת כעת! ( ננעל על ידי %s )"
@@ -1765,16 +1806,16 @@ msgstr ""
 "הקובץ שלך נכשל בבדיקת הנכונות (msgfmt -c). נא להריץ פקודה זו במערכת שלך כדי "
 "לצפות בשגיאות."
 
-#: resources/formats/qt.py:74
+#: resources/formats/qt.py:76
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
 msgstr "כפי הנראה הקובץ שלך אינו מכיל XML תקני: %s!"
 
-#: storage/api.py:129
+#: storage/api.py:131
 msgid "A strange error happened."
 msgstr "אירעה שגיאה מוזרה."
 
-#: storage/api.py:146
+#: storage/api.py:148
 msgid "File uploaded successfully."
 msgstr "הקובץ הועלה בהצלחה."
 
@@ -1839,67 +1880,67 @@ msgstr ""
 "המשתמש '%s' מופיע אצלך גם ברשימת החברים וגם ברשימת המתאמים. נא להשמיט אותו/ה "
 "מאחת הרשימות האלו.."
 
-#: teams/models.py:31 teams/models.py:100
+#: teams/models.py:37 teams/models.py:113
 msgid "The project this team works on."
 msgstr "המיזם עליו עובד צוות זה."
 
-#: teams/models.py:32 teams/models.py:101
-#: templates/projects/release_detail.html:151
-#: templates/resources/resource_detail.html:178
+#: teams/models.py:38 teams/models.py:114
+#: templates/projects/release_detail.html:147
+#: templates/resources/resource_detail.html:188
 msgid "Language"
 msgstr "שפה"
 
-#: teams/models.py:34 teams/models.py:103
+#: teams/models.py:40 teams/models.py:116
 msgid ""
 "People in this team will only be able to submit translations files related "
 "to the specific language."
 msgstr "אנשים בצוות זה יוכלו לשלוח קובצי תרגום הקשורים לשפה מסוימת"
 
-#: teams/models.py:36
+#: teams/models.py:42
 msgid "Coordinators"
 msgstr "מתאמים"
 
-#: teams/models.py:38
+#: teams/models.py:44
 msgid "Members"
 msgstr "חברים"
 
-#: teams/models.py:41
+#: teams/models.py:47
 msgid "Mainlist"
 msgstr "רשימה עיקרית:"
 
-#: teams/models.py:42
+#: teams/models.py:48
 msgid "The main mailing list of the team."
 msgstr "רשימת הדיוור הראשית של הקבוצה."
 
-#: teams/models.py:44
+#: teams/models.py:50
 msgid "creator"
 msgstr "יוצר"
 
-#: teams/models.py:60
+#: teams/models.py:66
 msgid "team"
 msgstr "צוות"
 
-#: teams/models.py:61
+#: teams/models.py:67
 msgid "teams"
 msgstr "צוותים"
 
-#: teams/models.py:120
+#: teams/models.py:133
 msgid "team creation request"
 msgstr "בקשה ליצירת צוות"
 
-#: teams/models.py:121
+#: teams/models.py:134
 msgid "team creation requests"
 msgstr "בקשות ליצירת צוותים"
 
-#: teams/models.py:139
+#: teams/models.py:152
 msgid "Team"
 msgstr "צוות"
 
-#: teams/models.py:156
+#: teams/models.py:169
 msgid "team access request"
 msgstr "בקשת גישה לצוות"
 
-#: teams/models.py:157
+#: teams/models.py:170
 msgid "team access requests"
 msgstr "בקשות גישה לצוותים"
 
@@ -2709,8 +2750,8 @@ msgid "Screenshots"
 msgstr "צילומי מסך"
 
 #: templates/projects/project_detail.html:124
-#: templates/resources/resource_detail.html:333
-#: templates/teams/team_detail.html:290
+#: templates/resources/resource_detail.html:346
+#: templates/teams/team_detail.html:299
 msgid "History"
 msgstr "היסטוריה"
 
@@ -2832,7 +2873,7 @@ msgid "Subscribe to this feed"
 msgstr "הרשמה לערוץ זה"
 
 #: templates/projects/project_list.html:49
-#: templates/projects/release_detail.html:105
+#: templates/projects/release_detail.html:104
 msgid "Resources:"
 msgstr "משאבים:"
 
@@ -2899,51 +2940,50 @@ msgstr "הקפאת מחרוזות:"
 msgid "Devel freeze:"
 msgstr "הקפאת פיתוח:"
 
-#: templates/projects/release_detail.html:107
-#: templates/projects/release_detail.html:127
+#: templates/projects/release_detail.html:106
+#: templates/projects/release_detail.html:124
 msgid "Click here to show or hide the resource list"
 msgstr "יש ללחוץ כאן כדי להציג או להסתיר את רשימת המשאבים"
 
-#: templates/projects/release_detail.html:108
+#: templates/projects/release_detail.html:107
 #, python-format
 msgid "This release has %(resources_number)s resources."
 msgstr "להפצה זו ישנם %(resources_number)s משאבים"
 
-#: templates/projects/release_detail.html:125
-#, fuzzy
+#: templates/projects/release_detail.html:122
 msgid "Private Resources:"
-msgstr "יצירת משאב"
+msgstr ""
 
-#: templates/projects/release_detail.html:128
-#, fuzzy, python-format
+#: templates/projects/release_detail.html:125
+#, python-format
 msgid ""
 "This release has %(resources_number)s private resources you have access to."
-msgstr "להפצה זו ישנם %(resources_number)s משאבים"
+msgstr ""
 
-#: templates/projects/release_detail.html:145
+#: templates/projects/release_detail.html:141
 msgid "Translation Statistics"
 msgstr "סטטיסטיקת תרגום"
 
-#: templates/projects/release_detail.html:152
+#: templates/projects/release_detail.html:148
 #: templates/projects/release_language_detail.html:65
-#: templates/projects/release_language_detail.html:187
-#: templates/resources/resource_detail.html:179
+#: templates/projects/release_language_detail.html:196
+#: templates/resources/resource_detail.html:189
 #: templates/teams/team_detail.html:141
 msgid "Completion"
 msgstr "השלמה"
 
-#: templates/projects/release_detail.html:153
+#: templates/projects/release_detail.html:149
 msgid "Last Translation"
 msgstr "התרגום האחרון"
 
-#: templates/projects/release_detail.html:182
+#: templates/projects/release_detail.html:178
 #: templates/projects/resource_list.html:90
-#: templates/resources/resource_detail.html:211
+#: templates/resources/resource_detail.html:224
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "אין תרגומים עדיין"
 
-#: templates/projects/release_detail.html:203
+#: templates/projects/release_detail.html:200
 msgid "Delete release"
 msgstr "מחיקת הפצה"
 
@@ -2984,60 +3024,81 @@ msgstr[0] "משאב תחת הפצה זו"
 msgstr[1] "משאבים תחת הפצה זו"
 
 #: templates/projects/release_language_detail.html:66
-#: templates/projects/release_language_detail.html:188
+#: templates/projects/release_language_detail.html:197
 #: templates/projects/resource_list.html:70
-#: templates/resources/resource_detail.html:180
+#: templates/resources/resource_detail.html:190
 #: templates/teams/team_detail.html:142
 msgid "Last Updated"
 msgstr "עדכון אחרון"
 
 #: templates/projects/release_language_detail.html:67
-#: templates/projects/release_language_detail.html:189
+#: templates/projects/release_language_detail.html:198
 #: templates/projects/resource_list.html:71
 #: templates/teams/team_detail.html:143
 msgid "Importance"
 msgstr "חשיבות"
 
 #: templates/projects/release_language_detail.html:72
-#: templates/projects/release_language_detail.html:194
-#: templates/resources/resource_detail.html:185
+#: templates/projects/release_language_detail.html:203
+#: templates/resources/resource_detail.html:195
 #: templates/teams/team_detail.html:149
 msgid "click for translation"
 msgstr "לחיצה לתרגום"
 
-#: templates/projects/release_language_detail.html:92
-#: templates/projects/release_language_detail.html:214
-#: templates/teams/team_detail.html:171
+#: templates/projects/release_language_detail.html:76
+#: templates/projects/release_language_detail.html:207
+#: templates/resources/resource_detail.html:204
+#: templates/teams/team_detail.html:154
+#, fuzzy
+msgid "Locked"
+msgstr "בוצעה נעילה."
+
+#: templates/projects/release_language_detail.html:79
+#: templates/projects/release_language_detail.html:210
+#: templates/teams/team_detail.html:157
+#, fuzzy
+msgid "Accepting translations"
+msgstr "מקבל תרגומים?"
+
+#: templates/projects/release_language_detail.html:81
+#: templates/projects/release_language_detail.html:212
+#: templates/teams/team_detail.html:159
+#, fuzzy
+msgid "Not accepting translations at the moment"
+msgstr "מקבל תרגומים?"
+
+#: templates/projects/release_language_detail.html:101
+#: templates/projects/release_language_detail.html:232
+#: templates/teams/team_detail.html:180
 msgid "no activity yet"
 msgstr "אין עדיין פעילות"
 
-#: templates/projects/release_language_detail.html:141
-#: templates/projects/release_language_detail.html:263
+#: templates/projects/release_language_detail.html:150
+#: templates/projects/release_language_detail.html:281
 #: templates/resources/resource_detail.html:29
-#: templates/resources/resource_detail.html:250
+#: templates/resources/resource_detail.html:263
 msgid "Please select a target language first."
 msgstr "נא לבחור שפת יעד תחילה."
 
-#: templates/projects/release_language_detail.html:151
-#: templates/projects/release_language_detail.html:273
-#: templates/resources/resource_detail.html:260
-#: templates/teams/team_detail.html:230
+#: templates/projects/release_language_detail.html:160
+#: templates/projects/release_language_detail.html:291
+#: templates/resources/resource_detail.html:273
+#: templates/teams/team_detail.html:239
 msgid "Trying to lock resource..."
 msgstr "מתבצע ניסיון לנעילת המשאב..."
 
-#: templates/projects/release_language_detail.html:174
-#: templates/projects/release_language_detail.html:296
-#: templates/resources/resource_detail.html:283
-#: templates/teams/team_detail.html:253
+#: templates/projects/release_language_detail.html:183
+#: templates/projects/release_language_detail.html:314
+#: templates/resources/resource_detail.html:296
+#: templates/teams/team_detail.html:262
 msgid "Translation Details"
 msgstr "פרטי התרגום"
 
-#: templates/projects/release_language_detail.html:182
-#, fuzzy
+#: templates/projects/release_language_detail.html:191
 msgid "Private Resource that you have access to under this Release"
 msgid_plural "Private resources that you have access to under this Release"
-msgstr[0] "משאב תחת הפצה זו"
-msgstr[1] "משאבים תחת הפצה זו"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/projects/release_list.html:11
 msgid "Add"
@@ -3070,9 +3131,9 @@ msgid "Click the flags to modify the importance of a resource."
 msgstr "נא ללחוץ על הדגלים כדי לשנות את חשיבות המשאב."
 
 #: templates/projects/resource_list.html:79
-#, python-format
-msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
-msgstr "סך כל המחרוזות: %(ts)s<br/>השפות הזמינות: %(al)s"
+#, fuzzy, python-format
+msgid "%(strings)s strings, %(words)s words"
+msgstr " סך הכול:&nbsp;%(total_entities)s מחרוזות, %(wordcount)s מילים"
 
 #: templates/projects/resource_list.html:83
 #, python-format
@@ -3084,12 +3145,12 @@ msgid "No committers yet"
 msgstr "אין שולחים עדיין"
 
 #: templates/projects/resource_list.html:117
-#: templates/teams/team_detail.html:260
+#: templates/teams/team_detail.html:269
 msgid "No resources are registered for this project yet."
 msgstr "לא נרשמו עדיין משאבים במיזם זה."
 
 #: templates/projects/resource_list.html:125
-#: templates/resources/resource_detail.html:310
+#: templates/resources/resource_detail.html:323
 msgid "Select Language"
 msgstr "בחירת שפה"
 
@@ -3102,7 +3163,12 @@ msgstr "תרגום הכול"
 msgid " Total:&nbsp;%(total_entities)s strings, %(wordcount)s words"
 msgstr " סך הכול:&nbsp;%(total_entities)s מחרוזות, %(wordcount)s מילים"
 
-#: templates/resources/resource_actions.html:37
+#: templates/resources/resource_actions.html:24
+#, fuzzy, python-format
+msgid " Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
+msgstr " סך הכול:&nbsp;%(total_entities)s מחרוזות, %(wordcount)s מילים"
+
+#: templates/resources/resource_actions.html:38
 msgid ""
 " \n"
 "        <span title=\"You cannot translate the source language strings."
@@ -3112,53 +3178,62 @@ msgstr ""
 "<span title=\"אין לך את האפשרות לשנות את מחרוזות שפת המקור.\">זוהי שפת "
 "המקור</span> "
 
-#: templates/resources/resource_actions.html:42
-#: templates/resources/resource_actions.html:46
+#: templates/resources/resource_actions.html:47
+#, fuzzy, python-format
+msgid ""
+"Warning: This resource is currently locked by '%(lock_owner)s'. He might be "
+"working on it right now."
+msgstr "קובץ זה אינו נעול. סביר להניח כי אף אחד אינו עובד עליו נכון לעכשיו."
+
+#: templates/resources/resource_actions.html:47
 #: templates/resources/resource_actions.html:49
-msgid "Translate Now"
+#: templates/resources/resource_actions.html:56
+#: templates/resources/resource_actions.html:59
+#, fuzzy
+msgid "Translate now"
 msgstr "תרגום כעת"
 
-#: templates/resources/resource_actions.html:46
+#: templates/resources/resource_actions.html:56
 msgid "This resource is currently not accepting translations"
 msgstr "משאב זה אינו מקבל תרגומים נכון לעכשיו"
 
-#: templates/resources/resource_actions.html:49
+#: templates/resources/resource_actions.html:59
 #, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
 msgstr "כדי לתרגם עליך להיכנס ולהיות במעמד חברות של צוות השפה ה%(lang_name)s"
 
-#: templates/resources/resource_actions.html:58
+#: templates/resources/resource_actions.html:68
 #: templates/resources/stats_bar_simple.html:4
 msgid "Translated: "
 msgstr "מתורגם:"
 
-#: templates/resources/resource_actions.html:58
+#: templates/resources/resource_actions.html:68
 #: templates/resources/stats_bar_simple.html:4
 msgid "Untranslated: "
 msgstr "לא מתורגם:"
 
-#: templates/resources/resource_actions.html:66
+#: templates/resources/resource_actions.html:76
 msgid "remaining strings"
 msgstr "מחרוזות שנותרו"
 
-#: templates/resources/resource_actions.html:74
+#: templates/resources/resource_actions.html:84
 msgid "View strings online"
 msgstr "צפייה במחרוזות בעמוד"
 
-#: templates/resources/resource_actions.html:78
+#: templates/resources/resource_actions.html:88
 msgid "Visit language team"
 msgstr "ביקור בצוות השפה"
 
-#: templates/resources/resource_actions.html:84
-#: templates/resources/resource_actions.html:104
-#: templates/resources/resource_actions.html:110
+#: templates/resources/resource_actions.html:94
+#: templates/resources/resource_actions.html:114
+#: templates/resources/resource_actions.html:120
 msgid "Clone to new language"
 msgstr "שכפול לשפה חדשה"
 
-#: templates/resources/resource_actions.html:86
-#: templates/resources/resource_actions.html:106
-#: templates/resources/resource_actions.html:112
+#: templates/resources/resource_actions.html:96
+#: templates/resources/resource_actions.html:116
+#: templates/resources/resource_actions.html:122
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
@@ -3167,47 +3242,47 @@ msgstr ""
 "העתקת כל התרגומים משפה זו לשפה חדשה (שנבחרה) במשאב הנוכחי. פעולה זו תעתיק את "
 "התרגומים לרבים גם כן, אם ורק אם לשתי השפות יש בדיוק את אותם כללי רבים."
 
-#: templates/resources/resource_actions.html:120
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:130
+#: templates/resources/resource_actions.html:132
 msgid "Download for viewing"
 msgstr "הורדה לצפייה"
 
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:132
 msgid "You must login to be able to download the translations."
 msgstr "עליך להיכנס כדי שתהיה באפשרותך להוריד את התרגומים."
 
-#: templates/resources/resource_actions.html:130
+#: templates/resources/resource_actions.html:140
 msgid "Resource cannot be locked"
 msgstr "לא ניתן לנעול את המשאב"
 
-#: templates/resources/resource_actions.html:130
-#: templates/resources/resource_actions.html:134
+#: templates/resources/resource_actions.html:140
+#: templates/resources/resource_actions.html:144
 msgid "Download for translation"
 msgstr "הורדה לתרגום"
 
-#: templates/resources/resource_actions.html:134
+#: templates/resources/resource_actions.html:144
 msgid "You must login to use this action"
 msgstr "עליך להיכנס כדי להשתמש בפעולה זו"
 
-#: templates/resources/resource_actions.html:137
+#: templates/resources/resource_actions.html:147
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action."
 msgstr "נעילת הקובץ תחת בעלותך, הורדתו באופן מקומי ועריכתו בפעולה אחת."
 
-#: templates/resources/resource_actions.html:154
+#: templates/resources/resource_actions.html:164
 msgid "This resource currently is not accepting translations."
 msgstr "מקור זה כרגע אינו מקבל תרגומים."
 
-#: templates/resources/resource_actions.html:165
+#: templates/resources/resource_actions.html:175
 msgid "Translation last updated "
 msgstr "עדכון התרגומים האחרון"
 
-#: templates/resources/resource_actions.html:167
+#: templates/resources/resource_actions.html:177
 msgid "by"
 msgstr "מאת"
 
-#: templates/resources/resource_actions.html:173
+#: templates/resources/resource_actions.html:183
 msgid "No translation yet"
 msgstr "אין תרגומים עדיין"
 
@@ -3236,49 +3311,53 @@ msgstr ""
 "\n"
 "  האם אכן ברצונך למחוק לצמיתות את משאב התרגום '%(resource_name)s'?\n"
 
-#: templates/resources/resource_detail.html:107
+#: templates/resources/resource_detail.html:106
 msgid "Translation Resource details"
 msgstr "פרטי משאב התרגומים"
 
-#: templates/resources/resource_detail.html:110
+#: templates/resources/resource_detail.html:109
 msgid "Source Language:"
 msgstr "שפת המקור:"
 
-#: templates/resources/resource_detail.html:116
+#: templates/resources/resource_detail.html:115
 msgid "Number of languages:"
 msgstr "מספר השפות:"
 
-#: templates/resources/resource_detail.html:122
+#: templates/resources/resource_detail.html:121
 msgid "Total Strings:"
 msgstr "סך כל המחרוזות:"
 
-#: templates/resources/resource_detail.html:125
+#: templates/resources/resource_detail.html:124
 msgid "words"
 msgstr "מילים"
 
-#: templates/resources/resource_detail.html:129
+#: templates/resources/resource_detail.html:128
+msgid "Auto-update from URL?"
+msgstr ""
+
+#: templates/resources/resource_detail.html:139
 msgid "Accepting Translations?"
 msgstr "מקבל תרגומים?"
 
-#: templates/resources/resource_detail.html:142
+#: templates/resources/resource_detail.html:152
 msgid "Priority Level"
 msgstr "רמת העדיפות"
 
-#: templates/resources/resource_detail.html:159
+#: templates/resources/resource_detail.html:169
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "הפצה:"
 msgstr[1] "הפצות:"
 
-#: templates/resources/resource_detail.html:173
+#: templates/resources/resource_detail.html:183
 msgid "Available translations"
 msgstr "תרגומים זמינים"
 
-#: templates/resources/resource_detail.html:191
+#: templates/resources/resource_detail.html:201
 msgid "source language"
 msgstr "שפת המקור"
 
-#: templates/resources/resource_detail.html:300
+#: templates/resources/resource_detail.html:313
 msgid ""
 "If you cannot see your language, click the button below to translate.<span "
 "class=\"note\">( You must belong to a language team of this project, to be "
@@ -3287,15 +3366,15 @@ msgstr ""
 "אם שפתך אינה מופיעה, עליך ללחוץ על הלחצן שלהלן כדי לתרגם.<span class=\"note"
 "\">( עליך להיות שייך לצוות שפה במיזם זה כדי לקבל את האפשרות לתרגם! )</span>"
 
-#: templates/resources/resource_detail.html:326
+#: templates/resources/resource_detail.html:339
 msgid "Add Translation"
 msgstr "הוספת תרגום"
 
-#: templates/resources/resource_detail.html:337
+#: templates/resources/resource_detail.html:350
 msgid "No actions recorded yet :)"
 msgstr "טרם הוקלטו פעולות :)"
 
-#: templates/resources/resource_detail.html:354
+#: templates/resources/resource_detail.html:367
 msgid "Delete translation resource"
 msgstr "מחיקת משאב תרגום"
 
@@ -3556,15 +3635,15 @@ msgid_plural "Team Translating Resources:"
 msgstr[0] "הצוות מתרגם את המשאב"
 msgstr[1] "הצוות מתרגם את המשאבים:"
 
-#: templates/teams/team_detail.html:267
+#: templates/teams/team_detail.html:276
 msgid "Team Members:"
 msgstr "חברי הקבוצה:"
 
-#: templates/teams/team_detail.html:277
+#: templates/teams/team_detail.html:286
 msgid "Leave"
 msgstr "עזיבה"
 
-#: templates/teams/team_detail.html:313
+#: templates/teams/team_detail.html:322
 msgid "Delete team"
 msgstr "מחיקת צוות"
 
@@ -4495,11 +4574,11 @@ msgstr "אין באפשרות לנדנד לעצמך."
 msgid "You have nudged '%s'."
 msgstr "נדנדת למשתמש '%s'."
 
-#: txcommon/db/models.py:43
+#: txcommon/db/models.py:85
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "יש להזין 0 או יותר מספרים שלמים חיוביים בסוגריים המופרדים בפסיקים."
 
-#: txcommon/db/models.py:45
+#: txcommon/db/models.py:87
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "עליך להזין לפחות צמד סוגריים שלא מכילים דבר."
 
@@ -4535,5 +4614,21 @@ msgstr "הסרת את ההרשאה."
 msgid "You removed the permission request."
 msgstr "הסרת את בקשת ההרשאה."
 
-#~ msgid "No resources are registered for this release yet."
-#~ msgstr "לא נרשמו משאבים להפצה זו עדיין."
+#~ msgid "Translation updated successfully in the DB"
+#~ msgstr "התרגום עודכן בהצלחה במסד הנתונים"
+
+#~ msgid "New translation stored successfully in the DB"
+#~ msgstr "תרגום חדש אוחסן בהצלחה במסד הנתונים"
+
+#~ msgid ""
+#~ "Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
+#~ "py in project %s."
+#~ msgstr ""
+#~ "הקובץ /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
+#~ "py העדכני ביותר במיזם %s."
+
+#~ msgid "<Project: %s>"
+#~ msgstr "<מיזם: %s>"
+
+#~ msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
+#~ msgstr "סך כל המחרוזות: %(ts)s<br/>השפות הזמינות: %(al)s"
