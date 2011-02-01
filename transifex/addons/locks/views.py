@@ -46,7 +46,7 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
             response['timeuntil'] = timeuntil(lock.expires)
         except LockError, e:
             response['status'] = "FAILED"
-            response['message'] = str(e)
+            response['message'] = e.message
     else:
         response['status'] = "FAILED"
         response['message'] = _("Sorry, but you need to send a POST request.")
