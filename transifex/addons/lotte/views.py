@@ -562,7 +562,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     if tr and url not in tr:
                         push_response_dict[source_id] = { 'status':200,
                         'message':_("The following url is either missing form the"
-                        " translation os has been translated: '%s'." % url)}
+                        " translation or has been translated: '%s'." % url)}
                         raise StopIteration
             except StopIteration:
                 pass 
@@ -574,7 +574,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     if tr and email not in tr:
                         push_response_dict[source_id] = { 'status':200,
                         'message':_("The following email is either missing form the"
-                        " translation os has been translated: '%s'." % email)}
+                        " translation or has been translated: '%s'." % email)}
                         raise StopIteration
             except StopIteration:
                 pass 
