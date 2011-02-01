@@ -40,15 +40,15 @@
         {% endblocktrans %}
       {% else %}
         {% if can_submit_translation and resource.accept_translations %}
+         {% url translate_resource project.slug resource.slug target_language.code as translate_resource %}
          {% if stats.lock.valid %}
           {% with stats.lock.owner as lock_owner %}
-           {% url translate_resource project.slug resource.slug target_language.code as translate_resource %}
            {% if lock_owner != request.user %}
             <a class="i16 notice buttonized2 buttonized2_warning tipsy_enable" id="translate_now" href="{{ translate_resource }}" title="{% blocktrans %}Warning: This resource is currently locked by '{{ lock_owner }}'. He might be working on it right now.{% endblocktrans %}" >{% trans "Translate now" %}</a>
-           {% else %}
-            <a class="i16 tick buttonized2" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
            {% endif %}
           {% endwith %}
+         {% else %}
+          <a class="i16 tick buttonized2" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
          {% endif %}
         {% else %}
           {% if not resource.accept_translations %}
