@@ -236,9 +236,9 @@ class Handler(object):
             qs = SourceEntity.objects.filter(
                     resource = self.resource)
             original_sources = list(qs)
+            new_entities = []
 
 
-        new_entities = []
         try:
             strings_added = 0
             strings_updated = 0
@@ -311,22 +311,27 @@ class Handler(object):
                 t.save()
                 self.resource.i18n_type = get_i18n_type_from_file(self.filename)
                 self.resource.save()
-                for se in original_sources:
-                    for ne in new_entities:
-                        try:
-                            old_trans = Translation.objects.get(source_entity=se,
-                                language=se.resource.source_language, rule=5)
-                            new_trans = Translation.objects.get(source_entity=ne,
-                                language=se.resource.source_language, rule=5)
-                        except Translation.DoesNotExist:
-                            # Source language translation should always exist
-                            # but just in case...
-                            continue
-                        # find Levenshtein distance
-                        if percent_diff(old_trans.string, new_trans.string) < settings.MAX_STRING_DISTANCE:
-                            convert_to_suggestions(se, ne, user)
+                # See how many iterations we need for this
+                iterations = len(original_sources)*len(new_entities)
+                # If it's not over the limit, then do it
+                if iterations < settings.MAX_STRING_ITERATIONS:
+                    for se in original_sources:
+                        for ne in new_entities:
+                            try:
+                                old_trans = Translation.objects.get(source_entity=se,
+                                    language=se.resource.source_language, rule=5)
+                                new_trans = Translation.objects.get(source_entity=ne,
+                                    language=se.resource.source_language, rule=5)
+                            except Translation.DoesNotExist:
+                                # Source language translation should always exist
+                                # but just in case...
+                                continue
+                            # find Levenshtein distance
+                            if percent_diff(old_trans.string, new_trans.string) < settings.MAX_STRING_DISTANCE:
+                                convert_to_suggestions(se, ne, user)
+                                break
 
-                    se.delete()
+                        se.delete()
 
             for j in self.suggestions.strings:
                 # Check SE existence
