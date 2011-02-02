@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo="http://code.transifex.org/index.cgi/mainline/"
+repo="http://code.indifex.com/transifex/"
 
 if ! which rpmbuild &> /dev/null ; then
 	echo "rpmbuild is not installed in your system; exiting"
