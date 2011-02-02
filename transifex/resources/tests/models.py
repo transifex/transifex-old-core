@@ -221,7 +221,7 @@ class RLStatsModelWordsTests(BaseTestCase):
         # since we have two source entities
         words_ar = len(self.translation_ar.string.split(None))
         rls_ar = self.resource.rlstats_set.get(language=self.language_ar)
-        self.assertEqual(rls_ar.translated_perc, 100)
+        self.assertEqual(rls_ar.translated_perc, 50)
         # FIXME: This is not implemented yet. All wordcounts are based on
         # source
         #self.assertEqual(rls_ar.untranslated_wordcount, 5)

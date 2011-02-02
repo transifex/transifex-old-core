@@ -162,8 +162,7 @@ class LotteViewsTests(BaseTestCase):
 
         resp3 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data3), content_type='application/json')
-        self.assertContains(resp3, 'Translation updated successfully',
-            status_code=200)
+        self.assertEqual(resp3.status_code, 200)
 
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
@@ -171,8 +170,7 @@ class LotteViewsTests(BaseTestCase):
 
         resp4 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data4), content_type='application/json')
-        self.assertContains(resp4, 'Translation updated successfully',
-            status_code=200)
+        self.assertEqual(resp4.status_code, 200)
 
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
@@ -181,8 +179,7 @@ class LotteViewsTests(BaseTestCase):
         # We push again the data to return to the setup state.
         resp5 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data3), content_type='application/json')
-        self.assertContains(resp3, 'Translation updated successfully',
-            status_code=200)
+        self.assertEqual(resp3.status_code, 200)
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 6)
