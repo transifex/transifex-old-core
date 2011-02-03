@@ -556,7 +556,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             except StopIteration:
                 pass
             # Scan for urls and see if they're in both strings
-            urls = re.compile(r'(\S+?://\S+)')
+            urls = re.compile('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
             try:
                 for url in urls.findall(ss):
                     if tr and url not in tr:
