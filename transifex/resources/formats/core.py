@@ -238,7 +238,6 @@ class Handler(object):
             original_sources = list(qs)
             new_entities = []
 
-
         try:
             strings_added = 0
             strings_updated = 0
@@ -309,8 +308,9 @@ class Handler(object):
                 t, created = Template.objects.get_or_create(resource = self.resource)
                 t.content = self.template
                 t.save()
-                self.resource.i18n_type = get_i18n_type_from_file(self.filename)
-                self.resource.save()
+                if created:
+                    self.resource.i18n_type = get_i18n_type_from_file(self.filename)
+                    self.resource.save()
                 # See how many iterations we need for this
                 iterations = len(original_sources)*len(new_entities)
                 # If it's not over the limit, then do it
@@ -349,6 +349,7 @@ class Handler(object):
                     source_entity = se,
                     language = self.language
                 )
+
 
             self._post_save2db(is_source , user, overwrite_translations)
 
