@@ -162,7 +162,6 @@ class POFile(BaseTestCase):
         pt_trans = Translation.objects.get(source_entity__resource=self.resource,
             language = self.language)
 
-        import ipdb; ipdb.set_trace()
         # Check to see that the correct strings appear as the translations and
         # not the logical id
         self.assertEqual(en_trans.string, "Hello, World!")
