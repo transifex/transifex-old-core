@@ -125,6 +125,50 @@ class POFile(BaseTestCase):
 
         r.delete()
 
+    def test_logical_ids(self):
+        """Test po files with logical ids instead of normal strings"""
+
+
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no suggestions to begin with
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = POHandler('%s/logical_ids/tests.pot' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # import pt_BR translation
+        handler = POHandler('%s/logical_ids/pt_BR.po' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
+
+        source = SourceEntity.objects.get(resource=self.resource)
+        en_trans = Translation.objects.get(source_entity__resource=self.resource,
+            language = self.resource.source_language)
+        pt_trans = Translation.objects.get(source_entity__resource=self.resource,
+            language = self.language)
+
+        import ipdb; ipdb.set_trace()
+        # Check to see that the correct strings appear as the translations and
+        # not the logical id
+        self.assertEqual(en_trans.string, "Hello, World!")
+        self.assertEqual(pt_trans.string, "Holas, Amigos!")
+        self.assertEqual(source.string, "source_1")
+
     def test_convert_to_suggestions(self):
         """Test convert to suggestions when importing new source files"""
 

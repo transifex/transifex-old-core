@@ -304,7 +304,7 @@ class POHandler(Handler):
                     continue
                 # Not pluralized, so no plural rules. Use 5 as 'other'.
                 if ispot:
-                    messages = [(5, entry.msgid)]
+                    messages = [(5, entry.msgstr or entry.msgid)]
                 else:
                     messages = [(5, entry.msgstr)]
 
