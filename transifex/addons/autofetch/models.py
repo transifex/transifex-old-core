@@ -56,7 +56,7 @@ class URLInfo(models.Model):
                 if 'filename' in content:
                     filename = content.split('filename')[1]
                     filename = filename.replace('"', '').replace("'", ""
-                        ).replace("=", "").strip()
+                        ).replace("=", "").replace('/', '-').strip()
 
         if filename == '':
             parts = urlparse.urlsplit(self.source_file_url)
