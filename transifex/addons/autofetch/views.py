@@ -17,7 +17,8 @@ def fetch_url(request, project_slug, resource_slug):
     """
     response_dict = {}
     try:
-        urlinfo = URLInfo.objects.get(resource__slug=resource_slug)
+        urlinfo = URLInfo.objects.get(resource__slug=resource_slug,
+            resource__project__slug=project_slug)
         urlinfo.update_source_file()
     except URLInfo.DoesNotExist:
         response_dict = { 'status':404,
