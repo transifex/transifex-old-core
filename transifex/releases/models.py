@@ -15,6 +15,15 @@ from transifex.txcommon.log import log_model
 from transifex.resources.utils import invalidate_template_cache
 from transifex.resources.models import RLStats
 
+# Config settings for the "All Resources" release (refer to
+# transifex.releases.handlers for more info).
+# FIXME: Some of the following strings should be i18n-ized. It seems that
+#        this isn't working right now.
+RELEASE_ALL_DATA = {
+    'slug': 'all-resources',
+    'name': _('All Resources'),
+    'description': _("A collection of all the resources of this project (auto-managed by Transifex)")}
+
 class Release(models.Model):
 
     """
@@ -89,8 +98,6 @@ class Release(models.Model):
         get_latest_by = 'created'
 
     def save(self, *args, **kwargs):
-        import markdown
-        from cgi import escape
         desc_escaped = escape(self.long_description)
         self.long_description_html = markdown.markdown(desc_escaped)
         created = self.created

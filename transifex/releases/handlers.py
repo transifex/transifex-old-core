@@ -1,13 +1,9 @@
 from django.db.models import (get_model, signals)
 from django.utils.translation import ugettext_lazy as _
 from transifex.resources.models import Resource
+from transifex.releases.models import RELEASE_ALL_DATA
 
 Release = get_model('releases', 'Release')
-
-RELEASE_DATA = {
-    'slug': 'all-resources',
-    'name': _('All Resources'),
-    'description': _('An auto-managed release containing all resources.')}
 
 def release_all_push(sender, instance, **kwargs):
     """
@@ -24,9 +20,9 @@ def release_all_push(sender, instance, **kwargs):
     created = kwargs['created']
     if created:
         rel, rel_created = resource.project.releases.get_or_create(
-            slug=RELEASE_DATA['slug'],
-            defaults={'name': RELEASE_DATA['name'],
-                      'description': RELEASE_DATA['description'],})
+            slug=RELEASE_ALL_DATA['slug'],
+            defaults={'name': RELEASE_ALL_DATA['name'],
+                      'description': RELEASE_ALL_DATA['description'],})
         rel.resources.add(resource)
 
 
@@ -41,7 +37,7 @@ def release_all_pop(sender, instance, **kwargs):
     """
 
     resource = instance
-    rel = resource.project.releases.get(slug=RELEASE_DATA['slug'])
+    rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
     rel.resources.remove(resource)
     if not rel.resources.count():
         rel.delete()
