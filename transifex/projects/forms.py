@@ -13,7 +13,10 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from transifex.projects.models import Project
 from transifex.projects.signals import project_access_control_form_start
-from transifex.releases.models import Release
+from transifex.releases.models import Release, RELEASE_ALL_DATA
+
+# List of slugs which are reserved and should not be used by users.
+RESERVED_RELEASE_SLUGS = [RELEASE_ALL_DATA['slug']]
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
@@ -152,4 +155,9 @@ class ReleaseForm(forms.ModelForm):
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
 
-
+    def clean_slug(self):
+        """Ensure that reserved slugs are not used."""
+        slug = self.cleaned_data['slug']
+        if slug in RESERVED_RELEASE_SLUGS:
+            raise ValidationError(_("This value is reserved and cannot be used."))
+        return slug

@@ -142,3 +142,12 @@ class AllReleaseTests(base.BaseTestCase):
         self.assertFalse(self.res2 in
             self.project.releases.get(slug='all-resources').resources.all())
 
+    def test_reserved_slug(self):
+        resp = self.client['maintainer'].post('/projects/p/project1/add-release/', {'slug': 'all-resources', 'project': '1', 'name': 'test', })
+        self.assertContains(resp, "value is reserved")
+        # Still at the right URL
+        self.assertContains(resp, "Add a release")
+
+        resp = self.client['maintainer'].post('/projects/p/project1/add-release/', {'slug': 'foobar', 'project': '1', 'name': 'test', })
+        self.assertNotContains(resp, "value is reserved")
+
