@@ -140,7 +140,12 @@
 
   <div id="footer">{% block footer %}
     <p class="main-footer center">
-      {% block footerlinks %}<a href="http://trac.transifex.org/wiki/About" title="{% trans "Learn more about Transifex" %}">{% trans "About" %}</a> | <a href="{% url contact_form %}" title="{% trans "Drops us a line" %}">{% trans "Feedback" %}</a>{% endblock %}
+      {% block footerlinks %}
+        <a href="http://trac.transifex.org/wiki/About" title="{% trans "Learn more about Transifex" %}">{% trans "About" %}</a>
+        {% if settings.ENABLE_CONTACT_FORM %}
+          | <a href="{% url contact_form %}" title="{% trans "Drops us a line" %}">{% trans "Feedback" %}</a>
+        {% endif %}
+      {% endblock %}
     </p>
     {% block powered %}<p class="powered">{% blocktrans %}Powered by <a href="http://transifex.org/" title="Transifex community">Transifex</a>, the Open Translation Platform{% endblocktrans %}</p>{% endblock %}
     {% block txversionblock %}<p class="version">v{% txversion_full %} </p>{% endblock %}
