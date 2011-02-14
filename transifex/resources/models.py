@@ -632,7 +632,7 @@ class RLStats(models.Model):
 
     @property
     def total(self):
-        return self.resource.total_entities
+        return self.translated + self.untranslated
 
     @property
     def untranslated_wordcount(self):
@@ -646,7 +646,7 @@ class RLStats(models.Model):
     def _calculate_perc(self):
         """Update normalized percentage statistics fields."""
         try:
-            total = self.resource.total_entities
+            total = self.total
             self.translated_perc = self.translated * 100 / total
             self.untranslated_perc = 100 - self.translated_perc
         except ZeroDivisionError:
