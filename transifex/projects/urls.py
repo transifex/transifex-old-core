@@ -37,10 +37,10 @@ feeds = {
 
 # Used only in urls already under projects/, such as this one and
 # resources/urls.py. For addons, use PROJECT_URL instead.
-PROJECT_URL_PARTIAL = 'p/(?P<project_slug>[-\w]+)/'
+PROJECT_URL_PARTIAL = '^p/(?P<project_slug>[-\w]+)/'
 
-# Full URL (including /projects/ prefix)
-PROJECT_URL = PROJECTS_URL + PROJECT_URL_PARTIAL
+# Full URL (including /projects/ prefix). The ^ on ^p/ must be escaped.
+PROJECT_URL = PROJECTS_URL + PROJECT_URL_PARTIAL[1:]
 
 #TODO: Temporary until we import view from a common place
 urlpatterns = patterns('',

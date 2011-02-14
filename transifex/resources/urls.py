@@ -17,8 +17,9 @@ urlpatterns = patterns('',
 # Resource-specific URLs:
 # URL relative to the projects app (no '/projects' prefix)
 RESOURCE_URL_PARTIAL = PROJECT_URL_PARTIAL + r'resource/(?P<resource_slug>[-\w]+)/'
-# URL which should be used from other addons (full with prefix)
-RESOURCE_URL = PROJECTS_URL + RESOURCE_URL_PARTIAL
+# URL which should be used from other addons (full with prefix). The ^ on ^p/
+# must be escaped.
+RESOURCE_URL = PROJECTS_URL + RESOURCE_URL_PARTIAL[1:]
 
 # URL relative to the projects app (no '/projects' prefix)
 RESOURCE_LANG_URL_PARTIAL = RESOURCE_URL_PARTIAL + r'l/(?P<lang_code>[\-_@\w]+)/'
