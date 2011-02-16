@@ -241,6 +241,7 @@ class Handler(object):
         try:
             strings_added = 0
             strings_updated = 0
+            strings_deleted = 0
             for j in self.stringset.strings:
                 # Check SE existence
                 try:
@@ -305,6 +306,7 @@ class Handler(object):
             return 0,0
         else:
             if is_source:
+                strings_deleted = len(original_sources)
                 t, created = Template.objects.get_or_create(resource = self.resource)
                 t.content = self.template
                 t.save()
@@ -353,11 +355,9 @@ class Handler(object):
 
             self._post_save2db(is_source , user, overwrite_translations)
 
-            # Invalidate cache after saving file
-            invalidate_stats_cache(self.resource, self.language, user=user)
-
-
-            if strings_added + strings_updated > 0:
+            if strings_added + strings_updated + strings_deleted > 0:
+                # Invalidate cache after saving file
+                invalidate_stats_cache(self.resource, self.language, user=user)
 
                 if self.language == self.resource.source_language:
                     nt = 'project_resource_changed'

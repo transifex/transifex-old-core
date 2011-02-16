@@ -28,7 +28,7 @@ from transifex.txcommon.log import logger
 
 from transifex.resources.forms import ResourceForm
 from transifex.resources.models import Translation, Resource, RLStats
-from transifex.resources.handlers import invalidate_stats_cache
+from transifex.resources.handlers import invalidate_object_templates
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
@@ -128,8 +128,10 @@ def resource_edit(request, project_slug, resource_slug):
         if resource_form.is_valid() and url_form.is_valid():
             urlinfo = url_form.save(commit=False)
             resource_new = resource_form.save(user=request.user)
+            resource_new.save()
             urlinfo.resource = resource_new
-            invalidate_stats_cache(resource_new, resource_new.source_language, user=request.user)
+            invalidate_object_templates(resource_new,
+                resource_new.source_language)
             if urlinfo.source_file_url:
                 try:
                     urlinfo.update_source_file(fake=True)

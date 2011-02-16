@@ -44,7 +44,14 @@ def invalidate_stats_cache(resource, language, **kwargs):
         resource.update_total_entities(save=False)
         resource.update_wordcount(save=True)
 
-    if is_source:
+    invalidate_object_templates(resource, language, **kwargs)
+
+def invalidate_object_templates(resource, language, **kwargs):
+    """
+    Invalidate all template level caches related to a specific object
+    """
+
+    if language == resource.source_language:
         langs = resource.available_languages
     else:
         langs = [language]
