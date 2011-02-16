@@ -334,16 +334,33 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             if(textarea.hasClass('default_translation')){
               id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }else{
-              id = parseInt(textarea.siblings('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+              id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
+
+            /* Auto-save should be called only if either all textareas are 
+               filled in or when none of them for an entry are filled. This
+               is mostly helpful in cases of plural entries */
+            var textareas_filled = 0
+            var textareas = textarea.parents('td.trans').find('textarea')
+            textareas.each(function(index) {
+                if ( this.value != "") 
+                    textareas_filled += 1;
+            });
+            if ( textareas_filled == textareas.length || textareas_filled == 0 )
+                must_push = true
+            else
+                must_push = false
+
+
             string = this_stringset.strings[id];
-            if (string.modified) {
+            if ( string.modified && must_push ) {
                 /* add timeout and then submit. using the id, this timeout can be canceled */
                 $.doTimeout(id.toString(), 1, function(){
                     /* push the string to server */
                     this_stringset.push(string);
                 });
             }
+
         });
     }
 
