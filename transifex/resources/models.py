@@ -36,8 +36,10 @@ def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
     class AggregatedRLStats(object):
         pass
 
-    grouped_rlstats = groupby(rlstats_query.order_by(grouping_key),
-        key=operator.attrgetter(grouping_key))
+    # Here grouping happens by the grouping_key. If it's a foreign key
+    # (resource, language) you have to make sure that __unicode__() method
+    # returns something unique per key.
+    grouped_rlstats = groupby(rlstats_query, key=operator.attrgetter(grouping_key))
 
     for key, rlstats in grouped_rlstats:
         stats = AggregatedRLStats()
@@ -571,7 +573,11 @@ class RLStatsQuerySet(models.query.QuerySet):
         total = Resource.objects.filter(releases=release).aggregate(
             total=Sum('total_entities'))['total']
 
-        return _aggregate_rlstats(self.by_release(release), 'language', total)
+        # In order to do grouping by language, we first need to order by
+        # language. We use language__code just to be safe and not depend on the
+        # __unicode__ method of the language object
+        return _aggregate_rlstats(self.by_release(release).order_by('language__code'),
+            'language', total)
 
     def by_project_aggregated(self, project):
         """
@@ -582,8 +588,13 @@ class RLStatsQuerySet(models.query.QuerySet):
         total = Resource.objects.filter(project=project).aggregate(
             total=Sum('total_entities'))['total']
 
-        return _aggregate_rlstats(self.by_project(project), 'resource', total)
-
+        # In order to do grouping by resource we first need to order by
+        # resource. We use resource__slug just to be safe and not depend on the
+        # __unicode__ method of the resource object. Maybe this should be
+        # changed to use resource.id or something that is truly unique instead
+        # of the slug?
+        return _aggregate_rlstats(self.by_project(project).order_by('resource__slug'),
+            'resource', total)
 
 class RLStats(models.Model):
     """
