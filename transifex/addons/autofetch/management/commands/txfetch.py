@@ -64,7 +64,7 @@ class Command(LabelCommand):
                     ( handler.resource.project.slug, handler.resource.slug) )
                 sys.stderr.write("Exception was: %s\n" % e)
                 if skip:
-                    pass
+                    continue
                 sys.stderr.write("Aborting...\n")
                 sys.exit(1)
             else:
