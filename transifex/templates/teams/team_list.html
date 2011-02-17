@@ -1,6 +1,5 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
-{% load pagination_tags %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
@@ -39,7 +38,6 @@
 
 {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
 {% if teamrequests %}
-{% autopaginate teamrequests 20 %}
 <div class="list">
 <h4>{% trans "List of team requests:" %}</h4>
 <ul>
@@ -61,7 +59,6 @@
     </li>
 {% endfor %}
 </ul>
-<div class="pagination bottom">{% paginate %}</div>
 </div>
 {% endif %}
 {% endwith %}
@@ -69,7 +66,6 @@
 
 {% with project.team_set.all|dictsort:"language.name" as teams %}
 {% if teams %}
-{% autopaginate teams 20 %}
 <div class="list">
 <h4>{% trans "List of available teams:" %}</h4>
 <ul>
@@ -87,7 +83,6 @@
     </li>
 {% endfor %}
 </ul>
-<div class="pagination bottom">{% paginate %}</div>
 </div>
 {% else %}
 <p>{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
