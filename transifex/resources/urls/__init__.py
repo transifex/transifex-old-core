@@ -35,8 +35,6 @@ urlpatterns += patterns('',
     # Resources-Lang
     url(RESOURCE_LANG_URL_PARTIAL+'delete_all/$',
         resource_translations_delete, name='resource_translations_delete'),
-    url(RESOURCE_URL_PARTIAL+r'l/(?P<target_lang_code>[\-_@\w]+)/actions/$',
-        resource_actions, name='resource_actions'),
     url(RESOURCE_LANG_URL_PARTIAL+'download/$',
         get_translation_file, name='download_translation'),
     url(RESOURCE_LANG_URL_PARTIAL+'lock_and_download/$',
