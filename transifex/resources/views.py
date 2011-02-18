@@ -28,7 +28,8 @@ from transifex.txcommon.log import logger
 
 from transifex.resources.forms import ResourceForm
 from transifex.resources.models import Translation, Resource, RLStats
-from transifex.resources.handlers import invalidate_object_templates
+from transifex.resources.handlers import (invalidate_object_templates,
+    invalidate_stats_cache)
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
