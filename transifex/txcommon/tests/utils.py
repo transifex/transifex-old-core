@@ -131,3 +131,83 @@ def convert_url_roles(url_with_roles_as_key):
             url_keys.update({url:user_roles_dict})
     return url_keys
 
+
+COLORS = ['BLACK', 'RED', 'GREEN', 'YELLOW', 'BLUE', 'MAGENTA', 'CYAN', 'WHITE']
+
+def color_text(text, color_name, bold=False):
+    """
+    This command can be used to colorify command line output. If the shell
+    doesn't support this or the --disable-colors options has been set, it just
+    returns the plain text.
+
+    Usage:
+        print "%s" % color_text("This text is red", "RED")
+    """
+    return '\033[%s;%sm%s\033[0m' % (
+        int(bold), COLORS.index(color_name) + 30, text)
+
+def grep(haystack, needle, ln=0, color=None):
+    """Highlight needle in haystack and return a few lines around it.
+    
+    Mimic UNIX's grep method. Search for a string (needle) in a text chunk
+    (haystack).
+    
+    Return a list of matches. Each match will have ln number of lines
+    before and after it (similar to "grep -C NUM"). The matching line will be
+    highlighted with a color from a pre-defined list.
+    
+    Examples:
+
+    >>> grep('a\nb\na1\na2\na3', 'b', 0)
+    ['b']
+    >>> grep('a\nb\na1\na2\na3', 'b', 1)
+    ['a\nb\na1']
+    >>> grep('a\nb\na1\na2\na3', 'b', 3)
+    ['a\nb\na1\na2\na3']
+    >>> grep('a\nb\na1\na2\na3', 'b', 3, 'RED')
+    ['a\n\x1b[0;31mb\x1b[0m\na1\na2\na3']
+    >>> grep('a\nb\na1\na2\na3', 'a')
+    ['a', 'a1', 'a2', 'a3']
+    >>> grep('a\nb\na1\na2\na3', 'a', 1)
+    ['a\nb', 'b\na1\na2', 'a1\na2\na3', 'a2\na3']
+
+    """
+
+    #TODO: Merge two overlapping matches together.
+    #TODO: Grep for more than one possible string (joined with logical OR).
+    ret = []
+    lines = haystack.split()
+    for i, line in enumerate(lines):
+        if needle in line:
+            # Before
+            first_possible = i-ln
+            start = first_possible if first_possible >= 0 else 0
+            before = '\n'.join(lines[start:i])
+            # After
+            last_possible = len(lines)
+            end = i+1+ln if i+1+ln <= last_possible else last_possible
+            after = '\n'.join(lines[i+1:end])
+            # Let's join them with newlines if needed.
+            txt = '%(before)s%(match)s%(after)s' % {
+                'before': before + '\n' if before else '',
+                'match': color_text(lines[i], color) if color else lines[i],
+                'after': '\n' + after if after else ''}
+            ret.append(txt)
+    return ret
+
+def highlight_grep(resp, text, context=2):
+    """Highlight matches of text in response.content and print them.
+    
+    Particularly useful in tests with the django client to find some string
+    in the response body. For example::
+    
+    >>> from txcommon.tests.utils import highlight_grep
+    >>> resp = self.client.get(reverse('myUrlName', args=['foo']))
+    >>> highlight_grep("SearchMe!")
+    """
+    
+    res = grep(resp.content, text, context, 'RED')
+    print ("\n===== Matches =====================================\n" +
+           "\n---------------------------------------------------\n".join(res) +
+           "\n===================================================\n")
+
