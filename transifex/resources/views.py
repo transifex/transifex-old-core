@@ -388,10 +388,12 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
     i18n_method = settings.I18N_METHODS[resource.i18n_type]
     response = HttpResponse(template,
         mimetype=i18n_method['mimetype'])
-    response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
-        smart_unicode(resource.name), language.code,
-        i18n_method['file-extensions'].split(', ')[0]))
-
+    _filename = "%(proj)s_%(res)s_%(lang)s%(type)s" % {
+        'proj': smart_unicode(resource.project.slug),
+        'res': smart_unicode(resource.slug),
+        'lang': language.code,
+        'type': i18n_method['file-extensions'].split(', ')[0]}
+    response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 
 # Restrict access only to : (The checks are done in the view's body)
