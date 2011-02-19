@@ -211,3 +211,36 @@ def highlight_grep(resp, text, context=2):
            "\n---------------------------------------------------\n".join(res) +
            "\n===================================================\n")
 
+def response_in_browser(resp, halt=True):
+    """Open a browser and render the response's content.
+    
+    Use it in tests to visually present the response and find what you need
+    with your browser's super tools such as 'View Source' and 'Inspect Element'.
+    
+    The browser will not render static media (eg. CSS). To achieve this, run
+    a separate Django server and setup your static serving variable to an
+    absolute URI (e.g. STATIC_URL = 'http://localhost:8000/site_media/).
+    This will trick the temporary window to show the test's HTML with the
+    static files served from the server.
+    
+    Call it as follows::
+    
+    >>> from txcommon.tests.utils import response_in_browser
+    >>> resp = self.client.get(reverse('myUrlName', args=['foo']))
+    >>> response_in_browser(resp)
+    
+    More info http://miniblog.glezos.com/post/3388080372/tests-browser
+
+    """
+
+    import tempfile, webbrowser, time
+    with tempfile.NamedTemporaryFile() as f:
+        f.write(resp.content)
+        f.flush()
+        webbrowser.open(f.name)
+        if halt:
+            raw_input("Press a key to continue with your tests...")
+        else:
+            # Wait a bit to give the chance to the browser to open the file.
+            time.sleep(1)
+
