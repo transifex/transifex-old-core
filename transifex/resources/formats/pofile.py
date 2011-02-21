@@ -176,6 +176,10 @@ class POHandler(Handler):
         # Update PO file headers
         po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
         po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
+        # The above doesn't change the charset of the actual object, so we
+        # need to do it for the pofile object as well.
+        po.encoding = "UTF-8"
+
         po.metadata['PO-Revision-Date'] = (datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000").encode("utf-8"))
         po.metadata['Plural-Forms'] = ("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)).encode("utf-8")
         # The following is in the specification but isn't being used by po
