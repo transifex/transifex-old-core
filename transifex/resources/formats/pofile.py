@@ -206,6 +206,8 @@ class POHandler(Handler):
             u = stat[0].last_committer
             po.metadata['Last-Translator'] = ("%s <%s>" %
                 (u.get_full_name() or u.username , u.email)).encode("utf-8")
+            po.metadata['PO-Revision-Date'] = ( stat[0].last_update.strftime(
+                "%Y-%m-%d %H:%M+0000").encode("utf-8") )
 
         for entry in po:
             if entry.msgid_plural:
