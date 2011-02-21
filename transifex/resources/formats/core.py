@@ -251,6 +251,14 @@ class Handler(object):
                         resource = self.resource
                     )
                     if is_source:
+                        # If it's a source file, we need to update source
+                        # string attributes.
+                        se.flags = j.flags or ""
+                        se.pluralized = j.pluralized
+                        se.developer_comment = j.comment or ""
+                        se.occurrences = j.occurrences
+                        se.save()
+                        strings_updated += 1
                         try:
                             original_sources.remove(se)
                         except ValueError:
