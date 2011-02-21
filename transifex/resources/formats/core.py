@@ -258,7 +258,6 @@ class Handler(object):
                         se.developer_comment = j.comment or ""
                         se.occurrences = j.occurrences
                         se.save()
-                        strings_updated += 1
                         try:
                             original_sources.remove(se)
                         except ValueError:
