@@ -27,8 +27,8 @@ class Migration(DataMigration):
 
             new_hash = se.string_hash
 
-            template = Template.objects.get(resource=se.resource)
-            template.content = re.sub(old_hash, new_hash, template.content)
+            template = orm.Template.objects.get(resource=se.resource)
+            template.content = re.sub(str(old_hash), str(new_hash), template.content)
             template.save()
 
     def backwards(self, orm):
@@ -37,7 +37,7 @@ class Migration(DataMigration):
             old_hash = se.string_hash
             se.save()
             new_hash = se.string_hash
-            template = Template.objects.get(resource=se.resource)
+            template = orm.Template.objects.get(resource=se.resource)
             template.content = re.sub(old_hash, new_hash, template.content)
             template.save()
 

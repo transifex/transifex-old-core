@@ -24,11 +24,8 @@ class Migration(DataMigration):
                     t.save()
 
                 new_hash = s.string_hash
-                if type(template.content) == str:
-                    content = unicode(template.content.decode('utf-8'))
-                else:
-                    content = template.content
-                template.content = re.sub(old_hash, new_hash, content)
+                template.content = re.sub(str(old_hash), str(new_hash),
+                    template.content)
             template.save()
 
     def backwards(self, orm):

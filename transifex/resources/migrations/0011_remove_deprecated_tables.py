@@ -34,7 +34,8 @@ class Migration(DataMigration):
             try:
                 db.delete_table(table, cascade=True)
             except Exception,e:
-                print "Could not delete table %s: %s." % (table, e)
+                # don't really need notifications abou this.
+                pass
 
     def backwards(self, orm):
         "Write your backwards methods here."
