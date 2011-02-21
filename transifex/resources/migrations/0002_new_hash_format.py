@@ -11,7 +11,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        for se in SourceEntity.objects.all():
+        for se in orm.SourceEntity.objects.all():
             old_hash = se.string_hash
             try:
                 if se.context == 'None' or not se.context:
@@ -33,7 +33,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        for se in SourceEntity.objects.all():
+        for se in orm.SourceEntity.objects.all():
             old_hash = se.string_hash
             se.save()
             new_hash = se.string_hash

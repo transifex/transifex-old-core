@@ -37,8 +37,8 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         count = 0
-        total = Translation.objects.all().count()
-        for t in queryset_iterator(Translation.objects.all()):
+        total = orm.Translation.objects.all().count()
+        for t in queryset_iterator(orm.Translation.objects.all()):
             sys.stderr.write('\r %d / %d' % (count, total))
             t.save()
             count += 1

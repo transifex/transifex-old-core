@@ -3,19 +3,27 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
+
 from transifex.resources.models import Resource
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        for r in Resource.objects.all():
-            r.update_total_entities()
-            r.update_wordcount()
-
+        for r in orm.Resource.objects.all():
+            total_entities_ids = orm.SourceEntity.objects.filter(
+                resource=r).values('id')
+            r.total_entities = total_entities_ids.count()
+            wc = 0
+            for t in orm.Translation.objects.filter(source_entity__id__in=
+              total_entities_ids, language=r.source_language):
+                wc += len(t.string.split(None))
+            r.wordcount = wc
+            r.save()
 
     def backwards(self, orm):
         "Write your backwards methods here."
+        pass
 
 
     models = {
