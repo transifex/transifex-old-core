@@ -68,5 +68,5 @@ class Command(LabelCommand):
                 sys.stderr.write("Aborting...\n")
                 sys.exit(1)
             else:
-               sys.stderr.write("Updated source file for resource %s.%s\n" %
+               sys.stdout.write("Updated source file for resource %s.%s\n" %
                     (handler.resource.project.slug, handler.resource.slug))
