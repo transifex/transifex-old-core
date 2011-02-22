@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 19:49+0000\n"
-"PO-Revision-Date: 2011-01-27 19:31+0000\n"
-"Last-Translator: toniher <toniher@softcatala.cat>\n"
+"POT-Creation-Date: 2011-02-22 19:26+0000\n"
+"PO-Revision-Date: 2011-02-22 00:05+0000\n"
+"Last-Translator: rbuj <robert.buj@gmail.com>\n"
 "Language-Team: Catalan <None>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -58,23 +58,23 @@ msgstr "DATETIME_FORMAT"
 msgid "No changes."
 msgstr "Sense canvis."
 
-#: addons/autofetch/models.py:16
+#: addons/autofetch/models.py:18
 msgid "Source file URL"
 msgstr "URL del fitxer font"
 
-#: addons/autofetch/models.py:18
+#: addons/autofetch/models.py:20
 msgid ""
 "A URL pointing to the source file of this resource to be used for automatic "
 "updates."
 msgstr ""
-"Un URL que apunta al fitxer font d'aquest recurs per a ser utilitzat en les "
-"actualitzacions automàtiques."
+"Una adreça URL que apunta al fitxer font d'aquest recurs per a utilitzar-se "
+"en les actualitzacions automàtiques."
 
-#: addons/autofetch/models.py:20
+#: addons/autofetch/models.py:22
 msgid "Automatically update source file"
 msgstr "Actualitza el fitxer font de forma automàtica"
 
-#: addons/autofetch/models.py:21
+#: addons/autofetch/models.py:23
 msgid ""
 "A boolean field indicating whether the file should be automatically updated "
 "by pulling and merging from the given URL."
@@ -82,30 +82,30 @@ msgstr ""
 "Un camp booleà que indica si el fitxer ha de ser automàticament agafat i "
 "unit des de l'adreça donada."
 
-#: addons/autofetch/models.py:26 resources/models.py:326
+#: addons/autofetch/models.py:28 resources/models.py:328
 #: templates/projects/release_language_detail.html:64
 #: templates/projects/release_language_detail.html:195
 #: templates/teams/team_detail.html:140
 msgid "Resource"
 msgstr "Recurs"
 
-#: addons/autofetch/models.py:28
+#: addons/autofetch/models.py:30
 msgid "The translation resource."
-msgstr "El recurs de traducció."
+msgstr "El recurs de la traducció."
 
-#: addons/autofetch/models.py:31
+#: addons/autofetch/models.py:33
 msgid "url handler"
 msgstr "gestor d'enllaços"
 
-#: addons/autofetch/views.py:24
+#: addons/autofetch/views.py:25
 msgid "URL not set for this resource."
 msgstr "No s'ha definit cap URL per a aquest recurs"
 
-#: addons/autofetch/views.py:29
+#: addons/autofetch/views.py:30
 msgid "Error updating source file."
 msgstr "Ha ocorregut un error mentre s'actualitzava el fitxer font."
 
-#: addons/autofetch/views.py:34
+#: addons/autofetch/views.py:35
 msgid "Source file updated successfully."
 msgstr "El fitxer font s'ha actualitzat correctament."
 
@@ -124,9 +124,9 @@ msgid ""
 "Display your project's translation statistics on your own website as a "
 "simple image. Perfect for embedding in wiki pages, Trac instances, and email."
 msgstr ""
-"Mostra les estadístiques del vostre projecte de traducció com una simple "
-"imatge. Ideal per a empotrar en pàgines wiki, instàncies Trac i correu "
-"electrònic."
+"Mostreu amb una imatge senzilla les estadístiques del vostre projecte de "
+"traducció al vostre propi lloc web. Perfectes per a incrustar-se en pàgines "
+"wiki, instàncies Trac i correus electrònics."
 
 #: addons/charts/templates/charts/widget_snippet.html:69
 msgid "The chart will always report live Transifex numbers."
@@ -135,7 +135,7 @@ msgstr "Les gràfiques sempre informen de dades del Transifex en viu."
 #: addons/charts/templates/charts/widget_snippet.html:70
 #: addons/charts/templates/charts/widget_snippet.html:101
 msgid "Show code snippet for resource:"
-msgstr "Mostra un retall de codi per al recurs:"
+msgstr "Mostra la porció del codi per al recurs:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
@@ -256,15 +256,15 @@ msgstr "desbloqueja"
 
 #: addons/locks/templates/lock_resource_action.html:28
 msgid "Click to renew your lock for a fresh period of time."
-msgstr "Feu clic per a renovar el bloqueig per un nou període de temps."
+msgstr "Cliqueu per renovar el bloqueig amb un nou interval de temps."
 
 #: addons/locks/templates/lock_resource_action.html:29
 #: addons/locks/templates/pofile_lock.html:31
 #, python-format
 msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
-msgstr[0] "Extend el bloqueig per %(hours)s hora."
-msgstr[1] "Extend el bloqueig per a %(hours)s hores."
+msgstr[0] "Amplia el bloqueig durant %(hours)s hora més."
+msgstr[1] "Amplia el bloqueig durant %(hours)s hores més."
 
 #: addons/locks/templates/lock_resource_action.html:38
 msgid "Lock this translation to notify others you're working with it."
@@ -276,8 +276,8 @@ msgstr ""
 msgid ""
 "This translation isn't locked. Most likely no one is working on it right now."
 msgstr ""
-"La traducció no està bloquejada. Sembla que no hi està treballant ningú "
-"actualment."
+"La traducció no està bloquejada. Sembla que actualment ningú no hi estigui "
+"treballant."
 
 #: addons/locks/templates/lock_resource_action.html:56
 msgid "Creating lock..."
@@ -289,7 +289,7 @@ msgstr "S'està eliminant el bloqueig..."
 
 #: addons/locks/templates/lock_resource_action.html:101
 msgid "Extending lock..."
-msgstr "S'està estenent bloqueig..."
+msgstr "S'està ampliant el bloqueig..."
 
 #: addons/locks/templates/pofile_lock.html:19
 #, python-format
@@ -298,7 +298,7 @@ msgstr "L'usuari '%(owner)s' ha bloquejat aquest fitxer."
 
 #: addons/locks/templates/pofile_lock.html:21
 msgid "Click file to unlock."
-msgstr "Feu clic al fitxer per a desbloquejar-lo."
+msgstr "Cliqueu al fitxer per a desbloquejar-lo."
 
 #: addons/locks/templates/pofile_lock.html:23
 msgid "Time left:"
@@ -367,7 +367,7 @@ msgid ""
 "Cannot save unless plural translations are either completely filled or "
 "entirely empty!"
 msgstr ""
-"No es pot desar les traduccions del plural mentre no s'hagin traduït "
+"No es pot desar a menys que les traduccions en plural s'hagin traduït "
 "completament."
 
 #: addons/lotte/views.py:545
@@ -384,18 +384,22 @@ msgstr ""
 "original."
 
 #: addons/lotte/views.py:564
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The following url is either missing form the translation os has been "
+"The following url is either missing from the translation or has been "
 "translated: '%s'."
 msgstr ""
+"La següent url o bé ja no hi és en la traducció o bé ja ha estat traduïda: "
+"'%s'."
 
 #: addons/lotte/views.py:576
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The following email is either missing form the translation os has been "
+"The following email is either missing from the translation or has been "
 "translated: '%s'."
 msgstr ""
+"La següent adreça de correu electrònic o bé ja no hi és en la traducció o bé "
+"ja ha estat traduïda: '%s'."
 
 #: addons/lotte/views.py:587
 msgid "Translation must start with a newline (\\n)"
@@ -467,7 +471,7 @@ msgid "by %(user)s"
 msgstr "per %(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:209
+#: addons/lotte/templates/translate.html:225
 msgid "Key"
 msgstr "Clau"
 
@@ -499,7 +503,7 @@ msgid "Comment:"
 msgstr ""
 
 #: addons/lotte/templates/lotte_details_snippet.html:25
-#: resources/models.py:304
+#: resources/models.py:306
 msgid "Occurrences"
 msgstr "Ocurrències"
 
@@ -525,106 +529,106 @@ msgstr "Projectes"
 msgid "Translate to %(lang)s"
 msgstr "Tradueix a %(lang)s"
 
-#: addons/lotte/templates/translate.html:117
+#: addons/lotte/templates/translate.html:133
 #: addons/lotte/templates/view_strings.html:38
 msgid "Processing..."
 msgstr "S'està processant"
 
-#: addons/lotte/templates/translate.html:118
+#: addons/lotte/templates/translate.html:134
 #: addons/lotte/templates/view_strings.html:39
 msgid "Show _MENU_ entries"
-msgstr "Mostra les entrades _MENU_"
+msgstr "Mostra _MENU_ entrades"
 
-#: addons/lotte/templates/translate.html:119
+#: addons/lotte/templates/translate.html:135
 #: addons/lotte/templates/view_strings.html:40
 msgid "No matching records found"
 msgstr "No s'han trobat entrades concordants"
 
-#: addons/lotte/templates/translate.html:120
+#: addons/lotte/templates/translate.html:136
 #: addons/lotte/templates/view_strings.html:41
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr "Mostrant entrades _START_ to _END_ de _TOTAL_"
+msgstr "Mostrant les entrades _START_ a _END_ de les _TOTAL_"
 
-#: addons/lotte/templates/translate.html:121
+#: addons/lotte/templates/translate.html:137
 #: addons/lotte/templates/view_strings.html:42
 msgid "Nothing to show"
 msgstr "No hi ha res a mostrar"
 
-#: addons/lotte/templates/translate.html:122
+#: addons/lotte/templates/translate.html:138
 #: addons/lotte/templates/view_strings.html:43
 msgid "(filtered from _MAX_ total entries)"
-msgstr "(filtrades de _MAX_ entrades)"
+msgstr "(filtrades de les _MAX_ entrades)"
 
-#: addons/lotte/templates/translate.html:124
+#: addons/lotte/templates/translate.html:140
 #: addons/lotte/templates/view_strings.html:45
 msgid "Search:"
 msgstr "Cercar:"
 
-#: addons/lotte/templates/translate.html:127
+#: addons/lotte/templates/translate.html:143
 #: addons/lotte/templates/view_strings.html:48
 msgid "First"
 msgstr "Primer"
 
-#: addons/lotte/templates/translate.html:128
+#: addons/lotte/templates/translate.html:144
 #: addons/lotte/templates/view_strings.html:49
 msgid "Previous"
 msgstr "Anterior"
 
-#: addons/lotte/templates/translate.html:129
+#: addons/lotte/templates/translate.html:145
 #: addons/lotte/templates/view_strings.html:50
 msgid "Next"
 msgstr "Següent"
 
-#: addons/lotte/templates/translate.html:130
+#: addons/lotte/templates/translate.html:146
 #: addons/lotte/templates/view_strings.html:51
 msgid "Last"
 msgstr "Darrer"
 
-#: addons/lotte/templates/translate.html:164
-#: addons/lotte/templates/translate.html:169
+#: addons/lotte/templates/translate.html:180
+#: addons/lotte/templates/translate.html:185
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "Cadena original"
 
-#: addons/lotte/templates/translate.html:214
+#: addons/lotte/templates/translate.html:230
 msgid "details"
 msgstr "detalls"
 
-#: addons/lotte/templates/translate.html:217 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:233 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "suggeriments"
 
-#: addons/lotte/templates/translate.html:236
-#: addons/lotte/templates/translate.html:241
+#: addons/lotte/templates/translate.html:252
+#: addons/lotte/templates/translate.html:257
 msgid "Fill in a new translation"
 msgstr "Afegeix una nova traducció"
 
-#: addons/lotte/templates/translate.html:263
+#: addons/lotte/templates/translate.html:279
 msgid "auto translate"
 msgstr "traducció automàtica"
 
-#: addons/lotte/templates/translate.html:264
+#: addons/lotte/templates/translate.html:280
 msgid "copy source"
 msgstr "copia la font"
 
-#: addons/lotte/templates/translate.html:282
+#: addons/lotte/templates/translate.html:297
 #: addons/lotte/templates/view_strings.html:116
 msgid "Loading strings..."
 msgstr "S'estan carregant les cadenes..."
 
-#: addons/lotte/templates/translate.html:462
+#: addons/lotte/templates/translate.html:478
 msgid "Translation text will be saved automatically."
 msgstr "La traducció es desarà de forma automàtica."
 
-#: addons/lotte/templates/translate.html:466
+#: addons/lotte/templates/translate.html:482
 msgid "Translation text will no longer be saved automatically."
 msgstr "La traducció no es desarà de forma automàtica."
 
-#: addons/lotte/templates/translate.html:483
+#: addons/lotte/templates/translate.html:499
 msgid "This page does not have any translations (to delete)!"
 msgstr "Aquesta pàgina no té traduccions (per a esborrar)!"
 
-#: addons/lotte/templates/translate.html:484
+#: addons/lotte/templates/translate.html:500
 msgid ""
 "This action will delete all translations in this page. Are you sure you want "
 "to proceed?"
@@ -632,93 +636,93 @@ msgstr ""
 "Aquesta acció eliminarà totes les traduccions de la pàgina. Esteu segur que "
 "voleu procedir?"
 
-#: addons/lotte/templates/translate.html:674
+#: addons/lotte/templates/translate.html:690
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 "Cerca a la memòria de Transifex per a traduccions existents (usa una nova "
 "pestanya / finestra)"
 
-#: addons/lotte/templates/translate.html:675
+#: addons/lotte/templates/translate.html:691
 msgid "Search translations"
 msgstr "Cerca traduccions"
 
-#: addons/lotte/templates/translate.html:684
+#: addons/lotte/templates/translate.html:700
 msgid "Show translations in<br /> the selected languages"
 msgstr "Mostra les traduccions en<br />els idiomes seleccionats."
 
-#: addons/lotte/templates/translate.html:687
+#: addons/lotte/templates/translate.html:703
 msgid "More languages"
 msgstr "Més idiomes"
 
-#: addons/lotte/templates/translate.html:692
+#: addons/lotte/templates/translate.html:708
 msgid "Show only the translations<br /> by the selected users"
 msgstr "Només mostra les traduccions<br />dels usuaris seleccionats."
 
-#: addons/lotte/templates/translate.html:695
+#: addons/lotte/templates/translate.html:711
 msgid "Filter by users"
 msgstr "Filtra per usuaris"
 
-#: addons/lotte/templates/translate.html:701
+#: addons/lotte/templates/translate.html:717
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "Només mostra les traduccions<br />dels recursos seleccionats."
 
-#: addons/lotte/templates/translate.html:704
+#: addons/lotte/templates/translate.html:720
 msgid "Filter by resources"
 msgstr "Filtra per recursos"
 
-#: addons/lotte/templates/translate.html:716
+#: addons/lotte/templates/translate.html:732
 #: addons/lotte/templates/view_strings.html:178
 msgid "Translated"
 msgstr "Traduït"
 
-#: addons/lotte/templates/translate.html:724
+#: addons/lotte/templates/translate.html:740
 #: addons/lotte/templates/view_strings.html:186
 msgid "Untranslated"
 msgstr "Sense traduir"
 
-#: addons/lotte/templates/translate.html:731
+#: addons/lotte/templates/translate.html:747
 msgid "Modified"
 msgstr "Modificat"
 
-#: addons/lotte/templates/translate.html:736
+#: addons/lotte/templates/translate.html:752
 #: addons/lotte/templates/view_strings.html:193
 msgid "Total"
 msgstr "Total"
 
-#: addons/lotte/templates/translate.html:749
-#: addons/lotte/templates/view_strings.html:206 resources/models.py:442
+#: addons/lotte/templates/translate.html:765
+#: addons/lotte/templates/view_strings.html:206 resources/models.py:444
 msgid "Source String"
 msgstr "Cadena original"
 
-#: addons/lotte/templates/translate.html:750
+#: addons/lotte/templates/translate.html:766
 #: addons/lotte/templates/view_strings.html:207
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "Traducció"
 
-#: addons/lotte/templates/translate.html:758
+#: addons/lotte/templates/translate.html:774
 msgid "Save all"
 msgstr "Desa-ho tot"
 
-#: addons/lotte/templates/translate.html:761
+#: addons/lotte/templates/translate.html:777
 #: templates/resources/resource_actions.html:194
 msgid "Delete translations"
 msgstr "Elimina les traduccions"
 
-#: addons/lotte/templates/translate.html:763
+#: addons/lotte/templates/translate.html:779
 msgid "Save and Exit"
 msgstr "Desa i surt"
 
-#: addons/lotte/templates/translate.html:769
+#: addons/lotte/templates/translate.html:785
 msgid "General Settings"
 msgstr "Opcions generals"
 
-#: addons/lotte/templates/translate.html:774
+#: addons/lotte/templates/translate.html:790
 msgid "Verbose editing"
 msgstr "Edició en mode detallat"
 
-#: addons/lotte/templates/translate.html:778
+#: addons/lotte/templates/translate.html:794
 msgid "Auto save"
 msgstr "Desat automàtic"
 
@@ -746,8 +750,8 @@ msgstr "prioritat del recurs"
 msgid "resource priorities"
 msgstr "prioritats del recurs"
 
-#: addons/suggestions/models.py:19 resources/models.py:290
-#: resources/models.py:420
+#: addons/suggestions/models.py:19 resources/models.py:292
+#: resources/models.py:422
 msgid "String"
 msgstr "Cadena"
 
@@ -755,8 +759,8 @@ msgstr "Cadena"
 msgid "The actual string content of suggestion."
 msgstr "Suggerència de la cadena"
 
-#: addons/suggestions/models.py:21 resources/models.py:292
-#: resources/models.py:422
+#: addons/suggestions/models.py:21 resources/models.py:294
+#: resources/models.py:424
 msgid "String Hash"
 msgstr "Hash de cadenes"
 
@@ -784,11 +788,11 @@ msgstr "Entitat de l'origen"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "L'entitat original sobre la que aquesta suggerència tradueix o afecta."
 
-#: addons/suggestions/models.py:40 resources/models.py:448
+#: addons/suggestions/models.py:40 resources/models.py:450
 msgid "Target Language"
 msgstr "Idioma de destinació"
 
-#: addons/suggestions/models.py:41 resources/models.py:449
+#: addons/suggestions/models.py:41 resources/models.py:451
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "L'idioma in la que aquesta traducció s'ha escrit."
@@ -828,8 +832,8 @@ msgstr "Suggeriments d'usuaris"
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:201
 msgid "Vote up for this translation suggestion (click again to undo)."
 msgstr ""
-"Voteu a favor d'aquesta suggeriment de traducció (torneu a fer clic per a "
-"desfer)."
+"Voteu a favor d'aquesta suggeriment de traducció (cliqueu-ho un altre cop "
+"per desfer)."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:203
 msgid ""
@@ -840,8 +844,8 @@ msgstr ""
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:205
 msgid "Vote down for this translation suggestion (click again to undo)."
 msgstr ""
-"Voteu en contra d'aquest suggeriment de traducció (torneu a fer clic per a "
-"desfer)"
+"Voteu en contra d'aquest suggeriment de traducció (cliqueu-ho un altre cop "
+"per desfer)."
 
 #: addons/suggestions/templates/lotte_suggestions_snippet.html:210
 msgid "This is the currently accepted translation."
@@ -867,7 +871,7 @@ msgstr "Envia el suggeriment!"
 #: addons/timeline/templates/timeline/additional_account_links.html:3
 #: templates/userprofile/profile/overview.html:105
 msgid "My Timeline"
-msgstr "La meva línia temporal"
+msgstr "La meva cronologia"
 
 #: addons/timeline/templates/timeline/project.html:9
 #: addons/timeline/templates/timeline/timeline_project.html:15
@@ -877,7 +881,7 @@ msgstr "La meva línia temporal"
 #: templates/projects/project_timeline.html:14
 #: templates/txcommon/user_timeline.html:12
 msgid "Timeline"
-msgstr "Línia temporal"
+msgstr "Cronologia"
 
 #: addons/timeline/templates/timeline/timeline_base.html:12
 #: templates/timeline.html:11
@@ -887,7 +891,7 @@ msgstr "Resultats del filtre"
 #: addons/timeline/templates/timeline/timeline_base.html:18
 #: templates/timeline.html:17 templates/resources/resource_actions.html:110
 msgid "Go"
-msgstr "Vés"
+msgstr "Vés-hi"
 
 #: addons/timeline/templates/timeline/timeline_base.html:25
 #: templates/timeline.html:24 templates/teams/team_detail.html:303
@@ -908,7 +912,7 @@ msgstr[1] "La consulta ha tornat %(counter)s resultats"
 #: templates/txcommon/user_timeline.html:22
 #, python-format
 msgid "%(project_name)s Timeline"
-msgstr "Línia temporal de %(project_name)s"
+msgstr "Cronologia de %(project_name)s"
 
 #: addons/timeline/templates/timeline/timeline_user.html:16
 #: templates/simpleauth/base_profile.html:4
@@ -1046,7 +1050,7 @@ msgstr "Els idiomes parlats a %s."
 
 #: languages/models.py:53 languages/migrations/0001_initial.py:19
 #: languages/migrations/0002_added_rules_f.py:94 projects/models.py:118
-#: releases/models.py:33 resources/models.py:113
+#: releases/models.py:33 resources/models.py:115
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1247,12 +1251,12 @@ msgstr ""
 "Un projecte privat és visible només per a vostè i el seu equip. A més, els "
 "projects privats estan limitats segons plans d'accés per a la conta d'usuari."
 
-#: projects/models.py:115 releases/models.py:30 resources/models.py:110
+#: projects/models.py:115 releases/models.py:30 resources/models.py:112
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slug"
 
-#: projects/models.py:116 releases/models.py:31 resources/models.py:111
+#: projects/models.py:116 releases/models.py:31 resources/models.py:113
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -1542,7 +1546,7 @@ msgstr ""
 "La darrera data per a construir paquets per part dels desenvolupadors. "
 "Traduccions enviades amb posterioritat no seran incloses en aquesta versió."
 
-#: releases/models.py:65 resources/models.py:145 teams/models.py:35
+#: releases/models.py:65 resources/models.py:147 teams/models.py:35
 #: teams/models.py:111
 msgid "Project"
 msgstr "Projecte"
@@ -1585,89 +1589,89 @@ msgstr ""
 "Seleccioneu un fitxer del vostre sistema per a ser usat per omplir les "
 "traduccions d'aquest recurs."
 
-#: resources/models.py:114
+#: resources/models.py:116
 msgid "A descriptive name unique inside the project."
 msgstr "Un nom únic i descriptiu dins el projecte."
 
-#: resources/models.py:117
+#: resources/models.py:119
 msgid "Source file"
 msgstr "Fitxer origen"
 
-#: resources/models.py:119
+#: resources/models.py:121
 msgid "A local file used to extract the strings to be translated."
 msgstr "Un fitxer local del qual s'extrauran les cadenes a ser traduïdes."
 
-#: resources/models.py:121
+#: resources/models.py:123
 msgid "I18n type"
 msgstr "Tipus d'i18n"
 
-#: resources/models.py:123
+#: resources/models.py:125
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "El tipus del mètode i18n usat en aquest recurs (%s)"
 
-#: resources/models.py:125
+#: resources/models.py:127
 msgid "Accepting translations?"
 msgstr "Acceptant traduccions?"
 
-#: resources/models.py:127
+#: resources/models.py:129
 msgid "Is this resource accepting submissions of translations?"
 msgstr "Accepta aquest recurs l'enviament de traduccions?"
 
-#: resources/models.py:128
+#: resources/models.py:130
 #, fuzzy
 msgid "Total source entities"
-msgstr "Detalls del recurs de traducció"
+msgstr "Detalls del recurs de la traducció"
 
-#: resources/models.py:130
+#: resources/models.py:132
 #, fuzzy
 msgid "The number of source strings in this translation resource."
 msgstr "El projecte que conté el recurs de traducció."
 
-#: resources/models.py:132
+#: resources/models.py:134
 msgid "Number of words in source entities."
 msgstr ""
 
-#: resources/models.py:134
+#: resources/models.py:136
 #, fuzzy
 msgid ""
 "The number of words contained in the source entities in this translation "
 "resource."
 msgstr "El projecte que conté el recurs de traducció."
 
-#: resources/models.py:143
+#: resources/models.py:145
 msgid "Source Language"
 msgstr "Idioma original"
 
-#: resources/models.py:144
+#: resources/models.py:146
 msgid "The source language of this Resource."
 msgstr "Idioma original d'aquest recurs."
 
-#: resources/models.py:147
+#: resources/models.py:149
 msgid "The project containing the translation resource."
 msgstr "El projecte que conté el recurs de traducció."
 
-#: resources/models.py:160
+#: resources/models.py:162
 msgid "resource"
 msgstr "recurs"
 
-#: resources/models.py:161
+#: resources/models.py:163
 msgid "resources"
 msgstr "recursos"
 
-#: resources/models.py:291
+#: resources/models.py:293
 msgid "The actual string content of source string."
 msgstr "El contingut de la cadena actual de la cadena original."
 
-#: resources/models.py:294 resources/models.py:424
+#: resources/models.py:296 resources/models.py:426
 msgid "The hash of the translation string used for indexing"
 msgstr "La hash de la cadena de traducció usada per a la indexació"
 
-#: resources/models.py:295
+#: resources/models.py:297
 msgid "Context"
 msgstr "Context"
 
-#: resources/models.py:297
+#: resources/models.py:299
 msgid ""
 "A description of the source string. This field specifiesthe context of the "
 "source string inside the resource."
@@ -1675,11 +1679,11 @@ msgstr ""
 "Una descripció de la cadena original. Aquest camp especifica el context de "
 "la cadena original dins el recurs."
 
-#: resources/models.py:299 templates/userprofile/profile/location.html:27
+#: resources/models.py:301 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "Posició"
 
-#: resources/models.py:300
+#: resources/models.py:302
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
 "position of msgid field in a po template (.pot) file in gettext."
@@ -1687,15 +1691,15 @@ msgstr ""
 "La posició de la cadena original en el recurs. Per exemple, la posició "
 "especifica de msgid en el fitxer plantilla (.pot)."
 
-#: resources/models.py:306
+#: resources/models.py:308
 msgid "The occurrences of the source string in the project code."
 msgstr "Les ocurrències de la cadena original en el codi del projecte."
 
-#: resources/models.py:307 resources/models.py:312
+#: resources/models.py:309 resources/models.py:314
 msgid "Flags"
 msgstr "Banderes"
 
-#: resources/models.py:309
+#: resources/models.py:311
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
@@ -1703,39 +1707,39 @@ msgstr ""
 "Les banderes marquen la cadena original. Per exemple, ifthere és una cadena "
 "python amb format que es marga com '#,python-format\" a gettext."
 
-#: resources/models.py:314
+#: resources/models.py:316
 msgid "The comment of the developer."
 msgstr "Comentari del desenvolupador."
 
-#: resources/models.py:316
+#: resources/models.py:318
 msgid "Pluralized"
 msgstr "Pluralitzada"
 
-#: resources/models.py:318
+#: resources/models.py:320
 msgid "Identify if the entity is pluralized ot not."
 msgstr "Identifica si l'entitat és pluralitzada o no"
 
-#: resources/models.py:328
+#: resources/models.py:330
 msgid "The translation resource which owns the source string."
 msgstr "El recurs de traducció que conté la cadena original."
 
-#: resources/models.py:337
+#: resources/models.py:339
 msgid "source string"
 msgstr "cadena original"
 
-#: resources/models.py:338
+#: resources/models.py:340
 msgid "source strings"
 msgstr "cadenes originals"
 
-#: resources/models.py:421
+#: resources/models.py:423
 msgid "The actual string content of translation."
 msgstr "La cadena que conté la traducció."
 
-#: resources/models.py:425
+#: resources/models.py:427
 msgid "Plural rule"
 msgstr "Regla per al plural"
 
-#: resources/models.py:427
+#: resources/models.py:429
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
@@ -1745,60 +1749,60 @@ msgstr ""
 "4=molts i 5=altres. Per a traduccions que tenen la seva entitat no plural, "
 "la regla ha de ser 5 (altres)."
 
-#: resources/models.py:431
+#: resources/models.py:433
 #, fuzzy
 msgid "Wordcount for this string."
 msgstr "Cerca una cadena:"
 
-#: resources/models.py:445
+#: resources/models.py:447
 msgid "The source string this translation string translates."
 msgstr "La cadena original que és traduïda per aquesta traducció."
 
-#: resources/models.py:452
+#: resources/models.py:454
 msgid "Committer"
 msgstr "Confirmador"
 
-#: resources/models.py:453
+#: resources/models.py:455
 msgid "The user who committed the specific translation."
 msgstr "L'usuari que ha confirmat aquesta traducció."
 
-#: resources/models.py:463
+#: resources/models.py:465
 msgid "translation string"
 msgstr "cadena traduïda"
 
-#: resources/models.py:464
+#: resources/models.py:466
 msgid "translation strings"
 msgstr "cadenes traduïdes"
 
-#: resources/models.py:594
+#: resources/models.py:605
 #, fuzzy
 msgid "Translated Entities"
 msgstr "Tradueix en línia"
 
-#: resources/models.py:597
+#: resources/models.py:608
 msgid "Wordcount for Translated Entities"
 msgstr ""
 
-#: resources/models.py:600
+#: resources/models.py:611
 #, fuzzy
 msgid "Untranslated Entities"
 msgstr "Sense traduir:"
 
-#: resources/models.py:603
+#: resources/models.py:614
 #, fuzzy
 msgid "Last Update"
 msgstr "Darrera actualització"
 
-#: resources/models.py:607
+#: resources/models.py:618
 #, fuzzy
 msgid "Last Committer"
 msgstr "Confirmador"
 
-#: resources/models.py:711
+#: resources/models.py:722
 msgid "This is the actual content of the template"
 msgstr "Aquest és el contingut actual de la plantilla"
 
-#: resources/models.py:715
+#: resources/models.py:726
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
@@ -1806,30 +1810,30 @@ msgstr ""
 "Hi ha una plantilla en el fitxer importat que s'usa per a exportar els "
 "fitxers de traducció de la base de dades a l'usuari."
 
-#: resources/models.py:719
+#: resources/models.py:730
 msgid "Template"
 msgstr "Plantilla"
 
-#: resources/models.py:720
+#: resources/models.py:731
 msgid "Templates"
 msgstr "Plantilles"
 
-#: resources/views.py:94
+#: resources/views.py:95
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "S'ha esborrat la traducció del recurs '%s'."
 
-#: resources/views.py:137
+#: resources/views.py:140
 msgid "The URL you provided doesn't link to valid file."
 msgstr "L'enllaç que heu proveït no apunta a un fitxer vàlid."
 
-#: resources/views.py:148
+#: resources/views.py:151
 msgid ""
 "You have checked the auto update checkbox but you haven't provided a valid "
 "url."
 msgstr "Heu activat l'auto-actualització però no heu provist cap enllaç vàlid."
 
-#: resources/views.py:333
+#: resources/views.py:336
 #, python-format
 msgid ""
 "The translations of language %(lang)s for the resource %(resource)s were "
@@ -1838,23 +1842,23 @@ msgstr ""
 "Les traduccions dels idiomes %(lang)s del recurs %(resource)s s'han esborrat "
 "de forma correcta."
 
-#: resources/views.py:379
+#: resources/views.py:382
 msgid "Error compiling translation file."
 msgstr "Error compilant el fitxer de traducció."
 
-#: resources/views.py:428
+#: resources/views.py:431
 msgid "Sorry, you cannot assign this file to you!"
 msgstr "Disculpeu, no podeu assignar-vos aquest fitxer!"
 
-#: resources/views.py:440
+#: resources/views.py:443
 msgid "Failed to lock the resource!"
 msgstr "No s'ha pogut bloquejar el recurs!"
 
-#: resources/views.py:451
+#: resources/views.py:454
 msgid "Failed to extend lock period on the resource!"
-msgstr "No s'ha pogut extendre el bloqueig del recurs!"
+msgstr "No s'ha pogut ampliar l'interval de bloqueig del recurs!"
 
-#: resources/views.py:456
+#: resources/views.py:459
 #, python-format
 msgid "You cannot lock it right now! ( Locked by %s )"
 msgstr "No podeu bloquejar el fitxer ara! (està bloquejat per %s)"
@@ -2101,11 +2105,11 @@ msgstr ""
 
 #: templates/base-sample.html:73
 msgid "Sign out from the website"
-msgstr "Finalitza la sessió del lloc web"
+msgstr "Finalitza la sessió des del lloc web"
 
 #: templates/base-sample.html:73
 msgid "Sign out"
-msgstr "Finalitza la sessió"
+msgstr "Finalitzeu la sessió"
 
 #: templates/base-sample.html:76 templates/simpleauth/login_box.html:7
 #: templates/simpleauth/login_box.html:17 templates/simpleauth/logout.html:4
@@ -2115,7 +2119,7 @@ msgstr "Finalitza la sessió"
 #: templates/userprofile/account/login.html:18
 #: templates/userprofile/account/login.html:27
 msgid "Sign in"
-msgstr "Inicia una sessió"
+msgstr "Inicieu una sessió"
 
 #: templates/base-sample.html:79
 #: templates/userprofile/account/includes/registration_form.html:10
@@ -2124,7 +2128,7 @@ msgstr "Registreu-vos"
 
 #: templates/base-sample.html:143
 msgid "Learn more about Transifex"
-msgstr "Saber-ne més de Transifex"
+msgstr "Conegueu més quant a Transifex"
 
 #: templates/base-sample.html:143
 msgid "About"
@@ -2132,11 +2136,11 @@ msgstr "Quant a"
 
 #: templates/base-sample.html:143
 msgid "Drops us a line"
-msgstr "Escriu-nos una línia"
+msgstr "Escriviu-nos unes línies"
 
 #: templates/base-sample.html:143
 msgid "Feedback"
-msgstr "Resposta"
+msgstr "Impressions"
 
 #: templates/base-sample.html:145
 msgid ""
@@ -2287,11 +2291,11 @@ msgid ""
 "syntax should be used.\n"
 msgstr ""
 "\n"
-"El camp de descripció llarga conté una extensiva descripció del projecte. "
-"Per al cas de Transifex podria ser: \"Transifex és un sistema web per al "
-"maneig de traduccions en diversos repositoris distribuïts\". Alerta! Useu "
-"la  <a href=\"http://en.wikipedia.org/wiki/Markdown\">sintaxi Markdown </"
-"a>.\n"
+"El camp de descripció llarga conté una descripció detallada del projecte. En "
+"el cas de Transifex aquesta podria ser: \"Transifex és un sistema web per a "
+"la gestió de traduccions en diversos dipòsits distribuïts\". Precaució! S'ha "
+"d'utilitzar la  <a href=\"http://en.wikipedia.org/wiki/Markdown\">sintaxi "
+"Markdown</a>.\n"
 
 #: templates/helptext/project_form_helptext.html:52
 msgid ""
@@ -2653,8 +2657,8 @@ msgid ""
 "to the <a href=\"%(team_url)s\">%(team_name)s translation team</a> of the <a "
 "href=\"%(project_url)s\">%(project_name)s</a> project."
 msgstr ""
-"S'ha <span class=\"notice_action\">afegit</span> l'usuari <span class="
-"\"notice_subject\">usuar</span> <a href=\"%(user_url)s\">%(user_name)s</a> "
+"S'ha <span class=\"notice_action\">afegit</span> l'<span class="
+"\"notice_subject\">usuari</span> <a href=\"%(user_url)s\">%(user_name)s</a> "
 "com a membre a l'<a href=\"%(team_url)s\">equip de traducció %(team_name)s</"
 "a> del projecte <a href=\"%(project_url)s\">%(project_name)s</a>."
 
@@ -3035,7 +3039,7 @@ msgstr "Congelació del desenvolupament:"
 #: templates/projects/release_detail.html:106
 #: templates/projects/release_detail.html:124
 msgid "Click here to show or hide the resource list"
-msgstr "Feu clic aquí per a mostrar o ocultar la llista de recursos"
+msgstr "Cliqueu aquí per mostrar o ocultar el llistat de recursos"
 
 #: templates/projects/release_detail.html:107
 #, python-format
@@ -3137,7 +3141,7 @@ msgstr "Rellevància"
 #: templates/resources/resource_detail.html:195
 #: templates/teams/team_detail.html:149
 msgid "click for translation"
-msgstr "feu clic per a traduir"
+msgstr "cliqueu per a traduir-ho"
 
 #: templates/projects/release_language_detail.html:76
 #: templates/projects/release_language_detail.html:207
@@ -3186,7 +3190,7 @@ msgstr "S'està provant de bloquejar el recurs..."
 #: templates/resources/resource_detail.html:296
 #: templates/teams/team_detail.html:262
 msgid "Translation Details"
-msgstr "Detalls de traducció"
+msgstr "Detalls de la traducció"
 
 #: templates/projects/release_language_detail.html:191
 msgid "Private Resource that you have access to under this Release"
@@ -3222,7 +3226,7 @@ msgstr "Nom del recurs"
 
 #: templates/projects/resource_list.html:71
 msgid "Click the flags to modify the importance of a resource."
-msgstr "Feu clic a les banderes per a modificar la rellevància del recurs."
+msgstr "Cliqueu a les banderes per a modificar la rellevància del recurs."
 
 #: templates/projects/resource_list.html:79
 #, fuzzy, python-format
@@ -3282,12 +3286,12 @@ msgstr ""
 "actualment."
 
 #: templates/resources/resource_actions.html:47
-#: templates/resources/resource_actions.html:49
+#: templates/resources/resource_actions.html:51
 #: templates/resources/resource_actions.html:56
 #: templates/resources/resource_actions.html:59
 #, fuzzy
 msgid "Translate now"
-msgstr "Tradueix ara"
+msgstr "Traduir-ho ara"
 
 #: templates/resources/resource_actions.html:56
 msgid "This resource is currently not accepting translations"
@@ -3377,7 +3381,7 @@ msgstr "Actualment, aquest recurs no accepta traduccions."
 
 #: templates/resources/resource_actions.html:175
 msgid "Translation last updated "
-msgstr "Darrera actualització de la traducció"
+msgstr "La traducció va ser actualitzada per darrer cop "
 
 #: templates/resources/resource_actions.html:177
 msgid "by"
@@ -3415,7 +3419,7 @@ msgstr ""
 
 #: templates/resources/resource_detail.html:106
 msgid "Translation Resource details"
-msgstr "Detalls del recurs de traducció"
+msgstr "Detalls del recurs de la traducció"
 
 #: templates/resources/resource_detail.html:109
 msgid "Source Language:"
@@ -3448,8 +3452,8 @@ msgstr "Nivell de prioritat"
 #: templates/resources/resource_detail.html:169
 msgid "Release:"
 msgid_plural "Releases:"
-msgstr[0] "Versions:"
-msgstr[1] "Versió:"
+msgstr[0] "Versió:"
+msgstr[1] "Versions:"
 
 #: templates/resources/resource_detail.html:183
 msgid "Available translations"
@@ -3465,9 +3469,9 @@ msgid ""
 "class=\"note\">( You must belong to a language team of this project, to be "
 "able to translate! )</span>"
 msgstr ""
-"Si no podeu veure el vostre idioma, feu clic al botó de traduir que hi ha a "
-"sota. <span class=\"note\">(Heu de pertànyer a l'equip de traducció per a "
-"poder traduir!)</span>"
+"Si no podeu veure el vostre idioma, cliqueu al botó de  sota per a traduir-"
+"ho. <span class=\"note\">(Heu de pertànyer a l'equip de traducció d'aquest "
+"projecte per a poder-ho traduir!)</span>"
 
 #: templates/resources/resource_detail.html:339
 msgid "Add Translation"
@@ -4457,7 +4461,7 @@ msgstr "Supressió d'un projecte"
 
 #: txcommon/notifications.py:27
 msgid "when a project is deleted"
-msgstr "quan se suprimeix un projecte"
+msgstr "quan es suprimeix un projecte"
 
 #: txcommon/notifications.py:33
 msgid "Submit access to project requested"
@@ -4738,20 +4742,21 @@ msgid "You removed the permission request."
 msgstr "Heu eliminat la petició de permís."
 
 #~ msgid "Translation updated successfully in the DB"
-#~ msgstr "La traducció s'ha actualitzat correctament a la base de dades"
+#~ msgstr "La traducció ha estat correctament actualitzada en la base de dades"
 
 #~ msgid "New translation stored successfully in the DB"
-#~ msgstr "S'ha emmagatzemat una nova traducció a la base de dades"
+#~ msgstr ""
+#~ "La nova traducció ha estat correctament enmagatzemada en la base de dades"
 
 #~ msgid ""
 #~ "Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
 #~ "py in project %s."
 #~ msgstr ""
-#~ "Darrer /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
-#~ "py al projecte %s."
+#~ "Última /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
+#~ "py en el projecte %s."
 
 #~ msgid "<Project: %s>"
 #~ msgstr "<Projecte: %s>"
 
 #~ msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
-#~ msgstr "Total de cadenes: %(ts)s<br/>Idiomes disponibles: %(al)s"
+#~ msgstr "Cadenes totals: %(ts)s<br/>Idiomes disponibles: %(al)s"
