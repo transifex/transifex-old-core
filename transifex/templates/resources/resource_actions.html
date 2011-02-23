@@ -45,6 +45,8 @@
           {% with stats.lock.owner as lock_owner %}
            {% if lock_owner != request.user %}
             <a class="i16 notice buttonized2 buttonized2_warning tipsy_enable" id="translate_now" href="{{ translate_resource }}" title="{% blocktrans %}Warning: This resource is currently locked by '{{ lock_owner }}'. He might be working on it right now.{% endblocktrans %}" >{% trans "Translate now" %}</a>
+           {% else %}
+            <a class="i16 tick buttonized2" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
            {% endif %}
           {% endwith %}
          {% else %}
