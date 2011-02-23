@@ -107,6 +107,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
 /*    The target language*/
     this.to_lang = to_lang;
+    /* True if there is error during saving translations */
+    this.error = null;
 
 /*    This array contains all the TranslationString objects of StringSet */
 /*    IMPORTANT! This keeps the table row index as a key!!! */
@@ -188,9 +190,11 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                 this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
                             } else
                                 this_stringset.current_box.parents('td.trans').find('div.error_notes').hide();
+                                stringset.error = false;
                         }else{ // Handle the error
                             this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
                             this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
+                            stringset.error = true;
                         }
                     } else {
                         /* For save_all button */
@@ -218,10 +222,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                         // Hide the error div if it is visible
                                         $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').hide();
                                     }
+                                    stringset.error = false;
                                 }else{ // Handle the error
                                     messages=true;
                                     $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').text(json_response_dict[this_stringset.strings[j].id]['message']);
                                     $('textarea#translation_'+j).parents('td.trans').find('div.error_notes').show();
+                                    stringset.error = true;
                                 }
                             }
                         }

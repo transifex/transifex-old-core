@@ -23,6 +23,7 @@
   <![endif]-->
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.fnSetFilteringDaley.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.customFullNumbersPagination.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/tx.lotte2.js"></script>
@@ -66,6 +67,7 @@
     /* Global vars holding the source and target language codes */
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
+    var saveError_response = false;
 
     function unique(a){
         /* Drop duplicated entries from an array (list) */
@@ -96,6 +98,23 @@
     // Concatenate the code and aliases to check all of them one by one for availability.
     target_source_codes = source_lang + ' {{ resource.source_language.code_aliases }}';
     target_codes = target_lang + ' {{ target_language.code_aliases }}';
+
+    function saveError(){
+        /*
+        Global function used by the custom jquery.dataTables pagination plugin
+        for checking for errors when saving entries before changing page.
+        */
+        if (stringset.translated_modified || stringset.untranslated_modified ) {
+            stringset.error = false;
+            stringset.push();
+            if (stringset.error) {
+                var r = confirm('{% trans "There is at least one entry with error that was not saved. Do you want to continue anyway?"|escapejs %}');
+                if (! r)
+                    return true;
+            }
+        }
+        return false;
+    }
 
     google.setOnLoadCallback(function() {
         /* Global variables */
@@ -131,7 +150,7 @@
                 }
             },
             "bJQueryUI": false,
-            "sPaginationType": "full_numbers",
+            "sPaginationType": "customFullNumbers",
             "aaSorting": [[ 0, "asc" ]],
             "bServerSide": true,
             "bProcessing": true,
@@ -384,7 +403,7 @@
 
                 // Auto expanding textareas.
                 $("textarea.translation").TextAreaExpander();
-            }
+	    }
         }).fnSetFilteringDelay(500);
 
         /* move to the next page */
@@ -774,7 +793,7 @@
                         <span>{% trans "Verbose editing" %}</span>
                     </li>
                     <li class="auto_save">
-                        <input id="toggle_autosave" type="checkbox" />
+                        <input id="toggle_autosave" type="checkbox" checked="checked"/>
                         <span>{% trans "Auto save" %}</span>
                     </li>
                 </ul>
