@@ -42,7 +42,7 @@ $.fn.dataTableExt.oPagination.customFullNumbers =	{
 							//fnCallbackDraw(oSettings);
 						} else {
 							if (oSettings.oApi._fnPageChange(oSettings, "first")) {
-								fnCallbackDraw(oSettings);
+								aroundPagination(oSettings, fnCallbackDraw);
 							}
 						}
 				} );
@@ -52,7 +52,7 @@ $.fn.dataTableExt.oPagination.customFullNumbers =	{
 							//fnCallbackDraw(oSettings);
 						} else {
 							if (oSettings.oApi._fnPageChange(oSettings, "previous")) {
-								fnCallbackDraw(oSettings);
+								aroundPagination(oSettings, fnCallbackDraw);
 							}
 						}
 				} );
@@ -62,7 +62,7 @@ $.fn.dataTableExt.oPagination.customFullNumbers =	{
 							//fnCallbackDraw(oSettings);
 						} else {
 							if (oSettings.oApi._fnPageChange(oSettings, "next")) {
-								fnCallbackDraw(oSettings);
+								aroundPagination(oSettings, fnCallbackDraw);
 							}
 						}
 				} );
@@ -72,7 +72,7 @@ $.fn.dataTableExt.oPagination.customFullNumbers =	{
 							//fnCallbackDraw(oSettings);
 						} else {
 							if (oSettings.oApi._fnPageChange(oSettings, "last")) {
-								fnCallbackDraw(oSettings);
+								aroundPagination(oSettings, fnCallbackDraw);
 							}
 						}
 				} );
@@ -161,7 +161,7 @@ $.fn.dataTableExt.oPagination.customFullNumbers =	{
 					/* Use the information in the element to jump to the required page */
 					var iTarget = (this.innerHTML * 1) - 1;
 					oSettings._iDisplayStart = iTarget * oSettings._iDisplayLength;
-					fnCallbackDraw( oSettings );
+					aroundPagination(oSettings, fnCallbackDraw);
 					return false;
 				};
 

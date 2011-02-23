@@ -116,6 +116,21 @@
         return false;
     }
 
+
+    function aroundPagination(oSettings, fnCallback){
+        /*
+        Global function used by the custom jquery.dataTables pagination plugin
+        for placing the page on the top of the table when changing page.
+        */
+        $("div.dataTables_wrapper").hide();
+
+        fnCallback(oSettings);
+
+        //$("html, body").animate({ scrollTop: $("div#content").offset().top}, 500);
+        $("div.dataTables_wrapper").show('slow');
+    }
+
+
     google.setOnLoadCallback(function() {
         /* Global variables */
         source_lang = supported_language(target_source_codes)
