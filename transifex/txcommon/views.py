@@ -1,7 +1,7 @@
 import datetime
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django import forms
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
@@ -18,6 +18,7 @@ from notification import models as notification
 from actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
 from transifex.projects.models import Project
+from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
 
@@ -61,7 +62,7 @@ def search(request):
 @csrf_protect
 def index(request):
     return render_to_response("index.html",
-        {'form': AuthenticationForm(),
+        {'form': RememberMeAuthForm(),
          'next': request.path,
          'num_projects': Project.objects.count(),
          'num_languages': Language.objects.count(),

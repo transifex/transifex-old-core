@@ -41,6 +41,10 @@ if settings.ENABLE_SIMPLEAUTH:
         url(r'^accounts/', include('simpleauth.urls')),)
 else:
     urlpatterns += patterns('',
+        url(r'^accounts/login/$', 'simpleauth.views.login',
+            {'template_name': 'userprofile/account/login.html'},
+            name='login'
+        ),
         url(r'^accounts/', include('userprofile.urls')),
     )
 

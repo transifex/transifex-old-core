@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
+
+from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.simpleauth.util import clean_next
 
 
@@ -20,12 +23,16 @@ def logout(request, template_name='simpleauth/logged_out.html'):
 def login(request, template_name='simpleauth/signin.html'):
     """Login the user to the website and redirect back."""
     next = clean_next(request.GET.get('next'))
-    # By default keep the user logged in for 3 weeks
-    # TODO: Make this an option with a checkbox (#129)
-    login_duration = getattr(settings, 'LOGIN_DAYS', 21) * 60 * 60 * 24 
+    try:
+        if request.POST['remember_me'] == 'on':
+            # By default keep the user logged in for 3 weeks
+            login_duration = getattr(settings, 'LOGIN_DAYS', 21) * 60 * 60 * 24
+    except:
+        login_duration = 0
     request.session.set_expiry(login_duration)
     return auth_login(request, template_name=template_name,
-                      redirect_field_name='next')
+                      redirect_field_name='next',
+                      authentication_form=RememberMeAuthForm)
 
 
 @login_required
