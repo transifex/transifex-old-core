@@ -43,10 +43,40 @@ class CoreViewsTest(BaseTestCase):
         """
         Test AJAX resource actions.
         """
-        resp = self.client['maintainer'].post(reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language.code]))
+        args=[self.project.slug, self.resource.slug, self.language.code]
+        url = reverse('resource_actions', args=args)
+
+        # Test response for maintainer
+        resp = self.client['maintainer'].get(url)
         self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "Translate now")
         self.assertTemplateUsed(resp, 'resources/resource_actions.html')
+
+        url_lock = reverse('resource_language_lock', args=args)
+
+        # Test response for registered user WITHOUT lock
+        resp = self.client['registered'].get(url)
+        self.assertContains(resp, "This translation isn't locked")
+        self.assertContains(resp, "Translate now")
+
+        # Test response for team_member WITHOUT lock
+        resp = self.client['team_member'].get(url)
+        self.assertContains(resp, "Lock this translation to notify others")
+        self.assertContains(resp, "Translate now")
+
+        # Test response for team_member WITH lock
+        resp = self.client['team_member'].post(url_lock)
+        resp = self.client['team_member'].get(url)
+        self.assertContains(resp, "Translate now")
+
+        # Test response for team_coordinator WITH resource locked by someone else
+        resp = self.client['team_coordinator'].get(url)
+        self.assertContains(resp, "This resource is currently locked by")
+
+        # Test response for registered user  WITH resource locked by someone else
+        resp = self.client['registered'].get(url)
+        self.assertContains(resp, "you need to be logged in and a member")
+
 
     def test_project_resources(self):
         """
