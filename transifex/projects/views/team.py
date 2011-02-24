@@ -96,8 +96,8 @@ def _team_create_update(request, project_slug, language_code=None):
                 # Send notification for maintainers and coordinators
                 from notification.models import NoticeType
                 try:
-                    notification.send(itertools.chain(project.maintainers.all(), 
-                        team.coordinators.all()), nt, context)
+                    notification.send(set(itertools.chain(project.maintainers.all(), 
+                        team.coordinators.all())), nt, context)
                 except NoticeType.DoesNotExist:
                     pass
 
@@ -261,8 +261,8 @@ def team_join_request(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and coordinators
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all()), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    team.coordinators.all())), nt, context)
 
                 
         except IntegrityError:
@@ -325,8 +325,8 @@ def team_join_approve(request, project_slug, language_code, username):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators and the user
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all(), [access_request.user]), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    team.coordinators.all()), [access_request.user]), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
@@ -374,8 +374,8 @@ def team_join_deny(request, project_slug, language_code, username):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators and the user
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all(), [access_request.user]), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    team.coordinators.all(), [access_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
@@ -418,8 +418,8 @@ def team_join_withdraw(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all()), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    team.coordinators.all())), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
@@ -461,8 +461,8 @@ def team_leave(request, project_slug, language_code):
                     txnotification.send_observation_notices_for(project,
                             signal=nt, extra_context=context)
                     # Send notification for maintainers, coordinators
-                    notification.send(itertools.chain(project.maintainers.all(), 
-                        team.coordinators.all()), nt, context)
+                    notification.send(set(itertools.chain(project.maintainers.all(), 
+                        team.coordinators.all())), nt, context)
             else:
                 request.user.message_set.create(message=_(
                     "You are not in the '%s' team."
@@ -592,8 +592,8 @@ def team_request_approve(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and coordinators
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all()), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    team.coordinators.all())), nt, context)
             
         except IntegrityError, e:
             transaction.rollback()
@@ -637,8 +637,8 @@ def team_request_deny(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and the user
-                notification.send(itertools.chain(project.maintainers.all(), 
-                    [team_request.user]), nt, context)
+                notification.send(set(itertools.chain(project.maintainers.all(), 
+                    [team_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()

@@ -39,7 +39,7 @@ def _send_notice_save_action(request, notice):
     action_logging(request.user, [notice['object']], notice['type'], 
                 context=notice['extra_context'])
     if settings.ENABLE_NOTICES:
-        notification.send(notice['sendto'],
+        notification.send(set(notice['sendto']),
             notice['type'], extra_context=notice['extra_context'])
 
 
