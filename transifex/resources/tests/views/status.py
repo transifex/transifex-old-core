@@ -27,7 +27,7 @@ class StatusCodesTest(BaseTestCase):
                     (self.project.slug,)),
                 ('/projects/p/%s/resources/1/more/' % 
                     (self.project.slug,)),
-                ('/projects/p/%s/resource/%s/l/pt_BR/actions/' %
+                ('/ajax/p/%s/resource/%s/l/pt_BR/actions/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             302: [
