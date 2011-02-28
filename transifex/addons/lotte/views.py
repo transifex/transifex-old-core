@@ -535,8 +535,20 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
               push_response_dict[source_id]['status'] == 500:
                 continue
 
-
-            ss = unescape(source_string.string)
+            source_language = source_string.source_entity.resource.source_language
+            if rule == "other":
+                ss = unescape(source_string.string)
+            else:
+                try:
+                    source_string = Translation.objects.get(source_entity=
+                        source_string.source_entity,
+                        language = source_language,
+                        rule = source_language.get_rule_num_from_name(rule))
+                except Translation.DoesNotExist:
+                    # This shouldn't happen
+                    pass
+                finally:
+                    ss = unescape(source_string.string)
             tr = unescape(string)
 
                     # Check whether the translation sting only contains spaces
@@ -615,14 +627,17 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 '?(?P<fullvar>[+#-]*(?:\d+)?(?:\.\d+)?(hh\|h\|l\|ll)?(?P<type>[\w%])))')
             ss_matches = list(printf_pattern.finditer(source_string.string))
             tr_matches = list(printf_pattern.finditer(string))
-
-            # Check number of printf variables
-            if string and len(printf_pattern.findall(source_string.string)) != \
-                len(printf_pattern.findall(string)):
-                push_response_dict[source_id] = { 'status':500,
-                    'message':_('The number of arguments seems to differ '
-                        'between the source string and the translation.')}
-                continue
+            # Since this doesn't allow translations to be saved, we'll only
+            # check it if the number of plurals of the source language and the
+            # target language is the same.
+            if target_language.nplurals == source_language.nplurals:
+                # Check number of printf variables
+                if string and len(printf_pattern.findall(source_string.string)) != \
+                    len(printf_pattern.findall(string)):
+                    push_response_dict[source_id] = { 'status':500,
+                        'message':_('The number of arguments seems to differ '
+                            'between the source string and the translation.')}
+                    continue
 
             try:
                 for pattern in ss_matches:
