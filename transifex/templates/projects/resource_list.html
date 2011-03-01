@@ -74,7 +74,7 @@
   <tbody>
   {% endif %}
     <tr>
-		{% cache 604800 project_resource_details project.slug stat.object LANGUAGE_CODE %}
+		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
         <td>
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}</a>
         </td>
