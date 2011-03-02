@@ -6,22 +6,38 @@ from django.test import TestCase
 from transifex.resources.models import RLStats
 from transifex.txcommon.tests.base import BaseTestCase
 
-Copyright = get_model('Copyright')
+Copyright = get_model('copyright', 'Copyright')
 
+class CopyrightTests(BaseTestCase):
 
-class CopyrightAppTests(BaseTestCase):
-    def test_model(self):
-        """Test model methods and attributes."""
-        owner = str(self.user['registered'])
-        from IPython.Shell import IPShellEmbed; ipython = IPShellEmbed()()
-        cr = Copyright.objects.create(
-            tresource=self.rls_en, owner='John Doe', year=2014)
-        self.assertEqual(cr, "Copyright (C) 2014 John Doe")
-        
-        # create copyright
-        # test copyright text
-        # update copyright with next year
-        # test copyright text
+    def test_manager(self):
+        """Test manager's methods and attributes."""
+
+        # Create basic copyright
+        cr = Copyright.objects.assign(
+            tresource=self.rls_en, owner='John Doe', year='2014')
+        self.assertEqual(str(cr), "Copyright (C) 2014 John Doe.")
+
+        # Test existing copyright
+        cr = Copyright.objects.assign(
+            tresource=self.rls_en, owner='John Doe', year='2014')
+        self.assertEqual(str(cr), "Copyright (C) 2014 John Doe.")
+
+        # Create consecutive copyright year
+        cr = Copyright.objects.assign(
+            tresource=self.rls_en, owner='John Doe', year='2015')
+        self.assertEqual(str(cr), "Copyright (C) 2014,2015 John Doe.")
+
+        # Create non-consecutive copyright year
+        cr = Copyright.objects.assign(
+            tresource=self.rls_en, owner='John Doe', year='2018')
+        self.assertEqual(str(cr), "Copyright (C) 2014,2015,2018 John Doe.")
+
+        # Create another copyright holder
+        cr = Copyright.objects.assign(
+            tresource=self.rls_en, owner='Django Reinhardt', year='2010')
+        self.assertEqual(str(cr), "Copyright (C) 2010 Django Reinhardt.")
+
 
     def copyright_text_load(self):
         """Test the conversion of a copyright text to db objects."""
@@ -33,7 +49,7 @@ class CopyrightAppTests(BaseTestCase):
         """Test load of existing PO file with copyright headers."""        
 
         test_file = os.path.join(settings.PROJECT_PATH,
-                                 './resources/tests/lib/pofile/tests.pot'
+                                 './resources/tests/lib/pofile/tests.pot')
         handler = POHandler(test_file)
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
@@ -45,12 +61,5 @@ class CopyrightAppTests(BaseTestCase):
         
     def poheader_update_test(self):
         """Test load of existing PO file with copyright headers."""        
-
-        test_file = os.path.join(settings.PROJECT_PATH,
-                                 './resources/tests/lib/pofile/tests.pot'
-        handler = POHandler(test_file)
-        handler.bind_resource(self.resource)
-        handler.set_language(self.resource.source_language)
-        handler.parse_file(is_source=True)
-        handler.save2db(is_source=True)
+        raise NotImplementedError
 
