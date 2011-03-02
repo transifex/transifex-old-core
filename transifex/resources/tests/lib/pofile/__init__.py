@@ -1,3 +1,4 @@
+import polib
 import os
 import unittest
 from transifex.txcommon.tests.base import BaseTestCase
@@ -213,3 +214,58 @@ class POFile(BaseTestCase):
         # Make both strings are now untranslated
         self.assertEqual(Translation.objects.filter(source_entity__in=
             SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
+
+    def test_general_po(self):
+        """
+        Test with a PO file containing multiple different 'breakable'
+        cases.
+        """
+
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Import file with two senteces
+        handler = POHandler('%s/general/test.pot' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        handler.compile()
+
+        exported_file = polib.pofile(handler.compiled_template)
+
+        for entry in exported_file:
+            se = SourceEntity.objects.get(
+               string = entry.msgid,
+               context = entry.msgctxt or 'None',
+               resource = self.resource
+            )
+
+            if se.pluralized:
+                plurals = Translation.objects.filter(
+                    source_entity__resource = self.resource,
+                    language = self.resource.source_language,
+                    source_entity__string = entry.msgid
+                ).order_by('rule')
+
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = self.resource.source_language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                for p,n in enumerate(lang_rules):
+                    plural_keys[str(p)] = ""
+                for n,p in enumerate(plurals):
+                    plural_keys[str(n)] = p.string
+
+                self.assertEqual(entry.msgstr_plural, plural_keys)
+
+            else:
+                trans = se.get_translation(
+                    self.resource.source_language.code, rule=5)
+
+                self.assertEqual(entry.msgstr, trans.string.encode('utf-8'), "Source '%s'"\
+                    " differs from translation %s" % (entry.msgstr,
+                    trans.string.encode('utf-8')))
+
