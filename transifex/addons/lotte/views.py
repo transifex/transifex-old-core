@@ -594,7 +594,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             # Check whether source string and translation start and end
             # with newlines
             if string and ss.startswith('\n') != tr.startswith('\n'):
-                if ss.endswith('\n'):
+                if ss.startswith('\n'):
                     push_response_dict[source_id] = { 'status':200,
                     'message':_("Translation must start with a newline (\\n)")}
                 else:
