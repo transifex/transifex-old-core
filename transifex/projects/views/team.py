@@ -326,7 +326,7 @@ def team_join_approve(request, project_slug, language_code, username):
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators and the user
                 notification.send(set(itertools.chain(project.maintainers.all(), 
-                    team.coordinators.all()), [access_request.user]), nt, context)
+                    team.coordinators.all(), [access_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
