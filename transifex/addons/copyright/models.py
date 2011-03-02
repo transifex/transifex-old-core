@@ -58,13 +58,21 @@ class Copyright(models.Model):
         verbose_name=_('Translated Resource Object'),
         help_text=_("The Resource-Language object this copyright applies to."))
 
-    years = models.CommaSeparatedIntegerField(_('Years of copyright'),
-        max_length=50,
-        help_text=_("The years of the copyright."))
+    years = models.CommaSeparatedIntegerField(_('Copyright years'),
+        max_length=80,
+        help_text=_("The years the copyright is active in."))
 
     comment = models.CharField(_('Comment'),
         max_length=255,
         help_text=_("A comment for this copyright."),)
+
+    # De-normalized fields
+    
+    # Store the years in a concise form. Responsible to convert years
+    # 2010, 2011, 2012, 2013 to 2010-2013.
+    years_text = models.CharField(_('Copyright Years Text'),
+        max_length=50,
+        help_text=_("Textual representation of the copyright years."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -75,13 +83,21 @@ class Copyright(models.Model):
 
     def __unicode__(self):
         return u'%(years)s %(owner)s' % {
-            'years': self.years,
+            'years': self.years_text,
             'owner': self.owner or self.user}
 
     def __str__(self):
         return u'Copyright (C) %(years)s %(owner)s.' % {
-            'years': str(self.years),
+            'years': str(self.years_text),
             'owner': self.owner or self.user}
+
+    def save(self, *args, **kwargs):
+        """Override save to de-normalize the years_text."""
+        #FIXME: Convert list of years to list of year periods
+        # ie. 2010,2011,2012 to 2010-2012.
+        self.years_text = self.years
+        super(Copyright, self).save(*args, **kwargs)
+
 
     objects = CopyrightManager()
 
