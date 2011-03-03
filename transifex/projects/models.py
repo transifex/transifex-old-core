@@ -81,7 +81,13 @@ class DefaultProjectQuerySet(models.query.QuerySet):
                     Q(team__coordinators__in=[user]) |
                     Q(team__members__in=[user]))).distinct()
         return projects
- 
+
+    def public(self):
+        return self.filter(private=False)
+
+    def private(self):
+        return self.filter(private=True)
+
 
 class PublicProjectManager(models.Manager):
     """

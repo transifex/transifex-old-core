@@ -20,3 +20,14 @@ class ModelTests(BaseTestCase):
                                                    name="Foo Project")
         new_p = Project(slug="foo", name="Foo Project")
         self.assertRaises(IntegrityError, new_p.save)
+    
+    def test_def_manager_public(self):
+        """Test that managers behave the same between models and relations.
+        
+        Grab a maintainer's public projects through the model and compare them
+        with the ones returned from his own instance's foreign key relation.
+        """
+        self.assertEqual(
+            Project.objects.filter(maintainers__id=self.user['maintainer'].pk).public(),
+            self.user['maintainer'].projects_maintaining.public(),)
+
