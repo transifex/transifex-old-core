@@ -96,6 +96,25 @@
 
         {% with profile.user as user %}
 
+        {% with profile.user.projects_maintaining.public as projects %}
+        {% if projects %}
+        <div class="list">
+        <h4>
+        {% blocktrans count projects|length as counter %}Maintainer of the following project:{% plural %}Member of the following projects:{% endblocktrans %}
+        </h4>
+        <ul>
+        {% for project in projects|dictsort:"project.name" %}
+            <li class="i16 team">
+                {% url project_detail project.slug as project_url %}
+                {% blocktrans with project.name as project_name %}<a class="name" href="{{ project_url }}">{{ project_name }}</a>{% endblocktrans %}
+            </li>
+        {% endfor %}
+        </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+
         {% with profile.user.team_coordinators.public as teams %}
         {% if teams %}
         {% autopaginate teams 20 %}
@@ -122,7 +141,7 @@
         {% autopaginate teams 20 %}
         <div class="list">
         <h4>
-        {% blocktrans count teams|length as counter %}Member of the following team:{% plural %}Members of the following teams:{% endblocktrans %}
+        {% blocktrans count teams|length as counter %}Member of the following team:{% plural %}Member of the following teams:{% endblocktrans %}
         </h4>
         <ul>
         {% for team in teams|dictsort:"language.name" %}
