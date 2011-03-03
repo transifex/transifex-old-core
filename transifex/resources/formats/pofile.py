@@ -239,12 +239,6 @@ class POHandler(Handler):
         """
         stringset = StringSet()
         suggestions = StringSet()
-        # For .pot files the msgid entry must be used as the translation for
-        # the related language.
-        if self.filename.endswith(".pot") or is_source:
-            ispot = True
-        else:
-            ispot = False
 
         if lang_rules:
             nplural = len(lang_rules)
@@ -259,7 +253,7 @@ class POHandler(Handler):
 
             # treat fuzzy translation as nonexistent
             if "fuzzy" in entry.flags:
-                if not ispot:
+                if not is_source:
                     if not entry.msgid_plural:
                         suggestion = GenericTranslation(entry.msgid, entry.msgstr,
                             context=entry.msgctxt or '',
@@ -273,14 +267,17 @@ class POHandler(Handler):
                     # Drop fuzzy flag from template
                     entry.flags.remove("fuzzy")
 
-
-
             if entry.msgid_plural:
                 pluralized = True
-                if ispot:
+                if is_source:
+                    nplural_file = len(entry.msgstr_plural.keys())
+                    if nplural_file != 2:
+                        raise FileCheckError("Your source file is not a POT file and"
+                            " the translation file you're using has more"
+                            " than two plurals which is not supported.")
                     # English plural rules
-                    messages = [(1, entry.msgid),
-                                (5, entry.msgid_plural)]
+                    messages = [(1, entry.msgstr_plural['0'] or entry.msgid),
+                                (5, entry.msgstr_plural['1'] or entry.msgid_plural)]
                     plural_keys = [0,1]
                 else:
                     message_keys = entry.msgstr_plural.keys()
@@ -306,10 +303,10 @@ class POHandler(Handler):
                         messages.append((nplural[n], entry.msgstr_plural['%s' % n]))
             else:
                 # pass empty strings for non source files
-                if not ispot and entry.msgstr in ["", None]:
+                if not is_source and entry.msgstr in ["", None]:
                     continue
                 # Not pluralized, so no plural rules. Use 5 as 'other'.
-                if ispot:
+                if is_source:
                     messages = [(5, entry.msgstr or entry.msgid)]
                 else:
                     messages = [(5, entry.msgstr)]
