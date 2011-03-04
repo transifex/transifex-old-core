@@ -193,37 +193,37 @@
     "pk": 11, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 11..20", 
       "code_aliases": " ", 
       "code": "bs", 
       "name": "Bosnian", 
       "description": "", 
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
     "pk": 12, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": null, 
+      "rule_few": "", 
       "code_aliases": " ", 
-      "code": "ca@valencia", 
-      "name": "Catalan (Valencian)", 
+      "code": "ca", 
+      "name": "Catalan", 
       "description": "", 
       "pluralequation": "(n != 1)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": null, 
+      "rule_many": "", 
       "nplurals": 2
     }
   }, 
@@ -250,13 +250,13 @@
     "pk": 14, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": null, 
+      "rule_few": "", 
       "code_aliases": " ", 
       "code": "cy", 
       "name": "Welsh", 
       "description": "", 
-      "pluralequation": "(n==2) ? 1 : 0", 
-      "rule_zero": null, 
+      "pluralequation": "(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3", 
+      "rule_zero": "", 
       "rule_two": "n is 2", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
@@ -573,19 +573,19 @@
     "pk": 31, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": null, 
+      "rule_few": "n in 3..6", 
       "code_aliases": " ", 
       "code": "ga", 
       "name": "Irish", 
       "description": "", 
       "pluralequation": "(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4)", 
-      "rule_zero": null, 
+      "rule_zero": "", 
       "rule_two": "n is 2", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 3
+      "rule_many": "n in 7..10", 
+      "nplurals": 5
     }
   }, 
   {
@@ -668,19 +668,19 @@
     "pk": 36, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 3..4 and n mod 100 not in 11..20", 
       "code_aliases": " ", 
       "code": "hr", 
       "name": "Croatian", 
       "description": "", 
-      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "pluralequation": "n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%\" \"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2", 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
@@ -1338,13 +1338,13 @@
       "code": "ro", 
       "name": "Romanian", 
       "description": "", 
-      "pluralequation": "(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "pluralequation": "(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1))", 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": null, 
+      "rule_many": "", 
       "nplurals": 3
     }
   }, 
@@ -1447,26 +1447,26 @@
     "pk": 77, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 is 1 and n mod 100 is not 11", 
       "code_aliases": " ", 
       "code": "sr", 
       "name": "Serbian", 
       "description": "", 
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
     "pk": 78, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 is 1 and n mod 100 is not 11", 
       "code_aliases": " sr@Latin sr@latn sr@Latn sr-Latn sr_Latn ", 
       "code": "sr@latin", 
       "name": "Serbian (Latin)", 
@@ -1477,8 +1477,8 @@
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
@@ -1656,7 +1656,7 @@
     "pk": 88, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 11..20", 
       "code_aliases": " ", 
       "code": "uk", 
       "name": "Ukrainian", 
@@ -1667,8 +1667,8 @@
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
@@ -2036,6 +2036,25 @@
     "pk": 108, 
     "model": "languages.language", 
     "fields": {
+      "rule_few": "", 
+      "code_aliases": " fr-CA fr-ca fr_ca ", 
+      "code": "fr_CA", 
+      "name": "French (Canada)", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n within 0..2 and n is not 2", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 109, 
+    "model": "languages.language", 
+    "fields": {
       "rule_few": null, 
       "code_aliases": " nl-BE ", 
       "code": "nl_BE", 
@@ -2052,273 +2071,7 @@
     }
   }, 
   {
-    "pk": 109, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ca", 
-      "name": "Catalan", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
     "pk": 110, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": null, 
-      "code_aliases": " ", 
-      "code": "tk", 
-      "name": "Turkmen", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": null, 
-      "rule_two": null, 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 111, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": null, 
-      "code_aliases": " ", 
-      "code": "uz", 
-      "name": "Uzbek", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": null, 
-      "rule_two": null, 
-      "rule_one": null, 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 112, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": null, 
-      "code_aliases": " bn-BD bn-bd ", 
-      "code": "bn_BD", 
-      "name": "Bengali (Bangladesh)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": null, 
-      "rule_two": null, 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 113, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": null, 
-      "code_aliases": " ", 
-      "code": "sw", 
-      "name": "Swahili", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": null, 
-      "rule_two": null, 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 114, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "sco", 
-      "name": "Scots", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 115, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "lb", 
-      "name": "Luxembourgish", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 116, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ln", 
-      "name": "Lingala", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 117, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "tt", 
-      "name": "Tatar", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 118, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "fil", 
-      "name": "Filipino", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 119, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "gun", 
-      "name": "Gun", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 120, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "pms", 
-      "name": "Piemontese", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 121, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "arn", 
-      "name": "Mapudungun", 
-      "description": "", 
-      "pluralequation": "n > 1", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 122, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "rm", 
-      "name": "Romansh", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 123, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "", 
@@ -2337,748 +2090,7 @@
     }
   }, 
   {
-    "pk": 124, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "jv", 
-      "name": "Javanese", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 125, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "oc", 
-      "name": "Occitan (post 1500)", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 126, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ps", 
-      "name": "Pushto", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 127, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ha", 
-      "name": "Hausa", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 128, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "mg", 
-      "name": "Malagasy", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 129, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "mi", 
-      "name": "Maori", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 130, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ug", 
-      "name": "Uighur", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 131, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ak", 
-      "name": "Akan", 
-      "description": "", 
-      "pluralequation": "n > 1", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 132, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "an", 
-      "name": "Aragonese", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 133, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "su", 
-      "name": "Sundanese", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 134, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "pap", 
-      "name": "Papiamento", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 135, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "nah", 
-      "name": "Nahuatl", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 136, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
-      "code_aliases": " ", 
-      "code": "csb", 
-      "name": "Kashubian", 
-      "description": "", 
-      "pluralequation": "n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 3
-    }
-  }, 
-  {
-    "pk": 137, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "nap", 
-      "name": "Neapolitan", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 138, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "n is 3", 
-      "code_aliases": " ", 
-      "code": "kw", 
-      "name": "Cornish", 
-      "description": "", 
-      "pluralequation": "(n==1) ? 0 : (n==2) ? 1 : (n == 3) ? 2 : 3", 
-      "rule_zero": "", 
-      "rule_two": "n is 2", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 4
-    }
-  }, 
-  {
-    "pk": 139, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ve", 
-      "name": "Venda", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 140, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "son", 
-      "name": "Songhay", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 141, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " en-CA en-ca en_ca ", 
-      "code": "en_CA", 
-      "name": "English (Canada)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 142, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "rw", 
-      "name": "Kinyarwanda", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 143, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "crh", 
-      "name": "Crimean Turkish", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 144, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "li", 
-      "name": "Limburgian", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 145, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " es-VE es-ve es_ve ", 
-      "code": "es_VE", 
-      "name": "Spanish (Venezuela)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 146, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "frp", 
-      "name": "Franco-Proven\u00e7al (Arpitan)", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 147, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "yi", 
-      "name": "Yiddish", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 148, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " es-ES es_es ", 
-      "code": "es_ES", 
-      "name": "Spanish (Spain)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 149, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " fr-FR fr-fr fr_fr ", 
-      "code": "fr_FR", 
-      "name": "French (France)", 
-      "description": "", 
-      "pluralequation": "(n > 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n within 0..2 and n is not 2", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 150, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " de-DE de-de de_de  ", 
-      "code": "de_DE", 
-      "name": "German (Germany)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 151, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "yo", 
-      "name": "Yoruba", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 152, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "ig", 
-      "name": "Igbo", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 153, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " es-PR es-pr es_pr ", 
-      "code": "es_PR", 
-      "name": "Spanish (Puerto Rico)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 154, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "nds", 
-      "name": "Low German", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 155, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "nr", 
-      "name": "Ndebele, South", 
-      "description": "", 
-      "pluralequation": "0", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 1
-    }
-  }, 
-  {
-    "pk": 156, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "gd", 
-      "name": "Gaelic, Scottish", 
-      "description": "", 
-      "pluralequation": "n < 2 ? 0 : n == 2 ? 1 : 2", 
-      "rule_zero": "", 
-      "rule_two": "n is 2", 
-      "rule_one": "n in 0..1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 3
-    }
-  }, 
-  {
-    "pk": 157, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " es-CL es-cl es_cl ", 
-      "code": "es_CL", 
-      "name": "Spanish (Chile)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 158, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " en-IE en-ie en_ie ", 
-      "code": "en_IE", 
-      "name": "English (Ireland)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 159, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ta-LK ta-lk ta_lk ", 
-      "code": "ta_LK", 
-      "name": "Tamil (Sri-Lanka)", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 160, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "se", 
-      "name": "Northern Sami", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 161, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "n mod 100 in 3..4 ", 
-      "code_aliases": " ", 
-      "code": "hsb", 
-      "name": "Upper Sorbian", 
-      "description": "", 
-      "pluralequation": "(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3)", 
-      "rule_zero": "", 
-      "rule_two": "n mod 100 is 2", 
-      "rule_one": "n mod 100 is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 4
-    }
-  }, 
-  {
-    "pk": 162, 
-    "model": "languages.language", 
-    "fields": {
-      "rule_few": "", 
-      "code_aliases": " ", 
-      "code": "hne", 
-      "name": "Chhattisgarhi", 
-      "description": "", 
-      "pluralequation": "(n != 1)", 
-      "rule_zero": "", 
-      "rule_two": "", 
-      "rule_one": "n is 1", 
-      "rule_other": "everything else", 
-      "specialchars": "", 
-      "rule_many": "", 
-      "nplurals": 2
-    }
-  }, 
-  {
-    "pk": 163, 
+    "pk": 111, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "", 
@@ -3097,18 +2109,1006 @@
     }
   }, 
   {
-    "pk": 164, 
+    "pk": 112, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": null, 
+      "code_aliases": " ", 
+      "code": "ca@valencia", 
+      "name": "Catalan (Valencian)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": null, 
+      "rule_two": null, 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": null, 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 113, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "", 
-      "code_aliases": " fr-CA fr-ca fr_ca ", 
-      "code": "fr_CA", 
-      "name": "French (Canada)", 
+      "code_aliases": " es-ES es_es ", 
+      "code": "es_ES", 
+      "name": "Spanish (Spain)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 114, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": null, 
+      "code_aliases": " bn-BD bn-bd ", 
+      "code": "bn_BD", 
+      "name": "Bengali (Bangladesh)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": null, 
+      "rule_two": null, 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": null, 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 115, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": null, 
+      "code_aliases": " ", 
+      "code": "sw", 
+      "name": "Swahili", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": null, 
+      "rule_two": null, 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": null, 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 116, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": null, 
+      "code_aliases": " ", 
+      "code": "tk", 
+      "name": "Turkmen", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": null, 
+      "rule_two": null, 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": null, 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 117, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": null, 
+      "code_aliases": " ", 
+      "code": "uz", 
+      "name": "Uzbek", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": null, 
+      "rule_two": null, 
+      "rule_one": null, 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": null, 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 118, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "sco", 
+      "name": "Scots", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 119, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "lb", 
+      "name": "Luxembourgish", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 120, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ln", 
+      "name": "Lingala", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 121, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "tt", 
+      "name": "Tatar", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 122, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "fil", 
+      "name": "Filipino", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 123, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "gun", 
+      "name": "Gun", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 124, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "pms", 
+      "name": "Piemontese", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 125, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "arn", 
+      "name": "Mapudungun", 
+      "description": "", 
+      "pluralequation": "n > 1", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 126, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "rm", 
+      "name": "Romansh", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 127, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "jv", 
+      "name": "Javanese", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 128, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "oc", 
+      "name": "Occitan (post 1500)", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 129, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ps", 
+      "name": "Pushto", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 130, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ha", 
+      "name": "Hausa", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 131, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "mg", 
+      "name": "Malagasy", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 132, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "mi", 
+      "name": "Maori", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 133, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ug", 
+      "name": "Uighur", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 134, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ak", 
+      "name": "Akan", 
+      "description": "", 
+      "pluralequation": "n > 1", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 135, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "an", 
+      "name": "Aragonese", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 136, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "su", 
+      "name": "Sundanese", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 137, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "pap", 
+      "name": "Papiamento", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 138, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "nah", 
+      "name": "Nahuatl", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 139, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "code_aliases": " ", 
+      "code": "csb", 
+      "name": "Kashubian", 
+      "description": "", 
+      "pluralequation": "n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 3
+    }
+  }, 
+  {
+    "pk": 140, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "nap", 
+      "name": "Neapolitan", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 141, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "n is 3", 
+      "code_aliases": " ", 
+      "code": "kw", 
+      "name": "Cornish", 
+      "description": "", 
+      "pluralequation": "(n==1) ? 0 : (n==2) ? 1 : (n == 3) ? 2 : 3", 
+      "rule_zero": "", 
+      "rule_two": "n is 2", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 4
+    }
+  }, 
+  {
+    "pk": 142, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ve", 
+      "name": "Venda", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 143, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "son", 
+      "name": "Songhay", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 144, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " en-CA en-ca en_ca ", 
+      "code": "en_CA", 
+      "name": "English (Canada)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 145, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "rw", 
+      "name": "Kinyarwanda", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 146, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "crh", 
+      "name": "Crimean Turkish", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 147, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "li", 
+      "name": "Limburgian", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 148, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " es-VE es-ve es_ve ", 
+      "code": "es_VE", 
+      "name": "Spanish (Venezuela)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 149, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "frp", 
+      "name": "Franco-Proven\u00e7al (Arpitan)", 
+      "description": "", 
+      "pluralequation": "(n > 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 150, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "yi", 
+      "name": "Yiddish", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 151, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " fr-FR fr-fr fr_fr ", 
+      "code": "fr_FR", 
+      "name": "French (France)", 
       "description": "", 
       "pluralequation": "(n > 1)", 
       "rule_zero": "", 
       "rule_two": "", 
       "rule_one": "n within 0..2 and n is not 2", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 152, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " de-DE de-de de_de  ", 
+      "code": "de_DE", 
+      "name": "German (Germany)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 153, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "yo", 
+      "name": "Yoruba", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 154, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "ig", 
+      "name": "Igbo", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 155, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " es-PR es-pr es_pr ", 
+      "code": "es_PR", 
+      "name": "Spanish (Puerto Rico)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 156, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "nds", 
+      "name": "Low German", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 157, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "nr", 
+      "name": "Ndebele, South", 
+      "description": "", 
+      "pluralequation": "0", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 1
+    }
+  }, 
+  {
+    "pk": 158, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "gd", 
+      "name": "Gaelic, Scottish", 
+      "description": "", 
+      "pluralequation": "n < 2 ? 0 : n == 2 ? 1 : 2", 
+      "rule_zero": "", 
+      "rule_two": "n is 2", 
+      "rule_one": "n in 0..1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 3
+    }
+  }, 
+  {
+    "pk": 159, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " es-CL es-cl es_cl ", 
+      "code": "es_CL", 
+      "name": "Spanish (Chile)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 160, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " en-IE en-ie en_ie ", 
+      "code": "en_IE", 
+      "name": "English (Ireland)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 161, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ta-LK ta-lk ta_lk ", 
+      "code": "ta_LK", 
+      "name": "Tamil (Sri-Lanka)", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 162, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "se", 
+      "name": "Northern Sami", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 2
+    }
+  }, 
+  {
+    "pk": 163, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "n mod 100 in 3..4 ", 
+      "code_aliases": " ", 
+      "code": "hsb", 
+      "name": "Upper Sorbian", 
+      "description": "", 
+      "pluralequation": "(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3)", 
+      "rule_zero": "", 
+      "rule_two": "n mod 100 is 2", 
+      "rule_one": "n mod 100 is 1", 
+      "rule_other": "everything else", 
+      "specialchars": "", 
+      "rule_many": "", 
+      "nplurals": 4
+    }
+  }, 
+  {
+    "pk": 164, 
+    "model": "languages.language", 
+    "fields": {
+      "rule_few": "", 
+      "code_aliases": " ", 
+      "code": "hne", 
+      "name": "Chhattisgarhi", 
+      "description": "", 
+      "pluralequation": "(n != 1)", 
+      "rule_zero": "", 
+      "rule_two": "", 
+      "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
       "rule_many": "", 
@@ -3423,7 +3423,7 @@
     "pk": 181, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 11..20", 
       "code_aliases": " uk-UA uk-ua ", 
       "code": "uk_UA", 
       "name": "Ukrainian (Ukraine)", 
@@ -3434,8 +3434,8 @@
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
@@ -3515,7 +3515,7 @@
     }
   }, 
   {
-    "pk": 187, 
+    "pk": 186, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3534,7 +3534,7 @@
     }
   }, 
   {
-    "pk": 188, 
+    "pk": 187, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3553,7 +3553,7 @@
     }
   }, 
   {
-    "pk": 189, 
+    "pk": 188, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3572,7 +3572,7 @@
     }
   }, 
   {
-    "pk": 190, 
+    "pk": 189, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3591,7 +3591,7 @@
     }
   }, 
   {
-    "pk": 191, 
+    "pk": 190, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3610,7 +3610,7 @@
     }
   }, 
   {
-    "pk": 192, 
+    "pk": 191, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3629,7 +3629,7 @@
     }
   }, 
   {
-    "pk": 193, 
+    "pk": 192, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3648,7 +3648,7 @@
     }
   }, 
   {
-    "pk": 194, 
+    "pk": 193, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3667,7 +3667,7 @@
     }
   }, 
   {
-    "pk": 195, 
+    "pk": 194, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3686,26 +3686,26 @@
     }
   }, 
   {
-    "pk": 197, 
+    "pk": 195, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 11..20", 
       "code_aliases": " bs-BA bs-ba ", 
       "code": "bs_BA", 
       "name": "Bosnian (Bosnia and Herzegovina)", 
       "description": "", 
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
-    "pk": 198, 
+    "pk": 196, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3724,7 +3724,7 @@
     }
   }, 
   {
-    "pk": 199, 
+    "pk": 197, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3743,26 +3743,26 @@
     }
   }, 
   {
-    "pk": 200, 
+    "pk": 198, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
+      "rule_few": "n mod 10 in 3..4 and n mod 100 not in 11..20", 
       "code_aliases": " hr-HR hr-hr ", 
       "code": "hr_HR", 
       "name": "Croatian (Croatia)", 
       "description": "", 
-      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "pluralequation": "n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%\" \"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2", 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "", 
+      "nplurals": 3
     }
   }, 
   {
-    "pk": 201, 
+    "pk": 199, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n in 2..4", 
@@ -3781,7 +3781,7 @@
     }
   }, 
   {
-    "pk": 202, 
+    "pk": 200, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3800,7 +3800,7 @@
     }
   }, 
   {
-    "pk": 203, 
+    "pk": 201, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3819,7 +3819,7 @@
     }
   }, 
   {
-    "pk": 204, 
+    "pk": 202, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3838,7 +3838,7 @@
     }
   }, 
   {
-    "pk": 205, 
+    "pk": 203, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3857,7 +3857,7 @@
     }
   }, 
   {
-    "pk": 206, 
+    "pk": 204, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3876,7 +3876,7 @@
     }
   }, 
   {
-    "pk": 207, 
+    "pk": 205, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3895,7 +3895,7 @@
     }
   }, 
   {
-    "pk": 208, 
+    "pk": 206, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3914,7 +3914,7 @@
     }
   }, 
   {
-    "pk": 209, 
+    "pk": 207, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3933,7 +3933,7 @@
     }
   }, 
   {
-    "pk": 210, 
+    "pk": 208, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3952,7 +3952,7 @@
     }
   }, 
   {
-    "pk": 211, 
+    "pk": 209, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3971,7 +3971,7 @@
     }
   }, 
   {
-    "pk": 212, 
+    "pk": 210, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -3990,7 +3990,7 @@
     }
   }, 
   {
-    "pk": 213, 
+    "pk": 211, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4009,7 +4009,7 @@
     }
   }, 
   {
-    "pk": 214, 
+    "pk": 212, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4028,7 +4028,7 @@
     }
   }, 
   {
-    "pk": 215, 
+    "pk": 213, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4047,7 +4047,7 @@
     }
   }, 
   {
-    "pk": 216, 
+    "pk": 214, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4066,26 +4066,26 @@
     }
   }, 
   {
-    "pk": 217, 
+    "pk": 215, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": null, 
+      "rule_few": "n in 3..6", 
       "code_aliases": " ga-IE ga-ie ", 
       "code": "ga_IE", 
       "name": "Irish (Ireland)", 
       "description": "", 
       "pluralequation": "(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4)", 
-      "rule_zero": null, 
+      "rule_zero": "", 
       "rule_two": "n is 2", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": null, 
-      "nplurals": 3
+      "rule_many": "n in 7..10", 
+      "nplurals": 5
     }
   }, 
   {
-    "pk": 218, 
+    "pk": 216, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4104,7 +4104,7 @@
     }
   }, 
   {
-    "pk": 219, 
+    "pk": 217, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4123,7 +4123,7 @@
     }
   }, 
   {
-    "pk": 220, 
+    "pk": 218, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4142,7 +4142,7 @@
     }
   }, 
   {
-    "pk": 225, 
+    "pk": 219, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4161,7 +4161,7 @@
     }
   }, 
   {
-    "pk": 226, 
+    "pk": 220, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4180,7 +4180,7 @@
     }
   }, 
   {
-    "pk": 227, 
+    "pk": 221, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4199,7 +4199,7 @@
     }
   }, 
   {
-    "pk": 228, 
+    "pk": 222, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4218,7 +4218,7 @@
     }
   }, 
   {
-    "pk": 229, 
+    "pk": 223, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4237,7 +4237,7 @@
     }
   }, 
   {
-    "pk": 230, 
+    "pk": 224, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 10 in 2..9 and n mod 100 not in 11..19", 
@@ -4256,7 +4256,7 @@
     }
   }, 
   {
-    "pk": 231, 
+    "pk": 225, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4275,7 +4275,7 @@
     }
   }, 
   {
-    "pk": 232, 
+    "pk": 226, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4294,7 +4294,7 @@
     }
   }, 
   {
-    "pk": 233, 
+    "pk": 227, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4313,7 +4313,7 @@
     }
   }, 
   {
-    "pk": 234, 
+    "pk": 228, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n is 0 or n mod 100 in 2..10", 
@@ -4332,7 +4332,7 @@
     }
   }, 
   {
-    "pk": 235, 
+    "pk": 229, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4351,7 +4351,7 @@
     }
   }, 
   {
-    "pk": 236, 
+    "pk": 230, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4370,7 +4370,7 @@
     }
   }, 
   {
-    "pk": 237, 
+    "pk": 231, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4389,7 +4389,7 @@
     }
   }, 
   {
-    "pk": 238, 
+    "pk": 232, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4408,7 +4408,7 @@
     }
   }, 
   {
-    "pk": 239, 
+    "pk": 233, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4427,7 +4427,7 @@
     }
   }, 
   {
-    "pk": 240, 
+    "pk": 234, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4446,7 +4446,7 @@
     }
   }, 
   {
-    "pk": 241, 
+    "pk": 235, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4465,7 +4465,7 @@
     }
   }, 
   {
-    "pk": 242, 
+    "pk": 236, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4484,7 +4484,7 @@
     }
   }, 
   {
-    "pk": 243, 
+    "pk": 237, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4503,7 +4503,7 @@
     }
   }, 
   {
-    "pk": 244, 
+    "pk": 238, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
@@ -4522,7 +4522,7 @@
     }
   }, 
   {
-    "pk": 245, 
+    "pk": 239, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4541,7 +4541,7 @@
     }
   }, 
   {
-    "pk": 246, 
+    "pk": 240, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n is 0 OR n is not 1 AND n mod 100 in 1..19", 
@@ -4549,18 +4549,18 @@
       "code": "ro_RO", 
       "name": "Romanian (Romania)", 
       "description": "", 
-      "pluralequation": "(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2)", 
-      "rule_zero": null, 
-      "rule_two": null, 
+      "pluralequation": "(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1))", 
+      "rule_zero": "", 
+      "rule_two": "", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": null, 
+      "rule_many": "", 
       "nplurals": 3
     }
   }, 
   {
-    "pk": 247, 
+    "pk": 241, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
@@ -4574,12 +4574,12 @@
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "n mod 10 is 1 and n mod 100 is not 11", 
+      "nplurals": 3
     }
   }, 
   {
-    "pk": 248, 
+    "pk": 242, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4598,7 +4598,7 @@
     }
   }, 
   {
-    "pk": 249, 
+    "pk": 243, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n in 2..4", 
@@ -4617,7 +4617,7 @@
     }
   }, 
   {
-    "pk": 250, 
+    "pk": 244, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 100 in 3..4", 
@@ -4636,7 +4636,7 @@
     }
   }, 
   {
-    "pk": 251, 
+    "pk": 245, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4655,7 +4655,7 @@
     }
   }, 
   {
-    "pk": 252, 
+    "pk": 246, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4674,7 +4674,7 @@
     }
   }, 
   {
-    "pk": 253, 
+    "pk": 247, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4693,7 +4693,7 @@
     }
   }, 
   {
-    "pk": 254, 
+    "pk": 248, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4712,7 +4712,7 @@
     }
   }, 
   {
-    "pk": 255, 
+    "pk": 249, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4731,7 +4731,7 @@
     }
   }, 
   {
-    "pk": 256, 
+    "pk": 250, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4750,7 +4750,7 @@
     }
   }, 
   {
-    "pk": 257, 
+    "pk": 251, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4769,7 +4769,7 @@
     }
   }, 
   {
-    "pk": 258, 
+    "pk": 252, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4788,7 +4788,7 @@
     }
   }, 
   {
-    "pk": 259, 
+    "pk": 253, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4807,7 +4807,7 @@
     }
   }, 
   {
-    "pk": 260, 
+    "pk": 254, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "", 
@@ -4826,7 +4826,7 @@
     }
   }, 
   {
-    "pk": 261, 
+    "pk": 255, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4845,16 +4845,16 @@
     }
   }, 
   {
-    "pk": 262, 
+    "pk": 256, 
     "model": "languages.language", 
     "fields": {
-      "rule_few": null, 
+      "rule_few": "", 
       "code_aliases": " cy-GB cy-gb ", 
       "code": "cy_GB", 
       "name": "Welsh (United Kingdom)", 
       "description": "", 
-      "pluralequation": "(n==2) ? 1 : 0", 
-      "rule_zero": null, 
+      "pluralequation": "(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3", 
+      "rule_zero": "", 
       "rule_two": "n is 2", 
       "rule_one": "n is 1", 
       "rule_other": "everything else", 
@@ -4864,7 +4864,7 @@
     }
   }, 
   {
-    "pk": 263, 
+    "pk": 257, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "", 
@@ -4883,7 +4883,7 @@
     }
   }, 
   {
-    "pk": 264, 
+    "pk": 258, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4902,7 +4902,7 @@
     }
   }, 
   {
-    "pk": 265, 
+    "pk": 259, 
     "model": "languages.language", 
     "fields": {
       "rule_few": null, 
@@ -4921,7 +4921,7 @@
     }
   }, 
   {
-    "pk": 266, 
+    "pk": 260, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
@@ -4940,12 +4940,12 @@
     }
   }, 
   {
-    "pk": 267, 
+    "pk": 261, 
     "model": "languages.language", 
     "fields": {
       "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14", 
       "code_aliases": " sr-RS@latin sr-rs@latin sr_RS@latn sr-RS@latn ", 
-      "code": " sr_RS@latin", 
+      "code": "sr_RS@latin", 
       "name": "Serbian (Latin) (Serbia)", 
       "description": "", 
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)", 
@@ -4954,8 +4954,8 @@
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11", 
       "rule_other": "everything else", 
       "specialchars": "", 
-      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14", 
-      "nplurals": 4
+      "rule_many": "n mod 10 is 1 and n mod 100 is not 11", 
+      "nplurals": 3
     }
   }
 ]

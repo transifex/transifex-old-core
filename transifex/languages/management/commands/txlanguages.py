@@ -33,16 +33,13 @@ class Command(LabelCommand):
         make_option('--export', action='store_true',
                     dest='doexport', default=False,
             help='Be more verbose in reporting progress.'),
-        make_option('--verbose', action='store_true',
-                dest='verbose', default=False,
-        help='Be more verbose in reporting progress.'),
     )
     
     requires_model_validation = False
     can_import_settings = True
 
     def handle(self, *args, **options):
-        verbose = options.get('verbose')
+        verbose = options.get('verbosity')
         doimport = options.get('doimport')
         doexport = options.get('doexport')
         
@@ -68,6 +65,7 @@ def export_lang(filename=None, verbose=False):
     models contents and depending on the filename it either writes to it or to
     stdout.
     """
+    print 'Exporting languages...'
     data = serializers.serialize("json", Language.objects.all().order_by('id'),
         indent=2)
     if filename:
@@ -101,13 +99,15 @@ def import_lang(filename=None, verbose=False):
         if not os.path.exists(filename):
             raise CommandError("Could not find fixture %s." % filename)
 
+    print 'Importing languages from %s' % filename
+
     try:
         datafile = open(filename, 'r')
     except IOError:
-        sys.stderr.write('Cannot open %s' % filename)
+        print 'Cannot open %s' % filename
         return
     except:
-        sys.stderr.write("Unexpected error: %s" % sys.exc_info()[0])
+        print "Unexpected error: %s" % sys.exc_info()[0]
         return
 
     data = simplejson.load(datafile)
@@ -124,9 +124,9 @@ def fill_the_database_verbose(data):
         fields = obj['fields']
         lang, created = Language.objects.get_or_create(code=fields['code'])
         if created:
-            sys.stdout.write('Creating %s language (%s)' % (fields['name'], fields['code']))
+            print 'Creating %s language (%s)' % (fields['name'], fields['code'])
         else:
-            sys.stdout.write('Updating %s language (%s)' % (fields['name'], fields['code']))
+            print 'Updating %s language (%s)' % (fields['name'], fields['code'])
         fill_language_data(lang, fields)
 
 def fill_the_database_silently(data):
