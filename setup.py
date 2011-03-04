@@ -77,7 +77,7 @@ setup(
         "South >= 0.7.2",
         "django-ajax-selects",
         "django-threadedcomments >= 0.9",
-        "django-staticfiles",
+        "django-staticfiles < 0.4",
         "pygooglechart",
         "python-magic",
     ],
