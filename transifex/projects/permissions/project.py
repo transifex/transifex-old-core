@@ -19,16 +19,18 @@ def _check_outsource_project(obj):
 
     Return a tuple '(project, team)'. The 'team' might be None.
     """
+    outsourced_project = None
     if isinstance(obj, Project):
         if obj.outsource:
             project = obj.outsource
+            outsourced_project = obj
         else:
             project = obj
         team = None
     elif isinstance(obj, Team):
         team = obj
         project = team.project
-    return (project, team)
+    return (project, team, outsourced_project)
 
 class ProjectPermission(BasePermission):
 
@@ -72,12 +74,19 @@ class ProjectPermission(BasePermission):
         """
         project, team = None, None
         if obj:
-            project, team = _check_outsource_project(obj)
+            # The `project` is the project against which we check the team
+            # permissions. For writers/maintainers we need to check against the
+            # `outsourced_project` if it exists.
+            project, team, outsourced_project = _check_outsource_project(obj)
             if project:
                 if project.anyone_submit:
                     return True
-                #Maintainers
-                if self.maintain(project):
+                # Maintainers
+                # A maintainer should have access to his project only and not
+                # to the project that are outsourced to his project as well
+                if (outsourced_project and self.maintain(outsourced_project)):
+                    return True
+                if self.maintain(project) and not outsourced_project:
                     return True
                 #Writers
                 perm = '%s.submit_translations' % self.label
