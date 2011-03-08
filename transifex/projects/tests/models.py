@@ -28,6 +28,6 @@ class ModelTests(BaseTestCase):
         with the ones returned from his own instance's foreign key relation.
         """
         self.assertEqual(
-            Project.objects.filter(maintainers__id=self.user['maintainer'].pk).public(),
-            self.user['maintainer'].projects_maintaining.public(),)
+            Project.objects.filter(maintainers__id=self.user['maintainer'].pk).public().count(),
+            self.user['maintainer'].projects_maintaining.filter(private=False).count(),)
 
