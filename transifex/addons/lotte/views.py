@@ -697,8 +697,16 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     if not push_response_dict.has_key(source_id):
                         push_response_dict[source_id] = { 'status':200}
                 else:
-                    push_response_dict[source_id] = { 'status':500,
-                         'message':_("The translation string is empty")}
+                    # In cases of pluralized translations, sometimes only one
+                    # translation will exist and the rest plural forms will be
+                    # empty. If the user wants to delete all of them, we need
+                    # to let by the ones that don't already have a translation.
+                    if source_string.source_entity.pluralized:
+                        if not push_response_dict.has_key(source_id):
+                            push_response_dict[source_id] = { 'status':200}
+                    else:
+                        push_response_dict[source_id] = { 'status':500,
+                             'message':_("The translation string is empty")}
             # catch-all. if we don't save we _MUST_ inform the user
             except:
                 # TODO: Log or inform here
