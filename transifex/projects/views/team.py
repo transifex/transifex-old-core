@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db import transaction
@@ -193,8 +194,7 @@ def team_delete(request, project_slug, language_code):
     if request.method == "POST":
         _team = copy.copy(team)
         team.delete()
-        request.user.message_set.create(
-            message=_("The team '%s' was deleted.") % _team.language.name)
+        messages.success(request, _("The team '%s' was deleted.") % _team.language.name)
 
         # ActionLog & Notification
         # TODO: Use signals
@@ -233,8 +233,8 @@ def team_join_request(request, project_slug, language_code):
     if request.POST:
         if request.user in team.members.all() or \
             request.user in team.coordinators.all():
-            request.user.message_set.create(message=_(
-                "You are in the '%s' team already.") % team.language.name)
+            messages.warning(request,
+                          _("You are in the '%s' team already.") % team.language.name)
         try:
             # send pre_team_join signal
             cla_sign = 'cla_sign' in request.POST and request.POST['cla_sign']
@@ -244,10 +244,8 @@ def team_join_request(request, project_slug, language_code):
 
             access_request = TeamAccessRequest(team=team, user=request.user)
             access_request.save()
-            request.user.message_set.create(message=_(
-                "You have added a request for joining the '%s' team."
-                ) % team.language.name)
-                
+            messages.success(request,
+                _("You have added a request for joining the '%s' team.") % team.language.name)
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_join_requested'
@@ -267,14 +265,14 @@ def team_join_request(request, project_slug, language_code):
                 
         except IntegrityError:
             transaction.rollback()
-            request.user.message_set.create(message=_(
-                "You already have a pending request to join the '%s' team."
-                ) % team.language.name)
+            messages.error(request,
+                            _("You already have a pending request to join the '%s' team.")
+                             % team.language.name)
         except ClaNotSignedError, e:
-            request.user.message_set.create(message=_(
-                "You need to sign the Contribution License Agreement for this "\
-                "project before you join a translation team"
-            ))
+            messages.error(request,
+                             _("You need to sign the Contribution License Agreement for this "\
+                "project before you join a translation team"))
+            
 
     return HttpResponseRedirect(reverse("team_detail", 
                                         args=[project_slug, language_code]))
@@ -300,16 +298,16 @@ def team_join_approve(request, project_slug, language_code, username):
     if request.POST:
         if user in team.members.all() or \
             user in team.coordinators.all():
-            request.user.message_set.create(message=_(
-                "User '%(user)s' is in the '%(team)s' team already."
-                ) % {'user':user, 'team':team.language.name})
+            messages.warning(request, 
+                            _("User '%(user)s' is in the '%(team)s' team already.")
+                            % {'user':user, 'team':team.language.name})
             access_request.delete()
         try:
             team.members.add(user)
             team.save()
-            request.user.message_set.create(message=_(
-                "You have added '%(user)s' into the '%(team)s' team."
-                ) % {'user':user, 'team':team.language.name})
+            messages.success(request,
+                            _("You have added '%(user)s' into the '%(team)s' team.")
+                            % {'user':user, 'team':team.language.name})
             access_request.delete()
 
             # ActionLog & Notification
@@ -355,7 +353,7 @@ def team_join_deny(request, project_slug, language_code, username):
     if request.POST:
         try:
             access_request.delete()
-            request.user.message_set.create(message=_(
+            messages.info(request,_(
                 "You have denied the request of the user '%(user)s' to join the "
                 "'%(team)s' team."
                 ) % {'user':user, 'team':team.language.name})
@@ -400,7 +398,7 @@ def team_join_withdraw(request, project_slug, language_code):
     if request.POST:
         try:
             access_request.delete()
-            request.user.message_set.create(message=_(
+            messages.success(request,_(
                 "You have withdrawn your own request to join the '%s' team."
                 ) % team.language.name)
                 
@@ -443,7 +441,7 @@ def team_leave(request, project_slug, language_code):
         try:
             if request.user in team.members.all():
                 team.members.remove(request.user)
-                request.user.message_set.create(message=_(
+                messages.info(request, _(
                     "You have left the '%s' team."
                     ) % team.language.name)
 
@@ -464,7 +462,7 @@ def team_leave(request, project_slug, language_code):
                     notification.send(set(itertools.chain(project.maintainers.all(), 
                         team.coordinators.all())), nt, context)
             else:
-                request.user.message_set.create(message=_(
+                messages.info(request, _(
                     "You are not in the '%s' team."
                     ) % team.language.name)
 
@@ -487,8 +485,8 @@ def team_request(request, project_slug):
     if request.POST:
         language_pk = request.POST.get('language', None)
         if not language_pk:
-            request.user.message_set.create(message=_(
-                "Please, select a language before submit the form."))
+            messages.error(request, _(
+                "Please, select a language before submit the form."))            
             return HttpResponseRedirect(reverse("team_list", 
                                         args=[project_slug,]))
 
@@ -500,13 +498,13 @@ def team_request(request, project_slug):
         try:
             team = Team.objects.get(project__pk=project.pk, 
                 language__pk=language.pk)
-            request.user.message_set.create(message=_(
+            messages.warning(request,_(
                 "'%s' team already exist.") % team.language.name)
         except Team.DoesNotExist:
             try:
                 team_request = TeamRequest.objects.get(project__pk=project.pk, 
                     language__pk=language.pk)
-                request.user.message_set.create(message=_(
+                messages.warning(request, _(
                     "A request for creating the '%s' team already exist.")
                     % team_request.language.name)
             except TeamRequest.DoesNotExist:
@@ -523,7 +521,7 @@ def team_request(request, project_slug):
                     team_request = TeamRequest(project=project, 
                         language=language, user=request.user)
                     team_request.save()
-                    request.user.message_set.create(message=_(
+                    messages.info(request, _(
                         "You have requested the '%s' team creation.")
                         % team_request.language.name)
                         
@@ -546,7 +544,7 @@ def team_request(request, project_slug):
                     transaction.rollback()
                     logger.error("Something weird happened: %s" % str(e))
                 except ClaNotSignedError, e:
-                    request.user.message_set.create(message=_(
+                    messages.error(request, _(
                         "You need to sign the Contribution License Agreement "\
                         "for this project before you submit a team creation "\
                         "request."
@@ -575,7 +573,7 @@ def team_request_approve(request, project_slug, language_code):
             team.coordinators.add(team_request.user)
             team.save()
             team_request.delete()
-            request.user.message_set.create(message=_(
+            messages.success(request, _(
                 "You have approved the '%(team)s' team requested by '%(user)s'."
                 ) % {'team':team.language.name, 'user':team_request.user})
             
@@ -618,7 +616,7 @@ def team_request_deny(request, project_slug, language_code):
     if request.POST:
         try:
             team_request.delete()
-            request.user.message_set.create(message=_(
+            messages.success(request, _(
                 "You have denied the '%(team)s' team requested by '%(user)s'."
                 ) % {'team':team_request.language.name, 
                      'user':team_request.user})

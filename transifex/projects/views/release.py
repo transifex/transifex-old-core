@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 
@@ -111,8 +112,8 @@ def release_delete(request, project_slug, release_slug):
         import copy
         release_ = copy.copy(release)
         release.delete()
-        request.user.message_set.create(
-            message=_("The release '%s' was deleted.") % release.full_name)
+        messages.success(request,
+                        _("The release '%s' was deleted.") % release.full_name)
 
         # ActionLog & Notification
         nt = 'project_release_deleted'

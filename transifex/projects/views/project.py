@@ -8,6 +8,7 @@ from django.dispatch import Signal
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.views.generic import list_detail
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging, LogEntry
@@ -159,8 +160,8 @@ def project_delete(request, project_slug):
         project_ = copy.copy(project)
         project.delete()
 
-        request.user.message_set.create(
-            message=_("The project '%s' was deleted.") % project.name)
+        messages.success(request,
+                         "The project '%s' was deleted." % project.name)
 
         # ActionLog & Notification
         nt = 'project_deleted'

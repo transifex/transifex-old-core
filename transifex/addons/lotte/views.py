@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.db.models import Count, Q
 from django.db.models.loading import get_model
 from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
@@ -65,11 +66,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         # Return a page explaining that the project has multiple source langs and
         # cannot be translated as a whole.
         if resource_list.values('source_language').distinct().count() > 1:
-            request.user.message_set.create(
-                message=_("This project has more than one source languages and as a "
+            messages.info(request,
+                          "This project has more than one source languages and as a "
                           "result you can not translate all resources at the "
-                          "same time."))
-
+                          "same time.")
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project_slug]),)
 
@@ -87,11 +87,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     # If it is an attempt to edit the source language, redirect the user to 
     # resource_detail and show him a message explaining the reason.
     if target_language == resources[0].source_language:
-        request.user.message_set.create(
-                message=_("The source language cannot be edited, because this would"
-                          " result in translation mismatching! If you want to "
-                          "update the source strings consider using the command"
-                          " line client of transifex."))
+        messages.error(request, 
+                       "The source language cannot be edited, because this would"
+                       " result in translation mismatching! If you want to "
+                       "update the source strings consider using the command"
+                       " line client of transifex.")
         if resource_slug:
             return HttpResponseRedirect(reverse('resource_detail',
                                                 args=[project_slug,

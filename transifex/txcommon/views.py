@@ -1,5 +1,6 @@
 import datetime
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.contrib.auth.models import User
@@ -100,18 +101,16 @@ def user_nudge(request, username):
         object_id=user.pk, content_type=ctype, action_time__gt=last_minutes)
 
     if log_entries:
-        request.user.message_set.create(message = _(
-                "You can't re-nudge the same user in a short amount of time."))
+        messages.warning(request,
+                         _("You can't re-nudge the same user in a short amount of time."))
     elif user.pk == request.user.pk:
-        request.user.message_set.create(message = _(
-                "You can't nudge yourself."))
+        messages.warning(request, _("You can't nudge yourself."))
     else:
         context={'performer': request.user}
         nt= 'user_nudge'
         action_logging(request.user, [user], nt, context=context)
         notification.send([user], nt, context)
-        request.user.message_set.create(message = _(
-                "You have nudged '%s'.") % user)
+        messages.success(request, _("You have nudged '%s'.") % user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 

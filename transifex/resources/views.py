@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
 from django.core.exceptions import ObjectDoesNotExist
@@ -91,8 +92,8 @@ def resource_delete(request, project_slug, resource_slug):
             user=request.user)
 
         # Signal for logging
-        request.user.message_set.create(
-            message=_("The translation resource '%s' was deleted.") % resource_.name)
+        messages.success(request,
+                         _("The translation resource '%s' was deleted.") % resource_.name)
 
         if xhr:
             response_dict = {'status': 200}
@@ -332,9 +333,9 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
         Translation.objects.filter(source_entity__resource=resource, 
             language=language).delete()
 
-        request.user.message_set.create(
-            message=_("The translations of language %(lang)s for the resource "
-                      "%(resource)s were deleted successfully.") % {
+        messages.success(request, 
+                        _("The translations of language %(lang)s for the resource "
+                        "%(resource)s were deleted successfully.") % {
                           'lang': language.name,
                           'resource': resource.name})
         invalidate_stats_cache(resource, language, user=request.user)
@@ -379,7 +380,8 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
     try:
         template = _compile_translation_template(resource, language)
     except Exception, e:
-        request.user.message_set.create(message=_("Error compiling translation file."))
+        messages.error(request,
+                       _("Error compiling translation file."))
         logger.error("Error compiling '%s' file for '%s': %s" % (language, 
             resource, str(e)))
         return HttpResponseRedirect(reverse('resource_detail',

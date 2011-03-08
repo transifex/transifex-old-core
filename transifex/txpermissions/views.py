@@ -6,6 +6,7 @@ from django.db.models.loading import get_model
 from django.utils.translation import ugettext as _
 from django.template.context import RequestContext
 from django.template import loader
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from actionlog.models import action_logging
@@ -94,7 +95,7 @@ def add_permission_or_request(request, obj, view_name, approved=False,
             else:
                 msg = _('You added a permission request.')
 
-            request.user.message_set.create(message=msg)
+            messages.info(request, msg)
 
             return HttpResponseRedirect(next)
     else:
@@ -129,8 +130,7 @@ def approve_permission_request(request, requested_permission, extra_context={}):
         # ActionLog & Notification
         _send_notice_save_action(request, extra_context['notice'])
 
-    request.user.message_set.create(
-        message=_('You approved the permission request.'))
+    messages.info(request, _('You approved the permission request.'))
     next = get_next(request, requested_permission)
     return HttpResponseRedirect(next)
 
@@ -158,5 +158,5 @@ def delete_permission_or_request(request, permission, approved, extra_context={}
         # ActionLog & Notification
         _send_notice_save_action(request, extra_context['notice'])
 
-    request.user.message_set.create(message=msg)
+    messages.info(request, msg)
     return HttpResponseRedirect(next)

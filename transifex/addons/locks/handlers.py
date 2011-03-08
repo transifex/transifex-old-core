@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.db.models.signals import post_save, post_delete
 from django.contrib.sites.models import Site
+from django.contrib import messages
 from notification  import models as notification
 from transifex.resources.models import Resource
 from transifex.resources.utils import invalidate_template_cache
@@ -54,8 +55,9 @@ def lotte_init_handler(sender, request, resources=None, language=None,
             logger.debug("lock-addon: Lock acquired/extended: '%s'" % lock)
         except LockError, e:
             logger.debug("lock-addon: %s" % e.message)
-            request.user.message_set.create(message = _("This translation is "
-                "locked by someone else."))
+            messages.error(request,
+                           "This translation is "
+                           "locked by someone else.")
 
 
 def lotte_done_handler(sender, request, resources=None, language=None,

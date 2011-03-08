@@ -537,7 +537,7 @@ img.repotype { vertical-align: middle; margin-left: 10px; }
   margin: 2px;
 }
 
-.message {
+.message, .message_info, .message_warning, .message_error, .message_success {
   border-radius: 5px;
   -moz-border-radius: 5px;
   border-width: 1px;
@@ -551,20 +551,35 @@ img.repotype { vertical-align: middle; margin-left: 10px; }
   border-right-width: 0px;
 }
 
-.message b {
+.message_warning {
+  background-color: yellow;
+}
+
+.message_error {
+  background-color: red;
+  color: white;
   font-weight: bold;
 }
 
-.messages .message {
+.message_success {
+  background-color: lightgreen;
+}
+
+.message b, .message_info b, .message_warning b, .message_error b, .message_success b {
+  font-weight: bold;
+}
+
+.messages .message, .messages message_info, .messages .message_warning, .messages .message_error, .messages .message_success {
   width: 70%;
   margin: 0 auto;
   display: block;
 }
 
-.message.i16 {
+.message.i16, .message_info.i16, .message_warning.i16, .message_error.i16, .message_success.i16 {
   background-position: 10px 50%;
   padding-left: 33px;
 }
+
 
 .hidden_field {
   display:none;
