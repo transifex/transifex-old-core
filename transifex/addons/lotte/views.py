@@ -51,7 +51,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project):
+    if not check.submit_translations(team or project) and not\
+        check.maintain(project):
         return permission_denied(request)
 
     resources = []
@@ -154,7 +155,8 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project):
+    if not check.submit_translations(team or project) and not\
+        check.maintain(project):
         return permission_denied(request)
 
     language = Language.objects.by_code_or_alias(lang_code)
@@ -459,7 +461,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     project = get_object_or_404(Project, slug=project_slug)
     team = Team.objects.get_or_none(project, lang_code)
     check = ProjectPermission(request.user)
-    if not check.submit_translations(team or project):
+    if not check.submit_translations(team or project) and not\
+        check.maintain(project):
         return permission_denied(request)
 
     if not request.POST:
