@@ -17,7 +17,7 @@ class POFile(BaseTestCase):
             os.path.split(__file__)[0])
 
         handler.set_language(self.resource.source_language)
-        handler.parse_file()
+        handler.parse_file(is_source=True)
         self.stringset = handler.stringset
         entities = 0
 
