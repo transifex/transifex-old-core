@@ -49,7 +49,16 @@ class TestTimeline(BaseTestCase):
 
         # Check project timeline page as regular user
         resp = self.client['registered'].get( self.url_project_timeline )
+        self.assertEqual(resp.status_code, 200)
+
+        # Check private project timeline page as regular user
+        resp = self.client['registered'].get(
+            reverse('project_timeline', args=[self.project_private.slug]))
         self.assertEqual(resp.status_code, 403)
+        
+        # Anonymous should require a login
+        resp = self.client['anonymous'].get( self.url_project_timeline, follow=True)
+        self.assertTrue("Enter your username and password to sign in." in resp.content)
 
         # Check whether link to user timeline is injected to profile page
         resp = self.client['registered'].get( self.url_user_profile )

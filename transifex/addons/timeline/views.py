@@ -5,9 +5,10 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.projects.models import Project
-from transifex.projects.permissions import pr_project_view_log
+from transifex.projects.permissions import pr_project_private_perm
 from actionlog.models import LogEntry
 from filters import LogEntryFilter
+
 
 @login_required
 def user_timeline(request, *args, **kwargs):
@@ -25,10 +26,10 @@ def user_timeline(request, *args, **kwargs):
          'actionlog': f.qs},
         context_instance = RequestContext(request))
 
+
 @login_required
-# Only the maintainer should have permissions to access this
-@one_perm_required_or_403(pr_project_view_log, 
-    (Project, 'slug__exact', 'project_slug'))
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
 def project_timeline(request, project_slug, *args, **kwargs):
     """
     Present a log of the latest actions on the project.
