@@ -60,14 +60,14 @@ class Command(LabelCommand):
             # Update stats
             for lang in langs:
                 lang = Language.objects.get(id=lang)
-                print "Calculating statistics for language %s" % lang
+                sys.stdout.write("Calculating statistics for language %s.\n" % lang)
                 rl, created = RLStats.objects.get_or_create(resource=r, language=lang)
 		rl.update()
             for team in Team.objects.filter(project=r.project):
                 lang = team.language
                 # Add team languages to the existing languages
                 langs.append(lang.id)
-                print "Calculating statistics for team language %s" % lang
+                sys.stdout.write("Calculating statistics for team language %s.\n" % lang)
                 rl,created = RLStats.objects.get_or_create(resource=r, language=lang)
 		rl.update()
 

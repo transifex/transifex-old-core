@@ -27,8 +27,8 @@ class Command(BaseCommand):
                 inst.send(None)
                 return
             else:
-                print "Couldn't find signal definition.\n"
+                sys.stdout.write("Couldn't find signal definition.\n")
         else:
             sys.stderr.write("No interval specified.\n")
         signal_list = [i[len(prefix):] for i in dir(signals) if i.startswith(prefix)]
-        print "Valid signals are: " + ", ".join(signal_list)
+        sys.stdout.write("Valid signals are: %s.\n" % ", ".join(signal_list))

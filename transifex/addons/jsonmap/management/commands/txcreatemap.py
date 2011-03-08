@@ -167,7 +167,7 @@ class Command(BaseCommand):
             else:
                 without_resources.append(p.slug)
 
-        print "Projects with at least one resource created: %s" % nprojects
-        print "Projects with no resources: %s" % len(without_resources)
+        sys.stdout.write("Projects with at least one resource created: %s.\n" % nprojects)
+        sys.stdout.write("Projects with no resources: %s.\n" % len(without_resources))
 
 

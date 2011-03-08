@@ -106,8 +106,8 @@ class Command(BaseCommand):
                             strings_added, strings_updated = fhandler.save2db(True)
                         except Exception, e:
                             resource.delete()
-                            print "Resource not created! Could not import " \
-                                "file '%s': %s" % (source_file, str(e))
+                            sys.stdout.write("Resource not created! Could not import "
+                                "file '%s': %s.\n" % (source_file, str(e)))
                             # Skip adding translations, as the resource 
                             # wasn't created.
                             continue
@@ -128,8 +128,8 @@ class Command(BaseCommand):
                                     fhandler.parse_file()
                                     strings_added, strings_updated = fhandler.save2db()
                                 except Exception, e:
-                                    print "Could not import file '%s': %s" % \
-                                        (translation_file, str(e))
+                                    sys.stdout.write("Could not import file '%s': %s" %
+                                        (translation_file, str(e)))
                 else:
                     logger.debug("Mapping '%s' does not have cached files "
                         "under %s." % (jsonmap, path))
