@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from transifex.txcommon.tests.base import (Project, Language, Team, AuPermission,
     BaseTestCase, USER_ROLES)
 from transifex.txcommon.tests.utils import (check_page_status, 
@@ -34,7 +35,8 @@ class ProjectAccessControlTestCase(BaseTestCase):
     Test if all project URLs return correct status code depending on each
     user role.
     """
-    EXTRA_USER_ROLES = ['outsource_writer', 'outsource_team_member']
+    EXTRA_USER_ROLES = ['outsource_writer', 'outsource_team_member',
+        'outsource_maintainer']
 
     def setUp(self):
         USER_ROLES.remove('anonymous')
@@ -48,7 +50,7 @@ class ProjectAccessControlTestCase(BaseTestCase):
         # Create an extra project to use it as the outsource
         self.project_outsource = Project.objects.get_or_create(
             slug="project1_outsource", name="Test Outsource Project")[0]
-        self.project_outsource.maintainers.add(self.user['maintainer'])
+        self.project_outsource.maintainers.add(self.user['outsource_maintainer'])
 
         # Add django-authority permission for outsource writer
         self.perm_outsource = AuPermission(codename='project_perm.submit_translations',
@@ -106,3 +108,30 @@ class ProjectAccessControlTestCase(BaseTestCase):
             response = self.client[user_role].get(url)
             assert_status_code(self, response, expected_code, url, 
                 user_role)
+
+    def testOriginalMaintainer(self):
+        """
+        Even if a project is outsourced, its maintainer needs to be able to
+        edit the source language and add translations as well.
+        """
+
+        self.project.outsource = self.project_outsource
+        self.project.save()
+
+        maintainer = self.project.maintainers.all()[0]
+
+        # Check if the maintainer can add translations.
+        expected_code = 200
+        url = reverse('translate_resource', args=[self.project.slug,
+            self.resource.slug, self.language.code])
+        response = self.client[maintainer.username].get(url)
+        assert_status_code(self, response, expected_code, url,
+            str(maintainer.username))
+
+        # Check if the maintainer can edit the resource
+        expected_code = 200
+        url = reverse('resource_edit', args=[self.project.slug,
+            self.resource.slug])
+        response = self.client[maintainer.username].get(url)
+        assert_status_code(self, response, expected_code, url,
+            str(maintainer.username))
