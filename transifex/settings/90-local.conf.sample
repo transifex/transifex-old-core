@@ -37,3 +37,14 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'HIDE_DJANGO_SQL': True,
 }
+
+# Do not run migrations for tests in devel for faster initial test setup.
+SOUTH_TESTS_MIGRATE = False
+
+# To be able to use txcommon.tests.utils.response_in_browser with CSS/JS.
+# More info: http://miniblog.glezos.com/post/3388080372/tests-browser
+# $ python manage.py build_static
+# MEDIA_ROOT = os.path.join(PROJECT_PATH, 'site_media/static/')
+# MEDIA_URL = '/site_media/static/'
+# STATIC_URL = 'http://localhost:8000' + MEDIA_URL
+
