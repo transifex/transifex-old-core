@@ -7,6 +7,10 @@ from django.db import models
 
 class Migration(DataMigration):
 
+    depends_on = (
+        ('resources', '0009_added_translation_wordcount',),
+    )
+
     def forwards(self, orm):
         """
         Drop extra remaining translations after decreasing the nplural of 
