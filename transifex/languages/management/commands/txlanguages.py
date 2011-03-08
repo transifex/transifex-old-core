@@ -92,6 +92,7 @@ def import_lang(filename=None, verbose=False):
         2) Read the json data
         3) For each model's object at the json data update references in the db
     """
+    sys.stdout.write('Importing initial set of languages...\n')
 
     if not filename:
         filename = os.path.abspath(os.path.join(settings.TX_ROOT,
