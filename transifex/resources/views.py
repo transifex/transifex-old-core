@@ -93,7 +93,7 @@ def resource_delete(request, project_slug, resource_slug):
 
         # Signal for logging
         messages.success(request,
-                         _("The translation resource '%s' was deleted.") % resource_.name)
+            _("The translation resource '%s' was deleted.") % resource_.name)
 
         if xhr:
             response_dict = {'status': 200}
