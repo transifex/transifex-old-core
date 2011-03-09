@@ -130,7 +130,9 @@ def project_access_control_edit(request, project_slug):
                 for p in project.project_set.all():
                     p.outsource=None
                     p.save()
-            if 'limited_access' == access_control :
+            # Check if cla form exists before sending the signal
+            if 'limited_access' == access_control and \
+              access_control_form.cleaned_data.has_key('cla_license_text'):
                 # send signal to save CLA
                 signals.cla_create.send(
                     sender='project_access_control_edit_view',
