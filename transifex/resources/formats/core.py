@@ -283,9 +283,11 @@ class Handler(object):
                     # Add it to list with new entities
                     new_entities.append(se)
 
-                # Skip storing empty strings as translations!
-                if not j.translation:
+                # Skip storing empty strings as translations and don't save not
+                # pluralized entries in pluralized source entities
+                if not j.translation or j.pluralized != se.pluralized:
                     continue
+
                 tr, created = Translation.objects.get_or_create(
                     source_entity = se,
                     language = self.language,
