@@ -251,6 +251,10 @@ class POHandler(Handler):
             pluralized = False
             same_nplural = True
 
+            # skip obsolete entries
+            if entry.obsolete:
+                continue
+
             # treat fuzzy translation as nonexistent
             if "fuzzy" in entry.flags:
                 if not is_source:
