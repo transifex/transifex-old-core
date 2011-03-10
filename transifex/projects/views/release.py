@@ -60,6 +60,9 @@ def release_detail(request, project_slug, release_slug):
     #TODO: find a way to do this more effectively
     resources = Resource.objects.filter(releases=release).filter(
         project__private=False).order_by('project__name')
+    source_languages = set()
+    for resource in resources:
+        source_languages.add(resource.source_language)
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
@@ -75,6 +78,7 @@ def release_detail(request, project_slug, release_slug):
         'project': release.project,
         'resources': resources,
         'private_resources': private_resources,
+        'source_languages' : source_languages,
         'statslist': statslist,
     }, context_instance=RequestContext(request))
 

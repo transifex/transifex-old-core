@@ -157,6 +157,10 @@
         <td>
           {{ stat.object.name }} 
           <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.code }}</a>)</span>
+          {% if stat.object in source_languages %}
+             <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
+          {% endif %}
+
           </td>
         <td>
           {% with 200 as barwidth %}
