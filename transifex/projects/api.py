@@ -103,7 +103,6 @@ class ProjectHandler(BaseHandler):
         """
         API call to update project details via PUT.
         """
-
         if 'application/json' in request.content_type: # we got JSON
             data = getattr(request, 'data', None)
             outsource = maintainers = None
@@ -272,9 +271,9 @@ class ProjectResourceHandler(BaseHandler):
         # Permissions handling
         team = Team.objects.get_or_none(project, language_code)
         check = ProjectPermission(request.user)
-        if not check.submit_translations(team or project) or \
-            (not resource.accept_translations and not
-                check.maintain(project)):
+        if (not check.submit_translations(team or project) or\
+            not resource.accept_translations) and not\
+                check.maintain(project):
             return rc.FORBIDDEN
 
         if "application/json" in request.content_type:
@@ -294,7 +293,6 @@ class ProjectResourceHandler(BaseHandler):
                 fhandler.set_language(language)
                 fhandler.bind_resource(resource)
                 fhandler.contents_check(fhandler.filename)
-
 
                 try:
                     fhandler.parse_file()

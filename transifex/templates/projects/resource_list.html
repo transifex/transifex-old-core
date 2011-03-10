@@ -119,7 +119,8 @@
 
   {% comment %}
   {% get_permission "project_perm.submit_translations" for request.user and project,1 as "can_submit_translation" %}
-  {% if can_submit_translation or request.user.is_superuser %}
+  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+  {% if can_submit_translation or request.user.is_superuser or is_maintainer %}
   <div id="new_translation_box1">
       <select name="translation_languages" class="language">
           <option value="">{% trans "Select Language" %}</option>
@@ -141,7 +142,6 @@
   {% endif %}
   {% endcomment %}
 
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   {% if is_maintainer %}
     {% upload_create_resource_form request project %}
   {% endif %}

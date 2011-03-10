@@ -33,13 +33,14 @@
       {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate now" {% endcomment %}
       {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translation" %}
     {% endif %}
+	{% get_permission "project_perm.maintain" for request.user and project as "can_maintain" %}
 
       {% ifequal resource.source_language target_language %}
         {% blocktrans %} 
         <span title="You cannot translate the source language strings.">This is the Source Language</span>
         {% endblocktrans %}
       {% else %}
-        {% if can_submit_translation and resource.accept_translations %}
+        {% if can_submit_translation and resource.accept_translations or can_maintain %}
          {% url translate_resource project.slug resource.slug target_language.code as translate_resource %}
          {% if stats.lock.valid %}
           {% with stats.lock.owner as lock_owner %}
@@ -150,7 +151,7 @@
             <div class="error_notes"></div>
           </li>
           <li>
-            {% if can_submit_translation and resource.accept_translations %}
+            {% if can_submit_translation and resource.accept_translations or can_maintain %}
                 <div class="upload_action_wrapper" style="padding:0.5em 0">
                 {% upload_resource_translation_button request resource target_language %}
                 </div>
