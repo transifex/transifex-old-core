@@ -432,7 +432,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
     if not can_lock:
         #print_gray_text(You cannot assign this file to you)
         response['status'] = "FAILED"
-        response['message'] = _("Sorry, you cannot assign this file to you!")
+        response['message'] = _("Sorry, you cannot lock this file!")
     else:
         # User can lock
         if not lock:
