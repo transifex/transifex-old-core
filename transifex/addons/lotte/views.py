@@ -774,7 +774,7 @@ def delete_translation(request, project_slug=None, resource_slug=None,
 #            message=_("Translations deleted successfully!"))
     except:
 #        request.user.message_set.create(
-#            message=_("Translations did not delete due to some error!"))
+#            message=_("Failed to delete translations due to some error!"))
         raise Http404
 
     invalidate_stats_cache(resource, language, user=user)
