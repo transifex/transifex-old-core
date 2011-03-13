@@ -234,7 +234,7 @@ def team_join_request(request, project_slug, language_code):
         if request.user in team.members.all() or \
             request.user in team.coordinators.all():
             messages.warning(request,
-                          _("You are in the '%s' team already.") % team.language.name)
+                          _("You are already on the '%s' team.") % team.language.name)
         try:
             # send pre_team_join signal
             cla_sign = 'cla_sign' in request.POST and request.POST['cla_sign']
@@ -299,7 +299,7 @@ def team_join_approve(request, project_slug, language_code, username):
         if user in team.members.all() or \
             user in team.coordinators.all():
             messages.warning(request,
-                            _("User '%(user)s' is in the '%(team)s' team already.")
+                            _("User '%(user)s' is already on the '%(team)s' team.")
                             % {'user':user, 'team':team.language.name})
             access_request.delete()
         try:
