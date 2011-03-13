@@ -527,7 +527,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             if error_flag:
                 push_response_dict[source_id] = { 'status':500,
                     'message':(_("Cannot save unless plural translations are either "
-                               "completely filled or entirely empty!"))}
+                               "completely specified or entirely empty!"))}
                 # Skip the save as we hit on an error.
                 continue
 
