@@ -17,7 +17,7 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--force', '-f', action="store_true", default=False,
             dest='force',
-            help="Force re-migration of mappings already migrated."),
+            help="Force re-migration of previously migrated mappings."),
     )
 
     args = '<project_slug project_slug ...>'
