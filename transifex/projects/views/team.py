@@ -499,13 +499,13 @@ def team_request(request, project_slug):
             team = Team.objects.get(project__pk=project.pk,
                 language__pk=language.pk)
             messages.warning(request,_(
-                "'%s' team already exist.") % team.language.name)
+                "'%s' team already exists.") % team.language.name)
         except Team.DoesNotExist:
             try:
                 team_request = TeamRequest.objects.get(project__pk=project.pk,
                     language__pk=language.pk)
                 messages.warning(request, _(
-                    "A request for creating the '%s' team already exist.")
+                    "A request to create the '%s' team already exists.")
                     % team_request.language.name)
             except TeamRequest.DoesNotExist:
                 try:
