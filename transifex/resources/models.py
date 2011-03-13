@@ -126,7 +126,7 @@ class Resource(models.Model):
                     ', '.join(settings.TRANS_CHOICES.keys()))
     accept_translations = models.BooleanField(_('Accepting translations?'),
         blank=False, null=False, default=True,
-        help_text=_('Is this resource accepting submissions of translations?'))
+        help_text=_('Is this resource accepting translations?'))
     total_entities = models.IntegerField(_('Total source entities'),
         blank=False, null=False, editable=False, default=0,
         help_text=_('The number of source strings in this translation'
