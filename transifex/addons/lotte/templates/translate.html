@@ -153,6 +153,7 @@
                 "sZeroRecords":  '{% trans "No matching records found"|escapejs %}',
                 "sInfo":         '{% trans "Showing _START_ to _END_ of _TOTAL_ entries"|escapejs %}',
                 "sInfoEmpty":    '{% trans "Nothing to show"|escapejs %}',
+// XXX "(excluding _EXCLUDED_ entries)"
                 "sInfoFiltered": '{% trans "(filtered from _MAX_ total entries)"|escapejs %}',
                 "sInfoPostFix":  "",
                 "sSearch":       '{% trans "Search:"|escapejs %}',
@@ -514,8 +515,8 @@
                 to_delete.push( $("span#sourceid_"+j).text() );
             }
             if(to_delete.length == 0){
-                alert('{% trans "This page does not have any translations (to delete)!"|escapejs %}');
-            }else if(confirm("{% trans 'This action will delete all translations in this page. Are you sure you want to proceed?' %}")){
+                alert('{% trans "There are no translations (to delete) on this page!"|escapejs %}');
+            }else if(confirm("{% trans 'This will delete all translations on this page. Are you sure you want to proceed?' %}")){
                 {% if resource %}
                 var delete_url = '{% url delete_translation project.slug resource.slug target_language.code %}';
                 {% else %}
