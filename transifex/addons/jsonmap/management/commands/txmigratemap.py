@@ -38,7 +38,7 @@ class Command(BaseCommand):
         if settings.DEBUG:
             msg = "You are running this command with DEBUG=True. Please " \
                 "change it to False in order to avoid problems with " \
-                "allocation of memory."
+                "allocating memory."
             raise CommandError(msg)
 
         msg = None
