@@ -486,7 +486,7 @@ def team_request(request, project_slug):
         language_pk = request.POST.get('language', None)
         if not language_pk:
             messages.error(request, _(
-                "Please, select a language before submit the form."))
+                "Please select a language before submitting the form."))
             return HttpResponseRedirect(reverse("team_list",
                                         args=[project_slug,]))
 
