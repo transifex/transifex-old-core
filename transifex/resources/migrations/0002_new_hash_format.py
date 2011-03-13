@@ -18,7 +18,7 @@ class Migration(DataMigration):
                     se.context = ""
                 se.save()
             except utils.IntegrityError:
-                logger.error("Updating failed for one of the source entities"
+                logger.error("Failed to update one of the source entities"
                 " for resource %s. Please re-upload the source file for that"
                 " resource." % '.'.join([se.resource.project.slug,
                 se.resource.slug]))
