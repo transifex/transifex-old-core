@@ -432,7 +432,7 @@ class Translation(models.Model):
                     "the rule must be 5 (other)."))
     wordcount = models.PositiveIntegerField(_("Wordcount for this string."),
         blank=False, null=False, default=0, help_text="The number of words "
-        " contained in this translation string.")
+        "contained in this translation string.")
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
