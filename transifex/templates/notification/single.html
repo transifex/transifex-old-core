@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>{% trans "Notice" %}</h1>
-    
+
     {% if notice.is_unseen %}
         <div class="unseen_notice">
     {% else %}
@@ -16,5 +16,5 @@
         <span class="notice_message">{{ notice.message|safe }}</span>
         <span class="notice_time">{{ notice.added }}</span>
     </div>
-    
+
 {% endblock %}

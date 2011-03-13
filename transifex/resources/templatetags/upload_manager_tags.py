@@ -11,8 +11,8 @@ register = template.Library()
 @register.inclusion_tag("resources/upload_create_resource_form.html")
 def upload_create_resource_form(request, project, prefix='create_form'):
     """
-    Render a form that uses StorageFile field to upload files. It creates a 
-    resource after the form ve validated, extract the file strings as 
+    Render a form that uses StorageFile field to upload files. It creates a
+    resource after the form ve validated, extract the file strings as
     sourceentities on the fly.
 
     The parameter 'prefix' can be used to add a prefix to the form name and
@@ -44,7 +44,7 @@ def upload_create_resource_form(request, project, prefix='create_form'):
                 resource.slug = "%s_%s" % (slug, identifier)
 
     else:
-        create_resource_form = CreateResourceForm(prefix=prefix, 
+        create_resource_form = CreateResourceForm(prefix=prefix,
             initial={'source_file':['en', ""]})
         display_form=False
 
@@ -66,12 +66,12 @@ def upload_resource_translation_button(request, resource, language=None,
     Render a StorageFile field to upload translation and insert them into a
     resource on the fly.
 
-    If the 'language' is passed, the field won't render the language select 
+    If the 'language' is passed, the field won't render the language select
     field for choosing the language.
 
     The parameter 'prefix' can be used to add a prefix to the field name and
     its sub-fields.
-    
+
     If the parameter translate online is given, a new button will appear next
     to the upload button which onclick will redirect the user to lotte.
     """
@@ -81,7 +81,7 @@ def upload_resource_translation_button(request, resource, language=None,
         initial={}
 
     if request.method == 'POST' and request.POST.get('resource_translation', None):
-        resource_translation_form = ResourceTranslationForm(request.POST, 
+        resource_translation_form = ResourceTranslationForm(request.POST,
             language=language, prefix=prefix, initial=initial)
         if resource_translation_form.is_valid():
             resource = resource_translation_form.save(commit=False)

@@ -1,6 +1,6 @@
 /**
 
-Custom pagination plugin that calls a custom external function called 
+Custom pagination plugin that calls a custom external function called
 saveError() to let the user know of any error while saving an entry on Lotte
 right before proceed with a page change.
 

@@ -19,7 +19,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.teams.models import Team
 
-# Uncomment the following and use ipython(), if you want to open ipython 
+# Uncomment the following and use ipython(), if you want to open ipython
 #from IPython.Shell import IPShellEmbed
 #ipython = IPShellEmbed()
 
@@ -37,7 +37,7 @@ class PrivateProjectTest(BaseTestCase):
 
     def test_project_list_with_anonymous_user(self):
         """
-        Test that project list pages contain only the public project and not 
+        Test that project list pages contain only the public project and not
         the private, if the user is anonymous.
         """
 
@@ -75,7 +75,7 @@ class PrivateProjectTest(BaseTestCase):
 
     def test_project_list_with_logged_in_user(self):
         """
-        Test that project list pages contain only the public project and not 
+        Test that project list pages contain only the public project and not
         the private, if the user is logged in.
         """
 
@@ -163,7 +163,7 @@ class PrivateProjectTest(BaseTestCase):
     def test_search_project(self):
         """
         Test that searching for the private project does not return it.
-        
+
         We also check the appearance of the public project
         """
         URL = reverse('search')
@@ -352,7 +352,7 @@ class PrivateProjectTest(BaseTestCase):
 
         # Check access to lotte for a language with a team.
         URL = reverse('translate_resource', kwargs={'project_slug':self.project_private.slug,
-            'resource_slug':self.resource_private.slug, 
+            'resource_slug':self.resource_private.slug,
             'lang_code': self.language.code })
 
         for user in ['anonymous']:
@@ -391,7 +391,7 @@ class PrivateProjectTest(BaseTestCase):
 
         # Check access to lotte for a language with a team.
         URL = reverse('translate_resource', kwargs={'project_slug':self.project_private.slug,
-            'resource_slug':self.resource_private.slug, 
+            'resource_slug':self.resource_private.slug,
             'lang_code': self.language.code })
 
         for user in ['anonymous']:
@@ -473,7 +473,7 @@ class PrivateProjectTest(BaseTestCase):
 #        Check access to submit pofile in a component of a private project.
 #        """
 #        URL = reverse('component_edit_file', kwargs={'project_slug':self.project_private.slug,
-#            'component_slug':'priv_component', 
+#            'component_slug':'priv_component',
 #            'filename': self.FILEPATHS[0] })
 #
 #        # POST Requests
@@ -481,13 +481,13 @@ class PrivateProjectTest(BaseTestCase):
 #        response = self.client.post(URL, follow=True)
 #        # Login required will redirect use to the login page
 #        self.failUnlessEqual(response.status_code, 200)
-#        self.failUnlessEqual(('http://testserver/accounts/login/?next=%s' % 
+#        self.failUnlessEqual(('http://testserver/accounts/login/?next=%s' %
 #            (URL), 302), response.redirect_chain[0])
 #
 #        # Logged in user without permissions should not have acces too!
 #        test_user = User.objects.create_user('test_login', 'test@transifex.net',
 #            'test_login')
-#        self.assertTrue(self.client.login(username='test_login', 
+#        self.assertTrue(self.client.login(username='test_login',
 #            password='test_login'))
 #        response = self.client.post(URL)
 #        self.failUnlessEqual(response.status_code, 403)
@@ -495,31 +495,31 @@ class PrivateProjectTest(BaseTestCase):
 #
 #        # Maintainer should have permission to submit files
 #        # (Owner should have been put to maintainers!)
-#        self.assertTrue(self.client.login(username='priv_owner', 
+#        self.assertTrue(self.client.login(username='priv_owner',
 #            password='priv_owner'))
 #        response = self.client.post(URL, follow=True)
 #        self.failUnlessEqual(response.status_code, 200)
 #        self.client.logout()
 #
 #        # Check that a submitter (writer) has access to submit file.
-#        self.assertTrue(self.client.login(username='priv_submitter', 
+#        self.assertTrue(self.client.login(username='priv_submitter',
 #            password='priv_submitter'))
 #        response = self.client.post(URL, follow=True)
 #        self.failUnlessEqual(response.status_code, 200)
 #        self.client.logout()
 #
-#        #TODO: ONLY team members and coordinators of the specific team where 
+#        #TODO: ONLY team members and coordinators of the specific team where
 #        # the file belongs to must have access to it.
 #
 #        # Check that a team coordinator (writer) has access to submit a file of his team
-#        self.assertTrue(self.client.login(username='priv_coordinator', 
+#        self.assertTrue(self.client.login(username='priv_coordinator',
 #            password='priv_coordinator'))
 #        response = self.client.post(URL, follow=True)
 #        self.failUnlessEqual(response.status_code, 200)
 #        self.client.logout()
 #
 #        # Check that a team member (writer) has access to submit a file of his team.
-#        self.assertTrue(self.client.login(username='priv_member', 
+#        self.assertTrue(self.client.login(username='priv_member',
 #            password='priv_member'))
 #        response = self.client.post(URL, follow=True)
 #        self.failUnlessEqual(response.status_code, 200)
@@ -700,10 +700,10 @@ class ProjectLookupsTests(BaseTestCase):
 
     def test_private_projects_ajax_lookup(self):
         """Test that a private project isn't present in lookups.
-        
+
         This AJAX lookup/dropdown is present in the Team Outsource form.
         """
-        
+
         public_project = "Test Project"
         private_project = "Test Private Project"
 

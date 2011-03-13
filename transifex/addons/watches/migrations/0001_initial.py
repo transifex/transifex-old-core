@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'TranslationWatch'
         db.create_table('watches_translationwatch', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -26,7 +26,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'TranslationWatch', fields ['resource', 'language']
         db.delete_unique('watches_translationwatch', ['resource_id', 'language_id'])
 

@@ -16,19 +16,19 @@ register = template.Library()
 
 def _base_permission_form(context, obj, perm, view_name):
     """
-    Handler for returning a dictionary with two basic fields (url and next) for 
+    Handler for returning a dictionary with two basic fields (url and next) for
     the permission form, based on the arguments passed by parameter.
     """
     return {
         'next': context['request'].build_absolute_uri(),
-        'url': reverse(view_name, kwargs={'project_slug': obj.slug, 
+        'url': reverse(view_name, kwargs={'project_slug': obj.slug,
                                           'permission_pk': perm.pk,}),
     }
 
 @register.simple_tag
 def txurl_for_obj(view_name, obj):
     """
-    Return the reverse url for a given obj and view_name based on the 
+    Return the reverse url for a given obj and view_name based on the
     object slug
     """
     return reverse(view_name, kwargs={'%s_slug' % obj._meta.module_name: obj.slug})
@@ -43,11 +43,11 @@ def txadd_url_for_obj(obj):
 @register.simple_tag
 def txrequest_url_for_obj(obj):
     """Return the reverse url for adding permission request to an object"""
-    return txurl_for_obj(u'%s_add_permission_request' % obj._meta.module_name, 
+    return txurl_for_obj(u'%s_add_permission_request' % obj._meta.module_name,
                          obj)
 
 
-@register.inclusion_tag('txpermissions/permission_delete_form.html', 
+@register.inclusion_tag('txpermissions/permission_delete_form.html',
                         takes_context=True)
 def txpermission_delete_form(context, obj, perm):
     """
@@ -60,23 +60,23 @@ def txpermission_delete_form(context, obj, perm):
         check = ProjectPermission(user)
         if (check.maintain(obj) or user.has_perm('authority.delete_permission')
             or user.pk == perm.creator.pk):
-            return _base_permission_form(context, obj, perm, 
+            return _base_permission_form(context, obj, perm,
                                          'project_delete_permission')
     return {'url': None}
 
 
-@register.inclusion_tag('txpermissions/permission_request_delete_form.html', 
+@register.inclusion_tag('txpermissions/permission_request_delete_form.html',
                         takes_context=True)
 def txpermission_request_delete_form(context, obj, perm):
     """
-    Render a html form to the delete view of the given permission request. 
+    Render a html form to the delete view of the given permission request.
     Return no content if the request-user has no permission to delete
     permissions.
     """
     user = context['request'].user
     if user.is_authenticated():
         check = ProjectPermission(user)
-        form_kwargs = _base_permission_form(context, obj, perm, 
+        form_kwargs = _base_permission_form(context, obj, perm,
                                             'project_delete_permission_request')
         if check.maintain(obj) or user.has_perm('authority.delete_permission'):
             form_kwargs['is_requestor'] = False
@@ -87,20 +87,20 @@ def txpermission_request_delete_form(context, obj, perm):
     return {'url': None}
 
 
-@register.inclusion_tag('txpermissions/permission_request_approve_form.html', 
+@register.inclusion_tag('txpermissions/permission_request_approve_form.html',
                         takes_context=True)
 def txpermission_request_approve_form(context, obj, perm):
     """
-    Render a html form to the approve view of the given permission request. 
-    Return no content if the request-user has no permission to delete 
+    Render a html form to the approve view of the given permission request.
+    Return no content if the request-user has no permission to delete
     permissions.
     """
     user = context['request'].user
     if user.is_authenticated():
         check = ProjectPermission(user)
-        if (check.maintain(obj) or 
+        if (check.maintain(obj) or
             user.has_perm('authority.approve_permission_requests')):
-            return _base_permission_form(context, obj, perm, 
+            return _base_permission_form(context, obj, perm,
                                          'project_approve_permission_request')
     return {'url': None}
 
@@ -144,7 +144,7 @@ class PermissionFormNode(ResolverNode):
                         'form_url': txadd_url_for_obj(obj),
                         'next': request.build_absolute_uri(),
                         'approved': self.approved,
-                        'form': UserAjaxPermissionForm(perm, obj, 
+                        'form': UserAjaxPermissionForm(perm, obj,
                             approved=self.approved, initial=dict(codename=perm)),
                     }
         else:

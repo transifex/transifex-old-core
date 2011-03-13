@@ -2,7 +2,7 @@
 NOTE: Why does Transifex have another pagination method?
 
 Django-pagination does not work with POST method. Once the navigation among
-the forms/pages of the translation wizard (webtrans app) requires a POST 
+the forms/pages of the translation wizard (webtrans app) requires a POST
 method to be sent, in order to save the data in the session for each form/page,
 it was necessary to implement a new templatetag for this kind of situation.
 
@@ -17,10 +17,10 @@ Usage:
 {% paginate "/items/" items current_page_number 20 6 paged_items %}
 {% for item in paged_items %}
   {{ item }}
-{% endfor %} 
+{% endfor %}
 {% include "pagination.html" %}
 
-Reference: 
+Reference:
 http://blog.awarelabs.com/2009/digg-style-pagination-in-django-revisited/
 """
 import math
@@ -38,16 +38,16 @@ class Pages:
     self.right = []
     self.next = None
     self.previous = None
-  
+
     if self.page > 1:
       self.previous = self.page - 1
-  
+
     p = int(1)
 
     while p < segment and p <= self.pages:
       self.left.append(p)
       p = p + 1
-    
+
     if p < self.page - segment/2:
       p = self.page - segment/2 + 1
 
@@ -59,7 +59,7 @@ class Pages:
       while p < self.page + segment/2 and p <= self.pages:
         self.left.append(int(p))
         p = p + 1
-      
+
     if p < self.pages - segment/2:
       p = self.pages - segment/2
 
@@ -83,9 +83,9 @@ class PaginationNode(template.Node):
     self.step = step
     self.segment = segment
     self.variable = variable
-  
+
   def render(self, context):
-      
+
     try:
         self.step = int(self.step)
     except ValueError:
@@ -99,7 +99,7 @@ class PaginationNode(template.Node):
     objects = template.resolve_variable(self.objects_var, context)
 
     page = template.resolve_variable(self.page_var, context)
-    if not page: 
+    if not page:
       page = 1
 
     page = int(page) - 1

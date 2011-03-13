@@ -13,7 +13,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         """
-        Drop extra remaining translations after decreasing the nplural of 
+        Drop extra remaining translations after decreasing the nplural of
         some languages.
         """
 
@@ -76,7 +76,7 @@ class Migration(DataMigration):
                     sug.save()
 
             orm['resources.Translation'].objects.filter(
-                language__code__startswith=l, 
+                language__code__startswith=l,
                 source_entity__pluralized=True).delete()
 
     def backwards(self, orm):

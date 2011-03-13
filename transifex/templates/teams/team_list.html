@@ -43,14 +43,14 @@
 <ul>
 {% for teamrequest in teamrequests %}
     <li class="i16 team_request">
-        <span class="name notice">{{ teamrequest.language.name }}</span> 
+        <span class="name notice">{{ teamrequest.language.name }}</span>
         <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
-        
+
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
             <input name="team_request_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
         </form>
-        
+
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
             <input name="team_request_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
         </form>
@@ -71,8 +71,8 @@
 <ul>
 {% for team in teams %}
     <li class="i16 team">
-        <a class="name" href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a> 
-          <span class="details">- {% blocktrans count team.coordinators.all|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %} 
+        <a class="name" href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
+          <span class="details">- {% blocktrans count team.coordinators.all|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}
             {% for c in team.coordinators.all %}
               <a href="{% url profile_public c.username %}">
                 <img class="border" src="{% avatar 16 c %}" style="vertical-align:bottom"/>

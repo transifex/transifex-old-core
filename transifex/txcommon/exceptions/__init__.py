@@ -14,12 +14,12 @@ def handle_exception_mailing(request, exception):
     subject, message = exception_email(request, exc_info)
     if not settings.DEBUG:
         logger.debug('Sending handled exception to admins.')
-        mail_admins(('%s - %s') % (subject, exception.message), message, 
+        mail_admins(('%s - %s') % (subject, exception.message), message,
             fail_silently=True)
 
 def exception_email(request, exc_info):
     """Format email subject and message for exception reporting."""
-    subject = 'Error (%s IP): %s' % ((request.META.get('REMOTE_ADDR') in 
+    subject = 'Error (%s IP): %s' % ((request.META.get('REMOTE_ADDR') in
         settings.INTERNAL_IPS and 'internal' or 'EXTERNAL'), request.path)
     try:
         request_repr = repr(request)

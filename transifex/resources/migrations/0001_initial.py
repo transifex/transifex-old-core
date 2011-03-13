@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'Resource'
         db.create_table('resources_resource', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -82,7 +82,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'Translation', fields ['source_entity', 'language', 'rule']
         db.delete_unique('resources_translation', ['source_entity_id', 'language_id', 'rule'])
 

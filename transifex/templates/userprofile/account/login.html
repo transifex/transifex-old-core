@@ -17,7 +17,7 @@
 {% block userprofile_content %}
   <h2>{% trans "Sign in" %}</h2>
   <p>{% trans "Enter your username and password to sign in." %}</p>
-    
+
   <div class="generic_form">
     <form action="{% if next %}?next={{ next }}{% endif %}" method="post" accept-charset="utf-8">{% csrf_token %}
     <fieldset>

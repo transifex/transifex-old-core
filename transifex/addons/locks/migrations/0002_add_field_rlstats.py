@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Lock.rlstats'
         db.add_column('addons_locks_lock', 'rlstats', self.gf('django.db.models.fields.related.OneToOneField')(related_name='lock', unique=True, null=True, to=orm['resources.RLStats']), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Lock.rlstats'
         db.delete_column('addons_locks_lock', 'rlstats_id')
 

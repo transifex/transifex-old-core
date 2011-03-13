@@ -13,8 +13,8 @@ class ResourcesTemplateTests(BaseTestCase):
         #URL
         self.resource_detail_url = reverse('resource_detail',
             args=[self.project.slug, self.resource.slug])
-        self.project_detail_url = reverse('project_detail', 
-            args=[self.project.slug]) 
+        self.project_detail_url = reverse('project_detail',
+            args=[self.project.slug])
 
     def tearDown(self):
         super(ResourcesTemplateTests, self).tearDown()
@@ -36,7 +36,7 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['maintainer'].get(self.project_detail_url)
         self.assertTemplateUsed(resp, 'projects/resource_list.html')
         self.assertContains(resp,
-                            'id="priority_%s"' % 
+                            'id="priority_%s"' %
                             (self.resource.slug ,),
                             status_code=200)
         self.assertContains(resp,
@@ -44,12 +44,12 @@ class ResourcesTemplateTests(BaseTestCase):
                             (self.resource.priority.level ,))
         self.assertContains(resp,
                             '<img class="res_tipsy_enable" src="%spriorities/images/%s.png"' %
-                            (settings.STATIC_URL, 
+                            (settings.STATIC_URL,
                              self.resource.priority.display_level ))
         for user in ['anonymous', 'registered','team_member']:
             resp = self.client[user].get(self.project_detail_url)
             self.assertNotContains(resp,
-                                   'id="priority_%s"' % 
+                                   'id="priority_%s"' %
                                    (self.resource.slug ,),
                                    status_code=200)
 
@@ -75,8 +75,8 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['maintainer'].get(self.project_detail_url)
         self.assertTemplateUsed(resp, 'projects/resource_list.html')
         self.assertContains(resp,
-                            'var resource_priority_cycle_url = \'%s\';'% 
-                            (reverse('cycle_resource_priority', 
+                            'var resource_priority_cycle_url = \'%s\';'%
+                            (reverse('cycle_resource_priority',
                                      args=[self.project.slug, "1111111111"]),),
                             status_code=200)
         self.assertContains(resp,
@@ -85,8 +85,8 @@ class ResourcesTemplateTests(BaseTestCase):
         for user in ['anonymous', 'registered','team_member']:
             resp = self.client[user].get(self.project_detail_url)
             self.assertNotContains(resp,
-                                'var resource_priority_cycle_url = \'%s\';'% 
-                                (reverse('cycle_resource_priority', 
+                                'var resource_priority_cycle_url = \'%s\';'%
+                                (reverse('cycle_resource_priority',
                                          args=[self.project.slug, "1111111111"]),),
                                 status_code=200)
             self.assertNotContains(resp,
@@ -114,7 +114,7 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['maintainer'].get(self.resource_detail_url)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
-                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
+                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
                             (self.project.slug, self.resource.slug),
                             status_code=200)
         # In any other case of user this should not be rendered
@@ -130,7 +130,7 @@ class ResourcesTemplateTests(BaseTestCase):
         resp = self.client['maintainer'].get(self.resource_detail_url)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
-                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' % 
+                            '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
                             (self.project.slug, self.resource.slug),
                             status_code=200)
         # In any other case of user this should not be rendered

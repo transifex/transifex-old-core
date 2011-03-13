@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'RLStats.translated_wordcount'
         db.add_column('resources_rlstats', 'translated_wordcount', self.gf('django.db.models.fields.PositiveIntegerField')(default=0), keep_default=False)
 
@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'RLStats.translated_wordcount'
         db.delete_column('resources_rlstats', 'translated_wordcount')
 

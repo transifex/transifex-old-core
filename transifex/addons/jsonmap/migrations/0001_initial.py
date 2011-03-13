@@ -5,14 +5,14 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     depends_on = (
         ('projects', '0001_initial'),
     )
 
 
     def forwards(self, orm):
-        
+
         # Adding model 'JSONMap'
         db.create_table('jsonmap_jsonmap', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'JSONMap'
         db.delete_table('jsonmap_jsonmap')
 

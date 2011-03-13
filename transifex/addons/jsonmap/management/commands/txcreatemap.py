@@ -15,10 +15,10 @@ Project = get_model('projects', 'Project')
 
 def get_source_file_for_file(filename, source_files):
     """
-    Find the related source file (POT) for a file (PO); useful when it has 
+    Find the related source file (POT) for a file (PO); useful when it has
     multiple source files.
 
-    This method gets a filename and the related source_files as parameters 
+    This method gets a filename and the related source_files as parameters
     and tries to discover the related POT file using two methods:
 
     1. Trying to find a POT file with the same base path that the PO.
@@ -53,7 +53,7 @@ def get_source_file_for_file(filename, source_files):
 class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
-        make_option('--anyversion', '-a', action="store_true", default=False, 
+        make_option('--anyversion', '-a', action="store_true", default=False,
             dest='anyversion', help='Skip Transifex version check.'),
     )
 
@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 translations = {}
                 c.unit._init_browser()
 
-                # Get source files; it might be a .pot or a .po with the same 
+                # Get source files; it might be a .pot or a .po with the same
                 # language code as the one set on component source language.
                 source_files = c.pofiles.filter(enabled=True).filter(
                     Q(is_pot=True) | Q(language_code=c.source_lang))
@@ -111,7 +111,7 @@ class Command(BaseCommand):
                 logger.debug("Mapping %s" % c.full_name)
 
                 for k, source_file in enumerate(source_files):
-                    r_slug = "%s-%s" % (c.slug, 
+                    r_slug = "%s-%s" % (c.slug,
                         source_file.filename.replace('/','-').replace('.','-'))
                     if len(r_slug) > 30:
                         r_slug = r_slug[-30:] + '_%s' % str(k)
@@ -121,14 +121,14 @@ class Command(BaseCommand):
                     # Map each source file as a resource
                     resources.append({
                         'source_file': source_file.filename,
-                        'source_lang': "en", 
+                        'source_lang': "en",
                         'resource_slug': r_slug,
                         '_allows_submission': c.allows_submission,
                         '_releases': list(c.releases.all().values_list(
                             'project__slug','slug'))
                     })
 
-                    # Temp var to associate translation files with the 
+                    # Temp var to associate translation files with the
                     # corresponding source file; useful for components with
                     # multiple source files.
                     translations.update({source_file.filename:{}})
@@ -136,7 +136,7 @@ class Command(BaseCommand):
                 # List of source file names; used on get_source_file_for_file()
                 source_filenames = [f.filename for f in source_files]
 
-                # Going through all the translation files of the related 
+                # Going through all the translation files of the related
                 # component, which have a language associated with.
                 for po in c.pofiles.filter(enabled=True).filter(
                     language__isnull=False).exclude(language_code=c.source_lang):
@@ -152,7 +152,7 @@ class Command(BaseCommand):
                 for r in resources:
                     r['translations']=translations.get(r['source_file'], {})
 
-                # Only save the JSON file if there is at least one resource for 
+                # Only save the JSON file if there is at least one resource for
                 # the project.
                 if resources:
                     data = { 'meta': {'project_slug': p.slug},

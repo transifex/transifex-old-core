@@ -44,7 +44,7 @@ class JSONMap(models.Model):
 
     def dumps(self, with_tmp_attr=False):
        """
-       Return the JSON formatted ``self.content`` with no tmp attributes if 
+       Return the JSON formatted ``self.content`` with no tmp attributes if
        with_tmp_attr is False.
        """
        return simplejson.dumps(self.loads(with_tmp_attr), indent=2,

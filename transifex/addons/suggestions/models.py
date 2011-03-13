@@ -11,7 +11,7 @@ from transifex.resources.models import Resource, SourceEntity
 class Suggestion(models.Model):
     """
     The representation of a suggestion for a translation on a source string.
-    
+
     More or less it is a duplication of the Translation model with a different
     way to determine the unique instances.
     """

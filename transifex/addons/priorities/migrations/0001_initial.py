@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'ResourcePriority'
         db.create_table('priorities_resourcepriority', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'ResourcePriority'
         db.delete_table('priorities_resourcepriority')
 

@@ -16,7 +16,7 @@ class TeamManager(models.Manager):
         if project.outsource:
             project=project.outsource
         try:
-            return self.get(project__pk=project.pk, 
+            return self.get(project__pk=project.pk,
                 language__code__exact=language_code)
         except Team.DoesNotExist:
             return None
@@ -29,25 +29,25 @@ class TeamManager(models.Manager):
 
 class Team(models.Model):
     """
-    A team is a set of people that work together in pro of a project in a 
+    A team is a set of people that work together in pro of a project in a
     specific language.
     """
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False, null=False,
         help_text=_("The project this team works on."))
-    language = models.ForeignKey(Language, verbose_name=_('Language'), 
+    language = models.ForeignKey(Language, verbose_name=_('Language'),
         blank=False, null=False, related_name='teams',
         help_text=_("People in this team will only be able to submit "
                     "translations files related to the specific language."))
-    coordinators = models.ManyToManyField(User, verbose_name=_('Coordinators'), 
+    coordinators = models.ManyToManyField(User, verbose_name=_('Coordinators'),
         related_name='team_coordinators', blank=False, null=False)
     members = models.ManyToManyField(User, verbose_name=_('Members'),
         related_name='team_members', blank=True, null=True)
 
-    mainlist = models.EmailField(_('Mainlist'), max_length=50, blank=True, 
+    mainlist = models.EmailField(_('Mainlist'), max_length=50, blank=True,
         null=True, help_text=_("The main mailing list of the team."))
 
-    creator = models.ForeignKey(User, verbose_name=_('creator'), blank=False, 
+    creator = models.ForeignKey(User, verbose_name=_('creator'), blank=False,
         null=False)
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
@@ -111,17 +111,17 @@ class TeamRequest(models.Model):
     project = models.ForeignKey(Project, verbose_name=_('Project'),
         blank=False, null=False,
         help_text=_("The project this team works on."))
-    language = models.ForeignKey(Language, verbose_name=_('Language'), 
+    language = models.ForeignKey(Language, verbose_name=_('Language'),
         blank=False, null=False,
         help_text=_("People in this team will only be able to submit "
                     "translations files related to the specific language."))
-    user = models.ForeignKey(User, verbose_name=_('User'), 
+    user = models.ForeignKey(User, verbose_name=_('User'),
         blank=False, null=False)
 
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return u'%s.%s' % (self.project.slug, 
+        return u'%s.%s' % (self.project.slug,
             self.language.code)
 
     def __repr__(self):
@@ -143,7 +143,7 @@ class TeamAccessRequestManager(models.Manager):
         Return a TeamAccessRequest object or None if it doesn't exist.
         """
         try:
-            return self.get(team__pk=team.pk, 
+            return self.get(team__pk=team.pk,
                 user__pk__exact=user.pk)
         except TeamAccessRequest.DoesNotExist:
             return None
@@ -151,7 +151,7 @@ class TeamAccessRequestManager(models.Manager):
 class TeamAccessRequest(models.Model):
     team = models.ForeignKey(Team, verbose_name=_('Team'),
         blank=False, null=False)
-    user = models.ForeignKey(User, verbose_name=_('User'), 
+    user = models.ForeignKey(User, verbose_name=_('User'),
         blank=False, null=False)
 
     created = models.DateTimeField(auto_now_add=True, editable=False)

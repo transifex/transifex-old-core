@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 class LanguageManager(models.Manager):
-    def by_code_or_alias(self, code):        
+    def by_code_or_alias(self, code):
         """
         Return a language that matches either with the code or something
         inside the code_aliases field.
@@ -33,9 +33,9 @@ class LanguageManager(models.Manager):
     def by_code_or_alias_or_404(self, code):
         """
         Return a language matches the code or something in code_aliases.
-        
+
         If no match is found, raise a 404 exception.
-        
+
         This method should be used in views.
         """
         try:
@@ -59,7 +59,7 @@ class Language(models.Model):
     code_aliases = models.CharField(_('Code aliases'), max_length=100,
         help_text=("A space-separated list of alternative locales."),
         null=True, blank=True, default='')
-    specialchars = models.CharField(_("Special Chars"), max_length=255, 
+    specialchars = models.CharField(_("Special Chars"), max_length=255,
         help_text=_("Enter any special characters that users might find"
                     " difficult to type"),
         blank=True)
@@ -102,7 +102,7 @@ class Language(models.Model):
 
     def save(self, *args, **kwargs):
         # It's needed to ensure that when we compare this field with the
-        # 'contain' action, we will always take the whole alias for a 
+        # 'contain' action, we will always take the whole alias for a
         # language, instead of part of it. We compare the alias with spaces
         # at the beginning and at the end of it.
         # TODO: check if alias does not already exist

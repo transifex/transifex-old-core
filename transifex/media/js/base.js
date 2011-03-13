@@ -27,7 +27,7 @@ function tooltip(targetnode, message){
     })
 }
 
-/** 
+/**
   * This function escapes the html elements found in a html string!
   */
 function html_escape(html)
@@ -36,7 +36,7 @@ function html_escape(html)
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-/** 
+/**
   * This function unescapes the html elements found in a string!
   */
 function html_unescape(html)
@@ -47,7 +47,7 @@ function html_unescape(html)
 }
 
 /**
-  * The typeOf function above will only recognize arrays that 
+  * The typeOf function above will only recognize arrays that
   * are created in the same context (or window or frame).
   */
 function typeOf(value) {
@@ -79,19 +79,19 @@ function  array_escape(tab)
           tab[key] = html_escape(tab[key]);
       }
   }
-  return(tab); 
+  return(tab);
 }
 
 /**
   *@desc escape strings appropriately to be used in jQuery selectors
-  *@return escaped string 
+  *@return escaped string
   */
 function jqescape(str) {
- return str.replace(/[#@;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, '\\$&'); 
+ return str.replace(/[#@;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, '\\$&');
 }
 
 $(document).ready(function(){
-    
+
       // Enable autosubmit form after a change on the language drop box switcher
       $("#language_switch").change(function() { this.form.submit(); });
 

@@ -1,5 +1,5 @@
 # Project permissions required
-# FIXME: It could be a dictionary with better key naming instead of a bunch of 
+# FIXME: It could be a dictionary with better key naming instead of a bunch of
 # variables
 pr_project_add = (
     ('general',  'projects.add_project'),

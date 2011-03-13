@@ -13,7 +13,7 @@ from transifex.txcommon.log import logger
 
 def _get_formatted_message(label, context):
     """
-    Return a message that is a rendered template with the given context using 
+    Return a message that is a rendered template with the given context using
     the default language of the system.
     """
     current_language = get_language()
@@ -38,9 +38,9 @@ def _user_counting(query):
     """
     Get a LogEntry queryset and return a list of dictionaries with the
     counting of times that the users appeared on the queryset.
-    
+
     Example of the resultant dictionary:
-    [{'user__username': u'editor', 'number': 5}, 
+    [{'user__username': u'editor', 'number': 5},
     {'user__username': u'guest', 'number': 1}]
     """
     query_result = query.values('user__username').annotate(
@@ -49,13 +49,13 @@ def _user_counting(query):
     # Rename key from 'user__username' to 'username'
     result=[]
     for entry in query_result:
-        result.append({'username': entry['user__username'], 
+        result.append({'username': entry['user__username'],
                        'number': entry['number']})
     return result
 
 def _distinct_action_time(query):
     """
-    Distinct rows by the 'action_time' field, keeping in the query only the 
+    Distinct rows by the 'action_time' field, keeping in the query only the
     entry with the highest 'id' for the related set of entries with equal
     'action_time'.
 
@@ -117,7 +117,7 @@ class LogEntryManager(models.Manager):
         # Avoiding circular import troubles. get_model didn't make it.
         from transifex.projects.models import Project
         ctype = ContentType.objects.get(model='project')
-        q = self.filter(user__pk__exact=user.pk, content_type=ctype, 
+        q = self.filter(user__pk__exact=user.pk, content_type=ctype,
                 object_id__in=Project.objects.filter(private=False))
         return _distinct_action_time(q)
 
@@ -165,7 +165,7 @@ class LogEntry(models.Model):
 
     # Managers
     objects = LogEntryManager()
-    
+
     class Meta:
         verbose_name = _('log entry')
         verbose_name_plural = _('log entries')
@@ -194,7 +194,7 @@ class LogEntry(models.Model):
     def action_type_short(self):
         """
         Return a shortened, generalized version of an action type.
-        
+
         Useful for presenting an image signifying an action type. Example::
         >>> from notification.models import  NoticeType
         >>> nt = NoticeType(label='project_added')
@@ -211,7 +211,7 @@ class LogEntry(models.Model):
 def action_logging(user, object_list, action_type, message=None, context=None):
     """
     Add ActionLog using a set of parameters.
-    
+
     user:
       The user that did the action.
     object_list:
@@ -223,7 +223,7 @@ def action_logging(user, object_list, action_type, message=None, context=None):
       it will try do render a message using the notice.html from the
       notification application.
     context:
-      To render the message using the notification files, sometimes it is 
+      To render the message using the notification files, sometimes it is
       necessary to pass some vars by using a context.
 
     Usage::
@@ -248,10 +248,10 @@ def action_logging(user, object_list, action_type, message=None, context=None):
     try:
         for object in object_list:
             l = LogEntry(
-                    user_id = user.pk, 
+                    user_id = user.pk,
                     content_type = ContentType.objects.get_for_model(object),
                     object_id = object.pk,
-                    object_name = force_unicode(object)[:200], 
+                    object_name = force_unicode(object)[:200],
                     action_type = action_type_obj,
                     action_time = time,
                     message = message)

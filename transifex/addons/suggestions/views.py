@@ -18,10 +18,10 @@ from authority.views import permission_denied
 # Allow even anonymous access on public projects
 def entity_suggestions_snippet(request, entity_id, lang_code):
     """Return an HTML snippet with translation suggestions.
-    
+
     We're also passing current_translation to be able to show a "tick" next
     to the one suggestion which is active.
-    
+
     This view is specific to Transifex and Lotte.
     """
 
@@ -89,5 +89,5 @@ def entity_suggestion_vote(request, entity_id, lang_code, suggestion_id, directi
         suggestion.vote_up(request.user)
     elif direction == 'down':
         suggestion.vote_down(request.user)
-    
+
     return HttpResponse(status=200)

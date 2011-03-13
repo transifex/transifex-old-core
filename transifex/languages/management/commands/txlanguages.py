@@ -34,7 +34,7 @@ class Command(LabelCommand):
                     dest='doexport', default=False,
             help='Be more verbose in reporting progress.'),
     )
-    
+
     requires_model_validation = False
     can_import_settings = True
 
@@ -42,7 +42,7 @@ class Command(LabelCommand):
         verbose = options.get('verbosity')
         doimport = options.get('doimport')
         doexport = options.get('doexport')
-        
+
         if doimport and doexport:
             raise CommandError("The arguments '--import' and '--export' can "
                 "not be used simultaneously.")

@@ -24,7 +24,7 @@ from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
 
 
-def permission_denied(request, template_name=None, extra_context={}, *args, 
+def permission_denied(request, template_name=None, extra_context={}, *args,
     **kwargs):
     """Wrapper to allow undeclared key arguments."""
     from authority.views import permission_denied
@@ -55,9 +55,9 @@ def search(request):
         results = []
     logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))
     return render_to_response("search.html",
-        {'query': query_string, 
-         'terms': search_terms, 
-         'results': results}, 
+        {'query': query_string,
+         'terms': search_terms,
+         'results': results},
           context_instance = RequestContext(request))
 
 @csrf_protect
@@ -75,7 +75,7 @@ def index(request):
 def user_timeline(request, *args, **kwargs):
     """
     Present a log of the latest actions of a user.
-    
+
     The view limits the results and uses filters to allow the user to even
     further refine the set.
     """
@@ -96,8 +96,8 @@ def user_nudge(request, username):
 
     #It's just allowed to re-nudge the same person after 15 minutes
     last_minutes = datetime.datetime.today() - datetime.timedelta(minutes=15)
-    
-    log_entries = LogEntry.objects.filter(user=request.user, 
+
+    log_entries = LogEntry.objects.filter(user=request.user,
         object_id=user.pk, content_type=ctype, action_time__gt=last_minutes)
 
     if log_entries:

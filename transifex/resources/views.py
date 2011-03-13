@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q, get_model
-from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
+from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseForbidden, HttpResponseBadRequest)
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -37,7 +37,7 @@ from autofetch.models import URLInfo
 
 Lock = get_model('locks', 'Lock')
 
-# Restrict access only for private projects 
+# Restrict access only for private projects
 # Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
@@ -83,7 +83,7 @@ def resource_delete(request, project_slug, resource_slug):
                                  slug = resource_slug)
     if request.method == 'POST':
         xhr = request.GET.has_key('xhr')
-        
+
         import copy
         resource_ = copy.copy(resource)
         resource.delete()
@@ -180,14 +180,14 @@ def resource_edit(request, project_slug, resource_slug):
     }, context_instance=RequestContext(request))
 
 
-# Restrict access only for private projects 
+# Restrict access only for private projects
 # Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def resource_actions(request, project_slug=None, resource_slug=None,
                      target_lang_code=None):
     """
-    Ajax view that returns an fancybox template snippet for resource specific 
+    Ajax view that returns an fancybox template snippet for resource specific
     actions.
     """
     resource = get_object_or_404(Resource.objects.select_related('project'), project__slug = project_slug,
@@ -229,14 +229,14 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     context_instance = RequestContext(request))
 
 
-# Restrict access only for private projects 
+# Restrict access only for private projects
 # Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_resources(request, project_slug=None, offset=None, **kwargs):
     """
     Ajax view that returns a table snippet for all the resources in a project.
-    
+
     If offset is provided, then the returned table snippet includes only the
     rows beginning from the offset and on.
     """
@@ -253,7 +253,7 @@ def project_resources(request, project_slug=None, offset=None, **kwargs):
 
     statslist = RLStats.objects.by_resources(resources)
 
-    return render_to_response("resources/resource_list_more.html", { 
+    return render_to_response("resources/resource_list_more.html", {
         'project': project,
         'statslist': statslist},
         context_instance = RequestContext(request))
@@ -294,7 +294,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
                 source_entity__resource = resource,
                 language = source_lang)
 
-    # If the language we want to create, has the same plural rules with the 
+    # If the language we want to create, has the same plural rules with the
     # source, we also copy the pluralized translations!
     if not source_lang.get_pluralrules() == target_lang.get_pluralrules():
         strings = strings.exclude(source_entity__pluralized = True)
@@ -330,10 +330,10 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
         is_source_language = True
 
     if request.method == 'POST':
-        Translation.objects.filter(source_entity__resource=resource, 
+        Translation.objects.filter(source_entity__resource=resource,
             language=language).delete()
 
-        messages.success(request, 
+        messages.success(request,
                         _("The translations of language %(lang)s for the resource "
                         "%(resource)s were deleted successfully.") % {
                           'lang': language.name,
@@ -361,7 +361,7 @@ def _compile_translation_template(resource=None, language=None):
     return handler.compiled_template
 
 
-# Restrict access only for private projects 
+# Restrict access only for private projects
 # DONT allow anonymous access
 @login_required
 @one_perm_required_or_403(pr_project_private_perm,
@@ -382,7 +382,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
     except Exception, e:
         messages.error(request,
                        _("Error compiling translation file."))
-        logger.error("Error compiling '%s' file for '%s': %s" % (language, 
+        logger.error("Error compiling '%s' file for '%s': %s" % (language,
             resource, str(e)))
         return HttpResponseRedirect(reverse('resource_detail',
             args=[resource.project.slug, resource.slug]),)
@@ -407,8 +407,8 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
 def lock_and_get_translation_file(request, project_slug, resource_slug, lang_code):
     """
     Lock and download the translations file.
-    
-    View to lock a resource for the requested language and as a second step to 
+
+    View to lock a resource for the requested language and as a second step to
     download (export+download) the translations in a formatted file.
     """
 

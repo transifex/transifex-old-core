@@ -32,15 +32,15 @@ class TeamSimpleForm(forms.ModelForm):
         # Lets filter the language field based on the teams already created.
         # We don't need to enable a language if there is a team for it already.
         # Also, when editing the team details the language must not be changeable
-        # to other complete different languages. It only accepts changing 
-        # language among languages with the same general code, such as pt, 
+        # to other complete different languages. It only accepts changing
+        # language among languages with the same general code, such as pt,
         # pt_BR, pt_PT.
         instance = kwargs.get('instance', None)
         if instance:
             # Getting general language code. 'pt_BR' turns into 'pt'
             general_code = instance.language.code.split('_')[0]
 
-            # Create list of languages to be disabled excluding the current 
+            # Create list of languages to be disabled excluding the current
             # language and also languages for the same general code that do not
             # have a team already created for the related project.
             self.disabled_langs = Language.objects.exclude(

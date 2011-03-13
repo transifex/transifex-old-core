@@ -1,8 +1,8 @@
-/* 
-Class to store the Status (in the client-side) of a Lotte instance that a 
+/*
+Class to store the Status (in the client-side) of a Lotte instance that a
 translator opens up.
 
-For not it's only used for ActionLog purposes on the server side, whenever 
+For not it's only used for ActionLog purposes on the server side, whenever
 the Save & Exit button is pressed in Lotte.
 */
 function LotteStatus(){
@@ -158,7 +158,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
             $.ajax({
                 url: push_url,
-                data: JSON.stringify({strings: to_update}), 
+                data: JSON.stringify({strings: to_update}),
                 dataType : "text", // "json" is strict and we get 500
                 type: "POST",
                 contentType: "application/json",
@@ -168,14 +168,14 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     var json_response_dict = JSON.parse(data);
 
                     // Update the object classes, and the overall statistics
-                    if(ts) { 
+                    if(ts) {
                         var status_code = json_response_dict[ts.id]['status'];
                         if (status_code == 200){
                             ts.modified = false;
                             if (ts.isUntranslated()) {
                                 stringset.translated -= 1;
                                 stringset.untranslated += 1;
-                            } else if (ts.checkVar(ts.previous)) { 
+                            } else if (ts.checkVar(ts.previous)) {
                                 stringset.translated += 1;
                                 stringset.untranslated -= 1;
                             }
@@ -264,7 +264,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             var string = this_stringset.strings[id];
             var new_class = this_stringset.strings[id].flagString();
-            
+
             /* Apply the new class to the default string and all its siblings! */
             textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass(new_class);
 
@@ -343,13 +343,13 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
               id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
 
-            /* Auto-save should be called only if either all textareas are 
+            /* Auto-save should be called only if either all textareas are
                filled in or when none of them for an entry are filled. This
                is mostly helpful in cases of plural entries */
             var textareas_filled = 0
             var textareas = textarea.parents('td.trans').find('textarea')
             textareas.each(function(index) {
-                if ( this.value != "") 
+                if ( this.value != "")
                     textareas_filled += 1;
             });
             if ( textareas_filled == textareas.length || textareas_filled == 0 )
@@ -440,20 +440,20 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
               obj.css({top:pos.top - 4, left:pos.left - w - 2});
             }
 
-            // show bottom tabs 
+            // show bottom tabs
             var obj2 = $(this).find('.row_tabs');
             obj2.css({'visibility': 'visible'});
         }).mouseout(function() {
             var obj = $(this).find('.lotte-actions');
             obj.css({top:-1000 ,left:-1000});
 
-            // show bottom tabs 
+            // show bottom tabs
             var obj2 = $(this).find('.row_tabs');
             // If there is no tab 'current'
             if(obj2.find('.current').length==0)
                 obj2.css({'visibility': 'hidden'});
         });
-        
+
         // Bind click events for tools
         // 1.Machine translation
         if (is_supported_lang && is_supported_source_lang) {
@@ -618,7 +618,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     $(this).animate({right:0}, {duration:'fast'});
                 },
                 timeout: 0,
-                out: function() { 
+                out: function() {
                     w = $('a', this).width();
                     $(this).animate({right: - w - 14}, {duration:'fast'});
                 }

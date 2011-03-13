@@ -11,13 +11,13 @@ class SourceEntityAdmin(admin.ModelAdmin):
     list_display = ['string', 'context', 'resource']
 
 class TranslationAdmin(admin.ModelAdmin):
-    search_fields = ['string', 'string_hash', 'language__name', 
+    search_fields = ['string', 'string_hash', 'language__name',
         'source_entity__string']
     list_display = ['source_entity', 'string', 'language']
     list_display_links = ['string']
 
 class TemplateAdmin(admin.ModelAdmin):
-    search_fields = ['resource__name', 'resource__project__name', 
+    search_fields = ['resource__name', 'resource__project__name',
         'resource__source_language__name']
     list_display = ['resource']
 

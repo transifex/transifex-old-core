@@ -35,9 +35,9 @@ def _project_create_update(request, project_slug=None,
     template_name='projects/project_form.html'):
     """
     Handler for creating and updating a project.
-    
-    This function helps to eliminate duplication of code between those two 
-    actions, and also allows to apply different permission checks in the 
+
+    This function helps to eliminate duplication of code between those two
+    actions, and also allows to apply different permission checks in the
     respective views.
     """
 
@@ -47,9 +47,9 @@ def _project_create_update(request, project_slug=None,
         project = None
 
     if request.method == 'POST':
-        project_form = ProjectForm(request.POST, instance=project, 
-                                prefix='project') 
-        if project_form.is_valid(): 
+        project_form = ProjectForm(request.POST, instance=project,
+                                prefix='project')
+        if project_form.is_valid():
             project = project_form.save(commit=False)
             project_id = project.id
             # Only here the owner is written to the project model
@@ -59,7 +59,7 @@ def _project_create_update(request, project_slug=None,
             project_form.save_m2m()
 
             # TODO: Not sure if here is the best place to put it
-            Signal.send(signals.post_proj_save_m2m, sender=Project, 
+            Signal.send(signals.post_proj_save_m2m, sender=Project,
                         instance=project)
 
             # ActionLog & Notification
@@ -71,7 +71,7 @@ def _project_create_update(request, project_slug=None,
                 nt = 'project_changed'
                 action_logging(request.user, [project], nt, context=context)
                 if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(project, 
+                    txnotification.send_observation_notices_for(project,
                                         signal=nt, extra_context=context)
 
             return HttpResponseRedirect(reverse('project_detail',
@@ -99,20 +99,20 @@ def project_create(request):
     return _project_create_update(request)
 
 @login_required
-@one_perm_required_or_403(pr_project_add_change, 
+@one_perm_required_or_403(pr_project_add_change,
     (Project, 'slug__exact', 'project_slug'))
 def project_update(request, project_slug):
         return _project_create_update(request, project_slug)
 
 
 @login_required
-@one_perm_required_or_403(pr_project_add_change, 
+@one_perm_required_or_403(pr_project_add_change,
     (Project, 'slug__exact', 'project_slug'))
 def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
-        access_control_form = ProjectAccessControlForm(request.POST, 
+        access_control_form = ProjectAccessControlForm(request.POST,
             instance=project)
         if access_control_form.is_valid():
             access_control = access_control_form.cleaned_data['access_control']
@@ -124,8 +124,8 @@ def project_access_control_edit(request, project_slug):
             if 'outsourced_access' != access_control:
                 project.outsource=None
             else:
-                # TODO: Send notification for these projects, telling the 
-                # maintainers that the outsource project is not accepting 
+                # TODO: Send notification for these projects, telling the
+                # maintainers that the outsource project is not accepting
                 # outsourcing anymore
                 for p in project.project_set.all():
                     p.outsource=None
@@ -153,7 +153,7 @@ def project_access_control_edit(request, project_slug):
 
 
 @login_required
-@one_perm_required_or_403(pr_project_delete, 
+@one_perm_required_or_403(pr_project_delete,
     (Project, 'slug__exact', 'project_slug'))
 def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
@@ -189,7 +189,7 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    statslist = RLStats.objects.select_related('resource', 
+    statslist = RLStats.objects.select_related('resource',
         'resource__project', 'last_committer','resource__priority'
         ).by_project_aggregated(project)
 

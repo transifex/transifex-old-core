@@ -15,11 +15,11 @@ StorageFile = models.get_model("storage", "StorageFile")
 class URLInfo(models.Model):
 
    # URL info for remote fetching/updating
-    source_file_url = models.URLField(_('Source file URL'), 
+    source_file_url = models.URLField(_('Source file URL'),
         null=True, blank=True, verify_exists=True,
         help_text=_("A URL pointing to the source file of this resource"\
             " to be used for automatic updates."))
-    auto_update = models.BooleanField(_("Automatically update source file"), 
+    auto_update = models.BooleanField(_("Automatically update source file"),
         default=False, help_text=_("A boolean field indicating whether the"\
         " file should be automatically updated by pulling and merging from"\
         " the given URL."))
@@ -51,7 +51,7 @@ class URLInfo(models.Model):
 
         filename = ''
         if file.info().has_key('Content-Disposition'):
-                # If the response has Content-Disposition, we try to take 
+                # If the response has Content-Disposition, we try to take
                 # filename from it
                 content = file.info()['Content-Disposition']
                 if 'filename' in content:

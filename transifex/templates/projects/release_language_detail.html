@@ -93,7 +93,7 @@
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }} 
+              {{ last_update|timesince }}
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}
@@ -117,9 +117,9 @@
     </tr>
     <script>
         $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
-           /* FancyBox Using custom settings */ 
+           /* FancyBox Using custom settings */
            $.fancybox(
-               { 
+               {
                 'href': '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}',
                 'hideOnContentClick': false,
                 'onStart':function(){
@@ -224,7 +224,7 @@
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-              {{ last_update|timesince }} 
+              {{ last_update|timesince }}
               {% if last_committer %}
               by {{ last_committer }}
               {% endif %}
@@ -248,9 +248,9 @@
     </tr>
     <script>
         $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
-           /* FancyBox Using custom settings */ 
+           /* FancyBox Using custom settings */
            $.fancybox(
-               { 
+               {
                 'href': '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}',
                 'hideOnContentClick': false,
                 'onStart':function(){

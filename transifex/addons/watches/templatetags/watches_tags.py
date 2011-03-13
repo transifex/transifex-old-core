@@ -18,7 +18,7 @@ def watch_toggle(context, obj, language=None):
     Handle watch links for objects by the logged in user
     """
     if isinstance(obj, Project):
-        obj.toggle_watch_url = reverse('project_toggle_watch', 
+        obj.toggle_watch_url = reverse('project_toggle_watch',
             args=(obj.slug,))
         obj.is_project = True
 

@@ -3,7 +3,7 @@
 {% load txcommontags %}
 
 {% block breadcrumb %}
-{% homelink %} » 
+{% homelink %} »
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a>
  » <a href="{% url project_detail project.slug %}">{{project}}</a>
 {% if resource %} » <a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>{% endif %}
@@ -23,8 +23,8 @@
     var stringset = null;
     var oTable;
     /* vars for string calcs */
-    var translated_strings = {{ translated_strings }} 
-    var untranslated_strings = {{ untranslated_strings }} 
+    var translated_strings = {{ translated_strings }}
+    var untranslated_strings = {{ untranslated_strings }}
     var total_strings = translated_strings + untranslated_strings;
 
     /* var to keep filter state */
@@ -57,7 +57,7 @@
             "bServerSide": true,
             "bProcessing": true,
             "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
-            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
+            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">',
             "bAutoWidth": true,
             "aoColumns" : [
                 { "bVisible":false },
@@ -136,7 +136,7 @@
                   });
 
              },
-            "fnDrawCallback": function() { 
+            "fnDrawCallback": function() {
                 $('#total_translated_perc').html((translated_strings*100.0/total_strings).toFixed(2) + "%");
                 $('#total_untranslated_perc').html((untranslated_strings*100.0/total_strings).toFixed(2) + "%");
             }
@@ -162,7 +162,7 @@
 {% endblock %}
 
 {% block title %}
-{{ block.super }} | 
+{{ block.super }} |
 {{resource}}
 {% endblock %}
 

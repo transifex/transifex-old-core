@@ -11,11 +11,11 @@ DEFAULT_LANG_CODE = 'en'
 @login_required
 def search_translations(request):
     """Search for existing translations.
-    
+
     This view accepts three GET variables and uses them to search in existing
     translations. It searches all the strings (translations) and returns those
     which match the string query in the particular language.
-    
+
     tq:
       The string to search the database for.
     source_lang:
@@ -53,7 +53,7 @@ def search_translations(request):
     #sources = Translation.objects.filter(
     #    source_entity__id__in=translations, language=source_language).values(
     #   'source_entity', 'string')
-    
+
     return render_to_response("search_translation.html", {
         'languages': Language.objects.all(),
         'query': query_string,

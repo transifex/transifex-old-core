@@ -66,7 +66,7 @@ register.tag('get_latest_projects', DoGetLatestProjects())
 def render_metacount(list, countable):
     """
     Return meta-style link rendered as superscript to count something.
-    
+
     For example, with list=['a', 'b'] and countable='boxes' return
     the HTML for "2 boxes".
     """
@@ -88,7 +88,7 @@ def txversion():
 @register.simple_tag
 def txrevision():
     """
-    Return the revision of the Transifex repository in case it's running on 
+    Return the revision of the Transifex repository in case it's running on
     top of a checkout. If it's not, return an empty string.
     """
     return txcommon.revision
@@ -97,16 +97,16 @@ def txrevision():
 def txversion_full():
     """
     Return the full version of Transifex.
-    
-    For versions that are not 'final' return the current version of Transifex 
-    plus the revision of the repository, in case it's running on top of a 
+
+    For versions that are not 'final' return the current version of Transifex
+    plus the revision of the repository, in case it's running on top of a
     checkout.
     """
     return txcommon.version_full
 
 class CounterNode(ResolverNode):
     """A template node to count how many times it was called."""
-    
+
     @classmethod
     def handle_token(cls, parser, token):
         bits = token.contents.split()
@@ -136,9 +136,9 @@ class CounterNode(ResolverNode):
 def counter(parser, token):
     """
     Return a number increasing its counting each time it's called.
-    An ``initial`` value can be passed to identify from which number it should 
+    An ``initial`` value can be passed to identify from which number it should
     start counting.
- 
+
     Syntax::
 
         {% counter %}
@@ -167,7 +167,7 @@ def form_as_table_rows(context, form, id=None):
 @stringfilter
 def mungify(email, text=None, autoescape=None):
     text = text or email
-    
+
     if autoescape:
         email = conditional_escape(email)
         text = conditional_escape(text)
@@ -188,7 +188,7 @@ def mungify(email, text=None, autoescape=None):
                 document.write('<\/a>');
                 </script>""" % (re.sub(r',$', '', emailArrayContent),
                                 re.sub(r',$', '', textArrayContent))
-    
+
     return mark_safe(result)
 
 mungify.needs_autoescape = True
@@ -206,7 +206,7 @@ def notice_type_user_filter(noticetype_list):
     Filter a NoticeType list passed by parameter using the NOTICE_TYPES
     dictionary that says which notice types must be shown to the user.
 
-    It is necessary by now until the upstream project have a model change to be 
+    It is necessary by now until the upstream project have a model change to be
     able to do this filtering from the database.
     """
     from txcommon.notifications import NOTICE_TYPES
@@ -270,7 +270,7 @@ def do_tooltip(parser, token):
     try:
         bits = token.split_contents()
         cmd, prefix, id = bits
-        
+
     except:
         raise TemplateSyntaxError("%r expects two arguments constant 'prefix' and variable 'id'" %
                                   bits[0])

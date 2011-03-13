@@ -62,14 +62,14 @@ class ProjectPermission(BasePermission):
         """
         Check whether a user can submit translations to a project.
 
-        This method can receive two kinds of object through the parameter 
-        'obj', which can be Project and Team instances. Depending on the 
+        This method can receive two kinds of object through the parameter
+        'obj', which can be Project and Team instances. Depending on the
         object type different checks are done.
 
-        The parameter 'any_team' can be used when a it is necessary to verify 
-        that a user has submit access for at least one project team. If a 
-        Project object is passed and the parameter 'any_team' is False, the 
-        verification of access will only return True for maintainers and 
+        The parameter 'any_team' can be used when a it is necessary to verify
+        that a user has submit access for at least one project team. If a
+        Project object is passed and the parameter 'any_team' is False, the
+        verification of access will only return True for maintainers and
         writers.
         """
         project, team = None, None
@@ -99,7 +99,7 @@ class ProjectPermission(BasePermission):
                         return True
                 if any_team and not team:
                     user_teams = project.team_set.filter(
-                        Q(coordinators=self.user)| 
+                        Q(coordinators=self.user)|
                         Q(members=self.user)).distinct()
                     if user_teams:
                         return True

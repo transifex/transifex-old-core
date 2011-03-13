@@ -12,7 +12,7 @@ class TimeoutException(Exception):
 
 class Timer:
     """Utility class for measuring task executions
-    
+
     This class has the following data attributes:
         self.duration : the wall time taken for the task
         self.cpu_duration : the time of CPU processing
@@ -34,9 +34,9 @@ class Timer:
 
     def log(self):
         """Write timer values to tx logger."""
-        logger.debug("Computing timer task \"%s\", task description : %s" % 
+        logger.debug("Computing timer task \"%s\", task description : %s" %
             (self.name, self.description))
-        logger.info("Timer Task \"%s\" Duration : %.3fsec (CPU %.3f)" % 
+        logger.info("Timer Task \"%s\" Duration : %.3fsec (CPU %.3f)" %
                     (self.name, self.duration, self.cpu_duration))
 
     def __str__(self):

@@ -47,9 +47,9 @@ def team_off(request, project, *args, **kwargs):
 def _team_create_update(request, project_slug, language_code=None):
     """
     Handler for creating and updating a team of a project.
-    
-    This function helps to eliminate duplication of code between those two 
-    actions, and also allows to apply different permission checks in the 
+
+    This function helps to eliminate duplication of code between those two
+    actions, and also allows to apply different permission checks in the
     respective views.
     """
     project = get_object_or_404(Project, slug=project_slug)
@@ -57,7 +57,7 @@ def _team_create_update(request, project_slug, language_code=None):
 
     if language_code:
         try:
-            team = Team.objects.get(project__pk=project.pk, 
+            team = Team.objects.get(project__pk=project.pk,
                 language__code=language_code)
         except Team.DoesNotExist:
             pass
@@ -72,7 +72,7 @@ def _team_create_update(request, project_slug, language_code=None):
             form.save_m2m()
 
             # Delete access requests for users that were added
-            for member in itertools.chain(team.members.all(), 
+            for member in itertools.chain(team.members.all(),
                 team.coordinators.all()):
                 tr = TeamAccessRequest.objects.get_or_none(team, member)
                 if tr:
@@ -97,7 +97,7 @@ def _team_create_update(request, project_slug, language_code=None):
                 # Send notification for maintainers and coordinators
                 from notification.models import NoticeType
                 try:
-                    notification.send(set(itertools.chain(project.maintainers.all(), 
+                    notification.send(set(itertools.chain(project.maintainers.all(),
                         team.coordinators.all())), nt, context)
                 except NoticeType.DoesNotExist:
                     pass
@@ -127,7 +127,7 @@ def team_create(request, project_slug):
 pr_team_update=(("granular", "project_perm.coordinate_team"),)
 @access_off(team_off)
 @login_required
-@one_perm_required_or_403(pr_team_update, 
+@one_perm_required_or_403(pr_team_update,
     (Project, 'slug__exact', 'project_slug'),
     (Language, "code__exact", "language_code"))
 def team_update(request, project_slug, language_code):
@@ -142,7 +142,7 @@ def team_list(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     team_request_form = TeamRequestSimpleForm(project)
 
-    return render_to_response("teams/team_list.html", 
+    return render_to_response("teams/team_list.html",
                               {"project": project,
                               "team_request_form": team_request_form,
                                "project_team_page": True, },
@@ -169,9 +169,9 @@ def team_detail(request, project_slug, language_code):
     statslist = RLStats.objects.select_related('resource',
         'resource__priority').by_project_and_language(project, language)
 
-    return render_to_response("teams/team_detail.html", 
+    return render_to_response("teams/team_detail.html",
                               {"project": project,
-                               "team": team, 
+                               "team": team,
                                "team_access_requests": team_access_requests,
                                "user_access_request": user_access_request,
                                "project_team_page": True,
@@ -211,7 +211,7 @@ def team_delete(request, project_slug, language_code):
             # Send notification for maintainers
             notification.send(project.maintainers.all(), nt, context)
 
-        return HttpResponseRedirect(reverse("team_list", 
+        return HttpResponseRedirect(reverse("team_list",
                                      args=(project_slug,)))
     else:
         return render_to_response("teams/team_confirm_delete.html",
@@ -259,10 +259,10 @@ def team_join_request(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and coordinators
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     team.coordinators.all())), nt, context)
 
-                
+
         except IntegrityError:
             transaction.rollback()
             messages.error(request,
@@ -272,9 +272,9 @@ def team_join_request(request, project_slug, language_code):
             messages.error(request,
                              _("You need to sign the Contribution License Agreement for this "\
                 "project before you join a translation team"))
-            
 
-    return HttpResponseRedirect(reverse("team_detail", 
+
+    return HttpResponseRedirect(reverse("team_detail",
                                         args=[project_slug, language_code]))
 
 
@@ -282,7 +282,7 @@ def team_join_request(request, project_slug, language_code):
 pr_team_add_member_perm=(("granular", "project_perm.coordinate_team"),)
 @access_off(team_off)
 @login_required
-@one_perm_required_or_403(pr_team_add_member_perm, 
+@one_perm_required_or_403(pr_team_add_member_perm,
     (Project, "slug__exact", "project_slug"),
     (Language, "code__exact", "language_code"))
 @transaction.commit_on_success
@@ -292,13 +292,13 @@ def team_join_approve(request, project_slug, language_code, username):
         language__code=language_code)
     project = team.project
     user = get_object_or_404(User, username=username)
-    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk, 
+    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk,
         user__pk=user.pk)
 
     if request.POST:
         if user in team.members.all() or \
             user in team.coordinators.all():
-            messages.warning(request, 
+            messages.warning(request,
                             _("User '%(user)s' is in the '%(team)s' team already.")
                             % {'user':user, 'team':team.language.name})
             access_request.delete()
@@ -323,21 +323,21 @@ def team_join_approve(request, project_slug, language_code, username):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators and the user
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     team.coordinators.all(), [access_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_detail", 
+    return HttpResponseRedirect(reverse("team_detail",
                                         args=[project_slug, language_code]))
 
 
 pr_team_deny_member_perm=(("granular", "project_perm.coordinate_team"),)
 @access_off(team_off)
 @login_required
-@one_perm_required_or_403(pr_team_deny_member_perm, 
+@one_perm_required_or_403(pr_team_deny_member_perm,
     (Project, "slug__exact", "project_slug"),
     (Language, "code__exact", "language_code"))
 @transaction.commit_on_success
@@ -347,7 +347,7 @@ def team_join_deny(request, project_slug, language_code, username):
         language__code=language_code)
     project = team.project
     user = get_object_or_404(User, username=username)
-    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk, 
+    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk,
         user__pk=user.pk)
 
     if request.POST:
@@ -372,14 +372,14 @@ def team_join_deny(request, project_slug, language_code, username):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators and the user
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     team.coordinators.all(), [access_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_detail", 
+    return HttpResponseRedirect(reverse("team_detail",
                                         args=[project_slug, language_code]))
 
 @access_off(team_off)
@@ -392,7 +392,7 @@ def team_join_withdraw(request, project_slug, language_code):
     team = get_object_or_404(Team, project__slug=project_slug,
         language__code=language_code)
     project = team.project
-    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk, 
+    access_request = get_object_or_404(TeamAccessRequest, team__pk=team.pk,
         user__pk=request.user.pk)
 
     if request.POST:
@@ -401,7 +401,7 @@ def team_join_withdraw(request, project_slug, language_code):
             messages.success(request,_(
                 "You have withdrawn your own request to join the '%s' team."
                 ) % team.language.name)
-                
+
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_join_withdrawn'
@@ -416,14 +416,14 @@ def team_join_withdraw(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers, coordinators
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     team.coordinators.all())), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_detail", 
+    return HttpResponseRedirect(reverse("team_detail",
                                         args=[project_slug, language_code]))
 
 @access_off(team_off)
@@ -459,7 +459,7 @@ def team_leave(request, project_slug, language_code):
                     txnotification.send_observation_notices_for(project,
                             signal=nt, extra_context=context)
                     # Send notification for maintainers, coordinators
-                    notification.send(set(itertools.chain(project.maintainers.all(), 
+                    notification.send(set(itertools.chain(project.maintainers.all(),
                         team.coordinators.all())), nt, context)
             else:
                 messages.info(request, _(
@@ -470,7 +470,7 @@ def team_leave(request, project_slug, language_code):
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_detail", 
+    return HttpResponseRedirect(reverse("team_detail",
                                         args=[project_slug, language_code]))
 
 
@@ -486,8 +486,8 @@ def team_request(request, project_slug):
         language_pk = request.POST.get('language', None)
         if not language_pk:
             messages.error(request, _(
-                "Please, select a language before submit the form."))            
-            return HttpResponseRedirect(reverse("team_list", 
+                "Please, select a language before submit the form."))
+            return HttpResponseRedirect(reverse("team_list",
                                         args=[project_slug,]))
 
 
@@ -496,13 +496,13 @@ def team_request(request, project_slug):
         language = get_object_or_404(Language, pk=int(language_pk))
 
         try:
-            team = Team.objects.get(project__pk=project.pk, 
+            team = Team.objects.get(project__pk=project.pk,
                 language__pk=language.pk)
             messages.warning(request,_(
                 "'%s' team already exist.") % team.language.name)
         except Team.DoesNotExist:
             try:
-                team_request = TeamRequest.objects.get(project__pk=project.pk, 
+                team_request = TeamRequest.objects.get(project__pk=project.pk,
                     language__pk=language.pk)
                 messages.warning(request, _(
                     "A request for creating the '%s' team already exist.")
@@ -518,13 +518,13 @@ def team_request(request, project_slug):
                                           user=request.user,
                                           cla_sign=cla_sign)
 
-                    team_request = TeamRequest(project=project, 
+                    team_request = TeamRequest(project=project,
                         language=language, user=request.user)
                     team_request.save()
                     messages.info(request, _(
                         "You have requested the '%s' team creation.")
                         % team_request.language.name)
-                        
+
                     # ActionLog & Notification
                     # TODO: Use signals
                     nt = 'project_team_requested'
@@ -556,7 +556,7 @@ def team_request(request, project_slug):
 pr_team_request_approve=(("granular", "project_perm.maintain"),)
 @access_off(team_off)
 @login_required
-@one_perm_required_or_403(pr_team_request_approve, 
+@one_perm_required_or_403(pr_team_request_approve,
     (Project, "slug__exact", "project_slug"),)
 @transaction.commit_on_success
 def team_request_approve(request, project_slug, language_code):
@@ -567,7 +567,7 @@ def team_request_approve(request, project_slug, language_code):
 
     if request.POST:
         try:
-            team = Team(project=team_request.project, 
+            team = Team(project=team_request.project,
                 language=team_request.language, creator=request.user)
             team.save()
             team.coordinators.add(team_request.user)
@@ -576,7 +576,7 @@ def team_request_approve(request, project_slug, language_code):
             messages.success(request, _(
                 "You have approved the '%(team)s' team requested by '%(user)s'."
                 ) % {'team':team.language.name, 'user':team_request.user})
-            
+
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_added'
@@ -590,21 +590,21 @@ def team_request_approve(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and coordinators
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     team.coordinators.all())), nt, context)
-            
+
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_list", 
+    return HttpResponseRedirect(reverse("team_list",
                                         args=[project_slug,]))
 
 
 pr_team_request_deny=(("granular", "project_perm.maintain"),)
 @access_off(team_off)
 @login_required
-@one_perm_required_or_403(pr_team_request_deny, 
+@one_perm_required_or_403(pr_team_request_deny,
     (Project, "slug__exact", "project_slug"),)
 @transaction.commit_on_success
 def team_request_deny(request, project_slug, language_code):
@@ -618,9 +618,9 @@ def team_request_deny(request, project_slug, language_code):
             team_request.delete()
             messages.success(request, _(
                 "You have denied the '%(team)s' team requested by '%(user)s'."
-                ) % {'team':team_request.language.name, 
+                ) % {'team':team_request.language.name,
                      'user':team_request.user})
-            
+
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_request_denied'
@@ -635,13 +635,13 @@ def team_request_deny(request, project_slug, language_code):
                 txnotification.send_observation_notices_for(project,
                         signal=nt, extra_context=context)
                 # Send notification for maintainers and the user
-                notification.send(set(itertools.chain(project.maintainers.all(), 
+                notification.send(set(itertools.chain(project.maintainers.all(),
                     [team_request.user])), nt, context)
 
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_list", 
+    return HttpResponseRedirect(reverse("team_list",
                                         args=[project_slug,]))
 

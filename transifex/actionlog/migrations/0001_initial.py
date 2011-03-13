@@ -4,9 +4,9 @@ from django.db import models
 from actionlog.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'LogEntry'
         db.create_table('actionlog_logentry', (
             ('action_time', models.DateTimeField()),
@@ -19,16 +19,16 @@ class Migration:
             ('id', models.AutoField(primary_key=True)),
         ))
         db.send_create_signal('actionlog', ['LogEntry'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'LogEntry'
         db.delete_table('actionlog_logentry')
-        
-    
-    
+
+
+
     models = {
         'auth.user': {
             '_stub': True,
@@ -55,5 +55,5 @@ class Migration:
             'user': ('models.ForeignKey', ['User'], {'related_name': '"tx_user_action"', 'null': 'True', 'blank': 'True'})
         }
     }
-    
+
     complete_apps = ['actionlog']

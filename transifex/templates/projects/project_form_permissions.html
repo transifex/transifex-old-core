@@ -45,7 +45,7 @@
         <a class="name" href="{% url profile_public perm.user.username %}">
             {{ perm.user }}
         </a>
-        {% txpermission_request_approve_form project perm %} 
+        {% txpermission_request_approve_form project perm %}
         {% txpermission_request_delete_form project perm %}
     </li>
 {% endfor %}
@@ -64,7 +64,7 @@
         <img class="border" src="{% avatar 16 perm.user %}" style="vertical-align:middle"/>
         <a class="name" href="{% url profile_public perm.user.username %}">
             {{ perm.user }}
-        </a> 
+        </a>
         {% txpermission_delete_form project perm %}
     </li>
 {% endfor %}

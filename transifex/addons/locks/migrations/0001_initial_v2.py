@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'Lock'
         db.create_table('addons_locks_lock', (
             ('resource', self.gf('django.db.models.fields.related.ForeignKey')(related_name='locks', to=orm['resources.Resource'])),
@@ -29,17 +29,17 @@ class Migration(SchemaMigration):
 
         # Adding unique constraint on 'Lock', fields ['resource', 'language']
         db.create_unique('addons_locks_lock', ['resource_id', 'language_id'])
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Lock'
         db.delete_table('addons_locks_lock')
 
         # Removing unique constraint on 'Lock', fields ['resource', 'language']
         db.delete_unique('addons_locks_lock', ['resource_id', 'language_id'])
-    
-    
+
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -155,5 +155,5 @@ class Migration(SchemaMigration):
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '1024'})
         }
     }
-    
+
     complete_apps = ['locks']

@@ -325,8 +325,8 @@ class LinguistHandler(Handler):
                     for msg in messages:
                         stringset.strings.append(GenericTranslation(sourceString,
                             msg[1], context = context_name, rule=msg[0],
-                            occurrences = ";".join(occurrences), 
-                            pluralized=pluralized, fuzzy=fuzzy, 
+                            occurrences = ";".join(occurrences),
+                            pluralized=pluralized, fuzzy=fuzzy,
                             comment=extracomment, obsolete=obsolete))
                 i += 1
 

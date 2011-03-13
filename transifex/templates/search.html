@@ -15,7 +15,7 @@
     {% if not query %}{% trans "Search projects" %}{% else %}{% trans "Search results" %}{% endif %}
   </h2>
 {% endblock %}
-  
+
 {% block content %}
 
   {% with "content_header_prim" as extra_searchform_classes %}
@@ -61,7 +61,7 @@
    <span class="i16 tip">
        {% url project_create as project_create_url %}
        {% blocktrans %}Couldn't find your project? Why don't you go ahead and <a href="{{ project_create_url }}">add it</a>?{% endblocktrans %}
-   </span>   
+   </span>
   </div>
 {% endif %}
 {% endblock %}

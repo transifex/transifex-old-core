@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Count, Q
 from django.db.models.loading import get_model
-from django.http import (HttpResponseRedirect, HttpResponse, Http404, 
+from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseForbidden, HttpResponseBadRequest)
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -84,10 +84,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     target_language = Language.objects.by_code_or_alias_or_404(lang_code)
 
-    # If it is an attempt to edit the source language, redirect the user to 
+    # If it is an attempt to edit the source language, redirect the user to
     # resource_detail and show him a message explaining the reason.
     if target_language == resources[0].source_language:
-        messages.error(request, 
+        messages.error(request,
                        "The source language cannot be edited, because this would"
                        " result in translation mismatching! If you want to "
                        "update the source strings consider using the command"
@@ -197,7 +197,7 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     return HttpResponseRedirect(url)
 
 
-# Restrict access only for private projects 
+# Restrict access only for private projects
 # Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
@@ -350,10 +350,10 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 s.id,
                 # 2. SourceEntity object's "string" content
                 s.source_entity.string,
-                # 3. Get all the necessary source strings, including plurals and 
+                # 3. Get all the necessary source strings, including plurals and
                 # similar langs, all in a dictionary (see also below)
                 _get_source_strings(s, source_language, lang_code, more_languages),
-                # 4. Get all the Translation strings mapped with plural rules 
+                # 4. Get all the Translation strings mapped with plural rules
                 # in a single dictionary (see docstring of function)
                 _get_strings(translated_strings, lang_code, s.source_entity),
                 # 5. A number which indicates the number of Suggestion objects
@@ -376,10 +376,10 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 def _get_source_strings(source_string, source_language, lang_code, more_languages):
     """
     Get all the necessary source strings, including plurals and similar langs.
-    
+
     Returns a dictionary with the keys:
     'source_strings' : {"one":<string>, "two":<string>, ... , "other":<string>}
-    'similar_lang_strings' : 
+    'similar_lang_strings' :
         {"lang1": {"one":<string>, ... , "other":<string>},
          "lang2": {"one":<string>, "two":<string>, ... , "other":<string>}}
     """
@@ -388,7 +388,7 @@ def _get_source_strings(source_string, source_language, lang_code, more_language
     source_strings = { "other":source_string.string }
     # List that will contain all the similar translations
     similar_lang_strings = {}
-    
+
     if source_entity.pluralized:
         # These are the remaining plural forms of the source string.
         plural_strings = Translation.objects.filter(
@@ -412,11 +412,11 @@ def _get_source_strings(source_string, source_language, lang_code, more_language
 def _get_strings(query, target_lang_code, source_entity):
     """
     Helper function for returning all the Translation strings or an empty dict.
-    
+
     Used in the list concatenation above to preserve code sanity.
     Returns a dictionary in the following form:
     {"zero":<string>, "one":<string>, ... , "other":<string>},
-    where the 'zero', 'one', ... are the plural names of the corresponding 
+    where the 'zero', 'one', ... are the plural names of the corresponding
     plural forms.
     """
     # It includes the plural translations, too!
@@ -452,7 +452,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
     Id is considered to be of the source translation string and the string is
     in the target_lang.
-    
+
     FIXME: Document in detail the form of the 'strings' POST variable.
     """
 
@@ -476,8 +476,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     except Language.DoesNotExist:
         raise Http404
 
-    # This dictionary will hold the results of the save operation and will map 
-    # status code for each translation pushed, to indicate the result on each 
+    # This dictionary will hold the results of the save operation and will map
+    # status code for each translation pushed, to indicate the result on each
     # translation push separately.
     push_response_dict = {}
 
@@ -506,7 +506,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                  'message':_("The resource of this source string is not "
                     "accepting translations.") }
 
-        # If the translated source string is pluralized check that all the 
+        # If the translated source string is pluralized check that all the
         # source language supported rules have been filled in, else return error
         # and donot save the translations.
         if source_string.source_entity.pluralized:
@@ -580,7 +580,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         " translation or has been translated: '%s'." % url)}
                         raise StopIteration
             except StopIteration:
-                pass 
+                pass
 
             # Scan for urls and see if they're in both strings
             emails = re.compile("([\w\-\.+]+@[\w\w\-]+\.+[\w\-]+)")
@@ -592,7 +592,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         " translation or has been translated: '%s'." % email)}
                         raise StopIteration
             except StopIteration:
-                pass 
+                pass
 
             # Check whether source string and translation start and end
             # with newlines
@@ -730,7 +730,7 @@ def translation_details_snippet(request, entity_id, lang_code):
 
     language = get_object_or_404(Language, code=lang_code)
     translation = source_entity.get_translation(language.code)
-    
+
     return list_detail.object_detail(request,
         queryset=SourceEntity.objects.all(),
         object_id=entity_id,

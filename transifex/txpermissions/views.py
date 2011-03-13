@@ -19,11 +19,11 @@ from transifex.txpermissions.templatetags.txpermissions import (txadd_url_for_ob
 from transifex.txpermissions.forms import UserAjaxPermissionForm
 
 def _send_notice_save_action(request, notice):
-    """ 
+    """
     Handler for manipulating notifications and save action logs
-    
+
     The argument notice must have the following dictionary structure:
-    
+
     notice = {
         'type': '<notice_type_label>',
         'object': <object>,
@@ -37,7 +37,7 @@ def _send_notice_save_action(request, notice):
         `sendto`: List of Users to sent the notification to
         `extra_context`: Any extra var used in the message templates
     """
-    action_logging(request.user, [notice['object']], notice['type'], 
+    action_logging(request.user, [notice['object']], notice['type'],
                 context=notice['extra_context'])
     if settings.ENABLE_NOTICES:
         notification.send(set(notice['sendto']),
@@ -50,18 +50,18 @@ def add_permission_or_request(request, obj, view_name, approved=False,
                    extra_context={}):
     """
     View for adding either a permission or a permission request for a user.
-    
-    This view is a centralized place for adding permissions/requests for any 
+
+    This view is a centralized place for adding permissions/requests for any
     kind of object through the whole Transifex.
-    
+
     Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
-    
-    For the extra_context, this view expect a key called 'notice' that MUST 
-    have a determinate dictionary structure to be able to send notifications 
-    and save action logs. See the `_send_notice_save_action` function docstring 
+
+    For the extra_context, this view expect a key called 'notice' that MUST
+    have a determinate dictionary structure to be able to send notifications
+    and save action logs. See the `_send_notice_save_action` function docstring
     for more information.
-    
+
     Example of `extra_context` with `notice` key:
         # See `_send_notice_save_action` docstring for the `notice` var below
         notice = {}
@@ -117,15 +117,15 @@ def add_permission_or_request(request, obj, view_name, approved=False,
 def approve_permission_request(request, requested_permission, extra_context={}):
     """
     View for approving/rejecting a user's permission request.
-    
-    This view is a centralized place for approving permission requests for any 
+
+    This view is a centralized place for approving permission requests for any
     kind of object through the whole Transifex.
-    
+
     Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
     """
     requested_permission.approve(request.user)
-    
+
     if extra_context.has_key('notice'):
         # ActionLog & Notification
         _send_notice_save_action(request, extra_context['notice'])
@@ -138,10 +138,10 @@ def approve_permission_request(request, requested_permission, extra_context={}):
 def delete_permission_or_request(request, permission, approved, extra_context={}):
     """
     View for deleting either a permission or a permission request from a user.
-    
-    This view is a centralized place for deleting permission/requests for any 
+
+    This view is a centralized place for deleting permission/requests for any
     kind of object through the whole Transifex.
-    
+
     Following the upstream django-authority app, all the entries are considered
     requests until the field approved be set to True.
     """

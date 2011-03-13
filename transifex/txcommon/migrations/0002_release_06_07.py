@@ -12,7 +12,7 @@ class Migration:
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'Profile'
         db.create_table('txcommon_profile', (
             ('looking_for_work', models.BooleanField(_('Looking for work?'), default=False)),
@@ -32,16 +32,16 @@ class Migration:
             ('location', models.CharField(max_length=255, blank=True)),
         ))
         db.send_create_signal('txcommon', ['Profile'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Profile'
         db.delete_table('txcommon_profile')
-        
-    
-    
+
+
+
     models = {
         'auth.user': {
             '_stub': True,
@@ -70,5 +70,5 @@ class Migration:
             'user': ('models.ForeignKey', ['User'], {'unique': 'True'})
         }
     }
-    
+
     complete_apps = ['txcommon']

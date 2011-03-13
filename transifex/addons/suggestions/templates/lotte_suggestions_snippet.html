@@ -189,7 +189,7 @@ $(document).ready(function(){
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
           <img class="border top" alt="{{ suggestion.user }}" src="{% avatar 32 suggestion.user %}" />
-		{% if suggestion.user %} 
+		{% if suggestion.user %}
           <a href="{% url profile_public suggestion.user.username %}">
             <span>{{ suggestion.user }}</span>
           </a>

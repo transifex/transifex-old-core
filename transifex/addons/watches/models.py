@@ -46,7 +46,7 @@ def is_watched(self, user, signal=None):
     """
     Return a boolean value if an object is watched by an user or not
 
-    It is possible also verify if it is watched by a user in a specific 
+    It is possible also verify if it is watched by a user in a specific
     signal, passing the signal as a second parameter
     """
     if signal:

@@ -18,7 +18,7 @@
   {% if project %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
   {% endif %}
-  
+
 <script type="text/javascript">
 
 function toggle_access_control(){
@@ -36,13 +36,13 @@ $(document).ready(
         $("#id_anyone_submit").change(function(){
             $(this).parents("form").submit();
             })
-            
+
         $("input[name='access_control']").change(function(){
             toggle_access_control();
         });
-        
+
         toggle_access_control();
-        
+
     }
 );
 </script>

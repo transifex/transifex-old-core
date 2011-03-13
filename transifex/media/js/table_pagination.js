@@ -1,7 +1,7 @@
 function table_pagination(table_node){
   /*
   Simple table pagination with filtering support.
-  
+
   To filter/skip a row from the table pagination, just include a 'filtered' class
   to the row (tr).
   */

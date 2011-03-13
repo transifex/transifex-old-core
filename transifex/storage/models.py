@@ -43,7 +43,7 @@ class StorageFile(models.Model):
     user = models.ForeignKey(User,
         verbose_name=_('Owner'), blank=False, null=True,
         help_text=_("The user who uploaded the specific file."))
-    
+
     created = models.DateTimeField(auto_now_add=True, editable=False)
     total_strings = models.IntegerField(_('Total number of strings'), blank=True, null=True)
 
@@ -73,7 +73,7 @@ class StorageFile(models.Model):
         return (self.total_strings > 0)
 
     def find_parser(self):
-        #FIXME: Decide whether it's important to have it and find a good way 
+        #FIXME: Decide whether it's important to have it and find a good way
         # to import the PARSERS.
         from transifex.resources.models import PARSERS
         parser = None

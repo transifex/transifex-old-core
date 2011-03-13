@@ -4,7 +4,7 @@
 {% load txcommontags %}
 
 {% block breadcrumb %}
-{% homelink %} » 
+{% homelink %} »
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a>
  » <a href="{% url project_detail project.slug %}">{{project}}</a>
 {% if resource %} » <a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>{% endif %}
@@ -50,8 +50,8 @@
     /* vars for string calcs */
     var translated;
     var untranslated;
-    var translated_strings = {{ translated_strings }} 
-    var untranslated_strings = {{ untranslated_strings }} 
+    var translated_strings = {{ translated_strings }}
+    var untranslated_strings = {{ untranslated_strings }}
     var total_strings = translated_strings + untranslated_strings;
     /* obj for holding default values of edited text areas. works like a hastable/dict */
     var current_defaults = {};
@@ -172,10 +172,10 @@
             "iDisplayLength": 25,
             {% if resource %}
                 "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
-            {% else %} 
+            {% else %}
                 "sAjaxSource": "{%  url stringset_handling project.slug target_language.code %}",
             {% endif %}
-            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">', 
+            "sDom": '<"top"fi><"clear">rt<"bottom"pl><"clear">',
             "bAutoWidth": false,
             "aoColumns" : [
                 // Holds the Translation id (hidden)
@@ -308,7 +308,7 @@
 
               /*
                * Here we issue the AJAX request to get the table data and
-               * then we create the StringSet object which holds all the 
+               * then we create the StringSet object which holds all the
                * Translation objects in memory.
               */
 
@@ -351,7 +351,7 @@
                         // Modified strings should be saved or dropped on page change.
                         translated = stringset.translated; // - stringset.translated_modified;
                         untranslated = stringset.untranslated; // - stringset.untranslated_modified;
-                    } else { 
+                    } else {
                         translated = translated_strings;
                         untranslated = untranslated_strings;
                     }
@@ -378,18 +378,18 @@
 
                 // Draw the colors for textareas and hide/show save buttons
                 stringset.updateColors_Buttons();
-                
+
                 // Enable the onkeyup mark as modified and show save button
                 stringset.bindKeyupTextArea();
 
                 // Enable the onfocus "make current in StringSet"
                 stringset.bindFocusTextArea();
 
-                if ($("#toggle_autosave").is(":checked")){ 
+                if ($("#toggle_autosave").is(":checked")){
                     // Enable the save button push upstream.
                     stringset.unbindSaveButton();
                     stringset.bindBlurTextArea();
-                } else { 
+                } else {
                     stringset.unbindBlurTextArea();
                     stringset.bindSaveButton();
                 }
@@ -397,14 +397,14 @@
                 // Enable the undo button.
                 stringset.bindUndoButton();
 
-                if ($("#toggle_verbose").is(":checked")){ 
+                if ($("#toggle_verbose").is(":checked")){
                     // Enable the save button push upstream.
                     $('.source_entity').show();
-                } else { 
+                } else {
                     $('.source_entity').hide();
                 }
 
-                // Statistics and filtering by flag table 
+                // Statistics and filtering by flag table
                 stringset.bindStatsAndFilter("stats_table");
                 stringset.updateStats(); /* Update statistics */
 
@@ -443,7 +443,7 @@
         shortcut.add('Alt+i', function(evt) {
             if ( ! stringset.current_box ) {
                 $("#stringset_table").find('tr:not(.metatr):last-child').find('textarea.default_translation').focus();
-            } else { 
+            } else {
                 stringset.current_box.blur();
                 stringset.current_box.parents('.trans').parent().prevAll(':not(.metatr):first').find('textarea.default_translation').focus();
             }
@@ -454,7 +454,7 @@
         shortcut.add('Alt+k', function(evt) {
             if ( ! stringset.current_box ) {
                 $("#stringset_table").find('tr:not(.metatr):nth-child(1)').find('textarea.default_translation').focus();
-            } else { 
+            } else {
                 stringset.current_box.blur();
                 stringset.current_box.parents('.trans').parent().nextAll(':not(.metatr):first').find('textarea.default_translation').focus();
             }
@@ -480,21 +480,21 @@
 
         /* SETTINGS togglers */
         $("#toggle_verbose").click( function() {
-            if ($(this).is(":checked")){ 
+            if ($(this).is(":checked")){
                 $('.source_entity').show();
-            } else { 
+            } else {
                 $('.source_entity').hide();
             }
         });
 
         /* Toggle autosave of textarea value */
         $("#toggle_autosave").click( function() {
-            if ($(this).is(":checked")){ 
+            if ($(this).is(":checked")){
                 stringset.unbindSaveButton();
                 stringset.bindBlurTextArea();
                 stringset.push();
                 alert('{% trans "Translation text will be saved automatically."|escapejs %}');
-            } else { 
+            } else {
                 stringset.unbindBlurTextArea();
                 stringset.bindSaveButton();
                 alert('{% trans "Translation text will no longer be saved automatically."|escapejs %}');
@@ -521,10 +521,10 @@
                 {% else %}
                 var delete_url = '{% url delete_translation project.slug target_language.code %}';
                 {% endif %}
-                
+
                 $.ajax({
                     url: delete_url,
-                    data: JSON.stringify({to_delete: to_delete}), 
+                    data: JSON.stringify({to_delete: to_delete}),
                     dataType : "text", // "json" is strict and we get 500
                     type: "POST",
                     contentType: "application/json",
@@ -697,7 +697,7 @@
 {% endblock %}
 
 {% block title %}
-{{ block.super }} | 
+{{ block.super }} |
 {{resource}}
 {% endblock %}
 

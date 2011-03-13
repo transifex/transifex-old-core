@@ -18,7 +18,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'Release'
         db.create_table('releases_release', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -47,7 +47,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Release'
         db.delete_table('releases_release')
 

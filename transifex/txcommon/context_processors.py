@@ -5,9 +5,9 @@ from django.utils import translation
 def site_section(request):
     """
     Return a ContextProcessor containing the first part in the URL.
-    
+
     Eg. Templates accessed at URLs under '/projects/...' having the
-    RequestContext processor will have a ``site_section`` variable available. 
+    RequestContext processor will have a ``site_section`` variable available.
     """
 
     try:

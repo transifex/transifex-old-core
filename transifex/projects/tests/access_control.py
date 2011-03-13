@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from transifex.txcommon.tests.base import (Project, Language, Team, AuPermission,
     BaseTestCase, USER_ROLES)
-from transifex.txcommon.tests.utils import (check_page_status, 
+from transifex.txcommon.tests.utils import (check_page_status,
     convert_url_roles, assert_status_code)
 
 URL_ROLES = {
@@ -40,7 +40,7 @@ class ProjectAccessControlTestCase(BaseTestCase):
 
     def setUp(self):
         USER_ROLES.remove('anonymous')
-        
+
         # Extending user roles
         USER_ROLES.extend(self.EXTRA_USER_ROLES)
         super(ProjectAccessControlTestCase, self).setUp()
@@ -87,7 +87,7 @@ class ProjectAccessControlTestCase(BaseTestCase):
         url = '/projects/p/project1/resource/resource1/l/pt_BR/'
         for user_role in ['registered']:
             response = self.client[user_role].get(url)
-            assert_status_code(self, response, expected_code, url, 
+            assert_status_code(self, response, expected_code, url,
                 user_role)
 
 
@@ -100,13 +100,13 @@ class ProjectAccessControlTestCase(BaseTestCase):
         for user_role in USER_ROLES:
             check_page_status(self, user_role, convert_url_roles(URL_ROLES))
 
-        # Check if a writer and a team member of the outsource project can 
+        # Check if a writer and a team member of the outsource project can
         # open up Lotte
         expected_code = 200
         url = '/projects/p/project1/resource/resource1/l/pt_BR/'
         for user_role in self.EXTRA_USER_ROLES:
             response = self.client[user_role].get(url)
-            assert_status_code(self, response, expected_code, url, 
+            assert_status_code(self, response, expected_code, url,
                 user_role)
 
     def testOriginalMaintainer(self):

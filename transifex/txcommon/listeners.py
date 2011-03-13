@@ -22,7 +22,7 @@ def add_user_to_registered_group(sender, **kwargs):
     This signal must be called by the post_save signal from the User class.
     This signal also creates a public profile for the user if it does not exist.
     """
-    if 'created' in kwargs and kwargs['created'] is True: 
+    if 'created' in kwargs and kwargs['created'] is True:
 
         user = kwargs['instance']
 

@@ -108,7 +108,7 @@ class StorageHandler(BaseHandler):
                         sf.language =  Language.objects.by_code_or_alias(lang_code)
                     except Language.DoesNotExist:
                         logger.error("Weird! Selected language code (%s) does "
-                            "not match with any language in the database." 
+                            "not match with any language in the database."
                             % lang_code)
                         return BAD_REQUEST("Selected language code (%s) does "
                             "not match with any language in the database." % lang_code)
@@ -123,7 +123,7 @@ class StorageHandler(BaseHandler):
                         'name':sf.name})
                 except Exception, e:
                     if isinstance(e, FileCheckError) or isinstance(e, LinguistParseError):
-                        #FIXME: Custom Exception should use an extra attr for 
+                        #FIXME: Custom Exception should use an extra attr for
                         # localized string.
                         message = e.message
                     else:
@@ -131,7 +131,7 @@ class StorageHandler(BaseHandler):
                         message = _("A strange error happened.")
                         logger.debug(str(e))
 
-                    # The object is not saved yet, but it removes file from 
+                    # The object is not saved yet, but it removes file from
                     # the filesystem
                     sf.delete()
 

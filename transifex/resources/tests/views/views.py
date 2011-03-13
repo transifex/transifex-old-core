@@ -122,7 +122,7 @@ class CoreViewsTest(BaseTestCase):
         trans_lang = 'el'
         trans = "foo"
         new_trans = "foo2"
-        # Create new translation 
+        # Create new translation
         # FIXME: Test plurals
         resp = self.client['maintainer'].post(reverse('push_translation',
             args=[self.project.slug, trans_lang]),
@@ -198,7 +198,7 @@ class CoreViewsTest(BaseTestCase):
             language__code = trans_lang).count(), 0)
 
 class ReleasesViewsTest(BaseTestCase):
-    
+
     def setUp(self, *args, **kwargs):
         super(ReleasesViewsTest, self).setUp(*args, **kwargs)
         self.release = self.project.releases.create(slug='release1', name='Release1')
@@ -219,13 +219,13 @@ class ResourcesLookupsTests(BaseTestCase):
 
     def test_private_resources_ajax_lookup(self):
         """Test that a private resource isn't present in lookup.
-        
+
         This AJAX lookup/dropdown is present in the Release Add/Edit form.
         """
-        
+
         public_project = "resource1 (Test Project)"
         private_project = "resource1 (Test Private Project)"
-        
+
         # Test that a private project is not visible to a random user
         self.assertTrue(self.user['registered'] not in self.project_private.maintainers.all())
         resp = self.client['registered'].get('/ajax/ajax_lookup/resources', {'q': 'r', 'limit': '150', })

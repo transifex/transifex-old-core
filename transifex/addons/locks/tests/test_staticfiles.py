@@ -16,7 +16,7 @@ class TestStaticfiles(unittest.TestCase):
     def test_staticfiles(self):
         """
         Test whether django-staticfiles is properly configured.
- 
+
         There are various reasons why this could fail:
          * App not loaded (not in get_apps())
          * models.py missing

@@ -58,7 +58,7 @@ def resource_language_lock(request, project_slug, resource_slug, language_code):
 @login_required
 @one_perm_required_or_403(pr_resource_language_lock,
     (Project, 'slug__exact', 'project_slug'))
-def resource_language_unlock(request, project_slug, resource_slug, 
+def resource_language_unlock(request, project_slug, resource_slug,
     language_code):
     """
     View to unlock a resource language.

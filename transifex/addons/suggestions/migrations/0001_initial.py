@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding model 'Suggestion'
         db.create_table('suggestions_suggestion', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -47,7 +47,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'Vote', fields ['suggestion', 'user']
         db.delete_unique('suggestions_vote', ['suggestion_id', 'user_id'])
 

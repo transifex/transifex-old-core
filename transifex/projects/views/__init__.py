@@ -8,10 +8,10 @@ from transifex.txcommon.decorators import one_perm_required_or_403
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
     Override default feed, using custom (including nonexistent) slug.
-    
+
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.
-    
+
     See also http://code.djangoproject.com/ticket/6969.
     """
     if slug:
@@ -27,10 +27,10 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 def project_feed(request, slug=None, param='', feed_dict=None):
     """
     Override default feed, using custom (including nonexistent) slug.
-    
+
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.
-    
+
     See also http://code.djangoproject.com/ticket/6969.
     """
     if slug:
@@ -43,7 +43,7 @@ def project_feed(request, slug=None, param='', feed_dict=None):
 # Release
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
-def release_feed(request, project_slug, release_slug, slug=None, param='', 
+def release_feed(request, project_slug, release_slug, slug=None, param='',
     feed_dict=None,):
     param = '%s/%s' % (project_slug, release_slug)
     if slug:

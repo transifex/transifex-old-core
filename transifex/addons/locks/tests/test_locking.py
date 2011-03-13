@@ -19,9 +19,9 @@ class TestLocking(BaseTestCase):
             settings.MIDDLEWARE_CLASSES, msg = 'Locking test doesn\'t '
             'work with CSRF Middleware enabled')
         super(TestLocking, self).setUp()
-        
+
         self.assertNoticeTypeExistence("project_resource_language_lock_expiring")
-        
+
         # Set settings for testcase
         settings.LOCKS_PER_USER = 3
         settings.LOCKS_LIFETIME = 10
@@ -60,15 +60,15 @@ class TestLocking(BaseTestCase):
         resp = self.client['maintainer'].post(self.url_lock)
 
         resp = self.client['team_member'].post(self.url_unlock, follow=True)
-        self.assertContains(resp, 
+        self.assertContains(resp,
             "You don't have permission to unlock this file", status_code=403)
 
         resp = self.client['registered'].post(self.url_unlock, follow=True)
-        self.assertContains(resp, 
+        self.assertContains(resp,
             "Forbidden access", status_code=403)
 
         resp = self.client['anonymous'].post(self.url_unlock, follow=True)
-        self.assertContains(resp, 
+        self.assertContains(resp,
             "Enter your username and password to sign in", status_code=200)
 
 

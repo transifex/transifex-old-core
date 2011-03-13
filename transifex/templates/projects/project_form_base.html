@@ -28,29 +28,29 @@ $(document).ready(
         {% if not project.id %}
             tooltip('#tab-link-2', "{% trans "Access control will be enabled once the project is created" %}");
         {% endif %}
-        
+
         // Tabs
-        $("#project-tabs").tabs({ 
+        $("#project-tabs").tabs({
             //spinner: false,
             fx: { opacity: "toggle", duration: "fast"},
-            {% if not project.id %}  
+            {% if not project.id %}
             disabled: [1],
             {% endif %}
-            
+
             {% if project_permission %}
             selected: 1,
             {% endif %}
         });
 
-         // If in the permission page for *requesting* (not add) a permission, 
+         // If in the permission page for *requesting* (not add) a permission,
          // remove link to project details.
-         {% if project_permission and not approved %}  
+         {% if project_permission and not approved %}
          $("#project-tabs").tabs('remove', 0 )
          {% endif %}
 
 
         // Make it load the pages as normal links instead of load via Ajax
-        $("#project-tabs").bind('tabsselect', 
+        $("#project-tabs").bind('tabsselect',
             function(event, ui) {
                 url = $.data(ui.tab, 'load.tabs')
                 if( url ) {
@@ -59,7 +59,7 @@ $(document).ready(
                 }
                 return true;
             });
-            
+
         $("#id_anyone_submit").change(function(){
             $(this).parents("form").submit();
             })
@@ -92,7 +92,7 @@ $(document).ready(
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-{% if project_permission %}  
+{% if project_permission %}
     {% include "projects/project_form_permissions.html" %}
 {% else %}
     {% include "projects/project_form.html" %}

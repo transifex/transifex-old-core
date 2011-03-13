@@ -11,11 +11,11 @@ class StorageFileField(forms.MultiValueField):
     file upload.
 
     Whenever a file is chosen to be uploaded, the upload happens through AJAX
-    using the storage app API, creating a StorageFile object accordingly. The 
-    deletion of the uploaded file happens through AJAX too, as the setting of 
+    using the storage app API, creating a StorageFile object accordingly. The
+    deletion of the uploaded file happens through AJAX too, as the setting of
     the related language to the StogareFile object.
 
-    In the end this field just returns the StorageFile id, which is the 
+    In the end this field just returns the StorageFile id, which is the
     important data used in the forms.
     """
     def __init__(self, language=None, *args, **kwargs):
@@ -37,7 +37,7 @@ class StorageFileField(forms.MultiValueField):
         # Hard coded widget
         widget = StorageFileWidget(attrs=attrs, language=language,
             language_choices=language_choices,  *args, **kwargs)
-        super(StorageFileField, self).__init__(fields, widget=widget, 
+        super(StorageFileField, self).__init__(fields, widget=widget,
             *args, **kwargs)
 
     def compress(self, data_list):

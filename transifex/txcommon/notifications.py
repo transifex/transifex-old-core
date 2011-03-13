@@ -230,17 +230,17 @@ NOTICE_TYPES = [
             },
             {   # Used only for ActionLog purposes.
                 "label": "project_resource_translated",
-                "display": _("Resource Translated"), 
+                "display": _("Resource Translated"),
                 "description": _("when a translation is sent to a project "
-                    "resource"), 
+                    "resource"),
                 "default": 0,
                 "show_to_user": False,
             },
             {
                 "label": "project_resource_translation_changed",
-                "display": _("Resource Translation Changed"), 
+                "display": _("Resource Translation Changed"),
                 "description": _("when a resource translation you are "
-                    "watching changes"), 
+                    "watching changes"),
                 "default": 0,
                 "show_to_user": True,
             },

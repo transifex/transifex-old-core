@@ -90,7 +90,7 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    stats = RLStats.objects.select_related('resource', 
+    stats = RLStats.objects.select_related('resource',
         'resource__project').public().by_release_and_language(release, language)
 
     private_stats = RLStats.objects.select_related('resource',
@@ -107,7 +107,7 @@ def release_language_detail(request, project_slug, release_slug, language_code):
 
 
 @login_required
-@one_perm_required_or_403(pr_release_delete, 
+@one_perm_required_or_403(pr_release_delete,
     (Project, 'slug__exact', 'project_slug'))
 def release_delete(request, project_slug, release_slug):
     release = get_object_or_404(Release, slug=release_slug,
@@ -127,7 +127,7 @@ def release_delete(request, project_slug, release_slug):
             txnotification.send_observation_notices_for(release_.project,
                                 signal=nt, extra_context=context)
 
-        return HttpResponseRedirect(reverse('project_detail', 
+        return HttpResponseRedirect(reverse('project_detail',
                                      args=(project_slug,)))
     else:
         return render_to_response('projects/release_confirm_delete.html',

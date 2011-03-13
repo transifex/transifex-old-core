@@ -31,7 +31,7 @@ def log_model(model):
     Register standard receivers for a model with a 'name' attribute.
 
     Called after the declaration of a model in ``models.py``. Eg.:
-    
+
     >>> from txcommon.log import log_model
     >>> from django import models
     >>> class Person(models.Model):

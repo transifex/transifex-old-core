@@ -19,7 +19,7 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation
 from transifex.resources.decorators import method_decorator
 from transifex.resources.formats import get_i18n_type_from_file, pofile, qt
-from transifex.resources.models import * 
+from transifex.resources.models import *
 from transifex.storage.models import StorageFile
 from transifex.teams.models import Team
 from transifex.txcommon.log import logger
@@ -239,17 +239,17 @@ class ProjectResourceHandler(BaseHandler):
                 retval= {
                     'strings_added': strings_added,
                     'strings_updated': strings_updated,
-                    'redirect': reverse('resource_detail',args=[project_slug, 
+                    'redirect': reverse('resource_detail',args=[project_slug,
                         resource.slug])
                     }
                 logger.debug("Extraction successful, returning: %s" % retval)
 
-                # Set StorageFile to 'bound' status, which means that it is 
+                # Set StorageFile to 'bound' status, which means that it is
                 # bound to some translation resource
                 storagefile.bound = True
                 storagefile.save()
 
-                return HttpResponse(simplejson.dumps(retval), 
+                return HttpResponse(simplejson.dumps(retval),
                     mimetype='text/plain')
 
             else:
@@ -263,7 +263,7 @@ class ProjectResourceHandler(BaseHandler):
         """
         try:
             project = Project.objects.get(slug=project_slug)
-            resource = Resource.objects.get(slug=resource_slug, 
+            resource = Resource.objects.get(slug=resource_slug,
                 project=project)
         except (Project.DoesNotExist, Resource.DoesNotExist):
             return rc.NOT_FOUND
@@ -283,7 +283,7 @@ class ProjectResourceHandler(BaseHandler):
                 language = storagefile.language
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
-                    (storagefile.name, storagefile.uuid, project_slug, 
+                    (storagefile.name, storagefile.uuid, project_slug,
                     resource.slug))
 
                 strings_added, strings_updated = 0, 0
@@ -309,13 +309,13 @@ class ProjectResourceHandler(BaseHandler):
                 retval= {
                     'strings_added':strings_added,
                     'strings_updated':strings_updated,
-                    'redirect':reverse('resource_detail',args=[project_slug, 
+                    'redirect':reverse('resource_detail',args=[project_slug,
                         resource.slug])
                     }
 
                 logger.debug("Extraction successful, returning: %s" % retval)
 
-                # Set StorageFile to 'bound' status, which means that it is 
+                # Set StorageFile to 'bound' status, which means that it is
                 # bound to some translation resource
                 storagefile.bound = True
                 storagefile.save()

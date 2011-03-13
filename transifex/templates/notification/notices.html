@@ -74,7 +74,7 @@
         </div>
 
         {% paginate %}
-        
+
     {% else %}
         <p>{% trans "No notices." %}</p>
     {% endif %}
@@ -97,7 +97,7 @@
             </p>
         {% endif %}
         {% endwith %}
-        
+
         <form method="POST" action="">{% csrf_token %}
             <table class="tablesorter notice_settings">
                 <tr>

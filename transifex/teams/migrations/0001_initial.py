@@ -4,9 +4,9 @@ from django.db import models
 from transifex.teams.models import *
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Team'
         db.create_table('teams_team', (
             ('id', orm['teams.Team:id']),
@@ -18,7 +18,7 @@ class Migration:
             ('modified', orm['teams.Team:modified']),
         ))
         db.send_create_signal('teams', ['Team'])
-        
+
         # Adding model 'TeamRequest'
         db.create_table('teams_teamrequest', (
             ('id', orm['teams.TeamRequest:id']),
@@ -28,7 +28,7 @@ class Migration:
             ('created', orm['teams.TeamRequest:created']),
         ))
         db.send_create_signal('teams', ['TeamRequest'])
-        
+
         # Adding model 'TeamAccessRequest'
         db.create_table('teams_teamaccessrequest', (
             ('id', orm['teams.TeamAccessRequest:id']),
@@ -37,60 +37,60 @@ class Migration:
             ('created', orm['teams.TeamAccessRequest:created']),
         ))
         db.send_create_signal('teams', ['TeamAccessRequest'])
-        
+
         # Adding ManyToManyField 'Team.members'
         db.create_table('teams_team_members', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('team', models.ForeignKey(orm.Team, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
+
         # Adding ManyToManyField 'Team.coordinators'
         db.create_table('teams_team_coordinators', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('team', models.ForeignKey(orm.Team, null=False)),
             ('user', models.ForeignKey(orm['auth.User'], null=False))
         ))
-        
+
         # Creating unique_together for [team, user] on TeamAccessRequest.
         db.create_unique('teams_teamaccessrequest', ['team_id', 'user_id'])
-        
+
         # Creating unique_together for [project, language] on TeamRequest.
         db.create_unique('teams_teamrequest', ['project_id', 'language_id'])
-        
+
         # Creating unique_together for [project, language] on Team.
         db.create_unique('teams_team', ['project_id', 'language_id'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting unique_together for [project, language] on Team.
         db.delete_unique('teams_team', ['project_id', 'language_id'])
-        
+
         # Deleting unique_together for [project, language] on TeamRequest.
         db.delete_unique('teams_teamrequest', ['project_id', 'language_id'])
-        
+
         # Deleting unique_together for [team, user] on TeamAccessRequest.
         db.delete_unique('teams_teamaccessrequest', ['team_id', 'user_id'])
-        
+
         # Deleting model 'Team'
         db.delete_table('teams_team')
-        
+
         # Deleting model 'TeamRequest'
         db.delete_table('teams_teamrequest')
-        
+
         # Deleting model 'TeamAccessRequest'
         db.delete_table('teams_teamaccessrequest')
-        
+
         # Dropping ManyToManyField 'Team.members'
         db.delete_table('teams_team_members')
-        
+
         # Dropping ManyToManyField 'Team.coordinators'
         db.delete_table('teams_team_coordinators')
-        
-    
-    
+
+
+
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -183,5 +183,5 @@ class Migration:
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
         }
     }
-    
+
     complete_apps = ['teams']

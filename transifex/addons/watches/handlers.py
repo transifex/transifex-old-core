@@ -26,14 +26,14 @@ def _notify_translationwatchers(resource, language):
         signal='project_resource_translation_changed', extra_context=context)
 
 
-def lotte_done_handler(sender, request, resources, language, modified, 
+def lotte_done_handler(sender, request, resources, language, modified,
     **kwargs):
     if modified and settings.ENABLE_NOTICES:
         for resource in resources:
             _notify_translationwatchers(resource, language)
 
 
-def post_submit_translation_handler(sender, request, resource, language, 
+def post_submit_translation_handler(sender, request, resource, language,
     modified, **kwargs):
     if modified and settings.ENABLE_NOTICES:
         _notify_translationwatchers(resource, language)

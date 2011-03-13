@@ -19,13 +19,13 @@ class access_off(object):
     """
     Decorator to check if writers and teams are disabled for a given project.
 
-    It needs to be used in front of views that accept the key argument 
+    It needs to be used in front of views that accept the key argument
     'project_slug'.
 
-    Whenever a project has set 'anyone_submit' or the 'outsource' attribute 
+    Whenever a project has set 'anyone_submit' or the 'outsource' attribute
     this decorator will disable the access to the related view.
 
-    The arg 'redirect_view' needs to be passed in order to specify the view 
+    The arg 'redirect_view' needs to be passed in order to specify the view
     where the user should be redirected.
     """
     def __init__(self, redirect_view):
@@ -44,7 +44,7 @@ class access_off(object):
 def user_passes_test_with_403(test_func, login_url=None):
     """
     Decorator for views that checks that the user passes the given test.
-    
+
     Users that fail the test will be given a 403 error.
     """
     def _dec(view_func):
@@ -71,10 +71,10 @@ def perm_required_with_403(perm):
 
 def _model_lookups_handler(model_lookups, *args, **kwargs):
     """
-    Private function to handle the lookup model arguments from the decorator 
+    Private function to handle the lookup model arguments from the decorator
     call.
     """
-    
+
     lookup_list= []
     for model, lookup, varname in model_lookups:
         if varname not in kwargs:
@@ -99,9 +99,9 @@ def _model_lookups_handler(model_lookups, *args, **kwargs):
 def one_perm_required(perms, *model_lookups, **kwargs):
     """
     Decorator for views that checks whether a user has a particular permission
-    enabled for an object or a general permission from the django permission 
+    enabled for an object or a general permission from the django permission
     system, redirecting to the log-in page if necessary.
-    
+
     Example::
 
       # Permissions required for setting stats
@@ -110,23 +110,23 @@ def one_perm_required(perms, *model_lookups, **kwargs):
           ('general',  'projects.refresh_stats'),
          #(<perm_type>, <perm_name>),
       )
-    
-      @one_perm_required_or_403(pr_set_stats, 
+
+      @one_perm_required_or_403(pr_set_stats,
           (Project, 'slug__contains', 'project_slug'))
       def set_stats(request, project_slug, resource_slug):
           bla bla bla
-        
+
     In the example above the decorator checks for the `maintain` permission
-    for a Project object, taking the project_slug from the view 
+    for a Project object, taking the project_slug from the view
     `set_stats`. If the user IS NOT a maintainer of that project, the
     second and general permission is checked.
-    
-    If at least one of the permissions checks in the list returns True, the 
+
+    If at least one of the permissions checks in the list returns True, the
     access for the user is guarantee.
-    
-    The permissions are checked in the same order as they are put in the tuple 
+
+    The permissions are checked in the same order as they are put in the tuple
     and it is allowed to add how many permissions checks as wanted.
-    
+
     CAUTION:
     This decorator implies login_required, since this is checked in the body.
     The ``allow_anonymous`` keyword allows you to use this decorator also for
@@ -135,7 +135,7 @@ def one_perm_required(perms, *model_lookups, **kwargs):
     project is public.
 
     """
-    
+
     login_url = kwargs.pop('login_url', settings.LOGIN_URL)
     redirect_field_name = kwargs.pop('redirect_field_name', REDIRECT_FIELD_NAME)
     redirect_to_login = kwargs.pop('redirect_to_login', True)

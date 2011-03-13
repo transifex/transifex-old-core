@@ -7,10 +7,10 @@ from transifex.txcommon.tests.base import BaseTestCase
 
 class StatusCodesTest(BaseTestCase):
     """Test that all app URLs return correct status code.
-    
-    Moreover, this kind of tests are useful to list down the urls that are 
+
+    Moreover, this kind of tests are useful to list down the urls that are
     mounted to the resources app views.
-    TODO: Maybe in the future, we need to refactor the tests according to 
+    TODO: Maybe in the future, we need to refactor the tests according to
     request type, e.g. split them to GET and POST sets of URLs.
     """
     # TODO: Fill in the urls
@@ -23,9 +23,9 @@ class StatusCodesTest(BaseTestCase):
                     (self.project.slug, self.resource.slug)),
                 ('/projects/p/%s/resource/%s/l/pt_BR/view/' %
                     (self.project.slug, self.resource.slug)),
-                ('/projects/p/%s/resources/1' % 
+                ('/projects/p/%s/resources/1' %
                     (self.project.slug,)),
-                ('/projects/p/%s/resources/1/more/' % 
+                ('/projects/p/%s/resources/1/more/' %
                     (self.project.slug,)),
                 ('/ajax/p/%s/resource/%s/l/pt_BR/actions/' %
                     (self.project.slug, self.resource.slug)),

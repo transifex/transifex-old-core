@@ -7,7 +7,7 @@
 {% block breadcrumb %}
 
 {{block.super}} »
-<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> » 
+<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> »
 <a href="{% url project_detail resource.project.slug %}">{{resource.project}}</a> »
 Edit {{resource}}
 {% endblock %}
@@ -41,15 +41,15 @@ Edit {{resource}}
 	{% blocktrans %}
 	<div class="message">
 		<p>To enable automatic "fetching" of your source language strings by
-		Transifex, enter a URL to your source file (e.g. POT file). Refer to 
-		<a href="http://help.transifex.net/user-guide/projects.html#projects-and-resources">the documentation</a> 
+		Transifex, enter a URL to your source file (e.g. POT file). Refer to
+		<a href="http://help.transifex.net/user-guide/projects.html#projects-and-resources">the documentation</a>
 		for more information.</p>
 
 		<p><b>Warning</b>: Transifex will overwrite the existing source strings
 		and translations with the ones found in the linked file. This may lead
 		to <b>loss of translations</b>, so make sure the URL links to the
 		correct file before submitting the form.
-		</p> 
+		</p>
 		</blink>
 	</div>
 	{% endblocktrans %}

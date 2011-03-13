@@ -8,9 +8,9 @@ def as_table(rows, header=True, vdelim=" ", border="=", padding=0, justify="left
     - rows:    List of lists
     - header:  If True the first row is treated as a table header
     - vdelim:  Vertical delimiter between columns
-    - border:  Character for drawing the the horizontal table border, in 
+    - border:  Character for drawing the the horizontal table border, in
                 the header and footer.
-    - padding: Padding nr. of spaces are left around the longest element 
+    - padding: Padding nr. of spaces are left around the longest element
                 in the column.
     - justify: May be 'left', 'center' or 'right'.
     """
@@ -45,7 +45,7 @@ def as_title(text, border="="):
     - text:    A string
     - border:  Character for drawing the bottom border.
     """
-    # Calculate width 
+    # Calculate width
     width = len(str(text))
     # The horizontal border needed by rst
     borderline = ''.join([width*border])+"\n"
@@ -59,4 +59,3 @@ def strip_tags(text):
     """
     HTMLtag = re.compile('<.*?>')  # Matches HTML tags
     return HTMLtag.sub('', text.replace('\n',''))
-    

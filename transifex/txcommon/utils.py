@@ -4,7 +4,7 @@ def get_url_pattern(urlname, args=[]):
     """
     Return URL pattern for a URL based on its name.
 
-    args - list of argument names for the URL. Useful to distinguish URL 
+    args - list of argument names for the URL. Useful to distinguish URL
     patterns identified with the same name.
 
     >>> get_url_pattern('project_detail')
@@ -90,11 +90,11 @@ def key_sort(l, *keys):
 def size_human(size):
     """
     Make the size in bytes to a more human readable format.
-    
+
     This function compares the size value with some thresholds and returns
     a new value with the appropriate suffix (K, M, T, P). The correct input
     is an integer value not a string!!!
-    
+
     >>> size_human(755745434)
     '721.0M'
     """
@@ -102,9 +102,9 @@ def size_human(size):
     if size:
         _abbrevs = [
         (1<<50L, 'P'),
-        (1<<40L, 'T'), 
-        (1<<30L, 'G'), 
-        (1<<20L, 'M'), 
+        (1<<40L, 'T'),
+        (1<<30L, 'G'),
+        (1<<20L, 'M'),
         (1<<10L, 'k'),
         (1, 'bytes')]
 
@@ -119,7 +119,7 @@ def size_human(size):
 
 def restructured_table(column_names, column_ids, object_list, truncate_len=13):
     """Restructured table creation method
-    
+
     This method takes some objects in a list and present them in a table format.
     The format is similar with the one used in restructured text, so it can easily
     be used in formatted text.
@@ -129,7 +129,7 @@ def restructured_table(column_names, column_ids, object_list, truncate_len=13):
     each object
     object_list : the list of the objects which contain the data to be presented
     truncate_len : the length of the strings in each cell
-    
+
     Example output :
     +---------------+---------------+---------------+
     |Alfa           |Beta           |Gama           |

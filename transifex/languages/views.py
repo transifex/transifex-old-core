@@ -14,10 +14,10 @@ from transifex.releases.models import Release
 def slug_feed(request, slug=None, param='', feed_dict=None):
     """
     Override default feed, using custom (including nonexistent) slug.
-    
+
     Provides the functionality needed to decouple the Feed's slug from
     the urlconf, so a feed mounted at "^/feed" can exist.
-    
+
     See also http://code.djangoproject.com/ticket/6969.
     """
     if slug:
@@ -29,7 +29,7 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
 
 def language_detail(request, slug, *args, **kwargs):
     language = get_object_or_404(Language, code__iexact=slug)
-        
+
     return list_detail.object_detail(
         request,
         object_id=language.id,

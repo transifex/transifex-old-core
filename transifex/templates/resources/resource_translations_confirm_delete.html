@@ -1,16 +1,16 @@
 {% extends "projects/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ block.super }} | 
-{% url resource_detail resource.project.slug resource.slug %} | 
+{% block title %}{{ block.super }} |
+{% url resource_detail resource.project.slug resource.slug %} |
 {% blocktrans with resource.name as resource_name and language.name as language_name %}
   Delete translations for {{ language_name }} of {{ resource_name }} resource.
 {% endblocktrans %}
 {% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; 
-<a href="{% url project_detail resource.project.slug %}">{{ resource.project.name }}</a> &raquo; 
-<a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.name }}</a> &raquo; 
+{% block breadcrumb %}{{ block.super }} &raquo;
+<a href="{% url project_detail resource.project.slug %}">{{ resource.project.name }}</a> &raquo;
+<a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.name }}</a> &raquo;
 {% blocktrans with resource.name as resource_name and language.name as language_name %}
 Delete <em>{{ language_name }}</em>
 {% endblocktrans %}

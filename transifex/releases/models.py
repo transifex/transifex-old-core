@@ -19,11 +19,11 @@ class Release(models.Model):
 
     """
     A release of a project, as in 'a set of specific resources'.
-    
+
     Represents the packaging and releasing of a software project (big or
     small) on a particular date, for which makes sense to track
     translations across the whole release.
-    
+
     Examples of Releases is Transifex 1.0, GNOME 2.26, Fedora 10, etc.
     """
 
@@ -52,10 +52,10 @@ class Release(models.Model):
         help_text=_("The last date packages from this release can be built "
                     "from the developers. Translations sent after this date "
                     "will not be included in the released version."))
-    
+
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
-    
+
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'),
         blank=True, max_length=1000,
@@ -75,7 +75,7 @@ class Release(models.Model):
         return _('<Release: %(rel)s (Project %(proj)s)>') % {
             'rel': self.name,
             'proj': self.project.name}
-    
+
     @property
     def full_name(self):
         #return "%s (%s)" % (self.name, self.project.name)

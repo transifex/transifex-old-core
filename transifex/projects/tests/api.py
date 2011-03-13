@@ -14,12 +14,12 @@ class ProjectResourceAPITests(BaseStorageTests):
         self.create_storage()
 
         data = '{"uuid": "%s"}' % self.uuid
-        resp = self.client['registered'].post(reverse('api_project_files', 
+        resp = self.client['registered'].post(reverse('api_project_files',
             args=[self.project.slug]), data, content_type="application/json")
         self.assertTrue('Forbidden access' in resp.content)
         self.assertEqual(resp.status_code, 403)
 
-        resp = self.client['maintainer'].post(reverse('api_project_files', 
+        resp = self.client['maintainer'].post(reverse('api_project_files',
             args=[self.project.slug]), data, content_type="application/json")
         self.assertEqual(eval(resp.content)['strings_added'], 3)
         self.assertEqual(resp.status_code, 200)
@@ -56,7 +56,7 @@ class ProjectResourceAPITests(BaseStorageTests):
         rls = RLStats.objects.get(resource__project=self.project,
             resource__slug=self.resource_slug, language=self.language)
 
-        resource = Resource.objects.get(project=self.project, 
+        resource = Resource.objects.get(project=self.project,
             slug=self.resource_slug)
 
         self.assertEqual(rls.translated, 3)

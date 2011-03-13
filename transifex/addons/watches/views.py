@@ -58,7 +58,7 @@ def resource_translation_toggle_watch(request, project_slug, resource_slug, lang
             'error': None,
         }
 
-        notification.stop_observing(twatch, request.user, 
+        notification.stop_observing(twatch, request.user,
             signal='project_resource_translation_changed')
 
     except (TranslationWatch.DoesNotExist,

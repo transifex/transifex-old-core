@@ -8,7 +8,7 @@ register = template.Library()
 def language_has_team(lang_code, project):
     """
     Return if the specific language has a corresponding team for the project.
-    
+
     Example: {% if language_obj.code|language_has_team:stat.object.project %}
     """
 

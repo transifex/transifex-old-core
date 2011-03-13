@@ -2,7 +2,7 @@ import os
 import glob
 from django.core.management.base import CommandError, BaseCommand
 from optparse import make_option
-from django.core.management.commands.makemessages import (make_messages, 
+from django.core.management.commands.makemessages import (make_messages,
                                                           handle_extensions)
 
 class Command(BaseCommand):

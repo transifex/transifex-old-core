@@ -7,7 +7,7 @@ class UsersLookup(object):
     def get_query(self,q,request):
         """
         Return a query set.
-        
+
         You also have access to request.user if needed.
         """
         return User.objects.filter(Q(username__istartswith=q))
@@ -19,7 +19,7 @@ class UsersLookup(object):
     def format_result(self,user):
         """
         A more verbose display, used in the search results display.
-        
+
         It may contain html and multi-lines.
         """
         return u"%s" % (user.username)

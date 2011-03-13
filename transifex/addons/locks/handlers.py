@@ -19,7 +19,7 @@ from models import Lock, LockError
 
 # Resource presubmit signal handler
 # Allow only owner of the lock to submit translations, otherwise throw Exception
-def pre_handler(sender, resource=None, language=None, user=None, 
+def pre_handler(sender, resource=None, language=None, user=None,
     instance=None, **kwargs):
 
     if not resource or not language or not user:
@@ -38,7 +38,7 @@ def pre_handler(sender, resource=None, language=None, user=None,
 
 # Resource postsubmit signal handler
 # Update the lock if user checked the checkbox
-def post_handler(sender, request=None, resource=None, language=None, 
+def post_handler(sender, request=None, resource=None, language=None,
     user=None, instance=None, **kwargs):
     if 'lock_extend' in request.POST and request.POST['lock_extend']:
         if user:
@@ -72,7 +72,7 @@ def lotte_done_handler(sender, request, resources=None, language=None,
                 logger.debug("lock-addon: Lock deleted: '%s'" % lock)
             except LockError, e:
                 logger.debug("lock-addon: User '%s' sent translations to a "
-                    "resource/language locked by someone else: %s" % 
+                    "resource/language locked by someone else: %s" %
                     (user, e.message))
 
 
@@ -110,7 +110,7 @@ def db_cleanup(sender, **kwargs):
 
 def invalidate_cache(sender, instance, created=True, **kwargs):
     """
-    Invalidate caching on places related to the lock icon in the stats table 
+    Invalidate caching on places related to the lock icon in the stats table
     row.
     """
     if created:

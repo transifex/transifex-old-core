@@ -2,7 +2,7 @@ from django.contrib import admin
 from transifex.teams.models import Team
 
 class TeamAdmin(admin.ModelAdmin):
-    search_fields = ['project__name', 'language__name', 
+    search_fields = ['project__name', 'language__name',
         'coordinators__username', 'members__username']
     list_display = ['project', 'language']
 

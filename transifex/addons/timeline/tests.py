@@ -55,7 +55,7 @@ class TestTimeline(BaseTestCase):
         resp = self.client['registered'].get(
             reverse('project_timeline', args=[self.project_private.slug]))
         self.assertEqual(resp.status_code, 403)
-        
+
         # Anonymous should require a login
         resp = self.client['anonymous'].get( self.url_project_timeline, follow=True)
         self.assertTrue("Enter your username and password to sign in." in resp.content)

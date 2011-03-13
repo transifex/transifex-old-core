@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Resource.total_entities'
         db.add_column('resources_resource', 'total_entities', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
 
@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Resource.total_entities'
         db.delete_column('resources_resource', 'total_entities')
 

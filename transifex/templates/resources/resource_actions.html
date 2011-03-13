@@ -36,7 +36,7 @@
 	{% get_permission "project_perm.maintain" for request.user and project as "can_maintain" %}
 
       {% ifequal resource.source_language target_language %}
-        {% blocktrans %} 
+        {% blocktrans %}
         <span title="You cannot translate the source language strings.">This is the Source Language</span>
         {% endblocktrans %}
       {% else %}
@@ -55,10 +55,10 @@
          {% endif %}
         {% else %}
           {% if not resource.accept_translations %}
-            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now"
             title="{% trans "This resource is currently not accepting translations" %}">{% trans "Translate now" %}</a>
           {% else %}
-            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now" 
+            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now"
             title="{% blocktrans with target_language.name as lang_name %}To translate you need to be logged in and a member of the {{ lang_name }} team{% endblocktrans %}">{% trans "Translate now" %}</a>
           {% endif %}
         {% endif %}
@@ -70,8 +70,8 @@
       {% with 300 as barwidth %}
       <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Untranslated: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions" >
-              {{ stats.translated|percentage:stats.total }} 
-          </div> 
+              {{ stats.translated|percentage:stats.total }}
+          </div>
           {% stats_bar_actions stats barwidth %}
       </div>
       {% endwith %}

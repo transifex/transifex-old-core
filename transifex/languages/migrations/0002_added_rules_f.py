@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
     )
 
     def forwards(self, orm):
-        
+
         # Adding field 'Language.rule_zero'
         db.add_column('translations_language', 'rule_zero', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True), keep_default=False)
 
@@ -53,7 +53,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Language.rule_zero'
         db.delete_column('translations_language', 'rule_zero')
 

@@ -36,7 +36,7 @@ class LockManager(models.Manager):
         Return valid (not expired) lock for the given resource and language.
         """
         try:
-            return self.valid().get(rlstats__resource=resource, 
+            return self.valid().get(rlstats__resource=resource,
                 rlstats__language=language)
         except Lock.DoesNotExist:
             return None
@@ -46,19 +46,19 @@ class LockManager(models.Manager):
         Return lock for the given resource and language.
         """
         try:
-            return self.get(rlstats__resource=resource, 
+            return self.get(rlstats__resource=resource,
                 rlstats__language=language)
         except Lock.DoesNotExist:
             return None
 
     def create_update(self, resource, language, user):
         """
-        Create new or update existing lock object for the given resource and 
+        Create new or update existing lock object for the given resource and
         language
 
         * Checks whether 'user' has permissions to create the lock.
         * Checks whether 'user' has reached max number of locks.
-        * Checks whether the given resource and language was already locked 
+        * Checks whether the given resource and language was already locked
           by someone else.
         """
 
@@ -82,7 +82,7 @@ class LockManager(models.Manager):
 
         expires = now + timedelta(seconds=settings.LOCKS_LIFETIME)
         try:
-            lock = self.get(rlstats__resource=resource, 
+            lock = self.get(rlstats__resource=resource,
                 rlstats__language=language)
             # The lock is not expired and user is not the owner
             if lock.expires and lock.expires > now and lock.owner != user:
@@ -95,7 +95,7 @@ class LockManager(models.Manager):
             lock.expires = expires
         except Lock.DoesNotExist:
             # Lock didn't exist, create one
-            rlstats, created = RLStats.objects.get_or_create(resource=resource, 
+            rlstats, created = RLStats.objects.get_or_create(resource=resource,
                 language=language)
             lock = self.create(rlstats=rlstats, owner=user, expires=expires)
         # Set notified flag to False meaning that expiration notification
@@ -120,7 +120,7 @@ class Lock(models.Model):
 
     # ForeignKeys
     owner = models.ForeignKey(User)
-    rlstats = models.OneToOneField('resources.RLStats', null=False, blank=False, 
+    rlstats = models.OneToOneField('resources.RLStats', null=False, blank=False,
         related_name='lock')
 
     # Managers

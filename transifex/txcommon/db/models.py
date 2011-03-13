@@ -27,7 +27,7 @@ def uncompress_string(s):
 
 class ChainerManager(models.Manager):
     """
-    Custom manager that has the ability to chain its methods to each other or 
+    Custom manager that has the ability to chain its methods to each other or
     to standard queryset filters.
 
     It needs to receive a custom ``django.db.model.query.QuerySet`` in order
@@ -90,7 +90,7 @@ class IntegerTupleField(models.CharField):
         }
         defaults.update(kwargs)
         return super(IntegerTupleField, self).formfield(**defaults)
-    
+
     def to_python(self, value):
         if type(value) == tuple:
             return value
@@ -102,19 +102,19 @@ class IntegerTupleField(models.CharField):
         if value is None:
             return None
         return tuple(int(x) for x in value.split(u':'))
-        
+
     def get_db_prep_value(self, value):
         if value is None:
             return None
         return u':'.join(unicode(x) for x in value)
-        
+
     def get_db_prep_lookup(self, lookup_type, value):
         if lookup_type == 'exact':
             return [self.get_db_prep_value(value)]
         else:
             raise TypeError('Lookup type %r not supported' %
                 lookup_type)
-    
+
     def value_to_string(self, obj):
         return self.get_db_prep_value(obj)
 

@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Removing unique constraint on 'Lock', fields ['resource', 'language']
         db.delete_unique('addons_locks_lock', ['resource_id', 'language_id'])
 

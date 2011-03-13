@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Changing field 'Template.resource'
         db.alter_column('resources_template', 'resource_id', self.gf('django.db.models.fields.related.OneToOneField')(unique=True, to=orm['resources.Resource']))
 
 
     def backwards(self, orm):
-        
+
         # Changing field 'Template.resource'
         db.alter_column('resources_template', 'resource_id', self.gf('django.db.models.fields.related.ForeignKey')(unique=True, to=orm['resources.Resource']))
 

@@ -8,7 +8,7 @@ from transifex.txcommon.tests.base import BaseTestCase
 class TestmakerBase(BaseTestCase):
     #fixtures = ["sample_data", "sample_users", "sample_site", "sample_languages"]
     pass
-    
+
 
 class TestmakerAnonymous(TestmakerBase):
 
@@ -27,14 +27,14 @@ class TestmakerLoggedIn(TestmakerBase):
         # Login
         r = self.c.post('/accounts/login/',
             {'username': 'editor', 'password': 'editor', 'blogin': 'Sign in', 'next': '/', })
-        
+
     # Homepage
 
     def test__128272158449(self):
         r = self.c.get('/', {})
         self.assertEqual(r.status_code, 200)
         self.assertContains(r, 'editor')
-  
+
     # Projects
 
     def test_projects_128272193615(self):
@@ -95,7 +95,7 @@ class TestmakerLoggedIn(TestmakerBase):
     def test_projectspexampleteamsadd_128281371426(self):
         r = self.c.get('/projects/p/project1/teams/add/', {})
         self.assertEqual(r.status_code, 200)
-        
+
     def test_projectspexampleteamsadd_128281371653(self):
         r = self.c.post('/projects/p/project1/teams/add/', {'language': '', 'creator': '', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '1', 'coordinators': '|', 'coordinators_text': '', 'members': '|', }, follow=True)
         self.assertContains(r, 'This field is required', status_code=200)

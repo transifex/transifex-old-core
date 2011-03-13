@@ -17,7 +17,7 @@ def available_languages(localedir):
             if lang and not lang.startswith('#'):
                 available_languages.append((lang,lang))
     except IOError, e:
-        logging.error(_('The LINGUAS file (%(file)s) could not be opened: %(exc)s') % 
+        logging.error(_('The LINGUAS file (%(file)s) could not be opened: %(exc)s') %
                         {'file': linguas_file,
                          'exc': e})
     return available_languages

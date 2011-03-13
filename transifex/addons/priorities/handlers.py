@@ -8,7 +8,7 @@ from transifex.txcommon.log import logger
 
 def priority_creation(**kwargs):
     """Create the default priority on Resource creation."""
-    if 'created' in kwargs and kwargs['created'] is True: 
+    if 'created' in kwargs and kwargs['created'] is True:
         resource = kwargs['instance']
         if resource:
             ResourcePriority.objects.create(resource=resource)

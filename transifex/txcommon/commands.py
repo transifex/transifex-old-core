@@ -8,7 +8,7 @@ from transifex.txcommon.log import logger
 def python_to_args(**kwargs):
     """
     Convert function arguments to command line ones.
-    
+
     Designed for use with the subprocess module.
 
     >>> python_to_args(baz=value, bar=True, v=True, f='foo')
@@ -47,7 +47,7 @@ class CommandError(StandardError):
 def run_command(command, *args, **kw):
     """
     Handle shell command execution.
-    
+
     Consume and return the returned information (stdout).
 
     ``command``
@@ -101,7 +101,7 @@ def run_command(command, *args, **kw):
         stdin = None
 
     logger.debug("Running low-level command '%s'" % ' '.join(command))
-    logger.debug("  CWD: '%s'" % cwd) 
+    logger.debug("  CWD: '%s'" % cwd)
 
     # Start the process
     proc = subprocess.Popen(command,

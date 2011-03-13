@@ -4,9 +4,9 @@ from django.db import models
 from transifex.languages.models import Language
 
 class Migration:
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Language'
         db.create_table('translations_language', (
             ('code_aliases', models.CharField(_('Code aliases'), default='', max_length=100, null=True)),
@@ -19,16 +19,16 @@ class Migration:
             ('name', models.CharField(_('Name'), max_length=50, unique=True)),
         ))
         db.send_create_signal('languages', ['Language'])
-        
-    
-    
+
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Language'
         db.delete_table('translations_language')
-        
-    
-    
+
+
+
     models = {
         'languages.language': {
             'Meta': {'ordering': "('name',)", 'db_table': "'translations_language'"},
@@ -42,5 +42,5 @@ class Migration:
             'specialchars': ('models.CharField', ['_("Special Chars")'], {'max_length': '255', 'blank': 'True'})
         }
     }
-    
+
     complete_apps = ['languages']

@@ -1,12 +1,12 @@
-This is a simple RPM build infrastructure for Transifex. It currently builds 
-two packages: 
-- transifex: this includes the core transifex software and brings in Django 
+This is a simple RPM build infrastructure for Transifex. It currently builds
+two packages:
+- transifex: this includes the core transifex software and brings in Django
 and mercurial as a dependency
-- transifex-extras: this is essentially a meta-package that brings git, cvs, 
+- transifex-extras: this is essentially a meta-package that brings git, cvs,
 pysvn, and bzrtools as a dependency. In the future it may also bring in
 p4python
 
-Usage: 
+Usage:
 	$ ./build.sh <version>
 
 Caveats:
@@ -15,5 +15,5 @@ Caveats:
 Requirements:
 	rpmbuild must be present in your system
 
-Output: 
+Output:
 	2 RPMs and 1 SRPM

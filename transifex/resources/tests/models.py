@@ -52,7 +52,7 @@ class ResourcesModelTests(BaseTestCase):
 
     def test_rlstats_creation(self):
         """Test the creation o a RLStats for a project team on resource saving."""
-        rls = RLStats.objects.get(resource=self.resource, 
+        rls = RLStats.objects.get(resource=self.resource,
             language=self.team.language)
 
         self.assertTrue(rls)
@@ -119,7 +119,7 @@ class ResourcesModelTests(BaseTestCase):
 
     def test_translation_size(self):
         """Test that a big translation text is stored in the DB correctly.
-        
+
         This depends to the corresponding DB engine.
         """
         t = Translation.objects.create(string=SAMPLE_BIG_TEXT,
@@ -128,12 +128,12 @@ class ResourcesModelTests(BaseTestCase):
                                language=self.language,
                                user=self.user['registered'])
         self.assertTrue(t)
-        self.assertEqual(t.string_hash, 
+        self.assertEqual(t.string_hash,
                          md5(SAMPLE_BIG_TEXT.encode('utf-8')).hexdigest())
 
     def test_translation_integrity(self):
         """Test translation integrity.
-        
+
         Translation uniqueness is based on the combination of 'source_entity',
         'language' and 'rule' fields.
         """
@@ -151,7 +151,7 @@ class ResourcesModelTests(BaseTestCase):
 
     def test_source_entity_integrity(self):
         """Test source_entity integrity.
-        
+
         SourceEntity uniqueness is based on the combination of 'string_hash',
          'context' and 'resource' fields.
         """
@@ -168,10 +168,10 @@ class ResourcesModelTests(BaseTestCase):
         """Test word counts in the model."""
         # Manually get the number of words in the English string, just in case
         words_en = len(self.translation_en.string.split(None))
- 
+
         # Test whether the Translation objects have the same words
         self.assertEquals(self.translation_en.wordcount, words_en)
- 
+
         # Since this resource only has one translatable string, its wordcount
         # should match its wordcount.
         self.resource.update_wordcount()

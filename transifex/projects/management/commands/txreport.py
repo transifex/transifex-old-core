@@ -5,14 +5,14 @@ from notification import models as notification
 from transifex.projects.models import Project
 from transifex.txcommon import rst
 
-_HELP_TEXT = """Generate reports with the statistics and action logs for a period of time, 
+_HELP_TEXT = """Generate reports with the statistics and action logs for a period of time,
 depending on the parameters, and send it by email.
 
 Report types::
-    weekly-maintainers: Sends reports of the last week activities to the project 
+    weekly-maintainers: Sends reports of the last week activities to the project
                         maintainers.
 
-A project slug can be passed too, in order to generate the report only for a 
+A project slug can be passed too, in order to generate the report only for a
 specific project.
 
 Example::
@@ -21,14 +21,14 @@ Example::
 
 class Command(LabelCommand):
     help = (_HELP_TEXT)
-           
+
     args = '[report-type [project_slug, project_slug, ...]]'
 
     report_types = ['weekly-maintainers',]
 
     # Validation is called explicitly each time the server is reloaded.
     requires_model_validation = False
-    
+
     def handle(self, *args, **options):
         """Override default method to make it work without arguments."""
 

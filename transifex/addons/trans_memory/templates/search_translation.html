@@ -19,7 +19,7 @@
     {% trans "Search Translations" %} {% if translations.count %}<sup>({{ translations.count }})</sup> {% endif %}
   </h2>
 {% endblock %}
-  
+
 {% block content %}
 
 <fieldset>
@@ -47,7 +47,7 @@
         {% highlight terms as source_highlighted %}
           {{ source_entity|entity_translation:source_language }}
         {% endhighlight %}
-        
+
         <p class="i16 text" title="{% trans "Source string" %}">{{ source_highlighted.highlighted }}</p>
         <p class="i16 comment" title="{% trans "Translation" %}">{{ translation.string }}</p>
 

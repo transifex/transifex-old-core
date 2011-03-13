@@ -57,10 +57,10 @@ class BaseTestCase(TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
-    
+
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
-       
+
         #FIXME: This should not happen, since it diverges away the test suite
         # from the actual deployment.
         # Remove the caching middlewares because they interfere with the
@@ -72,7 +72,7 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         """Set up a sample set of base objects for inherited tests.
-        
+
         If you are inheriting the class and overriding setUp, don't forget to
         call super().
         """
@@ -108,8 +108,8 @@ class BaseTestCase(TestCase):
 
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
-            codename='project_perm.submit_translations', 
-            approved=True, user=self.user['writer'], 
+            codename='project_perm.submit_translations',
+            approved=True, user=self.user['writer'],
             content_object=self.project, creator=self.user['maintainer'])
 
         # Create languages and teams
@@ -147,7 +147,7 @@ class BaseTestCase(TestCase):
             string='pluralized_String1', context='Context1',
             occurrences='Occurrences1_plural', resource= self.resource_private,
             pluralized=True)
-        
+
         # Create one translation
         self.translation_en = self.source_entity.translations.create(
             string='Buy me some BEER :)',
@@ -161,7 +161,7 @@ class BaseTestCase(TestCase):
             source_entity=self.source_entity,
             language=self.language_ar,
             user=self.user['registered'])
-            
+
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
             name="Release1", project=self.project)
@@ -202,18 +202,18 @@ class BaseTestCase(TestCase):
     #FIXME: Port all status checks to this method.
     def assert_url_statuses(self, pages_dict, client):
         """Test whether a list of URLs return the correct status codes.
-       
+
         'pages_dict':
           A dictionary of status codes, each one listing a
           set of pages to test whether they return that status code.
         'client': A django.test.client.Client object.
-        
+
         >>> pages = {200: ['/', '/projects/',],
                      404: ['/foobar'],}
         >>> self.assert_url_statuses(pages, self.client["anonymous"])
-        
-        """        
-        
+
+        """
+
         for expected_code, pages in pages_dict.items():
             for page_url in pages:
                 page = client.get(page_url)

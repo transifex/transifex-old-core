@@ -14,7 +14,7 @@ from filters import LogEntryFilter
 def user_timeline(request, *args, **kwargs):
     """
     Present a log of the latest actions of a user.
-    
+
     The view limits the results and uses filters to allow the user to even
     further refine the set.
     """
@@ -33,7 +33,7 @@ def user_timeline(request, *args, **kwargs):
 def project_timeline(request, project_slug, *args, **kwargs):
     """
     Present a log of the latest actions on the project.
-    
+
     The view limits the results and uses filters to allow the user to even
     further refine the set.
     """

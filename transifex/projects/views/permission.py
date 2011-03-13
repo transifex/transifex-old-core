@@ -26,29 +26,29 @@ from transifex.txpermissions.views import (add_permission_or_request,
 
 def _get_project_and_permission(project_slug, permission_pk):
     """
-    Handler to return a project and a permission instance or a 404 error, based 
+    Handler to return a project and a permission instance or a 404 error, based
     on the slugs passed by parameter.
     """
     project = get_object_or_404(Project, slug=project_slug)
     ctype = ContentType.objects.get_for_model(Project)
-    permission = get_object_or_404(Permission, object_id=project.pk, 
+    permission = get_object_or_404(Permission, object_id=project.pk,
                                    content_type=ctype, id=permission_pk)
     return project, permission
 
 @access_off(permission_denied)
 @login_required
-@one_perm_required_or_403(pr_project_add_perm, 
+@one_perm_required_or_403(pr_project_add_perm,
     (Project, 'slug__exact', 'project_slug'))
 def project_add_permission(request, project_slug):
     """
     Return a view with a form for adding a permission for a user.
-    
+
     This view is an abstraction of a txpermissions.views method to be able to
-    apply granular permission on it using a decorator. 
+    apply granular permission on it using a decorator.
     """
     project = get_object_or_404(Project, slug=project_slug)
 
-    # When adding a permission it's necessary to query the user object in 
+    # When adding a permission it's necessary to query the user object in
     # order to be able to pass the extra_context for the notification/actionlog
     try:
         username = request.POST['user']
@@ -65,7 +65,7 @@ def project_add_permission(request, project_slug):
                               'user_action': request.user,
             },
         }
-    return add_permission_or_request(request, project, 
+    return add_permission_or_request(request, project,
         view_name='project_add_permission',
         approved=True,
         extra_context={
@@ -82,7 +82,7 @@ def project_add_permission(request, project_slug):
     #"""
     #Return a view with a form for adding a request of permission for a user.
 
-    #This view is an abstraction of a txpermissions.views method. 
+    #This view is an abstraction of a txpermissions.views method.
     #"""
     #project = get_object_or_404(Project, slug=project_slug)
     #notice = {
@@ -98,7 +98,7 @@ def project_add_permission(request, project_slug):
         #approved=False,
         #extra_context={
             #'project_permission': True,
-            #'project': project, 
+            #'project': project,
             #'project_permission_form': ProjectAccessControlForm(instance=project),
             #'notice': notice
         #},
@@ -107,7 +107,7 @@ def project_add_permission(request, project_slug):
 
 @access_off(permission_denied)
 @login_required
-@one_perm_required_or_403(pr_project_approve_perm, 
+@one_perm_required_or_403(pr_project_approve_perm,
     (Project, 'slug__exact', 'project_slug'))
 def project_approve_permission_request(request, project_slug, permission_pk):
     project, permission=_get_project_and_permission(project_slug, permission_pk)
@@ -126,14 +126,14 @@ def project_approve_permission_request(request, project_slug, permission_pk):
 
 @access_off(permission_denied)
 @login_required
-@one_perm_required_or_403(pr_project_delete_perm, 
+@one_perm_required_or_403(pr_project_delete_perm,
     (Project, 'slug__exact', 'project_slug'))
 def project_delete_permission(request, project_slug, permission_pk):
     """
     View for deleting a permission of a user.
 
     This view is an abstraction of a txpermissions.views method to be able to
-    apply granular permission on it using a decorator. 
+    apply granular permission on it using a decorator.
     """
     project, permission=_get_project_and_permission(project_slug, permission_pk)
     notice = {
@@ -155,7 +155,7 @@ def project_delete_permission_request(request, project_slug, permission_pk):
     """
     View for deleting a request of permission of a user.
 
-    This view is an abstraction of a txpermissions.views method. 
+    This view is an abstraction of a txpermissions.views method.
     """
     project, permission=_get_project_and_permission(project_slug, permission_pk)
 

@@ -55,7 +55,7 @@ class QTFile(BaseTestCase):
 
             entities += 1
 
-        # Asserting nplurals based on the number of plurals of the 
+        # Asserting nplurals based on the number of plurals of the
         # '%n FILES PROCESSED.' entity - fi has nplurals=2
         self.assertEqual(nplurals, 2)
 

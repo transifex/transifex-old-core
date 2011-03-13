@@ -24,7 +24,7 @@ class ProjectViewsTests(BaseTestCase):
         resp = self.client['registered'].get(self.url_acc, {})
         self.assertContains(resp, "Test Project", status_code=200)
         self.assertNotContains(resp, "Test Private Project", status_code=200)
-        
+
         # Private project cannot be used by another maintainer to outsource
         resp = self.client['registered'].post(self.url_acc, {
             'outsource': self.project_private.id,

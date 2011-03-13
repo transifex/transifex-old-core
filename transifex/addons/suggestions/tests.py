@@ -19,7 +19,7 @@ class SuggestionsViewsTests(BaseTestCase):
                  #      (self.URL_PREFIX + '1/vote-up/')],
                  404: [(self.URL_PREFIX + '2/vote-up/'),]}
         self.assert_url_statuses(pages, self.client["anonymous"])
-    
+
     def testMemberPagesStatusCode(self):
         raise NotImplementedError
 
@@ -31,7 +31,7 @@ class SuggestionsViewsTests(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
         suggestion = self.entity.suggestions.filter(language=self.language).latest()
         return suggestion
-                
+
     def test_create_entitysuggestion(self):
         suggestion = self._create_entity_suggestion()
         self.assertTrue(suggestion.string == 'Hey!')
@@ -97,7 +97,7 @@ class SuggestionsModelsTests(BaseTestCase):
         self.entity = self.resource.entities[0]
         self.suggestion = self.entity.suggestions.create(
             language=self.language, string="Hey!", user=self.user["registered"])
-             
+
     def test_votes(self):
         u = self.user["registered"]
         s = self.suggestion

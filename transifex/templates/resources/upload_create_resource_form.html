@@ -45,7 +45,7 @@ $(document).ready(function(){
 <span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">{% trans "Create New Resource" %}</span>
 </p>
 
-<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}> 
+<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}>
 
  <form action='' method='post' class="microform houdini">{% csrf_token %}
   <fieldset style="margin-top: 1em;">
@@ -61,7 +61,7 @@ $(document).ready(function(){
   <table style="padding:0 1em">
   <tbody>
     {% comment %}
-    Overridden form_as_table_rows in order to better customize it. 
+    Overridden form_as_table_rows in order to better customize it.
     {% endcomment %}
     {% if create_resource_form %}
         {% if create_resource_form.non_field_errors %}

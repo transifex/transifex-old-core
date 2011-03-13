@@ -15,8 +15,8 @@ from jsonmap.models import JSONMap
 class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
-        make_option('--force', '-f', action="store_true", default=False, 
-            dest='force', 
+        make_option('--force', '-f', action="store_true", default=False,
+            dest='force',
             help="Force re-migration of mappings already migrated."),
     )
 
@@ -83,7 +83,7 @@ class Command(BaseCommand):
                                 project = project)
 
                         if created:
-                            resource.name = '%s - %s' % (jsonmap.slug, 
+                            resource.name = '%s - %s' % (jsonmap.slug,
                                 r['source_file'])
 
                         source_file = os.path.join(path, r['source_file'])
@@ -108,11 +108,11 @@ class Command(BaseCommand):
                             resource.delete()
                             sys.stdout.write("Resource not created! Could not import "
                                 "file '%s': %s.\n" % (source_file, str(e)))
-                            # Skip adding translations, as the resource 
+                            # Skip adding translations, as the resource
                             # wasn't created.
                             continue
 
-                        logger.debug("Inserting translations for '%s' (%s)." 
+                        logger.debug("Inserting translations for '%s' (%s)."
                             % (resource.slug, project))
 
                         # Load translations

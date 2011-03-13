@@ -46,18 +46,18 @@ class ProjectFeed(Feed):
 
     def items(self, obj):
         return obj.resources.order_by('-name')[:50]
-        
-        
+
+
 class ReleaseFeed(Feed):
     """
     A feed for all the languages for this release.
     """
-    
+
     def get_object(self, bits):
         if len(bits) != 2:
             raise ObjectDoesNotExist
         project_slug, release_slug = bits
-        self.project = get_object_or_404(Project, 
+        self.project = get_object_or_404(Project,
                                          slug__exact=project_slug)
         self.release = get_object_or_404(Release, slug__exact=release_slug,
                                          project__id=self.project.pk)
@@ -90,7 +90,7 @@ class ReleaseLanguageFeed(Feed):
     """
     A feed for all the languages for this release.
     """
-    
+
     def get_object(self, bits):
         if len(bits) != 3:
             raise ObjectDoesNotExist
@@ -99,7 +99,7 @@ class ReleaseLanguageFeed(Feed):
         self.release = get_object_or_404(Release, slug__exact=release_slug,
                                          project__id=self.project.pk)
         self.language = get_object_or_404(Language, code__exact=language_code)
-                                         
+
         return self.release
 
     def title(self, obj):

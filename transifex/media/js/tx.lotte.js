@@ -268,7 +268,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
     }
 
 
-    /* StringSet.updatePagination() 
+    /* StringSet.updatePagination()
     * Updates bound pagination div
     */
     this.updatePagination = function() {
@@ -303,7 +303,7 @@ function StringSet(json, push_url, from_lang, to_lang) {
            clearTimeout(this_stringset.update_search_timer);
            this_stringset.update_search_timer = window.setTimeout(function() { this_stringset.filter($(target_elem).val()); }, 1000);
         });
-        
+
     };
 
     /* StringSet.bindStats(target_table_id) */

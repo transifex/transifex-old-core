@@ -9,7 +9,7 @@ class ReleasesViewsTests(BaseTestCase):
 
     def test_release_create_good_private_resources(self):
         """Test Release creation with private resources.
-        
+
         User with access to a private resource should be able to add it to a
         release.
         """
@@ -57,7 +57,7 @@ class ReleasesViewsTests(BaseTestCase):
 
     def test_release_create_bad_private_resources(self):
         """Test Release creation with private resource w/o access.
-        
+
         Public project release with a private resource I don't have access to.
         Use the registered user as the giunea pig.
         """

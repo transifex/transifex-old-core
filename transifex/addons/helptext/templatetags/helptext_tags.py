@@ -24,11 +24,11 @@ class RegisterHelp(template.Node):
 def register_helptext(parser, token):
     """
     Register an object to be used with print_helptext
-    
+
     This templatetag is used at the beginning of a template where a help text
     needs to be extending with extra text. CAUTION! It should be used before
     the inclusion tag print_helptext to work properly.
-    
+
     Example: <% register_helptext "example_id" %>
     """
     # This version uses a regular expression to parse tag contents.
@@ -47,7 +47,7 @@ def register_helptext(parser, token):
 @register.inclusion_tag('extended_helptext.html', takes_context=True)
 def print_helptext(context, code_name, icon=None):
     """Put the registered extended helptext in a hidden container.
-    
+
     The text is presented in a popup, backed by a js script. If a "yes"
     string is given as second argument (you can give any string actually)
     then a help icon with a anchored link is appeared.
@@ -63,7 +63,7 @@ def print_helptext(context, code_name, icon=None):
 @register.inclusion_tag('tooltip_helptext.html', takes_context=True)
 def tooltip_helptext(context, code_name, helptext, icon=None):
     """Create a tooltip around an element with id code_name
-    
+
     It gets 3 arguments, an element id, a string of the helptext and an optional
     icon "True" string. The latter adds an icon which is marked with the tooltip.
     """

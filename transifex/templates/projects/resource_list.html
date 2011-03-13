@@ -26,7 +26,7 @@
             }
         });
         {% if request.user.is_authenticated %}
-        $("#new_translation1").click( function (){ 
+        $("#new_translation1").click( function (){
             $("#new_translation_box1").toggle();
         });
         $("#start_new_translation").click( function() {
@@ -63,7 +63,7 @@
 
   {% for stat in statslist %}
   {% if forloop.first %}
-  <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%"> 
+  <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
    <tr>
     <th><span class="i16 tag">{% trans "Resource Name" %}</span</th>

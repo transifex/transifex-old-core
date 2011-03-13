@@ -21,6 +21,6 @@ def create_languages(app, created_models, verbosity, **kwargs):
 
 # South's migrate does not accept a --noinput flag. Because we want to be able
 # to call these in a non-interactive way, we're disabling it for now and asking
-# the user installing Tx to call txcreatelanguages manually. 
+# the user installing Tx to call txcreatelanguages manually.
 #signals.post_syncdb.connect(create_languages,
 #    sender=lang_app, dispatch_uid = "languages.management.create_languages")

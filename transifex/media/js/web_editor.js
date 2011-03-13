@@ -173,7 +173,7 @@ $(function(){
     });
     toggle_contexts();
 
-    // Copy source string button 
+    // Copy source string button
     $('span.copy_source').click(function(){
         var first = null;
         tr = $(this).parents('tr')
@@ -191,11 +191,11 @@ $(function(){
             }
         });
 
-        // from web_editor.js: 
-        fuzzy(nkey); 
-        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', ''); 
-        update_totals(); 
-        return false; 
+        // from web_editor.js:
+        fuzzy(nkey);
+        $("input[name='fuzzy_field_"+nkey+"']").attr('disabled', '');
+        update_totals();
+        return false;
     });
 
 });

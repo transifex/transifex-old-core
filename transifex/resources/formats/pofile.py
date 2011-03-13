@@ -134,11 +134,11 @@ class POHandler(Handler):
                 ispot = False
             msgfmt_check(buf, ispot)
 
-        # Check required header fields 
+        # Check required header fields
         required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
         for metadata in required_metadata:
             if not metadata in po.metadata:
-                logger.debug("pofile: Required metadata '%s' not found." % 
+                logger.debug("pofile: Required metadata '%s' not found." %
                     metadata)
                 raise FileCheckError("Uploaded file header doesn't "
                 "have '%s' metadata!" % metadata)

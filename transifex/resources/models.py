@@ -97,14 +97,14 @@ class ResourceQuerySet(models.query.QuerySet):
 class Resource(models.Model):
     """
     A translatable resource, such as a document, a set of strings, etc.
-    
+
     This is roughly equivalent to a POT file, string stream, or some other
     strings grouped together as a single translatable element.
-    
+
     The resource is the rough equivalent to the deprecated 'Component' object,
     but with an important difference: a resource can only have one "source file"
     whereas the Component was able to encapsulate multiple ones.
-    
+
     A resource is always related to a project.
     """
 
@@ -244,7 +244,7 @@ class Resource(models.Model):
         Return a simple string without spaces identifying the resource.
 
         Can be used instead of __unicode__ to create files on disk, URLs, etc.
-        """        
+        """
         return "%s.%s" % (self.project.slug, self.slug)
 
     @property
@@ -255,7 +255,7 @@ class Resource(models.Model):
     @property
     def available_languages(self):
         """
-        All available languages for the resource. This list includes team 
+        All available languages for the resource. This list includes team
         languages that may have 0 translated entries.
         """
         return Language.objects.filter(
@@ -284,8 +284,8 @@ class SourceEntityManager(models.Manager):
 class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
-    
-    The SourceEntity is pointing to a specific Resource and it is uniquely 
+
+    The SourceEntity is pointing to a specific Resource and it is uniquely
     defined by the string, context and resource fields (so they are unique
     together).
     """
@@ -413,8 +413,8 @@ class TranslationManager(models.Manager):
 class Translation(models.Model):
     """
     The representation of a live translation for a given source string.
-    
-    This model encapsulates all the necessary fields for the translation of a 
+
+    This model encapsulates all the necessary fields for the translation of a
     source string in a specific target language. It also contains a set of meta
     fields for the context of this translation.
     """
@@ -491,7 +491,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def for_user(self, user):
         """
-        Return a queryset matching projects plus private projects that the 
+        Return a queryset matching projects plus private projects that the
         given user has access to.
         """
         return self.filter(
@@ -499,7 +499,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def private(self):
         """
-        Return a queryset matching only RLStats associated with private 
+        Return a queryset matching only RLStats associated with private
         projects.
         """
         resources = Resource.objects.filter(project__private=True)
@@ -507,7 +507,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def public(self):
         """
-        Return a queryset matching only RLStats associated with non-private 
+        Return a queryset matching only RLStats associated with non-private
         projects.
         """
         resources = Resource.objects.filter(project__private=False)
@@ -549,7 +549,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def by_release_and_language(self, release, language):
         """
-        Return a queryset matching RLStats associated with the given 
+        Return a queryset matching RLStats associated with the given
         ``release`` and ``language``.
 
         """
@@ -558,7 +558,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def by_project_and_language(self, project, language):
         """
-        Return a queryset matching RLStats associated with the given 
+        Return a queryset matching RLStats associated with the given
         ``project`` and ``language``.
         """
         return self.by_language(language).by_resources(

@@ -22,15 +22,15 @@ class StatBarsPositions(dict):
     def __init__(self, bar_data, width=100, border=1):
         """
         A dictionary to hold the positions of named bars.
-        
+
         Arguments:
-        
+
         - An ordered list of tuples (name, bar_width) to render
         - The width of the "100%" bar in pixels
         - The width of a border to pad each consecutive non-zero-sized bar
-        
+
         Example:
-        
+
         >>> pos = [('a', 2), ('b', 1), border=1]
         >>> pos['a'].w
         2
@@ -65,7 +65,7 @@ class StatBarsPositions(dict):
 @register.inclusion_tag("resources/stats_bar_simple.html")
 def stats_bar_simple(stat, width=100):
     """
-    Create a HTML bar to present the statistics of an object. 
+    Create a HTML bar to present the statistics of an object.
 
     The object should have attributes trans_percent/untrans_percent.
     Accepts an optional parameter to specify the width of the total bar.
@@ -95,7 +95,7 @@ def stats_bar_simple(stat, width=100):
 @register.inclusion_tag("resources/stats_bar_actions.html")
 def stats_bar_actions(stat, width=100):
     """
-    Create a HTML bar to present the statistics of an object. 
+    Create a HTML bar to present the statistics of an object.
 
     The object should have attributes trans_percent/untrans_percent.
     Accepts an optional parameter to specify the width of the total bar.

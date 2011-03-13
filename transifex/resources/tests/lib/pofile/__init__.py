@@ -13,7 +13,7 @@ class POFile(BaseTestCase):
     def test_pot_parser(self):
         """POT file tests."""
         # Parsing POT file
-        handler = POHandler('%s/tests.pot' % 
+        handler = POHandler('%s/tests.pot' %
             os.path.split(__file__)[0])
 
         handler.set_language(self.resource.source_language)
@@ -42,7 +42,7 @@ class POFile(BaseTestCase):
 
     def test_po_parser_pt_BR(self):
         """Tests for pt_BR PO file."""
-        handler = POHandler('%s/pt_BR.po' % 
+        handler = POHandler('%s/pt_BR.po' %
             os.path.split(__file__)[0])
 
 
@@ -61,13 +61,13 @@ class POFile(BaseTestCase):
             if s.source_entity == '{0} result' and s.pluralized:
                 nplurals += 1
 
-        # Asserting nplurals based on the number of plurals of the 
+        # Asserting nplurals based on the number of plurals of the
         # '{0 results}' entity - pt_BR has nplurals=2
         self.assertEqual(nplurals, 2)
 
     def test_po_parser_ar(self):
         """Tests for ar PO file."""
-        handler = POHandler('%s/ar.po' % 
+        handler = POHandler('%s/ar.po' %
             os.path.split(__file__)[0])
 
         handler.set_language(self.language_ar)
@@ -87,14 +87,14 @@ class POFile(BaseTestCase):
             if s.source_entity == '{0} result' and s.pluralized:
                 nplurals += 1
 
-        # Asserting nplurals based on the number of plurals of the 
+        # Asserting nplurals based on the number of plurals of the
         # '{0 results}' entity - ar has nplurals=6.
         self.assertEqual(nplurals, 6)
 
     def test_po_save2db(self):
         """Test creating source strings from a PO/POT file works"""
-        handler = POHandler('%s/tests.pot' % 
-            os.path.split(__file__)[0]) 
+        handler = POHandler('%s/tests.pot' %
+            os.path.split(__file__)[0])
 
         l = Language.objects.get(code='en_US')
 

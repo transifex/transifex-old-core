@@ -92,7 +92,7 @@ class DefaultProjectQuerySet(models.query.QuerySet):
 class PublicProjectManager(models.Manager):
     """
     Return a QuerySet of public projects.
-    
+
     Usage: Projects.public.all()
     """
 
@@ -125,7 +125,7 @@ class Project(models.Model):
         help_text=_('A short name or very short description.'))
     description = models.CharField(_('Description'), blank=True, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
-    long_description = models.TextField(_('Long description'), blank=True, 
+    long_description = models.TextField(_('Long description'), blank=True,
         max_length=1000,
         help_text=_('A longer description (optional). Use Markdown syntax.'))
     homepage = models.URLField(_('Homepage'), blank=True, verify_exists=False)
@@ -134,7 +134,7 @@ class Project(models.Model):
     bug_tracker = models.URLField(_('Bug tracker'), blank=True,
         help_text=_('The URL for the bug and tickets tracking system '
                     '(Bugzilla, Trac, etc.)'))
-    anyone_submit = models.BooleanField(_('Anyone can submit'), 
+    anyone_submit = models.BooleanField(_('Anyone can submit'),
         default=False, blank=False,
         help_text=_('Can anyone submit files to this project?'))
 
@@ -160,13 +160,13 @@ class Project(models.Model):
         help_text=_('The user who owns this project.'))
 
     # Normalized fields
-    long_description_html = models.TextField(_('HTML Description'), blank=True, 
+    long_description_html = models.TextField(_('HTML Description'), blank=True,
         max_length=1000,
         help_text=_('Description in HTML.'), editable=False)
 
     # Reverse Relation for LogEntry GenericForeignkey
     # Allows to access LogEntry objects for a given project
-    actionlogs = generic.GenericRelation(LogEntry, 
+    actionlogs = generic.GenericRelation(LogEntry,
         object_id_field="object_id", content_type_field="content_type")
 
     # Managers

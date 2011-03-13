@@ -14,7 +14,7 @@ NOTICE_TYPES += [
                 "label": "project_resource_language_lock_expiring",
                 "display": _("Lock expiration"),
                 "description": _("when a lock for a translation resource will "
-                    "expire"), 
+                    "expire"),
                 "default": 0,
                 "show_to_user": True,
             },

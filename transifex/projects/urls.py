@@ -93,7 +93,7 @@ urlpatterns += patterns('',
         regex = PROJECT_URL_PARTIAL+r'access/rq/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission_request,
         name = 'project_delete_permission_request'),
-        
+
     url(regex = PROJECT_URL_PARTIAL+r'access/rq/(?P<permission_pk>\d+)/approve/$',
         view = project_approve_permission_request,
         name = "project_approve_permission_request"),
@@ -102,7 +102,7 @@ urlpatterns += patterns('',
         view = project_detail,
         name = 'project_detail'),
 )
-      
+
 
 urlpatterns += patterns('django.views.generic',
     url(

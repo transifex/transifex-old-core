@@ -12,7 +12,7 @@ function mapFramework() {
 		if ($("#id_longitude").val()) lng = $("#id_longitude").val();
 
 		this.map.setCenter(new GLatLng(lat, lng), 4);
-		this.marker = new GMarker(new GLatLng(lat, lng), {clickable: false, bouncy: true, draggable: true}); 
+		this.marker = new GMarker(new GLatLng(lat, lng), {clickable: false, bouncy: true, draggable: true});
 		this.map.addOverlay(this.marker);
 
 		GEvent.addListener(this.marker, "dragend", function(){
