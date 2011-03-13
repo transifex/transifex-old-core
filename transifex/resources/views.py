@@ -460,7 +460,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
             else:
                 # File locked by someone else:
                 response['status'] = "FAILED"
-                response['message'] = _("You cannot lock it right now! ( Locked "
+                response['message'] = _("You cannot lock it right now! (Locked "
                                         "by %s )" % (lock.owner,))
 
     return HttpResponse(simplejson.dumps(response), mimetype='application/json')
