@@ -620,11 +620,11 @@ class RLStats(models.Model):
 
     # Foreign Keys
     resource = models.ForeignKey(Resource, blank=False, null=False,
-        verbose_name="Resource", help_text="The resource the statistics are "
-        "associated with.")
+        verbose_name="Resource", help_text="The resource to which the "
+        "statistics are associated.")
     language = models.ForeignKey(Language, blank=False, null=False,
-        verbose_name="Language", help_text="The language these statistics "
-        "refer to.")
+        verbose_name="Language", help_text="The language to which these "
+        "statistics refer.")
 
     # Normalized fields
     translated_perc = models.PositiveIntegerField(default=0, editable=False)
