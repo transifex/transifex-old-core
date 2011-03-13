@@ -236,7 +236,7 @@ class LinguistHandler(Handler):
                         logger.error("Source file has unsupported"
                             " variants.")
                         raise LinguistParseError("Qt Linguist variants are"
-                            " not supported yet.")
+                            " not yet supported.")
 
                     messages = [(5, sourceStringText or sourceString)]
                     # remove unfinished/obsolete attrs from template
