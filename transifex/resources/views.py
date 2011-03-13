@@ -334,8 +334,8 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             language=language).delete()
 
         messages.success(request,
-                        _("The translations of language %(lang)s for the resource "
-                        "%(resource)s were deleted successfully.") % {
+                        _("Deleted %(lang)s translation for resource "
+                        "%(resource)s.") % {
                           'lang': language.name,
                           'resource': resource.name})
         invalidate_stats_cache(resource, language, user=request.user)
