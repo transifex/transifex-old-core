@@ -478,7 +478,7 @@ class StringSet:
 
 class GenericTranslation:
     """
-    Store translations of any kind of I18N type (POT, QT, etc...).
+    Store translations of any kind of I18N type (POT, Qt, etc...).
 
     Parameters:
         source_entity - The original entity found in the source code.

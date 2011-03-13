@@ -12,7 +12,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Unescape all strings that are from Qt files"
-        for r in orm['resources.Resource'].objects.filter(i18n_type=u'QT'):
+        for r in orm['resources.Resource'].objects.filter(i18n_type=u'Qt'):
             template = orm['resources.Template'].objects.get(resource=r)
             for s in orm['resources.SourceEntity'].objects.filter(resource=r):
                 old_hash = s.string_hash
@@ -30,7 +30,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Escape all strings that belong to Qt files."
-        for r in orm['resources.Resource'].objects.filter(i18n_type=u'QT'):
+        for r in orm['resources.Resource'].objects.filter(i18n_type=u'Qt'):
             template = orm['resources.Template'].objects.get(resource=r)
             for s in orm['resources.SourceEntity'].objects.filter(resource=r):
                 old_hash = s.string_hash

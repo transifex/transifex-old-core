@@ -143,7 +143,7 @@ class LinguistHandler(Handler):
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
         """
-        Parses QT file and exports all entries as GenericTranslations.
+        Parses Qt file and exports all entries as GenericTranslations.
         """
         fh = open(self.filename, "ru")
         buf = fh.read()

@@ -6,7 +6,7 @@ from transifex.resources.models import *
 from transifex.resources.formats.qt import LinguistHandler
 from transifex.addons.suggestions.models import Suggestion
 
-class QTFile(BaseTestCase):
+class QtFile(BaseTestCase):
     """Suite of tests for the qt lib."""
     def test_qt_parser(self):
         """TS file tests."""
@@ -32,11 +32,11 @@ class QTFile(BaseTestCase):
             if s.rule == 5:
                 entities += 1
 
-        # Asserting number of entities - QT file has 43 entries +1 plural.
+        # Asserting number of entities - Qt file has 43 entries +1 plural.
         self.assertEqual(entities, 44)
 
     def test_qt_parser_fi(self):
-        """Tests for fi QT file."""
+        """Tests for fi Qt file."""
         handler = LinguistHandler('%s/fi.ts' %
             os.path.split(__file__)[0])
 
@@ -59,11 +59,11 @@ class QTFile(BaseTestCase):
         # '%n FILES PROCESSED.' entity - fi has nplurals=2
         self.assertEqual(nplurals, 2)
 
-        # Asserting number of entities - QT file has 43 entries.
+        # Asserting number of entities - Qt file has 43 entries.
         self.assertEqual(entities, 44)
 
     def test_qt_save2db(self):
-        """Test creating source strings from a QT file works"""
+        """Test creating source strings from a Qt file works"""
         handler = LinguistHandler('%s/en.ts' %
             os.path.split(__file__)[0])
 
