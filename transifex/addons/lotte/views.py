@@ -88,10 +88,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     # resource_detail and show him a message explaining the reason.
     if target_language == resources[0].source_language:
         messages.error(request,
-                       "The source language cannot be edited, because this would"
-                       " result in translation mismatching! If you want to "
-                       "update the source strings consider using the command"
-                       " line client of transifex.")
+                       "Cannot edit the source language because this would "
+                       "result in translation mismatches! If you want to "
+                       "update the source strings consider using the transifex "
+                       "command-line client.")
         if resource_slug:
             return HttpResponseRedirect(reverse('resource_detail',
                                                 args=[project_slug,
