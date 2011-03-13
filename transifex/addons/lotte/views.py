@@ -67,9 +67,9 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         # cannot be translated as a whole.
         if resource_list.values('source_language').distinct().count() > 1:
             messages.info(request,
-                          "This project has more than one source languages and as a "
-                          "result you can not translate all resources at the "
-                          "same time.")
+                          "There are multiple source languages for this project. "
+                          "You will only be able to translate resources for one "
+                          "source language at a time.")
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project_slug]),)
 
