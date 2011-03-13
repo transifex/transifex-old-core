@@ -300,7 +300,7 @@ class SourceEntity(models.Model):
                     "the context of the source string inside the resource."))
     position = models.IntegerField(_('Position'), blank=True, null=True,
         help_text=_("The position of the source string in the Resource."
-                    "For example, the specific position of msgid field in a "
+                    "For example, the specific position of a msgid field in a "
                     "po template (.pot) file in gettext."))
     #TODO: Decision for the following
     occurrences = models.TextField(_('Occurrences'), max_length=1000,
