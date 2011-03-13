@@ -139,7 +139,7 @@ def resource_edit(request, project_slug, resource_slug):
                     urlinfo.update_source_file(fake=True)
                 except Exception, e:
                     url_form._errors['source_file_url'] = _("The URL you provided"
-                        " doesn't link to valid file.")
+                        " doesn't link to a valid file.")
                     return render_to_response('resources/resource_form.html', {
                         'resource_form': resource_form,
                         'url_form': url_form,
