@@ -245,7 +245,7 @@ def team_join_request(request, project_slug, language_code):
             access_request = TeamAccessRequest(team=team, user=request.user)
             access_request.save()
             messages.success(request,
-                _("You have added a request for joining the '%s' team.") % team.language.name)
+                _("You requested to join the '%s' team.") % team.language.name)
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_join_requested'
@@ -266,7 +266,7 @@ def team_join_request(request, project_slug, language_code):
         except IntegrityError:
             transaction.rollback()
             messages.error(request,
-                            _("You already have a pending request to join the '%s' team.")
+                            _("You already requested to join the '%s' team.")
                              % team.language.name)
         except ClaNotSignedError, e:
             messages.error(request,
@@ -306,7 +306,7 @@ def team_join_approve(request, project_slug, language_code, username):
             team.members.add(user)
             team.save()
             messages.success(request,
-                            _("You have added '%(user)s' into the '%(team)s' team.")
+                            _("You added '%(user)s' to the '%(team)s' team.")
                             % {'user':user, 'team':team.language.name})
             access_request.delete()
 
@@ -354,7 +354,7 @@ def team_join_deny(request, project_slug, language_code, username):
         try:
             access_request.delete()
             messages.info(request,_(
-                "You have denied the request of the user '%(user)s' to join the "
+                "You rejected the request by user '%(user)s' to join the "
                 "'%(team)s' team."
                 ) % {'user':user, 'team':team.language.name})
 
@@ -399,7 +399,7 @@ def team_join_withdraw(request, project_slug, language_code):
         try:
             access_request.delete()
             messages.success(request,_(
-                "You have withdrawn your own request to join the '%s' team."
+                "You withdrew your request to join the '%s' team."
                 ) % team.language.name)
 
             # ActionLog & Notification
@@ -442,7 +442,7 @@ def team_leave(request, project_slug, language_code):
             if request.user in team.members.all():
                 team.members.remove(request.user)
                 messages.info(request, _(
-                    "You have left the '%s' team."
+                    "You left the '%s' team."
                     ) % team.language.name)
 
                 # ActionLog & Notification
@@ -522,7 +522,7 @@ def team_request(request, project_slug):
                         language=language, user=request.user)
                     team_request.save()
                     messages.info(request, _(
-                        "You have requested the '%s' team creation.")
+                        "You requested creation of the '%s' team.")
                         % team_request.language.name)
 
                     # ActionLog & Notification
@@ -574,7 +574,7 @@ def team_request_approve(request, project_slug, language_code):
             team.save()
             team_request.delete()
             messages.success(request, _(
-                "You have approved the '%(team)s' team requested by '%(user)s'."
+                "You approved the '%(team)s' team requested by '%(user)s'."
                 ) % {'team':team.language.name, 'user':team_request.user})
 
             # ActionLog & Notification
@@ -617,7 +617,7 @@ def team_request_deny(request, project_slug, language_code):
         try:
             team_request.delete()
             messages.success(request, _(
-                "You have denied the '%(team)s' team requested by '%(user)s'."
+                "You rejected the request by '%(user)s' for a '%(team)s' team."
                 ) % {'team':team_request.language.name,
                      'user':team_request.user})
 
