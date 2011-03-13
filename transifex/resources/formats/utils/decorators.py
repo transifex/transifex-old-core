@@ -30,7 +30,7 @@ def need_stringset(fn):
 def need_compiled(fn):
     def compiled_fn(self, *args, **kw):
         if not self.compiled_template:
-            raise Exception("No template found. Use compile to render the"
+            raise Exception("No template found. Use compile to generate the"
                  " template first")
         return fn(self, *args, **kw)
     return compiled_fn
