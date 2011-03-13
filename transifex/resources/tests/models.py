@@ -51,7 +51,7 @@ class ResourcesModelTests(BaseTestCase):
         self.assertTrue(r)
 
     def test_rlstats_creation(self):
-        """Test the creation o a RLStats for a project team on resource saving."""
+        """Test the creation of a RLStats for a project team on resource saving."""
         rls = RLStats.objects.get(resource=self.resource,
             language=self.team.language)
 
