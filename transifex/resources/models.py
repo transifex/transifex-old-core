@@ -111,15 +111,15 @@ class Resource(models.Model):
     # Short identifier to be used in the API URLs
     slug = models.SlugField(_('Slug'), max_length=50,
         help_text=_("A short label to be used in the URL, containing only "
-                    "letters, numbers, underscores or hyphens."))
+                    "letters, numbers, underscores and hyphens."))
     name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
         help_text=_("A descriptive name unique inside the project."))
 
     # i18n related fields
     source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
         blank=True, null=True,
-        help_text=_("A local file used to extract the strings to be "
-                    "translated."))
+        help_text=_("A local file used to extract the strings for "
+                    "translation."))
     i18n_type = models.CharField(_('I18n type'), max_length=20, editable=False,
         choices=((k,settings.I18N_METHODS[k]['description']) for k,v in settings.I18N_METHODS.items()),
         help_text=_("The type of i18n method used in this resource (%s)") %
@@ -420,7 +420,7 @@ class Translation(models.Model):
     """
 
     string = models.TextField(_('String'), blank=False, null=False,
-        help_text=_("The actual string content of translation."))
+        help_text=_("The actual string content for translation."))
     string_hash = models.CharField(_('String Hash'), blank=False, null=False,
         max_length=32, editable=False,
         help_text=_("The hash of the translation string used for indexing"))
