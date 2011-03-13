@@ -428,7 +428,7 @@ class Translation(models.Model):
         null=False, default=5,
         help_text=_("Number related to the plural rule of the translation. "
                     "It's 0=zero, 1=one, 2=two, 3=few, 4=many and 5=other. "
-                    "For translations that have its entity not pluralized, "
+                    "For translations that have no plural forms, "
                     "the rule must be 5 (other)."))
     wordcount = models.PositiveIntegerField(_("Wordcount for this string."),
         blank=False, null=False, default=0, help_text="The number of words "
