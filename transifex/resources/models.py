@@ -317,7 +317,7 @@ class SourceEntity(models.Model):
 
     pluralized = models.BooleanField(_('Pluralized'), blank=False,
         null=False, default=False,
-        help_text=_("Identify if the entity is pluralized ot not."))
+        help_text=_("Whether the entity is pluralized."))
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
@@ -607,7 +607,7 @@ class RLStats(models.Model):
         "translated entities in a language for a specific resource.")
     translated_wordcount = models.PositiveIntegerField(_("Wordcount for Translated Entities"),
         blank=False, null=False, default=0, help_text="The number of words "
-        " contained translated entities in a language for a specific resource.")
+        "containing translated entities in a language for a specific resource.")
     untranslated = models.PositiveIntegerField(_("Untranslated Entities"),
         blank=False, null=False, default=0, help_text="The number of "
         "untranslated entities in a language for a specific resource.")
