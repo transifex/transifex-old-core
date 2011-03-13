@@ -217,7 +217,7 @@ def response_in_browser(resp, halt=True):
     Use it in tests to visually present the response and find what you need
     with your browser's super tools such as 'View Source' and 'Inspect Element'.
 
-    The browser will not render static media (eg. CSS). To achieve this, run
+    The browser will not render static media (e.g. CSS). To achieve this, run
     a separate Django server and setup your static serving variable to an
     absolute URI (e.g. STATIC_URL = 'http://localhost:8000/site_media/).
     This will trick the temporary window to show the test's HTML with the

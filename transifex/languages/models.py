@@ -55,7 +55,7 @@ class Language(models.Model):
     description = models.CharField(_('Description'), blank=True, max_length=255)
     code = models.CharField(_('Code'), unique=True, max_length=50,
         help_text=("The primary language code, used in file naming, etc."
-                   "(eg. pt_BR for Brazilian Portuguese.)"))
+                   "(e.g. pt_BR for Brazilian Portuguese.)"))
     code_aliases = models.CharField(_('Code aliases'), max_length=100,
         help_text=("A space-separated list of alternative locales."),
         null=True, blank=True, default='')
