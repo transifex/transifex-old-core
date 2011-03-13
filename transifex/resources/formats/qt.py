@@ -284,7 +284,7 @@ class LinguistHandler(Handler):
                             suggestions.strings.append(suggestion)
                         else:
                             logger.error("Element 'translation' attribute "\
-                                "'type' isn't either 'unfinished' or 'obsolete'")
+                                "'type' is neither 'unfinished' nor 'obsolete'")
 
                         continue
 
