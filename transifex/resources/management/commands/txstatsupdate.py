@@ -11,7 +11,7 @@ class Command(LabelCommand):
     Management Command Class about resource source file updating
     """
     help = "This command creates the necessary objects for every resource"\
-           " and forces the recalculation of statistics."
+           " and forces statistics to be recalculated."
     args = "<project_slug1.resource_slug1 project_slug1.resource_slug2>"
 
     can_import_settings = True
