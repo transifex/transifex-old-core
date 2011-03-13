@@ -83,7 +83,7 @@ class URLInfo(models.Model):
                 parser = get_i18n_handler_from_type(self.resource.i18n_type)
             else:
                 parser = sf.find_parser()
-                assert parser, "No suitable handler could be found for this file."
+                assert parser, "Could not find a suitable handler for this file."
                 i18n_type = get_i18n_type_from_file(sf.get_storage_path())
                 self.resource.i18n_type = i18n_type
                 self.resource.save()
