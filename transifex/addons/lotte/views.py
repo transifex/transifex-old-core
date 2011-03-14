@@ -777,6 +777,6 @@ def delete_translation(request, project_slug=None, resource_slug=None,
 #            message=_("Failed to delete translations due to some error!"))
         raise Http404
 
-    invalidate_stats_cache(resource, language, user=user)
+    invalidate_stats_cache(resource, language, user=request.user)
 
     return HttpResponse(status=200)

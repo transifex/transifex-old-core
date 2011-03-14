@@ -505,6 +505,7 @@
         /* Save at once all the changed translation values */
         $("#save_all_2").click(function(){ stringset.push(); });
 
+        {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
         {% if is_maintainer or request.user.is_superuser%}
         /* Delete at once all the translations in this page */
         $("#delete_all_2").click(function(){ delete_these(); });
