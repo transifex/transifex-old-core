@@ -187,4 +187,96 @@ class QtFile(BaseTestCase):
         self.assertTrue(escaped_string in handler.compiled_template)
         self.assertFalse(unescaped_string in handler.compiled_template)
 
+    def test_unfinished_entries(self):
+        """Test that unfinished entries are not added in the database"""
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no translations to begin with
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = LinguistHandler('%s/general/unfinished.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # Make sure that we have all sources in the db
+        self.assertEqual(SourceEntity.objects.filter(
+            resource=self.resource).values('id').count(), 2)
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
+
+        # Import the same file as a translation file in pt_BR.
+        handler = LinguistHandler('%s/general/unfinished.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all sources in the db
+        self.assertEqual(SourceEntity.objects.filter(
+            resource=self.resource).values('id').count(), 2)
+
+        # Make sure that we have all translations in the db
+        # One is marked as unfinished so it shouldn't be saved
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 3)
+
+        # The unfinished translation should be added as a translation
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 1)
+
+    def test_obsolete_entries(self):
+        """Test that obsolete entries are not added in the database"""
+        # Empty our resource
+        SourceEntity.objects.filter(resource=self.resource).delete()
+
+        # Make sure that we have no translations to begin with
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
+        # Import file with two senteces
+        handler = LinguistHandler('%s/general/obsolete.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        # Make sure that we have all sources in the db
+        self.assertEqual(SourceEntity.objects.filter(
+            resource=self.resource).values('id').count(), 1)
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 1)
+
+        # Import the same file as a translation file in pt_BR.
+        handler = LinguistHandler('%s/general/unfinished.ts' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all sources in the db
+        self.assertEqual(SourceEntity.objects.filter(
+            resource=self.resource).values('id').count(), 1)
+
+        # Make sure that we have all translations in the db
+        # One is marked as unfinished so it shouldn't be saved
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
+
+        # The unfinished translation should be added as a translation
+        self.assertEqual(Suggestion.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
+
 

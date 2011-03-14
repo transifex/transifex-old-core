@@ -238,11 +238,17 @@ class LinguistHandler(Handler):
                         raise LinguistParseError("Qt Linguist variants are"
                             " not yet supported.")
 
+                    # Skip obsolete strings.
+                    if translation.attributes.has_key("type"):
+                        status = translation.attributes["type"].value.lower()
+                        if status == "obsolete":
+                            continue
+
                     messages = [(5, sourceStringText or sourceString)]
                     # remove unfinished/obsolete attrs from template
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
-                        if status in ["unfinished", "obsolete"]:
+                        if status == "unfinished":
                             del translation.attributes["type"]
                     if pluralized:
                         try:
@@ -273,9 +279,15 @@ class LinguistHandler(Handler):
                       translation.attributes['variants'].value == 'yes':
                         continue
 
+                    # Skip obsolete strings.
                     if translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
-                        if status in ["unfinished", "obsolete"] and\
+                        if status == "obsolete":
+                            continue
+
+                    if translation.attributes.has_key("type"):
+                        status = translation.attributes["type"].value.lower()
+                        if status == "unfinished" and\
                           not pluralized:
                             suggestion = GenericTranslation(sourceString,
                                 _getText(translation.childNodes),
