@@ -1,4 +1,4 @@
-import os
+import os, sys
 from optparse import make_option
 
 from django.conf import settings
