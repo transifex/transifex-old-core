@@ -307,8 +307,8 @@
 
 
 {% get_permission "project_perm.submit_translations" for request.user and resource.project,1 as "can_submit_translation" %}
-{% get_permission "project_perm.maintain" for request.user and resource.project as "can_maintain" %}
-{% if can_submit_translation and resource.accept_translations or can_maintain %}
+{% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+{% if can_submit_translation and resource.accept_translations or is_maintainer %}
 
 <p class="i16 tip" style="font-size:85%">
 {% blocktrans %}If you cannot see your language, click the button below to translate.<span class="note">( You must belong to a language team of this project, to be able to translate! )</span>{% endblocktrans %}
