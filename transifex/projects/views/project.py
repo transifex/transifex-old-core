@@ -138,7 +138,7 @@ def project_access_control_edit(request, project_slug):
                     sender='project_access_control_edit_view',
                     project=project,
                     license_text=access_control_form.cleaned_data['cla_license_text'],
-                    requester=request.user
+                    request=request
                 )
             project.save()
             return HttpResponseRedirect(request.POST['next'])
