@@ -97,11 +97,21 @@ def release_language_detail(request, project_slug, release_slug, language_code):
         'resource__project', 'lock').for_user(request.user
             ).private().by_release_and_language(release, language)
 
+    empty_rlstats = Resource.objects.filter(id__in=release.resources.all(),
+        project__private=False).exclude(
+        id__in=stats.values('resource'))
+
+    empty_private_rlstats = Resource.objects.for_user(request.user).filter(
+        id__in=release.resources.all(), project__private=True).exclude(
+        id__in=private_stats.values('resource'))
+
     return render_to_response('projects/release_language_detail.html', {
         'project': project,
         'release': release,
         'language': language,
         'stats': stats,
+        'empty_rlstats': empty_rlstats,
+        'empty_private_rlstats': empty_private_rlstats,
         'private_stats': private_stats,
     }, context_instance=RequestContext(request))
 

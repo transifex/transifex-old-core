@@ -318,6 +318,33 @@
   {% endfor %}
   </table>
  {% endif %}
+
+
+ {% if empty_rlstats or empty_private_rlstats %}
+  <br />
+   The following resources don't have any translations in {{ language.name }} and also don't have a team associated with this language:</span>
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <tbody>
+  {% for resource in empty_rlstats %} 
+    <tr title="{% trans 'click for resource details' %}">
+        <td style="padding-left:1em;">
+          <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
+        </td>
+	</tr>
+  {% endfor %}
+  {% if empty_private_rlstats %}
+   {% for resource in empty_private_rlstats %} 
+    <tr title="{% trans 'click for resource details' %}">
+      <td>
+       <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a> (private)</span>
+      </td>
+    </tr>
+   {% endfor %}
+  {% endif %}
+  </tbody>
+  </table>
+ {% endif %}
+   
 </div>
 
 {% endblock %}
