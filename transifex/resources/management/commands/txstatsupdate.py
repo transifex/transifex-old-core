@@ -33,8 +33,11 @@ class Command(LabelCommand):
                     prj, res = arg.split('.')
                     resources.extend(Resource.objects.filter(project__slug=prj,
                         slug=res) or None)
-                except (ValueError, TypeError), e:
+                except TypeError, e:
                     raise Exception("Unknown resource %s.%s" % (prj, res))
+                except ValueError, e:
+                    raise Exception("Argument %s is not in the correct format"
+                        % arg)
 
         num = len(resources)
 
@@ -62,14 +65,23 @@ class Command(LabelCommand):
                 lang = Language.objects.get(id=lang)
                 sys.stdout.write("Calculating statistics for language %s.\n" % lang)
                 rl, created = RLStats.objects.get_or_create(resource=r, language=lang)
-		rl.update()
-            for team in Team.objects.filter(project=r.project):
+                rl.update()
+
+            if r.project.outsource:
+                teams = Team.objects.filter(project=r.project.outsource)
+            else:
+                teams = Team.objects.filter(project=r.project)
+
+            # Exclude all rlstats that were already created
+            teams = teams.exclude(language__id__in=langs)
+
+            for team in teams:
                 lang = team.language
                 # Add team languages to the existing languages
                 langs.append(lang.id)
                 sys.stdout.write("Calculating statistics for team language %s.\n" % lang)
                 rl,created = RLStats.objects.get_or_create(resource=r, language=lang)
-		rl.update()
+                rl.update()
 
             # Add source language to the existing languages
             langs.append(r.source_language.id)
