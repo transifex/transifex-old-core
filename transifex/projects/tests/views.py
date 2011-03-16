@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from transifex.txcommon.tests import base, utils
+from transifex.projects.models import Project
 
 class ProjectViewsTests(base.BaseTestCase):
 
@@ -41,6 +42,7 @@ class ProjectViewsTests(base.BaseTestCase):
         self.assertContains(resp, "Say goodbye")
         resp = self.client['maintainer'].post(url, follow=True)
         self.assertContains(resp, "was deleted.")
+        self.assertTrue(Project.objects.filter(slug=self.project.slug).count() == 0)
         # Test messages:
         self.assertContains(resp, "message_success")
 
