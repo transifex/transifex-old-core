@@ -141,6 +141,7 @@ def project_access_control_edit(request, project_slug):
                     request=request
                 )
             project.save()
+            handle_stats_on_access_control_edit(project)
             return HttpResponseRedirect(request.POST['next'])
     else:
         access_control_form = ProjectAccessControlForm(instance=project,
@@ -151,6 +152,32 @@ def project_access_control_edit(request, project_slug):
         'project_access_control_form': access_control_form,
     }, context_instance=RequestContext(request))
 
+
+def handle_stats_on_access_control_edit(project):
+    """
+    This function is called in the access_control_edit of a project and deals
+    with add/remove of RLStats for existing teams based on whether the project
+    is outsourced or not.
+    """
+    if project.outsource:
+        # The project got outsourced. Create RLStats for all teams of the
+        # master project
+        teams = project.outsource.team_set.all()
+        for resource in project.resources.all():
+            new_stats = teams.exclude(language__in=RLStats.objects.filter(resource=resource).values(
+                'language'))
+            for stat in new_stats:
+                RLStats.objects.get_or_create(resource=resource,
+                    language=stat.language)
+    else:
+        teams = project.team_set.all()
+        for resource in project.resources.all():
+            old_stats = RLStats.objects.filter(Q(resource=resource) &
+                Q(translated=0) & ~Q(language__in=teams.values('language')))
+            for stat in old_stats:
+                stat.delete()
+
+    return
 
 @login_required
 @one_perm_required_or_403(pr_project_delete,
