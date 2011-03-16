@@ -22,6 +22,8 @@ Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
 SourceEntity = get_model('resources', 'SourceEntity')
 
+# Please refer to the README file in the tests directory for more info about
+# the various user roles.
 USER_ROLES = [
     'anonymous',
     'registered',

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests import base, utils
 
-class ProjectViewsTests(BaseTestCase):
+class ProjectViewsTests(base.BaseTestCase):
 
     # Note: The Project lookup field is tested elsewhere.
     def setUp(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class ProjectViewsTests(BaseTestCase):
         resp = self.client['registered'].get(self.url_acc, {})
         self.assertContains(resp, "Test Project", status_code=200)
         self.assertNotContains(resp, "Test Private Project", status_code=200)
-
+        
         # Private project cannot be used by another maintainer to outsource
         resp = self.client['registered'].post(self.url_acc, {
             'outsource': self.project_private.id,
@@ -34,3 +34,13 @@ class ProjectViewsTests(BaseTestCase):
         self.assertFalse(self.project.outsource)
         self.assertTemplateUsed(resp, "projects/project_form_access_control.html")
         self.assertContains(resp, "Select a valid choice.")
+
+    def test_delete_project(self):
+        url = reverse('project_delete', args=[self.project.slug])
+        resp = self.client['maintainer'].get(url)
+        self.assertContains(resp, "Say goodbye")
+        resp = self.client['maintainer'].post(url, follow=True)
+        self.assertContains(resp, "was deleted.")
+        # Test messages:
+        self.assertContains(resp, "message_success")
+
