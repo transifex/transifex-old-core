@@ -675,7 +675,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                 if string == "":
                     translation_string.delete()
                 else:
-                    translation_string.string = unescape(string)
+                    translation_string.string = string
                     translation_string.user = request.user
                     translation_string.save()
 
@@ -690,7 +690,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         source_entity = source_string.source_entity,
                         language = target_language,
                         rule = target_language.get_rule_num_from_name(rule),
-                        string = unescape(string),
+                        string = string,
                         user = request.user) # Save the sender as last committer
                     invalidate_stats_cache(source_string.source_entity.resource,
                         target_language, user=request.user)
