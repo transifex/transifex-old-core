@@ -13,7 +13,7 @@ from actionlog.models import action_logging
 from transifex.languages.models import Language
 from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
-from transifex.projects.permissions import (pr_release_add_change, pr_release_delete)
+from transifex.projects.permissions import *
 from transifex.releases.models import Release
 from transifex.resources.models import Resource, RLStats
 
@@ -54,6 +54,8 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
     }, context_instance=RequestContext(request))
 
 
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def release_detail(request, project_slug, release_slug):
     release = get_object_or_404(Release.objects.select_related('project'), slug=release_slug,
                                 project__slug=project_slug)
@@ -82,7 +84,8 @@ def release_detail(request, project_slug, release_slug):
         'statslist': statslist,
     }, context_instance=RequestContext(request))
 
-
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def release_language_detail(request, project_slug, release_slug, language_code):
 
     language = get_object_or_404(Language, code__iexact=language_code)
