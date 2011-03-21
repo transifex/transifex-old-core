@@ -674,11 +674,11 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 302)
 
-        for user in ['registered', 'writer', 'team_coordinator', 'team_member']:
+        for user in ['registered', 'writer']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer']:
+        for user in ['maintainer', 'team_coordinator', 'team_member']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 200)
 
