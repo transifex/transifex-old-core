@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-22 19:24+0000\n"
-"PO-Revision-Date: 2011-02-22 00:05+0000\n"
-"Last-Translator: aalam <apreet.alam@gmail.com>\n"
+"POT-Creation-Date: 2011-03-21 13:19+0000\n"
+"PO-Revision-Date: 2011-03-04 18:13+0000\n"
+"Last-Translator: diegobz <diegobz@indifex.com>\n"
 "Language-Team: Panjabi (Punjabi) <None>\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
@@ -132,7 +132,7 @@ msgstr "ਸਰੋਤ ਲਈ ਕੋਡ ਸਨਿੱਪਟ ਵੇਖੋ:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:135
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:141
 msgid "Hidden"
 msgstr "ਲੁਕਵਾਂ"
 
@@ -168,10 +168,6 @@ msgstr ""
 #: addons/helptext/templates/extended_helptext.html:8
 msgid "...more"
 msgstr "...ਹੋਰ"
-
-#: addons/locks/handlers.py:57
-msgid "This translation is locked by someone else."
-msgstr "ਇਹ ਅਨੁਵਾਦ ਨੂੰ ਕਿਸੇ ਹੋਰ ਨੇ ਲਾਕ ਕੀਤਾ ਹੋਇਆ ਹੈ।"
 
 #: addons/locks/models.py:67
 #, python-format
@@ -307,112 +303,95 @@ msgstr ""
 "<a href=\"http://%(current_site)s%(resource_url)s\">%(language)s ਵਿੱਚ "
 "%(resource)s</a> ਲਈ ਲਾਕ ਦੀ ਮਿਆਦ %(expires)s ਬਾਅਦ ਪੁੱਗਣ ਵਾਲੀ ਹੈ।\n"
 
-#: addons/lotte/views.py:68
-msgid ""
-"This project has more than one source languages and as a result you can not "
-"translate all resources at the same time."
-msgstr ""
-"ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਇੱਕ ਤੋਂ ਵੱਧ ਸਰੋਤ ਭਾਸ਼ਾਵਾਂ ਹਨ ਤੇ ਨਤੀਜੇ ਵਜੋਂ ਤੁਸੀਂ ਇੱਕੋ ਸਮੇਂ ਸਭ ਸਰੋਤਾਂ ਨੂੰ ਅਨੁਵਾਦ ਨਹੀਂ "
-"ਸਕਦੇ ਹੋ।"
-
-#: addons/lotte/views.py:90
-msgid ""
-"The source language cannot be edited, because this would result in "
-"translation mismatching! If you want to update the source strings consider "
-"using the command line client of transifex."
-msgstr ""
-"ਸਰੋਤ ਭਾਸ਼ਾ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ, ਕਿਉਂਕਿ ਇਸ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਅਨੁਵਾਦ ਰਲੇਗਾ ਨਹੀਂ ਹੈ! ਜੇ ਤੁਸੀਂ "
-"ਸਰੋਤ ਲਾਈਨ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ, ਟਰਾਂਸੀਫਿਕਸ ਦਾ ਕਮਾਂਡ ਲਾਈਨ ਵਰਜਨ ਵਰਤੋਂ।"
-
-#: addons/lotte/views.py:364
+#: addons/lotte/views.py:366
 msgid "Save the specific change"
 msgstr "ਖਾਸ ਬਦਲਾਅ ਸੰਭਾਲੋ"
 
-#: addons/lotte/views.py:365
+#: addons/lotte/views.py:367
 msgid "Undo to initial text"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਟੈਕਸਟ ਲਈ ਵਾਪਸ ਲਵੋ"
 
-#: addons/lotte/views.py:496
+#: addons/lotte/views.py:499
 msgid "Source string cannot be identified in the DB"
 msgstr ""
 
-#: addons/lotte/views.py:503
+#: addons/lotte/views.py:506
 msgid "The resource of this source string is not accepting translations."
 msgstr ""
 
-#: addons/lotte/views.py:526
+#: addons/lotte/views.py:529
 msgid ""
-"Cannot save unless plural translations are either completely filled or "
+"Cannot save unless plural translations are either completely specified or "
 "entirely empty!"
 msgstr ""
 
-#: addons/lotte/views.py:545
+#: addons/lotte/views.py:560
 msgid "Translation string only contains whitespaces."
 msgstr ""
 
-#: addons/lotte/views.py:553
+#: addons/lotte/views.py:568
 #, python-format
 msgid ""
 "Translation string doesn't contain the same number of '%s' as the source "
 "string."
 msgstr ""
 
-#: addons/lotte/views.py:564
+#: addons/lotte/views.py:579
 #, python-format
 msgid ""
 "The following url is either missing from the translation or has been "
 "translated: '%s'."
 msgstr ""
 
-#: addons/lotte/views.py:576
+#: addons/lotte/views.py:591
 #, python-format
 msgid ""
 "The following email is either missing from the translation or has been "
 "translated: '%s'."
 msgstr ""
 
-#: addons/lotte/views.py:587
+#: addons/lotte/views.py:602
 msgid "Translation must start with a newline (\\n)"
 msgstr ""
 
-#: addons/lotte/views.py:590
+#: addons/lotte/views.py:605
 msgid "Translation should not start with a newline (\\n)"
 msgstr ""
 
-#: addons/lotte/views.py:595
+#: addons/lotte/views.py:610
 msgid "Translation must end with a newline (\\n)"
 msgstr ""
 
-#: addons/lotte/views.py:598
+#: addons/lotte/views.py:613
 msgid "Translation should not end with a newline (\\n)"
 msgstr ""
 
-#: addons/lotte/views.py:607
+#: addons/lotte/views.py:622
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
 msgstr ""
 
-#: addons/lotte/views.py:623
+#: addons/lotte/views.py:641
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
 msgstr ""
 
-#: addons/lotte/views.py:631
+#: addons/lotte/views.py:649
 #, python-format
 msgid "The expression '%s' is not present in the translation."
 msgstr ""
 
-#: addons/lotte/views.py:641
+#: addons/lotte/views.py:659
 #, python-format
 msgid "The expression '%s' is not present in the source string."
 msgstr ""
 
-#: addons/lotte/views.py:683
+#: addons/lotte/views.py:709
 msgid "The translation string is empty"
 msgstr "ਅਨੁਵਾਦ ਲਾਈਨ ਖਾਲੀ ਹੈ"
 
-#: addons/lotte/views.py:688
+#: addons/lotte/views.py:714
 msgid "Error occurred while trying to save translation."
 msgstr "ਅਨੁਵਾਦ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਦੌਰਾਨ ਗਲਤੀ ਆਈ ਹੈ"
 
@@ -431,7 +410,7 @@ msgid "by %(user)s"
 msgstr "%(user)s ਵਲੋਂ"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:225
+#: addons/lotte/templates/translate.html:244
 msgid "Key"
 msgstr "ਕੁੰਜੀ"
 
@@ -441,8 +420,8 @@ msgstr "ਲਾਈਨ ID:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
-#: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:120
+#: languages/models.py:54 languages/migrations/0001_initial.py:14
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:126
 #: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
@@ -489,196 +468,203 @@ msgstr "ਪਰੋਜੈਕਟ"
 msgid "Translate to %(lang)s"
 msgstr "%(lang)s ਲਈ ਅਨੁਵਾਦ"
 
-#: addons/lotte/templates/translate.html:133
+#: addons/lotte/templates/translate.html:111
+msgid ""
+"There is at least one entry with error that was not saved. Do you want to "
+"continue anyway?"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:151
 #: addons/lotte/templates/view_strings.html:38
 msgid "Processing..."
 msgstr "ਕਾਰਵਾਈ ਜਾਰੀ..."
 
-#: addons/lotte/templates/translate.html:134
+#: addons/lotte/templates/translate.html:152
 #: addons/lotte/templates/view_strings.html:39
 msgid "Show _MENU_ entries"
 msgstr "_MENU_ ਐਂਟਰੀਆਂ ਵੇਖੋ"
 
-#: addons/lotte/templates/translate.html:135
+#: addons/lotte/templates/translate.html:153
 #: addons/lotte/templates/view_strings.html:40
 msgid "No matching records found"
 msgstr "ਕੋਈ ਮਿਲਦਾ ਰਿਕਾਰਡ ਨਹੀਂ ਮਿਲਿਆ"
 
-#: addons/lotte/templates/translate.html:136
+#: addons/lotte/templates/translate.html:154
 #: addons/lotte/templates/view_strings.html:41
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:137
+#: addons/lotte/templates/translate.html:155
 #: addons/lotte/templates/view_strings.html:42
 msgid "Nothing to show"
 msgstr "ਵੇਖਾਉਣ ਲਈ ਕੁਝ ਨਹੀਂ"
 
-#: addons/lotte/templates/translate.html:138
+#: addons/lotte/templates/translate.html:157
 #: addons/lotte/templates/view_strings.html:43
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(ਕੁੱਲ ਐਂਟਰੀਆਂ _MAX_  ਤੋਂ ਫਿਲਟਰ ਕਰੋ)"
 
-#: addons/lotte/templates/translate.html:140
+#: addons/lotte/templates/translate.html:159
 #: addons/lotte/templates/view_strings.html:45
 msgid "Search:"
 msgstr "ਖੋਜ:"
 
-#: addons/lotte/templates/translate.html:143
+#: addons/lotte/templates/translate.html:162
 #: addons/lotte/templates/view_strings.html:48
 msgid "First"
 msgstr "ਪਹਿਲਾਂ"
 
-#: addons/lotte/templates/translate.html:144
+#: addons/lotte/templates/translate.html:163
 #: addons/lotte/templates/view_strings.html:49
 msgid "Previous"
 msgstr "ਪਿੱਛੇ"
 
-#: addons/lotte/templates/translate.html:145
+#: addons/lotte/templates/translate.html:164
 #: addons/lotte/templates/view_strings.html:50
 msgid "Next"
 msgstr "ਅੱਗੇ"
 
-#: addons/lotte/templates/translate.html:146
+#: addons/lotte/templates/translate.html:165
 #: addons/lotte/templates/view_strings.html:51
 msgid "Last"
 msgstr "ਆਖਰੀ"
 
-#: addons/lotte/templates/translate.html:180
-#: addons/lotte/templates/translate.html:185
+#: addons/lotte/templates/translate.html:199
+#: addons/lotte/templates/translate.html:204
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "ਸਰੋਤ ਲਾਈਨ"
 
-#: addons/lotte/templates/translate.html:230
+#: addons/lotte/templates/translate.html:249
 msgid "details"
 msgstr "ਵੇਰਵਾ"
 
-#: addons/lotte/templates/translate.html:233 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:252 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "ਸੁਝਾਅ"
 
-#: addons/lotte/templates/translate.html:252
-#: addons/lotte/templates/translate.html:257
+#: addons/lotte/templates/translate.html:271
+#: addons/lotte/templates/translate.html:276
 msgid "Fill in a new translation"
 msgstr "ਨਵੇਂ ਅਨੁਵਾਦ 'ਚ ਭਰੋ"
 
-#: addons/lotte/templates/translate.html:279
+#: addons/lotte/templates/translate.html:298
 msgid "auto translate"
 msgstr "ਆਟੋ ਅਨੁਵਾਦ"
 
-#: addons/lotte/templates/translate.html:280
+#: addons/lotte/templates/translate.html:299
 msgid "copy source"
 msgstr "ਸਰੋਤ ਕਾਪੀ ਕਰੋ"
 
-#: addons/lotte/templates/translate.html:297
+#: addons/lotte/templates/translate.html:317
 #: addons/lotte/templates/view_strings.html:116
 msgid "Loading strings..."
 msgstr "...ਲਾਈਨਾਂ ਲੋਡ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ"
 
-#: addons/lotte/templates/translate.html:478
+#: addons/lotte/templates/translate.html:497
 msgid "Translation text will be saved automatically."
 msgstr "ਅਨੁਵਾਦ ਟੈਕਸਟ ਆਟੋਮੈਟਿਕ ਹੀ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ।"
 
-#: addons/lotte/templates/translate.html:482
+#: addons/lotte/templates/translate.html:501
 msgid "Translation text will no longer be saved automatically."
 msgstr "ਅਨੁਵਾਦ ਟੈਕਸਟ ਹੁਣ ਆਟੋਮੈਟਿਕ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।"
 
-#: addons/lotte/templates/translate.html:499
-msgid "This page does not have any translations (to delete)!"
+#: addons/lotte/templates/translate.html:519
+#, fuzzy
+msgid "There are no translations (to delete) on this page!"
 msgstr "ਇਹ ਸਫ਼ੇ ਲਈ ਕੋਈ ਅਨੁਵਾਦ ਨਹੀਂ ਹੈ (ਹਟਾਉਣ ਵਾਸਤੇ)!"
 
-#: addons/lotte/templates/translate.html:500
+#: addons/lotte/templates/translate.html:520
 msgid ""
-"This action will delete all translations in this page. Are you sure you want "
-"to proceed?"
+"This will delete all translations on this page. Are you sure you want to "
+"proceed?"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/translate.html:710
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr "ਮੌਜੂਦਾ ਅਨੁਵਾਦ ਲਈ ਟਰਾਂਸੀਫਿਕਸ ਮੈਮੋਰੀ 'ਚ ਲੱਭੋ (ਨਵੀਂ ਟੈਬ/ਵਿੰਡੋ ਵਿੱਚੋਂ ਵਰਤੋਂ)"
 
-#: addons/lotte/templates/translate.html:691
+#: addons/lotte/templates/translate.html:711
 msgid "Search translations"
 msgstr "ਅਨੁਵਾਦ ਖੋਜ"
 
-#: addons/lotte/templates/translate.html:700
+#: addons/lotte/templates/translate.html:720
 msgid "Show translations in<br /> the selected languages"
 msgstr "ਚੁਣੀਆਂ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ<br /> ਅਨੁਵਾਦ ਵੇਖੋ"
 
-#: addons/lotte/templates/translate.html:703
+#: addons/lotte/templates/translate.html:723
 msgid "More languages"
 msgstr "ਹੋਰ ਭਾਸ਼ਾਵਾਂ"
 
-#: addons/lotte/templates/translate.html:708
+#: addons/lotte/templates/translate.html:728
 msgid "Show only the translations<br /> by the selected users"
 msgstr "ਚੁਣੇ ਯੂਜ਼ਰ ਵਲੋਂ <br /> ਕੀਤਾ ਹੋਇਆ ਅਨੁਵਾਦ ਹੀ ਵੇਖੋ"
 
-#: addons/lotte/templates/translate.html:711
+#: addons/lotte/templates/translate.html:731
 msgid "Filter by users"
 msgstr "ਯੂਜ਼ਰ ਵਲੋਂ ਫਿਲਟਰ"
 
-#: addons/lotte/templates/translate.html:717
+#: addons/lotte/templates/translate.html:737
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "ਚੁਣ ਸਰੋਤਾਂ ਤੋਂ ਹੀ<br /> ਲਾਈਨਾਂ ਨੂੰ ਵੇਖੋ"
 
-#: addons/lotte/templates/translate.html:720
+#: addons/lotte/templates/translate.html:740
 msgid "Filter by resources"
 msgstr "ਸਰੋਤਾਂ ਵਲੋਂ ਫਿਲਟਰ"
 
-#: addons/lotte/templates/translate.html:732
+#: addons/lotte/templates/translate.html:752
 #: addons/lotte/templates/view_strings.html:178
 msgid "Translated"
 msgstr "ਅਨੁਵਾਦ ਹੋਇਆ"
 
-#: addons/lotte/templates/translate.html:740
+#: addons/lotte/templates/translate.html:760
 #: addons/lotte/templates/view_strings.html:186
 msgid "Untranslated"
 msgstr "ਨਾ-ਅਨੁਵਾਦ"
 
-#: addons/lotte/templates/translate.html:747
+#: addons/lotte/templates/translate.html:767
 msgid "Modified"
 msgstr "ਸੋਧੇ"
 
-#: addons/lotte/templates/translate.html:752
+#: addons/lotte/templates/translate.html:772
 #: addons/lotte/templates/view_strings.html:193
 msgid "Total"
 msgstr "ਕੁੱਲ"
 
-#: addons/lotte/templates/translate.html:765
+#: addons/lotte/templates/translate.html:785
 #: addons/lotte/templates/view_strings.html:206 resources/models.py:444
 msgid "Source String"
 msgstr "ਸਰੋਤ ਸਤਰ"
 
-#: addons/lotte/templates/translate.html:766
+#: addons/lotte/templates/translate.html:786
 #: addons/lotte/templates/view_strings.html:207
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "ਅਨੁਵਾਦ"
 
-#: addons/lotte/templates/translate.html:774
+#: addons/lotte/templates/translate.html:794
 msgid "Save all"
 msgstr "ਸਭ ਸੰਭਾਲੋ"
 
-#: addons/lotte/templates/translate.html:777
-#: templates/resources/resource_actions.html:194
+#: addons/lotte/templates/translate.html:797
+#: templates/resources/resource_actions.html:197
 msgid "Delete translations"
 msgstr "ਅਨੁਵਾਦ ਹਟਾਓ"
 
-#: addons/lotte/templates/translate.html:779
+#: addons/lotte/templates/translate.html:799
 msgid "Save and Exit"
 msgstr "ਸੰਭਾਲੋ ਤੇ ਬੰਦ ਕਰੋ"
 
-#: addons/lotte/templates/translate.html:785
+#: addons/lotte/templates/translate.html:805
 msgid "General Settings"
 msgstr "ਆਮ ਸੈਟਿੰਗ"
 
-#: addons/lotte/templates/translate.html:790
+#: addons/lotte/templates/translate.html:810
 msgid "Verbose editing"
 msgstr "ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਨਾਲ ਸੋਧ"
 
-#: addons/lotte/templates/translate.html:794
+#: addons/lotte/templates/translate.html:814
 msgid "Auto save"
 msgstr "ਆਟੋ ਸੰਭਾਲੋ"
 
@@ -836,7 +822,7 @@ msgid "Filter results"
 msgstr "ਨਤੀਜੇ ਫਿਲਟਰ"
 
 #: addons/timeline/templates/timeline/timeline_base.html:18
-#: templates/timeline.html:17 templates/resources/resource_actions.html:110
+#: templates/timeline.html:17 templates/resources/resource_actions.html:113
 msgid "Go"
 msgstr "ਜਾਓ"
 
@@ -926,27 +912,27 @@ msgstr "ਅਨੁਵਾਦ ਵਾਂਚ"
 msgid "translation watches"
 msgstr "ਅਨੁਵਾਦ ਵਾਂਚ"
 
-#: addons/watches/views.py:28 addons/watches/views.py:93
+#: addons/watches/views.py:28 addons/watches/views.py:94
 msgid "Must use POST to activate"
 msgstr "ਐਕਟੀਵੇਟ ਕਰਨ ਲਈ POST ਵਰਤਣਾ ਲਾਜ਼ਮੀ ਹੈ"
 
-#: addons/watches/views.py:31 addons/watches/views.py:96
+#: addons/watches/views.py:31 addons/watches/views.py:97
 msgid "Notification is not enabled"
 msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਚਾਲੂ ਨਹੀਂ ਹੈ"
 
-#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:7
+#: addons/watches/views.py:55 addons/watches/templates/watch_toggle.html:7
 msgid "Watch it"
 msgstr "ਨਿਗ੍ਹਾ ਰੱਖੋ"
 
-#: addons/watches/views.py:72
+#: addons/watches/views.py:73
 msgid "Stop watching"
 msgstr "ਵਾਂਚ ਕਰਨਾ ਰੋਕੋ"
 
-#: addons/watches/views.py:106
+#: addons/watches/views.py:107
 msgid "Watch this project"
 msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਚ ਨਿਗ੍ਹਾ ਰੱਖੋ"
 
-#: addons/watches/views.py:119
+#: addons/watches/views.py:120
 msgid "Stop watching this project"
 msgstr "ਇਹ ਪਰੋਜੈਕਟ 'ਤੇ ਨਿਗ੍ਹਾ ਰੱਖਣੀ ਬੰਦ ਕਰੋ"
 
@@ -992,81 +978,81 @@ msgstr "%(site_name)s ਉੱਤੇ ਭਾਸ਼ਾ"
 msgid "The languages spoken on %s."
 msgstr "%s ਵਿੱਚ ਬੋਲੀਆਂ ਜਾਂਦੀਆਂ ਭਾਸ਼ਾਵਾਂ।"
 
-#: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:118
+#: languages/models.py:52 languages/migrations/0001_initial.py:19
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:124
 #: releases/models.py:33 resources/models.py:115
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
 msgstr "ਨਾਂ"
 
-#: languages/models.py:56 languages/migrations/0001_initial.py:13
+#: languages/models.py:55 languages/migrations/0001_initial.py:13
 #: languages/migrations/0002_added_rules_f.py:79
 msgid "Code"
 msgstr "ਕੋਡ"
 
-#: languages/models.py:59 languages/migrations/0001_initial.py:12
+#: languages/models.py:58 languages/migrations/0001_initial.py:12
 #: languages/migrations/0002_added_rules_f.py:76
 msgid "Code aliases"
 msgstr "ਕੋਡ ਏਲੀਆਸ"
 
-#: languages/models.py:62 languages/migrations/0001_initial.py:17
+#: languages/models.py:61 languages/migrations/0001_initial.py:17
 #: languages/migrations/0002_added_rules_f.py:91
 msgid "Special Chars"
 msgstr "ਖਾਸ ਅੱਖਰ"
 
-#: languages/models.py:63
+#: languages/models.py:62
 msgid "Enter any special characters that users might find difficult to type"
 msgstr "ਕੋਈ ਖਾਸ ਅੱਖਰ ਦਿਓ, ਜੋ ਕਿ ਯੂਜ਼ਰ ਲਿਖਣ ਲਈ ਔਖਾ ਮਹਿਸੂਸ ਕਰਨ"
 
-#: languages/models.py:66 languages/migrations/0001_initial.py:16
+#: languages/models.py:65 languages/migrations/0001_initial.py:16
 #: languages/migrations/0002_added_rules_f.py:88
 msgid "Number of Plurals"
 msgstr "ਬਹੁਵਚਨਾਂ ਦੀ ਗਿਣਤੀ"
 
-#: languages/models.py:68 languages/migrations/0001_initial.py:15
+#: languages/models.py:67 languages/migrations/0001_initial.py:15
 #: languages/migrations/0002_added_rules_f.py:85
 msgid "Plural Equation"
 msgstr "ਬਹੁਵਚਨ ਸਮੀਕਰਨ"
 
-#: languages/models.py:72
+#: languages/models.py:71
 msgid "Rule zero"
 msgstr "ਰੂਲ ਜ਼ੀਰੋ"
 
-#: languages/models.py:74
+#: languages/models.py:73
 msgid "Rule one"
 msgstr "ਰੂਲ ਇੱਕ"
 
-#: languages/models.py:76
+#: languages/models.py:75
 msgid "Rule two"
 msgstr "ਰੂਲ ਦੋ"
 
-#: languages/models.py:78
+#: languages/models.py:77
 msgid "Rule few"
 msgstr "ਰੂਲ ਕੁਝ"
 
-#: languages/models.py:80
+#: languages/models.py:79
 msgid "Rule many"
 msgstr "ਰੂਲ ਕਈ"
 
-#: languages/models.py:82
+#: languages/models.py:81
 msgid "Rule other"
 msgstr "ਰੂਲ ਹੋਰ"
 
-#: languages/models.py:93
+#: languages/models.py:92
 msgid "language"
 msgstr "ਭਾਸ਼ਾ"
 
-#: languages/models.py:94 templates/languages/language_list.html:15
+#: languages/models.py:93 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "ਭਾਸ਼ਾਵਾਂ"
 
-#: projects/api.py:237 projects/api.py:308
+#: projects/api.py:236 projects/api.py:306
 #, python-format
 msgid "%i strings added"
 msgstr "%i ਲਾਈਨਾਂ ਜੋੜੀਆਂ"
 
-#: projects/api.py:239 projects/api.py:310
+#: projects/api.py:238 projects/api.py:308
 #, python-format
 msgid "%i strings updated"
 msgstr "%i ਲਾਈਨਾਂ ਅੱਪਡੇਟ ਕੀਤੀਆਂ"
@@ -1167,11 +1153,11 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "ਸਰੋਤ ਲਈ ਖੋਜ"
 
-#: projects/models.py:111
+#: projects/models.py:117
 msgid "Private"
 msgstr "ਪ੍ਰਾਈਵੇਟ"
 
-#: projects/models.py:112
+#: projects/models.py:118
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
@@ -1179,128 +1165,128 @@ msgstr ""
 "ਪ੍ਰਾਈਵੇਟ ਪਰੋਜੈਕਟ ਕੇਵਲ ਤੁਹਾਨੂੰ ਤੇ ਤੁਹਾਡੀ ਟੀਮ ਦੇ ਮੈਂਬਰਾਂ ਨੂੰ ਹੀ ਵੇਖਾਈ ਦਿੰਦਾ ਹੈ। ਇਸ ਤੋਂ ਇਲਾਵਾ, "
 "ਪ੍ਰਾਈਵੇਟ ਪਰੋਜੈਕਟ ਯੂਜ਼ਰ ਅਕਾਊਂਟ ਲਈ ਸੀਮਿਤ ਬਿੱਲਪਲੇਨ ਲਈ ਹਨ।"
 
-#: projects/models.py:115 releases/models.py:30 resources/models.py:112
+#: projects/models.py:121 releases/models.py:30 resources/models.py:112
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "ਸਲੁਗ"
 
-#: projects/models.py:116 releases/models.py:31 resources/models.py:113
+#: projects/models.py:122 releases/models.py:31
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
 msgstr ""
 "URL ਵਿੱਚ ਵਰਤਣ ਲਈ ਛੋਟਾ ਲੇਬਲ ਹੈ, ਜਿਸ ਵਿੱਚ ਕੇਵਲ ਅੱਖਰ, ਨੰਬਰ, ਅੰਡਰ-ਸਕਰੋ, ਜਾਂ ਹਾਈਫਨ ਹੀ ਸਕਦਾ ਹੈ।"
 
-#: projects/models.py:119
+#: projects/models.py:125
 msgid "A short name or very short description."
 msgstr "ਛੋਟਾ ਨਾਂ ਜਾਂ ਬਹੁਤ ਹੀ ਸੰਖੇਪ ਵੇਰਵਾ"
 
-#: projects/models.py:121
+#: projects/models.py:127
 msgid "A sentence or two describing the object (optional)."
 msgstr "ਆਬਜੈਕਟ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲਈ ਇੱਕ ਜਾਂ ਦੋ ਸਤਰਾਂ 'ਚ ਜਾਣਕਾਰੀ (ਚੋਣਵੀਂ)।"
 
-#: projects/models.py:122 releases/models.py:38
+#: projects/models.py:128 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "ਲੰਮਾ ਵੇਰਵਾ"
 
-#: projects/models.py:124
+#: projects/models.py:130
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "ਲੰਮਾ ਵੇਰਵਾ (ਚੋਣਵਾਂ)। Markdown ਸੰਟੈਕਸ ਵਰਤੋਂ।"
 
-#: projects/models.py:125 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:131 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "ਮੁੱਖ ਪੇਜ਼"
 
-#: projects/models.py:126
+#: projects/models.py:132
 msgid "Feed"
 msgstr "ਫੀਡ"
 
-#: projects/models.py:127
+#: projects/models.py:133
 msgid "An RSS feed with updates to the project."
 msgstr "ਪਰੋਜੈਕਟ ਅੱਪਡੇਟ ਲਈ RSS ਫੀਡ।"
 
-#: projects/models.py:128
+#: projects/models.py:134
 msgid "Bug tracker"
 msgstr "ਬੱਗ ਟਰੈਕਰ"
 
-#: projects/models.py:129
+#: projects/models.py:135
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr "ਬੱਗ ਅਤੇ ਟਿਕਟ ਟਰੈਕਿੰਗ ਸਿਸਟਮ (ਜਿਵੇਂ ਕਿ ਬੱਗਜ਼ੀਲਾ, ਟਰੇਕ ਆਦਿ) ਲਈ URL"
 
-#: projects/models.py:131
+#: projects/models.py:137
 msgid "Anyone can submit"
 msgstr "ਕੋਈ ਵੀ ਭੇਜ ਸਕਦਾ ਹੈ"
 
-#: projects/models.py:133
+#: projects/models.py:139
 msgid "Can anyone submit files to this project?"
 msgstr "ਕੀ ਕੋਈ ਵੀ ਇਸ ਪਰੋਜੈਕਟ ਲਈ ਫਾਇਲਾਂ ਭੇਜ ਸਕਦਾ ਹੈ?"
 
-#: projects/models.py:136
+#: projects/models.py:142
 msgid "Hide this object from the list view?"
 msgstr "ਇਹ ਆਬਜੈਕਟ ਲਿਸਟ ਝਲਕ ਵਿੱਚ ਓਹਲੇ ਰੱਖਣਾ?"
 
-#: projects/models.py:137
+#: projects/models.py:143
 msgid "Enabled"
 msgstr "ਚਾਲੂ"
 
-#: projects/models.py:138
+#: projects/models.py:144
 msgid "Enable this object or disable its use?"
 msgstr "ਇਹ ਆਬਜੈਕਟ ਅਤੇ ਇਸ ਦੀ ਵਰਤੋਂ ਚਾਲੂ ਕਰਨੀ ਹੈ?"
 
-#: projects/models.py:142 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:148 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "ਟੈਗ"
 
-#: projects/models.py:145 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:151 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "ਪਰਬੰਧਕ"
 
-#: projects/models.py:149
+#: projects/models.py:155
 msgid "Outsource project"
 msgstr "ਆਉਟਸੋਰਸ ਪਰੋਜੈਕਟ"
 
-#: projects/models.py:150
+#: projects/models.py:156
 msgid "Project that owns the access control of this project."
 msgstr "ਪਰੋਜੈਕਟ, ਜੋ ਕਿ ਇਸ ਪਰੋਜੈਕਟ ਲਈ ਅਸੈੱਸ ਕੰਟਰੋਲ ਰੱਖਦਾ ਹੈ।"
 
-#: projects/models.py:153 storage/models.py:44
+#: projects/models.py:159 storage/models.py:44
 msgid "Owner"
 msgstr "ਓਨਰ"
 
-#: projects/models.py:154
+#: projects/models.py:160
 msgid "The user who owns this project."
 msgstr "ਯੂਜ਼ਰ, ਜੋ ਇਹ ਪਰੋਜੈਕਟ ਦਾ ਮਾਲਕ ਹੈ।"
 
-#: projects/models.py:157 releases/models.py:60
+#: projects/models.py:163 releases/models.py:60
 msgid "HTML Description"
 msgstr "HTML ਵੇਰਵਾ"
 
-#: projects/models.py:159 releases/models.py:62
+#: projects/models.py:165 releases/models.py:62
 msgid "Description in HTML."
 msgstr "HTML ਵਿੱਚ ਵੇਰਵਾ ਹੈ।"
 
-#: projects/models.py:177
+#: projects/models.py:183
 msgid "project"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: projects/models.py:178 templates/projects/project_list.html:19
+#: projects/models.py:184 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "ਪਰੋਜੈਕਟ"
 
-#: projects/permissions/project.py:43
+#: projects/permissions/project.py:45
 msgid "Is allowed to maintain this project"
 msgstr "ਕੀ ਇਹ ਪਰੋਜੈਕਟ ਦਾ ਪਰਬੰਧ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
 
-#: projects/permissions/project.py:56
+#: projects/permissions/project.py:58
 msgid "Is allowed to coordinate a team project"
 msgstr "ਨੂੰ ਟੀਮ ਪਰੋਜੈਕਟ ਨੂੰ ਕੋਆਰਡੀਨੇਟ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
 
-#: projects/permissions/project.py:98
+#: projects/permissions/project.py:107
 msgid "Is allowed to submit translations to this project"
 msgstr "ਨੂੰ ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਅਨੁਵਾਦ ਭੇਜਣ ਦੀ ਮਨਜ਼ੂਰ ਹੈ"
 
-#: projects/permissions/project.py:115
+#: projects/permissions/project.py:124
 msgid "Is allowed to browse this private project"
 msgstr "ਨੂੰ ਇਹ ਪ੍ਰਾਈਵੇਟ ਪਰੋਜੈਕਟ ਬਰਾਊਜ਼ ਕਰਨ ਦੀ ਮਨਜ਼ੂਰੀ ਹੈ"
 
@@ -1319,12 +1305,7 @@ msgstr "ਨਾ-ਅਨੁਵਾਦ:"
 msgid "Total:"
 msgstr "ਕੁੱਲ:"
 
-#: projects/views/project.py:163
-#, python-format
-msgid "The project '%s' was deleted."
-msgstr "ਪਰੋਜੈਕਟ '%s' ਹਟਾਇਆ ਗਿਆ।"
-
-#: projects/views/release.py:115
+#: projects/views/release.py:133
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "ਰੀਲਿਜ਼ '%s' ਹਟਾਇਆ ਗਿਆ।"
@@ -1335,21 +1316,21 @@ msgid "The team '%s' was deleted."
 msgstr "ਟੀਮ '%s' ਹਟਾਈ ਗਈ ਹੈ।"
 
 #: projects/views/team.py:237
-#, python-format
-msgid "You are in the '%s' team already."
-msgstr "ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ '%s' ਟੀਮ ਵਿੱਚ ਹੋ।"
+#, fuzzy, python-format
+msgid "You are already on the '%s' team."
+msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਵਿੱਚ ਨਹੀਂ ਹੋ।"
 
 #: projects/views/team.py:248
-#, python-format
-msgid "You have added a request for joining the '%s' team."
-msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਦਾ ਮੈਂਬਰ ਬਣ ਲਈ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
+#, fuzzy, python-format
+msgid "You requested to join the '%s' team."
+msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਵਿੱਚ ਨਹੀਂ ਹੋ।"
 
-#: projects/views/team.py:271
-#, python-format
-msgid "You already have a pending request to join the '%s' team."
+#: projects/views/team.py:269
+#, fuzzy, python-format
+msgid "You already requested to join the '%s' team."
 msgstr "ਤੁਹਾਡੀ '%s' ਟੀਮ ਦਾ ਮੈਂਬਰ ਬਣਨ ਦੀ ਮੰਗ ਪਹਿਲਾਂ ਹੀ ਬਾਕੀ ਰਹਿੰਦੀ ਹੈ।"
 
-#: projects/views/team.py:275
+#: projects/views/team.py:273
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
@@ -1357,58 +1338,58 @@ msgstr ""
 "ਤੁਹਾਨੂੰ ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਯੋਗਦਾਨ ਲਾਈਸੈਂਸ ਇਕਰਾਰਨਾਮੇ ਨੂੰ ਸਾਈਨ ਕਰਨਾ ਪਵੇਗਾ, ਇਸ ਤੋਂ ਪਹਿਲਾਂ ਕਿ ਤੁਸੀਂ "
 "ਟੀਮ ਜੁਆਇੰਨ ਕਰ ਸਕੋ।"
 
-#: projects/views/team.py:304
-#, python-format
-msgid "User '%(user)s' is in the '%(team)s' team already."
+#: projects/views/team.py:302
+#, fuzzy, python-format
+msgid "User '%(user)s' is already on the '%(team)s' team."
 msgstr "ਯੂਜ਼ਰ '%(user)s'  '%(team)s' ਟੀਮ ਵਿੱਚ ਪਹਿਲਾਂ ਹੀ ਹੈ।"
 
-#: projects/views/team.py:311
-#, python-format
-msgid "You have added '%(user)s' into the '%(team)s' team."
+#: projects/views/team.py:309
+#, fuzzy, python-format
+msgid "You added '%(user)s' to the '%(team)s' team."
 msgstr "ਤੁਸੀਂ '%(team)s' ਵਿੱਚ '%(user)s' ਨੂੰ ਸ਼ਾਮਲ ਕੀਤਾ ਹੈ।"
 
-#: projects/views/team.py:359
-#, python-format
+#: projects/views/team.py:357
+#, fuzzy, python-format
 msgid ""
-"You have denied the request of the user '%(user)s' to join the '%(team)s' "
-"team."
+"You rejected the request by user '%(user)s' to join the '%(team)s' team."
 msgstr "ਤੁਸੀਂ '%(user)s' ਯੂਜ਼ਰ ਦੀ '%(team)s' ਟੀਮ ਜੁਆਇੰਨ ਕਰਨ ਦੀ ਮੰਗ ਨੂੰ ਠੁਕਰਾ ਦਿੱਤਾ ਹੈ।"
 
-#: projects/views/team.py:404
-#, python-format
-msgid "You have withdrawn your own request to join the '%s' team."
+#: projects/views/team.py:402
+#, fuzzy, python-format
+msgid "You withdrew your request to join the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਨੂੰ ਜੁਆਇੰਨ ਕਰਨ ਦੀ ਆਪਣੀ ਮੰਗ ਵਾਪਸ ਲੈ ਲਈ ਹੈ।"
 
-#: projects/views/team.py:447
-#, python-format
-msgid "You have left the '%s' team."
+#: projects/views/team.py:445
+#, fuzzy, python-format
+msgid "You left the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਛੱਡ ਚੁੱਕੇ ਹੋ।"
 
-#: projects/views/team.py:468
+#: projects/views/team.py:466
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਵਿੱਚ ਨਹੀਂ ਹੋ।"
 
-#: projects/views/team.py:491
-msgid "Please, select a language before submit the form."
+#: projects/views/team.py:489
+#, fuzzy
+msgid "Please select a language before submitting the form."
 msgstr "ਫਾਰਮ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ ਜੀ।"
 
-#: projects/views/team.py:504
-#, python-format
-msgid "'%s' team already exist."
+#: projects/views/team.py:502
+#, fuzzy, python-format
+msgid "'%s' team already exists."
 msgstr "'%s' ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
 
-#: projects/views/team.py:510
-#, python-format
-msgid "A request for creating the '%s' team already exist."
+#: projects/views/team.py:508
+#, fuzzy, python-format
+msgid "A request to create the '%s' team already exists."
 msgstr "'%s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਪਹਿਲਾਂ ਹੀ ਕੀਤੀ ਜਾ ਚੁੱਕੀ ਹੈ।"
 
-#: projects/views/team.py:527
-#, python-format
-msgid "You have requested the '%s' team creation."
-msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
+#: projects/views/team.py:525
+#, fuzzy, python-format
+msgid "You requested creation of the '%s' team."
+msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਵਿੱਚ ਨਹੀਂ ਹੋ।"
 
-#: projects/views/team.py:550
+#: projects/views/team.py:548
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
@@ -1416,15 +1397,15 @@ msgstr ""
 "ਤੁਹਾਨੂੰ ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਯੋਗਦਾਨ ਲਾਈਸੈਂਸ ਇਕਰਾਰਨਾਮੇ ਨੂੰ ਸਾਈਨ ਕਰਨਾ ਪਵੇਗਾ, ਇਸ ਤੋਂ ਪਹਿਲਾਂ ਕਿ ਤੁਸੀਂ "
 "ਟੀਮ ਬਣਾਉਣ ਦੀ ਬੇਨਤੀ ਕਰ ਸਕੋ।"
 
-#: projects/views/team.py:579
-#, python-format
-msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+#: projects/views/team.py:577
+#, fuzzy, python-format
+msgid "You approved the '%(team)s' team requested by '%(user)s'."
 msgstr "ਤੁਸੀਂ '%(user)s' ਵਲੋਂ  '%(team)s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਮਨਜ਼ੂਰ ਕਰ ਲਈ ਹੈ।"
 
-#: projects/views/team.py:622
-#, python-format
-msgid "You have denied the '%(team)s' team requested by '%(user)s'."
-msgstr "ਤੁਸੀਂ '%(user)s' ਵਲੋਂ  '%(team)s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਨਾ-ਮਨਜ਼ੂਰ ਕਰ ਦਿੱਤੀ ਹੈ।"
+#: projects/views/team.py:620
+#, fuzzy, python-format
+msgid "You rejected the request by '%(user)s' for a '%(team)s' team."
+msgstr "ਤੁਸੀਂ '%(user)s' ਯੂਜ਼ਰ ਦੀ '%(team)s' ਟੀਮ ਜੁਆਇੰਨ ਕਰਨ ਦੀ ਮੰਗ ਨੂੰ ਠੁਕਰਾ ਦਿੱਤਾ ਹੈ।"
 
 #: releases/models.py:34
 msgid "A string like a name or very short description."
@@ -1510,6 +1491,14 @@ msgid ""
 "resource."
 msgstr ""
 
+#: resources/models.py:113
+#, fuzzy
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores and hyphens."
+msgstr ""
+"URL ਵਿੱਚ ਵਰਤਣ ਲਈ ਛੋਟਾ ਲੇਬਲ ਹੈ, ਜਿਸ ਵਿੱਚ ਕੇਵਲ ਅੱਖਰ, ਨੰਬਰ, ਅੰਡਰ-ਸਕਰੋ, ਜਾਂ ਹਾਈਫਨ ਹੀ ਸਕਦਾ ਹੈ।"
+
 #: resources/models.py:116
 msgid "A descriptive name unique inside the project."
 msgstr "ਪਰੋਜੈਕਟ ਦੇ ਵਿੱਚ ਵੇਰਵੇ ਸਮੇਤ ਵਿਲੱਖਣ ਨਾਂ।"
@@ -1519,7 +1508,7 @@ msgid "Source file"
 msgstr "ਸਰੋਤ ਫਾਇਲ"
 
 #: resources/models.py:121
-msgid "A local file used to extract the strings to be translated."
+msgid "A local file used to extract the strings for translation."
 msgstr ""
 
 #: resources/models.py:123
@@ -1536,7 +1525,8 @@ msgid "Accepting translations?"
 msgstr "ਅਨੁਵਾਦ ਮਨਜ਼ੂਰ ਕਰਨਾ ਹੈ?"
 
 #: resources/models.py:129
-msgid "Is this resource accepting submissions of translations?"
+#, fuzzy
+msgid "Is this resource accepting translations?"
 msgstr "ਕੀ ਇਹ ਸਰੋਤ ਅਨੁਵਾਦ ਭੇਜਣ ਨੂੰ ਮਨਜ਼ੂਰ ਕਰਦਾ ਹੈ?"
 
 #: resources/models.py:130
@@ -1605,7 +1595,7 @@ msgstr "ਸਥਿਤੀ"
 #: resources/models.py:302
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
-"position of msgid field in a po template (.pot) file in gettext."
+"position of a msgid field in a po template (.pot) file in gettext."
 msgstr ""
 
 #: resources/models.py:308
@@ -1631,7 +1621,7 @@ msgid "Pluralized"
 msgstr "ਬਹੁਵਚਨ"
 
 #: resources/models.py:320
-msgid "Identify if the entity is pluralized ot not."
+msgid "Whether the entity is pluralized."
 msgstr ""
 
 #: resources/models.py:330
@@ -1647,7 +1637,8 @@ msgid "source strings"
 msgstr "ਸਰੋਤ ਲਾਈਨਾਂ"
 
 #: resources/models.py:423
-msgid "The actual string content of translation."
+#, fuzzy
+msgid "The actual string content for translation."
 msgstr "ਅਨੁਵਾਦ ਦੀ ਸਮੱਗਰੀ ਦੀ ਅਸਲੀ ਲਾਈਨ ਹੈ।"
 
 #: resources/models.py:427
@@ -1657,8 +1648,8 @@ msgstr "ਬਹੁਵਚਨ ਰੂਲ"
 #: resources/models.py:429
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
-"2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
-"pluralized, the rule must be 5 (other)."
+"2=two, 3=few, 4=many and 5=other. For translations that have no plural "
+"forms, the rule must be 5 (other)."
 msgstr ""
 
 #: resources/models.py:433
@@ -1728,47 +1719,47 @@ msgstr "ਟੈਪਲੇਟ"
 msgid "Templates"
 msgstr "ਟੈਪਲੇਟ"
 
-#: resources/views.py:95
+#: resources/views.py:96
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "ਅਨੁਵਾਦ ਸਰੋਤ '%s' ਹਟਾਇਆ ਗਿਆ ਸੀ।"
 
-#: resources/views.py:140
-msgid "The URL you provided doesn't link to valid file."
+#: resources/views.py:141
+#, fuzzy
+msgid "The URL you provided doesn't link to a valid file."
 msgstr "URL, ਜੋ ਤੁਸੀਂ ਦਿੱਤਾ ਹੈ, ਢੁੱਕਵਾਂ ਫਾਇਲ ਲਿੰਕ ਨਹੀਂ ਹੈ।"
 
-#: resources/views.py:151
+#: resources/views.py:152
 msgid ""
 "You have checked the auto update checkbox but you haven't provided a valid "
 "url."
 msgstr ""
 
-#: resources/views.py:336
-#, python-format
-msgid ""
-"The translations of language %(lang)s for the resource %(resource)s were "
-"deleted successfully."
-msgstr "ਸਰੋਤ %(resource)s ਲਈ %(lang)s ਭਾਸ਼ਾ ਦਾ ਸਭ ਅਨੁਵਾਦ ਠੀਕ ਤਰ੍ਹਾਂ ਹਟਾਇਆ ਗਿਆ ਹੈ।"
+#: resources/views.py:337
+#, fuzzy, python-format
+msgid "Deleted %(lang)s translation for resource %(resource)s."
+msgstr "ਅਨੁਵਾਦ ਸਰੋਤ ਹਟਾਓ"
 
-#: resources/views.py:382
+#: resources/views.py:384
 msgid "Error compiling translation file."
 msgstr "ਅਨੁਵਾਦ ਫਾਇਲ ਕੰਪਾਇਲ ਗਲਤੀ ਹੈ।"
 
-#: resources/views.py:431
-msgid "Sorry, you cannot assign this file to you!"
+#: resources/views.py:435
+#, fuzzy
+msgid "Sorry, you cannot lock this file!"
 msgstr "ਅਫਸੋਸ, ਤੁਸੀਂ ਇਹ ਫਾਇਲ ਖੁਦ ਨੂੰ ਨਹੀਂ ਦੇ ਸਕਦੇ!"
 
-#: resources/views.py:443
+#: resources/views.py:447
 msgid "Failed to lock the resource!"
 msgstr "ਸਰੋਤ ਲਾਕ ਕਰਨ ਲਈ ਫੇਲ੍ਹ ਹੈ!"
 
-#: resources/views.py:454
+#: resources/views.py:458
 msgid "Failed to extend lock period on the resource!"
 msgstr "ਸਰੋਤ ਉੱਤੇ ਲਾਕ ਸਮਾਂ ਵਧਾਉਣ ਲਈ ਫੇਲ੍ਹ ਹੈ!"
 
-#: resources/views.py:459
-#, python-format
-msgid "You cannot lock it right now! ( Locked by %s )"
+#: resources/views.py:463
+#, fuzzy, python-format
+msgid "You cannot lock it right now! (Locked by %s )"
 msgstr "ਤੁਸੀਂ ਹੁਣ ਲਾਕ ਨਹੀਂ ਕਰ ਸਕਦੇ! (%s ਵਲੋਂ ਲਾਕ ਹੈ)"
 
 #: resources/formats/pofile.py:92
@@ -1780,6 +1771,10 @@ msgstr ""
 #: resources/formats/qt.py:76
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
+msgstr ""
+
+#: simpleauth/forms.py:7
+msgid "Remember me"
 msgstr ""
 
 #: storage/api.py:131
@@ -2024,23 +2019,23 @@ msgstr "ਸਾਈਨ-ਇਨ"
 msgid "Register"
 msgstr "ਰਜਿਸਟਰ ਹੋਵੋ"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:144
 msgid "Learn more about Transifex"
 msgstr "ਟਰਾਂਸੀਫਿਕਸ ਬਾਰੇ ਹੋਰ ਜਾਣੋ"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:144
 msgid "About"
 msgstr "ਇਸ ਬਾਰੇ"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:146
 msgid "Drops us a line"
 msgstr "ਟਿੱਪਣੀ"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:146
 msgid "Feedback"
 msgstr "ਫੀਡਬੈਕ"
 
-#: templates/base-sample.html:145
+#: templates/base-sample.html:150
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -2616,7 +2611,7 @@ msgid "Screenshots"
 msgstr "ਸਕਰੀਨਸ਼ਾਟ"
 
 #: templates/projects/project_detail.html:124
-#: templates/resources/resource_detail.html:346
+#: templates/resources/resource_detail.html:347
 #: templates/teams/team_detail.html:299
 msgid "History"
 msgstr "ਅਤੀਤ"
@@ -2769,7 +2764,7 @@ msgid "Project Overview"
 msgstr "ਪਰੋਜੈਕਟ ਸੰਖੇਪ"
 
 #: templates/projects/project_menu.html:73 templates/teams/team_detail.html:42
-#: templates/teams/team_list.html:22
+#: templates/teams/team_list.html:21
 msgid "Teams"
 msgstr "ਟੀਮਾਂ"
 
@@ -2840,14 +2835,19 @@ msgstr "ਸਮਾਪਤੀ"
 msgid "Last Translation"
 msgstr "ਆਖਰੀ ਅਨੁਵਾਦ"
 
-#: templates/projects/release_detail.html:178
+#: templates/projects/release_detail.html:161
+#: templates/resources/resource_detail.html:201
+msgid "source language"
+msgstr "ਸਰੋਤ ਭਾਸ਼ਾ"
+
+#: templates/projects/release_detail.html:182
 #: templates/projects/resource_list.html:90
 #: templates/resources/resource_detail.html:224
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "ਹਾਲੇ ਕੋਈ ਅਨੁਵਾਦ ਨਹੀਂ"
 
-#: templates/projects/release_detail.html:200
+#: templates/projects/release_detail.html:204
 msgid "Delete release"
 msgstr "ਰੀਲਿਜ਼ ਹਟਾਓ"
 
@@ -2964,6 +2964,12 @@ msgid_plural "Private resources that you have access to under this Release"
 msgstr[0] ""
 msgstr[1] ""
 
+#: templates/projects/release_language_detail.html:329
+#: templates/projects/release_language_detail.html:337
+#, fuzzy
+msgid "click for resource details"
+msgstr "ਅਨੁਵਾਦ ਸਰੋਤ ਵੇਰਵਾ"
+
 #: templates/projects/release_list.html:11
 msgid "Add"
 msgstr "ਸ਼ਾਮਲ"
@@ -3013,12 +3019,12 @@ msgstr "ਹਾਲੇ ਕੋਈ ਕਮਿਟਰ ਨਹੀਂ"
 msgid "No resources are registered for this project yet."
 msgstr "ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਹਾਲੇ ਕੋਈ ਸਰੋਤ ਰਜਿਸਟਰ ਨਹੀਂ ਹੈ।"
 
-#: templates/projects/resource_list.html:125
-#: templates/resources/resource_detail.html:323
+#: templates/projects/resource_list.html:126
+#: templates/resources/resource_detail.html:324
 msgid "Select Language"
 msgstr "ਭਾਸ਼ਾ ਚੁਣੋ"
 
-#: templates/projects/resource_list.html:139
+#: templates/projects/resource_list.html:140
 msgid "Translate All"
 msgstr "ਸਭ ਅਨੁਵਾਦ"
 
@@ -3032,9 +3038,10 @@ msgstr " ਕੁੱਲ:&nbsp;%(total_entities)s ਲਾਈਨਾਂ, %(wordcount)s
 msgid " Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
 msgstr " ਕੁੱਲ:&nbsp;%(total_entities)s ਲਾਈਨਾਂ, %(wordcount)s ਸ਼ਬਦ"
 
-#: templates/resources/resource_actions.html:38
+#: templates/resources/resource_actions.html:39
+#, fuzzy
 msgid ""
-" \n"
+"\n"
 "        <span title=\"You cannot translate the source language strings."
 "\">This is the Source Language</span>\n"
 "        "
@@ -3044,91 +3051,92 @@ msgstr ""
 "ਸਰੋਤ ਭਾਸ਼ਾ ਹੈ</span>\n"
 "        "
 
-#: templates/resources/resource_actions.html:47
+#: templates/resources/resource_actions.html:48
 #, fuzzy, python-format
 msgid ""
 "Warning: This resource is currently locked by '%(lock_owner)s'. He might be "
 "working on it right now."
 msgstr "ਇਹ ਫਾਇਲ ਲਾਕ ਨਹੀਂ ਹੈ। ਸੰਭਵ ਤੌਰ ਉੱਤੇ ਇਸ ਸਮੇਂ ਕੋਈ ਇਸ ਉੱਤੇ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ ਹੈ।"
 
-#: templates/resources/resource_actions.html:47
-#: templates/resources/resource_actions.html:51
-#: templates/resources/resource_actions.html:56
+#: templates/resources/resource_actions.html:48
+#: templates/resources/resource_actions.html:50
+#: templates/resources/resource_actions.html:54
 #: templates/resources/resource_actions.html:59
+#: templates/resources/resource_actions.html:62
 #, fuzzy
 msgid "Translate now"
-msgstr "ਹੁਣੇ ਅਨੁਵਾਦ ਕਰੋ"
+msgstr "ਅਨੁਵਾਦ ਕੀਤਾ: "
 
-#: templates/resources/resource_actions.html:56
+#: templates/resources/resource_actions.html:59
 msgid "This resource is currently not accepting translations"
 msgstr ""
 
-#: templates/resources/resource_actions.html:59
+#: templates/resources/resource_actions.html:62
 #, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
 msgstr ""
 
-#: templates/resources/resource_actions.html:68
+#: templates/resources/resource_actions.html:71
 #: templates/resources/stats_bar_simple.html:4
 msgid "Translated: "
 msgstr "ਅਨੁਵਾਦ ਕੀਤਾ: "
 
-#: templates/resources/resource_actions.html:68
+#: templates/resources/resource_actions.html:71
 #: templates/resources/stats_bar_simple.html:4
 msgid "Untranslated: "
 msgstr "ਨਾ-ਅਨੁਵਾਦ: "
 
-#: templates/resources/resource_actions.html:76
+#: templates/resources/resource_actions.html:79
 msgid "remaining strings"
 msgstr "ਬਾਕੀ ਰਹਿੰਦੀਆਂ ਲਾਈਨਾਂ"
 
-#: templates/resources/resource_actions.html:84
+#: templates/resources/resource_actions.html:87
 msgid "View strings online"
 msgstr "ਸਰੋਤ ਆਨਲਾਈਨ ਵੇਖੋ"
 
-#: templates/resources/resource_actions.html:88
+#: templates/resources/resource_actions.html:91
 msgid "Visit language team"
 msgstr "ਭਾਸ਼ਾ ਟੀਮ ਵੇਖੋ"
 
-#: templates/resources/resource_actions.html:94
-#: templates/resources/resource_actions.html:114
-#: templates/resources/resource_actions.html:120
+#: templates/resources/resource_actions.html:97
+#: templates/resources/resource_actions.html:117
+#: templates/resources/resource_actions.html:123
 msgid "Clone to new language"
 msgstr "ਨਵੀਂ ਭਾਸ਼ਾ ਲਈ ਕਲੋਨ ਕਰੋ"
 
-#: templates/resources/resource_actions.html:96
-#: templates/resources/resource_actions.html:116
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:99
+#: templates/resources/resource_actions.html:119
+#: templates/resources/resource_actions.html:125
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
 "and only if the two languages have exactly the same plural rules."
 msgstr ""
 
-#: templates/resources/resource_actions.html:130
-#: templates/resources/resource_actions.html:132
+#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions.html:135
 msgid "Download for viewing"
 msgstr "ਵੇਖਣ ਲਈ ਡਾਊਨਲੋਡ ਕਰੋ"
 
-#: templates/resources/resource_actions.html:132
+#: templates/resources/resource_actions.html:135
 msgid "You must login to be able to download the translations."
 msgstr "ਅਨੁਵਾਦ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਤੁਹਾਨੂੰ ਲਾਗਇਨ ਕਰਨਾ ਪਵੇਗਾ।"
 
-#: templates/resources/resource_actions.html:140
+#: templates/resources/resource_actions.html:143
 msgid "Resource cannot be locked"
 msgstr "ਸਰੋਤ ਲਾਕ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
-#: templates/resources/resource_actions.html:140
-#: templates/resources/resource_actions.html:144
+#: templates/resources/resource_actions.html:143
+#: templates/resources/resource_actions.html:147
 msgid "Download for translation"
 msgstr "ਅਨੁਵਾਦ ਲਈ ਡਾਊਨਲੋਡ ਕਰੋ"
 
-#: templates/resources/resource_actions.html:144
+#: templates/resources/resource_actions.html:147
 msgid "You must login to use this action"
 msgstr "ਇਹ ਕਾਰਵਾਈ ਲਈ ਤੁਹਾਨੂੰ ਲਾਗਇਨ ਕਰਨਾ ਪਵੇਗਾ"
 
-#: templates/resources/resource_actions.html:147
+#: templates/resources/resource_actions.html:150
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action."
@@ -3136,19 +3144,19 @@ msgstr ""
 "ਫਾਇਲ ਨੂੰ ਆਪਣੀ ਬਣਾਉਣ ਲਈ ਲਾਕ ਕਰੋ ਤੇ ਇਸ ਨੂੰ ਲੋਕਲ ਮਸ਼ੀਨ ਉੱਤੇ ਸੋਧਣ ਲਈ ਡਾਊਨਲੋਡ ਕਰੋ, ਇੱਕ ਹੀ "
 "ਕਾਰਵਾਈ ਵਿੱਚ।"
 
-#: templates/resources/resource_actions.html:164
+#: templates/resources/resource_actions.html:167
 msgid "This resource currently is not accepting translations."
 msgstr "ਇਹ ਸਰੋਤ ਇਸ ਸਮੇਂ ਅਨੁਵਾਦ ਨਹੀਂ ਲੈ ਰਿਹਾ ਹੈ।"
 
-#: templates/resources/resource_actions.html:175
+#: templates/resources/resource_actions.html:178
 msgid "Translation last updated "
 msgstr "ਅਨੁਵਾਦ ਆਖਰੀ ਵਾਰ ਅੱਪਡੇਟ "
 
-#: templates/resources/resource_actions.html:177
+#: templates/resources/resource_actions.html:180
 msgid "by"
 msgstr "ਵਲੋਂ"
 
-#: templates/resources/resource_actions.html:183
+#: templates/resources/resource_actions.html:186
 msgid "No translation yet"
 msgstr "ਹਾਲੇ ਕੋਈ ਅਨੁਵਾਦ ਨਹੀਂ ਹੈ"
 
@@ -3219,26 +3227,22 @@ msgstr[1] "ਰੀਲਿਜ਼:"
 msgid "Available translations"
 msgstr "ਉਪਲੱਬਧ ਅਨੁਵਾਦ"
 
-#: templates/resources/resource_detail.html:201
-msgid "source language"
-msgstr "ਸਰੋਤ ਭਾਸ਼ਾ"
-
-#: templates/resources/resource_detail.html:313
+#: templates/resources/resource_detail.html:314
 msgid ""
 "If you cannot see your language, click the button below to translate.<span "
 "class=\"note\">( You must belong to a language team of this project, to be "
 "able to translate! )</span>"
 msgstr ""
 
-#: templates/resources/resource_detail.html:339
+#: templates/resources/resource_detail.html:340
 msgid "Add Translation"
 msgstr "ਅਨੁਵਾਦ ਸ਼ਾਮਲ"
 
-#: templates/resources/resource_detail.html:350
+#: templates/resources/resource_detail.html:351
 msgid "No actions recorded yet :)"
 msgstr "ਹਾਲੇ ਕੋਈ ਕਾਰਵਾਈ ਰਿਕਾਰਡ ਨਹੀਂ ਹੋਈ:)"
 
-#: templates/resources/resource_detail.html:367
+#: templates/resources/resource_detail.html:368
 msgid "Delete translation resource"
 msgstr "ਅਨੁਵਾਦ ਸਰੋਤ ਹਟਾਓ"
 
@@ -3256,16 +3260,16 @@ msgid ""
 "\n"
 "\t<div class=\"message\">\n"
 "\t\t<p>To enable automatic \"fetching\" of your source language strings by\n"
-"\t\tTransifex, enter a URL to your source file (e.g. POT file). Refer to \n"
+"\t\tTransifex, enter a URL to your source file (e.g. POT file). Refer to\n"
 "\t\t<a href=\"http://help.transifex.net/user-guide/projects.html#projects-"
-"and-resources\">the documentation</a> \n"
+"and-resources\">the documentation</a>\n"
 "\t\tfor more information.</p>\n"
 "\n"
 "\t\t<p><b>Warning</b>: Transifex will overwrite the existing source strings\n"
 "\t\tand translations with the ones found in the linked file. This may lead\n"
 "\t\tto <b>loss of translations</b>, so make sure the URL links to the\n"
 "\t\tcorrect file before submitting the form.\n"
-"\t\t</p> \n"
+"\t\t</p>\n"
 "\t\t</blink>\n"
 "\t</div>\n"
 "\t"
@@ -3438,7 +3442,7 @@ msgstr ""
 msgid "Mainlist:"
 msgstr "ਮੁੱਖ-ਲਿਸਟ:"
 
-#: templates/teams/team_detail.html:72 templates/teams/team_list.html:79
+#: templates/teams/team_detail.html:72 templates/teams/team_list.html:75
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "ਕੋ-ਆਰਡੀਨੇਟਰ:"
@@ -3456,11 +3460,11 @@ msgstr "ਇਹ ਟੀਮ ਜੁਆਇੰਨ ਕਰੋ"
 msgid "People waiting for team membership approving:"
 msgstr "ਲੋਕ ਟੀਮ ਮੈਂਬਰੀ ਮਨਜ਼ੂਰ ਕਰਨ ਦੀ ਉਡੀਕ ਕਰ ਰਹੇ ਹਨ:"
 
-#: templates/teams/team_detail.html:114 templates/teams/team_list.html:53
+#: templates/teams/team_detail.html:114 templates/teams/team_list.html:51
 msgid "Approve"
 msgstr "ਮਨਜ਼ੂਰ"
 
-#: templates/teams/team_detail.html:118 templates/teams/team_list.html:57
+#: templates/teams/team_detail.html:118 templates/teams/team_list.html:55
 msgid "Deny"
 msgstr "ਇਨਕਾਰ"
 
@@ -3511,35 +3515,35 @@ msgstr ""
 msgid "Save team"
 msgstr "ਟੀਮ ਸੰਭਾਲੋ"
 
-#: templates/teams/team_list.html:20 templates/teams/team_list.html.py:29
+#: templates/teams/team_list.html:19 templates/teams/team_list.html.py:28
 msgid "Translation Teams"
 msgstr "ਅਨੁਵਾਦ ਟੀਮਾਂ"
 
-#: templates/teams/team_list.html:33
+#: templates/teams/team_list.html:32
 msgid "Add a new team"
 msgstr "ਨਵੀਂ ਟੀਮ ਸ਼ਾਮਲ"
 
-#: templates/teams/team_list.html:44
+#: templates/teams/team_list.html:42
 msgid "List of team requests:"
 msgstr "ਟੀਮ ਮੰਗਾਂ ਦੀ ਲਿਸਟ:"
 
-#: templates/teams/team_list.html:74
+#: templates/teams/team_list.html:70
 msgid "List of available teams:"
 msgstr "ਉਪਲੱਬਧ ਟੀਮਾਂ ਦੀ ਲਿਸਟ:"
 
-#: templates/teams/team_list.html:93
+#: templates/teams/team_list.html:88
 msgid "No translation team has been created yet. Why don't you start one?"
 msgstr "ਹਾਲੇ ਕੋਈ ਅਨੁਵਾਦ ਟੀਮ ਨਹੀਂ ਬਣਾਈ ਗਈ ਹੈ। ਕੀ ਤੁਸੀਂ ਨਵੀਂ ਬਣਾਉਣੀ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: templates/teams/team_list.html:98
+#: templates/teams/team_list.html:93
 msgid "Request a new translation team for this project"
 msgstr "ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਨਵੀਂ ਅਨੁਵਾਦ ਟੀਮ ਲਈ ਮੰਗ ਕਰੋ"
 
-#: templates/teams/team_list.html:98
+#: templates/teams/team_list.html:93
 msgid "Request a new team"
 msgstr "ਨਵੀਂ ਟੀਮ ਲਈ ਮੰਗ"
 
-#: templates/teams/team_list.html:108
+#: templates/teams/team_list.html:103
 msgid "Request team"
 msgstr "ਟੀਮ ਲਈ ਮੰਗ"
 
@@ -4393,11 +4397,11 @@ msgstr "ਸਰੋਤ ਅਨੁਵਾਦ ਬਦਲਿਆ"
 msgid "when a resource translation you are watching changes"
 msgstr ""
 
-#: txcommon/views.py:103
+#: txcommon/views.py:105
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr ""
 
-#: txcommon/views.py:106
+#: txcommon/views.py:107
 msgid "You can't nudge yourself."
 msgstr "ਤੁਸੀਂ ਖੁਦ ਨੂੰ ਸੈਨਤ ਨਹੀਂ ਮਾਰ ਸਕਦੇ।"
 
@@ -4424,11 +4428,11 @@ msgstr ""
 msgid "Home"
 msgstr "ਘਰ"
 
-#: txpermissions/views.py:93
+#: txpermissions/views.py:94
 msgid "You added a permission."
 msgstr "ਤੁਹਾਨੂੰ ਅਧਿਕਾਰ ਮਿਲੇ।"
 
-#: txpermissions/views.py:95
+#: txpermissions/views.py:96
 msgid "You added a permission request."
 msgstr "ਤੁਸੀਂ ਅਧਿਕਾਰ ਮੰਗ ਸ਼ਾਮਲ ਕੀਤੀ।"
 
@@ -4444,15 +4448,40 @@ msgstr "ਤੁਸੀਂ ਅਧਿਕਾਰ ਹਟਾਏ।"
 msgid "You removed the permission request."
 msgstr "ਤੁਸੀਂ ਅਧਿਕਾਰ ਮੰਗ ਹਟਾਈ ਹੈ।"
 
+#~ msgid "This translation is locked by someone else."
+#~ msgstr "ਇਹ ਅਨੁਵਾਦ ਨੂੰ ਕਿਸੇ ਹੋਰ ਨੇ ਲਾਕ ਕੀਤਾ ਹੋਇਆ ਹੈ।"
+
 #~ msgid ""
-#~ "Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
-#~ "py in project %s."
+#~ "This project has more than one source languages and as a result you can "
+#~ "not translate all resources at the same time."
 #~ msgstr ""
-#~ "%s ਪਰੋਜੈਕਟ ਵਿੱਚ /home/mits/devel/tx/txn-mainline-happix/transifex/resources/"
-#~ "views.py ਵਿੱਚ ਤਾਜ਼ਾ।"
+#~ "ਇਹ ਪਰੋਜੈਕਟ ਲਈ ਇੱਕ ਤੋਂ ਵੱਧ ਸਰੋਤ ਭਾਸ਼ਾਵਾਂ ਹਨ ਤੇ ਨਤੀਜੇ ਵਜੋਂ ਤੁਸੀਂ ਇੱਕੋ ਸਮੇਂ ਸਭ ਸਰੋਤਾਂ ਨੂੰ ਅਨੁਵਾਦ ਨਹੀਂ "
+#~ "ਸਕਦੇ ਹੋ।"
 
-#~ msgid "<Project: %s>"
-#~ msgstr "<ਪਰੋਜੈਕਟ: %s>"
+#~ msgid ""
+#~ "The source language cannot be edited, because this would result in "
+#~ "translation mismatching! If you want to update the source strings "
+#~ "consider using the command line client of transifex."
+#~ msgstr ""
+#~ "ਸਰੋਤ ਭਾਸ਼ਾ ਨੂੰ ਸੋਧਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ, ਕਿਉਂਕਿ ਇਸ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਅਨੁਵਾਦ ਰਲੇਗਾ ਨਹੀਂ ਹੈ! ਜੇ ਤੁਸੀਂ "
+#~ "ਸਰੋਤ ਲਾਈਨ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ, ਟਰਾਂਸੀਫਿਕਸ ਦਾ ਕਮਾਂਡ ਲਾਈਨ ਵਰਜਨ ਵਰਤੋਂ।"
 
-#~ msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
-#~ msgstr "ਕੁੱਲ ਲਾਈਨਾਂ: %(ts)s<br/>ਉਪਲੱਬਧ ਭਾਸ਼ਾਵਾਂ: %(al)s"
+#~ msgid "The project '%s' was deleted."
+#~ msgstr "ਪਰੋਜੈਕਟ '%s' ਹਟਾਇਆ ਗਿਆ।"
+
+#~ msgid "You are in the '%s' team already."
+#~ msgstr "ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ '%s' ਟੀਮ ਵਿੱਚ ਹੋ।"
+
+#~ msgid "You have added a request for joining the '%s' team."
+#~ msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਦਾ ਮੈਂਬਰ ਬਣ ਲਈ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
+
+#~ msgid "You have requested the '%s' team creation."
+#~ msgstr "ਤੁਸੀਂ '%s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਕਰ ਚੁੱਕੇ ਹੋ।"
+
+#~ msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+#~ msgstr "ਤੁਸੀਂ '%(user)s' ਵਲੋਂ  '%(team)s' ਟੀਮ ਬਣਾਉਣ ਦੀ ਮੰਗ ਨਾ-ਮਨਜ਼ੂਰ ਕਰ ਦਿੱਤੀ ਹੈ।"
+
+#~ msgid ""
+#~ "The translations of language %(lang)s for the resource %(resource)s were "
+#~ "deleted successfully."
+#~ msgstr "ਸਰੋਤ %(resource)s ਲਈ %(lang)s ਭਾਸ਼ਾ ਦਾ ਸਭ ਅਨੁਵਾਦ ਠੀਕ ਤਰ੍ਹਾਂ ਹਟਾਇਆ ਗਿਆ ਹੈ।"

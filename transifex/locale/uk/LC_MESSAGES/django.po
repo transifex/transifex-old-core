@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-22 19:24+0000\n"
-"PO-Revision-Date: 2011-02-22 00:05+0000\n"
+"POT-Creation-Date: 2011-03-21 13:19+0000\n"
+"PO-Revision-Date: 2011-03-04 18:13+0000\n"
 "Last-Translator: yurchor <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: actionlog/filters.py:12
@@ -141,7 +141,7 @@ msgstr "Показ фрагмента коду для ресурсу:"
 
 #: addons/charts/templates/charts/widget_snippet.html:72
 #: addons/charts/templates/charts/widget_snippet.html:103
-#: addons/widgets/templates/project_widgets.html:40 projects/models.py:135
+#: addons/widgets/templates/project_widgets.html:40 projects/models.py:141
 msgid "Hidden"
 msgstr "Прихований"
 
@@ -183,10 +183,6 @@ msgstr ""
 #: addons/helptext/templates/extended_helptext.html:8
 msgid "...more"
 msgstr "…більше"
-
-#: addons/locks/handlers.py:57
-msgid "This translation is locked by someone else."
-msgstr "Цей переклад заблоковано іншим перекладачем."
 
 #: addons/locks/models.py:67
 #, python-format
@@ -271,8 +267,7 @@ msgid "Extend lock by %(hours)s hour."
 msgid_plural "Extend lock by %(hours)s hours."
 msgstr[0] "Продовжити блокування на %(hours)s годину."
 msgstr[1] "Продовжити блокування на %(hours)s години."
-msgstr[2] "Продовжити блокування на %(hours)s годин."
-msgstr[3] "Продовжити блокування на %(hours)s годину."
+msgstr[2] "Продовжити блокування на %(hours)s годину."
 
 #: addons/locks/templates/lock_resource_action.html:38
 msgid "Lock this translation to notify others you're working with it."
@@ -331,52 +326,34 @@ msgstr ""
 "Термін блокування <a href=\"http://%(current_site)s%(resource_url)s\">"
 "%(resource)s мовою %(language)s</a> буде вичерпано %(expires)s\n"
 
-#: addons/lotte/views.py:68
-msgid ""
-"This project has more than one source languages and as a result you can not "
-"translate all resources at the same time."
-msgstr ""
-"У цьому проекті передбачено більше за одну початкову мову, отже ви не "
-"зможете перекладати всі ресурси одночасно."
-
-#: addons/lotte/views.py:90
-msgid ""
-"The source language cannot be edited, because this would result in "
-"translation mismatching! If you want to update the source strings consider "
-"using the command line client of transifex."
-msgstr ""
-"Не можна змінювати початкову мову, оскільки це призведе до невідповідності "
-"перекладів! Якщо вам потрібно оновити рядки початковою мовою, спробуйте "
-"скористатися клієнтською програмою transifex, керувати якою можна з "
-"командного рядка."
-
-#: addons/lotte/views.py:364
+#: addons/lotte/views.py:366
 msgid "Save the specific change"
 msgstr "Зберегти ці зміни"
 
-#: addons/lotte/views.py:365
+#: addons/lotte/views.py:367
 msgid "Undo to initial text"
 msgstr "Повернутися до початкового тексту"
 
-#: addons/lotte/views.py:496
+#: addons/lotte/views.py:499
 msgid "Source string cannot be identified in the DB"
 msgstr "Не вдалося знайти рядок-джерело у базі даних"
 
-#: addons/lotte/views.py:503
+#: addons/lotte/views.py:506
 msgid "The resource of this source string is not accepting translations."
 msgstr "Перекладу ресурсу цього рядка-джерела не передбачено."
 
-#: addons/lotte/views.py:526
+#: addons/lotte/views.py:529
+#, fuzzy
 msgid ""
-"Cannot save unless plural translations are either completely filled or "
+"Cannot save unless plural translations are either completely specified or "
 "entirely empty!"
 msgstr "Не можна зберігати переклад, якщо форми множини вказано лише частково!"
 
-#: addons/lotte/views.py:545
+#: addons/lotte/views.py:560
 msgid "Translation string only contains whitespaces."
 msgstr "Рядок перекладу містить лише пробіли."
 
-#: addons/lotte/views.py:553
+#: addons/lotte/views.py:568
 #, python-format
 msgid ""
 "Translation string doesn't contain the same number of '%s' as the source "
@@ -385,44 +362,44 @@ msgstr ""
 "У рядку перекладу не міститься тієї самої кількості «%s», що і у початковому "
 "рядку."
 
-#: addons/lotte/views.py:564
+#: addons/lotte/views.py:579
 #, fuzzy, python-format
 msgid ""
 "The following url is either missing from the translation or has been "
 "translated: '%s'."
-msgstr "Вказану далі адресу або пропущено у перекладі або перекладено: «%s»."
+msgstr "Цієї адреси або немає у перекладі або її було перекладено: «%s»."
 
-#: addons/lotte/views.py:576
+#: addons/lotte/views.py:591
 #, fuzzy, python-format
 msgid ""
 "The following email is either missing from the translation or has been "
 "translated: '%s'."
 msgstr ""
-"Вказану далі адресу електронної пошти або пропущено у перекладі або "
-"перекладено: «%s»."
+"Цієї адреси електронної пошти або немає у перекладі або її було перекладено: "
+"«%s»."
 
-#: addons/lotte/views.py:587
+#: addons/lotte/views.py:602
 msgid "Translation must start with a newline (\\n)"
 msgstr "Переклад повинен починатися символом нового рядка (\\n)"
 
-#: addons/lotte/views.py:590
+#: addons/lotte/views.py:605
 msgid "Translation should not start with a newline (\\n)"
 msgstr "Переклад не повинен починатися з символу нового рядка (\\n)"
 
-#: addons/lotte/views.py:595
+#: addons/lotte/views.py:610
 msgid "Translation must end with a newline (\\n)"
 msgstr "Переклад повинен завершуватися символом нового рядка (\\n)"
 
-#: addons/lotte/views.py:598
+#: addons/lotte/views.py:613
 msgid "Translation should not end with a newline (\\n)"
 msgstr "Переклад не повинен завершуватися символом нового рядка (\\n)"
 
-#: addons/lotte/views.py:607
+#: addons/lotte/views.py:622
 #, python-format
 msgid "Number %s is in the source string but not in the translation."
 msgstr "Число %s є у початковому рядку, але його немає у перекладі."
 
-#: addons/lotte/views.py:623
+#: addons/lotte/views.py:641
 msgid ""
 "The number of arguments seems to differ between the source string and the "
 "translation."
@@ -430,21 +407,21 @@ msgstr ""
 "Кількість аргументів у початковому рядку і кількість аргументів у перекладі "
 "не збігаються."
 
-#: addons/lotte/views.py:631
+#: addons/lotte/views.py:649
 #, python-format
 msgid "The expression '%s' is not present in the translation."
 msgstr "Виразу «%s» немає у перекладі."
 
-#: addons/lotte/views.py:641
+#: addons/lotte/views.py:659
 #, python-format
 msgid "The expression '%s' is not present in the source string."
 msgstr "Виразу «%s» немає у початковому рядку."
 
-#: addons/lotte/views.py:683
+#: addons/lotte/views.py:709
 msgid "The translation string is empty"
 msgstr "Рядок перекладу є порожнім"
 
-#: addons/lotte/views.py:688
+#: addons/lotte/views.py:714
 msgid "Error occurred while trying to save translation."
 msgstr "Під час спроби збереження перекладу сталася помилка."
 
@@ -463,7 +440,7 @@ msgid "by %(user)s"
 msgstr "%(user)s"
 
 #: addons/lotte/templates/lotte_details_snippet.html:22
-#: addons/lotte/templates/translate.html:225
+#: addons/lotte/templates/translate.html:244
 msgid "Key"
 msgstr "Ключ"
 
@@ -473,8 +450,8 @@ msgstr "Ід. рядка:"
 
 #: addons/lotte/templates/lotte_details_snippet.html:23
 #: addons/timeline/templates/timeline/timeline_base.html:40
-#: languages/models.py:55 languages/migrations/0001_initial.py:14
-#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:120
+#: languages/models.py:54 languages/migrations/0001_initial.py:14
+#: languages/migrations/0002_added_rules_f.py:82 projects/models.py:126
 #: releases/models.py:35 templates/timeline.html:39
 #: templates/helptext/project_form_helptext.html:26
 #: templates/notification/notices.html:42
@@ -521,200 +498,208 @@ msgstr "Проекти"
 msgid "Translate to %(lang)s"
 msgstr "Переклад %(lang)s"
 
-#: addons/lotte/templates/translate.html:133
+#: addons/lotte/templates/translate.html:111
+msgid ""
+"There is at least one entry with error that was not saved. Do you want to "
+"continue anyway?"
+msgstr ""
+
+#: addons/lotte/templates/translate.html:151
 #: addons/lotte/templates/view_strings.html:38
 msgid "Processing..."
 msgstr "Обробка…"
 
-#: addons/lotte/templates/translate.html:134
+#: addons/lotte/templates/translate.html:152
 #: addons/lotte/templates/view_strings.html:39
 msgid "Show _MENU_ entries"
 msgstr "Показувати записи _MENU_"
 
-#: addons/lotte/templates/translate.html:135
+#: addons/lotte/templates/translate.html:153
 #: addons/lotte/templates/view_strings.html:40
 msgid "No matching records found"
 msgstr "Не знайдено відповідних записів"
 
-#: addons/lotte/templates/translate.html:136
+#: addons/lotte/templates/translate.html:154
 #: addons/lotte/templates/view_strings.html:41
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "Показ записів від _START_ до _END_ з _TOTAL_ записів"
 
-#: addons/lotte/templates/translate.html:137
+#: addons/lotte/templates/translate.html:155
 #: addons/lotte/templates/view_strings.html:42
 msgid "Nothing to show"
 msgstr "Нічого показувати"
 
-#: addons/lotte/templates/translate.html:138
+#: addons/lotte/templates/translate.html:157
 #: addons/lotte/templates/view_strings.html:43
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(вибрано з загальної кількості записів _MAX_)"
 
-#: addons/lotte/templates/translate.html:140
+#: addons/lotte/templates/translate.html:159
 #: addons/lotte/templates/view_strings.html:45
 msgid "Search:"
 msgstr "Пошук:"
 
-#: addons/lotte/templates/translate.html:143
+#: addons/lotte/templates/translate.html:162
 #: addons/lotte/templates/view_strings.html:48
 msgid "First"
 msgstr "Перший"
 
-#: addons/lotte/templates/translate.html:144
+#: addons/lotte/templates/translate.html:163
 #: addons/lotte/templates/view_strings.html:49
 msgid "Previous"
 msgstr "Назад"
 
-#: addons/lotte/templates/translate.html:145
+#: addons/lotte/templates/translate.html:164
 #: addons/lotte/templates/view_strings.html:50
 msgid "Next"
 msgstr "Далі"
 
-#: addons/lotte/templates/translate.html:146
+#: addons/lotte/templates/translate.html:165
 #: addons/lotte/templates/view_strings.html:51
 msgid "Last"
 msgstr "Останній"
 
-#: addons/lotte/templates/translate.html:180
-#: addons/lotte/templates/translate.html:185
+#: addons/lotte/templates/translate.html:199
+#: addons/lotte/templates/translate.html:204
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "Рядок джерела"
 
-#: addons/lotte/templates/translate.html:230
+#: addons/lotte/templates/translate.html:249
 msgid "details"
 msgstr "подробиці"
 
-#: addons/lotte/templates/translate.html:233 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:252 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "пропозиції"
 
-#: addons/lotte/templates/translate.html:252
-#: addons/lotte/templates/translate.html:257
+#: addons/lotte/templates/translate.html:271
+#: addons/lotte/templates/translate.html:276
 msgid "Fill in a new translation"
 msgstr "Вкажіть новий переклад"
 
-#: addons/lotte/templates/translate.html:279
+#: addons/lotte/templates/translate.html:298
 msgid "auto translate"
 msgstr "автопереклад"
 
-#: addons/lotte/templates/translate.html:280
+#: addons/lotte/templates/translate.html:299
 msgid "copy source"
 msgstr "копіювати джерело"
 
-#: addons/lotte/templates/translate.html:297
+#: addons/lotte/templates/translate.html:317
 #: addons/lotte/templates/view_strings.html:116
 msgid "Loading strings..."
 msgstr "Завантаження рядків…"
 
-#: addons/lotte/templates/translate.html:478
+#: addons/lotte/templates/translate.html:497
 msgid "Translation text will be saved automatically."
 msgstr "Текст перекладу буде збережено у автоматичному режимі."
 
-#: addons/lotte/templates/translate.html:482
+#: addons/lotte/templates/translate.html:501
 msgid "Translation text will no longer be saved automatically."
 msgstr "Текст перекладу не буде надалі зберігатися у автоматичному режимі."
 
-#: addons/lotte/templates/translate.html:499
-msgid "This page does not have any translations (to delete)!"
+#: addons/lotte/templates/translate.html:519
+#, fuzzy
+msgid "There are no translations (to delete) on this page!"
 msgstr "На цій сторінці немає жодних перекладів (для вилучення)!"
 
-#: addons/lotte/templates/translate.html:500
+#: addons/lotte/templates/translate.html:520
+#, fuzzy
 msgid ""
-"This action will delete all translations in this page. Are you sure you want "
-"to proceed?"
+"This will delete all translations on this page. Are you sure you want to "
+"proceed?"
 msgstr ""
 "У результаті виконання цієї дії всі переклади з цієї сторінки буде вилучено. "
 "Ви справді бажаєте виконати цю дію?"
 
-#: addons/lotte/templates/translate.html:690
+#: addons/lotte/templates/translate.html:710
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 "Шукати у пам’яті Transifex існуючі переклади (результати у новій вкладці або "
 "вікні)"
 
-#: addons/lotte/templates/translate.html:691
+#: addons/lotte/templates/translate.html:711
 msgid "Search translations"
 msgstr "Пошук перекладів"
 
-#: addons/lotte/templates/translate.html:700
+#: addons/lotte/templates/translate.html:720
 msgid "Show translations in<br /> the selected languages"
 msgstr "Показати переклади<br /> вибраними мовами"
 
-#: addons/lotte/templates/translate.html:703
+#: addons/lotte/templates/translate.html:723
 msgid "More languages"
 msgstr "Інші мови"
 
-#: addons/lotte/templates/translate.html:708
+#: addons/lotte/templates/translate.html:728
 msgid "Show only the translations<br /> by the selected users"
 msgstr "Показати лише переклади<br /> вибраних користувачів"
 
-#: addons/lotte/templates/translate.html:711
+#: addons/lotte/templates/translate.html:731
 msgid "Filter by users"
 msgstr "Фільтр користувачів"
 
-#: addons/lotte/templates/translate.html:717
+#: addons/lotte/templates/translate.html:737
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "Показати лише рядки з<br /> вибраних ресурсів."
 
-#: addons/lotte/templates/translate.html:720
+#: addons/lotte/templates/translate.html:740
 msgid "Filter by resources"
 msgstr "Фільтр ресурсів"
 
-#: addons/lotte/templates/translate.html:732
+#: addons/lotte/templates/translate.html:752
 #: addons/lotte/templates/view_strings.html:178
 msgid "Translated"
 msgstr "Перекладено"
 
-#: addons/lotte/templates/translate.html:740
+#: addons/lotte/templates/translate.html:760
 #: addons/lotte/templates/view_strings.html:186
 msgid "Untranslated"
 msgstr "Не перекладено"
 
-#: addons/lotte/templates/translate.html:747
+#: addons/lotte/templates/translate.html:767
 msgid "Modified"
 msgstr "Змінено"
 
-#: addons/lotte/templates/translate.html:752
+#: addons/lotte/templates/translate.html:772
 #: addons/lotte/templates/view_strings.html:193
 msgid "Total"
 msgstr "Загалом"
 
-#: addons/lotte/templates/translate.html:765
+#: addons/lotte/templates/translate.html:785
 #: addons/lotte/templates/view_strings.html:206 resources/models.py:444
 msgid "Source String"
 msgstr "Первинний рядок"
 
-#: addons/lotte/templates/translate.html:766
+#: addons/lotte/templates/translate.html:786
 #: addons/lotte/templates/view_strings.html:207
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "Переклад"
 
-#: addons/lotte/templates/translate.html:774
+#: addons/lotte/templates/translate.html:794
 msgid "Save all"
 msgstr "Зберегти всі"
 
-#: addons/lotte/templates/translate.html:777
-#: templates/resources/resource_actions.html:194
+#: addons/lotte/templates/translate.html:797
+#: templates/resources/resource_actions.html:197
 msgid "Delete translations"
 msgstr "Вилучити переклади"
 
-#: addons/lotte/templates/translate.html:779
+#: addons/lotte/templates/translate.html:799
 msgid "Save and Exit"
 msgstr "Зберегти і вийти"
 
-#: addons/lotte/templates/translate.html:785
+#: addons/lotte/templates/translate.html:805
 msgid "General Settings"
 msgstr "Загальні параметри"
 
-#: addons/lotte/templates/translate.html:790
+#: addons/lotte/templates/translate.html:810
 msgid "Verbose editing"
 msgstr "Докладне редагування"
 
-#: addons/lotte/templates/translate.html:794
+#: addons/lotte/templates/translate.html:814
 msgid "Auto save"
 msgstr "Автозбереження"
 
@@ -880,7 +865,7 @@ msgid "Filter results"
 msgstr "Результати фільтрування"
 
 #: addons/timeline/templates/timeline/timeline_base.html:18
-#: templates/timeline.html:17 templates/resources/resource_actions.html:110
+#: templates/timeline.html:17 templates/resources/resource_actions.html:113
 msgid "Go"
 msgstr "Перейти"
 
@@ -896,8 +881,7 @@ msgid "The query returned %(counter)s result"
 msgid_plural "The query returned %(counter)s results"
 msgstr[0] "У відповідь на запит повернуто %(counter)s результат"
 msgstr[1] "У відповідь на запит повернуто %(counter)s результати"
-msgstr[2] "У відповідь на запит повернуто %(counter)s результатів"
-msgstr[3] "У відповідь на запит повернуто %(counter)s результат"
+msgstr[2] "У відповідь на запит повернуто %(counter)s результат"
 
 #: addons/timeline/templates/timeline/timeline_project.html:23
 #: addons/timeline/templates/timeline/timeline_user.html:23
@@ -972,27 +956,27 @@ msgstr "спостереження за перекладами"
 msgid "translation watches"
 msgstr "спостереження за перекладами"
 
-#: addons/watches/views.py:28 addons/watches/views.py:93
+#: addons/watches/views.py:28 addons/watches/views.py:94
 msgid "Must use POST to activate"
 msgstr "Для активації потрібно використовувати POST-запит"
 
-#: addons/watches/views.py:31 addons/watches/views.py:96
+#: addons/watches/views.py:31 addons/watches/views.py:97
 msgid "Notification is not enabled"
 msgstr "Сповіщення вимкнено"
 
-#: addons/watches/views.py:54 addons/watches/templates/watch_toggle.html:7
+#: addons/watches/views.py:55 addons/watches/templates/watch_toggle.html:7
 msgid "Watch it"
 msgstr "Стежити"
 
-#: addons/watches/views.py:72
+#: addons/watches/views.py:73
 msgid "Stop watching"
 msgstr "Припинити стеження"
 
-#: addons/watches/views.py:106
+#: addons/watches/views.py:107
 msgid "Watch this project"
 msgstr "Стежити за проектом"
 
-#: addons/watches/views.py:119
+#: addons/watches/views.py:120
 msgid "Stop watching this project"
 msgstr "Припинити стеження за цим проектом"
 
@@ -1042,82 +1026,82 @@ msgstr "Мови на %(site_name)s"
 msgid "The languages spoken on %s."
 msgstr "Мови, доступні на сайті %s."
 
-#: languages/models.py:53 languages/migrations/0001_initial.py:19
-#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:118
+#: languages/models.py:52 languages/migrations/0001_initial.py:19
+#: languages/migrations/0002_added_rules_f.py:94 projects/models.py:124
 #: releases/models.py:33 resources/models.py:115
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
 msgstr "Назва"
 
-#: languages/models.py:56 languages/migrations/0001_initial.py:13
+#: languages/models.py:55 languages/migrations/0001_initial.py:13
 #: languages/migrations/0002_added_rules_f.py:79
 msgid "Code"
 msgstr "Код"
 
-#: languages/models.py:59 languages/migrations/0001_initial.py:12
+#: languages/models.py:58 languages/migrations/0001_initial.py:12
 #: languages/migrations/0002_added_rules_f.py:76
 msgid "Code aliases"
 msgstr "Псевдоніми коду"
 
-#: languages/models.py:62 languages/migrations/0001_initial.py:17
+#: languages/models.py:61 languages/migrations/0001_initial.py:17
 #: languages/migrations/0002_added_rules_f.py:91
 msgid "Special Chars"
 msgstr "Спеціальні символи"
 
-#: languages/models.py:63
+#: languages/models.py:62
 msgid "Enter any special characters that users might find difficult to type"
 msgstr ""
 "Введіть особливі символи, які можуть бути складними для вводу користувачам"
 
-#: languages/models.py:66 languages/migrations/0001_initial.py:16
+#: languages/models.py:65 languages/migrations/0001_initial.py:16
 #: languages/migrations/0002_added_rules_f.py:88
 msgid "Number of Plurals"
 msgstr "Кількість форм множини"
 
-#: languages/models.py:68 languages/migrations/0001_initial.py:15
+#: languages/models.py:67 languages/migrations/0001_initial.py:15
 #: languages/migrations/0002_added_rules_f.py:85
 msgid "Plural Equation"
 msgstr "Формат множини"
 
-#: languages/models.py:72
+#: languages/models.py:71
 msgid "Rule zero"
 msgstr "Правило нуля"
 
-#: languages/models.py:74
+#: languages/models.py:73
 msgid "Rule one"
 msgstr "Правило однини"
 
-#: languages/models.py:76
+#: languages/models.py:75
 msgid "Rule two"
 msgstr "Правило пари"
 
-#: languages/models.py:78
+#: languages/models.py:77
 msgid "Rule few"
 msgstr "Правило малої кількості"
 
-#: languages/models.py:80
+#: languages/models.py:79
 msgid "Rule many"
 msgstr "Правило великої кількості"
 
-#: languages/models.py:82
+#: languages/models.py:81
 msgid "Rule other"
 msgstr "Правило інших"
 
-#: languages/models.py:93
+#: languages/models.py:92
 msgid "language"
 msgstr "мова"
 
-#: languages/models.py:94 templates/languages/language_list.html:15
+#: languages/models.py:93 templates/languages/language_list.html:15
 msgid "languages"
 msgstr "мови"
 
-#: projects/api.py:237 projects/api.py:308
+#: projects/api.py:236 projects/api.py:306
 #, python-format
 msgid "%i strings added"
 msgstr "Додано %i рядків"
 
-#: projects/api.py:239 projects/api.py:310
+#: projects/api.py:238 projects/api.py:308
 #, python-format
 msgid "%i strings updated"
 msgstr "Оновлено %i рядків"
@@ -1245,11 +1229,11 @@ msgstr ""
 msgid "Search for a resource"
 msgstr "Шукати ресурс"
 
-#: projects/models.py:111
+#: projects/models.py:117
 msgid "Private"
 msgstr "Приватний"
 
-#: projects/models.py:112
+#: projects/models.py:118
 msgid ""
 "A private project is visible only by you and your team.Moreover, private "
 "projects are limited according to billingplans for the user account."
@@ -1258,12 +1242,12 @@ msgstr ""
 "приватних проектів обмежено відповідно до системи обліку для запису "
 "користувача."
 
-#: projects/models.py:115 releases/models.py:30 resources/models.py:112
+#: projects/models.py:121 releases/models.py:30 resources/models.py:112
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Позначка"
 
-#: projects/models.py:116 releases/models.py:31 resources/models.py:113
+#: projects/models.py:122 releases/models.py:31
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores or hyphens."
@@ -1271,119 +1255,119 @@ msgstr ""
 "Коротка мітка, яка використовуватиметься у URL, може містити лише букви, "
 "цифри, підкреслення та дефіси."
 
-#: projects/models.py:119
+#: projects/models.py:125
 msgid "A short name or very short description."
 msgstr "Коротка назва або дуже короткий опис."
 
-#: projects/models.py:121
+#: projects/models.py:127
 msgid "A sentence or two describing the object (optional)."
 msgstr "Пара речень з описом об'єкта (необов'язково)."
 
-#: projects/models.py:122 releases/models.py:38
+#: projects/models.py:128 releases/models.py:38
 #: templates/helptext/project_form_helptext.html:37
 msgid "Long description"
 msgstr "Повний опис"
 
-#: projects/models.py:124
+#: projects/models.py:130
 msgid "A longer description (optional). Use Markdown syntax."
 msgstr "Докладний опис (не обов'язково). Використовуйте синтаксис Markdown."
 
-#: projects/models.py:125 templates/helptext/project_form_helptext.html:50
+#: projects/models.py:131 templates/helptext/project_form_helptext.html:50
 msgid "Homepage"
 msgstr "Домашня сторінка:"
 
-#: projects/models.py:126
+#: projects/models.py:132
 msgid "Feed"
 msgstr "Подача"
 
-#: projects/models.py:127
+#: projects/models.py:133
 msgid "An RSS feed with updates to the project."
 msgstr "RSS-подача з оновленнями проекту."
 
-#: projects/models.py:128
+#: projects/models.py:134
 msgid "Bug tracker"
 msgstr "Система стеження за вадами:"
 
-#: projects/models.py:129
+#: projects/models.py:135
 msgid "The URL for the bug and tickets tracking system (Bugzilla, Trac, etc.)"
 msgstr ""
 "Адреса сторінки системи стеження за вадами та пропозиціями (Bugzilla, Trac "
 "тощо)"
 
-#: projects/models.py:131
+#: projects/models.py:137
 msgid "Anyone can submit"
 msgstr "Надсилати файли може будь-хто"
 
-#: projects/models.py:133
+#: projects/models.py:139
 msgid "Can anyone submit files to this project?"
 msgstr "Чи може довільний користувач надсилати файли до цього проекту?"
 
-#: projects/models.py:136
+#: projects/models.py:142
 msgid "Hide this object from the list view?"
 msgstr "Приховати цей об'єкт у списку?"
 
-#: projects/models.py:137
+#: projects/models.py:143
 msgid "Enabled"
 msgstr "Увімкнено"
 
-#: projects/models.py:138
+#: projects/models.py:144
 msgid "Enable this object or disable its use?"
 msgstr "Дозволити чи заборонити використання цього об'єкта?"
 
-#: projects/models.py:142 templates/helptext/project_form_helptext.html:81
+#: projects/models.py:148 templates/helptext/project_form_helptext.html:81
 msgid "Tags"
 msgstr "Мітки:"
 
-#: projects/models.py:145 templates/helptext/project_form_helptext.html:93
+#: projects/models.py:151 templates/helptext/project_form_helptext.html:93
 msgid "Maintainers"
 msgstr "Супровідники"
 
-#: projects/models.py:149
+#: projects/models.py:155
 msgid "Outsource project"
 msgstr "Основний проект"
 
-#: projects/models.py:150
+#: projects/models.py:156
 msgid "Project that owns the access control of this project."
 msgstr ""
 "Проект, який є основним під час визначення прав доступ до цього проекту."
 
-#: projects/models.py:153 storage/models.py:44
+#: projects/models.py:159 storage/models.py:44
 msgid "Owner"
 msgstr "Власник"
 
-#: projects/models.py:154
+#: projects/models.py:160
 msgid "The user who owns this project."
 msgstr "Користувач, який є власником цього проекту."
 
-#: projects/models.py:157 releases/models.py:60
+#: projects/models.py:163 releases/models.py:60
 msgid "HTML Description"
 msgstr "Опис HTML"
 
-#: projects/models.py:159 releases/models.py:62
+#: projects/models.py:165 releases/models.py:62
 msgid "Description in HTML."
 msgstr "Опис у HTML."
 
-#: projects/models.py:177
+#: projects/models.py:183
 msgid "project"
 msgstr "проект"
 
-#: projects/models.py:178 templates/projects/project_list.html:19
+#: projects/models.py:184 templates/projects/project_list.html:19
 msgid "projects"
 msgstr "проекти"
 
-#: projects/permissions/project.py:43
+#: projects/permissions/project.py:45
 msgid "Is allowed to maintain this project"
 msgstr "Чи дозволено супровід цього проекту"
 
-#: projects/permissions/project.py:56
+#: projects/permissions/project.py:58
 msgid "Is allowed to coordinate a team project"
 msgstr "Чи дозволено координувати проект команди"
 
-#: projects/permissions/project.py:98
+#: projects/permissions/project.py:107
 msgid "Is allowed to submit translations to this project"
 msgstr "Чи дозволено надсилати переклади до цього проекту"
 
-#: projects/permissions/project.py:115
+#: projects/permissions/project.py:124
 msgid "Is allowed to browse this private project"
 msgstr "Чи дозволено перегляд цього приватного проекту"
 
@@ -1402,12 +1386,7 @@ msgstr "Не перекладено:"
 msgid "Total:"
 msgstr "Загалом:"
 
-#: projects/views/project.py:163
-#, python-format
-msgid "The project '%s' was deleted."
-msgstr "Проект «%s» було вилучено."
-
-#: projects/views/release.py:115
+#: projects/views/release.py:133
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "Випуск «%s» було вилучено."
@@ -1418,21 +1397,21 @@ msgid "The team '%s' was deleted."
 msgstr "Команду «%s» було вилучено."
 
 #: projects/views/team.py:237
-#, python-format
-msgid "You are in the '%s' team already."
-msgstr "Ви вже є учасником команди «%s»."
+#, fuzzy, python-format
+msgid "You are already on the '%s' team."
+msgstr "Ви не є учасником команди «%s»."
 
 #: projects/views/team.py:248
-#, python-format
-msgid "You have added a request for joining the '%s' team."
-msgstr "Ви додали запит щодо долучення до команди «%s»."
+#, fuzzy, python-format
+msgid "You requested to join the '%s' team."
+msgstr "Ви не є учасником команди «%s»."
 
-#: projects/views/team.py:271
-#, python-format
-msgid "You already have a pending request to join the '%s' team."
+#: projects/views/team.py:269
+#, fuzzy, python-format
+msgid "You already requested to join the '%s' team."
 msgstr "Ви вже створили запит до черги запитів щодо долучення до команди «%s»."
 
-#: projects/views/team.py:275
+#: projects/views/team.py:273
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
@@ -1440,60 +1419,60 @@ msgstr ""
 "Перш ніж долучитися до команди перекладачів, вам слід підписати угоду щодо "
 "ліцензування внесків"
 
-#: projects/views/team.py:304
-#, python-format
-msgid "User '%(user)s' is in the '%(team)s' team already."
+#: projects/views/team.py:302
+#, fuzzy, python-format
+msgid "User '%(user)s' is already on the '%(team)s' team."
 msgstr "Користувач «%(user)s» вже є учасником команди «%(team)s»."
 
-#: projects/views/team.py:311
-#, python-format
-msgid "You have added '%(user)s' into the '%(team)s' team."
+#: projects/views/team.py:309
+#, fuzzy, python-format
+msgid "You added '%(user)s' to the '%(team)s' team."
 msgstr "Ви додали користувача «%(user)s» до команди «%(team)s»."
 
-#: projects/views/team.py:359
-#, python-format
+#: projects/views/team.py:357
+#, fuzzy, python-format
 msgid ""
-"You have denied the request of the user '%(user)s' to join the '%(team)s' "
-"team."
+"You rejected the request by user '%(user)s' to join the '%(team)s' team."
 msgstr ""
 "Ви відхилили запит користувача «%(user)s» щодо долучення до команди "
 "«%(team)s»."
 
-#: projects/views/team.py:404
-#, python-format
-msgid "You have withdrawn your own request to join the '%s' team."
+#: projects/views/team.py:402
+#, fuzzy, python-format
+msgid "You withdrew your request to join the '%s' team."
 msgstr "Ви відкликали ваш запит щодо долучення до команди «%s»."
 
-#: projects/views/team.py:447
-#, python-format
-msgid "You have left the '%s' team."
+#: projects/views/team.py:445
+#, fuzzy, python-format
+msgid "You left the '%s' team."
 msgstr "Ви полишили команду «%s»."
 
-#: projects/views/team.py:468
+#: projects/views/team.py:466
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "Ви не є учасником команди «%s»."
 
-#: projects/views/team.py:491
-msgid "Please, select a language before submit the form."
+#: projects/views/team.py:489
+#, fuzzy
+msgid "Please select a language before submitting the form."
 msgstr "Перш ніж надсилати заповнену форму, вкажіть мову."
 
-#: projects/views/team.py:504
-#, python-format
-msgid "'%s' team already exist."
+#: projects/views/team.py:502
+#, fuzzy, python-format
+msgid "'%s' team already exists."
 msgstr "Команда з назвою «%s» вже існує."
 
-#: projects/views/team.py:510
-#, python-format
-msgid "A request for creating the '%s' team already exist."
+#: projects/views/team.py:508
+#, fuzzy, python-format
+msgid "A request to create the '%s' team already exists."
 msgstr "Запит щодо створення команди «%s» вже надіслано."
 
-#: projects/views/team.py:527
-#, python-format
-msgid "You have requested the '%s' team creation."
-msgstr "Ви надіслали запит щодо створення команди «%s»."
+#: projects/views/team.py:525
+#, fuzzy, python-format
+msgid "You requested creation of the '%s' team."
+msgstr "Ви не є учасником команди «%s»."
 
-#: projects/views/team.py:550
+#: projects/views/team.py:548
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
@@ -1501,19 +1480,19 @@ msgstr ""
 "Перш ніж надсилати запит щодо створення команди перекладачів, вам слід "
 "підписати угоду щодо ліцензування внесків."
 
-#: projects/views/team.py:579
-#, python-format
-msgid "You have approved the '%(team)s' team requested by '%(user)s'."
+#: projects/views/team.py:577
+#, fuzzy, python-format
+msgid "You approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Вами підтверджено створення команди «%(team)s» у відповідь на запит "
 "користувача «%(user)s»."
 
-#: projects/views/team.py:622
-#, python-format
-msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+#: projects/views/team.py:620
+#, fuzzy, python-format
+msgid "You rejected the request by '%(user)s' for a '%(team)s' team."
 msgstr ""
-"Вами відхилено створення команди «%(team)s» у відповідь на запит користувача "
-"«%(user)s»."
+"Ви відхилили запит користувача «%(user)s» щодо долучення до команди "
+"«%(team)s»."
 
 #: releases/models.py:34
 msgid "A string like a name or very short description."
@@ -1604,6 +1583,15 @@ msgstr ""
 "Виберіть файл у файловій системі вашого комп’ютера. Цей файл буде "
 "використано для заповнення перекладів рядків цього ресурсу."
 
+#: resources/models.py:113
+#, fuzzy
+msgid ""
+"A short label to be used in the URL, containing only letters, numbers, "
+"underscores and hyphens."
+msgstr ""
+"Коротка мітка, яка використовуватиметься у URL, може містити лише букви, "
+"цифри, підкреслення та дефіси."
+
 #: resources/models.py:116
 msgid "A descriptive name unique inside the project."
 msgstr "Описова назва, унікальна в межах проекту."
@@ -1613,7 +1601,8 @@ msgid "Source file"
 msgstr "Файл джерела"
 
 #: resources/models.py:121
-msgid "A local file used to extract the strings to be translated."
+#, fuzzy
+msgid "A local file used to extract the strings for translation."
 msgstr "Локальний файл для видобування рядків для перекладу."
 
 #: resources/models.py:123
@@ -1630,7 +1619,8 @@ msgid "Accepting translations?"
 msgstr "Чи приймаються переклади?"
 
 #: resources/models.py:129
-msgid "Is this resource accepting submissions of translations?"
+#, fuzzy
+msgid "Is this resource accepting translations?"
 msgstr "Чи приймає цей ресурс надіслані переклади?"
 
 #: resources/models.py:130
@@ -1699,9 +1689,10 @@ msgid "Position"
 msgstr "Позиція"
 
 #: resources/models.py:302
+#, fuzzy
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
-"position of msgid field in a po template (.pot) file in gettext."
+"position of a msgid field in a po template (.pot) file in gettext."
 msgstr ""
 "Розташування початкового рядка у ресурсі. Наприклад, певне розташування поля "
 "msgid у файлі шаблону po (.pot) формату gettext."
@@ -1732,7 +1723,8 @@ msgid "Pluralized"
 msgstr "З формами множини"
 
 #: resources/models.py:320
-msgid "Identify if the entity is pluralized ot not."
+#, fuzzy
+msgid "Whether the entity is pluralized."
 msgstr "Визначає, чи має запис форми множини."
 
 #: resources/models.py:330
@@ -1748,7 +1740,8 @@ msgid "source strings"
 msgstr "початкові рядки"
 
 #: resources/models.py:423
-msgid "The actual string content of translation."
+#, fuzzy
+msgid "The actual string content for translation."
 msgstr "Дані рядка-перекладу."
 
 #: resources/models.py:427
@@ -1756,10 +1749,11 @@ msgid "Plural rule"
 msgstr "Правило побудови рядків множини"
 
 #: resources/models.py:429
+#, fuzzy
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
-"2=two, 3=few, 4=many and 5=other. For translations that have its entity not "
-"pluralized, the rule must be 5 (other)."
+"2=two, 3=few, 4=many and 5=other. For translations that have no plural "
+"forms, the rule must be 5 (other)."
 msgstr ""
 "Число, пов’язане з правилом визначення форм множини перекладу. Можливі "
 "варіанти: 0=нуль, 1=один, 2=два, 3=декілька, 4=багато і 5=інше. Для "
@@ -1834,16 +1828,17 @@ msgstr "Шаблон"
 msgid "Templates"
 msgstr "Шаблони"
 
-#: resources/views.py:95
+#: resources/views.py:96
 #, python-format
 msgid "The translation resource '%s' was deleted."
 msgstr "Ресурс перекладу «%s» було вилучено."
 
-#: resources/views.py:140
-msgid "The URL you provided doesn't link to valid file."
+#: resources/views.py:141
+#, fuzzy
+msgid "The URL you provided doesn't link to a valid file."
 msgstr "Вказана вами адреса не є чинним посиланням на файл."
 
-#: resources/views.py:151
+#: resources/views.py:152
 msgid ""
 "You have checked the auto update checkbox but you haven't provided a valid "
 "url."
@@ -1851,33 +1846,31 @@ msgstr ""
 "Ви позначили пункт автоматичного оновлення, але не вказали коректної адреси "
 "URL."
 
-#: resources/views.py:336
-#, python-format
-msgid ""
-"The translations of language %(lang)s for the resource %(resource)s were "
-"deleted successfully."
-msgstr ""
-"Переклади мовою %(lang)s рядків ресурсу %(resource)s було успішно вилучено."
+#: resources/views.py:337
+#, fuzzy, python-format
+msgid "Deleted %(lang)s translation for resource %(resource)s."
+msgstr "Вилучити ресурс перекладу"
 
-#: resources/views.py:382
+#: resources/views.py:384
 msgid "Error compiling translation file."
 msgstr "Помилка під час збирання файла перекладу."
 
-#: resources/views.py:431
-msgid "Sorry, you cannot assign this file to you!"
+#: resources/views.py:435
+#, fuzzy
+msgid "Sorry, you cannot lock this file!"
 msgstr "Вибачте ви не можете призначити переклад цього файла собі!"
 
-#: resources/views.py:443
+#: resources/views.py:447
 msgid "Failed to lock the resource!"
 msgstr "Не вдалося заблокувати ресурс!"
 
-#: resources/views.py:454
+#: resources/views.py:458
 msgid "Failed to extend lock period on the resource!"
 msgstr "Не вдалося продовжити період блокування цього ресурсу!"
 
-#: resources/views.py:459
-#, python-format
-msgid "You cannot lock it right now! ( Locked by %s )"
+#: resources/views.py:463
+#, fuzzy, python-format
+msgid "You cannot lock it right now! (Locked by %s )"
 msgstr "Не можна заблокувати! (Вже заблоковано %s )"
 
 #: resources/formats/pofile.py:92
@@ -1893,6 +1886,10 @@ msgstr ""
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
 msgstr "Здається, у вашому файлі є помилки у форматуванні xml: %s!"
+
+#: simpleauth/forms.py:7
+msgid "Remember me"
+msgstr ""
 
 #: storage/api.py:131
 msgid "A strange error happened."
@@ -2148,23 +2145,23 @@ msgstr "Увійти"
 msgid "Register"
 msgstr "Зареєструватися"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:144
 msgid "Learn more about Transifex"
 msgstr "Дізнатися більше про Transifex"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:144
 msgid "About"
 msgstr "Про нас"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:146
 msgid "Drops us a line"
 msgstr "Надіслати відгук"
 
-#: templates/base-sample.html:143
+#: templates/base-sample.html:146
 msgid "Feedback"
 msgstr "Зворотній зв'язок"
 
-#: templates/base-sample.html:145
+#: templates/base-sample.html:150
 msgid ""
 "Powered by <a href=\"http://transifex.org/\" title=\"Transifex community"
 "\">Transifex</a>, the Open Translation Platform"
@@ -2855,8 +2852,7 @@ msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "Супровідник:"
 msgstr[1] "Супровідники:"
-msgstr[2] "Супровідники:"
-msgstr[3] "Супровідник:"
+msgstr[2] "Супровідник:"
 
 #: templates/projects/project_detail.html:106
 msgid "External links:"
@@ -2867,7 +2863,7 @@ msgid "Screenshots"
 msgstr "Знімки вікон"
 
 #: templates/projects/project_detail.html:124
-#: templates/resources/resource_detail.html:346
+#: templates/resources/resource_detail.html:347
 #: templates/teams/team_detail.html:299
 msgid "History"
 msgstr "Історія"
@@ -3024,7 +3020,7 @@ msgid "Project Overview"
 msgstr "Огляд проекту"
 
 #: templates/projects/project_menu.html:73 templates/teams/team_detail.html:42
-#: templates/teams/team_list.html:22
+#: templates/teams/team_list.html:21
 msgid "Teams"
 msgstr "Команди"
 
@@ -3099,14 +3095,19 @@ msgstr "Рівень завершеності"
 msgid "Last Translation"
 msgstr "Останній переклад"
 
-#: templates/projects/release_detail.html:178
+#: templates/projects/release_detail.html:161
+#: templates/resources/resource_detail.html:201
+msgid "source language"
+msgstr "початкова мова"
+
+#: templates/projects/release_detail.html:182
 #: templates/projects/resource_list.html:90
 #: templates/resources/resource_detail.html:224
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "перекладів ще немає"
 
-#: templates/projects/release_detail.html:200
+#: templates/projects/release_detail.html:204
 msgid "Delete release"
 msgstr "Вилучити випуск"
 
@@ -3145,8 +3146,7 @@ msgid "Resource under this Release"
 msgid_plural "Resources under this Release"
 msgstr[0] "Ресурси з цього випуску"
 msgstr[1] "Ресурси з цього випуску"
-msgstr[2] "Ресурси з цього випуску"
-msgstr[3] "Ресурс з цього випуску"
+msgstr[2] "Ресурс з цього випуску"
 
 #: templates/projects/release_language_detail.html:66
 #: templates/projects/release_language_detail.html:197
@@ -3224,8 +3224,13 @@ msgid "Private Resource that you have access to under this Release"
 msgid_plural "Private resources that you have access to under this Release"
 msgstr[0] "Конфіденційні ресурси, до яких ви маєте доступ у цьому випуску"
 msgstr[1] "Конфіденційні ресурси, до яких ви маєте доступ у цьому випуску"
-msgstr[2] "Конфіденційні ресурси, до яких ви маєте доступ у цьому випуску"
-msgstr[3] "Конфіденційний ресурс, до якого ви маєте доступ у цьому випуску"
+msgstr[2] "Конфіденційний ресурс, до якого ви маєте доступ у цьому випуску"
+
+#: templates/projects/release_language_detail.html:329
+#: templates/projects/release_language_detail.html:337
+#, fuzzy
+msgid "click for resource details"
+msgstr "Параметри ресурсу перекладу"
 
 #: templates/projects/release_list.html:11
 msgid "Add"
@@ -3276,12 +3281,12 @@ msgstr "Ніхто ще нічого не надсилав"
 msgid "No resources are registered for this project yet."
 msgstr "У цьому проекті поки не зареєстровано жодного ресурсу."
 
-#: templates/projects/resource_list.html:125
-#: templates/resources/resource_detail.html:323
+#: templates/projects/resource_list.html:126
+#: templates/resources/resource_detail.html:324
 msgid "Select Language"
 msgstr "Виберіть мову"
 
-#: templates/projects/resource_list.html:139
+#: templates/projects/resource_list.html:140
 msgid "Translate All"
 msgstr "Перекласти все"
 
@@ -3295,9 +3300,10 @@ msgstr " Загалом:&nbsp;%(total_entities)s рядків, %(wordcount)s с�
 msgid " Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
 msgstr " Загалом:&nbsp;%(total_entities)s рядків, %(wordcount)s слів"
 
-#: templates/resources/resource_actions.html:38
+#: templates/resources/resource_actions.html:39
+#, fuzzy
 msgid ""
-" \n"
+"\n"
 "        <span title=\"You cannot translate the source language strings."
 "\">This is the Source Language</span>\n"
 "        "
@@ -3307,7 +3313,7 @@ msgstr ""
 "початкова мова</span>\n"
 "        "
 
-#: templates/resources/resource_actions.html:47
+#: templates/resources/resource_actions.html:48
 #, fuzzy, python-format
 msgid ""
 "Warning: This resource is currently locked by '%(lock_owner)s'. He might be "
@@ -3315,19 +3321,20 @@ msgid ""
 msgstr ""
 "Цей файл не заблоковано. Швидше за все, наразі над ним ніхто не працює."
 
-#: templates/resources/resource_actions.html:47
-#: templates/resources/resource_actions.html:51
-#: templates/resources/resource_actions.html:56
+#: templates/resources/resource_actions.html:48
+#: templates/resources/resource_actions.html:50
+#: templates/resources/resource_actions.html:54
 #: templates/resources/resource_actions.html:59
+#: templates/resources/resource_actions.html:62
 #, fuzzy
 msgid "Translate now"
 msgstr "Почати переклад"
 
-#: templates/resources/resource_actions.html:56
+#: templates/resources/resource_actions.html:59
 msgid "This resource is currently not accepting translations"
 msgstr "Переклади цього ресурсу ще не приймаються"
 
-#: templates/resources/resource_actions.html:59
+#: templates/resources/resource_actions.html:62
 #, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
@@ -3335,37 +3342,37 @@ msgstr ""
 "Щоб взяти участь у перекладі, вам слід вступити до команди %(lang_name)s і "
 "увійти до системи перекладу"
 
-#: templates/resources/resource_actions.html:68
+#: templates/resources/resource_actions.html:71
 #: templates/resources/stats_bar_simple.html:4
 msgid "Translated: "
 msgstr "Перекладено: "
 
-#: templates/resources/resource_actions.html:68
+#: templates/resources/resource_actions.html:71
 #: templates/resources/stats_bar_simple.html:4
 msgid "Untranslated: "
 msgstr "Не перекладено: "
 
-#: templates/resources/resource_actions.html:76
+#: templates/resources/resource_actions.html:79
 msgid "remaining strings"
 msgstr "рядків ще не перекладено"
 
-#: templates/resources/resource_actions.html:84
+#: templates/resources/resource_actions.html:87
 msgid "View strings online"
 msgstr "Переглянути рядки у інтернеті"
 
-#: templates/resources/resource_actions.html:88
+#: templates/resources/resource_actions.html:91
 msgid "Visit language team"
 msgstr "Відвідати сторінку команди перекладачів"
 
-#: templates/resources/resource_actions.html:94
-#: templates/resources/resource_actions.html:114
-#: templates/resources/resource_actions.html:120
+#: templates/resources/resource_actions.html:97
+#: templates/resources/resource_actions.html:117
+#: templates/resources/resource_actions.html:123
 msgid "Clone to new language"
 msgstr "Клонувати у нову мову"
 
-#: templates/resources/resource_actions.html:96
-#: templates/resources/resource_actions.html:116
-#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:99
+#: templates/resources/resource_actions.html:119
+#: templates/resources/resource_actions.html:125
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
@@ -3375,29 +3382,29 @@ msgstr ""
 "ресурсу. Переклади з формами множини буде скопійовано тоді і лише тоді, якщо "
 "правила утворення форм множини обох мов збігаються."
 
-#: templates/resources/resource_actions.html:130
-#: templates/resources/resource_actions.html:132
+#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions.html:135
 msgid "Download for viewing"
 msgstr "Звантажити для перегляду"
 
-#: templates/resources/resource_actions.html:132
+#: templates/resources/resource_actions.html:135
 msgid "You must login to be able to download the translations."
 msgstr "Вам слід увійти до системи, щоб мати змогу звантажувати переклади."
 
-#: templates/resources/resource_actions.html:140
+#: templates/resources/resource_actions.html:143
 msgid "Resource cannot be locked"
 msgstr "Ресурс не можна заблокувати"
 
-#: templates/resources/resource_actions.html:140
-#: templates/resources/resource_actions.html:144
+#: templates/resources/resource_actions.html:143
+#: templates/resources/resource_actions.html:147
 msgid "Download for translation"
 msgstr "Звантажити для перекладу"
 
-#: templates/resources/resource_actions.html:144
+#: templates/resources/resource_actions.html:147
 msgid "You must login to use this action"
 msgstr "Щоб мати змогу виконати цю дію, вам слід увійти до системи"
 
-#: templates/resources/resource_actions.html:147
+#: templates/resources/resource_actions.html:150
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action."
@@ -3405,19 +3412,19 @@ msgstr ""
 "Заблокувати файл з позначенням вашого імені користувача і звантажити його "
 "для локального редагування у одну дію."
 
-#: templates/resources/resource_actions.html:164
+#: templates/resources/resource_actions.html:167
 msgid "This resource currently is not accepting translations."
 msgstr "Переклади цього ресурсу ще не приймаються."
 
-#: templates/resources/resource_actions.html:175
+#: templates/resources/resource_actions.html:178
 msgid "Translation last updated "
 msgstr "Переклад востаннє оновлено "
 
-#: templates/resources/resource_actions.html:177
+#: templates/resources/resource_actions.html:180
 msgid "by"
 msgstr "перекладачем"
 
-#: templates/resources/resource_actions.html:183
+#: templates/resources/resource_actions.html:186
 msgid "No translation yet"
 msgstr "Перекладів ще немає"
 
@@ -3483,18 +3490,13 @@ msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "Випуски:"
 msgstr[1] "Випуски:"
-msgstr[2] "Випуски:"
-msgstr[3] "Випуск:"
+msgstr[2] "Випуск:"
 
 #: templates/resources/resource_detail.html:183
 msgid "Available translations"
 msgstr "Доступні переклади"
 
-#: templates/resources/resource_detail.html:201
-msgid "source language"
-msgstr "початкова мова"
-
-#: templates/resources/resource_detail.html:313
+#: templates/resources/resource_detail.html:314
 msgid ""
 "If you cannot see your language, click the button below to translate.<span "
 "class=\"note\">( You must belong to a language team of this project, to be "
@@ -3505,15 +3507,15 @@ msgstr ""
 "учасницею команди перекладачів цією мовою, щоб ваші переклади було включено "
 "до остаточного варіанта перекладу!)</span>"
 
-#: templates/resources/resource_detail.html:339
+#: templates/resources/resource_detail.html:340
 msgid "Add Translation"
 msgstr "Додати переклад"
 
-#: templates/resources/resource_detail.html:350
+#: templates/resources/resource_detail.html:351
 msgid "No actions recorded yet :)"
 msgstr "Записів дій ще немає :)"
 
-#: templates/resources/resource_detail.html:367
+#: templates/resources/resource_detail.html:368
 msgid "Delete translation resource"
 msgstr "Вилучити ресурс перекладу"
 
@@ -3527,20 +3529,21 @@ msgid "Edit the details of the translation resource"
 msgstr "Змінити параметри ресурсу перекладу"
 
 #: templates/resources/resource_form.html:41
+#, fuzzy
 msgid ""
 "\n"
 "\t<div class=\"message\">\n"
 "\t\t<p>To enable automatic \"fetching\" of your source language strings by\n"
-"\t\tTransifex, enter a URL to your source file (e.g. POT file). Refer to \n"
+"\t\tTransifex, enter a URL to your source file (e.g. POT file). Refer to\n"
 "\t\t<a href=\"http://help.transifex.net/user-guide/projects.html#projects-"
-"and-resources\">the documentation</a> \n"
+"and-resources\">the documentation</a>\n"
 "\t\tfor more information.</p>\n"
 "\n"
 "\t\t<p><b>Warning</b>: Transifex will overwrite the existing source strings\n"
 "\t\tand translations with the ones found in the linked file. This may lead\n"
 "\t\tto <b>loss of translations</b>, so make sure the URL links to the\n"
 "\t\tcorrect file before submitting the form.\n"
-"\t\t</p> \n"
+"\t\t</p>\n"
 "\t\t</blink>\n"
 "\t</div>\n"
 "\t"
@@ -3746,13 +3749,12 @@ msgstr ""
 msgid "Mainlist:"
 msgstr "Список листування:"
 
-#: templates/teams/team_detail.html:72 templates/teams/team_list.html:79
+#: templates/teams/team_detail.html:72 templates/teams/team_list.html:75
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Координатор:"
 msgstr[1] "Координатори:"
-msgstr[2] "Координатори:"
-msgstr[3] "Координатор:"
+msgstr[2] "Координатор:"
 
 #: templates/teams/team_detail.html:90
 msgid "Become a translator:"
@@ -3766,11 +3768,11 @@ msgstr "Долучитися до цієї команди"
 msgid "People waiting for team membership approving:"
 msgstr "Користувачі, що очікують на підтвердження участі у команді:"
 
-#: templates/teams/team_detail.html:114 templates/teams/team_list.html:53
+#: templates/teams/team_detail.html:114 templates/teams/team_list.html:51
 msgid "Approve"
 msgstr "Підтвердити"
 
-#: templates/teams/team_detail.html:118 templates/teams/team_list.html:57
+#: templates/teams/team_detail.html:118 templates/teams/team_list.html:55
 msgid "Deny"
 msgstr "Відмовити"
 
@@ -3783,8 +3785,7 @@ msgid "Team Translating Resource"
 msgid_plural "Team Translating Resources:"
 msgstr[0] "Ресурси, що перекладаються командою:"
 msgstr[1] "Ресурси, що перекладаються командою:"
-msgstr[2] "Ресурси, що перекладаються командою:"
-msgstr[3] "Ресурс, що перекладається командою"
+msgstr[2] "Ресурс, що перекладається командою"
 
 #: templates/teams/team_detail.html:276
 msgid "Team Members:"
@@ -3823,37 +3824,37 @@ msgstr ""
 msgid "Save team"
 msgstr "Зберегти команду"
 
-#: templates/teams/team_list.html:20 templates/teams/team_list.html.py:29
+#: templates/teams/team_list.html:19 templates/teams/team_list.html.py:28
 msgid "Translation Teams"
 msgstr "Команди перекладачів"
 
-#: templates/teams/team_list.html:33
+#: templates/teams/team_list.html:32
 msgid "Add a new team"
 msgstr "Додати нову команду"
 
-#: templates/teams/team_list.html:44
+#: templates/teams/team_list.html:42
 msgid "List of team requests:"
 msgstr "Список запитів щодо команд:"
 
-#: templates/teams/team_list.html:74
+#: templates/teams/team_list.html:70
 msgid "List of available teams:"
 msgstr "Список поточних команд:"
 
-#: templates/teams/team_list.html:93
+#: templates/teams/team_list.html:88
 msgid "No translation team has been created yet. Why don't you start one?"
 msgstr ""
 "Ще не створено жодної команди перекладачів. Чому б вам не створити таку "
 "команду?"
 
-#: templates/teams/team_list.html:98
+#: templates/teams/team_list.html:93
 msgid "Request a new translation team for this project"
 msgstr "Створити запит щодо нової команди перекладачів для цього проекту"
 
-#: templates/teams/team_list.html:98
+#: templates/teams/team_list.html:93
 msgid "Request a new team"
 msgstr "Створити запит щодо нової команди"
 
-#: templates/teams/team_list.html:108
+#: templates/teams/team_list.html:103
 msgid "Request team"
 msgstr "Запит щодо команди"
 
@@ -4419,8 +4420,7 @@ msgid "Coordinator of the following team:"
 msgid_plural "Coordinator of the following teams:"
 msgstr[0] "Координатор команди:"
 msgstr[1] "Координатор команд:"
-msgstr[2] "Координатор команд:"
-msgstr[3] "Координатор команди:"
+msgstr[2] "Координатор команди:"
 
 #: templates/userprofile/profile/public.html:111
 #: templates/userprofile/profile/public.html:132
@@ -4437,8 +4437,7 @@ msgid "Member of the following team:"
 msgid_plural "Members of the following teams:"
 msgstr[0] "Учасники наведених нижче команд:"
 msgstr[1] "Учасники наведених нижче команд:"
-msgstr[2] "Учасники наведених нижче команд:"
-msgstr[3] "Учасник (учасниця) наведених нижче команд:"
+msgstr[2] "Учасник (учасниця) наведених нижче команд:"
 
 #: txcommon/admin.py:10
 msgid ""
@@ -4746,13 +4745,13 @@ msgstr "Змінено ресурс перекладу"
 msgid "when a resource translation you are watching changes"
 msgstr "коли вносяться зміни до ресурсу перекладу, за яким ви спостерігаєте"
 
-#: txcommon/views.py:103
+#: txcommon/views.py:105
 msgid "You can't re-nudge the same user in a short amount of time."
 msgstr ""
 "Ви не можете надсилати повторне нагадування одному користувачеві протягом "
 "такого короткого проміжку часу."
 
-#: txcommon/views.py:106
+#: txcommon/views.py:107
 msgid "You can't nudge yourself."
 msgstr "Ви не можете надсилати нагадування собі."
 
@@ -4781,11 +4780,11 @@ msgstr ""
 msgid "Home"
 msgstr "Домівка"
 
-#: txpermissions/views.py:93
+#: txpermissions/views.py:94
 msgid "You added a permission."
 msgstr "Ви додали права доступу."
 
-#: txpermissions/views.py:95
+#: txpermissions/views.py:96
 msgid "You added a permission request."
 msgstr "Ви додали запит щодо прав доступу."
 
@@ -4801,8 +4800,28 @@ msgstr "Ви вилучили права доступу."
 msgid "You removed the permission request."
 msgstr "Ви вилучити запит щодо прав доступу."
 
+#~ msgid "This translation is locked by someone else."
+#~ msgstr "Цей переклад заблоковано іншим перекладачем."
+
+#~ msgid ""
+#~ "This project has more than one source languages and as a result you can "
+#~ "not translate all resources at the same time."
+#~ msgstr ""
+#~ "У цьому проекті передбачено більше за одну початкову мову, отже ви не "
+#~ "зможете перекладати всі ресурси одночасно."
+
+#~ msgid ""
+#~ "The source language cannot be edited, because this would result in "
+#~ "translation mismatching! If you want to update the source strings "
+#~ "consider using the command line client of transifex."
+#~ msgstr ""
+#~ "Не можна змінювати початкову мову, оскільки це призведе до "
+#~ "невідповідності перекладів! Якщо вам потрібно оновити рядки початковою "
+#~ "мовою, спробуйте скористатися клієнтською програмою transifex, керувати "
+#~ "якою можна з командного рядка."
+
 #~ msgid "Translation updated successfully in the DB"
-#~ msgstr "Переклад у базі даних успішно оновлено"
+#~ msgstr "Переклад успішно оновлено у базі даних"
 
 #~ msgid "New translation stored successfully in the DB"
 #~ msgstr "Новий переклад успішно збережено до бази даних"
@@ -4811,11 +4830,35 @@ msgstr "Ви вилучити запит щодо прав доступу."
 #~ "Latest /home/mits/devel/tx/txn-mainline-happix/transifex/resources/views."
 #~ "py in project %s."
 #~ msgstr ""
-#~ "Найсвіжіший /home/mits/devel/tx/txn-mainline-happix/transifex/resources/"
-#~ "views.py у проекті %s."
+#~ "Найсвіжіша версія /home/mits/devel/tx/txn-mainline-happix/transifex/"
+#~ "resources/views.py у проекті %s."
 
 #~ msgid "<Project: %s>"
 #~ msgstr "<Проект: %s>"
 
+#~ msgid "The project '%s' was deleted."
+#~ msgstr "Проект «%s» було вилучено."
+
+#~ msgid "You are in the '%s' team already."
+#~ msgstr "Ви вже є учасником команди «%s»."
+
+#~ msgid "You have added a request for joining the '%s' team."
+#~ msgstr "Ви додали запит щодо долучення до команди «%s»."
+
+#~ msgid "You have requested the '%s' team creation."
+#~ msgstr "Ви надіслали запит щодо створення команди «%s»."
+
+#~ msgid "You have denied the '%(team)s' team requested by '%(user)s'."
+#~ msgstr ""
+#~ "Вами відхилено створення команди «%(team)s» у відповідь на запит "
+#~ "користувача «%(user)s»."
+
+#~ msgid ""
+#~ "The translations of language %(lang)s for the resource %(resource)s were "
+#~ "deleted successfully."
+#~ msgstr ""
+#~ "Переклади мовою %(lang)s рядків ресурсу %(resource)s було успішно "
+#~ "вилучено."
+
 #~ msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
-#~ msgstr "Загалом рядків: %(ts)s<br/>Кількість мов: %(al)s"
+#~ msgstr "Кількість рядків: %(ts)s<br/>Кількість мов: %(al)s"
