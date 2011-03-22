@@ -58,9 +58,11 @@ class ResourcesTemplateTests(BaseTestCase):
         self.assertEqual(type(self.resource.available_languages.count()), int)
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
             resp = self.client[user].get(self.resource_detail_url)
-            self.assertContains(resp, '      <td>\n'\
-                '        %s \n'\
-                '      </td>' % (self.resource.available_languages.count()))
+            self.assertContains(resp,
+            "Number of languages:</th>\n"\
+            "      <td>\n"\
+            "        %s\n"\
+            "      </td>" % (self.resource.available_languages.count()))
 
     def test_total_strings_per_resource(self):
         """Test that resource.total_entities return the correct amount of
