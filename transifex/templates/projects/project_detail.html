@@ -100,6 +100,23 @@
     {% endif %}
     {% endwith %}
 
+    {% with project.trans_instructions as instructions_url %}
+    {% if instructions_url %}
+    <tr>
+      <th class="help i16">{% trans "Documentation:" %}</th>
+      <td><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></td>
+    </tr>
+    {% endif %}
+    {% endwith %}
+
+    {% if project.tags %}
+    <tr>
+      <th class="i16 tag">{% trans "Tags:" %}</th>
+      <td class="compact">
+        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
+      </td>
+    </tr>
+    {% endif %}
 
 {% comment %}
     <tr>

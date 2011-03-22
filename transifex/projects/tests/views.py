@@ -10,6 +10,7 @@ class ProjectViewsTests(base.BaseTestCase):
         super(ProjectViewsTests, self).setUp(*args, **kwargs)
         self.url_acc = reverse('project_access_control_edit', args=[self.project.slug])
 
+    # Outsource tests
     def test_project_outsource_good(self):
         """Test that a private project is visible to its maintainer."""
         resp = self.client['maintainer'].get(self.url_acc, {})
@@ -25,7 +26,7 @@ class ProjectViewsTests(base.BaseTestCase):
         resp = self.client['registered'].get(self.url_acc, {})
         self.assertContains(resp, "Test Project", status_code=200)
         self.assertNotContains(resp, "Test Private Project", status_code=200)
-        
+
         # Private project cannot be used by another maintainer to outsource
         resp = self.client['registered'].post(self.url_acc, {
             'outsource': self.project_private.id,
@@ -36,6 +37,16 @@ class ProjectViewsTests(base.BaseTestCase):
         self.assertTemplateUsed(resp, "projects/project_form_access_control.html")
         self.assertContains(resp, "Select a valid choice.")
 
+    def test_trans_instructions(self):
+        """Test the project.trans_instructions model field & templates."""
+        self.project.trans_instructions = "http://help.transifex.net/"\
+            "technical/contributing.html#updating-translation-files-po-files"
+        self.project.save()
+        url_detail = reverse('project_detail', args=[self.project.slug])
+        resp = self.client['anonymous'].get(url_detail)
+        self.assertContains(resp, "contributing.html")
+        self.assertContains(resp, "Translation help pages")
+
     def test_delete_project(self):
         url = reverse('project_delete', args=[self.project.slug])
         resp = self.client['maintainer'].get(url)
@@ -45,4 +56,5 @@ class ProjectViewsTests(base.BaseTestCase):
         self.assertTrue(Project.objects.filter(slug=self.project.slug).count() == 0)
         # Test messages:
         self.assertContains(resp, "message_success")
+
 

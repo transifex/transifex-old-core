@@ -134,6 +134,9 @@ class Project(models.Model):
     bug_tracker = models.URLField(_('Bug tracker'), blank=True,
         help_text=_('The URL for the bug and tickets tracking system '
                     '(Bugzilla, Trac, etc.)'))
+    trans_instructions = models.URLField(_('Translator Instructions'), blank=True,
+        help_text=_("A web page containing documentation or instructions for "
+                    "translators, or localization tips for your community."))
     anyone_submit = models.BooleanField(_('Anyone can submit'),
         default=False, blank=False,
         help_text=_('Can anyone submit files to this project?'))
