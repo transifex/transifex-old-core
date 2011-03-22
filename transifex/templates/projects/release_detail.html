@@ -108,7 +108,7 @@
         </span>
         <ul id="resource-list" class="simple links" style="display:none;">
           {% for r in resources %}
-            <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
+            <li><a title="{{ r }}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
       </td>

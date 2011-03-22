@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
 from django.test.client import Client
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests import base, utils
 
-class ReleasesViewsTests(BaseTestCase):
+class ReleasesViewsTests(base.BaseTestCase):
 
     # Note: The Resource lookup field is tested in the resources app.
+
+    def test_release_details_resources(self):
+        """Test whether the right resources show up on details page."""
+        url = reverse('release_detail', args=[self.project.slug, self.release.slug])
+        resp = self.client['anonymous'].get(url)
+
+        # The list at the top of the page should include this resource.
+        self.assertContains(resp, "Test Project: Resource1")
+
+        # One of the languages is totally untranslated.
+        self.assertContains(resp, "Untranslated: %s" % self.resource.source_entities.count())
+
 
     def test_release_create_good_private_resources(self):
         """Test Release creation with private resources.

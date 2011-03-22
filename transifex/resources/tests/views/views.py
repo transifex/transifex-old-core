@@ -223,8 +223,8 @@ class ResourcesLookupsTests(BaseTestCase):
         This AJAX lookup/dropdown is present in the Release Add/Edit form.
         """
 
-        public_project = "resource1 (Test Project)"
-        private_project = "resource1 (Test Private Project)"
+        public_project = "Test Project: Resource1"
+        private_project = "Test Private Project: Resource1"
 
         # Test that a private project is not visible to a random user
         self.assertTrue(self.user['registered'] not in self.project_private.maintainers.all())

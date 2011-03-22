@@ -152,7 +152,7 @@ class Resource(models.Model):
     objects = ChainerManager(ResourceQuerySet)
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.slug, self.project)
+        return u'%s: %s' % (self.project.name, self.name)
 
     def __repr__(self):
         return repr(u"<Resource: %s>" % self.slug)
