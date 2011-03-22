@@ -38,6 +38,10 @@ DEBUG_TOOLBAR_CONFIG = {
     'HIDE_DJANGO_SQL': True,
 }
 
+# Propagate exceptions upwards (surpress Django's normal exception handling)
+# of view functions. Use for testing & debugging AJAX, never on a live site.
+DEBUG_PROPAGATE_EXCEPTIONS = False
+
 # Do not run migrations for tests in devel for faster initial test setup.
 SOUTH_TESTS_MIGRATE = False
 
