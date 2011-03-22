@@ -69,7 +69,7 @@ class Release(models.Model):
         blank=False, null=False)
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.project.name)
+        return u'%s: %s' % (self.project.name, self.name)
 
     def __repr__(self):
         return _('<Release: %(rel)s (Project %(proj)s)>') % {
@@ -78,7 +78,7 @@ class Release(models.Model):
 
     @property
     def full_name(self):
-        #return "%s (%s)" % (self.name, self.project.name)
+        #return "%s: %s" % (self.project.name, self.name)
         return "%s.%s" % (self.project.slug, self.slug)
 
     class Meta:

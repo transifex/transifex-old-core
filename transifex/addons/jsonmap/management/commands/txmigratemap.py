@@ -93,8 +93,8 @@ class Command(BaseCommand):
                         resource.url_info = URLInfo(source_file_url=r['autofetch_url'])
 
                         logger.debug("Inserting source strings from %s (%s) to "
-                            "'%s' (%s)." % (r['source_file'], language.code,
-                            resource.slug, project))
+                            "'%s'." % (r['source_file'], language.code,
+                            resource.full_name))
 
                         fhandler = POHandler(filename=source_file)
                         fhandler.bind_resource(resource)

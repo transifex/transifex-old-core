@@ -44,9 +44,8 @@ class URLInfo(models.Model):
         try:
             file = urllib2.urlopen(self.source_file_url)
         except:
-            logger.error("Could not pull source file for resource %s.%s (%s)" %
-                ( self.resource.project.slug, self.resource.project,
-                  self.source_file_url ))
+            logger.error("Could not pull source file for resource %s (%s)" %
+                (self.resource.full_name, self.source_file_url))
             raise
 
         filename = ''
@@ -98,8 +97,7 @@ class URLInfo(models.Model):
                 strings_added, strings_updated = fhandler.save2db(is_source=True)
         except Exception,e:
             logger.error("Error importing source file for resource %s.%s (%s): %s" %
-                ( self.resource.project.slug, self.resource.project,
-                  self.source_file_url, str(e)))
+                ( self.resource, self.source_file_url, str(e)))
             raise
 
         return strings_added, strings_updated

@@ -30,7 +30,7 @@ class TranslationWatch(models.Model):
         help_text=_('Language of the translation.'))
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.resource.full_name, self.language)
+        return u'%s: %s' % (self.resource, self.language)
 
     def __repr__(self):
         return u'<TranslationWatch: %s (%s)>' % (
