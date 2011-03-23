@@ -5,9 +5,9 @@ from django.test.client import Client
 from django.utils import simplejson as json
 from transifex.languages.models import Language
 from transifex.resources.models import Resource, Translation
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests import base, utils
 
-class CoreViewsTest(BaseTestCase):
+class CoreViewsTest(base.BaseTestCase):
     """Test basic view function"""
 
     def test_resource_details(self):
@@ -197,7 +197,58 @@ class CoreViewsTest(BaseTestCase):
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language__code = trans_lang).count(), 0)
 
-class ReleasesViewsTest(BaseTestCase):
+
+
+class ResourceAutofetchTests(base.BaseTestCase):
+
+    def setUp(self, *args, **kwargs):
+        super(ResourceAutofetchTests, self).setUp(*args, **kwargs)
+        self.SFILE = "http://meego.gitorious.org/meego-netbook-ux/abrt-netbook/blobs/raw/master/po/en_GB.po"
+        self.url_edit =  reverse('resource_edit', args=[self.project.slug, self.resource.slug])
+        self.url_detail =  reverse('resource_detail', args=[self.project.slug, self.resource.slug])
+        
+        
+    def test_save_form_url(self):
+        """Test that saving the form creates the source URL."""
+        resp = self.client['maintainer'].post(self.url_edit, {
+            'source_file_url': self.SFILE, 'auto_update': 'on',
+            'sourcefile': '', 'accept_translations': 'on',
+            'slug': self.resource.slug, 'name': self.resource.name, })
+        self.assertEquals(self.resource.url_info.source_file_url, self.SFILE)
+        resp = self.client['maintainer'].get(self.url_edit)
+        self.assertContains(resp, self.SFILE)
+        resp = self.client['anonymous'].get(self.url_detail)
+        self.assertContains(resp, self.SFILE)
+
+       
+    def test_save_form_remove_url(self):
+        """Test that saving the form without a source file URL removes it."""
+
+        # First create the source file...
+        self.test_save_form_url()
+
+        # Then try to remove it.            
+        resp = self.client['maintainer'].post(self.url_edit,
+            {'source_file_url': '', 'sourcefile': '',
+             'accept_translations': 'on', 'slug': self.resource.slug,
+             'name': self.resource.name, })
+        resp = self.client['maintainer'].get(self.url_edit)
+        self.assertNotContains(resp, self.SFILE)
+        resp = self.client['anonymous'].get(self.url_detail)
+        self.assertNotContains(resp, self.SFILE)
+
+
+    def test_save_form_url_nourl(self):
+        """Test that autofetch without url does not work."""
+        resp = self.client['maintainer'].post(self.url_edit,
+            {'source_file_url': '', 'auto_update': 'on', 'sourcefile': '',
+             'accept_translations': 'on', 'slug': self.resource.slug,
+             'name': self.resource.name, })
+        self.assertContains(resp, "You have checked the auto update checkbox")
+
+
+
+class ReleasesViewsTest(base.BaseTestCase):
 
     def setUp(self, *args, **kwargs):
         super(ReleasesViewsTest, self).setUp(*args, **kwargs)
@@ -215,7 +266,7 @@ class ReleasesViewsTest(BaseTestCase):
         #raise NotImplementedError('Test if the table has the correct languages.')
 
 
-class ResourcesLookupsTests(BaseTestCase):
+class ResourcesLookupsTests(base.BaseTestCase):
 
     def test_private_resources_ajax_lookup(self):
         """Test that a private resource isn't present in lookup.
