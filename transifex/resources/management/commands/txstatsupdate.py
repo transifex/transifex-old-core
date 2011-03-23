@@ -24,6 +24,8 @@ class Command(LabelCommand):
         RLStats = get_model('resources', 'RLStats')
         Team = get_model('teams', 'Team')
 
+        verbosity = int(options.get('verbosity',1))
+
         if not args:
             resources = Resource.objects.all()
         else:
@@ -45,11 +47,14 @@ class Command(LabelCommand):
             sys.stderr.write("No resources suitable for updating found. Exiting...\n")
             sys.exit()
 
-        sys.stdout.write("A total of %s resources are listed for updating.\n" % num)
+
+        if verbosity:
+            sys.stdout.write("A total of %s resources are listed for updating.\n" % num)
 
         for seq, r in enumerate(resources):
-            sys.stdout.write("Updating resource %s.%s (%s of %s)\n" %
-                ( r.project.slug, r.slug, seq+1, num))
+            if verbosity:
+                sys.stdout.write("Updating resource %s.%s (%s of %s)\n" %
+                    ( r.project.slug, r.slug, seq+1, num))
 
             # Update resource fields
             r.update_total_entities()
@@ -63,7 +68,8 @@ class Command(LabelCommand):
             # Update stats
             for lang in langs:
                 lang = Language.objects.get(id=lang)
-                sys.stdout.write("Calculating statistics for language %s.\n" % lang)
+                if verbosity:
+                    sys.stdout.write("Calculating statistics for language %s.\n" % lang)
                 rl, created = RLStats.objects.get_or_create(resource=r, language=lang)
                 rl.update()
 
@@ -79,7 +85,8 @@ class Command(LabelCommand):
                 lang = team.language
                 # Add team languages to the existing languages
                 langs.append(lang.id)
-                sys.stdout.write("Calculating statistics for team language %s.\n" % lang)
+                if verbosity:
+                    sys.stdout.write("Calculating statistics for team language %s.\n" % lang)
                 rl,created = RLStats.objects.get_or_create(resource=r, language=lang)
                 rl.update()
 
