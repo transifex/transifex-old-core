@@ -130,11 +130,19 @@
   </table>
 </div>
 
-{% include "projects/resource_list.html" %}
+{% if project.resources.count or not project.releases.count %}
 
-{% hook "project.html" overview_top %}
+  {% include "projects/resource_list.html" %}
+  {% hook "project.html" overview_top %}
+  {% include "projects/release_list.html" %}
 
-{% include "projects/release_list.html" %}
+{% else %}
+
+  {% include "projects/release_list.html" %}
+  {% include "projects/resource_list.html" %}
+  {% hook "project.html" overview_top %}
+
+{% endif %}
 
 </div>
 
