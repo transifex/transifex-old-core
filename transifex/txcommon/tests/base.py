@@ -77,7 +77,13 @@ class BaseTestCase(TestCase):
         """Set up a sample set of base objects for inherited tests.
 
         If you are inheriting the class and overriding setUp, don't forget to
-        call super().
+        call super::
+
+          from transifex.txcommon.tests import (base, utils)
+          class TestClassName(base.BaseTestCase)
+              def setUp(self):
+                  super(TestClassName, self).setUp()
+
         """
 
         registered = Group.objects.get(name="registered")
