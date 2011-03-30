@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from django.core import management
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.loading import get_model
 from django.test import TestCase
@@ -171,6 +172,20 @@ class BaseTestCase(TestCase):
         self.release_private = Release.objects.create(slug="releaseslug2",
             name="Release2", project=self.project_private)
         self.release_private.resources.add(self.resource_private)
+
+
+        # Create common URLs
+        # Easier to call common URLs in your view/template unit tests.
+        self.urls = {
+            'project': reverse('project_detail', args=[self.project.slug]),
+            'project_private': reverse('project_detail', args=[self.project.slug]),
+            'resource_popup': reverse('resource_detail', args=[self.project.slug, self.release.slug]),
+            'release': reverse('release_detail', args=[self.project.slug, self.release.slug]),
+            'release_create': reverse('release_create', args=[self.project.slug]),
+        }
+
+
+
 
         from django.core import management
         management.call_command('txstatsupdate', verbosity=0)

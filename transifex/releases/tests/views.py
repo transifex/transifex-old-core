@@ -7,6 +7,28 @@ class ReleasesViewsTests(base.BaseTestCase):
 
     # Note: The Resource lookup field is tested in the resources app.
 
+    def test_release_list(self):
+        self.assertTrue(self.project.releases.all())
+
+        # Anonymous and maintainer should see it
+        resp = self.client['anonymous'].get(self.urls['project'])
+        self.assertContains(resp, self.release.name)
+        resp = self.client['maintainer'].get(self.urls['project'])
+        self.assertContains(resp, self.release.name)
+
+
+    def test_release_list_noreleases(self):
+        self.project.releases.all().delete()
+
+        # Maintainer should see things
+        resp = self.client['maintainer'].get(self.urls['project'])
+        self.assertContains(resp, "No releases are registered")
+
+        # Anonymous should not see anything
+        resp = self.client['anonymous'].get(self.urls['project'])
+        self.assertNotContains(resp, "Project Releases")
+
+
     def test_release_details_resources(self):
         """Test whether the right resources show up on details page."""
         url = reverse('release_detail', args=[self.project.slug, self.release.slug])
