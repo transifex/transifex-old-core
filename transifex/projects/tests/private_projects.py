@@ -114,33 +114,30 @@ class PrivateProjectTest(BaseTestCase):
         """
         Check private project details access.
         """
-        URL = reverse('project_detail', kwargs={'project_slug':self.project_private.slug}) #'/projects/p/priv_test/'
 
         # Check anonymous user and logged in user with no permissions
         for user in ['anonymous', 'registered']:
-            response = self.client[user].get(URL)
+            response = self.client[user].get(self.urls['project_private'])
             self.failUnlessEqual(response.status_code, 403)
 
         # Check people who should have access to the private project
         for user in ['maintainer', 'team_coordinator', 'team_member']: # 'writer',
-            response = self.client[user].get(URL)
+            response = self.client[user].get(self.urls['project_private'])
             self.failUnlessEqual(response.status_code, 200)
 
     def test_resource_details(self):
         """
         Check private project components' detail access.
         """
-        url = reverse('resource_detail', kwargs={'project_slug':self.project_private.slug,
-            'resource_slug': self.resource_private.slug})
 
         # Check anonymous user and logged in user with no permissions
         for user in ['anonymous', 'registered']:
-            response = self.client[user].get(url)
+            response = self.client[user].get(self.urls['resource_private'])
             self.failUnlessEqual(response.status_code, 403)
 
         # Check people who should have access to the private project
         for user in ['maintainer', 'team_coordinator', 'team_member']: # 'writer',
-            response = self.client[user].get(url)
+            response = self.client[user].get(self.urls['resource_private'])
             self.failUnlessEqual(response.status_code, 200)
 
     def test_widgets(self):
@@ -351,9 +348,7 @@ class PrivateProjectTest(BaseTestCase):
         """
 
         # Check access to lotte for a language with a team.
-        URL = reverse('translate_resource', kwargs={'project_slug':self.project_private.slug,
-            'resource_slug':self.resource_private.slug,
-            'lang_code': self.language.code })
+        URL = self.urls['translate_private']
 
         for user in ['anonymous']:
             response = self.client[user].get(URL)
@@ -390,9 +385,7 @@ class PrivateProjectTest(BaseTestCase):
         """
 
         # Check access to lotte for a language with a team.
-        URL = reverse('translate_resource', kwargs={'project_slug':self.project_private.slug,
-            'resource_slug':self.resource_private.slug,
-            'lang_code': self.language.code })
+        URL = self.urls['translate_private']
 
         for user in ['anonymous']:
             response = self.client[user].get(URL)

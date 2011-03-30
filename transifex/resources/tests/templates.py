@@ -8,32 +8,22 @@ from transifex.txcommon.tests.base import BaseTestCase
 
 class ResourcesTemplateTests(BaseTestCase):
 
-    def setUp(self):
-        super(ResourcesTemplateTests, self).setUp()
-        #URL
-        self.resource_detail_url = reverse('resource_detail',
-            args=[self.project.slug, self.resource.slug])
-        self.project_detail_url = reverse('project_detail',
-            args=[self.project.slug])
-
-    def tearDown(self):
-        super(ResourcesTemplateTests, self).tearDown()
 
     def test_create_resource_template_tag(self):
         """Ensure that button and the form is appeared correctly."""
-        resp = self.client['maintainer'].get(self.project_detail_url)
+        resp = self.client['maintainer'].get(self.urls['project'])
         self.assertTemplateUsed(resp,
                                 'projects/resource_list.html')
         self.assertContains(resp,
                             "Create Resource")
         for user in ['anonymous', 'registered','team_member']:
-            resp = self.client[user].get(self.project_detail_url)
+            resp = self.client[user].get(self.urls['project'])
             self.assertNotContains(resp,
                                    "Create Resource")
 
     def test_priority_table_snippet(self):
         """ Check that priority td is presented correctly."""
-        resp = self.client['maintainer'].get(self.project_detail_url)
+        resp = self.client['maintainer'].get(self.urls['project'])
         self.assertTemplateUsed(resp, 'projects/resource_list.html')
         self.assertContains(resp,
                             'id="priority_%s"' %
@@ -47,7 +37,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             (settings.STATIC_URL,
                              self.resource.priority.display_level ))
         for user in ['anonymous', 'registered','team_member']:
-            resp = self.client[user].get(self.project_detail_url)
+            resp = self.client[user].get(self.urls['project'])
             self.assertNotContains(resp,
                                    'id="priority_%s"' %
                                    (self.resource.slug ,),
@@ -57,7 +47,7 @@ class ResourcesTemplateTests(BaseTestCase):
         """ Test that the correct number of resource languages appear in template."""
         self.assertEqual(type(self.resource.available_languages.count()), int)
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
-            resp = self.client[user].get(self.resource_detail_url)
+            resp = self.client[user].get(self.urls['resource'])
             self.assertContains(resp,
             "Number of languages:</th>\n"\
             "      <td>\n"\
@@ -74,7 +64,7 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_javascript_snippet_cycle_priority(self):
         """Test if we include the ajax triggering js for priority changes."""
-        resp = self.client['maintainer'].get(self.project_detail_url)
+        resp = self.client['maintainer'].get(self.urls['project'])
         self.assertTemplateUsed(resp, 'projects/resource_list.html')
         self.assertContains(resp,
                             'var resource_priority_cycle_url = \'%s\';'%
@@ -85,7 +75,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             'title="Click the flags to modify the importance of a resource."')
         # All the other user classes should not see these snippets
         for user in ['anonymous', 'registered','team_member']:
-            resp = self.client[user].get(self.project_detail_url)
+            resp = self.client[user].get(self.urls['project'])
             self.assertNotContains(resp,
                                 'var resource_priority_cycle_url = \'%s\';'%
                                 (reverse('cycle_resource_priority',
@@ -98,14 +88,14 @@ class ResourcesTemplateTests(BaseTestCase):
         """Test that translate resource button appears in resource details."""
         # Test the response contents
         for user in ['team_member', 'maintainer']:
-            resp = self.client[user].get(self.resource_detail_url)
+            resp = self.client[user].get(self.urls['resource'])
             self.assertTemplateUsed(resp, 'resources/resource_detail.html')
             self.assertContains(resp,
                 '<a id="start_new_translation" class="i16 buttonized action">'\
                 'Translate Online</a>', status_code=200)
         # The anonymous users and the non-team members must not see the button
         for user in ['anonymous', 'registered']:
-            resp = self.client[user].get(self.resource_detail_url)
+            resp = self.client[user].get(self.urls['resource'])
             self.assertNotContains(resp,
                 '<a id="start_new_translation" class="i16 buttonized action">'\
                 'Translate Online</a>', status_code=200)
@@ -113,7 +103,7 @@ class ResourcesTemplateTests(BaseTestCase):
     def test_resource_edit_button(self):
         """Test that resource edit button is rendered correctly in details."""
         # Test the response contents
-        resp = self.client['maintainer'].get(self.resource_detail_url)
+        resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
@@ -121,7 +111,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
-            resp = self.client[user].get(self.resource_detail_url)
+            resp = self.client[user].get(self.urls['resource'])
             self.assertNotContains(resp,
                                 '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
                                 (self.project.slug, self.resource.slug),
@@ -129,7 +119,7 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
-        resp = self.client['maintainer'].get(self.resource_detail_url)
+        resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertContains(resp,
                             '<a class="i16 edit buttonized" href="/projects/p/%s/resource/%s/edit">Edit</a>' %
@@ -137,7 +127,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
-            resp = self.client[user].get(self.resource_detail_url)
+            resp = self.client[user].get(self.urls['resource'])
             self.assertNotContains(resp,
                                 '<a class="i16 delete buttonized" href="/projects/p/%s/resource/%s/delete">Delete translation resource</a>' %
                                 (self.project.slug, self.resource.slug),
@@ -148,17 +138,13 @@ class ResourcesTemplateTests(BaseTestCase):
         an action page."""
         # We chose Finnish language which has no corresponding project team.
         lang = Language.objects.by_code_or_alias('fi')
-        resp = self.client['maintainer'].get(reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug,
-                  lang.code]))
+        resp = self.client['maintainer'].get(self.urls['resource_actions'])
         self.assertEqual(resp.status_code, 404)
 
     def test_resource_details_team_and_zero_percent(self):
         """Test that languages with teams and 0% are presented."""
         self.project.team_set.filter(language=self.language).delete()
-        url = reverse('resource_detail',
-                      args=[self.project.slug, self.resource.slug])
-        resp = self.client['anonymous'].get(url)
+        resp = self.client['anonymous'].get(self.urls['resource'])
         self.assertContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Do not show 0% languages if there is no respective team.")
         self.assertNotContains(resp, '<div class="stats_string_resource"> 0% </div>')
@@ -166,7 +152,7 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test with a new team.
         t = Team.objects.create(language=self.language_ar, project=self.project,
                                 creator=self.user['maintainer'])
-        resp = self.client['anonymous'].get(url)
+        resp = self.client['anonymous'].get(self.urls['resource'])
         self.assertContains(resp, self.language_ar.name, status_code=200,
             msg_prefix="Show a 0% language if there is a respective team.")
         self.assertContains(resp, '<div class="stats_string_resource">\n'

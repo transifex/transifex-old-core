@@ -42,8 +42,7 @@ class ProjectViewsTests(base.BaseTestCase):
         self.project.trans_instructions = "http://help.transifex.net/"\
             "technical/contributing.html#updating-translation-files-po-files"
         self.project.save()
-        url_detail = reverse('project_detail', args=[self.project.slug])
-        resp = self.client['anonymous'].get(url_detail)
+        resp = self.client['anonymous'].get(self.urls['project'])
         self.assertContains(resp, "contributing.html")
         self.assertContains(resp, "Translation help pages")
 

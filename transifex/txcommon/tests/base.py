@@ -184,10 +184,16 @@ class BaseTestCase(TestCase):
         # Easier to call common URLs in your view/template unit tests.
         self.urls = {
             'project': reverse('project_detail', args=[self.project.slug]),
-            'project_private': reverse('project_detail', args=[self.project.slug]),
-            'resource_popup': reverse('resource_detail', args=[self.project.slug, self.release.slug]),
-            'release': reverse('release_detail', args=[self.project.slug, self.release.slug]),
+            'resource': reverse('resource_detail', args=[self.resource.project.slug, self.resource.slug]),
+            'resource_actions': reverse('resource_actions', args=[self.resource.project.slug, self.resource.slug, self.language.code]),
+            'resource_edit': reverse('resource_edit', args=[self.resource.project.slug, self.resource.slug]),
+            'translate': reverse('translate_resource', args=[self.resource.project.slug, self.resource.slug, self.language.code]),
+            'release': reverse('release_detail', args=[self.release.project.slug, self.release.slug]),
             'release_create': reverse('release_create', args=[self.project.slug]),
+
+            'project_private': reverse('project_detail', args=[self.project_private.slug]),
+            'resource_private': reverse('resource_detail', args=[self.resource_private.project.slug, self.resource_private.slug]),
+            'translate_private': reverse('translate_resource', args=[self.resource_private.project.slug, self.resource_private.slug, self.language.code]),
         }
 
 

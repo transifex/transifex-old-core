@@ -16,7 +16,6 @@ class TestTimeline(BaseTestCase):
         self.url_user_timeline = reverse("user_timeline")
         self.url_user_profile = reverse("profile_overview")
         self.url_project_timeline = reverse('project_timeline', args=[self.project.slug])
-        self.url_project_detail = reverse('project_detail', args=[self.project.slug])
 
 
     def test_anon(self):
@@ -79,7 +78,7 @@ class TestTimeline(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Fetch project overview page
-        resp = self.client['maintainer'].get( self.url_project_detail )
+        resp = self.client['maintainer'].get(self.urls['project'])
         self.assertEqual(resp.status_code, 200)
 
         # Check whether link to timeline page is found on the page

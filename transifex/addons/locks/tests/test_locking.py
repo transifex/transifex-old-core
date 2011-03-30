@@ -49,8 +49,7 @@ class TestLocking(BaseTestCase):
     def test_resource_popup_another_user(self):
         """Test how another user sees the resource popup."""
         resp = self.client['maintainer'].post(self.url_lock)
-        resp = self.client['team_member'].post(reverse('resource_actions',
-            args=[self.project.slug, self.resource.slug, self.language.code]))
+        resp = self.client['team_member'].post(self.urls['resource_actions'])
         self.assertContains(resp, "User 'maintainer' locked this translation")
         self.assertContains(resp, "Resource cannot be locked")
         self.assertContains(resp, "currently locked by 'maintainer'")

@@ -31,8 +31,7 @@ class ReleasesViewsTests(base.BaseTestCase):
 
     def test_release_details_resources(self):
         """Test whether the right resources show up on details page."""
-        url = reverse('release_detail', args=[self.project.slug, self.release.slug])
-        resp = self.client['anonymous'].get(url)
+        resp = self.client['anonymous'].get(self.urls['release'])
 
         # The list at the top of the page should include this resource.
         self.assertContains(resp, "Test Project: Resource1")
@@ -48,8 +47,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         release.
         """
 
-        url_release_create = reverse('release_create', args=[self.project.slug])
-        resp = self.client['maintainer'].post(url_release_create,
+        resp = self.client['maintainer'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
             'project': self.project.id, 'resources': '|2|',
             'description': '', 'release_date': '', 'resources_text': '',
@@ -97,8 +95,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         """
         self.project.maintainers.add(self.user['registered'])
         self.assertFalse(self.user['registered'] in self.project_private.maintainers.all())
-        url_release_create = reverse('release_create', args=[self.project.slug])
-        r = self.client['registered'].post(url_release_create,
+        r = self.client['registered'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
             'project': self.project.id, 'resources': '|2|',
             'description': '', 'release_date': '', 'resources_text': '',

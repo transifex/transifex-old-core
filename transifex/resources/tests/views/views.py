@@ -16,8 +16,7 @@ class CoreViewsTest(base.BaseTestCase):
         """
 
         # Check details page
-        resp = self.client['maintainer'].get(reverse('resource_detail',
-            args=[self.project.slug, self.resource.slug]))
+        resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         # Test if RLStats was created automatically
@@ -43,8 +42,7 @@ class CoreViewsTest(base.BaseTestCase):
         """
         Test AJAX resource actions.
         """
-        args=[self.project.slug, self.resource.slug, self.language.code]
-        url = reverse('resource_actions', args=args)
+        url = self.urls['resource_actions']
 
         # Test response for maintainer
         resp = self.client['maintainer'].get(url)
@@ -52,7 +50,7 @@ class CoreViewsTest(base.BaseTestCase):
         self.assertContains(resp, "Translate now")
         self.assertTemplateUsed(resp, 'resources/resource_actions.html')
 
-        url_lock = reverse('resource_language_lock', args=args)
+        url_lock = reverse('resource_language_lock', args=[self.project.slug, self.resource.slug, self.language.code])
 
         # Test response for registered user WITHOUT lock
         resp = self.client['registered'].get(url)
@@ -205,7 +203,6 @@ class ResourceAutofetchTests(base.BaseTestCase):
         super(ResourceAutofetchTests, self).setUp(*args, **kwargs)
         self.SFILE = "http://meego.gitorious.org/meego-netbook-ux/abrt-netbook/blobs/raw/master/po/en_GB.po"
         self.url_edit =  reverse('resource_edit', args=[self.project.slug, self.resource.slug])
-        self.url_detail =  reverse('resource_detail', args=[self.project.slug, self.resource.slug])
         
         
     def test_save_form_url(self):
@@ -217,7 +214,7 @@ class ResourceAutofetchTests(base.BaseTestCase):
         self.assertEquals(self.resource.url_info.source_file_url, self.SFILE)
         resp = self.client['maintainer'].get(self.url_edit)
         self.assertContains(resp, self.SFILE)
-        resp = self.client['anonymous'].get(self.url_detail)
+        resp = self.client['anonymous'].get(self.urls['resource'])
         self.assertContains(resp, self.SFILE)
 
        
@@ -234,7 +231,7 @@ class ResourceAutofetchTests(base.BaseTestCase):
              'name': self.resource.name, })
         resp = self.client['maintainer'].get(self.url_edit)
         self.assertNotContains(resp, self.SFILE)
-        resp = self.client['anonymous'].get(self.url_detail)
+        resp = self.client['anonymous'].get(self.urls['resource'])
         self.assertNotContains(resp, self.SFILE)
 
 
@@ -256,9 +253,7 @@ class ReleasesViewsTest(base.BaseTestCase):
         self.release.resources.add(self.resource)
 
     def test_release_detail_page(self):
-        url = reverse('release_detail',
-            args=[self.project.slug, self.release.slug])
-        resp = self.client['registered'].get(url)
+        resp = self.client['registered'].get(self.urls['release'])
         self.assertContains(resp, "This release has 1 resource", status_code=200)
 
         # FIXME: Check if the correct language appears in the table.
