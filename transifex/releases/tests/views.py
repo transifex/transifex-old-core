@@ -110,9 +110,6 @@ class ReleasesViewsTests(base.BaseTestCase):
 
 class AllReleaseTests(base.BaseTestCase):
     """Test the All Release model."""
-
-    def setUp(self):
-        super(AllReleaseTests, self).setUp()
           
     def test_no_resource(self):
         self.project.resources.all().delete()
@@ -125,6 +122,7 @@ class AllReleaseTests(base.BaseTestCase):
             i18n_type='PO')
 
     def test_first_resource(self):
+        self.project.resources.all().delete()
         self._create_new_resource()
         self.assertTrue(self.res2 in
             self.project.releases.get(slug='all-resources').resources.all())
@@ -135,13 +133,13 @@ class AllReleaseTests(base.BaseTestCase):
         self.assertTrue(self.resource in rel_resources)
         self.assertTrue(self.res2 in rel_resources)
 
-
     def test_extra_resource_deletion(self):
         self._create_new_resource()
         self.res2.delete()
-        self.assertFalse(self.res2 in
-            self.project.releases.get(slug='all-resources').resources.all())
-
+        rel_resources = self.project.releases.get(slug='all-resources').resources.all()
+        self.assertTrue(self.resource in rel_resources)
+        self.assertFalse(self.res2 in rel_resources)
+            
     def test_reserved_slug(self):
         resp = self.client['maintainer'].post('/projects/p/project1/add-release/', {'slug': 'all-resources', 'project': '1', 'name': 'test', })
         self.assertContains(resp, "value is reserved")
