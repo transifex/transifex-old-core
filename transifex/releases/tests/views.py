@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 from transifex.txcommon.tests import base, utils
+from transifex.resources.models import Resource
 
 class ReleasesViewsTests(base.BaseTestCase):
 
@@ -105,4 +106,39 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertFalse(self.project.releases.get(slug='nice-release'))
         self.assertTemplateUsed(resp, "projects/release_form.html")
         self.assertContains(resp, "Invalid...")
+
+
+class AllReleaseTests(base.BaseTestCase):
+    """Test the All Release model."""
+
+    def setUp(self):
+        super(AllReleaseTests, self).setUp()
+          
+    def test_no_resource(self):
+        self.project.resources.all().delete()
+        self.assertEquals(self.project.releases.filter(slug='all-resources').count(), 0)
+
+    def _create_new_resource(self):
+        self.res2 = Resource.objects.create(
+            slug="resource2", name="Resource2",
+            project=self.project, source_language=self.language_en,
+            i18n_type='PO')
+
+    def test_first_resource(self):
+        self._create_new_resource()
+        self.assertTrue(self.res2 in
+            self.project.releases.get(slug='all-resources').resources.all())
+
+    def test_extra_resource(self):
+        self._create_new_resource()
+        rel_resources = self.project.releases.get(slug='all-resources').resources.all()
+        self.assertTrue(self.resource in rel_resources)
+        self.assertTrue(self.res2 in rel_resources)
+
+
+    def test_extra_resource_deletion(self):
+        self._create_new_resource()
+        self.res2.delete()
+        self.assertFalse(self.res2 in
+            self.project.releases.get(slug='all-resources').resources.all())
 
