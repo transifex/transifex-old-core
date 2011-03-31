@@ -5,6 +5,18 @@ from transifex.releases.models import RELEASE_ALL_DATA
 
 Release = get_model('releases', 'Release')
 
+def update_all_release(project):
+    if project.resources.count():
+        rel, rel_created = project.releases.get_or_create(
+            slug=RELEASE_ALL_DATA['slug'],
+            defaults={'name': RELEASE_ALL_DATA['name'],
+                      'description': RELEASE_ALL_DATA['description'],})
+        rel.resources = project.resources.all()
+        return rel
+    else:
+        return None
+
+
 def release_all_push(sender, instance, **kwargs):
     """
     Append newly created resource to the 'all' release.
@@ -19,11 +31,7 @@ def release_all_push(sender, instance, **kwargs):
     resource = instance
     created = kwargs['created']
     if created:
-        rel, rel_created = resource.project.releases.get_or_create(
-            slug=RELEASE_ALL_DATA['slug'],
-            defaults={'name': RELEASE_ALL_DATA['name'],
-                      'description': RELEASE_ALL_DATA['description'],})
-        rel.resources.add(resource)
+        update_all_release(resource.project)
 
 
 def release_all_pop(sender, instance, **kwargs):
