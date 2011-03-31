@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
+from django.db.models import F
 
 from actionlog.models import action_logging
 from transifex.languages.models import Language
@@ -70,10 +71,24 @@ def release_detail(request, project_slug, release_slug):
     else:
         private_resources = Resource.objects.for_user(request.user).filter(
             releases=release, project__private=True
-            ).order_by('project__name').distinct()
-
-    statslist = RLStats.objects.select_related('language', 'last_committer'
-        ).for_user(request.user).by_release_aggregated(release)
+            ).order_by('project__name').distinct()            
+    if len(source_languages) == 1:
+        tmp = []
+        statslist = RLStats.objects.select_related('language', 'last_committer'
+          ).filter(language=F('resource__source_language'
+          )).for_user(request.user).by_release_aggregated(release)
+        for i in statslist:
+            tmp.append(i)
+        statslist = RLStats.objects.select_related('language', 'last_committer'
+          ).exclude(language=F('resource__source_language'
+          )).for_user(request.user).by_release_aggregated(release)
+        for i in statslist:
+            tmp.append(i)
+        statslist = tmp
+    else:
+        source_languages = ()
+        statslist = RLStats.objects.select_related('language', 'last_committer'
+          ).for_user(request.user).by_release_aggregated(release)
 
     return render_to_response('projects/release_detail.html', {
         'release': release,

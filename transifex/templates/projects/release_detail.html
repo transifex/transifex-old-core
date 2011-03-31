@@ -148,11 +148,19 @@
     <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Translation" %}</span></th>
    </tr>
-  </thead>
-  <tbody>
 {% for stat in statslist %}
+	 {% if source_languages %}
+        {% ifequal forloop.counter 2 %}
+            </thead>
+            <tbody>
+        {% endifequal %}
+     {% else %}
+       {% ifequal forloop.counter 1 %}
+            </thead>
+            <tbody>
+        {% endifequal %}
+     {% endif %}
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
-
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td>
           {{ stat.object.name }}
