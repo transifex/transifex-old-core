@@ -111,7 +111,7 @@ URL_ROLES.update({
         'team_coordinator':(200,),
         'team_member':(200,),
         },
-    'GET:/projects/p/project1/resource/resource1/edit':{
+    'GET:/projects/p/project1/resource/resource1/edit/':{
         'anonymous':(403,),
         'registered':(403,),
         'maintainer':(200,),
@@ -119,7 +119,7 @@ URL_ROLES.update({
         'team_coordinator':(403,),
         'team_member':(403,),
         },
-    'GET:/projects/p/project1/resource/resource1/delete':{
+    'GET:/projects/p/project1/resource/resource1/delete/':{
         'anonymous':(403,),
         'registered':(403,),
         'maintainer':(200,),
