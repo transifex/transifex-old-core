@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Count, Q, get_model
+from django.db.models import Count, Q, get_model, F
 from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseForbidden, HttpResponseBadRequest)
 from django.shortcuts import render_to_response, get_object_or_404
@@ -60,9 +60,18 @@ def resource_detail(request, project_slug, resource_slug):
     except ObjectDoesNotExist:
         autofetch_url = None
 
+    statslist_src = RLStats.objects.select_related('language', 'last_committer',
+        'lock','resource').by_resource(resource).filter(
+            language = F('resource__source_language'))
     statslist = RLStats.objects.select_related('language', 'last_committer',
-        'lock','resource').by_resource(resource)
-
+        'lock','resource').by_resource(resource).exclude(
+            language = F('resource__source_language'))
+    tmp = []
+    for i in statslist_src:
+        tmp.append(i)
+    for i in statslist:
+        tmp.append(i)
+    statslist = tmp
     return render_to_response("resources/resource_detail.html",
         { 'project' : resource.project,
           'resource' : resource,
