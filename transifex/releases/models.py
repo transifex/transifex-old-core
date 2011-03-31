@@ -21,8 +21,8 @@ from transifex.resources.models import RLStats
 #        this isn't working right now.
 RELEASE_ALL_DATA = {
     'slug': 'all-resources',
-    'name': _('All Resources'),
-    'description': _("A collection of all the resources of this project (auto-managed by Transifex)")}
+    'name': 'All Resources',
+    'description': "A collection of all the resources of this project (auto-managed by Transifex)"}
 
 class Release(models.Model):
 
