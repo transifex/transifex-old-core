@@ -24,6 +24,10 @@ RELEASE_ALL_DATA = {
     'name': 'All Resources',
     'description': "A collection of all the resources of this project (auto-managed by Transifex)"}
 
+# List of slugs which are reserved and should not be used by users.
+RESERVED_RELEASE_SLUGS = [RELEASE_ALL_DATA['slug'],]
+
+
 class Release(models.Model):
 
     """

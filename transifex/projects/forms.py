@@ -13,10 +13,8 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from transifex.projects.models import Project
 from transifex.projects.signals import project_access_control_form_start
-from transifex.releases.models import Release, RELEASE_ALL_DATA
+from transifex.releases.models import (Release, RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS)
 
-# List of slugs which are reserved and should not be used by users.
-RESERVED_RELEASE_SLUGS = [RELEASE_ALL_DATA['slug']]
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
