@@ -139,7 +139,11 @@ class AllReleaseTests(base.BaseTestCase):
         rel_resources = self.project.releases.get(slug='all-resources').resources.all()
         self.assertTrue(self.resource in rel_resources)
         self.assertFalse(self.res2 in rel_resources)
-            
+
+    def test_all_resources_deleted_no_all_release(self):
+        self.resource.delete()
+        self.assertFalse(self.project.releases.filter(slug='all-resources').count())
+
     def test_reserved_slug(self):
         resp = self.client['maintainer'].post('/projects/p/project1/add-release/', {'slug': 'all-resources', 'project': '1', 'name': 'test', })
         self.assertContains(resp, "value is reserved")
