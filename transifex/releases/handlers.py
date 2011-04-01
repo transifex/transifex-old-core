@@ -34,10 +34,23 @@ def release_all_push(sender, instance, **kwargs):
         update_all_release(resource.project)
 
 
-# Note: Since the resource is already deleted from the DB, we don't need to
-# remove it from the release (``release_all_pop`` not needed).
+def release_all_pop(sender, instance, **kwargs):
+    """
+    Remove newly deleted resource to the 'all' release.
+    
+    Remove newly deleted resources from the special release called
+    'All Resources'. Delete the release when the last resource is added to it.
+
+    Called every time a resource is deleted.
+    """
+
+    resource = instance
+    rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
+    rel.resources.remove(resource)
+    if not rel.resources.count():
+        rel.delete()
 
 # Connect handlers to populate 'all' release (more info in handler docstrings):
 signals.post_save.connect(release_all_push, sender=Resource)
-
+signals.post_delete.connect(release_all_pop, sender=Resource)
 
