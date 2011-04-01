@@ -46,7 +46,6 @@ def release_all_pop(sender, instance, **kwargs):
 
     resource = instance
     rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
-    rel.resources.remove(resource)
     if not rel.resources.count():
         rel.delete()
 
