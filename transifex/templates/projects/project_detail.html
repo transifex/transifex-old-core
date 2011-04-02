@@ -9,16 +9,17 @@
 {% load avatars %}
 {% load tx_action_log %}
 
-
+<h2 class="name">{{ project.name }}</h2>
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
+
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  <div class="obj_bigdetails ui-tabs-panel">
+  <div class="obj_bigdetails grid_16">
   {% if project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
@@ -132,7 +133,7 @@
 <ul class="actionlist simple">
 {% for entry in action_log %}
 <li class="i16 actionlog">
-    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+    {{ entry.message|safe }} by {{ entry.user }}. <span class="notice_when">{{ entry.action_time|timesince }} ago.</span>
 </li>
 {% endfor %}
 </ul>

@@ -6,11 +6,13 @@
 {% load upload_manager_tags %}
 
 <div id="resources" class="resources separate">
-  <h3>{% blocktrans %}Project Resources{% endblocktrans %}</h3>
+ 
+	<p style="display:inline;float:right; clear:right;">
+		<span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">{% trans "Create New Resource" %}</span>
+	</p>
+  <h3 class="seperator_header">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
 
-<p style="display:inline;float:right; clear:right;">
-<span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">{% trans "Create New Resource" %}</span>
-</p>
+
 
 <script type="text/javascript">
     $(document).ready(function(){
