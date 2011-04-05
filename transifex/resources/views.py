@@ -167,7 +167,8 @@ def resource_edit(request, project_slug, resource_slug):
                         'resource': resource,
                     }, context_instance=RequestContext(request))
                 else:
-                    urlinfo.delete()
+                    if urlinfo.id:
+                        urlinfo.delete()
 
             post_resource_save.send(sender=None, instance=resource_new,
                 created=False, user=request.user)
