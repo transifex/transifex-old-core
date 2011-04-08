@@ -11,6 +11,8 @@ from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 
+from django.contrib.sites.models import Site
+
 from transifex.txcommon.commands import run_command, CommandError
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
@@ -198,8 +200,12 @@ class POHandler(Handler):
         except Team.DoesNotExist:
             pass
         else:
-            po.metadata['Language-Team'] = "%s <%s>" % (language.name ,
-                team.mainlist)
+            team_contact = "<%s>" % team.mainlist if team.mainlist else \
+                "(http://%s%s)" % (Site.objects.get_current().domain,
+                                   team.get_absolute_url())
+
+            po.metadata['Language-Team'] = "%s %s" % (language.name,
+                                                      team_contact)
 
         stat = RLStats.objects.by_resource(self.resource).by_language(language)
         if stat and stat[0].last_committer:

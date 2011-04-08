@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import get_model
+from django.db.models import get_model, permalink
 from django.utils.translation import ugettext_lazy as _
 from transifex.languages.models import Language
 from transifex.projects.models import Project
@@ -60,6 +60,10 @@ class Team(models.Model):
 
     def __repr__(self):
         return '<Team: %s.%s>' % (self.project.slug, self.language.code)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('team_detail', [self.project.slug, self.language.code])
 
     class Meta:
         unique_together = ("project", "language")
