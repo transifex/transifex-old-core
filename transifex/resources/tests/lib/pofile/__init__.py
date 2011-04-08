@@ -1,15 +1,21 @@
 import polib
 import os
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from transifex.txcommon.tests import base, utils
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.pofile import POHandler
 
 from transifex.addons.suggestions.models import Suggestion
 
-class POFile(BaseTestCase):
+TEST_FILES_PATH = os.path.join(settings.PROJECT_PATH,
+                               'resources/tests/lib/pofile/general')
+
+class POFile(base.BaseTestCase):
     """Suite of tests for the pofile lib."""
+
     def test_pot_parser(self):
         """POT file tests."""
         # Parsing POT file
@@ -268,4 +274,42 @@ class POFile(BaseTestCase):
                 self.assertEqual(entry.msgstr, trans.string.encode('utf-8'), "Source '%s'"\
                     " differs from translation %s" % (entry.msgstr,
                     trans.string.encode('utf-8')))
+
+
+class POFileHeaders(base.BaseTestCase):
+    """Test PO File library support for PO file headers."""
+
+    def _load_pot(self):
+        test_file = os.path.join(TEST_FILES_PATH, 'test.pot')
+        # First empty our resource
+        self.resource.entities.all().delete()
+        # Load file
+        handler = POHandler(test_file)
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        return handler        
+    
+    def test_poheader_team_url(self):
+        """Test team header when no main list is defined (URL)."""
+        self.assertFalse(self.team.mainlist)
+        handler = self._load_pot()
+        handler.set_language(self.language)
+        handler.compile()
+        pofile = handler.compiled_template
+        self.assertTrue("Portuguese (Brazilian)" in pofile)
+        self.assertTrue(self.urls['team'] in pofile)
+
+    def test_poheader_team_email(self):
+        """Test team header when main list is defined."""
+        self.team.mainlist = "test@test.com"
+        self.team.save()
+        handler = self._load_pot()
+        handler.set_language(self.language)
+        handler.compile()
+        pofile = handler.compiled_template
+        self.assertTrue("Portuguese (Brazilian)" in pofile)
+        self.assertFalse(self.urls['team'] in pofile)
+        self.assertTrue(self.team.mainlist in pofile)
 

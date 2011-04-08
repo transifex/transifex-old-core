@@ -190,6 +190,8 @@ class BaseTestCase(TestCase):
             'translate': reverse('translate_resource', args=[self.resource.project.slug, self.resource.slug, self.language.code]),
             'release': reverse('release_detail', args=[self.release.project.slug, self.release.slug]),
             'release_create': reverse('release_create', args=[self.project.slug]),
+            'team': reverse('team_detail', args=[self.resource.project.slug, 
+                                                 self.language.code]),
 
             'project_private': reverse('project_detail', args=[self.project_private.slug]),
             'resource_private': reverse('resource_detail', args=[self.resource_private.project.slug, self.resource_private.slug]),
