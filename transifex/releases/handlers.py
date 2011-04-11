@@ -45,8 +45,11 @@ def release_all_pop(sender, instance, **kwargs):
     """
 
     resource = instance
-    rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
-    if not rel.resources.count():
+    try:
+        rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
+    except Release.DoesNotExist:
+        rel = None
+    if rel and not rel.resources.count():
         rel.delete()
 
 # Connect handlers to populate 'all' release (more info in handler docstrings):
