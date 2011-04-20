@@ -112,10 +112,18 @@ class StorageFile(models.Model):
         """
         Try to parse the file and fill in information fields in current model
         """
+        # this try to guess the API of the magic module, between
+        # the one from file and the other one from python-magic
+        try:
+                m = magic.Magic(mime=True)
+                # guess mimetype and remove charset
+                self.mime_type = m.from_file(self.get_storage_path())
+        except AttributeError:
+                m = magic.open(magic.MAGIC_NONE)
+                m.load()
+                self.mime_type = m.file(self.get_storage_path()) 
+                m.close()
 
-        m = magic.Magic(mime=True)
-        # guess mimetype and remove charset
-        self.mime_type = m.from_file(self.get_storage_path())
         self.save()
 
         parser = self.find_parser()
