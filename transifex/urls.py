@@ -29,6 +29,7 @@ urlpatterns += patterns('',
     url(r'^ajax/', include('ajax_select.urls')),
     url(r'^ajax/', include('resources.urls.ajax')),
     url(r'^api/', include('api.urls')),
+    
 )
 
 if settings.ENABLE_CONTACT_FORM:

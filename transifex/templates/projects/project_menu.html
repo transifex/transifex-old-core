@@ -53,22 +53,7 @@ $(document).ready(
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 
-<div class="tab-wrapper grid_16">
-<div  class="tabs clearfix">
-	<li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a> </li>
-	{% if is_maintainer %}
-	<li class="{% if project_access_control_form %}selected{% endif %}"><a href="{% url project_access_control_edit project.slug %}">{% trans "Access Control" %}</a> </li>
-	{% endif % 
-	<li class="{% if project_team_page %}selected{% endif %}"><a href="{{ url_most_active }}">{% trans "Teams" %}</a> </li>
-	
-	<li class="{% ifequal request.path url_featured %}selected{% endifequal %}"><a href="{{ url_featured }}">Featured</a> </li>	
-	{% url project_list as url_all %}
-	<li class="{% ifequal request.path url_all %}selected{% endifequal %}"><a href="{{ url_all }}">All from A to Z</a> </li>	
-	
-</div>
-</div>
 
-<!--
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 
@@ -94,7 +79,7 @@ $(document).ready(
     {% hook "project.html" menu %}
   </ul>
 </div>
--->
+
 {% endif %}
 {% endblock %}
 

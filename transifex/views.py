@@ -7,3 +7,4 @@ def server_error(request, template_name='500.html'):
     t = loader.get_template(template_name)
     return HttpResponseServerError(t.render(Context({
         'STATIC_URL': settings.STATIC_URL})))
+
