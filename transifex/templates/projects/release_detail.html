@@ -20,14 +20,21 @@
         $(".tablesorter_release_list").tablesorter({
             sortList: [[1,1]],
             widgets: ['zebra'],
-            textExtraction: { // Take value inside an object for the columns
-              0: function(node) {
-                  return $("a", node).text();
-              },
-              1: function(node) {
-                  return $(".origin_format", node).text();
-              }
-            }
+            headers: {
+                1: { sorter: 'percent' },
+                2: { sorter: 'number' }
+            },
+            textExtraction: function(node) {  
+                switch (node.cellIndex){
+                    // Stats column
+                    case 1:
+                        return $(".stats_string_resource", node).text();
+                    // Last update column
+                    case 2:
+                        return $("span", node).attr('unixdate');
+                    default: return node.innerHTML;
+                }
+            } 
         });
 
         // Toggle to resources list
@@ -177,11 +184,10 @@
         </td>
 
         <td>
-        <span style="border:0">
-          {% with stat.last_update as last_update %}
+        {% with stat.last_update as last_update %}
+        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
-              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|date:"M d, h:ia" }}
               {% if last_committer %}
               by {{ last_committer }}
@@ -190,8 +196,8 @@
               {% trans "no translations yet" %}
           {% endif %}
           {% endwith %}
-          {% endwith %}
         </span>
+        {% endwith %}
         </td>
 	  {% endcache %}
     </tr>

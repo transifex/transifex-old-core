@@ -20,22 +20,26 @@
         $(".tablesorter_resource").tablesorter({
             sortList: [[1,1],[0,0]],
             widgets: ['zebra'],
-            textExtraction: { // Take value inside an object for the columns
-              0: function(node) {
-                  return $("a", node).text();
-              },
-              1: function(node) {
-                  return $(".stats_string_resource", node).text();
-              },
-              2: function(node) {
-                  return $(".origin_format", node).text();
-              },
-              3: function(node) {
-                  return parseInt($(".priority_sort", node).text());
-              }
+            headers: {
+                1: { sorter: 'percent' },
+                2: { sorter: 'number' },
+                3: { sorter: 'number' }
+            },
+            textExtraction: function(node) {  
+                switch (node.cellIndex){
+                    // Stats column
+                    case 1:
+                        return $(".stats_string_resource", node).text();
+                    // Last update column
+                    case 2:
+                        return $("span", node).attr('unixdate');
+                    // Priority column
+                    case 3:
+                        return $(".priority_sort", node).text()
+                    default: return node.innerHTML;
+                }
             }
         });
-
     });
   </script>
 
@@ -88,11 +92,10 @@
         {% endwith %}
         </td>
         <td>
-        <span style="border:0">
-          {% with stat.last_update as last_update %}
+        {% with stat.last_update as last_update %}
+        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
-              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|timesince }}
               {% if last_committer %}
               by {{ last_committer }}
@@ -101,8 +104,8 @@
               {% trans "no activity yet" %}
           {% endif %}
           {% endwith %}
-          {% endwith %}
         </span>
+        {% endwith %}
         </td>
         <td class="priority_level" style="width:100px;text-align:center">
         <span style="border:0">
@@ -219,11 +222,10 @@
         {% endwith %}
         </td>
         <td>
-        <span style="border:0">
-          {% with stat.last_update as last_update %}
+        {% with stat.last_update as last_update %}
+        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
-              <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
               {{ last_update|timesince }}
               {% if last_committer %}
               by {{ last_committer }}
@@ -232,8 +234,8 @@
               {% trans "no activity yet" %}
           {% endif %}
           {% endwith %}
-          {% endwith %}
         </span>
+        {% endwith %}
         </td>
         <td class="priority_level" style="width:100px;text-align:center">
         <span style="border:0">
