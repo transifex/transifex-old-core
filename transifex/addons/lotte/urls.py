@@ -37,6 +37,8 @@ urlpatterns += patterns('',
 # General URLs
 
 urlpatterns += patterns('',
-    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[\-_@\w]+)/details_snippet/$',
-        translation_details_snippet, name='translation_details_snippet'),
+    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[\-_@\w]+)/tab_details_snippet/$',
+        tab_details_snippet, name='tab_details_snippet'),
+    url('^entities/(?P<entity_id>\d+)/l/(?P<lang_code>[\-_@\w]+)/tab_suggestions_snippet/$',
+        tab_suggestions_snippet, name='tab_suggestions_snippet'),
 )

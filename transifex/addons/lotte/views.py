@@ -719,7 +719,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
 # Restrict access only for private projects since this is used to fetch stuff
 # Allow even anonymous access on public projects
-def translation_details_snippet(request, entity_id, lang_code):
+def tab_details_snippet(request, entity_id, lang_code):
     """Return a template snippet with entity & translation details."""
 
     source_entity = get_object_or_404(SourceEntity, pk=entity_id)
@@ -734,9 +734,31 @@ def translation_details_snippet(request, entity_id, lang_code):
     return list_detail.object_detail(request,
         queryset=SourceEntity.objects.all(),
         object_id=entity_id,
-        template_name="lotte_details_snippet.html",
+        template_name="tab_details_snippet.html",
         template_object_name='source_entity',
         extra_context={"translation" : translation})
+
+
+# Restrict access only for private projects since this is used to fetch stuff
+# Allow even anonymous access on public projects
+def tab_suggestions_snippet(request, entity_id, lang_code):
+    """Return a template snippet with entity & translation details."""
+
+    source_entity = get_object_or_404(SourceEntity, pk=entity_id)
+
+    check = ProjectPermission(request.user)
+    if not check.private(source_entity.resource.project):
+        return permission_denied(request)
+
+    current_translation = source_entity.get_translation(lang_code)
+
+    return render_to_response("tab_suggestions_snippet.html", {
+        'source_entity': source_entity,
+        'lang_code': lang_code,
+        'current_translation': current_translation
+        },
+    context_instance = RequestContext(request))
+
 
 # Restrict access only to :
 # 1)project maintainers
