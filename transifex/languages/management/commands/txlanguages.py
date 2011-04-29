@@ -39,7 +39,7 @@ class Command(LabelCommand):
     can_import_settings = True
 
     def handle(self, *args, **options):
-        verbose = options.get('verbosity')
+        verbose = int(options.get('verbosity'))
         doimport = options.get('doimport')
         doexport = options.get('doexport')
 
