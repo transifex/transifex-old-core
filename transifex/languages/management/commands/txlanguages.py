@@ -100,12 +100,12 @@ def import_lang(filename=None, verbose=False):
         if not os.path.exists(filename):
             raise CommandError("Could not find fixture %s." % filename)
 
-    print 'Importing languages from %s' % filename
+    print (u'Importing languages from %s' % filename).encode('UTF-8')
 
     try:
         datafile = open(filename, 'r')
     except IOError:
-        print 'Cannot open %s' % filename
+        print (u'Cannot open %s' % filename).encode('UTF-8')
         return
     except:
         print "Unexpected error: %s" % sys.exc_info()[0]
@@ -125,9 +125,9 @@ def fill_the_database_verbose(data):
         fields = obj['fields']
         lang, created = Language.objects.get_or_create(code=fields['code'])
         if created:
-            print 'Creating %s language (%s)' % (fields['name'], fields['code'])
+            print (u'Creating %s language (%s)' % (fields['name'], fields['code'])).encode('UTF-8')
         else:
-            print 'Updating %s language (%s)' % (fields['name'], fields['code'])
+            print (u'Updating %s language (%s)' % (fields['name'], fields['code'])).encode('UTF-8')
         fill_language_data(lang, fields)
 
 def fill_the_database_silently(data):

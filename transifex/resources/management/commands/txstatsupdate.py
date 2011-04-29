@@ -53,8 +53,8 @@ class Command(LabelCommand):
 
         for seq, r in enumerate(resources):
             if verbosity:
-                sys.stdout.write("Updating resource %s.%s (%s of %s)\n" %
-                    ( r.project.slug, r.slug, seq+1, num))
+                sys.stdout.write((u"Updating resource %s.%s (%s of %s)\n" %
+                    ( r.project.slug, r.slug, seq+1, num)).encode('UTF-8'))
 
             # Update resource fields
             r.update_total_entities()

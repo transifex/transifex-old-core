@@ -21,7 +21,7 @@ class Command(NoArgsCommand):
         for path in transifex_paths():
             try:
                 os.makedirs(path)
-                sys.stdout.write("Creating %s\n" % path)
+                sys.stdout.write((u"Creating %s\n" % path).encode('UTF-8'))
             except OSError, e:
-                sys.stdout.write("Error creating %s: %s\n" % (path, e.strerror))
+                sys.stdout.write((u"Error creating %s: %s\n" % (path, e.strerror)).encode('UTF-8'))
 

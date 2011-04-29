@@ -42,7 +42,7 @@ class Command(LabelCommand):
                     resources.extend(Resource.objects.filter(project__slug=prj,
                         slug=res) or None)
                 except (ValueError, TypeError), e:
-                    sys.stderr.write("No matching resource was found for %s\n" % arg)
+                    sys.stderr.write((u"No matching resource was found for %s\n" % arg).encode('UTF-8'))
 
             resource_urlhandlers = URLInfo.objects.filter(resource__in=resources)
 
@@ -55,18 +55,18 @@ class Command(LabelCommand):
         sys.stdout.write("A total of %s resources are listed for updating.\n" % num)
 
         for seq, handler in enumerate(resource_urlhandlers):
-            sys.stdout.write("Updating resource %s.%s (%s of %s)\n" %
-                ( handler.resource.project.slug, handler.resource.slug, seq+1,num))
+            sys.stdout.write((u"Updating resource %s.%s (%s of %s)\n" %
+                ( handler.resource.project.slug, handler.resource.slug, seq+1,num)).encode('UTF-8'))
             try:
                 handler.update_source_file()
             except Exception, e:
-                sys.stderr.write("Error updating source file for resource %s.%s\n" %
-                    ( handler.resource.project.slug, handler.resource.slug) )
+                sys.stderr.write((u"Error updating source file for resource %s.%s\n" %
+                    ( handler.resource.project.slug, handler.resource.slug)).encode('UTF-8'))
                 sys.stderr.write("Exception was: %s\n" % e)
                 if skip:
                     continue
                 sys.stderr.write("Aborting...\n")
                 sys.exit(1)
             else:
-               sys.stdout.write("Updated source file for resource %s.%s\n" %
-                    (handler.resource.project.slug, handler.resource.slug))
+               sys.stdout.write((u"Updated source file for resource %s.%s\n" %
+                    (handler.resource.project.slug, handler.resource.slug)).encode('UTF-8'))
