@@ -209,9 +209,9 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     # Get the team if exists to use it for permissions and links
     team = Team.objects.get_or_none(project, target_lang_code)
 
-    disabled_languages_ids = Translation.objects.filter(
-        source_entity__resource = resource).values_list(
-            'language', flat=True).distinct()
+    disabled_languages_ids = RLStats.objects.filter(resource=resource
+        ).values_list('language', flat=True).distinct()
+
     languages = Language.objects.filter()
 
     lock = Lock.objects.get_valid(resource, target_language)
