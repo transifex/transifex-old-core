@@ -105,7 +105,7 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test the response contents
         resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        self.assertNotContains(resp, 'Edit resource...', status_code=200)
+        self.assertContains(resp, 'Edit resource...', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
             resp = self.client[user].get(self.urls['resource'])
@@ -126,7 +126,10 @@ class ResourcesTemplateTests(BaseTestCase):
         an action page."""
         # We chose Finnish language which has no corresponding project team.
         lang = Language.objects.by_code_or_alias('fi')
-        resp = self.client['maintainer'].get(self.urls['resource_actions'])
+        resp = self.client['maintainer'].get(
+            reverse('resource_actions', args=[self.resource.project.slug,
+                                              self.resource.slug, lang.code]),
+        )
         self.assertEqual(resp.status_code, 404)
 
     def test_resource_details_team_and_zero_percent(self):

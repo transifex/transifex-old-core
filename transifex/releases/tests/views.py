@@ -27,7 +27,8 @@ class ReleasesViewsTests(base.BaseTestCase):
 
         # Anonymous should not see anything
         resp = self.client['anonymous'].get(self.urls['project'])
-        self.assertNotContains(resp, "Project Releases")
+        self.assertContains(resp, "Project Releases")
+        self.assertContains(resp, "All Resources")
 
 
     def test_release_details_resources(self):
