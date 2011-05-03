@@ -108,6 +108,11 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertTemplateUsed(resp, "projects/release_form.html")
         self.assertContains(resp, "Invalid...")
 
+    def test_add_release_button_shown_on_project_deatils_page(self):
+        response = self.client['maintainer'].get(self.urls['project'])
+        self.assertContains(response, 'Add')
+        self.assertContains(response, 'href="%sadd-release/"' % self.urls['project'])
+
 
 class AllReleaseTests(base.BaseTestCase):
     """Test the All Release model."""
