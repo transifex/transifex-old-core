@@ -1,4 +1,4 @@
-from transifex.resources.tests.models import *
+#from transifex.resources.tests.models import *
 # Related to the deprecated code
 #from resources.tests.loaders import *
 from resources.formats import *

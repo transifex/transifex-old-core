@@ -125,6 +125,7 @@ class BaseTestCase(TestCase):
         self.language = Language.objects.get(code='pt_BR')
         self.language_en = Language.objects.get(code='en_US')
         self.language_ar = Language.objects.get(code='ar')
+        #self.language_hi_IN = Language.objects.get(code='hi_IN')
         self.team = Team.objects.get_or_create(language=self.language,
             project=self.project, creator=self.user['maintainer'])[0]
         self.team_private = Team.objects.get_or_create(language=self.language,
