@@ -168,6 +168,13 @@ class Handler(object):
         """
         return re.sub(re.escape(original), replacement, text)
 
+    def _peek_into_template(self):
+        """
+        Offer a chance to peek into the template before any string is
+        compiled.
+        """
+        pass
+
     @need_resource
     def compile(self, language=None):
         """
@@ -185,6 +192,7 @@ class Handler(object):
 
         template = Template.objects.get(resource=self.resource)
         template = template.content
+        self._peek_into_template()
 
         stringset = SourceEntity.objects.filter(
             resource = self.resource)

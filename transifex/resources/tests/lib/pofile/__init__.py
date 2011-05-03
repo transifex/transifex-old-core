@@ -3,17 +3,18 @@ import os
 import unittest
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from transifex.txcommon.tests import base, utils
+from transifex.txcommon.tests import utils
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.pofile import POHandler
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
 from transifex.addons.suggestions.models import Suggestion
 
 TEST_FILES_PATH = os.path.join(settings.PROJECT_PATH,
                                'resources/tests/lib/pofile/general')
 
-class POFile(base.BaseTestCase):
+class POFile(FormatsBaseTestCase):
     """Suite of tests for the pofile lib."""
 
     def test_pot_parser(self):
@@ -276,7 +277,7 @@ class POFile(base.BaseTestCase):
                     trans.string.encode('utf-8')))
 
 
-class POFileHeaders(base.BaseTestCase):
+class POFileHeaders(FormatsBaseTestCase):
     """Test PO File library support for PO file headers."""
 
     def _load_pot(self):
@@ -289,8 +290,8 @@ class POFileHeaders(base.BaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        return handler        
-    
+        return handler
+
     def test_poheader_team_url(self):
         """Test team header when no main list is defined (URL)."""
         self.assertFalse(self.team.mainlist)

@@ -1,12 +1,12 @@
 import os
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.qt import LinguistHandler
 from transifex.addons.suggestions.models import Suggestion
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
-class QtFile(BaseTestCase):
+class QtFile(FormatsBaseTestCase):
     """Suite of tests for the qt lib."""
     def test_qt_parser(self):
         """TS file tests."""
