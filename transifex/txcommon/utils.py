@@ -58,6 +58,42 @@ def cached_property(func):
 
     return property(_set_cache, fdel=_del_cache)
 
+
+def immutable_property(func):
+    """
+    Immutable property.
+
+    This function prevents an instance of a property field to be
+    altered and/or deleted.
+
+    Usage:
+    class Foo(object):
+        @immutable_property
+        def bar(self):
+            return True
+
+    foo=Foo()
+    foo.bar = False
+    ValueError: 'bar' is immutable and can not be changed
+
+    del(foo.bar)
+    ValueError: 'bar' is immutable and can not be deleted
+
+    """
+    def _set_attr(self, value):
+        raise ValueError("'%s' is immutable and can not be changed"
+            % func.__name__)
+
+    def _get_attr(self):
+        return func(self)
+
+    def _del_attr(self):
+        raise ValueError("'%s' is immutable and can not be deleted"
+            % func.__name__)
+
+    return property(fget=_get_attr, fset=_set_attr, fdel=_del_attr)
+
+
 def key_sort(l, *keys):
     """
     Sort an iterable given an arbitrary number of keys relative to it
