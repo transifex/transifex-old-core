@@ -74,6 +74,7 @@ setup(
         "django-piston",
         "django-sorting >= 0.1",
         "django-tagging >= 0.3",
+        "django-haystack",
         "South >= 0.7.2",
         "django-ajax-selects",
         "django-threadedcomments >= 0.9",

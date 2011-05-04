@@ -23,25 +23,29 @@
   {% endwith %}
 
   {% if query %}
+    {% if spelling_suggestion %}
+        <h3>{% trans 'Did you mean:' %} <a href="{% url search %}?q={{ spelling_suggestion }}">{{ spelling_suggestion }}</a></h3>
+    {% endif %}
+
     {% if results %}
       <h3 class="pagetitle">
         {% with results|length as result_count %}{% blocktrans %}Search Results ({{ result_count }}){% endblocktrans %}</h3>{% endwith %}
       {% autopaginate results 10 %}
       <div class="project_list">
-      {% for project in results %}
+      {% for sr in results %}
         {% highlight terms as name %} {# set `name` object #}
-            {{ project.name }}
+            {{ sr.object.name }}
         {% endhighlight %}
         {% searchexcerpt terms 6 as description %} {# set `description` object #}
-            {{ project.description|striptags }}
+            {{ sr.object.description|striptags }}
         {% endsearchexcerpt %}
-        {% searchexcerpt terms 10 as long_description %} {# set `description` object #}
-            {{ project.long_description|markdown|striptags }}
+        {% searchexcerpt terms 10 as searchtext %} {# set `searchtext` object #}
+            {{ sr.text|markdown|striptags }}
         {% endsearchexcerpt %}
         <div class="info">
-          <p class="name"><a href="{{ project.get_absolute_url }}">{{ name.highlighted }}</a></p>
+          <p class="name"><a href="{{ sr.object.get_absolute_url }}">{{ name.highlighted }}</a></p>
           <p class="description">{{ description.excerpt|highlight:terms }}</p>
-          <p class="long_description">{{ long_description.excerpt|highlight:terms }}</p>
+          <p class="long_description">{{ searchtext.excerpt|highlight:terms }}</p>
         </div>
       {% endfor %}
       <div class="pagination top">{% paginate %}</div>
