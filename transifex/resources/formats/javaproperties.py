@@ -190,7 +190,7 @@ class JavaPropertiesHandler(Handler):
                     continue
             else:
                 try:
-                    if SourceEntity.objects.get(resource=resource, string=source) and trans.strip()!="":
+                    if SourceEntity.objects.get(resource=resource, string=source):
                         pass
                     else:
                         continue
