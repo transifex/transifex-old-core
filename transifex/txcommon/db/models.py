@@ -158,16 +158,17 @@ class CompressedTextField(models.TextField):
     def get_internal_type(self):
         return "TextField"
 
-    def db_type(self):
-        db_types = {'mysql':'longblob',
-                    'sqlite3':'blob',
-                    'postgres':'text',
-                    'postgresql_psycopg2':'text'}
+    def db_type(self, connection):
+        db_types = {'django.db.backends.mysql':'longblob',
+                    'django.db.backends.sqlite3':'blob',
+                    'django.db.backends.postgres':'text',
+                    'django.db.backends.postgresql_psycopg2':'text'}
         try:
-            return db_types[settings.DATABASE_ENGINE]
-        except KeyError:
+            return db_types[connection.settings_dict['ENGINE']]
+        except KeyError, e:
+            print str(e)
             raise Exception, '%s currently works only with: %s' % (
-                self.__class__.__name__,','.join(db_types.keys()))
+                self.__class__.__name__,', '.join(db_types.keys()))
 
 
 """
