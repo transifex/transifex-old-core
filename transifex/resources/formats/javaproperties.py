@@ -18,9 +18,11 @@ class JavaPropertiesHandler(Handler):
     """
     Handler for Java PROPERTIES translation files.
     """
+
     name = "Java *.PROPERTIES file handler"
     mime_types = []
     format = "Java PROPERTIES (*.properties)"
+
     @classmethod
     def accept(cls, filename=None, mime=None):
         return filename.endswith(".properties") or mime in cls.mime_types
@@ -28,7 +30,7 @@ class JavaPropertiesHandler(Handler):
     @classmethod
     def contents_check(self, filename):
         pass
-        
+
     def __str__(self):
         s='{'
         for key,value in self._props.items():
@@ -37,9 +39,48 @@ class JavaPropertiesHandler(Handler):
         s=''.join((s[:-2],'}'))
         return s
 
-    def __parse(self, lines):
-        """ Parse a list of lines and create
-        an internal property dictionary """
+    def _split(self, line):
+        """
+        Split a line in (key, value).
+
+        The separator is the first non-escaped charcter of (\s,=,:).
+        If no such character exists, the wholi line is a key with no value.
+        """
+        for i, c in enumerate(line):
+            if c in [' ', '\t', '=', ':', ] and not self._is_escaped(line, i):
+                return (line[:i], line[i+1:])
+        return (line, None)
+
+    def _is_escaped(self, line, index):
+        """
+        Returns True, if the character of index is escaped by backslashes.
+
+        There has to be an even number of backslashes before the character for
+        it to be escaped.
+        """
+        nbackslashes = 0
+        for c in reversed(line[:index]):
+            if c == '\\':
+                nbackslashes += 1
+            else:
+                break
+        return nbackslashes % 2 == 1
+
+    def _parse(self, fh):
+        """
+        Parse a file handle and create an internal property dictionary.
+
+        See http://download.oracle.com/javase/1.4.2/docs/api/java/util/PropertyResourceBundle.html,
+        http://download.oracle.com/javase/1.4.2/docs/api/java/util/Properties.html#encoding and
+        http://download.oracle.com/javase/1.4.2/docs/api/java/util/Properties.html#load(java.io.InputStream)
+        for details.
+
+        Args:
+            fh: an open file handle.
+
+        Returns:
+            the original file as a buffer.
+        """
 
         # Every line in the file must consist of either a comment
         # or a key-value pair. A key-value pair is a line consisting
@@ -65,178 +106,57 @@ class JavaPropertiesHandler(Handler):
         # key
         # This key= this value
         # key = value1 value2 value3
-        
+
         # Any line that starts with a '#' or '!' is considerered a comment
         # and skipped. Also any trailing or preceding whitespaces
         # are removed from the key/value.
-        
-        # This is a line parser. It parses the
-        # contents like by line.
 
-        lineno=0
-        i = iter(lines)
+        # This is a line parser. It parses the contents line by line.
 
-        for line in i:
-            lineno += 1
-            line = line.strip()
-            # Skip null lines
-            if not line: continue
-            # Skip lines which are comments
-            if line[0] in ('#','!'): continue
-            # Some flags
-            escaped=False
-            # Position of first separation char
-            sepidx = -1
-            # A flag for performing wspace re check
-            flag = 0
-            # Check for valid space separation
-            # First obtain the max index to which we
-            # can search.
-            m = self.othercharre.search(line)
-            if m:
-                first, last = m.span()
-                start, end = 0, first
-                flag = 1
-                wspacere = re.compile(r'(?<![\\\=\:])(\s)')        
-            else:
-                if self.othercharre2.search(line):
-                    # Check if either '=' or ':' is present
-                    # in the line. If they are then it means
-                    # they are preceded by a backslash.
-                    
-                    # This means, we need to modify the
-                    # wspacere a bit, not to look for
-                    # : or = characters.
-                    wspacere = re.compile(r'(?<![\\])(\s)')        
-                start, end = 0, len(line)
-                
-            m2 = wspacere.search(line, start, end)
-            if m2:
-                logger.debug('Space match=>'+line)
-                # Means we need to split by space.
-                first, last = m2.span()
-                sepidx = first
-            elif m:
-                logger.debug('Other match=>'+line)
-                # No matching wspace char found, need
-                # to split by either '=' or ':'
-                first, last = m.span()
-                sepidx = last - 1
-                logger.debug(line[sepidx])
-                
-                
+        buf = u""
+        for line in fh:
+            buf += line
+            line = self._prepare_line(line)
+            # Skip empty lines and comments
+            if not line or line.startswith(('#','!', )):
+                continue
             # If the last character is a backslash
             # it has to be preceded by a space in which
             # case the next line is read as part of the
             # same property
-            while line[-1] == '\\':
+            while line[-1] == '\\' and not self._is_escaped(line, -1):
                 # Read next line
-                nextline = i.next()
-                nextline = nextline.strip()
-                lineno += 1
+                nextline = self._prepare_line(fh.next())
                 # This line will become part of the value
                 line = line[:-1] + nextline
+            key, value = self._split(line)
+            if value is None:
+                continue
+            self.processPair(self.unescape(key), self.unescape(value))
+        return buf
 
-            # Now split to key,value according to separation char
-            if sepidx != -1:
-                key, value = line[:sepidx], line[sepidx+1:]
-            else:
-                key,value = line,''
-            self._keyorder.append(key)
-            self.processPair(key, value)
-            
+    def _prepare_line(self, line):
+        """Prepare a line for parsing."""
+        return line.strip('\r\n').strip()
+
     def processPair(self, key, value):
         """ Process a (key, value) pair """
-
-        oldkey = key
-        oldvalue = value
-        
-        # Create key intelligently
-        keyparts = self.bspacere.split(key)
-        #logger.debug(keyparts)
-
-        strippable = False
-        lastpart = keyparts[-1]
-
-        if lastpart.find('\\ ') != -1:
-            keyparts[-1] = lastpart.replace('\\','')
-
-        # If no backspace is found at the end, but empty
-        # space is found, strip it
-        elif lastpart and lastpart[-1] == ' ':
-            strippable = True
-
-        key = ''.join(keyparts)
-        if strippable:
-            key = key.strip()
-            oldkey = oldkey.strip()
-        
-        oldvalue = self.unescape(oldvalue)
-        value = self.unescape(value)
-
-        # Patch from N B @ ActiveState
-        curlies = re.compile("{.+?}")
-        found = curlies.findall(value)
-
-        for f in found:
-            srcKey = f[1:-1]
-            if self._props.has_key(srcKey):
-                value = value.replace(f, self._props[srcKey], 1)
-
+        logger.debug("%s=%s\n" % (key, value))
         self._props[key] = value.strip()
 
-        # Check if an entry exists in pristine keys
-        if self._keymap.has_key(key):
-            oldkey = self._keymap.get(key)
-            self._origprops[oldkey] = oldvalue.strip()
-        else:
-            self._origprops[oldkey] = oldvalue.strip()
-            # Store entry in keymap
-            self._keymap[key] = oldkey
-        
-        if key not in self._keyorder:
-            self._keyorder.append(key)
-        
     def escape(self, value):
+        """
+        Escape special characters in Java properties files.
 
-        # Java escapes the '=' and ':' in the value
-        # string with backslashes in the store method.
-        # So let us do the same.
-        newvalue = value.replace(':','\:')
-        newvalue = newvalue.replace('=','\=')
-
-        return newvalue
+        Java escapes the '=' and ':' in the value
+        string with backslashes in the store method.
+        So let us do the same.
+        """
+        return value.replace(':','\:').replace('=','\=').replace(' ','\ ').replace('\\', '\\\\')
 
     def unescape(self, value):
-
-        # Reverse of escape
-        newvalue = value.replace('\:',':')
-        newvalue = newvalue.replace('\=','=')
-
-        return newvalue    
-        
-    def load(self, stream):
-        """ Load properties from an open file stream """
-        self._props = {}
-        self._origprops = {}
-        self._keyorder = []
-        self._keymap = {}
-        
-        self.othercharre = re.compile(r'(?<!\\)(\s*\=)|(?<!\\)(\s*\:)')
-        self.othercharre2 = re.compile(r'(\s*\=)|(\s*\:)')
-        self.bspacere = re.compile(r'\\(?!\s$)')
-
-        lines = stream.split('\n')
-        if lines[-1] == '':
-            lines.pop()
-        for line in lines:
-            lines[lines.index(line)] = line + '\n'
-        self.__parse(lines)
-
-
-    def getPropertyDict(self):
-        return self._props
-
+        """Reverse the escape of special characters."""
+        return value.replace('\:',':').replace('\=','=').replace('\ ', ' ').replace('\\\\', '\\')
 
     @need_language
     @need_file
@@ -247,16 +167,14 @@ class JavaPropertiesHandler(Handler):
         resource = self.resource
         stringset = StringSet()
         suggestions = StringSet()
+        self._props = {}
 
-        fh = codecs.open(self.filename, "r", "utf-8")
-
-        buf = fh.read()
-        fh.close()
-        self.load(buf)
-        propertyDict = self.getPropertyDict()
-        for property in propertyDict:
-            source = property
-            trans = propertyDict[property]
+        try:
+            fh = codecs.open(self.filename, "r", encoding="UTF-8")
+            buf = self._parse(fh)
+        finally:
+            fh.close()
+        for source, trans in self._props.iteritems():
             line = (source + '=' + trans)#.decode('utf-8')
             # We use empty context
             context = ""
@@ -265,7 +183,7 @@ class JavaPropertiesHandler(Handler):
                 if trans.strip()!="":
                     new_line = re.sub(re.escape(trans), "%(hash)s_tr" % {'hash':md5_constructor(
                         ':'.join([source,context]).encode('utf-8')).hexdigest()}, line)
-    
+
                     # this looks fishy
                     buf = re.sub(re.escape(line), new_line, buf)
                 else:
@@ -278,7 +196,7 @@ class JavaPropertiesHandler(Handler):
                         continue
                 except:
                     continue
-                    
+
             stringset.strings.append(GenericTranslation(source,
                 trans, rule=5, context=context,
                 pluralized=False, fuzzy=False,
@@ -289,3 +207,9 @@ class JavaPropertiesHandler(Handler):
 
         if is_source:
             self.template = str(buf.encode('utf-8'))
+
+    def _post_compile(self, *args, **kwargs):
+        """
+        Escape special chars in the end of compilation.
+        """
+        self.compiled_template = self._escape(self.compiled_template)
