@@ -157,3 +157,35 @@ def restructured_table(column_names, column_ids, object_list, truncate_len=13):
         table += "|\n"
     table += border + "\n"
     return table
+
+def paginate(qs, start, end):
+    """
+    Return the specified queryset paginated by start:end.
+    """
+    if start is None and end is None:
+        return (qs, "")
+
+    int_msg = "Value of '%s' parameter must be an integer."
+    neg_msg = "Parameter '%s' cannot be less than 1."
+    if start is not None:
+        try:
+            start = int(start) - 1
+            if start < 0:
+                return (None, neg_msg % "start")
+        except ValueError, TypeError:
+            return (None, int_msg % "start")
+    if end is not None:
+        try:
+            end = int(end) - 1
+            if end < 0:
+                return (None, neg_msg % "end")
+        except ValueError, TypeError:
+            return (None, int_msg % "end")
+
+    if start is None:
+        return (qs[:end], "")
+    elif end is None:
+        return (qs[start:], "")
+    else:
+        return (qs[start:end], "")
+

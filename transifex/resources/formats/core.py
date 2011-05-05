@@ -420,7 +420,8 @@ class Handler(object):
             raise Exception("Error opening file %s: %s" % ( filename, e))
 
 
-    def accept(self, filename=None, mime=None):
+    @classmethod
+    def accepts(self, filename=None, mime=None):
         return False
 
     def parse_file(self, filename, is_source=False, lang_rules=None):

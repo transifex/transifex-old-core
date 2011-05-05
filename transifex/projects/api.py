@@ -2,14 +2,14 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from django.http import HttpResponse, HttpResponseServerError
 from django.utils import simplejson
 from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 
 from piston.handler import BaseHandler
-from piston.utils import rc, throttle
+from piston.utils import rc, throttle, require_mime
 
 from transifex.actionlog.models import action_logging
 from transifex.languages.models import Language
@@ -24,147 +24,302 @@ from transifex.storage.models import StorageFile
 from transifex.teams.models import Team
 from transifex.txcommon.log import logger
 from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.utils import paginate
 from transifex.api.utils import BAD_REQUEST
 from uuid import uuid4
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
+
 class ProjectHandler(BaseHandler):
     """
     API handler for model Project.
     """
     allowed_methods = ('GET','POST','PUT','DELETE')
-    model = Project
-    #TODO: Choose the fields we want to return
-    fields = ('slug', 'name', 'description', 'long_description', 'created',
-              'anyone_submit', 'bugtracker', ('owner', ('username', 'email')),
-              ('resources', ('slug', 'name',)))
+    details_fields = (
+        'slug', 'name', 'description', 'long_description', 'homepage', 'feed',
+        'created', 'anyone_submit', 'bug_tracker', 'trans_instructions',
+        'anyone_submit', 'tags', 'outsource', ('maintainers', ('username')),
+        ('owner', ('username')), ('resources', ('slug', 'name', )),
+    )
+    default_fields = ('slug', 'name', 'description', )
+    fields = default_fields
+    allowed_fields = (
+        'name', 'slug', 'description', 'long_description', 'private',
+        'homepage', 'feed', 'anyone_submit', 'hidden', 'bug_tracker',
+        'trans_instructions', 'tags', 'maintainers', 'outsource',
+    )
     exclude = ()
 
-    def read(self, request, project_slug=None):
+    def read(self, request, project_slug=None, api_version=1):
         """
         Get project details in json format
         """
-        if project_slug:
-            try:
-                project = Project.objects.get(slug=project_slug)
-            except Project.DoesNotExist:
-                return rc.NOT_FOUND
-            return project
-        else:
-            return Project.objects.for_user(request.user)
+        # Reset fields to default value
+        ProjectHandler.fields = ProjectHandler.default_fields
+        if api_version == 2:
+            if "details" in request.GET.iterkeys():
+                if project_slug is None:
+                    return rc.NOT_IMPLEMENTED
+                ProjectHandler.fields = ProjectHandler.details_fields
+        return self._read(request, project_slug)
 
+    @require_mime('json')
     @method_decorator(one_perm_required_or_403(pr_project_add))
-    def create(self, request,project_slug=None):
+    def create(self, request, project_slug=None, api_version=1):
         """
         API call to create new projects via POST.
         """
-        if 'application/json' in request.content_type: # we got JSON
-            data = getattr(request, 'data', None)
-            outsource = maintainers = None
-            outsource = data.pop('outsource', {})
-            maintainers = data.pop('maintainers', {})
+        data = getattr(request, 'data', None)
+        if api_version == 2:
+            if project_slug is not None:
+                return BAD_REQUEST("POSTing to this url is not allowed.")
+            if data is None:
+                return BAD_REQUEST(
+                    "At least parameters 'slug' and 'name' are needed."
+                )
+            return self._create(request, data)
+        else:
+            return self._createv1(request, data)
+
+    @require_mime('json')
+    @method_decorator(one_perm_required_or_403(pr_project_add_change,
+        (Project, 'slug__exact', 'project_slug')))
+    def update(self, request, project_slug, api_version=1):
+        """
+        API call to update project details via PUT.
+        """
+        if project_slug is None:
+            return BAD_REQUEST("Project slug not specified.")
+        data = request.data
+        if data is None:
+            return BAD_REQUEST("Empty request.")
+        if api_version == 2:
+            return self._update(request, project_slug, data)
+        else:
+            return self._updatev1(request, project_slug, data)
+
+    @method_decorator(one_perm_required_or_403(pr_project_delete,
+        (Project, 'slug__exact', 'project_slug')))
+    def delete(self, request, project_slug=None, api_version=1):
+        """
+        API call to delete projects via DELETE.
+        """
+        if project_slug is None:
+            return BAD_REQUEST("Project slug not specified.")
+        return self._delete(request, project_slug)
+
+    def _read(self, request, project_slug):
+        """
+        Return a list of projects or the details for a specific project.
+        """
+        if project_slug is None:
+            # Use pagination
+            p = Project.objects.for_user(request.user)
+            res, msg = paginate(
+                p, request.GET.get('start'), request.GET.get('end')
+            )
+            if res is None:
+                return BAD_REQUEST(msg)
+            return res
+        else:
             try:
-                p, created = Project.objects.get_or_create(**data)
-            except:
-                return BAD_REQUEST("Project not found")
+                p = Project.objects.get(slug=project_slug)
+                perm = ProjectPermission(request.user)
+                if not perm.private(p):
+                    return rc.FORBIDDEN
+            except Project.DoesNotExist:
+                return rc.NOT_FOUND
+            return p
 
-            if created:
-                # Owner
-                p.owner = request.user
+    def _create(self, request, data):
+        """
+        Create a new project.
+        """
+        # slug and name are mandatory fields for projects
+        if 'slug' not in data:
+            return BAD_REQUEST("Field slug is required to create a new project.")
+        if 'name' not in data:
+            return BAD_REQUEST("Field name is required to create a new project.")
+        if 'owner' in data:
+            return BAD_REQUEST("Owner cannot be set explicitly.")
 
-                # Outsourcing
-                if outsource:
+        try:
+            self._check_fields(data.iterkeys())
+        except AttributeError, e:
+            return BAD_REQUEST("Field '%s' is not available." % e.message)
+
+        # outsource and maintainers are ForeignKey
+        outsource = data.pop('outsource', {})
+        maintainers = data.pop('maintainers', {})
+        try:
+            p = Project(**data)
+        except Exception:
+            return BAD_REQUEST("Invalid arguments given.")
+        try:
+            p.save()
+        except IntegrityError:
+            return rc.DUPLICATE_ENTRY
+
+        p.owner = request.user
+        if outsource:
+            try:
+                outsource_project = Project.objects.get(slug=outsource)
+            except Project.DoesNotExist:
+                p.delete()
+                return BAD_REQUEST("Project for outsource does not exist.")
+            p.outsource = outsource_project
+
+        if maintainers:
+            for user in maintainers.split(','):
+                try:
+                    u = User.objects.get(username=user)
+                except User.DoesNotExist:
+                    p.delete()
+                    return BAD_REQUEST("User %s does not exist." % user)
+                p.maintainers.add(u)
+        p.save()
+        return rc.CREATED
+
+    def _create_v1(self, request, data):
+        """
+        Create a new project following the v1 API.
+        """
+        outsource = data.pop('outsource', {})
+        maintainers = data.pop('maintainers', {})
+        try:
+            p, created = Project.objects.get_or_create(**data)
+        except:
+            return BAD_REQUEST("Project not found")
+
+        if created:
+            # Owner
+            p.owner = request.user
+
+            # Outsourcing
+            if outsource:
+                try:
+                    outsource_project = Project.objects.get(slug=outsource)
+                except Project.DoesNotExist:
+                    # maybe fail when wrong user is given?
+                    pass
+                p.outsource = outsource_project
+
+            # Handler m2m with maintainers
+            if maintainers:
+                for user in maintainers.split(','):
                     try:
-                        outsource_project = Project.objects.get(slug=outsource)
-                    except Project.DoesNotExist:
+                        p.maintainers.add(User.objects.get(username=user))
+                    except User.DoesNotExist:
                         # maybe fail when wrong user is given?
                         pass
-                    p.outsource = outsource_project
-
-                # Handler m2m with maintainers
-                if maintainers:
-                    for user in maintainers.split(','):
-                        try:
-                            p.maintainers.add(User.objects.get(username=user))
-                        except User.DoesNotExist:
-                            # maybe fail when wrong user is given?
-                            pass
-                p.save()
+            p.save()
 
             return rc.CREATED
         else:
             return BAD_REQUEST("Unsupported request")
 
-    @method_decorator(one_perm_required_or_403(pr_project_add_change,
-        (Project, 'slug__exact', 'project_slug')))
-    def update(self, request,project_slug):
-        """
-        API call to update project details via PUT.
-        """
-        if 'application/json' in request.content_type: # we got JSON
-            data = getattr(request, 'data', None)
-            outsource = maintainers = None
-            outsource = data.pop('outsource', {})
-            maintainers = data.pop('maintainers', {})
-            if project_slug:
+    def _update(self, request, project_slug, data):
+        try:
+            self._check_fields(data.iterkeys())
+        except AttributeError, e:
+            return BAD_REQUEST("Field '%s' is not available." % e.message)
+
+        outsource = data.pop('outsource', {})
+        maintainers = data.pop('maintainers', {})
+        try:
+            p = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return BAD_REQUEST("Project not found")
+
+        try:
+            for key,value in data.items():
+                setattr(p, key,value)
+
+            # Outsourcing
+            if outsource:
+                if outsource == p.slug:
+                    return BAD_REQUEST("Original and outsource projects are the same.")
                 try:
-                    p = Project.objects.get(slug=project_slug)
+                    outsource_project = Project.objects.get(slug=outsource)
                 except Project.DoesNotExist:
-                    return BAD_REQUEST("Project not found")
+                    return BAD_REQUEST("Project for outsource does not exist.")
+                p.outsource = outsource_project
+
+            # Handler m2m with maintainers
+            if maintainers:
+                # remove existing maintainers and add new ones
+                p.maintainers.clear()
+                for user in maintainers.split(','):
+                    try:
+                        p.maintainers.add(User.objects.get(username=user))
+                    except User.DoesNotExist:
+                        return BAD_REQUEST("User %s does not exist." % user)
+            p.save()
+        except Exception, e:
+            return BAD_REQUEST("Error parsing request data: %s" % e)
+        return rc.ALL_OK
+
+    def _updatev1(self, request, project_slug, data):
+        """
+        Update a project per API v1.
+        """
+        outsource = data.pop('outsource', {})
+        maintainers = data.pop('maintainers', {})
+        try:
+            p = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return BAD_REQUEST("Project not found")
+        try:
+            for key,value in data.items():
+                setattr(p, key,value)
+                # Outsourcing
+            if outsource:
+                if outsource == p.slug:
+                    return BAD_REQUEST("Original and outsource projects are the same.")
                 try:
-                    for key,value in data.items():
-                        setattr(p, key,value)
-                    # Outsourcing
-                    if outsource:
-                        try:
-                            outsource_project = Project.objects.get(slug=outsource)
-                        except Project.DoesNotExist:
-                            # maybe fail when wrong user is given?
-                            pass
-                        p.outsource = outsource_project
+                    outsource_project = Project.objects.get(slug=outsource)
+                except Project.DoesNotExist:
+                    # maybe fail when wrong user is given?
+                    pass
+                p.outsource = outsource_project
 
-                    # Handler m2m with maintainers
-                    if maintainers:
-                        # remove existing maintainers
-                        p.maintainers.all().clear()
-                        # add then all anew
-                        for user in maintainers.split(','):
-                            try:
-                                p.maintainers.add(User.objects.get(username=user))
-                            except User.DoesNotExist:
-                                # maybe fail when wrong user is given?
-                                pass
-                    p.save()
-                except Exception, e:
-                    return BAD_REQUEST("Error parsing request data: %s" % e)
+            # Handler m2m with maintainers
+            if maintainers:
+                # remove existing maintainers
+                p.maintainers.all().clear()
+                # add then all anew
+                for user in maintainers.split(','):
+                    try:
+                        p.maintainers.add(User.objects.get(username=user))
+                    except User.DoesNotExist:
+                        # maybe fail when wrong user is given?
+                        pass
+            p.save()
+        except Exception, e:
+            return BAD_REQUEST("Error parsing request data: %s" % e)
+        return rc.ALL_OK
 
-                return rc.ALL_OK
+    def _delete(self, request, project_slug):
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist:
+            return rc.NOT_FOUND
+        try:
+            project.delete()
+        except:
+            return rc.INTERNAL_ERROR
+        return rc.DELETED
 
-        return BAD_REQUEST("Unsupported request")
-
-
-    @method_decorator(one_perm_required_or_403(pr_project_delete,
-        (Project, 'slug__exact', 'project_slug')))
-    def delete(self, request,project_slug):
+    def _check_fields(self, fields):
         """
-        API call to delete projects via DELETE.
+        Check if supplied fields are allowed to be given in a
+        POST or PUT request.
         """
-        if project_slug:
-            try:
-                project = Project.objects.get(slug=project_slug)
-            except Project.DoesNotExist:
-                return rc.NOT_FOUND
-
-            try:
-                project.delete()
-            except:
-                return rc.INTERNAL_ERROR
-
-            return rc.DELETED
-        else:
-            return rc.BAD_REQUEST
+        for field in fields:
+            if field not in self.allowed_fields:
+                raise AttributeError(field)
 
 
 class ProjectResourceHandler(BaseHandler):
@@ -177,7 +332,7 @@ class ProjectResourceHandler(BaseHandler):
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
-    def create(self, request, project_slug):
+    def create(self, request, project_slug, api_version=1):
         """
         Create resource for project by UUID of StorageFile.
         """
@@ -257,7 +412,7 @@ class ProjectResourceHandler(BaseHandler):
         else:
             return BAD_REQUEST("Unsupported request")
 
-    def update(self, request, project_slug, resource_slug, language_code=None):
+    def update(self, request, project_slug, resource_slug, language_code=None, api_version=1):
         """
         Update resource translations of a project by the UUID of a StorageFile.
         """
@@ -299,6 +454,7 @@ class ProjectResourceHandler(BaseHandler):
                     strings_added, strings_updated = fhandler.save2db(
                         user=request.user)
                 except Exception, e:
+                    logger.error(e.message, exc_info=True)
                     return BAD_REQUEST("Error importing file: %s" % e)
                 else:
                     messages = []

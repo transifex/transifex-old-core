@@ -26,7 +26,7 @@ class JavaPropertiesHandler(Handler):
     separators = [' ', '\t', '\f', '=', ':', ]
 
     @classmethod
-    def accept(cls, filename=None, mime=None):
+    def accepts(cls, filename=None, mime=None):
         return filename.endswith(".properties") or mime in cls.mime_types
 
     @classmethod

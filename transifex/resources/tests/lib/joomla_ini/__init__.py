@@ -15,7 +15,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.set_language(Language.objects.by_code_or_alias("en_GB"))
 
     def test_accept(self):
-        self.assertTrue(self.parser.accept(self.file))
+        self.assertTrue(self.parser.accepts(self.file))
 
     def test_quote_removal(self):
         self.parser.parse_file(is_source=True)

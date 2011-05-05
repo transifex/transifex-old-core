@@ -26,7 +26,7 @@ class StorageHandler(BaseHandler):
     model = StorageFile
     fields = ('language',('language',('code',)),'total_strings','name','created','uuid','mime_type','size')
 
-    def delete(self, request, uuid=None):
+    def delete(self, request, uuid=None, api_version=1):
         """
         Deletes file by storage UUID
         """
@@ -39,7 +39,7 @@ class StorageHandler(BaseHandler):
         logger.debug("Deleted file %s" % uuid)
         return rc.DELETED
 
-    def read(self, request, uuid=None):
+    def read(self, request, uuid=None, api_version=1):
         """
         Returns list of StorageFile objects
         [
@@ -64,7 +64,7 @@ class StorageHandler(BaseHandler):
         return retval
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    def create(self, request, uuid=None):
+    def create(self, request, uuid=None, api_version=1):
         """
         API call for uploading a file via POST or updating storage file attributes
         """

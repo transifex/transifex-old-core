@@ -106,9 +106,13 @@ class POHandler(Handler):
     format = "GNU Gettext Catalog (*.po, *.pot)"
 
     @classmethod
-    def accept(cls, filename=None, mime=None):
-        return filename.endswith(".po") or filename.endswith(".pot") or\
-            mime in cls.mime_types
+    def accepts(cls, filename=None, mime=None):
+        accept = False
+        if filename is not None:
+            accept |= filename.endswith(".po") or filename.endswith(".pot")
+        if mime is not None:
+            accept |= mime in cls.mime_types
+        return accept
 
     @classmethod
     def contents_check(self, filename):

@@ -61,8 +61,15 @@ class LinguistHandler(Handler):
     mime_types = ["application/x-linguist"]
 
     @classmethod
-    def accept(cls, filename=None, mime=None):
-        return filename.endswith(".ts") or mime in cls.mime_types
+    def accepts(cls, filename=None, mime=None):
+        # TODO better way to handle tests
+        # maybe remove None?
+        accept = False
+        if filename is not None:
+            accept |= filename.endswith(".ts")
+        if mime is not None:
+            accept |= mime in cls.mime_types
+        return accept
 
     @classmethod
     def contents_check(self, filename):

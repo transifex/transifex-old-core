@@ -720,7 +720,7 @@ class Template(models.Model):
 
     content = CompressedTextField(null=False, blank=False,
         help_text=_("This is the actual content of the template"))
-    resource = models.ForeignKey(Resource,
+    resource = models.OneToOneField(Resource,
         verbose_name="Resource",unique=True,
         blank=False, null=False,related_name="source_file_template",
         help_text=_("This is the template of the imported source file which is"

@@ -78,7 +78,7 @@ class StorageFile(models.Model):
         from transifex.resources.models import PARSERS
         parser = None
         for p in PARSERS:
-            if p.accept(filename=self.name,mime=self.mime_type):
+            if p.accepts(filename=self.name,mime=self.mime_type):
                 parser = p
                 break
 
