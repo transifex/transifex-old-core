@@ -34,6 +34,9 @@ class TestJavaProperties(BaseTestCase):
         res = j._split(r"asd\ =sadsf")
         self.assertEqual(res[0], "asd\ ")
         self.assertEqual(res[1], "sadsf")
+        res = j._split(r"asd = sadsf")
+        self.assertEqual(res[0], "asd")
+        self.assertEqual(res[1], "sadsf")
         res = j._split(r"asd\\=sadsf")
         self.assertEqual(res[0], r"asd\\")
         self.assertEqual(res[1], "sadsf")
@@ -45,7 +48,7 @@ class TestJavaProperties(BaseTestCase):
         self.assertEqual(res[1], "sadsf")
         res = j._split(r"Key21\:WithColon : Value21")
         self.assertEqual(res[0], r"Key21\:WithColon")
-        self.assertEqual(res[1], ": Value21")
+        self.assertEqual(res[1], "Value21")
 
     def test_properties_parser(self):
         """PROPERTIES file tests."""

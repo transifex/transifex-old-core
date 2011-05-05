@@ -23,6 +23,8 @@ class JavaPropertiesHandler(Handler):
     mime_types = []
     format = "Java PROPERTIES (*.properties)"
 
+    separators = [' ', '\t', '\f', '=', ':', ]
+
     @classmethod
     def accept(cls, filename=None, mime=None):
         return filename.endswith(".properties") or mime in cls.mime_types
@@ -47,9 +49,16 @@ class JavaPropertiesHandler(Handler):
         If no such character exists, the wholi line is a key with no value.
         """
         for i, c in enumerate(line):
-            if c in [' ', '\t', '=', ':', ] and not self._is_escaped(line, i):
-                return (line[:i], line[i+1:])
+            if c in self.separators and not self._is_escaped(line, i):
+                # Seperator found
+                key = line[:i].lstrip()
+                value = self._strip_separators(line[i+1:])
+                return (key, value)
         return (line, None)
+
+    def _strip_separators(self, s):
+        """Strip separators from the front of the string s."""
+        return s.lstrip(''.join(self.separators))
 
     def _is_escaped(self, line, index):
         """
@@ -152,17 +161,25 @@ class JavaPropertiesHandler(Handler):
         string with backslashes in the store method.
         So let us do the same.
         """
-        return value.replace(':','\:').replace('=','\=').replace(' ','\ ').replace('\\', '\\\\')
+        return (value.replace(':','\:')
+                     .replace('=','\=')
+                     .replace(' ','\ ')
+                     .replace('\\', '\\\\')
+        )
 
     def unescape(self, value):
         """Reverse the escape of special characters."""
-        return value.replace('\:',':').replace('\=','=').replace('\ ', ' ').replace('\\\\', '\\')
+        return (value.replace('\:',':')
+                     .replace('\=','=')
+                     .replace('\ ', ' ')
+                     .replace('\\\\', '\\')
+        )
 
     @need_language
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
         """
-        Parse a PROPERTIES file and create a stringset with all entries in the file.
+        Parse a java .properties file and create a stringset with all entries in the file.
         """
         resource = self.resource
         stringset = StringSet()
@@ -208,8 +225,5 @@ class JavaPropertiesHandler(Handler):
         if is_source:
             self.template = str(buf.encode('utf-8'))
 
-    def _post_compile(self, *args, **kwargs):
-        """
-        Escape special chars in the end of compilation.
-        """
-        self.compiled_template = self._escape(self.compiled_template)
+    def _do_replace(self, original, replacement, text):
+        return re.sub(re.escape(original), self.escape(replacement), text)
