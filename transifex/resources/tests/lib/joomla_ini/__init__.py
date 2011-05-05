@@ -12,7 +12,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         super(TestJoomlaIni, self).setUp()
         self.file = os.path.join(os.path.dirname(__file__), 'example1.6.ini')
         self.parser = JoomlaINIHandler(self.file)
-        self.parser.set_language(Language.objects.by_code_or_alias("en_GB"))
+        self.parser.set_language(Language.objects.by_code_or_alias("en_US"))
 
     def test_accept(self):
         self.assertTrue(self.parser.accepts(self.file))
