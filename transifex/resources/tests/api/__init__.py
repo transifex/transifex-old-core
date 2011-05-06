@@ -87,24 +87,24 @@ class TestResourceAPI(APIBaseTests):
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
         self.assertEquals(len(data), 4)
-        self.assertIn('slug', data)
-        self.assertIn('name', data)
-        self.assertIn('source_language', data)
+        self.assertTrue('slug' in  data)
+        self.assertTrue('name' in data)
+        self.assertTrue('source_language', data)
         res = self.client['maintainer'].get(self.url_resource_private + "?details")
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
-        self.assertIn('source_language_code', data.iterkeys())
+        self.assertTrue('source_language_code' in data)
         self._create_resource()
         res = self.client['registered'].get(self.url_new_resource)
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
-        self.assertIn('source_language', data)
+        self.assertTrue('source_language' in data)
         res = self.client['registered'].get(
             self.url_new_resource + "content/"
         )
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
-        self.assertIn('content', data)
+        self.assertTrue('content' in data)
         res = self.client['registered'].get(
             self.url_new_resource + "content/?file"
         )
@@ -128,8 +128,7 @@ class TestResourceAPI(APIBaseTests):
         res = self.client['registered'].post(
             url, content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("POSTing to this url is not allowed", res.content)
+        self.assertContains(res, "POSTing to this url is not allowed", status_code=400)
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({
@@ -140,8 +139,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field 'foo'", res.content)
+        self.assertContains(res, "Field 'foo'", status_code=400)
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({
@@ -152,8 +150,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("same slug exists", res.content)
+        self.assertContains(res, "same slug exists", status_code=400)
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({
@@ -164,8 +161,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("No content", res.content)
+        self.assertContains(res, "No content", status_code=400)
         self.assertRaises(
             Resource.DoesNotExist,
             Resource.objects.get,
@@ -180,8 +176,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field 'mimetype'", res.content)
+        self.assertContains(res, "Field 'mimetype'", status_code=400)
 
     def test_post_files(self):
         self._create_project()
@@ -214,8 +209,7 @@ class TestResourceAPI(APIBaseTests):
             data=simplejson.dumps({}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("No resource", res.content)
+        self.assertContains(res, "No resource", status_code=400)
         url = reverse(
             'apiv2_resource',
             kwargs={'project_slug': 'new_pr_not', 'resource_slug': 'r1'}
@@ -233,8 +227,7 @@ class TestResourceAPI(APIBaseTests):
             url, data=simplejson.dumps({}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Empty request", res.content)
+        self.assertContains(res, "Empty request", status_code=400)
         url = reverse(
             'apiv2_resource',
             kwargs={'project_slug': 'new_pr', 'resource_slug': 'r1'}
@@ -271,8 +264,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field 'foo'", res.content)
+        self.assertContains(res,"Field 'foo'", status_code=400)
 
     def test_delete(self):
         res = self.client['anonymous'].delete(self.url_resource)
@@ -419,9 +411,7 @@ class TestTranslationAPI(APIBaseTests):
                 }
             )
         )
-        print res.content
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("No file", res.content)
+        self.assertContains(res, "No file", status_code=400)
         with open(self.po_file) as f:
             content = f.read()
         res = self.client['registered'].put(
@@ -471,8 +461,7 @@ class TestTranslationAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("language code", res.content)
+        self.assertContains(res, "language code", status_code=400)
 
         # test files
         res = self.client['registered'].put(
@@ -486,8 +475,7 @@ class TestTranslationAPI(APIBaseTests):
             ),
             data={},
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("No file", res.content)
+        self.assertContains(res, "No file", status_code=400)
         f = open(self.po_file)
         res = self.client['registered'].put(
             reverse(

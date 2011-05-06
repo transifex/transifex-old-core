@@ -142,30 +142,25 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['anonymous'].post(self.url_projects, content_type='application/json')
         self.assertEquals(res.status_code, 401)
         res = self.client['registered'].post(self.url_project, content_type='application/json')
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("POSTing to this url is not allowed", res.content)
+        self.assertContains(res, "POSTing to this url is not allowed", status_code=400)
         res = self.client['registered'].post(self.url_projects)
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Bad Request", res.content)
+        self.assertContains(res, "Bad Request", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({'name': 'name of project'}),
             content_type="application/json"
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field slug is required to create a new project.", res.content)
+        self.assertContains(res, "Field slug is required to create a new project.", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({'slug': 'slug'}), content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field name is required to create a new project.", res.content)
+        self.assertContains(res, "Field name is required to create a new project.", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'slug', 'name': 'name', 'owner': 'owner'
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Owner cannot be set explicitly.", res.content)
+        self.assertContains(res, "Owner cannot be set explicitly.", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project',
@@ -174,8 +169,7 @@ class TestProjectAPI(BaseTestCase):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Project for outsource does not exist", res.content)
+        self.assertContains(res, "Project for outsource does not exist", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
@@ -183,8 +177,7 @@ class TestProjectAPI(BaseTestCase):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("User", res.content)
+        self.assertContains(res, "User", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_maintainers',
@@ -194,8 +187,7 @@ class TestProjectAPI(BaseTestCase):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field 'none'", res.content)
+        self.assertContains(res, "Field 'none'", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_maintainers',
@@ -268,8 +260,7 @@ class TestProjectAPI(BaseTestCase):
             data=simplejson.dumps({'foo': 'foo'}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Field 'foo'", res.content)
+        self.assertContains(res, "Field 'foo'", status_code=400)
         res = self.client['registered'].put(
             self.url_project, data=simplejson.dumps({}),
             content_type='application/json'
@@ -289,22 +280,19 @@ class TestProjectAPI(BaseTestCase):
             data=simplejson.dumps({'outsource': "foo"}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Original and outsource projects are the same", res.content)
+        self.assertContains(res, "Original and outsource projects are the same", status_code=400)
         res = self.client['registered'].put(
             self.url_project,
             data=simplejson.dumps({'outsource': "bar"}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("Project for outsource does not exist", res.content)
+        self.assertContains(res, "Project for outsource does not exist", status_code=400)
         res = self.client['registered'].put(
             self.url_project,
             data=simplejson.dumps({'maintainers': 'none, not'}),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 400)
-        self.assertIn("User", res.content)
+        self.assertContains(res, "User", status_code=400)
 
 
     def test_delete(self):
@@ -318,7 +306,7 @@ class TestProjectAPI(BaseTestCase):
         )
         res = self.client['registered'].delete(self.url_projects)
         self.assertEquals(res.status_code, 400)
-        self.assertIn("Project slug not specified", res.content)
+        self.assertContains(res, "Project slug not specified", status_code=400)
         res = self.client['registered'].delete(self.url_project)
         self.assertEquals(res.status_code, 404)
         res = self.client['registered'].post(
