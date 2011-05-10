@@ -376,7 +376,7 @@ class LinguistHandler(Handler):
                         translation.childNodes = []
 
                         translation.appendChild(doc.createTextNode(
-                            ("%(hash)s_tr" % {'hash': hash_tag(sourceString, context_name)})
+                                ("%(hash)s_tr" % {'hash': hash_tag(sourceString, context_name)})
                         ))
 
             if is_source:
