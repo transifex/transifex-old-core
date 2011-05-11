@@ -12,8 +12,10 @@ from django.utils.safestring import mark_safe
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from transifex.projects.models import Project
-from transifex.projects.signals import project_access_control_form_start
-from transifex.releases.models import (Release, RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS)
+from transifex.projects.signals import (project_access_control_form_start,
+                                        project_form_init, project_form_save)
+from transifex.releases.models import (Release, RELEASE_ALL_DATA,
+                                       RESERVED_RELEASE_SLUGS)
 
 
 class ProjectForm(forms.ModelForm):
@@ -22,8 +24,16 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('anyone_submit', 'outsource', 'private')
+        exclude = ('anyone_submit', 'outsource')
 
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        project_form_init.send(sender=ProjectForm, form=self)
+
+    def save(self, *args, **kwargs):
+        retval = super(ProjectForm, self).save(*args, **kwargs)
+        project_form_save.send(sender=ProjectForm, form=self, instance=retval)
+        return retval
 
 class RadioFieldRenderer(widgets.RadioFieldRenderer):
     """

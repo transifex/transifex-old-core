@@ -107,6 +107,8 @@
     {% endif %}
     {% endwith %}
 
+    {% hook "additional_project_details.html" %}
+
 {% comment %}
     <tr>
       <th class="i16 link">{% trans "External links:" %}</th>
