@@ -43,9 +43,7 @@
 
   <div class="details separate">
 
-  {% if project.homepage or project.tags %}
-    <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
-  {% endif %}
+  <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
   <table class="definition">
     {% if request.user.is_authenticated%}
       {% url notification.views.notices as notices_url %}
