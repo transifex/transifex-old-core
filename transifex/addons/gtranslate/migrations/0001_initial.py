@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Gtranslate'
         db.create_table('gtranslate_gtranslate', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('use_gtranslate', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('use_gtranslate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('project', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['projects.Project'], unique=True)),
         ))
         db.send_create_signal('gtranslate', ['Gtranslate'])
