@@ -60,7 +60,7 @@ def _project_create_update(request, project_slug=None,
 
             # TODO: Not sure if here is the best place to put it
             Signal.send(signals.post_proj_save_m2m, sender=Project,
-                        instance=project)
+                        instance=project, form=project_form)
 
             # ActionLog & Notification
             context = {'project': project}
