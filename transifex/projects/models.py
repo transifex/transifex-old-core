@@ -194,10 +194,10 @@ class Project(models.Model):
         """Save the object in the database."""
         long_desc = escape(self.long_description)
         self.long_description_html = markdown.markdown(long_desc)
-        if hasattr(self, 'id'):
-            is_new = False
-        else:
+        if self.id is None:
             is_new = True
+        else:
+            is_new = False
         super(Project, self).save(*args, **kwargs)
         project_created.send(sender=self)
 
