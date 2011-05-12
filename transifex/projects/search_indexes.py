@@ -1,3 +1,4 @@
+import datetime
 from haystack.indexes import *
 from haystack import site
 
@@ -11,6 +12,10 @@ class ProjectIndex(RealTimeSearchIndex):
     def get_queryset(self):
         """Used when the entire index for model is updated."""
         # Do not index private projects
-        return Project.objects.filter(private=False)
+        return Project.objects.filter(private=False,
+            modified__lte=datetime.datetime.now())
+
+    def get_updated_field(self):
+        return 'modified'
 
 site.register(Project, ProjectIndex)
