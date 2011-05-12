@@ -23,7 +23,8 @@ from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
-
+from transifex.txcommon.haystack_utils import prepare_solr_query_string, \
+    fulltext_fuzzy_match_filter
 
 def permission_denied(request, template_name=None, extra_context={}, *args,
     **kwargs):
@@ -32,9 +33,10 @@ def permission_denied(request, template_name=None, extra_context={}, *args,
     return permission_denied(request, template_name, extra_context)
 
 def search(request):
-    query_string = request.GET.get('q', "")
+    query_string = prepare_solr_query_string(request.GET.get('q', ""))
     search_terms = query_string.split()
-    results = SearchQuerySet().models(Project).filter(text=query_string)
+    results = SearchQuerySet().models(Project).filter(
+        fulltext_fuzzy_match_filter(query_string))
     spelling_suggestion = results.spelling_suggestion(query_string)
 
     logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))

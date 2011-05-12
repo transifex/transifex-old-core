@@ -34,16 +34,16 @@
       <div class="project_list">
       {% for sr in results %}
         {% highlight terms as name %} {# set `name` object #}
-            {{ sr.object.name }}
+            {{ sr.name }}
         {% endhighlight %}
         {% searchexcerpt terms 6 as description %} {# set `description` object #}
-            {{ sr.object.description|striptags }}
+            {{ sr.description|striptags }}
         {% endsearchexcerpt %}
         {% searchexcerpt terms 10 as searchtext %} {# set `searchtext` object #}
             {{ sr.text|markdown|striptags }}
         {% endsearchexcerpt %}
         <div class="info">
-          <p class="name"><a href="{{ sr.object.get_absolute_url }}">{{ name.highlighted }}</a></p>
+          <p class="name"><a href="{% url project_detail sr.slug %}">{{ name.highlighted }}</a></p>
           <p class="description">{{ description.excerpt|highlight:terms }}</p>
           <p class="long_description">{{ searchtext.excerpt|highlight:terms }}</p>
         </div>
