@@ -5,6 +5,8 @@ post_proj_save_m2m = Signal(providing_args=['instance', 'form'])
 pre_comp_prep = Signal(providing_args=['instance'])
 post_comp_prep = Signal(providing_args=['instance'])
 submission_error = Signal(providing_args=['filename', 'message'])
+# Signal emitted when a new project is created
+project_created = Signal()
 
 pre_set_stats = Signal(providing_args=['instance'])
 post_set_stats = Signal(providing_args=['instance'])

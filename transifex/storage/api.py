@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.resources.models import Resource, SourceEntity, Translation
-from transifex.resources.formats.qt import LinguistParseError
+from transifex.resources.formats.core import ParseError
 from transifex.storage.models import StorageFile
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
@@ -122,7 +122,7 @@ class StorageHandler(BaseHandler):
                     files.append({'uuid':sf.uuid, 'id':str(sf.id),
                         'name':sf.name})
                 except Exception, e:
-                    if isinstance(e, FileCheckError) or isinstance(e, LinguistParseError):
+                    if isinstance(e, (FileCheckError, ParseError)):
                         #FIXME: Custom Exception should use an extra attr for
                         # localized string.
                         message = e.message

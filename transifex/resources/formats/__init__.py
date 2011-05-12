@@ -74,7 +74,7 @@ def parser_for(filename=None, mimetype=None):
     """
     Get the appropriate parser.
     """
-    from transifex.resources.models import PARSERS
+    from transifex.resources.parsers import PARSERS
     for parser in PARSERS:
         if parser.accepts(filename=filename,mime=mimetype):
             return parser

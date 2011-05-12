@@ -31,7 +31,7 @@ from transifex.resources.models import Resource, SourceEntity, Translation, \
 from transifex.resources.views import _compile_translation_template
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
         parser_for, get_file_extension_for_method, get_mimetype_from_method
-from transifex.resources.formats.qt import LinguistParseError
+from transifex.resources.formats.core import ParseError
 from transifex.teams.models import Team
 
 from transifex.api.utils import BAD_REQUEST
@@ -237,7 +237,7 @@ class ResourceHandler(BaseHandler):
         try:
             project = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist:
-            return rc.NOT_FOUN
+            return rc.NOT_FOUND
         slang = data.pop('source_language', None)
         source_language = None
         try:
@@ -670,7 +670,7 @@ class FileTranslation(Translation):
             try:
                 parser.contents_check(file_.name)
                 logger.debug("Uploaded file %s" % file_.name)
-            except (FileCheckError, LinguistParseError), e:
+            except (FileCheckError, ParseError), e:
                 raise BadRequestError("Error uploading file: %s" % e.message)
             except Exception, e:
                 logger.error(e.message, exc_info=True)
@@ -748,7 +748,7 @@ class StringTranslation(Translation):
             file_.close()
             try:
                 parser.contents_check(file_.name)
-            except (FileCheckError, LinguistParseError), e:
+            except (FileCheckError, ParseError), e:
                 raise BadRequestError(e.message)
             except Exception, e:
                 logger.error(e.message, exc_info=True)

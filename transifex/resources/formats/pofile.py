@@ -9,7 +9,6 @@ from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.utils.hashcompat import md5_constructor
 
 from django.contrib.sites.models import Site
 
@@ -18,11 +17,12 @@ from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
+from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.models import RLStats
 from suggestions.models import Suggestion
 
-from core import CompileError, GenericTranslation, Handler, STRICT, \
-    StringSet, ParseError
+from transifex.resources.formats.core import CompileError, GenericTranslation, \
+        Handler, STRICT, StringSet, ParseError
 
 #class ResXmlParseError(ParseError):
     #pass
@@ -341,16 +341,18 @@ class POHandler(Handler):
                 translation.flags = ', '.join( f for f in entry.flags)
 
             if is_source:
-                entry.msgstr = "%(hash)s_tr" % {'hash':
-                    md5_constructor(':'.join([translation.source_entity,
-                    translation.context]).encode('utf-8')).hexdigest()}
+                entry.msgstr = "%(hash)s_tr" % {
+                    'hash': hash_tag(translation.source_entity, translation.context)
+                }
 
                 if entry.msgid_plural:
                     for n, rule in enumerate(plural_keys):
-                        entry.msgstr_plural['%s' % n] = ("%(hash)s_pl_%(key)s" %
-                            {'hash':md5_constructor(':'.join([translation.source_entity,
-                            translation.context]).encode('utf-8')).hexdigest(), 'key':n})
-
+                        entry.msgstr_plural['%s' % n] = (
+                            "%(hash)s_pl_%(key)s" % {
+                                'hash':hash_tag(translation.source_entity, translation.context),
+                                'key':n
+                            }
+                        )
 
         if is_source:
             self.template =  get_po_contents(pofile)

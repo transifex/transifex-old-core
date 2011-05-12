@@ -5,13 +5,12 @@ Joomla INI file handler/compiler
 """
 import os, re
 import codecs
-from django.utils.hashcompat import md5_constructor
 
 from transifex.txcommon.log import logger
 from transifex.resources.formats.utils.decorators import *
-
-from core import GenericTranslation, Handler, STRICT, \
-    StringSet
+from transifex.resources.formats.utils.hash_tag import hash_tag
+from transifex.resources.formats.core import GenericTranslation, Handler, \
+        STRICT, StringSet
 
 class JoomlaINIHandler(Handler):
     """
@@ -79,9 +78,11 @@ class JoomlaINIHandler(Handler):
             context = ""
 
             if is_source:
-                new_line = re.sub(re.escape(trans), "%(hash)s_tr" % {'hash':md5_constructor(
-                    ':'.join([source,context]).encode('utf-8')).hexdigest()}, line)
-
+                new_line = re.sub(
+                    re.escape(trans),
+                    "%(hash)s_tr" % {'hash': hash_tag(source, context)},
+                    line
+                )
                 # this looks fishy
                 buf = re.sub(re.escape(line), new_line, buf)
 

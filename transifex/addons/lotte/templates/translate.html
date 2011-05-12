@@ -292,12 +292,14 @@
                       }
 
                       // Concatenate translation textareas with action buttons
-                      return textareas
-                      + '<div class="error_notes"></div>'
+                      textareas += '<div class="error_notes"></div>'
                       + '<div class="lotte-actions">'
-                      + '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">{% trans "auto translate" %}</a></p>'
-                      + '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">{% trans "copy source" %}</a></p>'
+                      {% if gtranslate %}
+                           textareas += '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">{% trans "auto translate" %}</a></p>'
+                      {% endif %}
+                      textareas += '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">{% trans "copy source" %}</a></p>'
                       + '</div>';
+                      return textareas;
                     }
                 },
                 // Holds the amount of Suggestions provided for this source string/s

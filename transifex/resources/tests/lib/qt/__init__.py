@@ -8,6 +8,17 @@ from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
 class QtFile(FormatsBaseTestCase):
     """Suite of tests for the qt lib."""
+
+    def test_problematic_file(self):
+        filename = 'problem.ts'
+        handler = LinguistHandler(os.path.join(
+                os.path.dirname(__file__),
+                filename
+        ))
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(True)
+        # OK, it doesn't raise any Exceptions
+
     def test_qt_parser(self):
         """TS file tests."""
         # Parsing POT file

@@ -31,6 +31,8 @@ from transifex.txcommon.decorators import one_perm_required_or_403
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
+from transifex.addons.gtranslate.models import Gtranslate
+
 Suggestion = get_model('suggestions', 'Suggestion')
 
 from signals import lotte_init, lotte_done
@@ -140,7 +142,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'contributors': contributors,
           'resources': resources,
           'resource_slug': resource_slug,
-          'languages': Language.objects.all()
+          'languages': Language.objects.all(),
+          'gtranslate': Gtranslate.objects.get(project=project).use_gtranslate,
         },
         context_instance = RequestContext(request))
 

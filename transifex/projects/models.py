@@ -23,6 +23,7 @@ from notification.models import ObservedItem
 from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
+from transifex.projects.signals import project_created
 
 class DefaultProjectQuerySet(models.query.QuerySet):
     """
@@ -193,7 +194,12 @@ class Project(models.Model):
         """Save the object in the database."""
         long_desc = escape(self.long_description)
         self.long_description_html = markdown.markdown(long_desc)
+        if hasattr(self, 'id'):
+            is_new = False
+        else:
+            is_new = True
         super(Project, self).save(*args, **kwargs)
+        project_created.send(sender=self)
 
     def delete(self, *args, **kwargs):
         self.resources.all().delete()

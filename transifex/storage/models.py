@@ -75,7 +75,7 @@ class StorageFile(models.Model):
     def find_parser(self):
         #FIXME: Decide whether it's important to have it and find a good way
         # to import the PARSERS.
-        from transifex.resources.models import PARSERS
+        from transifex.resources.parsers import PARSERS
         parser = None
         for p in PARSERS:
             if p.accepts(filename=self.name,mime=self.mime_type):
@@ -121,7 +121,7 @@ class StorageFile(models.Model):
         except AttributeError:
                 m = magic.open(magic.MAGIC_NONE)
                 m.load()
-                self.mime_type = m.file(self.get_storage_path()) 
+                self.mime_type = m.file(self.get_storage_path())
                 m.close()
 
         self.save()

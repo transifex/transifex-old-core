@@ -10,7 +10,6 @@ import xml.parsers.expat
 from xml.sax.saxutils import escape as xml_escape
 from django.db import transaction
 from django.db.models import get_model
-from django.utils.hashcompat import md5_constructor
 from django.utils.translation import ugettext, ugettext_lazy as _
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
@@ -18,6 +17,7 @@ from transifex.resources.formats.core import StringSet, ParseError, \
     GenericTranslation, CompileError, Handler, STRICT
 from suggestions.models import Suggestion
 from transifex.resources.formats.utils.decorators import *
+from transifex.resources.formats.utils.hash_tag import hash_tag
 
 # Resources models
 Resource = get_model('resources', 'Resource')
@@ -51,7 +51,10 @@ def _get_attribute(element, key, die = False):
 def _getText(nodelist):
     rc = []
     for node in nodelist:
-        rc.append(node.data)
+        if hasattr(node, 'data'):
+            rc.append(node.data)
+        else:
+            rc.append(node.toxml())
     return ''.join(rc)
 
 
@@ -217,7 +220,7 @@ class LinguistHandler(Handler):
                 try:
                     ec_node = _getElementByTagName(message, "extracomment")
                     extracomment = _getText(ec_node.childNodes)
-                except LinguistParseError:
+                except LinguistParseError, e:
                     extracomment = None
 
                 status = None
@@ -276,7 +279,7 @@ class LinguistHandler(Handler):
                                 nf=numerusforms[n]
                                 messages.append((nplural[n], _getText(nf.childNodes)
                                     or sourceStringText or sourceString ))
-                        except LinguistParseError:
+                        except LinguistParseError, e:
                             pass
 
                 elif translation and translation.firstChild:
@@ -350,14 +353,19 @@ class LinguistHandler(Handler):
                 i += 1
 
                 if is_source:
+                    if sourceString is None:
+                        continue
                     if message.attributes.has_key("numerus") and \
                         message.attributes['numerus'].value=='yes':
                             numerusforms = translation.getElementsByTagName('numerusform')
                             for n,f in enumerate(numerusforms):
-                                f.appendChild(doc.createTextNode("%(hash)s_pl_%(key)s" %
-                                    {'hash':md5_constructor(':'.join([sourceString,
-                                        context_name]).encode('utf-8')).hexdigest(),
-                                     'key': n}))
+                                f.appendChild(doc.createTextNode(
+                                        "%(hash)s_pl_%(key)s" %
+                                        {
+                                            'hash': hash_tag(sourceString, context_name),
+                                            'key': n
+                                        }
+                                ))
                     else:
                         if not translation:
                             translation = doc.createElement("translation")
@@ -368,9 +376,8 @@ class LinguistHandler(Handler):
                         translation.childNodes = []
 
                         translation.appendChild(doc.createTextNode(
-                            ("%(hash)s_tr" % {'hash':md5_constructor(
-                                ':'.join([sourceString,
-                                context_name]).encode('utf-8')).hexdigest()})))
+                                ("%(hash)s_tr" % {'hash': hash_tag(sourceString, context_name)})
+                        ))
 
             if is_source:
                 # Ugly fix to revert single quotes back to the escaped version
