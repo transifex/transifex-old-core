@@ -314,3 +314,41 @@ class POFileHeaders(FormatsBaseTestCase):
         self.assertFalse(self.urls['team'] in pofile)
         self.assertTrue(self.team.mainlist in pofile)
 
+
+class TestPOFileCopyright(FormatsBaseTestCase):
+    """Test copyright lines for translators in po files."""
+
+    def setUp(self):
+        self.handler = POHandler("test.po")
+        self.matched_lines = [
+            '# John Doe, 2011.',
+            '# John Doe <john@doe>, 2011.',
+            '# John Doe <john@doe>, 2011, 2012.',
+            '# Jogn Doe, 2011',
+        ]
+        self.unmatched_lines = [
+            '#John Doe, 2011',
+            '# John <john>, 20123',
+            '# Copyright, 2011, John Doe.',
+            'asdas, 2011',
+        ]
+        super(TestPOFileCopyright, self).setUp()
+
+    def test_match_lines(self):
+        for line in self.matched_lines:
+            m = self.handler._get_copyright_from_line(line)
+            self.assertTrue(m is not None)
+        for line in self.unmatched_lines:
+            m = self.handler._get_copyright_from_line(line)
+            self.assertTrue(m is None)
+
+    def test_copyright_on_save(self):
+        handler = POHandler(os.path.join(
+                os.path.dirname(__file__), 'copyright.po')
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        handler.compile()
+        handler._pre_save2file()

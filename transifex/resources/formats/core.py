@@ -406,11 +406,18 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
+    def _pre_save2file(self, *args, **kwargs):
+        pass
+
+    def _post_save2file(self, *args, **kwargs):
+        pass
+
     @need_compiled
     def save2file(self, filename):
         """
         Take the ouput of the compile method and save results to specified file.
         """
+        self._pre_save2file(filename=filename)
         try:
             file = open ('/tmp/%s' % filename, 'w' )
             file.write(self.compiled_template)
@@ -418,6 +425,7 @@ class Handler(object):
             file.close()
         except Exception, e:
             raise Exception("Error opening file %s: %s" % ( filename, e))
+        self._post_save2file(filename=filename)
 
 
     @classmethod

@@ -204,7 +204,6 @@ class BaseTestCase(TestCase):
 
         from django.core import management
         management.call_command('txstatsupdate', verbosity=0)
-        self.rls_en = self.resource.rlstats_set.get(language=self.language_en)
 
     def tearDown(self):
         pass

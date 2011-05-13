@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 class Meta:
     title = "Control integration with google translate."
     author = "Apostolos Bessas"

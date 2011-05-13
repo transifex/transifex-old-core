@@ -19,6 +19,7 @@ from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.models import RLStats
+from transifex.resources.signals import post_save_translation
 from suggestions.models import Suggestion
 
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
@@ -49,27 +50,6 @@ def escape(st):
              .replace('\t', r'\\t')\
              .replace('\r', r'\\r')\
              .replace('\"', r'\\"')
-
-def get_po_contents(pofile):
-    """
-    This function takes a pofile object and returns its contents
-    """
-
-    # FIXME: Temporary check until a version greater than polib-0.5.3 is out.
-    # Patch sent to upstream.
-    def charset_exists(charset):
-        """Check whether or not ``charset`` is valid."""
-        import codecs
-        try:
-            codecs.lookup(charset)
-        except LookupError:
-            return False
-        return True
-
-    if not charset_exists(pofile.encoding):
-        pofile.encoding = polib.default_encoding
-
-    return pofile.__str__()
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """
@@ -104,6 +84,7 @@ class POHandler(Handler):
     name = "GNU Gettext *.PO/*.POT handler"
     mime_types = ["application/x-gettext", "application/x-po", "text/x-po"]
     format = "GNU Gettext Catalog (*.po, *.pot)"
+    copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
     @classmethod
     def accepts(cls, filename=None, mime=None):
@@ -122,7 +103,7 @@ class POHandler(Handler):
 
         # get this back once the polib bug has been fixed :
         # http://bitbucket.org/izi/polib/issue/11/multiline-entries-are-not-getting-updated
-        #buf = get_po_contents(po)
+        #buf = self.get_po_contents(po)
 
         # Temporary solution
         buf = open(filename, 'r').read()
@@ -156,6 +137,36 @@ class POHandler(Handler):
 #            raise FileCheckError(_("Uploaded file doesn't contain any "
 #                "translated entries!"))
 #
+
+    def __init__(self, filename=None, resource= None, language = None):
+        super(POHandler, self).__init__(filename, resource, language)
+        self.copyrights = []
+
+    def get_po_contents(self, pofile):
+        """
+        This function takes a pofile object and returns its contents
+        """
+
+        # FIXME: Temporary check until a version greater than polib-0.5.3 is out.
+        # Patch sent to upstream.
+        def charset_exists(charset):
+            """Check whether or not ``charset`` is valid."""
+            import codecs
+            try:
+                codecs.lookup(charset)
+            except LookupError:
+                return False
+            return True
+
+        if not charset_exists(pofile.encoding):
+            pofile.encoding = polib.default_encoding
+
+        content = pofile.__str__()
+        stripped_content = ""
+        for line in content.split('\n'):
+            if not self._is_copyright_line(line):
+                stripped_content += line + "\n"
+        return stripped_content
 
     def _do_replace(self, original, replacement, text):
         """
@@ -238,8 +249,34 @@ class POHandler(Handler):
                 entry.msgstr_plural = plural_keys
 
         # Instead of saving raw text, we save the polib Handler
-        self.compiled_template = get_po_contents(po)
+        self.compiled_template = self.get_po_contents(po)
+
+        # Add copyright headers if any
+        from transifex.addons.copyright.models import Copyright
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language
+        )
+        content_with_copyright = ""
+        copyrights_inserted = False
+        for line in self.compiled_template.split('\n'):
+            if line.startswith('#'):
+                content_with_copyright += line + "\n"
+            elif not copyrights_inserted:
+                copyrights_inserted = True
+                for entry in c:
+                    content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
+                            ', ' + entry.years_text.encode('UTF-8') + "\n"
+            else:
+                content_with_copyright += line + "\n"
+        self.compiled_template = content_with_copyright
         return po
+
+    def _post_save2db(self, *args, **kwargs):
+        """Emit a signal for others to catch."""
+        post_save_translation.send(
+            sender=self, resource=self.resource,
+            language=self.language, copyrights=self.copyrights
+        )
 
     @need_language
     @need_file
@@ -255,6 +292,7 @@ class POHandler(Handler):
         else:
             nplural = self.language.get_pluralrules_numbers()
 
+        self._parse_copyrights(self.filename)
         pofile = polib.pofile(self.filename)
 
         for entry in pofile:
@@ -355,7 +393,7 @@ class POHandler(Handler):
                         )
 
         if is_source:
-            self.template =  get_po_contents(pofile)
+            self.template =  self.get_po_contents(pofile)
 
         self.stringset = stringset
         self.suggestions = suggestions
@@ -372,3 +410,40 @@ class POHandler(Handler):
             self.compiled_template.save(filename)
         except Exception, e:
             raise Exception("Error opening file %s: %s" % ( filename, e))
+
+    def _parse_copyrights(self, filename):
+        """
+        Read the copyrights (if any) from a po file.
+        """
+        # TODO remove FIRST AUTHOR line
+        if filename.endswith('pot'):
+            return
+        f = open(filename)
+        try:
+            for line in f:
+                if not line.startswith('#'):
+                    break
+                c = self._get_copyright_from_line(line)
+                if c is not None:
+                    self.copyrights.append(c)
+        finally:
+            f.close()
+
+    def _get_copyright_from_line(self, line):
+        """
+        Get the copyright info from the line.
+
+        Returns (owner, year) or None.
+        """
+        m = self.copyright_line.search(line)
+        if m is None:
+            return None
+        owner = m.group(1)
+        years = [y.strip() for y in m.group(2).split(',')]
+        return (owner, years)
+
+    def _is_copyright_line(self, line):
+        return self.copyright_line.search(line) is not None
+
+    def _get_copyright_lines():
+        pass

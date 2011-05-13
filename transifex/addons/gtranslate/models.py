@@ -15,6 +15,7 @@ class Gtranslate(models.Model):
     )
     project = models.OneToOneField(
         Project, unique=True,
+        verbose_name=_("Project"),
         help_text=_("The project this setting applies to.")
     )
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import date
 import re
 from polib import escape, unescape
 from django.conf import settings
@@ -35,7 +36,7 @@ from transifex.addons.gtranslate.models import Gtranslate
 
 Suggestion = get_model('suggestions', 'Suggestion')
 
-from signals import lotte_init, lotte_done
+from signals import lotte_init, lotte_done, lotte_save_translation
 
 # Restrict access only to : (The checks are done in the view's body)
 # 1)those belonging to the specific language team (coordinators or members)
@@ -133,6 +134,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     lotte_init.send(None, request=request, resources=resources,
         language=target_language)
 
+    use_gtranslate = True
+    try:
+        use_gtranslate = Gtranslate.objects.get(project=project).use_gtranslate
+    except Gtranslate.DoesNotExist:
+        pass
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -143,7 +149,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'resources': resources,
           'resource_slug': resource_slug,
           'languages': Language.objects.all(),
-          'gtranslate': Gtranslate.objects.get(project=project).use_gtranslate,
+          'gtranslate': use_gtranslate
         },
         context_instance = RequestContext(request))
 
@@ -682,6 +688,18 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     translation_string.user = request.user
                     translation_string.save()
 
+                # signal new translation
+                from transifex.addons.copyright.handlers import save_copyrights
+                lotte_save_translation.connect(save_copyrights)
+                lotte_save_translation.send(
+                    None, resource=source_string.source_entity.resource,
+                    language=target_language,
+                    copyrights=([(
+                        ''.join([request.user.first_name, ' ', request.user.last_name,
+                                 '<', request.user.email, '>']),
+                        [str(date.today().year)]
+                    ), ])
+                )
                 invalidate_stats_cache(source_string.source_entity.resource,
                     target_language, user=request.user)
                 if not push_response_dict.has_key(source_id):

@@ -3,23 +3,26 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from transifex.resources.models import RLStats as TranslatedResource
+from transifex.languages.models import Language
+from transifex.resources.models import Resource
 
 class CopyrightManager(models.Manager):
-    def assign(self, tresource, owner, year=date.today().year):
+    def assign(self, language, resource, owner, year=date.today().year):
         """Add copyright for a specific year to an object.
-        
+
         If there is no copyright object, create. Otherwise, update if
         necessary.
-        
+
         Should be called from Copyright.objects. Calling it from related models
         won't work.
-        """ 
+        """
         #FIXME: Make this work with foreign-key calls, for example:
         #       tresource.objects.assign(owner=, year=)
         _qs = super(CopyrightManager, self).get_query_set()
-        copyright, created = _qs.get_or_create(owner=owner, tresource=tresource,
-                                               defaults={'years': year})
+        copyright, created = _qs.get_or_create(
+            owner=owner, language=language, resource=resource,
+            defaults={'years': year}
+        )
         if not created:
             # Copyright exists, let's update it
             years = copyright.years.split(',')
@@ -32,9 +35,9 @@ class CopyrightManager(models.Manager):
 
 class Copyright(models.Model):
     """A model holding copyrights.
-    
+
     This should be representing a statement such as:
-    # Copyright (C) 2014, 2015, 2018 John Doe.
+    # John Doe <jhon@doe.org> 2014.
 
     Years are stored in a CommaSeparatedIntegerField.
     """
@@ -51,12 +54,15 @@ class Copyright(models.Model):
         verbose_name=_('User'),
         help_text=_("The Transifex user who owns the copyright, if applicable."))
 
-    # The target translated resource object
-    tresource = models.ForeignKey(TranslatedResource,
-        blank=True, null=True,
-        related_name='copyrights',
-        verbose_name=_('Translated Resource Object'),
-        help_text=_("The Resource-Language object this copyright applies to."))
+    language = models.ForeignKey(
+        Language, verbose_name=_("Language"),
+        help_text=_("Language of the translation.")
+    )
+
+    resource = models.ForeignKey(
+        Resource, verbose_name=_("Resource"),
+        help_text = _("The resource this copyright is on.")
+    )
 
     years = models.CommaSeparatedIntegerField(_('Copyright years'),
         max_length=80,
@@ -66,8 +72,19 @@ class Copyright(models.Model):
         max_length=255,
         help_text=_("A comment for this copyright."),)
 
+    IMPORT_CHOICES = (
+        ('T', 'Transifex (Lotte/API)'),
+        ('P', 'Po files'),
+    )
+    imported_by = models.CharField(
+        max_length=1, choices=IMPORT_CHOICES,
+        null=True, blank=True,
+        verbose_name=_("Imported by"),
+        help_text=_("How this copyright notice was created.")
+    )
+
     # De-normalized fields
-    
+
     # Store the years in a concise form. Responsible to convert years
     # 2010, 2011, 2012, 2013 to 2010-2013.
     years_text = models.CharField(_('Copyright Years Text'),
@@ -79,24 +96,29 @@ class Copyright(models.Model):
     last_update = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        unique_together = (('tresource', 'owner'),)
+        unique_together = (('language', 'resource', 'owner'), )
 
     def __unicode__(self):
         return u'%(years)s %(owner)s' % {
             'years': self.years_text,
-            'owner': self.owner or self.user}
+            'owner': self.owner
+        }
 
     def __str__(self):
-        return u'Copyright (C) %(years)s %(owner)s.' % {
+        return (u'%(owner)s, %(years)s.' % {
             'years': str(self.years_text),
-            'owner': self.owner or self.user}
+            'owner': self.owner
+        }).encode('UTF-8')
 
     def save(self, *args, **kwargs):
         """Override save to de-normalize the years_text."""
+        self.years_text = self._compress_years(self.years)
+        super(Copyright, self).save(*args, **kwargs)
+
+    def _compress_years(self, years):
         #FIXME: Convert list of years to list of year periods
         # ie. 2010,2011,2012 to 2010-2012.
-        self.years_text = self.years
-        super(Copyright, self).save(*args, **kwargs)
+        return ", ".join(years.split(','))
 
 
     objects = CopyrightManager()
