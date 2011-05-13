@@ -272,6 +272,10 @@
  {% endif %}
 </div>
 
+{% if project.resources.count or not project.releases.count %}
+  {% include "projects/release_list.html" %}
+{% endif %}
+
 {% with team.members.all as members %}
 {% if members %}
 <div class="list separate" style="clear:both">
