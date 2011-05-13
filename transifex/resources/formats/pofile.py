@@ -176,6 +176,32 @@ class POHandler(Handler):
         """
         return re.sub(re.escape(original), escape(replacement), text)
 
+    @need_resource
+    def compile_pot(self):
+        template = Template.objects.get(resource=self.resource)
+        template = template.content
+        self._peek_into_template()
+
+        stringset = SourceEntity.objects.filter(
+            resource = self.resource)
+
+        for string in stringset:
+            # Find translation for string
+            try:
+                trans = Translation.objects.get(
+                    source_entity__resource = self.resource,
+                    source_entity=string,
+                    language = language,
+                    rule=5)
+            except Translation.DoesNotExist:
+                trans = None
+
+            # Do the actual replacement in the template
+            template = self._do_replace(
+                "%s_tr" % string.string_hash.encode('utf-8'), "", template
+            )
+
+        self.compiled_template = template
 
     @need_compiled
     def _post_compile(self, *args, **kwargs):

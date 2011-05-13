@@ -32,6 +32,7 @@ urlpatterns += patterns('',
     url(RESOURCE_URL_PARTIAL+r'$', resource_detail, name='resource_detail'),
     url(RESOURCE_URL_PARTIAL+r'edit/$', resource_edit, name='resource_edit'),
     url(RESOURCE_URL_PARTIAL+r'delete/$', resource_delete, name='resource_delete'),
+    url(RESOURCE_URL_PARTIAL+'download_pot/$', get_pot_file, name='download_pot'),
     # Resources-Lang
     url(RESOURCE_LANG_URL_PARTIAL+'delete_all/$',
         resource_translations_delete, name='resource_translations_delete'),

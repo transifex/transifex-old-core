@@ -38,7 +38,7 @@
                 1: { sorter: 'percent' },
                 2: { sorter: 'number' }
             },
-            textExtraction: function(node) {  
+            textExtraction: function(node) {
                 switch (node.cellIndex){
                     // Stats column
                     case 1:
@@ -48,7 +48,7 @@
                         return $("span", node).attr('unixdate');
                     default: return node.innerHTML;
                 }
-            } 
+            }
         });
 
         {% if is_maintainer %}
@@ -202,7 +202,7 @@
           <span class="clickable">{{ stat.language.name }}</span>
           <span class="locale">({{ stat.language.code }})</span>
           {% ifequal resource.source_language stat.language %}
-             <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
+             <span style="padding-left:1em"><em>{% trans "source language" %}, <a href="{% url transifex.resources.views.get_pot_file project_slug=project.slug resource_slug=resource.slug %}">pot</a></em></span>
           {% endifequal %}
           {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>

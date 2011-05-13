@@ -368,7 +368,10 @@ def _compile_translation_template(resource=None, language=None):
     """
     parser = get_i18n_handler_from_type(resource.i18n_type)
     handler = parser(resource = resource, language = language)
-    handler.compile()
+    if language is not None:
+        handler.compile()
+    else:
+        handler.compile_pot()
 
     return handler.compiled_template
 
@@ -409,6 +412,41 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         'type': i18n_method['file-extensions'].split(', ')[0]}
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
+
+
+# Restrict access only for private projects
+# DONT allow anonymous access
+@login_required
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'))
+def get_pot_file(request, project_slug, resource_slug):
+    """
+    View to download the pot file of the resource.
+    """
+    resource = get_object_or_404(
+        Resource, project__slug=project_slug, slug=resource_slug
+    )
+    try:
+        template = _compile_translation_template(resource, None)
+    except Exception, e:
+        messages.error(request, _("Error compiling the pot file."))
+        logger.error(
+            "Error compiling the pot file for %s: %s" % (resource, e.message)
+        )
+        return HttpResponseRedirect(reverse(
+                'resource_detail', args=[resource.project.slug, resource.slug]
+        ))
+    i18n_method = settings.I18N_METHODS[resource.i18n_type]
+    response = HttpResponse(template,
+        mimetype=i18n_method['mimetype'])
+    _filename = "%(proj)s_%(res)s_%(type)s" % {
+        'proj': smart_unicode(resource.project.slug),
+        'res': smart_unicode(resource.slug),
+        'type': i18n_method['file-extensions'].split(', ')[0]}
+    response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
+    return response
+
+
 
 # Restrict access only to : (The checks are done in the view's body)
 # 1)those belonging to the specific language team (coordinators or members)
