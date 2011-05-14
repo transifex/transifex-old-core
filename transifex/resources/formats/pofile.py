@@ -34,6 +34,7 @@ from transifex.resources.formats.core import CompileError, GenericTranslation, \
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
+Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
 def escape(st):
@@ -186,22 +187,42 @@ class POHandler(Handler):
             resource = self.resource)
 
         for string in stringset:
-            # Find translation for string
-            try:
-                trans = Translation.objects.get(
-                    source_entity__resource = self.resource,
-                    source_entity=string,
-                    language = language,
-                    rule=5)
-            except Translation.DoesNotExist:
-                trans = None
-
-            # Do the actual replacement in the template
+            # Replace strings with ""
             template = self._do_replace(
                 "%s_tr" % string.string_hash.encode('utf-8'), "", template
             )
 
-        self.compiled_template = template
+        # FIXME merge with _post_compile
+        po = polib.pofile(unicode(template, 'utf-8'))
+
+        # Update PO file headers
+        po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
+        po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
+        # The above doesn't change the charset of the actual object, so we
+        # need to do it for the pofile object as well.
+        po.encoding = "UTF-8"
+
+        if self.resource.project.bug_tracker:
+            po.metadata['Report-Msgid-Bugs-To'] = (self.resource.project.bug_tracker.encode("utf-8"))
+
+        for entry in po:
+            if entry.msgid_plural:
+                plurals = Translation.objects.filter(
+                    source_entity__resource = self.resource,
+                    language = self.resource.source_language,
+                    source_entity__string = entry.msgid
+                ).order_by('rule')
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = self.resource.source_language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                for p,n in enumerate(lang_rules):
+                    plural_keys[p] = ""
+                for n,p in enumerate(plurals):
+                    plural_keys[n] =  ""
+
+                entry.msgstr_plural = plural_keys
+        self.compiled_template = self.get_po_contents(po)
 
     @need_compiled
     def _post_compile(self, *args, **kwargs):

@@ -442,7 +442,7 @@ def get_pot_file(request, project_slug, resource_slug):
     _filename = "%(proj)s_%(res)s_%(type)s" % {
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
-        'type': i18n_method['file-extensions'].split(', ')[0]}
+        'type': '.pot'}
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 
