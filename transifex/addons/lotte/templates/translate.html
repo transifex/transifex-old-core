@@ -294,8 +294,8 @@
                       return textareas
                       + '<div class="error_notes"></div>'
                       + '<div class="lotte-actions">'
-                      + '  <p id="auto_translate_wrapper"><a class="i16 action buttonized suggest">{% trans "auto translate" %}</a></p>'
-                      + '  <p id="copy_source_wrapper"><a class="i16 next buttonized copy_source">{% trans "copy source" %}</a></p>'
+                      + '  <p id="auto_translate_wrapper"><span class="buttonized"><a class="i16 action suggest">{% trans "auto translate" %}</a></span></p>'
+                      + '  <p id="copy_source_wrapper"><span class="buttonized"><a class="i16 next copy_source">{% trans "copy source" %}</a></span></p>'
                       + '</div>';
                     }
                 },
@@ -716,10 +716,10 @@
 <div class="floatright filtermenu-wrapper">
 
   <div id="filtermenu0" class="filtermenu tipsy_enable" title="{% trans "Show translations in<br /> the selected languages" %}">
-    <a class="filtermenu-trigger buttonized" href="#">
+    <span class="buttonized"><a class="filtermenu-trigger" href="#">
     <span class="filtermenu-icon"> </span>
     <span class="filtermenu-title">{% trans "More languages" %}</span>
-    </a>
+    </a></span>
   </div>
   {% include "more_languages.html" %}
 

@@ -96,7 +96,7 @@
   {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
     <div class="editlinks">
       <p>
-        <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a>
+        <span class="buttonized"><a class="i16 edit" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit" %}</a></span>
       </p>
     </div>
   {% endif %}
@@ -364,7 +364,7 @@
     {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
     {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete translation resource" %}</a>
+      <span class="buttonized"><a class="i16 delete" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete translation resource" %}</a></span>
     </div>
     {% endif %}
   </div>

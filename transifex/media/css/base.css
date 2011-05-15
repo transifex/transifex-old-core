@@ -599,11 +599,16 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-input, textarea {
-  padding: 0 0.5em;
+input,textarea {
   border: 1px solid #aaa;
   border-radius: 2px;
   -moz-border-radius: 2px;
+}
+
+input[type="submit"]{
+	border:none;
+	background-color: transparent;
+	color:#0D4C8C;
 }
 
 fieldset {
@@ -859,7 +864,7 @@ span.note {
 
 .buttonized,
 .buttonized_disabled {
-  padding: 0.4em 0.7em;
+  padding: 0.5em 0.7em;
   box-shadow:1px 1px 2px #ddd;
   -moz-box-shadow:1px 1px 2px #ddd;
   -webkit-box-shadow:1px 1px 2px #ddd;
@@ -905,7 +910,7 @@ a.buttonized2_disabled {
   padding-bottom:0.2em;
   padding-top:0.2em;
   padding-right:0.8em;
-  padding-left:1.6em; /* The class is intended to be used with i16 icons! */
+  padding-left:25px; /* The class is intended to be used with i16 icons! */
   box-shadow:1px 1px 3px #ccc;
   -moz-box-shadow:1px 1px 3px #ccc;
   -webkit-box-shadow:1px 1px 3px #ccc;

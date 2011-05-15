@@ -48,11 +48,11 @@
         
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
+            <span class="buttonized"><input name="team_request_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/></span>
         </form>
         
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
+            <span class="buttonized"><input name="team_request_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/></span>
         </form>
         {% endif %}
 
@@ -100,7 +100,7 @@
         </tbody>
     </table>
     <p class="submit">
-        <input name="team_request" class="i16 submit" type="submit" value="{% trans "Request team" %}"/>
+        <span class="buttonized"><input name="team_request" class="i16 submit" type="submit" value="{% trans "Request team" %}"/></span>
     </p>
    </fieldset>
 </form>

@@ -23,7 +23,9 @@
 {% block content_header_sec %}
     {% if request.user.is_authenticated and perms.projects.add_project %}
     <div class="addproject content_header_sec">
-     <a class="i16 buttonized add" href="{% url project_create %}">{% trans "Add a new project" %}</a>
+	    <p>
+	     	<span class="buttonized"><a class="i16 add" href="{% url project_create %}">{% trans "Add a new project" %}</a></span>
+	    </p>
     </div>
     {% endif %}
 {% endblock %}

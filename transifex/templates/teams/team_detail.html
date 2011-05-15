@@ -90,7 +90,7 @@
       <th class="i16 user">{% trans "Become a translator:" %}</th>
       <td>
         <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
-            <input name="team_join" class="i16 team_join" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}">
+            <span class="buttonized"><input name="team_join" class="i16 team_join" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}"></span>
         </form>
       </td>
     </tr>
@@ -111,17 +111,17 @@
         </a>
         {% if is_coordinator %}
         <form class="microform" method="post" action="{% url team_join_approve access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/>
+            <span class="buttonized"><input name="team_join_approve" class="i16 submit" type="submit" value="{% trans "Approve" %}"/></span>
         </form>
         
         <form class="microform" method="post" action="{% url team_join_deny access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/>
+            <span class="buttonized"><input name="team_join_deny" class="i16 delete" type="submit" value="{% trans "Deny" %}"/></span>
         </form>
         {% endif %}
         
         {% ifequal request.user.pk access_request.user.pk %}
         <form class="microform" method="post" action="{% url team_join_withdraw access_request.team.project.slug access_request.team.language.code %}">{% csrf_token %}
-            <input name="team_join_withdraw" class="i16 delete" type="submit" value="{% trans "Withdraw" %}"/>
+            <span class="buttonized"><input name="team_join_withdraw" class="i16 delete" type="submit" value="{% trans "Withdraw" %}"/></span>
         </form>
         {% endifequal %}
     </li>
@@ -283,7 +283,7 @@
         </a>
         {% ifequal request.user.pk m.pk %}
         <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
-            <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
+            <span class="buttonized"><input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/></span>
         </form>
         {% endifequal %}
     </li>
