@@ -3,9 +3,9 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 
 from languages.models import Language
-from txcommon.tests.base import BaseTestCase
+from txcommon.tests import base, utils
 
-class TestTeams(BaseTestCase):
+class TestTeams(base.BaseTestCase):
 
     def setUp(self):
         super(TestTeams, self).setUp()
@@ -33,3 +33,9 @@ class TestTeams(BaseTestCase):
         self.assertContains(resp, 'Translation Teams - Arabic', status_code=200)
         self.assertNotContains(resp, 'Enter a valid value')
 
+    def team_details_release(self):
+        """Test releases appear correctly on team details page."""
+        self.assertTrue(self.project.teams.all().count())
+        url = reverse('team_detail', args=[self.project.slug, self.language.code])
+        resp = self.client['team_member'].get(url)
+        self.assertContains(resp, 'releaseslug', status_code=200)

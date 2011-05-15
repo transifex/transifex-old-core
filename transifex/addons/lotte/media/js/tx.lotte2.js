@@ -544,8 +544,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     var source_id = parseInt(nTr.find('.source_id').text());
 
                     // Get the details and inject them.
-                    var entity_details_urlp = entity_details_urlp_tmpl.replace('1111111111', source_id)
-                    nTr.next(".details").find("td.inject_here").load(entity_details_urlp, function(response, status, xhr) {
+                    var tab_details_urlp = tab_details_urlp_tmpl.replace('1111111111', source_id)
+                    nTr.next(".details").find("td.inject_here").load(tab_details_urlp, function(response, status, xhr) {
                       if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);
@@ -572,8 +572,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     var source_id = parseInt(nTr.find('.source_id').text());
 
                     // Get the details and inject them.
-                    var entity_suggestions_urlp = entity_suggestions_urlp_tmpl.replace('1111111111', source_id)
-                    nTr.next(".suggestions").find("td.inject_here").load(entity_suggestions_urlp, function(response, status, xhr) {
+                    var tab_suggestions_urlp = tab_suggestions_urlp_tmpl.replace('1111111111', source_id)
+                    nTr.next(".suggestions").find("td.inject_here").load(tab_suggestions_urlp, function(response, status, xhr) {
                       if (status == "error") {
                         var msg = "Sorry but there was an error: ";
                         alert(msg + xhr.status + " " + xhr.statusText);

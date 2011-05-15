@@ -1,3 +1,4 @@
+import gc
 from django.core.urlresolvers import get_resolver
 
 def get_url_pattern(urlname, args=[]):
@@ -57,6 +58,42 @@ def cached_property(func):
             pass
 
     return property(_set_cache, fdel=_del_cache)
+
+
+def immutable_property(func):
+    """
+    Immutable property.
+
+    This function prevents an instance of a property field to be
+    altered and/or deleted.
+
+    Usage:
+    class Foo(object):
+        @immutable_property
+        def bar(self):
+            return True
+
+    foo=Foo()
+    foo.bar = False
+    ValueError: 'bar' is immutable and can not be changed
+
+    del(foo.bar)
+    ValueError: 'bar' is immutable and can not be deleted
+
+    """
+    def _set_attr(self, value):
+        raise ValueError("'%s' is immutable and can not be changed"
+            % func.__name__)
+
+    def _get_attr(self):
+        return func(self)
+
+    def _del_attr(self):
+        raise ValueError("'%s' is immutable and can not be deleted"
+            % func.__name__)
+
+    return property(fget=_get_attr, fset=_set_attr, fdel=_del_attr)
+
 
 def key_sort(l, *keys):
     """
@@ -189,3 +226,24 @@ def paginate(qs, start, end):
     else:
         return (qs[start:end], "")
 
+
+def queryset_iterator(queryset, chunksize=1000):
+    """
+    Iterate over a Django Queryset ordered by the primary key
+
+    This method loads a maximum of chunksize (default: 1000) rows in it's
+    memory at the same time while django normally would load all rows in it's
+    memory. Using the iterator() method only causes it to not preload all the
+    classes.
+
+    Note that the implementation of the iterator does not support ordered 
+    query sets.
+    """
+    pk = 0
+    last_pk = queryset.order_by('-pk')[0].pk
+    queryset = queryset.order_by('pk')
+    while pk < last_pk:
+        for row in queryset.filter(pk__gt=pk)[:chunksize]:
+            pk = row.pk
+            yield row
+        gc.collect()

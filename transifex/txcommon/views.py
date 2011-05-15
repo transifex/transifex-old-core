@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import list_detail
 
 from notification import models as notification
+from haystack.query import SearchQuerySet
 
 from actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
@@ -22,7 +23,8 @@ from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
-
+from transifex.txcommon.haystack_utils import prepare_solr_query_string, \
+    fulltext_fuzzy_match_filter
 
 def permission_denied(request, template_name=None, extra_context={}, *args,
     **kwargs):
@@ -31,33 +33,18 @@ def permission_denied(request, template_name=None, extra_context={}, *args,
     return permission_denied(request, template_name, extra_context)
 
 def search(request):
-    query_string = request.GET.get('q', "")
+    query_string = prepare_solr_query_string(request.GET.get('q', ""))
     search_terms = query_string.split()
-    # Search only public projects
-    # TODO: enable searching for private projects that the user has permissions.
-    results = Project.public.filter()
+    results = SearchQuerySet().models(Project).filter(
+        fulltext_fuzzy_match_filter(query_string))
+    spelling_suggestion = results.spelling_suggestion(query_string)
 
-    if search_terms:
-        query = Q()
-        for term in search_terms:
-            # AND is a FEATURE not a BUG!
-            #TODO this query heavy pounds the db. Caching is in order.
-            query &= (Q(name__icontains=term) |
-                Q(description__icontains=term) |
-                Q(bug_tracker__icontains=term) |
-                Q(homepage__icontains=term) |
-                Q(slug__icontains = term) |
-                Q(feed__icontains=term) |
-                Q(long_description__icontains=term)
-                )
-        results = results.filter(query).distinct()
-    else:
-        results = []
     logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))
     return render_to_response("search.html",
         {'query': query_string,
          'terms': search_terms,
-         'results': results},
+         'results': results,
+         'spelling_suggestion': spelling_suggestion},
           context_instance = RequestContext(request))
 
 @csrf_protect
