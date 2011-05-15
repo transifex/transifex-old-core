@@ -20,7 +20,7 @@
 {% block content_main %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  <div class="obj_bigdetails grid_16">
+  <div class="obj_bigdetails">
   {% if project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
@@ -139,7 +139,7 @@
 
 </div>
 
-<div id="project-history" class="grid_16">
+<div id="project-history">
 	<h3>{% trans 'History' %}</h3>
 	{% get_log 10 as action_log for_object project %}
 	{% if not action_log %}
