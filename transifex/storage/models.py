@@ -12,6 +12,8 @@ from transifex.languages.models import Language
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 
+import magic
+
 class StorageFile(models.Model):
     """
     StorageFile refers to a uploaded file. Initially
