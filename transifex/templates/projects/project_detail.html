@@ -16,9 +16,11 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
+
 {% block content_main %}
+
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  <div class="obj_bigdetails ui-tabs-panel">
+  <div class="obj_bigdetails grid_16">
   {% if project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
@@ -38,7 +40,7 @@
   {% endwith %}
 
   {% if perms.projects.change_project or is_maintainer %}
-  <div class="editlinks"><p><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit project..." %}</a></p></div>
+  <div class="editlinks"><span class="buttonized"><a class="i16 edit" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit project..." %}</a></span></div>
   {% endif %}
 
   <div class="details separate">
@@ -137,24 +139,26 @@
 
 </div>
 
-<h3>{% trans 'History' %}</h3>
-{% get_log 5 as action_log for_object project %}
-{% if not action_log %}
-
-<p>{% trans 'No history recorded yet.' %}</p>
-
-{% else %}
-
-<ul class="actionlist simple">
-{% for entry in action_log %}
-<li class="i16 actionlog">
-    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
-</li>
-{% endfor %}
-</ul>
-{% hook "project.html" overview %}
-
-{% endif %}
+<div id="project-history" class="grid_16">
+	<h3>{% trans 'History' %}</h3>
+	{% get_log 10 as action_log for_object project %}
+	{% if not action_log %}
+	
+	<p>{% trans 'No history recorded yet.' %}</p>
+	
+	{% else %}
+	
+	<ul class="actionlist simple">
+	{% for entry in action_log %}
+	<li class="i16 actionlog">
+	    {{ entry.message|safe }} by {{ entry.user }}. <span class="notice_when">{{ entry.action_time|timesince }} ago.</span>
+	</li>
+	{% endfor %}
+	</ul>
+	{% hook "project.html" overview %}
+	
+	{% endif %}
+</div>
 
 {% endblock %}
 
@@ -163,7 +167,7 @@
   <div id="content_footer_center">
     {% if perms.projects.delete_project or is_maintainer %}
     <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project..." %}</a>
+      <span class="buttonized"><a class="i16 delete" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project..." %}</a></span>
     </div>
     {% endif %}
   </div>

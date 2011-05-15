@@ -76,7 +76,7 @@
   {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   {% if perms.projects.add_release or is_maintainer %}
     <div class="editlinks">
-      <p><a class="i16 edit buttonized" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release..." %}</a></p>
+      <p><span class="buttonized"><a class="i16 edit" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release..." %}</a></span></p>
     </div>
   {% endif %}
 

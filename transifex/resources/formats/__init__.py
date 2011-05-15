@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
 

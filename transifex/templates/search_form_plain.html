@@ -2,6 +2,6 @@
 <div class="searchform searchform_plain {{ extra_searchform_classes }}">
   <form action="{% url search %}" method="GET" class="search_projects">
     <input class="query withbgimage" type="text" name="q" size="12" value="{{ query|escape }}">
-    <input class="i16 submit" type="submit" value="{% trans "Search Projects" %}">
+   	<span class="buttonized"><input class="i16 submit" type="submit" value="{% trans "Search Projects" %}"></span>
   </form>
 </div>

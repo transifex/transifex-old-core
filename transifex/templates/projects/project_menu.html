@@ -51,6 +51,9 @@ $(document).ready(
 {% block content_title %}
 {% if project %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+
+
+
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 
@@ -76,6 +79,7 @@ $(document).ready(
     {% hook "project.html" menu %}
   </ul>
 </div>
+
 {% endif %}
 {% endblock %}
 
