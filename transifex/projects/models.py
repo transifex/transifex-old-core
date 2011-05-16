@@ -199,7 +199,8 @@ class Project(models.Model):
         else:
             is_new = False
         super(Project, self).save(*args, **kwargs)
-        project_created.send(sender=self)
+        if is_new:
+            project_created.send(sender=self)
 
     def delete(self, *args, **kwargs):
         self.resources.all().delete()
