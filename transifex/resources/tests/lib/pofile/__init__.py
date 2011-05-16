@@ -351,4 +351,16 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
         handler.compile()
-        handler._pre_save2file()
+        self.assertTrue("AB" in handler.compiled_template)
+
+    def test_remove_headers(self):
+        handler = POHandler(os.path.join(
+                os.path.dirname(__file__), 'tests.pot')
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        handler.compile()
+        self.assertFalse("FIRST AUTHOR" in handler.compiled_template)
+

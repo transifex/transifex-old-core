@@ -302,12 +302,13 @@ class POHandler(Handler):
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
-        )
+        ).order_by('-user')
         content_with_copyright = ""
         copyrights_inserted = False
         for line in self.compiled_template.split('\n'):
             if line.startswith('#'):
-                content_with_copyright += line + "\n"
+                if not line.startswith('# FIRST AUTHOR'):
+                    content_with_copyright += line + "\n"
             elif not copyrights_inserted:
                 copyrights_inserted = True
                 for entry in c:
