@@ -64,12 +64,13 @@ class CustomSerializer(json.JSONEncoder):
                 'strings' : obj.strings,
             }
 
-class ParseError(StandardError):
+class ParseError(Exception):
     pass
 
 
-class CompileError(StandardError):
+class CompileError(Exception):
     pass
+
 
 class Handler(object):
     """

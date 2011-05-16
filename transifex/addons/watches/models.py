@@ -14,7 +14,7 @@ from transifex.projects.models import Project
 
 from notification.models import ObservedItem, is_observing
 
-class WatchException(StandardError):
+class WatchException(Exception):
     pass
 
 class TranslationWatch(models.Model):
