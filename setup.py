@@ -40,7 +40,7 @@ setup(
 #    },
     name="transifex",
     version=version,
-    description="A platform for distributed translation submissions",
+    description="The software behind Transifex.net, the open service to collaboratively translate software, documentation and websites.",
     long_description=long_description,
     author="The Transifex community and the staff of Indifex",
     author_email="transifex-devel@googlegroups.com",
