@@ -3,7 +3,8 @@ import unittest
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.javaproperties import  JavaPropertiesHandler
+from transifex.resources.formats.javaproperties import  JavaPropertiesHandler, \
+        JavaParseError
 
 from transifex.addons.suggestions.models import Suggestion
 
@@ -97,7 +98,7 @@ class TestJavaProperties(BaseTestCase):
         )
 
         # Import and save the finish translation
-        handler.bind_file(os.path.join(os.path.dirname(__file__),'complex_hi_IN.properties'))
+        handler.bind_file(os.path.join(os.path.dirname(__file__),'complex_hi_IN-ascii.properties'))
         l = Language.objects.get(code='hi_IN')
         handler.set_language(l)
         handler.parse_file()
@@ -118,5 +119,8 @@ class TestJavaProperties(BaseTestCase):
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 23)
+
+        handler.bind_file(os.path.join(os.path.dirname(__file__),'complex_hi_IN.properties'))
+        self.assertRaises(JavaParseError, handler.parse_file)
 
         r.delete()
