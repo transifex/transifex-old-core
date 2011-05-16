@@ -179,6 +179,8 @@ class ProjectHandler(BaseHandler):
                     p.delete()
                     return BAD_REQUEST("User %s does not exist." % user)
                 p.maintainers.add(u)
+        else:
+            p.maintainers.add(p.owner)
         p.save()
         return rc.CREATED
 
@@ -214,6 +216,8 @@ class ProjectHandler(BaseHandler):
                     except User.DoesNotExist:
                         # maybe fail when wrong user is given?
                         pass
+            else:
+                p.maintainers.add(p.owner)
             p.save()
 
             return rc.CREATED

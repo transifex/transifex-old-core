@@ -204,6 +204,9 @@ class TestProjectAPI(BaseTestCase):
             }),
             content_type='application/json'
         )
+        p = Project.objects.get(slug='api_project')
+        user = User.objects.get(username='registered')
+        self.assertTrue(user in p.maintainers.all())
         self.assertEquals(res.status_code, 201)
         self.assertEquals(len(Project.objects.all()), 9)
         res = self.client['registered'].post(
@@ -239,7 +242,7 @@ class TestProjectAPI(BaseTestCase):
             content_type="application/json"
         )
         self.assertEquals(res.status_code, 404)
-        res = self.client['registered'].post(
+        res = self.client['maintainer'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'foo', 'name': 'Foo Project',
             }),
