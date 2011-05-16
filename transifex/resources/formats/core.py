@@ -169,6 +169,11 @@ class Handler(object):
         """
         return re.sub(re.escape(original), replacement, text)
 
+    def _get_strings(self, resource):
+        return SourceEntity.objects.filter(
+            resource=resource
+        )
+
     def _peek_into_template(self):
         """
         Offer a chance to peek into the template before any string is
@@ -195,8 +200,7 @@ class Handler(object):
         template = template.content
         self._peek_into_template()
 
-        stringset = SourceEntity.objects.filter(
-            resource = self.resource)
+        stringset = self._get_strings(self.resource)
 
         for string in stringset:
             # Find translation for string

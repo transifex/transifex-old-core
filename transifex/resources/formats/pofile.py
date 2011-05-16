@@ -307,7 +307,7 @@ class POHandler(Handler):
         copyrights_inserted = False
         for line in self.compiled_template.split('\n'):
             if line.startswith('#'):
-                if not line.startswith('# FIRST AUTHOR'):
+                if not line.startswith('# FIRST AUTHOR') or self.filename.endswith('.pot'):
                     content_with_copyright += line + "\n"
             elif not copyrights_inserted:
                 copyrights_inserted = True
