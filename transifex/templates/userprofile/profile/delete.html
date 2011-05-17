@@ -15,7 +15,7 @@
   <div class="generic_form">
 	<form action="{% url profile_delete %}" method="post" enctype="multipart/form-data">{% csrf_token %}
 		<h3>{% trans "Are you sure?" %}</label></h3>
-        <span class="buttonized"><input id="remove" class="i16 delete" type="submit" value="{% trans "Delete my data" %}" /></span>
+        <input id="remove" class="i16 delete buttonized" type="submit" value="{% trans "Delete my data" %}" />
 	</form>
   </div>
 {% endblock %}

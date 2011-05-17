@@ -28,7 +28,7 @@ Delete <em>{{ language_name }}</em>
 {% endblocktrans %}</p>
 
   <form action="{% url resource_translations_delete resource.project.slug resource.slug language.code %}" method="post">{% csrf_token %}
-    <span class="buttonized"><input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" /></span>
+    <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 
 {% endblock %}

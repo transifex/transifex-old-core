@@ -2,9 +2,10 @@
 {% block menu %}
 {% if project.private %}
 {% else %}
-<li class="{% if project_widgets %}active{% endif %}">
-    <a id="tab-link-widgets" href="{% url project_widgets project.slug %}">{% trans "Widgets" %}</a>
-</li>
+<li class="ui-state-default ui-corner-top {% if project_widgets %}ui-tabs-selected ui-state-active active{% endif %}">
+    <a id="tab-link-widgets" href="{% url project_widgets project.slug %}">
+        <span>{% trans "Widgets" %}</span>
+	</a>
 {% endif %}
 {% endblock %}
 
