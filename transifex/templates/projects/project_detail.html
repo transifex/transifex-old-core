@@ -27,9 +27,6 @@
     <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
   </span>
   {% endif %}
-  <h2 class="name">{{ project.name }}</h2>
-
-  <p class="description">{% firstof project.description|escape project.name|escape %}</p>
 
   {% with project.long_description_html as long_desc %}
   {% if long_desc %}
@@ -40,7 +37,7 @@
   {% endwith %}
 
   {% if perms.projects.change_project or is_maintainer %}
-  <div class="editlinks"><span class="buttonized"><a class="i16 edit" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit project..." %}</a></span></div>
+  <div class="editlinks"><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit Details" %}</a></div>
   {% endif %}
 
   <div class="details separate">
@@ -167,7 +164,7 @@
   <div id="content_footer_center">
     {% if perms.projects.delete_project or is_maintainer %}
     <div class="deletelink">
-      <span class="buttonized"><a class="i16 delete" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project..." %}</a></span>
+      <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>
     </div>
     {% endif %}
   </div>
