@@ -6,16 +6,17 @@ from tagging.fields import TagField
 import markdown
 
 from django.conf import settings
-from django.core.cache import cache
-from django.utils.translation import ugettext_lazy as _
-from django.db import models, IntegrityError
-from django.db.models import permalink, get_model, Q
-from django.dispatch import Signal
-from django.forms import ModelForm
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.core.cache import cache
+from django.db import models, IntegrityError
+from django.db.models import Sum
+from django.db.models import permalink, get_model, Q
+from django.dispatch import Signal
+from django.forms import ModelForm
 from django.utils.html import escape
+from django.utils.translation import ugettext_lazy as _
 
 from authority.models import Permission
 from notification.models import ObservedItem
@@ -209,6 +210,10 @@ class Project(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('project_detail', None, { 'project_slug': self.slug })
+
+    @property
+    def wordcount(self):
+        return self.resources.aggregate(Sum('wordcount'))['wordcount__sum']
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
