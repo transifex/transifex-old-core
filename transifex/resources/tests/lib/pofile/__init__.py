@@ -45,7 +45,7 @@ class POFile(FormatsBaseTestCase):
                 entities += 1
 
         # Asserting number of entities - POT file has 3 entries.
-        self.assertEqual(entities, 3)
+        self.assertEqual(entities, 6)
 
     def test_po_parser_pt_BR(self):
         """Tests for pt_BR PO file."""
@@ -114,10 +114,10 @@ class POFile(FormatsBaseTestCase):
 
         handler.save2db(is_source=True)
 
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 6)
 
         self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
-            language=l)), 4)
+            language=l)), 7)
 
         handler.bind_file('%s/ar.po' % os.path.split(__file__)[0])
         l = Language.objects.by_code_or_alias('ar')
@@ -126,10 +126,10 @@ class POFile(FormatsBaseTestCase):
 
         handler.save2db()
 
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 3)
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 6)
 
         self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
-            language=l)), 8)
+            language=l)), 11)
 
         r.delete()
 
@@ -353,7 +353,7 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         handler.compile()
         self.assertTrue("AB" in handler.compiled_template)
 
-    def test_remove_headers(self):
+    def test_headers_on_pot(self):
         handler = POHandler(os.path.join(
                 os.path.dirname(__file__), 'tests.pot')
         )
@@ -363,4 +363,6 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         handler.save2db(is_source=True)
         handler.compile()
         self.assertFalse("FIRST AUTHOR" in handler.compiled_template)
+        handler.compile_pot()
+        self.assertTrue("FIRST AUTHOR" in handler.compiled_template)
 
