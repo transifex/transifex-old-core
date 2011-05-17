@@ -7,6 +7,7 @@ from transifex.storage.fields import StorageFileField
 from transifex.storage.models import StorageFile
 from transifex.storage.widgets import StorageFileWidget
 from transifex.resources.models import Resource
+from transifex.resources.formats.core import ParseError
 from transifex.storage.models import StorageFile
 
 class ResourceForm(forms.ModelForm):
@@ -62,7 +63,10 @@ class ResourceForm(forms.ModelForm):
             sf.size = file.size
             sf.language = language
 
-            sf.update_props()
+            try:
+                sf.update_props()
+            except ParseError, e:
+                raise forms.ValidationError(e.message)
             sf.save()
 
             parser = sf.find_parser()

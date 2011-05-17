@@ -341,8 +341,11 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
 
     # for items displayed
-    dlength = int(request.POST.get('iDisplayLength','25'))
-    dstart = int(request.POST.get('iDisplayStart','0'))
+    try:
+        dlength = int(request.POST.get('iDisplayLength','25'))
+        dstart = int(request.POST.get('iDisplayStart','0'))
+    except ValueError, e:
+        return HttpResponseBadRequest()
     # for statistics
     total = source_strings.count()
 
