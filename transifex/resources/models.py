@@ -338,8 +338,7 @@ class SourceEntity(models.Model):
         unique_together = (('string_hash', 'context', 'resource'),)
         verbose_name = _('source string')
         verbose_name_plural = _('source strings')
-        ordering = ['string', 'context']
-        order_with_respect_to = 'resource'
+        ordering = ['last_update',]
         get_latest_by = 'created'
 
     def save(self, *args, **kwargs):
@@ -464,8 +463,7 @@ class Translation(models.Model):
         unique_together = (('source_entity', 'language', 'rule'),)
         verbose_name = _('translation string')
         verbose_name_plural = _('translation strings')
-        ordering  = ['string',]
-        order_with_respect_to = 'source_entity'
+        ordering  = ['last_update',]
         get_latest_by = 'last_update'
 
     def save(self, *args, **kwargs):
