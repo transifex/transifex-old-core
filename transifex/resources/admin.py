@@ -8,12 +8,12 @@ class ResourceAdmin(admin.ModelAdmin):
 
 class SourceEntityAdmin(admin.ModelAdmin):
     search_fields = ['string', 'string_hash', 'context', 'occurrences']
-    list_display = ['string', 'context', 'resource']
+    list_display = ['string', 'context', 'resource', 'last_update']
 
 class TranslationAdmin(admin.ModelAdmin):
     search_fields = ['string', 'string_hash', 'language__name',
         'source_entity__string']
-    list_display = ['source_entity', 'string', 'language']
+    list_display = ['source_entity', 'string', 'language', 'last_update']
     list_display_links = ['string']
 
 class TemplateAdmin(admin.ModelAdmin):
