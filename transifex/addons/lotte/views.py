@@ -36,6 +36,8 @@ from transifex.txcommon import notifications as txnotification
 try:
     from transifex.addons.gtranslate import is_gtranslate_allowed
 except ImportError, e:
+    # gtranslate addon is not available
+    # create a dummy function that always returns True
     def is_gtranslate_allowed(project):
         return True
 
