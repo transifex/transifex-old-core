@@ -31,6 +31,14 @@ class Profile(BaseProfile):
     firstname = models.CharField(_('First name'), max_length=255, blank=True)
     surname = models.CharField(_('Surname'), max_length=255, blank=True)
 
+    @property
+    def first_name(self):
+        return self.firstname
+
+    @property
+    def last_name(self):
+        return self.surname
+
     native_language = models.ForeignKey(Language, blank=True,
         verbose_name=_('Native Language'), null=True)
     blog = models.URLField(_('Blog'), blank=True)

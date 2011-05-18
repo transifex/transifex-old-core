@@ -734,14 +734,16 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
 def _add_copyright(source_string, target_language, request):
     user = get_profile_or_user(request.user)
+    firstname = user.first_name
+    surname = user.last_name
     from transifex.addons.copyright.handlers import save_copyrights
     lotte_save_translation.connect(save_copyrights)
     lotte_save_translation.send(
         None, resource=source_string.source_entity.resource,
         language=target_language,
         copyrights=([(
-                    ''.join([user.firstname, ' ', user.surname,
-                             '<', request.user.email, '>']),
+                    ''.join([firstname, ' ', surname,
+                             ' <', request.user.email, '>']),
                     [str(date.today().year)]
         ), ])
     )
