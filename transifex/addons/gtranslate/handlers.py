@@ -11,8 +11,6 @@ def set_gtranslate_use(sender, **kwargs):
     """
     GtModel = get_model('gtranslate', 'Gtranslate')
     gt = GtModel(project=sender)
-    PModel = get_model('projects', 'Project')
-    disallowed = ( PModel.objects.get(slug=x) for x in settings.DISALLOWED_SLUGS)
     for p in settings.DISALLOWED_SLUGS:
         if sender.slug == p or (sender.outsource is not None and sender.outsource == p):
             gt.use_gtranslate = False
@@ -20,7 +18,6 @@ def set_gtranslate_use(sender, **kwargs):
     else:
         gt.use_gtranslate = True
     gt.save()
-
 
 def connect():
     project_created.connect(set_gtranslate_use)

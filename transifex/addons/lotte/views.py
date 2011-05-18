@@ -33,7 +33,12 @@ from transifex.txcommon.models import get_profile_or_user
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
-from transifex.addons.gtranslate.models import Gtranslate
+try:
+    from transifex.addons.gtranslate import is_gtranslate_allowed
+except ImportError, e:
+    def is_gtranslate_allowed(project):
+        return True
+
 
 Suggestion = get_model('suggestions', 'Suggestion')
 
@@ -135,11 +140,6 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     lotte_init.send(None, request=request, resources=resources,
         language=target_language)
 
-    use_gtranslate = True
-    try:
-        use_gtranslate = Gtranslate.objects.get(project=project).use_gtranslate
-    except Gtranslate.DoesNotExist:
-        pass
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -150,7 +150,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'resources': resources,
           'resource_slug': resource_slug,
           'languages': Language.objects.all(),
-          'gtranslate': use_gtranslate
+          'gtranslate': is_gtranslate_allowed(project)
         },
         context_instance = RequestContext(request))
 
