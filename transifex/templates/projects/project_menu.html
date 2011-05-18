@@ -77,6 +77,15 @@ $(document).ready(
          <span>{% trans "Teams" %}</span>
        </a>
     </li>
+    
+    {% if perms.projects.change_project or is_maintainer %}
+    <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}" style="float:right;">
+       <a id="tab-link-3" href="{% url project_edit project_slug=project.slug %}">
+         <span>{% trans "Edit Project" %}</span>
+       </a>
+    </li>
+    {% endif %}
+    
     {% hook "project.html" menu %}
   </ul>
 </div>

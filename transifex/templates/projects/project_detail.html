@@ -36,10 +36,7 @@
   {% endif %}
   {% endwith %}
 
-  {% if perms.projects.change_project or is_maintainer %}
-  <div class="editlinks"><a class="i16 edit buttonized" href="{% url project_edit project_slug=project.slug %}">{% trans "Edit Details" %}</a></div>
-  {% endif %}
-
+ 
   <div class="details separate">
 
   <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
@@ -160,12 +157,8 @@
 {% endblock %}
 
 {% block content_footer %}
-{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  <div id="content_footer_center">
-    {% if perms.projects.delete_project or is_maintainer %}
-    <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>
-    </div>
-    {% endif %}
-  </div>
+<div id="content_footer_center">
+</div>
+
 {% endblock %}
+

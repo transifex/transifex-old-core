@@ -81,7 +81,7 @@
   {% endif %}
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
-        <td>
+        <td style="padding-left:47px;"><!--icon padding 27px+20px list padding...so that aligns with the rest-->
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}</a>
         </td>
         <td class="last_updated">
