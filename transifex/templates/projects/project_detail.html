@@ -21,13 +21,6 @@
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   <div class="obj_bigdetails">
-  {% if project.private %}
-  <span id="private_project_banner" class="ui-corner-all">
-    {% trans "Private Project"%}
-    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
-  </span>
-  {% endif %}
-
   {% with project.long_description_html as long_desc %}
   {% if long_desc %}
   <div class="long_description">

@@ -56,8 +56,17 @@ Edit {{resource}}
 	<br />
     <input type="submit" class="i16 submit buttonized" value="{% trans "Save translation resource" %}" />
   </form>
-
-
 </div>
+
+<h3>
+    {% trans "Delete this Resource." %}
+</h3>
+
+ {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+    {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
+    <div>
+      <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete resource" %}</a>
+    </div>
+    {% endif %}
 {% endblock %}
 
