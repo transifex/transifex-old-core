@@ -28,6 +28,7 @@ from transifex.resources.models import (Translation, Resource, SourceEntity)
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.models import get_profile_or_user
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -691,18 +692,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                     translation_string.user = request.user
                     translation_string.save()
 
-                # signal new translation
-                from transifex.addons.copyright.handlers import save_copyrights
-                lotte_save_translation.connect(save_copyrights)
-                lotte_save_translation.send(
-                    None, resource=source_string.source_entity.resource,
-                    language=target_language,
-                    copyrights=([(
-                        ''.join([request.user.first_name, ' ', request.user.last_name,
-                                 '<', request.user.email, '>']),
-                        [str(date.today().year)]
-                    ), ])
-                )
+                _add_copyright(source_string, target_language, request)
                 invalidate_stats_cache(source_string.source_entity.resource,
                     target_language, user=request.user)
                 if not push_response_dict.has_key(source_id):
@@ -716,6 +706,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                         rule = target_language.get_rule_num_from_name(rule),
                         string = string,
                         user = request.user) # Save the sender as last committer
+                    _add_copyright(source_string, target_language, request)
                     invalidate_stats_cache(source_string.source_entity.resource,
                         target_language, user=request.user)
                     if not push_response_dict.has_key(source_id):
@@ -739,6 +730,21 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
 
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')
+
+
+def _add_copyright(source_string, target_language, request):
+    user = get_profile_or_user(request.user)
+    from transifex.addons.copyright.handlers import save_copyrights
+    lotte_save_translation.connect(save_copyrights)
+    lotte_save_translation.send(
+        None, resource=source_string.source_entity.resource,
+        language=target_language,
+        copyrights=([(
+                    ''.join([user.firstname, ' ', user.surname,
+                             '<', request.user.email, '>']),
+                    [str(date.today().year)]
+        ), ])
+    )
 
 
 # Restrict access only for private projects since this is used to fetch stuff

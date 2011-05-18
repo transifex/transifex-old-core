@@ -439,10 +439,10 @@ def get_pot_file(request, project_slug, resource_slug):
     i18n_method = settings.I18N_METHODS[resource.i18n_type]
     response = HttpResponse(template,
         mimetype=i18n_method['mimetype'])
-    _filename = "%(proj)s_%(res)s_%(type)s" % {
+    _filename = "%(proj)s_%(res)s.pot" % {
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
-        'type': '.pot'}
+    }
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 

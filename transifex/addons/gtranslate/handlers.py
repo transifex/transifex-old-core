@@ -13,8 +13,8 @@ def set_gtranslate_use(sender, **kwargs):
     gt = GtModel(project=sender)
     PModel = get_model('projects', 'Project')
     disallowed = ( PModel.objects.get(slug=x) for x in settings.DISALLOWED_SLUGS)
-    for p in disallowed:
-        if sender == p or sender.outsource == p:
+    for p in settings.DISALLOWED_SLUGS:
+        if sender.slug == p or (sender.outsource is not None and sender.outsource == p):
             gt.use_gtranslate = False
             break
     else:
