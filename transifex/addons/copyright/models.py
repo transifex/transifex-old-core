@@ -1,3 +1,4 @@
+import re
 from datetime import date
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -16,6 +17,16 @@ class CopyrightManager(models.Manager):
         Should be called from Copyright.objects. Calling it from related models
         won't work.
         """
+
+        # Find if the email is registered to the db
+        user = None
+        email = re.search('<(.*?)>', owner)
+        if email is not None:
+            try:
+                user = User.objects.get(email=email.group(1))
+            except User.DoesNotExist, e:
+                pass
+
         #FIXME: Make this work with foreign-key calls, for example:
         #       tresource.objects.assign(owner=, year=)
         _qs = super(CopyrightManager, self).get_query_set()
@@ -29,7 +40,11 @@ class CopyrightManager(models.Manager):
             if not year in years:
                 years.append(year)
                 copyright.years = ','.join(sorted(years))
-                copyright.save()
+
+        # User must be separately created, to that get_or_create works
+        copyright.user = user
+        copyright.save()
+
         return copyright
 
 

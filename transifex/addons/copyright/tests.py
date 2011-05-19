@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 from django.db.models.loading import get_model
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 from transifex.languages.models import Language
@@ -66,6 +67,17 @@ class CopyrightTests(BaseTestCase):
             resource=self.resource, language=self.resource.source_language
         )
         self.assertEquals(len(c), 3)
+
+    def test_user_from_db(self):
+        cr = Copyright.objects.assign(
+            language=self.language_en, resource=self.resource,
+            owner='Test Test <test@test.org>', year='2010')
+        self.assertTrue(cr.user is None)
+        u = User.objects.create(username='test', email='test@test.org')
+        cr = Copyright.objects.assign(
+            language=self.language_en, resource=self.resource,
+            owner='Test Test <test@test.org>', year='2010')
+        self.assertTrue(cr.user == u)
 
     def poheader_load_test(self):
         raise NotImplementedError
