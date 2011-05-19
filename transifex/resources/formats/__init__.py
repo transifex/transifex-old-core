@@ -18,11 +18,16 @@ def get_i18n_type_from_file(filename):
     filename -- The file name. Duh
     """
     i18n_type = None
-    m = magic.Magic(mime=True)
-    # guess mimetype and remove charset
     try:
+        m = magic.Magic(mime=True)
+        # guess mimetype and remove charset
         mime_type = m.from_file(filename)
-    except IOError:
+    except AttributeError:
+        m = magic.open(magic.MAGIC_NONE)
+        m.load()
+        mime_type = m.file(filename)
+        m.close()
+    except Exception:
         # We don't have the actual file. Depend on the filename only
         mime_type = None
 
