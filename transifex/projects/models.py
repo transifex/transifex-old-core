@@ -24,7 +24,7 @@ from notification.models import ObservedItem
 from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
-from transifex.projects.signals import project_created
+from transifex.projects.signals import project_created, project_deleted
 
 class DefaultProjectQuerySet(models.query.QuerySet):
     """
@@ -205,6 +205,7 @@ class Project(models.Model):
 
     def delete(self, *args, **kwargs):
         self.resources.all().delete()
+        project_deleted.send(sender=self)
         super(Project, self).delete(*args, **kwargs)
 
     @permalink

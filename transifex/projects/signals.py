@@ -7,6 +7,7 @@ post_comp_prep = Signal(providing_args=['instance'])
 submission_error = Signal(providing_args=['filename', 'message'])
 # Signal emitted when a new project is created
 project_created = Signal()
+project_deleted = Signal()
 
 pre_set_stats = Signal(providing_args=['instance'])
 post_set_stats = Signal(providing_args=['instance'])
