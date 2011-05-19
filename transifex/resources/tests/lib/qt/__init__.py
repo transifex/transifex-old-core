@@ -290,4 +290,27 @@ class QtFile(FormatsBaseTestCase):
         self.assertEqual(Suggestion.objects.filter(source_entity__in=
             SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 0)
 
+    def test_unfinished_entries(self):
+        testfile = os.path.join(
+            os.path.dirname(__file__),
+            'en-untranslated.ts'
+        )
+        handler = LinguistHandler(testfile)
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        lang = Language.objects.by_code_or_alias('el')
+        testfile = os.path.join(
+            os.path.dirname(__file__),
+            'gr-untranslated.ts'
+        )
+        handler = LinguistHandler(testfile)
+        handler.bind_resource(self.resource)
+        handler.set_language(lang)
+        handler.parse_file()
+        handler.save2db()
+        handler.compile()
+        self.assertEqual(handler.compiled_template.count('unfinished'), 2)
+
 

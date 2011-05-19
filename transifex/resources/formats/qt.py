@@ -107,10 +107,10 @@ class LinguistHandler(Handler):
         root.attributes["language"] = language.code
 
         for message in doc.getElementsByTagName("message"):
+            translation = _getElementByTagName(message, "translation")
             if message.attributes.has_key("numerus") and \
                 message.attributes['numerus'].value=='yes':
                 source = _getElementByTagName(message, "source")
-                translation = _getElementByTagName(message, "translation")
                 numerusforms = message.getElementsByTagName('numerusform')
                 translation.childNodes  = []
 
@@ -136,11 +136,18 @@ class LinguistHandler(Handler):
                 for p,n in enumerate(plurals):
                     plural_keys[p] = n.string
                 message.setAttribute('numerus', 'yes')
-                for key in plural_keys.keys():
+                for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")
                     e.appendChild(doc.createTextNode(xml_escape(plural_keys[key],
                         {"'": "&apos;", '"': '&quot;'})))
                     translation.appendChild(e)
+                    if not plural_keys[key]:
+                        translation.attributes['type'] = 'unfinished'
+            else:
+                if not translation.childNodes:
+                    translation.attributes['type'] = 'unfinished'
+
+
 
         template_text = doc.toxml()
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
