@@ -18,21 +18,21 @@ def is_gtranslate_allowed(project):
     outsources to has a value of False.
     """
 
-    # Check the project first
-    GtModel = get_model('gtranslate', 'Gtranslate')
-    try:
-        gt = GtModel.objects.get(project=project)
-        if not gt.use_gtranslate:
-            return False
-    except GtModel.DoesNotExist, e:
-        pass
-
-    # Then the outsource
+    # Check the outsource first
     try:
         if project.outsource is not None:
             gt = GtModel.objects.get(project=project.outsource)
             if not gt.use_gtranslate:
                 return False
+    except GtModel.DoesNotExist, e:
+        pass
+
+    # Then the project
+    GtModel = get_model('gtranslate', 'Gtranslate')
+    try:
+        gt = GtModel.objects.get(project=project)
+        if not gt.use_gtranslate:
+            return False
     except GtModel.DoesNotExist, e:
         pass
 
