@@ -216,6 +216,10 @@ class Project(models.Model):
     def wordcount(self):
         return self.resources.aggregate(Sum('wordcount'))['wordcount__sum']
 
+    @property
+    def team_member_count(self):
+        return len(User.objects.filter(team_members__project=self))
+
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
 except tagging.AlreadyRegistered, e:
