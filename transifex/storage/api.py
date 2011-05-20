@@ -94,7 +94,7 @@ class StorageHandler(BaseHandler):
             for name, submitted_file in request.FILES.items():
                 submitted_file = submitted_file
                 sf = StorageFile()
-                sf.name = str(submitted_file.name)
+                sf.name = str(submitted_file.name.encode('UTF-8'))
                 sf.uuid = str(uuid4())
                 fh = open(sf.get_storage_path(), 'wb')
                 for chunk in submitted_file.chunks():
