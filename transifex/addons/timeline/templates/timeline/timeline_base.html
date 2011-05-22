@@ -31,13 +31,13 @@
 
   <div class="pagination">{% paginate %}</div>
 
-  <table class="tablesorter compact withair timeline">
+  <table class="tablesorter compact withair timeline" width="100%">
    <thead>
     <tr>
       <th><span>{% anchor action_type # %}</span></th>
-      <th><span class="i16 user">{% anchor user User %}</span></th>
-      <th><span class="i16 clock">{% anchor action_time "Time" %}</span></th>
-      <th><span class="i16 text">{% trans "Description" %}</span></th>
+      <th><span>{% anchor user User %}</span></th>
+      <th><span>{% anchor action_time "Time" %}</span></th>
+      <th><span>{% trans "Description" %}</span></th>
     </tr>
    </thead>
    <tbody>

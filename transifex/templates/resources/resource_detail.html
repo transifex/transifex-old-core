@@ -83,16 +83,24 @@
 
 {% block body_class %}project_list{% endblock %}
 
+{% block header_menu %}{% endblock %}
+
+{% block content_title %}
+<h2 class="pagetitle">{{ resource.project.name }}</h2>
+{% endblock%}
+
 {% block content_main %}
   {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
   <div class="obj_bigdetails ui-tabs-panel">
-  {% if resource.project.private %}
+ {% comment %}
+  <!--{% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
     <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
   </span>
-  {% endif %}
+  {% endif %}-->
+ {% endcomment %}
   <h2 class="name">{{ resource.name }}</h2>
 
   {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
@@ -127,7 +135,7 @@
       </td>
     </tr>
     <tr>
-      <th class="i16 merge">{% trans "Auto-update from URL?" %}</th>
+      <th class="i16 url_update">{% trans "Auto-update from URL?" %}</th>
       <td>
         {% if autofetch_url and autofetch_url.auto_update %}
 		    <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" /> &nbsp;
@@ -187,9 +195,9 @@
 <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span class="i16 language">{% trans "Language" %}</span></th>
-    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
-    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+    <th><span>{% trans "Language" %}</span></th>
+    <th style="width:320px"><span>{% trans "Completion" %}</span></th>
+    <th><span>{% trans "Last Updated" %}</span></th>
    </tr>
 {% for stat in statslist %}
     {% ifequal forloop.counter 2 %}
