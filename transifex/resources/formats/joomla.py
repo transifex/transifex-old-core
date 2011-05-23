@@ -114,6 +114,6 @@ class JoomlaINIHandler(Handler):
         Joomla versions >=1.6 need the replacement to be enclosed in double quotes
         first.
         """
-        if self._version:
+        if self._version and not replacement.startswith('"'):
             replacement = ''.join(['"', replacement, '"'])
         return super(JoomlaINIHandler, self)._do_replace(original, replacement, text)

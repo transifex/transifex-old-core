@@ -29,3 +29,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.parse_file(is_source=True)
         self.compare_to_actual_file(self.parser, file_)
 
+    def test_already_quoted_string(self):
+        # case where a translation was saved before the support for 1.6
+        text = self.parser._do_replace('123456_tr', '"translation"', 'key = 123456_tr')
+        self.assertEqual(text.count('"'), 2)
