@@ -196,8 +196,8 @@ class Handler(object):
         # pre compile init
         self._pre_compile(language=language)
 
-        template = Template.objects.get(resource=self.resource)
-        template = template.content
+        self.template = Template.objects.get(resource=self.resource)
+        self.template = self.template.content
         self._peek_into_template()
 
         stringset = self._get_strings(self.resource)
@@ -214,10 +214,10 @@ class Handler(object):
                 trans = None
 
             # Do the actual replacement in the template
-            template = self._do_replace("%s_tr" % string.string_hash.encode('utf-8'),
-                    trans and trans.string.encode('utf-8') or "", template)
+            self.template = self._do_replace("%s_tr" % string.string_hash.encode('utf-8'),
+                    trans and trans.string.encode('utf-8') or "", self.template)
 
-        self.compiled_template = template
+        self.compiled_template = self.template
 
         self._post_compile(language)
 
