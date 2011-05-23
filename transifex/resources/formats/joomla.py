@@ -106,14 +106,3 @@ class JoomlaINIHandler(Handler):
             self._version = 1
         else:
             self._version = 0
-
-    def _do_replace(self, original, replacement, text):
-        """
-        Replace `original` with `replacement` in `text`.
-
-        Joomla versions >=1.6 need the replacement to be enclosed in double quotes
-        first.
-        """
-        if self._version and not replacement.startswith('"'):
-            replacement = ''.join(['"', replacement, '"'])
-        return super(JoomlaINIHandler, self)._do_replace(original, replacement, text)
