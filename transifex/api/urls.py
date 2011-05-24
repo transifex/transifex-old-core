@@ -116,7 +116,7 @@ urlpatterns = patterns('',
         r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/content/$',
         never_cache(translation_handler),
         {'api_version': 2, 'lang_code': 'source'},
-        name='apiv2_translations',
+        name='apiv2_source_content',
     ), url(
         r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/translation/(?P<lang_code>[\-_@\w]+)/$',
         never_cache(translation_handler),
