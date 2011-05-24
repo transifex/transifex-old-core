@@ -16,6 +16,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
     is_source = False
     if not language or language == resource.source_language:
         is_source = True
+        language = resource.source_language
 
     if not is_source:
         # Get or create new RLStat object

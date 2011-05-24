@@ -179,8 +179,8 @@ class POHandler(Handler):
 
     @need_resource
     def compile_pot(self):
-        template = Template.objects.get(resource=self.resource)
-        template = template.content
+        self.template = Template.objects.get(resource=self.resource)
+        self.template = template.content
         self._peek_into_template()
 
         stringset = SourceEntity.objects.filter(
@@ -188,12 +188,12 @@ class POHandler(Handler):
 
         for string in stringset:
             # Replace strings with ""
-            template = self._do_replace(
-                "%s_tr" % string.string_hash.encode('utf-8'), "", template
+            self.template = self._do_replace(
+                "%s_tr" % string.string_hash.encode('utf-8'), "", self.template
             )
 
         # FIXME merge with _post_compile
-        po = polib.pofile(unicode(template, 'utf-8'))
+        po = polib.pofile(unicode(self.template, 'utf-8'))
 
         # Update PO file headers
         po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
