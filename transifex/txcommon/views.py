@@ -54,6 +54,7 @@ def index(request):
          'next': request.path,
          'num_projects': Project.objects.count(),
          'num_languages': Language.objects.count(),
+         'num_users': User.objects.count(),
         },
         context_instance = RequestContext(request))
 
