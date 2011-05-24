@@ -45,5 +45,10 @@ class TestGtranslate(BaseTestCase):
         pout.outsource = p
         self.assertFalse(is_gtranslate_allowed(pout))
 
+    def test_delete(self):
+        p = Project(slug="rm")
+        p.name = "RM me"
+        p.save()
+        delete_gtranslate(p)
 
 

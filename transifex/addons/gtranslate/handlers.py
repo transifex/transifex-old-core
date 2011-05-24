@@ -13,7 +13,7 @@ def delete_gtranslate(sender, **kwargs):
     try:
         gt = GtModel.objects.get(project=sender)
         gt.delete()
-    except GtModel.DoesNotExit, e:
+    except GtModel.DoesNotExist, e:
         pass
 
 
