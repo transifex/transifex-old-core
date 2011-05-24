@@ -1,6 +1,7 @@
 from uuid import uuid4
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from transifex.txcommon.exceptions import FileCheckError
 from transifex.languages.models import Language
 from transifex.resources.formats import get_i18n_type_from_file
 from transifex.storage.fields import StorageFileField
@@ -65,7 +66,7 @@ class ResourceForm(forms.ModelForm):
 
             try:
                 sf.update_props()
-            except ParseError, e:
+            except (FileCheckError, ParseError), e:
                 raise forms.ValidationError(e.message)
             sf.save()
 
