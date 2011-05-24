@@ -52,7 +52,7 @@ $(document).ready(
 {% if project %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<h2 class="name" style="display:inline-block;">{{ project.name }}</h2>
+<h2 class="pagetitle withdesc" style="display:inline-block;">{{ project.name }}</h2>
 
 
 {% if project.private %}
@@ -62,7 +62,7 @@ $(document).ready(
 </span>
 {% endif %}
 
-<p class="description">{% firstof project.description|escape project.name|escape %}</p>
+<p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
 
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
