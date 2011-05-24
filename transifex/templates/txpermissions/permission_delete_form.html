@@ -2,6 +2,6 @@
 {% if url %}
 <form class="microform delete_permission" method="post" enctype="multipart/form-data" action="{{ url }}">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
-    <input class="i16 delete" type="submit" value="{% trans "Revoke permission" %}"/>
+    <input class="i16 delete duttonized" type="submit" value="{% trans "Revoke permission" %}"/>
 </form>
 {% endif %}

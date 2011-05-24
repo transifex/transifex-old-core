@@ -3,9 +3,9 @@
 <form class="microform delete_permission" method="post" enctype="multipart/form-data" action="{{ url }}">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
     {% if is_requestor %}
-        <input class="i16 delete" type="submit" value="{% trans "Withdraw request" %}"/>
+        <input class="i16 delete buttonized" type="submit" value="{% trans "Withdraw request" %}"/>
     {% else %}
-        <input class="i16 delete" type="submit" value="{% trans "Deny request" %}"/>
+        <input class="i16 delete buttonized" type="submit" value="{% trans "Deny request" %}"/>
     {% endif %}
 </form>
 {% endif %}

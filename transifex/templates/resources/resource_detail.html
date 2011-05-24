@@ -116,19 +116,19 @@
   <h3>{% trans "Translation Resource details" %}</h3>
   <table class="definition">
     <tr>
-      <th class="i16 omega">{% trans "Source Language:" %}</th>
+      <th class="i16 omega">{% trans "Source Language" %}</th>
       <td>
         {{ resource.source_language }}
       </td>
     </tr>
     <tr>
-      <th class="i16 language">{% trans "Number of languages:" %}</th>
+      <th class="i16 language">{% trans "Number of languages" %}</th>
       <td>
         {{ resource.available_languages|length }}
       </td>
     </tr>
     <tr>
-      <th class="i16 stringnum">{% trans "Total Strings:" %}</th>
+      <th class="i16 stringnum">{% trans "Total Strings" %}</th>
       <td>
         {{ resource.total_entities }}
         <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
@@ -146,7 +146,7 @@
       </td>
     </tr>
     <tr>
-      <th class="i16 allow_file">{% trans "Accepting Translations?" %}</th>
+      <th class="i16 accept_translation">{% trans "Accepting Translations?" %}</th>
       <td>
         {% if resource.accept_translations %}
             <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" />
