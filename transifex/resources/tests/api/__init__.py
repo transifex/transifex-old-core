@@ -3,9 +3,10 @@ import os
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.contrib.auth.models import User, Permission
-from transifex.resources.models import Resource
+from transifex.resources.models import Resource, RLStats
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
+from transifex.languages.models import Language
 from transifex.settings import PROJECT_PATH
 
 
@@ -407,7 +408,7 @@ class TestTranslationAPI(APIBaseTests):
                 kwargs={
                     'project_slug': 'new_pr',
                     'resource_slug': 'r1',
-                    'lang_code': 'el_GR',
+                    'lang_code': 'el',
                 }
             )
         )
@@ -515,6 +516,59 @@ class TestTranslationAPI(APIBaseTests):
         )
         f.close()
         self.assertEquals(res.status_code, 200)
+
+    def test_rlstats_updated(self):
+        self._create_project()
+        content = 'key = value'
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'r1',
+                    'source_language': 'en_US',
+                    'mimetype': 'text/x-joomla-ini',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        translation = u'key = τιμή'
+        res = self.client['registered'].put(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'el',
+                }
+            ),
+            data=simplejson.dumps({
+                    'content': translation,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 200)
+        r = Resource.objects.get(slug='r1', project__slug='new_pr')
+        l = Language.objects.by_code_or_alias('el')
+        rl = RLStats.objects.get(resource=r, language=l)
+        self.assertEquals(rl.translated_perc, 100)
+        content += '\nother = other'
+        res = self.client['registered'].put(
+            reverse(
+                'apiv2_source_content',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                }
+            ),
+            data=simplejson.dumps({
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 200)
+        rl = RLStats.objects.get(resource=r, language=l)
+        self.assertEquals(rl.translated_perc, 50)
 
     def _create_project(self):
         res = self.client['registered'].post(
