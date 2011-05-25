@@ -35,7 +35,8 @@ class Migration(DataMigration):
     def backwards(self, orm):
         # Delete all data from copyrights
         for c in orm.Copyright.objects.all():
-            if c.user is not None:  # Pushed from lotte
+            # if c.user is not None:  # Pushed from lotte
+            if not c.years_text:
                 c.delete()
 
     def assign(self, orm, language, resource, owner, year):
@@ -60,9 +61,14 @@ class Migration(DataMigration):
 
         # User must be separately created, so that get_or_create works
         copyright.user = user
+        copyright.years_text = self._compress_years(copyright.years)
         copyright.save()
 
         return copyright
+
+    def _compress_years(self, years):
+        return ", ".join(years.split(','))
+
 
 
     models = {
