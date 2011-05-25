@@ -316,7 +316,7 @@ class POHandler(Handler):
                 copyrights_inserted = True
                 for entry in c:
                     content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
-                            ', ' + entry.years_text.encode('UTF-8') + "\n"
+                            ', ' + entry.years_text.encode('UTF-8') + ".\n"
                 content_with_copyright += line + "\n"
             else:
                 content_with_copyright += line + "\n"
