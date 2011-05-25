@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from transifex.txcommon.tests import utils
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.pofile import POHandler
+from transifex.resources.formats.pofile import POHandler, PoParseError
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
 from transifex.addons.suggestions.models import Suggestion
@@ -275,6 +275,14 @@ class POFile(FormatsBaseTestCase):
                 self.assertEqual(entry.msgstr, trans.string.encode('utf-8'), "Source '%s'"\
                     " differs from translation %s" % (entry.msgstr,
                     trans.string.encode('utf-8')))
+
+    def test_wrong_po(self):
+        handler = POHandler(os.path.join(
+                os.path.dirname(__file__), 'wrong.pot')
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        self.assertRaises(PoParseError, handler.parse_file, is_source=True)
 
 
 class POFileHeaders(FormatsBaseTestCase):
