@@ -18,10 +18,11 @@ class CopyrightManager(models.Manager):
         won't work.
         """
 
+        # FIXME work for User/Profile objects as well
         # Find if the email is registered to the db
         user = None
         email = re.search('<(.*?)>', owner)
-        if email is not None:
+        if email is not None and email.group(1):
             try:
                 user = User.objects.get(email=email.group(1))
             except User.DoesNotExist, e:
