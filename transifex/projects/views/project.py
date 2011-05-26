@@ -21,6 +21,7 @@ from transifex.projects import signals
 
 from transifex.languages.models import Language
 from transifex.resources.models import RLStats
+from transifex.resources.utils import invalidate_template_cache
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -169,6 +170,10 @@ def handle_stats_on_access_control_edit(project):
             for stat in new_stats:
                 RLStats.objects.get_or_create(resource=resource,
                     language=stat.language)
+            invalidate_template_cache("project_resource_details",
+                project.slug, resource.slug)
+            invalidate_template_cache("resource_details",
+                project.slug, resource.slug)
     else:
         teams = project.team_set.all()
         for resource in project.resources.all():
@@ -176,8 +181,10 @@ def handle_stats_on_access_control_edit(project):
                 Q(translated=0) & ~Q(language__in=teams.values('language')))
             for stat in old_stats:
                 stat.delete()
-
-    return
+            invalidate_template_cache("project_resource_details",
+                project.slug, resource.slug)
+            invalidate_template_cache("resource_details",
+                project.slug, resource.slug)
 
 @login_required
 @one_perm_required_or_403(pr_project_delete,
