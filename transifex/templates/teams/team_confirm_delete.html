@@ -14,7 +14,7 @@
 <p>{% blocktrans with team.project.name as project_name and team.language.name as lang_name %}Are you sure you want to permanently delete the '{{ lang_name }}' team which works on {{ project_name }}?{% endblocktrans %}</p>
 
   <form action='' method='post'>{% csrf_token %}
-    <input name="team_delete" type="submit" class="i16 submit buttonized" value="{% trans 'Yes, I'm sure!' %}" />
+    <input name="team_delete" type="submit" class="i16 submit buttonized" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 
 {% endblock %}
