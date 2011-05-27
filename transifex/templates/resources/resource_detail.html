@@ -83,16 +83,24 @@
 
 {% block body_class %}project_list{% endblock %}
 
+{% block header_menu %}{% endblock %}
+
+{% block content_title %}
+<h2 class="pagetitle">{{ resource.project.name }}</h2>
+{% endblock%}
+
 {% block content_main %}
   {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
   <div class="obj_bigdetails ui-tabs-panel">
-  {% if resource.project.private %}
+ {% comment %}
+  <!--{% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private Project"%}
     <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
   </span>
-  {% endif %}
+  {% endif %}-->
+ {% endcomment %}
   <h2 class="name">{{ resource.name }}</h2>
 
   {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
@@ -108,26 +116,26 @@
   <h3>{% trans "Translation Resource details" %}</h3>
   <table class="definition">
     <tr>
-      <th class="i16 omega">{% trans "Source Language:" %}</th>
+      <th class="i16 omega">{% trans "Source Language" %}</th>
       <td>
         {{ resource.source_language }}
       </td>
     </tr>
     <tr>
-      <th class="i16 language">{% trans "Number of languages:" %}</th>
+      <th class="i16 language">{% trans "Number of languages" %}</th>
       <td>
         {{ resource.available_languages|length }}
       </td>
     </tr>
     <tr>
-      <th class="i16 stringnum">{% trans "Total Strings:" %}</th>
+      <th class="i16 stringnum">{% trans "Total Strings" %}</th>
       <td>
         {{ resource.total_entities }}
         <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
       </td>
     </tr>
     <tr>
-      <th class="i16 merge">{% trans "Auto-update from URL?" %}</th>
+      <th class="i16 url_update">{% trans "Auto-update from URL?" %}</th>
       <td>
         {% if autofetch_url and autofetch_url.auto_update %}
 		    <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" /> &nbsp;
@@ -138,7 +146,7 @@
       </td>
     </tr>
     <tr>
-      <th class="i16 allow_file">{% trans "Accepting Translations?" %}</th>
+      <th class="i16 accept_translation">{% trans "Accepting Translations?" %}</th>
       <td>
         {% if resource.accept_translations %}
             <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" />
@@ -187,9 +195,9 @@
 <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span class="i16 language">{% trans "Language" %}</span></th>
-    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
-    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
+    <th><span>{% trans "Language" %}</span></th>
+    <th style="width:320px"><span>{% trans "Completion" %}</span></th>
+    <th><span>{% trans "Last Updated" %}</span></th>
    </tr>
 {% for stat in statslist %}
     {% ifequal forloop.counter 2 %}
@@ -365,11 +373,6 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
-    {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
-    <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete resource" %}</a>
-    </div>
-    {% endif %}
+
   </div>
 {% endblock %}

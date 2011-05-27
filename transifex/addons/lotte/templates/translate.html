@@ -297,7 +297,7 @@
                       {% if gtranslate %}
                            textareas += '  <p id="auto_translate_wrapper"><a class="i16 buttonized action suggest">{% trans "auto translate" %}</a></p>'
                       {% endif %}
-                      textareas += '  <p id="copy_source_wrapper"><a class="i16 buttonized next copy_source">{% trans "copy source" %}</a></p>'
+                      textareas += '  <p id="copy_source_wrapper"><a class="i16 buttonized  copy_source">{% trans "copy source" %}</a></p>'
                       + '</div>';
                       return textareas;
                     }
@@ -709,7 +709,7 @@
 
 {% block content_header_sec %}
   {% url search_translations as search_translations %}
-  <p class="i16 view nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">
+  <p class="i16 search_translations nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">
     {% trans "Search translations" %}</a>
   </p>
 {% endblock %}

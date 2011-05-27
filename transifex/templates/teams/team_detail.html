@@ -140,10 +140,10 @@
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span class="i16 comment">{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
-    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
-    <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
+    <th><span>{% trans "Resource" %}</span></th>
+    <th style="width:320px"><span>{% trans "Completion" %}</span></th>
+    <th><span>{% trans "Last Updated" %}</span></th>
+    <th><span>{% trans "Importance" %}</span></th>
    </tr>
   </thead>
   <tbody>
@@ -322,11 +322,6 @@
 
 {% block content_footer %}
   <div id="content_footer_center">
-    {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-    {% if perms.teams.delete_team or is_maintainer %}
-    <div class="deletelink">
-      <a class="i16 delete buttonized" href="{% url team_delete project.slug team.language.code %}">{% trans "Delete team..." %}</a>
-    </div>
-    {% endif %}
+
   </div>
 {% endblock %}

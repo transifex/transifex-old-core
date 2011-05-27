@@ -52,8 +52,17 @@ $(document).ready(
 {% if project %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<h2 class="name">{{ project.name }}</h2>
-<p class="description">{% firstof project.description|escape project.name|escape %}</p>
+<h2 class="pagetitle withdesc" style="display:inline-block;">{{ project.name }}</h2>
+
+
+{% if project.private %}
+<span id="private_project_banner" class="ui-corner-all" style="display:inline-block;">
+{% trans "Private Project"%}
+<img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
+</span>
+{% endif %}
+
+<p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
 
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
@@ -91,6 +100,7 @@ $(document).ready(
 </div>
 
 {% endif %}
+
 {% endblock %}
 
 {% block content_main %}{% endblock %}

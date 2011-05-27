@@ -19,7 +19,7 @@
 <p>{% blocktrans with release.project.name as project_name and release.name as release_name %}Are you sure you want to permanently delete the release '{{ release_name }}' which works on {{ project_name }}?{% endblocktrans %}</p>
 
   <form action='' method='post'>{% csrf_token %}
-    <input type="submit" class="i16 submit" value="{% trans "Yes, I'm sure!" %}" />
+    <input type="submit" class="i16 submit buttonized" value="{% trans "Yes, I'm sure!" %}" />
   </form>
 
 {% endblock %}
