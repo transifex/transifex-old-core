@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from userprofile.models import BaseProfile
+from userprofile.countries import COUNTRIES, CountryField
 
 Language = models.get_model('languages', 'Language')
 
@@ -23,6 +24,20 @@ def get_profile_or_user(user):
         return Profile.objects.get(user__pk=user.pk)
     except Profile.DoesNotExist:
         return user
+
+from south.modelsinspector import add_introspection_rules
+rules = [
+    (
+        (CountryField, ),
+        [],
+        {
+            'max_length': ['max_length', {'default': 2}],
+            'choices': ['choices', {'default': COUNTRIES}],
+        },
+    )
+]
+add_introspection_rules(rules, ["^userprofile\.countries\.CountryField"])
+
 
 class Profile(BaseProfile):
     """
@@ -47,6 +62,8 @@ class Profile(BaseProfile):
     about = models.TextField(_('About yourself'), max_length=140, blank=True,
         help_text=_('Short description of yourself (140 chars).'))
     looking_for_work = models.BooleanField(_('Looking for work?'), default=False)
+
+
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''

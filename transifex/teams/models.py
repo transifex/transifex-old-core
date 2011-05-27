@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import get_model, permalink
+from django.db.models import Q, get_model, permalink
 from django.utils.translation import ugettext_lazy as _
 from transifex.languages.models import Language
 from transifex.projects.models import Project
@@ -81,7 +81,8 @@ class Team(models.Model):
         super(Team, self).save(*args, **kwargs)
         Resource = get_model('resources', 'Resource')
         RLStats = get_model('resources', 'RLStats')
-        res = Resource.objects.filter(project=self.project)
+        res = Resource.objects.filter(Q(project=self.project) | 
+            Q(project__outsource=self.project))
         for r in res:
             RLStats.objects.get_or_create(resource=r, language=self.language)
             invalidate_template_cache("project_resource_details",

@@ -25,11 +25,11 @@ from suggestions.models import Suggestion
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
         Handler, STRICT, StringSet, ParseError
 
-#class ResXmlParseError(ParseError):
-    #pass
+class PoParseError(ParseError):
+    pass
 
-#class ResXmlCompileError(CompileError):
-    #pass
+class PoCompileError(CompileError):
+    pass
 
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
@@ -100,7 +100,10 @@ class POHandler(Handler):
     def contents_check(self, filename):
 
         # Read the stream to buffer
-        po = polib.pofile(filename)
+        try:
+            po = polib.pofile(filename)
+        except IOError, e:
+            raise PoParseError(e.message)
 
         # get this back once the polib bug has been fixed :
         # http://bitbucket.org/izi/polib/issue/11/multiline-entries-are-not-getting-updated
@@ -180,7 +183,7 @@ class POHandler(Handler):
     @need_resource
     def compile_pot(self):
         self.template = Template.objects.get(resource=self.resource)
-        self.template = template.content
+        self.template = self.template.content
         self._peek_into_template()
 
         stringset = SourceEntity.objects.filter(
@@ -313,7 +316,7 @@ class POHandler(Handler):
                 copyrights_inserted = True
                 for entry in c:
                     content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
-                            ', ' + entry.years_text.encode('UTF-8') + "\n"
+                            ', ' + entry.years_text.encode('UTF-8') + ".\n"
                 content_with_copyright += line + "\n"
             else:
                 content_with_copyright += line + "\n"
@@ -342,7 +345,10 @@ class POHandler(Handler):
             nplural = self.language.get_pluralrules_numbers()
 
         self._parse_copyrights(self.filename)
-        pofile = polib.pofile(self.filename)
+        try:
+            pofile = polib.pofile(self.filename)
+        except IOError, e:
+            raise PoParseError(e.message)
 
         for entry in pofile:
             pluralized = False
