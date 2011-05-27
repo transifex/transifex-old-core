@@ -52,8 +52,9 @@ $(document).ready(
 {% if project %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
+{% block project_header %}
 <h2 class="pagetitle withdesc" style="display:inline-block;">{{ project.name }}</h2>
-
+{% endblock %}
 
 {% if project.private %}
 <span id="private_project_banner" class="ui-corner-all" style="display:inline-block;">
