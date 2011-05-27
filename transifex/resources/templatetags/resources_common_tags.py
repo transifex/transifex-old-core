@@ -6,3 +6,21 @@ register = template.Library()
 def entity_translation(source_entity, language):
     return source_entity.get_translation(language.code)
 
+
+@register.filter
+def sort_source_langs_first(rlstats, source_languages):
+    """
+    Take a RLStats aggregated queryset and move the entries related to the
+    source_languages to the top of the list.
+    """
+    rlstats_source_list, rlstats_list = [], []
+    for r in rlstats:
+        if r.object in source_languages:
+            rlstats_source_list.append(r)
+        else:
+            rlstats_list.append(r)
+    # 'tag' last source entry in the list
+    last = rlstats_source_list.pop()
+    last.last_source_entry = True
+    rlstats_source_list.append(last)
+    return rlstats_source_list + rlstats_list

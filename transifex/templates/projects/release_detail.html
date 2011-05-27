@@ -6,6 +6,8 @@
 {% load statistics_resources %}
 {% load permissions %}
 {% load txpermissions %}
+{% load resources_common_tags %}
+
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed release.project.slug release.slug %}" />
@@ -155,18 +157,11 @@
     <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
     <th><span class="i16 clock">{% trans "Last Translation" %}</span></th>
    </tr>
-{% for stat in statslist %}
-	 {% if source_languages %}
-        {% ifequal forloop.counter 2 %}
-            </thead>
-            <tbody>
-        {% endifequal %}
-     {% else %}
-       {% ifequal forloop.counter 1 %}
-            </thead>
-            <tbody>
-        {% endifequal %}
-     {% endif %}
+{% for stat in statslist|sort_source_langs_first:source_languages %}
+    {% if stat.last_source_entry %}
+        </thead>
+        <tbody>
+    {% endif %}
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td>

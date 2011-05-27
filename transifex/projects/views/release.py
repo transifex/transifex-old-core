@@ -58,37 +58,26 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def release_detail(request, project_slug, release_slug):
-    release = get_object_or_404(Release.objects.select_related('project'), slug=release_slug,
-                                project__slug=project_slug)
-    #TODO: find a way to do this more effectively
-    resources = Resource.objects.filter(releases=release).filter(
-        project__private=False).order_by('project__name')
+    release = get_object_or_404(Release, slug=release_slug, 
+        project__slug=project_slug)
+    resources = Resource.objects.select_related('project', 
+        'source_language').filter(releases=release, project__private=False
+        ).order_by('project__name')
     source_languages = set()
     for resource in resources:
         source_languages.add(resource.source_language)
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
-        private_resources = Resource.objects.for_user(request.user).filter(
+        private_resources = Resource.objects.select_related('project', 
+            'source_language').for_user(request.user).filter(
             releases=release, project__private=True
             ).order_by('project__name').distinct()            
-    if len(source_languages) == 1:
-        tmp = []
-        statslist = RLStats.objects.select_related('language', 'last_committer'
-          ).filter(language=F('resource__source_language'
-          )).for_user(request.user).by_release_aggregated(release)
-        for i in statslist:
-            tmp.append(i)
-        statslist = RLStats.objects.select_related('language', 'last_committer'
-          ).exclude(language=F('resource__source_language'
-          )).for_user(request.user).by_release_aggregated(release)
-        for i in statslist:
-            tmp.append(i)
-        statslist = tmp
-    else:
+    if not len(source_languages) == 1:
         source_languages = ()
-        statslist = RLStats.objects.select_related('language', 'last_committer'
-          ).for_user(request.user).by_release_aggregated(release)
+        
+    statslist = RLStats.objects.select_related('language', 'last_committer'
+        ).for_user(request.user).by_release_aggregated(release)
 
     return render_to_response('projects/release_detail.html', {
         'release': release,
