@@ -85,8 +85,8 @@
 
 {% block header_menu %}{% endblock %}
 
-{% block content_title %}
-<h2 class="pagetitle">{{ resource.project.name }}</h2>
+{% block project_header %}
+{{block.super}}<h2 class="pagetitle_wdesc">/</h2><h2 class="pagetitle">{{ resource.name }}</h2>
 {% endblock%}
 
 {% block content_main %}
@@ -101,8 +101,7 @@
   </span>
   {% endif %}-->
  {% endcomment %}
-  <h2 class="name">{{ resource.name }}</h2>
-
+ 
   {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
     <div class="editlinks">
       <p>
@@ -312,7 +311,7 @@
   </tbody>
 </table>
 
-</div>
+
 
 {% endcache %}
 
@@ -351,6 +350,8 @@
   <a id="new_translation1" class="buttonized i16 add">{% trans "Add Translation" %}</a>
 </p>
 {% endif %}
+
+</div>
 
 </div>
 

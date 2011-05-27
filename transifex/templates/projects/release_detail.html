@@ -1,4 +1,4 @@
-{% extends "projects/project_detail_childs.html" %}
+{% extends "projects/project_menu.html" %}
 {% load cache %}
 {% load markup %}
 {% load i18n %}
@@ -58,13 +58,15 @@
   <a class="simlink" href="{% url release_feed release.project.slug release.slug %}" title="Statistics feed for this release"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" /></a>
 {% endblock %}
 
-{% block content_title %}
-<h2 class="pagetitle">{{ release.project.name }}</h2>
-{% endblock %}
+{% block header_menu %}{% endblock %}
+
+{% block project_header %}
+{{block.super}}<h2 class="pagetitle_wdesc">/</h2><h2 class="pagetitle">Release '{{ release.name }}'</h2>
+{% endblock%}
 
 {% block content_main %}
   <div class="obj_bigdetails">
-  <h3 class="pagesubtitle">Release '{{ release.name }}'</h3>
+ {% comment %} <h3 class="pagesubtitle">Release '{{ release.name }}'</h3>{% endcomment %}
 
   {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
 
