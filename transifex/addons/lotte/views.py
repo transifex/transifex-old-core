@@ -272,6 +272,11 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     else:
         resources = Resource.objects.filter(project__slug = project_slug)
 
+    try:
+        language = Language.objects.by_code_or_alias(lang_code)
+    except Language.DoesNotExist:
+        raise Http404
+
     # Find a way to determine the source language of multiple resources #FIXME
     source_language = resources[0].source_language
     source_strings = Translation.objects.filter(
@@ -281,7 +286,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     translated_strings = Translation.objects.filter(
         source_entity__resource__in=resources,
-        language__code=lang_code)
+        language=language)
 
     # These are only the rule=5 (other) translations
     default_translated_strings = translated_strings.filter(rule=5)
@@ -291,14 +296,10 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         for f in request.POST['filters'].split(','):
             if f == "translated":
                 source_strings = source_strings.filter(
-                    Q(source_entity__id__in=default_translated_strings.filter(
-                        string="").values('source_entity'))|
                     ~Q(source_entity__id__in=default_translated_strings.values(
                         'source_entity')))
             elif f == "untranslated":
                 source_strings = source_strings.exclude(
-                    Q(source_entity__id__in=default_translated_strings.filter(
-                        string="").values('source_entity'))|
                     ~Q(source_entity__id__in=default_translated_strings.values(
                         'source_entity')))
 
@@ -309,6 +310,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         source_strings = source_strings.filter(
             source_entity__id__in=default_translated_strings.filter(
                 user__id__in=users).values('source_entity'))
+
     if request.POST and request.POST.has_key('resource_filters'):
         # rsplit is used to remove the trailing ','
         resources = request.POST.get('resource_filters').rstrip(',').split(',')
