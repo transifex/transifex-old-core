@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 from django.conf import settings
+import transifex
 from transifex.languages.models import Language
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.resources.formats.pofile import POHandler
@@ -20,7 +21,8 @@ class APIBaseTests(BaseTestCase):
         self.data = ORIGINAL
         self.trans = TRANSLATION
         self.pofile_path = os.path.join(
-            settings.PROJECT_PATH, 'resources/tests/lib/pofile')
+            os.path.dirname(transifex.__file__), 'resources/tests/lib/pofile'
+        )
 
         # Loading POT (en_US) into the resource
         handler = POHandler('%s/tests.pot' % self.pofile_path)
