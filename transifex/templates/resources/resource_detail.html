@@ -113,36 +113,12 @@
 
 {% cache 604800 resource_details resource.project.slug resource.slug LANGUAGE_CODE %}
 <div id="resource_details">
-  <h3>{% trans "Translation Resource details" %}</h3>
   <table class="definition">
-    <tr>
-      <th class="i16 omega">{% trans "Source Language" %}</th>
-      <td>
-        {{ resource.source_language }}
-      </td>
-    </tr>
-    <tr>
-      <th class="i16 language">{% trans "Number of languages" %}</th>
-      <td>
-        {{ resource.available_languages|length }}
-      </td>
-    </tr>
     <tr>
       <th class="i16 stringnum">{% trans "Total Strings" %}</th>
       <td>
         {{ resource.total_entities }}
         <span class="words big_number">({{ resource.wordcount }} {% trans "words" %})</span>
-      </td>
-    </tr>
-    <tr>
-      <th class="i16 url_update">{% trans "Auto-update from URL?" %}</th>
-      <td>
-        {% if autofetch_url and autofetch_url.auto_update %}
-		    <img class="noborder" src="{{ STATIC_URL }}images/icons/accept.png" /> &nbsp;
-			<span><a href="{{ autofetch_url.source_file_url }}">[link to file]</a></span>
-        {% else %}
-            <img class="noborder" src="{{ STATIC_URL }}images/icons/delete.png" />
-        {% endif %}
       </td>
     </tr>
     <tr>
@@ -190,7 +166,7 @@
   </table>
 </div>
 
-<h3>{% trans "Available translations" %}</h3>
+<h3>{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
 <div class="list separate clear">
 <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
@@ -210,7 +186,7 @@
           <span class="clickable">{{ stat.language.name }}</span>
           <span class="locale">({{ stat.language.code }})</span>
           {% ifequal resource.source_language stat.language %}
-             <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
+             <span style="padding-left:1em"><em>{% trans "(source language)" %}</em></span>
           {% endifequal %}
           {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
