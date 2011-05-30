@@ -570,6 +570,35 @@ class TestTranslationAPI(APIBaseTests):
         rl = RLStats.objects.get(resource=r, language=l)
         self.assertEquals(rl.translated_perc, 50)
 
+    def test_unicode_resource_name(self):
+        self._create_project()
+        with open(self.po_file) as f:
+            content = f.read()
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "rα",
+                    'slug': 'r1',
+                    'source_language': 'en_US',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        url = "".join([
+                reverse(
+                    'apiv2_translation',
+                    kwargs={
+                        'project_slug': 'new_pr',
+                        'resource_slug': 'r1',
+                            'lang_code': 'en_US',
+                    }),
+                "?file"
+        ])
+        res = self.client['registered'].get(url)
+        self.assertEquals(res.status_code, 200)
+
     def _create_project(self):
         res = self.client['registered'].post(
             self.url_new_project,

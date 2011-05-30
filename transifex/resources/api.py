@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import tempfile
+import urllib
 from itertools import ifilter
 from django.db import transaction, IntegrityError
 from django.conf import settings
@@ -379,8 +380,8 @@ class FileHandler(BaseHandler):
 
         i18n_method = settings.I18N_METHODS[resource.i18n_type]
         response = HttpResponse(template, mimetype=i18n_method['mimetype'])
-        response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
-        smart_unicode(resource.name), language.code,
+        response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
+        urllib.quote(resource.name.encode('UTF-8')), language.code,
         i18n_method['file-extensions'].split(', ')[0]))
 
         return response
@@ -607,8 +608,8 @@ class FileTranslation(Translation):
     def to_http_for_get(cls, translation, result):
         i18n_method = settings.I18N_METHODS[translation.resource.i18n_type]
         response = HttpResponse(result, mimetype=i18n_method['mimetype'])
-        response['Content-Disposition'] = ('attachment; filename="%s_%s%s"' % (
-                smart_unicode(translation.resource.name),
+        response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
+                urllib.quote(translation.resource.name.encode('UTF-8')),
                 translation.language.code,
                 i18n_method['file-extensions'].split(', ')[0])
         )
