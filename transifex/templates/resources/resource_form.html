@@ -58,10 +58,6 @@ Edit {{resource}}
   </form>
 </div>
 
-<h3>
-    {% trans "Delete this Resource." %}
-</h3>
-
  {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
     {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
     <div>
