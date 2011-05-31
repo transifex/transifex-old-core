@@ -56,4 +56,9 @@ class ProjectViewsTests(base.BaseTestCase):
         # Test messages:
         self.assertContains(resp, "message_success")
 
+    def test_project_edit(self):
+        resp = self.client['maintainer'].get(self.urls['project_edit'])
+        self.assertContains(resp, "Edit Test Project", status_code=200)
+        self.assertContains(resp, self.project.maintainers.all()[0])
+        self.assertNotContains(resp, "Owner")
 

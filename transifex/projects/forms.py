@@ -24,7 +24,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        exclude = ('anyone_submit', 'outsource')
+        exclude = ('anyone_submit', 'outsource', 'owner')
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
