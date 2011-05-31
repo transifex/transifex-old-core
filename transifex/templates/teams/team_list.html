@@ -27,34 +27,6 @@
 
 <div class="project_create generic_form">
 
-
-{% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
-{% if teamrequests %}
-<div class="list">
-<h4>{% trans "Requests for new teams:" %}</h4>
-<ul>
-{% for teamrequest in teamrequests %}
-    <li class="i16 team_request">
-        <span class="name notice">{{ teamrequest.language.name }}</span>
-        <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
-
-        {% if is_maintainer %}
-        <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
-        </form>
-        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
-        </form>
-        {% endif %}
-
-    </li>
-{% endfor %}
-</ul>
-</div>
-{% endif %}
-{% endwith %}
-
-
 {% with project.team_set.all|dictsort:"language.name" as teams %}
 {% if teams %}
 <div class="list">
@@ -84,6 +56,34 @@
     <a class="i16 buttonized add" href="{% url team_create project.slug %}">{% trans "Create a new team" %}</a>
 </div>
 {% endif %}
+
+
+{% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
+{% if teamrequests %}
+<div class="list">
+<h4>{% trans "Requests for new teams:" %}</h4>
+<ul>
+{% for teamrequest in teamrequests %}
+    <li class="i16 team_request">
+        <span class="name notice">{{ teamrequest.language.name }}</span>
+        <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
+
+        {% if is_maintainer %}
+        <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
+            <input name="team_request_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
+        </form>
+        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
+            <input name="team_request_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
+        </form>
+        {% endif %}
+
+    </li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+{% endwith %}
+
 
 {% if team_request_form %}
 {% if request.user.is_authenticated and not is_maintainer %}
