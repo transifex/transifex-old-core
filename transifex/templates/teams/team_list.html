@@ -44,6 +44,7 @@
 {% for teamrequest in teamrequests %}
     <li class="i16 team_request">
         <span class="name notice">{{ teamrequest.language.name }}</span>
+        <span class="locale">({{ teamrequest.language.code }})</span>
         <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
 
         {% if is_maintainer %}
@@ -72,6 +73,7 @@
 {% for team in teams %}
     <li class="i16 team">
         <a class="name" href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
+          <span class="locale">({{ team.language.code }})</span>
           <span class="details">- {% blocktrans count team.coordinators.all|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}
             {% for c in team.coordinators.all %}
               <a href="{% url profile_public c.username %}">
