@@ -3,6 +3,7 @@
 {% load cache %}
 {% load statistics_resources %}
 {% load permissions %}
+{% load truncate %}
 {% load upload_manager_tags %}
 
 {% block extra_head %}
@@ -68,10 +69,9 @@
 {% endblock %}
 
 {% block breadcrumb %}
-
-{{block.super}} »
-<a href="{% url project_detail project.slug %}">{{project}}</a> »
-<a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>
+ {{ block.super }}
+ » <a href="{% url project_detail project.slug %}">{{ project.name|truncate_chars_middle:"40" }}</a>
+ » <a href="{% url resource_detail project.slug resource.slug %}">{{ resource.name|truncate_chars_middle:"30" }}</a>
 {% endblock %}
 
 {% block title %}
