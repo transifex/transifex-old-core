@@ -25,21 +25,13 @@
 
 <div class="obj_bigdetails">
 
-<h2 class="name">{% trans "Translation Teams" %}</h2>
-
-{% if perms.projects.change_team or is_maintainer %}
-<div class="addteam editlinks">
-    <a class="i16 buttonized add" href="{% url team_create project.slug %}">{% trans "Add a new team" %}</a>
-</div>
-{% endif %}
-
 <div class="project_create generic_form">
 
 
 {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
 {% if teamrequests %}
 <div class="list">
-<h4>{% trans "List of team requests:" %}</h4>
+<h4>{% trans "Requests for new teams:" %}</h4>
 <ul>
 {% for teamrequest in teamrequests %}
     <li class="i16 team_request">
@@ -47,12 +39,11 @@
         <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
 
         {% if is_maintainer %}
-        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
-        </form>
-
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
             <input name="team_request_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
+        </form>
+        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
+            <input name="team_request_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
         </form>
         {% endif %}
 
@@ -67,7 +58,7 @@
 {% with project.team_set.all|dictsort:"language.name" as teams %}
 {% if teams %}
 <div class="list">
-<h4>{% trans "List of available teams:" %}</h4>
+<h4>{% trans "Available teams:" %}</h4>
 <ul>
 {% for team in teams %}
     <li class="i16 team">
@@ -86,6 +77,12 @@
 </div>
 {% else %}
 <p>{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
+{% endif %}
+
+{% if perms.projects.change_team or is_maintainer %}
+<div class="addteam" style="text-align: center;">
+    <a class="i16 buttonized add" href="{% url team_create project.slug %}">{% trans "Create a new team" %}</a>
+</div>
 {% endif %}
 
 {% if team_request_form %}
