@@ -18,6 +18,10 @@ class TestJavaProperties(BaseTestCase):
         self.assertFalse(j._is_escaped(r"\\ blah", 2))
         self.assertTrue(j._is_escaped(r"e\\\ blah", 4))
 
+    def test_accept(self):
+        parser = JavaPropertiesHandler()
+        self.assertTrue(parser.accepts(mime='text/x-java-properties'))
+
     def test_split(self):
         j = JavaPropertiesHandler()
         res = j._split("asd sadsf")

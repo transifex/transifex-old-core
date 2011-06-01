@@ -20,7 +20,7 @@ class JoomlaINIHandler(Handler):
     and http://docs.joomla.org/Creating_a_language_definition_file.
     """
     name = "Joomla *.INI file handler"
-    mime_types = []
+    mime_types = ['text/x-joomla-ini']
     format = "Joomla INI (*.ini)"
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
 

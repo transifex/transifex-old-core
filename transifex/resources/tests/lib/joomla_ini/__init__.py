@@ -16,6 +16,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
 
     def test_accept(self):
         self.assertTrue(self.parser.accepts(self.file))
+        self.assertTrue(self.parser.accepts(mime='text/x-joomla-ini'))
 
     def test_quote_removal(self):
         self.parser.parse_file(is_source=True)
