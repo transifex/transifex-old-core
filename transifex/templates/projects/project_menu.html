@@ -65,6 +65,7 @@ $(document).ready(
 
 <p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
 
+{% block header_menu %}
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
   <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
 
@@ -99,7 +100,7 @@ $(document).ready(
     {% hook "project.html" menu %}
   </ul>
 </div>
-
+{% endblock %}
 {% endif %}
 
 {% endblock %}
