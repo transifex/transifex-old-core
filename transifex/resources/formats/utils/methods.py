@@ -3,6 +3,15 @@
 from django.conf import settings
 
 
+def get_mimetypes_for_method(m):
+    """
+    Get the mimetype for the specified method.
+    """
+    if m not in settings.I18N_METHODS:
+        return []
+    return _string_to_list(settings.I18N_METHODS[m]['mimetype'])
+
+
 def get_extensions_for_method(m):
     """
     Get a list of extensions for the specified method.

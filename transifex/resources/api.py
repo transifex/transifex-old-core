@@ -32,7 +32,8 @@ from transifex.resources.models import Resource, SourceEntity, \
 from transifex.resources.views import _compile_translation_template
 from transifex.resources.formats import get_i18n_type_from_file
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
-        parser_for, get_file_extension_for_method, get_mimetype_from_method
+        parser_for, get_file_extension_for_method
+from transifex.resources.formats.utils.methods import get_mimetypes_for_method
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
 from transifex.teams.models import Team
@@ -69,7 +70,7 @@ class ResourceHandler(BaseHandler):
         """
         Return the mimetype in a GET request instead of the i18n_type.
         """
-        return get_mimetype_from_method(r.i18n_type)
+        return get_mimetypes_for_method(r.i18n_type)[0]
 
     @classmethod
     def source_language_code(cls, r):
@@ -977,7 +978,7 @@ class StringTranslation(Translation):
         if 'content' not in self.data:
             raise NoContentError("No content found.")
         parser = parser_for(
-            mimetype=get_mimetype_from_method(self.resource.i18n_type)
+            mimetype=get_mimetypes_for_method(self.resource.i18n_type)[0]
         )
         if parser is None:
             raise BadRequestError("Mimetype not supported")

@@ -87,10 +87,3 @@ def parser_for(filename=None, mimetype=None):
             return parser
     return None
 
-def get_mimetype_from_method(method):
-    """
-    Get the mimetype for the method.
-    """
-    if method is None:
-        return None
-    return settings.I18N_METHODS[method]['mimetype']
