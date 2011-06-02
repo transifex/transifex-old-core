@@ -88,8 +88,18 @@ class Handler(object):
     Base class for writing file handlers for all the I18N types.
     """
     default_encoding = "utf-8"
+    method_name = None
 
-    def __init__(self, filename=None, resource= None, language = None):
+    @classmethod
+    def accepts(cls, filename=None, mime=None):
+        accept = False
+        if filename is not None:
+            accept |= filename.endswith(tuple(get_extensions_for_method(cls.method_name)))
+        if mime is not None:
+            accept |= mime in get_mimetypes_for_method(cls.method_name)
+        return accept
+
+    def __init__(self, filename=None, resource=None, language=None):
         """
         Initialize a File Handler either using a file or a Translation Queryset
         """
@@ -518,11 +528,6 @@ class Handler(object):
         except Exception, e:
             raise Exception("Error opening file %s: %s" % ( filename, e))
         self._post_save2file(filename=filename)
-
-
-    @classmethod
-    def accepts(self, filename=None, mime=None):
-        return False
 
     def parse_file(self, filename, is_source=False, lang_rules=None):
         raise Exception("Not Implemented")

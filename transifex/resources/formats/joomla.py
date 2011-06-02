@@ -22,18 +22,9 @@ class JoomlaINIHandler(Handler):
     and http://docs.joomla.org/Creating_a_language_definition_file.
     """
     name = "Joomla *.INI file handler"
-    mime_types = ['text/x-joomla-ini']
     format = "Joomla INI (*.ini)"
+    method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".ini")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
 
     @classmethod
     def contents_check(self, filename):

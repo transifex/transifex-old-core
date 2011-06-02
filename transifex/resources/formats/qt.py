@@ -65,18 +65,7 @@ def _getText(nodelist):
 class LinguistHandler(Handler):
     name = "Qt4 TS parser"
     format = "Qt4 Translation XML files (*.ts)"
-    mime_types = ["application/x-linguist"]
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        # TODO better way to handle tests
-        # maybe remove None?
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".ts")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
+    method_name = 'QT'
 
     @classmethod
     def contents_check(self, filename):

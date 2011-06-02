@@ -30,8 +30,8 @@ class JavaPropertiesHandler(Handler):
     """
 
     name = "Java *.PROPERTIES file handler"
-    mime_types = ['text/x-java-properties']
     format = "Java PROPERTIES (*.properties)"
+    method_name = 'PROPERTIES'
 
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
     COMMENT_CHARS = ('#', '!', )
@@ -96,15 +96,6 @@ class JavaPropertiesHandler(Handler):
     def _strip_separators(self, s):
         """Strip separators from the front of the string s."""
         return s.lstrip(''.join(self.SEPARATORS))
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".properties")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
 
     @classmethod
     def contents_check(self, filename):

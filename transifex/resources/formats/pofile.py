@@ -24,8 +24,10 @@ from suggestions.models import Suggestion
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
         Handler, STRICT, StringSet, ParseError
 
+
 class PoParseError(ParseError):
     pass
+
 
 class PoCompileError(CompileError):
     pass
@@ -67,18 +69,9 @@ class POHandler(Handler):
     TODO: Switch to Gettext C library
     """
     name = "GNU Gettext *.PO/*.POT handler"
-    mime_types = ["application/x-gettext", "application/x-po", "text/x-po"]
+    method_name = 'PO'
     format = "GNU Gettext Catalog (*.po, *.pot)"
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".po") or filename.endswith(".pot")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
 
     @classmethod
     def contents_check(self, filename):
@@ -176,6 +169,7 @@ class POHandler(Handler):
         self.template = Template.objects.get(resource=self.resource)
         self.template = self.template.content
         self._examine_content(self.template)
+
 
         stringset = SourceEntity.objects.filter(
             resource = self.resource)
