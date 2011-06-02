@@ -134,7 +134,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     }
 
     // Method for pushing one or more TranslationStrings of this StringSet
-    this.push = function(ts, callback) {
+    this.push = function(ts, textarea_id, callback) {
         var messages = false;
         this_stringset = this;
         var to_update = [];
@@ -166,7 +166,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 success: function(data, textStatus){ // jquery 1.4 includes xmlhtttpreq
 
                     var json_response_dict = JSON.parse(data);
-
+                    var textarea_container = $("textarea#translation_" + textarea_id).parents("div.translation_wrapper");
                     // Update the object classes, and the overall statistics
                     if(ts) {
                         var status_code = json_response_dict[ts.id]['status'];
@@ -185,15 +185,15 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                             // Hide the error div if it is visible
                             if ( json_response_dict[ts.id]['message'] != null ) {
                                 messages=true;
-                                this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
-                                this_stringset.current_box.parents('td.trans').find('div.error_notes').addClass('warning_notes');
-                                this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
+                                textarea_container.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
+                                textarea_container.parents('td.trans').find('div.error_notes').addClass('warning_notes');
+                                textarea_container.parents('td.trans').find('div.error_notes').show();
                             } else
-                                this_stringset.current_box.parents('td.trans').find('div.error_notes').hide();
+                                textarea_container.parents('td.trans').find('div.error_notes').hide();
                                 stringset.error = false;
                         }else{ // Handle the error
-                            this_stringset.current_box.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
-                            this_stringset.current_box.parents('td.trans').find('div.error_notes').show();
+                            textarea_container.parents('td.trans').find('div.error_notes').text(json_response_dict[ts.id]['message']);
+                            textarea_container.parents('td.trans').find('div.error_notes').show();
                             stringset.error = true;
                         }
                     } else {
@@ -363,7 +363,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 /* add timeout and then submit. using the id, this timeout can be canceled */
                 $.doTimeout(id.toString(), 1, function(){
                     /* push the string to server */
-                    this_stringset.push(string);
+                    this_stringset.push(string, id);
                 });
             }
 

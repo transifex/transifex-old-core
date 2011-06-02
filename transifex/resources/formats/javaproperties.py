@@ -26,7 +26,7 @@ class JavaPropertiesHandler(Handler):
     """
 
     name = "Java *.PROPERTIES file handler"
-    mime_types = []
+    mime_types = ['text/x-java-properties']
     format = "Java PROPERTIES (*.properties)"
 
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
@@ -87,7 +87,12 @@ class JavaPropertiesHandler(Handler):
 
     @classmethod
     def accepts(cls, filename=None, mime=None):
-        return filename.endswith(".properties") or mime in cls.mime_types
+        accept = False
+        if filename is not None:
+            accept |= filename.endswith(".properties")
+        if mime is not None:
+            accept |= mime in cls.mime_types
+        return accept
 
     @classmethod
     def contents_check(self, filename):

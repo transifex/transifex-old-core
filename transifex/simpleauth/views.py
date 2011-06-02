@@ -23,6 +23,10 @@ def logout(request, template_name='simpleauth/logged_out.html'):
 def login(request, template_name='simpleauth/signin.html'):
     """Login the user to the website and redirect back."""
     next = clean_next(request.GET.get('next'))
+    
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(next)
+    
     try:
         if request.POST['remember_me'] == 'on':
             # By default keep the user logged in for 3 weeks

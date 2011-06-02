@@ -184,7 +184,7 @@ class ProjectHandler(BaseHandler):
         p.save()
         return rc.CREATED
 
-    def _create_v1(self, request, data):
+    def _createv1(self, request, data):
         """
         Create a new project following the v1 API.
         """
