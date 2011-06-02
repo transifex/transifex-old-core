@@ -66,11 +66,18 @@ class CustomSerializer(json.JSONEncoder):
                 'strings' : obj.strings,
             }
 
-class ParseError(Exception):
+class FormatsError(Exception):
+    """Base class for all formats related errors."""
     pass
 
 
-class CompileError(Exception):
+class ParseError(FormatsError):
+    """Base class for parsing errors."""
+    pass
+
+
+class CompileError(FormatsError):
+    """Base class for all compiling errors."""
     pass
 
 
