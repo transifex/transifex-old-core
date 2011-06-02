@@ -329,7 +329,7 @@ class TestPOFileCopyright(FormatsBaseTestCase):
     """Test copyright lines for translators in po files."""
 
     def setUp(self):
-        self.handler = POHandler("test.po")
+        self.handler = POHandler()
         self.matched_lines = [
             '# John Doe, 2011.',
             '# John Doe <john@doe>, 2011.',

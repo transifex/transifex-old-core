@@ -24,6 +24,16 @@ def get_extensions_for_method(m):
     return _string_to_list(settings.I18N_METHODS[m]['file-extensions'])
 
 
+def get_method_for_mimetype(m):
+    """
+    Returns the i18n method that corresponds to the supplied mimetype.
+    """
+    for key in settings.I18N_METHODS:
+        if m in get_mimetypes_for_method(key):
+            return key
+    return None
+
+
 def _string_to_list(string):
     """
     Convert a string of multiple items separated by commas and spaces to a list.

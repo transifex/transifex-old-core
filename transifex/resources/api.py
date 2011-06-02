@@ -30,10 +30,9 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
-from transifex.resources.formats import get_i18n_type_from_file
-from transifex.resources.formats import get_i18n_method_from_mimetype, \
-        parser_for, get_file_extension_for_method
-from transifex.resources.formats.utils.methods import get_mimetypes_for_method
+from transifex.resources.formats import parser_for, get_file_extension_for_method
+from transifex.resources.formats.utils.methods import get_mimetypes_for_method, \
+        get_method_for_mimetype
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
 from transifex.teams.models import Team
@@ -200,7 +199,9 @@ class ResourceHandler(BaseHandler):
         if 'source_language' in data:
             slang = data.get('source_language')
             del data['source_language']
-        i18n_type = get_i18n_method_from_mimetype(data.get('mimetype'))
+        i18n_type = get_method_for_mimetype(data.get('mimetype', None))
+        if 'application/json' in request.content_type and i18n_type is None:
+            return BAD_REQUEST("Field 'mimetype' must be specified.")
         if i18n_type is not None:
             del data['mimetype']
         try:
@@ -301,7 +302,7 @@ class ResourceHandler(BaseHandler):
             return rc.NOT_FOUND
         slang = data.pop('source_language', None)
         source_language = None
-        i18n_type = get_i18n_method_from_mimetype(data.pop('mimetype', None))
+        i18n_type = get_method_for_mimetype(data.pop('mimetype', None))
         if slang is not None:
             try:
                 source_language = Language.objects.by_code_or_alias(slang)

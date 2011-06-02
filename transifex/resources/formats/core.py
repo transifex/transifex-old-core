@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import copy, os, re
+import codecs, copy, os, re
 from django.utils import simplejson as json
 
 from django.conf import settings
@@ -16,6 +16,8 @@ from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.string_utils import percent_diff
 from transifex.resources.signals import post_save_translation
+from transifex.resources.formats.utils.methods import get_mimetypes_for_method, \
+        get_extensions_for_method
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
