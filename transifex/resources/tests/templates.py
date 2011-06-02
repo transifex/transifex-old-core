@@ -49,7 +49,7 @@ class ResourcesTemplateTests(BaseTestCase):
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
             resp = self.client[user].get(self.urls['resource'])
             self.assertContains(resp,
-            "Number of languages:</th>\n"\
+            "Number of languages</th>\n"\
             "      <td>\n"\
             "        %s\n"\
             "      </td>" % (self.resource.available_languages.count()))
@@ -105,21 +105,21 @@ class ResourcesTemplateTests(BaseTestCase):
         # Test the response contents
         resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        self.assertContains(resp, 'Edit resource...', status_code=200)
+        self.assertContains(resp, 'Edit resource', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
             resp = self.client[user].get(self.urls['resource'])
-            self.assertNotContains(resp, 'Edit resource...', status_code=200)
+            self.assertNotContains(resp, 'Edit resource', status_code=200)
 
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
         resp = self.client['maintainer'].get(self.urls['resource'])
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        self.assertContains(resp, 'Delete resource...', status_code=200)
+        # self.assertContains(resp, 'Delete resource', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
             resp = self.client[user].get(self.urls['resource'])
-        self.assertNotContains(resp, 'Delete resource...', status_code=200)
+        self.assertNotContains(resp, 'Delete resource', status_code=200)
 
     def test_disabled_visit_team_resource_actions(self):
         """Test that languages with no team or existing translations don't have
@@ -148,4 +148,3 @@ class ResourcesTemplateTests(BaseTestCase):
             msg_prefix="Show a 0% language if there is a respective team.")
         self.assertContains(resp, '<div class="stats_string_resource">\n'
             '    0%\n  </div>')
-
