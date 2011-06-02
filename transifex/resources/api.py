@@ -805,7 +805,7 @@ class Translation(object):
 
         is_source = self.resource.source_language == self.language
         try:
-            fhandler.contents_check(fhandler.filename)
+            fhandler.is_content_valid(fhandler.filename)
             fhandler.parse_file(is_source)
             strings_added, strings_updated = fhandler.save2db(
                 is_source, user=self.request.user
@@ -914,7 +914,7 @@ class FileTranslation(Translation):
                 raise BadRequestError("Empty file")
 
             try:
-                parser.contents_check(file_.name)
+                parser.is_content_valid(file_.name)
                 logger.debug("Uploaded file %s" % file_.name)
             except (FileCheckError, ParseError), e:
                 raise BadRequestError("Error uploading file: %s" % e.message)
@@ -993,7 +993,7 @@ class StringTranslation(Translation):
             file_.write(self.data['content'].encode('UTF-8'))
             file_.close()
             try:
-                parser.contents_check(file_.name)
+                parser.is_content_valid(file_.name)
             except (FileCheckError, ParseError), e:
                 raise BadRequestError(e.message)
             except Exception, e:

@@ -894,6 +894,7 @@ class TestTranslationAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
+        print res.content
         self.assertEquals(res.status_code, 201)
         url = "".join([
                 reverse(

@@ -110,7 +110,7 @@ class JavaPropertiesHandler(Handler):
         return s.lstrip(''.join(self.SEPARATORS))
 
     @classmethod
-    def contents_check(self, filename):
+    def is_content_valid(cls, filename):
         pass
 
     def convert_to_unicode(self, s):

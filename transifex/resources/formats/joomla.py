@@ -27,7 +27,7 @@ class JoomlaINIHandler(Handler):
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
 
     @classmethod
-    def contents_check(self, filename):
+    def is_content_valid(cls, filename):
         pass
 
     def __init__(self, filename=None, resource= None, language = None):
@@ -102,12 +102,12 @@ class JoomlaINIHandler(Handler):
         if is_source:
             self.template = str(buf.encode('utf-8'))
 
-    def _peek_into_template(self):
+    def _examine_content(self, content):
         """
         If the first line begins with ';', mark the version of the
         ini file as 1 (>=1.6), else as 0 (==1.5).
         """
-        if self.template.startswith(';'):
+        if content.startswith(';'):
             self._version = 1
         else:
             self._version = 0

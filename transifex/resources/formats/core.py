@@ -118,6 +118,10 @@ class Handler(object):
         if language:
             self.language = language
 
+    @classmethod
+    def is_content_valid(cls, filename):
+        """Check whether the content is valid for the format."""
+        return False
 
     ####################
     # Helper functions #
@@ -525,9 +529,6 @@ class Handler(object):
         self._post_save2file(filename=filename)
 
     def parse_file(self, filename, is_source=False, lang_rules=None):
-        raise Exception("Not Implemented")
-
-    def contents_check(self, filename):
         raise Exception("Not Implemented")
 
 

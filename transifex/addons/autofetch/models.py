@@ -90,7 +90,7 @@ class URLInfo(models.Model):
             fhandler = parser(filename=sf.get_storage_path())
             fhandler.set_language(language)
             fhandler.bind_resource(self.resource)
-            fhandler.contents_check(fhandler.filename)
+            fhandler.is_content_valid(fhandler.filename)
             fhandler.parse_file(is_source=True)
             strings_added, strings_updated = 0, 0
             if not fake:

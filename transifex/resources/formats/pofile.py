@@ -90,7 +90,7 @@ class POHandler(Handler):
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
     @classmethod
-    def contents_check(self, filename):
+    def is_content_valid(cls, filename):
 
         # Read the stream to buffer
         try:

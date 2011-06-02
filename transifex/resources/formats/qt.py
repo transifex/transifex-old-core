@@ -68,7 +68,7 @@ class LinguistHandler(Handler):
     method_name = 'QT'
 
     @classmethod
-    def contents_check(self, filename):
+    def is_content_valid(cls, filename):
         """
         Check file for XML validity. No DTD checking happens here.
         """

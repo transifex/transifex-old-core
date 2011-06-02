@@ -105,7 +105,7 @@ class StorageFile(models.Model):
             raise FileCheckError(ugettext("You have uploaded an empty file!"))
 
         # Specific check for the i18n format
-        parser.contents_check(self.get_storage_path())
+        parser.is_content_valid(self.get_storage_path())
 
 
     def update_props(self):
@@ -135,7 +135,7 @@ class StorageFile(models.Model):
 
         fpo = parser(filename = self.get_storage_path() )
         fpo.set_language(self.language)
-        fpo.contents_check(self.get_storage_path())
+        fpo.is_content_valid(self.get_storage_path())
         fpo.parse_file()
 
         stringset = fpo.stringset
