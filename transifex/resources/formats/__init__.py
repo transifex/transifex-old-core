@@ -4,6 +4,12 @@ import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
 
+
+class FormatsError(Exception):
+    """Base class for all formats related errors."""
+    pass
+
+
 def get_i18n_type_from_file(filename):
     """
     Return an appropriate Handler class for given file.
