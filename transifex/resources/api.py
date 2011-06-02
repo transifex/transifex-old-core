@@ -753,7 +753,7 @@ class StringTranslation(Translation):
                 raise BadRequestError(e.message)
             except Exception, e:
                 logger.error(e.message, exc_info=True)
-                raise BadequestError("A strange error has happened.")
+                raise BadRequestError("A strange error has happened.")
 
             res = self._parse_translation(parser, file_.name)
         finally:
