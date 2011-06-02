@@ -4,7 +4,7 @@
 GNU Gettext .PO/.POT file handler/compiler
 """
 import os, re, time
-import polib
+import polib, datetime
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
@@ -19,6 +19,7 @@ from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
+from transifex.resources.signals import post_save_translation
 from suggestions.models import Suggestion
 
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
@@ -37,6 +38,21 @@ Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
+
+def escape(st):
+    """
+    Escape special chars and return the given string *st*.
+
+    **Examples**:
+
+    >>> escape('\\t and \\n and \\r and " and \\\\')
+    '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
+    """
+    return st.replace('\\', r'\\\\')\
+             .replace('\n', r'\\n')\
+             .replace('\t', r'\\t')\
+             .replace('\r', r'\\r')\
+             .replace('\"', r'\\"')
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """
@@ -163,6 +179,14 @@ class POHandler(Handler):
                 .replace('\t', r'\\t')\
                 .replace('\r', r'\\r')\
                 .replace('\"', r'\\"')
+
+    def _replace_translation(self, original, replacement, text):
+        """
+        It just does a search and replace inside `text` and replaces all
+        occurrences of `original` with `replacement`. For pofiles we also want
+        to escape all special characters
+        """
+        return re.sub(re.escape(original), escape(replacement), text)
 
     @need_resource
     def compile_pot(self):

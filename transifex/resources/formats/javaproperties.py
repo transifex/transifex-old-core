@@ -57,6 +57,10 @@ class JavaPropertiesHandler(Handler):
                 .replace('\\\\', '\\')
         )
 
+    def _replace_translation(self, original, replacement, text):
+        """Substitute hash code with escaped value of translation."""
+        return re.sub(re.escape(original), self.escape(replacement), text)
+
     def _is_escaped(self, line, index):
         """
         Returns True, if the character at index is escaped by backslashes.
@@ -77,6 +81,14 @@ class JavaPropertiesHandler(Handler):
 
     def _pre_save2file(self, *args, **kwargs):
         self.compiled_template = self.compiled_template.encode(self.ENCODING)
+
+    def _prepare_line(self, line):
+        """
+        Prepare a line for parsing.
+
+        Remove newline and whitespace characters.
+        """
+        return line.strip('\r\n').strip()
 
     def _split(self, line):
         """
