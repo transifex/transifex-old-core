@@ -149,6 +149,27 @@ class Handler(object):
     ####################
 
 
+    def _replace_translation(self, original, replacement, text):
+        """
+        Do a search and replace inside `text` and replaces all
+        occurrences of `original` with `replacement`.
+        """
+        return re.sub(re.escape(original), replacement, text)
+
+    def _get_strings(self, resource):
+        return SourceEntity.objects.filter(
+            resource=resource
+        )
+
+    def _get_translation(self, string, language, rule):
+        try:
+            return Translation.objects.get(
+                source_entity__resource = self.resource, source_entity=string,
+                language=language, rule=rule
+            )
+        except Translation.DoesNotExist, e:
+            return None
+
     def _pre_compile(self, *args, **kwargs):
         """
         This is called before doing any actual work. Override in inherited
@@ -163,19 +184,7 @@ class Handler(object):
         """
         pass
 
-    def _do_replace(self, original, replacement, text):
-        """
-        It just does a search and replace inside `text` and replaces all
-        occurrences of `original` with `replacement`.
-        """
-        return re.sub(re.escape(original), replacement, text)
-
-    def _get_strings(self, resource):
-        return SourceEntity.objects.filter(
-            resource=resource
-        )
-
-    def _peek_into_template(self):
+    def _examine_content(self, content):
         """
         Offer a chance to peek into the template before any string is
         compiled.
@@ -188,7 +197,14 @@ class Handler(object):
         Compile the template using the database strings. The result is the
         content of the translation file.
 
-        - language: The language of the file
+        There are three hooks a subclass can call:
+          _pre_compile: This is called first, before anything takes place.
+          _examine_content: This is called, to have a look at the content/make
+              any adjustments before it is used.
+          _post_compile: Called at the end of the process.
+
+        Args:
+          language: The language of the file
         """
 
         if not language:
@@ -197,29 +213,21 @@ class Handler(object):
         # pre compile init
         self._pre_compile(language=language)
 
-        self.template = Template.objects.get(resource=self.resource)
-        self.template = self.template.content
-        self._peek_into_template()
+        self.content = Template.objects.get(resource=self.resource).content
+        self._examine_content(self.content)
 
         stringset = self._get_strings(self.resource)
 
         for string in stringset:
-            # Find translation for string
-            try:
-                trans = Translation.objects.get(
-                    source_entity__resource = self.resource,
-                    source_entity=string,
-                    language = language,
-                    rule=5)
-            except Translation.DoesNotExist:
-                trans = None
+            trans = self._get_translation(string, language, 5)
+            self.content = self._replace_translation(
+                "%s_tr" % string.string_hash.encode('utf-8'),
+                trans and trans.string.encode('utf-8') or "",
+                self.content
+            )
 
-            # Do the actual replacement in the template
-            self.template = self._do_replace("%s_tr" % string.string_hash.encode('utf-8'),
-                    trans and trans.string.encode('utf-8') or "", self.template)
-
-        self.compiled_template = self.template
-
+        self.compiled_template = self.content
+        del self.content
         self._post_compile(language)
 
 

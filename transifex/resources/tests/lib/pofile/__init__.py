@@ -271,7 +271,8 @@ class POFile(FormatsBaseTestCase):
 
             else:
                 trans = se.get_translation(
-                    self.resource.source_language.code, rule=5)
+                    self.resource.source_language.code, rule=5
+                )
 
                 self.assertEqual(entry.msgstr, trans.string.encode('utf-8'), "Source '%s'"\
                     " differs from translation %s" % (entry.msgstr,

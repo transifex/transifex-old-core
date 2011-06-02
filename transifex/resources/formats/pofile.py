@@ -171,7 +171,7 @@ class POHandler(Handler):
                 stripped_content += line + "\n"
         return stripped_content
 
-    def _do_replace(self, original, replacement, text):
+    def _replace_translation(self, original, replacement, text):
         """
         It just does a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`. For pofiles we also want
@@ -183,14 +183,14 @@ class POHandler(Handler):
     def compile_pot(self):
         self.template = Template.objects.get(resource=self.resource)
         self.template = self.template.content
-        self._peek_into_template()
+        self._examine_content(self.template)
 
         stringset = SourceEntity.objects.filter(
             resource = self.resource)
 
         for string in stringset:
             # Replace strings with ""
-            self.template = self._do_replace(
+            self.template = self._replace_translation(
                 "%s_tr" % string.string_hash.encode('utf-8'), "", self.template
             )
 

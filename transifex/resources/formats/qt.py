@@ -86,7 +86,7 @@ class LinguistHandler(Handler):
             raise FileCheckError, ugettext("Your file doesn't seem to contain "\
                 "valid xml: %s!" % e )
 
-    def _do_replace(self, original, replacement, text):
+    def _replace_translation(self, original, replacement, text):
         """
         It just does a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.

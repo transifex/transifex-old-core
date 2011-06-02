@@ -33,7 +33,7 @@ class JavaPropertiesHandler(Handler):
     COMMENT_CHARS = ('#', '!', )
     ENCODING = 'ISO-8859-1'
 
-    def _do_replace(self, original, replacement, text):
+    def _replace_translation(self, original, replacement, text):
         """Substitute hash code with escaped value of translation."""
         return re.sub(re.escape(original), self.escape(replacement), text)
 
