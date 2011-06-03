@@ -259,7 +259,7 @@ class Handler(object):
         Offer a chance to peek into the template before any string is
         compiled.
         """
-        pass
+        return content
 
     def _post_compile(self, *args, **kwargs):
         """
@@ -291,21 +291,20 @@ class Handler(object):
             # pre compile init
             self._pre_compile(language=language)
 
-            self.content = Template.objects.get(resource=self.resource).content
-            self._examine_content(self.content)
+            content = Template.objects.get(resource=self.resource).content
+            content = self._examine_content(content)
 
             stringset = self._get_strings(self.resource)
 
             for string in stringset:
                 trans = self._get_translation(string, language, 5)
-                self.content = self._replace_translation(
+                content = self._replace_translation(
                     "%s_tr" % string.string_hash.encode('utf-8'),
                     trans and trans.string.encode('utf-8') or "",
-                    self.content
+                    content
                 )
 
-            self.compiled_template = self.content
-            del self.content
+            self.compiled_template = content
             self._post_compile(language)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
