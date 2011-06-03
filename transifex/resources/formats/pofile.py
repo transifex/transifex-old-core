@@ -4,6 +4,7 @@
 GNU Gettext .PO/.POT file handler/compiler
 """
 import os, re, time
+from collections import defaultdict
 import polib, datetime
 from django.conf import settings
 from django.db import transaction
@@ -211,70 +212,11 @@ class POHandler(Handler):
         """
         Here we update the PO file headers and the plurals
         """
-        if hasattr(kwargs,'language'):
-            language = kwargs['language']
-        else:
-            language = self.language
-
+        language = kwargs.get('language', self.language)
         template = self.compiled_template
-        po = polib.pofile(unicode(template, 'utf-8'))
-
-        # Update PO file headers
-        po.metadata['Project-Id-Version'] = self.resource.project.name
-        po.metadata['Content-Type'] = u"text/plain; charset=UTF-8"
-        # The above doesn't change the charset of the actual object, so we
-        # need to do it for the pofile object as well.
-        po.encoding = u"UTF-8"
-
-        po.metadata['PO-Revision-Date'] = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
-        po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
-        # The following is in the specification but isn't being used by po
-        # files. What should we do?
-        po.metadata['Language'] = language.code
-
-        if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
-
-        if 'fuzzy' in po.metadata_is_fuzzy:
-            po.metadata_is_fuzzy.remove('fuzzy')
-
-        try:
-            team = Team.objects.get(language = language,
-                project = self.resource.project.outsource or self.resource.project)
-        except Team.DoesNotExist:
-            pass
-        else:
-            team_contact = "<%s>" % team.mainlist if team.mainlist else \
-                "(http://%s%s)" % (Site.objects.get_current().domain,
-                                   team.get_absolute_url())
-
-            po.metadata['Language-Team'] = "%s %s" % (language.name,
-                                                      team_contact)
-
-        stat = RLStats.objects.by_resource(self.resource).by_language(language)
-        if stat and stat[0].last_committer:
-            u = stat[0].last_committer
-            po.metadata['Last-Translator'] = "%s <%s>" % (u.get_full_name() or u.username , u.email)
-            po.metadata['PO-Revision-Date'] = stat[0].last_update.strftime(
-                "%Y-%m-%d %H:%M+0000")
-
-        for entry in po:
-            if entry.msgid_plural:
-                plurals = Translation.objects.filter(
-                    resource = self.resource,
-                    language = language,
-                    source_entity__string = entry.msgid
-                ).order_by('rule')
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                for p,n in enumerate(lang_rules):
-                    plural_keys[p] = ""
-                for n,p in enumerate(plurals):
-                    plural_keys[n] =  self._pseudo_decorate(p.string)
-
-                entry.msgstr_plural = plural_keys
+        po = polib.pofile(template.decode(self.format_encoding))
+        po = self._update_headers(po=po, language=language)
+        po = self._update_plurals(po=po, language=language)
 
         # Instead of saving raw text, we save the polib Handler
         self.compiled_template = self.get_po_contents(po)
@@ -283,7 +225,7 @@ class POHandler(Handler):
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
-        ).order_by('owner')
+        ).order_by('-user')
         content_with_copyright = ""
         copyrights_inserted = False
         for line in self.compiled_template.split('\n'):
@@ -292,7 +234,6 @@ class POHandler(Handler):
                     content_with_copyright += line + "\n"
             elif not copyrights_inserted:
                 copyrights_inserted = True
-                content_with_copyright += "# Translators:\n"
                 for entry in c:
                     content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
                             ', ' + entry.years_text.encode('UTF-8') + ".\n"
@@ -300,6 +241,72 @@ class POHandler(Handler):
             else:
                 content_with_copyright += line + "\n"
         self.compiled_template = content_with_copyright
+        return po
+
+    def _update_headers(self, po, language):
+        """
+        Update the headers of a compiled po file.
+        """
+        po.metadata['Project-Id-Version'] = self.resource.project.name.encode(self.format_encoding)
+        po.metadata['Content-Type'] = u"text/plain; charset=%s" % self.format_encoding
+        # The above doesn't change the charset of the actual object, so we
+        # need to do it for the pofile object as well.
+        po.encoding = self.format_encoding
+
+        po.metadata['PO-Revision-Date'] = (datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000").encode(self.format_encoding))
+        po.metadata['Plural-Forms'] = ("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)).encode(self.format_encoding)
+        # The following is in the specification but isn't being used by po
+        # files. What should we do?
+        po.metadata['Language'] = (language.code.encode(self.format_encoding))
+
+        if self.resource.project.bug_tracker:
+            po.metadata['Report-Msgid-Bugs-To'] = (self.resource.project.bug_tracker.encode(self.format_encoding))
+
+        if 'fuzzy' in po.metadata_is_fuzzy:
+            po.metadata_is_fuzzy.remove('fuzzy')
+
+        try:
+            team = Team.objects.get(
+                language=language, project = self.resource.project.outsource or self.resource.project
+            )
+        except Team.DoesNotExist:
+            pass
+        else:
+            team_contact = "<%s>" % team.mainlist if team.mainlist else \
+                "(http://%s%s)" % (Site.objects.get_current().domain,
+                                   team.get_absolute_url())
+
+            po.metadata['Language-Team'] = "%s %s" % (language.name, team_contact)
+
+        stat = RLStats.objects.by_resource(self.resource).by_language(language)
+        if stat and stat[0].last_committer:
+            u = stat[0].last_committer
+            po.metadata['Last-Translator'] = ("%s <%s>" %
+                (u.get_full_name() or u.username , u.email)).encode(self.format_encoding)
+            po.metadata['PO-Revision-Date'] = ( stat[0].last_update.strftime(
+                "%Y-%m-%d %H:%M+0000").encode(self.format_encoding) )
+        return po
+
+    def _update_plurals(self, po, language):
+        """Update the plurals in the po file."""
+        translations = Translation.objects.filter(
+            source_entity__resource = self.resource,
+            language = language,
+        ).order_by('source_entity__id', 'rule').values_list('source_entity__string', 'string')
+        plurals = defaultdict(list)
+        for se, t in translations:
+            plurals[se].append(t)
+        for entry in po:
+            if entry.msgid_plural:
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                for p, n in enumerate(lang_rules):
+                    plural_keys[p] = ""
+                for n, p in enumerate(plurals[entry.msgid]):
+                    plural_keys[n] =  p
+                entry.msgstr_plural = plural_keys
         return po
 
     def _post_save2db(self, *args, **kwargs):

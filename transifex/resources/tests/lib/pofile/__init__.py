@@ -239,11 +239,8 @@ class POFile(FormatsBaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-
         handler.compile()
-
         exported_file = polib.pofile(handler.compiled_template)
-
         for entry in exported_file:
             se = SourceEntity.objects.get(
                string = entry.msgid,
