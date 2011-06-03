@@ -35,14 +35,19 @@ def permission_denied(request, template_name=None, extra_context={}, *args,
 def search(request):
     query_string = prepare_solr_query_string(request.GET.get('q', ""))
     search_terms = query_string.split()
+    index_query = SearchQuerySet().models(Project)
+    spelling_suggestion = None
     #FIXME: Workaround for https://github.com/toastdriven/django-haystack/issues/364
     # Only the else part should be necessary.
     if settings.HAYSTACK_SEARCH_ENGINE == 'simple':
-        results = SearchQuerySet().models(Project).auto_query(query_string)
+        results = index_query.auto_query(query_string)
     else:
-        results = SearchQuerySet().models(Project).filter(
-            fulltext_fuzzy_match_filter(query_string))
-    spelling_suggestion = results.spelling_suggestion(query_string)
+        try:
+            qfilter = fulltext_fuzzy_match_filter(query_string)
+            results = index_query.filter(qfilter)
+            spelling_suggestion = results.spelling_suggestion(query_string)
+        except TypeError:
+            results = []
 
     logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))
     return render_to_response("search.html",
