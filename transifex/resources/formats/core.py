@@ -115,9 +115,11 @@ class Handler(object):
         if language:
             self.language = language
 
-    def is_content_valid(self, filename):
+    def is_content_valid(self, content=None):
         """Check whether the content is valid for the format."""
-        return False
+        # FIXME Make all code use return values instead of exceptions
+        # FIXME Needs to deprecate API v1
+        return (True, None)
 
     ####################
     # Helper functions #

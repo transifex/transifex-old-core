@@ -67,16 +67,18 @@ class LinguistHandler(Handler):
     format = "Qt4 Translation XML files (*.ts)"
     method_name = 'QT'
 
-    def is_content_valid(self, filename):
+    def is_content_valid(self, content=None):
         """
         Check file for XML validity. No DTD checking happens here.
         """
+        if content is None:
+            content = self.content
         try:
             parser = xml.parsers.expat.ParserCreate()
-            parser.ParseFile(open(filename, "r"))
+            parser.Parse(content)
         except Exception, e:
             raise FileCheckError, ugettext("Your file doesn't seem to contain "\
-                "valid xml: %s!" % e )
+                "valid xml: %s!" % e.message)
 
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})

@@ -20,16 +20,11 @@ class JoomlaINIHandler(Handler):
     See http://docs.joomla.org/Specification_of_language_files
     and http://docs.joomla.org/Creating_a_language_definition_file.
     """
+
     name = "Joomla *.INI file handler"
     format = "Joomla INI (*.ini)"
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
-
-    def is_content_valid(self, filename):
-        pass
-
-    def __init__(self, filename=None, resource= None, language = None):
-        super(JoomlaINIHandler, self).__init__(filename, resource, language)
 
     @need_language
     @need_file

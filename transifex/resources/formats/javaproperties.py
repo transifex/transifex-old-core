@@ -11,7 +11,7 @@ from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
-        STRICT, StringSet, ParseError, CompileError
+        STRICT, StringSet, ParseError
 
 
 class JavaParseError(ParseError):
@@ -49,17 +49,6 @@ class JavaPropertiesHandler(Handler):
                 .replace('=', '\=')
                 .replace('\\', '\\\\')
         )
-
-    def _unescape(self, value):
-        """Reverse the escape of special characters."""
-        return (value.replace('\:', ':')
-                .replace('\=', '=')
-                .replace('\\\\', '\\')
-        )
-
-    def _replace_translation(self, original, replacement, text):
-        """Substitute hash code with escaped value of translation."""
-        return re.sub(re.escape(original), self.escape(replacement), text)
 
     def _is_escaped(self, line, index):
         """
@@ -109,8 +98,12 @@ class JavaPropertiesHandler(Handler):
         """Strip separators from the front of the string s."""
         return s.lstrip(''.join(self.SEPARATORS))
 
-    def is_content_valid(self, filename):
-        pass
+    def _unescape(self, value):
+        """Reverse the escape of special characters."""
+        return (value.replace('\:', ':')
+                     .replace('\=', '=')
+                     .replace('\ ', ' ')
+                     .replace('\\\\', '\\')
 
     def convert_to_unicode(self, s):
         """Convert the string s to a proper unicode string.
@@ -168,6 +161,17 @@ class JavaPropertiesHandler(Handler):
         return super(JavaPropertiesHandler, self)._replace_translation(
             original, replacement, text
         )
+
+    def find_linesep(self, file_):
+        """Find the line separator used in the file."""
+        line = file_.readline()
+        if line.endswith("\r\n"):  # windows line ending
+            self._linesep = "\r\n"
+        elif line.endswith("\r"):  # macosx line ending
+            self._linesep = "\r"
+        else:
+            self._linesep = "\n"
+        file_.seek(0)
 
     @need_language
     @need_file

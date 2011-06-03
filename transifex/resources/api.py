@@ -918,7 +918,7 @@ class FileTranslation(Translation):
                 raise BadRequestError("Empty file")
 
             try:
-                parser.is_content_valid(file_.name)
+                parser.is_content_valid()
                 logger.debug("Uploaded file %s" % file_.name)
             except (FileCheckError, ParseError), e:
                 raise BadRequestError("Error uploading file: %s" % e.message)
@@ -998,7 +998,8 @@ class StringTranslation(Translation):
             file_.write(self.data['content'].encode('UTF-8'))
             file_.close()
             try:
-                parser.is_content_valid(file_.name)
+                parser.bind_file(file_.name)
+                parser.is_content_valid()
             except (FileCheckError, ParseError), e:
                 raise BadRequestError(e.message)
             except Exception, e:

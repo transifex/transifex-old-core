@@ -33,11 +33,13 @@ class PoParseError(ParseError):
 class PoCompileError(CompileError):
     pass
 
+
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
+
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """
@@ -51,14 +53,15 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
             command = 'msgfmt -o /dev/null --check-format --check-domain -'
         else:
             command = 'msgfmt -o /dev/null -c -'
-        status, stdout, stderr = run_command(command, _input=po_contents,
+        status, stdout, stderr = run_command(command, _input=po_contents.encode('UTF-8'),
             with_extended_output=True, with_exceptions=with_exceptions)
         # Not sure why msgfmt sends its output to stderr instead of stdout
         #if 'warning:' in stderr or 'too many errors, aborting' in stderr:
         if 'too many errors, aborting' in stderr:
+            logger.warning('msgfmt %s: %s' % (status, stderr, ))
             raise CommandError(command, status, stderr)
-    except CommandError:
-        logger.debug("pofile: The 'msgfmt -c' check failed.")
+    except CommandError, e:
+        logger.warning("pofile: The 'msgfmt -c' check failed.")
         raise FileCheckError, ugettext("Your file failed a correctness check "
             "(msgfmt -c). Please run this command on "
             "your system to see the errors.")
@@ -74,53 +77,48 @@ class POHandler(Handler):
     format = "GNU Gettext Catalog (*.po, *.pot)"
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
-    def is_content_valid(self, filename):
+    def is_content_valid(self, content=None):
+        if content is None:
+            content = self.content
 
         # Read the stream to buffer
         try:
-            po = polib.pofile(filename)
+            po = polib.pofile(content)
         except IOError, e:
+            logger.warning("Parse error: %s" % e.message, exc_infp=True)
             raise PoParseError(e.message)
 
-        # get this back once the polib bug has been fixed :
-        # http://bitbucket.org/izi/polib/issue/11/multiline-entries-are-not-getting-updated
-        #buf = self.get_po_contents(po)
-
-        # Temporary solution
-        buf = open(filename, 'r').read()
-
         # If file is empty, the method hangs so we should bail out.
-        if not buf:
-            logger.error("pofile: File '%s' is empty." % filename)
+        if not content:
+            logger.warning("Pofile: File '%s' is empty." % filename)
             raise FileCheckError("Uploaded file is empty.")
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
-            if filename.lower().endswith('.pot'):
-                ispot = True
+            if self.filename.endswith('.pot'):
+                is_pot = True
             else:
-                ispot = False
-            msgfmt_check(buf, ispot)
+                is_pot = False # FIXME Find a way to figure this out from content
+            msgfmt_check(content, is_pot)
 
         # Check required header fields
         required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
         for metadata in required_metadata:
             if not metadata in po.metadata:
-                logger.debug("pofile: Required metadata '%s' not found." %
-                    metadata)
-                raise FileCheckError("Uploaded file header doesn't "
-                "have '%s' metadata!" % metadata)
+                logger.warning(
+                    "pofile: Required metadata '%s' not found." % metadata
+                )
+                raise FileCheckError(
+                    "Uploaded file header doesn't have '%s' metadata!" % metadata
+                )
 
+        # Save to avoid parsing it again
+        self._po = po
 
-        # No translated entries check
-#        if len(po.translated_entries()) + len(po.fuzzy_entries()) < 1:
-#            logger.debug("pofile: No translations found!")
-#            raise FileCheckError(_("Uploaded file doesn't contain any "
-#                "translated entries!"))
-#
-
-    def __init__(self, filename=None, resource= None, language = None):
-        super(POHandler, self).__init__(filename, resource, language)
+    def __init__(self, filename=None, resource=None, language=None, content=None):
+        super(POHandler, self).__init__(
+            filename=filename, resource=resource, language=language, content=content
+        )
         self.copyrights = []
 
     def get_po_contents(self, pofile):
