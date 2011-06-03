@@ -36,21 +36,6 @@ SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
-def escape(st):
-    """
-    Escape special chars and return the given string *st*.
-
-    **Examples**:
-
-    >>> escape('\\t and \\n and \\r and " and \\\\')
-    '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
-    """
-    return st.replace('\\', r'\\\\')\
-             .replace('\n', r'\\n')\
-             .replace('\t', r'\\t')\
-             .replace('\r', r'\\r')\
-             .replace('\"', r'\\"')
-
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """
     Run a `msgfmt -c` on the file contents.
@@ -171,13 +156,20 @@ class POHandler(Handler):
                 stripped_content += line + "\n"
         return stripped_content
 
-    def _replace_translation(self, original, replacement, text):
+    def _escape(self, s):
         """
-        It just does a search and replace inside `text` and replaces all
-        occurrences of `original` with `replacement`. For pofiles we also want
-        to escape all special characters
+        Escape special chars and return the given string *st*.
+
+        **Examples**:
+
+        >>> escape('\\t and \\n and \\r and " and \\\\')
+        '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
         """
-        return re.sub(re.escape(original), escape(replacement), text)
+        return s.replace('\\', r'\\\\')\
+                .replace('\n', r'\\n')\
+                .replace('\t', r'\\t')\
+                .replace('\r', r'\\r')\
+                .replace('\"', r'\\"')
 
     @need_resource
     def compile_pot(self):

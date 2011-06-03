@@ -12,6 +12,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
         STRICT, StringSet
 
+
 class JoomlaINIHandler(Handler):
     """
     Handler for Joomla's INI translation files.

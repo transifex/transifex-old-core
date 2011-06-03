@@ -19,17 +19,21 @@ from suggestions.models import Suggestion
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 
+
 # Resources models
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Storage = get_model('storage', 'StorageFile')
 
+
 class LinguistParseError(ParseError):
     pass
 
+
 class LinguistCompileError(CompileError):
     pass
+
 
 def _getElementByTagName(element, tagName, noneAllowed = False):
     elements = element.getElementsByTagName(tagName)
@@ -86,13 +90,8 @@ class LinguistHandler(Handler):
             raise FileCheckError, ugettext("Your file doesn't seem to contain "\
                 "valid xml: %s!" % e )
 
-    def _replace_translation(self, original, replacement, text):
-        """
-        It just does a search and replace inside `text` and replaces all
-        occurrences of `original` with `replacement`.
-        """
-        return re.sub(re.escape(original), xml_escape(replacement,
-            {"'": "&apos;", '"': '&quot;'}), text)
+    def _escape(self, s):
+        return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
 
     def _post_compile(self, *args, **kwargs):
         """

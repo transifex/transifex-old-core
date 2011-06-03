@@ -154,7 +154,7 @@ class Handler(object):
         Do a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(re.escape(original), replacement, text)
+        return re.sub(re.escape(original), self._escape(replacement), text)
 
     def _get_strings(self, resource):
         return SourceEntity.objects.filter(
@@ -177,17 +177,23 @@ class Handler(object):
         """
         pass
 
-    def _post_compile(self, *args, **kwargs):
+    def _escape(self, s):
         """
-        This is called in the end of the compile method. Override if you need
-        the behaviour changed.
+        Escape special characters in string.
         """
-        pass
+        return s
 
     def _examine_content(self, content):
         """
         Offer a chance to peek into the template before any string is
         compiled.
+        """
+        pass
+
+    def _post_compile(self, *args, **kwargs):
+        """
+        This is called in the end of the compile method. Override if you need
+        the behaviour changed.
         """
         pass
 

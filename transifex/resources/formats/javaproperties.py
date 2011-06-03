@@ -33,9 +33,27 @@ class JavaPropertiesHandler(Handler):
     COMMENT_CHARS = ('#', '!', )
     ENCODING = 'ISO-8859-1'
 
-    def _replace_translation(self, original, replacement, text):
-        """Substitute hash code with escaped value of translation."""
-        return re.sub(re.escape(original), self.escape(replacement), text)
+    def _escape(self, s):
+        """
+        Escape special characters in Java properties files.
+
+        Java escapes the '=' and ':' in the value
+        string with backslashes in the store method.
+        So let us do the same.
+        """
+        return (s.replace(':', '\:')
+                .replace('=', '\=')
+                .replace(' ', '\ ')
+                .replace('\\', '\\\\')
+        )
+
+    def _unescape(self, value):
+        """Reverse the escape of special characters."""
+        return (value.replace('\:', ':')
+                .replace('\=', '=')
+                .replace('\ ', ' ')
+                .replace('\\\\', '\\')
+        )
 
     def _is_escaped(self, line, index):
         """
@@ -97,20 +115,6 @@ class JavaPropertiesHandler(Handler):
     @classmethod
     def contents_check(self, filename):
         pass
-
-    def escape(self, value):
-        """
-        Escape special characters in Java properties files.
-
-        Java escapes the '=' and ':' in the value
-        string with backslashes in the store method.
-        So let us do the same.
-        """
-        return (value.replace(':', '\:')
-                     .replace('=', '\=')
-                     .replace(' ', '\ ')
-                     .replace('\\', '\\\\')
-        )
 
     def find_linesep(self, file_):
         """Find the line separator used in the file."""
@@ -180,7 +184,7 @@ class JavaPropertiesHandler(Handler):
                     continue
 
                 stringset.strings.append(GenericTranslation(key,
-                    self.unescape(value), rule=5, context=context,
+                    self._unescape(value), rule=5, context=context,
                     pluralized=False, fuzzy=False,
                     obsolete=False))
         except UnicodeDecodeError, e:
@@ -196,11 +200,3 @@ class JavaPropertiesHandler(Handler):
 
         if is_source:
             self.template = str(buf.encode('utf-8'))
-
-    def unescape(self, value):
-        """Reverse the escape of special characters."""
-        return (value.replace('\:', ':')
-                     .replace('\=', '=')
-                     .replace('\ ', ' ')
-                     .replace('\\\\', '\\')
-        )
