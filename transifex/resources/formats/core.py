@@ -118,8 +118,7 @@ class Handler(object):
         if language:
             self.language = language
 
-    @classmethod
-    def is_content_valid(cls, filename):
+    def is_content_valid(self, filename):
         """Check whether the content is valid for the format."""
         return False
 

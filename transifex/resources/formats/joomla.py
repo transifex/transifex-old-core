@@ -26,8 +26,7 @@ class JoomlaINIHandler(Handler):
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
 
-    @classmethod
-    def is_content_valid(cls, filename):
+    def is_content_valid(self, filename):
         pass
 
     def __init__(self, filename=None, resource= None, language = None):

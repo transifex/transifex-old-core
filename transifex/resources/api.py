@@ -797,11 +797,16 @@ class Translation(object):
         """
         raise NotImplementedError
 
-    def _parse_translation(self, parser, filename):
+    def _parse_translation(self, parser):
+        """
+        Parses a source/translation file.
+
+        We assume the content has been checked for validity
+        by now.
+        """
         strings_added, strings_updated = 0, 0
-        fhandler = parser(filename=filename)
-        fhandler.bind_resource(self.resource)
-        fhandler.set_language(self.language)
+        parser.bind_resource(self.resource)
+        parser.set_language(self.language)
 
         is_source = self.resource.source_language == self.language
         try:
@@ -922,7 +927,8 @@ class FileTranslation(Translation):
                 logger.error(e.message, exc_info=True)
                 raise BadRequestError("A strange error happened.")
 
-            res = self._parse_translation(parser, file_.name)
+            parser.bind_file(file_.name)
+            res = self._parse_translation(parser)
         finally:
             os.unlink(file_.name)
         return res
@@ -1000,7 +1006,8 @@ class StringTranslation(Translation):
                 logger.error(e.message, exc_info=True)
                 raise BadRequestError("A strange error has happened.")
 
-            res = self._parse_translation(parser, file_.name)
+            parser.bind_file(file_.name)
+            res = self._parse_translation(parser)
         finally:
             os.unlink(file_.name)
         return res

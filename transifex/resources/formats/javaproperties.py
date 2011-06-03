@@ -109,8 +109,7 @@ class JavaPropertiesHandler(Handler):
         """Strip separators from the front of the string s."""
         return s.lstrip(''.join(self.SEPARATORS))
 
-    @classmethod
-    def is_content_valid(cls, filename):
+    def is_content_valid(self, filename):
         pass
 
     def convert_to_unicode(self, s):

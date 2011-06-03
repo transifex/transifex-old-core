@@ -89,8 +89,7 @@ class POHandler(Handler):
     format = "GNU Gettext Catalog (*.po, *.pot)"
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
-    @classmethod
-    def is_content_valid(cls, filename):
+    def is_content_valid(self, filename):
 
         # Read the stream to buffer
         try:
