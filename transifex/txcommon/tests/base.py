@@ -112,8 +112,13 @@ class BaseTestCase(TestCase):
         #    slug="project1", name="Test Project")
         self.project = Project.objects.get(slug='project1')
         self.project.maintainers.add(self.user['maintainer'])
+        self.project.owner = self.user['maintainer']
+        self.project.save()
+        
         self.project_private = Project.objects.get(slug='project2')
         self.project_private.maintainers.add(self.user['maintainer'])
+        self.project_private.owner = self.user['maintainer']
+        self.project_private.save()
 
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
