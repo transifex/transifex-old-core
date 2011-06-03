@@ -32,7 +32,7 @@ class JavaPropertiesHandler(Handler):
     name = "Java *.PROPERTIES file handler"
     format = "Java PROPERTIES (*.properties)"
     method_name = 'PROPERTIES'
-    default_encoding = 'ISO-8859-1'
+    format_encoding = 'ISO-8859-1'
 
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
     COMMENT_CHARS = ('#', '!', )
@@ -50,6 +50,15 @@ class JavaPropertiesHandler(Handler):
                 .replace('\\', '\\\\')
         )
 
+    def _find_linesep(self, s):
+        """Find the line separator used in the file."""
+        if "\r\n" in s:         # windows line ending
+            self._linesep = "\r\n"
+        elif "\r" in s:         # macosx line ending
+            self._linesep = "\r"
+        else:
+            self._linesep = "\n"
+
     def _is_escaped(self, line, index):
         """
         Returns True, if the character at index is escaped by backslashes.
@@ -64,6 +73,11 @@ class JavaPropertiesHandler(Handler):
             else:
                 break
         return nbackslashes % 2 == 1
+
+    def _iter_by_line(self):
+        """Iterate the content by line."""
+        for line in self.content.split(self._linesep):
+            yield line
 
     def _prepare_line(self, line):
         """
@@ -156,23 +170,10 @@ class JavaPropertiesHandler(Handler):
             original, replacement, text
         )
 
-    def find_linesep(self, file_):
-        """Find the line separator used in the file."""
-        line = file_.readline()
-        if line.endswith("\r\n"):  # windows line ending
-            self._linesep = "\r\n"
-        elif line.endswith("\r"):  # macosx line ending
-            self._linesep = "\r"
-        else:
-            self._linesep = "\n"
-        file_.seek(0)
-
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         """
-        Parse a java .properties file and create a stringset with
-        all entries in the file.
+        Parse a java .properties content and create a stringset with
+        all entries in it.
 
         See
         http://download.oracle.com/javase/1.4.2/docs/api/java/util/PropertyResourceBundle.html,
@@ -231,6 +232,7 @@ class JavaPropertiesHandler(Handler):
                         string=key).exists() or not value:
                     # ignore keys with no translation
                     continue
+
                 stringset.strings.append(GenericTranslation(key,
                     self._unescape(value), rule=5, context=context,
                     pluralized=False, fuzzy=False,

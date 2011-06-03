@@ -82,8 +82,9 @@ class Handler(object):
     """
     Base class for writing file handlers for all the I18N types.
     """
-    default_encoding = "utf-8"
+    default_encoding = "UTF-8"
     method_name = None
+    format_encoding = "UTF-8"
 
     @classmethod
     def accepts(cls, filename=None, mime=None):
@@ -146,9 +147,15 @@ class Handler(object):
             return content
         if filename is None:
             return None
-        f = codecs.open(filename, 'r', encoding=self.default_encoding)
+        f = codecs.open(filename, 'r', encoding=self.format_encoding)
         try:
             return f.read()
+        except Exception, e:
+            logger.warning(
+                "Error opening file %s with encoding %s" % (filename, self.format_encoding),
+                exc_info=True
+            )
+            raise FormatsError(e.message)
         finally:
             f.close()
 
@@ -544,8 +551,14 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
-    def parse_file(self, filename, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         raise NotImplementedError
+
+    @need_content
+    @need_language
+    def parse_file(self, is_source=False, lang_rules=None):
+        """Parse the content."""
+        self._parse(is_source, lang_rules)
 
 
 def convert_to_suggestions(source, dest, user=None, langs=None):

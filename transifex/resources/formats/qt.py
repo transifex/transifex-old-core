@@ -81,7 +81,6 @@ class LinguistHandler(Handler):
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
 
-
     def _post_compile(self, *args, **kwargs):
         """
         """
@@ -166,16 +165,10 @@ class LinguistHandler(Handler):
             comment = []
         return context_name + comment
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         """
         Parses Qt file and exports all entries as GenericTranslations.
         """
-        fh = open(self.filename, "ru")
-        buf = fh.read()
-        fh.close()
-
         def clj(s, w):
             return s[:w].replace("\n", " ").ljust(w)
 
@@ -184,7 +177,7 @@ class LinguistHandler(Handler):
         else:
             nplural = self.language.get_pluralrules_numbers()
 
-        doc = xml.dom.minidom.parseString(buf)
+        doc = xml.dom.minidom.parseString(self.content.encode(self.format_encoding))
         if hasattr(doc, 'doctype') and hasattr(doc.doctype, 'name'):
             if doc.doctype.name != "TS":
                 raise LinguistParseError("Incorrect doctype!")

@@ -81,7 +81,7 @@ class POHandler(Handler):
         try:
             po = polib.pofile(content)
         except IOError, e:
-            logger.warning("Parse error: %s" % e.message, exc_infp=True)
+            logger.warning("Parse error: %s" % e.message, exc_info=True)
             raise PoParseError(e.message)
 
         # If file is empty, the method hangs so we should bail out.
@@ -308,9 +308,7 @@ class POHandler(Handler):
         super(POHandler, self)._post_save2db(*args, **kwargs)
 
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         """
         Parse a PO file and create a stringset with all PO entries in the file.
         """
@@ -322,13 +320,16 @@ class POHandler(Handler):
         else:
             nplural = self.language.get_pluralrules_numbers()
 
+        if not hasattr(self, '_po'):
+            self.is_content_valid()
+
         self._parse_copyrights(self.filename)
         try:
-            pofile = polib.pofile(self.filename)
+            self._po = polib.pofile(self.filename)
         except IOError, e:
             raise PoParseError(e.message)
 
-        for entry in pofile:
+        for entry in self._po:
             pluralized = False
             same_nplural = True
 
@@ -426,11 +427,11 @@ class POHandler(Handler):
                         )
 
         if is_source:
-            self.template =  self.get_po_contents(pofile)
+            self.template =  self.get_po_contents(self._po)
 
         self.stringset = stringset
         self.suggestions = suggestions
-        return pofile
+        return self._po
 
     def _parse_copyrights(self, filename):
         """

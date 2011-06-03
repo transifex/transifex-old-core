@@ -26,23 +26,15 @@ class JoomlaINIHandler(Handler):
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source=False, lang_rules=None):
         """
         Parse an INI file and create a stringset with all entries in the file.
         """
         stringset = StringSet()
-        suggestions = StringSet()
+        content = self.content
+        jformat = JoomlaIniVersion.create(self.content)
 
-        fh = codecs.open(self.filename, "r", "utf-8")
-
-        buf = fh.read()
-        fh.close()
-
-        jformat = JoomlaIniVersion.create(buf)
-
-        for line in buf.split('\n'):
+        for line in content.split('\n'):
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
                 continue
@@ -51,13 +43,11 @@ class JoomlaINIHandler(Handler):
                 source, trans = line.split('=', 1)
             except ValueError:
                 # Maybe abort instead of skipping?
-                logger.error('Could not parse line "%s". Skipping...' % line)
+                logger.warning('Could not parse line "%s". Skipping...' % line)
                 continue
 
             trans = jformat.get_translation(trans)
-
-            # We use empty context
-            context = ""
+            context = ""        # We use empty context
 
             if is_source:
                 new_line = re.sub(
@@ -66,7 +56,7 @@ class JoomlaINIHandler(Handler):
                     line
                 )
                 # this looks fishy
-                buf = re.sub(re.escape(line), new_line, buf)
+                content = re.sub(re.escape(line), new_line, content)
 
             stringset.strings.append(GenericTranslation(source,
                 trans, rule=5, context=context,
@@ -74,10 +64,9 @@ class JoomlaINIHandler(Handler):
                 obsolete=False))
 
         self.stringset=stringset
-        self.suggestions=suggestions
-
+        self.suggestions = StringSet()
         if is_source:
-            self.template = str(buf.encode('utf-8'))
+            self.template = str(content.encode('utf-8'))
 
 
 class JoomlaIniVersion(object):
