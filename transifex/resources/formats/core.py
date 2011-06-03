@@ -317,7 +317,7 @@ class Handler(object):
           language: The language of the file
         """
 
-        if not language:
+        if language is None:
             language = self.language
 
         try:
@@ -326,9 +326,7 @@ class Handler(object):
 
             content = Template.objects.get(resource=self.resource).content
             content = self._examine_content(content)
-
             stringset = self._get_strings(self.resource)
-
             for string in stringset:
                 trans = self._get_translation(string, language, 5)
                 content = self._replace_translation(
@@ -336,7 +334,6 @@ class Handler(object):
                     trans and trans.string.encode('utf-8') or "",
                     content
                 )
-
             self.compiled_template = content
             self._post_compile(language)
         except Exception, e:
@@ -377,9 +374,9 @@ class Handler(object):
         Saves parsed file contents to the database. duh
         """
         self._pre_save2db(is_source, user, overwrite_translations)
+
         if is_source:
-            qs = SourceEntity.objects.filter(
-                    resource = self.resource)
+            qs = SourceEntity.objects.filter(resource=self.resource)
             original_sources = list(qs)
             new_entities = []
 
@@ -547,29 +544,8 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
-    def _pre_save2file(self, *args, **kwargs):
-        pass
-
-    def _post_save2file(self, *args, **kwargs):
-        pass
-
-    @need_compiled
-    def save2file(self, filename):
-        """
-        Take the ouput of the compile method and save results to specified file.
-        """
-        self._pre_save2file(filename=filename)
-        try:
-            file = open ('/tmp/%s' % filename, 'w' )
-            file.write(self.compiled_template)
-            file.flush()
-            file.close()
-        except Exception, e:
-            raise Exception("Error opening file %s: %s" % ( filename, e))
-        self._post_save2file(filename=filename)
-
     def parse_file(self, filename, is_source=False, lang_rules=None):
-        raise NotImplementedError("parse_file() is not implemented.")
+        raise NotImplementedError
 
 
 def convert_to_suggestions(source, dest, user=None, langs=None):

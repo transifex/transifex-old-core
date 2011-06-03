@@ -65,12 +65,6 @@ class JavaPropertiesHandler(Handler):
                 break
         return nbackslashes % 2 == 1
 
-    def _post_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.decode(self.default_encoding)
-
-    def _pre_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.encode(self.default_encoding)
-
     def _prepare_line(self, line):
         """
         Prepare a line for parsing.

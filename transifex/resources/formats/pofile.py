@@ -432,18 +432,6 @@ class POHandler(Handler):
         self.suggestions = suggestions
         return pofile
 
-    @need_compiled
-    def save2file(self, filename):
-        """
-        Take the ouput of the compile method and save results to specified
-        file. To avoid an extra step here, we take the polib.pofile handler and
-        save directly to the file.
-        """
-        try:
-            self.compiled_template.save(filename)
-        except Exception, e:
-            raise Exception("Error opening file %s: %s" % ( filename, e))
-
     def _parse_copyrights(self, filename):
         """
         Read the copyrights (if any) from a po file.
