@@ -810,9 +810,8 @@ class Translation(object):
 
         is_source = self.resource.source_language == self.language
         try:
-            fhandler.is_content_valid(fhandler.filename)
-            fhandler.parse_file(is_source)
-            strings_added, strings_updated = fhandler.save2db(
+            parser.parse_file(is_source)
+            strings_added, strings_updated = parser.save2db(
                 is_source, user=self.request.user
             )
         except Exception, e:
