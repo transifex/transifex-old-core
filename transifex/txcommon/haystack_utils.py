@@ -1,4 +1,26 @@
 import re, operator
+from pysolr import SolrCoreAdmin
+from django.conf import settings
+
+from haystack.query import SearchQuerySet
+
+from transifex.txcommon.log import logger
+
+def check_haystack_error(func):
+    """Decorator to check whether haystack backend is up and running or not."""
+    def wrapper(*args, **kwargs):
+        if settings.HAYSTACK_SEARCH_ENGINE == 'solr':
+            try:
+                soldadmin = SolrCoreAdmin(SearchQuerySet().query.backend.conn.url)
+                soldadmin.status()
+                func(*args, **kwargs)
+                return True
+            except Exception, e:
+                logger.error('SOLR seems to be down: %s' % str(e))
+                return False
+        return True
+    return wrapper
+
 
 def fulltext_fuzzy_match_filter(string):
     """
