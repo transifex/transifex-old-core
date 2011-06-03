@@ -96,7 +96,7 @@ class Handler(object):
 
     def __init__(self, filename=None, resource=None, language=None):
         """
-        Initialize a File Handler either using a file or a Translation Queryset
+        Initialize a formats handler.
         """
 
         self.filename = None # Input filename for associated translation file
@@ -134,9 +134,14 @@ class Handler(object):
         if isinstance(language, Language):
             self.language = language
         else:
-            raise Exception("language needs to be of type %s" %
-                Language.__class__)
-
+            try:
+                self.language = Language.objects.by_code_or_alias(language)
+            except Language.DoesNotExist, e:
+                logger.warning("Language.DoesNotExist: %s" % e.message, exc_info=True)
+                raise FormatsError(e.message)
+            except Exception, e:
+                logger.error(e.message, exc_info=True)
+                raise FormatsError(e.message)
 
     def bind_file(self, filename):
         """
