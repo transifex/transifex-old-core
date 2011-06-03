@@ -81,13 +81,6 @@ class LinguistHandler(Handler):
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
 
-    def _replace_translation(self, original, replacement, text):
-        """
-        It just does a search and replace inside `text` and replaces all
-        occurrences of `original` with `replacement`.
-        """
-        return re.sub(re.escape(original), xml_escape(replacement,
-            {"'": "&apos;", '"': '&quot;'}), text)
 
     def _post_compile(self, *args, **kwargs):
         """
