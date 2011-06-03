@@ -19,6 +19,7 @@ def is_gtranslate_allowed(project):
     """
 
     # Check the outsource first
+    GtModel = get_model('gtranslate', 'Gtranslate')
     try:
         if project.outsource is not None:
             gt = GtModel.objects.get(project=project.outsource)
@@ -28,7 +29,6 @@ def is_gtranslate_allowed(project):
         pass
 
     # Then the project
-    GtModel = get_model('gtranslate', 'Gtranslate')
     try:
         gt = GtModel.objects.get(project=project)
         if not gt.use_gtranslate:
