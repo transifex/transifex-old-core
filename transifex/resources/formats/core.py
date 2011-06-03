@@ -115,11 +115,26 @@ class Handler(object):
         if language:
             self.language = language
 
-    def is_content_valid(self, content=None):
-        """Check whether the content is valid for the format."""
+    def _check_content(self, content):
+        """
+        Perform the actua lcheck of the content.
+
+        A subclass needs to only override this method to customize the check.
+        """
         # FIXME Make all code use return values instead of exceptions
         # FIXME Needs to deprecate API v1
         return (True, None)
+
+    def is_content_valid(self, content=None):
+        """
+        Check whether the content is valid for the format.
+
+        Delegate the check to _check_content().
+        """
+        if content is None:
+            content = self.content
+            assert content is not None
+        return self._check_content(content)
 
     ####################
     # Helper functions #

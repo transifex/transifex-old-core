@@ -77,11 +77,7 @@ class POHandler(Handler):
     format = "GNU Gettext Catalog (*.po, *.pot)"
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
-    def is_content_valid(self, content=None):
-        if content is None:
-            content = self.content
-
-        # Read the stream to buffer
+    def _check_content(self, content):
         try:
             po = polib.pofile(content)
         except IOError, e:
