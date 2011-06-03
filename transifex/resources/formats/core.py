@@ -149,7 +149,9 @@ class Handler(object):
         if os.path.isfile(filename):
             self.filename = filename
         else:
-            raise Exception("File does not exist")
+            msg = "Specified file %s does not exist." % filename
+            logger.error(msg)
+            raise FormatsError(msg)
 
     def bind_resource(self, resource):
         """
@@ -164,7 +166,9 @@ class Handler(object):
             self.compiled_template = self.compiled_template or resource_template
             self.language = self.language or resource.source_language
         else:
-            raise Exception("The specified object is not of the required type")
+            msg = "The specified object %s is not of type Resource" % resource
+            logger.error(msg)
+            raise FormatsError(msg)
 
 
     def bind_pseudo_type(self, pseudo_type):
@@ -533,7 +537,7 @@ class Handler(object):
         self._post_save2file(filename=filename)
 
     def parse_file(self, filename, is_source=False, lang_rules=None):
-        raise Exception("Not Implemented")
+        raise NotImplementedError("parse_file() is not implemented.")
 
 
 def convert_to_suggestions(source, dest, user=None, langs=None):
