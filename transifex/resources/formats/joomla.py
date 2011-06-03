@@ -30,7 +30,6 @@ class JoomlaINIHandler(Handler):
 
     def __init__(self, filename=None, resource= None, language = None):
         super(JoomlaINIHandler, self).__init__(filename, resource, language)
-        self._version = 0
 
     @need_language
     @need_file
@@ -46,6 +45,8 @@ class JoomlaINIHandler(Handler):
         buf = fh.read()
         fh.close()
 
+        jformat = JoomlaIniVersion.create(buf)
+
         for line in buf.split('\n'):
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
@@ -58,12 +59,7 @@ class JoomlaINIHandler(Handler):
                 logger.error('Could not parse line "%s". Skipping...' % line)
                 continue
 
-            # In versions >=1.6 translations are surrounded by double quotes. So remove them
-            # Normally, if the translation starts with '"', it is a 1.6-file and must
-            # end with '"', since translations starting with '"' are not allowed in 1.5.
-            # But, let's check both the first and last character of the translation to be safe.
-            if trans.startswith('"') and trans.endswith('"'):
-                trans = trans[1:-1]
+            trans = jformat.get_translation(trans)
 
             # We use empty context
             context = ""
@@ -88,15 +84,38 @@ class JoomlaINIHandler(Handler):
         if is_source:
             self.template = str(buf.encode('utf-8'))
 
-    def _examine_content(self, content):
-        """
-        If the first line begins with ';', mark the version of the
-        ini file as 1 (>=1.6), else as 0 (==1.5).
-        """
-        if content.startswith(';'):
-            self._version = 1
-        else:
-            self._version = 0
 
-    def _escape(self, s):
-        return s.replace('\\', '\\\\')
+class JoomlaIniVersion(object):
+    """Base class for the various formats of Joomla ini files."""
+
+    @classmethod
+    def create(cls, content):
+        """Factory method to return the correct instance for the format.
+
+        In versions >=1.6 translations are surrounded by double quotes.
+        """
+        if content[0] == ';':
+            return JoomlaIniNew()
+        else:
+            return JoomlaIniOld()
+
+    def get_translation(self, value):
+        """
+        Return the trasnlation value extracted from the specified string.
+        """
+        raise NotImplementedError
+
+
+class JoomlaIniOld(JoomlaIniVersion):
+    """Format for Joomla 1.5."""
+
+    def get_translation(self, value):
+        return value
+
+
+class JoomlaIniNew(JoomlaIniVersion):
+    """Format for Joomla 1.6."""
+
+    def get_translation(self, value):
+        # Get rid of double-quote at the start and end of value
+        return value[1:-1]
