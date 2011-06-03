@@ -94,14 +94,14 @@ class Handler(object):
             accept |= mime in get_mimetypes_for_method(cls.method_name)
         return accept
 
-    def __init__(self, filename=None, resource=None, language=None):
+    def __init__(self, filename=None, resource=None, language=None, content=None):
         """
         Initialize a formats handler.
         """
 
-        self.filename = None # Input filename for associated translation file
+        self.filename = filename # Input filename for associated translation file
+        self.content = self._get_content(filename=filename, content=content) # The content of the translation file
         self.stringset = None # Stringset to extract entries from files
-
 
         self.resource = None # Associated resource
         self.language = None # Resource's source language
@@ -109,9 +109,6 @@ class Handler(object):
         self.template = None # Var to store raw template
         self.compiled_template = None # Var to store output of compile() method
 
-        if filename:
-            self.filename = filename
-            #self.file = codecs.open(filename, "r", self.default_encoding )
         if resource:
             self.resource = resource
             self.language = resource.source_language
@@ -125,6 +122,18 @@ class Handler(object):
     ####################
     # Helper functions #
     ####################
+
+    def _get_content(self, filename=None, content=None):
+        """Read the content of the specified file."""
+        if content is not None:
+            return content
+        if filename is None:
+            return None
+        f = codecs.open(filename, 'r', encoding=self.default_encoding)
+        try:
+            return f.read()
+        finally:
+            f.close()
 
     def set_language(self, language):
         """
@@ -142,12 +151,19 @@ class Handler(object):
                 logger.error(e.message, exc_info=True)
                 raise FormatsError(e.message)
 
+    def bind_content(self, content):
+        """
+        Bind some content to the handler.
+        """
+        self.content = self._get_content(content)
+
     def bind_file(self, filename):
         """
         Bind a file to an initialized POHandler.
         """
         if os.path.isfile(filename):
             self.filename = filename
+            self.content = self._get_content(filename=filename)
         else:
             msg = "Specified file %s does not exist." % filename
             logger.error(msg)
