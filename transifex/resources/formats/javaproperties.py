@@ -26,16 +26,16 @@ class JavaPropertiesHandler(Handler):
     """
     Handler for Java PROPERTIES translation files.
 
-    Java properties files *must* be encoded in cls.ENCODING encoding.
+    Java properties files *must* be encoded in cls.default_encoding encoding.
     """
 
     name = "Java *.PROPERTIES file handler"
     format = "Java PROPERTIES (*.properties)"
     method_name = 'PROPERTIES'
+    default_encoding = 'ISO-8859-1'
 
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
     COMMENT_CHARS = ('#', '!', )
-    ENCODING = 'ISO-8859-1'
 
     def _escape(self, s):
         """
@@ -66,10 +66,10 @@ class JavaPropertiesHandler(Handler):
         return nbackslashes % 2 == 1
 
     def _post_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.decode(self.ENCODING)
+        self.compiled_template = self.compiled_template.decode(self.default_encoding)
 
     def _pre_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.encode(self.ENCODING)
+        self.compiled_template = self.compiled_template.encode(self.default_encoding)
 
     def _prepare_line(self, line):
         """
@@ -196,7 +196,7 @@ class JavaPropertiesHandler(Handler):
             self.find_linesep(fh)
             buf = u""
             for line in fh:
-                line = line.decode(self.ENCODING)
+                line = line.decode(self.default_encoding)
                 line = self._prepare_line(line)
                 # Skip empty lines and comments
                 if not line or line.startswith(self.COMMENT_CHARS):
@@ -242,9 +242,6 @@ class JavaPropertiesHandler(Handler):
                     pluralized=False, fuzzy=False,
                     obsolete=False))
         except UnicodeDecodeError, e:
-            # raise JavaParseError(
-            #     'Java .proeprties files must be in %s encoding.' % self.ENCODING
-            # )
             raise JavaParseError(e.message)
         finally:
             fh.close()
