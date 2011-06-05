@@ -86,7 +86,7 @@
 {% block header_menu %}{% endblock %}
 
 {% block project_header %}
-{{block.super}}<h2 class="pagetitle_wdesc">/</h2><h2 class="pagetitle">{{ resource.name }}</h2>
+{{block.super}}<h2 class="pagetitle{% if short_desc %}_wdesc{% endif %}">/</h2><h2 class="pagetitle_wdesc">{{ resource.name }}</h2>
 {% endblock%}
 
 {% block content_main %}

@@ -25,7 +25,7 @@
 
   <div class="details separate">
 
-  <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
+  <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
   <table class="definition">
     {% if request.user.is_authenticated%}
       {% url notification.views.notices as notices_url %}
@@ -139,7 +139,7 @@
 	<ul class="actionlist simple">
 	{% for entry in action_log %}
 	<li class="i16 actionlog">
-	    {{ entry.message|safe }} by {{ entry.user }}. <span class="notice_when">{{ entry.action_time|timesince }} ago.</span>
+	    {{ entry.message|safe }} by {{ entry.user }}. <span class="timestamp">{{ entry.action_time|timesince }} ago.</span>
 	</li>
 	{% endfor %}
 	</ul>

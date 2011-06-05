@@ -8,17 +8,14 @@
 {% autopaginate actionlog 30 %}
 
 <div class="generic_form">
-<fieldset style="margin: inherit auto;" class="compact">
-  <legend><span class="i16 filter">{% trans "Filter results" %}</span></legend>
-        <form action="" method="get">
-          <table class="definition">
-            {% form_as_table_rows f.form %}
-          <tr>
-            <td></td>
-            <td><input type="submit" class="i16 action buttonized" id="timeline-submit" value="{% trans "Go" %}"/></td></tr>
-          </table>
-        </form>
-</fieldset>
+    <form action="" method="get">
+      <table class="definition">
+        {% form_as_table_rows f.form %}
+      <tr>
+        <td></td>
+        <td><input type="submit" class="i16 action buttonized" id="timeline-submit" value="{% trans "Go" %}"/></td></tr>
+      </table>
+    </form>
 </div>
 
 {% if not actionlog %}

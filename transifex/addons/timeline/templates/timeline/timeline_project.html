@@ -16,13 +16,17 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Timeline" %}{% endblock %}
 
+{% block project_header %}
+{% with project.description as short_desc %}
+{{block.super}}<h2 class="pagetitle{% if short_desc %}_wdesc{% endif %}">/</h2><h2 class="pagetitle_wdesc">&nbsp;{% trans "Timeline" %}</h2>
+{% endwith %}
+{% endblock%}
+
 {% block content_main %}
 
 <div class="obj_bigdetails ui-tabs-panel">
-<h2 class="name">
- {% blocktrans with project.name as project_name %}{{ project_name }} Timeline{% endblocktrans %}
-</h2>
-<p class="description">
+<h3>{% trans "Filter results:" %}</h3>
+<p>
 {% include "timeline/timeline_base.html" %}
 </p>
 </div>
