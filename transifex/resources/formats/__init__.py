@@ -51,9 +51,7 @@ def get_i18n_handler_from_type(i18n_type):
     assert i18n_type in settings.I18N_METHODS.keys(), (
         "I18n '%s' is not registered as a supported one." % i18n_type)
 
-    class_name = ('%(module)s.%(class)s' % {
-                  'module': settings.I18N_HANDLER_CLASS_BASE,
-                  'class': settings.I18N_HANDLER_CLASS_NAMES[i18n_type]})
+    class_name = settings.I18N_HANDLER_CLASS_NAMES[i18n_type]
 
     return import_to_python(class_name)
 

@@ -123,6 +123,8 @@ class StorageFile(models.Model):
                 m.load()
                 self.mime_type = m.file(self.get_storage_path())
                 m.close()
+        except Exception, e:
+            pass
 
         self.save()
 

@@ -486,17 +486,17 @@ class Translation(models.Model):
     @property
     def source_translation(self):
         """
-        Return the Translation object related to the source language of the 
-        self.source_entity.resource. The returned object of this method contains 
+        Return the Translation object related to the source language of the
+        self.source_entity.resource. The returned object of this method contains
         the original content used to translated the current 'self' object.
-        If the 'self' object is the actual source language translation, None 
+        If the 'self' object is the actual source language translation, None
         is returned instead.
         """
-        # Tweaking the translation rule, because the source translation might 
+        # Tweaking the translation rule, because the source translation might
         # not have the same number of plural rules.
         source_language = self.source_entity.resource.source_language
         if not self.source_entity.pluralized or \
-            (self.source_entity.pluralized and 
+            (self.source_entity.pluralized and
             self.rule in source_language.get_pluralrules_numbers()):
             rule = self.rule
         else:
@@ -504,7 +504,7 @@ class Translation(models.Model):
 
         try:
             if source_language != self.language:
-                return Translation.objects.get(language=source_language, 
+                return Translation.objects.get(language=source_language,
                     rule=rule, source_entity=self.source_entity)
         except Translation.DoesNotExist:
             pass
