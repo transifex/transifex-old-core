@@ -87,7 +87,6 @@ function StringSet(json, push_url, from_lang, to_lang) {
 				}
         }
         if (to_update == {} && to_add == {}) {
-            alert("No strings to push");
         } else {
             $.ajax({
 				url: push_url,
