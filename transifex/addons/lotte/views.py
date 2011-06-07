@@ -118,7 +118,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         source_entity__resource__in = resources,
         language = target_language,
         source_entity__pluralized=False,
-        rule = 5).exclude(string="").count()
+        rule = 5).count()
 
     # Include counting of pluralized entities
     for pluralized_entity in SourceEntity.objects.filter(resource__in = resources,
@@ -219,7 +219,7 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
     View for observing the translations strings on a specific language.
     """
 
-    translation_resource = get_object_or_404(Resource,
+    resource = get_object_or_404(Resource,
         slug = resource_slug,
         project__slug = project_slug
     )
@@ -228,19 +228,17 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
     except Language.DoesNotExist:
         raise Http404
 
-    total_strings = Translation.objects.filter(
-                        source_entity__resource = translation_resource,
-                        language = translation_resource.source_language,
-                        rule = 5).count()
+    total_strings = SourceEntity.objects.filter(
+        resource=resource).count()
 
     translated_strings = Translation.objects.filter(
-                            source_entity__resource = translation_resource,
-                            language = target_language,
-                            rule = 5).exclude(string="").count()
+        source_entity__resource=resource,
+        language=target_language,
+        rule=5).count()
 
     return render_to_response("view_strings.html",
-        { 'project' : translation_resource.project,
-          'resource' : translation_resource,
+        { 'project' : resource.project,
+          'resource' : resource,
           'target_language' : target_language,
           'translated_strings': translated_strings,
           'untranslated_strings': total_strings - translated_strings,
