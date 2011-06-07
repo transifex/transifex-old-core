@@ -3,7 +3,7 @@ from datetime import datetime
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext as _
 from django.conf import settings
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete
 from django.contrib.sites.models import Site
 from django.contrib import messages
 from notification  import models as notification
@@ -140,4 +140,4 @@ def connect():
     cron_hourly.connect(db_cleanup)
     cron_hourly.connect(expiration_notification)
     post_save.connect(invalidate_cache, sender=Lock)
-    post_delete.connect(invalidate_cache, sender=Lock)
+    pre_delete.connect(invalidate_cache, sender=Lock)
