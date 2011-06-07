@@ -161,7 +161,7 @@ class Project(models.Model):
         help_text=_('Project that owns the access control of this project.'))
 
     owner = models.ForeignKey(User, blank=True, null=True,
-        verbose_name=_('Owner'),
+        verbose_name=_('Owner'), related_name='projects_owning',
         help_text=_('The user who owns this project.'))
 
     # Normalized fields
