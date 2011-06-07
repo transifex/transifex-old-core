@@ -45,18 +45,11 @@ $(document).ready(function(){
 <span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">{% trans "Create resource..." %}</span>
 </p>
 -->
-<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}>
+<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;margin-top:1.5em;"{% endif %}>
 
  <form action='' method='post' class="microform houdini">{% csrf_token %}
-  <fieldset style="margin-top: 1em;">
-  <legend>{% trans "Create resource to be translated" %}</legend>
 
-  <p class="helptext clear">
-  {% blocktrans %}
-  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
-  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
-  {% endblocktrans %}
-  </p>
+
 
   <table style="padding:0 1em">
   <tbody>
@@ -89,7 +82,13 @@ $(document).ready(function(){
   </table>
   <p class="submit" style="text-align:center"><input type="submit" class="i16 submit buttonized" name="create_resource" value="{% trans "Create Resource" %}" /></p>
 
-  </fieldset>
+  <p class="i16 tip">
+  {% blocktrans %}
+  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.<br/>
+  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
+  {% endblocktrans %}
+  </p>
+
  </form>
 
 </div>
