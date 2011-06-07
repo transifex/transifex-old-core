@@ -7,7 +7,7 @@
 <a href="{% url project_list_recent %}">{% trans "Projects" %}</a>
  » <a href="{% url project_detail project.slug %}">{{project}}</a>
 {% if resource %} » <a href="{% url resource_detail project.slug resource.slug %}">{{resource}}</a>{% endif %}
-{% blocktrans with target_language.name as lang %}Translate to {{ lang }}{% endblocktrans %}
+» {% blocktrans with target_language.name as lang %}Translate to {{ lang }}{% endblocktrans %}
 {% endblock %}
 
 
