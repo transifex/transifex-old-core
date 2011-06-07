@@ -20,7 +20,8 @@ def sort_source_langs_first(rlstats, source_languages):
         else:
             rlstats_list.append(r)
     # 'tag' last source entry in the list
-    last = rlstats_source_list.pop()
-    last.last_source_entry = True
-    rlstats_source_list.append(last)
+    if rlstats_source_list:
+        last = rlstats_source_list.pop()
+        last.last_source_entry = True
+        rlstats_source_list.append(last)
     return rlstats_source_list + rlstats_list
