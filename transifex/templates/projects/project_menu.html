@@ -56,14 +56,19 @@ $(document).ready(
 <h2 class="pagetitle withdesc" style="display:inline-block;">{{ project.name }}</h2>
 {% endblock %}
 
+{% block current_description %}
+{% if short_desc %}
+  <p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
+{% endif %}
+{% endblock %}
+
+
 {% if project.private %}
 <span id="private_project_banner" class="ui-corner-all" style="display:inline-block;">
 {% trans "Private Project"%}
 <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
 </span>
 {% endif %}
-
-<p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
 
 {% block header_menu %}
 <div id="project-tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -90,7 +95,7 @@ $(document).ready(
     </li>
     
     {% if perms.projects.change_project or is_maintainer %}
-    <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}" style="float:right;">
+    <li class="ui-state-default ui-corner-top {% ifequal request.path url_project_edit %}ui-tabs-selected ui-state-active{% endifequal %}" style="float:right;">
        <a id="tab-link-3" href="{% url project_edit project_slug=project.slug %}">
          <span>{% trans "Edit Project" %}</span>
        </a>

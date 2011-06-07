@@ -63,22 +63,20 @@
 {% block header_menu %}{% endblock %}
 
 {% block project_header %}
-{{block.super}}<h2 class="pagetitle_wdesc">/</h2><h2 class="pagetitle">Release '{{ release.name }}'</h2>
+{{block.super}}<h2 class="pagetitle_wdesc">/</h2><h2 class="pagetitle_wdesc">Release '{{ release.name }}'</h2>
 {% endblock%}
+
+
+{% if release.description %}
+{% block current_description %}
+<p class="description">{{ release.description }}</p>
+{% endblock %}
+{% endif %}
+
 
 {% block content_main %}
   <div class="obj_bigdetails">
  {% comment %} <h3 class="pagesubtitle">Release '{{ release.name }}'</h3>{% endcomment %}
-
-  {% if release.description %}<p class="description">{{ release.description }}</p>{% endif %}
-
-  {% with release.long_description_html as long_desc %}
-  {% if long_desc %}
-  <div class="long_description">
-    {{ long_desc|truncatewords:"100"|safe }}
-  </div>
-  {% endif %}
-  {% endwith %}
 
   {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   {% if perms.projects.add_release or is_maintainer %}
@@ -87,10 +85,10 @@
     </div>
   {% endif %}
 
-  <div class="details">
+  <div class="details separate">
 
   {% if release.homepage or release.release_date %}
-  <h4>{% blocktrans %}Details{% endblocktrans %}</h4>
+  <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
   {% endif %}
   <table class="definition">
     <tr {% if not release.homepage %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
@@ -148,6 +146,15 @@
     {% endif %}
     {% endwith %}
   </table>
+  
+  {% with release.long_description_html as long_desc %}
+  {% if long_desc %}
+  <div class="long_description">
+    {{ long_desc|truncatewords:"100"|safe }}
+  </div>
+  {% endif %}
+  {% endwith %}
+  
 </div>
 
 <div id="projects" class="projects">

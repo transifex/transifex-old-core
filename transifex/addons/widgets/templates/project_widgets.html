@@ -17,10 +17,19 @@
 
 {% endblock %}
 
+
+{% block project_header %}
+{{block.super}}<h2 class="pagetitle_wdesc">/&nbsp;</h2><h2 class="pagetitle_wdesc">{% blocktrans %}Widgets, buttons, etc.{% endblocktrans %}</h2>
+{% endblock%}
+
+{% block current_description %}
+<p class="description">{% blocktrans %}Here are some widgets, buttons and other cool stuff you can add to your homepage!{% endblocktrans %}</p>
+{% endblock %}
+
+
+
 {% block content_main %}
-  <div class="obj_bigdetails ui-tabs-panel">
-  <h2 class="name">{% blocktrans %}Widgets, buttons, etc.{% endblocktrans %}</h2>
-  <p class="description">{% blocktrans %}Here are some widgets, buttons and other cool stuff you can add to your homepage!{% endblocktrans %}</p>
+  <div class="obj_bigdetails">
   {% hook "widget_snippet.html" %}
 
   <!-- Userbars are not so important so put them into the end -->
