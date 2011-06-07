@@ -170,7 +170,7 @@
     <th><span>{% trans "Last Translation" %}</span></th>
    </tr>
 {% for stat in statslist|sort_source_langs_first:source_languages %}
-    {% if stat.last_source_entry %}
+    {% if stat.first_translation %}
         </thead>
         <tbody>
     {% endif %}
