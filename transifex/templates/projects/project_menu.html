@@ -53,7 +53,7 @@ $(document).ready(
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 {% block project_header %}
-<h2 class="pagetitle withdesc" style="display:inline-block;">{{ project.name }}</h2>
+<h2 class="pagetitle with_description" style="display:inline-block;">{{ project.name }}</h2>
 {% endblock %}
 
 {% block current_description %}
