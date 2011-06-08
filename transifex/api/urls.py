@@ -123,6 +123,16 @@ urlpatterns = patterns('',
         {'api_version': 2},
         name='apiv2_translation',
     ), url(
+        r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
+        never_cache(stats_handler),
+        {'api_version': 2, 'lang_code': None},
+        name='apiv2_stats',
+    ), url(
+        r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_@\w]+)/$',
+        never_cache(stats_handler),
+        {'api_version': 2},
+        name='apiv2_stats',
+    ), url(
         r'^1/languages/$',
         Resource(LanguageHandler),
         {'api_version': 1},

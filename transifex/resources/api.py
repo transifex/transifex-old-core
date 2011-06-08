@@ -313,7 +313,7 @@ class ResourceHandler(BaseHandler):
 
 
 class StatsHandler(BaseHandler):
-    allowed_methods = ('GET')
+    allowed_methods = ('GET', )
 
     def read(self, request, project_slug, resource_slug,
              lang_code=None, api_version=1):
@@ -321,6 +321,11 @@ class StatsHandler(BaseHandler):
         This is an API handler to display translation statistics for individual
         resources.
         """
+        if api_version == 2:
+            return self._get_stats(request=request, pslug=project_slug,
+            rslug=resource_slug, lang_code=lang_code)
+
+        # API v1 code
         try:
             resource = Resource.objects.get( project__slug = project_slug,
                 slug= resource_slug)
@@ -352,6 +357,52 @@ class StatsHandler(BaseHandler):
                     (stat.translated_perc),
                     "translated_entities": stat.translated}})
         return retval
+
+    def _get_stats(self, request, pslug, rslug, lang_code):
+        try:
+            resource = Resource.objects.get(project__slug=pslug, slug=rslug)
+        except Resource.DoesNotExist, e:
+            logger.debug(
+                "Resource %s.%s requested, but it does not exist" % (pslug, rslug),
+                exc_info=True
+            )
+            return rc.NOT_FOUND
+        language = None
+        if lang_code is not None:
+            try:
+                language = Language.objects.by_code_or_alias(lang_code)
+            except Language.DoesNotExist, e:
+                logger.debug(
+                    "Language %s was requested, but it does not exist." % lang_code,
+                    exc_info=True
+                )
+                return BAD_REQUEST("Unknown language code %s" % lang_code)
+
+        stats = RLStats.objects.by_resource(resource)
+        if language is not None:
+            stat = stats.by_language(language)[0]
+            return {
+                'completed': '%s%%' % stat.translated_perc,
+                'translated_entities': stat.translated,
+                'translated_words': stat.translated_wordcount,
+                'untranslated_entities': stat.untranslated,
+                'untranslated_words': stat.untranslated_wordcount,
+                'last_update': stat.last_update,
+                'last_commiter': stat.last_committer.username,
+            }
+        # statistics requested for all languages
+        res = {}
+        for stat in stats:
+            res[stat.language.code] = {
+                    'completed': '%s%%' % stat.translated_perc,
+                    'translated_entities': stat.translated,
+                    'translated_words': stat.translated_wordcount,
+                    'untranslated_entities': stat.untranslated,
+                    'untranslated_words': stat.untranslated_wordcount,
+                    'last_update': stat.last_update,
+                    'last_commiter': stat.last_committer.username,
+            }
+        return res
 
 class FileHandler(BaseHandler):
     allowed_methods = ('GET')

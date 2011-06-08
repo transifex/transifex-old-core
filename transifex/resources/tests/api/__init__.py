@@ -628,3 +628,114 @@ class TestTranslationAPI(APIBaseTests):
         self.assertEquals(res.status_code, 201)
         r = Resource.objects.get(slug='r1', project__slug='new_pr')
         self.assertEquals(len(r.available_languages_without_teams), 1)
+
+
+class TestStatsAPI(APIBaseTests):
+
+    def setUp(self):
+        super(TestStatsAPI, self).setUp()
+        self.content = 'KEY1="Translation"\nKEY2="Translation with "_QQ_"quotes"_QQ_""'
+        self.project_slug = 'new_pr'
+        self.resource_slug='r1'
+        self.url_new_project = reverse(
+            'apiv2_projects'
+        )
+        self.url_create_resource = reverse(
+            'apiv2_resources', kwargs={'project_slug': self.project_slug}
+        )
+        self._create_project()
+        self._create_resource()
+
+    def test_get_stats(self):
+        r = Resource.objects.get(slug='r1')
+        greek = 'KEY1="Μετάφραση"\nKEY2="Μετάφραση με "_QQ_"εισαγωγικά"_QQ_""'
+        res = self.client['registered'].put(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': self.project_slug,
+                    'resource_slug': self.resource_slug,
+                    'lang_code': 'el'
+                }
+            ),
+            data=simplejson.dumps({'content': greek}),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 200)
+        res = self.client['registered'].get(
+            reverse(
+                'apiv2_stats',
+                kwargs={
+                    'project_slug': self.project_slug,
+                    'resource_slug': self.resource_slug,
+                    'lang_code': 'el',
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 200)
+        data = simplejson.loads(res.content)
+        self.assertEquals(data['completed'], '100%')
+        german = 'KEY1="Übersetzung"\nKEY2="Übersetzung mit "_QQ_"Zitate"_QQ_""'
+        res = self.client['registered'].put(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': self.project_slug,
+                    'resource_slug': self.resource_slug,
+                    'lang_code': 'af'
+                }
+            ),
+            data=simplejson.dumps({'content': german}),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 200)
+        res = self.client['registered'].get(
+            reverse(
+                'apiv2_stats',
+                kwargs={
+                    'project_slug': self.project_slug,
+                    'resource_slug': self.resource_slug,
+                    'lang_code': 'af',
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 200)
+        data = simplejson.loads(res.content)
+        self.assertEquals(data['completed'], '100%')
+        res = self.client['registered'].get(
+            reverse(
+                'apiv2_stats',
+                kwargs={
+                    'project_slug': self.project_slug,
+                    'resource_slug': self.resource_slug,
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 200)
+        data = simplejson.loads(res.content)
+        self.assertEquals(data['el']['completed'], '100%')
+        self.assertEquals(data['af']['completed'], '100%')
+
+    def _create_project(self):
+        res = self.client['registered'].post(
+            self.url_new_project,
+            data=simplejson.dumps({
+                    'slug': self.project_slug, 'name': 'Project from API',
+                    'maintainers': 'registered',
+            }),
+            content_type='application/json'
+        )
+
+    def _create_resource(self):
+        self._create_project()
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': self.resource_slug,
+                    'source_language': 'el',
+                    'mimetype': 'text/x-joomla-ini',
+                    'content': self.content,
+            }),
+            content_type='application/json'
+        )
