@@ -344,7 +344,10 @@ class ProjectResourceHandler(BaseHandler):
             if "uuid" in request.data:
                 uuid = request.data['uuid']
                 project = Project.objects.get(slug=project_slug)
-                storagefile = StorageFile.objects.get(uuid=uuid)
+                try:
+                    storagefile = StorageFile.objects.get(uuid=uuid)
+                except StorageFile.DoesNotExist, e:
+                    return BAD_REQUEST("Specified uuid is invalid.")
                 resource_slug = None
                 if "slug" in request.data:
                     resource_slug = request.data['slug']
