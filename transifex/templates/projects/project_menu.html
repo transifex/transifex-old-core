@@ -51,7 +51,7 @@ $(document).ready(
 {% block content_title %}
 {% if project %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-
+{% with project.description as short_desc %}
 {% block project_header %}
 <h2 class="pagetitle with_description" style="display:inline-block;">{{ project.name }}</h2>
 {% endblock %}
@@ -61,7 +61,7 @@ $(document).ready(
   <p class="description belowheader">{% firstof project.description|escape project.name|escape %}</p>
 {% endif %}
 {% endblock %}
-
+{% endwith %}
 
 {% if project.private %}
 <span id="private_project_banner" class="ui-corner-all" style="display:inline-block;">

@@ -47,7 +47,9 @@
 
 {% if release %}  
 	{% if perms.projects.delete_release or is_maintainer %}
-	<div class="deletelink">
+	
+	<h3>{% trans "Delete release from Transifex" %}</h3>
+	<div>
 	  <a class="i16 delete buttonized buttonized_warning" href="{% url release_delete release.project.slug release.slug %}">{% trans "Delete release..." %}</a>
 	</div>
 	{% endif %}

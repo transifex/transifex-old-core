@@ -48,7 +48,8 @@
 	{% if team %}
 		{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 		{% if perms.teams.delete_team or is_maintainer %}
-		<div class="deletelink">
+		<h3>{% trans "Delete team from Transifex" %}</h3>
+		<div>
 		  <a class="i16 delete buttonized buttonized_warning" href="{% url team_delete project.slug team.language.code %}">{% trans "Delete team..." %}</a>
 		</div>
 		{% endif %}
