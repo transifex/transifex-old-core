@@ -111,7 +111,7 @@
   {% endif %}
 
 {% cache 604800 resource_details resource.project.slug resource.slug LANGUAGE_CODE %}
-<div id="resource_details">
+<div id="resource_details" class="separate">
   <h3>{% trans "Details" %}</h3>
   <table class="definition">
     <tr>
@@ -342,7 +342,7 @@
 <ul class="actionlist simple">
 {% for entry in action_log %}
     <li class="i16 actionlog">
-    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
+    {{ entry.message|safe }} by {{ entry.user }} <span class="timestamp">{{ entry.action_time|timesince }} ago.</span>
 {% endfor %}
 </ul>
 {% endif %}
