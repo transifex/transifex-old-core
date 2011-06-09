@@ -136,6 +136,21 @@
             {% endif %}
 			</span>
           </li>
+          {% ifequal resource.i18n_type "PO" %}
+          <li>
+            <span id="download_pot" class="i16 get_file">
+              {% if request.user.is_authenticated %}
+              <a href="{% url transifex.resources.views.get_pot_file project_slug=project.slug resource_slug=resource.slug %}">
+                {% trans "Download original pot file" %}
+              </a>
+              {% else %}
+              <a class="disabled" title="{% trans "You must login to be able to download the pot file." %}">
+                {% trans "Download original pot file" %}
+              </a>
+              {% endif %}
+            </span>
+          </li>
+          {% endifequal %}
           {% ifnotequal resource.source_language target_language %}
           <li>
             {% if request.user.is_authenticated %}
@@ -158,21 +173,6 @@
             {% endif %}
           </li>
           {% endifnotequal %}
-          {% ifequal resource.i18n_type "PO" %}
-          <li>
-            <span id="download_pot" class="i16 downsource">
-              {% if request.user.is_authenticated %}
-              <a href="{% url transifex.resources.views.get_pot_file project_slug=project.slug resource_slug=resource.slug %}">
-                {% trans "Download original pot file" %}.
-              </a>
-              {% else %}
-              <a class="disabled" title="{% trans "You must login to be able to download the pot file." %}">
-                {% trans "Download original pot file" %}.
-              </a>
-              {% endif %}
-            </span>
-          </li>
-          {% endifequal %}
         </ul>
   </div>
   <div class="first_level last_update">
