@@ -87,9 +87,9 @@
 
   <div class="details separate">
 
-  {% if release.homepage or release.release_date %}
+
   <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
-  {% endif %}
+
   <table class="definition">
     <tr {% if not release.homepage %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
       <th class="homepage i16">{% trans "Homepage:" %}</th>
