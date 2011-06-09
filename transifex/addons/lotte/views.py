@@ -20,6 +20,7 @@ from django.views.generic import list_detail
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
+from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
@@ -40,6 +41,10 @@ except ImportError, e:
     # create a dummy function that always returns True
     def is_gtranslate_allowed(project):
         return True
+
+
+class LotteBadRequestError(Exception):
+    pass
 
 
 Suggestion = get_model('suggestions', 'Suggestion')
@@ -275,73 +280,54 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     except Language.DoesNotExist:
         raise Http404
 
+
     # Find a way to determine the source language of multiple resources #FIXME
     source_language = resources[0].source_language
-    source_strings = Translation.objects.filter(
-        source_entity__resource__in=resources,
-        language=source_language,
-        rule=5)
+    try:
+        source_strings = _get_source_strings_for_request(
+            request, resources, source_language, language
+        )
+    except LotteBadRequestError, e:
+        logger.warning("Error in lotte filters: %s" % e.message, excinfo=True)
+        return HttpResponseBadRequest()
 
     translated_strings = Translation.objects.filter(
         source_entity__resource__in=resources,
         language=language)
 
-    # These are only the rule=5 (other) translations
-    default_translated_strings = translated_strings.filter(rule=5)
+    if not isinstance(source_strings, list):
+        more_languages = []
+        if request.POST and request.POST.has_key('more_languages'):
+            # rsplit is used to remove the trailing ','
+            more_languages = request.POST.get('more_languages').rstrip(',').split(',')
 
-    # status filtering (translated/untranslated)
-    if request.POST and request.POST.has_key('filters'):
-        for f in request.POST['filters'].split(','):
-            if f == "translated":
-                source_strings = source_strings.filter(
-                    ~Q(source_entity__id__in=default_translated_strings.values(
-                        'source_entity')))
-            elif f == "untranslated":
-                source_strings = source_strings.exclude(
-                    ~Q(source_entity__id__in=default_translated_strings.values(
-                        'source_entity')))
+        # keyword filtering
+        sSearch = request.POST.get('sSearch','')
+        if not sSearch == '':
+            query = Q()
+            for term in sSearch.split(' '):
+                query &= Q(string__icontains=term)
+            source_strings = source_strings.filter(query)
 
-    # Object filtering (e.g. users, resources, etc.)
-    if request.POST and request.POST.has_key('user_filters'):
-        # rsplit is used to remove the trailing ','
-        users = request.POST.get('user_filters').rstrip(',').split(',')
-        source_strings = source_strings.filter(
-            source_entity__id__in=default_translated_strings.filter(
-                user__id__in=users).values('source_entity'))
+        # grouping
+        # TODO
+        source_strings.group_by = ['string']
 
-    if request.POST and request.POST.has_key('resource_filters'):
-        # rsplit is used to remove the trailing ','
-        resources = request.POST.get('resource_filters').rstrip(',').split(',')
-        source_strings = source_strings.filter(resource__id__in=resources)
+        # sorting
+        scols = request.POST.get('iSortingCols', '0')
+        for i in range(0,int(scols)):
+            if request.POST.has_key('iSortCol_'+str(i)):
+                col = int(request.POST.get('iSortCol_'+str(i)))
+                if request.POST.has_key('sSortDir_'+str(i)) and \
+                    request.POST['sSortDir_'+str(i)] == 'asc':
+                    source_strings=source_strings.order_by(SORTING_DICT[col])
+                else:
+                    source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
 
-    more_languages = []
-    if request.POST and request.POST.has_key('more_languages'):
-        # rsplit is used to remove the trailing ','
-        more_languages = request.POST.get('more_languages').rstrip(',').split(',')
-
-
-    # keyword filtering
-    sSearch = request.POST.get('sSearch','')
-    if not sSearch == '':
-        query = Q()
-        for term in sSearch.split(' '):
-            query &= Q(string__icontains=term)
-        source_strings = source_strings.filter(query)
-
-    # grouping
-    # TODO
-    source_strings.group_by = ['string']
-
-    # sorting
-    scols = request.POST.get('iSortingCols', '0')
-    for i in range(0,int(scols)):
-        if request.POST.has_key('iSortCol_'+str(i)):
-            col = int(request.POST.get('iSortCol_'+str(i)))
-            if request.POST.has_key('sSortDir_'+str(i)) and \
-                request.POST['sSortDir_'+str(i)] == 'asc':
-                source_strings=source_strings.order_by(SORTING_DICT[col])
-            else:
-                source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
+        # for statistics
+        total = source_strings.count()
+    else:
+        total = 0
 
     # for items displayed
     try:
@@ -349,8 +335,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         dstart = int(request.POST.get('iDisplayStart','0'))
     except ValueError, e:
         return HttpResponseBadRequest()
-    # for statistics
-    total = source_strings.count()
 
     # NOTE: It's important to keep the translation string matching inside this
     # iteration to prevent extra un-needed queries. In this iteration only the
@@ -386,6 +370,138 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
         ],
         })
     return HttpResponse(json, mimetype='application/json')
+
+
+def _get_source_strings_for_request(request, resources, source_language, language):
+    """Return the source strings that correspond to the filters in the request.
+
+    Use powers of two for each possible filter, so that we can get a unique
+    number for each possible combination. Use that number as index to call
+    the specialized for the combination function.
+    This allows to optimize queries based on the specific filters applied
+    and bypass the database for combinations which are guaranteed to return
+    empty results.
+    """
+    # FIXME Is this possible?
+    if not request.POST:
+        return Translation.objects.filter(
+            source_entity__resource__in=resources,
+            language=source_language,
+            rule=5
+        )
+
+    if 'resource_filters' in request.POST:
+        requested_resources = set(
+            request.POST['resource_filters'].rstrip(',').split(',')
+        )
+        resources = filter(lambda r: r in requested_resources, resources)
+
+    # FIXME handle exceptions
+    index = 0
+    if 'filters' in request.POST:
+        # Handle 'translated'/'untranslated' filter
+        select = request.POST['filters'].rstrip(',').split(',')
+        if len(select) == 2 and 'translated' and 'untranslated' in select:
+            index += 3
+        elif select[0] == 'translated' and len(select) == 1:
+            index += 1
+        elif select[0] == 'untranslated' and len(select) == 1:
+            index += 2
+        else:
+            raise LotteBadRequestError('Invalid filter: %s' % select[0])
+
+    users = None
+    if 'user_filters' in request.POST:
+        try:
+            users = map(int, request.POST['user_filters'].rstrip(',').split(','))
+        except ValueError, e:
+            raise LotteBadRequestError(
+                "Invalid user id specified: %s" % request.POST['user_filters']
+            )
+        index += 4
+
+    querysets = [
+        _get_all_source_strings,
+        _get_untranslated_source_strings,
+        _get_translated_source_strings,
+        _get_none_source_strings,
+        _get_user_filtered_source_strings,
+        _get_user_filtered_source_strings,
+        _get_none_source_strings,
+        _get_none_source_strings,
+    ]
+
+    return querysets[index](
+        resources=resources,
+        source_language=source_language,
+        language=language,
+        users=users
+    )
+
+
+def _get_all_source_strings(resources, source_language, *args, **kwargs):
+    """Return all source strings for the resources."""
+    return Translation.objects.filter(
+        source_entity__resource__in=resources,
+        language=source_language,
+        rule=5
+    )
+
+
+def _get_untranslated_source_strings(resources, source_language, language, *args, **kwargs):
+    """
+    Get only the source strigns that haven't been translated
+    in the specified language.
+    """
+    all_se_ids = frozenset(SourceEntity.objects.filter(
+        resource__in=resources
+    ).values_list('id', flat=True))
+    translated_se_ids = frozenset(Translation.objects.filter(
+        source_entity__resource__in=resources,
+        language=language, rule=5
+    ).values_list('source_entity_id', flat=True))
+    untranslated_se_ids = all_se_ids - translated_se_ids
+    return Translation.objects.filter(
+        source_entity__id__in=untranslated_se_ids,
+        language=source_language, rule=5
+    )
+
+
+def _get_translated_source_strings(resources, source_language, language, *args, **kwargs):
+    """
+    Get only the source strigns that haven't been translated
+    in the specified language.
+    """
+    translated_se_ids = frozenset(Translation.objects.filter(
+        source_entity__resource__in=resources,
+        language=language, rule=5
+    ).values_list('source_entity_id', flat=True))
+    return Translation.objects.filter(
+        source_entity__id__in=translated_se_ids,
+        language=source_language, rule=5
+    )
+
+def _get_none_source_strings(*args, **kwargs):
+    """Return an empty set.
+
+    There are combinations that return emty sets, so let's optimize those
+    cases and return an empty set without querying the database.
+    """
+    return []
+
+
+def _get_user_filtered_source_strings(resources, users, source_language,
+                                      language, *args, **kwargs):
+    """Return all source strings created/edited by the specified users."""
+    user_translated_se_ids = Translation.objects.filter(
+        language=language, rule=5,
+        user__id__in=users,
+        source_entity__resource__in=resources
+    ).values_list('source_entity_id', flat=True)
+    return Translation.objects.filter(
+        source_entity__resource__in=user_translated_se_ids,
+        language=source_language, rule=5,
+    )
 
 
 def _get_source_strings(source_string, source_language, lang_code, more_languages):
