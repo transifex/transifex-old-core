@@ -434,7 +434,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             pos = $(this).find("textarea.default_translation").offset();
             w = obj.width();
             // IE8 fix
-            if(jQuery.browser.msie){
+            if(jQuery.browser.msie || jQuery.browser.webkit || jQuery.browser.opera){
               obj.css({top: 4, left: - w + 4});
             }else{
               obj.css({top:pos.top - 4, left:pos.left - w - 2});
@@ -445,7 +445,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             obj2.css({'visibility': 'visible'});
         }).mouseout(function() {
             var obj = $(this).find('.lotte-actions');
-            obj.css({top:-1000 ,left:-1000});
+            obj.css({top:-10000 ,left:-10000});
 
             // show bottom tabs
             var obj2 = $(this).find('.row_tabs');
