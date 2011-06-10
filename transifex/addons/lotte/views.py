@@ -264,7 +264,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     Function to serve AJAX data to the datatable holding the translating
     stringset.
     """
-
     resources = []
     if resource_slug:
         try:
@@ -280,7 +279,19 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     except Language.DoesNotExist:
         raise Http404
 
+    # FIXME Do we need to check for non-POST requests and return an error?
+    return _get_stringset(request.POST, resources, language)
 
+
+def _get_stringset(post_data, resources, language, *args, **kwargs):
+    """Return the source strings for the specified resources and language
+    based on the filters active in the request.
+
+    Filters are: translated|untranslated, specific user and specific
+    resources, which must be a subset of the resources argument. Also, the
+    user can select to search for a term, sort the columns and show more
+    languages other than the selected one.
+    """
     # Find a way to determine the source language of multiple resources #FIXME
     source_language = resources[0].source_language
     try:
@@ -297,12 +308,12 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     if not isinstance(source_strings, list):
         more_languages = []
-        if request.POST and request.POST.has_key('more_languages'):
+        if post_data and post_data.has_key('more_languages'):
             # rsplit is used to remove the trailing ','
-            more_languages = request.POST.get('more_languages').rstrip(',').split(',')
+            more_languages = post_data.get('more_languages').rstrip(',').split(',')
 
         # keyword filtering
-        sSearch = request.POST.get('sSearch','')
+        sSearch = post_data.get('sSearch','')
         if not sSearch == '':
             query = Q()
             for term in sSearch.split(' '):
@@ -310,12 +321,12 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
             source_strings = source_strings.filter(query)
 
         # sorting
-        scols = request.POST.get('iSortingCols', '0')
+        scols = post_data.get('iSortingCols', '0')
         for i in range(0,int(scols)):
-            if request.POST.has_key('iSortCol_'+str(i)):
-                col = int(request.POST.get('iSortCol_'+str(i)))
-                if request.POST.has_key('sSortDir_'+str(i)) and \
-                    request.POST['sSortDir_'+str(i)] == 'asc':
+            if post_data.has_key('iSortCol_'+str(i)):
+                col = int(post_data.get('iSortCol_'+str(i)))
+                if post_data.has_key('sSortDir_'+str(i)) and \
+                    post_data['sSortDir_'+str(i)] == 'asc':
                     source_strings=source_strings.order_by(SORTING_DICT[col])
                 else:
                     source_strings=source_strings.order_by(SORTING_DICT[col]).reverse()
@@ -327,8 +338,8 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
 
     # for items displayed
     try:
-        dlength = int(request.POST.get('iDisplayLength','25'))
-        dstart = int(request.POST.get('iDisplayStart','0'))
+        dlength = int(post_data.get('iDisplayLength','25'))
+        dstart = int(post_data.get('iDisplayStart','0'))
     except ValueError, e:
         return HttpResponseBadRequest()
 
@@ -336,7 +347,7 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     # iteration to prevent extra un-needed queries. In this iteration only the
     # strings displayed are calculated, saving a lot of resources.
     json = simplejson.dumps({
-        'sEcho': request.POST.get('sEcho','1'),
+        'sEcho': post_data.get('sEcho','1'),
         'iTotalRecords': total,
         'iTotalDisplayRecords': total,
         'aaData': [
@@ -379,24 +390,24 @@ def _get_source_strings_for_request(request, resources, source_language, languag
     empty results.
     """
     # FIXME Is this possible?
-    if not request.POST:
+    if not post_data:
         return Translation.objects.filter(
             source_entity__resource__in=resources,
             language=source_language,
             rule=5
         )
 
-    if 'resource_filters' in request.POST:
+    if 'resource_filters' in post_data:
         requested_resources = set(
-            request.POST['resource_filters'].rstrip(',').split(',')
+            post_data['resource_filters'].rstrip(',').split(',')
         )
         resources = filter(lambda r: r in requested_resources, resources)
 
     # FIXME handle exceptions
     index = 0
-    if 'filters' in request.POST:
+    if 'filters' in post_data:
         # Handle 'translated'/'untranslated' filter
-        select = request.POST['filters'].rstrip(',').split(',')
+        select = post_data['filters'].rstrip(',').split(',')
         if len(select) == 2 and 'translated' and 'untranslated' in select:
             index += 3
         elif select[0] == 'translated' and len(select) == 1:
@@ -407,12 +418,12 @@ def _get_source_strings_for_request(request, resources, source_language, languag
             raise LotteBadRequestError('Invalid filter: %s' % select[0])
 
     users = None
-    if 'user_filters' in request.POST:
+    if 'user_filters' in post_data:
         try:
-            users = map(int, request.POST['user_filters'].rstrip(',').split(','))
+            users = map(int, post_data['user_filters'].rstrip(',').split(','))
         except ValueError, e:
             raise LotteBadRequestError(
-                "Invalid user id specified: %s" % request.POST['user_filters']
+                "Invalid user id specified: %s" % post_data['user_filters']
             )
         index += 4
 
