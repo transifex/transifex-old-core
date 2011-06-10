@@ -296,7 +296,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
     source_language = resources[0].source_language
     try:
         source_strings = _get_source_strings_for_request(
-            request, resources, source_language, language
+            post_data, resources, source_language, language
         )
     except LotteBadRequestError, e:
         logger.warning("Error in lotte filters: %s" % e.message, excinfo=True)
@@ -358,13 +358,13 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
                 s.source_entity.string,
                 # 3. Get all the necessary source strings, including plurals and
                 # similar langs, all in a dictionary (see also below)
-                _get_source_strings(s, source_language, lang_code, more_languages),
+                _get_source_strings(s, source_language, language.code, more_languages),
                 # 4. Get all the Translation strings mapped with plural rules
                 # in a single dictionary (see docstring of function)
-                _get_strings(translated_strings, lang_code, s.source_entity),
+                _get_strings(translated_strings, language.code, s.source_entity),
                 # 5. A number which indicates the number of Suggestion objects
                 # attached to this row of the table.
-                Suggestion.objects.filter(source_entity=s.source_entity, language__code=lang_code).count(),
+                Suggestion.objects.filter(source_entity=s.source_entity, language__code=language.code).count(),
                 # 6. save buttons and hidden context (ready to inject snippet)
                 # It includes the following content, wrapped in span tags:
                 # * SourceEntity object's "context" value
@@ -379,7 +379,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
     return HttpResponse(json, mimetype='application/json')
 
 
-def _get_source_strings_for_request(request, resources, source_language, language):
+def _get_source_strings_for_request(post_data, resources, source_language, language):
     """Return the source strings that correspond to the filters in the request.
 
     Use powers of two for each possible filter, so that we can get a unique
