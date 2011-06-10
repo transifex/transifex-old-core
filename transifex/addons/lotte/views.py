@@ -309,10 +309,6 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
                 query &= Q(string__icontains=term)
             source_strings = source_strings.filter(query)
 
-        # grouping
-        # TODO
-        source_strings.group_by = ['string']
-
         # sorting
         scols = request.POST.get('iSortingCols', '0')
         for i in range(0,int(scols)):
