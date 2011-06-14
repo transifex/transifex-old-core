@@ -493,11 +493,11 @@ class TranslationManager(models.Manager):
             `language` by `users`.
         """
         source_language = get_source_language(resources)
-        user_translated_se_ids = self.filter(
+        user_translated_se_ids = frozenset(self.filter(
             language=language, rule=5,
             user__id__in=users,
             source_entity__resource__in=resources
-        ).values_list('source_entity_id', flat=True)
+        ).values_list('source_entity_id', flat=True))
         return self.filter(
             source_entity__id__in=user_translated_se_ids,
             language=source_language, rule=5,
