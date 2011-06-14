@@ -499,7 +499,7 @@ class TranslationManager(models.Manager):
             source_entity__resource__in=resources
         ).values_list('source_entity_id', flat=True)
         return self.filter(
-            source_entity__resource__in=user_translated_se_ids,
+            source_entity__id__in=user_translated_se_ids,
             language=source_language, rule=5,
         )
 
