@@ -17,7 +17,7 @@ from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag
+from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
 from suggestions.models import Suggestion
@@ -363,7 +363,7 @@ class POHandler(Handler):
                 if not is_source:
                     if not entry.msgid_plural:
                         suggestion = GenericTranslation(entry.msgid, entry.msgstr,
-                            context=entry.msgctxt or '',
+                            context=escape_context(entry.msgctxt) or '',
                             occurrences=', '.join(
                                 [':'.join([i for i in t ]) for t in
                                 entry.occurrences]))
@@ -421,7 +421,7 @@ class POHandler(Handler):
             # Add messages with the correct number (plural)
             for number, msgstr in enumerate(messages):
                 translation = GenericTranslation(entry.msgid, msgstr[1],
-                    context=entry.msgctxt or '',
+                    context=escape_context(entry.msgctxt) or '',
                     occurrences=', '.join(
                         [':'.join([i for i in t ]) for t in entry.occurrences]),
                     rule=msgstr[0], pluralized=pluralized)

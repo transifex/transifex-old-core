@@ -128,25 +128,28 @@ class ListCharField(models.CharField):
     """
     __metaclass__ = models.SubfieldBase
 
+    def _replace(self, value):
+        return [re.sub(r'(?<!\\)\:', '\:', unicode(v)) for v in value]
+
     # This is also called whenever setting the field value, it means that 
     # values other than a list can be attributed, such as string object.
     def to_python(self, value):
         if type(value) == list:
-            return value
+            return self._replace(value)
         if type(value) == unicode and value.startswith('[') and \
             value.endswith(']'):
-            return eval(value)
+            return self._replace(eval(value))
         if value == '':
             return []
         if value is None:
             return None
-        return re.split(r'(?<!\\)\:', value)
+        return self._replace(re.split(r'(?<!\\)\:', value))
 
     def get_db_prep_value(self, value):
         if value is None:
             return None
         assert isinstance(value, list)
-        return u':'.join(unicode(x).replace(u':', u'\:') for x in value)
+        return u':'.join(unicode(x) for x in value)
 
 
 class CompressedTextField(models.TextField):
@@ -222,6 +225,17 @@ rules['IntegerTupleField'] = [
 rules['CompressedTextField'] = [
     (
         [CompressedTextField],
+        [],
+        {
+            "blank": ["blank", {"default": True}],
+            "null": ["null", {"default": True}],
+        },
+    ),
+]
+
+rules['ListCharField'] = [
+    (
+        [ListCharField],
         [],
         {
             "blank": ["blank", {"default": True}],

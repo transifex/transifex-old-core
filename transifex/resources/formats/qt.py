@@ -17,7 +17,7 @@ from transifex.resources.formats.core import StringSet, ParseError, \
     GenericTranslation, CompileError, Handler, STRICT
 from suggestions.models import Suggestion
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag
+from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 
 # Resources models
 Resource = get_model('resources', 'Resource')
@@ -200,7 +200,8 @@ class LinguistHandler(Handler):
             context_name_element = _getElementByTagName(context, "name")
             if context_name_element.firstChild:
                 if context_name_element.firstChild.nodeValue:
-                    context_name = [context_name_element.firstChild.nodeValue]
+                    context_name = escape_context(
+                        [context_name_element.firstChild.nodeValue])
                 else:
                     context_name = []
             else:
@@ -239,7 +240,7 @@ class LinguistHandler(Handler):
                     c_node = _getElementByTagName(message, "comment")
                     comment_text = _getText(c_node.childNodes)
                     if comment_text:
-                        comment = [comment_text]
+                        comment = escape_context([comment_text])
                     else:
                         comment = []
                 except LinguistParseError, e:
