@@ -409,6 +409,97 @@ class TranslationManager(models.Manager):
                     'source_entity', flat=True))
         return results
 
+    def source_strings(self, resources):
+        """Return all source strings that correspond to the specified resources.
+
+        Args:
+            resources: An iterable of Resource objects.
+
+        Returns:
+            A queryset that returns all source strings (ie strings in the source
+            language) for the resources.
+        """
+        source_language = resources[0].source_language
+        return self.filter(
+            source_entity__resource__in=resources,
+            language=source_language,
+            rule=5
+        )
+
+    def untranslated_source_strings(self, resources, language):
+        """Return the source strings which have not been translated in the specified
+        language.
+
+        Args:
+            resources: An iterable of Resource objects.
+            language: The language to search for untranslated strings.
+
+        Returns:
+            A queryset which returns all untranslated source strings in the specified
+            language.
+        """
+        source_language = resources[0].source_language
+        all_se_ids = frozenset(SourceEntity.objects.filter(
+            resource__in=resources
+        ).values_list('id', flat=True))
+        translated_se_ids = frozenset(self.filter(
+            source_entity__resource__in=resources,
+            language=language, rule=5
+        ).values_list('source_entity_id', flat=True))
+        untranslated_se_ids = all_se_ids - translated_se_ids
+        return self.filter(
+            source_entity__id__in=untranslated_se_ids,
+            language=source_language, rule=5
+        )
+
+    def translated_source_strings(self, resources, language):
+        """Return the source strings which have been translated in the specified
+        language.
+
+        Args:
+            resources: An iterable of Resource objects.
+            language: The language to search for translated strings.
+
+        Returns:
+            A queryset which returns all translated source strings in the specified
+            language.
+        """
+        source_language = resources[0].source_language
+        translated_se_ids = frozenset(self.filter(
+            source_entity__resource__in=resources,
+            language=language, rule=5
+        ).values_list('source_entity_id', flat=True))
+        return self.filter(
+            source_entity__id__in=translated_se_ids,
+            language=source_language, rule=5
+        )
+
+    def user_translated_strings(self, resources, language, users):
+        """Return the source strings which have been transalted in the specified language
+        by the specified users.
+
+        Args:
+            resources: An iterable of Resource objects.
+            language: The language to look for translations in.
+            users: An iterable of user ids.
+
+        Returns:
+            A queryset that returns all source strigns which have been translated in
+            `language` by `users`.
+        """
+        source_language = resources[0].source_language
+        user_translated_se_ids = self.filter(
+            language=language, rule=5,
+            user__id__in=users,
+            source_entity__resource__in=resources
+        ).values_list('source_entity_id', flat=True)
+        return self.filter(
+            source_entity__resource__in=user_translated_se_ids,
+            language=source_language, rule=5,
+        )
+
+
+
 class Translation(models.Model):
     """
     The representation of a live translation for a given source string.

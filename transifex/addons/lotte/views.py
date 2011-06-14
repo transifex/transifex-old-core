@@ -446,47 +446,26 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
     )
 
 
-def _get_all_source_strings(resources, source_language, *args, **kwargs):
+def _get_all_source_strings(resources, *args, **kwargs):
     """Return all source strings for the resources."""
-    return Translation.objects.filter(
-        source_entity__resource__in=resources,
-        language=source_language,
-        rule=5
-    )
+    return Translation.objects.source_strings(resources)
 
 
-def _get_untranslated_source_strings(resources, source_language, language, *args, **kwargs):
+def _get_untranslated_source_strings(resources, language, *args, **kwargs):
     """
     Get only the source strigns that haven't been translated
     in the specified language.
     """
-    all_se_ids = frozenset(SourceEntity.objects.filter(
-        resource__in=resources
-    ).values_list('id', flat=True))
-    translated_se_ids = frozenset(Translation.objects.filter(
-        source_entity__resource__in=resources,
-        language=language, rule=5
-    ).values_list('source_entity_id', flat=True))
-    untranslated_se_ids = all_se_ids - translated_se_ids
-    return Translation.objects.filter(
-        source_entity__id__in=untranslated_se_ids,
-        language=source_language, rule=5
-    )
+    return Translation.objects.untranslated_source_strings(resources, language)
 
 
-def _get_translated_source_strings(resources, source_language, language, *args, **kwargs):
+def _get_translated_source_strings(resources, language, *args, **kwargs):
     """
     Get only the source strigns that haven't been translated
     in the specified language.
     """
-    translated_se_ids = frozenset(Translation.objects.filter(
-        source_entity__resource__in=resources,
-        language=language, rule=5
-    ).values_list('source_entity_id', flat=True))
-    return Translation.objects.filter(
-        source_entity__id__in=translated_se_ids,
-        language=source_language, rule=5
-    )
+    return Translation.objects.translated_source_strings(resources, language)
+
 
 def _get_none_source_strings(*args, **kwargs):
     """Return an empty set.
@@ -497,18 +476,9 @@ def _get_none_source_strings(*args, **kwargs):
     return []
 
 
-def _get_user_filtered_source_strings(resources, users, source_language,
-                                      language, *args, **kwargs):
+def _get_user_filtered_source_strings(resources, users, language, *args, **kwargs):
     """Return all source strings created/edited by the specified users."""
-    user_translated_se_ids = Translation.objects.filter(
-        language=language, rule=5,
-        user__id__in=users,
-        source_entity__resource__in=resources
-    ).values_list('source_entity_id', flat=True)
-    return Translation.objects.filter(
-        source_entity__resource__in=user_translated_se_ids,
-        language=source_language, rule=5,
-    )
+    return Translation.objects.user_translated_strings(resources, language, users)
 
 
 def _get_source_strings(source_string, source_language, lang_code, more_languages):
