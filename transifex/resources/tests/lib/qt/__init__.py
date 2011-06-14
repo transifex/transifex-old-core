@@ -314,3 +314,37 @@ class QtFile(FormatsBaseTestCase):
         self.assertEqual(handler.compiled_template.count('unfinished'), 2)
 
 
+    def test_entries_with_comment_tag(self):
+        """
+        Test entries with <comment>.
+        
+        This should be treated as a uniqueness value.
+        """
+        testfile = os.path.join(
+            os.path.dirname(__file__),
+            'comment/en.ts'
+        )
+        handler = LinguistHandler(testfile)
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+            string='It exists').context_string,
+            u'QCoreApplication\\:bar:QSystemSemaphore')
+
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+            string='This failed').context_string,
+            u'QCoreApplication\\:bar')
+
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+            string='One Entry').context_string, u'QSystemSemaphore\\: foo')
+
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+            string='Two Entries').context_string, u'None')
+            
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+            string='Unable to connect').context_string, u'QDB2Driver')
+
+

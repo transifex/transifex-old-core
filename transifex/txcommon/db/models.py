@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import base64
-import datetime
+import base64, datetime, re
 from django import forms
 from django.conf import settings
 from django.db.models.signals import post_save
@@ -117,6 +116,37 @@ class IntegerTupleField(models.CharField):
 
     def value_to_string(self, obj):
         return self.get_db_prep_value(obj)
+
+
+class ListCharField(models.CharField):
+    """
+    A field type for storing concatenated strings using the colon (:) char.
+
+    This field received the values that must be concatenated as a list of
+    string object, return also a list of string object whenever the database
+    content is required too.
+    """
+    __metaclass__ = models.SubfieldBase
+
+    # This is also called whenever setting the field value, it means that 
+    # values other than a list can be attributed, such as string object.
+    def to_python(self, value):
+        if type(value) == list:
+            return value
+        if type(value) == unicode and value.startswith('[') and \
+            value.endswith(']'):
+            return eval(value)
+        if value == '':
+            return []
+        if value is None:
+            return None
+        return re.split(r'(?<!\\)\:', value)
+
+    def get_db_prep_value(self, value):
+        if value is None:
+            return None
+        assert isinstance(value, list)
+        return u':'.join(unicode(x).replace(u':', u'\:') for x in value)
 
 
 class CompressedTextField(models.TextField):

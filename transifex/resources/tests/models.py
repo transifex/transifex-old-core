@@ -74,7 +74,7 @@ class ResourcesModelTests(BaseTestCase):
                                         resource=self.resource)
         self.assertTrue(s)
         self.assertEqual(s.string_hash, md5_constructor(':'.join([s.string,
-            s.context]).encode('utf-8')).hexdigest())
+            s.context_string]).encode('utf-8')).hexdigest())
 
     def test_create_translation_string(self):
         """Test TranslationString model creation."""

@@ -19,7 +19,8 @@ from django.contrib.auth.models import User, AnonymousUser
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
-from transifex.txcommon.db.models import CompressedTextField, ChainerManager
+from transifex.txcommon.db.models import CompressedTextField, \
+    ChainerManager, ListCharField
 from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
 
@@ -299,10 +300,11 @@ class SourceEntity(models.Model):
     string_hash = models.CharField(_('String Hash'), blank=False, null=False,
         max_length=32, editable=False,
         help_text=_("The hash of the translation string used for indexing"))
-    context = models.CharField(_('Context'), max_length=255,
+    context = ListCharField(_('Context'), max_length=255,
         null=False, default="",
-        help_text=_("A description of the source string. This field specifies"
-                    "the context of the source string inside the resource."))
+        help_text=_("A list of description of the source string. This field "
+                    "specifies the context of the source string inside the "
+                    "resource."))
     position = models.IntegerField(_('Position'), blank=True, null=True,
         help_text=_("The position of the source string in the Resource."
                     "For example, the specific position of a msgid field in a "
@@ -350,7 +352,7 @@ class SourceEntity(models.Model):
         """
         Do some exra processing before the actual save to db.
         """
-        context = self.context
+        context = self.context_string
         # This is for sqlite support since None objects are treated as strings
         # containing 'None'
         if not context or context == 'None':
@@ -361,6 +363,13 @@ class SourceEntity(models.Model):
             context]).encode('utf-8')).hexdigest()
 
         super(SourceEntity, self).save(*args, **kwargs)
+
+    @property
+    def context_string(self):
+        """Return context field as a colon concatenated string"""
+        if self.context:
+            return u':'.join(self.context)
+        return u''
 
     def get_translation(self, lang_code, rule=5):
         """Return the current active translation for this entity."""

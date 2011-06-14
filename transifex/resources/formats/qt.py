@@ -199,9 +199,12 @@ class LinguistHandler(Handler):
         for context in root.getElementsByTagName("context"):
             context_name_element = _getElementByTagName(context, "name")
             if context_name_element.firstChild:
-                context_name = context_name_element.firstChild.nodeValue or ''
+                if context_name_element.firstChild.nodeValue:
+                    context_name = [context_name_element.firstChild.nodeValue]
+                else:
+                    context_name = []
             else:
-                context_name = ''
+                context_name = []
 
             for message in context.getElementsByTagName("message"):
                 occurrences = []
@@ -230,6 +233,18 @@ class LinguistHandler(Handler):
                 except LinguistParseError, e:
                     extracomment = None
 
+                # <commend> in ts files are also used to distinguish entries,
+                # so we append it to the context to make the entry unique
+                try:
+                    c_node = _getElementByTagName(message, "comment")
+                    comment_text = _getText(c_node.childNodes)
+                    if comment_text:
+                        comment = [comment_text]
+                    else:
+                        comment = []
+                except LinguistParseError, e:
+                    comment = []
+                
                 status = None
                 if source.firstChild:
                     sourceString = _getText(source.childNodes)
@@ -308,7 +323,7 @@ class LinguistHandler(Handler):
                           not pluralized:
                             suggestion = GenericTranslation(sourceString,
                                 _getText(translation.childNodes),
-                                context=context_name,
+                                context=context_name + comment,
                                 occurrences= ";".join(occurrences))
                             suggestions.strings.append(suggestion)
                         else:
@@ -353,7 +368,7 @@ class LinguistHandler(Handler):
                 if sourceString and messages:
                     for msg in messages:
                         stringset.strings.append(GenericTranslation(sourceString,
-                            msg[1], context = context_name, rule=msg[0],
+                            msg[1], context = context_name + comment, rule=msg[0],
                             occurrences = ";".join(occurrences),
                             pluralized=pluralized, fuzzy=fuzzy,
                             comment=extracomment, obsolete=obsolete))
@@ -369,7 +384,8 @@ class LinguistHandler(Handler):
                                 f.appendChild(doc.createTextNode(
                                         "%(hash)s_pl_%(key)s" %
                                         {
-                                            'hash': hash_tag(sourceString, context_name),
+                                            'hash': hash_tag(sourceString, 
+                                                context_name + comment),
                                             'key': n
                                         }
                                 ))
@@ -383,7 +399,8 @@ class LinguistHandler(Handler):
                         translation.childNodes = []
 
                         translation.appendChild(doc.createTextNode(
-                                ("%(hash)s_tr" % {'hash': hash_tag(sourceString, context_name)})
+                                ("%(hash)s_tr" % {'hash': hash_tag(
+                                    sourceString, context_name + comment)})
                         ))
 
             if is_source:
