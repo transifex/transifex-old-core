@@ -25,7 +25,8 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
-from transifex.resources.models import (Translation, Resource, SourceEntity)
+from transifex.resources.models import Translation, Resource, SourceEntity, \
+        get_source_language
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
@@ -102,7 +103,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
 
     # If it is an attempt to edit the source language, redirect the user to
     # resource_detail and show him a message explaining the reason.
-    if target_language == resources[0].source_language:
+    if target_language == get_source_language(resources):
         messages.error(request,
                        "Cannot edit the source language because this would "
                        "result in translation mismatches! If you want to "
@@ -293,7 +294,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
     languages other than the selected one.
     """
     # Find a way to determine the source language of multiple resources #FIXME
-    source_language = resources[0].source_language
+    source_language = get_source_language(resources)
     try:
         source_strings = _get_source_strings_for_request(
             post_data, resources, source_language, language
@@ -440,7 +441,6 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
 
     return querysets[index](
         resources=resources,
-        source_language=source_language,
         language=language,
         users=users
     )

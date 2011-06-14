@@ -80,6 +80,11 @@ def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
         yield stats
 
 
+def get_source_language(resources):
+    """Return the source language of a list of resources."""
+    return resources[0].source_language
+
+
 class ResourceQuerySet(models.query.QuerySet):
 
     def for_user(self, user):
@@ -419,7 +424,7 @@ class TranslationManager(models.Manager):
             A queryset that returns all source strings (ie strings in the source
             language) for the resources.
         """
-        source_language = resources[0].source_language
+        source_language = get_source_language(resources)
         return self.filter(
             source_entity__resource__in=resources,
             language=source_language,
@@ -438,7 +443,7 @@ class TranslationManager(models.Manager):
             A queryset which returns all untranslated source strings in the specified
             language.
         """
-        source_language = resources[0].source_language
+        source_language = get_source_language(resources)
         all_se_ids = frozenset(SourceEntity.objects.filter(
             resource__in=resources
         ).values_list('id', flat=True))
@@ -464,7 +469,7 @@ class TranslationManager(models.Manager):
             A queryset which returns all translated source strings in the specified
             language.
         """
-        source_language = resources[0].source_language
+        source_language = get_source_language(resources)
         translated_se_ids = frozenset(self.filter(
             source_entity__resource__in=resources,
             language=language, rule=5
@@ -487,7 +492,7 @@ class TranslationManager(models.Manager):
             A queryset that returns all source strigns which have been translated in
             `language` by `users`.
         """
-        source_language = resources[0].source_language
+        source_language = get_source_language(resources)
         user_translated_se_ids = self.filter(
             language=language, rule=5,
             user__id__in=users,
@@ -497,7 +502,6 @@ class TranslationManager(models.Manager):
             source_entity__resource__in=user_translated_se_ids,
             language=source_language, rule=5,
         )
-
 
 
 class Translation(models.Model):
