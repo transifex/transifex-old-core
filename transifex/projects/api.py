@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.db import transaction, IntegrityError
+from django.db import transaction, DatabaseError, IntegrityError
 from django.http import HttpResponse, HttpResponseServerError
 from django.utils import simplejson
 from django.utils.translation import ugettext_lazy as _
@@ -355,11 +355,18 @@ class ProjectResourceHandler(BaseHandler):
                         return BAD_REQUEST("Resouce slug is too long "
                             "(Max. 50 chars).")
 
-                resource, created = Resource.objects.get_or_create(
+                try:
+                    resource, created = Resource.objects.get_or_create(
                         slug = resource_slug or slugify(storagefile.name),
                         source_language = storagefile.language,
                         project = project
-                )
+                    )
+                except DatabaseError, e:
+                    logger.error(e.message, exc_info=True)
+                    return BAD_REQUEST(e.message)
+                except IntegrityError, e:
+                    logger.error(e.message, exc_info=True)
+                    return BAD_REQUEST(e.message)
 
                 if created:
                     resource.name = resource_slug or storagefile.name
