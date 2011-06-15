@@ -173,6 +173,7 @@ class ResourceHandler(BaseHandler):
             return False
         return True
 
+    @transaction.commit_manually
     def _create(self, request, project_slug, data):
         # Check for unavailable fields
         try:
@@ -213,6 +214,8 @@ class ResourceHandler(BaseHandler):
         try:
             r.save()
         except IntegrityError, e:
+            transaction.rollback()
+            logger.warning("Error creating resource %s: %s" % (r, e.message))
             return BAD_REQUEST(
                 "A resource with the same slug exists in this project."
             )
@@ -221,16 +224,20 @@ class ResourceHandler(BaseHandler):
         try:
             t = Translation.get_object("create", request, r, source_language)
         except AttributeError, e:
-            r.delete()
+            transaction.rollback()
             return BAD_REQUEST("The content type of the request is not valid.")
         try:
             res = t.create()
         except (BadRequestError, NoContentError), e:
-            r.delete()
+            transaction.rollback()
             return BAD_REQUEST(e.message)
+        except Exception, e:
+            logger.error("Unexamined exception raised: %s" % e.message, exc_info=True)
+            transaction.rollback()
         res = t.__class__.to_http_for_create(t, res)
         if res.status_code == 200:
             res.status_code = 201
+        transaction.commit()
         return res
 
     @require_mime('json')

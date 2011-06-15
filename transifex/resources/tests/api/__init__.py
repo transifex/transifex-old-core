@@ -2,7 +2,10 @@
 import os
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
+from django.test import TransactionTestCase
+from django.conf import settings
 from django.contrib.auth.models import User, Permission
+from transifex.txcommon.tests.base import Users, NoticeTypes
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
@@ -145,32 +148,6 @@ class TestResourceAPI(APIBaseTests):
             self.url_create_resource,
             data=simplejson.dumps({
                     'name': "resource1",
-                    'slug': 'r1',
-                    'source_language': 'el',
-                    'mimetype': 'text/x-po',
-            }),
-            content_type='application/json'
-        )
-        self.assertContains(res, "same slug exists", status_code=400)
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
-                    'name': "resource2",
-                    'slug': 'r2',
-                    'source_language': 'el',
-                    'mimetype': 'text/x-po',
-            }),
-            content_type='application/json'
-        )
-        self.assertContains(res, "No content", status_code=400)
-        self.assertRaises(
-            Resource.DoesNotExist,
-            Resource.objects.get,
-            slug="r2", project__slug="new_pr"
-        )
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
                     'name': "resource2",
                     'slug': 'r2',
                     'source_language': 'el',
@@ -309,6 +286,102 @@ class TestResourceAPI(APIBaseTests):
         self.assertEquals(res.status_code, 201)
         r = Resource.objects.get(slug='r1', project__slug='new_pr')
         self.assertEquals(len(r.available_languages_without_teams), 1)
+
+
+class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
+
+    def setUp(self):
+        super(TestTransactionResourceCreate, self).setUp()
+        self.pofile_path = os.path.join(
+            settings.TX_ROOT, 'resources/tests/lib/pofile'
+        )
+        self.po_file = os.path.join(self.pofile_path, "pt_BR.po")
+        self.url_resources = reverse(
+            'apiv2_resources', kwargs={'project_slug': 'project1'}
+        )
+        self.url_resources_private = reverse(
+            'apiv2_resources', kwargs={'project_slug': 'project2'}
+        )
+        self.url_resource = reverse(
+            'apiv2_resource',
+            kwargs={'project_slug': 'project1', 'resource_slug': 'resource1'}
+        )
+        self.url_resource_private = reverse(
+            'apiv2_resource',
+            kwargs={'project_slug': 'project2', 'resource_slug': 'resource1'}
+        )
+        self.url_new_project = reverse(
+            'apiv2_projects'
+        )
+        self.url_create_resource = reverse(
+            'apiv2_resources', kwargs={'project_slug': 'new_pr'}
+        )
+        self.url_new_resource = reverse(
+            'apiv2_resource',
+            kwargs={'project_slug': 'new_pr', 'resource_slug': 'r1', }
+        )
+        self.url_new_translation = reverse(
+            'apiv2_translation',
+            kwargs={
+                'project_slug': 'new_pr',
+                'resource_slug': 'new_r',
+                'lang_code': 'el'
+            }
+        )
+
+    def test_post_errors(self):
+        res = self.client['registered'].post(
+            self.url_new_project,
+            data=simplejson.dumps({
+                    'slug': 'new_pr', 'name': 'Project from API',
+                    'maintainers': 'registered',
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        with open(self.po_file) as f:
+            content = f.read()
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'r1',
+                    'source_language': 'el',
+                    'i18n_type': 'PO',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        r = Resource.objects.get(slug='r1', project__slug='new_pr')
+        self.assertEquals(len(r.available_languages_without_teams), 1)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'r1',
+                    'source_language': 'el',
+                    'i18n_type': 'PO',
+            }),
+            content_type='application/json'
+        )
+        self.assertContains(res, "same slug exists", status_code=400)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource2",
+                    'slug': 'r2',
+                    'source_language': 'el',
+                    'i18n_type': 'PO',
+            }),
+            content_type='application/json'
+        )
+        self.assertContains(res, "No content", status_code=400)
+        self.assertRaises(
+            Resource.DoesNotExist,
+            Resource.objects.get,
+            slug="r2", project__slug="new_pr"
+        )
 
 
 class TestTranslationAPI(APIBaseTests):
