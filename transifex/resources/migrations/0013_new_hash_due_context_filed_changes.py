@@ -28,14 +28,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        for se in orm.SourceEntity.objects.all():
-            old_hash = se.string_hash
-            se.save()
-            new_hash = se.string_hash
-            template = orm.Template.objects.get(resource=se.resource)
-            template.content = re.sub(old_hash, new_hash, template.content)
-            template.save()
-
+        raise Exception("Cannot reverse this migration.")
 
     models = {
         'actionlog.logentry': {
