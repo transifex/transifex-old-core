@@ -25,13 +25,3 @@ def slug_feed(request, slug=None, param='', feed_dict=None):
     else:
         url = param
     return feed(request, url, feed_dict)
-
-
-def language_detail(request, slug, *args, **kwargs):
-    language = get_object_or_404(Language, code__iexact=slug)
-
-    return list_detail.object_detail(
-        request,
-        object_id=language.id,
-        *args, **kwargs
-    )
