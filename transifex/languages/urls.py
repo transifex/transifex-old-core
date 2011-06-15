@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from transifex.languages.models import Language
 from transifex.languages.feeds import AllLanguages
-from transifex.languages.views import language_detail, slug_feed
+from transifex.languages.views import slug_feed
 
 feeds = {
     'all': AllLanguages,

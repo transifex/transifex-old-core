@@ -95,10 +95,6 @@ class Language(models.Model):
         db_table  = 'translations_language'
         ordering  = ('name',)
 
-    @permalink
-    def get_absolute_url(self):
-        return ('language_detail', None, { 'slug': self.code })
-
     def save(self, *args, **kwargs):
         # It's needed to ensure that when we compare this field with the
         # 'contain' action, we will always take the whole alias for a
