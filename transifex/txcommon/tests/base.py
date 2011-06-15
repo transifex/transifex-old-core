@@ -56,7 +56,51 @@ def deactivate_csrf_middleware():
     settings.MIDDLEWARE_CLASSES = list_middle_c
 
 
-class BaseTestCase(TestCase):
+class Users(object):
+    """A class to create users in setUp().
+
+    Use this as a mixin.
+    """
+
+    fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
+
+    def setUp(self):
+        registered = Group.objects.get(name="registered")
+        registered.permissions.add(
+            DjPermission.objects.get_or_create(
+                codename='add_project', name='Can add project',
+                content_type=ContentType.objects.get_for_model(Project))[0])
+
+        self.user = {}
+        self.client = {}
+
+        # Create users, respective clients and login users
+        for nick in USER_ROLES:
+            self.client[nick] = Client()
+            if nick != 'anonymous':
+                # Create respective users
+                self.user[nick] = User.objects.create_user(
+                    nick, '%s@localhost' % nick, PASSWORD)
+                self.user[nick].groups.add(registered)
+                # Login non-anonymous personas
+                self.client[nick].login(username=nick, password=PASSWORD)
+                self.assertTrue(self.user[nick].is_authenticated())
+        super(Users, self).setUp()
+
+
+class NoticeTypes(object):
+    """A class to create default notice types.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        from django.core import management
+        management.call_command('txcreatenoticetypes', verbosity=0)
+        super(NoticeTypes, self).setUp()
+
+
+class BaseTestCase(Users, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
@@ -85,27 +129,7 @@ class BaseTestCase(TestCase):
                   super(TestClassName, self).setUp()
 
         """
-
-        registered = Group.objects.get(name="registered")
-        registered.permissions.add(
-            DjPermission.objects.get_or_create(
-                codename='add_project', name='Can add project',
-                content_type=ContentType.objects.get_for_model(Project))[0])
-
-        self.user = {}
-        self.client = {}
-
-        # Create users, respective clients and login users
-        for nick in USER_ROLES:
-            self.client[nick] = Client()
-            if nick != 'anonymous':
-                # Create respective users
-                self.user[nick] = User.objects.create_user(
-                    nick, '%s@localhost' % nick, PASSWORD)
-                self.user[nick].groups.add(registered)
-                # Login non-anonymous personas
-                self.client[nick].login(username=nick, password=PASSWORD)
-                self.assertTrue(self.user[nick].is_authenticated())
+        super(BaseTestCase, self).setUp()
 
         # Create projects
         #self.project = Project.objects.create(
@@ -114,7 +138,7 @@ class BaseTestCase(TestCase):
         self.project.maintainers.add(self.user['maintainer'])
         self.project.owner = self.user['maintainer']
         self.project.save()
-        
+
         self.project_private = Project.objects.get(slug='project2')
         self.project_private.maintainers.add(self.user['maintainer'])
         self.project_private.owner = self.user['maintainer']
@@ -204,9 +228,6 @@ class BaseTestCase(TestCase):
             'resource_private': reverse('resource_detail', args=[self.resource_private.project.slug, self.resource_private.slug]),
             'translate_private': reverse('translate_resource', args=[self.resource_private.project.slug, self.resource_private.slug, self.language.code]),
         }
-
-
-
 
         from django.core import management
         management.call_command('txstatsupdate', verbosity=0)
