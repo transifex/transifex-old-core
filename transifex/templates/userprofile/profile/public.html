@@ -64,7 +64,7 @@
                 {% if profile.native_language %}
                 <tr>
                     <th class="i16 language">{% trans "Native language" %}:</th>
-                    <td><a href="{% url language_detail profile.native_language.code %}">{{ profile.native_language }}</a></td>
+                    <td>{{ profile.native_language }}</td>
                 </tr>
                 {% endif %}
                 {% if profile.blog %}
