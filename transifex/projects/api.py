@@ -63,6 +63,8 @@ class ProjectHandler(BaseHandler):
                 if project_slug is None:
                     return rc.NOT_IMPLEMENTED
                 ProjectHandler.fields = ProjectHandler.details_fields
+        else:
+            ProjectHandler.fields = ProjectHandler.details_fields
         return self._read(request, project_slug)
 
     @require_mime('json')
